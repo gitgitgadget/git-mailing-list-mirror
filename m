@@ -1,89 +1,61 @@
-From: Pierre Habouzit <madcoder@madism.org>
-Subject: Re: [RFC PATCH v2 2/3] Introduce git-discard
-Date: Sat, 25 Jul 2009 16:58:20 +0200
-Message-ID: <20090725145819.GC18545@artemis.corp>
-References: <2d756f643fc7d1b50cf590c95467fa029b49ff46.1248426652.git.trast@student.ethz.ch>
- <cf51e6aa92ea98fc9409826cc0468a01fdf7b01e.1248452530.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nmemrqcdn5VTmUEE"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jul 25 16:58:49 2009
+From: Michael Bergin <michaeljbergin@gmail.com>
+Subject: Git Option/Subcommand Processing Library?
+Date: Sat, 25 Jul 2009 12:28:12 -0400
+Message-ID: <231BD892-07B1-452C-A224-047829E21991@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 25 18:28:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUii0-0000eY-9j
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 16:58:48 +0200
+	id 1MUk6k-0002VI-Iq
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 18:28:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937AbZGYO6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Jul 2009 10:58:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbZGYO6a
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 10:58:30 -0400
-Received: from pan.madism.org ([88.191.52.104]:44642 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751931AbZGYO61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Jul 2009 10:58:27 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id 7B7B542346;
-	Sat, 25 Jul 2009 16:58:26 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 52BA02AEA0; Sat, 25 Jul 2009 16:58:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <cf51e6aa92ea98fc9409826cc0468a01fdf7b01e.1248452530.git.trast@student.ethz.ch>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751998AbZGYQ2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 12:28:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751863AbZGYQ2T
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 12:28:19 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:15164 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbZGYQ2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 12:28:19 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1222801qwh.37
+        for <git@vger.kernel.org>; Sat, 25 Jul 2009 09:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=xghBe1AD5sUtcgTpH9zzFBA+eYsqQ1CW0LctxDlMyuU=;
+        b=L6CZkDak0WBJ7GidQUpRqsAFOO2zR0U35G8FmO0abDEvhWalplyHJMaqmo9o05mQD2
+         +hbItL/ikWRRCCYpmBPRTsXqIsq+HFFbr17Y8CGcJFG1uOqpimzthD5YajimE08slGTw
+         sbpObxUVS0XeZ0bAITBO/BDYO3o2EisJVl5FA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=Qe4PuuMm6ma6p0mpbnJ1AExqubMLaBsllv6cVhqf8QW+TBTkYLK/mn/fzThi3/lPxH
+         bDaxzVoZeshRH/Ysez+ITenXDFkNdRF4hIfq3QtFDbA2CoCdGUFCJR4se19OyC7Vcai4
+         p4f7NN0+6/a2/8fra5jMNWl/wrWs981QtdT7Q=
+Received: by 10.224.67.16 with SMTP id p16mr4444578qai.180.1248539299053;
+        Sat, 25 Jul 2009 09:28:19 -0700 (PDT)
+Received: from mobile003.mycingular.net ([32.178.44.31])
+        by mx.google.com with ESMTPS id 8sm5468954qwj.36.2009.07.25.09.28.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Jul 2009 09:28:18 -0700 (PDT)
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124019>
 
+Is there a library containing just the option and subcommand  
+processing code from git?  I saw a post about gitopt but can't find a  
+project with that name.  If not is there any problem with me doing  
+this?  Thanks.
 
---nmemrqcdn5VTmUEE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Jul 24, 2009 at 06:24:35PM +0200, Thomas Rast wrote:
-> +*WARNING:* All unstaged changes to the 'paths' are *irreversibly*
-> +lost.
-
-FWIW, as git checkout -- <path> is already doing that, and that
-git-discard is clearly something meant as some UI sugar, I would make
-that operation a "safe" porcelain by puting the discarded hunks in a
-stash.
-
-I'm shamelessly stealing this idea from Jeff, but it's probably an
-excellent idea to have a strash=C2=B9. It makes git even safer to use,
-especially to beginners, to whom we would talk about git-discard instead
-of git checkout.
-
-=C2=B9: stash-trash
---=20
-Intersec <http://www.intersec.com>
-Pierre Habouzit <pierre.habouzit@intersec.com>
-T=C3=A9l : +33 (0)1 5570 3346
-Mob : +33 (0)6 1636 8131
-Fax : +33 (0)1 5570 3332
-37 Rue Pierre Lhomme
-92400 Courbevoie
-
---nmemrqcdn5VTmUEE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkprHYsACgkQvGr7W6HudhzUBwCfZi4eGk716fxLu6iH9Vq4Tbnm
-WIIAn1707g4/m9pfBPwhbRzuQEnTcspI
-=0clm
------END PGP SIGNATURE-----
-
---nmemrqcdn5VTmUEE--
+- Mike Bergin
