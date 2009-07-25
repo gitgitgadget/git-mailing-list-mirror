@@ -1,7 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 13/19] Make Config thread safe by using copy-on-write semantics
-Date: Sat, 25 Jul 2009 11:52:56 -0700
-Message-ID: <1248547982-4003-14-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 14/19] Support cached application models in a Config
+Date: Sat, 25 Jul 2009 11:52:57 -0700
+Message-ID: <1248547982-4003-15-git-send-email-spearce@spearce.org>
 References: <1248547982-4003-1-git-send-email-spearce@spearce.org>
  <1248547982-4003-2-git-send-email-spearce@spearce.org>
  <1248547982-4003-3-git-send-email-spearce@spearce.org>
@@ -15,243 +15,326 @@ References: <1248547982-4003-1-git-send-email-spearce@spearce.org>
  <1248547982-4003-11-git-send-email-spearce@spearce.org>
  <1248547982-4003-12-git-send-email-spearce@spearce.org>
  <1248547982-4003-13-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
+ <1248547982-4003-14-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org,
+	Constantine Plotnikov <constantine.plotnikov@gmail.com>
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Jul 25 20:54:34 2009
+X-From: git-owner@vger.kernel.org Sat Jul 25 20:54:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUmO9-0002ZF-Bx
-	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 20:54:33 +0200
+	id 1MUmOA-0002ZF-4R
+	for gcvg-git-2@gmane.org; Sat, 25 Jul 2009 20:54:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbZGYSxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752328AbZGYSxj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 25 Jul 2009 14:53:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752304AbZGYSxi
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 14:53:38 -0400
-Received: from george.spearce.org ([209.20.77.23]:35578 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752192AbZGYSxh
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 14:53:37 -0400
+Received: from george.spearce.org ([209.20.77.23]:35575 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbZGYSxM (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752210AbZGYSxM (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 25 Jul 2009 14:53:12 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 82BF738221; Sat, 25 Jul 2009 18:53:12 +0000 (UTC)
+	id 4AC1A381FE; Sat, 25 Jul 2009 18:53:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id ECB18381FE;
-	Sat, 25 Jul 2009 18:53:06 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 3A97638200;
+	Sat, 25 Jul 2009 18:53:07 +0000 (UTC)
 X-Mailer: git-send-email 1.6.4.rc2.216.g769fa
-In-Reply-To: <1248547982-4003-13-git-send-email-spearce@spearce.org>
+In-Reply-To: <1248547982-4003-14-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124047>
 
-It is relatively rare that the Config instance is modified from
-application code.  When it is, we usually are working on a small
-set of values read from .git/config or ~/.gitconfig.  Making the
-class thread-safe through basic copy-on-write semantics for its
-inner collection of entries simplifies the locking and permits us
-to optimize for the much more common read path.
+The Config.SectionParser acts as a key into a cache of model object
+instances, but also knows how to create its model instance if the
+cache does not contain the corresponding instance.
+
+Because we don't keep track of which keys were accessed by a parser
+when it created its model, we discard the entire cache anytime any
+key is modified, forcing all models to reparse on the next access.
+
+Both CoreConfig and TransferConfig are trivial to switch to this
+method of access, although the typical get path is quite a bit longer
+as we now need to do a hash lookup instead of a getfield instruction.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+CC: Constantine Plotnikov <constantine.plotnikov@gmail.com>
 ---
- .../src/org/spearce/jgit/lib/Config.java           |   85 +++++++++++++++++---
- 1 files changed, 72 insertions(+), 13 deletions(-)
+ .../src/org/spearce/jgit/lib/Config.java           |   92 +++++++++++++++++++-
+ .../src/org/spearce/jgit/lib/CoreConfig.java       |   16 +++-
+ .../src/org/spearce/jgit/lib/RepositoryConfig.java |   20 +----
+ .../src/org/spearce/jgit/lib/TransferConfig.java   |   11 ++-
+ 4 files changed, 112 insertions(+), 27 deletions(-)
 
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
-index f4e78f3..4d4b315 100644
+index 4d4b315..6036c4c 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Config.java
-@@ -46,6 +46,7 @@
+@@ -45,7 +45,9 @@
+ import java.util.Collections;
  import java.util.HashSet;
  import java.util.List;
++import java.util.Map;
  import java.util.Set;
-+import java.util.concurrent.atomic.AtomicReference;
++import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.atomic.AtomicReference;
  
  import org.spearce.jgit.errors.ConfigInvalidException;
- import org.spearce.jgit.util.StringUtils;
-@@ -60,9 +61,15 @@
- 	private static final long MiB = 1024 * KiB;
- 	private static final long GiB = 1024 * MiB;
+@@ -375,6 +377,43 @@ public String getString(final String section, String subsection,
+ 		return result;
+ 	}
  
--	private List<Entry> entries;
 +	/**
-+	 * Immutable current state of the configuration data.
-+	 * <p>
-+	 * This state is copy-on-write. It should always contain an immutable list
-+	 * of the configuration keys/values.
++	 * Obtain a handle to a parsed set of configuration values.
++	 *
++	 * @param <T>
++	 *            type of configuration model to return.
++	 * @param parser
++	 *            parser which can create the model if it is not already
++	 *            available in this configuration file. The parser is also used
++	 *            as the key into a cache and must obey the hashCode and equals
++	 *            contract in order to reuse a parsed model.
++	 * @return the parsed object instance, which is cached inside this config.
 +	 */
-+	private final AtomicReference<State> state;
- 
--	final Config baseConfig;
-+	private final Config baseConfig;
- 
- 	/**
- 	 * Magic value indicating a missing entry.
-@@ -87,7 +94,7 @@ public Config() {
- 	 */
- 	public Config(Config defaultConfig) {
- 		baseConfig = defaultConfig;
--		clear();
-+		state = new AtomicReference<State>(newState());
++	@SuppressWarnings("unchecked")
++	public <T> T get(final SectionParser<T> parser) {
++		final State myState = getState();
++		T obj = (T) myState.cache.get(parser);
++		if (obj == null) {
++			obj = parser.parse(this);
++			myState.cache.put(parser, obj);
++		}
++		return obj;
++	}
++
++	/**
++	 * Remove a cached configuration object.
++	 * <p>
++	 * If the associated configuration object has not yet been cached, this
++	 * method has no effect.
++	 *
++	 * @param parser
++	 *            parser used to obtain the configuration object.
++	 * @see #get(SectionParser)
++	 */
++	public void uncache(final SectionParser<?> parser) {
++		state.get().cache.remove(parser);
++	}
++
+ 	private String getRawString(final String section, final String subsection,
+ 			final String name) {
+ 		final List<String> lst = getRawStringList(section, subsection, name);
+@@ -409,6 +448,22 @@ else if (baseConfig != null)
+ 		return curr;
  	}
  
- 	/**
-@@ -358,7 +365,7 @@ public String getString(final String section, String subsection,
- 	 */
- 	public Set<String> getSubsections(final String section) {
- 		final Set<String> result = new HashSet<String>();
--		for (final Entry e : entries) {
-+		for (final Entry e : state.get().entryList) {
- 			if (StringUtils.equalsIgnoreCase(section, e.section)
- 					&& e.subsection != null)
- 				result.add(e.subsection);
-@@ -382,7 +389,7 @@ else if (baseConfig != null)
- 	private List<String> getRawStringList(final String section,
- 			final String subsection, final String name) {
- 		List<String> r = null;
--		for (final Entry e : entries) {
-+		for (final Entry e : state.get().entryList) {
- 			if (e.match(section, subsection, name))
- 				r = add(r, e.value);
- 		}
-@@ -541,6 +548,17 @@ public void unset(final String section, final String subsection,
- 	 */
- 	public void setStringList(final String section, final String subsection,
- 			final String name, final List<String> values) {
-+		State src, res;
++	private State getState() {
++		State cur, upd;
 +		do {
-+			src = state.get();
-+			res = replaceStringList(src, section, subsection, name, values);
-+		} while (!state.compareAndSet(src, res));
++			cur = state.get();
++			final State base = getBaseState();
++			if (cur.baseState == base)
++				return cur;
++			upd = new State(cur.entryList, base);
++		} while (!state.compareAndSet(cur, upd));
++		return upd;
 +	}
 +
-+	private State replaceStringList(final State srcState,
-+			final String section, final String subsection, final String name,
-+			final List<String> values) {
-+		final List<Entry> entries = copy(srcState, values);
- 		int entryIndex = 0;
- 		int valueIndex = 0;
- 		int insertPosition = -1;
-@@ -548,11 +566,12 @@ public void setStringList(final String section, final String subsection,
- 		// Reset the first n Entry objects that match this input name.
- 		//
- 		while (entryIndex < entries.size() && valueIndex < values.size()) {
--			final Entry e = entries.get(entryIndex++);
-+			final Entry e = entries.get(entryIndex);
- 			if (e.match(section, subsection, name)) {
--				e.value = values.get(valueIndex++);
--				insertPosition = entryIndex;
-+				entries.set(entryIndex, e.forValue(values.get(valueIndex++)));
-+				insertPosition = entryIndex + 1;
- 			}
-+			entryIndex++;
- 		}
- 
- 		// Remove any extra Entry objects that we no longer need.
-@@ -573,7 +592,7 @@ public void setStringList(final String section, final String subsection,
- 				// is already a section available that matches. Insert
- 				// after the last key of that section.
- 				//
--				insertPosition = findSectionEnd(section, subsection);
-+				insertPosition = findSectionEnd(entries, section, subsection);
- 			}
- 			if (insertPosition < 0) {
- 				// We didn't find any matching section header for this key,
-@@ -594,9 +613,22 @@ public void setStringList(final String section, final String subsection,
- 				entries.add(insertPosition++, e);
- 			}
- 		}
-+
-+		return newState(entries);
++	private State getBaseState() {
++		return baseConfig != null ? baseConfig.getState() : null;
 +	}
 +
-+	private static List<Entry> copy(final State src, final List<String> values) {
-+		// At worst we need to insert 1 line for each value, plus 1 line
-+		// for a new section header. Assume that and allocate the space.
-+		//
-+		final int max = src.entryList.size() + values.size() + 1;
-+		final ArrayList<Entry> r = new ArrayList<Entry>(max);
-+		r.addAll(src.entryList);
-+		return r;
+ 	/**
+ 	 * Add or modify a configuration value. The parameters will result in a
+ 	 * configuration entry like this.
+@@ -757,11 +812,11 @@ public void fromText(final String text) throws ConfigInvalidException {
  	}
  
--	private int findSectionEnd(final String section, final String subsection) {
-+	private static int findSectionEnd(final List<Entry> entries,
-+			final String section, final String subsection) {
- 		for (int i = 0; i < entries.size(); i++) {
- 			Entry e = entries.get(i);
- 			if (e.match(section, subsection, null)) {
-@@ -619,7 +651,7 @@ private int findSectionEnd(final String section, final String subsection) {
- 	 */
- 	public String toText() {
- 		final StringBuilder out = new StringBuilder();
--		for (final Entry e : entries) {
-+		for (final Entry e : state.get().entryList) {
- 			if (e.prefix != null)
- 				out.append(e.prefix);			
- 			if (e.section != null && e.name == null) {
-@@ -721,14 +753,22 @@ public void fromText(final String text) throws ConfigInvalidException {
- 				throw new ConfigInvalidException("Invalid line in config file");
- 		}
+ 	private State newState() {
+-		return new State(Collections.<Entry> emptyList());
++		return new State(Collections.<Entry> emptyList(), getBaseState());
+ 	}
  
--		entries = newEntries;
-+		state.set(newState(newEntries));
-+	}
-+
-+	private State newState() {
-+		return new State(Collections.<Entry> emptyList());
-+	}
-+
-+	private State newState(final List<Entry> entries) {
-+		return new State(Collections.unmodifiableList(entries));
+ 	private State newState(final List<Entry> entries) {
+-		return new State(Collections.unmodifiableList(entries));
++		return new State(Collections.unmodifiableList(entries), getBaseState());
  	}
  
  	/**
- 	 * Clear the configuration file
- 	 */
- 	protected void clear() {
--		entries = new ArrayList<Entry>();
-+		state.set(newState());
- 	}
- 
- 	private static String readSectionName(final StringReader in)
-@@ -893,6 +933,14 @@ private static String readValue(final StringReader in, boolean quote,
+@@ -933,11 +988,42 @@ private static String readValue(final StringReader in, boolean quote,
  		return value.length() > 0 ? value.toString() : null;
  	}
  
-+	private static class State {
-+		final List<Entry> entryList;
-+
-+		State(List<Entry> entries) {
-+			entryList = entries;
-+		}
++	/**
++	 * Parses a section of the configuration into an application model object.
++	 * <p>
++	 * Instances must implement hashCode and equals such that model objects can
++	 * be cached by using the {@code SectionParser} as a key of a HashMap.
++	 * <p>
++	 * As the {@code SectionParser} itself is used as the key of the internal
++	 * HashMap applications should be careful to ensure the SectionParser key
++	 * does not retain unnecessary application state which may cause memory to
++	 * be held longer than expected.
++	 *
++	 * @param <T>
++	 *            type of the application model created by the parser.
++	 */
++	public static interface SectionParser<T> {
++		/**
++		 * Create a model object from a configuration.
++		 *
++		 * @param cfg
++		 *            the configuration to read values from.
++		 * @return the application model instance.
++		 */
++		T parse(Config cfg);
 +	}
 +
- 	/**
- 	 * The configuration file entry
- 	 */
-@@ -927,6 +975,17 @@ private static String readValue(final StringReader in, boolean quote,
- 		 */
- 		String suffix;
+ 	private static class State {
+ 		final List<Entry> entryList;
  
-+		Entry forValue(final String newValue) {
-+			final Entry e = new Entry();
-+			e.prefix = prefix;
-+			e.section = section;
-+			e.subsection = subsection;
-+			e.name = name;
-+			e.value = newValue;
-+			e.suffix = suffix;
-+			return e;
-+		}
+-		State(List<Entry> entries) {
++		final Map<Object, Object> cache;
 +
- 		boolean match(final String aSection, final String aSubsection,
- 				final String aKey) {
- 			return eqIgnoreCase(section, aSection)
++		final State baseState;
++
++		State(List<Entry> entries, State base) {
+ 			entryList = entries;
++			cache = new ConcurrentHashMap<Object, Object>(16, 0.75f, 1);
++			baseState = base;
+ 		}
+ 	}
+ 
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/CoreConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/CoreConfig.java
+index e98e0bc..ed3827b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/CoreConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/CoreConfig.java
+@@ -38,22 +38,28 @@
+ 
+ package org.spearce.jgit.lib;
+ 
+-import java.util.zip.Deflater;
++import static java.util.zip.Deflater.DEFAULT_COMPRESSION;
++
++import org.spearce.jgit.lib.Config.SectionParser;
+ 
+ /**
+  * This class keeps git repository core parameters.
+  */
+ public class CoreConfig {
+-	private static final int DEFAULT_COMPRESSION = Deflater.DEFAULT_COMPRESSION;
+-	private static final int DEFAULT_INDEXVERSION = 2;
++	/** Key for {@link Config#get(SectionParser)}. */
++	public static final Config.SectionParser<CoreConfig> KEY = new SectionParser<CoreConfig>() {
++		public CoreConfig parse(final Config cfg) {
++			return new CoreConfig(cfg);
++		}
++	};
+ 
+ 	private final int compression;
+ 
+ 	private final int packIndexVersion;
+ 
+-	CoreConfig(final RepositoryConfig rc) {
++	private CoreConfig(final Config rc) {
+ 		compression = rc.getInt("core", "compression", DEFAULT_COMPRESSION);
+-		packIndexVersion = rc.getInt("pack", "indexversion", DEFAULT_INDEXVERSION);
++		packIndexVersion = rc.getInt("pack", "indexversion", 2);
+ 	}
+ 
+ 	/**
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+index fb97747..c6a13b6 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RepositoryConfig.java
+@@ -42,9 +42,7 @@
+ package org.spearce.jgit.lib;
+ 
+ import java.io.File;
+-import java.io.IOException;
+ 
+-import org.spearce.jgit.errors.ConfigInvalidException;
+ import org.spearce.jgit.util.SystemReader;
+ 
+ /**
+@@ -57,10 +55,6 @@
+ 	/** Section name for a branch configuration. */
+ 	public static final String BRANCH_SECTION = "branch";
+ 
+-	CoreConfig core;
+-
+-	TransferConfig transfer;
+-
+ 	/**
+ 	 * Create a Git configuration file reader/writer/cache for a specific file.
+ 	 *
+@@ -79,14 +73,14 @@ public RepositoryConfig(final Config base, final File cfgLocation) {
+ 	 * @return Core configuration values
+ 	 */
+ 	public CoreConfig getCore() {
+-		return core;
++		return get(CoreConfig.KEY);
+ 	}
+ 
+ 	/**
+ 	 * @return transfer, fetch and receive configuration values
+ 	 */
+ 	public TransferConfig getTransfer() {
+-		return transfer;
++		return get(TransferConfig.KEY);
+ 	}
+ 
+ 	/**
+@@ -175,15 +169,5 @@ public void create() {
+ 		clear();
+ 		setInt("core", null, "repositoryformatversion", 0);
+ 		setBoolean("core", null, "filemode", true);
+-
+-		core = new CoreConfig(this);
+-		transfer = new TransferConfig(this);
+-	}
+-
+-	@Override
+-	public void load() throws IOException, ConfigInvalidException {
+-		super.load();
+-		core = new CoreConfig(this);
+-		transfer = new TransferConfig(this);
+ 	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/TransferConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/TransferConfig.java
+index ff3a5eb..8760103 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/TransferConfig.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/TransferConfig.java
+@@ -37,13 +37,22 @@
+ 
+ package org.spearce.jgit.lib;
+ 
++import org.spearce.jgit.lib.Config.SectionParser;
++
+ /**
+  * The standard "transfer", "fetch" and "receive" configuration parameters.
+  */
+ public class TransferConfig {
++	/** Key for {@link Config#get(SectionParser)}. */
++	public static final Config.SectionParser<TransferConfig> KEY = new SectionParser<TransferConfig>() {
++		public TransferConfig parse(final Config cfg) {
++			return new TransferConfig(cfg);
++		}
++	};
++
+ 	private final boolean fsckObjects;
+ 
+-	TransferConfig(final RepositoryConfig rc) {
++	private TransferConfig(final Config rc) {
+ 		fsckObjects = rc.getBoolean("receive", "fsckobjects", false);
+ 	}
+ 
 -- 
 1.6.4.rc2.216.g769fa
