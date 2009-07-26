@@ -1,128 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] New whitespace checking category 'trailing-blank-line'
-Date: Sun, 26 Jul 2009 14:36:55 -0700
-Message-ID: <7vbpn7p1mw.fsf@alter.siamese.dyndns.org>
-References: <200907261145.38449.bruno@clisp.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Sun Jul 26 23:37:17 2009
+From: Jason Holden <jason.k.holden@gmail.com>
+Subject: [PATCH] subtree merge strategy fails if branch.master.rebase=true
+Date: Sun, 26 Jul 2009 17:47:45 -0400
+Message-ID: <1248644865-1998-1-git-send-email-jason.k.holden@gmail.com>
+Cc: Jason Holden <jason.k.holden@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 26 23:48:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVBP9-0007zi-RF
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 23:37:16 +0200
+	id 1MVBZm-0002gU-6t
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 23:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992AbZGZVhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 17:37:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbZGZVhG
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 17:37:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52509 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753976AbZGZVhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 17:37:05 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A63E312BF2;
-	Sun, 26 Jul 2009 17:37:02 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5023212BF1; Sun, 26 Jul 2009
- 17:36:56 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 74EC35E2-7A2C-11DE-A7C5-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754018AbZGZVsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 17:48:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754016AbZGZVsF
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 17:48:05 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:17016 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754009AbZGZVsD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 17:48:03 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1446892qwh.37
+        for <git@vger.kernel.org>; Sun, 26 Jul 2009 14:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bwoOZ2n8opoTzFEer0iIra9pgoxw3pa1Hm7OUdc0kNs=;
+        b=M0vHuSqTdfA9ZkgZKUON7eJSmNrA4dpSuVjlBVrOMv0V1E+HZsXeVFZoEEmxJvoIiJ
+         g5q5nNeUq0BcPqtGxACycCCkNbk6NWPcgJqUS9x6NQBasqLs1bJfA9t80uy1QJeARG3v
+         T+0RSjgnZV4U6zvmPzO51/678G/0TWT4LKzmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=l0dmPU4iy3qOsZq8bLM/tPbn4wgwKn9TeKtR5uPEMukqM3Qai84RTEXh5hpDxcroDi
+         AVM6XTAD1NFGbP1YivOkYCeMdNRz9xRUa8G2BSWptLACIZEaAxE+Yb2qlnp0jIyKh0SM
+         5GhVlQUXMx1J321lwIT6dwwlgZc1tJ3pERy/o=
+Received: by 10.224.37.140 with SMTP id x12mr5385221qad.235.1248644883066;
+        Sun, 26 Jul 2009 14:48:03 -0700 (PDT)
+Received: from localhost (c-75-69-254-77.hsd1.nh.comcast.net [75.69.254.77])
+        by mx.google.com with ESMTPS id 6sm3346326qwk.34.2009.07.26.14.48.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 26 Jul 2009 14:48:02 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.3.497.g2e2f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124139>
 
-Bruno Haible <bruno@clisp.org> writes:
+Update documentation so that users pass --no-rebase to the git-pull
+command when using the subtree merge strategy.  Without it, if a user
+has specified in their config file that branch.master.rebase=true,
+the pull will fail with the following error:
 
-> In some GNU projects, there are file types for which trailing spaces in a line
-> ...
-> Currently the user has to turn off the 'trailing-space' whitespace attribute
-> in order for 'git diff --check' to not complain about such files. This has
-> the drawback that trailing spaces are not detected.
+>From /disk2/git_projects/git/Bproject
+ * branch            master     -> FETCH_HEAD
+First, rewinding head to replay your work on top of it...
+fatal: Could not parse object 'c54bafddcae4679e8a675713251ace678f962aa0^'
+Unknown exit code (128) from command: git-merge-subtree c54bafddcae4679e8a675713251ace678f962aa0^ -- HEAD c54bafddcae4679e8a675713251ace678f962aa0
 
-Very good problem description.  Thanks.
+The hash value referenced above is the first commit made to the main
+repository (not the Bproject subtree).
+---
+ Documentation/howto/using-merge-subtree.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> Here is a proposed patch, to allow people to turn the check against trailing
-> blank lines independently from the whitespace-in-a-line checking. The default
-> behavior is not changed.
-
-The "default" for people who do not have configuration may not change, but
-people who explicitly asked git to check the trailing blank lines by
-specifying "whitespace=trail" attribute, and have been relying on it, will
-now be unprotected. Such a regression/incompatibility should be noted here.
-
-Better yet would be not to introduce such a regression, of course.
-
-> From: Bruno Haible <bruno@clisp.org>
-> Date: Sun, 26 Jul 2009 11:08:41 +0200
-> Subject: [PATCH] New whitespace checking category 'trailing-blank-line'.
-
-Have these three lines _before_ the proposed commit log message above, not
-after it, if you want to set these differently from what your MUA gives to
-your message; in this particular case I do not think they are necessary,
-though.
-
-> ---
-
-And please sign-off your patch before the three-dash line.
-
-> diff --git a/Documentation/RelNotes-1.6.4.txt b/Documentation/RelNotes-1.6.4.txt
-> index b3c0346..9ebcc3a 100644
-> --- a/Documentation/RelNotes-1.6.4.txt
-> +++ b/Documentation/RelNotes-1.6.4.txt
-> @@ -64,6 +64,12 @@ Updates since v1.6.3
-> ...
-> + * In the configuration variable core.whitespace and in a 'whitespace'
-> +   attribute specified in .git/info/attributes or .gitattributes, a new
-> +   category of whitespace checking is recognized: "trailing-blank-line".
-> +   Previously this checking was part of "trailing-space"; now it can be
-> +   turned on or off separately.
-> +
-
-I appreciate a hunk to update the release notes like this (the series
-definitely is a post 1.6.4 material, though).
-
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 6857d2f..e9221ba 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -411,6 +411,8 @@ core.whitespace::
->    part of the line terminator, i.e. with it, `trailing-space`
->    does not trigger if the character before such a carriage-return
->    is not a whitespace (not enabled by default).
-> +* `trailing-blank-line` treats blank lines at the end of the file as
-> +  an error (enabled by default).
-
-I suspect this should be done in a similar way as cr-at-eol.  Keep the
-behaviour for people who says trailing-space unchanged, but the error
-check can be loosened if you include the new string in the config or
-attribute value.
-
-And name it not to begin with "trail", e.g. "blank-lines-at-eof", to avoid
-breaking people who have abbrevated "trailing-space" to "trail" in their
-config.
-
-Another idea would be to:
-
-    - introduce two new settings:
-
-        blank-at-eol		: SP/HT at EOL is an error
-        empty-lines-at-eof	: empty lines at the end of file is an error
-
-    - make existing "trailing-space" a mere short-hand for "blank-at-eol"
-      and "empty-lines-at-eof".
-
-I think the way we handled cr-at-eol was suboptimal. We should be able to
-link this to crlf attribute (and core.autocrlf configuration) and pretend
-as if cr-at-eol was given if a file is subject to the crlf conversion
-(iow,. cr-at-eol should be deprecated/removed as a mistake).
-
-The "git diff" part looked reasonable from a quick glance, but I do not
-think I saw anything that affects "git apply --whitespace=fix" in the
-patch.
+diff --git a/Documentation/howto/using-merge-subtree.txt b/Documentation/howto/using-merge-subtree.txt
+index 0953a50..3f5972e 100644
+--- a/Documentation/howto/using-merge-subtree.txt
++++ b/Documentation/howto/using-merge-subtree.txt
+@@ -37,7 +37,7 @@ $ git merge -s ours --no-commit Bproject/master <2>
+ $ git read-tree --prefix=dir-B/ -u Bproject/master <3>
+ $ git commit -m "Merge B project as our subdirectory" <4>
+ 
+-$ git pull -s subtree Bproject master <5>
++$ git pull --no-rebase -s subtree Bproject master <5>
+ ----------------
+ <1> name the other project "Bproject", and fetch.
+ <2> prepare for the later step to record the result as a merge.
+-- 
+1.6.3.3.497.g2e2f
