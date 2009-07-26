@@ -1,91 +1,86 @@
-From: Dan Savilonis <djs@n-cube.org>
-Subject: Re: git format-patch from date never set
-Date: Sat, 25 Jul 2009 20:06:11 -0400
-Message-ID: <325c62f60907251706i4d9bf656n8e094a22a8736924@mail.gmail.com>
-References: <325c62f60907251439n6f3f661dhf0e76a74ce1eaec8@mail.gmail.com>
-	 <81b0412b0907251531u7566813fr10bdd70187e9aca6@mail.gmail.com>
-	 <325c62f60907251549o27ebc8f2gcd1d728adb662ffd@mail.gmail.com>
-	 <7v7hxwtlf7.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 02:06:58 2009
+From: Michael Bergin <michaeljbergin@gmail.com>
+Subject: Re: Git Option/Subcommand Processing Library?
+Date: Sat, 25 Jul 2009 20:38:48 -0400
+Message-ID: <D48B952D-501B-4B90-A2B7-00DF5F21D3A4@gmail.com>
+References: <231BD892-07B1-452C-A224-047829E21991@gmail.com> <alpine.DEB.1.00.0907251830420.8306@pacific.mpi-cbg.de> <D30CE3A7-176D-4132-88A6-23C46A4EA185@gmail.com> <alpine.DEB.1.00.0907260117540.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 26 02:39:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUrGR-00050L-Em
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 02:06:55 +0200
+	id 1MUrlk-0004Pn-KG
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 02:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752976AbZGZAGN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Jul 2009 20:06:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbZGZAGN
-	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 20:06:13 -0400
-Received: from mail-yx0-f198.google.com ([209.85.210.198]:32983 "EHLO
-	mail-yx0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752886AbZGZAGM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Jul 2009 20:06:12 -0400
-Received: by yxe36 with SMTP id 36so1376338yxe.33
-        for <git@vger.kernel.org>; Sat, 25 Jul 2009 17:06:12 -0700 (PDT)
+	id S1752525AbZGZAi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Jul 2009 20:38:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751533AbZGZAi6
+	(ORCPT <rfc822;git-outgoing>); Sat, 25 Jul 2009 20:38:58 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:36603 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751444AbZGZAi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Jul 2009 20:38:58 -0400
+Received: by qyk34 with SMTP id 34so1190382qyk.33
+        for <git@vger.kernel.org>; Sat, 25 Jul 2009 17:38:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Zo7hhy5jHbKxa1uijeIzrfPuiRRAyuHW+LQPUUyqxRI=;
-        b=MlMaWLBQERoTBH37oLqt8yJUBe8GVDwPf0rkrphHtgTOsnY+r2TWaw/RMCr940swd8
-         6ZOlsnGu410a9HMPzMTJmqwWQkS2kw4M7n1Uwfg1id65Uf/v/Y/WAthAN3CnHWmpAKLW
-         FiaW0KTgeW5i64JzNnJqOLsRYksNr7h+gRFMI=
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=7InTpNlkw47ZC5AfMlxvuTAnzi3YRd4xPF62Z6Uag9I=;
+        b=PdjsgxxAhqL27uifzTV7/TEuUcb0B3Wk3Yz97n/GwNR4YdgSH6KE04icc5OqYOfsky
+         PKChq13YJnZYCzAdgq47LRWnSUtjpMnlUW8lcvBjrs1SetOoJ1PJ9Cvkwhl24uTOysrZ
+         fTJG6XcDHApfOD53Zx9MVPcWGBJ5P7v9HTilE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=FzIJCh0FnVAxGpxlYCIefE7GupvMwJDmUPdaQ7xIjn9KIEWt+8S8i6QXiTqTkApZYb
-         ypvV+Sp5rZK36RDHcKCHKtT5ovRCVumbICJiFtE3814VofurCckf0hziZGmCQ+AAcdRl
-         9YKhBktF70ZCk+fYwNNVJXj0NvtmHXakcKgoU=
-Received: by 10.231.14.67 with SMTP id f3mr1692603iba.36.1248566771974; Sat, 
-	25 Jul 2009 17:06:11 -0700 (PDT)
-In-Reply-To: <7v7hxwtlf7.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: ed91e91a6b928c37
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=JgZbnytPa2H06lOb5W8un0KdXZBtl2X54b9T1QXc5R+fFOOQHSFJttvxCY1JpxTwcc
+         D9djhZhxvKjHl22EKoIiEmd8LPsoDUCeEziUNXOTI7nnDPN4zrszfty85ZWpRGu5RlnC
+         oX68P+8sP+vqP8b1TePPnGJA0/BOZ88xZUAT8=
+Received: by 10.224.37.66 with SMTP id w2mr4720027qad.333.1248568738010;
+        Sat, 25 Jul 2009 17:38:58 -0700 (PDT)
+Received: from ?166.203.127.199? ([166.203.127.199])
+        by mx.google.com with ESMTPS id 26sm13203qwa.39.2009.07.25.17.38.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 25 Jul 2009 17:38:57 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0907260117540.8306@pacific.mpi-cbg.de>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124101>
 
-Okay, I can see that. I suppose I don't really have an argument in
-favor of using the real date, other than aesthetics.
+I really appreciate your help.  I'm going to do this regardless of  
+license so I'll ask about that when I have a finished project.  Let me  
+know if you have any suggestions for features, etc.  Thanks again.
 
---
-Dan
+- Mike Bergin
 
-On Sat, Jul 25, 2009 at 7:03 PM, Junio C Hamano<gitster@pobox.com> wrot=
-e:
-> Dan Savilonis <djs@n-cube.org> writes:
+On Jul 25, 2009, at 7:18 PM, Johannes Schindelin wrote:
+
+> Hi,
 >
->> On Sat, Jul 25, 2009 at 6:31 PM, Alex Riesen<raa.lkml@gmail.com> wro=
-te:
->>> Neither. This is not a date, but a part of "loosely defined" mbox f=
-ormat.
->>>
->>
->> In the examples of mbox format I have found, the date in the From:
->> line is generally the same as in the Date: line, albeit in a more
->> ambiguous format. Further, the the git code treats it as a date and
->> attempts to set it. It remains at the default date only because
->> git_committer_info() is called without GIT_COMMITTER_DATE set.
->>
->> So is the code misleading? Was it designed to just meet the minimal
->> requirement of having a date-like string to comform to the mbox
->> format? What's the disadvantage to using the real commit date?
+> On Sat, 25 Jul 2009, Michael Bergin wrote:
 >
-> Having it as a fixed date-looking string was to help /etc/magic entry
-> people may want to invent to detect format-patch output.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>> Thanks for the pointers.  I also want to create a generic library for
+>> command facades like git.  For that I will probably use git.c as a  
+>> guide
+>> but to make it generic I would need to add/rearrange code.  GPLv2  
+>> works
+>> fine for my purposes.  I hope this isn't an offensive question or
+>> anything but would releasing just the library under LGPL be  
+>> considered?
 >
+> You need to ask all authors of all the code you reuse.  I, for one,  
+> have
+> no objections.
+>
+> Ciao,
+> Dscho
