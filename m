@@ -1,69 +1,59 @@
-From: Heikki Orsila <heikki.orsila@iki.fi>
-Subject: [PATCH] Fix documentation: "fmt-merge-msg" and "mv" are no longer scripts
-Date: Sun, 26 Jul 2009 19:08:29 +0300
-Message-ID: <20090726160829.GA22834@zakalwe.fi>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make git config fail on variables with no section, as
+ documented
+Date: Sun, 26 Jul 2009 18:49:28 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907261849110.8306@pacific.mpi-cbg.de>
+References: <1248474081-sup-2762@utwig> <1248625102-472-1-git-send-email-alex@chmrr.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 26 18:30:14 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alex Vandiver <alex@chmrr.net>
+X-From: git-owner@vger.kernel.org Sun Jul 26 18:49:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MV6c0-0005zN-GI
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 18:30:12 +0200
+	id 1MV6uk-0005KC-3N
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 18:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804AbZGZQaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 12:30:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbZGZQaB
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 12:30:01 -0400
-Received: from zakalwe.fi ([80.83.5.154]:36342 "EHLO zakalwe.fi"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753801AbZGZQaB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 12:30:01 -0400
-X-Greylist: delayed 1291 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Jul 2009 12:30:00 EDT
-Received: by zakalwe.fi (Postfix, from userid 1023)
-	id 61C4E2C328; Sun, 26 Jul 2009 19:08:29 +0300 (EEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1753856AbZGZQtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 12:49:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753852AbZGZQtY
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 12:49:24 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45164 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753851AbZGZQtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 12:49:24 -0400
+Received: (qmail invoked by alias); 26 Jul 2009 16:49:23 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 26 Jul 2009 18:49:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ybMMaTgayaDlc5dXJZBmWQ1qgMEOQ+lCnOQtS8i
+	rebKTXLDtMqIXB
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1248625102-472-1-git-send-email-alex@chmrr.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124129>
 
-Signed-off-by: Heikki Orsila <heikki.orsila@iki.fi>
----
- Documentation/git-fmt-merge-msg.txt |    2 +-
- Documentation/git-mv.txt            |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Hi,
 
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index 1c24796..0067805 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -18,7 +18,7 @@ Takes the list of merged objects on stdin and produces a suitable
- commit message to be used for the merge commit, usually to be
- passed as the '<merge-message>' argument of 'git-merge'.
- 
--This script is intended mostly for internal use by scripts
-+This command is intended mostly for internal use by scripts
- automatically invoking 'git-merge'.
- 
- OPTIONS
-diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
-index 9c56602..63b4365 100644
---- a/Documentation/git-mv.txt
-+++ b/Documentation/git-mv.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--This script is used to move or rename a file, directory or symlink.
-+Move or rename a file, directory or symlink.
- 
-  git mv [-f] [-n] <source> <destination>
-  git mv [-f] [-n] [-k] <source> ... <destination directory>
--- 
-1.6.1.2
+On Sun, 26 Jul 2009, Alex Vandiver wrote:
+
+> Documentation/config.txt claims:
+> 
+>     Each variable must belong to some section, which means that there
+>     must be a section header before the first setting of a variable.
+> 
+> However, the parsing code did not enforce this.  This change makes it
+> a syntax error to defined a variable before the first section header.
+
+Is there any downside in allowing this?
+
+Ciao,
+Dscho
