@@ -1,66 +1,126 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: What's cooking in git.git (Jul 2009, #02; Sun, 26)
-Date: Sun, 26 Jul 2009 16:08:08 +0200
-Message-ID: <4A6C6348.90607@alum.mit.edu>
-References: <7viqhfrfu5.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
+Date: Sun, 26 Jul 2009 11:39:50 -0400
+Message-ID: <20090726153950.GA16780@sigill.intra.peff.net>
+References: <20090723074104.GI4750@laphroaig.corp>
+ <7veis7yxwx.fsf@alter.siamese.dyndns.org>
+ <20090724193207.6117@nanako3.lavabit.com>
+ <7v8wienk07.fsf@alter.siamese.dyndns.org>
+ <20090725145237.GB18545@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 16:11:08 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Sun Jul 26 17:40:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MV4RP-0002H5-Kh
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 16:11:08 +0200
+	id 1MV5pW-0005CS-Pg
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 17:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753481AbZGZOIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 10:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbZGZOIO
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 10:08:14 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:59090 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753478AbZGZOIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 10:08:14 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.129] (p4FC1C88A.dip.t-dialin.net [79.193.200.138])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n6QE89Kx001346
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sun, 26 Jul 2009 16:08:10 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.22) Gecko/20090608 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
-In-Reply-To: <7viqhfrfu5.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1751459AbZGZPjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 11:39:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbZGZPjx
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 11:39:53 -0400
+Received: from peff.net ([208.65.91.99]:39620 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751059AbZGZPjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 11:39:52 -0400
+Received: (qmail 6024 invoked by uid 107); 26 Jul 2009 15:41:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 26 Jul 2009 11:41:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Jul 2009 11:39:50 -0400
+Content-Disposition: inline
+In-Reply-To: <20090725145237.GB18545@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124123>
 
-Junio C Hamano wrote:
-> * hv/cvsps-tests (Sun Apr 5 01:40:50 2009 -0700) 8 commits
->  - t/t9600: remove exit after test_done
->  - cvsimport: extend testcase about patchset order to contain
->    branches
->  - cvsimport: add test illustrating a bug in cvsps
->  - Add a test of "git cvsimport"'s handling of tags and branches
->  - Add some tests of git-cvsimport's handling of vendor branches
->  - Test contents of entire cvsimported "master" tree contents
->  - Use CVS's -f option if available (ignore user's ~/.cvsrc file)
->  - Start a library for cvsimport-related tests
+On Sat, Jul 25, 2009 at 04:52:37PM +0200, Pierre Habouzit wrote:
 
-What needs to happen to get these changes moving again?  The last
-relevant comment I can find from you about this subject is from 2009-02-22:
+> FWIW it's what I was doing so far, and it's not very efficient for many
+> patterns, you talked about the bit where you want to keep some of the
+> debug, for this one I used to do that:
+> 
+> while I have meaning full commits to do:
+>     git add -p; commit;
+> git add -p the things I want to trash and commit
+> git stash
+> git reset --hard HEAD~1
+> git stash apply
+> 
+> That sucks.
+> [...]
+> For all those reasons I believe it's a good thing to be able to have
+> something to remove hunks from the working-directory. Jeff's suggestions
+> to move them to some stash is the best suggestion so far, and is safe.
 
-> Thanks, both.  I generally am not very fond of adding tests without
-> intention to look into fixes, but if they make outstanding bugs more
-> visible, they may have the effect of shaming the original authors
-> badly enough to step in in the effort of fixing them  ;-)
+Here's kind of a weird idea I've been considering. Feel free to write it
+off as insane ranting.
 
-No knight in shining armor has shown up to fix these bugs, but there is
-still value to documenting them in the form of unit tests.
+My two complaints about using stash for separating changes are:
 
-Michael
+  - it lacks the tool support for splitting changes that we have for
+    making commits (like "add -p"), and it lacks the ability to build up
+    a set of changes over multiple commands (like we can do for commits)
+
+  - it works as a single destination. You stash and delete a change from
+    the working tree, or you leave it. It's hard to say "there are 3
+    different types of change here" and sort them all at once.
+
+My idea is to instead have a general set of "registers" that contain
+states, each of which is basically an index. You can copy state from
+register to register, from working tree to register, or from register to
+register. You can also do any of those moves by looking at differences
+between two states and saying "move this change" (i.e., like what "add
+-p" does for the regular index).
+
+So one way of splitting changes would be to say:
+
+  1. Set registers 'a' and 'b' to the same state as HEAD
+
+  2. Pick changes from the working tree to go to 'a'
+
+  3. Pick changes from the working tree to go to 'b'
+
+  4. Commit 'a' on top of HEAD
+
+  5. Commit 'b' on top of new HEAD (and this would probably actually
+     mean the changes from 'b' to the old HEAD, not setting the new HEAD
+     state to what's in 'b').
+
+So it's sort of a generalized form of the index, where you have N "index
+registers" and you sort your changes into them. And during steps 2 and
+3, you could also make more changes, pick them out, etc.
+
+The workflow you want maps into that pretty simply: you would sort your
+changes into "stuff you want to commit" and "stuff that is debugging
+cruft". And then you would just throw away the latter register (or use a
+special "trash" register).
+
+And the workflow I described is "pick the changes for 'a', then for
+'a'". But there's no reason you couldn't go through the changes, sorting
+each into "put this one into 'a', and this one into 'b'". Which is what
+you asked for.
+
+Is this really that different from what you proposed? No, I don't really
+think so in terms of implementation, but it is really about a different
+mental model:
+
+  1. You never delete things. You only copy or move them into registers.
+
+  2. The interface should be the same whether you are moving between
+     registers, or to/from the working tree.
+
+  3. It extends naturally to multiple registers.
+
+Anyway, just some stray thoughts. No code, so feel free to ignore. ;)
+
+-Peff
