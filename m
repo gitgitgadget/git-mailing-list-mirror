@@ -1,70 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git config fail on variables with no section, as
- documented
-Date: Sun, 26 Jul 2009 21:48:20 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907262146530.8306@pacific.mpi-cbg.de>
-References: <1248474081-sup-2762@utwig> <1248625102-472-1-git-send-email-alex@chmrr.net> <alpine.DEB.1.00.0907261849110.8306@pacific.mpi-cbg.de> <1248636518-sup-7499@utwig>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: [PATCH] Make git config fail on variables with no section, as documented
+Date: Sun, 26 Jul 2009 16:24:37 -0400
+Message-ID: <1248637797-sup-6595@utwig>
+References: <1248474081-sup-2762@utwig> <1248625102-472-1-git-send-email-alex@chmrr.net> <alpine.DEB.1.00.0907261849110.8306@pacific.mpi-cbg.de> <1248636518-sup-7499@utwig> <alpine.DEB.1.00.0907262146530.8306@pacific.mpi-cbg.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: git <git@vger.kernel.org>
-To: Alex Vandiver <alex@chmrr.net>
-X-From: git-owner@vger.kernel.org Sun Jul 26 21:48:24 2009
+To: Johannes Schindelin <johannes.schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Jul 26 22:24:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MV9hn-0006xI-ST
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 21:48:24 +0200
+	id 1MVAH1-0002WF-27
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 22:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040AbZGZTsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 15:48:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753011AbZGZTsQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 15:48:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60987 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752917AbZGZTsP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 15:48:15 -0400
-Received: (qmail invoked by alias); 26 Jul 2009 19:48:14 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp034) with SMTP; 26 Jul 2009 21:48:14 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Xa1tUdT1Xf8cC+OfKjB/4gEEpw8J6ER2RR2AAsC
-	IVZsnL5egKihLT
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1248636518-sup-7499@utwig>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1753218AbZGZUYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 16:24:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753207AbZGZUYh
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 16:24:37 -0400
+Received: from chmrr.net ([209.67.253.66]:57776 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752917AbZGZUYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 16:24:37 -0400
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.69)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1MVAGr-0005y9-Lu; Sun, 26 Jul 2009 16:24:37 -0400
+In-reply-to: <alpine.DEB.1.00.0907262146530.8306@pacific.mpi-cbg.de>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124137>
 
-Hi,
+At Sun Jul 26 15:48:20 -0400 2009, Johannes Schindelin wrote:
+> That, together with the fact that "git config -f <file>" was meant 
+> _explicitely_ to allow 3rd party porcelains having their own config files 
+> without having to implement their own "git config" lets me suspect that 
+> we'd rather want the current behavior.
 
-On Sun, 26 Jul 2009, Alex Vandiver wrote:
+*shrug* Note I'm not wholly convinced of the rationale myself -- I'm
+merely trying to reconcile the documentation and reality.  I'll also
+note that you can't, at current, set or unset such values from the
+command-line.
 
-> At Sun Jul 26 12:49:28 -0400 2009, Johannes Schindelin wrote:
-> > Is there any downside in allowing this?
-> 
-> Not explicitly.  However, there are no legal current uses of it, and
-> allowing it might encourage extensions to use the top-level config
-> namespace.
+Looking back at the blame for the documentation, it looks like e136f33
+in 2007 is what added the claim that section-less variables weren't
+acceptable.  The `git repo-config` of the time parsed them just fine,
+however.
 
-So?
-
-> It also has the odd property that it _must_ be at the top of a 
-> configuration file -- unlike all other configuration options, you can 
-> never return to the section to add more variable definitions later.
-
-Yes, that is a special property that you might actually want in some 
-contexts.
-
-That, together with the fact that "git config -f <file>" was meant 
-_explicitely_ to allow 3rd party porcelains having their own config files 
-without having to implement their own "git config" lets me suspect that 
-we'd rather want the current behavior.
-
-Ciao,
-Dscho
+If you wish to correct the documentation instead, I can send in a doc
+patch.  Fixing --set and --unset to work with section-less variables
+will take a bit more work, however.
+ - Alex
+-- 
+Networking -- only one letter away from not working
