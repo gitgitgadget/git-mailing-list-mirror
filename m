@@ -1,153 +1,92 @@
-From: Bruno Haible <bruno@clisp.org>
-Subject: [PATCH] New whitespace checking category 'trailing-blank-line'
-Date: Sun, 26 Jul 2009 11:45:37 +0200
-Message-ID: <200907261145.38449.bruno@clisp.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] t9143: do not fail if Compress::Zlib is missing
+Date: Sun, 26 Jul 2009 03:01:52 -0700
+Message-ID: <20090726100152.GA25775@dcvr.yhbt.net>
+References: <7vd47r298e.fsf@alter.siamese.dyndns.org> <20090724093847.GA20338@dcvr.yhbt.net> <7vk51ykm42.fsf@alter.siamese.dyndns.org> <20090725103821.GA13534@dcvr.yhbt.net> <20090725111044.GA7969@dcvr.yhbt.net> <7v3a8jsvyu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 26 11:46:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Robert Allan Zeh <robert.a.zeh@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 26 12:06:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MV0J3-0002HI-U2
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 11:46:14 +0200
+	id 1MV0cE-0007Z6-KU
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 12:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332AbZGZJqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 05:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753326AbZGZJqE
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 05:46:04 -0400
-Received: from mo-p00-ob.rzone.de ([81.169.146.162]:53205 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753324AbZGZJqD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Jul 2009 05:46:03 -0400
-X-RZG-AUTH: :Ln4Re0+Ic/6oZXR1YgKryK8brksyK8dozXDwHXjf9hj/zDNRbP8446gMQQ==
-X-RZG-CLASS-ID: mo00
-Received: from linuix.haible.de
-	(dslb-088-068-059-160.pools.arcor-ip.net [88.68.59.160])
-	by post.strato.de (mrclete mo24) (RZmta 19.1)
-	with ESMTP id v064a6l6Q9cGZE ; Sun, 26 Jul 2009 11:45:59 +0200 (MEST)
-User-Agent: KMail/1.9.9
+	id S1752623AbZGZKBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 06:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbZGZKBx
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 06:01:53 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55400 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751415AbZGZKBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 06:01:52 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 0D3C71F5F3;
+	Sun, 26 Jul 2009 10:01:53 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <7v3a8jsvyu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124114>
 
-Hi,
+"git svn gc" will not compress unhandled.log files if
+Compress::Zlib is missing.  However, leftover index files should
+always be removed, so add a test for this behavior as well.
 
-In some GNU projects, there are file types for which trailing spaces in a line
-are undesired, but for which trailing blank lines are normal. Such file types
-are:
-  - ChangeLog files,
-  - modules descriptions in Gnulib,
-  - also the README files in 20% of the projects.
-
-Currently the user has to turn off the 'trailing-space' whitespace attribute
-in order for 'git diff --check' to not complain about such files. This has
-the drawback that trailing spaces are not detected.
-
-Here is a proposed patch, to allow people to turn the check against trailing
-blank lines independently from the whitespace-in-a-line checking. The default
-behavior is not changed.
-
-
->From 049db23a38c92c734aae13788a5a9478ed587cfd Mon Sep 17 00:00:00 2001
-From: Bruno Haible <bruno@clisp.org>
-Date: Sun, 26 Jul 2009 11:08:41 +0200
-Subject: [PATCH] New whitespace checking category 'trailing-blank-line'.
-
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
- Documentation/RelNotes-1.6.4.txt |    6 ++++++
- Documentation/config.txt         |    2 ++
- cache.h                          |    3 ++-
- diff.c                           |    2 +-
- ws.c                             |    6 ++++++
- 5 files changed, 17 insertions(+), 2 deletions(-)
+  Junio C Hamano <gitster@pobox.com> wrote:
+  > Eric Wong <normalperson@yhbt.net> writes:
+  > 
+  > >   # I thought I had pushed this out earlier:
+  > >   Robert Allan Zeh (1):
+  > >         git svn: add gc command
+  > 
+  > Note that with this commit, the test fails needlessly if Compress::Zlib is
+  > not found, even though otherwise "svn gc" succeeds (for some definition of
+  > "success")..
 
-diff --git a/Documentation/RelNotes-1.6.4.txt b/Documentation/RelNotes-1.6.4.txt
-index b3c0346..9ebcc3a 100644
---- a/Documentation/RelNotes-1.6.4.txt
-+++ b/Documentation/RelNotes-1.6.4.txt
-@@ -64,6 +64,12 @@ Updates since v1.6.3
-    to avoid testing a commit that is too close to a commit that is
-    already known to be untestable.
+  Oops, this test completely slipped my mind even though I caught the
+  issue in the original code.  Pushed out to git://git.bogomips.org/git-svn
+
+ t/t9143-git-svn-gc.sh |   15 ++++++++++++---
+ 1 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/t/t9143-git-svn-gc.sh b/t/t9143-git-svn-gc.sh
+index aaa3af0..f2ba2d1 100755
+--- a/t/t9143-git-svn-gc.sh
++++ b/t/t9143-git-svn-gc.sh
+@@ -31,11 +31,20 @@ test_expect_success 'make backup copy of unhandled.log' '
+ 	 cp .git/svn/git-svn/unhandled.log tmp
+ 	'
  
-+ * In the configuration variable core.whitespace and in a 'whitespace'
-+   attribute specified in .git/info/attributes or .gitattributes, a new
-+   category of whitespace checking is recognized: "trailing-blank-line".
-+   Previously this checking was part of "trailing-space"; now it can be
-+   turned on or off separately.
++test_expect_success 'create leftover index' '> .git/svn/git-svn/index'
 +
-  * "git cvsexportcommit" learned -k option to stop CVS keywords expansion
+ test_expect_success 'git svn gc runs' 'git svn gc'
  
-  * "git grep" learned -p option to show the location of the match using the
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6857d2f..e9221ba 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -411,6 +411,8 @@ core.whitespace::
-   part of the line terminator, i.e. with it, `trailing-space`
-   does not trigger if the character before such a carriage-return
-   is not a whitespace (not enabled by default).
-+* `trailing-blank-line` treats blank lines at the end of the file as
-+  an error (enabled by default).
+-test_expect_success 'git svn gc produces a valid gzip file' '
+-	 gunzip .git/svn/git-svn/unhandled.log.gz
+-	'
++test_expect_success 'git svn index removed' '! test -f .git/svn/git-svn/index'
++
++if perl -MCompress::Zlib -e 0 2>/dev/null
++then
++	test_expect_success 'git svn gc produces a valid gzip file' '
++		 gunzip .git/svn/git-svn/unhandled.log.gz
++		'
++else
++	say "Perl Compress::Zlib unavailable, skipping gunzip test"
++fi
  
- core.fsyncobjectfiles::
- 	This boolean will enable 'fsync()' when writing object files.
-diff --git a/cache.h b/cache.h
-index e6c7f33..24ae981 100644
---- a/cache.h
-+++ b/cache.h
-@@ -968,7 +968,8 @@ void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, i
- #define WS_SPACE_BEFORE_TAB	02
- #define WS_INDENT_WITH_NON_TAB	04
- #define WS_CR_AT_EOL           010
--#define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB)
-+#define WS_TRAILING_BLANK_LINE 020
-+#define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|WS_TRAILING_BLANK_LINE)
- extern unsigned whitespace_rule_cfg;
- extern unsigned whitespace_rule(const char *);
- extern unsigned parse_whitespace_rule(const char *);
-diff --git a/diff.c b/diff.c
-index cd35e0c..6d1b07b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1704,7 +1704,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 		xdi_diff_outf(&mf1, &mf2, checkdiff_consume, &data,
- 			      &xpp, &xecfg, &ecb);
- 
--		if ((data.ws_rule & WS_TRAILING_SPACE) &&
-+		if ((data.ws_rule & WS_TRAILING_BLANK_LINE) &&
- 		    data.trailing_blanks_start) {
- 			fprintf(o->file, "%s:%d: ends with blank lines.\n",
- 				data.filename, data.trailing_blanks_start);
-diff --git a/ws.c b/ws.c
-index 59d0883..5f5a930 100644
---- a/ws.c
-+++ b/ws.c
-@@ -16,6 +16,7 @@ static struct whitespace_rule {
- 	{ "space-before-tab", WS_SPACE_BEFORE_TAB, 0 },
- 	{ "indent-with-non-tab", WS_INDENT_WITH_NON_TAB, 0 },
- 	{ "cr-at-eol", WS_CR_AT_EOL, 1 },
-+	{ "trailing-blank-line", WS_TRAILING_BLANK_LINE, 0 },
- };
- 
- unsigned parse_whitespace_rule(const char *string)
-@@ -114,6 +115,11 @@ char *whitespace_error_string(unsigned ws)
- 			strbuf_addstr(&err, ", ");
- 		strbuf_addstr(&err, "indent with spaces");
- 	}
-+	if (ws & WS_TRAILING_BLANK_LINE) {
-+		if (err.len)
-+			strbuf_addstr(&err, ", ");
-+		strbuf_addstr(&err, "trailing blank line");
-+	}
- 	return strbuf_detach(&err, NULL);
- }
- 
+ test_expect_success 'git svn gc does not change unhandled.log files' '
+ 	 test_cmp .git/svn/git-svn/unhandled.log tmp/unhandled.log
 -- 
-1.6.3.2
+Eric Wong
