@@ -1,79 +1,55 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Performance issue of 'git branch'
-Date: Sun, 26 Jul 2009 09:54:55 +0200
-Message-ID: <20090726075455.GA22525@glandium.org>
-References: <20090723195548.GA28494@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain>
- <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain>
- <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
- <20090724234648.GA4616@Pilar.aei.mpg.de>
- <20090725004122.GA28477@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907251046140.3960@localhost.localdomain>
- <20090725215739.d074e947.tihirvon@gmail.com>
- <20090725203130.GB1640@glandium.org>
- <alpine.LFD.2.01.0907251353410.3960@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] git svn: the branch command no longer needs the full
+ path
+Date: Sun, 26 Jul 2009 01:13:29 -0700
+Message-ID: <7v3a8jsvyu.fsf@alter.siamese.dyndns.org>
+References: <7vd47r298e.fsf@alter.siamese.dyndns.org>
+ <20090724093847.GA20338@dcvr.yhbt.net>
+ <7vk51ykm42.fsf@alter.siamese.dyndns.org>
+ <20090725103821.GA13534@dcvr.yhbt.net> <20090725111044.GA7969@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org,
-	"Carlos R. Mafra" <crmafra2@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jul 26 09:55:40 2009
+Cc: git@vger.kernel.org, Robert Allan Zeh <robert.a.zeh@gmail.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 26 10:13:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUya3-0004tx-Pj
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 09:55:40 +0200
+	id 1MUyre-0001Nh-VA
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 10:13:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbZGZHzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 03:55:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751858AbZGZHzB
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 03:55:01 -0400
-Received: from vuizook.err.no ([85.19.221.46]:57080 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751059AbZGZHzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 03:55:00 -0400
-Received: from [194.224.98.149] (helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1MUyZI-00072E-CN; Sun, 26 Jul 2009 09:54:55 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1MUyZL-0007gh-Ed; Sun, 26 Jul 2009 09:54:55 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.01.0907251353410.3960@localhost.localdomain>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_NONE autolearn=disabled version=3.2.4
+	id S1751966AbZGZINm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 04:13:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbZGZINm
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 04:13:42 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44465 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459AbZGZINl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 04:13:41 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 1B9DA14F69;
+	Sun, 26 Jul 2009 04:13:40 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 7789A14F68; Sun,
+ 26 Jul 2009 04:13:32 -0400 (EDT)
+In-Reply-To: <20090725111044.GA7969@dcvr.yhbt.net> (Eric Wong's message of
+ "Sat\, 25 Jul 2009 04\:10\:44 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 39F74294-79BC-11DE-B84B-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124107>
 
-On Sat, Jul 25, 2009 at 02:02:19PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Sat, 25 Jul 2009, Mike Hommey wrote:
-> 
-> > On Sat, Jul 25, 2009 at 09:57:39PM +0300, Timo Hirvonen wrote:
-> > > Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > > 
-> > > > So curl really must die. It may not matter for the expensive operations, 
-> > > > but a lot of scripting is about running all those "cheap" things that just 
-> > > > add up over time.
-> > > 
-> > > SELinux is the problem, not curl.
-> > 
-> > I think it's NSS, the problem, not SELinux. Linus's libcurl is built
-> > against NSS, which is the default on Fedora.
-> 
-> Well, it kind of doesn't matter. The fact is, libcurl is a bloated 
-> monster, and adds zero to 99% of what git people do.
+Eric Wong <normalperson@yhbt.net> writes:
 
-Especially consideting the http transport fails to be useful in various
-scenarios.
+>   # I thought I had pushed this out earlier:
+>   Robert Allan Zeh (1):
+>         git svn: add gc command
 
-Mike
+Note that with this commit, the test fails needlessly if Compress::Zlib is
+not found, even though otherwise "svn gc" succeeds (for some definition of
+"success")..
