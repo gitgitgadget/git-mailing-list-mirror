@@ -1,70 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: db/transport-shim, was Re: What's cooking in git.git (Jul 2009, #02;
- Sun, 26)
-Date: Sun, 26 Jul 2009 12:35:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907261232280.8306@pacific.mpi-cbg.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: What's cooking in git.git (Jul 2009, #02; Sun, 26)
+Date: Sun, 26 Jul 2009 16:08:08 +0200
+Message-ID: <4A6C6348.90607@alum.mit.edu>
 References: <7viqhfrfu5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Heiko Voigt <hvoigt@hvoigt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 26 12:35:51 2009
+X-From: git-owner@vger.kernel.org Sun Jul 26 16:11:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MV154-0002i7-Ct
-	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 12:35:50 +0200
+	id 1MV4RP-0002H5-Kh
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 16:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753405AbZGZKfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Jul 2009 06:35:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbZGZKfI
-	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 06:35:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37462 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753401AbZGZKfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Jul 2009 06:35:06 -0400
-Received: (qmail invoked by alias); 26 Jul 2009 10:35:05 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 26 Jul 2009 12:35:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1819gAvzGc1UpV4EbKVoAn/3+wQfUd8MQLWwnp0f7
-	bBYZ4GfLSAG17v
-X-X-Sender: schindelin@pacific.mpi-cbg.de
+	id S1753481AbZGZOIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 10:08:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbZGZOIO
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 10:08:14 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:59090 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753478AbZGZOIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 10:08:14 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.129] (p4FC1C88A.dip.t-dialin.net [79.193.200.138])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n6QE89Kx001346
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Sun, 26 Jul 2009 16:08:10 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.22) Gecko/20090608 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
 In-Reply-To: <7viqhfrfu5.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124122>
 
-Hi,
+Junio C Hamano wrote:
+> * hv/cvsps-tests (Sun Apr 5 01:40:50 2009 -0700) 8 commits
+>  - t/t9600: remove exit after test_done
+>  - cvsimport: extend testcase about patchset order to contain
+>    branches
+>  - cvsimport: add test illustrating a bug in cvsps
+>  - Add a test of "git cvsimport"'s handling of tags and branches
+>  - Add some tests of git-cvsimport's handling of vendor branches
+>  - Test contents of entire cvsimported "master" tree contents
+>  - Use CVS's -f option if available (ignore user's ~/.cvsrc file)
+>  - Start a library for cvsimport-related tests
 
-On Sun, 26 Jul 2009, Junio C Hamano wrote:
+What needs to happen to get these changes moving again?  The last
+relevant comment I can find from you about this subject is from 2009-02-22:
 
-> * db/transport-shim (Sat Jul 25 13:51:40 2009 -0400) 3 commits
->  - git-http-fetch: not a builtin
->  - Use an external program to implement fetching with curl
->  - Add support for external programs for handling native fetches
-> 
-> Interesting as a concept.  I saw its ls-remote segfault on me, though.
-> Hopefully will mature by 1.6.5 final.
-> 
-> [...]
->
-> * db/foreign-scm (Tue Mar 24 23:04:12 2009 -0400) 3 commits
->  - Add option for using a foreign VCS
->  - Document details of transport function APIs
->  - Allow late reporting of fetched hashes
-> 
-> I have a feeling that the recent transport-shim series from the same
-> author could supersede this one.
+> Thanks, both.  I generally am not very fond of adding tests without
+> intention to look into fixes, but if they make outstanding bugs more
+> visible, they may have the effect of shaming the original authors
+> badly enough to step in in the effort of fixing them  ;-)
 
-Oh, you mean that the foreign scm helpers would turn into shim helpers, 
-which could then either call fast-import directly or use another helper?
+No knight in shining armor has shown up to fix these bugs, but there is
+still value to documenting them in the form of unit tests.
 
-Interesting,
-Dscho
+Michael
