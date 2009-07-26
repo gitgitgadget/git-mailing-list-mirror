@@ -1,203 +1,333 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.4-rc3
-Date: Sun, 26 Jul 2009 01:16:40 -0700
-Message-ID: <7vws5vrh93.fsf@alter.siamese.dyndns.org>
+Subject: What's in git.git (Jul 2009, #01; Sun, 26)
+Date: Sun, 26 Jul 2009 01:17:40 -0700
+Message-ID: <7vr5w3rh7f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1752120AbZGZIQ6@vger.kernel.org Sun Jul 26 10:17:14 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1752120AbZGZIQ6@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+X-From: git-owner@vger.kernel.org Sun Jul 26 10:18:20 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MUyuv-0002CX-O6
-	for glk-linux-kernel-3@gmane.org; Sun, 26 Jul 2009 10:17:14 +0200
+	id 1MUyvy-0002Tu-Gp
+	for gcvg-git-2@gmane.org; Sun, 26 Jul 2009 10:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbZGZIQ6 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 26 Jul 2009 04:16:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752036AbZGZIQ5
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 26 Jul 2009 04:16:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55037 "EHLO
+	id S1752057AbZGZIRv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Jul 2009 04:17:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752044AbZGZIRu
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 04:17:50 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:44657 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752034AbZGZIQv (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 26 Jul 2009 04:16:51 -0400
+	with ESMTP id S1752036AbZGZIRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 04:17:43 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77EA8120B2;
-	Sun, 26 Jul 2009 04:16:50 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C532014F95;
+	Sun, 26 Jul 2009 04:17:43 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 80101120B1; Sun, 26 Jul 2009
- 04:16:42 -0400 (EDT)
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id EA26214F94; Sun,
+ 26 Jul 2009 04:17:41 -0400 (EDT)
+X-maint-at: 54bc13ce5300bf7c2237aba3fd123dd587e56d31
+X-master-at: d8f7be2ebcb7e3ec40269080a9ab9a28bc06ba17
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AB6DA67A-79BC-11DE-9D85-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: CB384320-79BC-11DE-917E-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124108>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124109>
 
-A release candidate GIT 1.6.4.rc3 is available at the usual places
-for testing:
+The tip of 'master' is 1.6.4-rc3 and it should be the last -rc before t=
+he
+1.6.4 final.
 
-  http://www.kernel.org/pub/software/scm/git/
+* The 'maint' branch has these fixes since the last announcement.
 
-  git-1.6.4.rc3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.4.rc3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.4.rc3.tar.{gz,bz2}		(preformatted docs)
+Brandon Casey (2):
+  refs.c: release file descriptor on error return
+  sha1_name.c: avoid unnecessary strbuf_release
 
-The RPM binary packages for a few architectures are found in:
+Chris Frey (1):
+  git-remote: fix missing .uploadpack usage for show command
 
-  testing/git-*-1.6.4.rc3-1.fc9.$arch.rpm	(RPM)
+Clemens Buchacher (1):
+  fetch: do not create ref from empty name
 
-An embarrassing and serious bug in "git am/apply" that was in 1.6.4-rc2
-has been squashed, and this snapshot should be both safe to use and is
-expected to be the last -rc before the real thing.  Please give it a good
-beating.
+Giuseppe Bilotta (1):
+  gitweb/README: fix AliasMatch in example
+
+Johannes Sixt (1):
+  Makefile: git.o depends on library headers
+
+Junio C Hamano (8):
+  request-pull: really disable pager
+  checkout -f: deal with a D/F conflict entry correctly
+  combine-diff.c: fix performance problem when folding common deleted l=
+ines
+  diff --cc: a lost line at the beginning of the file is shown incorrec=
+tly
+  do_one_ref(): null_sha1 check is not about broken ref
+  SunOS grep does not understand -C<n> nor -e
+  Fix severe breakage in "git-apply --whitespace=3Dfix"
+  t8005: Nobody writes Russian in shift_jis
+
+Linus Torvalds (3):
+  git branch: fix performance problem
+  git branch: avoid unnecessary object lookups
+  git branch: clean up detached branch handling
+
+Matthias Andree (1):
+  Fix export_marks() error handling.
+
+Michal Marek (1):
+  request-pull: really really disable pager
+
+Miklos Vajna (1):
+  git-submodule documentation: fix foreach example
+
+Ren=C3=A9 Scharfe (1):
+  attr: plug minor memory leak
+
+Roel Kluin (1):
+  fread does not return negative on error
+
+SZEDER G=C3=A1bor (1):
+  Trailing whitespace and no newline fix
+
+Sitaram Chamarty (1):
+  Documentation: update description of shell aliases
+
+Thadeu Lima de Souza Cascardo (1):
+  Makes some cleanup/review in gittutorial
+
+Thomas Rast (2):
+  Test git archive --remote
+  Test grep --and/--or/--not
 
 
-GIT v1.6.4 Release Notes (draft)
-================================
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-With the next major release, "git push" into a branch that is
-currently checked out will be refused by default.  You can choose
-what should happen upon such a push by setting the configuration
-variable receive.denyCurrentBranch in the receiving repository.
+Alex Vandiver (2):
+  Make section_name_match start on '[', and return the length on succes=
+s
+  After renaming a section, print any trailing variable definitions
 
-To ease the transition plan, the receiving repository of such a
-push running this release will issue a big warning when the
-configuration variable is missing.  Please refer to:
+Andreas Ericsson (1):
+  mailinfo: Remove only one set of square brackets
 
-  http://git.or.cz/gitwiki/GitFaq#non-bare
-  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
+Ben Jackson (3):
+  Add 'git svn help [cmd]' which works outside a repo.
+  git-svn: speed up find_rev_before
+  Add 'git svn reset' to unwind 'git svn fetch'
 
-for more details on the reason why this change is needed and the
-transition plan.
+Bert Wesarg (1):
+  builtin-remote: (get_one_entry): use strbuf
 
-For a similar reason, "git push $there :$killed" to delete the branch
-$killed in a remote repository $there, if $killed branch is the current
-branch pointed at by its HEAD, gets a large warning.  You can choose what
-should happen upon such a push by setting the configuration variable
-receive.denyDeleteCurrent in the receiving repository.
+Bj=C3=B6rn Steinbrink (1):
+  Add a test showing that 'git repack' throws away grafted-away parents
 
+Brandon Casey (10):
+  Makefile: Solaris needs HAVE_ALLOCA_H for alloca()
+  t/t9001-send-email.sh: ensure generated script is executed with
+    $SHELL_PATH
+  git.c: avoid allocating one-too-many elements for new argv array
+  unpack-trees.c: work around run-time array initialization flaw on IRI=
+X
+    6.5
+  git-compat-util.h: adjust for SGI IRIX 6.5
+  Makefile: add NEEDS_LIBGEN to optionally add -lgen to compile argumen=
+ts
+  Makefile: add section for SGI IRIX 6.5
+  Makefile: update IRIX64 section
+  configure.ac: rework/fix the NEEDS_RESOLV and NEEDS_LIBGEN tests
+  configure.ac: properly unset NEEDS_SSL_WITH_CRYPTO when sha1 func is
+    missing
 
-Updates since v1.6.3
---------------------
+Christian Couder (2):
+  bisect: use a PRNG with a bias when skipping away from untestable com=
+mits
+  Documentation: remove warning saying that "git bisect skip" may slow
+    bisection
 
-(subsystems)
+Daniel Trstenjak (1):
+  Show the presence of untracked files in the bash prompt.
 
- * gitweb Perl style clean-up.
+Eric Wong (12):
+  git-svn: convert globs to regexps for branch destinations
+  t9138: remove stray dot in test which broke bash
+  Allow the Unix epoch to be a valid commit date
+  git svn: allow uppercase UUIDs from SVN
+  git svn: rename tests that had conflicting numbers
+  git svn: fix reparenting when ugly http(s) URLs are used
+  git svn: fix shallow clone when upstream revision is too new
+  git svn: revert default behavior for --minimize-url
+  git svn: the branch command no longer needs the full path
+  t9142: stop httpd after the test
+  git svn: avoid escaping '/' when renaming/copying files
+  git svn: make minimize URL more reliable over http(s)
 
- * git-svn updates, including a new --authors-prog option to map author
-   names by invoking an external program, 'git svn reset' to unwind
-   'git svn fetch', support for more than one branches, documenting
-   of the useful --minimize-url feature, new "git svn gc" command, etc.
+Giuseppe Bilotta (11):
+  git-am foreign patch support: introduce patch_format
+  git-am foreign patch support: autodetect some patch formats
+  git-am foreign patch support: StGIT support
+  git-am: refactor 'cleaning up and aborting'
+  gitweb: refactor author name insertion
+  gitweb: uniform author info for commit and commitdiff
+  gitweb: use git_print_authorship_rows in 'tag' view too
+  gitweb: (gr)avatar support
+  gitweb: gravatar url cache
+  gitweb: picon avatar provider
+  gitweb: add empty alt text to avatar img
 
-(portability)
+Hunter, D. Seth (1):
+  http-push: fix xml_entities() string parsing overrun
 
- * We feed iconv with "UTF-8" instead of "utf8"; the former is
-   understood more widely.  Similarly updated test scripts to use
-   encoding names more widely understood (e.g. use "ISO8859-1" instead
-   of "ISO-8859-1").
+Jeff King (5):
+  Makefile: refactor regex compat support
+  Makefile: use compat regex on Solaris
+  log-tree: fix confusing comment
+  Makefile: install 'git' in execdir
+  send-email: detect cycles in alias expansion
 
- * Various portability fixes/workarounds for different vintages of
-   SunOS, IRIX, and Windows.
+Johan Herland (1):
+  quickfetch(): Prevent overflow of the rev-list command line
 
- * Git-over-ssh transport on Windows supports PuTTY plink and TortoisePlink.
+Johannes Schindelin (1):
+  git repack: keep commits hidden by a graft
 
-(performance)
+Johannes Sixt (5):
+  daemon: send stderr of service programs to the syslog
+  upload-pack: squelch progress indicator if client cannot see it
+  receive-pack: do not send error details to the client
+  git-mv: fix directory separator treatment on Windows
+  MinGW: truncate exit()'s argument to lowest 8 bits
 
- * Many repeated use of lstat() are optimized out in "checkout" codepath.
+Junio C Hamano (7):
+  die_errno(): double % in strerror() output just in case
+  Makefile: keep "git" when bindir is execdir
+  Revert "mailinfo: Remove only one set of square brackets"
+  push: do not give big warning when no preference is configured
+  Updates to draft release notes to 1.6.4
+  Update release notes for 1.6.4
+  GIT 1.6.4-rc3
 
- * git-status (and underlying git-diff-index --cached) are optimized
-   to take advantage of cache-tree information in the index.
+Larry D'Anna (1):
+  add --porcelain option to git-push
 
-(usability, bells and whistles)
+Linus Torvalds (11):
+  git log: add '--merges' flag to match '--no-merges'
+  Add 'fill_directory()' helper function for directory traversal
+  Simplify read_directory[_recursive]() arguments
+  Avoid doing extra 'lstat()'s for d_type if we have an up-to-date cach=
+e
+    entry
+  Avoid using 'lstat()' to figure out directories
+  Prepare symlink caching for thread-safety
+  Export thread-safe version of 'has_symlink_leading_path()'
+  Make index preloading check the whole path to the file
+  Make 'git show' more useful
+  Improve on the 'invalid object' error message at commit time
+  Fix extraneous lstat's in 'git checkout -f'
 
- * "git add --edit" lets users edit the whole patch text to fine-tune what
-   is added to the index.
+Marc Branchaud (3):
+  git svn: Support multiple branch and tag paths in the svn repository.
+  git svn: cleanup t9138-multiple-branches
+  git svn: Doc update for multiple branch and tag paths
 
- * "git am" accepts StGIT series file as its input.
+Mark Lodato (2):
+  http.c: prompt for SSL client certificate password
+  http.c: add http.sslCertPasswordProtected option
 
- * "git bisect skip" skips to a more randomly chosen place in the hope
-   to avoid testing a commit that is too close to a commit that is
-   already known to be untestable.
+Martin Koegler (1):
+  git stash: modernize use of "dashed" git-XXX calls
 
- * "git cvsexportcommit" learned -k option to stop CVS keywords expansion
+Martin Renold (1):
+  Remove filename from conflict markers
 
- * "git grep" learned -p option to show the location of the match using the
-   same context hunk marker "git diff" uses.
+Mattias Nissler (2):
+  git-svn: Always duplicate paths returned from get_log
+  git-svn: Fix branch detection when repository root is inaccessible
 
- * https transport can optionally be told that the used client
-   certificate is password protected, in which case it asks the
-   password only once.
+Michael J Gruber (1):
+  t4202-log.sh: Test git log --no-walk sort order
 
- * "git imap-send" is IPv6 aware.
+Mike Ralphson (1):
+  cvsexportcommit: reorder tests to quiet intermittent failure
 
- * "git log --graph" draws graphs more compactly by using horizontal lines
-   when able.
+Nanako Shiraishi (1):
+  Documentation/config.txt: a variable can be defined on the section he=
+ader
+    line
 
- * "git log --decorate" shows shorter refnames by stripping well-known
-   refs/* prefix.
+Nick Edelen (1):
+  diff-tree -r -t: include added/removed directories in the output
 
- * "git push $name" honors remote.$name.pushurl if present before
-   using remote.$name.url.  In other words, the URL used for fetching
-   and pushing can be different.
+Nick Woolley (2):
+  Remove archaic use of regex capture \1 in favour of $1
+  Avoid generating a warning if $fullname{$file} is undefined
 
- * "git send-email" understands quoted aliases in .mailrc files (might
-   have to be backported to 1.6.3.X).
+Pierre Habouzit (4):
+  janitor: use NULL and not 0 for pointers.
+  refactor: use bitsizeof() instead of 8 * sizeof()
+  janitor: add DIV_ROUND_UP and use it.
+  janitor: useless checks before free
 
- * "git send-email" can fetch the sender address from the configuration
-   variable "sendmail.from" (and "sendmail.<identity>.from").
+Ren=C3=A9 Scharfe (7):
+  userdiff: add xdiff_clear_find_func()
+  grep: move context hunk mark handling into show_line()
+  grep: print context hunk marks between files
+  grep: handle pre context lines on demand
+  grep: add option -p/--show-function
+  grep -p: support user defined regular expressions
+  grep: simplify -p output
 
- * "git show-branch" can color its output.
+Robert Allan Zeh (1):
+  git svn: add gc command
 
- * "add" and "update" subcommands to "git submodule" learned --reference
-   option to use local clone with references.
+SZEDER G=C3=A1bor (2):
+  Document 'git (rev-list|log) --merges'
+  bash: add '--merges' to common 'git log' options
 
- * "git submodule update" learned --rebase option to update checked
-   out submodules by rebasing the local changes.
+Stephen Boyd (9):
+  t4150: test applying with a newline in subject
+  am: suppress apply errors when using 3-way
+  git-sh-setup: introduce say() for quiet options
+  submodule, repack: migrate to git-sh-setup's say()
+  am, rebase: teach quiet option
+  stash: teach quiet option
+  show-ref: migrate to parse-options
+  completion: add missing config variables
+  completion: __git_config_get_set_variables() handle values with space=
+s
 
- * "gitweb" can optionally use gravatar to adorn author/committer names.
+Thomas Rast (5):
+  git-svn: let 'dcommit $rev' work on $rev instead of HEAD
+  Introduce die_errno() that appends strerror(errno) to die()
+  Convert existing die(..., strerror(errno)) to die_errno()
+  Use die_errno() instead of die() when checking syscalls
+  Disable asciidoc 8.4.1+ semantics for `{plus}` and friends
 
-(developers)
+Todd Zullinger (1):
+  completion: Add --full-diff to log options
 
- * A major part of the "git bisect" wrapper has moved to C.
+Ulrich Dangel (1):
+  git-svn: Canonicalize svn urls to prevent libsvn assertion
 
- * Formatting with the new version of AsciiDoc 8.4.1 is now supported.
+Uwe Kleine-K=C3=B6nig (2):
+  more tests for git rev-parse --parse-opt
+  parse-opt: make PARSE_OPT_STOP_AT_NON_OPTION available to git rev-par=
+se
 
-Fixes since v1.6.3
-------------------
+Wincent Colaiuta (1):
+  gitweb: update Git homepage URL
 
-All of the fixes in v1.6.3.X maintenance series are included in this
-release, unless otherwise noted.
-
-Here are fixes that this release has, but have not been backported to
-v1.6.3.X series.
-
- * "git diff-tree -r -t" used to omit new or removed directories from
-   the output.  df533f3 (diff-tree -r -t: include added/removed
-   directories in the output, 2009-06-13) may need to be cherry-picked
-   to backport this fix.
-
- * The way Git.pm sets up a Repository object was not friendly to callers
-   that chdir around.  It now internally records the repository location
-   as an absolute path when autodetected.
-
- * Removing a section with "git config --remove-section", when its
-   section header has a variable definition on the same line, lost
-   that variable definition.
-
- * "git repack" used to faithfully follow grafts and considered true
-   parents recorded in the commit object unreachable from the commit.
-   After such a repacking, you cannot remove grafts without corrupting
-   the repository.
-
- * "git send-email" did not detect erroneous loops in alias expansion.
-
----
-exec >/var/tmp/1
-echo O=$(git describe master)
-O=v1.6.4-rc2-31-g2ceb639
-git shortlog --no-merges $O..master ^maint
+Yann Dirson (6):
+  git-svn.txt: stop using dash-form of commands.
+  git-svn.txt: make formatting more consistent.
+  git-svn.txt: fix fetch flags incorrectly documented as init flags.
+  git-svn.txt: fix description of fetch flags accepted by clone.
+  List send-email config options in config.txt.
+  Improve doc for format-patch threading options.
