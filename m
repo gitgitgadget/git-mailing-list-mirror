@@ -1,66 +1,52 @@
-From: Chris Hills <chaz@chaz6.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [ANNOUNCE] GIT 1.6.4-rc3
-Date: Mon, 27 Jul 2009 03:54:27 +0200
-Message-ID: <4A6D08D3.50404@chaz6.com>
+Date: Sun, 26 Jul 2009 20:14:25 -0700
+Message-ID: <7vk51uom0e.fsf@alter.siamese.dyndns.org>
 References: <7vws5vrh93.fsf@alter.siamese.dyndns.org>
+ <4A6D08D3.50404@chaz6.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: linux-kernel@vger.kernel.org
-X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755647AbZG0BzI@vger.kernel.org Mon Jul 27 03:55:32 2009
-Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1755647AbZG0BzI@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@gmane.org
+To: Chris Hills <chaz@chaz6.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 05:14:39 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVFR3-0007PQ-5b
-	for glk-linux-kernel-3@gmane.org; Mon, 27 Jul 2009 03:55:29 +0200
+	id 1MVGff-0001kA-6p
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 05:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755647AbZG0BzI (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 26 Jul 2009 21:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbZG0BzI
-	(ORCPT <rfc822;linux-kernel-outgoing>);
-	Sun, 26 Jul 2009 21:55:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:58052 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754580AbZG0BzH (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 26 Jul 2009 21:55:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1MVFQc-0006YF-Vh
-	for linux-kernel@vger.kernel.org; Mon, 27 Jul 2009 01:55:02 +0000
-Received: from nobelnet.dk ([130.225.243.116])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <linux-kernel@vger.kernel.org>; Mon, 27 Jul 2009 01:55:02 +0000
-Received: from chaz by nobelnet.dk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <linux-kernel@vger.kernel.org>; Mon, 27 Jul 2009 01:55:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: nobelnet.dk
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.2pre) Gecko/20090726 Shredder/3.0b4pre
-In-Reply-To: <7vws5vrh93.fsf@alter.siamese.dyndns.org>
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755610AbZG0DOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Jul 2009 23:14:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755576AbZG0DOa
+	(ORCPT <rfc822;git-outgoing>); Sun, 26 Jul 2009 23:14:30 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:41153 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755456AbZG0DO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Jul 2009 23:14:29 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 69C1A15E9D;
+	Sun, 26 Jul 2009 23:14:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DD15915E9C; Sun,
+ 26 Jul 2009 23:14:26 -0400 (EDT)
+In-Reply-To: <4A6D08D3.50404@chaz6.com> (Chris Hills's message of "Mon\, 27
+ Jul 2009 03\:54\:27 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 98F0CA96-7A5B-11DE-9EAF-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124153>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124154>
 
-On 26/07/09 10:16, Junio C Hamano wrote:
- > A release candidate GIT 1.6.4.rc3 is available at the usual places
- > for testing:
- >
- >    http://www.kernel.org/pub/software/scm/git/
- >
- >    git-1.6.4.rc3.tar.{gz,bz2}			(source tarball)
- >    git-htmldocs-1.6.4.rc3.tar.{gz,bz2}		(preformatted docs)
- >    git-manpages-1.6.4.rc3.tar.{gz,bz2}		(preformatted docs)
+Chris Hills <chaz@chaz6.com> writes:
 
-Hi
+> It seems that running `make distclean` removes the configure
+> script. Is this expected behavior?
 
-It seems that running `make distclean` removes the configure script. Is 
-this expected behavior?
+Yes.
 
-Regards,
-
-Chris
+The users are not expected to run configure before building, and we do not
+ship a configure script as part of the distribution.
