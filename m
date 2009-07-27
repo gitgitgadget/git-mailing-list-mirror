@@ -1,95 +1,83 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC 00/11] Foreign VCS helper program for CVS repositories
-Date: Mon, 27 Jul 2009 20:11:19 +0200
-Message-ID: <200907272011.19430.johan@herland.net>
-References: <1248656659-21415-1-git-send-email-johan@herland.net> <alpine.LNX.2.00.0907271251280.2147@iabervon.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
+Subject: Re: [PATCH] Preserve the protection mode for the Git config files
+Date: Mon, 27 Jul 2009 19:18:53 +0100
+Organization: ARM Ltd
+Message-ID: <1248718733.12375.65.camel@pc1117.cambridge.arm.com>
+References: <20090721152435.16642.47207.stgit@pc1117.cambridge.arm.com>
+	 <7vab2wlh4y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Jul 27 20:11:43 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 20:19:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVUfm-0006SF-Qd
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 20:11:43 +0200
+	id 1MVUnG-0001fe-So
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 20:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751722AbZG0SLe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 14:11:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbZG0SLe
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 14:11:34 -0400
-Received: from sam.opera.com ([213.236.208.81]:60035 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751162AbZG0SLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 14:11:33 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n6RIBJ4m006686
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 27 Jul 2009 18:11:25 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.LNX.2.00.0907271251280.2147@iabervon.org>
-Content-Disposition: inline
+	id S1753975AbZG0SS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 14:18:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753893AbZG0SS6
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 14:18:58 -0400
+Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:58112 "EHLO
+	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752587AbZG0SS5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2009 14:18:57 -0400
+Received: from cam-owa1.Emea.Arm.com (cam-owa1.emea.arm.com [10.1.255.62])
+	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id n6RIIsZm025198;
+	Mon, 27 Jul 2009 19:18:54 +0100 (BST)
+Received: from [10.1.68.81] ([10.1.255.212]) by cam-owa1.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
+	 Mon, 27 Jul 2009 19:18:53 +0100
+In-Reply-To: <7vab2wlh4y.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.22.3.1 
+X-OriginalArrivalTime: 27 Jul 2009 18:18:53.0884 (UTC) FILETIME=[B2D1C7C0:01CA0EE6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124179>
 
-On Monday 27 July 2009, Daniel Barkalow wrote:
-> On Mon, 27 Jul 2009, Johan Herland wrote:
-> > This series is a first draft towards implementing a foreign VCS
-> > helper program for CVS.
-> >
-> > It is based on the 'db/foreign-scm' and 'jh/notes' topics in 'pu'.
-> > As such, this patch series should apply cleanly to current 'pu'.
-> >
-> > The first 4 patches supply the necessary parts of Daniel Barkalow's
-> > foreign-scm topic that has not yet been merged to 'pu' (i.e.
-> > everything remaining in Daniel's original patch series, except the
-> > p4-specific stuff).
->
-> I've got some changes to this series in the works; I just made a few
-> changes to share the transport-side code for interacting with the
-> helper with the transport-side code for interacting with
-> native-object helpers. Mainly, this means starting each line in the
-> "list" response with "?" to indicate that you don't know the hash,
-> since the protocol is trying to be compatible with cases where you do
-> know.
+Hi Junio,
 
-No problem. I'm actually considering whether I should rewrite the CVS 
-helper to a full-fledged git-shim (btw, thanks for the shim work; it 
-looks really promising). I would still probably have to use 
-git-fast-import, but I would have more control over the fast-import 
-process (e.g. by closing the fast-import process myself, I could 
-simplify the code maintaining the marks database).
+On Wed, 2009-07-22 at 11:14 -0700, Junio C Hamano wrote:
+> Catalin Marinas <catalin.marinas@arm.com> writes:
+> > Every time an option is set, the config file protection mode is changed
+> > to 0666 & ~umask even if it was different before. This patch is useful
+> > if people store passwords (SMTP server in the StGit case) and do not
+> > want others to read the .gitconfig file.
+[...]
+> Your log message talks about .git/config and nothing else, but I think
+> this codepath affects everything that is created under the lock, such as
+> the index and refs.
 
-With the git-shim feature already having found an excellent use case 
-(the HTTP fetcher), how do you see the future for the foreign-scm 
-topic? I like the idea of rewriting foreign-scm on top of git-shim, but 
-is there anything substantial _left_ in foreign-scm after such a 
-rewrite?
+I haven't checked all the places where this function is called. For my
+use-case, I store the SMTP password in the .git/config file (or
+~/.gitconfig) and every time I update this file (with git or via stgit),
+the permission gets changed.
 
-> > Next, there are 3 patches tweaking and expanding the git-vcs API
-> > (with corresponding implementations in the foreign transport code)
-> > to adjust for the CVS helper's needs.
->
-> These make sense to me. I assume you're planning to support exporting
-> in some ways, but haven't got it working yet?
+> The patch description must defend itself a bit better, perhaps by saying
+> something like this at the end.
+> 
+> 	This patch touches the codepath that affects not just .git/config
+> 	but other files like the index and the loose refs, so they also
+> 	inherit the original protection bits.  In a private repository,
+> 	this is not an issue exactly because the repository is private,
+> 
+> 	In a shared repository, a later call made in this function to
+> 	adjust_shared_perm() widens the permission bits as configured.
+> 	Because adjust_shared_perm() is designed to do so from any mode
+> 	limited by user's umask, even though this patch changes the
+> 	behaviour in the strict sense, it should not affect the outcome in
+> 	a negative way and what is explicitly marked as allowed in the
+> 	configuration will still be allowed.
 
-Indeed. The current version is only a first draft that fetches 
-successfully from simple toy repositories (but probably not many 
-real-world CVS repos). I hope to support both fetching and pushing to 
-real-world CVS repos at some point.
+Thanks for the explanation. Would you like me to repost with your
+description?
 
-
-Have fun! :)
-
-...Johan
+Thanks.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Catalin
