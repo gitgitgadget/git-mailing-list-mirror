@@ -1,79 +1,99 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH v3 0/5] {checkout,reset,stash} --patch
-Date: Mon, 27 Jul 2009 12:10:36 +0200
-Message-ID: <200907271210.40001.trast@student.ethz.ch>
-References: <7vzlat64u1.fsf@alter.siamese.dyndns.org> <cover.1248557241.git.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
+Date: Mon, 27 Jul 2009 06:30:32 -0400
+Message-ID: <20090727103031.GA3131@coredump.intra.peff.net>
+References: <20090723074104.GI4750@laphroaig.corp>
+ <7veis7yxwx.fsf@alter.siamese.dyndns.org>
+ <20090724193207.6117@nanako3.lavabit.com>
+ <7v8wienk07.fsf@alter.siamese.dyndns.org>
+ <20090725145237.GB18545@artemis.corp>
+ <20090726153950.GA16780@sigill.intra.peff.net>
+ <20090727082623.GB18268@laphroaig.corp>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
 	Nanako Shiraishi <nanako3@lavabit.com>,
-	Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 27 12:11:00 2009
+	Pierre Habouzit <madcoder@debian.org>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Mon Jul 27 12:30:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVNAZ-0007jG-6a
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 12:10:59 +0200
+	id 1MVNTi-0007p5-DZ
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 12:30:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979AbZG0KKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 06:10:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755977AbZG0KKv
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 06:10:51 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:8020 "EHLO XSMTP0.ethz.ch"
+	id S1755985AbZG0Kag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 06:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755963AbZG0Kaf
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 06:30:35 -0400
+Received: from peff.net ([208.65.91.99]:48299 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755976AbZG0KKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 06:10:50 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 27 Jul 2009 12:10:49 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 27 Jul 2009 12:10:49 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
-In-Reply-To: <cover.1248557241.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 27 Jul 2009 10:10:49.0796 (UTC) FILETIME=[84249040:01CA0EA2]
+	id S1755929AbZG0Kaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 06:30:35 -0400
+Received: (qmail 23515 invoked by uid 107); 27 Jul 2009 10:32:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 27 Jul 2009 06:32:39 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Jul 2009 06:30:32 -0400
+Content-Disposition: inline
+In-Reply-To: <20090727082623.GB18268@laphroaig.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124161>
 
-I wrote:
+On Mon, Jul 27, 2009 at 10:26:24AM +0200, Pierre Habouzit wrote:
+
+> > No, I don't really think so in terms of implementation, but it is
+> > really about a different mental model:
+> > 
+> >   1. You never delete things. You only copy or move them into registers.
+> > 
+> >   2. The interface should be the same whether you are moving between
+> >      registers, or to/from the working tree.
+> > 
+> >   3. It extends naturally to multiple registers.
 > 
-> Similarly, "stash" has some problems: we want to encode the changes
-> HEAD..index into one commit, and index..worktree into another.
-> However, these patches may not apply on top of each other depending on
-> what hunks were selected.  I see three options:
-> 
-> * Make more a priori restrictions, such as, --patch is strictly about
->   the worktree and simply refuses to stash anything if you have staged
->   changes; or, we only deal with the worktree and always stash the
->   index whole.  I think at least the first option would make it
->   significantly less useful though.
+> I like the general idea, I'm unsure what the UI for such tools would
+> look like though.
 
-I'm still not happy with this interface.  How about the following to
-make it less confusing:
+I was thinking of unifying the multiple interfaces that we use to move
+content and changes around into a single "git sort" and "git sort -i"
+(and yes, I just made those names up, so feel free to call them crappy),
+which would take a source and a destination (which would probably
+default to the working tree and index respectively).
 
-1b) 'stash save -p' defaults to --keep-index (which can be disabled
-    with a new option --no-keep-index).  In --keep-index mode, it only
-    offers hunks from the worktree.
+So you could do the equivalent of:
 
-That way, it's almost analogous to 'git add -p', but for "adding to
-the stash".
+  - git add foo => git sort foo
+  - git add -p => git sort -i foo
+  - git checkout -- foo => git sort --from=index --to=tree foo
+  - git checkout HEAD -- foo => git sort --from=HEAD --to=tree foo
+  - git reset --mixed => git sort --from=HEAD --to=index
+  - git reset --mixed foo => git sort --from=HEAD --to=index foo
+    (note that this reset doesn't actually exist now, but is something
+    that people try to do)
+  - git stash save => git sort --to=%mystash
+    (and note that I just made up some "this is a register" syntax;
+     we maybe would really just want these as refs like refs/registers,
+     so you would specify registers/mystash)
+  - git stash -i => git sort --to=%mystash -i
+    (interactive stash doesn't exist yet, of course)
+  - git stash foo => git sort --to=%mystash foo
+    (partial stash doesn't exist yet)
+  - git diff HEAD stash -- foo | git apply => git sort --from=%mystash foo
 
-> * Hope that it works out, and catch failure later.  This is what it
->   currently does.
-> 
-> * Expand the stash format to four commits so that, e.g.,
->   stash^1..stash^2 is HEAD..index and stash^3..stash is
->   index..worktree.  (Currently stash^1 is HEAD, stash^2 is index and
->   stash is worktree.)  This would require more changes, and make these
->   stashes backward incompatible w.r.t. application, so I'm not sure it
->   is worth the trouble.
+So really, it could be a new way of interacting with the _regular_
+index, as well, though perhaps it is overboard to completely redesign
+the git interface. :) I just think it introduces a consistency to the
+interface around the single concept of "moving your content around". So
+in a sense it would be a good candidate for an alternative porcelain.
+But do note that many common operations are more typing (like the
+checkout replacements); that would be something to fix.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Again, just thinking out loud. Feel free to ignore, but if you think
+there is anything interesting to pick out, let me know.
+
+-Peff
