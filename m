@@ -1,140 +1,106 @@
-From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: RE: Question about fixing windows bug reading graft data
-Date: Mon, 27 Jul 2009 12:33:50 -0500
-Message-ID: <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
-References: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com>
+Date: Mon, 27 Jul 2009 19:55:09 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907271948130.6883@intel-tinevez-2-302>
+References: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "Kelly F. Hickel" <kfh@mqsoftware.com>, <git@vger.kernel.org>,
-	<Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jul 27 19:49:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 19:55:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVUKH-0005A5-RZ
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:49:30 +0200
+	id 1MVUQ4-0007le-5l
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:55:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbZG0RtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 13:49:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbZG0RtV
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:49:21 -0400
-Received: from mail.de.mqsoftware.com ([66.192.70.108]:7315 "EHLO
-	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779AbZG0RtU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2009 13:49:20 -0400
-X-Greylist: delayed 910 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jul 2009 13:49:20 EDT
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Question about fixing windows bug reading graft data
-Thread-Index: AcnoXU0XuqTBhzgZRw2U6H6CLjOnfAmglWxw
+	id S1752835AbZG0RzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 13:55:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbZG0RzS
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:55:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42889 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752714AbZG0RzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 13:55:17 -0400
+Received: (qmail invoked by alias); 27 Jul 2009 17:55:15 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp002) with SMTP; 27 Jul 2009 19:55:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18LcrZ2/s8Lwok9z5u+29J3ddkhZAyZtkXekynsIm
+	DfhP3ZfQ1hux2A
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124175>
 
-OK, so the 10th copy of the msysGit Herald post has shamed me out of
-hiding!
-I posted the below awhile back, and since I volunteered to fix something
-(if given a few pointers), I felt I had "Done My Duty" to the Git world!
+Hi,
 
-But now Dscho has made me rip the blinders from my eyes, to try once
-again to offer to fix this bug (even though I found it in Cygwin Git and
-don't use msysgit, but hey, Git is Git, right!?!?!)....
+On Mon, 27 Jul 2009, Kelly F. Hickel wrote:
 
-So, here I am, gonna put myself out there, willing to suffer ridicule,
-etc!
+> OK, so the 10th copy of the msysGit Herald post has shamed me out of
+> hiding!
 
-Any guidance on "the Git way" to properly deal with \r in a meta
-file????  Show me the light!
+;-)
 
+> > The bug, is that in in commit.c, the code strips '\n', but not '\r', 
+> > so the code says the graft data is bad:
+> >
+> > struct commit_graft *read_graft_line(char *buf, int len) {
+> >         /* The format is just "Commit Parent1 Parent2 ...\n" */
+> >         int i;
+> >         struct commit_graft *graft = NULL;
+> > 
+> >         if (buf[len-1] == '\n')
+> >                 buf[--len] = 0;
+> >         if (buf[0] == '#' || buf[0] == '\0')
+> >                 return NULL;
+> >         if ((len + 1) % 41) {
+> >         bad_graft_data:
+> >                 error("bad graft data: %s", buf);
+> >                 free(graft);
+> >                 return NULL;
+> >         }
+> > 
+> > My first plan was to fix it the way that xdiff-interface.c handles it,
+> > assuming that was "the Git way" to deal with CRLF:
+> >         /* Exclude terminating newline (and cr) from matching */
+> >         if (len > 0 && line[len-1] == '\n') {
+> >                 if (len > 1 && line[len-2] == '\r')
+> >                         len -= 2;
+> >                 else
+> >                         len--;
+> >         }
+> > 
+> > But I noticed that there seemed to be several checks for '\n' in 
+> > commit.c that didn't check for '\r', and wondered if there was a 
+> > reason, or if there'd be a better way to handle it.....
 
---
+I think that you really only have to handle text files read from the file 
+system.  That is not the case for commit object parsers: commit _objects_ 
+are required to have LF line endings.
 
-Kelly F. Hickel
-Senior Product Architect
-MQSoftware, Inc.
-952-345-8677 Office
-952-345-8721 Fax
-kfh@mqsoftware.com
-www.mqsoftware.com
-Certified IBM SOA Specialty
-Your Full Service Provider for IBM WebSphere
-Learn more at www.mqsoftware.com 
+But a few files come to mind which might have CR/LF line endings and need 
+to be interpreted correctly by Git: "grafts", as you pointed out, but also 
+the refs and of course the config.
 
+It would probably be a good idea to have something like
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Kelly F. Hickel
-> Sent: Monday, June 08, 2009 12:20 PM
-> To: git@vger.kernel.org
-> Subject: Question about fixing windows bug reading graft data
-> 
-> Hi All,
-> 	Ran into a bug trying to use grafts on windows with cygwin git
-> version 1.6.1.2.  I've verified that the bug is still there in the
-> latest source, and was going to submit a patch, but then I noticed
-that
-> there seem to be more occurrences in commit.c, and wondered if there
-> was
-> a better way to fix it than what I had first come up with.
-> 
-> The bug, is that in in commit.c, the code strips '\n', but not '\r',
-so
-> the code says the graft data is bad:
-> struct commit_graft *read_graft_line(char *buf, int len) {
->         /* The format is just "Commit Parent1 Parent2 ...\n" */
->         int i;
->         struct commit_graft *graft = NULL;
-> 
->         if (buf[len-1] == '\n')
->                 buf[--len] = 0;
->         if (buf[0] == '#' || buf[0] == '\0')
->                 return NULL;
->         if ((len + 1) % 41) {
->         bad_graft_data:
->                 error("bad graft data: %s", buf);
->                 free(graft);
->                 return NULL;
->         }
-> 
-> My first plan was to fix it the way that xdiff-interface.c handles it,
-> assuming that was "the Git way" to deal with CRLF:
->         /* Exclude terminating newline (and cr) from matching */
->         if (len > 0 && line[len-1] == '\n') {
->                 if (len > 1 && line[len-2] == '\r')
->                         len -= 2;
->                 else
->                         len--;
->         }
-> 
-> But I noticed that there seemed to be several checks for '\n' in
-> commit.c that didn't check for '\r', and wondered if there was a
-> reason,
-> or if there'd be a better way to handle it.....
-> 
-> 
-> 
-> --
-> 
-> Kelly F. Hickel
-> Senior Product Architect
-> MQSoftware, Inc.
-> 952-345-8677 Office
-> 952-345-8721 Fax
-> kfh@mqsoftware.com
-> www.mqsoftware.com
-> Certified IBM SOA Specialty
-> Your Full Service Provider for IBM WebSphere Learn more at
-> www.mqsoftware.com
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+	static inline fix_line_ending(char *line, int len)
+	{
+		if (len > 0 && line[len-1] == '\n')
+			line[len-1 - (len > 1 && line[len-2] == '\r')] = '\0';
+	}
+
+in cache.h, and use it in said places.
+
+Of course, the hassle is to find all those places ;-)
+
+Thanks,
+Dscho
