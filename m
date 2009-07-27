@@ -1,106 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: Question about fixing windows bug reading graft data
-Date: Mon, 27 Jul 2009 19:55:09 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907271948130.6883@intel-tinevez-2-302>
-References: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com> <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Pro Git Book
+Date: Mon, 27 Jul 2009 10:56:57 -0700
+Message-ID: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Kelly F. Hickel" <kfh@mqsoftware.com>
-X-From: git-owner@vger.kernel.org Mon Jul 27 19:55:41 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 27 19:57:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVUQ4-0007le-5l
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:55:28 +0200
+	id 1MVURw-0000Qz-N0
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbZG0RzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 13:55:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752704AbZG0RzS
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:55:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42889 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752714AbZG0RzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 13:55:17 -0400
-Received: (qmail invoked by alias); 27 Jul 2009 17:55:15 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp002) with SMTP; 27 Jul 2009 19:55:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18LcrZ2/s8Lwok9z5u+29J3ddkhZAyZtkXekynsIm
-	DfhP3ZfQ1hux2A
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1752045AbZG0R47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 13:56:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbZG0R47
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:56:59 -0400
+Received: from an-out-0708.google.com ([209.85.132.246]:36056 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751016AbZG0R46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 13:56:58 -0400
+Received: by an-out-0708.google.com with SMTP id d40so4704900and.1
+        for <git@vger.kernel.org>; Mon, 27 Jul 2009 10:56:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=/iYKr5LsNugzK8FgzmIrulEm2osGat8odptNcqqgeKI=;
+        b=ah1iamktP2XoVJlFbvtbZ0PHaZyRl9+uaQWsdghv8/qDnU9bYVulCqHmC70A8eMM7G
+         00KyKbJ/OzO3MgkNV01vLgLRhuPEDN9l4thNHwcVGVSTkhr1hyI2oAZF3v2QWZdiCNK8
+         s6DDx8WbJLPVWMuV/DB5RzvDIFgcqdbSMcD/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=XruWmh0XsjdHYbRBLbor2zwXlFsJ27eQ+aOfkmEnIRR0YeXsBlpcqnCg5+JEGNfdxC
+         1dxCHqyEIDJ1n0dKMKAnYwhpUEcJvu6Y/fjt4xvteMIzXjM1x8qZtQcbjqA3CiJ+CyKS
+         5eis/EoLQQkdlAkqpQPq2vMzT2JAqE39+0zsA=
+Received: by 10.100.251.8 with SMTP id y8mr8785835anh.74.1248717417777; Mon, 
+	27 Jul 2009 10:56:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124176>
 
-Hi,
+Hey all,
 
-On Mon, 27 Jul 2009, Kelly F. Hickel wrote:
+Just a heads up - I've been working on a book on Git being published
+by Apress called "Pro Git", which is being licensed under a CC 3.0
+license and as I've just finished some of the final reviews, I've put
+the entire content of the book online at:
 
-> OK, so the 10th copy of the msysGit Herald post has shamed me out of
-> hiding!
+http://progit.org
 
-;-)
+It should be shipping at the end of August, I think, but I just wanted
+to let people know that there is another resource out there to help
+learn Git.  This one was actually technically edited by Shawn, too, so
+hopefully not too many serious errors of mine got through.
 
-> > The bug, is that in in commit.c, the code strips '\n', but not '\r', 
-> > so the code says the graft data is bad:
-> >
-> > struct commit_graft *read_graft_line(char *buf, int len) {
-> >         /* The format is just "Commit Parent1 Parent2 ...\n" */
-> >         int i;
-> >         struct commit_graft *graft = NULL;
-> > 
-> >         if (buf[len-1] == '\n')
-> >                 buf[--len] = 0;
-> >         if (buf[0] == '#' || buf[0] == '\0')
-> >                 return NULL;
-> >         if ((len + 1) % 41) {
-> >         bad_graft_data:
-> >                 error("bad graft data: %s", buf);
-> >                 free(graft);
-> >                 return NULL;
-> >         }
-> > 
-> > My first plan was to fix it the way that xdiff-interface.c handles it,
-> > assuming that was "the Git way" to deal with CRLF:
-> >         /* Exclude terminating newline (and cr) from matching */
-> >         if (len > 0 && line[len-1] == '\n') {
-> >                 if (len > 1 && line[len-2] == '\r')
-> >                         len -= 2;
-> >                 else
-> >                         len--;
-> >         }
-> > 
-> > But I noticed that there seemed to be several checks for '\n' in 
-> > commit.c that didn't check for '\r', and wondered if there was a 
-> > reason, or if there'd be a better way to handle it.....
-
-I think that you really only have to handle text files read from the file 
-system.  That is not the case for commit object parsers: commit _objects_ 
-are required to have LF line endings.
-
-But a few files come to mind which might have CR/LF line endings and need 
-to be interpreted correctly by Git: "grafts", as you pointed out, but also 
-the refs and of course the config.
-
-It would probably be a good idea to have something like
-
-	static inline fix_line_ending(char *line, int len)
-	{
-		if (len > 0 && line[len-1] == '\n')
-			line[len-1 - (len > 1 && line[len-2] == '\r')] = '\0';
-	}
-
-in cache.h, and use it in said places.
-
-Of course, the hassle is to find all those places ;-)
+I've added a link to it on http://git-scm.com under the Books section,
+in case you want to point any newbies there.  Hope this helps take
+some teaching load off some of your plates.
 
 Thanks,
-Dscho
+Scott
