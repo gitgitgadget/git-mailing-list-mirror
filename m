@@ -1,69 +1,104 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Pro Git Book
-Date: Mon, 27 Jul 2009 10:56:57 -0700
-Message-ID: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: Re: [PATCH/RFC 10/10] gitweb: Create links leading to
+	'blame_incremental' using JavaScript
+Date: Mon, 27 Jul 2009 20:10:46 +0200
+Message-ID: <20090727181046.GA30365@auto.tuwien.ac.at>
+References: <1248475450-5668-1-git-send-email-jnareb@gmail.com> <1248475450-5668-11-git-send-email-jnareb@gmail.com> <20090725104622.GA7337@auto.tuwien.ac.at> <200907261206.15646.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 27 19:57:26 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Fredrik Kuivinen <frekui@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Luben Tuikov <ltuikov@yahoo.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 20:11:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVURw-0000Qz-N0
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:57:25 +0200
+	id 1MVUf7-0006BG-QM
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 20:11:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752045AbZG0R47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 13:56:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbZG0R47
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:56:59 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:36056 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016AbZG0R46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 13:56:58 -0400
-Received: by an-out-0708.google.com with SMTP id d40so4704900and.1
-        for <git@vger.kernel.org>; Mon, 27 Jul 2009 10:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/iYKr5LsNugzK8FgzmIrulEm2osGat8odptNcqqgeKI=;
-        b=ah1iamktP2XoVJlFbvtbZ0PHaZyRl9+uaQWsdghv8/qDnU9bYVulCqHmC70A8eMM7G
-         00KyKbJ/OzO3MgkNV01vLgLRhuPEDN9l4thNHwcVGVSTkhr1hyI2oAZF3v2QWZdiCNK8
-         s6DDx8WbJLPVWMuV/DB5RzvDIFgcqdbSMcD/U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=XruWmh0XsjdHYbRBLbor2zwXlFsJ27eQ+aOfkmEnIRR0YeXsBlpcqnCg5+JEGNfdxC
-         1dxCHqyEIDJ1n0dKMKAnYwhpUEcJvu6Y/fjt4xvteMIzXjM1x8qZtQcbjqA3CiJ+CyKS
-         5eis/EoLQQkdlAkqpQPq2vMzT2JAqE39+0zsA=
-Received: by 10.100.251.8 with SMTP id y8mr8785835anh.74.1248717417777; Mon, 
-	27 Jul 2009 10:56:57 -0700 (PDT)
+	id S1752877AbZG0SKs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Jul 2009 14:10:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751611AbZG0SKs
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 14:10:48 -0400
+Received: from odin.auto.tuwien.ac.at ([128.130.60.3]:44473 "EHLO
+	mail.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756AbZG0SKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 14:10:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 99A30130397C;
+	Mon, 27 Jul 2009 20:10:46 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at odin.auto.tuwien.ac.at
+Received: from mail.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (odin.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tFKBrr3kGMEf; Mon, 27 Jul 2009 20:10:46 +0200 (CEST)
+Received: from thor.localdomain (thor.auto.tuwien.ac.at [128.130.60.15])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 852861000186;
+	Mon, 27 Jul 2009 20:10:46 +0200 (CEST)
+Received: by thor.localdomain (Postfix, from userid 3001)
+	id 7D2E96800645; Mon, 27 Jul 2009 20:10:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200907261206.15646.jnareb@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124177>
 
-Hey all,
+On Sun, Jul 26, 2009 at 12:06:11PM +0200, Jakub Narebski wrote:
+> On Sat, 25 Jul 2009, Martin Koegler wrote:
+> > On Sat, Jul 25, 2009 at 12:44:10AM +0200, Jakub Narebski wrote:
+>=20
+> > > TODO list:
+> > > * Perhaps put fixLinks() function in separate file gitweb.js.
+> > >   Should gitweb use single JavaScript file, or should it be split=
+ into
+> > >   more than one file?
+> >=20
+> > The same question can be asked for gitweb itself:
+>=20
+> Well, there is one important difference: gitweb itself is not send
+> over network to client.  JavaScript is.  (Although I'm not sure how
+> great it is of an issue, with browsers caching JavaScript.  Perhaps
+> one single file would be better idea.)
 
-Just a heads up - I've been working on a book on Git being published
-by Apress called "Pro Git", which is being licensed under a CC 3.0
-license and as I've just finished some of the final reviews, I've put
-the entire content of the book online at:
+More files mean more request on the server. If the browser is
+configured to check at each request, it will issue a GET for each
+JavaScript file, which will be answered by a 304 after the first
+request. In the "automatic mode", the browser waits for some time
+(determined by a heuristic), before it will issue a GET for each file
+request again.
 
-http://progit.org
+So in my option, on (bigger) file is better, as it means fewer request.
 
-It should be shipping at the end of August, I think, but I just wanted
-to let people know that there is another resource out there to help
-learn Git.  This one was actually technically edited by Shawn, too, so
-hopefully not too many serious errors of mine got through.
+> >=20
+> > Why is it a single perl file and not splited in many different
+> > modules?
+>=20
+> 2. Having it all in single file make its easy to install and update.
+>    Well, it made more sense when only way to configure gitweb was to
+>    edit gitweb.cgi.  Now building gitweb.cgi is the task for build
+>    system, and the only thing left is to copy files in correct place
+>    (I think that there are distribution specific packages which makes
+>    installing gitweb as easy as "xxx install gitweb").
 
-I've added a link to it on http://git-scm.com under the Books section,
-in case you want to point any newbies there.  Hope this helps take
-some teaching load off some of your plates.
+Yes, there are gitweb packages, which automaticially server
+repositories under a specific path (eg. /srv/git). For such packages,
+the js layout is irrelavant.
 
-Thanks,
-Scott
+When manually installing, copying only one javascript file simplifies
+the deployment.
+
+> 3. You would have to decide _how_ to split it into many different=20
+>    modules.  Do you know any good examples?
+
+Javascript uses on global namespace. If it is one file, its implicitly
+clear, that everything (functions, variables) are in one scope.  If
+you split it into multiple files, you have to remember, what the other
+files contain.
+
+mfg Martin K=F6gler
