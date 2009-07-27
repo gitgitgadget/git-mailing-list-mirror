@@ -1,70 +1,140 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC 00/11] Foreign VCS helper program for CVS repositories
-Date: Mon, 27 Jul 2009 13:27:47 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907271251280.2147@iabervon.org>
-References: <1248656659-21415-1-git-send-email-johan@herland.net>
+From: "Kelly F. Hickel" <kfh@mqsoftware.com>
+Subject: RE: Question about fixing windows bug reading graft data
+Date: Mon, 27 Jul 2009 12:33:50 -0500
+Message-ID: <63BEA5E623E09F4D92233FB12A9F7943033B2744@emailmn.mqsoftware.com>
+References: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jul 27 19:27:57 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "Kelly F. Hickel" <kfh@mqsoftware.com>, <git@vger.kernel.org>,
+	<Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jul 27 19:49:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVTzP-0004WI-Vn
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:27:56 +0200
+	id 1MVUKH-0005A5-RZ
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 19:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046AbZG0R1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 13:27:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZG0R1s
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:27:48 -0400
-Received: from iabervon.org ([66.92.72.58]:48436 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751364AbZG0R1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 13:27:48 -0400
-Received: (qmail 4813 invoked by uid 1000); 27 Jul 2009 17:27:47 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Jul 2009 17:27:47 -0000
-In-Reply-To: <1248656659-21415-1-git-send-email-johan@herland.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752385AbZG0RtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 13:49:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbZG0RtV
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 13:49:21 -0400
+Received: from mail.de.mqsoftware.com ([66.192.70.108]:7315 "EHLO
+	emailmn.mqsoftware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779AbZG0RtU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2009 13:49:20 -0400
+X-Greylist: delayed 910 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jul 2009 13:49:20 EDT
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <63BEA5E623E09F4D92233FB12A9F794303117E06@emailmn.mqsoftware.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Question about fixing windows bug reading graft data
+Thread-Index: AcnoXU0XuqTBhzgZRw2U6H6CLjOnfAmglWxw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124174>
 
-On Mon, 27 Jul 2009, Johan Herland wrote:
+OK, so the 10th copy of the msysGit Herald post has shamed me out of
+hiding!
+I posted the below awhile back, and since I volunteered to fix something
+(if given a few pointers), I felt I had "Done My Duty" to the Git world!
 
-> This series is a first draft towards implementing a foreign VCS helper
-> program for CVS.
+But now Dscho has made me rip the blinders from my eyes, to try once
+again to offer to fix this bug (even though I found it in Cygwin Git and
+don't use msysgit, but hey, Git is Git, right!?!?!)....
+
+So, here I am, gonna put myself out there, willing to suffer ridicule,
+etc!
+
+Any guidance on "the Git way" to properly deal with \r in a meta
+file????  Show me the light!
+
+
+--
+
+Kelly F. Hickel
+Senior Product Architect
+MQSoftware, Inc.
+952-345-8677 Office
+952-345-8721 Fax
+kfh@mqsoftware.com
+www.mqsoftware.com
+Certified IBM SOA Specialty
+Your Full Service Provider for IBM WebSphere
+Learn more at www.mqsoftware.com 
+
+
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Kelly F. Hickel
+> Sent: Monday, June 08, 2009 12:20 PM
+> To: git@vger.kernel.org
+> Subject: Question about fixing windows bug reading graft data
 > 
-> It is based on the 'db/foreign-scm' and 'jh/notes' topics in 'pu'. As such,
-> this patch series should apply cleanly to current 'pu'.
+> Hi All,
+> 	Ran into a bug trying to use grafts on windows with cygwin git
+> version 1.6.1.2.  I've verified that the bug is still there in the
+> latest source, and was going to submit a patch, but then I noticed
+that
+> there seem to be more occurrences in commit.c, and wondered if there
+> was
+> a better way to fix it than what I had first come up with.
 > 
-> The first 4 patches supply the necessary parts of Daniel Barkalow's
-> foreign-scm topic that has not yet been merged to 'pu' (i.e. everything
-> remaining in Daniel's original patch series, except the p4-specific stuff).
-
-I've got some changes to this series in the works; I just made a few 
-changes to share the transport-side code for interacting with the helper 
-with the transport-side code for interacting with native-object helpers. 
-Mainly, this means starting each line in the "list" response with "?" to 
-indicate that you don't know the hash, since the protocol is trying to be 
-compatible with cases where you do know.
-
-> The next 2 patches add some functionality to git fast-import, for
-> facilitating the import of 'notes' objects (this is a _much_ faster way to
-> generate/import notes than invoking "git notes edit -m MSG" for each note).
+> The bug, is that in in commit.c, the code strips '\n', but not '\r',
+so
+> the code says the graft data is bad:
+> struct commit_graft *read_graft_line(char *buf, int len) {
+>         /* The format is just "Commit Parent1 Parent2 ...\n" */
+>         int i;
+>         struct commit_graft *graft = NULL;
 > 
-> Next, there are 3 patches tweaking and expanding the git-vcs API (with
-> corresponding implementations in the foreign transport code) to adjust for
-> the CVS helper's needs.
-
-These make sense to me. I assume you're planning to support exporting in 
-some ways, but haven't got it working yet? I largely ignored the 
-capabilities stuff because I didn't have two systems with differing 
-requirements to actually use it.
-
-	-Daniel
-*This .sig left intentionally blank*
+>         if (buf[len-1] == '\n')
+>                 buf[--len] = 0;
+>         if (buf[0] == '#' || buf[0] == '\0')
+>                 return NULL;
+>         if ((len + 1) % 41) {
+>         bad_graft_data:
+>                 error("bad graft data: %s", buf);
+>                 free(graft);
+>                 return NULL;
+>         }
+> 
+> My first plan was to fix it the way that xdiff-interface.c handles it,
+> assuming that was "the Git way" to deal with CRLF:
+>         /* Exclude terminating newline (and cr) from matching */
+>         if (len > 0 && line[len-1] == '\n') {
+>                 if (len > 1 && line[len-2] == '\r')
+>                         len -= 2;
+>                 else
+>                         len--;
+>         }
+> 
+> But I noticed that there seemed to be several checks for '\n' in
+> commit.c that didn't check for '\r', and wondered if there was a
+> reason,
+> or if there'd be a better way to handle it.....
+> 
+> 
+> 
+> --
+> 
+> Kelly F. Hickel
+> Senior Product Architect
+> MQSoftware, Inc.
+> 952-345-8677 Office
+> 952-345-8721 Fax
+> kfh@mqsoftware.com
+> www.mqsoftware.com
+> Certified IBM SOA Specialty
+> Your Full Service Provider for IBM WebSphere Learn more at
+> www.mqsoftware.com
+> 
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
