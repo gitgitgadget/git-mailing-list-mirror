@@ -1,100 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] request-pull with diff body itself
-Date: Mon, 27 Jul 2009 14:27:47 -0700
-Message-ID: <7vtz0xerzg.fsf@alter.siamese.dyndns.org>
-References: <20090727195357.GE17942@lenovo>
- <7vws5tg8fw.fsf@alter.siamese.dyndns.org>
- <aa79d98a0907271356l51111uac0884cf148f434f@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make 'git stash -k' a short form for 'git stash save 
+ --keep-index'
+Date: Mon, 27 Jul 2009 23:37:02 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907272336290.8306@pacific.mpi-cbg.de>
+References: <cover.1248719786u.git.johannes.schindelin@gmx.de>  <76cdda0d6cf911449d16ebb86f54641620135fca.1248719786u.git.johannes.schindelin@gmx.de> <fabb9a1e0907271424x5495a228r779efe9794848880@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Cyrill Gorcunov <gorcunov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 27 23:28:05 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 27 23:37:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVXjn-00017O-BI
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 23:28:03 +0200
+	id 1MVXsX-0004fD-N8
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 23:37:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755003AbZG0V1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 17:27:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbZG0V1y
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 17:27:54 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42781 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753979AbZG0V1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 17:27:53 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8B67A134C2;
-	Mon, 27 Jul 2009 17:27:52 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 572CB134BF; Mon, 27 Jul 2009
- 17:27:48 -0400 (EDT)
-In-Reply-To: <aa79d98a0907271356l51111uac0884cf148f434f@mail.gmail.com>
- (Cyrill Gorcunov's message of "Tue\, 28 Jul 2009 00\:56\:10 +0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5772046A-7AF4-11DE-9C31-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1755145AbZG0Vg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 17:36:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755126AbZG0Vgz
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 17:36:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41613 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754643AbZG0Vgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 17:36:55 -0400
+Received: (qmail invoked by alias); 27 Jul 2009 21:36:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp009) with SMTP; 27 Jul 2009 23:36:53 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+AVRBoGEKARWwfSAaDzmZyGBe3Zy7c6J8YkxRQSE
+	KynNvmayyl/Mgy
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <fabb9a1e0907271424x5495a228r779efe9794848880@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124199>
 
-Cyrill Gorcunov <gorcunov@gmail.com> writes:
+Hi,
 
-> Will post an updated patch in a day or so ( as only get back my laptop
-> back). Or maybe someone could make it faster then me ;)
+On Mon, 27 Jul 2009, Sverre Rabbelier wrote:
 
-Like this, perhaps.
+> On Mon, Jul 27, 2009 at 11:37, Johannes 
+> Schindelin<johannes.schindelin@gmx.de> wrote:
+> > To save me from the carpal tunnel syndrome, make 'git stash' accept 
+> > the short option '-k' instead of '--keep-index', and for even more 
+> > convenience, let's DWIM when this developer forgot to type the 'save' 
+> > command.
+> 
+> +many, especially the DWIM part! Does it also grok 'git stash 
+> --keep-index'?
 
- git-request-pull.sh |   24 ++++++++++++++++++++++--
- 1 files changed, 22 insertions(+), 2 deletions(-)
+Yes, it does, but it causes carpal tunnel.
 
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 5917773..5c1121c 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -8,13 +8,33 @@ USAGE='<start> <url> [<end>]'
- LONG_USAGE='Summarizes the changes between two commits to the standard output,
- and includes the given URL in the generated summary.'
- SUBDIRECTORY_OK='Yes'
--OPTIONS_SPEC=
-+OPTIONS_SPEC='git request-pull [options] start url [end]
-+--
-+p    show patch text as well
-+'
-+
- . git-sh-setup
- . git-parse-remote
- 
- GIT_PAGER=
- export GIT_PAGER
- 
-+patch=
-+while	case "$#" in 0) break ;; esac
-+do
-+	case "$1" in
-+	-p)
-+		patch=-p ;;
-+	--)
-+		shift; break ;;
-+	-*)
-+		usage ;;
-+	*)
-+		break ;;
-+	esac
-+	shift
-+done
-+
- base=$1
- url=$2
- head=${3-HEAD}
-@@ -54,5 +74,5 @@ echo "  $url $branch"
- echo
- 
- git shortlog ^$baserev $headrev
--git diff -M --stat --summary $merge_base $headrev
-+git diff -M --stat --summary $patch $merge_base..$headrev
- exit $status
+Ciao,
+Dscho
