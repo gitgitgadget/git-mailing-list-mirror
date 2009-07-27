@@ -1,71 +1,74 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git-svn commit count vs- revision count
-Date: Mon, 27 Jul 2009 11:59:08 +0200
-Message-ID: <4A6D7A6C.7020909@drmicha.warpmail.net>
-References: <4A6D6916.2040509@e-tobi.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-add -p: be able to undo a given hunk
+Date: Mon, 27 Jul 2009 12:06:10 +0200
+Message-ID: <200907271206.11431.trast@student.ethz.ch>
+References: <20090723074104.GI4750@laphroaig.corp> <20090725145237.GB18545@artemis.corp> <20090726153950.GA16780@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: Text/Plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tobi <listaccount@e-tobi.net>
-X-From: git-owner@vger.kernel.org Mon Jul 27 11:59:36 2009
+Cc: Pierre Habouzit <madcoder@madism.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 27 12:06:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVMzX-000231-QK
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 11:59:36 +0200
+	id 1MVN6E-0005Q8-M3
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 12:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755953AbZG0J70 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 05:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755926AbZG0J70
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 05:59:26 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52600 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755916AbZG0J7Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Jul 2009 05:59:25 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 864963B0B12;
-	Mon, 27 Jul 2009 05:59:24 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 27 Jul 2009 05:59:24 -0400
-X-Sasl-enc: G1VrQ8w/WnTAKlCLJG5o2a2IwCq2pR0eCAD41fC8agF5 1248688758
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 49EAA998F;
-	Mon, 27 Jul 2009 05:59:18 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1pre) Gecko/20090718 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <4A6D6916.2040509@e-tobi.net>
+	id S1755975AbZG0KGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 06:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755970AbZG0KGX
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 06:06:23 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:7128 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755968AbZG0KGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 06:06:22 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 27 Jul 2009 12:06:21 +0200
+Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 27 Jul 2009 12:06:21 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
+In-Reply-To: <20090726153950.GA16780@sigill.intra.peff.net>
+X-OriginalArrivalTime: 27 Jul 2009 10:06:21.0215 (UTC) FILETIME=[E40E5AF0:01CA0EA1]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124159>
 
-Tobi venit, vidit, dixit 27.07.2009 10:45:
-> Hi!
+Jeff King wrote:
 > 
-> I've `git-svn clone`ed a pretty large repository, which took about 3 days
-> even with with local access to the SVN repository. To check that
-> everything went ok, I listed the root commits with `git fsck --root
-> --full` and verfied, that these are indeed root commits with no branch point.
+>   5. Commit 'b' on top of new HEAD (and this would probably actually
+>      mean the changes from 'b' to the old HEAD, not setting the new HEAD
+>      state to what's in 'b').
 > 
-> So far so good... what's puzzling me is, that `git rev-list --all | wc -l`
-> says I have 40731 commits, but the SVN repository only has 21875 revisons.
-> 
-> Shouldn't these numbers be the same? The only explanation I have, is, that
-> git-svn imported one or more branches or tags, where it failed to find the
-> correct branch point in the history. Is there a way to figure out, if
-> there went something wrong and possibly fix it?
+> So it's sort of a generalized form of the index, where you have N "index
+> registers" and you sort your changes into them. And during steps 2 and
+> 3, you could also make more changes, pick them out, etc.
 
-With svn, it is possible to commit to (or create) several branches or
-tags in one go (i.e. revision), whereas with git those would be
-individual commits. For example, some people always create a commit and
-a tag "pointing" to it in one go in svn (commit to trunk and tags/foo).
-(The same is true for "svn style subprojects", i.e. subdirs used as
-subprojects.)
+I think the parenthetical remark actually contradicts the notion that
+it's an index.  It's more like a place to hold a patch.  Which then
+makes it rather similar to a temporary branch and cherry-pick, or
+interactive rebase, or whatever.
 
-If that has been used to a large extent then it may explain the
-difference, although it is very large. Have you checked whether git-svn
-produced the (number of) branches and tags that you expect?
+Granted, the register idea does not directly map to interactive rebase
+because that cannot (automatically) add changes to an older commit.
+So I frequently wind up making a series of commits along the lines of
 
-Michael
+  WIP implement foo
+  WIP implement bar
+  WIP fix foo some
+  WIP docs for bar
+  WIP docs for foo
+  WIP tests for foo
+
+and then have to sort and squash them with rebase -i.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
