@@ -1,77 +1,77 @@
-From: "Timothy Schaeffer" <tschaeffer@dramail.com>
-Subject: RE: git-svn error: RA layer request failed: PROPFIND requestfailed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
-Date: Mon, 27 Jul 2009 09:44:18 -0400
-Message-ID: <138905EB75AB0D44B6A0ECD251A92EA7011BAA76@sdra00198.intranet.dra-inc.net>
-References: <20090725093633.GA15880@dcvr.yhbt.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC 06/11] Add support for mark references as path names
+Date: Mon, 27 Jul 2009 07:12:00 -0700
+Message-ID: <20090727141200.GJ11191@spearce.org>
+References: <1248656659-21415-1-git-send-email-johan@herland.net> <1248656659-21415-7-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <git@vger.kernel.org>
-To: "Eric Wong" <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Jul 27 15:46:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, barkalow@iabervon.org, gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jul 27 16:12:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVQXB-0000Yj-Lf
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 15:46:34 +0200
+	id 1MVQvy-0003Lm-Nl
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 16:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754347AbZG0NqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 09:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754114AbZG0NqM
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 09:46:12 -0400
-Received: from dramail.com ([66.195.237.160]:54297 "EHLO
-	sdra00198.intranet.dra-inc.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754044AbZG0NqM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 09:46:12 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <20090725093633.GA15880@dcvr.yhbt.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-svn error: RA layer request failed: PROPFIND requestfailed on '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h':
-Thread-Index: AcoNDf+brBCewIQRQDi68a1d93y5UwBsgpgg
+	id S1751243AbZG0OMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 10:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751199AbZG0OMA
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 10:12:00 -0400
+Received: from george.spearce.org ([209.20.77.23]:41911 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750928AbZG0OMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 10:12:00 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 77E31381FD; Mon, 27 Jul 2009 14:12:00 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1248656659-21415-7-git-send-email-johan@herland.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124168>
 
- 
+Johan Herland <johan@herland.net> wrote:
+> When using a mark reference as a path name, the mark reference will be
+> expanded to the 40-byte hex version of the object name associated with the
+> mark. This is useful e.g. when importing notes objects (where the filenames
+> in a notes tree are the object names of the annotated objects).
+> 
+> Signed-off-by: Johan Herland <johan@herland.net>
+> ---
+>  Documentation/git-fast-import.txt |    9 +++++++--
+>  fast-import.c                     |   11 +++++++++--
+>  2 files changed, 16 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+> index c2f483a..bbc8b78 100644
+> --- a/Documentation/git-fast-import.txt
+> +++ b/Documentation/git-fast-import.txt
+> @@ -487,12 +487,17 @@ in octal.  Git only supports the following modes:
+>  
+>  In both formats `<path>` is the complete path of the file to be added
+>  (if not already existing) or modified (if already existing).
+> +`<path>` may also be a mark reference (`:<idnum>`) set by a prior
+> +command, which will expand to a full 40-byte SHA-1 of the Git object
+> +associated with the mark. This is useful e.g. when importing commit
+> +notes (the filenames in a notes commit are the object names of the
+> +annotated commits).
+>  
+>  A `<path>` string must use UNIX-style directory separators (forward
+>  slash `/`), may contain any byte other than `LF`, and must not
+> -start with double quote (`"`).
+> +start with double quote (`"`) or colon (`:`).
 
-> -----Original Message-----
-> From: Eric Wong [mailto:normalperson@yhbt.net] 
-> Timothy Schaeffer <tschaeffer@dramail.com> wrote:
-> > Git-svn has been giving me the following error for some 
-> time when calling "git svn dcommit":
-> > 
-> > RA layer request failed: PROPFIND request failed on 
-> '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h': 
-> > PROPFIND of 
-> '/svn/stf/branches/dev/sw%2Fdpemu%2Finclude%2FNetCnxn.h': 
-> > 302 Found (https://oursvnrepo.net) at 
-> > /usr/local/libexec/git-core/git-svn line 508
-> > 
-> > This only occurred when git detected a rename or copy.
-> > 
-> > Following the lead into git-svn.perl, and noticing that some of the 
-> > '/'s in the path were hex-encoded and some were not, I changed the 
-> > regex used to find chars to hex-encode in the relative part of the 
-> > path to exclude '/'.
-> > It works, so far.  
-> > I have included a patch.
-> 
-> Hi Timothy,
-> 
-> Thanks for the bug report and patch, i'll push it out 
-> shortly.  I'm curious, do you happen to know which version of 
-> Subversion the server was running?  I'm unable to reproduce 
-> the problem, but I wouldn't be surprised if it's only a 
-> problem with newere versions.  Thanks.
-> 
-> --
-> Eric Wong
-> 
+I'm worried about changing the path rules here.  Previously writing
+a path as :1 was legal and produced a file named ":1" in the top
+level directory of the repository.  Now it will create a file that
+matches a mark.
 
-The server is running svn 1.4.6.
+I think you need to find another back door, something that the
+language wouldn't have considered as valid previously.
+  
+-- 
+Shawn.
