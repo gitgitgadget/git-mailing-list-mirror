@@ -1,74 +1,57 @@
-From: carlo baffa <baffa@arcetri.astro.it>
-Subject: Your software Git - Fast Version Control System registered on Skysoft
-Date: Mon, 27 Jul 2009 12:43:55 +0200
-Message-ID: <E1MVNgR-0002Ko-DC@baffa>
-To: git team <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 27 13:06:27 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Your software Git - Fast Version Control System registered on
+ Skysoft
+Date: Mon, 27 Jul 2009 13:42:19 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907271340420.6883@intel-tinevez-2-302>
+References: <E1MVNgR-0002Ko-DC@baffa>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git team <git@vger.kernel.org>
+To: carlo baffa <baffa@arcetri.astro.it>
+X-From: git-owner@vger.kernel.org Mon Jul 27 13:42:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVO2C-0004nZ-Jd
-	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 13:06:25 +0200
+	id 1MVObD-0001nv-2g
+	for gcvg-git-2@gmane.org; Mon, 27 Jul 2009 13:42:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755040AbZG0LGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Jul 2009 07:06:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754858AbZG0LGQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 07:06:16 -0400
-Received: from hercules.arcetri.astro.it ([193.206.154.170]:49677 "EHLO
-	hercules.arcetri.astro.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754402AbZG0LGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Jul 2009 07:06:16 -0400
-X-Greylist: delayed 1461 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jul 2009 07:06:14 EDT
-Received: from baffa (galadriel [193.206.155.34])
-	by hercules.arcetri.astro.it (8.13.8/8.13.8) with ESMTP id n6RAfgYk003844
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 27 Jul 2009 12:41:48 +0200 (MEST)
-Received: from baffa by baffa with local (Exim 4.69)
-	(envelope-from <baffa@arcetri.astro.it>)
-	id 1MVNgR-0002Ko-DC
-	for git@vger.kernel.org; Mon, 27 Jul 2009 12:43:55 +0200
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2rc1 (hercules.arcetri.astro.it [193.206.154.170]); Mon, 27 Jul 2009 12:41:48 +0200 (MEST)
-X-Virus-Scanned: clamav-milter 0.95.2 at hercules
-X-Virus-Status: Clean
+	id S1751367AbZG0Lm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Jul 2009 07:42:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbZG0Lm1
+	(ORCPT <rfc822;git-outgoing>); Mon, 27 Jul 2009 07:42:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44256 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751075AbZG0Lm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Jul 2009 07:42:27 -0400
+Received: (qmail invoked by alias); 27 Jul 2009 11:42:25 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp016) with SMTP; 27 Jul 2009 13:42:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/IkqNNtA/I1jlt4tuP9lU655f70VNp5DAAM02Xlt
+	6VgYb8bM34jnz9
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <E1MVNgR-0002Ko-DC@baffa>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124164>
 
-Dear Colleague,
+Hi,
 
-We have started a new astronomical software directory, Skysoft,
-available at the address http://www.skysoft.org, and we have added your
-software to our database. The relative information was found on the
-web, but can be incomplete or inaccurate, so please visit our site to
-integrate it. Also if you know of other software or people who would be
-interested in contributing, please let me know, and give them the
-Skysoft URL.  At the end of this mail, we give a summary of site
-self-portrait.
+On Mon, 27 Jul 2009, carlo baffa wrote:
 
-Thank you for your attention,
-Best regards
+> We have started a new astronomical software directory, Skysoft,
+> available at the address http://www.skysoft.org, and we have added your
+> software to our database.
 
- Carlo Baffa                          INAF-Osservatorio Astrofisico di Arcetri
- baffa@arcetri.astro.it               Largo Fermi 5
- http://www.skysoft.org               I-50125-Firenze ITALY
-----
+The home page is http://git-scm.com/, the license is more precisely GPLv2, 
+system on which the software works is also MacOSX & Windows, and there is 
+an "a" missing between "Git is" and "popular version control system".
 
- From the site:
-
-Skysoft is a YAASD (Yet Another Astronomical Software Directory), but with
-a different overall approach. Our choice is to design this site as a
-community supported directory. The idea is that, like a chat session,
-content remains timely because of frequent user interaction. Users and
-developers are invited to contribute with software news, user's views,
-comments and bugs notifications. This site is designed so that software
-developers acquire more visibility because of astronomical context.
-Developers can post a brief description of their product, with the
-classification which can ease the search and retrieval of software
-projects.
-
-Our goal is to be useful to both end-users and developers. We host all
-software kinds, from general data reduction packages, to specialized
-libraries, to small specific tools. 
+Thanks,
+Dscho
