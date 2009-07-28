@@ -1,65 +1,45 @@
-From: david@lang.hm
-Subject: Re: From P4 to Git
-Date: Tue, 28 Jul 2009 13:32:27 -0700 (PDT)
-Message-ID: <alpine.DEB.1.10.0907281331270.28013@asgard.lang.hm>
-References: <85ljm84lat.fsf@oqube.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Update the documentation of the raw diff output format
+Date: Tue, 28 Jul 2009 13:34:56 -0700
+Message-ID: <7vhbww5yxb.fsf@alter.siamese.dyndns.org>
+References: <87hbwxaolw.fsf@krank.kagedal.org>
+ <7vbpn5g7og.fsf@alter.siamese.dyndns.org> <87vdld9694.fsf@krank.kagedal.org>
+ <87prbl8ay5.fsf_-_@krank.kagedal.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Arnaud Bailly <abailly@oqube.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 22:34:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue Jul 28 22:35:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVtNC-00006p-2C
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 22:34:10 +0200
+	id 1MVtOF-0000Wg-3t
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 22:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752685AbZG1Ucj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 16:32:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZG1Ucj
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 16:32:39 -0400
-Received: from mail.lang.hm ([64.81.33.126]:42211 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751296AbZG1Uci (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 16:32:38 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id n6SKWRNK007039;
-	Tue, 28 Jul 2009 13:32:27 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <85ljm84lat.fsf@oqube.com>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753512AbZG1UfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 16:35:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbZG1UfD
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 16:35:03 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:55176 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753453AbZG1UfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 16:35:03 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id EBE2017754;
+	Tue, 28 Jul 2009 16:35:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 5DDBF17753; Tue,
+ 28 Jul 2009 16:34:58 -0400 (EDT)
+In-Reply-To: <87prbl8ay5.fsf_-_@krank.kagedal.org> ("David =?utf-8?Q?K?=
+ =?utf-8?Q?=C3=A5gedal=22's?= message of "Tue\, 28 Jul 2009 10\:32\:18 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1F71B8CC-7BB6-11DE-81C5-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124273>
 
-On Tue, 28 Jul 2009, Arnaud Bailly wrote:
-
-> Hello,
-> I am investigating the use of Git in a setting where we:
-> 1. branches a lot
-> 2. have a very large codebase
->
-> Given Git is developed to handle these 2 issues, I suspect it would be a
-> very good choice, but I need to gather some experiments feedback and
-> hard figures on how Git performs (storage use, necessary
-> bandwidth/resources, maintainance of repositories, cleanup & gc...).
->
-> For the experiment part, I am started working on it but would be
-> interested in other people's experiences.
->
-> For the figures part, I think I read somewhere there exists some
-> statistics on Git usage for Linux kernel. Is this correct ? If true,
-> where could I find them ?
->
-> Thanks in advance for answering my (maybe pointless) questions and for
-> producing such a nice piece of software.
-
-the one thing that I have seen P4 reported as handling better than git is 
-the case where the repository is very large. this is typically not caused 
-by lots of lines of code, but by checking in lots of binary blobs to the 
-repository.
-
-David Lang
+Looks reasonable; thanks.
