@@ -1,80 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git fast-export: add --no-data option
-Date: Tue, 28 Jul 2009 10:01:08 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281000360.8306@pacific.mpi-cbg.de>
-References: <7f9d599f0907250645s6e6f9b81w3cf20f07eff088eb@mail.gmail.com>  <7vfxcku13i.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0907251942390.8306@pacific.mpi-cbg.de> <7f9d599f0907270548k15c51a01j1fedba20c66b66f6@mail.gmail.com>
- <alpine.DEB.1.00.0907272042450.6883@intel-tinevez-2-302> <4A6E7A80.9040809@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jul 2009, #02; Sun, 26)
+Date: Tue, 28 Jul 2009 01:01:35 -0700
+Message-ID: <7v3a8h8cdc.fsf@alter.siamese.dyndns.org>
+References: <7viqhfrfu5.fsf@alter.siamese.dyndns.org>
+ <4A6EA86A.5010705@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Geoffrey Irving <irving@naml.us>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 10:01:11 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jul 28 10:02:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVhcU-0003JL-F8
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 10:01:10 +0200
+	id 1MVhe5-0003wv-9g
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 10:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578AbZG1IBC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 04:01:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbZG1IBB
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 04:01:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52416 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750862AbZG1IBB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 04:01:01 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 08:01:00 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp021) with SMTP; 28 Jul 2009 10:01:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/++bxTS9L+nSGtSNVi1Ls6Pb8YFx+Gx0811sdb8N
-	PM74cvp3bFjxMD
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4A6E7A80.9040809@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1752714AbZG1IBm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 04:01:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752527AbZG1IBl
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 04:01:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49294 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752627AbZG1IBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 04:01:41 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F70E14280;
+	Tue, 28 Jul 2009 04:01:40 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 18ED11427B; Tue, 28 Jul 2009
+ 04:01:36 -0400 (EDT)
+In-Reply-To: <4A6EA86A.5010705@gnu.org> (Paolo Bonzini's message of "Tue\, 28
+ Jul 2009 09\:27\:38 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E1A2EB9C-7B4C-11DE-821D-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124219>
 
-Hi,
+Paolo Bonzini <bonzini@gnu.org> writes:
 
-On Mon, 27 Jul 2009, Stephen Boyd wrote:
+> Is your workflow to merge next to master after the release, or do you
+> cherry-pick the merges?
 
-> Johannes Schindelin wrote:
-> >
-> > [PATCH] parse-opt: optionally show "--no-" option string
-> >
-> > It is usually better to have positive options, to avoid confusing 
-> > double negations.  However, sometimes it is desirable to show the 
-> > negative option in the help.
-> >
-> > Introduce the flag PARSE_OPT_NEGHELP to do that.
-> 
-> Perhaps with this documentation throw in?
-> 
-> diff --git a/parse-options.h b/parse-options.h
-> index 90e577d..14162e9 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -81,6 +81,9 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
->   *   PARSE_OPT_LITERAL_ARGHELP: says that argh shouldn't be enclosed in brackets
->   *                             (i.e. '<argh>') in the help message.
->   *                             Useful for options with multiple parameters.
-> + *   PARSE_OPT_NEGHELP: says that the long option should always be shown with
-> + *                     the --no prefix in the usage message. Sometimes
-> + *                     useful for users of OPTION_NEGBIT.
->   *
->   * `callback`::
->   *   pointer to the callback to use for OPTION_CALLBACK.
-> 
+Usually 'next' will never rewind, and topics graduate by merging into
+'master', either as a whole or in steps.
 
-Thanks.
+But I've kept 'next' and 'pu' deliberately more inclusive during this -rc
+period, knowing that people by now would be very well aware that after the
+final release of 1.6.4, 'next' will be discarded and rebuilt with a few
+selected topics.  That means what currently is in 'next' can be safely
+kicked back to 'pu' or discarded if it turns out to be necessary.
 
-Ciao,
-Dscho
+If you have doubts or regrets in the series currently in 'next', you can
+even send in replacements if you want to (which is not how 'next' works
+normally). I can revert the merge of the original series to 'next' and
+merge the replacements during -rc period.  After 1.6.4, I can discard the
+original series and keep only the updated series.
+
+On the other hand, if you want to keep going incremental, which is how
+'next' is supposed to work, that is perfectly Ok, too.  After 1.6.4, we
+can decide what to do.
+
+> Do you plan to merge at least the first two patches of "git push
+> --current" (i.e. without the config option)?
+
+I am not quite sure if that is a good approach.  If the design is in flux,
+perhaps we should cook the code in 'pu' a bit longer until we know what
+end user interface want?  The last thing I want to do is to give end users
+a set of new command line options in 'master' (or even 'next'), only to
+revoke them before the next release.
