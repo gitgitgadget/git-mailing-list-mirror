@@ -1,145 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: From P4 to Git
-Date: Tue, 28 Jul 2009 14:10:16 -0700 (PDT)
-Message-ID: <m3fxcg3473.fsf@localhost.localdomain>
-References: <85ljm84lat.fsf@oqube.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Arnaud Bailly <abailly@oqube.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 23:10:32 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v4 0/5] {checkout,reset,stash} --patch
+Date: Tue, 28 Jul 2009 23:20:06 +0200
+Message-ID: <cover.1248815580.git.trast@student.ethz.ch>
+References: <200907271210.40001.trast@student.ethz.ch>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 28 23:20:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVtwO-0005cl-3H
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 23:10:32 +0200
+	id 1MVu6E-0001P2-MQ
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 23:20:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582AbZG1VKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 17:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754560AbZG1VKU
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 17:10:20 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:41787 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754240AbZG1VKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 17:10:19 -0400
-Received: by fxm18 with SMTP id 18so22847fxm.37
-        for <git@vger.kernel.org>; Tue, 28 Jul 2009 14:10:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=FulEaAYfO8Fan0Ozx3q3iAPfdM3HYbD1UZ3ENmV76Z8=;
-        b=EY095O1c+RMaNutuWJMhToDNH4557D6LtWIBKl3J6lTLCCkn+vOCfbBwrNWvFpmHpo
-         RWL8em7MLEMUDsJrETy078OMDIt3pvQQ1qy/TmYal5WCfvaQifHPf/t/TAoY767AC5tk
-         GB0ZMMsLlmXWUdgQXsLJPm0JNtAbI+/CsdEUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=XKgLfp/fC+FxlthQbNRyqkycCBm5Xp2CletrFndfwwSdLwMaXI3shnuS6LSFa2ZmD9
-         Xjypp9rCUc2wOZJu8nXoWrmmrZtT+0vITLaDtaC+IcQ/dYLUWyAEV5T+SqM7vUY7Bpyt
-         EXd3vNFmYWWeEbjvXp5j3H4ReISOTxLBZbpHM=
-Received: by 10.103.248.17 with SMTP id a17mr4149294mus.97.1248815418178;
-        Tue, 28 Jul 2009 14:10:18 -0700 (PDT)
-Received: from localhost.localdomain (abvm110.neoplus.adsl.tpnet.pl [83.8.210.110])
-        by mx.google.com with ESMTPS id y6sm1266582mug.10.2009.07.28.14.10.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Jul 2009 14:10:16 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6SL9kqF010237;
-	Tue, 28 Jul 2009 23:09:56 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6SL9RUD010233;
-	Tue, 28 Jul 2009 23:09:27 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <85ljm84lat.fsf@oqube.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754873AbZG1VUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 17:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754831AbZG1VUX
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 17:20:23 -0400
+Received: from xsmtp1.ethz.ch ([82.130.70.13]:28959 "EHLO xsmtp1.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754721AbZG1VUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 17:20:22 -0400
+Received: from xfe2.d.ethz.ch ([82.130.124.42]) by xsmtp1.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Jul 2009 23:20:21 +0200
+Received: from localhost.localdomain ([77.56.221.170]) by xfe2.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Jul 2009 23:20:21 +0200
+X-Mailer: git-send-email 1.6.4.rc3.215.gd714f
+In-Reply-To: <200907271210.40001.trast@student.ethz.ch>
+X-OriginalArrivalTime: 28 Jul 2009 21:20:21.0344 (UTC) FILETIME=[36AA1600:01CA0FC9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124276>
 
-Arnaud Bailly <abailly@oqube.com> writes:
+I wrote:
+> 1b) 'stash save -p' defaults to --keep-index (which can be disabled
+>     with a new option --no-keep-index).  In --keep-index mode, it only
+>     offers hunks from the worktree.
 
-> I am investigating the use of Git in a setting where we:
->  1. branches a lot
+I ended up implementing the even more restricted form, it always
+stashes the index as-is and only offers hunks from the worktree.  This
+is because it finally dawned on me that 'git stash apply' does not
+merge the changesets base..index and index..worktree, but in fact (in
+one go) base..worktree, into the new HEAD.
 
-Git handles large number of branches very well.  
+That way the rules are much simpler as to what goes where.  The
+downside of course is that the state of the worktree (with all stashed
+hunks discarded) compared to the index (still as before) can be a bit
+confusing if you stash areas of files that already have staged
+changes.
 
-The workflow of topic branches, where each new feature is developed on
-separate branch, which can be individually picked to be merged (or
-not) is used by git itself, for example.
+I also finally found some round tuits, and wrote tests.  Which then of
+course immediately showed that neither 'git reset -p HEAD^' nor 'git
+checkout -p HEAD^' ever worked as advertised, so I had to fix that.
+Patches 1/5 and 2/5 are unaffected and still the same.
 
->  2. have a very large codebase
+Last but not least, I rather like Dscho's patch
 
-How large codebase?  What it means "large codebase"?  Large number of
-files, or files large in size (usually binary)?
+  http://article.gmane.org/gmane.comp.version-control.git/124182
 
-
-Git can deal comfortably with codebase of the size of Linux kernel.
-Perl 5 core was converted from Perforce to Git.
-
-But git is snapshot based, not changeset based, and treats project
-(repository) as whole, not as a combination of single file histories.
-This means that it would be unproductive to use 'everything in single
-repository' approach.  If your codebase is of the size of whole KDE
-tree, or the whole GNOME tree, you would need to organize it and split
-it into smaller, reasonably sized repositories (you can urganize them
-back together in a superproject using submodules).
-
-If ou can't do that, you would probably be better with other version
-control system, like Subversion (IIRC both KDE and OpenOffice.org
-chosen this free centralized version control system).
+so I added a small patch to do the same DWIM logic for -p/--patch that
+goes on top of a merge of 1-5 and his patch.  I suspect it's more work
+to do the merge than to just edit either 5/5 or Dscho's patch,
+however.
 
 
-Because Git was created to version control source code, it might not
-work well with large binary files, meaning that performance would
-suffer.  
-
-Partial checkouts (where you check out only part of repository) were
-proposed, but are not implemented yet.  Neither did lazy clone /
-remote alternates idea.  You can do a bit with undocumented `delta`
-gitattribute, and with putting large binary blobs into separate
-packfile, which is 'kept' (using *.keep file) against repacking, and
-perhaps available on networked filesystem.
-
-I think you can use refs/replace/ mechanizm (IIRC currently in 'pu',
-(proposed updates) branch) to have two versions of repository: one
-with binary blobs and one without.
-
-> 
-> Given Git is developed to handle these 2 issues, I suspect it would be a
-> very good choice, but I need to gather some experiments feedback and
-> hard figures on how Git performs (storage use, necessary
-> bandwidth/resources, maintainance of repositories, cleanup & gc...).
-> 
-> For the experiment part, I am started working on it but would be
-> interested in other people's experiences.
-
-Check out Sam Vilain (?) reports from converting Perl 5 repository
-from Perforce to Git.
-
-> 
-> For the figures part, I think I read somewhere there exists some
-> statistics on Git usage for Linux kernel. Is this correct ? If true,
-> where could I find them ? 
-
-There is GitStat project: http://mirror.celinuxforum.org/gitstat/
-
-There was also Git-Statistics project at Google Summer of Code 2008
-which repository can be found at http://repo.or.cz/w/git-stats.git
-See http://git.or.cz/gitwiki/SoC2008Projects
-
-> 
-> Thanks in advance for answering my (maybe pointless) questions and for
-> producing such a nice piece of software.
-> -- 
-> Arnaud Bailly
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thomas Rast (6):
+  git-apply--interactive: Refactor patch mode code
+  builtin-add: refactor the meat of interactive_add()
+  Implement 'git reset --patch'
+  Implement 'git checkout --patch'
+  Implement 'git stash save --patch'
+  DWIM 'git stash save -p' for 'git stash -p'
