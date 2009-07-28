@@ -1,94 +1,77 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3 v2] git-http-fetch: not a builtin
-Date: Tue, 28 Jul 2009 15:23:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281520150.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0907280207480.2147@iabervon.org>
+Subject: Re: [PATCH 1/3] log: Show reflog date with --date=normal
+Date: Tue, 28 Jul 2009 15:27:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907281524220.8306@pacific.mpi-cbg.de>
+References: <1e2f7d731286d99b74cc9af37beb5fe187e9d460.1248770042.git.trast@student.ethz.ch> <200907281353.07590.trast@student.ethz.ch> <alpine.DEB.1.00.0907281428220.8306@pacific.mpi-cbg.de> <200907281511.10010.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jul 28 15:23:13 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jul 28 15:27:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVme8-0008OH-Ag
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:23:12 +0200
+	id 1MVmid-0001y1-Vl
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbZG1NXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 09:23:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754119AbZG1NXE
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:23:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56159 "HELO mail.gmx.net"
+	id S1754133AbZG1N1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 09:27:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbZG1N1r
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:27:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47028 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754095AbZG1NXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 09:23:02 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 13:23:01 -0000
+	id S1754127AbZG1N1q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 09:27:46 -0400
+Received: (qmail invoked by alias); 28 Jul 2009 13:27:45 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp038) with SMTP; 28 Jul 2009 15:23:01 +0200
+  by mail.gmx.net (mp025) with SMTP; 28 Jul 2009 15:27:45 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+2WwVP2Aq2L4n6PISXcgfh3KJCaD2wGRsFwtgHbV
-	VNg+9vP2mtXuqa
+X-Provags-ID: V01U2FsdGVkX18z5/ZOpGMzu9FJsLcRfxnEBApO/+MdayVzgdfSL+
+	2elbC8Fbasy+3W
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0907280207480.2147@iabervon.org>
+In-Reply-To: <200907281511.10010.trast@student.ethz.ch>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124249>
 
 Hi,
 
-On Tue, 28 Jul 2009, Daniel Barkalow wrote:
+On Tue, 28 Jul 2009, Thomas Rast wrote:
 
-> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Johannes Schindelin wrote:
+> > 
+> > Inspecting reflogs is an interactive task, and I do not think that 
+> > this justifies the complications you suggested.  I can _easily_ say 
+> > "git log -g" and then "git show --date=relative <commit>".  Not that I 
+> > _ever_ needed such a thing.
 > 
-> This splits up git-http-fetch so that it isn't built-in.
-> 
-> It also removes the general dependency on curl, because it is no
-> longer used by any built-in code.
-> 
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
+> That's something entirely different.
 
-I think there is something missing that was not needed in Linus' original 
-patch:
+No, it's not.  The '--date=<format>' option was always about the commit 
+dates.  It was just DWIMed in the context of '--reflog' to mean "show me 
+the dates in the reflogs, too".
 
-> diff --git a/Makefile b/Makefile
-> index d3dd2ed..3425336 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -979,10 +979,7 @@ else
->  	else
->  		CURL_LIBCURL = -lcurl
->  	endif
-> -	BUILTIN_OBJS += builtin-http-fetch.o
-> -	PROGRAMS += git-shim-curl$X
-> -	EXTLIBS += $(CURL_LIBCURL)
-> -	LIB_OBJS += http.o http-walker.o
-> +	PROGRAMS += git-shim-curl$X git-http-fetch$X
+As such, I think having '--no-date' switch that DWIM off (and reverting to 
+default date format for the commit dates) is perfectly acceptable and 
+consistent.
 
-So now, http is all excluded from libgit.a.  Okay.
+Having DATE_NORMAL and DATE_DEFAULT do exactly the same thing -- except in 
+the presence of '--reflog' -- is nothing I want to see in Git.  It is 
+inconsistent, unintuitive and confusing.
 
-> @@ -1487,6 +1484,9 @@ git-imap-send$X: imap-send.o $(GITLIBS)
->  
->  http.o http-walker.o http-push.o transport.o: http.h
->  
-> +git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
-> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+I could live with switching off the DWIMery and introducing 
+'--reflog-date=<format', though but the whole point of our IRC discussion 
+was to make it less painful to switch on the date-based reflogs, no?
 
-And git-http-fetch is linked to libcurl.  But why is git-shim-curl not 
-linked to libcurl?  I can only guess (as I am running out of time) that 
-git-shim-curl (in addition to having a doubly horrible name) has _no idea_ 
-about curl?  So why does it exist in the first place?  Should not rather 
-"git http-fetch" be turned _into_ that helper (albeit with a much better 
-name)?
+Now, it often happened that Junio just ignored such comments of mine, and 
+I had to live with the consequences.  I just hope it does not happen here.
 
 Ciao,
 Dscho
