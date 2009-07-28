@@ -1,82 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3 v2] Improve your performance with our patch
-Date: Tue, 28 Jul 2009 15:29:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281528260.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0907280131230.2147@iabervon.org>  <alpine.DEB.1.00.0907281307380.8306@pacific.mpi-cbg.de> <3f4fd2640907280550g22e922fue0bbeeed36fba497@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 2/3 v2] Use an external program to implement fetching with 
+	curl
+Date: Tue, 28 Jul 2009 15:30:13 +0200
+Message-ID: <40aa078e0907280630p7751c3d9m639e63e7700a8819@mail.gmail.com>
+References: <alpine.LNX.2.00.0907280207350.2147@iabervon.org>
+	 <alpine.DEB.1.00.0907281505290.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-97692666-1248787762=:8306"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 15:29:26 2009
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 28 15:30:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVmk8-0002c0-Ks
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:29:25 +0200
+	id 1MVml9-00035F-AZ
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:30:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754095AbZG1N3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 09:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753945AbZG1N3O
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:29:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36895 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753263AbZG1N3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 09:29:13 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 13:29:12 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 28 Jul 2009 15:29:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/u7Ut1J4XuZZccXzQDcb4lFmIFyV66oCMf3GTrDl
-	NG0t+0dpehy4B3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <3f4fd2640907280550g22e922fue0bbeeed36fba497@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1754126AbZG1NaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 09:30:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753343AbZG1NaP
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:30:15 -0400
+Received: from mail-bw0-f221.google.com ([209.85.218.221]:36934 "EHLO
+	mail-bw0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753945AbZG1NaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 09:30:14 -0400
+Received: by bwz21 with SMTP id 21so15328bwz.37
+        for <git@vger.kernel.org>; Tue, 28 Jul 2009 06:30:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Gm9ns3ZXNAmzmiIuvVSFkbgRvSS+JkP1bwRLmoF4HxQ=;
+        b=xusmARFMvpjhLFimmrn6co55lbgm0+PtF/CCTZ4lu21gdZsSQs5ht8siyBhRzI9kIM
+         nna1Nza1pnbg1ff8RJ/Bo1d1zhQPagBs31mpgZmTbb1gQa41sVhje6ND4UD+Yk8nCW7w
+         tJ/vDB2tI6uDbWYB5pfthxNbSGHTzw5kGNHrU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NX8YC7chBPHuYQkxOzWVpGrtVH2yHwLNxtU4Uy58sZuwHnt7N6bSRHRMiMUBTlEcZo
+         R4y4hqBCebKzenbcsWormZ9iVfCSmJCTEEBlP9ocmQcPs6HcN9u0YmNWXnSLCRVpcV9j
+         rHwSnd0MmXWeBPnmWzOlJHVS6hSIIS6QWezQ0=
+Received: by 10.204.76.199 with SMTP id d7mr4090578bkk.84.1248787814001; Tue, 
+	28 Jul 2009 06:30:14 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0907281505290.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124251>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Tue, Jul 28, 2009 at 3:19 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> If you already start some infrastructure like this, you should go the
+> whole nine yards and make helper functions in remote.c or transport.c that
+> help implementing "git-remote-<protocol>" helpers.
 
---8323328-97692666-1248787762=:8306
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+You mean helper-helpers? :)
 
-Hi,
-
-On Tue, 28 Jul 2009, Reece Dunn wrote:
-
-> 2009/7/28 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->
-> > On Tue, 28 Jul 2009, Daniel Barkalow wrote:
-> >
-> >>  Documentation/git-shim.txt           |   37 +++++++++
-> >
-> > May I re-register my complaint about the naming?
-> >
-> > I mean, yes, I could think of something even worse when it comes to the
-> > (ridiculously bad!) tradition of naming things "porcelain", "plumbing" and
-> > "potty", especially when it comes to "pushing objects" and
-> > then "pulling".
-> >
-> > But now that we had a good laugh, it is time to get serious again, and
-> > give this child a _way_ better name.
-> >
-> > I mean, you already had a good name for your foreign scm series.  Why did
-> > you give that up in favor of this lousy naming?
-> 
-> How about git-http?
-
-If 'git-fetch' learns to search for a helper by the name of the protocol 
-(as it should learn), this will obviously fail with svn://.
-
-Ciao,
-Dscho
-
---8323328-97692666-1248787762=:8306--
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
