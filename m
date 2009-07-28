@@ -1,56 +1,52 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Frans Pop <elendil@planet.nl>
 Subject: Re: git-send-email generates mail with invalid Message-Id
-Date: Tue, 28 Jul 2009 12:03:48 +0200
-Message-ID: <200907281203.49732.trast@student.ethz.ch>
-References: <200907280446.22890.elendil@planet.nl> <200907281127.44558.trast@student.ethz.ch> <40aa078e0907280251k159d9a93xa8c90413b3fab5a@mail.gmail.com>
+Date: Tue, 28 Jul 2009 12:14:33 +0200
+Message-ID: <200907281214.34362.elendil@planet.nl>
+References: <200907280446.22890.elendil@planet.nl> <40aa078e0907280217g76cbfai8544edde605f8772@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
+Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Frans Pop <elendil@planet.nl>, git@vger.kernel.org
-To: "Erik Faye-Lund" <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 12:05:22 2009
+Cc: git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 12:14:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVjYH-0006J6-Sl
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 12:04:58 +0200
+	id 1MVjhk-0004Tz-Ra
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 12:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752867AbZG1KD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 06:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752015AbZG1KD7
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 06:03:59 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:38828 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752597AbZG1KD7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 06:03:59 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Jul 2009 12:03:58 +0200
-Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Jul 2009 12:03:57 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
-In-Reply-To: <40aa078e0907280251k159d9a93xa8c90413b3fab5a@mail.gmail.com>
-X-OriginalArrivalTime: 28 Jul 2009 10:03:58.0041 (UTC) FILETIME=[B9217C90:01CA0F6A]
+	id S1751565AbZG1KOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 06:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751471AbZG1KOf
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 06:14:35 -0400
+Received: from Cpsmtpm-eml107.kpnxchange.com ([195.121.3.11]:63050 "EHLO
+	CPSMTPM-EML107.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750918AbZG1KOf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 06:14:35 -0400
+Received: from aragorn.fjphome.nl ([84.85.147.182]) by CPSMTPM-EML107.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Tue, 28 Jul 2009 12:14:34 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <40aa078e0907280217g76cbfai8544edde605f8772@mail.gmail.com>
+Content-Disposition: inline
+X-OriginalArrivalTime: 28 Jul 2009 10:14:35.0107 (UTC) FILETIME=[34DA0B30:01CA0F6C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124231>
 
-Erik Faye-Lund wrote:
-> On Tue, Jul 28, 2009 at 11:27 AM, Thomas Rast<trast@student.ethz.ch> wrote:
-> > git-format-patch generates its own message IDs if it needs them for
-> > threading, with gen_message_id() (in builtin-log.c).  That one appends
-> > the committer email address blindly, without verifying that it has an
-> > @ in it.
-> 
-> That must be a separate issue (but quite possibly a valid one), since
-> gen_message_id's ids dont' contain "-send-email-" like the message-id
-> in the report does, no?
+On Tuesday 28 July 2009, Erik Faye-Lund wrote:
+> The problematic e-mails, are they coming from another user than you?
+> Can you find out who that is, and check what git-version he or she
+> runs?
 
-Ah, true of course.
+The Message-Id in my mail was an actual example. Luckily a search for it 
+gave the following link: http://patchwork.kernel.org/patch/37597/
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+See the link for the name of the user. The headers have:
+   X-Mailer: git-send-email 1.5.2.5
+
+Cheers,
+FJP
