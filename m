@@ -1,63 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/3 v2] Improve your performance with our patch
-Date: Tue, 28 Jul 2009 13:11:16 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281307380.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0907280131230.2147@iabervon.org>
+From: Frans Pop <elendil@planet.nl>
+Subject: Re: git-send-email generates mail with invalid Message-Id
+Date: Tue, 28 Jul 2009 13:13:50 +0200
+Message-ID: <200907281313.51304.elendil@planet.nl>
+References: <200907280446.22890.elendil@planet.nl> <200907281127.44558.trast@student.ethz.ch> <20090728104423.GA12947@vidovic>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jul 28 13:11:20 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Erik Faye-Lund <kusmabite@googlemail.com>, git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 13:14:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVkaV-0001Rs-Il
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 13:11:20 +0200
+	id 1MVkd7-0002Tb-8z
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 13:14:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752585AbZG1LLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 07:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbZG1LLJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 07:11:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54474 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752366AbZG1LLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 07:11:08 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 11:11:07 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp014) with SMTP; 28 Jul 2009 13:11:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+qcMoHZleqAJq+1xwtfreTfuXAZgQXW2BlLkpU7x
-	0i59sJDpqROVP3
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0907280131230.2147@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1751181AbZG1LNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 07:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750874AbZG1LNx
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 07:13:53 -0400
+Received: from cpsmtpm-eml110.kpnxchange.com ([195.121.3.14]:63093 "EHLO
+	CPSMTPM-EML110.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750824AbZG1LNw (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 07:13:52 -0400
+Received: from aragorn.fjphome.nl ([84.85.147.182]) by CPSMTPM-EML110.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Tue, 28 Jul 2009 13:13:50 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090728104423.GA12947@vidovic>
+Content-Disposition: inline
+X-OriginalArrivalTime: 28 Jul 2009 11:13:50.0873 (UTC) FILETIME=[7C40E090:01CA0F74]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124237>
 
-Hi,
+On Tuesday 28 July 2009, you wrote:
+> Erik Faye-Lund wrote:
+> > On Tue, Jul 28, 2009 at 4:46 AM, Frans Pop<elendil@planet.nl> wrote:
+> > > I assume that this is a configuration issue in the git setup of the
+> > > sender, but shouldn't git-send-email refuse to send out messages
+> > > with an invalid Message-Id?
+>
+> Stricly speacking, it is not an invalid Message-Id. RFC 2822 says that
+> the Message-Id has to be unique. The right hand side may not contain a
+> domain identifier. It is a RECOMMENDED practice (a good one, though).
 
-On Tue, 28 Jul 2009, Daniel Barkalow wrote:
+It also says that (3.6.4):
+   The message identifier (msg-id) is similar in syntax to an angle-addr
+   construct without the internal CFWS.
 
->  Documentation/git-shim.txt           |   37 +++++++++
+And defines:
+   message-id      =       "Message-ID:" msg-id CRLF
+   msg-id          =       [CFWS] "<" id-left "@" id-right ">" [CFWS]
 
-May I re-register my complaint about the naming?
+So, the domain part *is* required (or at least: there has to be a "@"; it 
+maybe does not require id-right to be an actual domain, but that's not 
+really relevant here).
 
-I mean, yes, I could think of something even worse when it comes to the 
-(ridiculously bad!) tradition of naming things "porcelain", "plumbing" and 
-"potty", especially when it comes to "pushing objects" and 
-then "pulling".
-
-But now that we had a good laugh, it is time to get serious again, and 
-give this child a _way_ better name.
-
-I mean, you already had a good name for your foreign scm series.  Why did 
-you give that up in favor of this lousy naming?
-
-Ciao,
-Dscho
+So, IMO inn2's check is correct.
