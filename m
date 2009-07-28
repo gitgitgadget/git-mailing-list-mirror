@@ -1,87 +1,101 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/3 v2] Add support for external programs for handling 
- native fetches
-Date: Tue, 28 Jul 2009 11:25:57 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907281124060.2147@iabervon.org>
-References: <alpine.LNX.2.00.0907280155390.2147@iabervon.org> <36ca99e90907280107i7afb7c64tf0c49bdf82e1e7cb@mail.gmail.com>
+From: Saikiran Madugula <hummerbliss@gmail.com>
+Subject: [PATCH] Documentation: Fix build failure of docs.
+Date: Tue, 28 Jul 2009 16:38:49 +0100
+Message-ID: <4A6F1B89.9080202@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1566878557-1248794757=:2147"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Mariano Ortega <mgo1977@gmail.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 17:26:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Saikiran Madugula <hummerbliss@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 28 17:39:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVoZ7-0007F8-OG
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 17:26:10 +0200
+	id 1MVolZ-0004jE-39
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 17:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564AbZG1PZ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 11:25:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753204AbZG1PZ6
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 11:25:58 -0400
-Received: from iabervon.org ([66.92.72.58]:55916 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753525AbZG1PZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 11:25:58 -0400
-Received: (qmail 9591 invoked by uid 1000); 28 Jul 2009 15:25:57 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Jul 2009 15:25:57 -0000
-In-Reply-To: <36ca99e90907280107i7afb7c64tf0c49bdf82e1e7cb@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753525AbZG1Pix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 11:38:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753515AbZG1Piw
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 11:38:52 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:54739 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752251AbZG1Piw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 11:38:52 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so33755eyd.37
+        for <git@vger.kernel.org>; Tue, 28 Jul 2009 08:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
+         :content-transfer-encoding;
+        bh=2DODJd9U9+HWlwlT5sgwRvVZUzc7jPT7Wt1rIjSShBo=;
+        b=iDz/yUiq9YAu4bXPrAl6J0lbOyej0A4RINSFszdQX1OQdbOlscI9F75h9AqlJy7bNy
+         RxLdI9UkQtTTyBxK8JWnoPAPCUmJa42jnj97+RZ6KXYxQxEQayEfpK3drBgczUTBma9X
+         jcH0acJc11qwan5NF7qP8zO9OFZq6wUt+niGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=vM1NFolGZ/A8d+wuBiutzLfxeW4N4GZU2aGawuT/NvXXXLWW8MPyyZC5z1D+wZOEpe
+         gAcrXht2gMZedAOTOHgvHtyS5ALN3bzqeMDnA7Zpo03R/H/UFPgpMpCgdhlQXqoXArQZ
+         vmUc4t1XxsH9pGQ4dz5KqWpI40HJw1uOGpNNg=
+Received: by 10.211.179.6 with SMTP id g6mr10163442ebp.32.1248795531601;
+        Tue, 28 Jul 2009 08:38:51 -0700 (PDT)
+Received: from ?10.0.11.140? ([85.118.31.194])
+        by mx.google.com with ESMTPS id 7sm92121eyb.2.2009.07.28.08.38.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 28 Jul 2009 08:38:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124258>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This patch fixes the build failure due to what seems to be extraneous
+characters, "+++" in the git-filter-branch.txt file.
 
---1547844168-1566878557-1248794757=:2147
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+$make man
 
-On Tue, 28 Jul 2009, Bert Wesarg wrote:
+...
 
-> On Tue, Jul 28, 2009 at 08:08, Daniel Barkalow<barkalow@iabervon.org> wrote:
-> > +static struct child_process *get_shim(struct transport *transport)
-> > +{
-> > +       struct shim_data *data = transport->data;
-> > +       if (!data->shim) {
-> > +               struct strbuf buf = STRBUF_INIT;
-> > +               struct child_process *shim = xcalloc(1, sizeof(*shim));
-> > +               shim->in = -1;
-> > +               shim->out = -1;
-> > +               shim->err = 0;
-> > +               shim->argv = xcalloc(4, sizeof(*shim->argv));
-> > +               strbuf_addf(&buf, "shim-%s", data->name);
-> > +               shim->argv[0] = buf.buf;
-> > +               shim->argv[1] = transport->remote->name;
-> > +               shim->argv[2] = transport->url;
-> > +               shim->git_cmd = 1;
-> > +               start_command(shim);
-> > +               data->shim = shim;
-> > +       }
-> > +       return data->shim;
-> > +}
-> > +
-> > +static int disconnect_shim(struct transport *transport)
-> > +{
-> > +       struct shim_data *data = transport->data;
-> > +       if (data->shim) {
-> > +               write(data->shim->in, "\n", 1);
-> > +               close(data->shim->in);
-> > +               finish_command(data->shim);
-> > +               free(data->shim->argv);
-> Does this leak data->shim->argv[0] (Ie "shim-%s")?
+ASCIIDOC git-filter-branch.xml
+    XMLTO git-filter-branch.1
+xmlto: input does not validate (status 1)
+/home/bobthe/git.kernel.org/git/Documentation/git-filter-branch.xml:435:
+parser error : PCDATA invalid Char value 7
+Clone it with <literal>git clone +++0+++</literal>.  The clone
+                                    ^
+/home/bobthe/git.kernel.org/git/Documentation/git-filter-branch.xml:435:
+parser error : PCDATA invalid Char value 7
+Clone it with <literal>git clone +++0+++</literal>.  The clone
+                                      ^
+make[1]: *** [git-filter-branch.1] Error 1
+make[1]: Leaving directory
+`/home/bobthe/git.kernel.org/git/Documentation'
+make: *** [man] Error 2
 
-Yes, I guess it would. I think it's time to look up how to run tests with 
-valgrind...
+...
 
-Thanks.
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1566878557-1248794757=:2147--
+Signed-off-by: Saikiran Madugula <hummerbliss@gmail.com>
+---
+ Documentation/git-filter-branch.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index ab527b5..8a261c7 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -364,7 +364,7 @@ objects until you tell it to.  First make sure that:
+ Then there are two ways to get a smaller repository.  A safer way is
+ to clone, that keeps your original intact.
+ 
+-* Clone it with `git clone +++file:///path/to/repo+++`.  The clone
++* Clone it with `git clone file:///path/to/repo`.  The clone
+   will not have the removed objects.  See linkgit:git-clone[1].  (Note
+   that cloning with a plain path just hardlinks everything!)
+ 
+-- 
+1.5.6.3
