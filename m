@@ -1,68 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3 v2] Use an external program to implement fetching
- with  curl
-Date: Tue, 28 Jul 2009 17:03:11 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281658370.14706@intel-tinevez-2-302>
-References: <alpine.LNX.2.00.0907280207350.2147@iabervon.org>  <alpine.DEB.1.00.0907281505290.8306@pacific.mpi-cbg.de> <40aa078e0907280630p7751c3d9m639e63e7700a8819@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: git-send-email generates mail with invalid Message-Id
+Date: Tue, 28 Jul 2009 17:07:45 +0200
+Message-ID: <20090728150745.GB16168@vidovic>
+References: <200907280446.22890.elendil@planet.nl> <200907281127.44558.trast@student.ethz.ch> <20090728104423.GA12947@vidovic> <200907281313.51304.elendil@planet.nl> <20090728113814.GB12947@vidovic> <40aa078e0907280447p4ed92133jb5e586fb0ca40ef2@mail.gmail.com> <40aa078e0907280510s1afee3ddw3a9333620a3c7d7a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Frans Pop <elendil@planet.nl>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
 To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 17:03:53 2009
+X-From: git-owner@vger.kernel.org Tue Jul 28 17:11:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVoDY-0004xD-NG
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 17:03:53 +0200
+	id 1MVoKa-0008Tz-5t
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 17:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753524AbZG1PDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 11:03:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbZG1PDP
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 11:03:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34998 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753519AbZG1PDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 11:03:13 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 15:03:12 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp067) with SMTP; 28 Jul 2009 17:03:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18TVDUEz/gTOFil7hgCHhk0Y+5SucaYKalNe3X6xD
-	4p8vbzOtKZQ2vu
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <40aa078e0907280630p7751c3d9m639e63e7700a8819@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1754431AbZG1PID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 11:08:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbZG1PIB
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 11:08:01 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:64111 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754424AbZG1PIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 11:08:00 -0400
+Received: by ewy26 with SMTP id 26so96563ewy.37
+        for <git@vger.kernel.org>; Tue, 28 Jul 2009 08:07:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=rVCBl9+YhMcURB43kB8nVwoG1kuezqbz9Bf7e4GTJVw=;
+        b=k9AOuOoUyxHkwZvDH4dTt896rEgvfXyPeZm5i25qg1UfO5p+/6K0BgxfomGv/CizXF
+         7ijwoF3EHJhQ3VPuxMyhhUZeVJHgl/JEbNiIpSWwh/FEKopbe1MJKXkAd1O6JkJBJfxW
+         YYtu21lccIz+SBD2w2KfY/kZbjmgSswWq/M4c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=R+js4kW31W9bAsx0h/x03a1gwB2KOEGwqzWZFByLnlbYGu45HtsBXghVBEhC6s1yNU
+         U/qLlFJs5mV7uTL2yERXBvleE1Gab2ZtScYVXV1zESnd2YtVQV1BJ6XoJ+Zu5yhnoU//
+         8vTi5FWqz9Kx0h05H9opiJWKUZfMZDSh9ykc4=
+Received: by 10.210.118.13 with SMTP id q13mr6753874ebc.48.1248793678857;
+        Tue, 28 Jul 2009 08:07:58 -0700 (PDT)
+Received: from @ (91-165-131-3.rev.libertysurf.net [91.165.131.3])
+        by mx.google.com with ESMTPS id 24sm363079eyx.43.2009.07.28.08.07.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 28 Jul 2009 08:07:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <40aa078e0907280510s1afee3ddw3a9333620a3c7d7a@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124256>
 
-Hi,
-
-On Tue, 28 Jul 2009, Erik Faye-Lund wrote:
-
-> On Tue, Jul 28, 2009 at 3:19 PM, Johannes
-> Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> > If you already start some infrastructure like this, you should go the 
-> > whole nine yards and make helper functions in remote.c or transport.c 
-> > that help implementing "git-remote-<protocol>" helpers.
+The 28/07/09, Erik Faye-Lund wrote:
 > 
-> You mean helper-helpers? :)
+> Here's an attempt to fix the case when Sys::Hostname::hostname returns
+> "" (domains aren't allowed to be empty if I read RFC2822 correctly).
+>
+> The problem with the previous attempt was that the earlier if assigned
+> "user@" to $du_part, so the last if was never entered ($du_part was
+> always defined).
 
-Not really... I meant functions that do all the stdin parsing for you, 
-together with error handling, and only return proper lists of verified 
-arguments in the appropriate data structure.  This functionality is likely 
-to be needed by all remote helpers, that's why I would prefer to have it 
-exposed as functions in libgit.a, to be reused by all the helpers.
+Yes, thank you.
 
-Of course, this would not help shell scripting such helpers, but you have 
-to start somewhere.  And that somewhere happens to be the http transport.
+> I generally don't write Perl, so people will most likely barf all over
+> this one, but at least it should show the concept. It might not even
+> work.
 
-Ciao,
-Dscho
+Looks ok here.
+
+> I also suspect that it is not needed.
+
+I'm not sure because http://linux.die.net/man/2/gethostname does not
+tell either (and POSIX neither).
+
+That said, I tend to think it worth to merge this fix before having a
+bug report.
+
+-- 
+Nicolas Sebrecht
