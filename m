@@ -1,67 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] log: Show reflog date with --date=normal
-Date: Tue, 28 Jul 2009 10:05:34 -0700
-Message-ID: <7vr5w07n6p.fsf@alter.siamese.dyndns.org>
-References: <1e2f7d731286d99b74cc9af37beb5fe187e9d460.1248770042.git.trast@student.ethz.ch>
+From: Frans Pop <elendil@planet.nl>
+Subject: Re: Add option in git-am to ignore leading text?
+Date: Tue, 28 Jul 2009 19:38:24 +0200
+Message-ID: <200907281938.24960.elendil@planet.nl>
+References: <200907280513.59374.elendil@planet.nl> <20090728142219.GA16168@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 28 19:05:52 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 28 19:38:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVq7b-0005w0-U3
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 19:05:52 +0200
+	id 1MVqdH-0005zu-FS
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 19:38:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637AbZG1RFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 13:05:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbZG1RFn
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 13:05:43 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:36625 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428AbZG1RFn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 13:05:43 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DD617178D7;
-	Tue, 28 Jul 2009 13:05:41 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 04C68178CF; Tue,
- 28 Jul 2009 13:05:36 -0400 (EDT)
-In-Reply-To: <1e2f7d731286d99b74cc9af37beb5fe187e9d460.1248770042.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 28 Jul 2009 10\:40\:20 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E1A9A5B2-7B98-11DE-B1A4-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1754034AbZG1Ri0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 13:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753772AbZG1Ri0
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 13:38:26 -0400
+Received: from cpsmtpm-eml110.kpnxchange.com ([195.121.3.14]:51294 "EHLO
+	CPSMTPM-EML110.kpnxchange.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753533AbZG1RiZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 13:38:25 -0400
+Received: from aragorn.fjphome.nl ([84.85.147.182]) by CPSMTPM-EML110.kpnxchange.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Tue, 28 Jul 2009 19:38:25 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090728142219.GA16168@vidovic>
+Content-Disposition: inline
+X-OriginalArrivalTime: 28 Jul 2009 17:38:25.0685 (UTC) FILETIME=[35E9C450:01CA0FAA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124263>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Tuesday 28 July 2009, Nicolas Sebrecht wrote:
+> The 28/07/09, Frans Pop wrote:
+> > That's a very useful feature. However, on lkml there are frequently
+> > also mails with the following structure (example: [1]).
+> >
+> > [1] http://lkml.org/lkml/2009/7/10/49
+>
+> This is an example of what not to do. Content after the '---' won't be
+> part of the commit message.
 
-> The reflog case special-cases --date=default (internally DATE_NORMAL)
-> to show the entry number instead of a date.  This means it is
-> impossible to show the default date format for the reflog entries.
+Yes, I'm aware of that (and I omitted such a line from my example for that 
+reason). But currently that's not really relevant as either with or 
+without that line one needs to manually fix up things before the desired 
+result is obtained.
 
-Isn't it the other way around?  Traditionally you wrote
+If my feature request is implemented I'll of course make sure to omit the
+'---' line if needed.
 
-    $ git show -g @{0}
-    $ git show -g @{now}
+Here are some other examples (some of which would equally need to drop or 
+change a separator line).
+http://lkml.org/lkml/2009/6/25/62
+http://lkml.org/lkml/2009/6/22/114
+http://lkml.org/lkml/2009/6/30/109
+http://lkml.org/lkml/2009/6/30/224
 
-to explicitly ask for either time or number, but without @{which}, the
-presense of --date=<foo> for some unknown reason declares that you want
-time for reflogs, too.  I personally think that is an insane behaviour,
-but that is probably already stuck in people's fingers.
+> IMHO, a better way would be to ignore lines beginning with a defined
+> level of quotes in the commit message (the "level" beeing the number of
+> '>' or '> ' found at the beginning of a line. Something like
+>
+> 	--strip-quotes[=N]
+>
+> where N is the level of quoted lines to remove (if "=N" is
+> not given, assume that the level is 1 and remove all the quotes).
 
-    $ git show -g --date=short master
-    $ git show -g --date=short master@{0}
-    $ git show -g --date=short master@{now}
-    
-I think what is broken, if anything, is the second case (i.e. with --date,
-you cannot even ask for entry numbers).
+As Mark Brown has already said, that won't solve the issue for an 
+introduction or comments added by the sender of the mail.
+Also, people use all kinds of quoting schemes, not just leading ">".
 
-You can get times in default date formats just fine.
+And I've also seen plenty of cases where quoted lines _were_ a desired 
+part of a commit log.
+
+Thanks,
+FJP
