@@ -1,42 +1,42 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/3 v2] Add support for external programs for handling
- native fetches
-Date: Tue, 28 Jul 2009 13:38:48 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907281126200.2147@iabervon.org>
-References: <alpine.LNX.2.00.0907280155390.2147@iabervon.org> <alpine.DEB.1.00.0907281444140.8306@pacific.mpi-cbg.de>
+Subject: Re: [PATCH 2/3 v2] Use an external program to implement fetching
+ with curl
+Date: Tue, 28 Jul 2009 13:59:44 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907281339260.2147@iabervon.org>
+References: <alpine.LNX.2.00.0907280207350.2147@iabervon.org> <alpine.DEB.1.00.0907281505290.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Mariano Ortega <mgo1977@gmail.com>,
-	Reece Dunn <msclrhd@googlemail.com>
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jul 28 19:39:03 2009
+X-From: git-owner@vger.kernel.org Tue Jul 28 20:00:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVqdh-0006FU-1l
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 19:39:01 +0200
+	id 1MVqy0-00084N-HU
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 20:00:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754303AbZG1Riu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 13:38:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754036AbZG1Riu
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 13:38:50 -0400
-Received: from iabervon.org ([66.92.72.58]:43533 "EHLO iabervon.org"
+	id S1755196AbZG1R7w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 13:59:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755194AbZG1R7v
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 13:59:51 -0400
+Received: from iabervon.org ([66.92.72.58]:45545 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754003AbZG1Rit (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 13:38:49 -0400
-Received: (qmail 1119 invoked by uid 1000); 28 Jul 2009 17:38:48 -0000
+	id S1755038AbZG1R7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 13:59:50 -0400
+Received: (qmail 3560 invoked by uid 1000); 28 Jul 2009 17:59:44 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 28 Jul 2009 17:38:48 -0000
-In-Reply-To: <alpine.DEB.1.00.0907281444140.8306@pacific.mpi-cbg.de>
+  by localhost with SMTP; 28 Jul 2009 17:59:44 -0000
+In-Reply-To: <alpine.DEB.1.00.0907281505290.8306@pacific.mpi-cbg.de>
 User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124265>
+
+
 
 On Tue, 28 Jul 2009, Johannes Schindelin wrote:
 
@@ -44,278 +44,253 @@ On Tue, 28 Jul 2009, Johannes Schindelin wrote:
 > 
 > On Tue, 28 Jul 2009, Daniel Barkalow wrote:
 > 
-> > transport_get() can call transport_shim_init() to have list and
-> > fetch-ref operations handled by running a separate program as:
+> > diff --git a/Makefile b/Makefile
+> > index 01efc73..d3dd2ed 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -980,6 +980,7 @@ else
+> >  		CURL_LIBCURL = -lcurl
+> >  	endif
+> >  	BUILTIN_OBJS += builtin-http-fetch.o
+> > +	PROGRAMS += git-shim-curl$X
 > 
-> As I commented already, "shim" is a meaningless word in the context of 
-> Git.  At _least_ call it something like "git-remote-<protocol>".  Even 
-> "git-fetch-<protocol>" would be better than "shim".
-
-I think git-remote-<protocol> is a good name; I'm not particularly tied to 
-"shim", although I think this should be able to support push as well as 
-fetch (that is, instead of http-push being a separate program that 
-transport.c knows how to run, have that be handled by transport-side code 
-that could support pushing with arbitrary protocols, and have the pushing 
-code built into the curl handler). I do think that I want to form the 
-command names differently depending on whether this is a helper that 
-transports git objects to a remote git repository using a protocol that 
-the helper is for, or a helper that interacts with a non-git remote 
-repository where the helper is particular to the foreign scm.
-
-> > diff --git a/Documentation/git-shim.txt b/Documentation/git-shim.txt
+> So now you not only use that disgustingly meaningless name "shim", but 
+> also abolish the notion that the helper is called by its protocol name?
+> 
+> > diff --git a/shim-curl.c b/shim-curl.c
 > > new file mode 100644
-> > index 0000000..dd80c6d
+> > index 0000000..bde041b
 > > --- /dev/null
-> > +++ b/Documentation/git-shim.txt
-> > @@ -0,0 +1,37 @@
-> > +git-shim(1)
-> > +============
-> > +
-> > +NAME
-> > +----
-> > +git-shim - Helper programs for interoperation with remote git
-> 
-> Actually, this is just one helper program, no?  Why can't it be integrated 
-> into transport.c?
-
-No, this defines a pattern of helper programs, all of which should behave 
-as documented by the same man page, so that the same code can run any of 
-them.
-
-> > +COMMANDS
-> > +--------
-> > +
-> > +Commands are given by the caller on the helper's standard input, one per line.
-> > +
-> > +'list'::
-> > +	Lists the refs, one per line, if the format "<value>
-> > +	<name>". The value is either a hex sha1 hash or "@<dest>" for
-> > +	symrefs. After the complete list, outputs a blank line.
-> > +
-> > +'fetch' ref::
-> > +	Fetches the given ref, writing the necessary objects to the
-> > +	database. Outputs a blank line when the fetch is complete.
-> > ++
-> 
-> So you allow only 'list' and 'fetch'.  That is very limiting, and you do 
-> not even foresee a method to ask for the helper's capabilities.  We 
-> already saw how much pain that caused in the transport protocol, so please 
-> do not repeat the mistake here.
-
-I'll put the "capabilities" command back in; I dropped it from this subset 
-of the foreign vcs helper protocol because there's not much variation 
-possible when the remote repository must be a git repository.
-
-> > diff --git a/transport-shim.c b/transport-shim.c
-> > new file mode 100644
-> > index 0000000..2518aba
-> > --- /dev/null
-> > +++ b/transport-shim.c
-> > @@ -0,0 +1,142 @@
+> > +++ b/shim-curl.c
+> > @@ -0,0 +1,132 @@
 > > +#include "cache.h"
-> > +#include "transport.h"
+> > +#include "remote.h"
+> > +#include "strbuf.h"
+> > +#include "walker.h"
+> > +#include "http.h"
 > > +
-> > +#include "run-command.h"
-> > +#include "commit.h"
-> > +#include "diff.h"
-> > +#include "revision.h"
-> > +
-> > +struct shim_data
+> > +static struct ref *get_refs(struct walker *walker, const char *url)
 > > +{
-> > +	const char *name;
-> > +	struct child_process *shim;
-> > +};
+> > +	int http_ret;
+> > +	char *refs_url;
+> > +	struct strbuf buffer = STRBUF_INIT;
+> > +	char *data, *start, *mid;
+> > +	int i = 0;
+> > +	char *ref_name;
+> > +	struct ref *refs = NULL;
+> > +	struct ref *ref = NULL;
+> > +	struct ref *last_ref = NULL;
 > > +
-> > +static struct child_process *get_shim(struct transport *transport)
-> > +{
-> > +	struct shim_data *data = transport->data;
-> > +	if (!data->shim) {
+> > +	refs_url = xmalloc(strlen(url) + 11);
+> > +	sprintf(refs_url, "%s/info/refs", url);
 > 
-> Why can't the caller check for this?  Would this not make much more sense 
-> to begin with?
+> And I thought we had strbufs...
 
-Depending on the order that the user of transport.c calls commands, the 
-helper may or may not already be running (and it may or may not have been 
-closed by the previous command, in the future extension of also handling 
-importers which produce a fast-import stream). The caller could check for 
-the connection already being constructed, but all callers would have to 
-add the same check.
+This whole chunk of code is a direct move from transport.c, which is 
+unfortunately not obvious in the way we represent diffs. I'd prefer to 
+keep the code the same across the move so that we'd be able to track it if 
+"git blame" got especially smart.
 
-> > +static int disconnect_shim(struct transport *transport)
-> > +{
-> > +	struct shim_data *data = transport->data;
-> > +	if (data->shim) {
-> > +		write(data->shim->in, "\n", 1);
-> > +		close(data->shim->in);
-> > +		finish_command(data->shim);
-> > +		free(data->shim->argv);
-> > +		free(data->shim);
-> > +		transport->data = NULL;
+> > +
+> > +	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+> > +	switch (http_ret) {
+> > +	case HTTP_OK:
+> > +		break;
+> > +	case HTTP_MISSING_TARGET:
+> > +		die("%s not found: did you run git update-server-info on the"
+> > +		    " server?", refs_url);
+> > +	default:
+> > +		http_error(refs_url, http_ret);
+> > +		die("HTTP request failed");
 > > +	}
-> > +	return 0;
-> > +}
-> 
-> Why is this function returning anything?
-
-Good point; we can't really fail to disconnect, and we've already 
-determined that things haven't screwed up. It's left over from the pattern 
-used by some of the native protocol code, where it may determine that the 
-operation didn't work after all when the "I'm done" packet fails to 
-produce the "goodbye" response.
-
-> > +static int fetch_refs_via_shim(struct transport *transport,
-> > +			       int nr_heads, const struct ref **to_fetch)
-> 
-> Do you fetch only the refs, or also their objects?  If the latter, the 
-> name needs to be adjusted.
-
-This is inherited from the transport.h naming, which made sense years ago 
-(when it contrasted fetching objects by name of ref versus fetching 
-objects by hash); it is fetching objects as specified by struct refs.
-
-> > +{
-> > +	struct child_process *shim;
-> > +	const struct ref *posn;
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	int i, count;
-> > +	FILE *file;
+> > +	free(refs_url);
 > > +
-> > +	count = 0;
-> > +	for (i = 0; i < nr_heads; i++) {
-> > +		posn = to_fetch[i];
-> > +		if (posn->status & REF_STATUS_UPTODATE)
-> > +			continue;
-> > +		count++;
-> > +	}
+> > +	data = buffer.buf;
+> > +	start = NULL;
+> > +	mid = data;
 > 
-> This would be more readable IMO if it read like this:
+> What does "mid" stand for?
 > 
-> 	for (count = i = 0; i < nr_heads; i++)
-> 		if (!(to_fetch[i]->status & REF_STATUS_UPTODATE))
-> 			count++;
-
-I think it's more readable to match the flow control of the later loop. 
-This is a dry run of the main loop, counting the number of times we 
-don't skip the important part. I think your version is a more readable way 
-of counting the number of not-up-to-date items, but it's not nearly so 
-readable a way of calculating how many times we'll reach the interesting 
-part of the loop further down.
-
-> > +	if (count) {
-> > +		shim = get_shim(transport);
-> 
-> It would be much better to say "if (!count) return 0;" here rather than 
-> indenting a whole block of code, with no code after that.
-
-True.
-
-> > +		for (i = 0; i < nr_heads; i++) {
-> > +			posn = to_fetch[i];
-> > +			if (posn->status & REF_STATUS_UPTODATE)
-> > +				continue;
-> > +			write(shim->in, "fetch ", 6);
-> > +			write(shim->in, sha1_to_hex(posn->old_sha1), 40);
-> > +			write(shim->in, " ", 1);
-> > +			write(shim->in, posn->name, strlen(posn->name));
-> > +			write(shim->in, "\n", 1);
+> > +	while (i < buffer.len) {
+> > +		if (!start) {
+> > +			start = &data[i];
 > > +		}
-> > +		file = fdopen(shim->out, "r");
-> > +		while (count) {
-> > +			if (strbuf_getline(&buf, file, '\n') == EOF)
-> > +				exit(128); /* child died, message supplied already */
-> > +
-> > +			count--;
 > 
-> while (count--)
-
-I don't like decrement operators used with values, except for the common 
-string idioms. But I like:
-
-	for (; count; count--)
-		if ...
-
+> Why curly brackets around this one, but not this:
+> 
+> > +		if (data[i] == '\t')
+> > +			mid = &data[i];
+> 
+> > +		if (data[i] == '\n') {
+> > +			data[i] = 0;
+> > +			ref_name = mid + 1;
+> > +			ref = xmalloc(sizeof(struct ref) +
+> > +				      strlen(ref_name) + 1);
+> 
+> What is alloc_ref() for?
+> 
+> > +			memset(ref, 0, sizeof(struct ref));
+> > +			strcpy(ref->name, ref_name);
+> > +			get_sha1_hex(start, ref->old_sha1);
+> > +			if (!refs)
+> > +				refs = ref;
+> > +			if (last_ref)
+> > +				last_ref->next = ref;
+> > +			last_ref = ref;
+> 
+> Is this another "tail"?
+> 
+> > +			start = NULL;
 > > +		}
+> > +		i++;
+> 
+> Oh, so it _is_ a for() loop.
+> 
 > > +	}
-> > +	return 0;
+> > +	strbuf_release(&buffer);
+> > +
+> > +	ref = alloc_ref("HEAD");
+> > +	if (!walker->fetch_ref(walker, ref) &&
+> > +	    !resolve_remote_symref(ref, refs)) {
+> > +		ref->next = refs;
+> > +		refs = ref;
+> > +	} else {
+> > +		free(ref);
+> > +	}
+> > +
+> > +	return refs;
 > > +}
 > > +
-> > +static struct ref *get_refs_via_shim(struct transport *transport, int for_push)
+> > +int main(int argc, const char **argv)
 > > +{
-> > +	struct child_process *shim;
-> > +	struct ref *ret = NULL;
-> > +	struct ref **end = &ret;
-> 
-> A better name for this is "tail", as is used at least in many parts of the 
-> Git source code already.
-
-True.
-
-> > +	struct ref *posn;
+> > +	struct remote *remote;
 > > +	struct strbuf buf = STRBUF_INIT;
-> > +	FILE *file;
+> > +	const char *url;
+> > +	struct walker *walker = NULL;
 > > +
-> > +	shim = get_shim(transport);
-> > +	write(shim->in, "list\n", 5);
-> 
-> What about the return value of this write()?  It can indicate error or 
-> short write.
-
-Yeah, I should use write_in_full(), although we know at this point that 
-shim->in is a pipe which has been drained entirely.
-
+> > +	setup_git_directory();
+> > +	if (argc < 2) {
+> > +		fprintf(stderr, "Remote needed\n");
+> > +		return 1;
+> > +	}
 > > +
-> > +	file = fdopen(shim->out, "r");
-> 
-> No check for file != NULL?
-
-I don't think this can fail, if setting up the child process didn't fail.
-
-> > +	while (1) {
-> > +		char *eov;
-> > +		if (strbuf_getline(&buf, file, '\n') == EOF)
-> > +			exit(128); /* child died, message supplied already */
+> > +	remote = remote_get(argv[1]);
 > > +
-> > +		if (!*buf.buf)
+> > +	if (argc > 2) {
+> > +		url = argv[2];
+> > +	} else {
+> > +		url = remote->url[0];
+> > +	}
+> > +
+> > +	do {
+> > +		if (strbuf_getline(&buf, stdin, '\n') == EOF)
 > > +			break;
-> > +
-> > +		eov = strchr(buf.buf, ' ');
-> > +		if (!eov)
-> > +			die("Malformed response in ref list: %s", buf.buf);
-> > +		*eov = '\0';
-> > +		*end = alloc_ref(eov + 1);
-> > +		if (eov) {
-> 
-> Did we not die 4 lines earlier if eov == NULL?
-
-Yeah, I confused myself while paring down the vcs output parsing code. I 
-think I actually want to future-proof this code to allow the helper to add 
-space-separated flags after the name, and I don't want this test.
-
-> > +			if (buf.buf[0] == '@')
-> > +				(*end)->symref = xstrdup(buf.buf + 1);
-> > +			else
-> > +				get_sha1_hex(buf.buf, (*end)->old_sha1);
-> 
-> IMHO it is not at all clear what you are doing here.  At least a little 
-> hint is in order if the code does not explain itself.
-
-It's parsing the output of the "list" command, as given in the 
-documentation. Item starting with a '@' is a symref, otherwise it is a 
-sha1.
-
+> > +		if (!prefixcmp(buf.buf, "fetch ")) {
+> > +			char *obj = buf.buf + strlen("fetch ");
+> > +			if (!walker)
+> > +				walker = get_http_walker(url, remote);
+> > +			walker->get_all = 1;
+> > +			walker->get_tree = 1;
+> > +			walker->get_history = 1;
+> > +			walker->get_verbosely = 0;
+> > +			walker->get_recover = 0;
+> > +			if (walker_fetch(walker, 1, &obj, NULL, NULL))
+> > +				die("Fetch failed.");
+> > +			printf("\n");
+> > +			fflush(stdout);
+> > +		} else if (!strcmp(buf.buf, "list")) {
+> > +			struct ref *refs;
+> > +			struct ref *posn;
+> > +			if (!walker)
+> > +				walker = get_http_walker(url, remote);
+> > +			refs = get_refs(walker, url);
+> > +			for (posn = refs; posn; posn = posn->next) {
+> > +				if (posn->symref)
+> > +					printf("@%s %s\n", posn->symref, posn->name);
+> > +				else
+> > +					printf("%s %s\n", sha1_to_hex(posn->old_sha1), posn->name);
+> > +			}
+> > +			printf("\n");
+> > +			fflush(stdout);
+> > +		} else {
+> > +			return 1;
 > > +		}
-> > +		end = &((*end)->next);
 > > +		strbuf_reset(&buf);
-> > +	}
-> > +	strbuf_release(&buf);
-> > +
-> > +	for (posn = ret; posn; posn = posn->next)
-> > +		resolve_remote_symref(posn, ret);
-> > +
-> > +	return ret;
+> > +	} while (1);
+> > +	return 0;
 > > +}
 > 
-> Ciao,
-> Dscho
+> If you already start some infrastructure like this, you should go the 
+> whole nine yards and make helper functions in remote.c or transport.c that 
+> help implementing "git-remote-<protocol>" helpers.
+
+I thought of that, but I couldn't think of any helper functions that 
+wouldn't be harder to use than to not use. In any case, they should be in 
+a separate file, since they'd only be used by a set of separate programs.
+
+> > diff --git a/transport.c b/transport.c
+> > index de0d587..6d13b0e 100644
+> > --- a/transport.c
+> > +++ b/transport.c
+> > @@ -950,14 +818,12 @@ struct transport *transport_get(struct remote *remote, const char *url)
+> >  	} else if (!prefixcmp(url, "http://")
+> >  	        || !prefixcmp(url, "https://")
+> >  	        || !prefixcmp(url, "ftp://")) {
+> > +		transport_shim_init(ret, "curl");
 > 
+> Like I said, identifying the remote helper by anything else than the 
+> protocol is a design catastrophe.
+
+But this helper supports all of the protocols supported by curl, and may 
+eventually not be the only available helper that supports some of these 
+protocols. I think it's better to represent this fact by having 
+transport.c explicitly know when to use this helper, rather than linking 
+the same executable to git-remote-https, git-remote-http, git-remote-ftp, 
+etc.
+
+> >  #ifdef NO_CURL
+> >  		error("git was compiled without libcurl support.");
 > 
+> Why the heck does this have to be guarded by an #ifdef NO_CURL?  It is the 
+> helper's task to say, not transport.c's.
+
+What helper? There is no helper at all if NO_CURL, and:
+
+  git: 'remote-curl' is not a git-command. See 'git --help'.
+
+is not a user-friendly message. For now, I'm keeping the existing 
+behavior.
+
+> >  #else
+> > -		ret->get_refs_list = get_refs_via_curl;
+> > -		ret->fetch = fetch_objs_via_curl;
+> >  		ret->push = curl_transport_push;
+> >  #endif
+> > -		ret->disconnect = disconnect_walker;
+> >  
+> >  	} else if (is_local(url) && is_file(url)) {
+> >  		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+> 
+> I think the basic idea of yours is sound, but all I see is some incomplete 
+> separation between builtin git-fetch/-push and the helper.  As it stands, 
+> git-fetch/-push have to be compiled with the exact knowledge what helper 
+> is there, git-fetch/-push are _still_ aware if Git was compiled with http 
+> support (so that it is not possible to just install the helper 
+> afterwards), and the infrastructure forbids any extension of capabilities 
+> in the future.
+
+In the long run, I want to have two methods for running an external 
+helper: one where the installation in some way knows when to run the 
+helper (either by having code in place or by having helpers with 
+particular names or something), and one where the user specifies something 
+explicit. That is, git shouldn't know that a remote with no url but some 
+"codeline" settings that start with "//" is p4, and the user shouldn't 
+have to know that git repositories whose urls start with http:// are done 
+with an external helper, so no one mechanism is sufficient.
+
+It would be nice if git supported querying its environment to see whether 
+a command is available and printing a message suitted to why it was 
+looking for it, but that's a separate topic.
+
+	-Daniel
+*This .sig left intentionally blank*
