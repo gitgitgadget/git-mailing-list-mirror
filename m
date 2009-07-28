@@ -1,258 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3 v2] Add support for external programs for handling
- native fetches
-Date: Tue, 28 Jul 2009 15:04:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907281444140.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0907280155390.2147@iabervon.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/3] log: Show reflog date with --date=normal
+Date: Tue, 28 Jul 2009 15:11:09 +0200
+Message-ID: <200907281511.10010.trast@student.ethz.ch>
+References: <1e2f7d731286d99b74cc9af37beb5fe187e9d460.1248770042.git.trast@student.ethz.ch> <200907281353.07590.trast@student.ethz.ch> <alpine.DEB.1.00.0907281428220.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Mariano Ortega <mgo1977@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Jul 28 15:05:05 2009
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 28 15:11:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVmMV-0008T3-Cy
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:05:00 +0200
+	id 1MVmSo-0003Cd-9U
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 15:11:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237AbZG1NEu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 09:04:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbZG1NEt
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:04:49 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42888 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751798AbZG1NEs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 09:04:48 -0400
-Received: (qmail invoked by alias); 28 Jul 2009 13:04:41 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp046) with SMTP; 28 Jul 2009 15:04:41 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19vm3pNHDFvE/GxUEBp7dRq0lw7ZZGlwNsgLsA0BE
-	wMskHIG0JOVlHz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0907280155390.2147@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.45
+	id S1753173AbZG1NLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 09:11:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752084AbZG1NLU
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 09:11:20 -0400
+Received: from xsmtp0.ethz.ch ([82.130.70.14]:17323 "EHLO XSMTP0.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752025AbZG1NLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 09:11:19 -0400
+Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Jul 2009 15:11:18 +0200
+Received: from thomas.localnet ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 28 Jul 2009 15:11:18 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
+In-Reply-To: <alpine.DEB.1.00.0907281428220.8306@pacific.mpi-cbg.de>
+X-OriginalArrivalTime: 28 Jul 2009 13:11:18.0466 (UTC) FILETIME=[E4F23A20:01CA0F84]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124246>
 
-Hi,
+Johannes Schindelin wrote:
+> 
+> Inspecting reflogs is an interactive task, and I do not think that this 
+> justifies the complications you suggested.  I can _easily_ say "git log 
+> -g" and then "git show --date=relative <commit>".  Not that I _ever_ 
+> needed such a thing.
 
-On Tue, 28 Jul 2009, Daniel Barkalow wrote:
+That's something entirely different.  This series is about the date of
+*reflog entries*; the git-show will give you the dates associated with
+the *commit*.  The latter act naturally w.r.t. --date and are of no
+concern to this discussion (other than not breaking them of course).
 
-> transport_get() can call transport_shim_init() to have list and
-> fetch-ref operations handled by running a separate program as:
+The reflog entries, OTOH, show numbers instead in "default" date mode,
+leading people to do things like
 
-As I commented already, "shim" is a meaningless word in the context of 
-Git.  At _least_ call it something like "git-remote-<protocol>".  Even 
-"git-fetch-<protocol>" would be better than "shim".
+  git reflog show HEAD@{now}
+  git reflog --date=local
 
-> diff --git a/Documentation/git-shim.txt b/Documentation/git-shim.txt
-> new file mode 100644
-> index 0000000..dd80c6d
-> --- /dev/null
-> +++ b/Documentation/git-shim.txt
-> @@ -0,0 +1,37 @@
-> +git-shim(1)
-> +============
-> +
-> +NAME
-> +----
-> +git-shim - Helper programs for interoperation with remote git
+to see the reflog with dates instead of numbers.  (AFAICT 'reflog' in
+this usage is equivalent to 'log -g --oneline' which is even more
+typing, so I'm usually assuming 'reflog'.)
 
-Actually, this is just one helper program, no?  Why can't it be integrated 
-into transport.c?
+So the discussion on IRC was about making a shorthand like --date that
+triggers display of the reflog dates.  This much can be solved by the
+DATE_UNSPECIFIED value alone.
 
-At the very least, the text so far is misleading.
+I just wasn't happy to leave it at that because that means people who
+do set log.date now always get dates instead of numbers in the reflog.
 
-> +COMMANDS
-> +--------
-> +
-> +Commands are given by the caller on the helper's standard input, one per line.
-> +
-> +'list'::
-> +	Lists the refs, one per line, if the format "<value>
-> +	<name>". The value is either a hex sha1 hash or "@<dest>" for
-> +	symrefs. After the complete list, outputs a blank line.
-> +
-> +'fetch' ref::
-> +	Fetches the given ref, writing the necessary objects to the
-> +	database. Outputs a blank line when the fetch is complete.
-> ++
+> And what exactly does "--no-date" mean?  Does it not say _exactly_ what 
+> "--date=unspecified" would _intuitively_ mean?
 
-So you allow only 'list' and 'fetch'.  That is very limiting, and you do 
-not even foresee a method to ask for the helper's capabilities.  We 
-already saw how much pain that caused in the transport protocol, so please 
-do not repeat the mistake here.
+Maybe to someone who knows the implementation details.  To a user,
+specifying --date=unspecified is probably a contradiction in terms,
+and even if not, it does not show the date in some unspecified format
+-- it hides it (again, for reflog dates).
 
-> diff --git a/transport-shim.c b/transport-shim.c
-> new file mode 100644
-> index 0000000..2518aba
-> --- /dev/null
-> +++ b/transport-shim.c
-> @@ -0,0 +1,142 @@
-> +#include "cache.h"
-> +#include "transport.h"
-> +
-> +#include "run-command.h"
-> +#include "commit.h"
-> +#include "diff.h"
-> +#include "revision.h"
-> +
-> +struct shim_data
-> +{
-> +	const char *name;
-> +	struct child_process *shim;
-> +};
-> +
-> +static struct child_process *get_shim(struct transport *transport)
-> +{
-> +	struct shim_data *data = transport->data;
-> +	if (!data->shim) {
-
-Why can't the caller check for this?  Would this not make much more sense 
-to begin with?
-
-> +static int disconnect_shim(struct transport *transport)
-> +{
-> +	struct shim_data *data = transport->data;
-> +	if (data->shim) {
-> +		write(data->shim->in, "\n", 1);
-> +		close(data->shim->in);
-> +		finish_command(data->shim);
-> +		free(data->shim->argv);
-> +		free(data->shim);
-> +		transport->data = NULL;
-> +	}
-> +	return 0;
-> +}
-
-Why is this function returning anything?
-
-> +static int fetch_refs_via_shim(struct transport *transport,
-> +			       int nr_heads, const struct ref **to_fetch)
-
-Do you fetch only the refs, or also their objects?  If the latter, the 
-name needs to be adjusted.
-
-> +{
-> +	struct child_process *shim;
-> +	const struct ref *posn;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	int i, count;
-> +	FILE *file;
-> +
-> +	count = 0;
-> +	for (i = 0; i < nr_heads; i++) {
-> +		posn = to_fetch[i];
-> +		if (posn->status & REF_STATUS_UPTODATE)
-> +			continue;
-> +		count++;
-> +	}
-
-This would be more readable IMO if it read like this:
-
-	for (count = i = 0; i < nr_heads; i++)
-		if (!(to_fetch[i]->status & REF_STATUS_UPTODATE))
-			count++;
-
-> +	if (count) {
-> +		shim = get_shim(transport);
-
-It would be much better to say "if (!count) return 0;" here rather than 
-indenting a whole block of code, with no code after that.
-
-> +		for (i = 0; i < nr_heads; i++) {
-> +			posn = to_fetch[i];
-> +			if (posn->status & REF_STATUS_UPTODATE)
-> +				continue;
-> +			write(shim->in, "fetch ", 6);
-> +			write(shim->in, sha1_to_hex(posn->old_sha1), 40);
-> +			write(shim->in, " ", 1);
-> +			write(shim->in, posn->name, strlen(posn->name));
-> +			write(shim->in, "\n", 1);
-> +		}
-> +		file = fdopen(shim->out, "r");
-> +		while (count) {
-> +			if (strbuf_getline(&buf, file, '\n') == EOF)
-> +				exit(128); /* child died, message supplied already */
-> +
-> +			count--;
-
-while (count--)
-
-> +		}
-> +	}
-> +	return 0;
-> +}
-> +
-> +static struct ref *get_refs_via_shim(struct transport *transport, int for_push)
-> +{
-> +	struct child_process *shim;
-> +	struct ref *ret = NULL;
-> +	struct ref **end = &ret;
-
-A better name for this is "tail", as is used at least in many parts of the 
-Git source code already.
-
-> +	struct ref *posn;
-> +	struct strbuf buf = STRBUF_INIT;
-> +	FILE *file;
-> +
-> +	shim = get_shim(transport);
-> +	write(shim->in, "list\n", 5);
-
-What about the return value of this write()?  It can indicate error or 
-short write.
-
-> +
-> +	file = fdopen(shim->out, "r");
-
-No check for file != NULL?
-
-> +	while (1) {
-> +		char *eov;
-> +		if (strbuf_getline(&buf, file, '\n') == EOF)
-> +			exit(128); /* child died, message supplied already */
-> +
-> +		if (!*buf.buf)
-> +			break;
-> +
-> +		eov = strchr(buf.buf, ' ');
-> +		if (!eov)
-> +			die("Malformed response in ref list: %s", buf.buf);
-> +		*eov = '\0';
-> +		*end = alloc_ref(eov + 1);
-> +		if (eov) {
-
-Did we not die 4 lines earlier if eov == NULL?
-
-> +			if (buf.buf[0] == '@')
-> +				(*end)->symref = xstrdup(buf.buf + 1);
-> +			else
-> +				get_sha1_hex(buf.buf, (*end)->old_sha1);
-
-IMHO it is not at all clear what you are doing here.  At least a little 
-hint is in order if the code does not explain itself.
-
-> +		}
-> +		end = &((*end)->next);
-> +		strbuf_reset(&buf);
-> +	}
-> +	strbuf_release(&buf);
-> +
-> +	for (posn = ret; posn; posn = posn->next)
-> +		resolve_remote_symref(posn, ret);
-> +
-> +	return ret;
-> +}
-
-Ciao,
-Dscho
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
