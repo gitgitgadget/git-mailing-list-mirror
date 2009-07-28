@@ -1,95 +1,93 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: Pro Git Book
-Date: Tue, 28 Jul 2009 09:14:27 -0700
-Message-ID: <d411cc4a0907280914v520d3c25xefc4e0f74046c4bb@mail.gmail.com>
-References: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
-	 <20090728085600.GA33224@gmail.com>
+From: Saikiran Madugula <hummerbliss@gmail.com>
+Subject: Re: [PATCH] Documentation: Fix build failure of docs.
+Date: Tue, 28 Jul 2009 17:39:33 +0100
+Message-ID: <4A6F29C5.6030608@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 18:14:39 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jul 28 18:39:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVpK1-0004aj-Lh
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 18:14:38 +0200
+	id 1MVpiL-0000eo-8w
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 18:39:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754687AbZG1QO3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Jul 2009 12:14:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754554AbZG1QO3
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 12:14:29 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:12259 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754548AbZG1QO2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 12:14:28 -0400
-Received: by an-out-0708.google.com with SMTP id d40so118271and.1
-        for <git@vger.kernel.org>; Tue, 28 Jul 2009 09:14:28 -0700 (PDT)
+	id S1754961AbZG1Qji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 12:39:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754940AbZG1Qji
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 12:39:38 -0400
+Received: from mail-ew0-f226.google.com ([209.85.219.226]:56472 "EHLO
+	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983AbZG1Qjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 12:39:37 -0400
+Received: by ewy26 with SMTP id 26so171700ewy.37
+        for <git@vger.kernel.org>; Tue, 28 Jul 2009 09:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:content-type
          :content-transfer-encoding;
-        bh=XNw3ldUKVJm+bEc35RF5oNzEqBlbsEtSzyY/hG3nfxg=;
-        b=nQEMHp/M1HJo8QD38xe6S/e+iBmYclQMY53akZmByObJXGt1gwjW0kbxeIy8ISwKxW
-         z1Mb7DUyO+3BO31sRc7VUYi6gK08ZQJQ1PL7MbKxXW+lbUuYGmI2lUeo7aE6tVJnOnrW
-         IHokdgrc9xJwXlBqPyAN3Zxifi5ugCmjnMrok=
+        bh=5iUdocKbPRJx6CmSuvY4gD00zFPlxpdioSZITvEUiQQ=;
+        b=ASYYoJxX0endrplHRwj/suClREjZXGO8USh7ftPffeAu8N2PBmU+FpN3/1wqA6Yrkp
+         TiyXluuHtE4SAujgOD3XCRMntwQwyQkNaufwiYftZwru92Y6naIi2PU8fw6qSSIVLrii
+         0VuX061O/97rV/ObyuPG78R4uK4Dx3zugOR9Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=teQtshMD47C8PiLgYD4C8lkvECyjUrS5TEfdUDpG1NGt97N2hh3JbgQ3DunsVIYR0W
-         lcRcUOM4Ro7A9t8gJn9dS6NfbHAUFcbY6zURdoIrC2A2mz51tor8/CVvnDWFAtlhGkr2
-         T86Cx8QLXaGj21ovO1hltVLEilSrIR9YjwTaA=
-Received: by 10.100.251.6 with SMTP id y6mr10228912anh.44.1248797667834; Tue, 
-	28 Jul 2009 09:14:27 -0700 (PDT)
-In-Reply-To: <20090728085600.GA33224@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        b=qsQL88gxI2kWIo1YdlAXtITFonQLUoPK7s7E1SR0K0vbBKL+wEJyYLfzUiFjsT09o+
+         Fq/znM/6tQ99tAywKttWHKvbwfjh+rUl9MRIV+circ4PaxaeLKv2+xo8Cve26PDu2Oz6
+         DUpN609baZsaM1nQzefoSN136SBD20imE9vhI=
+Received: by 10.210.81.3 with SMTP id e3mr10182654ebb.12.1248799175873;
+        Tue, 28 Jul 2009 09:39:35 -0700 (PDT)
+Received: from ?10.0.11.140? ([85.118.31.194])
+        by mx.google.com with ESMTPS id 7sm184395eyg.15.2009.07.28.09.39.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 28 Jul 2009 09:39:35 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124261>
 
-Hey,
+OOps, forgot to cc vger.kernel.org
 
-On Tue, Jul 28, 2009 at 1:56 AM, David Aguilar<davvid@gmail.com> wrote:
->
-> Good stuff,
-> Thanks Scott.
->
-> In http://progit.org/book/ch7-1.html we go through a
-> lot of machinations to setup an external diff viewer.
->
-> That might be a good time to introduce git-difftool, even if
-> only to mention that the setup is much simpler when difftool is
-> used. =C2=A0It allows you to do without the wrapper scripts.
->
-> $ p4=3D/Applications/p4.merge.app/Contents/MacOS/p4merge
-> $ git config --global difftool.p4.cmd "$p4 \"\$LOCAL\" \"\$REMOTE\""
-> $ git difftool -t p4
->
-> $ git config --global diff.tool p4
-> $ git difftool
->
-> It's even easier if you use one of the several built-in tools,
-> e.g. opendiff, kompare, meld, etc., since it requires no
-> configuration.
+Thomas Rast wrote:
+> NAK.  Presumably you are using an asciidoc 8.x?  Please check if
+> saying
+> 
+>   make ASCIIDOC8=Yes man
+> 
+> fixes the problem.  Read the comments in Documentation/Makefile for
+> advice on what precise combination of options you should use.  Also,
+> if you do not want to actually work on docs
+> 
+>   make quick-install-man
+> 
+> is a much less painful way to get manpages (in this case, from Junio's
+> 'man' branch that has preformatted manpages for 'master').
 
-That's a good point - I never actually covered that, it looks like.
-I'll put that in the list of things to cover for the second edition :)
+My asciidoc version is 8.4.1. Yes "make ASCIIDOC8=yes" seems to have built with
+out any problems. Thanks for quick-install-man tip, I should have read till the
+end of INSTALL document  :) .
+> 
+> I put the +++ in there to stop the version I used at the time from
+> rendering the closing backtick as part of the URL and garbling the
+> entire paragraph in the process.  To be precise, with asciidoc 8.2.7
+> and without the +++ I get
+> 
+>   Clone it with <tt>git clone <a href="file:///path/to/repo</tt">file:///path/to/repo</tt</a>>.
+> 
+> in the HTML output.  Note the nested tags.  (With asciidoc 8.4.5 the
+> problem appears to be fixed.)
+> 
 
->
-> Mentioning that it's a fairly new feature is probably important,
-> too. =C2=A0Hmm. I guess I should've send a patch ;-)
-
-If you are interested in contributing and don't mind releasing the
-rights to your contributions to also be published commercially under a
-second edition in the future, please feel free to fork the project on
-GitHub and send me a pull request for anything you add.  I've already
-gotten errata in this manner, which is pretty cool. Otherwise I'll try
-to get this in eventually.
-
-Thanks,
-Scott
+People would start using latest versions of ascii doc which has no problems,
+wouldn't it be better if the default compile options suit them ? Also, it would
+be good if "make install man", would do "quick-install-man" as default to
+prevent users from the painful compilation of manpages everytime they try to
+install latest git.
