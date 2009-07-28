@@ -1,93 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Documentation: Fix build failure of docs.
-Date: Tue, 28 Jul 2009 20:03:03 +0200
-Message-ID: <4A6F3D57.2010602@drmicha.warpmail.net>
-References: <4A6F29C5.6030608@gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 3/3 v2] git-http-fetch: not a builtin
+Date: Tue, 28 Jul 2009 14:05:49 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907281400100.2147@iabervon.org>
+References: <alpine.LNX.2.00.0907280207480.2147@iabervon.org> <alpine.DEB.1.00.0907281520150.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Saikiran Madugula <hummerbliss@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 28 20:03:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Jul 28 20:06:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVr1M-00011e-3F
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 20:03:28 +0200
+	id 1MVr3m-00025P-Bj
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 20:05:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbZG1SDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 14:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755291AbZG1SDU
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 14:03:20 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43491 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755038AbZG1SDT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 14:03:19 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 8DBC33BD1F1;
-	Tue, 28 Jul 2009 14:03:19 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 28 Jul 2009 14:03:19 -0400
-X-Sasl-enc: NtKzRXt9DPWSZbXLOyZygwlTTDUci52YZfy10NiJjNQB 1248804199
-Received: from localhost.localdomain (p5DCC1492.dip0.t-ipconnect.de [93.204.20.146])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7BE5CD3A1;
-	Tue, 28 Jul 2009 14:03:18 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.2pre) Gecko/20090728 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <4A6F29C5.6030608@gmail.com>
+	id S1755327AbZG1SFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 14:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755317AbZG1SFu
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 14:05:50 -0400
+Received: from iabervon.org ([66.92.72.58]:54104 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755307AbZG1SFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 14:05:49 -0400
+Received: (qmail 4363 invoked by uid 1000); 28 Jul 2009 18:05:49 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Jul 2009 18:05:49 -0000
+In-Reply-To: <alpine.DEB.1.00.0907281520150.8306@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124267>
 
-Saikiran Madugula venit, vidit, dixit 28.07.2009 18:39:
-> OOps, forgot to cc vger.kernel.org
+On Tue, 28 Jul 2009, Johannes Schindelin wrote:
+
+> Hi,
 > 
-> Thomas Rast wrote:
->> NAK.  Presumably you are using an asciidoc 8.x?  Please check if
->> saying
->>
->>   make ASCIIDOC8=Yes man
->>
->> fixes the problem.  Read the comments in Documentation/Makefile for
->> advice on what precise combination of options you should use.  Also,
->> if you do not want to actually work on docs
->>
->>   make quick-install-man
->>
->> is a much less painful way to get manpages (in this case, from Junio's
->> 'man' branch that has preformatted manpages for 'master').
+> On Tue, 28 Jul 2009, Daniel Barkalow wrote:
 > 
-> My asciidoc version is 8.4.1. Yes "make ASCIIDOC8=yes" seems to have built with
-> out any problems. Thanks for quick-install-man tip, I should have read till the
-> end of INSTALL document  :) .
->>
->> I put the +++ in there to stop the version I used at the time from
->> rendering the closing backtick as part of the URL and garbling the
->> entire paragraph in the process.  To be precise, with asciidoc 8.2.7
->> and without the +++ I get
->>
->>   Clone it with <tt>git clone <a href="file:///path/to/repo</tt">file:///path/to/repo</tt</a>>.
->>
->> in the HTML output.  Note the nested tags.  (With asciidoc 8.4.5 the
->> problem appears to be fixed.)
->>
+> > From: Linus Torvalds <torvalds@linux-foundation.org>
+> > 
+> > This splits up git-http-fetch so that it isn't built-in.
+> > 
+> > It also removes the general dependency on curl, because it is no
+> > longer used by any built-in code.
+> > 
+> > Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> > Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> > ---
 > 
-> People would start using latest versions of ascii doc which has no problems,
-> wouldn't it be better if the default compile options suit them ? Also, it would
-> be good if "make install man", would do "quick-install-man" as default to
-> prevent users from the painful compilation of manpages everytime they try to
-> install latest git.
+> I think there is something missing that was not needed in Linus' original 
+> patch:
+> 
+> > diff --git a/Makefile b/Makefile
+> > index d3dd2ed..3425336 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -979,10 +979,7 @@ else
+> >  	else
+> >  		CURL_LIBCURL = -lcurl
+> >  	endif
+> > -	BUILTIN_OBJS += builtin-http-fetch.o
+> > -	PROGRAMS += git-shim-curl$X
+> > -	EXTLIBS += $(CURL_LIBCURL)
+> > -	LIB_OBJS += http.o http-walker.o
+> > +	PROGRAMS += git-shim-curl$X git-http-fetch$X
+> 
+> So now, http is all excluded from libgit.a.  Okay.
+> 
+> > @@ -1487,6 +1484,9 @@ git-imap-send$X: imap-send.o $(GITLIBS)
+> >  
+> >  http.o http-walker.o http-push.o transport.o: http.h
+> >  
+> > +git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
+> > +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> > +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+> 
+> And git-http-fetch is linked to libcurl.  But why is git-shim-curl not 
+> linked to libcurl?
 
-"make install" does not build any documentation at all, so that should
-be no source of pain.
+It is linked to libcurl. Like git-http-push, it was already not relying on 
+EXTLIBS including -lcurl.
 
-The user decides which we to go: install-man or quick-install-man.
-
-Having the defaults set up so that recent "mainstream" versions of the
-tool chain work without extra options may sound like a good idea - but
-that would mean changing options again and again. I think we should do
-this for major milestones (say git 1.7).
-
-Michael
+	-Daniel
+*This .sig left intentionally blank*
