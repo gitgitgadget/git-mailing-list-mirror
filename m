@@ -1,138 +1,109 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 1/3] log: Show reflog date with --date=normal
-Date: Tue, 28 Jul 2009 10:40:20 +0200
-Message-ID: <1e2f7d731286d99b74cc9af37beb5fe187e9d460.1248770042.git.trast@student.ethz.ch>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 28 10:41:55 2009
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Pro Git Book
+Date: Tue, 28 Jul 2009 01:56:01 -0700
+Message-ID: <20090728085600.GA33224@gmail.com>
+References: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 28 10:56:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MViEn-0002f8-1Z
-	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 10:40:45 +0200
+	id 1MViTq-0003B9-3l
+	for gcvg-git-2@gmane.org; Tue, 28 Jul 2009 10:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335AbZG1Ike (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 04:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbZG1Ikd
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 04:40:33 -0400
-Received: from xsmtp0.ethz.ch ([82.130.70.14]:20204 "EHLO XSMTP0.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750733AbZG1Ikc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Jul 2009 04:40:32 -0400
-Received: from xfe0.d.ethz.ch ([82.130.124.40]) by XSMTP0.ethz.ch with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Jul 2009 10:40:31 +0200
-Received: from localhost.localdomain ([129.132.153.233]) by xfe0.d.ethz.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 28 Jul 2009 10:40:31 +0200
-X-Mailer: git-send-email 1.6.4.rc3.218.g43757
-X-OriginalArrivalTime: 28 Jul 2009 08:40:31.0039 (UTC) FILETIME=[10B99CF0:01CA0F5F]
+	id S1752523AbZG1I4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Jul 2009 04:56:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752267AbZG1I4I
+	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 04:56:08 -0400
+Received: from rv-out-0506.google.com ([209.85.198.237]:40748 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbZG1I4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Jul 2009 04:56:07 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so1045354rvb.1
+        for <git@vger.kernel.org>; Tue, 28 Jul 2009 01:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=LvCxy1h/Cje0rQgrvFWS3k1VfKlbF8ARXo4fGh2mito=;
+        b=sRyGk94xg5uoZnvUUBJxdI8q7EyDNGBJOqAKpX7LDX5tAXX+3Q4X+rN3emGdf6RYcI
+         9wOPWsCzulWVRsCdEQHvzLoAA2u7L7dQhqRmrrBpfwBsq7VksCYBub4NQohKbvGHgxoD
+         fJEFE5TpERfBcqA8AhnB09YOs3oyYilA5YInM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hTkleXSiZ0zIL5iWht+NgMfLwjBT7uUCtn4W3JY+oxVoouU86Ruord02fizcyGRT4A
+         OxXvG3vhxXoBhwE5J5wX1pLrSpvz1YMcFveuDc1PEH0vaZbwN4qrbxDtMlon+Ft44+Hl
+         0rARoF7HaGBPtFE7ZuKpwCNsTcCHrmna/l8fY=
+Received: by 10.140.169.4 with SMTP id r4mr567766rve.102.1248771367628;
+        Tue, 28 Jul 2009 01:56:07 -0700 (PDT)
+Received: from gmail.com (cpe-76-94-197-182.socal.res.rr.com [76.94.197.182])
+        by mx.google.com with ESMTPS id b39sm750379rvf.23.2009.07.28.01.56.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 28 Jul 2009 01:56:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124225>
 
-The reflog case special-cases --date=default (internally DATE_NORMAL)
-to show the entry number instead of a date.  This means it is
-impossible to show the default date format for the reflog entries.
+On Mon, Jul 27, 2009 at 10:56:57AM -0700, Scott Chacon wrote:
+> Hey all,
+> 
+> Just a heads up - I've been working on a book on Git being published
+> by Apress called "Pro Git", which is being licensed under a CC 3.0
+> license and as I've just finished some of the final reviews, I've put
+> the entire content of the book online at:
+> 
+> http://progit.org
+> 
+> It should be shipping at the end of August, I think, but I just wanted
+> to let people know that there is another resource out there to help
+> learn Git.  This one was actually technically edited by Shawn, too, so
+> hopefully not too many serious errors of mine got through.
+> 
+> I've added a link to it on http://git-scm.com under the Books section,
+> in case you want to point any newbies there.  Hope this helps take
+> some teaching load off some of your plates.
+> 
+> Thanks,
+> Scott
 
-Introduce a new state DATE_DEFAULT (for the existing --date=default)
-that takes over the special value 0, and have DATE_NORMAL (for the new
---date=normal) act the same except in the reflog code where we still
-special-case the value 0.  This means that 'git log -g --date=normal'
-shows the date, whereas 'git log -g --date=default' shows the reflog
-entry number.
+Good stuff,
+Thanks Scott.
 
-Thanks to Johannes Schindelin for IRC help.
+In http://progit.org/book/ch7-1.html we go through a
+lot of machinations to setup an external diff viewer.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- Documentation/git-rev-list.txt     |    2 +-
- Documentation/rev-list-options.txt |    7 +++++--
- builtin-blame.c                    |    1 +
- cache.h                            |    3 ++-
- date.c                             |    2 ++
- 5 files changed, 11 insertions(+), 4 deletions(-)
+That might be a good time to introduce git-difftool, even if
+only to mention that the setup is much simpler when difftool is
+used.  It allows you to do without the wrapper scripts.
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index a765cfa..6f2013b 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -36,7 +36,7 @@ SYNOPSIS
- 	     [ \--regexp-ignore-case | -i ]
- 	     [ \--extended-regexp | -E ]
- 	     [ \--fixed-strings | -F ]
--	     [ \--date={local|relative|default|iso|rfc|short} ]
-+	     [ \--date={local|relative|normal|default|iso|rfc|short} ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index bf66116..2a106bd 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -13,7 +13,7 @@ include::pretty-options.txt[]
- 
- 	Synonym for `--date=relative`.
- 
----date={relative,local,default,iso,rfc,short,raw}::
-+--date={relative,local,normal,default,iso,rfc,short,raw}::
- 
- 	Only takes effect for dates shown in human-readable format, such
- 	as when using "--pretty". `log.date` config variable sets a default
-@@ -33,8 +33,11 @@ format, often found in E-mail messages.
- +
- `--date=raw` shows the date in the internal raw git format `%s %z` format.
- +
--`--date=default` shows timestamps in the original timezone
-+`--date=normal` shows timestamps in the original timezone
- (either committer's or author's).
-++
-+`--date=default` is like `normal`, except for reflog entries where the
-+entry number is shown instead.
- 
- ifdef::git-rev-list[]
- --header::
-diff --git a/builtin-blame.c b/builtin-blame.c
-index fd6ca51..9671c20 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2288,6 +2288,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		/* "normal" is used as the fallback for "relative" */
- 	case DATE_LOCAL:
- 	case DATE_NORMAL:
-+	case DATE_DEFAULT:
- 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
- 		break;
- 	}
-diff --git a/cache.h b/cache.h
-index e6c7f33..a62ce78 100644
---- a/cache.h
-+++ b/cache.h
-@@ -712,7 +712,8 @@ static inline unsigned int hexval(unsigned char c)
- 				   struct object *o, enum object_type);
- 
- enum date_mode {
--	DATE_NORMAL = 0,
-+	DATE_DEFAULT = 0,
-+	DATE_NORMAL,
- 	DATE_RELATIVE,
- 	DATE_SHORT,
- 	DATE_LOCAL,
-diff --git a/date.c b/date.c
-index 409a17d..661dd24 100644
---- a/date.c
-+++ b/date.c
-@@ -637,6 +637,8 @@ enum date_mode parse_date_format(const char *format)
- 	else if (!strcmp(format, "local"))
- 		return DATE_LOCAL;
- 	else if (!strcmp(format, "default"))
-+		return DATE_DEFAULT;
-+	else if (!strcmp(format, "normal"))
- 		return DATE_NORMAL;
- 	else if (!strcmp(format, "raw"))
- 		return DATE_RAW;
+$ p4=/Applications/p4.merge.app/Contents/MacOS/p4merge
+$ git config --global difftool.p4.cmd "$p4 \"\$LOCAL\" \"\$REMOTE\""
+$ git difftool -t p4
+
+$ git config --global diff.tool p4
+$ git difftool
+
+It's even easier if you use one of the several built-in tools,
+e.g. opendiff, kompare, meld, etc., since it requires no
+configuration.
+
+Mentioning that it's a fairly new feature is probably important,
+too.  Hmm. I guess I should've send a patch ;-)
+
+
+Have fun,
+
 -- 
-1.6.4.rc3.218.gb7ac
+		David
