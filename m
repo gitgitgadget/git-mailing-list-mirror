@@ -1,100 +1,139 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 5/5] unpack_trees(): add support for sparse checkout
-Date: Thu, 30 Jul 2009 09:32:01 +1000
-Message-ID: <fcaeb9bf0907291632n418508ccke6ad274211690e59@mail.gmail.com>
-References: <1248850154-5469-1-git-send-email-pclouds@gmail.com> 
-	<1248850154-5469-2-git-send-email-pclouds@gmail.com> <1248850154-5469-3-git-send-email-pclouds@gmail.com> 
-	<1248850154-5469-4-git-send-email-pclouds@gmail.com> <1248850154-5469-5-git-send-email-pclouds@gmail.com> 
-	<1248850154-5469-6-git-send-email-pclouds@gmail.com> <m3zlan1zhv.fsf@localhost.localdomain>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v3] Demonstrate bugs when a directory is replaced with
+ a symlink
+Date: Wed, 29 Jul 2009 16:58:53 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0907291656420.3161@localhost.localdomain>
+References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com> <1248819198-13921-2-git-send-email-james.e.pickens@intel.com> <4A70062A.4040008@drmicha.warpmail.net> <7v4osvyjl2.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
+ <7v63dbuyru.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com> <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 01:32:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Kjetil Barvik <barvik@broadpark.no>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: "Pickens, James E" <james.e.pickens@intel.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 01:59:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWIdJ-0000Ku-MD
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 01:32:30 +0200
+	id 1MWJ3i-0008Og-OE
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 01:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755185AbZG2XcW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 19:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754869AbZG2XcV
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 19:32:21 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:20533 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754826AbZG2XcV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 19:32:21 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1330622and.1
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 16:32:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=q3nblUdxLdWB3AQ/i2diS2msJpcIrQfO5B61Nw9FHyo=;
-        b=NLK6iRGZDdqms9kikoOxRegImza1a0kLSSBW7sbxD8wkRLo6YBxYzYlG8nl5IkQ9ai
-         B0JyqKFmWbF5fTalHeOvQwF9PfKZ3CotsL1mxbnaFQmDgla33EAnBp1A7cKvD8Nnl7YL
-         N9aIoE0zo7vGIqwOw12FLaN5CK74ghsRzOarI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=OBsaamYM0+0ONW85xJcXjECWT+osKzWxTZbS7m4h+hSfKypkqfq2sjd5EdULs23a98
-         WjHsbkJTgvB8F/+WsxzEiYmc9INj8CPUOtLvp+Ca3hcgFl5MR4XP+QCEkO6LvR4wsZa0
-         nBzxYSOQ4Tts9jpvUgyQlZb24S1gwGqgs2G+4=
-Received: by 10.100.44.4 with SMTP id r4mr632610anr.13.1248910341124; Wed, 29 
-	Jul 2009 16:32:21 -0700 (PDT)
-In-Reply-To: <m3zlan1zhv.fsf@localhost.localdomain>
+	id S1754030AbZG2X7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 19:59:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753965AbZG2X7b
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 19:59:31 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48669 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752935AbZG2X7a (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 19:59:30 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6TNwrbD016542
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 29 Jul 2009 16:58:55 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6TNwrc9010816;
+	Wed, 29 Jul 2009 16:58:53 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.968 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124412>
 
-2009/7/29 Jakub Narebski <jnareb@gmail.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0 =C2=A0<pclouds@gmail=
-=2Ecom> writes:
+
+
+On Wed, 29 Jul 2009, Linus Torvalds wrote:
 >
->> This patch teaches unpack_trees() to checkout/remove entries
->> on working directories appropriately when sparse checkout area is
->> changed. A helper "git shape-workdir" is needed to help determine
->> which entry will be checked out, which will be not.
->
-> Wouldn't "git update-index --index-info" (perhaps extended) be enough=
-?
+> The 'merge' issue is different, though: it's not due to a blind 'lstat()', 
+> but due to a blind 'unlink()' done by 'remove_path()'. I think 
+> 'remove_path()' should be taught to look for symlinks, and remove just the 
+> symlink - but that's a bit more work, especially since the symlink cache 
+> doesn't seem to expose any way to get the "what is the first symlink path" 
+> information.
+> 
+> Kjetil, can you look at that? 
 
-It's a bit more complicated because the in-memory index is filled with
-various information and can't just be dumped out to be manipulated
-with "git update-index".
+Hmm... This looks like it should do it.
 
->>
->> "git shape-workdir" will receive from stdin in this format
->>
->> X\tpathname
->>
->> where X is either
->> =C2=A0- '!' current entry is already CE_VALID
->> =C2=A0- 'N' current entry is "new" (it has not been in index before)
->> =C2=A0- '-' current entry is "normal" entry
->>
->> "git shape-workdir" is expected to return either "1" or "0"
->> immediately. "1" means the entry should be in workdir. "0" means
->> setting CE_VALID and get rid of it from workdir.
->
-> Just in case it would be better IMVHO if it returned "1\tpathname" or
-> "2\tpathname". =C2=A0By the way, is 'pathname' quoted if necessary, a=
-nd
-> does git-shape-workdir support -z/--null option?
+It doesn't make the test _pass_ (we don't seem to be creating a/b-2/c/d 
+properly - I haven't checked why yet, but I suspect it is becasue we think 
+it already exists due to the symlinked version lstat'ing fine), but it 
+seems to do the right thing.
 
-It doesn't currently. Thanks for the suggestion.
+		Linus
 
-> Signoff (also in some other patches in this series)?
+---
+ dir.c      |   20 --------------------
+ symlinks.c |   26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
-This series is mainly for taking input on how git-shape-workdir should
-behave, what format is good... That's why I did not sign off. Anyway
-the series is not really well tested (and obvious lacks tests)
---=20
-Duy
+diff --git a/dir.c b/dir.c
+index e05b850..2204826 100644
+--- a/dir.c
++++ b/dir.c
+@@ -911,23 +911,3 @@ void setup_standard_excludes(struct dir_struct *dir)
+ 	if (excludes_file && !access(excludes_file, R_OK))
+ 		add_excludes_from_file(dir, excludes_file);
+ }
+-
+-int remove_path(const char *name)
+-{
+-	char *slash;
+-
+-	if (unlink(name) && errno != ENOENT)
+-		return -1;
+-
+-	slash = strrchr(name, '/');
+-	if (slash) {
+-		char *dirs = xstrdup(name);
+-		slash = dirs + (slash - name);
+-		do {
+-			*slash = '\0';
+-		} while (rmdir(dirs) && (slash = strrchr(dirs, '/')));
+-		free(dirs);
+-	}
+-	return 0;
+-}
+-
+diff --git a/symlinks.c b/symlinks.c
+index 4bdded3..349c8d5 100644
+--- a/symlinks.c
++++ b/symlinks.c
+@@ -306,3 +306,29 @@ void remove_scheduled_dirs(void)
+ {
+ 	do_remove_scheduled_dirs(0);
+ }
++
++int remove_path(const char *name)
++{
++	char *slash;
++
++	/*
++	 * If we have a leading symlink, we remove
++	 * just the symlink!
++	 */
++	if (has_symlink_leading_path(name, strlen(name)))
++		name = default_cache.path;
++
++	if (unlink(name) && errno != ENOENT)
++		return -1;
++
++	slash = strrchr(name, '/');
++	if (slash) {
++		char *dirs = xstrdup(name);
++		slash = dirs + (slash - name);
++		do {
++			*slash = '\0';
++		} while (rmdir(dirs) && (slash = strrchr(dirs, '/')));
++		free(dirs);
++	}
++	return 0;
++}
