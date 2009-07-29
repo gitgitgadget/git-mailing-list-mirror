@@ -1,93 +1,67 @@
-From: Jody McIntyre <scjody@sun.com>
-Subject: Re: 'git pull' fails with 'not uptodate' message despite 'git	reset
- --hard'
-Date: Wed, 29 Jul 2009 18:54:32 -0400
-Message-ID: <20090729225432.GG22281@clouds>
-References: <20090728230842.GE22281@clouds>
- <32541b130907281719y57862c25w524f5bbf1df11c40@mail.gmail.com>
- <20090729203637.GF22281@clouds>
- <32541b130907291344u3c2b7df8ld848a79ec38197a6@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: Git for Windows 1.6.4
+Date: Thu, 30 Jul 2009 00:55:49 +0200
+Message-ID: <40aa078e0907291555v7eecdc15r7aca6cc31f566aa3@mail.gmail.com>
+References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 00:54:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jul 30 00:55:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWI2p-0005ME-Dz
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 00:54:47 +0200
+	id 1MWI3v-0005gJ-EE
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 00:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753338AbZG2Wyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 18:54:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753321AbZG2Wyh
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 18:54:37 -0400
-Received: from sca-es-mail-2.Sun.COM ([192.18.43.133]:55613 "EHLO
-	sca-es-mail-2.sun.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbZG2Wyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 18:54:36 -0400
-Received: from fe-sfbay-10.sun.com ([192.18.43.129])
-	by sca-es-mail-2.sun.com (8.13.7+Sun/8.12.9) with ESMTP id n6TMsaA7007424
-	for <git@vger.kernel.org>; Wed, 29 Jul 2009 15:54:36 -0700 (PDT)
-Content-disposition: inline
-Received: from conversion-daemon.fe-sfbay-10.sun.com by fe-sfbay-10.sun.com
- (Sun Java(tm) System Messaging Server 7u2-7.02 64bit (built Apr 16 2009))
- id <0KNK00300FAWT200@fe-sfbay-10.sun.com> for git@vger.kernel.org; Wed,
- 29 Jul 2009 15:54:36 -0700 (PDT)
-Received: from shinkansen.modernduck.com ([unknown] [24.37.153.200])
- by fe-sfbay-10.sun.com
- (Sun Java(tm) System Messaging Server 7u2-7.02 64bit (built Apr 16 2009))
- with ESMTPSA id <0KNK00M3XFMWMB40@fe-sfbay-10.sun.com>; Wed,
- 29 Jul 2009 15:54:34 -0700 (PDT)
-Received: by shinkansen.modernduck.com (sSMTP sendmail emulation); Wed,
- 29 Jul 2009 18:54:32 -0400
-In-reply-to: <32541b130907291344u3c2b7df8ld848a79ec38197a6@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754887AbZG2Wzv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 18:55:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754192AbZG2Wzv
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 18:55:51 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:43519 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754882AbZG2Wzu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 18:55:50 -0400
+Received: by fxm28 with SMTP id 28so299797fxm.17
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 15:55:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=40n2znQ+ruQk+YKp+8ltuaYUk181YYJJxlhIOjlEYu8=;
+        b=Gm86TPJ39FBFQOwENmZ1i7vnJwse9UfBeOHiVKQUXR/TWg6T2rV37sLFbnyw8vR+M6
+         o4LO/62/yfeWYdWpu+bIt9sCjsLnd3YWAm+MBK65jy15mMYkOFh/g/l/1FJyZ7pG6oHJ
+         eff6sJup2kbO3P2kivDTvgW4Dydbg7mq2doVA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mI3IWu3hz4cn9fCIG1PFSqJP32Uq/t7y3zH+TyPHFROhrQvdPo6h59LcfLzF2b6wxY
+         8AQVC4N5pouUQkxqr7cyZxqo2v6vhskxXFAy77MRxhbiK+PM9wW4Gsd4QWGn8P/WAb+q
+         UOpUtE6xRZw2JKKH/Bq9IBtkwKLwJJQqzhvpU=
+Received: by 10.204.62.135 with SMTP id x7mr344843bkh.124.1248908149780; Wed, 
+	29 Jul 2009 15:55:49 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124405>
 
-On Wed, Jul 29, 2009 at 08:44:32PM +0000, Avery Pennarun wrote:
+On Wed, Jul 29, 2009 at 11:40 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> - Some commands are not yet supported on Windows and excluded from th=
+e
+> =A0installation; [...] git send-email, git shell.
+<snip>
+> - Supports send-email
 
-> You can always try the thermonuclear option:
-> 
->    mv .git/index .git/index.bak
->    git reset HEAD    # note, don't use --hard here
->    git status   # should show only files you have *really* changed
-> 
-> Of course, if this fixes it than it's *definitely* a bug somewhere.
+=46orgot to update the list of unsupported commands?
 
-That still doesn't fix the problem.  I guess the index is not to blame.
-
-$ mv .git/index .git/index.bak
-$ git reset HEAD
-$ git status
-# On branch master
-# Your branch is behind 'origin/master' by 484 commits, and can be fast-forwarded.
-#
-nothing to commit (working directory clean)
-$ git pull origin tags/v2.6.31-rc4
-From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
- * tag               v2.6.31-rc4 -> FETCH_HEAD
-Updating 6847e15..4be3bd7
-error: Entry 'CREDITS' not uptodate. Cannot merge.
-
-Incidentally:
-
-$ diff .git/index.bak .git/index
-Binary files .git/index.bak and .git/index differ
-
-I don't know what .git/index contains so I don't know if that's surprising or
-not.
-
-Cheers,
-Jody
-
-> 
-> Good luck.
-> 
-> Avery
+--=20
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
