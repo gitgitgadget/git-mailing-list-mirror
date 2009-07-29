@@ -1,88 +1,89 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: 'git pull' fails with 'not uptodate' message despite 'git reset 
-	--hard'
-Date: Wed, 29 Jul 2009 20:44:32 +0000
-Message-ID: <32541b130907291344u3c2b7df8ld848a79ec38197a6@mail.gmail.com>
-References: <20090728230842.GE22281@clouds> <32541b130907281719y57862c25w524f5bbf1df11c40@mail.gmail.com> 
-	<20090729203637.GF22281@clouds>
+From: Josh ben Jore <jbenjore@whitepages.com>
+Subject: Re: Null deref in recursive merge in
+ df73af5f667a479764d2b2195cb0cb60b0b89e3d
+Date: Wed, 29 Jul 2009 13:45:00 -0700
+Message-ID: <C69602DC.61D6D%jbenjore@whitepages.com>
+References: <20090729161030.GA3848@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jody McIntyre <scjody@sun.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 22:45:07 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git <git@vger.kernel.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Wed Jul 29 22:45:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWG1G-0003H3-Be
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 22:45:02 +0200
+	id 1MWG1V-0003O4-0G
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 22:45:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756021AbZG2Uoy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 16:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756019AbZG2Uox
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 16:44:53 -0400
-Received: from mail-yx0-f198.google.com ([209.85.210.198]:53541 "EHLO
-	mail-yx0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753953AbZG2Uox convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 16:44:53 -0400
-Received: by yxe36 with SMTP id 36so387886yxe.21
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 13:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Cnu1ge7BswYRVP7e8Lw3nyTYsytlPySlVhl4ZFkJ/mE=;
-        b=Nf/e5oSwaMSUarEF38WSGpJ1hGPZYYH5DmP0g6wm3/4d/3xumj/87YUjBljhUq4hcu
-         buIwX/AC906gluAucAbx9c8o5l1K7nUAiWYCcxjVX2rgz+FSXe08lJV1g79nOww1VuNu
-         k7ZW2Rf1FJfNNUbsC6aPfsBjwtQjHYi9oYGD4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=LaaE41Uej7Dv2Ju/pIs3URbaFVcx5RNFVH5YF04CWEmZtrzpYaSY7aTXFBcsyUjVhh
-         pUtHJ7OTFBs3sRIP+UJSH+53X0gLTfSnHvHH/O6Dm4AdXuEBpp4ZHXwl89ibbHVZnpID
-         on+UT1AIgptpYhTMWuLusPaPCpC9EZQX8Mtf4=
-Received: by 10.150.191.10 with SMTP id o10mr549806ybf.167.1248900292230; Wed, 
-	29 Jul 2009 13:44:52 -0700 (PDT)
-In-Reply-To: <20090729203637.GF22281@clouds>
+	id S1756096AbZG2UpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 16:45:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756045AbZG2UpD
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 16:45:03 -0400
+Received: from mail0.w3data.com ([38.112.225.178]:64329 "EHLO
+	hub.corp.w3data.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756019AbZG2UpB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 16:45:01 -0400
+Received: from post.corp.w3data.com ([172.18.0.206]) by hub ([172.25.0.29])
+ with mapi; Wed, 29 Jul 2009 13:45:07 -0700
+Thread-Topic: Null deref in recursive merge in
+ df73af5f667a479764d2b2195cb0cb60b0b89e3d
+Thread-Index: AcoQZyZA6JyF3jubSsuXuzgSRirShQAJkpqV
+In-Reply-To: <20090729161030.GA3848@localhost>
+Accept-Language: en-US
+Content-Language: en
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124387>
 
-On Wed, Jul 29, 2009 at 8:36 PM, Jody McIntyre<scjody@sun.com> wrote:
-> On Tue, Jul 28, 2009 at 08:19:54PM -0400, Avery Pennarun wrote:
->> Usually a 'git status' will fix it. =A0In any case, if it doesn't,
->> please send the output of 'git status' :)
->
-> This is again a bit strange:
->
-> $ git status
-> # On branch master
-> # Your branch is behind 'origin/master' by 484 commits, and can be fa=
-st-forwarded.
-> #
-> nothing to commit (working directory clean)
-> $ git status CREDITS > /tmp/git_status.txt
-> $ wc -l /tmp/git_status.txt
-> 26063 /tmp/git_status.txt
+On 7/29/09 9:10 AM, "Clemens Buchacher" <drizzd@aon.at> wrote:
+> Hi,
+> 
+> On Tue, Jul 28, 2009 at 03:23:00PM -0700, Josh ben Jore wrote:
+> [...]
+>>   CONFLICT (rename/add): Rename
+>> config/conf/target/dev-ubuntu/wpn_rails/appserver.yml->config/conf/target/dev
+>> /wpn_rails/appserver.yml
+>> in Temporary merge branch 1. config/conf/target/dev/wpn_rails/appse2
+>>   Adding as config/conf/target/dev/wpn_rails/appserver.yml~Temporary merge
+>> branch 2 instead
+>>   Skipped config/conf/target/dev/wpn_rails/appserver.yml (merged same as
+>> existing)
+> [...]
+>>   There are unmerged index entries:
+>>   2 config/conf/target/dev/wpn_rails/appserver.yml
+>>   3 config/conf/target/dev/wpn_rails/appserver.yml
+>>   Merging:
+>>   virtual merged tree
+>>   e4a886b Adding legacy click log processing scripts
+>>   found 1 common ancestor(s):
+>>   09fb055 Merge commit 'rel_090630_prod_02'
+>> Segmentation fault
+> 
+> Yeah, if process_entry leaves unmerged entries, write_tree_from_memory will
+> return NULL. I can reproduce with the following script (same principle as
+> t7405).
+> 
+> Clemens
+> ---
+> 
+> diff --git a/t/t6035-merge-recursive-ra.sh b/t/t6035-merge-recursive-ra.sh
+> new file mode 100755
 
-Okay, that's extra strange: when I've had this problem, 'git status'
-has fixed it right away; it just goes away after that.  It might be
-that recent changes to git have added an "optimization" that makes
-this not happen for some reason.
+Thank you for the unit test. It fails as expected but I didn't verify that
+it failed with the segfault as I'm experiencing. Your explanation of "There
+are unmerged index entries:" is interesting. I've taken that as the focal
+point for working around the bug in my repo with the unfixed software.
 
-You can always try the thermonuclear option:
+I've also started getting acquainted with the code in merge_tree to see if I
+can identify the problem. I do not understand the se_stage values of 0 vs 2
+or 3. These are not defined as constants or documented in the code. I'm
+viewing them as magic for now. :-/
 
-   mv .git/index .git/index.bak
-   git reset HEAD    # note, don't use --hard here
-   git status   # should show only files you have *really* changed
-
-Of course, if this fixes it than it's *definitely* a bug somewhere.
-
-Good luck.
-
-Avery
+Josh
