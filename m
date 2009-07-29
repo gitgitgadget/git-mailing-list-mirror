@@ -1,74 +1,59 @@
-From: Oswald Buddenhagen <oswald.buddenhagen@nokia.com>
-Subject: Re: [PATCH] Allow author names with just two letters.
-Date: Wed, 29 Jul 2009 16:55:18 +0200
-Message-ID: <20090729145518.GA8743@troll08.nokia.trolltech.de>
-References: <20090710200134.GA30032@troll08.nokia.trolltech.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 29 16:55:28 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH 0/5] Some minor bug fixes
+Date: Wed, 29 Jul 2009 08:50:22 -0700
+Message-ID: <1248882627-7285-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 17:51:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWAYw-0006Vv-Eb
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 16:55:26 +0200
+	id 1MWBQl-0000Sa-W8
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 17:51:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725AbZG2OzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 10:55:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752258AbZG2OzS
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 10:55:18 -0400
-Received: from ktown.kde.org ([131.246.120.250]:37877 "HELO ktown.kde.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751447AbZG2OzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 10:55:17 -0400
-Received: (qmail 23069 invoked from network); 29 Jul 2009 14:55:15 -0000
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 29 Jul 2009 14:55:15 -0000
-Received: from obuddenh by troll08.nokia.trolltech.de with local
- (masqmail 0.2.21) id 1MWAYo-2LA-00 for <git@vger.kernel.org>; Wed, 29
- Jul 2009 16:55:18 +0200
-Content-Disposition: inline
-In-Reply-To: <20090710200134.GA30032@troll08.nokia.trolltech.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754345AbZG2Pu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 11:50:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753352AbZG2Pu3
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 11:50:29 -0400
+Received: from george.spearce.org ([209.20.77.23]:45978 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753085AbZG2Pu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 11:50:28 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 4683F38215; Wed, 29 Jul 2009 15:50:29 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 5971138195;
+	Wed, 29 Jul 2009 15:50:28 +0000 (UTC)
+X-Mailer: git-send-email 1.6.4.rc3.201.gd9d59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124357>
 
-moin,
+I'm just throwing this series into the repository as-is.
 
-just in case this wasn't clear: the patch below is a request to merge,
-or at least an rfc. you see, i have a rather bad standing in getting my
-colleagues to use rebase if git mangles their commits in the process. ;)
-thanks
+The first in the series is needed to fix Gerrit Code Review (busted
+due to a recent change to ReceivePack).  The rest of the series is
+really minor public API corrections.
 
-greetings
+Shawn O. Pearce (5):
+  Don't dispose of RevFlag used to advertise objects in ReceivePack
+  Allow RemoteConfig.getAllRemoteConfigs on any Config object
+  Add ConfigInvalidException constructor to take Throwable
+  Add no fallback constructor to FileBasedConfig
+  Include the file path when FileBasedConfig.load throws an exception
 
-
-On Fri, Jul 10, 2009 at 10:01:34PM +0200, Oswald Buddenhagen wrote:
-> Some at Qt Software use aliases which may have only two letters.
-> 
-> One could argue that just one letter should be permitted as well,
-> but that's none of my concerns. :)
-> ---
->  builtin-mailinfo.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-> index 1eeeb4d..1adbebd 100644
-> --- a/builtin-mailinfo.c
-> +++ b/builtin-mailinfo.c
-> @@ -35,7 +35,7 @@ static void cleanup_space(struct strbuf *sb);
->  static void get_sane_name(struct strbuf *out, struct strbuf *name, struct strbuf *email)
->  {
->  	struct strbuf *src = name;
-> -	if (name->len < 3 || 60 < name->len || strchr(name->buf, '@') ||
-> +	if (name->len < 2 || 60 < name->len || strchr(name->buf, '@') ||
->  		strchr(name->buf, '<') || strchr(name->buf, '>'))
->  		src = email;
->  	else if (name == out)
-> -- 
-> 1.6.3.3.18.g49902.dirty
-> 
+ .../tst/org/spearce/jgit/lib/MockSystemReader.java |    2 +-
+ .../org/spearce/jgit/lib/RepositoryTestCase.java   |    2 +-
+ .../jgit/errors/ConfigInvalidException.java        |   12 ++++++++++++
+ .../src/org/spearce/jgit/lib/FileBasedConfig.java  |   16 ++++++++++++++++
+ .../org/spearce/jgit/transport/ReceivePack.java    |    1 -
+ .../org/spearce/jgit/transport/RemoteConfig.java   |    5 ++---
+ .../src/org/spearce/jgit/util/SystemReader.java    |    3 +--
+ 7 files changed, 33 insertions(+), 8 deletions(-)
