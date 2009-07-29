@@ -1,83 +1,148 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: Output from git diff
-Date: Wed, 29 Jul 2009 11:29:02 -0600
-Message-ID: <1cd1989b0907291029r2efd78br3506ded03dedf438@mail.gmail.com>
-References: <87hbwxaolw.fsf@krank.kagedal.org>
-	 <873a8fflt2.fsf@krank.kagedal.org>
+From: "Pickens, James E" <james.e.pickens@intel.com>
+Subject: [PATCH v2] Demonstrate bugs when a directory is replaced with a
+ symlink
+Date: Wed, 29 Jul 2009 10:48:11 -0700
+Message-ID: <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
+References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com>
+ <1248819198-13921-2-git-send-email-james.e.pickens@intel.com>
+ <4A70062A.4040008@drmicha.warpmail.net>
+ <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Wed Jul 29 19:37:24 2009
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Kjetil Barvik <barvik@broadpark.no>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 29 19:50:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWD5f-0007W1-3N
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 19:37:23 +0200
+	id 1MWDGO-0005Lh-0Y
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 19:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178AbZG2RhN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 13:37:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbZG2RhN
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 13:37:13 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:62381 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750977AbZG2RhM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 13:37:12 -0400
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Jul 2009 13:37:12 EDT
-Received: by mail-ew0-f214.google.com with SMTP id 10so146547ewy.37
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 10:37:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LYGwV/cvPcPjlUYjTfRV4gBFUcjFV8+s1LUwOcT/81k=;
-        b=tz/RYxhAe+H7bMd1W1hw9BZhZZEbgxVxrVCpHFBjbU77vC54fuJYAaVwV5KCZLk405
-         b+QzPHhcWrpIBk+E0hO0txUspz1Q/NO/VExj9aZBQpiB8p5LUdIidEyFdmUyBnK7SAct
-         ba5Wven2QFz+V0RMnaaRR7MhlU1skCJwR1MTw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CfW99fR6vPTPb1FyYtIPj5c65StivElkMomiAhik472aW0roOtt88m/rto8JZZBcma
-         UXVuMsXijWTHIYpD6Lrx8oTUHPdGWNwrFewhLGl0SSinkjcp7paH0Yz4DlrKcwYw8jGf
-         s1J8ZI0qwg41IMxCM91ORTHEzHxy33TQRRcoo=
-Received: by 10.210.19.7 with SMTP id 7mr296485ebs.52.1248888542949; Wed, 29 
-	Jul 2009 10:29:02 -0700 (PDT)
-In-Reply-To: <873a8fflt2.fsf@krank.kagedal.org>
+	id S1751352AbZG2RsR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 13:48:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbZG2RsR
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 13:48:17 -0400
+Received: from mga09.intel.com ([134.134.136.24]:33031 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751051AbZG2RsQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 13:48:16 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP; 29 Jul 2009 10:35:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.43,289,1246863600"; 
+   d="scan'208";a="536963542"
+Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
+  by orsmga001.jf.intel.com with ESMTP; 29 Jul 2009 10:47:51 -0700
+Received: from azsmsx507.amr.corp.intel.com ([10.2.121.87]) by
+ azsmsx601.amr.corp.intel.com ([10.2.121.193]) with mapi; Wed, 29 Jul 2009
+ 10:48:13 -0700
+Thread-Topic: [PATCH v2] Demonstrate bugs when a directory is replaced with
+ a symlink
+Thread-Index: AcoQJ0ZwApSLgiTtTISb1ql6yzXO4AARkt9AAAGD0dA=
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124375>
 
-On Wed, Jul 29, 2009 at 11:20 AM, David K=E5gedal<davidk@lysator.liu.se=
-> wrote:
-> Here is another diff output question. The updated documentation in
-> diff-format.txt still claims that the output from the diff commands
-> has this format:
->
-> :100644 100644 bcd1234... 0123456... M file0
->
-> This is true for "git diff --raw", but diff-tree and friends print
-> full 40-char hashes.
->
-> I can get diff-tree to use abbreviated hashes with --abbrev, but how
-> do I tell diff to stop abbreviating?
+This test creates two directories, a/b and a/b-2, then replaces a/b with
+a symlink to a/b-2, then merges that change into another branch that
+contains an unrelated change.
 
-Probably not the answer you *really* want but 'git diff --raw
---abbrev=3D40' will give you the full sha1
+There are two bugs:
+1. 'git checkout' wrongly deletes work tree file a/b-2/d.
+2. 'git merge' wrongly deletes work tree file a/b-2/d.
 
->
-> And what should the documentation really say?
->
-> --
-> David K=E5gedal
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+The test goes on to create another branch in which a/b-2 is replaced
+with a symlink to a/b (i.e., the reverse of what was done the first
+time), and merge it with the "unrelated changes" branch.
+
+There's another bug:
+3. Since the changes are unrelated, the merge should be clean, but git
+   reports a conflict.
+
+Note that using the resolve strategy instead of recursive makes the
+second bug go away, but not the third one.
+
+Signed-off-by: James Pickens <james.e.pickens@intel.com>
+---
+This version combines the two tests into one, and cleans up between steps
+so that the early failures don't affect the later tests.
+
+This time I include the bare minimum commands inside the
+test_expect_failure calls, which seems like the right thing to do, since
+the other commands are expected to "succeed" (exit code of 0).
+
+BTW I'm sending this patch using 'git format-patch' + Outlook instead of
+'git send-email'; apologies if it gets botched.
+
+ t/t6035-merge-dir-to-symlink.sh |   49 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 49 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6035-merge-dir-to-symlink.sh
+
+diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6035-merge-dir-to-symlink.sh
+new file mode 100755
+index 0000000..94a9f32
+--- /dev/null
++++ b/t/t6035-merge-dir-to-symlink.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++
++test_description='merging when a directory was replaced with a symlink'
++. ./test-lib.sh
++
++test_expect_success 'setup a merge where dir a/b changed to symlink' '
++       mkdir -p a/b/c a/b-2/c &&
++       > a/b/c/d &&
++       > a/b-2/c/d &&
++       > a/x &&
++       git add -A &&
++       git commit -m base &&
++       rm -rf a/b &&
++       ln -s b-2 a/b &&
++       git add -A &&
++       git commit -m "dir to symlink" &&
++       git checkout -b temp HEAD^
++'
++
++test_expect_failure 'checkout should not have deleted a/b-2/c/d' '
++       test -f a/b-2/c/d
++'
++
++test_expect_success 'clean the work tree and do the merge' '
++       git reset --hard &&
++       test -f a/b-2/c/d &&
++       echo x > a/x &&
++       git add a/x &&
++       git commit -m x &&
++       git merge master
++'
++
++test_expect_failure 'merge should not have deleted a/b-2/c/d' '
++       test -f a/b-2/c/d
++'
++
++test_expect_success 'setup a merge where dir a/b-2 changed to symlink' '
++       git checkout -f -b temp2 master^ &&
++       rm -rf a/b-2 &&
++       ln -s b a/b-2 &&
++       git add -A &&
++       git commit -m "dir a/b-2 to symlink"
++'
++
++test_expect_failure 'merge should not have conflicts' '
++       git merge temp
++'
++
++test_done
+--
+1.6.2.5
