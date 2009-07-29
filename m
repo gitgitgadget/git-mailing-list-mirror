@@ -1,86 +1,122 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv3] git apply: option to ignore whitespace differences
-Date: Wed, 29 Jul 2009 11:09:12 +0200
-Message-ID: <cb7bb73a0907290209u11b2055bv9889ccd5c4a92911@mail.gmail.com>
-References: <1248814820-25367-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7vljm84htf.fsf@alter.siamese.dyndns.org> <cb7bb73a0907282333g26efd1d8y7d913fba8a426aa5@mail.gmail.com> 
-	<20090729174000.6117@nanako3.lavabit.com>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: Adding files to a git-archive when it is generated, and whats the 
+	best way to find out what branch a commit is on?
+Date: Wed, 29 Jul 2009 11:21:32 +0200
+Message-ID: <9b18b3110907290221o8afc72s157969ef7d707d4d@mail.gmail.com>
+References: <9b18b3110907290115v1f30eeat748631bb09f92517@mail.gmail.com>
+	 <adf1fd3d0907290141v24cf129eue3939bf1afd518d2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 11:10:25 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Jul 29 11:21:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MW5B1-0002xL-8I
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 11:10:23 +0200
+	id 1MW5Lz-0007pc-Pf
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 11:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbZG2JJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 05:09:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbZG2JJd
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 05:09:33 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:52686 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752960AbZG2JJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 05:09:33 -0400
-Received: by fxm18 with SMTP id 18so255438fxm.37
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 02:09:32 -0700 (PDT)
+	id S1751897AbZG2JVe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 05:21:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbZG2JVd
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 05:21:33 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:58960 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751620AbZG2JVc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 05:21:32 -0400
+Received: by gxk9 with SMTP id 9so1201435gxk.13
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 02:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=10yNpwGh1TDJttWO6yZCf2xiuOL5sHAfsTlV9imp3M8=;
-        b=B1RXP9lCXm8+iJ94GXLByPhpEgtAhdOBX/AYISHLhLIZ4LK6Y2o50alihk5gAxrSOf
-         q/xXQRZ4drwykTTfLLsbnVNCMITN9KT+5ZOI8iBCTlQ2JSvU7WnWbuo8zBd44tIpvN8g
-         NORrqVIwu4tOkrhX+DNiwe0saaDmrWOBZE7YU=
+        bh=RAQvHDYXZ644/E02NpxiJEYCSY+8KbmxPNJ8XVvYAQk=;
+        b=JPjMWxYrtuJmzg/T+AuL0OQtVNiH4KRDG5M3Qwjko0OsNluf44S6IxQgIe6U00Azoq
+         w+IDm59vuLRfWruF5u8xoGBO1s0MlhI35wkE6xYwJy+B2Xs/mvTQFYLiWaY1Z+UI9N8B
+         tjja56SaXskubv6H+rWFsfLTM1uqj1eK1OJn4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=TtOc1WYsYVlImLsBNmpypD4ttHVSggYM4Ohyw3zjBsjETp1ZV5H57HHyrG7b9tzd07
-         w3xQaJrMFKn4NGciGJgONZHa3k0rdqgJlbhHwH7p0GnjOKQKwc1EQhi+tdCEpwcPFP1W
-         eicPqbAYE86CK97FoTjVPEJy0m6FNiccx4eAI=
-Received: by 10.204.119.129 with SMTP id z1mr5365963bkq.67.1248858572078; Wed, 
-	29 Jul 2009 02:09:32 -0700 (PDT)
-In-Reply-To: <20090729174000.6117@nanako3.lavabit.com>
+        b=ord+8W2MJeHxg4bydiQnzvpqNKjckB6/gRol5eCfp/8z44yWOasVtyFlVjcDafIXnt
+         WnVLzig8yQF2u24QJgodPhZKO63nFVPo7dGwLEwN/V7jpdYc5r7QvWgG08j8C5beI20Z
+         gY5Pzb5jLv3OxRDR18jrcmHMRGtq49osdCh0w=
+Received: by 10.231.11.136 with SMTP id t8mr2788716ibt.50.1248859292058; Wed, 
+	29 Jul 2009 02:21:32 -0700 (PDT)
+In-Reply-To: <adf1fd3d0907290141v24cf129eue3939bf1afd518d2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124335>
 
-On Wed, Jul 29, 2009 at 10:40 AM, Nanako Shiraishi<nanako3@lavabit.com> wrote:
-> Quoting Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->
->>> Perhaps --ignore-space-change, to be consistent with a "git diff" option,
->>> would be more appropriate. Doing so has an added benefit of leaving the
->>> door open to add --ignore-all-space option to the patch application side
->>> later.
+2009/7/29 Santi B=E9jar <santi@agolina.net>:
+> 2009/7/29 demerphq <demerphq@gmail.com>:
+>> I was wondering if anybody had any suggestions on a sane way to add =
+a
+>> file to a git-archive when it is being produced.
 >>
->> On the other hand, --ignore-whitespace matches the option name (and
->> behavior) of the 'patch' command (just like "git diff"'s matches the
->> 'diff' option name and behavior). Principle of least surprise says
->> that someone coming to git from raw diff/patch setups would expect
->> --ignore-whitespace on the patch side.
+>> For =A0instance build procedures that expect to be run inside of a g=
+it
+>> WD wont work if built from an archived version of the tree. Being ab=
+le
+>> to provide a file of additional data to the archive package would be=
+ a
+>> very convenient way to work around this.
+>>
+>> Ideally id like to be able to specify a set of additional files to
+>> include in the archive as part of the git-archive command line
+>> interface, but I'd be nearly as a happy with almost any solution oth=
+er
+>> than the one I came up with, which is to use archive to generate a t=
+ar
+>> file, then use tar to append the additional files to the tar, and th=
+en
+>> compress it. This process turns out to be quite slow in comparison t=
+o
+>> producing a compressed archive directly from git-archive.
 >
-> Not everybody shares your diff/patch background.
+> Then I don't know. It is exactly the way it is done in git.git itself=
+,
+> look the dist target in the makefile.
+
+So then git also would benefit from support in git-archive for adding
+arbitrary files to the archive during generation?
+
+One problem here is that we (the Perl project) are supporting VMS
+smoke-testers and need the ability to provide snapshots that are
+buildable without using git at all. So we hacked the snapshot support
+in gitweb to do this. However we dont want to do this for every
+commit, just the ones that people actually fetch. So while the process
+we use is fine for rolling a dist, its not so fine when people are
+expecting a download to start promptly after clicking on the snapshot
+link.
+
 >
-> I wouldn't be surprised if git were the first system they ever learn for
-> majority of users of version control systems in this century, especially
-> because now there are many books written on it.
+>>
+>> Another question is whether anyone has any advice on the best way to
+>> find out the "best" branch an arbitrary commit is on. Where best can
+>> be flexibly definied to handle commits that are reachable from
+>> multiple branches. =A0I have hacked a solution involving git-log and
+>> grep, but it performs quite poorly. I was wondering if there is a
+>> better solution.
+>
+> The "best" tag is easy: git describe commit. For branches I think you
+> could use "git name-ref --refs=3Drefs/heads/* commit", because git
+> describe does not have a --branches flag.
 
-This is something I hadn't considered.
+Dang, I guess this is from a newer release than mine. So now i have an
+excuse to upgrade.
 
-> Isn't it more important for git to be internally consistent across its
-> commands for such an audience to satisfy the principle of least surprise?
+:-)
 
-Would it be ok if I had the option and command line option turn into
-ignore-space-change and keep ignore-whitespace as a synonym? Or would
-that be too much?
+Yves
 
--- 
-Giuseppe "Oblomov" Bilotta
+
+
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
