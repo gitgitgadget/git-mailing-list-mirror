@@ -1,116 +1,310 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Git for Windows 1.6.4
-Date: Wed, 29 Jul 2009 23:40:56 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
+Subject: Re: [PATCH 1/3 v2] Add support for external programs for handling
+ native fetches
+Date: Thu, 30 Jul 2009 00:02:25 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907292351040.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0907280155390.2147@iabervon.org> <alpine.DEB.1.00.0907281444140.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0907281126200.2147@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: msysgit@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 29 23:41:01 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mariano Ortega <mgo1977@gmail.com>,
+	Reece Dunn <msclrhd@googlemail.com>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Jul 30 00:02:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWGtJ-0003sa-HD
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 23:40:54 +0200
+	id 1MWHEA-0003VU-6W
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 00:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754288AbZG2Vkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 17:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754247AbZG2Vkq
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 17:40:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55279 "HELO mail.gmx.net"
+	id S1752983AbZG2WCQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 18:02:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbZG2WCQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 18:02:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54816 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754171AbZG2Vkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 17:40:45 -0400
-Received: (qmail invoked by alias); 29 Jul 2009 21:40:44 -0000
+	id S1751581AbZG2WCO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 18:02:14 -0400
+Received: (qmail invoked by alias); 29 Jul 2009 22:02:13 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp037) with SMTP; 29 Jul 2009 23:40:44 +0200
+  by mail.gmx.net (mp029) with SMTP; 30 Jul 2009 00:02:13 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Gx7cTa8iGv0AGPu8BOAbLS8sRXMMBSI4bEoCptu
-	3a3xkP64IjNsIb
+X-Provags-ID: V01U2FsdGVkX1+htMoLyPOhuPn4q9gFHVpDU1M/616sRzSIzpA1rf
+	oK2+iRHjbfcU6T
 X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0907281126200.2147@iabervon.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124394>
 
 Hi,
 
-this mail informs you that Git for Windows 1.6.4 is out.  It is less well 
-tested than the previous versions, mainly because I was busy with other 
-things and asked for help with testing on the msysGit mailing list and I 
-am very impatient.
+On Tue, 28 Jul 2009, Daniel Barkalow wrote:
 
-Git Release Notes (Git-1.6.4-preview20090729)
-Last update: 29 July 2009
+> On Tue, 28 Jul 2009, Johannes Schindelin wrote:
+> 
+> > On Tue, 28 Jul 2009, Daniel Barkalow wrote:
+> > 
+> > > transport_get() can call transport_shim_init() to have list and
+> > > fetch-ref operations handled by running a separate program as:
+> > 
+> > As I commented already, "shim" is a meaningless word in the context of 
+> > Git.  At _least_ call it something like "git-remote-<protocol>".  Even 
+> > "git-fetch-<protocol>" would be better than "shim".
+> 
+> I think git-remote-<protocol> is a good name;
 
-Introduction
-These release notes describe issues specific to the Windows release.
+Good.
 
-General release notes covering the history of the core git commands are 
-included in the subdirectory doc/git/html of the installation directory. 
-Look for files starting with RelNotes.
+> I think this should be able to support push as well as fetch
 
-Known issues
+So you agree that it should be extensible.  Also good.
 
-- Some commands are not yet supported on Windows and excluded from the 
-  installation; namely: git archimport, git cvsexportcommit, git 
-  cvsimport, git cvsserver, git instaweb, git send-email, git shell.
+> I do think that I want to form the command names differently depending 
+> on whether this is a helper that transports git objects to a remote git 
+> repository using a protocol that the helper is for, or a helper that 
+> interacts with a non-git remote repository where the helper is 
+> particular to the foreign scm.
 
-- The Logitec QuickCam software can cause spurious crashes. See "Why does 
-  make often crash creating a sh.exe.stackdump file when I try to compile 
-  my source code?" on the MinGW Wiki 
-  (http://www.mingw.org/wiki/Environment_issues)
+I think that is a rather bad decision: you should not _need_ to care on 
+the transport.c side.  If the helper handles fetching and/or pushing: 
+fine.  How it accomplishes that: don't care.
 
-- The Quick Launch icon will only be installed for the user running setup 
-  (typically the Administrator). This is a technical restriction and will 
-  not change.
+> > > diff --git a/Documentation/git-shim.txt b/Documentation/git-shim.txt
+> > > new file mode 100644
+> > > index 0000000..dd80c6d
+> > > --- /dev/null
+> > > +++ b/Documentation/git-shim.txt
+> > > @@ -0,0 +1,37 @@
+> > > +git-shim(1)
+> > > +============
+> > > +
+> > > +NAME
+> > > +----
+> > > +git-shim - Helper programs for interoperation with remote git
+> > 
+> > Actually, this is just one helper program, no?  Why can't it be integrated 
+> > into transport.c?
+> 
+> No, this defines a pattern of helper programs, all of which should 
+> behave as documented by the same man page, so that the same code can run 
+> any of them.
 
-- Git Bash launched through the Explorer shell extension does not have the 
-  git icon in its taskbar. This is a technical restriction and will not 
-  change.
+See?  That description _is_ misleading.
 
-- curl uses $HOME/_netrc instead of $HOME/.netrc.
+> > > +COMMANDS
+> > > +--------
+> > > +
+> > > +Commands are given by the caller on the helper's standard input, one per line.
+> > > +
+> > > +'list'::
+> > > +	Lists the refs, one per line, if the format "<value>
+> > > +	<name>". The value is either a hex sha1 hash or "@<dest>" for
+> > > +	symrefs. After the complete list, outputs a blank line.
+> > > +
+> > > +'fetch' ref::
+> > > +	Fetches the given ref, writing the necessary objects to the
+> > > +	database. Outputs a blank line when the fetch is complete.
+> > > ++
+> > 
+> > So you allow only 'list' and 'fetch'.  That is very limiting, and you do 
+> > not even foresee a method to ask for the helper's capabilities.  We 
+> > already saw how much pain that caused in the transport protocol, so please 
+> > do not repeat the mistake here.
+> 
+> I'll put the "capabilities" command back in; I dropped it from this 
+> subset of the foreign vcs helper protocol because there's not much 
+> variation possible when the remote repository must be a git repository.
 
-- If you want to specify a different location for --upload-pack, you have 
-  to start the absolute path with two slashes. Otherwise MSys will mangle 
-  the path.
+Just because you do not foresee it now does not mean that it won't happen.
 
-- git and bash have serious problems with non-ASCII file names (Issue 80, 
-  159).
+As I hinted at: it is rather likely that you do not foresee what kind of 
+capability negotiation we'll want in the future.
 
-- If configured to use plink, you will have to connect with putty first 
-  and accept the host key.
+Let's learn from history.
 
-- When run from cmd.exe instead of Git Bash, some characters seem to be 
-  "swallowed" from Git's output (Issue 192).
+> > > diff --git a/transport-shim.c b/transport-shim.c
+> > > new file mode 100644
+> > > index 0000000..2518aba
+> > > --- /dev/null
+> > > +++ b/transport-shim.c
+> > > @@ -0,0 +1,142 @@
+> > > +#include "cache.h"
+> > > +#include "transport.h"
+> > > +
+> > > +#include "run-command.h"
+> > > +#include "commit.h"
+> > > +#include "diff.h"
+> > > +#include "revision.h"
+> > > +
+> > > +struct shim_data
+> > > +{
+> > > +	const char *name;
+> > > +	struct child_process *shim;
+> > > +};
+> > > +
+> > > +static struct child_process *get_shim(struct transport *transport)
+> > > +{
+> > > +	struct shim_data *data = transport->data;
+> > > +	if (!data->shim) {
+> > 
+> > Why can't the caller check for this?  Would this not make much more sense 
+> > to begin with?
+> 
+> Depending on the order that the user of transport.c calls commands, the 
+> helper may or may not already be running (and it may or may not have been 
+> closed by the previous command, in the future extension of also handling 
+> importers which produce a fast-import stream). The caller could check for 
+> the connection already being constructed, but all callers would have to 
+> add the same check.
 
-- There are a spurious write errors during rebase (Issue 200) that seem 
-  not to be reproducible on most computers.
+Fair enough.  That large deeply indented part that makes up the most part 
+of the function is very ugly, though.
 
-- As merge tools are executed using the MSys bash, options starting with 
-  "/" need to be handled specially: MSys would interpret that as a POSIX 
-  path, so you need to double the slash (Issue 226).  Example: instead of 
-  "/base", say "//base".  Also, extra care has to be paid to pass Windows 
-  programs Windows paths, as they have no clue about MSys style POSIX 
-  paths -- You can use something like $(cmd //c echo "$POSIXPATH").
+> > > +static int fetch_refs_via_shim(struct transport *transport,
+> > > +			       int nr_heads, const struct ref **to_fetch)
+> > 
+> > Do you fetch only the refs, or also their objects?  If the latter, the 
+> > name needs to be adjusted.
+> 
+> This is inherited from the transport.h naming, which made sense years ago 
+> (when it contrasted fetching objects by name of ref versus fetching 
+> objects by hash); it is fetching objects as specified by struct refs.
 
-Changes since Git-1.6.3.2-preview20090608
+It is actually not inherited from the naming, as the member you assign 
+this function to does not contain the string "refs".
 
-New Features
+> > > +{
+> > > +	struct child_process *shim;
+> > > +	const struct ref *posn;
+> > > +	struct strbuf buf = STRBUF_INIT;
+> > > +	int i, count;
+> > > +	FILE *file;
+> > > +
+> > > +	count = 0;
+> > > +	for (i = 0; i < nr_heads; i++) {
+> > > +		posn = to_fetch[i];
+> > > +		if (posn->status & REF_STATUS_UPTODATE)
+> > > +			continue;
+> > > +		count++;
+> > > +	}
+> > 
+> > This would be more readable IMO if it read like this:
+> > 
+> > 	for (count = i = 0; i < nr_heads; i++)
+> > 		if (!(to_fetch[i]->status & REF_STATUS_UPTODATE))
+> > 			count++;
+> 
+> I think it's more readable to match the flow control of the later loop. 
 
-- Comes with official git 1.6.4.
+Yeah, right.  It was so readable that I bothered to comment.
+ 
+> > > +		for (i = 0; i < nr_heads; i++) {
+> > > +			posn = to_fetch[i];
+> > > +			if (posn->status & REF_STATUS_UPTODATE)
+> > > +				continue;
+> > > +			write(shim->in, "fetch ", 6);
+> > > +			write(shim->in, sha1_to_hex(posn->old_sha1), 40);
+> > > +			write(shim->in, " ", 1);
+> > > +			write(shim->in, posn->name, strlen(posn->name));
+> > > +			write(shim->in, "\n", 1);
+> > > +		}
+> > > +		file = fdopen(shim->out, "r");
+> > > +		while (count) {
+> > > +			if (strbuf_getline(&buf, file, '\n') == EOF)
+> > > +				exit(128); /* child died, message supplied already */
+> > > +
+> > > +			count--;
+> > 
+> > while (count--)
+> 
+> I don't like decrement operators used with values, except for the common 
+> string idioms. But I like:
+> 
+> 	for (; count; count--)
+> 		if ...
 
-- Supports https:// URLs, thanks to Erik Faye-Lund.
+Which is even more ugly than your current version.  Just my personal 
+taste, of course.  Oh, and maybe also a little disagreement with the rest 
+of Git's source.
 
-- Supports send-email, thanks to Erik Faye-Lund (Issue 27).
+> > > +	struct ref *posn;
+> > > +	struct strbuf buf = STRBUF_INIT;
+> > > +	FILE *file;
+> > > +
+> > > +	shim = get_shim(transport);
+> > > +	write(shim->in, "list\n", 5);
+> > 
+> > What about the return value of this write()?  It can indicate error or 
+> > short write.
+> 
+> Yeah, I should use write_in_full(), although we know at this point that 
+> shim->in is a pipe which has been drained entirely.
 
-- Updated Tcl/Tk to version 8.5.7, thanks to Pat Thoyts.
+I am not at all sure that you can guarantee that at this point.
 
-Bugfixes
+> > > +	file = fdopen(shim->out, "r");
+> > 
+> > No check for file != NULL?
+> 
+> I don't think this can fail, if setting up the child process didn't fail.
 
-- The home directory is now discovered properly (Issues 108 & 259).
-- IPv6 is supported now, thanks to Martin Martin Storsj (Issue 182).
+Until somebody reports a segmentation fault because her operating system 
+ran out of file descriptors.
+
+In any case, I would rather be safe than sorry.  It is not a good habit to 
+get into, calling functions that can return NULL and not checking them 
+(even if you try to be super-clever).
+
+> > > +	while (1) {
+> > > +		char *eov;
+> > > +		if (strbuf_getline(&buf, file, '\n') == EOF)
+> > > +			exit(128); /* child died, message supplied already */
+> > > +
+> > > +		if (!*buf.buf)
+> > > +			break;
+> > > +
+> > > +		eov = strchr(buf.buf, ' ');
+> > > +		if (!eov)
+> > > +			die("Malformed response in ref list: %s", buf.buf);
+> > > +		*eov = '\0';
+> > > +		*end = alloc_ref(eov + 1);
+> > > +		if (eov) {
+> > 
+> > Did we not die 4 lines earlier if eov == NULL?
+> 
+> Yeah, I confused myself while paring down the vcs output parsing code. I 
+> think I actually want to future-proof this code to allow the helper to 
+> add space-separated flags after the name, and I don't want this test.
+
+Yeah, why not making it hard on the reviewer for the slight possibility 
+that some change will go in in the future, in the exact form you envisaged 
+it now?
+
+> > > +			if (buf.buf[0] == '@')
+> > > +				(*end)->symref = xstrdup(buf.buf + 1);
+> > > +			else
+> > > +				get_sha1_hex(buf.buf, (*end)->old_sha1);
+> > 
+> > IMHO it is not at all clear what you are doing here.  At least a little 
+> > hint is in order if the code does not explain itself.
+> 
+> It's parsing the output of the "list" command, as given in the 
+> documentation. Item starting with a '@' is a symref, otherwise it is a 
+> sha1.
+
+That's nice.
+
+It would be even nicer if there was a comment in the patch so that future 
+puzzled readers do not know that they have to search the mailing list to 
+understand this code.
+
+Ciao,
+Dscho
