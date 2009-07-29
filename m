@@ -1,107 +1,114 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC 06/11 v2] fast-import: Add support for importing commit notes
-Date: Wed, 29 Jul 2009 04:41:07 +0200
-Message-ID: <200907290441.08246.johan@herland.net>
-References: <1248656659-21415-1-git-send-email-johan@herland.net>
- <200907280343.56586.johan@herland.net>
- <7vskgg1bbt.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make "git request-pull" use the configured
+ remote.REMOTE.uploadpack
+Date: Tue, 28 Jul 2009 22:05:47 -0700
+Message-ID: <7vws5syt78.fsf@alter.siamese.dyndns.org>
+References: <1248728563-23906-1-git-send-email-tgrennan@redback.com>
+ <adf1fd3d0907281713t378440eamb39baae3be6d41c4@mail.gmail.com>
+ <20090729013002.GM4850@redback.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	barkalow@iabervon.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 04:41:23 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Tom Grennan <tgrennan@redback.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 07:06:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MVz6V-0003PV-Md
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 04:41:20 +0200
+	id 1MW1Mm-0007gk-N7
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 07:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756239AbZG2ClM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Jul 2009 22:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750776AbZG2ClL
-	(ORCPT <rfc822;git-outgoing>); Tue, 28 Jul 2009 22:41:11 -0400
-Received: from mx.getmail.no ([84.208.15.66]:64307 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750971AbZG2ClK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Jul 2009 22:41:10 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNI007KKVGM1I90@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 29 Jul 2009 04:41:10 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNI0043VVGKO340@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 29 Jul 2009 04:41:09 +0200 (MEST)
-X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
- Antispam-Data: 2009.7.29.22715
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <7vskgg1bbt.fsf@alter.siamese.dyndns.org>
+	id S1750992AbZG2FGI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 01:06:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750971AbZG2FGI
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 01:06:08 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35453 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbZG2FGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 01:06:07 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D02715A85;
+	Wed, 29 Jul 2009 01:06:06 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9115F15A83; Wed, 29 Jul 2009
+ 01:05:56 -0400 (EDT)
+In-Reply-To: <20090729013002.GM4850@redback.com> (Tom Grennan's message of
+ "Tue\, 28 Jul 2009 18\:30\:02 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 855E3772-7BFD-11DE-8BB6-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124304>
 
-On Wednesday 29 July 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > +External data format::
-> > +	The data content for the note was already supplied by a prior
-> > +	`blob` command.  The frontend just needs to connect it to the
-> > +	commit that is to be annotated.
-> > ++
-> > +....
-> > +	'N' SP <dataref> SP <committish> LF
-> > +....
-> > ++
-> > +Here `<dataref>` can be either a mark reference (`:<idnum>`)
-> > +set by a prior `blob` command, or a full 40-byte SHA-1 of an
-> > +existing Git blob object.
-> > +
-> > +Inline data format::
-> > +	The data content for the note has not been supplied yet.
-> > +	The frontend wants to supply it as part of this modify
-> > +	command.
-> > ++
-> > +....
-> > +	'N' SP 'inline' SP <committish> LF
-> > +	data
-> > +....
-> > ++
-> > +See below for a detailed description of the `data` command.
-> > +
-> > +In both formats `<committish>` is any of the commit specification
-> > +expressions also accepted by `from` (see above).
+Tom Grennan <tgrennan@redback.com> writes:
+
+> On Tue, Jul 28, 2009 at 05:13:30PM -0700, Santi B=C3=A9jar wrote:
+>>2009/7/27 Tom Grennan <tgrennan@redback.com>:
+>>> git-request-pull.sh should use git-parse-remote:get_uploadpack() to
+>>> load a configured remote.REMOTE.uploadpack like "git remote show" a=
+nd
+>>> "git fetch". This allows one to specify the path of git-upload-pack=
+ on
+>>> the remote side.
+>>
+>>Sorry, but I removed all unused functions from git-parse-remote in 62=
+d955f
+>>(parse-remote: remove unused functions, 2009-06-12), and it is in
+>>v1.6.4-rc1. I don't think there is much problem reverting part of tha=
+t commit,
+>>but I wonder if the problem is that "git ls-remote" does not read the
+>>remote.<remote>.uploadpack by itself as it reads the remote.<remote>.=
+url.
+>>
+>>Santi
 >
-> Doesn't this make fast-import language incapable of add notes to anything
-> other than commits?  As far as I remember, there is no such limitation in
-> the underlying data structure on git notes, even though the git-notes
-> sample Porcelain might have such a restriction.
+> Thanks for the hint.
+>
+> Yes, "git ls-remote" is retrieving remote.<remote>.uploadpack when
+> dest is a configured remote.  However, git-request-pull runs ls-remot=
+e
+> after converting its URL argument from remote.<remote>.url
 
-It does (probably because the default notes tree is "refs/notes/commits").
+Thanks, both.
 
-> We recently hit a similar unintended limitation that we regret in the
-> fast-import language, didn't we?
+-- >8 --
+=46rom: Tom Grennan <tgrennan@redback.com>
+Date: Tue, 28 Jul 2009 18:30:02 -0700
+Subject: request-pull: allow ls-remote to notice remote.$nickname.uploa=
+dpack
 
-I don't know. Must have slipped past my mailbox.
+The location to pull from should be converted from the configured nickn=
+ame
+to URL in the message, but ls-remote should be fed the nickname so that
+the command uses remote.$nickname.* variables, most notably "uploadpack=
+".
 
-> Although personally I do not think it is a big deal if we cannot tag or
-> add notes to trees, I am pointing it out in case other people care.
+Signed-off-by: Tom Grennan <tgrennan@redback.com>
+---
 
-I copied the semantics from the 'tag' command, for no particular reason 
-(except following the git-notes procelain). Expanding 'notemodify' (and 
-'tag') to cover all types of objects is fine by me, unless there are good 
-arguments otherwise. Shawn?
-
-
-Have fun!
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index 5917773..fd95bea 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -28,13 +28,13 @@ headrev=3D`git rev-parse --verify "$head"^0` || exi=
+t
+ merge_base=3D`git merge-base $baserev $headrev` ||
+ die "fatal: No commits in common between $base and $head"
+=20
+-url=3D$(get_remote_url "$url")
+ branch=3D$(git ls-remote "$url" \
+ 	| sed -n -e "/^$headrev	refs.heads./{
+ 		s/^.*	refs.heads.//
+ 		p
+ 		q
+ 	}")
++url=3D$(get_remote_url "$url")
+ if [ -z "$branch" ]; then
+ 	echo "warn: No branch of $url is at:" >&2
+ 	git log --max-count=3D1 --pretty=3D'tformat:warn:   %h: %s' $headrev =
+>&2
