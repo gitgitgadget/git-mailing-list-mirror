@@ -1,86 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: How to host a github?
-Date: Wed, 29 Jul 2009 09:59:30 +0200
-Message-ID: <81b0412b0907290059j7ff346efu7fea3dbaef65e5eb@mail.gmail.com>
-References: <24713161.post@talk.nabble.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCHv3 5/8] Teach "-m <msg>" and "-F <file>" to "git notes edit"
+Date: Wed, 29 Jul 2009 09:57:34 +0200
+Message-ID: <200907290957.36000.trast@student.ethz.ch>
+References: <1248834326-31488-1-git-send-email-johan@herland.net> <1248834326-31488-6-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: jvsrvcs <jvsrvcs@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 10:00:37 2009
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: <gitster@pobox.com>, <git@vger.kernel.org>,
+	<johannes.schindelin@gmx.de>, <tavestbo@trolltech.com>,
+	<git@drmicha.warpmail.net>, <chriscool@tuxfamily.org>,
+	<spearce@spearce.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jul 29 10:05:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MW44c-0001gh-1t
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 09:59:42 +0200
+	id 1MW48D-0004ag-6P
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 10:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbZG2H7d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 03:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbZG2H7d
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 03:59:33 -0400
-Received: from mail-bw0-f221.google.com ([209.85.218.221]:64444 "EHLO
-	mail-bw0-f221.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751068AbZG2H7c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 03:59:32 -0400
-Received: by bwz21 with SMTP id 21so523672bwz.37
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 00:59:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+HJOQw6cRqbO90iCzjkMRGr4UcPw0yBjqnStgYrpXeQ=;
-        b=cwW5B6hPTtJstQ7Z0WLSgaSvRl6aNzWuchV5sVjEWYgR7uYHC39LpAKWJ/jnoRXuws
-         VsBH+TxWy3N5F9ilOBGz+G3VBPZkQXLRmW4e9WPLonHHGPA/HJtYUrIvEuAbLss3t8ai
-         cuGMSjH8uOLewgbdQIpIH/RaqxLdrRbCA1U4Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DNdRMlSuIFPn7JgGCM8f84xp4NCVEieLfNGP9BeFO5s44b7faQQENbLr85Udii2PCp
-         e0ssxeTZN075qB/Z9YjNK/pD2uLGEpjb4VHkFpsRvl2wjxyzeZC4FGZHUTSZ76xwghyc
-         z1An9YSD95189iPzR4lH910KoQsPv2rdQ9OrM=
-Received: by 10.204.60.72 with SMTP id o8mr5273176bkh.210.1248854370959; Wed, 
-	29 Jul 2009 00:59:30 -0700 (PDT)
-In-Reply-To: <24713161.post@talk.nabble.com>
+	id S1751320AbZG2IDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 04:03:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751307AbZG2IDP
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 04:03:15 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:40561 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751068AbZG2IDM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 04:03:12 -0400
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Jul 2009 04:03:12 EDT
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 29 Jul
+ 2009 09:57:43 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 29 Jul
+ 2009 09:57:44 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
+In-Reply-To: <1248834326-31488-6-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124317>
 
-On Wed, Jul 29, 2009 at 08:25, jvsrvcs<jvsrvcs@gmail.com> wrote:
->
-> I want to share code with a few co-workers and I want to use git.
->
-> I installed git (cygwin), created a /project/ and then $cd project
-> and then $git init
+Johan Herland wrote:
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+[...]
+> +cat > expect-m-and-F << EOF
+> +commit 15023535574ded8b1a89052b32673f84cf9582b8
+> +Author: A U Thor <author@example.com>
+> +Date:   Thu Apr 7 15:16:13 2005 -0700
+> +
+> +    4th
+> +
+> +Notes:
+> +    spam
+> +    
+> +    xyzzy
+> +    
+> +    foo
 
-See also "git add" and "git commit" in the tutorials below.
+There's significant trailing whitespace here (in the lines between
+spam, xyzzy and foo) that initially broke the test for me because I
+use apply.whitespace=fix.  Can you guard the whitespace if it is
+really important, with something like
 
-> I have found so much documentation as to what to do next, that
-> I'm confused.
+sed 's/#$//' > expect <<EOF
+whitespace:    #
+EOF
 
-Start here: http://www.git-scm.com/documentation ("Tutorials" section).
-The recently published http://progit.org/book/ can be also recommended.
+Thanks!
 
-> Do I have to create an account on github in order to share code with
-> a few local developers?
-
-No.
-
-> Could I run some sort of server on my laptop in order to share code?
-
-Yes. You don't have to, though.
-
-> (we only need to share during office hours). =C2=A0Basically I just
-> want to share code but do not want to sign up for an account
-> on github.
-
-Look for fetch, push, and patches in the tutorials.
-
-> How do I work this?
-
-Patiently.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
