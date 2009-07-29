@@ -1,94 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC 06/11 v2] fast-import: Add support for importing commit
-	notes
-Date: Wed, 29 Jul 2009 07:26:34 -0700
-Message-ID: <20090729142634.GC1033@spearce.org>
-References: <1248656659-21415-1-git-send-email-johan@herland.net> <200907280343.56586.johan@herland.net> <7vskgg1bbt.fsf@alter.siamese.dyndns.org> <200907290441.08246.johan@herland.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] post-receive-email: Set content-type and encoding in
+ generated mail
+Date: Wed, 29 Jul 2009 10:46:11 -0400
+Message-ID: <20090729144610.GA5060@coredump.intra.peff.net>
+References: <1248875304-13167-1-git-send-email-emmes@informatik.rwth-aachen.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	barkalow@iabervon.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jul 29 16:28:13 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Fabian Emmes <emmes@informatik.rwth-aachen.de>
+X-From: git-owner@vger.kernel.org Wed Jul 29 16:47:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWA7A-0007tb-56
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 16:26:44 +0200
+	id 1MWAQr-0002Ev-96
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 16:47:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607AbZG2O0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 10:26:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbZG2O0e
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 10:26:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:51771 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090AbZG2O0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 10:26:34 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 7A299381FD; Wed, 29 Jul 2009 14:26:34 +0000 (UTC)
+	id S1753621AbZG2OqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 10:46:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753450AbZG2OqP
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 10:46:15 -0400
+Received: from peff.net ([208.65.91.99]:59953 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751387AbZG2OqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 10:46:14 -0400
+Received: (qmail 8202 invoked by uid 107); 29 Jul 2009 14:48:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 29 Jul 2009 10:48:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Jul 2009 10:46:11 -0400
 Content-Disposition: inline
-In-Reply-To: <200907290441.08246.johan@herland.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <1248875304-13167-1-git-send-email-emmes@informatik.rwth-aachen.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124355>
 
-Johan Herland <johan@herland.net> wrote:
-> On Wednesday 29 July 2009, Junio C Hamano wrote:
-> > Johan Herland <johan@herland.net> writes:
-> > > +
-> > > +In both formats `<committish>` is any of the commit specification
-> > > +expressions also accepted by `from` (see above).
-> >
-> > Doesn't this make fast-import language incapable of add notes to anything
-> > other than commits?  As far as I remember, there is no such limitation in
-> > the underlying data structure on git notes, even though the git-notes
-> > sample Porcelain might have such a restriction.
-> 
-> It does (probably because the default notes tree is "refs/notes/commits").
+On Wed, Jul 29, 2009 at 03:48:24PM +0200, Fabian Emmes wrote:
 
-Yea, it does have that limitation right now.  That limitation could
-be relaxed in the code by just allowing the <committish> to be any
-object and simply don't check its type.
+> --- a/contrib/hooks/post-receive-email
+> +++ b/contrib/hooks/post-receive-email
+> @@ -197,6 +197,7 @@ generate_email_header()
+>  	cat <<-EOF
+>  	To: $recipients
+>  	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
+> +	Content-Type: text/plain; charset=utf-8
+>  	X-Git-Refname: $refname
+>  	X-Git-Reftype: $refname_type
+>  	X-Git-Oldrev: $oldrev
 
-But I've already stated with regards to the notes that I think we
-should only allow noting commits and annotated tags, where we have
-a timestamp we can use to split the notes in the note tree by time,
-so that we can index recent notes much more quickly and can answer
-`git log -20` much more efficiently.
+Shouldn't this be $(git config i18n.logOutputEncoding), since you will
+be inserting the output of git rev-list into the mail?
 
-I just don't see a lot of value in noting a blob or a tree, there
-is too little context information on such things for it to really
-be all that useful.
+And as Teemu mentioned, you need a mime-version and a transfer-encoding
+header, as well.
 
-> > We recently hit a similar unintended limitation that we regret in the
-> > fast-import language, didn't we?
-> 
-> I don't know. Must have slipped past my mailbox.
+So maybe (totally untested):
 
-I remember something being raised, but I can't remember exactly
-what it was either.
-
-It might have had to do with the effects of rename commands, e.g. a
-file rename takes place immediately when issued, and some frontends
-wanted it to take place only after the commit was completed.
+---
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 2a66063..0c1c6ad 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -192,11 +192,16 @@ generate_email()
  
-> > Although personally I do not think it is a big deal if we cannot tag or
-> > add notes to trees, I am pointing it out in case other people care.
-> 
-> I copied the semantics from the 'tag' command, for no particular reason 
-> (except following the git-notes procelain). Expanding 'notemodify' (and 
-> 'tag') to cover all types of objects is fine by me, unless there are good 
-> arguments otherwise. Shawn?
-
-tag, there might be arguments for tagging trees, e.g. so you can
-export the linux kernel repository with `git fast-export` and reload
-it with fast-import.  But that's unrelated to this change.
-
-See above about notes.
-
--- 
-Shawn.
+ generate_email_header()
+ {
++	encoding=`git config i18n.logOutputEncoding`
++	test -z "$encoding" && encoding=utf-8
+ 	# --- Email (all stdout will be the email)
+ 	# Generate header
+ 	cat <<-EOF
+ 	To: $recipients
+ 	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
++	MIME-Version: 1.0
++	Content-Type: text/plain; charset=$encoding
++	Content-Transfer-Encoding: 8bit
+ 	X-Git-Refname: $refname
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
