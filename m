@@ -1,73 +1,86 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 5/5] Include the file path when FileBasedConfig.load throws an exception
-Date: Wed, 29 Jul 2009 08:50:27 -0700
-Message-ID: <1248882627-7285-6-git-send-email-spearce@spearce.org>
-References: <1248882627-7285-1-git-send-email-spearce@spearce.org>
- <1248882627-7285-2-git-send-email-spearce@spearce.org>
- <1248882627-7285-3-git-send-email-spearce@spearce.org>
- <1248882627-7285-4-git-send-email-spearce@spearce.org>
- <1248882627-7285-5-git-send-email-spearce@spearce.org>
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 17:51:14 2009
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: Pro Git Book
+Date: Wed, 29 Jul 2009 08:38:49 -0700
+Message-ID: <d411cc4a0907290838r228aaa18yb748fd97d4be01d2@mail.gmail.com>
+References: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
+	 <m34osv3kah.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 29 18:00:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWBQp-0000Sa-0q
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 17:51:07 +0200
+	id 1MWBZx-0005DO-2U
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 18:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755131AbZG2Puf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 11:50:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754630AbZG2Pue
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 11:50:34 -0400
-Received: from george.spearce.org ([209.20.77.23]:45992 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091AbZG2Puc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 11:50:32 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id 54C6938215; Wed, 29 Jul 2009 15:50:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 73C03381FE;
-	Wed, 29 Jul 2009 15:50:30 +0000 (UTC)
-X-Mailer: git-send-email 1.6.4.rc3.201.gd9d59
-In-Reply-To: <1248882627-7285-5-git-send-email-spearce@spearce.org>
+	id S1753569AbZG2QAZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 12:00:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbZG2QAY
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 12:00:24 -0400
+Received: from mail-yw0-f183.google.com ([209.85.211.183]:50850 "EHLO
+	mail-yw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751457AbZG2QAY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 12:00:24 -0400
+X-Greylist: delayed 843 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Jul 2009 12:00:23 EDT
+Received: by ywh13 with SMTP id 13so25890ywh.15
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 09:00:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oAC2PjscK3uuIHzR3XW4KEjqKjRy6s5VFiGAtlf/3QQ=;
+        b=DQUZ+KekE6yIDE+URYYKj+WcfbJA56ti6vAtMC9w7309OQFTcLLLI09FsAXFkFtkLC
+         Xd3lT1oahqMoZ+QIGTt2lwg4JtA7t/a/P5etCJDl+SBpleJo1Ct+t1qiERE+zD7Qmgre
+         5+PAJFceUlx6TP4us9Ox06zYYxnLz283Z9flo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=B+9vmNUbAq/UFNCJE3HMy8e7WaitRa3owWSrlc4CQEaee2fzckpITHKRcwlmEHvV4d
+         xbycQjTbF9Wm9C/oiW0L2Fez7dnOC/siPEi8jVkTr0fTNSthQe3dRr1faGF019T42rE9
+         nXoBGKgl/PMlEHTDlgGjlr89TLIYi/GmJFb4Q=
+Received: by 10.100.141.15 with SMTP id o15mr12093205and.20.1248881929464; 
+	Wed, 29 Jul 2009 08:38:49 -0700 (PDT)
+In-Reply-To: <m34osv3kah.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124363>
 
-This may help an end-user debug the problem, if they know what file
-the error occurred in.  We have to wrap the exception here because
-the methods throwing the original error do not have access to the
-file path, and cannot include it in the message.
+Hey,
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- .../src/org/spearce/jgit/lib/FileBasedConfig.java  |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+On Wed, Jul 29, 2009 at 2:34 AM, Jakub Narebski<jnareb@gmail.com> wrote=
+:
+>
+> Wonderfull news! =C2=A0Thanks a lot for publishing it under Creative
+> Commons (CC-BY-NC-SA 3.0) license for all to see (and improve).
+>
+> I'll send a few comments later (BTW. would you prefer to have it here=
+,
+> or private?).
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/FileBasedConfig.java b/org.spearce.jgit/src/org/spearce/jgit/lib/FileBasedConfig.java
-index adf85c6..518b31d 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/FileBasedConfig.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/FileBasedConfig.java
-@@ -98,6 +98,12 @@ public void load() throws IOException, ConfigInvalidException {
- 			fromText(RawParseUtils.decode(NB.readFully(getFile())));
- 		} catch (FileNotFoundException noFile) {
- 			clear();
-+		} catch (IOException e) {
-+			final IOException e2 = new IOException("Cannot read " + getFile());
-+			e2.initCause(e);
-+			throw e2;
-+		} catch (ConfigInvalidException e) {
-+			throw new ConfigInvalidException("Cannot read " + getFile(), e);
- 		}
- 	}
- 
--- 
-1.6.4.rc3.201.gd9d59
+You can either email them to me or fork the markdown source
+(http://github.com/progit/progit) and send me a pull request or patch.
+ Or just push fixes to your fork - I've been checking them pretty
+often since people are starting to translate it on GitHub.
+
+>
+> One comment about on-line version: it might be better to have one
+> chapter and not one (sub)section per HTML page. =C2=A0There are some
+> sections that are not enough to even fill one single page.
+>
+
+I agree that some of the pages are small, but I like being able to
+point someone at a section for help with something - a whole chapter I
+think would be overwhelming.  Eventually I'd like to possibly add a
+commenting system inline and having one per section would be a lot
+more manageable.
+
+Thanks,
+Scott
