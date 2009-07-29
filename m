@@ -1,101 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v3] Demonstrate bugs when a directory is replaced with
- a symlink
-Date: Wed, 29 Jul 2009 18:06:39 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907291758030.3161@localhost.localdomain>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com> <1248819198-13921-2-git-send-email-james.e.pickens@intel.com> <4A70062A.4040008@drmicha.warpmail.net> <7v4osvyjl2.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
- <7v63dbuyru.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com> <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain> <alpine.LFD.2.01.0907291656420.3161@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: "Pickens, James E" <james.e.pickens@intel.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 03:07:33 2009
+From: Fabian Emmes <emmes@informatik.rwth-aachen.de>
+Subject: [PATCH] post-receive-email: Set content-type and encoding in generated mail
+Date: Wed, 29 Jul 2009 11:43:42 +0200
+Message-ID: <1248860622-11814-1-git-send-email-emmes@informatik.rwth-aachen.de>
+Cc: Fabian Emmes <emmes@informatik.rwth-aachen.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 30 03:10:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWK7I-0003TE-Vb
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 03:07:33 +0200
+	id 1MWKAP-0004MP-6D
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 03:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756126AbZG3BGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 21:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756089AbZG3BGx
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 21:06:53 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:51554 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756049AbZG3BGw (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 21:06:52 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6U16e6u022198
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 29 Jul 2009 18:06:41 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6U16dj0023551;
-	Wed, 29 Jul 2009 18:06:40 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0907291656420.3161@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.968 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756058AbZG3BKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 21:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756049AbZG3BKh
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 21:10:37 -0400
+Received: from hobbit.neveragain.de ([217.69.77.34]:53584 "EHLO
+	hobbit.neveragain.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756009AbZG3BKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 21:10:37 -0400
+X-Greylist: delayed 55588 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Jul 2009 21:10:36 EDT
+Received: from server.c-otto.de (ip2-169.halifax.RWTH-Aachen.DE [137.226.109.169])
+	(authenticated bits=0)
+	by hobbit.neveragain.de (8.13.8/8.13.8) with ESMTP id n6T9idEb000379
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 29 Jul 2009 11:44:40 +0200 (CEST)
+	(envelope-from fab@hebe.informatik.RWTH-Aachen.DE)
+Received: from hebe.informatik.rwth-aachen.de ([137.226.194.45])
+	by server.c-otto.de with smtp (Exim 4.69)
+	(envelope-from <fab@hebe.informatik.RWTH-Aachen.DE>)
+	id 1MW5hd-0008Uy-6C; Wed, 29 Jul 2009 11:44:05 +0200
+Received: (nullmailer pid 11858 invoked by uid 1005);
+	Wed, 29 Jul 2009 09:44:05 -0000
+X-Mailer: git-send-email 1.6.3.1.9.g95405b
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (hobbit.neveragain.de [217.69.77.34]); Wed, 29 Jul 2009 11:44:40 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124433>
 
+Add proper content-type header to mails generated by post-receive-email, as
+suggested by Alexander Gerasiov in
+http://www.mail-archive.com/debian-bugs-dist@lists.debian.org/msg588535.html
 
+Signed-off-by: Fabian Emmes <emmes@informatik.rwth-aachen.de>
+---
+ contrib/hooks/post-receive-email |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-On Wed, 29 Jul 2009, Linus Torvalds wrote:
-> 
-> Hmm... This looks like it should do it.
-> 
-> It doesn't make the test _pass_ (we don't seem to be creating a/b-2/c/d 
-> properly - I haven't checked why yet, but I suspect it is becasue we think 
-> it already exists due to the symlinked version lstat'ing fine), but it 
-> seems to do the right thing.
-
-Never mind. The patch does what I set out to do, but it's not relevant for 
-the problem.
-
-What happens is:
-
- - we remove a/b/c/d to make room for the a/b symlink:
-
-	merge_trees ->
-	  git_merge_trees ->
-	    check_updates ->
-	      checkout_entry ->
-	        remove_subtree("a/b") ->
-	          recursive rm
-
-   This is correct
-
- - then we create the a/b symlink to a/b2
-
-	merge_trees ->
-	  git_merge_trees ->
-	    check_updates ->
-	      checkout_entry ->
-	        write_entry ->
-	          symlink
-
-   This is correct
-
- - Then we remove 'a/b/c/d' again for the 'unmerged_cache()' case:
-
-	merge_trees ->
-	  process_entry ->
-	    remove_file
-
-   because th eprocess_entry() will decide that the original tree had that 
-   "a/b/c/d" file (true) that needs to be removed (false - we already 
-   did that as part of creating "a/b").
-
-Annoying.
-
-		Linus
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 2a66063..0c50155 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -197,6 +197,7 @@ generate_email_header()
+ 	cat <<-EOF
+ 	To: $recipients
+ 	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
++	Content-Type: text/plain; charset=utf-8
+ 	X-Git-Refname: $refname
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
+-- 
+1.6.3.1.9.g95405b
