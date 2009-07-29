@@ -1,80 +1,62 @@
-From: "Pickens, James E" <james.e.pickens@intel.com>
-Subject: RE: [PATCH 1/2] Demonstrate bugs when a directory is replaced with
- a symlink.
-Date: Wed, 29 Jul 2009 09:57:36 -0700
-Message-ID: <3BA20DF9B35F384F8B7395B001EC3FB342402A13@azsmsx507.amr.corp.intel.com>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com>
- <1248819198-13921-2-git-send-email-james.e.pickens@intel.com>
- <4A70062A.4040008@drmicha.warpmail.net>
- <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Output from git diff
+Date: Wed, 29 Jul 2009 19:20:25 +0200
+Message-ID: <873a8fflt2.fsf@krank.kagedal.org>
+References: <87hbwxaolw.fsf@krank.kagedal.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>
-To: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 29 18:57:52 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 29 19:20:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWCTP-0006KY-S2
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 18:57:52 +0200
+	id 1MWCpf-0008Ly-W0
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 19:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755879AbZG2Q5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 12:57:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755863AbZG2Q5l
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 12:57:41 -0400
-Received: from mga09.intel.com ([134.134.136.24]:33440 "EHLO mga09.intel.com"
+	id S1750848AbZG2RUn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 13:20:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbZG2RUm
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 13:20:42 -0400
+Received: from main.gmane.org ([80.91.229.2]:37781 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755806AbZG2Q5k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 12:57:40 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP; 29 Jul 2009 09:44:23 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.43,289,1246863600"; 
-   d="scan'208";a="434415818"
-Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
-  by orsmga002.jf.intel.com with ESMTP; 29 Jul 2009 10:04:21 -0700
-Received: from azsmsx507.amr.corp.intel.com ([10.2.121.87]) by
- azsmsx601.amr.corp.intel.com ([10.2.121.193]) with mapi; Wed, 29 Jul 2009
- 09:57:37 -0700
-Thread-Topic: [PATCH 1/2] Demonstrate bugs when a directory is replaced with
- a symlink.
-Thread-Index: AcoQJ0ZwApSLgiTtTISb1ql6yzXO4AARkt9A
-In-Reply-To: <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1750794AbZG2RUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 13:20:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MWCpT-0003Dz-Nu
+	for git@vger.kernel.org; Wed, 29 Jul 2009 17:20:40 +0000
+Received: from 95.209.165.17 ([95.209.165.17])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:20:39 +0000
+Received: from davidk by 95.209.165.17 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:20:39 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 95.209.165.17
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+Cancel-Lock: sha1:DE6+CfP3trf4bLx1MmFO/suhpsk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124373>
 
-On Wed, Jul 29, 2009, Junio C Hamano<gitster@pobox.com> wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->> Isn't the failure of the second test caused by that of the first one?
->> a/b-2/c/d is gone from the worktree, and master does not touch it, so
->> the merge leaves the worktree version (non-existent) as is.
->
-> To avoid that impression the second test should probably have been written
-> to start from a clean slate, using "reset --hard" or something.
+Here is another diff output question. The updated documentation in
+diff-format.txt still claims that the output from the diff commands
+has this format:
 
-I'll send a new patch shortly that combines the two tests into one and
-includes the "reset --hard".
+:100644 100644 bcd1234... 0123456... M file0
 
-> Kjetil's patch actually fixes the first one, but the second one will still
-> show breakage.
->
-> I wonder if the breakage is in recursive merge or in the generic read-tree
-> three-way merge code.  I highly suspect that using "git merge -s resolve"
-> would make the test pass.  Historically recursive merge is known to be
-> careless in many corner cases.
+This is true for "git diff --raw", but diff-tree and friends print
+full 40-char hashes.
 
-You're right, using the resolve strategy does make the test pass.
+I can get diff-tree to use abbreviated hashes with --abbrev, but how
+do I tell diff to stop abbreviating?
 
-James
+And what should the documentation really say?
+
+--=20
+David K=C3=A5gedal
