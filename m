@@ -1,172 +1,284 @@
-From: "Pickens, James E" <james.e.pickens@intel.com>
-Subject: [PATCH v3] Demonstrate bugs when a directory is replaced with a
- symlink
-Date: Wed, 29 Jul 2009 14:02:39 -0700
-Message-ID: <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com>
- <1248819198-13921-2-git-send-email-james.e.pickens@intel.com>
- <4A70062A.4040008@drmicha.warpmail.net>
- <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
- <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
- <7v63dbuyru.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: A note from the maintainer
+Date: Wed, 29 Jul 2009 14:15:27 -0700
+Message-ID: <7vskgfry1c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 29 23:02:53 2009
+Content-Type: text/plain; charset=iso-2022-jp
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 29 23:15:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWGIT-00033l-SX
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 23:02:50 +0200
+	id 1MWGUx-0000Az-8L
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 23:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752898AbZG2VCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 17:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbZG2VCl
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 17:02:41 -0400
-Received: from mga11.intel.com ([192.55.52.93]:54764 "EHLO mga11.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752776AbZG2VCl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 17:02:41 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga102.fm.intel.com with ESMTP; 29 Jul 2009 13:53:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.43,290,1246863600"; 
-   d="scan'208";a="712258895"
-Received: from azsmsx602.amr.corp.intel.com ([10.2.121.201])
-  by fmsmga001.fm.intel.com with ESMTP; 29 Jul 2009 14:05:54 -0700
-Received: from azsmsx507.amr.corp.intel.com ([10.2.121.87]) by
- azsmsx602.amr.corp.intel.com ([10.2.121.201]) with mapi; Wed, 29 Jul 2009
- 14:02:41 -0700
-Thread-Topic: [PATCH v3] Demonstrate bugs when a directory is replaced with
- a symlink
-Thread-Index: AcoQeu6GEDHhYnYaQDShlUFk1w34TQAFL5ug
-In-Reply-To: <7v63dbuyru.fsf@alter.siamese.dyndns.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1753551AbZG2VPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 17:15:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752640AbZG2VPd
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 17:15:33 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:38373 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753551AbZG2VPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 17:15:31 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6B2AF192B3;
+	Wed, 29 Jul 2009 17:15:30 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 8A62B192B2; Wed,
+ 29 Jul 2009 17:15:28 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F1F03D2C-7C84-11DE-8226-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124390>
 
-This test creates two directories, a/b and a/b-2, then replaces a/b with
-a symlink to a/b-2, then merges that change into the 'baseline' commit,
-which contains an unrelated change.
+Welcome to git community.
 
-There are two bugs:
-1. 'git checkout' incorrectly deletes work tree file a/b-2/d.
-2. 'git merge' incorrectly deletes work tree file a/b-2/d.
+This message talks about how git.git is managed, and how you can work
+with it.
 
-The test goes on to create another branch in which a/b-2 is replaced
-with a symlink to a/b (i.e., the reverse of what was done the first
-time), and merge it into the 'baseline' commit.
+* IRC and Mailing list
 
-There is a different bug:
-3. The merge should be clean, but git reports a conflict.
+Many active members of development community hang around on #git
+IRC channel on Freenode.  Its log is available at:
 
-Signed-off-by: James Pickens <james.e.pickens@intel.com>
----
+        http://colabti.org/irclogger/irclogger_log/git
 
-Ok, one more try.  I added Junio's latest feedback, and also added more checks
-for correct merge results after each merge.  For the merges that incorrectly
-report conflicts, those checks won't be executed since the conflict stops the
-test.  If/when the bug causing the merge conflict is fixed, it will become
-important to check the merge results, so those checks might as well be there
-from the beginning.
+The development however is primarily done on the git mailing list
+(git@vger.kernel.org).  If you have patches, please send them to the
+list, following Documentation/SubmittingPatches.
 
- t/t6035-merge-dir-to-symlink.sh |   76 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 76 insertions(+), 0 deletions(-)
- create mode 100755 t/t6035-merge-dir-to-symlink.sh
+I usually try to read all patches posted to the list, and follow
+almost all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously not
+perfect.  If you sent a patch that you did not hear from anybody for
+three days, that is a very good indication that it was dropped on the
+floor --- please do not hesitate to remind me.
 
-diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6035-merge-dir-to-symlink.sh
-new file mode 100755
-index 0000000..89e8e6a
---- /dev/null
-+++ b/t/t6035-merge-dir-to-symlink.sh
-@@ -0,0 +1,76 @@
-+#!/bin/sh
-+
-+test_description='merging when a directory was replaced with a symlink'
-+. ./test-lib.sh
-+
-+test_expect_success 'create a commit where dir a/b changed to symlink' '
-+       mkdir -p a/b/c a/b-2/c &&
-+       > a/b/c/d &&
-+       > a/b-2/c/d &&
-+       > a/x &&
-+       git add -A &&
-+       git commit -m base &&
-+       git tag start &&
-+       rm -rf a/b &&
-+       ln -s b-2 a/b &&
-+       git add -A &&
-+       git commit -m "dir to symlink" &&
-+       git checkout start^0
-+'
-+
-+test_expect_failure 'checkout should not have deleted a/b-2/c/d' '
-+       test -f a/b-2/c/d
-+'
-+
-+test_expect_success 'setup for merge test' '
-+       git reset --hard &&
-+       test -f a/b-2/c/d &&
-+       echo x > a/x &&
-+       git add a/x &&
-+       git commit -m x &&
-+       git tag baseline
-+'
-+
-+test_expect_success 'do not lose a/b-2/c/d in merge (resolve)' '
-+       git reset --hard &&
-+       git checkout baseline^0 &&
-+       git merge -s resolve master &&
-+       test -h a/b &&
-+       test -f a/b-2/c/d
-+'
-+
-+test_expect_failure 'do not lose a/b-2/c/d in merge (recursive)' '
-+       git reset --hard &&
-+       git checkout baseline^0 &&
-+       git merge -s recursive master &&
-+       test -h a/b &&
-+       test -f a/b-2/c/d
-+'
-+
-+test_expect_success 'setup a merge where dir a/b-2 changed to symlink' '
-+       git reset --hard &&
-+       git checkout start^0 &&
-+       rm -rf a/b-2 &&
-+       ln -s b a/b-2 &&
-+       git add -A &&
-+       git commit -m "dir a/b-2 to symlink" &&
-+       git tag test2
-+'
-+
-+test_expect_failure 'merge should not have conflicts (resolve)' '
-+       git reset --hard &&
-+       git checkout baseline^0 &&
-+       git merge -s resolve test2 &&
-+       test -h a/b-2 &&
-+       test -f a/b/c/d
-+'
-+
-+test_expect_failure 'merge should not have conflicts (recursive)' '
-+       git reset --hard &&
-+       git checkout baseline^0 &&
-+       git merge -s recursive test2 &&
-+       test -h a/b-2 &&
-+       test -f a/b/c/d
-+'
-+
-+test_done
---
-1.6.2.5
+The list archive is available at a few public sites as well:
+
+        http://news.gmane.org/gmane.comp.version-control.git/
+        http://marc.theaimsgroup.com/?l=git
+        http://www.spinics.net/lists/git/
+
+and some people seem to prefer to read it over NNTP:
+
+        nntp://news.gmane.org/gmane.comp.version-control.git
+
+When you point at a message in a mailing list archive, using
+gmane is often the easiest to follow by readers, like this:
+
+        http://thread.gmane.org/gmane.comp.version-control.git/27/focus=217
+
+as it also allows people who subscribe to the mailing list as
+gmane newsgroup to "jump to" the article.
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+        git://git.kernel.org/pub/scm/git/git.git/
+
+Immediately after I publish to the primary repository at kernel.org, I
+also push into an alternate here:
+
+        git://repo.or.cz/alt-git.git/
+
+Impatient people might have better luck with the latter one.
+
+Their gitweb interfaces are found at:
+
+        http://git.kernel.org/?p=git/git.git
+        http://repo.or.cz/w/alt-git.git
+
+There are three branches in git.git repository that are not about the
+source tree of git: "todo", "html" and "man".  The first one was meant
+to contain TODO list for me, but I am not good at maintaining such a
+list and it is in an abandoned state.  The branch mostly is used to
+keep some helper scripts I use to maintain git and the regular "What's
+in/cooking" messages these days.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+        http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use a post-update hook to
+automate a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".  I may
+add more maintenance branches (e.g. "maint-1.6.3") if we have
+hugely backward incompatible feature updates in the future to keep
+an older release alive; I may not, but the distributed nature of
+git means any volunteer can run a stable-tree like that herself.
+
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major, and more
+importantly quickly and trivially fixable.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was 1.6.4 done on Jul 29th 2009.  You
+can expect that the tip of the "master" branch is always more
+stable than any of the released versions.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was 1.6.3.4.
+New features never go to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
+
+The quality of topic branches are judged primarily by the mailing list
+discussions.  Some of them start out as "good idea but obviously is
+broken in some areas (e.g. breaks the existing testsuite)" and then
+with some more work (either by the original contributor's effort or
+help from other people on the list) becomes "more or less done and can
+now be tested by wider audience".  Luckily, most of them start out in
+the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+
+The two branches "master" and "maint" are never rewound, and
+"next" usually will not be either (this automatically means the
+topics that have been merged into "next" are usually not
+rebased, and you can find the tip of topic branches you are
+interested in from the output of "git log next"). You should be
+able to safely track them.
+
+After a feature release is made from "master", however, "next"
+will be rebuilt from the tip of "master" using the surviving
+topics.  The commit that replaces the tip of the "next" will
+usually have the identical tree, but it will have different ancestry
+from the tip of "master".  An announcement will be made to warn
+people about such a rebasing.
+
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.  By the above
+definition of how "next" works, you can tell that this branch
+will contain quite experimental and obviously broken stuff.
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
+
+        git checkout next
+        git merge that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+good and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master" (that's why "master"
+can be expected to stay very stable).  Similarly to the above, I
+do it with this:
+
+        git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
+
+Note that being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), nor even in any
+future release.  There even were cases that topics needed
+reverting a few commits in them before graduating to "master",
+or a topic that already was in "next" were entirely reverted
+from "next" because fatal flaws were found in them later.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines to whom your proposed
+changes should be sent.  As described in contrib/README, I would
+delegate fixes and enhancements in contrib/ area to the primary
+contributors of them.
+
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
+
+ - git-gui/ comes from Shawn Pearce's git-gui project:
+
+        git://repo.or.cz/git-gui.git
+
+ - gitk-git/ comes from Paul Mackerras's gitk project:
+
+        git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
+
+ - Linus on general design issues.
+
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre,
+   Ren辿 Scharfe, Jeff King and Johannes Sixt on general
+   implementation issues.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff and Frank Lichtenheld on cvsserver and cvsimport.
+
+ - Paul Mackerras on gitk.
+
+ - Eric Wong on git-svn.
+
+ - Simon Hausmann on git-p4.
+
+ - Jakub Narebski, Petr Baudis, Luben Tuikov, Giuseppe Bilotta
+   on gitweb.
+
+ - J. Bruce Fields on documentation (and countless others for
+   proofreading and fixing).
+
+ - Alexandre Julliard on Emacs integration.
+
+ - Charles Bailey for taking good care of git-mergetool (and Theodore
+   Ts'o for creating it in the first place).
+
+ - David Aguilar for git-difftool.
+
+ - Johannes Schindelin, Johannes Sixt and others for their effort
+   to move things forward on the Windows front.
+
+ - People on non-Linux platforms for keeping their eyes on
+   portability; especially, Randal Schwartz, Theodore Ts'o,
+   Jason Riedy, Thomas Glanzmann, Brandon Casey, Jeff King,
+   Alex Riesen and countless others.
+
+* This document
+
+The latest copy of this document is found in git.git repository,
+on 'todo' branch, as MaintNotes.
