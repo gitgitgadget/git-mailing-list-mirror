@@ -1,198 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.6.4
-Date: Wed, 29 Jul 2009 01:46:27 -0700
-Message-ID: <7vfxcfx4f0.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCHv3 1/8] Introduce commit notes
+Date: Wed, 29 Jul 2009 10:52:56 +0200
+Message-ID: <81b0412b0907290152w27c1b5b5l9efbd6980d4f904e@mail.gmail.com>
+References: <1248834326-31488-1-git-send-email-johan@herland.net>
+	 <1248834326-31488-2-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 29 10:46:49 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org, johannes.schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jul 29 10:53:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MW4oC-0001k2-N7
-	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 10:46:49 +0200
+	id 1MW4uH-0004WG-W7
+	for gcvg-git-2@gmane.org; Wed, 29 Jul 2009 10:53:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077AbZG2Iqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 04:46:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752980AbZG2Iqi
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 04:46:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63676 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752977AbZG2Iqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 04:46:34 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7DA2715295;
-	Wed, 29 Jul 2009 04:46:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8424515293; Wed, 29 Jul 2009
- 04:46:28 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 52072E64-7C1C-11DE-8D9F-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1752495AbZG2Iw6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 04:52:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751174AbZG2Iw5
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 04:52:57 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:32789 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861AbZG2Iw5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 04:52:57 -0400
+Received: by fxm18 with SMTP id 18so247698fxm.37
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 01:52:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fpI4wRJM48SogjrDtFxp0ogYRW1Ws2clJUkmuNizUoo=;
+        b=itHKg1cKACMHHRHHqRcnUYxqGrMEeeUA46cAP9ZsuzTMr3wP3n9y9aRN+sGaT759hB
+         PR4uLzzrRhMLIqQM3/QgdI0CAUBmQT4yTrjXHqjI3bt6ngDDo54CJ+bjeoWJ6Mbjef8m
+         zgby5aXGFgY2fWcEODccr7DCfl3rOBArVjjKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T9+rdGyiq7jpjkz2DTPQ+WQDEs82iylcpelh2cTPWYmmZNlZiWOzMJP4akf9iP1G4Z
+         n0sEAWD+CBizh5v8ZdGA9ZvQFx7ZWxygzEX6kfx2JoN1jPEwpIc84ka1D2PARLmA0YvY
+         Qvdpjxz0urB+qXNyYlDCFwZitvN/9YKv4B424=
+Received: by 10.204.119.129 with SMTP id z1mr5350762bkq.67.1248857576470; Wed, 
+	29 Jul 2009 01:52:56 -0700 (PDT)
+In-Reply-To: <1248834326-31488-2-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124330>
 
-The latest feature release GIT 1.6.4 is available at the usual
-places:
+On Wed, Jul 29, 2009 at 04:25, Johan Herland<johan@herland.net> wrote:
+> +void get_commit_notes(const struct commit *commit, struct strbuf *sb=
+,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *output=
+_encoding)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 static const char *utf8 =3D "utf-8";
 
-  http://www.kernel.org/pub/software/scm/git/
+Using an array
 
-  git-1.6.4.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.6.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.6.4.tar.{gz,bz2}		(preformatted docs)
+  const char utf8[] =3D "utf-8";
 
-The RPM binary packages for a few architectures are found in:
+costs you less BSS (no separate storage for the pointer).
 
-  RPMS/$arch/git-*-1.6.4-1.fc9.$arch.rpm	(RPM)
+> @@ -963,5 +964,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const=
+ struct commit *commit,
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (fmt !=3D CMIT_FMT_ONELINE)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 get_commit_notes(c=
+ommit, sb, encoding);
+> +
 
-GIT v1.6.4 Release Notes
-========================
-
-With the next major release, "git push" into a branch that is
-currently checked out will be refused by default.  You can choose
-what should happen upon such a push by setting the configuration
-variable receive.denyCurrentBranch in the receiving repository.
-
-To ease the transition plan, the receiving repository of such a
-push running this release will issue a big warning when the
-configuration variable is missing.  Please refer to:
-
-  http://git.or.cz/gitwiki/GitFaq#non-bare
-  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-
-for more details on the reason why this change is needed and the
-transition plan.
-
-For a similar reason, "git push $there :$killed" to delete the branch
-$killed in a remote repository $there, if $killed branch is the current
-branch pointed at by its HEAD, gets a large warning.  You can choose what
-should happen upon such a push by setting the configuration variable
-receive.denyDeleteCurrent in the receiving repository.
-
-
-Updates since v1.6.3
---------------------
-
-(subsystems)
-
- * gitweb Perl style clean-up.
-
- * git-svn updates, including a new --authors-prog option to map author
-   names by invoking an external program, 'git svn reset' to unwind
-   'git svn fetch', support for more than one branches, documenting
-   of the useful --minimize-url feature, new "git svn gc" command, etc.
-
-(portability)
-
- * We feed iconv with "UTF-8" instead of "utf8"; the former is
-   understood more widely.  Similarly updated test scripts to use
-   encoding names more widely understood (e.g. use "ISO8859-1" instead
-   of "ISO-8859-1").
-
- * Various portability fixes/workarounds for different vintages of
-   SunOS, IRIX, and Windows.
-
- * Git-over-ssh transport on Windows supports PuTTY plink and TortoisePlink.
-
-(performance)
-
- * Many repeated use of lstat() are optimized out in "checkout" codepath.
-
- * git-status (and underlying git-diff-index --cached) are optimized
-   to take advantage of cache-tree information in the index.
-
-(usability, bells and whistles)
-
- * "git add --edit" lets users edit the whole patch text to fine-tune what
-   is added to the index.
-
- * "git am" accepts StGIT series file as its input.
-
- * "git bisect skip" skips to a more randomly chosen place in the hope
-   to avoid testing a commit that is too close to a commit that is
-   already known to be untestable.
-
- * "git cvsexportcommit" learned -k option to stop CVS keywords expansion
-
- * "git fast-export" learned to handle history simplification more
-   gracefully.
-
- * "git fast-export" learned an option --tag-of-filtered-object to handle
-   dangling tags resulting from history simplification more usefully.
-
- * "git grep" learned -p option to show the location of the match using the
-   same context hunk marker "git diff" uses.
-
- * https transport can optionally be told that the used client
-   certificate is password protected, in which case it asks the
-   password only once.
-
- * "git imap-send" is IPv6 aware.
-
- * "git log --graph" draws graphs more compactly by using horizontal lines
-   when able.
-
- * "git log --decorate" shows shorter refnames by stripping well-known
-   refs/* prefix.
-
- * "git push $name" honors remote.$name.pushurl if present before
-   using remote.$name.url.  In other words, the URL used for fetching
-   and pushing can be different.
-
- * "git send-email" understands quoted aliases in .mailrc files (might
-   have to be backported to 1.6.3.X).
-
- * "git send-email" can fetch the sender address from the configuration
-   variable "sendmail.from" (and "sendmail.<identity>.from").
-
- * "git show-branch" can color its output.
-
- * "add" and "update" subcommands to "git submodule" learned --reference
-   option to use local clone with references.
-
- * "git submodule update" learned --rebase option to update checked
-   out submodules by rebasing the local changes.
-
- * "gitweb" can optionally use gravatar to adorn author/committer names.
-
-(developers)
-
- * A major part of the "git bisect" wrapper has moved to C.
-
- * Formatting with the new version of AsciiDoc 8.4.1 is now supported.
-
-Fixes since v1.6.3
-------------------
-
-All of the fixes in v1.6.3.X maintenance series are included in this
-release, unless otherwise noted.
-
-Here are fixes that this release has, but have not been backported to
-v1.6.3.X series.
-
- * "git diff-tree -r -t" used to omit new or removed directories from
-   the output.  df533f3 (diff-tree -r -t: include added/removed
-   directories in the output, 2009-06-13) may need to be cherry-picked
-   to backport this fix.
-
- * The way Git.pm sets up a Repository object was not friendly to callers
-   that chdir around.  It now internally records the repository location
-   as an absolute path when autodetected.
-
- * Removing a section with "git config --remove-section", when its
-   section header has a variable definition on the same line, lost
-   that variable definition.
-
- * "git rebase -p --onto" used to always leave side branches of a merge
-   intact, even when both branches are subject to rewriting.
-
- * "git repack" used to faithfully follow grafts and considered true
-   parents recorded in the commit object unreachable from the commit.
-   After such a repacking, you cannot remove grafts without corrupting
-   the repository.
-
- * "git send-email" did not detect erroneous loops in alias expansion.
+Someday we will need a way to switch off the display of notes
+without resolving to oneline format.
+Is there a notes specifier for the printf-like log message formatting
+(--pretty=3Dformat: or --format) planned, BTW?
