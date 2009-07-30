@@ -1,90 +1,72 @@
-From: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>
-Subject: Re: [PATCH] Fix typos on pt_BR/gittutorial.txt translation
-Date: Thu, 30 Jul 2009 13:58:09 -0300
-Message-ID: <b8bf37780907300958k41577b98qfe371131f994e12a@mail.gmail.com>
-References: <b8bf37780907292044i5ad7b879ueb5048447e4e5bb5@mail.gmail.com>
-	 <20090730145044.GA1727@vespa.holoscopio.com>
-	 <4A71C6A7.80008@drmicha.warpmail.net>
+From: Jeffrey Middleton <jefromi@gmail.com>
+Subject: exec-path behavior
+Date: Thu, 30 Jul 2009 12:00:29 -0500
+Message-ID: <4389ce950907301000m5b264771jf87cc06398bee7e0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 18:58:30 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 30 19:01:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWYxQ-0005E3-OO
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 18:58:21 +0200
+	id 1MWYzz-0006aL-C8
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 19:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751441AbZG3Q6L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jul 2009 12:58:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZG3Q6L
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 12:58:11 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:9504 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbZG3Q6K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 12:58:10 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so860136qwh.37
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 09:58:10 -0700 (PDT)
+	id S1751577AbZG3RAw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jul 2009 13:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751354AbZG3RAw
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 13:00:52 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:34156 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335AbZG3RAv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 13:00:51 -0400
+Received: by ewy10 with SMTP id 10so910096ewy.37
+        for <git@vger.kernel.org>; Thu, 30 Jul 2009 10:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dVDl2e6ZgC7jZ+i2FwZjc7AkeuhDAFfOzK4V8k95t14=;
-        b=fJMITg87TyDOgRV3VgaHEKzz+Y+Vc71cbgbzenz2gm+lEWd3JNtfMNJYrlZw05xgGT
-         GhnyJjlVeHPzOI37tE9iQxAkX/mSVRI/RKLQJ+b2RReUbsY+Q2YQ6uzW9y++c2dvA6eU
-         puvt+M8C0xXxpDgbn6rY9jz2aSyRK7f0ghJhg=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=gSgnmlkJdbjsy73EgcDzYT9G2nVQyykX+gsqe+G67Xs=;
+        b=ozVo/gssB1qXxsQcHEERAyn1JxqMsik1IukBKAOvmd97huJ2zWDGonWnB/Dwb7+i5I
+         FJ/Oau1oSNUkz6lPc4lro4pD5+thKezdR1HszW/5YFDQs15XkFoKxB17KoIBbYZgO2Ut
+         P05fa1X9VfUW57e+o8owUBxE5XQLXhLeeGt2E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Y7mzFSrosVDmfe5C9xbqWhwqKjLwndRJ/Y38zs62Iansr0H2FEkQWARqHfe7b7kKp7
-         xqb0ggZ9t34hwTST0Xsr9Hb/Y0ECknxLBmX/2rJkrudCPjcagkx2VNQJsTjub76aRvx2
-         9ECDwdt7JaQZ9Eue4J1R7ARqWTpy1N/qSk8Xo=
-Received: by 10.220.46.10 with SMTP id h10mr1709065vcf.8.1248973089998; Thu, 
-	30 Jul 2009 09:58:09 -0700 (PDT)
-In-Reply-To: <4A71C6A7.80008@drmicha.warpmail.net>
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=pu7wGUKKi4ZcU+l2XcVYv5l2fLsn3zH8r/O6zH/DF5oJUwHs/VKmS7ZIhlEeso4j+i
+         FSwm/VTVA5ZlZSudQVuKKWQRuoIuRBA6dxYiL9M2y7rcj96DQn1fyb9EFf6joivs43J+
+         k/SVhJdUSQ6/eqmoaBa52HKfdjCYoOvgwkPa0=
+Received: by 10.211.194.4 with SMTP id w4mr1756326ebp.46.1248973249118; Thu, 
+	30 Jul 2009 10:00:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124470>
 
-On 7/30/09, Michael J Gruber <git@drmicha.warpmail.net> wrote:
- > Thadeu Lima de Souza Cascardo venit, vidit, dixit 30.07.2009 16:50:
- >> Thanks a lot for the review. I will apply it to my tree with some l=
-ittle
- >> changes.
+I'm wondering about the intended behavior of the
+--exec-path/GIT_EXEC_PATH option - is it supposed to override or add
+to the built-in path?=A0 It seems to do some of both.
 
- Thank you!
+$ git --exec-path=3Dfoo rebase
+git: 'rebase' is not a git-command. See 'git --help'.
 
- >> +ser especificado de v=E0rias formas. Aqui est=E3o alguns exemplos =
-com
-'git-log':
- >
- >  "v=E1rias", not "v=E0rias"
+but:
 
- Good catch!
+$ git --exec-path=3Dfoo status
+# On branch master
+nothing to commit (working directory clean)
 
- >> Sorry, but I could never accept "kernel do linux". I am deeply agai=
-nst
- >> this naming. It's "o kernel linux". It's like saying "kernel from l=
-inux"
- >> instead of "the linux kernel".
- >
- > Isn't it more like "kernel of linux", which is pretty OK (at least i=
-n
- > English)?
+There are plenty of commands in each category, and it's not
+immediately obvious to me what criteria separate them.=A0 Not a huge
+problem, since it's easy enough to use --exec-path=3Dfoo:<normal-path>,
+but I was in the process of adding support for exec-path to the bash
+completion, and it's an important distinction there - and much easier
+if it adds to the built-in, of course.
 
- Right, Linux operating system has a kernel, then, kernel of Linux.
- Anyway, perhaps you have such strong opinion because Linux word has so
- many meanings depending of the context. Linux can be (distribution,
- kernel, operating system etc.). I don't care.
 
- Kind regards,
- Andre
+Thanks,
+Jeffrey
