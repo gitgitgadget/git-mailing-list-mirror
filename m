@@ -1,55 +1,55 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
 Subject: Re: Git for Windows 1.6.4
-Date: Thu, 30 Jul 2009 02:03:58 +0200
-Message-ID: <40aa078e0907291703n618a5981j4f1ac76c8c95e2e9@mail.gmail.com>
+Date: Thu, 30 Jul 2009 02:05:16 +0200
+Message-ID: <40aa078e0907291705r65feae3au1dfc5b6400f4e434@mail.gmail.com>
 References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: msysgit@googlegroups.com, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 30 02:04:13 2009
+X-From: git-owner@vger.kernel.org Thu Jul 30 02:05:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJ7w-0001L6-WA
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:04:09 +0200
+	id 1MWJ98-0001nH-OD
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308AbZG3AEA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 20:04:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755274AbZG3AEA
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:04:00 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:44679 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755266AbZG3AD7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 20:03:59 -0400
-Received: by bwz19 with SMTP id 19so293459bwz.37
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:03:58 -0700 (PDT)
+	id S1755484AbZG3AFS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Jul 2009 20:05:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481AbZG3AFS
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:05:18 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:61298 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755476AbZG3AFR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 20:05:17 -0400
+Received: by fxm28 with SMTP id 28so322143fxm.17
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:05:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Stf9uypfHap62v1yA2DyUGO6sw+505O+0Tr/K+ZyPH4=;
-        b=D2s1avi191DdoHdQk6IrlLb1TUZLYHjyKn7XsmLfEf+fSdMPlxLlnRKU1gBxNB7MXi
-         qXBe21/KhVUNDLLyPvybEvVxWyyI+RzRvDwOEkjwVzdo/Tdlh+r7GdNeoqWbADznp+mU
-         WTANIjV+oAjKbMqzD2TahFbhp3eQDrSyT+g+I=
+        bh=/VhWJNatr2dzUi71bVNm+ujJgfhIZLXL+IwT3Qd7RaE=;
+        b=NYiRpX1A0pYWSIBbVaT1+5O2FC+NpXGLSe9uvQ+eLBeH7fgVs81I8Cg5kLXZnwDMIb
+         UND5YzgFB/yB08vD22HGj9Api7mwPDhD97uWA116uvAX9CC64nEnJTDVrOwdh73SxScR
+         yDe7EKUR4yQZ52CqWxy61peg1hPYgqJz7/ZO4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Djp8uA6vYVbywxLcgZSujjnNQQx+HAXlj/ay0ZZGYClz89Rd4DZKodS/TZhG9PGs2B
-         CFM3PGl3crc+dHsw+dNs7afHh7ZADnzs4sbD4ndntQ69diGuGUsI7+f3u5Hm5e6o7w8n
-         Ggsne7YvmLqMA2C2fLwoICiLcE4Knxi6nXltE=
-Received: by 10.204.72.129 with SMTP id m1mr430095bkj.61.1248912238736; Wed, 
-	29 Jul 2009 17:03:58 -0700 (PDT)
+        b=SwV1fSk8dobWCs3IZ+vnqc8e8O3PmAhAVZHB68Nsl1aqwwGl9DUczJ+MBaitMfAeBk
+         e3DSoEyH22oYmFnNAJZUDidlhX/hJh5EYJ2RhxwaJ/aQqyaqwMpgMCvWhONi62oKJ0ox
+         /ZPfBzR3JhlQMSxfkJk5HiVtlv7KrBxlXp0l0=
+Received: by 10.204.103.203 with SMTP id l11mr424697bko.71.1248912316270; Wed, 
+	29 Jul 2009 17:05:16 -0700 (PDT)
 In-Reply-To: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124415>
 
 On Wed, Jul 29, 2009 at 11:40 PM, Johannes
 Schindelin<Johannes.Schindelin@gmx.de> wrote:
@@ -64,6 +64,10 @@ d I
 > am very impatient.
 
 I'm having issues installing msysGit-netinstall-1.6.4-preview20090729,
+due to lack of libcrypto.dll during installation. The command promt
+says:
+
+
 
 --=20
 Erik "kusma" Faye-Lund
