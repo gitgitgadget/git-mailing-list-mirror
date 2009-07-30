@@ -1,76 +1,71 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/5] unpack_trees(): add support for sparse checkout
-Date: Thu, 30 Jul 2009 02:42:09 +0200
-Message-ID: <200907300242.09950.jnareb@gmail.com>
-References: <1248850154-5469-1-git-send-email-pclouds@gmail.com> <m3zlan1zhv.fsf@localhost.localdomain> <fcaeb9bf0907291632n418508ccke6ad274211690e59@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv3 1/8] Introduce commit notes
+Date: Thu, 30 Jul 2009 02:42:38 +0200
+Message-ID: <200907300242.38844.johan@herland.net>
+References: <1248834326-31488-1-git-send-email-johan@herland.net>
+ <1248834326-31488-2-git-send-email-johan@herland.net>
+ <81b0412b0907290152w27c1b5b5l9efbd6980d4f904e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 02:42:19 2009
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Alex Riesen <raa.lkml@gmail.com>, gitster@pobox.com,
+	johannes.schindelin@gmx.de, trast@student.ethz.ch,
+	tavestbo@trolltech.com, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org, spearce@spearce.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 30 02:42:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJis-00046y-IP
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:42:19 +0200
+	id 1MWJjL-0004JI-92
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749AbZG3AmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 20:42:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754198AbZG3AmK
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:42:10 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:34209 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751026AbZG3AmJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 20:42:09 -0400
-Received: by bwz19 with SMTP id 19so303668bwz.37
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:42:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=PsXcods44jnnaaqVFkswNh12+a3cSFppVrWIGaiLVHg=;
-        b=OclwjIkn6fbXYZd23HsmNWjAqHqfhZpT5QrT3saOMGvjCyfXoS9tx56kzbEHlg+r2k
-         +vbIlQdVt+36+SquGvOaXX4vI8Ds3Hv2zQgy9hFY+qLi3HaZlODCitb5J/g8hMbsg8TN
-         gO/Q6+ROyMVSmrbe9kzc/DZEsbj/YfIz5yBWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ma1qCqXiqt3LZL48RUvw85oPevBAN1a1lObotjJKs8/LffN1JhNCIzs7Xgnlug4nWx
-         I1wFJDxCg7VwnZ6IeBCmVBDeW916OwRUf56zSJnVDVyz8F9TI0taEdo3N3lvDYNSrZAa
-         WaBTK/0tCC9i5FAw0PM72ub4eIpEje5ubeb50=
-Received: by 10.103.52.11 with SMTP id e11mr281430muk.19.1248914528547;
-        Wed, 29 Jul 2009 17:42:08 -0700 (PDT)
-Received: from ?192.168.1.13? (abvq124.neoplus.adsl.tpnet.pl [83.8.214.124])
-        by mx.google.com with ESMTPS id w5sm1692880mue.34.2009.07.29.17.42.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 29 Jul 2009 17:42:07 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <fcaeb9bf0907291632n418508ccke6ad274211690e59@mail.gmail.com>
-Content-Disposition: inline
+	id S1754897AbZG3Amk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 20:42:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754802AbZG3Amk
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:42:40 -0400
+Received: from mx.getmail.no ([84.208.15.66]:55466 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754752AbZG3Amk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 20:42:40 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KNK008QEKN3A4B0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 30 Jul 2009 02:42:39 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KNK00IK4KN3T210@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 30 Jul 2009 02:42:39 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.7.30.2717
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <81b0412b0907290152w27c1b5b5l9efbd6980d4f904e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124426>
 
-On Thu, 30 July 2009, Nguyen Thai Ngoc Duy wrote:
-> 2009/7/29 Jakub Narebski <jnareb@gmail.com>:
+On Wednesday 29 July 2009, Alex Riesen wrote:
+> On Wed, Jul 29, 2009 at 04:25, Johan Herland<johan@herland.net> wrote:
+> > +void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+> > +               const char *output_encoding)
+> > +{
+> > +       static const char *utf8 = "utf-8";
+>
+> Using an array
+>
+>   const char utf8[] = "utf-8";
+>
+> costs you less BSS (no separate storage for the pointer).
 
-> > Signoff (also in some other patches in this series)?
-> 
-> This series is mainly for taking input on how git-shape-workdir should
-> behave, what format is good... That's why I did not sign off. Anyway
-> the series is not really well tested (and obvious lacks tests)
+Thanks, will be fixed in the next iteration of this topic.
 
-In that case it would be IMHO a good idea to mark those patches also
-by using "[PATCH/RFC m/n] ..." or "[RFC/PATCH m/n] ..." in subject.
+...Johan
 
 -- 
-Jakub Narebski
-Poland
+Johan Herland, <johan@herland.net>
+www.herland.net
