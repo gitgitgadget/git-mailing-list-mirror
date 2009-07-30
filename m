@@ -1,105 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Demonstrate bugs when a directory is replaced with a
- symlink
-Date: Wed, 29 Jul 2009 20:26:43 -0700
-Message-ID: <7vbpn2n958.fsf@alter.siamese.dyndns.org>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com>
- <1248819198-13921-2-git-send-email-james.e.pickens@intel.com>
- <4A70062A.4040008@drmicha.warpmail.net>
- <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
- <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
- <7v63dbuyru.fsf@alter.siamese.dyndns.org>
- <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com>
- <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
+From: =?ISO-8859-1?Q?Andr=E9_Goddard_Rosa?= <andre.goddard@gmail.com>
+Subject: Re: [PATCH] Translate the tutorial to Brazillian Portuguese.
+Date: Thu, 30 Jul 2009 00:26:14 -0300
+Message-ID: <b8bf37780907292026q61805aadhd2019eae77739c47@mail.gmail.com>
+References: <7vljnbcbjs.fsf@alter.siamese.dyndns.org>
+	 <1246289542-1596-1-git-send-email-cascardo@holoscopio.com>
+	 <7vfxdjc9b3.fsf@alter.siamese.dyndns.org>
+	 <20090629162738.GE4327@vespa.holoscopio.com>
+	 <7vtz1yc2i3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Pickens\, James E" <james.e.pickens@intel.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 30 05:27:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Yasuaki Narita <yasuaki_n@mti.biglobe.ne.jp>
+To: Junio C Hamano <gitster@pobox.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 05:32:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWMIK-0006U5-Bq
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 05:27:04 +0200
+	id 1MWMNr-0008HH-P0
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 05:32:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964AbZG3D0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 23:26:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753629AbZG3D0x
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 23:26:53 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57205 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbZG3D0x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 23:26:53 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7242616887;
-	Wed, 29 Jul 2009 23:26:53 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 17D7416886; Wed, 29 Jul 2009
- 23:26:44 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D3A4B580-7CB8-11DE-98E6-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754081AbZG3Dcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 23:32:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754022AbZG3Dcg
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 23:32:36 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:34529 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753965AbZG3Dcf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 23:32:35 -0400
+Received: by qyk34 with SMTP id 34so504377qyk.33
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 20:32:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yI9a4jkj+ix7NdO9oUuweJ1B5MWLzgqXfw6G8ZlpY7s=;
+        b=ulz3k6GEw9J+pJYnXvX4tocm7o8N3uMJdwV/TzqCH5S23Y/PMxlZ62K/sU+tgIefI1
+         bkvTVBnBo5GacTYx+wog7f68N91RJR+hxWrg8m/2lB/vqSlwxTClad7xQ7qbcF+j1Xp5
+         ns//RaOGCcUbo1p5DjD5MVKgd+3PS9Q3Woeoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bDdgFvM7vDsfJLk9vU+uXxbiR/XF/xvhm1Msgx4Fx0ls9zjY76r9tOELcr44aIfU94
+         7NsVDmTCEGfk+Zlm4rLgKjzmSO0RUlJa73hSGZlnfcVCTshpcakL4owwBDhDOV2Ree8g
+         GMcY5vbVY3AkCP7RtUlpWOBu39F/y98bvamyY=
+Received: by 10.220.46.10 with SMTP id h10mr840896vcf.8.1248924374220; Wed, 29 
+	Jul 2009 20:26:14 -0700 (PDT)
+In-Reply-To: <7vtz1yc2i3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124439>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> This patch should fix the 'checkout' issue.
+>> I think that using something like po would be better. There are tools
+>> that can extract and update the template messages from many differente
+>> sources. Adapting them to produce a template file from gittutorial.txt
+>> would allow translators to verify how stale their translations are and
+>> much smoother merges. How about that?
 >
-> I made it use a new generic helper function ("check_path()"), since there 
-> are other cases like this that use just 'lstat()', and I bet we want to 
-> change that.
+> After thinking about it a bit more, I think I would prefer something that
+> keeps translation sources separate from the original text.  That way, I
+> have a lot less chance of having to deal with merge/patch conflicts.
 >
-> The 'merge' issue is different, though: it's not due to a blind 'lstat()', 
-> but due to a blind 'unlink()' done by 'remove_path()'. I think 
-> 'remove_path()' should be taught to look for symlinks, and remove just the 
-> symlink - but that's a bit more work, especially since the symlink cache 
-> doesn't seem to expose any way to get the "what is the first symlink path" 
-> information.
+> Your patch adds Documentation/pt/ hierarchy, but I noticed that the kernel
+> folks seem to use Documentation/{ja_JP,ko_KR,zh_CN}/.  I do not think it
+> would make much difference for Japanese language between ja vs ja_JP, but
+> for many languages used in different geographic areas, such an arrangement
+> would make a lot more sense.  As your patch identified itself as a
+> translation to "Brasilian Portuguese", I am imagining that it would be
+> sufficiently different to merit the distinction from Old-world Portuguese.
+> Perhaps your patch should be made to Documentation/pt_BR instead?
+>
+> As to the choice of the tool, from a quick superficial glance, po4a could
+> be a reasonable choice, but I do not know how mature and/or widely used it
+> is, or if there are better alternatives.  http://po4a.alioth.debian.org/
+> says it does support AsciiDoc.
 
-This is a good thing to do, but the James's "checkout" test fails for an
-unrelated reason.
+git gui uses 'po' at http://repo.or.cz/w/git-gui/git-gui-i18n.git to
+handle all translations, including Brazilian Portuguese.
 
-The tree has
+In the meantime, I've made some translation improvements over Thadeu's
+translation work, fixing some typos overall. I'll send it as a
+separate patch.
 
-        120000 blob a36b773	a/b		-> b-2
-        100644 blob e69de29	a/b-2/c/d
-        100644 blob e69de29	a/x
+@Thadeu: would you please double check it and perhaps add your Acked-by?
 
-checked out, and wants to switch to 
-
-        100644 blob e69de29	a/b-2/c/d
-        100644 blob e69de29	a/b/c/d
-        100644 blob e69de29	a/x
-
-checkout_entry() is called to check out "a/b/c/d".  If "a/b" symlink
-were still there, the lstat() you fixed will be fooled.
-
-But in James's test, because the symlink "a/b" is tracked in the
-switched-from commit and is being obliterated by switching to a tree that
-has a directory there, we (should) have called deleted_entry() on a/b to
-mark it for removal, and inside check_updates() before going into the loop
-to call checkout_entry(), we would have already removed the symlink "a/b"
-that is going away inside unlink_entry().
-
-The problem is that has_symlink_or_noent_leading_path() called from there
-lies, without Kjetil's fix c52dc70 (lstat_cache: guard against full match
-of length of 'name' parameter, 2009-06-14) that is in 'pu'.
-
-If the original tree in the test did not have "a/b" tracked, but has an
-untracked symlink "a/b" that points at b-2, then "a/b" will stay in the
-work tree when the codepath your patch touches is reached, and the problem
-will be demonstrated. Your patch will fix that issue.
-
-So both fixes are necessary, and we need a separate test to illustrate
-what your patch fixes.
-
-I'll push out some updates to do so.
+Thanks,
+Andre
