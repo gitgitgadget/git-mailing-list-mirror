@@ -1,88 +1,74 @@
-From: Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
-Subject: Re: [PATCH] Translate the tutorial to Brazillian Portuguese.
-Date: Thu, 30 Jul 2009 12:44:47 -0300
-Message-ID: <20090730154446.GD1727@vespa.holoscopio.com>
-References: <7vljnbcbjs.fsf@alter.siamese.dyndns.org> <1246289542-1596-1-git-send-email-cascardo@holoscopio.com> <7vfxdjc9b3.fsf@alter.siamese.dyndns.org> <20090629162738.GE4327@vespa.holoscopio.com> <7vtz1yc2i3.fsf@alter.siamese.dyndns.org> <b8bf37780907292026q61805aadhd2019eae77739c47@mail.gmail.com>
+From: Luciano Rocha <luciano@eurotux.com>
+Subject: Re: Pro Git Book
+Date: Thu, 30 Jul 2009 16:51:28 +0100
+Message-ID: <20090730155127.GB2484@bit.office.eurotux.com>
+References: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="veXX9dWIonWZEC6h"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Yasuaki Narita <yasuaki_n@mti.biglobe.ne.jp>
-To: =?utf-8?B?QW5kcsOp?= Goddard Rosa <andre.goddard@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 17:45:04 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 17:51:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWXoT-000395-CR
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 17:45:01 +0200
+	id 1MWXux-0006YT-4V
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 17:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838AbZG3Po5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 11:44:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZG3Poz
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 11:44:55 -0400
-Received: from liberdade.minaslivre.org ([72.232.18.203]:45513 "EHLO
-	liberdade.minaslivre.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751692AbZG3Pou (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 11:44:50 -0400
-Received: from vespa.holoscopio.com (unknown [201.80.130.87])
-	by liberdade.minaslivre.org (Postfix) with ESMTPSA id 91DA7208011;
-	Thu, 30 Jul 2009 12:57:19 -0300 (BRT)
-Received: by vespa.holoscopio.com (Postfix, from userid 1000)
-	id 5484DC22A; Thu, 30 Jul 2009 12:44:47 -0300 (BRT)
+	id S1751459AbZG3Pvf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jul 2009 11:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbZG3Pvf
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 11:51:35 -0400
+Received: from os.eurotux.com ([216.75.63.6]:57308 "EHLO os.eurotux.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750701AbZG3Pve (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 11:51:34 -0400
+Received: (qmail 30513 invoked from network); 30 Jul 2009 15:51:33 -0000
+Received: from unknown (HELO bit.office.eurotux.com) (luciano@81.84.255.161)
+  by 0 with AES128-SHA encrypted SMTP; 30 Jul 2009 15:51:33 -0000
 Content-Disposition: inline
-In-Reply-To: <b8bf37780907292026q61805aadhd2019eae77739c47@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <d411cc4a0907271056x458d7b15lc1b2868a46884175@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-07-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124466>
 
-
---veXX9dWIonWZEC6h
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jul 30, 2009 at 12:26:14AM -0300, Andr=C3=A9 Goddard Rosa wrote:
-> git gui uses 'po' at http://repo.or.cz/w/git-gui/git-gui-i18n.git to
-> handle all translations, including Brazilian Portuguese.
+On Mon, Jul 27, 2009 at 10:56:57AM -0700, Scott Chacon wrote:
+> Hey all,
 >=20
-
-But do they use it for Documentation? It doesn't seem so. po4a seems to
-be a reasonable choice, which, in the end, means po too. But it would be
-interesting to gather others experiences in keeping Documentation
-translations updated, not only software strings.
-
-> In the meantime, I've made some translation improvements over Thadeu's
-> translation work, fixing some typos overall. I'll send it as a
-> separate patch.
+> Just a heads up - I've been working on a book on Git being published
+> by Apress called "Pro Git", which is being licensed under a CC 3.0
+> license and as I've just finished some of the final reviews, I've put
+> the entire content of the book online at:
 >=20
-> @Thadeu: would you please double check it and perhaps add your Acked-by?
->=20
+> http://progit.org
 
-It seems OK, but for three fixes as I've sent before. Would you mind
-re-sending them?
+Many thanks for that. It's an interesting reading. Is it updated often?
+There're some typos.
 
-> Thanks,
-> Andre
+Also, a comment. When you show how to setup a git server with ssh, you
+have:
+$ su git
+$ cd
+$ mkdir .ssh
+
+After su make sure umask doesn't allow group-writable, or the ssh daemo=
+n
+will complay about wrong permissions in .ssh and .ssh/authorized_keys.
+
+$ su git
+$ umask 077
+$ ..
+
+And reset to more generous defaults after finishing with ssh setup.
+(Like by saving the previous value or just using 022.)
 
 Regards,
-Cascardo.
+Luciano Rocha
 
---veXX9dWIonWZEC6h
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkpxv+4ACgkQyTpryRcqtS1psQCeLEpNem8M6GB/pD4oOiFGrxPL
-jWIAn149dwE+jaesQx82oMMdEPMXYRlC
-=1gxo
------END PGP SIGNATURE-----
-
---veXX9dWIonWZEC6h--
+--=20
+Luciano Rocha <luciano@eurotux.com>
+Eurotux Inform=E1tica, S.A. <http://www.eurotux.com/>
