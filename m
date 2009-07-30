@@ -1,83 +1,89 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv3 1/8] Introduce commit notes
-Date: Thu, 30 Jul 2009 02:50:03 +0200
-Message-ID: <200907300250.03485.johan@herland.net>
-References: <1248834326-31488-1-git-send-email-johan@herland.net>
- <81b0412b0907290152w27c1b5b5l9efbd6980d4f904e@mail.gmail.com>
- <alpine.DEB.1.00.0907291839350.7626@intel-tinevez-2-302>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2009, #03; Wed, 29)
+Date: Wed, 29 Jul 2009 17:50:46 -0700 (PDT)
+Message-ID: <m3vdlb0zb6.fsf@localhost.localdomain>
+References: <7vzlanqj9p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alex Riesen <raa.lkml@gmail.com>, gitster@pobox.com,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 30 02:50:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 02:50:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJqa-0006Xy-Nf
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:50:17 +0200
+	id 1MWJrD-0006lC-1C
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755205AbZG3AuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 20:50:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754901AbZG3AuF
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:50:05 -0400
-Received: from mx.getmail.no ([84.208.15.66]:40628 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754875AbZG3AuE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 20:50:04 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNK00KTZKZG5D90@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Thu, 30 Jul 2009 02:50:04 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNK00IW3KZFT220@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 30 Jul 2009 02:50:04 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.7.30.3622
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <alpine.DEB.1.00.0907291839350.7626@intel-tinevez-2-302>
+	id S1755478AbZG3Aur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 20:50:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755476AbZG3Aur
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:50:47 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:43743 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754901AbZG3Auq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 20:50:46 -0400
+Received: by ewy10 with SMTP id 10so402767ewy.37
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=N4HalLpPQkXNepbn1Ea4UeDXxa3ZgElKpIa2sZ8ED7o=;
+        b=ciLvwXTHTbgYeNlJmSERNPYViD5fkDQN2CWp+0NxxaSooShjQRfAOVYlaZhLySqLmF
+         Z8YCLTUrCGml9GZ7ttgCnlN59oBKvX+W2DpKIQjgt45gXqQ5xbCV5IfvPmeELrfNwrNh
+         h9MtC0b4d90SwUzAazxwm9dliq76Lw09+K5iM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=wXUm7TnfX46KE5s5Y1ezUkuLclmx0+DLxZ99P+nH3xlXr8SDaTyx0XDmwB0I9RFqMI
+         EIr/w0N8nRBX/RujjqO71cPqJQUeOc7zqBg39RT3xW5MndaEVmOYSLPIMI7T+SYKlpK7
+         yiGRRpsQRZZv85SyquurtxIXPkyjvDYLwnWp0=
+Received: by 10.210.52.15 with SMTP id z15mr587467ebz.34.1248915046420;
+        Wed, 29 Jul 2009 17:50:46 -0700 (PDT)
+Received: from localhost.localdomain (abvq124.neoplus.adsl.tpnet.pl [83.8.214.124])
+        by mx.google.com with ESMTPS id 5sm1271729eyf.34.2009.07.29.17.50.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Jul 2009 17:50:46 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6U0oMoX030585;
+	Thu, 30 Jul 2009 02:50:27 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6U0o67a030581;
+	Thu, 30 Jul 2009 02:50:06 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vzlanqj9p.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124428>
 
-On Wednesday 29 July 2009, Johannes Schindelin wrote:
-> On Wed, 29 Jul 2009, Alex Riesen wrote:
-> > On Wed, Jul 29, 2009 at 04:25, Johan Herland<johan@herland.net> wrote:
-> > > @@ -963,5 +964,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const
-> > > struct commit *commit, +
-> > > +       if (fmt != CMIT_FMT_ONELINE)
-> > > +               get_commit_notes(commit, sb, encoding);
-> > > +
-> >
-> > Someday we will need a way to switch off the display of notes
-> > without resolving to oneline format.
-> > Is there a notes specifier for the printf-like log message formatting
-> > (--pretty=format: or --format) planned, BTW?
->
-> That would probably be something like "GIT_NOTES_REF=nyanyanya git log"?
+Junio C Hamano <gitster@pobox.com> writes:
 
-Yes, that works, although I suspect some users will prefer a command-line
-argument instead.
+> * jn/gitweb-blame (Sat Jul 25 00:44:10 2009 +0200) 10 commits
+>  - gitweb: Create links leading to 'blame_incremental' using
+>    JavaScript
+>  - gitweb: Incremental blame (proof of concept)
+>  - gitweb: Add optional "time to generate page" info in footer
+>  - gitweb: Add -partial_query option to href() subroutine
+>  - gitweb: Use light/dark for class names also in 'blame' view
+>  - gitweb: Add author initials in 'blame' view, a la "git gui blame"
+>  - gitweb: Mark commits with no "previous" in 'blame' view
+>  - gitweb: Use "previous" header of git-blame -p in 'blame' view
+>  - gitweb: Mark boundary commits in 'blame' view
+>  - gitweb: Make .error style generic
+> 
+> There may have been updates during 1.6.4-rc period that I missed.
 
-Nonetheless, I think it makes sense to add a notes specifier to be used in 
---pretty/--format.
-
-I'll try to remember to look into this later, but I'll be grateful if 
-someone gets to it before me.
-
-
-...Johan
+There weren't any updates.  I plan on replacing the 4 top patches soon
+(without '-partial_query' one, as it would not be needed), less proof
+of concept, but still RFC.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Jakub Narebski
+Poland
+ShadeHawk on #git
