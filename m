@@ -1,144 +1,150 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: suppress 'Use of uninitialized value' error
-Date: Fri, 31 Jul 2009 01:00:40 +0200
-Message-ID: <200907310100.42786.jnareb@gmail.com>
-References: <1248988540-8971-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
+Subject: Re: [PATCH] Fix typos on pt_BR/gittutorial.txt translation
+Date: Thu, 30 Jul 2009 20:19:11 -0300
+Message-ID: <20090730231911.GI1727@vespa.holoscopio.com>
+References: <b8bf37780907292044i5ad7b879ueb5048447e4e5bb5@mail.gmail.com> <20090730145044.GA1727@vespa.holoscopio.com> <4A71C6A7.80008@drmicha.warpmail.net> <7viqhaar7v.fsf@alter.siamese.dyndns.org> <b8bf37780907301551w4cdc7e96m137aa188ce1a0a8c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 01:01:07 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="u/L2/WlOHZg+YGU4"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Carlos R. Mafra" <crmafra2@gmail.com>
+To: =?utf-8?B?QW5kcsOp?= Goddard Rosa <andre.goddard@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 01:19:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWecT-0005iM-VR
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 01:01:06 +0200
+	id 1MWeu9-0002gq-5i
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 01:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004AbZG3XAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 19:00:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751953AbZG3XAx
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 19:00:53 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:61459 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751765AbZG3XAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 19:00:52 -0400
-Received: by ewy10 with SMTP id 10so1148852ewy.37
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 16:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=m9DJfiKde+JvJlKp22EnCxJXmcIg2reNuR/7Ft8qAMk=;
-        b=eZ3TcEvsrz1jIJpjbohal1CHOeGfYHX8P/a30O5BwPmPpuSgOKL6VDOXzg0PWBm8Hh
-         5ccFtNmSNUSUag44JtDslE+YFRNKELKm01w5GqxJx16boZqK61JM5rQZaWZ/TygcbVtm
-         mRzKXs1d3xtLP3nRD/Ck6QJGOfyT0uWTSQTjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=MYCZL67U/EEnXfYjmMIpblTmVdyhw/IUHy10VJEwIIfLkxT9KBH4h1nYPnFcaRVxDP
-         2VpRRSJN3/VbfNHjq0Fe1YFi2n+LG+/TJeFVXnkDPcdPTJ9pW2X+rPBedM7jXeHPu1ex
-         oADFmlznNhFyDtt/iJOs1TRk0MXlOAGZ4TLyA=
-Received: by 10.210.89.7 with SMTP id m7mr260255ebb.14.1248994850320;
-        Thu, 30 Jul 2009 16:00:50 -0700 (PDT)
-Received: from ?192.168.1.13? (abvk103.neoplus.adsl.tpnet.pl [83.8.208.103])
-        by mx.google.com with ESMTPS id 10sm1021045eyz.21.2009.07.30.16.00.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Jul 2009 16:00:49 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1248988540-8971-1-git-send-email-giuseppe.bilotta@gmail.com>
+	id S1753178AbZG3XTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 19:19:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZG3XTO
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 19:19:14 -0400
+Received: from liberdade.minaslivre.org ([72.232.18.203]:33738 "EHLO
+	liberdade.minaslivre.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753131AbZG3XTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 19:19:13 -0400
+Received: from vespa.holoscopio.com (unknown [201.80.130.87])
+	by liberdade.minaslivre.org (Postfix) with ESMTPSA id C59A4208019;
+	Thu, 30 Jul 2009 20:31:44 -0300 (BRT)
+Received: by vespa.holoscopio.com (Postfix, from userid 1000)
+	id BCD6DC22A; Thu, 30 Jul 2009 20:19:11 -0300 (BRT)
 Content-Disposition: inline
+In-Reply-To: <b8bf37780907301551w4cdc7e96m137aa188ce1a0a8c@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124486>
 
-On Thu, 30 July 2009, Giuseppe Bilotta wrote:
 
-Thanks for catching this.
+--u/L2/WlOHZg+YGU4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-However... First, the subject should be more specific and less generic.  
-At least provide where 'Use of uninitialized' value was generated, e.g.:
+On Thu, Jul 30, 2009 at 07:51:17PM -0300, Andr=C3=A9 Goddard Rosa wrote:
+> On 7/30/09, Junio C Hamano <gitster@pobox.com> wrote:
+> > Michael J Gruber <git@drmicha.warpmail.net> writes:
+> >
+> >> Isn't it more like "kernel of linux", which is pretty OK (at least in
+> >> English)?
+> >
+> > Google shows (in a query limited to Portuguese) 912000 hits for "kernel=
+ do
+> > Linux" and 6550 hits for "o Linux kernel", so as Thadeu already said, it
+> > appears to be not just "common", but "so common that practically nobody
+> > uses the other form."
+> >
+> > I do not know if there is a war between the factions that use these two
+> > phrases in Portuguese speaking community, but this smells somewhat simi=
+lar
+> > to the "Is it Linux or GNU/Linux?" religious war.  GNU/Linux example mi=
+ght
+> > be much more religious, as opposed to a lingusitc disagreement Thadeu's
+> > comment suggests the Portuguese situation is, though.
+> >
+> > Be it religious or linguistic, I'd rather not to see the war fought in =
+our
+> > documentation.  The documentation is not about the Linux kernel to begin
+> > with, and being easier to read and understand by using phrases more
+> > familiar to the readers is much more important than being technically a=
+nd
+> > linguistically correct but risking to make novices stutter while reading
+> > due to uncommon wording.
+> >
+>=20
+> Hi, Junio!
+>=20
+>     I surely won't argue with your pragmatic view, I do believe it's
+> good for the project, as you have mentioned.
+>=20
+>     Would you like to get another patch or can you adjust it himself
+> as you like?
+>=20
+> Thanks,
+> Andre
 
-  Subject: [PATCH] gitweb: Fix 'Use of uninitialized value' error in href()
+I'd rather remove the linux example and use something else (like git
+itself), since the Documentation is not about linux, as Juno says and
+that would stop the disagreements.
 
-or a bit shorter
+Regards,
+Cascardo.
 
-  Subject: [PATCH] gitweb: Fix 'Use of uninitialized value' in href()
 
-Second, it would be nice to have more detailed description in the body
-of a commit message, in this case stating when mentioned error occur:
+diff --git a/Documentation/pt_BR/gittutorial.txt b/Documentation/pt_BR/gitt=
+utorial.txt
+index 38fab57..2b982f3 100644
+--- a/Documentation/pt_BR/gittutorial.txt
++++ b/Documentation/pt_BR/gittutorial.txt
+@@ -595,9 +595,9 @@ uma lista. Quando a hist=C3=B3ria tem linhas de desenvo=
+lvimento que
+ divergiram e ent=C3=A3o foram unificadas novamente, a ordem em que 'git-lo=
+g'
+ apresenta essas mudan=C3=A7as =C3=A9 irrelevante.
+=20
+-A maioria dos projetos com m=C3=BAltiplos contribuidores (como o kernel
+-Linux, ou o pr=C3=B3prio git) tem unifica=C3=A7=C3=B5es frequentes, e 'git=
+k' faz um
+-trabalho melhor de visualizar sua hist=C3=B3ria. Por exemplo,
++A maioria dos projetos com m=C3=BAltiplos contribuidores (como o pr=C3=B3p=
+rio git)
++tem unifica=C3=A7=C3=B5es frequentes, e 'gitk' faz um trabalho melhor de
++visualizar sua hist=C3=B3ria. Por exemplo,
+=20
+ -------------------------------------
+ $ gitk --since=3D"2 weeks ago" drivers/
+@@ -646,8 +646,7 @@ outras digress=C3=B5es que podem ser interessantes nest=
+e ponto s=C3=A3o:
+=20
+   * linkgit:git-format-patch[1], linkgit:git-am[1]: Estes convertem
+     s=C3=A9ries de commits em patches para email, e vice-versa, =C3=BAteis=
+ para
+-    projetos como o kernel Linux que dependem fortemente de patches
+-    enviados por email.
++    projetos que dependem fortemente de patches enviados por email.
+=20
+   * linkgit:git-bisect[1]: Quando h=C3=A1 uma regress=C3=A3o em seu projet=
+o, uma
+     forma de rastrear um bug =C3=A9 procurando pela hist=C3=B3ria para enc=
+ontrar o
 
-  This warning was generated when 'hash_parent_base' parameter was
-  defined, and either 'file_name' or 'file_parent' was not defined.
+--u/L2/WlOHZg+YGU4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-Note that from above description you can notice that you protect against
-'file_parent' being not defined, but not against 'file_name', so you
-should I think write why it is not a problem:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-  In gitweb code 'file_parent' is used only if 'file_name' is filled.
+iEYEARECAAYFAkpyKm8ACgkQyTpryRcqtS0GpACfbTGbEA+3tKYUHfWv5uDTLxsb
+3kgAn03y+uasX/2b/WIOChIDvnFGtVRH
+=wVBu
+-----END PGP SIGNATURE-----
 
-Well... almost.  This does not cover href(..., -replay=>1) with hand
-crafted broken/invalid gitweb URL.  BTW. a question for you: how did
-you detect/found this breakage?  I don't think gitweb generates such
-broken links (with 'hash_parent_base' but not 'file_parent') normally,
-but I might be mistaken.
-
-Third, we would probably want to have additional case in t/t9500 test
-to protect against regression here.  But that is not as important,
-I think.
-
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-
-Otherwise, for what it is worth:
-
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-> ---
->  gitweb/gitweb.perl |   11 +++++++----
->  1 files changed, 7 insertions(+), 4 deletions(-)
-> 
-> The patch could have been a one-liner by adding the defined check at
-> line 943, but that pushed the line to 120 char, so I decided for this
-> slightly more complex form.
-
-That is IMHO a good solution.  Better not abuse 'if' modifier form.
-
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7fbd5ff..c7f257e 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -940,10 +940,13 @@ sub href {
->  			if (defined $params{'hash_parent_base'}) {
->  				$href .= esc_url($params{'hash_parent_base'});
->  				# skip the file_parent if it's the same as the file_name
-> -				delete $params{'file_parent'} if $params{'file_parent'} eq $params{'file_name'};
-> -				if (defined $params{'file_parent'} && $params{'file_parent'} !~ /\.\./) {
-> -					$href .= ":/".esc_url($params{'file_parent'});
-> -					delete $params{'file_parent'};
-> +				if (defined $params{'file_parent'}) {
-> +					if ($params{'file_parent'} eq $params{'file_name'}) {
-> +						delete $params{'file_parent'};
-> +					} else if ($params{'file_parent'} !~ /\.\./) {
-> +						$href .= ":/".esc_url($params{'file_parent'});
-> +						delete $params{'file_parent'};
-> +					}
->  				}
->  				$href .= "..";
->  				delete $params{'hash_parent'};
-> -- 
-> 1.6.3.rc1.192.gdbfcb
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+--u/L2/WlOHZg+YGU4--
