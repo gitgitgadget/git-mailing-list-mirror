@@ -1,106 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Demonstrate bugs when a directory is replaced with a
- symlink
-Date: Wed, 29 Jul 2009 23:05:06 -0700
-Message-ID: <7vfxceln8t.fsf@alter.siamese.dyndns.org>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com>
- <1248819198-13921-2-git-send-email-james.e.pickens@intel.com>
- <4A70062A.4040008@drmicha.warpmail.net>
- <7v4osvyjl2.fsf@alter.siamese.dyndns.org>
- <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
- <7v63dbuyru.fsf@alter.siamese.dyndns.org>
- <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com>
- <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Pickens\, James E" <james.e.pickens@intel.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jul 30 08:05:31 2009
+From: Mark A Rada <marada@uwaterloo.ca>
+Subject: Add Gitweb support for LZMA compressed snapshots
+Date: Thu, 30 Jul 2009 01:48:01 -0400
+Message-ID: <E0C39B59-E2C5-4C28-9570-D33FEA2A44EB@uwaterloo.ca>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: multipart/mixed; boundary=Apple-Mail-457-42741892
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 30 08:22:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWOld-0006Np-Lr
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 08:05:30 +0200
+	id 1MWP0m-0004AJ-AR
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 08:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbZG3GFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 02:05:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751460AbZG3GFQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 02:05:16 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:43646 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751189AbZG3GFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 02:05:15 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AE52F19ED3;
-	Thu, 30 Jul 2009 02:05:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9AFDE19ECF; Thu,
- 30 Jul 2009 02:05:07 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
- (Linus Torvalds's message of "Wed\, 29 Jul 2009 15\:08\:12 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F23EF0B2-7CCE-11DE-93FB-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751538AbZG3GUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 02:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751189AbZG3GUs
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 02:20:48 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:40921 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751150AbZG3GUs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 02:20:48 -0400
+X-Greylist: delayed 1956 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jul 2009 02:20:48 EDT
+Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n6U5m6Ve023910
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Thu, 30 Jul 2009 01:48:11 -0400 (EDT)
+X-Mailer: Apple Mail (2.935.3)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Thu, 30 Jul 2009 01:48:11 -0400 (EDT)
+X-Miltered: at psyche with ID 4A713416.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: ClamAV version 0.94.2, clamav-milter version 0.94.2 on localhost
+X-Virus-Status: Clean
+X-UUID: d2fb92de-9a06-4494-a64d-1ac99fb955ba
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124443>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> This patch should fix the 'checkout' issue.
->
-> I made it use a new generic helper function ("check_path()"), since there 
-> are other cases like this that use just 'lstat()', and I bet we want to 
-> change that.
->
-> The 'merge' issue is different, though: it's not due to a blind 'lstat()', 
-> but due to a blind 'unlink()' done by 'remove_path()'. I think 
-> 'remove_path()' should be taught to look for symlinks, and remove just the 
-> symlink - but that's a bit more work, especially since the symlink cache 
-> doesn't seem to expose any way to get the "what is the first symlink path" 
-> information.
+--Apple-Mail-457-42741892
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
 
-I think this is a good thing to do regardless, but the James's "checkout"
-test fails for an unrelated reason.
+Hi,
 
-The tree has
+I thought I would submit this little patch I made to my gitweb. I am  
+on a relatively slow
+connection, and so LZMA compression time is less of a  concern than  
+bandwidth---I'm
+guessing that I am not the only person who suffers from slow internet  
+connection
+syndrome.
 
-        120000 blob a36b773	a/b		-> b-2
-        100644 blob e69de29	a/b-2/c/d
-        100644 blob e69de29	a/x
 
-checked out, and wants to switch to 
+--
+Mark A Rada (ferrous26)
+marada@uwaterloo.ca
 
-        100644 blob e69de29	a/b-2/c/d
-        100644 blob e69de29	a/b/c/d
-        100644 blob e69de29	a/x
 
-checkout_entry() is called to check out "a/b/c/d".  If "a/b" symlink
-were still there, the lstat() you fixed will be fooled.
+--Apple-Mail-457-42741892
+Content-Disposition: attachment;
+	filename=0001-Add-Gitweb-support-for-LZMA-compressed-snapshots.patch
+Content-Type: application/octet-stream;
+	x-unix-mode=0644;
+	name="0001-Add-Gitweb-support-for-LZMA-compressed-snapshots.patch"
+Content-Transfer-Encoding: quoted-printable
 
-But in James's test, because the symlink "a/b" is tracked in the
-switched-from commit and is being obliterated by switching to a tree that
-has a directory there, we (should) have called deleted_entry() on a/b to
-mark it for removal, and inside check_updates() before going into the loop
-to call checkout_entry(), we would have already removed the symlink "a/b"
-that is going away inside unlink_entry().
+=46rom=20a080ce5e8467317a3f20c6de8814549e5c4f46f2=20Mon=20Sep=2017=20=
+00:00:00=202001=0AFrom:=20Mark=20Rada=20<marada@uwaterloo.ca>=0ADate:=20=
+Wed,=2029=20Jul=202009=2021:27:32=20-0400=0ASubject:=20[PATCH]=20Add=20=
+Gitweb=20support=20for=20LZMA=20compressed=20snapshots=0A=0A=
+Signed-off-by:=20Mark=20Rada=20<marada@uwaterloo.ca>=0A---=0A=20=
+gitweb/gitweb.perl=20|=20=20=20=208=20++++++++=0A=201=20files=20changed,=20=
+8=20insertions(+),=200=20deletions(-)=0A=0Adiff=20--git=20=
+a/gitweb/gitweb.perl=20b/gitweb/gitweb.perl=0Aindex=2038492d0..e131ea4=20=
+100755=0A---=20a/gitweb/gitweb.perl=0A+++=20b/gitweb/gitweb.perl=0A@@=20=
+-184,6=20+184,13=20@@=20our=20%known_snapshot_formats=20=3D=20(=0A=20=09=09=
+'format'=20=3D>=20'tar',=0A=20=09=09'compressor'=20=3D>=20['bzip2']},=0A=20=
+=0A+=09'txz'=20=3D>=20{=0A+=09=09'display'=20=3D>=20'tar.lzma',=0A+=09=09=
+'type'=20=3D>=20'application/x-lzma',=0A+=09=09'suffix'=20=3D>=20=
+'.lzma',=0A+=09=09'format'=20=3D>=20'tar',=0A+=09=09'compressor'=20=3D>=20=
+['lzma']},=0A+=0A=20=09'zip'=20=3D>=20{=0A=20=09=09'display'=20=3D>=20=
+'zip',=0A=20=09=09'type'=20=3D>=20'application/x-zip',=0A@@=20-196,6=20=
++203,7=20@@=20our=20%known_snapshot_formats=20=3D=20(=0A=20our=20=
+%known_snapshot_format_aliases=20=3D=20(=0A=20=09'gzip'=20=20=3D>=20=
+'tgz',=0A=20=09'bzip2'=20=3D>=20'tbz2',=0A+=09'lzma'=20=20=3D>=20'txz',=0A=
+=20=0A=20=09#=20backward=20compatibility:=20legacy=20gitweb=20config=20=
+support=0A=20=09'x-gzip'=20=3D>=20undef,=20'gz'=20=3D>=20undef,=0A--=20=0A=
+1.6.4=0A=0A=
 
-The problem is that has_symlink_or_noent_leading_path() called from there
-lies, without Kjetil's fix c52dc70 (lstat_cache: guard against full match
-of length of 'name' parameter, 2009-06-14) that is in 'pu'.
+--Apple-Mail-457-42741892
+Content-Type: text/plain;
+	charset=US-ASCII;
+	format=flowed
+Content-Transfer-Encoding: 7bit
 
-If the original tree in the test did not have "a/b" tracked, but has an
-untracked symlink "a/b" that points at b-2, then "a/b" will stay in the
-work tree when the codepath your patch touches is reached, and the problem
-will be demonstrated. Your patch will fix that issue.
 
-So both fixes are necessary, and we need a separate test to illustrate
-what your patch fixes.
 
-I'll push out some updates.
+
+
+--Apple-Mail-457-42741892--
