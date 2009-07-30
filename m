@@ -1,65 +1,93 @@
-From: Diggory Hardy <diggory.hardy@gmail.com>
-Subject: LESS env var and a pager
-Date: Thu, 30 Jul 2009 09:10:23 +0200
-Message-ID: <31718a220907300010t136885c6ldc2ea362f9c6e33@mail.gmail.com>
+From: Josh ben Jore <jbenjore@whitepages.com>
+Subject: Re: Null deref in recursive merge in
+ df73af5f667a479764d2b2195cb0cb60b0b89e3d
+Date: Thu, 30 Jul 2009 00:24:54 -0700
+Message-ID: <C69698D6.61E1C%jbenjore@whitepages.com>
+References: <7vtz0uk5z3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 30 09:10:37 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 09:25:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWPmb-0005fe-L8
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 09:10:34 +0200
+	id 1MWQ0e-0003Mk-On
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 09:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753418AbZG3HKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 03:10:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309AbZG3HKY
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 03:10:24 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:39305 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751454AbZG3HKY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 03:10:24 -0400
-Received: by fxm28 with SMTP id 28so439438fxm.17
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 00:10:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=QzYOFbDXSSx0/qSIYbhvLRmVkiOC6NqiOZV4SiQustE=;
-        b=Sb3ohqXsdjc85ZEe18XsY5h29Ts9R5pIZI5opgyNuJ2uK/zcpB2TxlN1qoT5BVIEZz
-         CiP84XO0mxHs++7VrKV9wK2gQfpTBweAJT6i+RBe6c6/xxnpM0C/snN02XvO24CMbIae
-         G+6M82jtsnzIa7ag08fbmFnysSW5Qqf9ccE2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=YMXKUaR7XoSi5+WHIWoH+3LAj8AzPBPzVUSzlyKNetOh+839O39P8QMXU7hnCJ2AXV
-         bXo5UvTGOvsPvaa5nU6M+hBBKjM3j/gCOi9WEBfzSaGAmPVMWCTT/nF/I+VD39gR7dxh
-         YLrOx/oN8uCHEEvCvd4LLXlW1dAvNF0PYR0l8=
-Received: by 10.204.117.65 with SMTP id p1mr812527bkq.91.1248937823413; Thu, 
-	30 Jul 2009 00:10:23 -0700 (PDT)
+	id S1753450AbZG3HY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 03:24:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752174AbZG3HY4
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 03:24:56 -0400
+Received: from mail0.w3data.com ([38.112.225.178]:21871 "EHLO
+	hub.corp.w3data.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751454AbZG3HY4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 03:24:56 -0400
+Received: from post.corp.w3data.com ([172.18.0.206]) by hub ([172.25.0.29])
+ with mapi; Thu, 30 Jul 2009 00:25:02 -0700
+Thread-Topic: Null deref in recursive merge in
+ df73af5f667a479764d2b2195cb0cb60b0b89e3d
+Thread-Index: AcoQ4+qEwNrsWQbATmmqOORw1/evoQAAuq++
+In-Reply-To: <7vtz0uk5z3.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124447>
 
-I was recently trying to work out why when git's output is piped
-through a pager, it doesn't use the alternate screen buffer:
-https://bugs.kde.org/show_bug.cgi?id=201899
+On 7/30/09 12:03 AM, "Junio C Hamano" <gitster@pobox.com> wrote:
 
-Conclusion: removing the X option from the LESS environ var produced
-the results I wanted (allow mouse-wheel scrolling, output is hidden
-after closing the pager).
-One relevent post I found:
-http://article.gmane.org/gmane.comp.version-control.git/29565/match=less+frsx
+> Josh ben Jore <jbenjore@whitepages.com> writes:
+> 
+>> I know more now.
+> 
+> Thanks.  The log was a bit hard to read with linewrapping; here is what I
+> could glean out of it anyway.
 
-So maybe it'd make sense to change this in pager.c to:
-setenv("LESS", "FRS", 0);
-(or even just FR:)
-setenv("LESS", "FR", 0);
+Sorry about that. I didn't realize it was wrapped. I thought I'd use my
+work's Outlook since I was addressing a problem for work.
 
-Just a suggestion of what seems preferable to me.
+> Since I do not have an access to exact details, nor reproducible history,
+> this is shot in the dark, but I think this may fix it.
+
+It is a very accurate shot in the dark. It appears to have fixed it when
+applied to 0a53e9ddeaddad63ad106860237bbf53411d11a7 GIT 1.6.4. I'll be
+trying this against v1.6.0.4 tomorrow.
+
+> The codepath saw that one branch renamed dev-ubuntu/ stuff to dev/ at that
+> "unmerged" path, while the other branch added something else to the same
+> path, and decided to add that at an alternative path, and the intent of
+> that is so that it can safely resolve the "renamed" side to its final
+> destination.  The added update_file() call is about finishing that
+> conflict resolution the code forgets to do.
+> 
+>  merge-recursive.c |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index d415c41..868b383 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -955,6 +955,7 @@ static int process_renames(struct merge_options *o,
+>                                 new_path = unique_path(o, ren1_dst, branch2);
+>                                 output(o, 1, "Adding as %s instead",
+> new_path);
+>                                 update_file(o, 0, dst_other.sha1,
+> dst_other.mode, new_path);
+> +                               update_file(o, 0, src_other.sha1,
+> src_other.mode, ren1_dst);
+>                         } else if ((item = string_list_lookup(ren1_dst,
+> renames2Dst))) {
+>                                 ren2 = item->util;
+>                                 clean_merge = 0;
+> 
+
+Thanks very much,
+Josh
