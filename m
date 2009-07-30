@@ -1,91 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Null deref in recursive merge in
  df73af5f667a479764d2b2195cb0cb60b0b89e3d
-Date: Thu, 30 Jul 2009 00:54:11 -0700
-Message-ID: <7vws5qhaho.fsf@alter.siamese.dyndns.org>
-References: <7vtz0uk5z3.fsf@alter.siamese.dyndns.org>
- <C69698D6.61E1C%jbenjore@whitepages.com>
+Date: Thu, 30 Jul 2009 10:00:57 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907300958430.4589@intel-tinevez-2-302>
+References: <D5F958F92101F74D8A5683C2FE14F4200F23102F@post.corp.w3data.com> <C695A6A4.61CD9%jbenjore@whitepages.com> <7vtz0uk5z3.fsf@alter.siamese.dyndns.org> <7viqhaipg0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Josh ben Jore <jbenjore@whitepages.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 09:54:24 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <frekui@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>, Git <git@vger.kernel.org>,
+	Josh ben Jore <jbenjore@whitepages.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 10:01:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWQT0-00016q-Vh
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 09:54:23 +0200
+	id 1MWQZY-0003z3-PN
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 10:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753422AbZG3HyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 03:54:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753146AbZG3HyP
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 03:54:15 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:49412 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752999AbZG3HyO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 03:54:14 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 448E819348;
-	Thu, 30 Jul 2009 03:54:15 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 9D10819347; Thu,
- 30 Jul 2009 03:54:12 -0400 (EDT)
-In-Reply-To: <C69698D6.61E1C%jbenjore@whitepages.com> (Josh ben Jore's
- message of "Thu\, 30 Jul 2009 00\:24\:54 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D5316F6-7CDE-11DE-9DE5-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751168AbZG3IBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 04:01:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbZG3IBA
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 04:01:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50877 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750938AbZG3IA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 04:00:59 -0400
+Received: (qmail invoked by alias); 30 Jul 2009 08:00:58 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp066) with SMTP; 30 Jul 2009 10:00:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+UcYwn4ZeUJZTlvw4fFoVsmpHViLtbAv1lYd6a62
+	TJJ7RZrrHEuFli
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7viqhaipg0.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124450>
 
-Josh ben Jore <jbenjore@whitepages.com> writes:
+Hi,
 
-> It is a very accurate shot in the dark. It appears to have fixed it when
-> applied to 0a53e9ddeaddad63ad106860237bbf53411d11a7 GIT 1.6.4. I'll be
-> trying this against v1.6.0.4 tomorrow.
+On Thu, 30 Jul 2009, Junio C Hamano wrote:
 
-Thanks.  After re-reading the patch, I am reasonably sure that it is the
-right fix.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > The codepath saw that one branch renamed dev-ubuntu/ stuff to dev/ at 
+> > that "unmerged" path, while the other branch added something else to 
+> > the same path, and decided to add that at an alternative path, and the 
+> > intent of that is so that it can safely resolve the "renamed" side to 
+> > its final destination.  The added update_file() call is about 
+> > finishing that conflict resolution the code forgets to do.
+> 
+> By the way, (I am CC'ing Fredrik, the author of the merge-recursive.py,
+> the original implementation, even though I haven't seen him around here
+> for a long time. Two "thieves" are also CC'ed), I think the way recursive
+> strategy tries to handle rename/add and rename/rename conflicts by coming
+> up with a temporary pathname is fundamentally wrong.
+> 
+> If our branch (stage #2) added by renaming and their branch (stage #3)
+> added by creating the same path, why can't we simply leave these two
+> stages in unmerged state without funny "unique_path()" renaming?
 
-Earlier we fixed similar issues with bf74106 (merge-recursive: never leave
-index unmerged while recursing, 2009-05-09) and 0c44c94 (merge-recursive:
-do not die on a conflicting submodule, 2009-04-29).
+AFAIR we could not leave the two in unmerged state because the "recursive" 
+part of the recursive merge demands that we be able (at the intermediate 
+merges) to write a tree.
 
-The former is a fix to 36e3b5e (merge-recursive: mark rename/delete
-conflict as unmerged, 2008-12-22) which is probably newer than 1.6.0.4
-codebase, and unless you are using submodules, the latter is probalby also
-safe to ignore if you are cherry-picking to the ancient 1.6.0.4 codebase.
+But I agree that coming up with unique paths is wrong: if it is a 
+rename/rename conflict, it should be
 
->> The codepath saw that one branch renamed dev-ubuntu/ stuff to dev/ at that
->> "unmerged" path, while the other branch added something else to the same
->> path, and decided to add that at an alternative path, and the intent of
->> that is so that it can safely resolve the "renamed" side to its final
->> destination.  The added update_file() call is about finishing that
->> conflict resolution the code forgets to do.
->> 
->>  merge-recursive.c |    1 +
->>  1 files changed, 1 insertions(+), 0 deletions(-)
->> 
->> diff --git a/merge-recursive.c b/merge-recursive.c
->> index d415c41..868b383 100644
->> --- a/merge-recursive.c
->> +++ b/merge-recursive.c
->> @@ -955,6 +955,7 @@ static int process_renames(struct merge_options *o,
->>                                 new_path = unique_path(o, ren1_dst, branch2);
->>                                 output(o, 1, "Adding as %s instead",
->> new_path);
->>                                 update_file(o, 0, dst_other.sha1,
->> dst_other.mode, new_path);
->> +                               update_file(o, 0, src_other.sha1,
->> src_other.mode, ren1_dst);
->>                         } else if ((item = string_list_lookup(ren1_dst,
->> renames2Dst))) {
->>                                 ren2 = item->util;
->>                                 clean_merge = 0;
->> 
->
-> Thanks very much,
-> Josh
+	<<<<<<<
+	=======
+	<file1>
+	>>>>>>>
+
+for one and
+
+	<<<<<<<
+	<file2>
+	=======
+	>>>>>>>
+
+for the other rename target.
+
+Ciao,
+Dscho
