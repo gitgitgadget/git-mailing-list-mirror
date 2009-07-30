@@ -1,76 +1,62 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC 06/11 v2] fast-import: Add support for importing commit notes
-Date: Thu, 30 Jul 2009 02:29:13 +0200
-Message-ID: <200907300229.13642.johan@herland.net>
-References: <1248656659-21415-1-git-send-email-johan@herland.net>
- <20090729142634.GC1033@spearce.org> <7v8wi7wjex.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git for Windows 1.6.4
+Date: Thu, 30 Jul 2009 02:34:03 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907300226510.8306@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>  <40aa078e0907291705r65feae3au1dfc5b6400f4e434@mail.gmail.com> <40aa078e0907291710j23695160q34541e4dc5943f3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	barkalow@iabervon.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 02:29:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 30 02:34:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJWS-0000EB-0m
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:29:28 +0200
+	id 1MWJap-0001ZZ-Mr
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:34:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753259AbZG3A3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 20:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752890AbZG3A3Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:29:16 -0400
-Received: from mx.getmail.no ([84.208.15.66]:52049 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752821AbZG3A3P (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 20:29:15 -0400
-Content-disposition: inline
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNK008OGK0RA4B0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 30 Jul 2009 02:29:15 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNK00893K0PYL40@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Thu, 30 Jul 2009 02:29:15 +0200 (MEST)
-X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
- Antispam-Data: 2009.7.30.1816
-User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
-In-reply-to: <7v8wi7wjex.fsf@alter.siamese.dyndns.org>
+	id S1753516AbZG3Adw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 20:33:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752821AbZG3Adw
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:33:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41567 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751026AbZG3Adw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 20:33:52 -0400
+Received: (qmail invoked by alias); 30 Jul 2009 00:33:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp029) with SMTP; 30 Jul 2009 02:33:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX182xbUlWmw2LZE1V+Un7se9Sxorw0IWUbbhc9e6eP
+	0wJs87v79KDTgl
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <40aa078e0907291710j23695160q34541e4dc5943f3d@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124424>
 
-On Wednesday 29 July 2009, Junio C Hamano wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> >> > We recently hit a similar unintended limitation that we regret in
-> >> > the fast-import language, didn't we?
-> >>
-> >> I don't know. Must have slipped past my mailbox.
-> >
-> > I remember something being raised, but I can't remember exactly
-> > what it was either.
->
-> Exporting a tag that points at a non commit was what I had in mind.
->
-> > tag, there might be arguments for tagging trees, e.g. so you can
-> > export the linux kernel repository with `git fast-export` and reload
-> > it with fast-import.  But that's unrelated to this change.
-> >
-> > See above about notes.
->
-> I think we are in agreement then.  Good.
+Hi,
 
-We do? on what? That 'notemodify' should work on <committish> + <tag 
-object>? Or that 'notemodify' should work on <any object>?
+On Thu, 30 Jul 2009, Erik Faye-Lund wrote:
 
-...Johan
+> On Thu, Jul 30, 2009 at 2:05 AM, Erik 
+> Faye-Lund<kusmabite@googlemail.com> wrote:
+> > I'm having issues installing msysGit-netinstall-1.6.4-preview20090729, 
+> > due to lack of libcrypto.dll during installation.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Just to be sure, I tried the same, but it worked here!  Of course, that 
+was due to me making a new net installer...
+
+Oh well, please find a new net installer (that I briefly tested, 
+actually).
+
+Hopefully by now everybody understands that Git for Windows is Beta for a 
+reason.
+
+Ciao,
+Dscho
