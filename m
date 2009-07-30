@@ -1,86 +1,80 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
 Subject: Re: Git for Windows 1.6.4
-Date: Thu, 30 Jul 2009 02:10:15 +0200
-Message-ID: <40aa078e0907291710j23695160q34541e4dc5943f3d@mail.gmail.com>
-References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
-	 <40aa078e0907291705r65feae3au1dfc5b6400f4e434@mail.gmail.com>
+Date: Thu, 30 Jul 2009 02:13:08 +0200
+Message-ID: <40aa078e0907291713x3c672fdsf013465b373ae57b@mail.gmail.com>
+References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de> <40aa078e0907291705r65feae3au1dfc5b6400f4e434@mail.gmail.com> <40aa078e0907291710j23695160q34541e4dc5943f3d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: msysgit@googlegroups.com, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 30 02:10:29 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Jul 30 02:13:24 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f162.google.com ([209.85.210.162])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJE3-0003NJ-Ct
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:10:27 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755583AbZG3AKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 20:10:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755476AbZG3AKR
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:10:17 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:38346 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755266AbZG3AKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Jul 2009 20:10:16 -0400
-Received: by fxm28 with SMTP id 28so323546fxm.17
-        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:10:15 -0700 (PDT)
+	id 1MWJGt-0004E0-W8
+	for gcvm-msysgit@m.gmane.org; Thu, 30 Jul 2009 02:13:24 +0200
+Received: by yxe34 with SMTP id 34so1552924yxe.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 29 Jul 2009 17:13:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=93plSPn1cljgPpWUXUA3j0igMcByGjSSZ/tgoFc1X+Q=;
-        b=GI2jYqYaVyGhm67Ggej1pF8tCnKyrLnMsrKzlqIjIJmJrPqsnjZdhHzzY8zf/cujpA
-         hUrO2o+g0UI1VcQykCK7NzMff2KgqI9DWzhBTnfxiOhBmiV/t81WiF6/MFAMx4MI7JQS
-         ltlpDtc+QsWYqmLuk/shOIYWohPfIISrP4Cik=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received-spf:authentication-results:received
+         :dkim-signature:domainkey-signature:mime-version:received
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=551NDaUXIJf2BcasH4SHtr41nDBPL7RIICnJE8EcJuM=;
+        b=nzbKrZ33TvgFm/CwmoKgiO+ah3xGEPy4peBBzp4yPxf0JIMpW2BfDXTAcSVUSWu2pv
+         m6KQMWA2gKisIE9MMMcnqC9i2H6UxOFdTD5V/fY72lRwhz4sSTkauiiFhTBzCmuMyuT1
+         pzk2B7ywAU8o1MfbF+CFe0NKquvjfBojDEsuI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GboV1bHfYzZtxKexnTsLP3XmRjZjgP+22ERrLZ6/6PWSKZ2ojh6Iw2Qjctw4wsAV5X
-         A+4wxbg/Vk/OaqwjtFlyAWe50sO9Y9ND1SHG/fompdgUwKVuO4auee0pSQyspPbVpIlo
-         1xB5ESQOjuJ3Tlbc6ctLsYB4JZuLTy1CbcRuA=
-Received: by 10.204.116.15 with SMTP id k15mr418976bkq.111.1248912615694; Wed, 
-	29 Jul 2009 17:10:15 -0700 (PDT)
-In-Reply-To: <40aa078e0907291705r65feae3au1dfc5b6400f4e434@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        b=ymK5YUhQTCmc0KI3NXV8f3ow1+pTZ42rs2ps2Hl3N5mU6QGSBUfLR+Oj9NSsvU37iz
+         FaF1A+pc8EsGOGKQwQvyQZ6HAZerwlCVo/QCc57DAz6x6wUwPPOssarNj5GfVyQfrJKb
+         BccKKe1aIcn/tqhFg55UHMEhY0q0wRSbCD9l4=
+Received: by 10.151.112.4 with SMTP id p4mr110413ybm.19.1248912792506;
+        Wed, 29 Jul 2009 17:13:12 -0700 (PDT)
+Received: by 10.176.56.38 with SMTP id e38gr5994yqa.0;
+	Wed, 29 Jul 2009 17:13:10 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.204.59.197 with SMTP id m5mr11209bkh.19.1248912790273; Wed, 29 Jul 2009 17:13:10 -0700 (PDT)
+Received: from mail-fx0-f215.google.com (mail-fx0-f215.google.com [209.85.220.215]) by gmr-mx.google.com with ESMTP id 14si249039bwz.1.2009.07.29.17.13.09; Wed, 29 Jul 2009 17:13:09 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.215 as permitted sender) client-ip=209.85.220.215;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.215 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by fxm11 with SMTP id 11so352160fxm.15 for <msysgit@googlegroups.com>; Wed, 29 Jul 2009 17:13:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=aP3pgLvs+Wgyj35kkcwDG/7wRDgqS1jBLE9vh+bHhPs=; b=lAoDyU5E2/2aXZEz8/ID3j93HpgueBSXSIZWdiQGm8+mhVjdDWmILNnb5r7KhU7jTf Ff2YC1UHlYXK9EU8geiegYWKgspfD5kzD/vwkWS6uGl2+j+eTchDmo4AfVAGBcY6WHeQ +t0VFHbYECeR5AKYMrF12vXS14PzJwbO7SJak=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=AWQqr2UypUiMjvXh1D2UOtuDP8SX//v4nyR42vXR6jzJLs/J8a8PqfyUrTGBCTyjRe dfq4bsRTy4OeoYzsxwig8hXWbW/0139KTRoWU4clj2D1hPsdiRE/Th6zSuI2uXBKfF9m BGZ/sJKFnBWnl3kqDiALDAUdU1r+upre9j58s=
+Received: by 10.204.61.204 with SMTP id u12mr409844bkh.149.1248912788809; Wed,  29 Jul 2009 17:13:08 -0700 (PDT)
+In-Reply-To: <40aa078e0907291710j23695160q34541e4dc5943f3d@mail.gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124417>
-
-On Thu, Jul 30, 2009 at 2:05 AM, Erik Faye-Lund<kusmabite@googlemail.com> wrote:
-> I'm having issues installing msysGit-netinstall-1.6.4-preview20090729,
-> due to lack of libcrypto.dll during installation. The command promt
-> says:
-
-OK, this new netbook is neat, apart from the tiny keyboard ;)
-
-I'll try again - sorry for the noise.
-
-I'm having issues installing msysGit-netinstall-1.6.4-preview20090729,
-due to lack of libcrypto.dll during installation. The command promt
-says:
--------------------------------------------------------
-Checking environment
--------------------------------------------------------
-Environment is clean. Can install msysgit.
-
--------------------------------------------------------
-Fetching the latest MSys environment
--------------------------------------------------------
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124418>
 
 
-...after that I'm getting a messagebox saying that git.exe failed to
-find libcrypto.dll.
+On Thu, Jul 30, 2009 at 2:10 AM, Erik Faye-Lund<kusmabite@googlemail.com> wrote:
+> Checking in c:\msysgit\bin I find most needed stuff, but not
 
-Checking in c:\msysgit\bin I find most needed stuff, but not
-libcrypto.dll (or libssl.dll, which I suspect would have caused
-similar issues if it wasn't for the lacking libcrypto.dll)
-
+Uhm, that should have been c:\msysgit\installer-tmp\bin...
 
 -- 
 Erik "kusma" Faye-Lund
