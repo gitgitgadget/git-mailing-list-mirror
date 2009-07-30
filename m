@@ -1,139 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v3] Demonstrate bugs when a directory is replaced with
- a symlink
-Date: Wed, 29 Jul 2009 16:58:53 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0907291656420.3161@localhost.localdomain>
-References: <1248819198-13921-1-git-send-email-james.e.pickens@intel.com> <1248819198-13921-2-git-send-email-james.e.pickens@intel.com> <4A70062A.4040008@drmicha.warpmail.net> <7v4osvyjl2.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402AD9@azsmsx507.amr.corp.intel.com>
- <7v63dbuyru.fsf@alter.siamese.dyndns.org> <3BA20DF9B35F384F8B7395B001EC3FB342402D3C@azsmsx507.amr.corp.intel.com> <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
+From: Troy Telford <ttelford.groups@gmail.com>
+Subject: Re: git-fast-import question
+Date: Wed, 29 Jul 2009 18:00:02 -0600
+Message-ID: <1e30a6d10907291700u55eef62cy22c87815602616ee@mail.gmail.com>
+References: <1e30a6d10907291536y3ec68caq8788aef2b7c34a6f@mail.gmail.com>
+	 <20090729224855.GD1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: "Pickens, James E" <james.e.pickens@intel.com>
-X-From: git-owner@vger.kernel.org Thu Jul 30 01:59:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 30 02:00:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWJ3i-0008Og-OE
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 01:59:47 +0200
+	id 1MWJ4A-00005g-FQ
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 02:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754030AbZG2X7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Jul 2009 19:59:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753965AbZG2X7b
-	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 19:59:31 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48669 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752935AbZG2X7a (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Jul 2009 19:59:30 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6TNwrbD016542
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 29 Jul 2009 16:58:55 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n6TNwrc9010816;
-	Wed, 29 Jul 2009 16:58:53 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0907291440480.3161@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.968 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755240AbZG3AAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Jul 2009 20:00:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755233AbZG3AAE
+	(ORCPT <rfc822;git-outgoing>); Wed, 29 Jul 2009 20:00:04 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:14258 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210AbZG3AAC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Jul 2009 20:00:02 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so638293qwh.37
+        for <git@vger.kernel.org>; Wed, 29 Jul 2009 17:00:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JqM7uPJCH8qtRxOfxlVD+NiSE9r8qu4ZbtV33p7WMpo=;
+        b=LgtpVWjJXPi0AKdf++QF5ht2lb6w9gqBoIpFbNBfV5fLasJt5qMmqdeK6tnNkR7PJg
+         Qq+m4ctGQkl7dfElQxctOsAYj+0raE9M9A4f00VN8RVP1y/ZY3sIVcvR+YkGuHjSYIux
+         yisFnrFPO3wlgII+fzMUBMkVkROCx9+Sba1tY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ly4YmDycovvHbsVQyOdHANtgsK9EuHptWZ3oFi4Jn9YuL/OqUH76sqmxMDw5H5AFii
+         KHYMRmUXhFPiFCo7LxgXBKdON5Cm3QOSaKNp8Np6sdxszIv9DMpXzT7upwQzkq5gyvf8
+         lOpGguEl4gIveOe7xfqPIyxPBkgUyBBCRwPXQ=
+Received: by 10.229.89.146 with SMTP id e18mr95499qcm.23.1248912002886; Wed, 
+	29 Jul 2009 17:00:02 -0700 (PDT)
+In-Reply-To: <20090729224855.GD1033@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124413>
 
+> My initial guess is, you don't have what
+> you think you have.
 
+Thanks for the tip - you're right in that I don't have what I think I have.
 
-On Wed, 29 Jul 2009, Linus Torvalds wrote:
->
-> The 'merge' issue is different, though: it's not due to a blind 'lstat()', 
-> but due to a blind 'unlink()' done by 'remove_path()'. I think 
-> 'remove_path()' should be taught to look for symlinks, and remove just the 
-> symlink - but that's a bit more work, especially since the symlink cache 
-> doesn't seem to expose any way to get the "what is the first symlink path" 
-> information.
-> 
-> Kjetil, can you look at that? 
+Namely, there are entire sections of the dump file that aren't getting
+imported.  fast-import isn't complaining about it either.
 
-Hmm... This looks like it should do it.
+commit refs/heads/foo
+<various metadata>
+M 100644 :mark path/to/some/file
 
-It doesn't make the test _pass_ (we don't seem to be creating a/b-2/c/d 
-properly - I haven't checked why yet, but I suspect it is becasue we think 
-it already exists due to the symlinked version lstat'ing fine), but it 
-seems to do the right thing.
+Isn't getting imported (to any branch, let alone refs/heads/foo)
 
-		Linus
+So when the later commit wants to rename the file, it can't be found.
 
----
- dir.c      |   20 --------------------
- symlinks.c |   26 ++++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 20 deletions(-)
+Digging a bit deeper, I found a few cases where I'd have something
+along the lines of:
 
-diff --git a/dir.c b/dir.c
-index e05b850..2204826 100644
---- a/dir.c
-+++ b/dir.c
-@@ -911,23 +911,3 @@ void setup_standard_excludes(struct dir_struct *dir)
- 	if (excludes_file && !access(excludes_file, R_OK))
- 		add_excludes_from_file(dir, excludes_file);
- }
--
--int remove_path(const char *name)
--{
--	char *slash;
--
--	if (unlink(name) && errno != ENOENT)
--		return -1;
--
--	slash = strrchr(name, '/');
--	if (slash) {
--		char *dirs = xstrdup(name);
--		slash = dirs + (slash - name);
--		do {
--			*slash = '\0';
--		} while (rmdir(dirs) && (slash = strrchr(dirs, '/')));
--		free(dirs);
--	}
--	return 0;
--}
--
-diff --git a/symlinks.c b/symlinks.c
-index 4bdded3..349c8d5 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -306,3 +306,29 @@ void remove_scheduled_dirs(void)
- {
- 	do_remove_scheduled_dirs(0);
- }
-+
-+int remove_path(const char *name)
-+{
-+	char *slash;
-+
-+	/*
-+	 * If we have a leading symlink, we remove
-+	 * just the symlink!
-+	 */
-+	if (has_symlink_leading_path(name, strlen(name)))
-+		name = default_cache.path;
-+
-+	if (unlink(name) && errno != ENOENT)
-+		return -1;
-+
-+	slash = strrchr(name, '/');
-+	if (slash) {
-+		char *dirs = xstrdup(name);
-+		slash = dirs + (slash - name);
-+		do {
-+			*slash = '\0';
-+		} while (rmdir(dirs) && (slash = strrchr(dirs, '/')));
-+		free(dirs);
-+	}
-+	return 0;
-+}
+commit refs/heads/foo
+mark :1
+<etc, etc.>
+
+commit refs/heads/foo
+mark :2
+from :1
+<etc, etc>
+
+ie. two sequential commits, to the same branch.  The first commit is
+being imported; the second commit isn't being imported.  Many
+subsequent commits are similarly cast aside - then for no reason I can
+tell, commits start getting imported again.  I'd expect fast-import to
+complain, but that doesn't seem to be happening.
