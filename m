@@ -1,96 +1,65 @@
-From: Christian MICHON <christian.michon@gmail.com>
-Subject: Re: [msysGit] Git for Windows 1.6.4
-Date: Thu, 30 Jul 2009 10:37:16 +0200
-Message-ID: <46d6db660907300137m32c1f49dx5b177720dc475d69@mail.gmail.com>
-References: <alpine.DEB.1.00.0907292331090.8306@pacific.mpi-cbg.de>
-	 <46d6db660907291503o6979ef9fvbef5d25fa4318e37@mail.gmail.com>
-	 <alpine.DEB.1.00.0907300018451.8306@pacific.mpi-cbg.de>
-	 <46d6db660907291550q62d4383au7e847d535058558d@mail.gmail.com>
-	 <alpine.DEB.1.00.0907300159250.8306@pacific.mpi-cbg.de>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: Add Gitweb support for LZMA compressed snapshots
+Date: Thu, 30 Jul 2009 00:44:28 -0700
+Message-ID: <4A714F5C.70000@eaglescrag.net>
+References: <E0C39B59-E2C5-4C28-9570-D33FEA2A44EB@uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 30 10:40:32 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Mark A Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Thu Jul 30 10:42:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWRBH-0002u4-9X
-	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 10:40:07 +0200
+	id 1MWRDV-0004MD-Bc
+	for gcvg-git-2@gmane.org; Thu, 30 Jul 2009 10:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbZG3Ij6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Jul 2009 04:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbZG3Ij6
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 04:39:58 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:55229 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751155AbZG3Ij5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 04:39:57 -0400
-Received: by fxm28 with SMTP id 28so480444fxm.17
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 01:39:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0nCazTSqZhQ6l4Z7uYus7nVcbDhzetHP0HkmcxgiuDU=;
-        b=ORGBOXnW47LLN+eepgoM9Njqg3oP6rafUMExnSBYNRXLZGuopCqV6TQRrHgVi7YmNX
-         rb2+qSNT5mWYoqxLZ5KHrEoyQ1a35q47EblObinR33kSG3EpeGP5g5IoH174iVkCkNpn
-         fKAE/ulQf2ghOs1ogK3V2dvUCkrLn7PQXlD6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=u6OXfn6V5jiPAFH73U+aT+SZzmQG4Euni6DmedvUt35P0CZjni8yntRtXpk3ojwo1U
-         Qlw+hSQ7tAMhCiOHcdBNgBM/2kSL3Yw9jPBhw9HBZttHIFcN+EcfWdrCq8IiePy2RzcP
-         LzTdkj0gkTimsH56yBfSMATDp+udU6RgEVgE4=
-Received: by 10.204.58.208 with SMTP id i16mr895709bkh.63.1248943036178; Thu, 
-	30 Jul 2009 01:37:16 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0907300159250.8306@pacific.mpi-cbg.de>
+	id S1751266AbZG3ImR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 04:42:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbZG3ImR
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 04:42:17 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:50199 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751218AbZG3ImR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 04:42:17 -0400
+X-Greylist: delayed 3463 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Jul 2009 04:42:16 EDT
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n6U7iSNe009380
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 30 Jul 2009 00:44:28 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <E0C39B59-E2C5-4C28-9570-D33FEA2A44EB@uwaterloo.ca>
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/9634/Wed Jul 29 20:03:31 2009 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Thu, 30 Jul 2009 00:44:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124455>
 
-On Thu, Jul 30, 2009 at 2:21 AM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
+Mark A Rada wrote:
 > Hi,
->
-> On Thu, 30 Jul 2009, Christian MICHON wrote:
->
->> On Thu, Jul 30, 2009 at 12:20 AM, Johannes
->> Schindelin<Johannes.Schindelin@gmx.de> wrote:
->>
->> > I will not guess, especially since I am dead tired after that hour=
- it
->> > always takes to make a new release.
->>
->> I believe we're both on CET :)
->
-> I guess I am really too tired, as I thought that I had tested, but
-> obviously only tested the https-and-send-email installer.
->
-> But in the meantime, I found the issue, fixed and re-uploaded it. =A0=
-=46WIW
-> the portable application was not affected, and funnily enough, the ne=
-t
-> installer works (although I wonder why).
+> 
+> I thought I would submit this little patch I made to my gitweb. I am on 
+> a relatively slow
+> connection, and so LZMA compression time is less of a  concern than 
+> bandwidth---I'm
+> guessing that I am not the only person who suffers from slow internet 
+> connection
+> syndrome.
+> 
+> 
+> -- 
+> Mark A Rada (ferrous26)
+> marada@uwaterloo.ca
 
-http://msysgit.googlecode.com/files/Git-1.6.4-preview20090730.exe
-works on Vista and winXP. I will test on win2003 later, but I guess it
-should be ok.
+Don't use 'lzma' the command, use 'xz' ( http://tukaani.org/xz/ ) as it 
+uses the lzma2 format which is, by far, preferable to what 'lzma' 
+outputs.  Same compression (lzma) just different file format.
 
->
-> Thanks for your report and help in diagnosing the problem.
->
-
-no pb
-
---=20
-Christian
---
-http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git=
- inside !
+- John 'Warthog9' Hawley
