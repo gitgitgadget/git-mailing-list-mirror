@@ -1,92 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to embed a hash, tag or branch name?
-Date: Fri, 31 Jul 2009 02:27:50 -0700 (PDT)
-Message-ID: <m3ljm5ryar.fsf@localhost.localdomain>
-References: <20090731081723.GE29909@nalle>
+From: Gustav =?utf-8?b?SMOlbGxiZXJn?= <gustav@virtutech.com>
+Subject: [StGit PATCH] stgit new: Do not open editor if --save-template was
+	specified
+Date: Fri, 31 Jul 2009 11:48:29 +0200
+Message-ID: <20090731094718.4516.20444.stgit@lux.e.vtech>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mikko Rapeli <mikko.rapeli@iki.fi>
-X-From: git-owner@vger.kernel.org Fri Jul 31 11:28:00 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 31 11:48:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWoP9-0001R8-R2
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 11:28:00 +0200
+	id 1MWoj7-0000pT-QD
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 11:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751711AbZGaJ1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 05:27:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbZGaJ1w
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 05:27:52 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:50948 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558AbZGaJ1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 05:27:51 -0400
-Received: by ewy10 with SMTP id 10so1368123ewy.37
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 02:27:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=xiz5v70yVL9JtdO5jz8Do5bohpwFqx/5RWjnKdBFGsI=;
-        b=f2KioXJfhD85x7vRd5Ani3eppaNcqALEs3lnwWVHW6LWs11gmdSDwIN/fnZIg2uW2E
-         dkCcIlzwVqcRVyeYAmWU4f/NsXfIcgcIjSrAbUyMLadGkx1yPonJdpg3Xh7Pc4jK4q0j
-         oQrOOxhtoyK7laSI7P1ZTlSWLr1BOyQQIqOmg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Apq3pujx73DGRws4WYcig/wBtJHNsqnicLvm1MlvKoC/DEszXrRCewRCfYFPbyG7Qc
-         iR12bMRxC4Ywz/fea9TkIGVoH8FxF9USEU/8n93XR6y5f4677QNad0jCRETdQ1OMnxzz
-         H+dyajHeoC2uUaBf4N0pasrLlI3WSaa+ju2N0=
-Received: by 10.210.56.7 with SMTP id e7mr597859eba.30.1249032470974;
-        Fri, 31 Jul 2009 02:27:50 -0700 (PDT)
-Received: from localhost.localdomain (abvk103.neoplus.adsl.tpnet.pl [83.8.208.103])
-        by mx.google.com with ESMTPS id 10sm2870587eyd.52.2009.07.31.02.27.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Jul 2009 02:27:50 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6V9YKdb022475;
-	Fri, 31 Jul 2009 11:34:20 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6V9YKHr022472;
-	Fri, 31 Jul 2009 11:34:20 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090731081723.GE29909@nalle>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751764AbZGaJsa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 05:48:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbZGaJsa
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 05:48:30 -0400
+Received: from oden.vtab.com ([62.20.90.195]:39771 "EHLO oden.vtab.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751315AbZGaJs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 05:48:29 -0400
+X-Greylist: delayed 307 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jul 2009 05:48:29 EDT
+Received: from oden.vtab.com (oden.vtab.com [127.0.0.1])
+	by oden.vtab.com (Postfix) with ESMTP id 7473926EF3A;
+	Fri, 31 Jul 2009 11:48:29 +0200 (CEST)
+Received: from lux.e.vtech (unknown [62.20.90.206])
+	by oden.vtab.com (Postfix) with ESMTP id 5DB0526EF1C;
+	Fri, 31 Jul 2009 11:48:29 +0200 (CEST)
+User-Agent: StGit/0.15-rc1-31-g936b-dirty
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124519>
 
-Mikko Rapeli <mikko.rapeli@iki.fi> writes:
+=46ixes side-effect of e58f264a3e59a0887c7aaa1e3227cff108ac840d
 
-> How do I embed a hash, tag or branch name into source code managed by
-> git?
-> 
-> I've tried searching the net, git manuals etc but haven't found a
-> replacement for the old '$Id: $' strings from svn. What I need is a way to
-> map compiled binaries and flash images to git tree heads, tags and
-> branches.
+I'm not sure this is the right way to fix the problem, but an editor
+should not be opened if "--save-template" was specified to "stg new",
+as it is used for batch processes.
 
-You can embed SHA-1 of a _file contents_ (blob) using '$Id: $' keyword
-with `ident` attribute - see gitattributes manpage.
+Signed-off-by: Gustav H=C3=A5llberg <gustav@virtutech.com>
+---
+ stgit/commands/new.py |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-The correct solution of embedding version number is to do it at 
-_build time_, using e.g. script similar to GIT-VERSION-GEN used by
-Git itself and by Linux kernel.  It helps if you tag your releases.
-
-
-If you really, really, really need it, you can embed tag or branch
-name into source code using `filter` attribute and custom clean/smudge
-filters to do keyword un-expansion and keyword expansion.  But please
-think twice about what you want to achive with keyword expansion, and
-whether keyword expansion is a best solution...
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+diff --git a/stgit/commands/new.py b/stgit/commands/new.py
+index 9fd51c3..158193e 100644
+--- a/stgit/commands/new.py
++++ b/stgit/commands/new.py
+@@ -67,7 +67,8 @@ def func(parser, options, args):
+     cd =3D gitlib.CommitData(
+         tree =3D stack.head.data.tree, parents =3D [stack.head], messa=
+ge =3D '',
+         author =3D gitlib.Person.author(), committer =3D gitlib.Person=
+=2Ecommitter())
+-    cd =3D common.update_commit_data(cd, options, allow_edit =3D True)
++    cd =3D common.update_commit_data(cd, options,
++                                   allow_edit =3D not options.save_tem=
+plate)
+=20
+     if options.save_template:
+         options.save_template(cd.message)
