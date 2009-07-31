@@ -1,46 +1,45 @@
 From: Mark A Rada <marada@uwaterloo.ca>
-Subject: [PATCHv2] Gitweb support for XZ compressed snapshots
-Date: Thu, 30 Jul 2009 22:12:03 -0400
-Message-ID: <896CD516-F3F0-4CA1-907A-6C7EF6D9789B@uwaterloo.ca>
+Subject: [PATCHv3] Gitweb support for XZ compressed snapshots
+Date: Thu, 30 Jul 2009 22:43:01 -0400
+Message-ID: <A51E105D-8E32-4EDE-9D56-16BB88498D37@uwaterloo.ca>
 Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 04:12:24 2009
+X-From: git-owner@vger.kernel.org Fri Jul 31 04:43:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWhbb-0005iq-Gz
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 04:12:24 +0200
+	id 1MWi5Z-0005rv-4d
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 04:43:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbZGaCMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 22:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbZGaCMO
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 22:12:14 -0400
-Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:56500 "EHLO
+	id S1751557AbZGaCnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 22:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbZGaCnK
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 22:43:10 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:57848 "EHLO
 	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750876AbZGaCMN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 22:12:13 -0400
+	by vger.kernel.org with ESMTP id S1751268AbZGaCnK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 22:43:10 -0400
 Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
 	(authenticated bits=0)
-	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n6V2C80j026195
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n6V2h6HE027714
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Thu, 30 Jul 2009 22:12:11 -0400 (EDT)
+	for <git@vger.kernel.org>; Thu, 30 Jul 2009 22:43:09 -0400 (EDT)
 X-Mailer: Apple Mail (2.935.3)
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Thu, 30 Jul 2009 22:12:12 -0400 (EDT)
-X-Miltered: at mailchk-w01 with ID 4A7252F8.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-x03
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Thu, 30 Jul 2009 22:43:09 -0400 (EDT)
+X-Miltered: at mailchk-w04 with ID 4A725A3A.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at minos
 X-Virus-Status: Clean
-X-UUID: ec75680a-564a-4d4e-8620-3dbe28e36363
+X-UUID: d1b0296f-a36c-466c-bc14-2d11d5a05b0b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124499>
 
-Ok, I've fixed things up a bit, and done a bit of benchmarking, let me  
-know if something/wrong.
+Fix'd
 
 
 --
@@ -48,7 +47,7 @@ Mark A Rada (ferrous26)
 marada@uwaterloo.ca
 
 
-------------------->8-------------------
+----->8-------
 From: Mark Rada <marada@uwaterloo.ca>
 Date: Thu, 30 Jul 2009 08:56:42 -0400
 Subject: [PATCH] Gitweb support for XZ compressed snapshots
@@ -76,29 +75,29 @@ CPU: AMD Sempron 3400+ (1 core @ 1.8GHz with 256K L2 cache)
 			BZip2: 	13352K
 			XZ: 	  102M
 
-Linux kernel 2.6 series (f5886c7f96f2542382d3a983c5f13e03d7fc5259)
-gzip 	23.70s user    	0.47s system  	99% cpu  	24.227 total
-gunzip 	3.74s user     	0.74s system  	94% cpu  	4.741 total
-bzip2 	130.96s user   	0.53s system  	99% cpu  	2:11.97 total
-bunzip2 31.05s user    	1.02s system  	99% cpu  	32.355 total
-xz 	448.78s user 	0.91s system  	99% cpu  	7:31.28 total
-unxz 	7.67s user     	0.80s system  	98% cpu  	8.607 total
+Linux 2.6 series (f5886c7f96f2542382d3a983c5f13e03d7fc5259) 	349M
+gzip 	23.70s user    	0.47s system  	99% cpu  24.227 total 	76M
+gunzip 	3.74s user     	0.74s system  	94% cpu  4.741 total
+bzip2 	130.96s user   	0.53s system  	99% cpu  2:11.97 total 	59M
+bunzip2 31.05s user    	1.02s system  	99% cpu  32.355 total
+xz 	448.78s user 	0.91s system  	99% cpu  7:31.28 total 	51M
+unxz 	7.67s user     	0.80s system  	98% cpu  8.607 total
 
-Git (0a53e9ddeaddad63ad106860237bbf53411d11a7)
-gzip 	0.77s user 	0.03s system 	99% cpu 	0.792 total
-gunzip 	0.12s user 	0.02s system 	98% cpu 	0.142 total
-bzip2 	3.42s user 	0.02s system 	99% cpu 	3.454 total
-bunzip2 0.95s user 	0.03s system 	99% cpu 	0.984 total
-xz 	12.88s user 	0.14s system 	98% cpu 	13.239 total
-unxz 	0.27s user 	0.03s system 	99% cpu 	0.298 total
+Git (0a53e9ddeaddad63ad106860237bbf53411d11a7) 			11M
+gzip 	0.77s user 	0.03s system 	99% cpu  0.792 total 	2.5M
+gunzip 	0.12s user 	0.02s system 	98% cpu  0.142 total
+bzip2 	3.42s user 	0.02s system 	99% cpu  3.454 total 	2.1M
+bunzip2 0.95s user 	0.03s system 	99% cpu  0.984 total
+xz 	12.88s user 	0.14s system 	98% cpu  13.239 total 	1.9M
+unxz 	0.27s user 	0.03s system 	99% cpu  0.298 total
 
-XZ (669413bb2db954bbfde3c4542fddbbab53891eb4)
-xz 	1.62s user 	0.03s system 	99% cpu 	1.652 total
-unxz   	0.05s user 	0.00s system 	99% cpu 	0.058 total
-bzip2  	1.28s user 	0.01s system 	99% cpu 	1.298 total
-bunzip2 0.15s user 	0.01s system 	100% cpu 	0.157 total
-gzip  	0.12s user 	0.00s system 	95% cpu 	0.132 total
-gunzip 	0.02s user 	0.00s system 	97% cpu 	0.027 total
+XZ (669413bb2db954bbfde3c4542fddbbab53891eb4) 			1.8M
+xz 	1.62s user 	0.03s system 	99% cpu  1.652 total 	442K
+unxz   	0.05s user 	0.00s system 	99% cpu  0.058 total
+bzip2  	1.28s user 	0.01s system 	99% cpu  1.298 total 	363K
+bunzip2 0.15s user 	0.01s system 	100% cpu 0.157 total
+gzip  	0.12s user 	0.00s system 	95% cpu  0.132 total 	347K
+gunzip 	0.02s user 	0.00s system 	97% cpu  0.027 total
 
 I don't think it should be the default format, at least not right now,
 simply because the XZ format is still fairly new (the format was
