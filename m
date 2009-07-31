@@ -1,128 +1,160 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 3/3 v3] git-http-fetch: not a builtin
-Date: Fri, 31 Jul 2009 01:26:43 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907310115240.2147@iabervon.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] gitweb: suppress 'Use of uninitialized value' error
+Date: Fri, 31 Jul 2009 08:06:27 +0200
+Message-ID: <cb7bb73a0907302306k691b1d4fy85d7b460077bc639@mail.gmail.com>
+References: <1248988540-8971-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<200907310100.42786.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 07:27:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Petr Baudis <pasky@suse.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 08:07:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWke4-00021w-2s
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 07:27:08 +0200
+	id 1MWlGe-00039M-FD
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 08:07:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbZGaF0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 01:26:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZGaF0p
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 01:26:45 -0400
-Received: from iabervon.org ([66.92.72.58]:54998 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751436AbZGaF0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 01:26:44 -0400
-Received: (qmail 5915 invoked by uid 1000); 31 Jul 2009 05:26:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jul 2009 05:26:43 -0000
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1751364AbZGaGGu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 02:06:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbZGaGGu
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 02:06:50 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:63213 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750870AbZGaGGt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 02:06:49 -0400
+Received: by fxm17 with SMTP id 17so1182763fxm.37
+        for <git@vger.kernel.org>; Thu, 30 Jul 2009 23:06:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9ltGKnQNB6pavimlG4g9LoDjMA1BnznWC1CJfP1w114=;
+        b=IRbcceRNgTgbSUy9gLQ4femaKOkvJPRZ5pKUrss+zDroAjlD/Ru3IXlpIz6g9Lt6z+
+         W74XNmX0Cmf6P0yzPtrUhnjzZNdZXWZi1l+9lirHECg/WvgMjGu7/yS4XwnbjaoZ5QWT
+         zempM02G7hJkhmRuz37Uk6q+uw4cfilYnky8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=fMgqyTL0L6d9Ggi/hgx8UC7Ni3E31AjpUvEZqkwLYxwKgDfMcfyhj8ZAOJkmp9mXld
+         f9D/q8slSmLgJdeqyj0i+PXrStzaX7X5zp/l26R7HBxpmJxne1V9gM/SzYcWmkHcC3qd
+         79a8SIiBD4926uZpcOcJqhfHfr1RnsaeJf4J4=
+Received: by 10.204.66.17 with SMTP id l17mr2352455bki.51.1249020407589; Thu, 
+	30 Jul 2009 23:06:47 -0700 (PDT)
+In-Reply-To: <200907310100.42786.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124505>
 
-This splits up git-http-fetch so that it isn't built-in.
+2009/7/31 Jakub Narebski <jnareb@gmail.com>:
+> On Thu, 30 July 2009, Giuseppe Bilotta wrote:
+>
+> Thanks for catching this.
+>
+> However... First, the subject should be more specific and less generi=
+c.
+> At least provide where 'Use of uninitialized' value was generated, e.=
+g.:
+>
+> =A0Subject: [PATCH] gitweb: Fix 'Use of uninitialized value' error in=
+ href()
+>
+> or a bit shorter
+>
+> =A0Subject: [PATCH] gitweb: Fix 'Use of uninitialized value' in href(=
+)
 
-It also removes the general dependency on curl, because it is no
-longer used by any built-in code. Because they are no longer LIB_OBJS,
-add LIB_H to the dependencies of http-related object files, and remove
-http.h from the dependencies of transport.o
+Agreed.
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
-I think the dependency change fixes the random segfaults; http.o and 
-http-walker.o wouldn't be rebuilt when needed without it, leading to 
-incorrect builds after checking out this version after building a 
-different version.
+> Second, it would be nice to have more detailed description in the bod=
+y
+> of a commit message, in this case stating when mentioned error occur:
+>
+> =A0This warning was generated when 'hash_parent_base' parameter was
+> =A0defined, and either 'file_name' or 'file_parent' was not defined.
+>
+> Note that from above description you can notice that you protect agai=
+nst
+> 'file_parent' being not defined, but not against 'file_name', so you
+> should I think write why it is not a problem:
+>
+> =A0In gitweb code 'file_parent' is used only if 'file_name' is filled=
+=2E
+>
+> Well... almost. =A0This does not cover href(..., -replay=3D>1) with h=
+and
+> crafted broken/invalid gitweb URL. =A0BTW. a question for you: how di=
+d
+> you detect/found this breakage?
 
- Makefile                             |   10 ++++++----
- git.c                                |    3 ---
- builtin-http-fetch.c => http-fetch.c |    5 ++++-
- 3 files changed, 10 insertions(+), 8 deletions(-)
- rename builtin-http-fetch.c => http-fetch.c (95%)
+I was looking at the error log of my webserver and spotted the lines,
+coming from a spider indexing my git pages. An URL that caused it is
+http://git.oblomov.eu/git/commit/32ae83194b0f287a9b6644cdad175c56417c31=
+f3
+(the tree link, I suspect).
 
-diff --git a/Makefile b/Makefile
-index 35117fc..0ebf9dd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -980,10 +980,7 @@ else
- 	else
- 		CURL_LIBCURL = -lcurl
- 	endif
--	BUILTIN_OBJS += builtin-http-fetch.o
- 	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
--	EXTLIBS += $(CURL_LIBCURL)
--	LIB_OBJS += http.o http-walker.o
- 	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
- 	ifeq "$(curl_check)" "070908"
- 		ifndef NO_EXPAT
-@@ -1486,8 +1483,13 @@ git-imap-send$X: imap-send.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
- 
--http.o http-walker.o http-push.o transport.o: http.h
-+http.o http-walker.o http-push.o: http.h
- 
-+http.o http-walker.o: $(LIB_H)
-+
-+git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-+		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-diff --git a/git.c b/git.c
-index 807d875..c1e8f05 100644
---- a/git.c
-+++ b/git.c
-@@ -309,9 +309,6 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
- 		{ "grep", cmd_grep, RUN_SETUP | USE_PAGER },
- 		{ "help", cmd_help },
--#ifndef NO_CURL
--		{ "http-fetch", cmd_http_fetch, RUN_SETUP },
--#endif
- 		{ "init", cmd_init_db },
- 		{ "init-db", cmd_init_db },
- 		{ "log", cmd_log, RUN_SETUP | USE_PAGER },
-diff --git a/builtin-http-fetch.c b/http-fetch.c
-similarity index 95%
-rename from builtin-http-fetch.c
-rename to http-fetch.c
-index f3e63d7..e8f44ba 100644
---- a/builtin-http-fetch.c
-+++ b/http-fetch.c
-@@ -1,8 +1,9 @@
- #include "cache.h"
- #include "walker.h"
- 
--int cmd_http_fetch(int argc, const char **argv, const char *prefix)
-+int main(int argc, const char **argv)
- {
-+	const char *prefix;
- 	struct walker *walker;
- 	int commits_on_stdin = 0;
- 	int commits;
-@@ -18,6 +19,8 @@ int cmd_http_fetch(int argc, const char **argv, const char *prefix)
- 	int get_verbosely = 0;
- 	int get_recover = 0;
- 
-+	prefix = setup_git_directory();
-+
- 	git_config(git_default_config, NULL);
- 
- 	while (arg < argc && argv[arg][0] == '-') {
--- 
-1.6.4.rc3.25.gd5eff.dirty
+>=A0I don't think gitweb generates such
+> broken links (with 'hash_parent_base' but not 'file_parent') normally=
+,
+> but I might be mistaken.
+
+Do you think it would be worth to protect against this case?
+
+> Third, we would probably want to have additional case in t/t9500 test
+> to protect against regression here. =A0But that is not as important,
+> I think.
+
+I'll see if I can cook that up.
+
+>> =A0gitweb/gitweb.perl | =A0 11 +++++++----
+>> =A01 files changed, 7 insertions(+), 4 deletions(-)
+>>
+>> The patch could have been a one-liner by adding the defined check at
+>> line 943, but that pushed the line to 120 char, so I decided for thi=
+s
+>> slightly more complex form.
+>
+> That is IMHO a good solution. =A0Better not abuse 'if' modifier form.
+>
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 7fbd5ff..c7f257e 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -940,10 +940,13 @@ sub href {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (defined $params{'has=
+h_parent_base'}) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $href .=3D=
+ esc_url($params{'hash_parent_base'});
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # skip t=
+he file_parent if it's the same as the file_name
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 delete $pa=
+rams{'file_parent'} if $params{'file_parent'} eq $params{'file_name'};
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (define=
+d $params{'file_parent'} && $params{'file_parent'} !~ /\.\./) {
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 $href .=3D ":/".esc_url($params{'file_parent'});
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 delete $params{'file_parent'};
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (define=
+d $params{'file_parent'}) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 if ($params{'file_parent'} eq $params{'file_name'}) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 delete $params{'file_parent'};
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 } else if ($params{'file_parent'} !~ /\.\./) {
+
+And I'm an idiot 'cause this should be 'elsif'.
+
+Resend coming soon.
+
+--=20
+Giuseppe "Oblomov" Bilotta
