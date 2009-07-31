@@ -1,92 +1,91 @@
-From: Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
-Subject: Re: [PATCH] Fix typos on pt_BR/gittutorial.txt translation
-Date: Thu, 30 Jul 2009 21:08:09 -0300
-Message-ID: <20090731000808.GO1727@vespa.holoscopio.com>
-References: <b8bf37780907292044i5ad7b879ueb5048447e4e5bb5@mail.gmail.com> <20090730145044.GA1727@vespa.holoscopio.com> <4A71C6A7.80008@drmicha.warpmail.net> <7viqhaar7v.fsf@alter.siamese.dyndns.org> <b8bf37780907301551w4cdc7e96m137aa188ce1a0a8c@mail.gmail.com> <20090730231911.GI1727@vespa.holoscopio.com> <7vtz0t7mnw.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCHv3] git apply: option to ignore whitespace differences
+Date: Fri, 31 Jul 2009 00:27:37 +0000
+Message-ID: <94a0d4530907301727h171a2581ybee2a5b2d77e7c05@mail.gmail.com>
+References: <1248814820-25367-1-git-send-email-giuseppe.bilotta@gmail.com>
+	 <7vljm84htf.fsf@alter.siamese.dyndns.org>
+	 <cb7bb73a0907282333g26efd1d8y7d913fba8a426aa5@mail.gmail.com>
+	 <20090729174000.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="0u4QAjBqqw4+MLTw"
-Cc: =?utf-8?B?QW5kcsOp?= Goddard Rosa <andre.goddard@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Carlos R. Mafra" <crmafra2@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 02:08:25 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 02:27:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWffY-0007zY-Eh
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:08:20 +0200
+	id 1MWfyV-0004TG-UY
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753130AbZGaAIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 20:08:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753121AbZGaAIL
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:08:11 -0400
-Received: from liberdade.minaslivre.org ([72.232.18.203]:55494 "EHLO
-	liberdade.minaslivre.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753101AbZGaAIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 20:08:11 -0400
-Received: from vespa.holoscopio.com (unknown [201.80.130.87])
-	by liberdade.minaslivre.org (Postfix) with ESMTPSA id 7FDF420801A;
-	Thu, 30 Jul 2009 21:20:42 -0300 (BRT)
-Received: by vespa.holoscopio.com (Postfix, from userid 1000)
-	id 0DFFBC22A; Thu, 30 Jul 2009 21:08:09 -0300 (BRT)
-Content-Disposition: inline
-In-Reply-To: <7vtz0t7mnw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751460AbZGaA1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 20:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbZGaA1i
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:27:38 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:5435 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751178AbZGaA1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 20:27:37 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so524397fga.17
+        for <git@vger.kernel.org>; Thu, 30 Jul 2009 17:27:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=K9Q2iQ4XnVRr4JwvoimKCpL0Co+Cy0yuJXJfoff8kQs=;
+        b=LmCVgEPKOmxzAodR9HJbsPTk9RuGw+7/K4wDyFgj3ObGK25Ey18HVo+qJut9N0XhrM
+         AhOntKpdmzEMEBabqVZICK2bdVO7RHMH3bchOFlzsGkKn5FdzKAvxhjQx7kj9sFPzQDN
+         QrwNG7q/wYaRnEJS1xSXeAQ52ll5rW0/JW6b0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MW2f7dIWEKvANab+IwDyc2HhD01P2oIJhAD5KXzr3mN0ZccjAvTzfAELMyk2NVEGkk
+         UOZm3qXf7IDPAAIeZC1CLWA0K7S/X9RQNXtJKmnRHMfPguw05sAjtB2agsr4Iw8z/J4x
+         nID+ai5L5F4kZfmIa88V/xcSeMzYbDyJ/HS2c=
+Received: by 10.86.92.13 with SMTP id p13mr644967fgb.43.1249000057325; Thu, 30 
+	Jul 2009 17:27:37 -0700 (PDT)
+In-Reply-To: <20090729174000.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124492>
 
+On Wed, Jul 29, 2009 at 8:40 AM, Nanako Shiraishi<nanako3@lavabit.com> wrote:
+> Quoting Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>
+>>> Perhaps --ignore-space-change, to be consistent with a "git diff" option,
+>>> would be more appropriate. Doing so has an added benefit of leaving the
+>>> door open to add --ignore-all-space option to the patch application side
+>>> later.
+>>
+>> On the other hand, --ignore-whitespace matches the option name (and
+>> behavior) of the 'patch' command (just like "git diff"'s matches the
+>> 'diff' option name and behavior). Principle of least surprise says
+>> that someone coming to git from raw diff/patch setups would expect
+>> --ignore-whitespace on the patch side.
+>
+> Not everybody shares your diff/patch background.
+>
+> I wouldn't be surprised if git were the first system they ever learn for
+> majority of users of version control systems in this century, especially
+> because now there are many books written on it.
 
---0u4QAjBqqw4+MLTw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+That's not relevant, "white space" is an already used concept.
 
-On Thu, Jul 30, 2009 at 04:53:39PM -0700, Junio C Hamano wrote:
-> Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com> writes:
->=20
-> > I'd rather remove the linux example and use something else (like git
-> > itself), since the Documentation is not about linux, as Juno says and
-> > that would stop the disagreements.
->=20
-> That is unacceptable, _if_ you are adding a _translated_ version of our
-> primary documentation.
+Google:
+ignore space change: 17,300,000
+ignore white space: 181,000,000
 
-I can't agree more. In that view, would you agree to remove any mention
-to linux in the primary version?
+> Isn't it more important for git to be internally consistent across its
+> commands for such an audience to satisfy the principle of least surprise?
 
-In respect to your previous message, and considering keeping any mention
-to linux, I would like to add that [1] uses "kernel linux" and not
-"kernel do linux".
+Perhaps, but you are forgetting the option to change the current
+commands' arguments.
 
-And spreading a popular but incorrect use (not technical correct, as you
-say) for the sake of the supposed readability (it does not increase the
-readability for a Portuguese speaker, IMO) and considering a novice
-(which should not be tainted by this notion that linux HAS a kernel,
-which is wrong, when, in fact, linux IS a kernel), I would rather teach
-it what is right than teach him wrong for the simple sake of popularity.
-
-[1] http://pt.wikipedia.org/wiki/Linux_(kernel)
-
-Regards,
-Cascardo.
-
---0u4QAjBqqw4+MLTw
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkpyNegACgkQyTpryRcqtS02sACffxIGX1yIOYPyH9QMQi/q6x4Y
-OP4An324yHILig5TJFuV5FG0F0zSw2zF
-=VzVt
------END PGP SIGNATURE-----
-
---0u4QAjBqqw4+MLTw--
+-- 
+Felipe Contreras
