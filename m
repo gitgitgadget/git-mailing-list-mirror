@@ -1,141 +1,158 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Request for benchmarking: x86 SHA1 code
-Date: Fri, 31 Jul 2009 06:27:07 -0700 (PDT)
-Message-ID: <m3d47hrniw.fsf@localhost.localdomain>
-References: <20090726232154.29594.qmail@science.horizon.com>
-	<20090731104602.15375.qmail@science.horizon.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "George Spelvin" <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 15:27:16 2009
+From: Mark A Rada <marada@uwaterloo.ca>
+Subject: [PATCHv4] Add Gitweb support for XZ compressed snapshots
+Date: Fri, 31 Jul 2009 09:32:38 -0400
+Message-ID: <828BD9FC-1238-4B2E-858D-248977F04D31@uwaterloo.ca>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 31 15:32:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWs8h-0001cL-RA
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 15:27:16 +0200
+	id 1MWsEC-0004MQ-SC
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 15:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752754AbZGaN1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 09:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752706AbZGaN1L
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 09:27:11 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:61738 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752620AbZGaN1K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 09:27:10 -0400
-Received: by bwz19 with SMTP id 19so1190137bwz.37
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 06:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=/+bpSBDrysSQSi8U2/Lzko8jRr5hg6fmisNPUUE/jIM=;
-        b=X4kc0HvdyeWM5jjCAKkQRfsrDcrZrbE946SGEqjN8gG6rZ2GPvQvbIHcwDc9F8dtdK
-         VKWrtUg3alvHLZvej3oUrkc0ZXdPP6WrlXe6sOvz5zSm4r+DBTcD97ybnGZAkiIWXmCq
-         Fli1fhTCfZ4MSjrx/IMjqDoMYif951jhHOM7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=fFNOml69F3ElUz667bffT6Hu/OlhmrPmf7yMQaOtMVi4uCxF2E3nvUVwEaudZQNp6W
-         rGEyJ4+hzOHe11ebadNi9LjOlfnftnNsFLKX4Tk1DgqmSpaPK8a4oD4+xyjma7x0vot6
-         pusuTEBduLkwiA+pwDYzhOYjq5+sCnnNTl42Y=
-Received: by 10.204.63.20 with SMTP id z20mr2086935bkh.34.1249046828045;
-        Fri, 31 Jul 2009 06:27:08 -0700 (PDT)
-Received: from localhost.localdomain (abvt17.neoplus.adsl.tpnet.pl [83.8.217.17])
-        by mx.google.com with ESMTPS id d13sm676987fka.2.2009.07.31.06.27.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Jul 2009 06:27:07 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n6VDR4wo025444;
-	Fri, 31 Jul 2009 15:27:05 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n6VDR3cc025441;
-	Fri, 31 Jul 2009 15:27:03 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090731104602.15375.qmail@science.horizon.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751133AbZGaNct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 09:32:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbZGaNcs
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 09:32:48 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:51196 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750978AbZGaNcs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 09:32:48 -0400
+Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n6VDWimO022745
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Fri, 31 Jul 2009 09:32:47 -0400 (EDT)
+X-Mailer: Apple Mail (2.935.3)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Fri, 31 Jul 2009 09:32:47 -0400 (EDT)
+X-Miltered: at mailchk-m05 with ID 4A72F27C.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-w05
+X-Virus-Status: Clean
+X-UUID: 2168b120-b84d-4b32-943e-778e48f903f3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124561>
 
-"George Spelvin" <linux@horizon.com> writes:
-> After studying Andy Polyakov's optimized x86 SHA-1 in OpenSSL, I've
-> got a version that's 1.6% slower on a P4 and 15% faster on a Phenom.
-> I'm curious about the performance on other CPUs I don't have access to,
-> particularly Core 2 duo and i7.
-> 
-> Could someone do some benchmarking for me?  Old (486/Pentium/P2/P3)
-> machines are also interesting, but I'm optimizing for newer ones.
+Ok, so I got a good nights sleep now, and reviewed the results of my
+benchmarks to make sure they were consistent (turns out I had the
+archive sizes in the wrong order for the XZ repository tests).
 
-----------
-$ [time] ./586test 
-Result:  a9993e36 4706816a ba3e2571 7850c26c 9cd0d89d
-Expected:a9993e36 4706816a ba3e2571 7850c26c 9cd0d89d
-500000000 bytes: 5.376325 s
+I also reworded a number of things and added a conclusion to the
+benchmarks.
 
-real    0m5.384s
-user    0m5.108s
-sys     0m0.008s
+Let me know what you think.
 
-500000000 bytes: 5.367261 s
 
-5.09user 0.00system 0:05.38elapsed 94%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+378minor)pagefaults 0swaps
+--
+Mark A Rada (ferrous26)
+marada@uwaterloo.ca
 
-----------
-$ [time] ./x86test 
-Result:  a9993e36 4706816a ba3e2571 7850c26c 9cd0d89d
-Expected:a9993e36 4706816a ba3e2571 7850c26c 9cd0d89d
-500000000 bytes: 5.312238 s
 
-real    0m5.325s
-user    0m5.060s
-sys     0m0.008s
+------->8--------------
+From: Mark Rada <marada@uwaterloo.ca>
+Date: Thu, 30 Jul 2009 08:56:42 -0400
+Subject: [PATCH] Add Gitweb support for XZ compressed snapshots
 
-500000000 bytes: 5.323783 s
+The XZ compression format uses the LZMA2 compression algorithm, which
+often yields higher compression ratios than both GZip and BZip2 at the
+cost of using more CPU time and RAM. Though, while XZ is the slowest
+for compression, it is much faster than BZip2 for decompression, almost
+comparable to GZip (see benchmarks below).
 
-5.06user 0.00system 0:05.34elapsed 94%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+377minor)pagefaults 0swaps
+You can enable XZ compressed snapshots by adding 'txz' to the list of
+default options for snapshots in your $GITWEB_CONFIG.
 
-==========
-System:
-$ uname -a
-Linux roke 2.6.14-11.1.aur.2 #1 Tue Jan 31 16:05:05 CET 2006 \
- i686 athlon i386 GNU/Linux
+I did some simple benchmarks, starting with an already tarballed
+archive of the repos listed below. Memory usage seemed to be consistent
+for any given algorithm at their default compression level. Timings were
+gathered using the `time' command.
 
-$ cat /proc/cpuinfo
-processor	: 0
-vendor_id	: AuthenticAMD
-cpu family	: 6
-model		: 4
-model name	: AMD Athlon(tm) processor
-stepping	: 2
-cpu MHz		: 1000.188
-cache size	: 256 KB
-fdiv_bug	: no
-hlt_bug		: no
-f00f_bug	: no
-coma_bug	: no
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 1
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 mtrr pge \
- mca cmov pat pse36 mmx fxsr syscall mmxext 3dnowext 3dnow
-bogomips	: 2002.43
+CPU: AMD Sempron 3400+ (1 core @ 1.8GHz with 256K L2 cache)
+Virtual Memory Usage
+	GZip: 4152K	BZip2: 13352K	XZ: 102M
 
-$ free
-             total       used       free     shared    buffers     cached
-Mem:        515616     495812      19804          0       6004     103160
--/+ buffers/cache:     386648     128968
-Swap:      1052248     279544     772704
+Linux 2.6 series (f5886c7f96f2542382d3a983c5f13e03d7fc5259) 	349M
+gzip 	23.70s user    	0.47s system  	99% cpu  24.227 total 	76M
+gunzip 	3.74s user     	0.74s system  	94% cpu  4.741 total
+bzip2 	130.96s user   	0.53s system  	99% cpu  2:11.97 total 	59M
+bunzip2 31.05s user    	1.02s system  	99% cpu  32.355 total
+xz 	448.78s user 	0.91s system  	99% cpu  7:31.28 total 	51M
+unxz 	7.67s user     	0.80s system  	98% cpu  8.607 total
 
+Git (0a53e9ddeaddad63ad106860237bbf53411d11a7) 			11M
+gzip 	0.77s user 	0.03s system 	99% cpu  0.792 total 	2.5M
+gunzip 	0.12s user 	0.02s system 	98% cpu  0.142 total
+bzip2 	3.42s user 	0.02s system 	99% cpu  3.454 total 	2.1M
+bunzip2 0.95s user 	0.03s system 	99% cpu  0.984 total
+xz 	12.88s user 	0.14s system 	98% cpu  13.239 total 	1.9M
+unxz 	0.27s user 	0.03s system 	99% cpu  0.298 total
+
+XZ (669413bb2db954bbfde3c4542fddbbab53891eb4) 			1.8M
+gzip  	0.12s user 	0.00s system 	95% cpu  0.132 total 	442K
+gunzip 	0.02s user 	0.00s system 	97% cpu  0.027 total
+bzip2  	1.28s user 	0.01s system 	99% cpu  1.298 total 	363K
+bunzip2 0.15s user 	0.01s system 	100% cpu 0.157 total
+xz 	1.62s user 	0.03s system 	99% cpu  1.652 total 	347K
+unxz   	0.05s user 	0.00s system 	99% cpu  0.058 total
+
+Purely from a time and memory perspective, nothing compares to GZip in
+each of the three tests. Though, if you have an average upload speed of
+20KB/s, it would take ~400 seconds longer to transfer the kernel  
+snapshot
+that was BZip2 compressed than it would the XZ compressed snapshot, the
+transfer time difference is even greater when compared to the GZip
+compressed snapshot. The wall clock time savings are relatively the same
+for all test cases, but less dramatic for the smaller repositories.
+
+The obvious downside for XZ compressed snapshots is the large CPU and
+memory load put on the server to actualy generate the snapshot. Though  
+XZ
+will eventually have good threading support, and I suspect then that the
+wall clock time for making an XZ compressed snapshot would go down
+considerably if the server had a beefy multi-core CPU.
+
+I have not enabled XZ compression by default because the current default
+is GZip, and XZ is only really competitive with BZip2. Also, the XZ  
+format
+is still fairly new (the format was declared stable about 6 months ago),
+and there have been no "stable" releases of the utils yet.
+
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
+  gitweb/gitweb.perl |    8 ++++++++
+  1 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7fbd5ff..3398163 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -176,6 +176,13 @@ our %known_snapshot_formats = (
+  		'format' => 'tar',
+  		'compressor' => ['bzip2']},
+
++	'txz' => {
++		'display' => 'tar.xz',
++		'type' => 'application/x-xz',
++		'suffix' => '.tar.xz',
++		'format' => 'tar',
++		'compressor' => ['xz']},
++
+  	'zip' => {
+  		'display' => 'zip',
+  		'type' => 'application/x-zip',
+@@ -188,6 +195,7 @@ our %known_snapshot_formats = (
+  our %known_snapshot_format_aliases = (
+  	'gzip'  => 'tgz',
+  	'bzip2' => 'tbz2',
++	'xz'    => 'txz',
+
+  	# backward compatibility: legacy gitweb config support
+  	'x-gzip' => undef, 'gz' => undef,
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.6.4
