@@ -1,95 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] git apply: option to ignore whitespace differences
-Date: Fri, 31 Jul 2009 10:17:45 -0700
-Message-ID: <7v1vnwsreu.fsf@alter.siamese.dyndns.org>
-References: <1248814820-25367-1-git-send-email-giuseppe.bilotta@gmail.com>
- <7vljm84htf.fsf@alter.siamese.dyndns.org>
- <cb7bb73a0907282333g26efd1d8y7d913fba8a426aa5@mail.gmail.com>
- <20090729174000.6117@nanako3.lavabit.com>
- <94a0d4530907301727h171a2581ybee2a5b2d77e7c05@mail.gmail.com>
- <7v3a8d65kv.fsf@alter.siamese.dyndns.org>
- <94a0d4530907310838nbca0037u1a192dc07a379e66@mail.gmail.com>
- <cb7bb73a0907310916i309c99cax2f2d5aa02084103f@mail.gmail.com>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: [PATCHv2 2/2] Documentation: git-send-email: correct statement about standard ports
+Date: Fri, 31 Jul 2009 11:45:00 -0600
+Organization: icecavern.net
+Message-ID: <200907311145.01759.wjl@icecavern.net>
+References: <1248995334-28545-1-git-send-email-wjl@icecavern.net> <1248995334-28545-2-git-send-email-wjl@icecavern.net> <7vzlaku9d4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 19:18:02 2009
+Content-Type: Text/Plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 19:45:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWvk1-0007Vh-55
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 19:18:01 +0200
+	id 1MWwAd-0004EK-G9
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 19:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbZGaRRx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 13:17:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751860AbZGaRRx
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 13:17:53 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58539 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089AbZGaRRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 13:17:52 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DFC711BD87;
-	Fri, 31 Jul 2009 13:17:52 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DCB911BD86; Fri,
- 31 Jul 2009 13:17:46 -0400 (EDT)
-In-Reply-To: <cb7bb73a0907310916i309c99cax2f2d5aa02084103f@mail.gmail.com>
- (Giuseppe Bilotta's message of "Fri\, 31 Jul 2009 18\:16\:43 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 149E8352-7DF6-11DE-A3C1-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751752AbZGaRpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 13:45:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbZGaRpO
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 13:45:14 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:36873 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751404AbZGaRpN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 13:45:13 -0400
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id A3E7635A36;
+	Fri, 31 Jul 2009 19:45:10 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.29-2-amd64; KDE/4.2.2; x86_64; ; )
+In-Reply-To: <7vzlaku9d4.fsf@alter.siamese.dyndns.org>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124585>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
-
-> Before I go on with the next revision of the patch, I would like to
-> have some kind of agreed convention to implement.
+On Friday 31 July 2009 10:04:39 Junio C Hamano wrote:
+> As you noted, port 465 has been used as a well-known de-facto port to run
+> SMTP over SSL at many places.  I do not think it would help anybody by
+> clarifying that it is a "non-standard" port here.  This is not a place to
+> educate people on which port they should run their SMTP servers.
 >
-> My suggestion would be the following:
-> (1) implement options --ignore-space-change, --ignore-all-space
-> mirroring their 'git diff' meaning.
-> (2) add --ignore-whitespace as a synonym to --ignore-space-change, for
-> consistency with 'patch'
-> (3) apply.ignore-whitespace accepts values
->      * false,no,none,0 to mean no whitespace ignoring
->      * true,yes,change,1 to mean ignore whitespace change
->      * all,2 to mean ignore all whitespace
+> But I do not care deeply enough, and I can let it pass.
+>
+> I have much more trouble with that "like 465" than I have with "non
+> standard".
 
-I'd suggest taking one small bite at a time.  You do not have code to do
-the ignore-all-space semantics that has been reviewed, and you neither
-have the configuration variables.  So my preference would be to do in the
-first round the first half of (1) with (2), docs, tests and nothing else.
+If you don't like the phrasing, how about this revised patch? I call it a
+"common SSL smtp port", and refer directly to 465. I think should make everyone
+happy:
 
-A later follow-up patch would complete your (1) and (2) by supporting
-ignore-all-space.  And perhaps you would give it --ignore-all-whitespace
-synonym perhaps?  You may want to ask "GNU patch" people if they are
-interested in ignoring all whitespaces, and if so what their plan is to
-name that option, so that you can use the same name.
+---
 
-As to configuration:
+>From f0f6d41705f51f198c7cd87cbbf4ffdbe3fdf84e Mon Sep 17 00:00:00 2001
+From: Wesley J. Landaker <wjl@icecavern.net>
+Date: Thu, 30 Jul 2009 14:53:29 -0600
+Subject: [PATCH 2/2] Documentation: git-send-email: correct statement about standard ports
 
- - I think the naming convention (I know, there are existing violators,
-   but that is not an excuse to add new ones) is without dashes (again, I
-   know I personally do not like CamelCase but that is what we have);
+The current documentation states that servers typically listen on port
+465 and calls this "ssmtp". While it's true that many mail servers use
+port 465 for SSL smtp, this is non-standard, and hails from the days
+before smtp and submission TLS support, that arrived in RFC2487 and
+RFC3207. Port 465 is actually assigned by IANA for unrelated purposes,
+and is mostly still used by mail servers today only to support Outlook
+Express.
 
- - I personally think 0/1/2 would be more cluttering than they are useful.
+In any case, this patch helps the documentation better reflect both
+standards and reality, while still helpfully mentioning ports numbers
+that a user may wish to specify.
 
- - I'd say "no (never, none)", "change", "all".  You could throw in
-   "false" if you want, as declining this option is quite boolean-ish, but
-   activating it is _not_ boolean decision and I would suggest actively
-   keeping "true" or "yes" out of the choices.  Otherwise anybody who is
-   tempted to answer "yes" has to ask himself "Ok, I want to say 'yes' but
-   which semantics does it mean?  What would I be ignoring?"
+Signed-off-by: Wesley J. Landaker <wjl@icecavern.net>
+---
+ Documentation/git-send-email.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-That non-booleanness of "true" is why I am somewhat negative on your (2)
-above.  It would only be there for people who know "GNU patch" because
-they would understand it.
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 1c94351..767cf4d 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -142,8 +142,9 @@ user is prompted for a password while the input is masked for privacy.
+ 
+ --smtp-server-port=<port>::
+ 	Specifies a port different from the default port (SMTP
+-	servers typically listen to smtp port 25 and ssmtp port
+-	465); symbolic port names (e.g. "submission" instead of 587)
++	servers typically listen to smtp port 25, but may also listen to
++	submission port 587, or the common SSL smtp port 465);
++	symbolic port names (e.g. "submission" instead of 587)
+ 	are also accepted. The port can also be set with the
+ 	'sendemail.smtpserverport' configuration variable.
+ 
+-- 
+1.6.3.1
