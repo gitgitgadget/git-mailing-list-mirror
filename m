@@ -1,117 +1,113 @@
-From: Allen Johnson <akjohnson78@gmail.com>
-Subject: Re: merge confusion
-Date: Fri, 31 Jul 2009 09:32:50 -0400
-Message-ID: <6786ed4f0907310632t2435f7d9y9151febea7844ca@mail.gmail.com>
-References: <24755682.post@talk.nabble.com>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: Adding files to a git-archive when it is generated, and whats the 
+	best way to find out what branch a commit is on?
+Date: Fri, 31 Jul 2009 15:48:21 +0200
+Message-ID: <9b18b3110907310648y4178da4cs9264dc01de50426@mail.gmail.com>
+References: <9b18b3110907290115v1f30eeat748631bb09f92517@mail.gmail.com>
+	 <adf1fd3d0907290141v24cf129eue3939bf1afd518d2@mail.gmail.com>
+	 <9b18b3110907290221o8afc72s157969ef7d707d4d@mail.gmail.com>
+	 <4A720393.6030607@lsrfire.ath.cx>
+	 <9b18b3110907310304w261ee30bw8c06c6a65e936e6e@mail.gmail.com>
+	 <m3hbwtrpip.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: thepurpleblob <howardsmiller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 15:33:12 2009
+Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	=?ISO-8859-1?B?U2FudGkgQsOpamFy?= <santi@agolina.net>,
+	Git <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 15:54:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWsER-0004Sd-JE
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 15:33:12 +0200
+	id 1MWsZG-0005NE-Sg
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 15:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751198AbZGaNcy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 09:32:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751160AbZGaNcy
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 09:32:54 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:57909 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751155AbZGaNcx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 09:32:53 -0400
-Received: by fxm17 with SMTP id 17so1369479fxm.37
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 06:32:53 -0700 (PDT)
+	id S1751356AbZGaNye convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 09:54:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbZGaNye
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 09:54:34 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:46651 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750960AbZGaNyd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 09:54:33 -0400
+Received: by gxk9 with SMTP id 9so3720660gxk.13
+        for <git@vger.kernel.org>; Fri, 31 Jul 2009 06:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=sc8LlYNwru2SrX8l9uOOq0LGHrU0YJ66PmwGRVxFD64=;
-        b=SBpXVIsnSmcYg4vDAVNnvIXtyOZ93wMv62xYcCswdS0ezKfLqCy322+Xi8cWQlCaD6
-         CYUq+B88oq3vejLg4W0dBIF9lb9Wn2ZaAU4Wc1it8CNtTdqrWV6iLzHMfXBaW8lh2sQt
-         sb+V2vI1YwbqCN+gXW/qoqTm/KMCENWvCJf6s=
+        bh=Z0nPXem9pHyTN6n8lg9Iwfvwt35tPvTB1Wvpv0zvTXc=;
+        b=COo9DJOwFbvURASo2UGXN8S3OY6hFDTyOMlQtSpD6sEmJSthN7/59kPeUuFQaSRfT1
+         HPeVE3pYLX6ugJLyXGiLAVTCmcuc29PLWfr5Ac48BStkApmQ8UZaURC1xdvcg0Zkt4Aa
+         UVRM3nbscOe2JFtSBiulrGPDG/WW8uw0Zlq9Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=UZX2UlmUKhXfw+ouDfcA/elpYR58HgDzXEpAXeIj7GoJJcqeK526b81iy+f5Ox5EPs
-         EMVGJWideRO4+vTPrgGbOH60wKkt1i+BVBwpPi1coHAqcq5qOTKF8IrtGFX56z1jI5N+
-         5DA8zXIxfVE9cxY714vahAebzCDf7pT5LurLg=
-Received: by 10.223.126.69 with SMTP id b5mr1487704fas.54.1249047170759; Fri, 
-	31 Jul 2009 06:32:50 -0700 (PDT)
-In-Reply-To: <24755682.post@talk.nabble.com>
+        b=SmuqYeCT1obZDeWn3QLjeFb1CZn5LKvVQha+9FrIKhWx4xD6r3UhDfOgetbsWE51HM
+         y/ZR+DmY7sbWf0AKzRf5j5V3xB3bjhFvXWg5P6QuFZgmU9pm9sJ/GW28ZlExoO0zSLOP
+         u00rcSEqVxgTEkdOk6DEAAFFTI4SIAJBfs0Fk=
+Received: by 10.231.13.201 with SMTP id d9mr656189iba.35.1249048101302; Fri, 
+	31 Jul 2009 06:48:21 -0700 (PDT)
+In-Reply-To: <m3hbwtrpip.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124563>
 
-I think in this case you should do a `git fetch` instead. Doing a pull
-is the same as performing a fetch and merge.
-
-With a `fetch`, your remote branch is up-to-date while your tracking
-branch is left untouched. You can later check the differences between
-the two branches and merge when you're ready.
-
-$ git fetch # update remote branch heads
-$ git diff origin/branchname # show what is different between your
-local branch and the remote
-$ git merge origin/branchname # only when you're ready
-
-=46or me, it's easier to keep my personal branches separate by using a
-topic branch that doesn't track a remote branch. Then, optionally,
-merge in differences from whatever remote tracking branches as needed.
-
-$ git branch -t development origin/development # tracking remote
-development branch
-$ git checkout -b mystuff development # my personal stuff
-
-Now a `git pull` won't affect `mystuff`.
-
-Allen
-
-On Fri, Jul 31, 2009 at 8:35 AM,
-thepurpleblob<howardsmiller@googlemail.com> wrote:
+2009/7/31 Jakub Narebski <jnareb@gmail.com>:
+> demerphq <demerphq@gmail.com> writes:
+>> 2009/7/30 Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx>:
+>> > demerphq schrieb:
 >
-> I had some unexpected behaviour doing a merge today. I wonder if anyb=
-ody can
-> tell me where I have gone wrong. This is the sequence...
+>>>> So then git also would benefit from support in git-archive for add=
+ing
+>>>> arbitrary files to the archive during generation?
+>>>
+>>> Yes, and this has come up before.
+>>>
+>>> How about the following? =A0It's missing documentation and a test c=
+ase,
+>>> but you could try
+>>>
+>>> =A0 =A0 =A0 =A0$ git archive --add-file extra HEAD>HEAD+extra.tar
+>>>
+>>> or
+>>>
+>>> =A0 =A0 =A0 =A0$ git archive --prefix=3Da/ --add-file extra --prefi=
+x=3Db/ HEAD>ba.tar
+>>
+>> I havent managed to try it out yet but this is pretty much exactly
+>> what I was looking for. Only thought I had was that it might be nice
+>> to be able to specify what name the file should be added as so that
+>> you can add files to subpaths deeper than the root/root prefix of th=
+e
+>> tar. However for /my/ particular purposes that is unnecessary, it on=
+ly
+>> occurs to me as a nice to have. But if you were inclined to think
+>> about extending it I was thinking an argument notation like --add-fi=
+le
+>> foo:bar/baz/bop might be useful.
 >
-> * clone a remote repo
-> * created a local branch to track one of the remote branches
-> * did work on the local branch and then created another 'feature' bra=
-nch
-> from that
-> * time elapsed and at some point(s) I pulled from the remote but did =
-not
-> merge the original local branch
-> * finished feature, checkout local branch and merge in feature.
+> Why not use notation used by --graft-points option of mkisofs, i.e.
+> "--add-file foo=3Dbar/baz/bop", where 'foo' is name in archive
+> (respective to prefix if any, I think), and 'bar/baz/bop' is name in
+> filesystem.
 >
-> What I didn't expect is that all the subsequent changes on the tracke=
-d
-> remote branch got merged in too. Which I didn't want.
->
-> So the question is - is that what's supposed to happen (ie. if you do=
- any
-> merge the tracked branch 'fast forwards' the remote) and, if so, if I=
- want a
-> branch that stays a branch (doesn't ever merge with the remote) how w=
-ould I
-> do that?
->
-> Thanks!
-> --
-> View this message in context: http://www.nabble.com/merge-confusion-t=
-p24755682p24755682.html
-> Sent from the git mailing list archive at Nabble.com.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+> The proposed notation "--add-file foo:bar/baz/bop" looks for me (see
+> extended sha-1 syntax in git-rev-parse manpage) like adding file
+> 'bar/baz/bop' from 'foo' tree-ish.
+
+Whatever is most appropriate. I was just demonstrating what I had in mi=
+nd.
+
+cheers,
+Yves
+
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
