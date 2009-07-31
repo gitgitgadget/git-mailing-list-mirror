@@ -1,82 +1,84 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Have git-merge-base support multiple IDs
-Date: Fri, 31 Jul 2009 18:22:17 +0200
-Message-ID: <4A731A39.3090506@drmicha.warpmail.net>
-References: <alpine.LSU.2.00.0907311745100.4901@fbirervta.pbzchgretzou.qr>
+From: Sean Estabrooks <seanlkml@sympatico.ca>
+Subject: Re: merge confusion
+Date: Fri, 31 Jul 2009 09:29:44 -0700
+Message-ID: <BLU0-SMTP58E44ED78547385BC3A82BAE100@phx.gbl>
+References: <24755682.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Fri Jul 31 18:22:43 2009
+To: thepurpleblob <howardsmiller@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 18:29:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWusU-00008u-Hi
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 18:22:43 +0200
+	id 1MWuzU-0003HC-Hd
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 18:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752009AbZGaQWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 12:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751961AbZGaQWe
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 12:22:34 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60489 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751947AbZGaQWd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 12:22:33 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id C22FF3BD9E5;
-	Fri, 31 Jul 2009 12:22:33 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 31 Jul 2009 12:22:34 -0400
-X-Sasl-enc: R2Zb/NNEBu4HaBHElPu5uNOFQl10v3nTuJTmv61aiV8T 1249057353
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9E55AEC5;
-	Fri, 31 Jul 2009 12:22:33 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.2pre) Gecko/20090728 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <alpine.LSU.2.00.0907311745100.4901@fbirervta.pbzchgretzou.qr>
+	id S1751866AbZGaQ3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 12:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751712AbZGaQ3s
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 12:29:48 -0400
+Received: from blu0-omc3-s36.blu0.hotmail.com ([65.55.116.111]:22150 "EHLO
+	blu0-omc3-s36.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751404AbZGaQ3r (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 12:29:47 -0400
+Received: from BLU0-SMTP58 ([65.55.116.72]) by blu0-omc3-s36.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 31 Jul 2009 09:29:48 -0700
+X-Originating-IP: [69.104.164.24]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from hobo ([69.104.164.24]) by BLU0-SMTP58.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 31 Jul 2009 09:29:47 -0700
+In-Reply-To: <24755682.post@talk.nabble.com>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.2; i586-redhat-linux-gnu)
+X-OriginalArrivalTime: 31 Jul 2009 16:29:47.0572 (UTC) FILETIME=[1E90D740:01CA11FC]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124578>
 
-Jan Engelhardt venit, vidit, dixit 31.07.2009 17:51:
-> Hi,
-> 
-> 
-> I am using git merge-base as sort of a hack to determine where to start 
-> rebasing.
-> Suppose this is the commit log (git log --oneline), of course, all 
-> unpublished, which is why rebase comes in:
-> 
->   98683793  Fix For faae2553
->   3365a01b  Fix For ab80794f
->   62943a23  Feature Baz
->   ab80794f  Feature Bar
->   faae2553  Feature Foo
-> 
-> To determine the rebase point (i.e. first commit in a series),
-> one can (ab)use git-merge-base:
-> 
->   p=$(git merge-base ab80794f faae2553)
->   git re -i ${p}^
-> 
-> And then reorder ab80794f, faae2553 to squash the fixes into the 
-> appropriate commits. This practice works well somewhat.
-> The twist is that merge-base in git 1.6.3.3 happens to ignore any 
-> further arguments following two IDs. In short:
-> 
->   git merge-base A B C...
-> 
-> Only yields the merge-base of A and B, and ignores C...
+On Fri, 31 Jul 2009 06:41:32 -0700 (PDT)
+thepurpleblob <howardsmiller@googlemail.com> wrote:
 
-Uhm, are you sure about this?
-The first argument is special.
-merge-base computes the merge base between two commits:
-- the first argument
-- a (hypothetical) merge between all other arguments.
+Howard,
 
-It may look a if C was ignored, though.
+> I had some unexpected behaviour doing a merge today. I wonder if anybody can
+> tell me where I have gone wrong. This is the sequence...
+[...]
 
-Michael
+Not sure i'm following your question, will take a crack at it though.
+I believe this is what you did:
+
+ 1. cloned a remote repo
+ 2. created a local branch B and committed some changes onto it
+ 3. created another local branch F
+ 4. committed some changes on F
+ 5. pulled in additional changes from a remote repo into F
+ 6. committed additional local changes on F
+ 7. merged F into B
+
+> What I didn't expect is that all the subsequent changes on the tracked
+> remote branch got merged in too. Which I didn't want.
+
+When you merged the feature branch(F) you merged all the new commits made on
+it.  By design this includes any commits you pulled in from any remote; you
+don't just get the subset of commits that you made locally.
+
+> So the question is - is that what's supposed to happen (ie. if you do any
+> merge the tracked branch 'fast forwards' the remote) and, if so, if I want a
+> branch that stays a branch (doesn't ever merge with the remote) how would I
+> do that?
+
+There's nothing forcing you to merge with a remote, you just need to find a
+workflow that accomplishes what you want.  As far as i can tell without knowing
+the actual commands you used, it appears you explicitly asked Git to merge in
+changes from the remote when you merged the feature branch.
+
+So to hopefully answer your question, don't merge remote changes into your
+feature branch if you want your feature branch to only contain local changes
+when you merge it with other local branches.
+
+HTH,
+Sean
