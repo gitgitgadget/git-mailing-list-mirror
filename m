@@ -1,60 +1,68 @@
-From: thepurpleblob <howardsmiller@googlemail.com>
-Subject: merge confusion
-Date: Fri, 31 Jul 2009 05:35:54 -0700 (PDT)
-Message-ID: <24755682.post@talk.nabble.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: Request for benchmarking: x86 SHA1 code
+Date: Fri, 31 Jul 2009 14:45:15 +0200
+Message-ID: <40aa078e0907310545k64f058b6ja936f583bdaeb120@mail.gmail.com>
+References: <40aa078e0907310524x1fe4d84dr858ebc03731ee093@mail.gmail.com>
+	 <20090731123203.6160.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 14:36:03 2009
+Cc: git@drmicha.warpmail.net, git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 14:45:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWrL8-0003GE-03
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 14:36:02 +0200
+	id 1MWrUN-0007F2-9R
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 14:45:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751685AbZGaMfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 08:35:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751554AbZGaMfy
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 08:35:54 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:49522 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750928AbZGaMfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 08:35:54 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1MWrL0-0008K0-GQ
-	for git@vger.kernel.org; Fri, 31 Jul 2009 05:35:54 -0700
-X-Nabble-From: howardsmiller@googlemail.com
+	id S1751701AbZGaMpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 08:45:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbZGaMpS
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 08:45:18 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:52347 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097AbZGaMpR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 08:45:17 -0400
+Received: by bwz19 with SMTP id 19so1167936bwz.37
+        for <git@vger.kernel.org>; Fri, 31 Jul 2009 05:45:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aHeEHqcqmWEgxddQspLONu0CuNX1ZOibATZkyNNJriQ=;
+        b=ayGd1lrNHv0da5nlDh5lDuhiZlbgKOLRuV9fddLBiZDtvXE8okJCbYILuuc6GGjv5c
+         KifVRLR4oVuxDQ4Q/WRJyEpBrvMeKdTYG0FOocFhISTisKzHHgA5NEPgtr5/4VxzTOSx
+         T0tgnjyqY3rohN9bpSxLT6lLj6NqWQ0z+LpR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VOn5hUDvfobpDjTgyhsJWV46rspeTWeyFEAlPJccIW+uwAQOTpSsFE/UgAERgtbNba
+         33sI36GxmWh18U0thzV3uqnOrTxbbt/zAs59VSvs/0StbSSUmT6KTrRthXH9kvIWIFWr
+         d+69wtwFyFr9NWc9eoIctm1j5zPIQ/mFrY5Sw=
+Received: by 10.204.62.136 with SMTP id x8mr2829574bkh.36.1249044315945; Fri, 
+	31 Jul 2009 05:45:15 -0700 (PDT)
+In-Reply-To: <20090731123203.6160.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124556>
 
+On Fri, Jul 31, 2009 at 2:32 PM, George Spelvin<linux@horizon.com> wrote:
+> Maybe you need to replace "elf" with "coff"?
 
-I had some unexpected behaviour doing a merge today. I wonder if anybody can
-tell me where I have gone wrong. This is the sequence...
+That did the trick, thanks!
 
-* clone a remote repo
-* created a local branch to track one of the remote branches
-* did work on the local branch and then created another 'feature' branch
-from that
-* time elapsed and at some point(s) I pulled from the remote but did not
-merge the original local branch
-* finished feature, checkout local branch and merge in feature. 
+Best of 6 runs on an Intel Core i7 920 @ 2.67GHz:
 
-What I didn't expect is that all the subsequent changes on the tracked
-remote branch got merged in too. Which I didn't want.
+before (586test): 1.415
+after (x86test): 1.470
 
-So the question is - is that what's supposed to happen (ie. if you do any
-merge the tracked branch 'fast forwards' the remote) and, if so, if I want a
-branch that stays a branch (doesn't ever merge with the remote) how would I
-do that?
-
-Thanks!
 -- 
-View this message in context: http://www.nabble.com/merge-confusion-tp24755682p24755682.html
-Sent from the git mailing list archive at Nabble.com.
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
