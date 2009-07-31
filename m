@@ -1,39 +1,39 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFCv2 07/12] Add a transport implementation using git-vcs-* helpers
-Date: Fri, 31 Jul 2009 12:00:27 +0200
-Message-ID: <1249034432-31437-8-git-send-email-johan@herland.net>
+Subject: [RFCv2 12/12] Add simple test cases of git-vcs-cvs functionality
+Date: Fri, 31 Jul 2009 12:00:32 +0200
+Message-ID: <1249034432-31437-13-git-send-email-johan@herland.net>
 References: <1249034432-31437-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
-Cc: Daniel Barkalow <barkalow@iabervon.org>, gitster@pobox.com,
-	Johan Herland <johan@herland.net>
+Cc: Johan Herland <johan@herland.net>, barkalow@iabervon.org,
+	gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 12:03:08 2009
+X-From: git-owner@vger.kernel.org Fri Jul 31 12:03:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWox6-0008BK-UM
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 12:03:05 +0200
+	id 1MWox9-0008BK-AB
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 12:03:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752087AbZGaKBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 06:01:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751944AbZGaKBi
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 06:01:38 -0400
-Received: from mx.getmail.no ([84.208.15.66]:55725 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752039AbZGaKBh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 06:01:37 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
+	id S1752098AbZGaKB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 06:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752091AbZGaKB4
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 06:01:56 -0400
+Received: from mx.getmail.no ([84.208.15.66]:46352 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751944AbZGaKBt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 06:01:49 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KNN00EYG56P2D60@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Fri, 31 Jul 2009 12:01:37 +0200 (MEST)
+ with ESMTP id <0KNN00GE85710220@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 31 Jul 2009 12:01:49 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KNN005FA55FU840@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 31 Jul 2009 12:01:36 +0200 (MEST)
+ git@vger.kernel.org; Fri, 31 Jul 2009 12:01:49 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.7.31.94825
 X-Mailer: git-send-email 1.6.4.rc3.138.ga6b98.dirty
@@ -42,279 +42,849 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124532>
 
-From: Daniel Barkalow <barkalow@iabervon.org>
-
-This is somewhat careless about pushes (that is, it attempts to make
-pushes that the helper can't necessarily handle), but actually works for
-fetches and simple pushes.
-
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Makefile            |    1 +
- remote.c            |    2 +-
- transport-foreign.c |  200 +++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.c         |    1 +
- transport.h         |    3 +
- 5 files changed, 206 insertions(+), 1 deletions(-)
- create mode 100644 transport-foreign.c
+ t/t9800-foreign-vcs-cvs-basic.sh |  518 ++++++++++++++++++++++++++++++++++++++
+ t/t9801-foreign-vcs-cvs-fetch.sh |  291 +++++++++++++++++++++
+ t/test-lib.sh                    |    1 +
+ 3 files changed, 810 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9800-foreign-vcs-cvs-basic.sh
+ create mode 100755 t/t9801-foreign-vcs-cvs-fetch.sh
 
-diff --git a/Makefile b/Makefile
-index c9003d7..fe62e2b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -553,6 +553,7 @@ LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
- LIB_OBJS += transport.o
-+LIB_OBJS += transport-foreign.o
- LIB_OBJS += tree-diff.o
- LIB_OBJS += tree.o
- LIB_OBJS += tree-walk.o
-diff --git a/remote.c b/remote.c
-index 106151f..057ac02 100644
---- a/remote.c
-+++ b/remote.c
-@@ -50,7 +50,7 @@ static char buffer[BUF_SIZE];
- 
- static int valid_remote(const struct remote *remote)
- {
--	return !!remote->url;
-+	return remote->url || remote->foreign_vcs;
- }
- 
- static const char *alias_url(const char *url)
-diff --git a/transport-foreign.c b/transport-foreign.c
-new file mode 100644
-index 0000000..29aad77
+diff --git a/t/t9800-foreign-vcs-cvs-basic.sh b/t/t9800-foreign-vcs-cvs-basic.sh
+new file mode 100755
+index 0000000..78f5a98
 --- /dev/null
-+++ b/transport-foreign.c
-@@ -0,0 +1,200 @@
-+#include "cache.h"
-+#include "transport.h"
++++ b/t/t9800-foreign-vcs-cvs-basic.sh
+@@ -0,0 +1,518 @@
++#!/bin/sh
 +
-+#include "run-command.h"
-+#include "commit.h"
-+#include "diff.h"
-+#include "revision.h"
++test_description='git vcs-cvs basic tests'
++. ./test-lib.sh
 +
-+struct foreign_data
-+{
-+	struct child_process *importer;
-+};
++if ! test_have_prereq PYTHON; then
++	say 'skipping CVS foreign-vcs helper tests, python not available'
++	test_done
++fi
 +
-+static struct child_process *get_importer(struct transport *transport)
-+{
-+	struct child_process *importer = transport->data;
-+	if (!importer) {
-+		struct strbuf buf;
-+		importer = xcalloc(1, sizeof(*importer));
-+		importer->in = -1;
-+		importer->out = -1;
-+		importer->err = 0;
-+		importer->argv = xcalloc(3, sizeof(*importer->argv));
-+		strbuf_init(&buf, 80);
-+		strbuf_addf(&buf, "vcs-%s", transport->remote->foreign_vcs);
-+		importer->argv[0] = buf.buf;
-+		importer->argv[1] = transport->remote->name;
-+		importer->git_cmd = 1;
-+		start_command(importer);
-+		transport->data = importer;
-+	}
-+	return importer;
++CVS_EXEC=cvs
++CVS_OPTS="-f -q"
++CVS="$CVS_EXEC $CVS_OPTS"
++
++CVSROOT=$(pwd)/cvsroot
++export CVSROOT
++unset CVS_SERVER
++
++CVSMODULE=cvsmodule
++GITREMOTE=cvsremote
++
++if ! type $CVS_EXEC >/dev/null 2>&1
++then
++	say 'skipping vcs-cvs tests, $CVS_EXEC not found'
++	test_done
++fi
++
++test_expect_success 'setup cvsroot' '$CVS init'
++
++test_expect_success '#1: setup a cvs module' '
++
++	mkdir "$CVSROOT/$CVSMODULE" &&
++	$CVS co -d module-cvs $CVSMODULE &&
++	(
++		cd module-cvs &&
++		cat <<EOF >o_fortuna &&
++O Fortuna
++velut luna
++statu variabilis,
++
++semper crescis
++aut decrescis;
++vita detestabilis
++
++nunc obdurat
++et tunc curat
++ludo mentis aciem,
++
++egestatem,
++potestatem
++dissolvit ut glaciem.
++EOF
++		$CVS add o_fortuna &&
++		cat <<EOF >message &&
++add "O Fortuna" lyrics
++
++These public domain lyrics make an excellent sample text.
++EOF
++		$CVS commit -f -F message o_fortuna
++	)
++'
++
++test_expect_success 'set up CVS repo as a foreign remote' '
++
++	git config "user.name" "Test User"
++	git config "user.email" "test@example.com"
++	git config "remote.$GITREMOTE.vcs" cvs
++	git config "remote.$GITREMOTE.cvsRoot" "$CVSROOT"
++	git config "remote.$GITREMOTE.cvsModule" "$CVSMODULE"
++	git config "remote.$GITREMOTE.fetch" \
++		"+refs/cvs/$GITREMOTE/*:refs/remotes/$GITREMOTE/*"
++
++'
++
++test_expect_success '#1: git-vcs-cvs "capabilities" command' '
++
++	echo "capabilities" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++marks .git/info/cvs/$GITREMOTE/marks
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#1: git-vcs-cvs "list" command' '
++
++	echo "list" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++refs/cvs/$GITREMOTE/HEAD changed
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#1: git-vcs-cvs "import" command' '
++
++	echo "import refs/cvs/$GITREMOTE/HEAD" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++# Importing CVS revision o_fortuna:1.1
++blob
++mark :1
++data 180
++O Fortuna
++velut luna
++statu variabilis,
++
++semper crescis
++aut decrescis;
++vita detestabilis
++
++nunc obdurat
++et tunc curat
++ludo mentis aciem,
++
++egestatem,
++potestatem
++dissolvit ut glaciem.
++
++commit refs/cvs/$GITREMOTE/HEAD
++mark :2
++data 82
++add "O Fortuna" lyrics
++
++These public domain lyrics make an excellent sample text.
++
++M 644 :1 o_fortuna
++
++# Importing note for object 2
++blob
++mark :3
++data 14
++o_fortuna:1.1
++
++commit refs/notes/cvs/$GITREMOTE
++mark :4
++data 43
++Annotate commits imported by "git vcs-cvs"
++
++N :3 :2
++
++blob
++mark :5
++data 32
++1 o_fortuna:1.1
++2 o_fortuna:1.1
++
++blob
++mark :6
++data 16
++blob 1
++commit 2
++
++commit refs/cvs/$GITREMOTE/_metadata
++mark :7
++data 39
++Updated metadata used by "git vcs-cvs"
++
++M 644 :5 CVS/marks
++M 644 :6 o_fortuna/1.1
++
++EOF
++	grep -v "^committer " actual > actual.filtered &&
++	test_cmp expect actual.filtered
++
++'
++
++test_expect_success '#1: Passing git-vcs-cvs output to git-fast-import' '
++
++	git fast-import --quiet \
++		--export-marks=".git/info/cvs/$GITREMOTE/marks" \
++		< actual &&
++	git gc
++
++'
++
++test_expect_success '#1: Verifying correctness of import' '
++
++	echo "verify HEAD" | git vcs-cvs "$GITREMOTE"
++
++'
++
++test_expect_success '#2: update cvs module' '
++
++	(
++		cd module-cvs &&
++		cat <<EOF >o_fortuna &&
++O Fortune,
++like the moon
++you are changeable,
++
++ever waxing
++and waning;
++hateful life
++
++first oppresses
++and then soothes
++as fancy takes it;
++
++poverty
++and power
++it melts them like ice.
++EOF
++		cat <<EOF >message &&
++translate to English
++
++My Latin is terrible.
++EOF
++		$CVS commit -f -F message o_fortuna
++	)
++'
++
++test_expect_success '#2: git-vcs-cvs "capabilities" command' '
++
++	echo "capabilities" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++marks .git/info/cvs/$GITREMOTE/marks
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#2: git-vcs-cvs "list" command' '
++
++	echo "list" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++refs/cvs/$GITREMOTE/HEAD changed
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#2: git-vcs-cvs "import" command' '
++
++	echo "import refs/cvs/$GITREMOTE/HEAD" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++# Importing CVS revision o_fortuna:1.2
++blob
++mark :8
++data 179
++O Fortune,
++like the moon
++you are changeable,
++
++ever waxing
++and waning;
++hateful life
++
++first oppresses
++and then soothes
++as fancy takes it;
++
++poverty
++and power
++it melts them like ice.
++
++commit refs/cvs/$GITREMOTE/HEAD
++mark :9
++data 44
++translate to English
++
++My Latin is terrible.
++
++from refs/cvs/$GITREMOTE/HEAD^0
++M 644 :8 o_fortuna
++
++# Importing note for object 9
++blob
++mark :10
++data 14
++o_fortuna:1.2
++
++commit refs/notes/cvs/$GITREMOTE
++mark :11
++data 43
++Annotate commits imported by "git vcs-cvs"
++
++from refs/notes/cvs/$GITREMOTE^0
++N :10 :9
++
++blob
++mark :12
++data 32
++8 o_fortuna:1.2
++9 o_fortuna:1.2
++
++blob
++mark :13
++data 94
++
++blob
++mark :14
++data 16
++blob 8
++commit 9
++
++commit refs/cvs/$GITREMOTE/_metadata
++mark :15
++data 39
++Updated metadata used by "git vcs-cvs"
++
++from refs/cvs/$GITREMOTE/_metadata^0
++M 644 :12 CVS/marks
++M 644 :13 o_fortuna/1.1
++M 644 :14 o_fortuna/1.2
++
++EOF
++	grep -v -e "^committer " -e "\b[0-9a-f]\{40\}\b" actual > actual.filtered &&
++	test_cmp expect actual.filtered
++
++'
++
++test_expect_success '#2: Passing git-vcs-cvs output to git-fast-import' '
++
++	git fast-import --quiet \
++		--import-marks=".git/info/cvs/$GITREMOTE/marks" \
++		--export-marks=".git/info/cvs/$GITREMOTE/marks" \
++		< actual &&
++	git gc
++
++'
++
++test_expect_success '#2: Verifying correctness of import' '
++
++	echo "verify HEAD" | git vcs-cvs "$GITREMOTE"
++
++'
++
++test_expect_success '#3: update cvs module' '
++
++	(
++		cd module-cvs &&
++		echo 1 >tick &&
++		$CVS add tick &&
++		$CVS commit -f -m 1 tick
++	)
++
++'
++
++test_expect_success '#3: git-vcs-cvs "capabilities" command' '
++
++	echo "capabilities" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++marks .git/info/cvs/$GITREMOTE/marks
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#3: git-vcs-cvs "list" command' '
++
++	echo "list" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++refs/cvs/$GITREMOTE/HEAD changed
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#3: git-vcs-cvs "import" command' '
++
++	echo "import refs/cvs/$GITREMOTE/HEAD" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++# Importing CVS revision tick:1.1
++blob
++mark :16
++data 2
++1
++
++commit refs/cvs/$GITREMOTE/HEAD
++mark :17
++data 2
++1
++
++from refs/cvs/$GITREMOTE/HEAD^0
++M 644 :16 tick
++
++# Importing note for object 17
++blob
++mark :18
++data 23
++o_fortuna:1.2
++tick:1.1
++
++commit refs/notes/cvs/$GITREMOTE
++mark :19
++data 43
++Annotate commits imported by "git vcs-cvs"
++
++from refs/notes/cvs/$GITREMOTE^0
++N :18 :17
++
++blob
++mark :20
++data 41
++16 tick:1.1
++17 tick:1.1
++17 o_fortuna:1.2
++
++blob
++mark :21
++data 104
++commit 17
++
++blob
++mark :22
++data 18
++blob 16
++commit 17
++
++commit refs/cvs/$GITREMOTE/_metadata
++mark :23
++data 39
++Updated metadata used by "git vcs-cvs"
++
++from refs/cvs/$GITREMOTE/_metadata^0
++M 644 :20 CVS/marks
++M 644 :21 o_fortuna/1.2
++M 644 :22 tick/1.1
++
++EOF
++	grep -v -e "^committer " -e "\b[0-9a-f]\{40\}\b" actual > actual.filtered &&
++	test_cmp expect actual.filtered
++
++'
++
++test_expect_success '#3: Passing git-vcs-cvs output to git-fast-import' '
++
++	git fast-import --quiet \
++		--import-marks=".git/info/cvs/$GITREMOTE/marks" \
++		--export-marks=".git/info/cvs/$GITREMOTE/marks" \
++		< actual &&
++	git gc
++
++'
++
++test_expect_success '#3: Verifying correctness of import' '
++
++	echo "verify HEAD" | git vcs-cvs "$GITREMOTE"
++
++'
++
++test_expect_success '#4: git-vcs-cvs "capabilities" command' '
++
++	echo "capabilities" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++marks .git/info/cvs/$GITREMOTE/marks
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#4: git-vcs-cvs "list" command' '
++
++	echo "list" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++refs/cvs/$GITREMOTE/HEAD unchanged
++
++EOF
++	test_cmp expect actual
++
++'
++
++test_expect_success '#4: git-vcs-cvs "import" command' '
++
++	echo "import refs/cvs/$GITREMOTE/HEAD" | git vcs-cvs "$GITREMOTE" > actual &&
++	cat <<EOF >expect &&
++blob
++mark :24
++data 0
++
++blob
++mark :25
++data 142
++
++blob
++mark :26
++data 94
++
++commit refs/cvs/$GITREMOTE/_metadata
++mark :27
++data 39
++Updated metadata used by "git vcs-cvs"
++
++from refs/cvs/$GITREMOTE/_metadata^0
++M 644 :24 CVS/marks
++M 644 :25 o_fortuna/1.2
++M 644 :26 tick/1.1
++
++EOF
++	grep -v -e "^committer " -e "\b[0-9a-f]\{40\}\b" actual > actual.filtered &&
++	test_cmp expect actual.filtered
++
++'
++
++test_expect_success '#4: Passing git-vcs-cvs output to git-fast-import' '
++
++	git fast-import --quiet \
++		--import-marks=".git/info/cvs/$GITREMOTE/marks" \
++		--export-marks=".git/info/cvs/$GITREMOTE/marks" \
++		< actual &&
++	git gc
++
++'
++
++test_expect_success '#4: Verifying correctness of import' '
++
++	echo "verify HEAD" | git vcs-cvs "$GITREMOTE"
++
++'
++
++test_done
+diff --git a/t/t9801-foreign-vcs-cvs-fetch.sh b/t/t9801-foreign-vcs-cvs-fetch.sh
+new file mode 100755
+index 0000000..62a2325
+--- /dev/null
++++ b/t/t9801-foreign-vcs-cvs-fetch.sh
+@@ -0,0 +1,291 @@
++#!/bin/sh
++
++test_description='git vcs-cvs basic tests'
++. ./test-lib.sh
++
++if ! test_have_prereq PYTHON; then
++	say 'skipping CVS foreign-vcs helper tests, python not available'
++	test_done
++fi
++
++CVS_EXEC=cvs
++CVS_OPTS="-f -q"
++CVS="$CVS_EXEC $CVS_OPTS"
++
++CVSROOT=$(pwd)/cvsroot
++export CVSROOT
++unset CVS_SERVER
++
++CVSMODULE=cvsmodule
++GITREMOTE=cvsremote
++
++if ! type $CVS_EXEC >/dev/null 2>&1
++then
++	say 'skipping vcs-cvs tests, $CVS_EXEC not found'
++	test_done
++fi
++
++verify () {
++	git log --reverse --format="--- %T%n%s%n%n%b" "$GITREMOTE/$1" >actual &&
++	test_cmp "expect.$1" actual &&
++	echo "verify $1" | git vcs-cvs "$GITREMOTE"
 +}
 +
-+static int disconnect_foreign(struct transport *transport)
-+{
-+	struct child_process *importer = transport->data;
-+	if (importer) {
-+		write(importer->in, "\n", 1);
-+		close(importer->in);
-+		finish_command(importer);
-+		free(importer);
-+		transport->data = NULL;
-+	}
-+	return 0;
-+}
++test_expect_success 'setup CVS repo' '$CVS init'
 +
-+static int fetch_refs_via_foreign(struct transport *transport,
-+				  int nr_heads, struct ref **to_fetch)
-+{
-+	struct child_process *importer;
-+	struct child_process fastimport;
-+	struct ref *posn;
-+	int i, count;
++test_expect_success 'create CVS module with initial commit' '
 +
-+	count = 0;
-+	for (i = 0; i < nr_heads; i++) {
-+		posn = to_fetch[i];
-+		if (posn->status & REF_STATUS_UPTODATE)
-+			continue;
-+		count++;
-+	}
-+	if (count) {
-+		importer = get_importer(transport);
++	mkdir "$CVSROOT/$CVSMODULE" &&
++	$CVS co -d module-cvs $CVSMODULE &&
++	(
++		cd module-cvs &&
++		cat <<EOF >o_fortuna &&
++O Fortuna
++velut luna
++statu variabilis,
 +
-+		memset(&fastimport, 0, sizeof(fastimport));
-+		fastimport.in = importer->out;
-+		fastimport.argv = xcalloc(3, sizeof(*fastimport.argv));
-+		fastimport.argv[0] = "fast-import";
-+		fastimport.argv[1] = "--quiet";
-+		fastimport.git_cmd = 1;
-+		start_command(&fastimport);
++semper crescis
++aut decrescis;
++vita detestabilis
 +
-+		for (i = 0; i < nr_heads; i++) {
-+			posn = to_fetch[i];
-+			if (posn->status & REF_STATUS_UPTODATE)
-+				continue;
-+			write(importer->in, "import ", 7);
-+			write(importer->in, posn->name, strlen(posn->name));
-+			write(importer->in, "\n", 1);
-+		}
-+		disconnect_foreign(transport);
-+		finish_command(&fastimport);
-+	}
-+	for (i = 0; i < nr_heads; i++) {
-+		posn = to_fetch[i];
-+		if (posn->status & REF_STATUS_UPTODATE)
-+			continue;
-+		read_ref(posn->name, posn->old_sha1);
-+	}
-+	return 0;
-+}
++nunc obdurat
++et tunc curat
++ludo mentis aciem,
 +
-+static struct ref *get_refs_via_foreign(struct transport *transport, int for_push)
-+{
-+	struct child_process *importer;
-+	struct ref *ret = NULL;
-+	struct ref **end = &ret;
-+	struct strbuf buf;
-+	FILE *file;
++egestatem,
++potestatem
++dissolvit ut glaciem.
++EOF
++		$CVS add o_fortuna &&
++		cat <<EOF >message &&
++add "O Fortuna" lyrics
 +
-+	importer = get_importer(transport);
-+	write(importer->in, "list\n", 5);
++These public domain lyrics make an excellent sample text.
++EOF
++		$CVS commit -f -F message o_fortuna
++	)
++'
 +
-+	strbuf_init(&buf, 0);
-+	file = fdopen(importer->out, "r");
-+	while (1) {
-+		char *eon;
-+		if (strbuf_getline(&buf, file, '\n') == EOF)
-+			break;
++test_expect_success 'set up CVS repo/module as a foreign remote' '
 +
-+		if (!*buf.buf)
-+			break;
++	git config "user.name" "Test User"
++	git config "user.email" "test@example.com"
++	git config "remote.$GITREMOTE.vcs" cvs
++	git config "remote.$GITREMOTE.cvsRoot" "$CVSROOT"
++	git config "remote.$GITREMOTE.cvsModule" "$CVSMODULE"
++	git config "remote.$GITREMOTE.fetch" \
++		"+refs/cvs/$GITREMOTE/*:refs/remotes/$GITREMOTE/*"
 +
-+		eon = strchr(buf.buf, ' ');
-+		if (eon)
-+			*eon = '\0';
-+		*end = alloc_ref(buf.buf);
-+		if (eon) {
-+			if (strstr(eon + 1, "unchanged")) {
-+				(*end)->status |= REF_STATUS_UPTODATE;
-+				if (read_ref((*end)->name, (*end)->old_sha1))
-+					die("Unchanged?");
-+				fprintf(stderr, "Old: %p %s\n", *end, sha1_to_hex((*end)->old_sha1));
-+			}
-+		}
-+		end = &((*end)->next);
-+		strbuf_reset(&buf);
-+	}
++'
 +
-+	strbuf_release(&buf);
-+	return ret;
-+}
++test_expect_success 'initial fetch from CVS remote' '
 +
-+static int foreign_push(struct transport *transport, struct ref *remote_refs, int flags) {
-+	struct ref *ref, *has;
-+	struct child_process *importer;
-+	struct rev_info revs;
-+	struct commit *commit;
-+	struct child_process fastimport;
++	cat <<EOF >expect.HEAD &&
++--- 0e06d780dedab23e683c686fb041daa9a84c936c
++add "O Fortuna" lyrics
 +
-+	importer = get_importer(transport);
++These public domain lyrics make an excellent sample text.
 +
-+	memset(&fastimport, 0, sizeof(fastimport));
-+	fastimport.in = importer->out;
-+	fastimport.argv = xcalloc(3, sizeof(*fastimport.argv));
-+	fastimport.argv[0] = "fast-import";
-+	fastimport.argv[1] = "--quiet";
-+	fastimport.git_cmd = 1;
-+	start_command(&fastimport);
-+	for (ref = remote_refs; ref; ref = ref->next) {
-+		if (!ref->peer_ref) {
-+			ref->status = REF_STATUS_NONE;
-+			continue;
-+		}
-+		init_revisions(&revs, NULL);
-+		revs.reverse = 1;
-+		for (has = remote_refs; has; has = has->next) {
-+			commit = lookup_commit(has->old_sha1);
-+			commit->object.flags |= UNINTERESTING;
-+			add_pending_object(&revs, &commit->object, has->name);
-+		}
-+		commit = lookup_commit(ref->peer_ref->new_sha1);
-+		add_pending_object(&revs, &commit->object, ref->name);
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
 +
-+		if (prepare_revision_walk(&revs))
-+			die("Something wrong");
++'
 +
-+		ref->status = REF_STATUS_UPTODATE;
-+		while ((commit = get_revision(&revs))) {
-+			ref->status = REF_STATUS_EXPECTING_REPORT;
-+			fprintf(stderr, "export %s %s\n", sha1_to_hex(commit->object.sha1), ref->name);
-+			write(importer->in, "export ", 7);
-+			write(importer->in, sha1_to_hex(commit->object.sha1), 40);
-+			write(importer->in, " ", 1);
-+			write(importer->in, ref->name, strlen(ref->name));
-+			write(importer->in, "\n", 1);
-+		}
-+	}
++test_expect_success 'CVS commit' '
 +
-+	disconnect_foreign(transport);
-+	finish_command(&fastimport);
++	(
++		cd module-cvs &&
++		cat <<EOF >o_fortuna &&
++O Fortune,
++like the moon
++you are changeable,
 +
-+	for (ref = remote_refs; ref; ref = ref->next) {
-+		read_ref(ref->name, ref->new_sha1);
-+		if (ref->status == REF_STATUS_EXPECTING_REPORT)
-+			ref->status = REF_STATUS_OK;
-+	}
++ever waxing
++and waning;
++hateful life
 +
-+	return 0;
-+}
++first oppresses
++and then soothes
++as fancy takes it;
 +
-+void transport_foreign_init(struct transport *transport)
-+{
-+	transport->get_refs_list = get_refs_via_foreign;
-+	transport->fetch = fetch_refs_via_foreign;
-+	transport->push_refs = foreign_push;
-+	transport->disconnect = disconnect_foreign;
-+	transport->url = transport->remote->foreign_vcs;
-+}
-diff --git a/transport.c b/transport.c
-index 7ba7ea9..643f20e 100644
---- a/transport.c
-+++ b/transport.c
-@@ -932,6 +932,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 	ret->url = url;
++poverty
++and power
++it melts them like ice.
++EOF
++		cat <<EOF >message &&
++translate to English
++
++My Latin is terrible.
++EOF
++		$CVS commit -f -F message o_fortuna
++	) &&
++	cat <<EOF >>expect.HEAD &&
++--- daa87269a5e00388135ad9542dc16ab6754466e5
++translate to English
++
++My Latin is terrible.
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'CVS commit with new file' '
++
++	(
++		cd module-cvs &&
++		echo 1 >tick &&
++		$CVS add tick &&
++		$CVS commit -f -m 1 tick
++	) &&
++	cat <<EOF >>expect.HEAD &&
++--- 486935b4fccecea9b64cbed3a797ebbcbe2b7461
++1
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'fetch without CVS changes' '
++
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'add 2 CVS commits' '
++
++	(
++		cd module-cvs &&
++		echo 2 >tick &&
++		$CVS commit -f -m 2 tick &&
++		echo 3 >tick &&
++		$CVS commit -f -m 3 tick
++	) &&
++	cat <<EOF >>expect.HEAD &&
++--- 83437ab3e57bf0a42915de5310e3419792b5a36f
++2
++
++
++--- 60fc50406a82dc6bd32dc6e5f7bd23e4c3cdf7ef
++3
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'CVS commit with removed file' '
++
++	(
++		cd module-cvs &&
++		$CVS remove -f tick &&
++		$CVS commit -f -m "remove file" tick
++	) &&
++	cat <<EOF >>expect.HEAD &&
++--- daa87269a5e00388135ad9542dc16ab6754466e5
++remove file
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'CVS commit with several new files' '
++
++	(
++		cd module-cvs &&
++		echo spam >spam &&
++		echo sausage >sausage &&
++		echo eggs >eggs &&
++		$CVS add spam sausage eggs &&
++		$CVS commit -f -m "spam, sausage, and eggs" spam sausage eggs
++	) &&
++	cat <<EOF >>expect.HEAD &&
++--- 3190dfce44a6d5e9916b4870dbf8f37d1ca4ddaf
++spam, sausage, and eggs
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD
++
++'
++
++test_expect_success 'new CVS branch' '
++
++	(
++		cd module-cvs &&
++		$CVS tag -b foo
++	) &&
++	cp expect.HEAD expect.foo &&
++	git fetch "$GITREMOTE" &&
++	verify HEAD &&
++	verify foo
++
++'
++
++test_expect_success 'CVS commit on branch' '
++
++	(
++		cd module-cvs &&
++		$CVS up -r foo &&
++		echo "spam spam spam" >spam &&
++		$CVS commit -f -m "commit on branch foo" spam
++	) &&
++	cat <<EOF >>expect.foo &&
++--- 1aba123e5c83898ce3a8b976cc6064d60246aef4
++commit on branch foo
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD &&
++	verify foo
++
++'
++
++test_expect_success 'create CVS tag' '
++
++	(
++		cd module-cvs &&
++		$CVS tag bar
++	) &&
++	cp expect.foo expect.bar &&
++	git fetch "$GITREMOTE" &&
++	verify HEAD &&
++	verify foo &&
++	verify bar
++
++'
++
++test_expect_success 'another CVS commit on branch' '
++
++	(
++		cd module-cvs &&
++		echo "spam spam spam spam spam spam" >> spam &&
++		$CVS commit -f -m "another commit on branch foo" spam
++	) &&
++	cat <<EOF >>expect.foo &&
++--- 15a2635e76e8e5a5a8746021643de317452f2340
++another commit on branch foo
++
++
++EOF
++	git fetch "$GITREMOTE" &&
++	verify HEAD &&
++	verify foo &&
++	verify bar
++
++'
++
++test_done
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 5fdc5d9..8eb8b95 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -706,6 +706,7 @@ case $(uname -s) in
+ esac
  
- 	if (remote && remote->foreign_vcs) {
-+		transport_foreign_init(ret);
- 	} else if (!prefixcmp(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
-diff --git a/transport.h b/transport.h
-index b45e6c5..190490e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -115,4 +115,7 @@ void transport_unlock_pack(struct transport *transport);
- int transport_disconnect(struct transport *transport);
- char *transport_anonymize_url(const char *url);
+ test -z "$NO_PERL" && test_set_prereq PERL
++test -z "$NO_PYTHON" && test_set_prereq PYTHON
  
-+/* Transport methods defined outside transport.c */
-+void transport_foreign_init(struct transport *transport);
-+
- #endif
+ # test whether the filesystem supports symbolic links
+ ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq SYMLINKS
 -- 
 1.6.4.rc3.138.ga6b98.dirty
