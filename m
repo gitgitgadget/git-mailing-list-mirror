@@ -1,89 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Documentation: git-send-email: correct statement
- about standard ports
-Date: Fri, 31 Jul 2009 09:04:39 -0700
-Message-ID: <7vzlaku9d4.fsf@alter.siamese.dyndns.org>
-References: <1248995334-28545-1-git-send-email-wjl@icecavern.net>
- <1248995334-28545-2-git-send-email-wjl@icecavern.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv3] git apply: option to ignore whitespace differences
+Date: Fri, 31 Jul 2009 18:16:43 +0200
+Message-ID: <cb7bb73a0907310916i309c99cax2f2d5aa02084103f@mail.gmail.com>
+References: <1248814820-25367-1-git-send-email-giuseppe.bilotta@gmail.com> 
+	<7vljm84htf.fsf@alter.siamese.dyndns.org> <cb7bb73a0907282333g26efd1d8y7d913fba8a426aa5@mail.gmail.com> 
+	<20090729174000.6117@nanako3.lavabit.com> <94a0d4530907301727h171a2581ybee2a5b2d77e7c05@mail.gmail.com> 
+	<7v3a8d65kv.fsf@alter.siamese.dyndns.org> <94a0d4530907310838nbca0037u1a192dc07a379e66@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Fri Jul 31 18:04:56 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 18:17:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWubE-00007e-PZ
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 18:04:53 +0200
+	id 1MWunE-0006G1-GX
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 18:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023AbZGaQEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 12:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbZGaQEo
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 12:04:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65512 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752017AbZGaQEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 12:04:43 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E464418BEA;
-	Fri, 31 Jul 2009 12:04:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BCE6918BE9; Fri, 31 Jul 2009
- 12:04:40 -0400 (EDT)
-In-Reply-To: <1248995334-28545-2-git-send-email-wjl@icecavern.net> (Wesley J.
- Landaker's message of "Thu\, 30 Jul 2009 17\:08\:54 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DC91B1F0-7DEB-11DE-83CF-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751774AbZGaQRG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 12:17:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751459AbZGaQRF
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 12:17:05 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:49905 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426AbZGaQRE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 12:17:04 -0400
+Received: by bwz19 with SMTP id 19so1286386bwz.37
+        for <git@vger.kernel.org>; Fri, 31 Jul 2009 09:17:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=blMNfZBc7pI+HmQbX8Zutv1SBEajBuouhRr/Fwise3Q=;
+        b=pwb2wQwldswi92H1rY29AU7Yc/L0PV2f+ek3swY9fxu3n2mEQnH9+dKiw2oPTgrYyP
+         pZu+FrkY5YIrxpe49cXLO2MHRQK3UDgKlGypNHecj514EL+/mAYVFMjEa87iU0wKeXZR
+         Ny7C4Wwk3RiqkwJrZhf2KUnddr+HfbmBpAZxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XIuDpt6yzv2aXFY05OC/eIjnWtvKAONC0riJBg+gMI965nDK4SIVUUSWijP/z4NdAA
+         tjx5TFpgydTMQfd2P4l10Q/6n0YA179ZqyHQ1A13MbPlV0ZVpf6IWEVRqzKdskSj/GPp
+         SmcEjyy1yiLrIpfdKJq6gndu1JnULSShRwBXs=
+Received: by 10.204.54.143 with SMTP id q15mr3056135bkg.148.1249057023158; 
+	Fri, 31 Jul 2009 09:17:03 -0700 (PDT)
+In-Reply-To: <94a0d4530907310838nbca0037u1a192dc07a379e66@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124575>
 
-"Wesley J. Landaker" <wjl@icecavern.net> writes:
+On Fri, Jul 31, 2009 at 5:38 PM, Felipe
+Contreras<felipe.contreras@gmail.com> wrote:
+> On Fri, Jul 31, 2009 at 12:48 AM, Junio C Hamano<gitster@pobox.com> w=
+rote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> Google:
+>>> ignore space change: 17,300,000
+>>> ignore white space: 181,000,000
+>>
+>> But that is not relevant either. =A0"ignore white space" is a supers=
+et of
+>> "ignore space change", iow the latter has more specific meaning than=
+ the
+>> former. =A0It is not surprising to see that search engines find larg=
+er
+>> number of references to more general terms than more specific ones.
+>
+> The fact remains the same: white space is a much more used term, and
+> IMHO the only one that really matters.
 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index 1c94351..6415d94 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -142,8 +142,9 @@ user is prompted for a password while the input is masked for privacy.
->  
->  --smtp-server-port=<port>::
->  	Specifies a port different from the default port (SMTP
-> -	servers typically listen to smtp port 25 and ssmtp port
-> -	465); symbolic port names (e.g. "submission" instead of 587)
-> +	servers typically listen to smtp port 25, but may also listen to
-> +	submission port 587, or a non-standard SSL smtp port like 465);
-> +	symbolic port names (e.g. "submission" instead of 587)
->  	are also accepted. The port can also be set with the
->  	'sendemail.smtpserverport' configuration variable.
+Before I go on with the next revision of the patch, I would like to
+have some kind of agreed convention to implement.
 
-As you noted, port 465 has been used as a well-known de-facto port to run
-SMTP over SSL at many places.  I do not think it would help anybody by
-clarifying that it is a "non-standard" port here.  This is not a place to
-educate people on which port they should run their SMTP servers.
+My suggestion would be the following:
+(1) implement options --ignore-space-change, --ignore-all-space
+mirroring their 'git diff' meaning.
+(2) add --ignore-whitespace as a synonym to --ignore-space-change, for
+consistency with 'patch'
+(3) apply.ignore-whitespace accepts values
+     * false,no,none,0 to mean no whitespace ignoring
+     * true,yes,change,1 to mean ignore whitespace change
+     * all,2 to mean ignore all whitespace
 
-But I do not care deeply enough, and I can let it pass.
+Objections?
 
-I have much more trouble with that "like 465" than I have with "non
-standard".
 
-The purpose of listing the specific numbers in this sectiono is to give
-practical hints.  We could just have said "we can take the port number
-your SMTP server listens to with this option, and it is up to you to
-figure out which port you want to talk to".  We try to be helpful instead,
-so that the people can try to see if the suggested ports match their
-situation without having to consult outside references.  That's the whole
-reason for having specific numbers in this section.
 
-And in that context, 465 is much more special than any other "non standard
-port on which a random ISP may happen to run its SMTP over SSL service".
-
-I think you would help people better to say:
-
-	... submission port 587, or a widely used non-standard SMTP over
-	SSL port 465.
-
-if you want to really say non-standard, that is.
+--=20
+Giuseppe "Oblomov" Bilotta
