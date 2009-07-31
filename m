@@ -1,337 +1,392 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 1/3 v3] Add support for external programs for handling native
- fetches
-Date: Fri, 31 Jul 2009 01:26:38 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0907310109130.2147@iabervon.org>
+Subject: [PATCH 2/3 v3] Use an external program to implement fetching with
+ curl
+Date: Fri, 31 Jul 2009 01:26:40 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0907310112400.2147@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 07:26:45 2009
+X-From: git-owner@vger.kernel.org Fri Jul 31 07:27:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWkdh-0001ud-4S
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 07:26:45 +0200
+	id 1MWke2-00021w-Au
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 07:27:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416AbZGaF0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 01:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZGaF0l
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 01:26:41 -0400
-Received: from iabervon.org ([66.92.72.58]:54992 "EHLO iabervon.org"
+	id S1751439AbZGaF0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 01:26:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751389AbZGaF0n
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 01:26:43 -0400
+Received: from iabervon.org ([66.92.72.58]:54995 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751165AbZGaF0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 01:26:39 -0400
-Received: (qmail 5897 invoked by uid 1000); 31 Jul 2009 05:26:38 -0000
+	id S1751276AbZGaF0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 01:26:42 -0400
+Received: (qmail 5908 invoked by uid 1000); 31 Jul 2009 05:26:40 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jul 2009 05:26:38 -0000
+  by localhost with SMTP; 31 Jul 2009 05:26:40 -0000
 User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124503>
 
-transport_get() can call transport_native_helper_init() to have list and
-fetch-ref operations handled by running a separate program as:
-
- git remote-<something> <remote> [<url>]
-
-This program then accepts, on its stdin, "list" and "fetch <hex>
-<name>" commands; the former prints out a list of available refs and
-either their hashes or what they are symreefs to, while the latter
-fetches them into the local object database and prints a newline when done.
+Use the transport native helper mechanism to fetch by http (and ftp, etc).
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
-dscho: it turned out that disconnect...() is a method defined to return 
-int.
+Note that the bulk of remote-curl is code moved verbatim from transport.c; 
+cleaning it up is a separate topic.
 
- Documentation/git-remote-helpers.txt |   72 +++++++++++++++
- Makefile                             |    1 +
- transport-helper.c                   |  168 ++++++++++++++++++++++++++++++++++
- transport.h                          |    3 +
- 4 files changed, 244 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-remote-helpers.txt
- create mode 100644 transport-helper.c
+ Makefile      |    5 ++
+ remote-curl.c |  139 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ transport.c   |  136 +-------------------------------------------------------
+ 3 files changed, 145 insertions(+), 135 deletions(-)
+ create mode 100644 remote-curl.c
 
-diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-new file mode 100644
-index 0000000..86a9c3f
---- /dev/null
-+++ b/Documentation/git-remote-helpers.txt
-@@ -0,0 +1,72 @@
-+git-remote-helpers(1)
-+=====================
-+
-+NAME
-+----
-+git-remote-helpers - Helper programs for interoperation with remote git
-+
-+SYNOPSIS
-+--------
-+'git remote-<transport>' <remote>
-+
-+DESCRIPTION
-+-----------
-+
-+These programs are normally not used directly by end users, but are
-+invoked by various git programs that interact with remote repositories
-+when the repository they would operate on will be accessed using
-+transport code not linked into the main git binary. Various particular
-+helper programs will behave as documented here.
-+
-+COMMANDS
-+--------
-+
-+Commands are given by the caller on the helper's standard input, one per line.
-+
-+'capabilities'::
-+	Lists the capabilities of the helper, one per line, ending
-+	with a blank line.
-+
-+'list'::
-+	Lists the refs, one per line, in the format "<value> <name>
-+	[<attr> ...]". The value may be a hex sha1 hash, "@<dest>" for
-+	a symref, or "?" to indicate that the helper could not get the
-+	value of the ref. A space-separated list of attributes follows
-+	the name; unrecognized attributes are ignored. After the
-+	complete list, outputs a blank line.
-+
-+'fetch' <sha1> <name>::
-+	Fetches the given object, writing the necessary objects to the
-+	database. Outputs a blank line when the fetch is
-+	complete. Only objects which were reported in the ref list
-+	with a sha1 may be fetched this way.
-++
-+Supported if the helper has the "fetch" capability.
-+
-+If a fatal error occurs, the program writes the error message to
-+stderr and exits. The caller should expect that a suitable error
-+message has been printed if the child closes the connection without
-+completing a valid response for the current command.
-+
-+Additional commands may be supported, as may be determined from
-+capabilities reported by the helper.
-+
-+CAPABILITIES
-+------------
-+
-+'fetch'::
-+	This helper supports the 'fetch' command, with the object
-+	specified using a sha1 or ref name as specified.
-+
-+REF LIST ATTRIBUTES
-+-------------------
-+
-+None are defined yet, but the caller must accept any which are supplied.
-+
-+Documentation
-+-------------
-+Documentation by Daniel Barkalow.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index daf4296..504646a 100644
+index 504646a..35117fc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -549,6 +549,7 @@ LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
- LIB_OBJS += transport.o
-+LIB_OBJS += transport-helper.o
- LIB_OBJS += tree-diff.o
- LIB_OBJS += tree.o
- LIB_OBJS += tree-walk.o
-diff --git a/transport-helper.c b/transport-helper.c
-new file mode 100644
-index 0000000..a879bc6
---- /dev/null
-+++ b/transport-helper.c
-@@ -0,0 +1,168 @@
-+#include "cache.h"
-+#include "transport.h"
-+
-+#include "run-command.h"
-+#include "commit.h"
-+#include "diff.h"
-+#include "revision.h"
-+
-+struct helper_data
-+{
-+	const char *name;
-+	struct child_process *helper;
-+	unsigned fetch : 1;
-+};
-+
-+static struct child_process *get_helper(struct transport *transport)
-+{
-+	struct helper_data *data = transport->data;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process *helper;
-+	FILE *file;
-+
-+	if (data->helper)
-+		return data->helper;
-+
-+	helper = xcalloc(1, sizeof(*helper));
-+	helper->in = -1;
-+	helper->out = -1;
-+	helper->err = 0;
-+	helper->argv = xcalloc(4, sizeof(*helper->argv));
-+	strbuf_addf(&buf, "remote-%s", data->name);
-+	helper->argv[0] = strbuf_detach(&buf, NULL);
-+	helper->argv[1] = transport->remote->name;
-+	helper->argv[2] = transport->url;
-+	helper->git_cmd = 1;
-+	if (start_command(helper))
-+		die("Unable to run helper: git %s", helper->argv[0]);
-+	data->helper = helper;
-+
-+	write_in_full(data->helper->in, "capabilities\n", 13);
-+	file = xfdopen(helper->out, "r");
-+	while (1) {
-+		if (strbuf_getline(&buf, file, '\n') == EOF)
-+			exit(128); /* child died, message supplied already */
-+
-+		if (!*buf.buf)
-+			break;
-+		if (!strcmp(buf.buf, "fetch"))
-+			data->fetch = 1;
-+	}
-+	return data->helper;
-+}
-+
-+static int disconnect_helper(struct transport *transport)
-+{
-+	struct helper_data *data = transport->data;
-+	if (data->helper) {
-+		write_in_full(data->helper->in, "\n", 1);
-+		close(data->helper->in);
-+		finish_command(data->helper);
-+		free((char *)data->helper->argv[0]);
-+		free(data->helper->argv);
-+		free(data->helper);
-+		data->helper = NULL;
-+	}
-+	return 0;
-+}
-+
-+static int fetch(struct transport *transport,
-+		 int nr_heads, const struct ref **to_fetch)
-+{
-+	struct helper_data *data = transport->data;
-+	struct child_process *helper;
-+	const struct ref *posn;
-+	struct strbuf buf = STRBUF_INIT;
-+	int i, count;
-+	FILE *file;
-+
-+	count = 0;
-+	for (i = 0; i < nr_heads; i++) {
-+		posn = to_fetch[i];
-+		if (posn->status & REF_STATUS_UPTODATE)
-+			continue;
-+		count++;
-+	}
-+
-+	if (!count)
-+		return 0;
-+
-+	helper = get_helper(transport);
-+
-+	if (!data->fetch)
-+		return -1;
-+
-+	file = xfdopen(helper->out, "r");
-+	for (i = 0; i < nr_heads; i++) {
-+		posn = to_fetch[i];
-+		if (posn->status & REF_STATUS_UPTODATE)
-+			continue;
-+		write_in_full(helper->in, "fetch ", 6);
-+		write_in_full(helper->in, sha1_to_hex(posn->old_sha1), 40);
-+		write_in_full(helper->in, " ", 1);
-+		write_in_full(helper->in, posn->name, strlen(posn->name));
-+		write_in_full(helper->in, "\n", 1);
-+		if (strbuf_getline(&buf, file, '\n') == EOF)
-+			exit(128); /* child died, message supplied already */
-+	}
-+	return 0;
-+}
-+
-+static struct ref *get_refs_list(struct transport *transport, int for_push)
-+{
-+	struct child_process *helper;
-+	struct ref *ret = NULL;
-+	struct ref **tail = &ret;
-+	struct ref *posn;
-+	struct strbuf buf = STRBUF_INIT;
-+	FILE *file;
-+
-+	helper = get_helper(transport);
-+	write_in_full(helper->in, "list\n", 5);
-+
-+	file = xfdopen(helper->out, "r");
-+	while (1) {
-+		char *eov, *eon;
-+		if (strbuf_getline(&buf, file, '\n') == EOF)
-+			exit(128); /* child died, message supplied already */
-+
-+		if (!*buf.buf)
-+			break;
-+
-+		eov = strchr(buf.buf, ' ');
-+		if (!eov)
-+			die("Malformed response in ref list: %s", buf.buf);
-+                eon = strchr(eov + 1, ' ');
-+		*eov = '\0';
-+                if (eon)
-+                        *eon = '\0';
-+		*tail = alloc_ref(eov + 1);
-+		if (buf.buf[0] == '@')
-+			(*tail)->symref = xstrdup(buf.buf + 1);
-+		else if (buf.buf[0] != '?')
-+			get_sha1_hex(buf.buf, (*tail)->old_sha1);
-+		tail = &((*tail)->next);
-+		strbuf_reset(&buf);
-+	}
-+	strbuf_release(&buf);
-+
-+	for (posn = ret; posn; posn = posn->next)
-+		resolve_remote_symref(posn, ret);
-+
-+	return ret;
-+}
-+
-+int transport_native_helper_init(struct transport *transport)
-+{
-+	struct helper_data *data = xmalloc(sizeof(*data));
-+	char *eom = strchr(transport->url, ':');
-+	if (!eom)
-+		return -1;
-+	data->helper = NULL;
-+	data->name = xstrndup(transport->url, eom - transport->url);
-+	transport->data = data;
-+	transport->get_refs_list = get_refs_list;
-+	transport->fetch = fetch;
-+	transport->disconnect = disconnect_helper;
-+	return 0;
-+}
-diff --git a/transport.h b/transport.h
-index 51b5397..fff9d8c 100644
---- a/transport.h
-+++ b/transport.h
-@@ -77,4 +77,7 @@ void transport_unlock_pack(struct transport *transport);
- int transport_disconnect(struct transport *transport);
- char *transport_anonymize_url(const char *url);
+@@ -981,6 +981,7 @@ else
+ 		CURL_LIBCURL = -lcurl
+ 	endif
+ 	BUILTIN_OBJS += builtin-http-fetch.o
++	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
+ 	EXTLIBS += $(CURL_LIBCURL)
+ 	LIB_OBJS += http.o http-walker.o
+ 	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
+@@ -1491,6 +1492,10 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
  
-+/* Transport methods defined outside transport.c */
-+int transport_native_helper_init(struct transport *transport);
++git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
++		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
 +
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H) $(wildcard */*.h)
+ builtin-revert.o wt-status.o: wt-status.h
+diff --git a/remote-curl.c b/remote-curl.c
+new file mode 100644
+index 0000000..ad6a163
+--- /dev/null
++++ b/remote-curl.c
+@@ -0,0 +1,139 @@
++#include "cache.h"
++#include "remote.h"
++#include "strbuf.h"
++#include "walker.h"
++#include "http.h"
++
++static struct ref *get_refs(struct walker *walker, const char *url)
++{
++	struct strbuf buffer = STRBUF_INIT;
++	char *data, *start, *mid;
++	char *ref_name;
++	char *refs_url;
++	int i = 0;
++	int http_ret;
++
++	struct ref *refs = NULL;
++	struct ref *ref = NULL;
++	struct ref *last_ref = NULL;
++
++	refs_url = xmalloc(strlen(url) + 11);
++	sprintf(refs_url, "%s/info/refs", url);
++
++	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
++	switch (http_ret) {
++	case HTTP_OK:
++		break;
++	case HTTP_MISSING_TARGET:
++		die("%s not found: did you run git update-server-info on the"
++		    " server?", refs_url);
++	default:
++		http_error(refs_url, http_ret);
++		die("HTTP request failed");
++	}
++
++	data = buffer.buf;
++	start = NULL;
++	mid = data;
++	while (i < buffer.len) {
++		if (!start) {
++			start = &data[i];
++		}
++		if (data[i] == '\t')
++			mid = &data[i];
++		if (data[i] == '\n') {
++			data[i] = 0;
++			ref_name = mid + 1;
++			ref = xmalloc(sizeof(struct ref) +
++				      strlen(ref_name) + 1);
++			memset(ref, 0, sizeof(struct ref));
++			strcpy(ref->name, ref_name);
++			get_sha1_hex(start, ref->old_sha1);
++			if (!refs)
++				refs = ref;
++			if (last_ref)
++				last_ref->next = ref;
++			last_ref = ref;
++			start = NULL;
++		}
++		i++;
++	}
++
++	strbuf_release(&buffer);
++
++	ref = alloc_ref("HEAD");
++	if (!walker->fetch_ref(walker, ref) &&
++	    !resolve_remote_symref(ref, refs)) {
++		ref->next = refs;
++		refs = ref;
++	} else {
++		free(ref);
++	}
++
++	strbuf_release(&buffer);
++	free(refs_url);
++	return refs;
++}
++
++int main(int argc, const char **argv)
++{
++	struct remote *remote;
++	struct strbuf buf = STRBUF_INIT;
++	const char *url;
++	struct walker *walker = NULL;
++
++	setup_git_directory();
++	if (argc < 2) {
++		fprintf(stderr, "Remote needed\n");
++		return 1;
++	}
++
++	remote = remote_get(argv[1]);
++
++	if (argc > 2) {
++		url = argv[2];
++	} else {
++		url = remote->url[0];
++	}
++
++	do {
++		if (strbuf_getline(&buf, stdin, '\n') == EOF)
++			break;
++		if (!prefixcmp(buf.buf, "fetch ")) {
++			char *obj = buf.buf + strlen("fetch ");
++			if (!walker)
++				walker = get_http_walker(url, remote);
++			walker->get_all = 1;
++			walker->get_tree = 1;
++			walker->get_history = 1;
++			walker->get_verbosely = 0;
++			walker->get_recover = 0;
++			if (walker_fetch(walker, 1, &obj, NULL, NULL))
++				die("Fetch failed.");
++			printf("\n");
++			fflush(stdout);
++		} else if (!strcmp(buf.buf, "list")) {
++			struct ref *refs;
++			struct ref *posn;
++			if (!walker)
++				walker = get_http_walker(url, remote);
++			refs = get_refs(walker, url);
++			for (posn = refs; posn; posn = posn->next) {
++				if (posn->symref)
++					printf("@%s %s\n", posn->symref, posn->name);
++				else
++					printf("%s %s\n", sha1_to_hex(posn->old_sha1), posn->name);
++			}
++			printf("\n");
++			fflush(stdout);
++		} else if (!strcmp(buf.buf, "capabilities")) {
++			printf("fetch\n");
++			printf("\n");
++			fflush(stdout);
++		} else {
++			return 1;
++		}
++		strbuf_reset(&buf);
++	} while (1);
++	return 0;
++}
+diff --git a/transport.c b/transport.c
+index de0d587..d986126 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1,9 +1,6 @@
+ #include "cache.h"
+ #include "transport.h"
+ #include "run-command.h"
+-#ifndef NO_CURL
+-#include "http.h"
+-#endif
+ #include "pkt-line.h"
+ #include "fetch-pack.h"
+ #include "send-pack.h"
+@@ -352,45 +349,6 @@ static int rsync_transport_push(struct transport *transport,
+ 	return result;
+ }
+ 
+-/* Generic functions for using commit walkers */
+-
+-#ifndef NO_CURL /* http fetch is the only user */
+-static int fetch_objs_via_walker(struct transport *transport,
+-				 int nr_objs, const struct ref **to_fetch)
+-{
+-	char *dest = xstrdup(transport->url);
+-	struct walker *walker = transport->data;
+-	char **objs = xmalloc(nr_objs * sizeof(*objs));
+-	int i;
+-
+-	walker->get_all = 1;
+-	walker->get_tree = 1;
+-	walker->get_history = 1;
+-	walker->get_verbosely = transport->verbose >= 0;
+-	walker->get_recover = 0;
+-
+-	for (i = 0; i < nr_objs; i++)
+-		objs[i] = xstrdup(sha1_to_hex(to_fetch[i]->old_sha1));
+-
+-	if (walker_fetch(walker, nr_objs, objs, NULL, NULL))
+-		die("Fetch failed.");
+-
+-	for (i = 0; i < nr_objs; i++)
+-		free(objs[i]);
+-	free(objs);
+-	free(dest);
+-	return 0;
+-}
+-#endif /* NO_CURL */
+-
+-static int disconnect_walker(struct transport *transport)
+-{
+-	struct walker *walker = transport->data;
+-	if (walker)
+-		walker_free(walker);
+-	return 0;
+-}
+-
+ #ifndef NO_CURL
+ static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
+ {
+@@ -432,96 +390,6 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
+ 	return !!err;
+ }
+ 
+-static struct ref *get_refs_via_curl(struct transport *transport, int for_push)
+-{
+-	struct strbuf buffer = STRBUF_INIT;
+-	char *data, *start, *mid;
+-	char *ref_name;
+-	char *refs_url;
+-	int i = 0;
+-	int http_ret;
+-
+-	struct ref *refs = NULL;
+-	struct ref *ref = NULL;
+-	struct ref *last_ref = NULL;
+-
+-	struct walker *walker;
+-
+-	if (for_push)
+-		return NULL;
+-
+-	if (!transport->data)
+-		transport->data = get_http_walker(transport->url,
+-						transport->remote);
+-
+-	walker = transport->data;
+-
+-	refs_url = xmalloc(strlen(transport->url) + 11);
+-	sprintf(refs_url, "%s/info/refs", transport->url);
+-
+-	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+-	switch (http_ret) {
+-	case HTTP_OK:
+-		break;
+-	case HTTP_MISSING_TARGET:
+-		die("%s not found: did you run git update-server-info on the"
+-		    " server?", refs_url);
+-	default:
+-		http_error(refs_url, http_ret);
+-		die("HTTP request failed");
+-	}
+-
+-	data = buffer.buf;
+-	start = NULL;
+-	mid = data;
+-	while (i < buffer.len) {
+-		if (!start)
+-			start = &data[i];
+-		if (data[i] == '\t')
+-			mid = &data[i];
+-		if (data[i] == '\n') {
+-			data[i] = 0;
+-			ref_name = mid + 1;
+-			ref = xmalloc(sizeof(struct ref) +
+-				      strlen(ref_name) + 1);
+-			memset(ref, 0, sizeof(struct ref));
+-			strcpy(ref->name, ref_name);
+-			get_sha1_hex(start, ref->old_sha1);
+-			if (!refs)
+-				refs = ref;
+-			if (last_ref)
+-				last_ref->next = ref;
+-			last_ref = ref;
+-			start = NULL;
+-		}
+-		i++;
+-	}
+-
+-	strbuf_release(&buffer);
+-
+-	ref = alloc_ref("HEAD");
+-	if (!walker->fetch_ref(walker, ref) &&
+-	    !resolve_remote_symref(ref, refs)) {
+-		ref->next = refs;
+-		refs = ref;
+-	} else {
+-		free(ref);
+-	}
+-
+-	strbuf_release(&buffer);
+-	free(refs_url);
+-	return refs;
+-}
+-
+-static int fetch_objs_via_curl(struct transport *transport,
+-				 int nr_objs, const struct ref **to_fetch)
+-{
+-	if (!transport->data)
+-		transport->data = get_http_walker(transport->url,
+-						transport->remote);
+-	return fetch_objs_via_walker(transport, nr_objs, to_fetch);
+-}
+-
  #endif
+ 
+ struct bundle_transport_data {
+@@ -950,14 +818,12 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	} else if (!prefixcmp(url, "http://")
+ 	        || !prefixcmp(url, "https://")
+ 	        || !prefixcmp(url, "ftp://")) {
++		transport_native_helper_init(ret);
+ #ifdef NO_CURL
+ 		error("git was compiled without libcurl support.");
+ #else
+-		ret->get_refs_list = get_refs_via_curl;
+-		ret->fetch = fetch_objs_via_curl;
+ 		ret->push = curl_transport_push;
+ #endif
+-		ret->disconnect = disconnect_walker;
+ 
+ 	} else if (is_local(url) && is_file(url)) {
+ 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
 -- 
 1.6.4.rc3.25.gd5eff.dirty
