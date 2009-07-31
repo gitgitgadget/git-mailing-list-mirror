@@ -1,82 +1,77 @@
-From: Diggory Hardy <diggory.hardy@gmail.com>
-Subject: Re: LESS env var and a pager
-Date: Fri, 31 Jul 2009 14:25:41 +0200
-Message-ID: <31718a220907310525v681eb2c4l53c41fdec32f3f72@mail.gmail.com>
-References: <31718a220907300010t136885c6ldc2ea362f9c6e33@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Request for benchmarking: x86 SHA1 code
+Date: Fri, 31 Jul 2009 14:29:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0907311428340.4503@intel-tinevez-2-302>
+References: <20090726232154.29594.qmail@science.horizon.com>  <20090731104602.15375.qmail@science.horizon.com>  <40aa078e0907310411k54dc58fbq9a938c489df56b68@mail.gmail.com>  <4A72D76D.3050400@drmicha.warpmail.net>
+ <40aa078e0907310524x1fe4d84dr858ebc03731ee093@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 14:25:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	George Spelvin <linux@horizon.com>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 14:29:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWrBG-0007S9-Bj
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 14:25:50 +0200
+	id 1MWrEr-0000d4-Qq
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 14:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbZGaMZn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 08:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbZGaMZm
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 08:25:42 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:39061 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966AbZGaMZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 08:25:42 -0400
-Received: by bwz19 with SMTP id 19so1158398bwz.37
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 05:25:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=9R8JPDz9RSHfU3v7Iv36kCgbmWYOW9vv8llUU+j/hyo=;
-        b=jLXhPEXrUweY3FJm2vIDetlw++B3PgxunSG5N+NXQJp3gmOWKnHzlTIqJj1JatQezR
-         LwcTBZCY0t2fNzNm9cPzc+oR4YAl9lXpqIF8+nhqOSKmAn2JmRN7i41q+XDb0KnYA8ww
-         JPv5zgUuQIF+BE3G731SI4UEhm/RzOYo05eA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=QonKhCQuZcdL13jD2d1CuqBOCS+EmVB0DYFE31kciurlDuhD6JeUnwUXEhjPw6GWf+
-         +U08axB4wqY4thRxoeo8buY8gEd7G3RdOckDlgwb0zFdMlXP0w4G5Jsm5PHbItQrNfqB
-         C6Pnxcv3D3mEGa+Vpw6j+1FQFkHmrVABWb5no=
-Received: by 10.204.52.72 with SMTP id h8mr866719bkg.30.1249043141509; Fri, 31 
-	Jul 2009 05:25:41 -0700 (PDT)
-In-Reply-To: <31718a220907300010t136885c6ldc2ea362f9c6e33@mail.gmail.com>
+	id S1752555AbZGaM3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 08:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbZGaM3N
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 08:29:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56709 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752544AbZGaM3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 08:29:12 -0400
+Received: (qmail invoked by alias); 31 Jul 2009 12:29:11 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp020) with SMTP; 31 Jul 2009 14:29:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cytUgovUcSv7BhK9LYe4ohP1m4HpFXDLAVmwKPR
+	xhHRVPft1fBLEv
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <40aa078e0907310524x1fe4d84dr858ebc03731ee093@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124552>
 
-Unfortunately using F without X results in output no longer than one
-screen not being displayed, since less immediately exits and anything
-less would display is immediately cleared from the screen (so it just
-looks like the git command had no output).
+Hi,
 
-I looked through less's man page and didn't find any solution other
-than also not specifying F, which is not so desirable since it's
-always necessary to press 'q' to exit less and previous output is not
-visible on the terminal.
+On Fri, 31 Jul 2009, Erik Faye-Lund wrote:
 
-[So don't follow my first suggestion.]
+> On Fri, Jul 31, 2009 at 1:37 PM, Michael J
+> Gruber<git@drmicha.warpmail.net> wrote:
+> >> What did I do wrong? :)
+> >
+> > You need to go to the x86 directory, apply the patch and run make there.
+> > (I made the same mistake.) Also, you i586 (32bit) glibc-devel if you're
+> > on a 64 bit system.
+> 
+> Aha, thanks :)
+> 
+> Now I'm getting a different error:
+> $ make
+> as   -o sha1-586.o sha1-586.s
+> sha1-586.s: Assembler messages:
+> sha1-586.s:4: Warning: .type pseudo-op used outside of .def/.endef ignored.
+> sha1-586.s:4: Error: junk at end of line, first unrecognized character is `s'
+> sha1-586.s:1438: Warning: .size pseudo-op used outside of .def/.endef ignored.
+> sha1-586.s:1438: Error: junk at end of line, first unrecognized character is `s'
+> 
+> make: *** [sha1-586.o] Error 1
+> 
+> What might be relevant, is that I'm trying this on Windows (Vista
+> 64bit).
 
-On 30/07/2009, Diggory Hardy <diggory.hardy@gmail.com> wrote:
-> I was recently trying to work out why when git's output is piped
-> through a pager, it doesn't use the alternate screen buffer:
-> https://bugs.kde.org/show_bug.cgi?id=201899
->
-> Conclusion: removing the X option from the LESS environ var produced
-> the results I wanted (allow mouse-wheel scrolling, output is hidden
-> after closing the pager).
-> One relevent post I found:
-> http://article.gmane.org/gmane.comp.version-control.git/29565/match=less+frsx
->
-> So maybe it'd make sense to change this in pager.c to:
-> setenv("LESS", "FRS", 0);
-> (or even just FR:)
-> setenv("LESS", "FR", 0);
->
-> Just a suggestion of what seems preferable to me.
->
+Probably using msysGit?  Then you're still using the 32-bit environment, 
+as MSys is 32-bit only for now.
+
+Ciao,
+Dscho
