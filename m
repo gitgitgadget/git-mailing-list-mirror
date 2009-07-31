@@ -1,114 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] revert: libify pick
-Date: Fri, 31 Jul 2009 00:15:19 -0700
-Message-ID: <7v8wi52uig.fsf@alter.siamese.dyndns.org>
-References: <20090731032548.4169.16389.chriscool@tuxfamily.org>
+From: =?UTF-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] git.el: Clarify documentation of git-commit-tree
+Date: Fri, 31 Jul 2009 09:23:09 +0200
+Message-ID: <1249024989-27826-1-git-send-email-davidk@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Jul 31 09:15:56 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?David=20K=C3=A5gedal?= <davidk@lysator.liu.se>
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Fri Jul 31 09:56:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWmLJ-0006eH-UX
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 09:15:54 +0200
+	id 1MWmyR-0005vE-A3
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 09:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752840AbZGaHPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 03:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbZGaHP3
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 03:15:29 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40814 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752551AbZGaHP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 03:15:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 408A61ABE9;
-	Fri, 31 Jul 2009 03:15:28 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 20E4C1ABE8; Fri,
- 31 Jul 2009 03:15:21 -0400 (EDT)
-In-Reply-To: <20090731032548.4169.16389.chriscool@tuxfamily.org> (Christian
- Couder's message of "Fri\, 31 Jul 2009 05\:25\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ECBA1E72-7DA1-11DE-87AB-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1751447AbZGaH4L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 31 Jul 2009 03:56:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751413AbZGaH4L
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 03:56:11 -0400
+Received: from mail.lysator.liu.se ([130.236.254.3]:38106 "EHLO
+	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbZGaH4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 03:56:10 -0400
+X-Greylist: delayed 1966 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jul 2009 03:56:09 EDT
+Received: from mail.lysator.liu.se (localhost [127.0.0.1])
+	by mail.lysator.liu.se (Postfix) with ESMTP id DE95940011;
+	Fri, 31 Jul 2009 09:22:49 +0200 (CEST)
+Received: by mail.lysator.liu.se (Postfix, from userid 1674)
+	id D23304001D; Fri, 31 Jul 2009 09:22:49 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
+	bernadotte.lysator.liu.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.3 required=5.0 tests=AWL autolearn=disabled 
+	version=3.1.7-deb3
+Received: from krank (unknown [87.96.142.66])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.lysator.liu.se (Postfix) with ESMTP id ADC6540011;
+	Fri, 31 Jul 2009 09:22:49 +0200 (CEST)
+Received: by krank (Postfix, from userid 1000)
+	id 671E0DC302; Fri, 31 Jul 2009 09:23:22 +0200 (CEST)
+X-Mailer: git-send-email 1.6.4.rc3.21.g3b9e
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124509>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
+---
+ contrib/emacs/git.el |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
 
-> From: Stephan Beyer <s-beyer@gmx.net>
->
-> This commit is made of code from the sequencer GSoC project:
->
-> git://repo.or.cz/git/sbeyer.git
->
-> (commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
->
-> The goal of this commit is to abstract out pick functionnality
-> into a new pick() function made of code from "builtin-revert.c".
->
-> The new pick() function is in a new "pick.c" file with an
-> associated "pick.h".
->
-> "pick.h" and "pick.c" are strictly the same as on the sequencer repo,
-> but a few changes were needed on "builtin-revert.c" to keep it up to
-> date with changes on git.git.
->
-> Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->
-> ---
->
-> 	This patch is part of trying to port git-rebase--interactive.sh
-> 	to C using code from the sequencer GSoC project. But maybe it can
-> 	be seen as a clean up too.
-
-Thanks.  Why doesn't this have Stephan's sign-off?
-
-The new "pick.c" file seems to be a nicer implementation of the main logic
-of builtin-revert.c and its primary niceness comes from the use of strbuf.
-
-A few minor points and comments.
-
- * error() returns -1.
-
-        error("message");     =>        return error("message");
-        return -1;
-
- * pick() might be a bit too short and abstract name for a generic library
-   function.
-
- * REVERSE is made to imply ADD_NOTE but the codepath that acts on
-   ADD_NOTE never seems to be reached if REVERSE is set.
-
-The intent of pick() funtion looks like it starts from the current index
-(not HEAD), and allow the effect of one commit replayed (either forward or
-backward) to that state, leaving the result in the index.
-
-You do not have to start from a commit, so you can replay many commits to
-the index in sequence without commiting in between to squash multiple
-steps if you wanted to.  I think that makes sense as a nice general
-interface.
-
-The "if (no_commit)" codepath in the original code did things very
-differently from the usual "start from HEAD and replay the effect"
-codepath and it warranted the big "We do not intend to commit immediately"
-comment.  For pick() function, however, the "start from index" is the
-normal and only mode of operation.  Keeping the big comment is misleading.
-
-When it replays another commit on HEAD, the new code does not read "HEAD"
-by hand into head anymore, but it still has the check between the index
-and "HEAD" and refuses to run if the index is dirty, which means the tree
-you get from write_cache_as_tree() is guaranteed to be the same as "HEAD",
-so this conversion looks correct.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index face333..3a0bda3 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -436,16 +436,19 @@ Each entry is a cons of (SHORT-NAME . FULL-NAME).=
+"
+     (git-get-string-sha1
+      (git-call-process-string-display-error "write-tree"))))
+=20
+-(defun git-commit-tree (buffer tree head)
+-  "Call git-commit-tree with buffer as input and return the resulting =
+commit SHA1."
++(defun git-commit-tree (buffer tree parent)
++  "Create a commit and possibly update HEAD.
++Create a commit with the message in BUFFER using the tree with hash TR=
+EE.
++Use PARENT as the parent of the new commit. If PARENT is the current \=
+"HEAD\",
++update the \"HEAD\" reference to the new commit."
+   (let ((author-name (git-get-committer-name))
+         (author-email (git-get-committer-email))
+         (subject "commit (initial): ")
+         author-date log-start log-end args coding-system-for-write)
+-    (when head
++    (when parent
+       (setq subject "commit: ")
+       (push "-p" args)
+-      (push head args))
++      (push parent args))
+     (with-current-buffer buffer
+       (goto-char (point-min))
+       (if
+@@ -481,7 +484,7 @@ Each entry is a cons of (SHORT-NAME . FULL-NAME)."
+               (apply #'git-run-command-region
+                      buffer log-start log-end env
+                      "commit-tree" tree (nreverse args))))))
+-      (when commit (git-update-ref "HEAD" commit head subject))
++      (when commit (git-update-ref "HEAD" commit parent subject))
+       commit)))
+=20
+ (defun git-empty-db-p ()
+--=20
+1.6.4.rc3.21.g3b9e
