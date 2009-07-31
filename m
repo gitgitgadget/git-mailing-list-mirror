@@ -1,139 +1,745 @@
-From: Mark A Rada <marada@uwaterloo.ca>
-Subject: [PATCHv3] Gitweb support for XZ compressed snapshots
-Date: Thu, 30 Jul 2009 22:43:01 -0400
-Message-ID: <A51E105D-8E32-4EDE-9D56-16BB88498D37@uwaterloo.ca>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 04:43:21 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] revert: libify pick
+Date: Fri, 31 Jul 2009 05:25:47 +0200
+Message-ID: <20090731032548.4169.16389.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 05:44:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWi5Z-0005rv-4d
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 04:43:21 +0200
+	id 1MWj2a-0002aF-10
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 05:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbZGaCnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 22:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbZGaCnK
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 22:43:10 -0400
-Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:57848 "EHLO
-	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751268AbZGaCnK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Jul 2009 22:43:10 -0400
-Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
-	(authenticated bits=0)
-	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n6V2h6HE027714
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Thu, 30 Jul 2009 22:43:09 -0400 (EDT)
-X-Mailer: Apple Mail (2.935.3)
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Thu, 30 Jul 2009 22:43:09 -0400 (EDT)
-X-Miltered: at mailchk-w04 with ID 4A725A3A.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.2 at minos
-X-Virus-Status: Clean
-X-UUID: d1b0296f-a36c-466c-bc14-2d11d5a05b0b
+	id S1752525AbZGaDng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 23:43:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbZGaDng
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 23:43:36 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:57164 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752403AbZGaDnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 23:43:35 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 471D48180B8;
+	Fri, 31 Jul 2009 05:43:25 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A7F078180B5;
+	Fri, 31 Jul 2009 05:43:22 +0200 (CEST)
+X-git-sha1: 4c6c4e074a23b874a773e2a750a1a6be87a1f2b5 
+X-Mailer: git-mail-commits v0.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124500>
 
-Fix'd
+From: Stephan Beyer <s-beyer@gmx.net>
 
+This commit is made of code from the sequencer GSoC project:
 
---
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
+git://repo.or.cz/git/sbeyer.git
 
+(commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
 
------>8-------
-From: Mark Rada <marada@uwaterloo.ca>
-Date: Thu, 30 Jul 2009 08:56:42 -0400
-Subject: [PATCH] Gitweb support for XZ compressed snapshots
+The goal of this commit is to abstract out pick functionnality
+into a new pick() function made of code from "builtin-revert.c".
 
-The XZ compression format uses the LZMA compression algorithm, which
-generally is capable of yielding higher compression ratios than both
-GZip and BZip2 at the cost of using more CPU time and RAM (lots more).
-It is relevant to note that while LZMA is the slowest of the mentioned
-algorithms for compression, it is much faster than BZip2 for
-decompression (but still slower than GZip).
+The new pick() function is in a new "pick.c" file with an
+associated "pick.h".
 
-You can enable XZ compressed snapshots by adding 'txz' to the list of
-default options for snapshots in $GITWEB_CONFIG or adding txz to an
-individual repository using the gitweb.snapshot variable for the config
-file.
+"pick.h" and "pick.c" are strictly the same as on the sequencer repo,
+but a few changes were needed on "builtin-revert.c" to keep it up to
+date with changes on git.git.
 
-I did some simple benchmarks, starting with an already tarballed
-archive of the repos listed below. Memory usage seemed to be consistent
-for any given algorithm. All tests done at default compression level.
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 
-CPU: AMD Sempron 3400+ (1 core @ 1.8GHz with 256K L2 cache)
-
-			Virtual Memory
-			GZip: 	 4152K
-			BZip2: 	13352K
-			XZ: 	  102M
-
-Linux 2.6 series (f5886c7f96f2542382d3a983c5f13e03d7fc5259) 	349M
-gzip 	23.70s user    	0.47s system  	99% cpu  24.227 total 	76M
-gunzip 	3.74s user     	0.74s system  	94% cpu  4.741 total
-bzip2 	130.96s user   	0.53s system  	99% cpu  2:11.97 total 	59M
-bunzip2 31.05s user    	1.02s system  	99% cpu  32.355 total
-xz 	448.78s user 	0.91s system  	99% cpu  7:31.28 total 	51M
-unxz 	7.67s user     	0.80s system  	98% cpu  8.607 total
-
-Git (0a53e9ddeaddad63ad106860237bbf53411d11a7) 			11M
-gzip 	0.77s user 	0.03s system 	99% cpu  0.792 total 	2.5M
-gunzip 	0.12s user 	0.02s system 	98% cpu  0.142 total
-bzip2 	3.42s user 	0.02s system 	99% cpu  3.454 total 	2.1M
-bunzip2 0.95s user 	0.03s system 	99% cpu  0.984 total
-xz 	12.88s user 	0.14s system 	98% cpu  13.239 total 	1.9M
-unxz 	0.27s user 	0.03s system 	99% cpu  0.298 total
-
-XZ (669413bb2db954bbfde3c4542fddbbab53891eb4) 			1.8M
-xz 	1.62s user 	0.03s system 	99% cpu  1.652 total 	442K
-unxz   	0.05s user 	0.00s system 	99% cpu  0.058 total
-bzip2  	1.28s user 	0.01s system 	99% cpu  1.298 total 	363K
-bunzip2 0.15s user 	0.01s system 	100% cpu 0.157 total
-gzip  	0.12s user 	0.00s system 	95% cpu  0.132 total 	347K
-gunzip 	0.02s user 	0.00s system 	97% cpu  0.027 total
-
-I don't think it should be the default format, at least not right now,
-simply because the XZ format is still fairly new (the format was
-declared stable about 6 months ago), and there have been no "stable"
-releases of the utils yet.
-
-Signed-off-by: Mark Rada <marada@uwaterloo.ca>
 ---
-  gitweb/gitweb.perl |    8 ++++++++
-  1 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7fbd5ff..3398163 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -176,6 +176,13 @@ our %known_snapshot_formats = (
-  		'format' => 'tar',
-  		'compressor' => ['bzip2']},
+	This patch is part of trying to port git-rebase--interactive.sh
+	to C using code from the sequencer GSoC project. But maybe it can
+	be seen as a clean up too.
 
-+	'txz' => {
-+		'display' => 'tar.xz',
-+		'type' => 'application/x-xz',
-+		'suffix' => '.tar.xz',
-+		'format' => 'tar',
-+		'compressor' => ['xz']},
+ Makefile         |    2 +
+ builtin-revert.c |  272 +++++++++---------------------------------------------
+ pick.c           |  229 +++++++++++++++++++++++++++++++++++++++++++++
+ pick.h           |   13 +++
+ 4 files changed, 288 insertions(+), 228 deletions(-)
+ create mode 100644 pick.c
+ create mode 100644 pick.h
+
+diff --git a/Makefile b/Makefile
+index 0adc0cc..478be29 100644
+--- a/Makefile
++++ b/Makefile
+@@ -435,6 +435,7 @@ LIB_H += pack-refs.h
+ LIB_H += pack-revindex.h
+ LIB_H += parse-options.h
+ LIB_H += patch-ids.h
++LIB_H += pick.h
+ LIB_H += pkt-line.h
+ LIB_H += progress.h
+ LIB_H += quote.h
+@@ -524,6 +525,7 @@ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
+ LIB_OBJS += path.o
++LIB_OBJS += pick.o
+ LIB_OBJS += pkt-line.o
+ LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 151aa6a..6dd29a3 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -1,18 +1,14 @@
+ #include "cache.h"
+ #include "builtin.h"
+-#include "object.h"
+ #include "commit.h"
+ #include "tag.h"
+-#include "wt-status.h"
+-#include "run-command.h"
+ #include "exec_cmd.h"
+ #include "utf8.h"
+ #include "parse-options.h"
+-#include "cache-tree.h"
+ #include "diff.h"
+ #include "revision.h"
+ #include "rerere.h"
+-#include "merge-recursive.h"
++#include "pick.h"
+ 
+ /*
+  * This implements the builtins revert and cherry-pick.
+@@ -35,25 +31,23 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
+ 
+-static int edit, no_replay, no_commit, mainline, signoff;
+-static enum { REVERT, CHERRY_PICK } action;
++static int edit, no_commit, mainline, signoff;
++static int flags;
+ static struct commit *commit;
+ 
+-static const char *me;
+-
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+ static void parse_args(int argc, const char **argv)
+ {
+ 	const char * const * usage_str =
+-		action == REVERT ?  revert_usage : cherry_pick_usage;
++		flags & PICK_REVERSE ? revert_usage : cherry_pick_usage;
+ 	unsigned char sha1[20];
+ 	const char *arg;
+ 	int noop;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
+ 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
+-		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
++		OPT_BIT('x', NULL, &flags, "append commit name when cherry-picking", PICK_ADD_NOTE),
+ 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
+ 		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
+ 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
+@@ -77,42 +71,12 @@ static void parse_args(int argc, const char **argv)
+ 		die ("'%s' does not point to a commit", arg);
+ }
+ 
+-static char *get_oneline(const char *message)
+-{
+-	char *result;
+-	const char *p = message, *abbrev, *eol;
+-	int abbrev_len, oneline_len;
+-
+-	if (!p)
+-		die ("Could not read commit message of %s",
+-				sha1_to_hex(commit->object.sha1));
+-	while (*p && (*p != '\n' || p[1] != '\n'))
+-		p++;
+-
+-	if (*p) {
+-		p += 2;
+-		for (eol = p + 1; *eol && *eol != '\n'; eol++)
+-			; /* do nothing */
+-	} else
+-		eol = p;
+-	abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
+-	abbrev_len = strlen(abbrev);
+-	oneline_len = eol - p;
+-	result = xmalloc(abbrev_len + 5 + oneline_len);
+-	memcpy(result, abbrev, abbrev_len);
+-	memcpy(result + abbrev_len, "... ", 4);
+-	memcpy(result + abbrev_len + 4, p, oneline_len);
+-	result[abbrev_len + 4 + oneline_len] = '\0';
+-	return result;
+-}
+-
+ static char *get_encoding(const char *message)
+ {
+ 	const char *p = message, *eol;
+ 
+ 	if (!p)
+-		die ("Could not read commit message of %s",
+-				sha1_to_hex(commit->object.sha1));
++		return NULL;
+ 	while (*p && *p != '\n') {
+ 		for (eol = p + 1; *eol && *eol != '\n'; eol++)
+ 			; /* do nothing */
+@@ -128,30 +92,6 @@ static char *get_encoding(const char *message)
+ 	return NULL;
+ }
+ 
+-static struct lock_file msg_file;
+-static int msg_fd;
+-
+-static void add_to_msg(const char *string)
+-{
+-	int len = strlen(string);
+-	if (write_in_full(msg_fd, string, len) < 0)
+-		die_errno ("Could not write to MERGE_MSG");
+-}
+-
+-static void add_message_to_msg(const char *message)
+-{
+-	const char *p = message;
+-	while (*p && (*p != '\n' || p[1] != '\n'))
+-		p++;
+-
+-	if (!*p)
+-		add_to_msg(sha1_to_hex(commit->object.sha1));
+-
+-	p += 2;
+-	add_to_msg(p);
+-	return;
+-}
+-
+ static void set_author_ident_env(const char *message)
+ {
+ 	const char *p = message;
+@@ -214,7 +154,7 @@ static char *help_msg(const unsigned char *sha1)
+ 	       "mark the corrected paths with 'git add <paths>' "
+ 	       "or 'git rm <paths>' and commit the result.");
+ 
+-	if (action == CHERRY_PICK) {
++	if (!(flags & PICK_REVERSE)) {
+ 		sprintf(helpbuf + strlen(helpbuf),
+ 			"\nWhen commiting, use the option "
+ 			"'-c %s' to retain authorship and message.",
+@@ -223,187 +163,68 @@ static char *help_msg(const unsigned char *sha1)
+ 	return helpbuf;
+ }
+ 
+-static struct tree *empty_tree(void)
++static void write_message(struct strbuf *msgbuf, const char *filename)
+ {
+-	struct tree *tree = xcalloc(1, sizeof(struct tree));
+-
+-	tree->object.parsed = 1;
+-	tree->object.type = OBJ_TREE;
+-	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
+-	return tree;
++	struct lock_file msg_file;
++	int msg_fd;
++	msg_fd = hold_lock_file_for_update(&msg_file, filename,
++					   LOCK_DIE_ON_ERROR);
++	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
++		die_errno("Could not write to %s.", filename);
++	strbuf_release(msgbuf);
++	if (commit_lock_file(&msg_file) < 0)
++		die("Error wrapping up %s", filename);
+ }
+ 
+ static int revert_or_cherry_pick(int argc, const char **argv)
+ {
+-	unsigned char head[20];
+-	struct commit *base, *next, *parent;
+-	int i, index_fd, clean;
+-	char *oneline, *reencoded_message = NULL;
+-	const char *message, *encoding;
+-	char *defmsg = git_pathdup("MERGE_MSG");
+-	struct merge_options o;
+-	struct tree *result, *next_tree, *base_tree, *head_tree;
+-	static struct lock_file index_lock;
++	const char *me;
++	struct strbuf msgbuf;
++	char *reencoded_message = NULL;
++	const char *encoding;
++	int failed;
+ 
+ 	git_config(git_default_config, NULL);
+-	me = action == REVERT ? "revert" : "cherry-pick";
++	me = flags & PICK_REVERSE ? "revert" : "cherry-pick";
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+ 	parse_args(argc, argv);
+ 
+-	/* this is copied from the shell script, but it's never triggered... */
+-	if (action == REVERT && !no_replay)
+-		die("revert is incompatible with replay");
+-
+ 	if (read_cache() < 0)
+ 		die("git %s: failed to read the index", me);
+-	if (no_commit) {
+-		/*
+-		 * We do not intend to commit immediately.  We just want to
+-		 * merge the differences in, so let's compute the tree
+-		 * that represents the "current" state for merge-recursive
+-		 * to work on.
+-		 */
+-		if (write_cache_as_tree(head, 0, NULL))
+-			die ("Your index file is unmerged.");
+-	} else {
+-		if (get_sha1("HEAD", head))
+-			die ("You do not have a valid HEAD");
+-		if (index_differs_from("HEAD", 0))
+-			die ("Dirty index: cannot %s", me);
+-	}
+-	discard_cache();
+-
+-	index_fd = hold_locked_index(&index_lock, 1);
++	if (!no_commit && index_differs_from("HEAD", 0))
++		die ("Dirty index: cannot %s", me);
+ 
+-	if (!commit->parents) {
+-		if (action == REVERT)
+-			die ("Cannot revert a root commit");
+-		parent = NULL;
+-	}
+-	else if (commit->parents->next) {
+-		/* Reverting or cherry-picking a merge commit */
+-		int cnt;
+-		struct commit_list *p;
+-
+-		if (!mainline)
+-			die("Commit %s is a merge but no -m option was given.",
+-			    sha1_to_hex(commit->object.sha1));
+-
+-		for (cnt = 1, p = commit->parents;
+-		     cnt != mainline && p;
+-		     cnt++)
+-			p = p->next;
+-		if (cnt != mainline || !p)
+-			die("Commit %s does not have parent %d",
+-			    sha1_to_hex(commit->object.sha1), mainline);
+-		parent = p->item;
+-	} else if (0 < mainline)
+-		die("Mainline was specified but commit %s is not a merge.",
+-		    sha1_to_hex(commit->object.sha1));
+-	else
+-		parent = commit->parents->item;
+-
+-	if (!(message = commit->buffer))
+-		die ("Cannot get commit message for %s",
++	if (!commit->buffer)
++		return error("Cannot get commit message for %s",
+ 				sha1_to_hex(commit->object.sha1));
+-
+-	if (parent && parse_commit(parent) < 0)
+-		die("%s: cannot parse parent commit %s",
+-		    me, sha1_to_hex(parent->object.sha1));
+-
+-	/*
+-	 * "commit" is an existing commit.  We would want to apply
+-	 * the difference it introduces since its first parent "prev"
+-	 * on top of the current HEAD if we are cherry-pick.  Or the
+-	 * reverse of it if we are revert.
+-	 */
+-
+-	msg_fd = hold_lock_file_for_update(&msg_file, defmsg,
+-					   LOCK_DIE_ON_ERROR);
+-
+-	encoding = get_encoding(message);
++	encoding = get_encoding(commit->buffer);
+ 	if (!encoding)
+ 		encoding = "UTF-8";
+ 	if (!git_commit_encoding)
+ 		git_commit_encoding = "UTF-8";
+-	if ((reencoded_message = reencode_string(message,
++	if ((reencoded_message = reencode_string(commit->buffer,
+ 					git_commit_encoding, encoding)))
+-		message = reencoded_message;
+-
+-	oneline = get_oneline(message);
+-
+-	if (action == REVERT) {
+-		char *oneline_body = strchr(oneline, ' ');
++		commit->buffer = reencoded_message;
+ 
+-		base = commit;
+-		next = parent;
+-		add_to_msg("Revert \"");
+-		add_to_msg(oneline_body + 1);
+-		add_to_msg("\"\n\nThis reverts commit ");
+-		add_to_msg(sha1_to_hex(commit->object.sha1));
+-
+-		if (commit->parents->next) {
+-			add_to_msg(", reversing\nchanges made to ");
+-			add_to_msg(sha1_to_hex(parent->object.sha1));
+-		}
+-		add_to_msg(".\n");
+-	} else {
+-		base = parent;
+-		next = commit;
+-		set_author_ident_env(message);
+-		add_message_to_msg(message);
+-		if (no_replay) {
+-			add_to_msg("(cherry picked from commit ");
+-			add_to_msg(sha1_to_hex(commit->object.sha1));
+-			add_to_msg(")\n");
+-		}
+-	}
+-
+-	read_cache();
+-	init_merge_options(&o);
+-	o.branch1 = "HEAD";
+-	o.branch2 = oneline;
+-
+-	head_tree = parse_tree_indirect(head);
+-	next_tree = next ? next->tree : empty_tree();
+-	base_tree = base ? base->tree : empty_tree();
+-
+-	clean = merge_trees(&o,
+-			    head_tree,
+-			    next_tree, base_tree, &result);
+-
+-	if (active_cache_changed &&
+-	    (write_cache(index_fd, active_cache, active_nr) ||
+-	     commit_locked_index(&index_lock)))
+-		die("%s: Unable to write new index file", me);
+-	rollback_lock_file(&index_lock);
+-
+-	if (!clean) {
+-		add_to_msg("\nConflicts:\n\n");
+-		for (i = 0; i < active_nr;) {
+-			struct cache_entry *ce = active_cache[i++];
+-			if (ce_stage(ce)) {
+-				add_to_msg("\t");
+-				add_to_msg(ce->name);
+-				add_to_msg("\n");
+-				while (i < active_nr && !strcmp(ce->name,
+-						active_cache[i]->name))
+-					i++;
+-			}
+-		}
+-		if (commit_lock_file(&msg_file) < 0)
+-			die ("Error wrapping up %s", defmsg);
++	failed = pick(commit, mainline, flags, &msgbuf);
++	if (failed < 0) {
++		exit(1);
++	} else if (failed > 0) {
+ 		fprintf(stderr, "Automatic %s failed.%s\n",
+ 			me, help_msg(commit->object.sha1));
++		write_message(&msgbuf, git_path("MERGE_MSG"));
+ 		rerere();
+ 		exit(1);
+ 	}
+-	if (commit_lock_file(&msg_file) < 0)
+-		die ("Error wrapping up %s", defmsg);
++	if (!(flags & PICK_REVERSE))
++		set_author_ident_env(commit->buffer);
++	free(reencoded_message);
 +
-  	'zip' => {
-  		'display' => 'zip',
-  		'type' => 'application/x-zip',
-@@ -188,6 +195,7 @@ our %known_snapshot_formats = (
-  our %known_snapshot_format_aliases = (
-  	'gzip'  => 'tgz',
-  	'bzip2' => 'tbz2',
-+	'xz'    => 'txz',
-
-  	# backward compatibility: legacy gitweb config support
-  	'x-gzip' => undef, 'gz' => undef,
+ 	fprintf(stderr, "Finished one %s.\n", me);
+ 
++	write_message(&msgbuf, git_path("MERGE_MSG"));
++
+ 	/*
+-	 *
+ 	 * If we are cherry-pick, and if the merge did not result in
+ 	 * hand-editing, we will hit this commit and inherit the original
+ 	 * author date and name.
+@@ -421,14 +242,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			args[i++] = "-s";
+ 		if (!edit) {
+ 			args[i++] = "-F";
+-			args[i++] = defmsg;
++			args[i++] = git_path("MERGE_MSG");
+ 		}
+ 		args[i] = NULL;
+ 		return execv_git_cmd(args);
+ 	}
+-	free(reencoded_message);
+-	free(defmsg);
+-
+ 	return 0;
+ }
+ 
+@@ -436,14 +254,12 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ {
+ 	if (isatty(0))
+ 		edit = 1;
+-	no_replay = 1;
+-	action = REVERT;
++	flags = PICK_REVERSE | PICK_ADD_NOTE;
+ 	return revert_or_cherry_pick(argc, argv);
+ }
+ 
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+-	no_replay = 0;
+-	action = CHERRY_PICK;
++	flags = 0;
+ 	return revert_or_cherry_pick(argc, argv);
+ }
+diff --git a/pick.c b/pick.c
+new file mode 100644
+index 0000000..77c7169
+--- /dev/null
++++ b/pick.c
+@@ -0,0 +1,229 @@
++#include "cache.h"
++#include "commit.h"
++#include "run-command.h"
++#include "cache-tree.h"
++#include "pick.h"
++#include "merge-recursive.h"
++
++static struct commit *commit;
++
++static char *get_oneline(const char *message)
++{
++	char *result;
++	const char *p = message, *abbrev, *eol;
++	int abbrev_len, oneline_len;
++
++	if (!p)
++		return NULL;
++	while (*p && (*p != '\n' || p[1] != '\n'))
++		p++;
++
++	if (*p) {
++		p += 2;
++		for (eol = p + 1; *eol && *eol != '\n'; eol++)
++			; /* do nothing */
++	} else
++		eol = p;
++	abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
++	abbrev_len = strlen(abbrev);
++	oneline_len = eol - p;
++	result = xmalloc(abbrev_len + 5 + oneline_len);
++	memcpy(result, abbrev, abbrev_len);
++	memcpy(result + abbrev_len, "... ", 4);
++	memcpy(result + abbrev_len + 4, p, oneline_len);
++	result[abbrev_len + 4 + oneline_len] = '\0';
++	return result;
++}
++
++static void add_message_to_msg(struct strbuf *msg, const char *message)
++{
++	const char *p = message;
++	while (*p && (*p != '\n' || p[1] != '\n'))
++		p++;
++
++	if (!*p)
++		strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
++
++	p += 2;
++	strbuf_addstr(msg, p);
++	return;
++}
++
++static struct tree *empty_tree(void)
++{
++	struct tree *tree = xcalloc(1, sizeof(struct tree));
++
++	tree->object.parsed = 1;
++	tree->object.type = OBJ_TREE;
++	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
++	return tree;
++}
++
++/*
++ * Pick changes introduced by pick_commit into current working tree
++ * and index.
++ *
++ * Return 0 on success.
++ * Return negative value on error before picking,
++ * and a positive value after picking,
++ * and return 1 if and only if a conflict occurs but no other error.
++ */
++int pick(struct commit *pick_commit, int mainline, int flags,
++						struct strbuf *msg)
++{
++	unsigned char head[20];
++	struct commit *base, *next, *parent;
++	int i, index_fd, clean;
++	int ret = 0;
++	char *oneline;
++	const char *message;
++	struct merge_options o;
++	struct tree *result, *next_tree, *base_tree, *head_tree;
++	static struct lock_file index_lock;
++
++	strbuf_init(msg, 0);
++	commit = pick_commit;
++
++	if (flags & PICK_REVERSE) /* REVERSE implies ADD_NOTE */
++		flags |= PICK_ADD_NOTE;
++
++	/*
++	 * We do not intend to commit immediately.  We just want to
++	 * merge the differences in, so let's compute the tree
++	 * that represents the "current" state for merge-recursive
++	 * to work on.
++	 */
++	if (write_cache_as_tree(head, 0, NULL)) {
++		error("Your index file is unmerged.");
++		return -1;
++	}
++	discard_cache();
++
++	index_fd = hold_locked_index(&index_lock, 0);
++	if (index_fd < 0) {
++		error("Unable to create locked index: %s",
++						strerror(errno));
++		return -1;
++	}
++
++	if (!commit->parents) {
++		if (flags & PICK_REVERSE) {
++			error("Cannot revert a root commit");
++			return -1;
++		}
++		parent = NULL;
++	}
++	else if (commit->parents->next) {
++		/* Reverting or cherry-picking a merge commit */
++		int cnt;
++		struct commit_list *p;
++
++		if (!mainline) {
++			error("Commit %s is a merge but no mainline was given.",
++			    sha1_to_hex(commit->object.sha1));
++			return -1;
++		}
++
++		for (cnt = 1, p = commit->parents;
++		     cnt != mainline && p;
++		     cnt++)
++			p = p->next;
++		if (cnt != mainline || !p) {
++			error("Commit %s does not have parent %d",
++			    sha1_to_hex(commit->object.sha1), mainline);
++			return -1;
++		}
++		parent = p->item;
++	} else if (0 < mainline) {
++		error("Mainline was specified but commit %s is not a merge.",
++		    sha1_to_hex(commit->object.sha1));
++		return -1;
++	} else
++		parent = commit->parents->item;
++
++	if (!(message = commit->buffer)) {
++		error("Cannot get commit message for %s",
++				sha1_to_hex(commit->object.sha1));
++		return -1;
++	}
++
++	if (parent && parse_commit(parent) < 0) {
++		error("Cannot parse parent commit %s",
++		      sha1_to_hex(parent->object.sha1));
++		return -1;
++	}
++
++	oneline = get_oneline(message);
++
++	if (flags & PICK_REVERSE) {
++		char *oneline_body = strchr(oneline, ' ');
++
++		base = commit;
++		next = parent;
++		strbuf_addstr(msg, "Revert \"");
++		strbuf_addstr(msg, oneline_body + 1);
++		strbuf_addstr(msg, "\"\n\nThis reverts commit ");
++		strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
++
++		if (commit->parents->next) {
++			strbuf_addstr(msg, ", reversing\nchanges made to ");
++			strbuf_addstr(msg, sha1_to_hex(parent->object.sha1));
++		}
++		strbuf_addstr(msg, ".\n");
++	} else {
++		base = parent;
++		next = commit;
++		add_message_to_msg(msg, message);
++		if (flags & PICK_ADD_NOTE) {
++			strbuf_addstr(msg, "(cherry picked from commit ");
++			strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
++			strbuf_addstr(msg, ")\n");
++		}
++	}
++
++	read_cache();
++	init_merge_options(&o);
++	o.branch1 = "HEAD";
++	o.branch2 = oneline;
++
++	head_tree = parse_tree_indirect(head);
++	next_tree = next ? next->tree : empty_tree();
++	base_tree = base ? base->tree : empty_tree();
++
++	clean = merge_trees(&o,
++			    head_tree,
++			    next_tree, base_tree, &result);
++
++	if (active_cache_changed &&
++	    (write_cache(index_fd, active_cache, active_nr) ||
++	     commit_locked_index(&index_lock))) {
++		error("Unable to write new index file");
++		return 2;
++	}
++	rollback_lock_file(&index_lock);
++
++	if (!clean) {
++		strbuf_addstr(msg, "\nConflicts:\n\n");
++		for (i = 0; i < active_nr;) {
++			struct cache_entry *ce = active_cache[i++];
++			if (ce_stage(ce)) {
++				strbuf_addstr(msg, "\t");
++				strbuf_addstr(msg, ce->name);
++				strbuf_addstr(msg, "\n");
++				while (i < active_nr && !strcmp(ce->name,
++						active_cache[i]->name))
++					i++;
++			}
++		}
++		ret = 1;
++	}
++	free(oneline);
++
++	discard_cache();
++	if (read_cache() < 0) {
++		error("Cannot read the index");
++		return 2;
++	}
++
++	return ret;
++}
+diff --git a/pick.h b/pick.h
+new file mode 100644
+index 0000000..7eb0d3a
+--- /dev/null
++++ b/pick.h
+@@ -0,0 +1,13 @@
++#ifndef PICK_H
++#define PICK_H
++
++#include "commit.h"
++
++/* Pick flags: */
++#define PICK_REVERSE   1 /* pick the reverse changes ("revert") */
++#define PICK_ADD_NOTE  2 /* add note about original commit (unless conflict) */
++/* We don't need a PICK_QUIET. This is done by
++ *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
++extern int pick(struct commit *pick_commit, int mainline, int flags, struct strbuf *msg);
++
++#endif
 -- 
-1.6.4
+1.6.3.GIT
