@@ -1,690 +1,235 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv4] git apply: option to ignore whitespace differences
-Date: Fri, 31 Jul 2009 22:40:58 +0200
-Message-ID: <1249072858-21894-1-git-send-email-giuseppe.bilotta@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Git User's Survey 2009 partial summary, part 1 - announcing survey, participation
+Date: Fri, 31 Jul 2009 22:46:10 +0200
+Message-ID: <200907312246.12134.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 22:41:22 2009
+X-From: git-owner@vger.kernel.org Fri Jul 31 22:46:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWyum-00028d-LP
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 22:41:21 +0200
+	id 1MWyzl-00045c-R9
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 22:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752203AbZGaUlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 16:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZGaUlL
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 16:41:11 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:52999 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814AbZGaUlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 16:41:09 -0400
-Received: by fxm17 with SMTP id 17so1583708fxm.37
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 13:41:08 -0700 (PDT)
+	id S1752289AbZGaUqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 16:46:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752230AbZGaUqV
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 16:46:21 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:47394 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752031AbZGaUqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 16:46:21 -0400
+Received: by ewy10 with SMTP id 10so1794612ewy.37
+        for <git@vger.kernel.org>; Fri, 31 Jul 2009 13:46:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=TUKWXKpYApOxYn5ugBihkHd3gZTooA9LfcfY4YBuiL0=;
-        b=O1cnsHtKEqx5uQxl9gI2/FJ7b1VeAoJahuT+GzmVhytVWfFy2mVNUT4iq4xsOGqBQN
-         ALLcJm4Tchf1F0i1LGdPS4WLutIJz3PqVChSPz0plvVT3dAVt/XO9gjqJ/bK1fuXXh4r
-         YMTgZ7sLEfdr4CbYKHTfSeobIZb0NZZ+i/26M=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=jDwh7GJWs0+ubSIXurUBnxaGVWVdkUlbhQP/sLzJTiE=;
+        b=Z0LBU1dEsd+XuZ7S4b7v9DVymW5sAks4R36JWzWPD6R72Tv9KxVKqxISF2m4JNwVc1
+         /cPAcAVpAVm7Fpn0n7Qr+cHfGbWGKK2w6PxJQ7o/g1OGXkMvKxlbqzUVJnqAu8IA9Dqg
+         pjsCD32ggZKssRB6CUK+oq1ZJSPblSvgxfoNU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Dv93eivjmL3hqai/XRILMgrVs049NIZ5uzlG1bORVishQCrSkaygDOIxZQQ7mCC01r
-         tmm6u+GAqmDPPMDILIHvDBbnJ/69gKxBjL0/7nnWExY7ewcd+daP4rF848mmP82vCgdh
-         rXNU3E0+oPrl5XL28ep7O9CyFIbuyu2zrWpVc=
-Received: by 10.103.134.17 with SMTP id l17mr1740112mun.76.1249072868019;
-        Fri, 31 Jul 2009 13:41:08 -0700 (PDT)
-Received: from localhost (host-78-15-19-142.cust-adsl.tiscali.it [78.15.19.142])
-        by mx.google.com with ESMTPS id j10sm11654462mue.15.2009.07.31.13.41.06
+        h=from:to:subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=GxZjawXS0irjW6f/klijgQu5yPDfJj7im4wkv9i2nokn0TSj8u7X16bqooWxCm8ov7
+         hT0/NkdABsJHBXQ9FitdWAm/du5Nz5q9kh5pQzrjmep7YX0mJtDNaEQ6P43OtQDkacDx
+         gqWBC0hswCTRqSWlCMF3kxjfuTETUGHUTGKpM=
+Received: by 10.210.81.3 with SMTP id e3mr3693066ebb.12.1249073179944;
+        Fri, 31 Jul 2009 13:46:19 -0700 (PDT)
+Received: from ?192.168.1.13? (abvt17.neoplus.adsl.tpnet.pl [83.8.217.17])
+        by mx.google.com with ESMTPS id 5sm4272542eyh.16.2009.07.31.13.46.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Jul 2009 13:41:07 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.216.g15680.dirty
+        Fri, 31 Jul 2009 13:46:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124599>
 
-Introduce --ignore-whitespace / --ignore-space-change option and
-corresponding config apply.ignorewhitespace to ignore changes in
-whitespace of context lines while applying patches. The two names
-match the corresponding option resp. in 'patch' and 'git diff'.
+It was half a month since Git User's Survey 2009 was started (it was
+started on 15 July 2009), a quarter of duration time of the survey.
 
-'git am', 'git rebase' and the bash git completion are made aware of
-the option.
+So I think this is time for partial summary of Git User's Survey 2009.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
 
-Changes wrt the previous version:
- * the option has a dual name
- * the option management has a cleaner structure, allowing
-   an easier implementation of options such as
-   --ignore-space-at-eol or
-   --ignore-all-space
- * the documentation mentions that ignoring changes in whitespace
-   prevents context lines from being whitespace-fixed
+You can see summary of Git User's Survey 2009 responses (and make your
+own analysis) at the following URL:
 
- Documentation/config.txt               |    8 ++
- Documentation/git-am.txt               |    5 +-
- Documentation/git-apply.txt            |   13 +++
- Documentation/git-rebase.txt           |    3 +-
- builtin-apply.c                        |  172 ++++++++++++++++++++++++++++++--
- cache.h                                |    1 +
- contrib/completion/git-completion.bash |    3 +
- environment.c                          |    1 +
- git-am.sh                              |    4 +-
- git-rebase.sh                          |    3 +
- t/t4107-apply-ignore-whitespace.sh     |  149 +++++++++++++++++++++++++++
- 11 files changed, 352 insertions(+), 10 deletions(-)
- create mode 100755 t/t4107-apply-ignore-whitespace.sh
+  http://www.survs.com/shareResults?survey=2PIMZGU0&rndm=678J66QRA2
+  http://tinyurl.com/GitSurvey2009Analyze
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index c6f09f8..0b53cab 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -461,6 +461,14 @@ it will be treated as a shell command.  For example, defining
- executed from the top-level directory of a repository, which may
- not necessarily be the current directory.
- 
-+apply.ignorewhitespace::
-+	When set to 'change', tells 'git-apply' to ignore changes in
-+	whitespace, in the same way as the '--ignore-space-change'
-+	option.
-+	When set to one of: no, none, never, false tells 'git-apply' to
-+	respect all whitespace differences.
-+	See linkgit:git-apply[1].
-+
- apply.whitespace::
- 	Tells 'git-apply' how to handle whitespaces, in the same way
- 	as the '--whitespace' option. See linkgit:git-apply[1].
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 32e689b..fcacc94 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git am' [--signoff] [--keep] [--utf8 | --no-utf8]
- 	 [--3way] [--interactive] [--committer-date-is-author-date]
--	 [--ignore-date]
-+	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
- 	 [--reject] [-q | --quiet]
- 	 [<mbox> | <Maildir>...]
-@@ -65,6 +65,9 @@ default.   You can use `--no-utf8` to override this.
- 	it is supposed to apply to and we have those blobs
- 	available locally.
- 
-+--ignore-date::
-+--ignore-space-change::
-+--ignore-whitespace::
- --whitespace=<option>::
- -C<n>::
- -p<n>::
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 735374d..5ee8c91 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 	  [--apply] [--no-add] [--build-fake-ancestor=<file>] [-R | --reverse]
- 	  [--allow-binary-replacement | --binary] [--reject] [-z]
- 	  [-pNUM] [-CNUM] [--inaccurate-eof] [--recount] [--cached]
-+	  [--ignore-space-change | --ignore-whitespace ]
- 	  [--whitespace=<nowarn|warn|fix|error|error-all>]
- 	  [--exclude=PATH] [--include=PATH] [--directory=<root>]
- 	  [--verbose] [<patch>...]
-@@ -149,6 +150,14 @@ patch to each path is used.  A patch to a path that does not match any
- include/exclude pattern is used by default if there is no include pattern
- on the command line, and ignored if there is any include pattern.
- 
-+--ignore-space-change::
-+--ignore-whitespace::
-+	When applying a patch, ignore changes in whitespace in context
-+	lines if necessary.
-+	Context lines will preserve their whitespace, and they will not
-+	undergo whitespace fixing regardless of the value of the
-+	`--whitespace` option. New lines will still be fixed, though.
-+
- --whitespace=<action>::
- 	When applying a patch, detect a new or modified line that has
- 	whitespace errors.  What are considered whitespace errors is
-@@ -205,6 +214,10 @@ running `git apply --directory=modules/git-gui`.
- Configuration
- -------------
- 
-+apply.ignorewhitespace::
-+	Set to 'change' if you want changes in whitespace to be ignored by default.
-+	Set to one of: no, none, never, false if you want changes in
-+	whitespace to be significant.
- apply.whitespace::
- 	When no `--whitespace` flag is given from the command
- 	line, this configuration item is used as the default.
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index db1b71d..0aefc34 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -268,8 +268,9 @@ OPTIONS
- 	exit with the message "Current branch is up to date" in such a
- 	situation.
- 
-+--ignore-whitespace::
- --whitespace=<option>::
--	This flag is passed to the 'git-apply' program
-+	These flag are passed to the 'git-apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
- 	Incompatible with the --interactive option.
- 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 39dc96a..7ec5b8b 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -61,6 +61,13 @@ static enum ws_error_action {
- static int whitespace_error;
- static int squelch_whitespace_errors = 5;
- static int applied_after_fixing_ws;
-+
-+static enum ws_ignore {
-+	ignore_ws_none,
-+	ignore_ws_change,
-+} ws_ignore_action = ignore_ws_none;
-+
-+
- static const char *patch_input_file;
- static const char *root;
- static int root_len;
-@@ -97,6 +104,21 @@ static void parse_whitespace_option(const char *option)
- 	die("unrecognized whitespace option '%s'", option);
- }
- 
-+static void parse_ignorewhitespace_option(const char *option)
-+{
-+	if (!option || !strcmp(option, "no") ||
-+	    !strcmp(option, "false") || !strcmp(option, "never") ||
-+	    !strcmp(option, "none")) {
-+		ws_ignore_action = ignore_ws_none;
-+		return;
-+	}
-+	if (!strcmp(option, "change")) {
-+		ws_ignore_action = ignore_ws_change;
-+		return;
-+	}
-+	die("unrecognized whitespace ignore option '%s'", option);
-+}
-+
- static void set_default_whitespace_mode(const char *whitespace_option)
- {
- 	if (!whitespace_option && !apply_default_whitespace)
-@@ -214,6 +236,62 @@ static uint32_t hash_line(const char *cp, size_t len)
- 	return h;
- }
- 
-+/*
-+ * Compare lines s1 of length n1 and s2 of length n2, ignoring
-+ * whitespace difference. Returns 1 if they match, 0 otherwise
-+ */
-+static int fuzzy_matchlines(const char *s1, size_t n1,
-+			    const char *s2, size_t n2)
-+{
-+	const char *last1 = s1 + n1 - 1;
-+	const char *last2 = s2 + n2 - 1;
-+	int result = 0;
-+
-+	if (n1 < 0 || n2 < 0)
-+		return 0;
-+
-+	/* ignore line endings */
-+	while ((*last1 == '\r') || (*last1 == '\n'))
-+		last1--;
-+	while ((*last2 == '\r') || (*last2 == '\n'))
-+		last2--;
-+
-+	/* skip leading whitespace */
-+	while (isspace(*s1) && (s1 <= last1))
-+		s1++;
-+	while (isspace(*s2) && (s2 <= last2))
-+		s2++;
-+	/* early return if both lines are empty */
-+	if ((s1 > last1) && (s2 > last2))
-+		return 1;
-+	while (!result) {
-+		result = *s1++ - *s2++;
-+		/*
-+		 * Skip whitespace inside. We check for whitespace on
-+		 * both buffers because we don't want "a b" to match
-+		 * "ab"
-+		 */
-+		if (isspace(*s1) && isspace(*s2)) {
-+			while (isspace(*s1) && s1 <= last1)
-+				s1++;
-+			while (isspace(*s2) && s2 <= last2)
-+				s2++;
-+		}
-+		/*
-+		 * If we reached the end on one side only,
-+		 * lines don't match
-+		 */
-+		if (
-+		    ((s2 > last2) && (s1 <= last1)) ||
-+		    ((s1 > last1) && (s2 <= last2)))
-+			return 0;
-+		if ((s1 > last1) && (s2 > last2))
-+			break;
-+	}
-+
-+	return !result;
-+}
-+
- static void add_line_info(struct image *img, const char *bol, size_t len, unsigned flag)
- {
- 	ALLOC_GROW(img->line_allocated, img->nr + 1, img->alloc);
-@@ -1672,10 +1750,17 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
- 	}
- }
- 
-+/*
-+ * Update the preimage, and the common lines in postimage,
-+ * from buffer buf of length len. If postlen is 0 the postimage
-+ * is updated in place, otherwise it's updated on a new buffer
-+ * of length postlen
-+ */
-+
- static void update_pre_post_images(struct image *preimage,
- 				   struct image *postimage,
- 				   char *buf,
--				   size_t len)
-+				   size_t len, size_t postlen)
- {
- 	int i, ctx;
- 	char *new, *old, *fixed;
-@@ -1694,11 +1779,19 @@ static void update_pre_post_images(struct image *preimage,
- 	*preimage = fixed_preimage;
- 
- 	/*
--	 * Adjust the common context lines in postimage, in place.
--	 * This is possible because whitespace fixing does not make
--	 * the string grow.
-+	 * Adjust the common context lines in postimage. This can be
-+	 * done in-place when we are just doing whitespace fixing,
-+	 * which does not make the string grow, but needs a new buffer
-+	 * when ignoring whitespace causes the update, since in this case
-+	 * we could have e.g. tabs converted to multiple spaces.
-+	 * We trust the caller to tell us if the update can be done
-+	 * in place (postlen==0) or not.
- 	 */
--	new = old = postimage->buf;
-+	old = postimage->buf;
-+	if (postlen)
-+		new = postimage->buf = xmalloc(postlen);
-+	else
-+		new = old;
- 	fixed = preimage->buf;
- 	for (i = ctx = 0; i < postimage->nr; i++) {
- 		size_t len = postimage->line[i].len;
-@@ -1773,12 +1866,57 @@ static int match_fragment(struct image *img,
- 	    !memcmp(img->buf + try, preimage->buf, preimage->len))
- 		return 1;
- 
-+	/*
-+	 * No exact match. If we are ignoring whitespace, run a line-by-line
-+	 * fuzzy matching. We collect all the line length information because
-+	 * we need it to adjust whitespace if we match.
-+	 */
-+	if (ws_ignore_action == ignore_ws_change) {
-+		size_t imgoff = 0;
-+		size_t preoff = 0;
-+		size_t postlen = postimage->len;
-+		size_t imglen[preimage->nr];
-+		for (i = 0; i < preimage->nr; i++) {
-+			imglen[i] = img->line[try_lno+i].len;
-+			size_t prelen = preimage->line[i].len;
-+			if (!fuzzy_matchlines(
-+				img->buf + try + imgoff, imglen[i],
-+				preimage->buf + preoff, prelen))
-+				return 0;
-+			if (preimage->line[i].flag & LINE_COMMON)
-+				postlen += imglen[i] - prelen;
-+			imgoff += imglen[i];
-+			preoff += prelen;
-+		}
-+
-+		/*
-+		 * Ok, the preimage matches with whitespace fuzz. Update it and
-+		 * the common postimage lines to use the same whitespace as the
-+		 * target. imgoff now holds the true length of the target that
-+		 * matches the preimage, and we need to update the line lengths
-+		 * of the preimage to match the target ones.
-+		 */
-+		fixed_buf = xmalloc(imgoff);
-+		memcpy(fixed_buf, img->buf + try, imgoff);
-+		for (i = 0; i < preimage->nr; i++)
-+			preimage->line[i].len = imglen[i];
-+
-+		/*
-+		 * Update the preimage buffer and the postimage context lines.
-+		 */
-+		update_pre_post_images(preimage, postimage,
-+				fixed_buf, imgoff, postlen);
-+		return 1;
-+	}
-+
- 	if (ws_error_action != correct_ws_error)
- 		return 0;
- 
- 	/*
- 	 * The hunk does not apply byte-by-byte, but the hash says
--	 * it might with whitespace fuzz.
-+	 * it might with whitespace fuzz. We haven't been asked to
-+	 * ignore whitespace, we were asked to correct whitespace
-+	 * errors, so let's try matching after whitespace correction.
- 	 */
- 	fixed_buf = xmalloc(preimage->len + 1);
- 	buf = fixed_buf;
-@@ -1830,7 +1968,7 @@ static int match_fragment(struct image *img,
- 	 * hunk match.  Update the context lines in the postimage.
- 	 */
- 	update_pre_post_images(preimage, postimage,
--			       fixed_buf, buf - fixed_buf);
-+			       fixed_buf, buf - fixed_buf, 0);
- 	return 1;
- 
-  unmatch_exit:
-@@ -3272,6 +3410,8 @@ static int git_apply_config(const char *var, const char *value, void *cb)
- {
- 	if (!strcmp(var, "apply.whitespace"))
- 		return git_config_string(&apply_default_whitespace, var, value);
-+	else if (!strcmp(var, "apply.ignorewhitespace"))
-+		return git_config_string(&apply_default_ignorewhitespace, var, value);
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -3308,6 +3448,16 @@ static int option_parse_z(const struct option *opt,
- 	return 0;
- }
- 
-+static int option_parse_space_change(const struct option *opt,
-+			  const char *arg, int unset)
-+{
-+	if (unset)
-+		ws_ignore_action = ignore_ws_none;
-+	else
-+		ws_ignore_action = ignore_ws_change;
-+	return 0;
-+}
-+
- static int option_parse_whitespace(const struct option *opt,
- 				   const char *arg, int unset)
- {
-@@ -3384,6 +3534,12 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
- 		{ OPTION_CALLBACK, 0, "whitespace", &whitespace_option, "action",
- 			"detect new or modified lines that have whitespace errors",
- 			0, option_parse_whitespace },
-+		{ OPTION_CALLBACK, 0, "ignore-space-change", NULL, NULL,
-+			"ignore changes in whitespace when finding context",
-+			PARSE_OPT_NOARG, option_parse_space_change },
-+		{ OPTION_CALLBACK, 0, "ignore-whitespace", NULL, NULL,
-+			"ignore changes in whitespace when finding context",
-+			PARSE_OPT_NOARG, option_parse_space_change },
- 		OPT_BOOLEAN('R', "reverse", &apply_in_reverse,
- 			"apply the patch in reverse"),
- 		OPT_BOOLEAN(0, "unidiff-zero", &unidiff_zero,
-@@ -3408,6 +3564,8 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
- 	git_config(git_apply_config, NULL);
- 	if (apply_default_whitespace)
- 		parse_whitespace_option(apply_default_whitespace);
-+	if (apply_default_ignorewhitespace)
-+		parse_ignorewhitespace_option(apply_default_ignorewhitespace);
- 
- 	argc = parse_options(argc, argv, prefix, builtin_apply_options,
- 			apply_usage, 0);
-diff --git a/cache.h b/cache.h
-index 0bbcb1f..69efe1b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -509,6 +509,7 @@ extern int log_all_ref_updates;
- extern int warn_ambiguous_refs;
- extern int shared_repository;
- extern const char *apply_default_whitespace;
-+extern const char *apply_default_ignorewhitespace;
- extern int zlib_compression_level;
- extern int core_compression_level;
- extern int core_compression_seen;
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 5543dc4..bf688e1 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -674,6 +674,7 @@ _git_am ()
- 	--*)
- 		__gitcomp "
- 			--3way --committer-date-is-author-date --ignore-date
-+			--ignore-whitespace --ignore-space-change
- 			--interactive --keep --no-utf8 --signoff --utf8
- 			--whitespace=
- 			"
-@@ -695,6 +696,7 @@ _git_apply ()
- 			--stat --numstat --summary --check --index
- 			--cached --index-info --reverse --reject --unidiff-zero
- 			--apply --no-add --exclude=
-+			--ignore-whitespace --ignore-space-change
- 			--whitespace= --inaccurate-eof --verbose
- 			"
- 		return
-@@ -1537,6 +1539,7 @@ _git_config ()
- 	__gitcomp "
- 		add.ignore-errors
- 		alias.
-+		apply.ignorewhitespace
- 		apply.whitespace
- 		branch.autosetupmerge
- 		branch.autosetuprebase
-diff --git a/environment.c b/environment.c
-index 73bccf1..5de6837 100644
---- a/environment.c
-+++ b/environment.c
-@@ -26,6 +26,7 @@ const char *git_commit_encoding;
- const char *git_log_output_encoding;
- int shared_repository = PERM_UMASK;
- const char *apply_default_whitespace;
-+const char *apply_default_ignorewhitespace;
- int zlib_compression_level = Z_BEST_SPEED;
- int core_compression_level;
- int core_compression_seen;
-diff --git a/git-am.sh b/git-am.sh
-index d64d997..ab39b3c 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -16,6 +16,8 @@ s,signoff       add a Signed-off-by line to the commit message
- u,utf8          recode into utf8 (default)
- k,keep          pass -k flag to git-mailinfo
- whitespace=     pass it through git-apply
-+ignore-space-change pass it through git-apply
-+ignore-whitespace pass it through git-apply
- directory=      pass it through git-apply
- C=              pass it through git-apply
- p=              pass it through git-apply
-@@ -303,7 +305,7 @@ do
- 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
- 	--patch-format)
- 		shift ; patch_format="$1" ;;
--	--reject)
-+	--reject|--ignore-whitespace|--ignore-space-change)
- 		git_apply_opt="$git_apply_opt $1" ;;
- 	--committer-date-is-author-date)
- 		committer_date_is_author_date=t ;;
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 18bc694..d741752 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -333,6 +333,9 @@ do
- 			;;
- 		esac
- 		;;
-+	--ignore-whitespace)
-+		git_am_opt="$git_am_opt $1"
-+		;;
- 	--committer-date-is-author-date|--ignore-date)
- 		git_am_opt="$git_am_opt $1"
- 		force_rebase=t
-diff --git a/t/t4107-apply-ignore-whitespace.sh b/t/t4107-apply-ignore-whitespace.sh
-new file mode 100755
-index 0000000..8e3fce3
---- /dev/null
-+++ b/t/t4107-apply-ignore-whitespace.sh
-@@ -0,0 +1,149 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Giuseppe Bilotta
-+# Copyright (c) 2005 Junio C Hamano
-+# Copyright (c) 2005 Robert Fitzsimons
-+#
-+
-+test_description='git-apply --ignore-whitespace.
-+
-+'
-+. ./test-lib.sh
-+
-+# setup
-+
-+cat > patch1.patch <<\EOF
-+diff --git a/main.c b/main.c
-+new file mode 100644
-+--- /dev/null
-++++ b/main.c
-+@@ -0,0 +1,22 @@
-++#include <stdio.h>
-++
-++void print_int(int num);
-++int func(int num);
-++
-++int main() {
-++       int i;
-++
-++       for (i = 0; i < 10; i++) {
-++               print_int(func(i)); /* stuff */
-++       }
-++
-++       return 0;
-++}
-++
-++int func(int num) {
-++       return num * num;
-++}
-++
-++void print_int(int num) {
-++       printf("%d", num);
-++}
-+EOF
-+cat > patch2.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -10,6 +10,8 @@
-+ 		print_int(func(i)); /* stuff */
-+ 	}
-+ 
-++	printf("\n");
-++
-+ 	return 0;
-+ }
-+ 
-+EOF
-+
-+cat > patch3.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -10,1 +10,1 @@
-+ 		print_int(func(i)); 
-+EOF
-+
-+cat > patch4.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -21,1 +21,1 @@
-+ 	}; 
-+\ No newline at end of file
-+EOF
-+
-+cat > patch5.patch <<\EOF
-+diff --git a/main.c b/main.c
-+--- a/main.c
-++++ b/main.c
-+@@ -2,1 +2,1 @@
-+ 	void print_int(int num);
-+EOF
-+
-+cat > main.c.final <<\EOF
-+#include <stdio.h>
-+
-+void print_int(int num);
-+int func(int num);
-+
-+int main() {
-+       int i;
-+
-+       for (i = 0; i < 10; i++) {
-+               print_int(func(i)); /* stuff */
-+       }
-+
-+	printf("\n");
-+
-+       return 0;
-+}
-+
-+int func(int num) {
-+       return num * num;
-+}
-+
-+void print_int(int num) {
-+       printf("%d", num);
-+}
-+EOF
-+
-+test_expect_success "S = patch1" \
-+    'git-apply patch1.patch'
-+
-+test_expect_failure "F = patch2" \
-+    'git-apply patch2.patch'
-+
-+test_expect_success "S = patch2 (--ignore-whitespace)" \
-+    'git-apply --ignore-whitespace patch2.patch'
-+
-+test_expect_success "S = patch2 (-R --ignore-space-change)" \
-+    'git-apply -R --ignore-space-change patch2.patch'
-+
-+git config apply.ignorewhitespace change
-+
-+test_expect_success "S = patch2 (ignorewhitespace = change)" \
-+    'git-apply patch2.patch'
-+
-+test_expect_failure "F = patch3 (missing string at EOL)" \
-+    'git-apply patch3.patch'
-+
-+test_expect_failure "F = patch4 (missing EOL at EOF)" \
-+    'git-apply patch4.patch'
-+
-+test_expect_success "S = patch5 (leading whitespace)" \
-+    'git-apply patch5.patch'
-+
-+test_expect_success "S = main.c.final" \
-+    'diff -q main.c main.c.final'
-+
-+rm -f main.c
-+test_expect_success "S = patch1 (--ignore-whitespace)" \
-+    'git-apply patch1.patch'
-+
-+test_expect_failure "F = patch5 (leading whitespace)" \
-+    'git-apply --no-ignore-whitespace patch5.patch'
-+
-+test_done
-+
-+
+After the survey ends (or earlier, if it is requested) the raw data
+would be published on GitSurvey2009 page on Git Wiki in CSV and XLS
+formats (like for GitSurvey2008).
+
+
+We have currently (at the time I have checked this) around 2424
+responses, as compared to 3236 individual responses (including 21
+responses in 'test' channel) for survey in 2008, 683 individual
+responses in 2007, and around 117 responses in 2006.
+
+Those 3236 responses in 2008 were for around month and a half of
+duration of survey, as compared to 2424 in half a month (16 days) now.
+In 2008 after the first 3 days of [official] running we had 1045
+responses.  In 2009 first three days bring 564+126+134 = 824
+responses, but one should take into account the fact that announcement
+mechanism was slightly different, and that announcement on GitHub was
+delayed.  See also analysis of completion rate graph below, and its
+correlation with the dates of announcing it in different places.
+
+(Side note: perhaps it would be better to run Git User's Survey in
+different term, and not in summer in the middle of holidays?).
+
+There are three spikes on Completion Rate Graph - July 2009 ('Monthly'
+view):
+  Jul 15 | 564 respondents / day
+  Jul 21 | 696 respondents / day
+  Jul 27 | 152 respondents / day
+(note that there is/was bug in Survs.com that made dates in 'Monthly'
+view to be off by 1 day).  See below for analysis.
+
+  Total respondents:  2424
+  First response:     Jul 15, 2009
+  Last response:      Jul 31, 2009
+  Open during:        24 days
+  Average time:       36 minutes
+
+There were 12 responses in the channel that required no cookies, and
+was totally anonymous, at the cost of not being able to go back to
+one's responses to correct or complete it.
+
+This survey was announced at the following blogs (note that dates
+below for blog posts are in local timezone of blog, while Survs.com
+dates are in survey admin timezone, currently GMT+01:00):
+  July 14  | http://gitster.livejournal.com/36139.html
+  July 15  | http://blogs.gnome.org/newren/2009/07/15/git-users-survey-2009
+  July 15  | http://gitlog.wordpress.com/2009/07/15/git-users-survey-2009
+  July 17  | http://blog.gitorious.org/2009/07/17/the-git-users-survey
+  July 20* | http://github.com/blog/460-git-user-s-survey-2009
+
+And also on the following blogs I have just found via blogsearch:
+  July 17  | http://marilyn.frields.org:8080/~paul/wordpress/?p=2632
+  July 17  | http://markelikalderon.com/blog/2009/07/17/git-users-survey-2009/
+  July 27* | http://blog.hartwork.org/?p=451
+
+If you know of any blogs which posted announcement about the survey,
+but are not listed here, feel free to drop information about them
+(with link).
+
+As you can see the announcement on GitHub Blog (and via Twitter:
+http://twitter.com/github/status/2746745923) correlate with the second
+spike in responses, when we take difference in timezone into account.
+
+It looks like the announcement on Hartwork Blog, part of Planet
+Gentoo, was responsible for small spike in responses at 27 July.
+But it might have been cased by announcement arriving via other
+channel, see the table below.
+
+The announcement was posted (with slight delay) on git homepage
+(http://git-scm.com), and is present on "git ready" site with git tips
+(http://www.gitready.com).  
+
+The following git hosting sites have announced the survey:
+ * repo.or.cz
+ * git.kernel.org
+ * GitHub (via blog)
+ * Gitorious (via blog)
+
+The following git hosting sites promised to announce the survey:
+ * Assembla
+ * Unfuddle
+ * Codebase
+ * InDefero
+
+The announcement was added on http://wiki.debian.org/DeveloperNews
+wiki page, where it would be relayed to debian-devel-announce mailing
+list (hopefully before survey ends ;-)).
+
+I have sent request for Git User's Survey 2009 announcement also to
+Ohloh (software metric site), Perlbuzz (blog and Twitter) and LWN
+(Linux Weekly News), currently without response or results.
+
+Where should we send request for announcing Git User's Survey 2009?
+
+----
+Below there is analysis of single question from this survey;
+the question which is related to announcing survey (and participation).
+
+29) How did you hear about this Git User's Survey? 
+    (Choice - Single answer)
+
+===============================================================
+Source                                   | resp [%] | resp [n]
+---------------------------------------------------------------
+blog (or blog planet)                    |      29% |      653
+Twitter or other microblogging platform  |      14% |      310
+git hosting site[1]                      |      14% |      308
+git mailing list                         |      10% |      221
+git homepage[2]                          |       5% |      117
+mailing list or forum of some project[3] |       4% |       89
+news web site or social news site[4]     |       4% |       87
+software-related web site[5]             |       3% |       74
+announcement on IRC channel              |       2% |       39
+git wiki                                 |       2% |       38
+git-related mailing list[6]              |       2% |       34
+#git IRC channel topic[7]                |       1% |       21
+other kind of web site                   |       1% |       20
+.........................................|..........|..........
+other - please specify                   |      11% |      244
+-----------------------------------------+---------------------
+Total respondents                        |                2255
+Respondents who skipped this question    |                 169
+===============================================================
+
+Results are sorted in descending order of number of responses.  
+
+As you can see most popular channel was blog or blog planet.  Next
+are, with nearly the same number of votes (responses) are:
+microblogging platform such as Twitter, Plurk, Jaiku, identi.ca or
+Pownce, and announcement on git hosting site (note that some git
+hosting site post announcement/news via blogs).  Third in turn was git
+mailing list.
+
+Note that this year I didn't "spam" mailing lists for projects which
+use Git with announcement about Git User's Survey; nevertheless
+announcement on project mailing list or forum is in the middle
+(median) of announcement channels.
+
+The free-form answer "other (please specify)" haven't been yet
+analysed, but among others there are replies of 'reddit' and
+'ycombinator' (which belongs IMHO in "news web site or social news
+site" category), 'blog'/'planet xxx' (which belong to "blog (or blog
+planet)" category), differently phrased 'word of mouth' / 'colleague'
+category, 'instant messaging', [forwarded] [personal] email or
+corporate mailing list or wiki, gitready (which I forgot to put as
+possible option in the list), GitHub (which belong either to "blog" or
+"git hosting site" category... although as one of responder states
+"github, it is more than git hosting site" ;-)).
+
+Footnotes:
+----------
+[1] sites such as git.kernel.org, repo.or.cz, GitHub, Gitorious;
+    note that some git hosting sites use blogs to announce news
+[2] some responders have chosen this option _before_ there was
+    announcement posted on Git Homepage (http://git-scm.com) :-)
+[3] this time I didn't send announcement to mailing list of (some)
+    of projects using Git, with the sole exception of LKML (Linux)
+[4] sites such as Digg, Reddit, Hacker News (YCombinator), etc.
+[5] sites such as Ohloh or Freshmeat
+[6] "Git for Human Beings" Google Group, msysGit mailing list,
+    GitHub Google Group, Gitorious Google Group.
+[7] other IRC channels like #github and #gitorious also put 
+    announcement in the channel topic (channel description)
+
 -- 
-1.6.4.216.g15680.dirty
+Jakub Narebski
+Git User's Survey 2009: http://tinyurl.com/GitSurvey2009
