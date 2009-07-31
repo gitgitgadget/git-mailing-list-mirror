@@ -1,91 +1,99 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCHv3] git apply: option to ignore whitespace differences
-Date: Fri, 31 Jul 2009 00:27:37 +0000
-Message-ID: <94a0d4530907301727h171a2581ybee2a5b2d77e7c05@mail.gmail.com>
-References: <1248814820-25367-1-git-send-email-giuseppe.bilotta@gmail.com>
-	 <7vljm84htf.fsf@alter.siamese.dyndns.org>
-	 <cb7bb73a0907282333g26efd1d8y7d913fba8a426aa5@mail.gmail.com>
-	 <20090729174000.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix typos on pt_BR/gittutorial.txt translation
+Date: Thu, 30 Jul 2009 17:35:40 -0700
+Message-ID: <7vocr1665f.fsf@alter.siamese.dyndns.org>
+References: <b8bf37780907292044i5ad7b879ueb5048447e4e5bb5@mail.gmail.com>
+ <20090730145044.GA1727@vespa.holoscopio.com>
+ <4A71C6A7.80008@drmicha.warpmail.net>
+ <7viqhaar7v.fsf@alter.siamese.dyndns.org>
+ <b8bf37780907301551w4cdc7e96m137aa188ce1a0a8c@mail.gmail.com>
+ <20090730231911.GI1727@vespa.holoscopio.com>
+ <7vtz0t7mnw.fsf@alter.siamese.dyndns.org>
+ <20090731000808.GO1727@vespa.holoscopio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 02:27:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?Q?Andr=C3=A9?= Goddard Rosa <andre.goddard@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Carlos R. Mafra" <crmafra2@gmail.com>
+To: Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
+X-From: git-owner@vger.kernel.org Fri Jul 31 02:36:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWfyV-0004TG-UY
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:27:56 +0200
+	id 1MWg6J-0006fJ-TX
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbZGaA1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 20:27:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751240AbZGaA1i
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:27:38 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:5435 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178AbZGaA1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 20:27:37 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so524397fga.17
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 17:27:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K9Q2iQ4XnVRr4JwvoimKCpL0Co+Cy0yuJXJfoff8kQs=;
-        b=LmCVgEPKOmxzAodR9HJbsPTk9RuGw+7/K4wDyFgj3ObGK25Ey18HVo+qJut9N0XhrM
-         AhOntKpdmzEMEBabqVZICK2bdVO7RHMH3bchOFlzsGkKn5FdzKAvxhjQx7kj9sFPzQDN
-         QrwNG7q/wYaRnEJS1xSXeAQ52ll5rW0/JW6b0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MW2f7dIWEKvANab+IwDyc2HhD01P2oIJhAD5KXzr3mN0ZccjAvTzfAELMyk2NVEGkk
-         UOZm3qXf7IDPAAIeZC1CLWA0K7S/X9RQNXtJKmnRHMfPguw05sAjtB2agsr4Iw8z/J4x
-         nID+ai5L5F4kZfmIa88V/xcSeMzYbDyJ/HS2c=
-Received: by 10.86.92.13 with SMTP id p13mr644967fgb.43.1249000057325; Thu, 30 
-	Jul 2009 17:27:37 -0700 (PDT)
-In-Reply-To: <20090729174000.6117@nanako3.lavabit.com>
+	id S1751817AbZGaAft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 20:35:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbZGaAft
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:35:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41018 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240AbZGaAft (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 20:35:49 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3345F171A8;
+	Thu, 30 Jul 2009 20:35:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EFF46171A3; Thu, 30 Jul 2009
+ 20:35:41 -0400 (EDT)
+In-Reply-To: <20090731000808.GO1727@vespa.holoscopio.com> (Thadeu Lima de
+ Souza Cascardo's message of "Thu\, 30 Jul 2009 21\:08\:09 -0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 181583C8-7D6A-11DE-8ABD-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124493>
 
-On Wed, Jul 29, 2009 at 8:40 AM, Nanako Shiraishi<nanako3@lavabit.com> wrote:
-> Quoting Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->
->>> Perhaps --ignore-space-change, to be consistent with a "git diff" option,
->>> would be more appropriate. Doing so has an added benefit of leaving the
->>> door open to add --ignore-all-space option to the patch application side
->>> later.
+Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com> writes:
+
+> On Thu, Jul 30, 2009 at 04:53:39PM -0700, Junio C Hamano wrote:
+>> Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com> writes:
+>> 
+>> > I'd rather remove the linux example and use something else (like git
+>> > itself), since the Documentation is not about linux, as Juno says and
+>> > that would stop the disagreements.
 >>
->> On the other hand, --ignore-whitespace matches the option name (and
->> behavior) of the 'patch' command (just like "git diff"'s matches the
->> 'diff' option name and behavior). Principle of least surprise says
->> that someone coming to git from raw diff/patch setups would expect
->> --ignore-whitespace on the patch side.
+>> That is unacceptable, _if_ you are adding a _translated_ version of our
+>> primary documentation.
 >
-> Not everybody shares your diff/patch background.
->
-> I wouldn't be surprised if git were the first system they ever learn for
-> majority of users of version control systems in this century, especially
-> because now there are many books written on it.
+> I can't agree more. In that view, would you agree to remove any mention
+> to linux in the primary version?
 
-That's not relevant, "white space" is an already used concept.
+You must be kidding.
 
-Google:
-ignore space change: 17,300,000
-ignore white space: 181,000,000
+If the situation were that the word "Linux kernel" cannot be translated
+correctly to many languages, it may make good sense to use a more commonly
+known example in the original (and translated) text.  But as far as I can
+tell from this thread so far, Portuguese speakers in the tech field would
+understand which project you are referring to when you say either "kernel
+do linux" or "o kernel linux" just fine.  Avoiding the "Linux kernel"
+example only because you have some language lawyering tendency feels just
+plain silly.
 
-> Isn't it more important for git to be internally consistent across its
-> commands for such an audience to satisfy the principle of least surprise?
+First of all, I never said anything about "stopping the disagreements".
 
-Perhaps, but you are forgetting the option to change the current
-commands' arguments.
+You can do your disagreement with other people in Portuguese speaking
+community all you want.  I only asked you to do your disagreeing with them
+in _other forums_.  Do it in your blog, in your own Linux tutorial or git
+documentation, or whatever.  I really do not care, and I do not want to
+get involved.
 
--- 
-Felipe Contreras
+But not in our documentation, whose original uses the Linux kernel as an
+example, simply because that's the original proeject git came from.
+
+Pick whichever word you feel is the most appropriate translation, and send
+in an update (or a pull request), and let's get this round of typofixes
+over with in the first place.  I do not care if that version said "kernel
+do linux" or "o kernel linux".
+
+If enough people care deeply about one way or another like you seem to do,
+they can send in further updates and I may (or may not) pick it up to
+reverse whatever choice you make in that version.  But that will be in a
+later round.  Let's not let this block other noncontroversial and
+obviously correct updates, Ok?
