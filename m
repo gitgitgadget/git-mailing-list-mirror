@@ -1,95 +1,114 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH] gitweb: fix 'Use of uninitialized value' error in href()
-Date: Fri, 31 Jul 2009 08:48:49 +0200
-Message-ID: <1249022929-21037-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <200907310824.42953.jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@suse.cz>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 31 08:48:37 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] revert: libify pick
+Date: Fri, 31 Jul 2009 00:15:19 -0700
+Message-ID: <7v8wi52uig.fsf@alter.siamese.dyndns.org>
+References: <20090731032548.4169.16389.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jul 31 09:15:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWluv-0005ps-B7
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 08:48:37 +0200
+	id 1MWmLJ-0006eH-UX
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 09:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752623AbZGaGsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 02:48:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbZGaGsT
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 02:48:19 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:43830 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752504AbZGaGsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 02:48:04 -0400
-Received: by bwz19 with SMTP id 19so1022299bwz.37
-        for <git@vger.kernel.org>; Thu, 30 Jul 2009 23:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=h+hfLdIcR+ID7/tCH4qQpIwJVXFOe7TiiC1M6E1xymg=;
-        b=T4nYdTWXDVQZmbs8cxvTsIpKMQWIkOL3n9Dzp8cVdM1iA0/sASiabsxPWQlJ3tlthb
-         tVjLPWRMfmdopB7HejZLZ7v4yX4Vx457rS4TXWN4BlEUQ62ZYpG1O/GZLj5m3aML+OYt
-         mLJSp5OirZQzYr2cEy3KhISFY70reXit2YPHQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ajTvIEFIdiq2UDdOo2Mhl/V0w4F2b6nisFuj0TV9ByVlZ4wLi3Ca/1lRoPTeSQmGvT
-         6FCscaRSmWDteb1L/TmfpdgGvsqhBfgKwHe8CTYi8ia5HSQoUKbTKCGGQNCl+GIkFiv2
-         3hY0HY/64bxizIYX1qJ066/S30mRBjAVM0Wh4=
-Received: by 10.204.53.72 with SMTP id l8mr1578825bkg.171.1249022883216;
-        Thu, 30 Jul 2009 23:48:03 -0700 (PDT)
-Received: from localhost (host-78-15-19-142.cust-adsl.tiscali.it [78.15.19.142])
-        by mx.google.com with ESMTPS id 18sm2506559fks.40.2009.07.30.23.48.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Jul 2009 23:48:02 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.rc1.192.gdbfcb
-In-Reply-To: <200907310824.42953.jnareb@gmail.com>
+	id S1752840AbZGaHPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 03:15:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752585AbZGaHP3
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 03:15:29 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:40814 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752551AbZGaHP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Jul 2009 03:15:28 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 408A61ABE9;
+	Fri, 31 Jul 2009 03:15:28 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 20E4C1ABE8; Fri,
+ 31 Jul 2009 03:15:21 -0400 (EDT)
+In-Reply-To: <20090731032548.4169.16389.chriscool@tuxfamily.org> (Christian
+ Couder's message of "Fri\, 31 Jul 2009 05\:25\:47 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: ECBA1E72-7DA1-11DE-87AB-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124508>
 
-Equality between file_parent and file_name was being checked without a
-preliminary check for existence of the parameters.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Fix by wrapping the equality check in appropriate if (defined ...),
-rearranging the lines to prevent excessive length.
+> From: Stephan Beyer <s-beyer@gmx.net>
+>
+> This commit is made of code from the sequencer GSoC project:
+>
+> git://repo.or.cz/git/sbeyer.git
+>
+> (commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
+>
+> The goal of this commit is to abstract out pick functionnality
+> into a new pick() function made of code from "builtin-revert.c".
+>
+> The new pick() function is in a new "pick.c" file with an
+> associated "pick.h".
+>
+> "pick.h" and "pick.c" are strictly the same as on the sequencer repo,
+> but a few changes were needed on "builtin-revert.c" to keep it up to
+> date with changes on git.git.
+>
+> Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+>
+> ---
+>
+> 	This patch is part of trying to port git-rebase--interactive.sh
+> 	to C using code from the sequencer GSoC project. But maybe it can
+> 	be seen as a clean up too.
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- gitweb/gitweb.perl |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+Thanks.  Why doesn't this have Stephan's sign-off?
 
-The funny thing is that I seem to get the error for something as simple
-as a commit view (_any_ commit view, for the matter), but I wasn't able
-to reproduce it from the shell, which is why I'm not adding a testcase.
+The new "pick.c" file seems to be a nicer implementation of the main logic
+of builtin-revert.c and its primary niceness comes from the use of strbuf.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7fbd5ff..37120a3 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -940,10 +940,13 @@ sub href {
- 			if (defined $params{'hash_parent_base'}) {
- 				$href .= esc_url($params{'hash_parent_base'});
- 				# skip the file_parent if it's the same as the file_name
--				delete $params{'file_parent'} if $params{'file_parent'} eq $params{'file_name'};
--				if (defined $params{'file_parent'} && $params{'file_parent'} !~ /\.\./) {
--					$href .= ":/".esc_url($params{'file_parent'});
--					delete $params{'file_parent'};
-+				if (defined $params{'file_parent'}) {
-+					if (defined $params{'file_name'} && $params{'file_parent'} eq $params{'file_name'}) {
-+						delete $params{'file_parent'};
-+					} elsif ($params{'file_parent'} !~ /\.\./) {
-+						$href .= ":/".esc_url($params{'file_parent'});
-+						delete $params{'file_parent'};
-+					}
- 				}
- 				$href .= "..";
- 				delete $params{'hash_parent'};
--- 
-1.6.3.rc1.192.gdbfcb
+A few minor points and comments.
+
+ * error() returns -1.
+
+        error("message");     =>        return error("message");
+        return -1;
+
+ * pick() might be a bit too short and abstract name for a generic library
+   function.
+
+ * REVERSE is made to imply ADD_NOTE but the codepath that acts on
+   ADD_NOTE never seems to be reached if REVERSE is set.
+
+The intent of pick() funtion looks like it starts from the current index
+(not HEAD), and allow the effect of one commit replayed (either forward or
+backward) to that state, leaving the result in the index.
+
+You do not have to start from a commit, so you can replay many commits to
+the index in sequence without commiting in between to squash multiple
+steps if you wanted to.  I think that makes sense as a nice general
+interface.
+
+The "if (no_commit)" codepath in the original code did things very
+differently from the usual "start from HEAD and replay the effect"
+codepath and it warranted the big "We do not intend to commit immediately"
+comment.  For pick() function, however, the "start from index" is the
+normal and only mode of operation.  Keeping the big comment is misleading.
+
+When it replays another commit on HEAD, the new code does not read "HEAD"
+by hand into head anymore, but it still has the check between the index
+and "HEAD" and refuses to run if the index is dirty, which means the tree
+you get from write_cache_as_tree() is guaranteed to be the same as "HEAD",
+so this conversion looks correct.
