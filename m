@@ -1,99 +1,181 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix typos on pt_BR/gittutorial.txt translation
-Date: Thu, 30 Jul 2009 17:35:40 -0700
-Message-ID: <7vocr1665f.fsf@alter.siamese.dyndns.org>
-References: <b8bf37780907292044i5ad7b879ueb5048447e4e5bb5@mail.gmail.com>
- <20090730145044.GA1727@vespa.holoscopio.com>
- <4A71C6A7.80008@drmicha.warpmail.net>
- <7viqhaar7v.fsf@alter.siamese.dyndns.org>
- <b8bf37780907301551w4cdc7e96m137aa188ce1a0a8c@mail.gmail.com>
- <20090730231911.GI1727@vespa.holoscopio.com>
- <7vtz0t7mnw.fsf@alter.siamese.dyndns.org>
- <20090731000808.GO1727@vespa.holoscopio.com>
+Subject: [PATCH] merge-recursive: don't segfault while handling rename
+ clashes
+Date: Thu, 30 Jul 2009 17:38:15 -0700
+Message-ID: <7vd47h6614.fsf@alter.siamese.dyndns.org>
+References: <D5F958F92101F74D8A5683C2FE14F4200F23102F@post.corp.w3data.com>
+ <C695A6A4.61CD9%jbenjore@whitepages.com>
+ <7vtz0uk5z3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Andr=C3=A9?= Goddard Rosa <andre.goddard@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Carlos R. Mafra" <crmafra2@gmail.com>
-To: Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
-X-From: git-owner@vger.kernel.org Fri Jul 31 02:36:02 2009
+Cc: Josh ben Jore <jbenjore@whitepages.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 31 02:38:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MWg6J-0006fJ-TX
-	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:36:00 +0200
+	id 1MWg8l-0007OU-Af
+	for gcvg-git-2@gmane.org; Fri, 31 Jul 2009 02:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbZGaAft (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Jul 2009 20:35:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbZGaAft
-	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:35:49 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41018 "EHLO
+	id S1752140AbZGaAiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Jul 2009 20:38:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751747AbZGaAiW
+	(ORCPT <rfc822;git-outgoing>); Thu, 30 Jul 2009 20:38:22 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45824 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240AbZGaAft (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Jul 2009 20:35:49 -0400
+	with ESMTP id S1751240AbZGaAiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Jul 2009 20:38:22 -0400
 Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3345F171A8;
-	Thu, 30 Jul 2009 20:35:49 -0400 (EDT)
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id DAF5B1A638;
+	Thu, 30 Jul 2009 20:38:21 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EFF46171A3; Thu, 30 Jul 2009
- 20:35:41 -0400 (EDT)
-In-Reply-To: <20090731000808.GO1727@vespa.holoscopio.com> (Thadeu Lima de
- Souza Cascardo's message of "Thu\, 30 Jul 2009 21\:08\:09 -0300")
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id C86A91A636; Thu,
+ 30 Jul 2009 20:38:16 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 181583C8-7D6A-11DE-8ABD-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 731B2CDC-7D6A-11DE-8C4B-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124494>
 
-Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com> writes:
+When a branch moves A to B while the other branch created B (or moved C to
+B), the code tried to rename one of them to B~something to preserve both
+versions, and failed to register temporary resolution for the original
+path B at stage#0 during virtual ancestor computation.  This left the
+index in unmerged state and caused a segfault.
 
-> On Thu, Jul 30, 2009 at 04:53:39PM -0700, Junio C Hamano wrote:
->> Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com> writes:
->> 
->> > I'd rather remove the linux example and use something else (like git
->> > itself), since the Documentation is not about linux, as Juno says and
->> > that would stop the disagreements.
->>
->> That is unacceptable, _if_ you are adding a _translated_ version of our
->> primary documentation.
->
-> I can't agree more. In that view, would you agree to remove any mention
-> to linux in the primary version?
+A better solution is to merge these two versions of B's in place and use
+the (potentially conflicting) result as the intermediate merge result in
+the virtual ancestor.
 
-You must be kidding.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-If the situation were that the word "Linux kernel" cannot be translated
-correctly to many languages, it may make good sense to use a more commonly
-known example in the original (and translated) text.  But as far as I can
-tell from this thread so far, Portuguese speakers in the tech field would
-understand which project you are referring to when you say either "kernel
-do linux" or "o kernel linux" just fine.  Avoiding the "Linux kernel"
-example only because you have some language lawyering tendency feels just
-plain silly.
+ Junio C Hamano <gitster@pobox.com> writes:
 
-First of all, I never said anything about "stopping the disagreements".
+ > The codepath saw that one branch renamed dev-ubuntu/ stuff to dev/ at that
+ > "unmerged" path, while the other branch added something else to the same
+ > path, and decided to add that at an alternative path, and the intent of
+ > that is so that it can safely resolve the "renamed" side to its final
+ > destination.  The added update_file() call is about finishing that
+ > conflict resolution the code forgets to do.
+ > ...
 
-You can do your disagreement with other people in Portuguese speaking
-community all you want.  I only asked you to do your disagreeing with them
-in _other forums_.  Do it in your blog, in your own Linux tutorial or git
-documentation, or whatever.  I really do not care, and I do not want to
-get involved.
+ Yesterday's patch squashes the conflicted path down to stage#0 even for
+ outermost merge, which is not quite correct.
 
-But not in our documentation, whose original uses the Linux kernel as an
-example, simply because that's the original proeject git came from.
+ This may be a better fix.
 
-Pick whichever word you feel is the most appropriate translation, and send
-in an update (or a pull request), and let's get this round of typofixes
-over with in the first place.  I do not care if that version said "kernel
-do linux" or "o kernel linux".
+ merge-recursive.c                 |   28 ++++++++++++++++--
+ t/t6036-recursive-corner-cases.sh |   56 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+), 3 deletions(-)
+ create mode 100755 t/t6036-recursive-corner-cases.sh
 
-If enough people care deeply about one way or another like you seem to do,
-they can send in further updates and I may (or may not) pick it up to
-reverse whatever choice you make in that version.  But that will be in a
-later round.  Let's not let this block other noncontroversial and
-obviously correct updates, Ok?
+diff --git a/merge-recursive.c b/merge-recursive.c
+index d415c41..10d7913 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -952,9 +952,31 @@ static int process_renames(struct merge_options *o,
+ 				       "%s added in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       ren1_dst, branch2);
+-				new_path = unique_path(o, ren1_dst, branch2);
+-				output(o, 1, "Adding as %s instead", new_path);
+-				update_file(o, 0, dst_other.sha1, dst_other.mode, new_path);
++				if (o->call_depth) {
++					struct merge_file_info mfi;
++					struct diff_filespec one, a, b;
++
++					one.path = a.path = b.path =
++						(char *)ren1_dst;
++					hashcpy(one.sha1, null_sha1);
++					one.mode = 0;
++					hashcpy(a.sha1, ren1->pair->two->sha1);
++					a.mode = ren1->pair->two->mode;
++					hashcpy(b.sha1, dst_other.sha1);
++					b.mode = dst_other.mode;
++					mfi = merge_file(o, &one, &a, &b,
++							 branch1,
++							 branch2);
++					output(o, 1, "Adding merged %s", ren1_dst);
++					update_file(o, 0,
++						    mfi.sha,
++						    mfi.mode,
++						    ren1_dst);
++				} else {
++					new_path = unique_path(o, ren1_dst, branch2);
++					output(o, 1, "Adding as %s instead", new_path);
++					update_file(o, 0, dst_other.sha1, dst_other.mode, new_path);
++				}
+ 			} else if ((item = string_list_lookup(ren1_dst, renames2Dst))) {
+ 				ren2 = item->util;
+ 				clean_merge = 0;
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
+new file mode 100755
+index 0000000..a9d1613
+--- /dev/null
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='recursive merge corner cases'
++
++. ./test-lib.sh
++
++#
++#  L1  L2
++#   o---o
++#  / \ / \
++# o   X   ?
++#  \ / \ /
++#   o---o
++#  R1  R2
++#
++
++test_expect_success setup '
++	ten="0 1 2 3 4 5 6 7 8 9"
++	for i in $ten
++	do
++		echo line $i in a sample file
++	done >one &&
++	for i in $ten
++	do
++		echo line $i in another sample file
++	done >two &&
++	git add one two &&
++	test_tick && git commit -m initial &&
++
++	git branch L1 &&
++	git checkout -b R1 &&
++	git mv one three &&
++	test_tick && git commit -m R1 &&
++
++	git checkout L1 &&
++	git mv two three &&
++	test_tick && git commit -m L1 &&
++
++	git checkout L1^0 &&
++	test_tick && git merge -s ours R1 &&
++	git tag L2 &&
++
++	git checkout R1^0 &&
++	test_tick && git merge -s ours L1 &&
++	git tag R2
++'
++
++test_expect_success merge '
++	git reset --hard &&
++	git checkout L2^0 &&
++
++	test_must_fail git merge -s recursive R2^0
++'
++
++test_done
++
+-- 
+1.6.4.13.ge65800
