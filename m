@@ -1,71 +1,69 @@
-From: Phil Lawrence <prlawrence@gmail.com>
-Subject: interactive rebase of binary files?
-Date: Fri, 31 Jul 2009 22:58:58 -0500
-Message-ID: <530ac78e0907312058i1fbc3685qad060d5c01f5b8ac@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: interactive rebase of binary files?
+Date: Sat, 1 Aug 2009 01:15:59 -0400
+Message-ID: <20090801051559.GA26580@sigill.intra.peff.net>
+References: <530ac78e0907312058i1fbc3685qad060d5c01f5b8ac@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 01 05:59:19 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Phil Lawrence <prlawrence@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 07:16:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MX5kc-0003ga-HB
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 05:59:19 +0200
+	id 1MX6x3-0004Lm-3O
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 07:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbZHAD67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 23:58:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbZHAD67
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 23:58:59 -0400
-Received: from mail-yw0-f183.google.com ([209.85.211.183]:65112 "EHLO
-	mail-yw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbZHAD66 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 23:58:58 -0400
-Received: by ywh13 with SMTP id 13so2381148ywh.15
-        for <git@vger.kernel.org>; Fri, 31 Jul 2009 20:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=YSKlDj7bHYK7tL14UM21f3QOMnTORJHi431l512+0FU=;
-        b=V65MwyHVdVZ2E0SV8g+t9Ln8cqSxJawOLbP0uiTljDyXYxkaIipX6XF0mVi6tK3enb
-         hHqcodjGTQPa7gCsurxG5SupNX0WNicDCs5Uj7/FS3+87+Q3I/pPvXi395FCbb/8qXbT
-         vlOSjLSO7GDgvEGFA4Jdb72T/0OsJUDhCLtKk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=lx5CiM0Yl1qtV2LEiodY5Nwymajam+heLX+JnSvtPmgRSzj69CrpBY5PQqd0dxzFkA
-         YT6sxYB4Y/D4WzGGeiV7bHghNCWipZI/CoY8Cxv8zeRkBJ03TRtypESJPBEYctFLNw5n
-         SJHY9oyJUGoBOlqB8O/ppa/GB8a7fROOR/lAo=
-Received: by 10.231.13.141 with SMTP id c13mr863163iba.56.1249099138247; Fri, 
-	31 Jul 2009 20:58:58 -0700 (PDT)
+	id S1751521AbZHAFQC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2009 01:16:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751428AbZHAFQC
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 01:16:02 -0400
+Received: from peff.net ([208.65.91.99]:56449 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751252AbZHAFQB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 01:16:01 -0400
+Received: (qmail 9867 invoked by uid 107); 1 Aug 2009 05:18:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 01 Aug 2009 01:18:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Aug 2009 01:15:59 -0400
+Content-Disposition: inline
+In-Reply-To: <530ac78e0907312058i1fbc3685qad060d5c01f5b8ac@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124607>
 
-With the help of some friends, I now have an understanding of how to
-tease interleaved commits out of a branch (dev, branched from master),
-into two new branches (foo and bar, branched from dev):
+On Fri, Jul 31, 2009 at 10:58:58PM -0500, Phil Lawrence wrote:
 
-git checkout dev
-git checkout -b foo
-git rebase -i master   #rebase everything SINCE master
-etc., repeat for bar...
+> However, there is a problem with binary files.  For example, if I
+> specify "edit" in the git-rebase-todo list for one of the binary file
+> commits, only one version of the binary file is presented to me in the
+> working copy.  If it were a text file, I'd expect to see the standard
+> conflict stuff within the one file.  I'd edit and save that one file.
+> However, in the case of binary files, should I not see binary_file.a
+> and binary_file.b both in the working copy, so that I can compare and
+> pick a winner (or edit one of them into a winner)?
+> 
+> More likely, my expectations are due to my ignorance, and someone can
+> point me to the "git" way of doing this.  Please?
 
-However, there is a problem with binary files.  For example, if I
-specify "edit" in the git-rebase-todo list for one of the binary file
-commits, only one version of the binary file is presented to me in the
-working copy.  If it were a text file, I'd expect to see the standard
-conflict stuff within the one file.  I'd edit and save that one file.
-However, in the case of binary files, should I not see binary_file.a
-and binary_file.b both in the working copy, so that I can compare and
-pick a winner (or edit one of them into a winner)?
+During a merge conflict, the index stages are populated with the various
+versions of the file you are looking for. The simplest way to access
+them is probably:
 
-More likely, my expectations are due to my ignorance, and someone can
-point me to the "git" way of doing this.  Please?
+  $ git show :1:$filename ;# the common ancestor
+  $ git show :2:$filename ;# upstream version
+  $ git show :3:$filename ;# version from rebasing branch
 
-Phil Lawrence
+It's a bit tricky to find in the documentation, though. You have to
+first realize that git-rebase is basically trying to do a merge behind
+the scenes, and then find the "how to resolve conflicts" section of "git
+help merge". And then realize that the usual "ours" and "theirs" stages
+of 2 and 3 are reversed, since you are really merging your work onto the
+upstream branch. So probably there is room to improve the documentation,
+but I'm not sure of the best way.
+
+-Peff
