@@ -1,83 +1,84 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: How to embed a hash, tag or branch name?
-Date: Sat, 01 Aug 2009 14:38:13 +0200
-Message-ID: <4A743735.9020806@dirk.my1.cc>
-References: <20090731081723.GE29909@nalle> <m3ljm5ryar.fsf@localhost.localdomain> <20090731095238.GG29909@nalle>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [GITK PATCH] gitk: fix direction of --left-right triangles
+Date: Sat, 1 Aug 2009 14:47:47 +0200
+Message-ID: <0fd5fc0f09779bb04c02b54d6ec8f43087a51bca.1249130587.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Mikko Rapeli <mikko.rapeli@iki.fi>
-X-From: git-owner@vger.kernel.org Sat Aug 01 14:42:14 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
+	<git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Aug 01 14:48:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXDue-0003PJ-Un
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 14:42:13 +0200
+	id 1MXE0Q-0005fe-Fj
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 14:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbZHAMmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2009 08:42:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751403AbZHAMmE
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 08:42:04 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:41519 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367AbZHAMmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2009 08:42:03 -0400
-Received: from [84.176.93.19] (helo=[192.168.2.100])
-	by smtprelay04.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1MXDpa-0002Ci-8P; Sat, 01 Aug 2009 14:36:58 +0200
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-In-Reply-To: <20090731095238.GG29909@nalle>
-X-Df-Sender: 757646
+	id S1751501AbZHAMr6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 08:47:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751490AbZHAMr6
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 08:47:58 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:22521 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751332AbZHAMr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 08:47:58 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 1 Aug
+ 2009 14:47:56 +0200
+Received: from localhost.localdomain (129.132.210.111) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 1 Aug
+ 2009 14:47:54 +0200
+X-Mailer: git-send-email 1.6.4.239.gc2c75
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124620>
 
-Am 31.07.2009 11:52 schrieb Mikko Rapeli:
-> On Fri, Jul 31, 2009 at 02:27:50AM -0700, Jakub Narebski wrote:
->> You can embed SHA-1 of a _file contents_ (blob) using '$Id: $' keyword
->> with `ident` attribute - see gitattributes manpage.
-> 
-> Great, thanks!
-> 
->> The correct solution of embedding version number is to do it at 
->> _build time_, using e.g. script similar to GIT-VERSION-GEN used by
->> Git itself and by Linux kernel.  It helps if you tag your releases.
-> 
+c961b22 (gitk: Use git log and add support for --left-right,
+2007-07-09) introduced --left-right support to gitk, but right from
+the start, 'gitk --left-right A...B' oriented the triangles the wrong
+way: commits coming from A had a triangle to the right, and vice
+versa.  To fix this, we simply swap the triangles.  (Note that git-log
+does it right.)
 
-Hi Mikko,
+Noticed-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-I don't know whether you want to use the "ident" command on your final
-binary. With Git, that's pointless, as all source files will have the
-same $Id$. So it's perfectly sufficient to have only ONE file enriched
-with Git's SHA1.
+Sorry for the double mail, I forgot to Cc the list in the first mail.
 
-Suggestion: During build time, compile (and link in) a file (e.g.
-version.c) with "-DVERSION=\"$(git describe)\"". My version.c looks like
-this:
+ gitk |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-----------------------------------
-char const * version()
-{
-     return VERSION;
-}
-----------------------------------
-
-The function then returns sth. like "foo12004-26-gc6c9273", which means
-that you're 26 commits ahead of the annotated tag "foo12004" and your
-commit has SHA1 "c6c9273". Then make your application somehow return
-that version string when asked (or deliver a version.txt together with
-it). This way you know that your binary was built using commit
-"c6c9273". You can further refine the VERSION by adding a "-dirty" if
-the working tree was dirty at build time. Then you'll know that your
-binary was based on c6c9273 "with some changes".
-
-Make sure that version.c is the ONLY file that compiles with that
--DVERSION switch. Otherwise all files get re-compiled when $(git
-describe) changes. That's not what you want.
-
-     HTH, Dirk
+diff --git a/gitk b/gitk
+index 4604c83..5be2a76 100755
+--- a/gitk
++++ b/gitk
+@@ -5689,16 +5689,16 @@ proc drawcmittext {id row col} {
+     } elseif {$listed =3D=3D 3} {
+ 	# triangle pointing left for left-side commits
+ 	set t [$canv create polygon \
+-		   [expr {$x - $orad}] $y \
+-		   [expr {$x + $orad - 1}] [expr {$y - $orad}] \
+-		   [expr {$x + $orad - 1}] [expr {$y + $orad - 1}] \
++		   [expr {$x + $orad - 1}] $y \
++		   [expr {$x - $orad}] [expr {$y - $orad}] \
++		   [expr {$x - $orad}] [expr {$y + $orad - 1}] \
+ 		   -fill $ofill -outline $fgcolor -width 1 -tags circle]
+     } else {
+ 	# triangle pointing right for right-side commits
+ 	set t [$canv create polygon \
+-		   [expr {$x + $orad - 1}] $y \
+-		   [expr {$x - $orad}] [expr {$y - $orad}] \
+-		   [expr {$x - $orad}] [expr {$y + $orad - 1}] \
++		   [expr {$x - $orad}] $y \
++		   [expr {$x + $orad - 1}] [expr {$y - $orad}] \
++		   [expr {$x + $orad - 1}] [expr {$y + $orad - 1}] \
+ 		   -fill $ofill -outline $fgcolor -width 1 -tags circle]
+     }
+     set circleitem($row) $t
+--=20
+1.6.4.214.gb5b94
