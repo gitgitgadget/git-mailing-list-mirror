@@ -1,192 +1,508 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: [PATCHv5] Add Gitweb support for XZ compressed snapshots
-Date: Fri, 31 Jul 2009 17:47:03 -0700
-Message-ID: <4A739087.1090301@eaglescrag.net>
-References: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC] First draft of 256-tree structure for storing notes
+Date: Sat, 01 Aug 2009 04:36:57 +0200
+Message-ID: <200908010436.57480.johan@herland.net>
+References: <1248834326-31488-1-git-send-email-johan@herland.net>
+ <alpine.DEB.1.00.0907291842360.7626@intel-tinevez-2-302>
+ <200907300218.40203.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark A Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Sat Aug 01 02:47:07 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch,
+	tavestbo@trolltech.com, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org, spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Aug 01 04:37:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MX2kc-0002pS-QD
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 02:47:07 +0200
+	id 1MX4TR-000214-Ey
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 04:37:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212AbZHAAq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Jul 2009 20:46:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752088AbZHAAq6
-	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 20:46:58 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:40614 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751924AbZHAAq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Jul 2009 20:46:57 -0400
-Received: from [172.19.0.11] (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n710kp8E004526
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 31 Jul 2009 17:46:51 -0700
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-In-Reply-To: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca>
-X-Virus-Scanned: ClamAV 0.88.7/9640/Fri Jul 31 10:06:23 2009 on shards.monkeyblade.net
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Fri, 31 Jul 2009 17:46:51 -0700 (PDT)
+	id S1751160AbZHAChG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Jul 2009 22:37:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750945AbZHAChF
+	(ORCPT <rfc822;git-outgoing>); Fri, 31 Jul 2009 22:37:05 -0400
+Received: from mx.getmail.no ([84.208.15.66]:33628 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750859AbZHAChD (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Jul 2009 22:37:03 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KNO00878F9OVH60@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 01 Aug 2009 04:37:00 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KNO00CUKF9LNB10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 01 Aug 2009 04:37:00 +0200 (MEST)
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
+ Antispam-Data: 2009.8.1.22416
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <200907300218.40203.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124604>
 
-Mark A Rada wrote:
-> 
->  >Note that for me the above results are not aligned in table.
->  >This is a cosmetic issue.
-> 
-> The table formatting issue was due to a bad habit of mixing tabs and 
-> spaces,
-> I decided to go with spaces this time :)
-> 
-> 
->  >One thing that would concern me greatly, is not so much the CPU time 
-> (though that's a *huge* change in comparison to gz) but the memory 
-> usage.  Where gzip and bzip2 are chewing 4M and 13M respectively, xz 
-> chews 102M.  >From a 'beefy' server perspective chewing up that much 
-> memory per snapshot for that long could be bad.  This is likely 
-> something that needs to have some sort of enable/disable switch if it's 
-> going to be included.
-> 
-> True, and there are two solutions I can think of for this "problem".
-> 
->     1. My tests were at the default compression level, the XZ documentation
->     says that at lower levels you will get resource usage and compression
->     ratios that are comparable to BZip2. However, I'm not sure where you
->     would change the compression level variable for this (globally for the
->     system, somewhere in $GITWEB_CONFIG, a git config variable). Does
->     someone know the correct answer here?
+This patch stores note entries and unexpanded fanout subtree entries in a
+customized 256-tree structure.
 
-Well you can always call xz with -[1-9] to change the compression level 
-(same as gzip and bzip2) though I think a full disabling would be 'more' 
-preferable, though I'm not sure I like Jakub's suggestion of just 
-deleting it after the fact, it would work.
+Initial performance numbers are encouraging:
 
->     2. Implement snapshot caching for Gitweb.
+$ ./test_performance.sh
+Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 0...
+14.92user 4.84system 0:20.39elapsed 96%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+2164780minor)pagefaults 0swaps
 
-I think it's slightly broken in my version (binary files don't work 
-right apparently, it's on my todo list to fix in my upcoming update) but 
-both Lea and I have done this long ago (caching layers in Gitweb), which 
-would be an acceptable workaround for this, create once and serve many - 
-though this has the downside of trading cpu for diskspace.  At least 
-with xz there's less diskspace used ;-)
+Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 1...
+0.71user 0.32system 0:01.06elapsed 97%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+154090minor)pagefaults 0swaps
 
-I think more my concern is more what's enabled by default, and since xz 
-is still new (as was pointed out) it's probably worth only enabling if 
-the admin selects it to be enabled.
+Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 2...
+0.44user 0.18system 0:00.63elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+94183minor)pagefaults 0swaps
 
-- John 'Warthog9' Hawley
+This is pretty much twice as fast as the existing version (which uses a hash map
+for notes, and a linked list for unexpanded fanout subtrees).
+
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+
+Hi,
+
+Just a quick update before I leave for a week of vacation (with spotty
+Internet access, at best).
+
+I've been thinking about various data structures for the notes code for
+the last couple of days, and here is a quick first draft of the idea that
+I found most promising: Storing both notes and unexpanded subtrees as leaf
+nodes in a customized 256-tree structure. The initial performance numbers
+look very promising (~twice as fast as the previous implementation at
+fanout levels 0 and 1), and there are still probably several optimization
+that can be done (an obvious example is reducing malloc pressure by
+memory pooling leaf_node objects).
+
+AFAICS, this implementation is semantically equivalent the previous code
+(longer prefixes are preferred, no merging of notes, multiple/nested
+fanout levels are allowed, etc.).
 
 
-> -- 
-> Mark A Rada (ferrous26)
-> marada@uwaterloo.ca
-> 
-> 
-> From: Mark Rada <marada@uwaterloo.ca>
-> Date: Thu, 30 Jul 2009 08:56:42 -0400
-> Subject: [PATCH] Add Gitweb support for XZ compressed snapshots
-> 
-> The XZ compression format uses the LZMA2 compression algorithm, which
-> often yields higher compression ratios than both GZip and BZip2 at the
-> cost of using more CPU time and RAM. Though, while XZ is the slowest
-> for compression, it is much faster than BZip2 for decompression, almost
-> comparable to GZip (see benchmarks below).
-> 
-> You can enable XZ compressed snapshots by adding 'txz' to the list of
-> default options for snapshots in your $GITWEB_CONFIG.
-> 
-> I did some simple benchmarks, starting with an already tarballed
-> archive of the repos listed below. Memory usage seemed to be consistent
-> for any given algorithm at their default compression level. Timings were
-> gathered using the `time' command.
-> 
-> CPU: AMD Sempron 3400+ (1 core @ 1.8GHz with 256K L2 cache)
-> Virtual Memory Usage
->     GZip: 4152K    BZip2: 13352K    XZ: 102M
-> 
-> Linux 2.6 series (f5886c7f96f2542382d3a983c5f13e03d7fc5259)   349M
-> gzip    23.70s user   0.47s system  99% cpu   24.227 total    76M
-> gunzip  3.74s user    0.74s system  94% cpu   4.741 total
-> bzip2   130.96s user  0.53s system  99% cpu   2:11.97 total   59M
-> bunzip2 31.05s user   1.02s system  99% cpu   32.355 total
-> xz      448.78s user  0.91s system  99% cpu   7:31.28 total   51M
-> unxz    7.67s user    0.80s system  98% cpu   8.607 total
-> 
-> Git (0a53e9ddeaddad63ad106860237bbf53411d11a7)                11M
-> gzip    0.77s user    0.03s system  99% cpu   0.792 total     2.5M
-> gunzip  0.12s user    0.02s system  98% cpu   0.142 total
-> bzip2   3.42s user    0.02s system  99% cpu   3.454 total     2.1M
-> bunzip2 0.95s user    0.03s system  99% cpu   0.984 total
-> xz      12.88s user   0.14s system  98% cpu   13.239 total    1.9M
-> unxz    0.27s user    0.03s system  99% cpu   0.298 total
-> 
-> XZ (669413bb2db954bbfde3c4542fddbbab53891eb4)                 1.8M
-> gzip    0.12s user    0.00s system  95% cpu   0.132 total     442K
-> gunzip  0.02s user    0.00s system  97% cpu   0.027 tota
-> bzip2   1.28s user    0.01s system  99% cpu   1.298 total     363K
-> bunzip2 0.15s user    0.01s system  100% cpu  0.157 total
-> xz      1.62s user    0.03s system  99% cpu   1.652 total     347K
-> unxz    0.05s user    0.00s system  99% cpu   0.058 total
-> 
-> Purely from a time and memory perspective, nothing compares to GZip in
-> each of the three tests. Though, if you have an average upload speed of
-> 20KB/s, it would take ~400 seconds longer to transfer the kernel
-> snapshot that was BZip2 compressed than it would the XZ compressed
-> snapshot, the transfer time difference is even greater when compared to
-> the GZip compressed snapshot. The wall clock time savings are
-> relatively the same for all test cases, but less dramatic for the
-> smaller repositories.
-> 
-> The obvious downside for XZ compressed snapshots is the large CPU and
-> memory load put on the server to actualy generate the snapshot. Though
-> XZ will eventually have good threading support, and I suspect then that
-> the wall clock time for making an XZ compressed snapshot would go down
-> considerably if the server had a beefy multi-core CPU.
-> 
-> I have not enabled XZ compression by default because the current default
-> is GZip, and XZ is only really competitive with BZip2. Also, the XZ
-> format is still fairly new (the format was declared stable about 6
-> months ago), and there have been no "stable" releases of the utils yet.
-> 
-> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
-> ---
->  gitweb/gitweb.perl |    8 ++++++++
->  1 files changed, 8 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7fbd5ff..3398163 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -176,6 +176,13 @@ our %known_snapshot_formats = (
->          'format' => 'tar',
->          'compressor' => ['bzip2']},
-> 
-> +    'txz' => {
-> +        'display' => 'tar.xz',
-> +        'type' => 'application/x-xz',
-> +        'suffix' => '.tar.xz',
-> +        'format' => 'tar',
-> +        'compressor' => ['xz']},
-> +
->      'zip' => {
->          'display' => 'zip',
->          'type' => 'application/x-zip',
-> @@ -188,6 +195,7 @@ our %known_snapshot_formats = (
->  our %known_snapshot_format_aliases = (
->      'gzip'  => 'tgz',
->      'bzip2' => 'tbz2',
-> +    'xz'    => 'txz',
-> 
->      # backward compatibility: legacy gitweb config support
->      'x-gzip' => undef, 'gz' => undef,
+Have fun! :)
+
+...Johan
+
+
+ notes.c |  325 ++++++++++++++++++++++++++++++++++-----------------------------
+ 1 files changed, 174 insertions(+), 151 deletions(-)
+
+diff --git a/notes.c b/notes.c
+index 7e9dc49..9282b16 100644
+--- a/notes.c
++++ b/notes.c
+@@ -6,79 +6,165 @@
+ #include "strbuf.h"
+ #include "tree-walk.h"
+ 
+-struct entry {
+-	unsigned char commit_sha1[20];
+-	unsigned char notes_sha1[20];
++/*
++ * Use a non-balancing simple 256-tree structure with struct int_node as
++ * internal nodes, and struct leaf_node as leaf nodes. Each int_node has a
++ * 256-array of pointers to its children
++ * The bottom 2 bits of each pointer is used to identify the pointer type
++ * - ptr & 3 == 0 - NULL pointer, assert(ptr == NULL)
++ * - ptr & 3 == 1 - pointer to next internal node - cast to struct int_node *
++ * - ptr & 3 == 2 - pointer to note entry - cast to struct leaf_node *
++ * - ptr & 3 == 3 - pointer to subtree entry - cast to struct leaf_node *
++ *
++ * The root node is always an inline struct int_node.
++ * An array_entry always starts out with all pointers set to NULL.
++ *
++ * To add a leaf_node:
++ * 1. Start at the root node, with n = 0
++ * 2. Use the nth byte of the key as an index into a:
++ *    - If NULL, store the tweaked pointer directly into a[n]
++ *    - If an int_node, recurse into that node and increment n
++ *    - If a leaf_node:
++ *      1. Check if they're equal, and handle that (abort? overwrite?)
++ *      2. Create a new int_node, and store both leaf_nodes there
++ *      3. Store the new int_node into a[n].
++ *
++ * To find a leaf_node:
++ * 1. Start at the root node, with n = 0
++ * 2. Use the nth byte of the key as an index into a:
++ *    - If an int_node, recurse into that node and increment n
++ *    - If a leaf_node with matching key, return leaf_node (assert note entry)
++ *    - If a matching subtree entry, unpack that subtree entry (and remove it);
++ *      restart search at the current level.
++ *    - Otherwise, we end up at a NULL pointer, or a non-matching leaf_node.
++ *      Backtrack out of the recursion, one level at a time and check a[0]:
++ *      - If a[0] at the current level is a matching subtree entry, unpack that
++ *        subtree entry (and remove it); restart search at the current level.
++ */
++struct int_node {
++	void *a[256];
+ };
+ 
+-struct hash_map {
+-	struct entry *entries;
+-	off_t count, size;
++/*
++ * Leaf nodes come in two variants, note entries and subtree entries,
++ * distinguished by the LSb of the leaf node pointer (see above).
++ * As a note entry, the key is the SHA1 of the referenced commit, and the value
++ * is the SHA1 of the note object.
++ * As a subtree entry, the key is the prefix SHA1 (w/trailing NULs) of the
++ * referenced commit, including the prefix length in the last byte of the key.
++ * The value is the SHA1 of the tree object containing the notes subtree.
++ */
++struct leaf_node {
++	unsigned char key_sha1[20];
++	unsigned char val_sha1[20];
+ };
+ 
+-struct subtree_entry {
+-	/*
+-	 * SHA1 prefix is stored in the first 19 bytes (w/trailing NUL bytes);
+-	 * length of SHA1 prefix is stored in the last byte
+-	 */
+-	unsigned char sha1_prefix_w_len[20];
+-	unsigned char subtree_sha1[20];
+-	struct subtree_entry *next;
+-};
++#define PTR_TYPE_NULL     0
++#define PTR_TYPE_INTERNAL 1
++#define PTR_TYPE_NOTE     2
++#define PTR_TYPE_SUBTREE  3
+ 
+-static int initialized;
+-static struct hash_map hash_map;
+-static struct subtree_entry *subtree_list;
++#define GET_PTR_TYPE(ptr)       ((uintptr_t) (ptr) & 3)
++#define CLR_PTR_TYPE(ptr)       ((void *) ((uintptr_t) (ptr) & ~3))
++#define SET_PTR_TYPE(ptr, type) ((void *) ((uintptr_t) (ptr) | (type)))
+ 
+-static int hash_index(struct hash_map *map, const unsigned char *sha1)
+-{
+-	int i = ((*(unsigned int *)sha1) % map->size);
++#define MATCHING_SUBTREE(key_sha1, subtree_sha1) \
++	(!memcmp(key_sha1, subtree_sha1, subtree_sha1[19]))
+ 
+-	for (;;) {
+-		unsigned char *current = map->entries[i].commit_sha1;
++static struct int_node root_node;
+ 
+-		if (!hashcmp(sha1, current))
+-			return i;
++static int initialized;
+ 
+-		if (is_null_sha1(current))
+-			return -1 - i;
+ 
+-		if (++i == map->size)
+-			i = 0;
+-	}
+-}
++static void load_subtree(struct leaf_node *subtree, struct int_node *node,
++		unsigned int n);
+ 
+-static void add_entry(const unsigned char *commit_sha1,
+-		const unsigned char *notes_sha1)
++static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
++		const unsigned char *key_sha1)
+ {
+-	int index;
+-
+-	if (hash_map.count + 1 > hash_map.size >> 1) {
+-		int i, old_size = hash_map.size;
+-		struct entry *old = hash_map.entries;
+-
+-		hash_map.size = old_size ? old_size << 1 : 64;
+-		hash_map.entries = (struct entry *)
+-			xcalloc(sizeof(struct entry), hash_map.size);
+-
+-		for (i = 0; i < old_size; i++)
+-			if (!is_null_sha1(old[i].commit_sha1)) {
+-				index = -1 - hash_index(&hash_map,
+-						old[i].commit_sha1);
+-				memcpy(hash_map.entries + index, old + i,
+-					sizeof(struct entry));
+-			}
+-		free(old);
++	struct leaf_node *l;
++	unsigned char i = key_sha1[n];
++	void *p = tree->a[i];
++
++	switch(GET_PTR_TYPE(p)) {
++	case PTR_TYPE_INTERNAL:
++		l = note_tree_find(CLR_PTR_TYPE(p), n + 1, key_sha1);
++		if (l)
++			return l;
++		break;
++	case PTR_TYPE_NOTE:
++		l = (struct leaf_node *) CLR_PTR_TYPE(p);
++		if (!hashcmp(key_sha1, l->key_sha1))
++			return l; /* return note object matching given key */
++		break;
++	case PTR_TYPE_SUBTREE:
++		l = (struct leaf_node *) CLR_PTR_TYPE(p);
++		if (MATCHING_SUBTREE(key_sha1, l->key_sha1)) {
++			/* unpack tree and resume search */
++			tree->a[i] = NULL;
++			load_subtree(l, tree, n);
++			free(l);
++			return note_tree_find(tree, n, key_sha1);
++		}
++		break;
++	case PTR_TYPE_NULL:
++	default:
++		assert(!p);
++		break;
+ 	}
+ 
+-	index = hash_index(&hash_map, commit_sha1);
+-	if (index < 0) {
+-		index = -1 - index;
+-		hash_map.count++;
++	/*
++	 * Did not find key at this (or any lower) level.
++	 * Check if there's a matching subtree entry in tree->a[0].
++	 * If so, unpack tree and resume search.
++	 */
++	p = tree->a[0];
++	if (GET_PTR_TYPE(p) != PTR_TYPE_SUBTREE)
++		return NULL;
++	l = (struct leaf_node *) CLR_PTR_TYPE(p);
++	if (MATCHING_SUBTREE(key_sha1, l->key_sha1)) {
++		/* unpack tree and resume search */
++		tree->a[0] = NULL;
++		load_subtree(l, tree, n);
++		free(l);
++		return note_tree_find(tree, n, key_sha1);
+ 	}
++	return NULL;
++}
+ 
+-	hashcpy(hash_map.entries[index].commit_sha1, commit_sha1);
+-	hashcpy(hash_map.entries[index].notes_sha1, notes_sha1);
++static int note_tree_insert(struct int_node *tree, unsigned char n,
++		const struct leaf_node *entry, unsigned char type)
++{
++	struct int_node *new_node;
++	const struct leaf_node *l;
++	int ret;
++	unsigned char i = entry->key_sha1[n];
++	void *p = tree->a[i];
++	assert(GET_PTR_TYPE(entry) == PTR_TYPE_NULL);
++	switch(GET_PTR_TYPE(p)) {
++	case PTR_TYPE_NULL:
++		assert(!p);
++		tree->a[i] = SET_PTR_TYPE(entry, type);
++		return 0;
++	case PTR_TYPE_INTERNAL:
++		return note_tree_insert(CLR_PTR_TYPE(p), n + 1, entry, type);
++	default:
++		assert(GET_PTR_TYPE(p) == PTR_TYPE_NOTE ||
++			GET_PTR_TYPE(p) == PTR_TYPE_SUBTREE);
++		l = (const struct leaf_node *) CLR_PTR_TYPE(p);
++		if (!hashcmp(entry->key_sha1, l->key_sha1))
++			return -1; /* abort insert on matching key */
++		new_node = (struct int_node *)
++			xcalloc(sizeof(struct int_node), 1);
++		ret = note_tree_insert(new_node, n + 1,
++			CLR_PTR_TYPE(p), GET_PTR_TYPE(p));
++		if (ret) {
++			free(new_node);
++			return -1;
++		}
++		tree->a[i] = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
++		return note_tree_insert(new_node, n + 1, entry, type);
++	}
+ }
+ 
+ /*
+@@ -110,22 +196,23 @@ static int get_sha1_hex_segment(const char *hex, unsigned int hex_len,
+ 	return len;
+ }
+ 
+-static void load_subtree(struct subtree_entry *se)
++static void load_subtree(struct leaf_node *subtree, struct int_node *node,
++		unsigned int n)
+ {
+ 	unsigned char commit_sha1[20];
+ 	unsigned int prefix_len;
+ 	void *buf;
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+-	struct subtree_entry *tmp_list = NULL, *tmp_last = NULL;
+ 
+-	buf = fill_tree_descriptor(&desc, se->subtree_sha1);
++	buf = fill_tree_descriptor(&desc, subtree->val_sha1);
+ 	if (!buf)
+ 		die("Could not read %s for notes-index",
+-		     sha1_to_hex(se->subtree_sha1));
++		     sha1_to_hex(subtree->val_sha1));
+ 
+-	prefix_len = se->sha1_prefix_w_len[19];
+-	memcpy(commit_sha1, se->sha1_prefix_w_len, prefix_len);
++	prefix_len = subtree->key_sha1[19];
++	assert(prefix_len >= n);
++	memcpy(commit_sha1, subtree->key_sha1, prefix_len);
+ 	while (tree_entry(&desc, &entry)) {
+ 		int len = get_sha1_hex_segment(entry.path, strlen(entry.path),
+ 				commit_sha1 + prefix_len, 20 - prefix_len);
+@@ -133,111 +220,47 @@ static void load_subtree(struct subtree_entry *se)
+ 			continue; /* entry.path is not a SHA1 sum. Skip */
+ 		len += prefix_len;
+ 
+-		/* If commit SHA1 is complete, assume note object */
+-		if (len == 20)
+-			add_entry(commit_sha1, entry.sha1);
+-		/* If commit SHA1 is incomplete, assume note subtree */
+-		else if (len < 20 && entry.mode == S_IFDIR) {
+-			struct subtree_entry *n = (struct subtree_entry *)
+-				xcalloc(sizeof(struct subtree_entry), 1);
+-			hashcpy(n->sha1_prefix_w_len, commit_sha1);
+-			n->sha1_prefix_w_len[19] = (unsigned char) len;
+-			hashcpy(n->subtree_sha1, entry.sha1);
+-
+-			if (!tmp_list) {
+-				tmp_list = n;
+-				tmp_last = n;
+-			}
+-			else {
+-				assert(!tmp_last->next);
+-				assert(hashcmp(n->sha1_prefix_w_len,
+-					tmp_last->sha1_prefix_w_len) > 0);
+-				tmp_last->next = n;
+-				tmp_last = n;
++		/*
++		 * If commit SHA1 is complete (len == 20), assume note object
++		 * If commit SHA1 is incomplete (len < 20), assume note subtree
++		 */
++		if (len <= 20) {
++			unsigned char type = PTR_TYPE_NOTE;
++			struct leaf_node *l = (struct leaf_node *)
++				xcalloc(sizeof(struct leaf_node), 1);
++			hashcpy(l->key_sha1, commit_sha1);
++			hashcpy(l->val_sha1, entry.sha1);
++			if (len < 20) {
++				l->key_sha1[19] = (unsigned char) len;
++				type = PTR_TYPE_SUBTREE;
+ 			}
++			assert(!note_tree_insert(node, n, l, type));
+ 		}
+ 	}
+ 	free(buf);
+-	if (tmp_list) {
+-		/* insert tmp_list immediately after se */
+-		assert(hashcmp(tmp_list->sha1_prefix_w_len,
+-				se->sha1_prefix_w_len) > 0);
+-		if (se->next) {
+-			assert(hashcmp(se->next->sha1_prefix_w_len,
+-					tmp_last->sha1_prefix_w_len) > 0);
+-			tmp_last->next = se->next;
+-		}
+-		se->next = tmp_list;
+-	}
+ }
+ 
+-static void initialize_hash_map(const char *notes_ref_name)
++static void initialize_notes(const char *notes_ref_name)
+ {
+ 	unsigned char sha1[20], commit_sha1[20];
+ 	unsigned mode;
+-	struct subtree_entry root_tree;
++	struct leaf_node root_tree;
+ 
+ 	if (!notes_ref_name || read_ref(notes_ref_name, commit_sha1) ||
+ 	    get_tree_entry(commit_sha1, "", sha1, &mode))
+ 		return;
+ 
+-	hashclr(root_tree.sha1_prefix_w_len);
+-	hashcpy(root_tree.subtree_sha1, sha1);
+-	root_tree.next = NULL;
+-	load_subtree(&root_tree);
+-	subtree_list = root_tree.next;
+-}
+-
+-/*
+- * Compare the given commit SHA1 against the given subtree entry.
+- * Return -1 if the commit SHA1 cannot exist within the given subtree, or any
+- * subtree following it.
+- * Return 0 if the commit SHA1 _may_ exist within the given subtree.
+- * Return 1 if the commit SHA1 cannot exist within the given subtree, but may
+- * exist within a subtree following it.
+- */
+-static int commit_subtree_cmp(const unsigned char *commit_sha1,
+-		const struct subtree_entry *entry)
+-{
+-	unsigned int prefix_len = entry->sha1_prefix_w_len[19];
+-	return memcmp(commit_sha1, entry->sha1_prefix_w_len, prefix_len);
+-}
+-
+-static struct subtree_entry *lookup_subtree(const unsigned char *commit_sha1)
+-{
+-	struct subtree_entry *found = NULL, *cur = subtree_list;
+-	while (cur) {
+-		int cmp = commit_subtree_cmp(commit_sha1, cur);
+-		if (!cmp)
+-			found = cur;
+-		if (cmp < 0)
+-			break;
+-		cur = cur->next;
+-	}
+-	return found;
++	hashclr(root_tree.key_sha1);
++	hashcpy(root_tree.val_sha1, sha1);
++	load_subtree(&root_tree, &root_node, 0);
+ }
+ 
+ static unsigned char *lookup_notes(const unsigned char *commit_sha1)
+ {
+-	int index;
+-	struct subtree_entry *subtree;
+-
+-	/* First, try to find the commit SHA1 directly in hash map */
+-	index = hash_map.size ? hash_index(&hash_map, commit_sha1) : -1;
+-	if (index >= 0)
+-		return hash_map.entries[index].notes_sha1;
+-
+-	/* Next, try finding a subtree that may contain the commit SHA1 */
+-	subtree = lookup_subtree(commit_sha1);
+-
+-	/* Give up if no subtree found, or if subtree is already loaded */
+-	if (!subtree || is_null_sha1(subtree->subtree_sha1))
+-		return NULL;
+-
+-	/* Load subtree into hash_map, and retry lookup recursively */
+-	load_subtree(subtree);
+-	hashclr(subtree->subtree_sha1);
+-	return lookup_notes(commit_sha1);
++	struct leaf_node *found = note_tree_find(&root_node, 0, commit_sha1);
++	if (found)
++		return found->val_sha1;
++	return NULL;
+ }
+ 
+ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+@@ -255,7 +278,7 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+ 			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
+ 		else if (!notes_ref_name)
+ 			notes_ref_name = GIT_NOTES_DEFAULT_REF;
+-		initialize_hash_map(notes_ref_name);
++		initialize_notes(notes_ref_name);
+ 		initialized = 1;
+ 	}
+ 
+-- 
+1.6.4.rc3.138.ga6b98.dirty
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
