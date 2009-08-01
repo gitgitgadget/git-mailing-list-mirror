@@ -1,127 +1,91 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: [PATCHv5] Add Gitweb support for XZ compressed snapshots
-Date: Sat, 1 Aug 2009 12:13:52 +0200
-Message-ID: <9b18b3110908010313x38991dffx3e4a2f2a5c5fff9f@mail.gmail.com>
-References: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca>
-	 <4A739087.1090301@eaglescrag.net>
-	 <9b18b3110908010112va6e2ceap727c4129a054ebda@mail.gmail.com>
-	 <m3vdl7rjev.fsf@localhost.localdomain>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Git User's Survey 2009 partial summary, part 1 - announcing 
+	survey, participation
+Date: Sat, 1 Aug 2009 10:52:31 +0000
+Message-ID: <94a0d4530908010352v719beb0aqcc4960a0a1064ba6@mail.gmail.com>
+References: <200907312246.12134.jnareb@gmail.com>
+	 <94a0d4530907311700m1014c8e6k884eabd198ac1b77@mail.gmail.com>
+	 <200908010955.08199.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "J.H." <warthog19@eaglescrag.net>,
-	Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 12:22:28 2009
+X-From: git-owner@vger.kernel.org Sat Aug 01 12:52:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXBjQ-0007WR-3f
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 12:22:28 +0200
+	id 1MXCCh-0001kH-SU
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 12:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbZHAKWO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 06:22:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbZHAKWN
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 06:22:13 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:64322 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077AbZHAKWL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2009 06:22:11 -0400
-X-Greylist: delayed 74030 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Aug 2009 06:22:11 EDT
-Received: by yxe5 with SMTP id 5so772473yxe.33
-        for <git@vger.kernel.org>; Sat, 01 Aug 2009 03:22:11 -0700 (PDT)
+	id S1751208AbZHAKwc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 06:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbZHAKwc
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 06:52:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:18307 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750768AbZHAKwb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2009 06:52:31 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so220676fga.17
+        for <git@vger.kernel.org>; Sat, 01 Aug 2009 03:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=TEZybsH0koC89O1fk6DQ3p46T9Mye9gOlsB5WLaXGNc=;
-        b=c8ub2PhejMngIhYuP4IePA5ARvL8Zq7ie3xix3/jYavaE2bhySK+hXrfXc5lXXBETy
-         383OlYBVkiDN6HpMUH4KnD+XZum5Fmn3I+9gKjV4jyVLuRlAxTwnUF4StMrxNZY4PDXU
-         YUxqmPMe2zvyjLIMD1uDfNUTiEwDSWJZBkDOg=
+        bh=iFuYY3TKXkjYSgJ0zixY1QGUhQKDBFp7gY5CrwXtXjI=;
+        b=pIFxLArmxiYaB3WWBAK6lg+pe8HinNXtQGrCETSRMte/DmCjHxGUolmi1ChUoTGpMU
+         eVylvNdlo/9+L9BvTrUhSwFQ+YlNEHaCS/reu2Sim7jk5ZhE1KExxO2S0cs+3JjqwDwf
+         QNKtw2kMG/fHDMBtaslFdUd+vgii7Y2jxb3gM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=ns7g4yHqmqlD72bOit2+69IY34JsG/sUTGoTfyX+nD2IroAAa1eZ2GZZn8TfUymCa+
-         Al1FrcyfZ3laotevZmSMaI7P0Xqn8hx/wR5XMu9ckt3V5eVD2rsojI494+l54UFq0dUn
-         Y4weZQBb8vH4RUVAmbxDHlA3yrDAv2u/POQxY=
-Received: by 10.231.35.205 with SMTP id q13mr918818ibd.17.1249121632508; Sat, 
-	01 Aug 2009 03:13:52 -0700 (PDT)
-In-Reply-To: <m3vdl7rjev.fsf@localhost.localdomain>
+        b=qc7lGBAJLkoqhDqZFxAGJxh1u7LsNHAj9Cil8xidrYw2GqOsL3t1jit0n28p4h5vup
+         gAQNMz+gnQ5gzEhrRA6f0IOPvUBKR6+WdAkqk/iZjAsLDWrzyvhMr2+twE7d6j0RWIXj
+         i+iPHAsI6VsLZflx7o0vxKQHPJSLp4kfV00Ek=
+Received: by 10.86.83.17 with SMTP id g17mr1228192fgb.25.1249123951464; Sat, 
+	01 Aug 2009 03:52:31 -0700 (PDT)
+In-Reply-To: <200908010955.08199.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124616>
 
-2009/8/1 Jakub Narebski <jnareb@gmail.com>:
-> demerphq <demerphq@gmail.com> writes:
+On Sat, Aug 1, 2009 at 7:55 AM, Jakub Narebski<jnareb@gmail.com> wrote:
+> On Sat, 1 Aug 2009, Felipe Contreras wrote:
+>> 2009/7/31 Jakub Narebski <jnareb@gmail.com>:
 >
->> FWIW the perl project ripped out all the snapshot generation logic
->> from gitweb, and replaced it with a tool that generates snapshots
->> correctly for our requirements (if the build process needs additiona=
-l
->> files /currently/ git-archive does not support adding them), this
->> includes a disk level cache for the snapshots since creating the tar=
-,
->> adding the additional files, then gziping is quite slow.
+>> > It was half a month since Git User's Survey 2009 was started (it w=
+as
+>> > started on 15 July 2009), a quarter of duration time of the survey=
+=2E
+>> >
+>> > So I think this is time for partial summary of Git User's Survey 2=
+009.
 >>
->> If its interesting to people I can post it and the other changes her=
-e,
->> although its not a "nice" change, as I literally ripped out the
->> existing code.
+>> Cool :)
+>>
+>> </snip>
+>>
+>> > As you can see most popular channel was blog or blog planet.
+>>
+>> Not a surprise for me. I still think we should have an official blog
+>> precisely for these kinds of announcements.
 >
-> Do you mean gitweb serving http://perl5.git.perl.org/ ?
+> Don't forget about bias. =C2=A0Git User's Survey 2009 was announced o=
+n blogs
+> (and not "spammed" on projects' mailing lists), therefore most popula=
+r
+> channel responders knew about the survey was 'blog or blog planet'
+> (and not 'projects mailink list or forum').
 
-Yes. I updated it to a relatively recent version just the other week.
+It could be bias, but it could be not. If you want to make sure you
+can "spam" projects' mailing lists now.
 
-> Well, at least publish this version of gitweb somewhere (snapshot or
-> better git repository), and add it to the list of gitweb forks at
-> http://git.or.cz/gitwiki/Gitweb wiki page.
+So far what we can say is that the users like blogs.
 
-Sure, we have been discussing doing that recently.
-
-I need to cleanup how I set up the repository for it tho.
-
-Also probably there are one or two patches that should be pushed back t=
-o you.
-
-> Sidenote: snapshot support appeared, as far as I know, first at fork =
-of
-> gitweb that had been used by XMMS2, but the snapshot was generated by
-> a separate snapshot.cgi script... written in Python. =A0(Now they use
-> stock (if old) gitweb, I think.)
-
-Ah, I'm not generating it with a separate cgi script, I just replaced
-the call to git-archive to be a call to my own tool.
-
-> P.S. Perhaps you or other Perl Mongers would be interested in creatin=
-g
-> yet another git web interface, in Perl, but contrary to (current)
-> gitweb modular and using more of CPAN modules? =A0For example convert
-> SVN::Web or Insurrection (or other Perl module) from Subversion (or
-> other SCM) to Git (and rename it to Git::Web, or ???).
-
-I think that there is some interest in doing that and likely over time
-there will be more. It has come up at least a few times in our
-discussion forums. I think you could easily make a public call for
-support on places like Perlmonks to get more action tho.
-
-A better git api toolset for perl would make things a lot easier.
-Especially an XS one.
-
->
-> P.P.S. Could you per chance post announcement of Git User's Survey 20=
-09
-> on http://perl5.git.perl.org, just like it is done on http://repo.or.=
-cz
-> and http://git.kernel.org? =A0TIA.
-
-Sure.
-
-cheers,
-Yves
 --=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+=46elipe Contreras
