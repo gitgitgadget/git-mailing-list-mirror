@@ -1,83 +1,107 @@
-From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-Subject: [PATCH/RFC] gitweb: parse_commit_text encoding fix
-Date: Sat,  1 Aug 2009 10:28:43 +0200
-Message-ID: <1249115323-17974-1-git-send-email-zfuzesi@eaglet.hu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5] Add Gitweb support for XZ compressed snapshots
+Date: Sat, 01 Aug 2009 02:08:48 -0700 (PDT)
+Message-ID: <m3vdl7rjev.fsf@localhost.localdomain>
+References: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca>
+	<4A739087.1090301@eaglescrag.net>
+	<9b18b3110908010112va6e2ceap727c4129a054ebda@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: giuseppe.bilotta@gmail.com,
-	=?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 01 10:47:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "J.H." <warthog19@eaglescrag.net>,
+	"Mark A Rada" <marada@uwaterloo.ca>, git@vger.kernel.org
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 01 11:09:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXAFP-0000Ek-MD
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 10:47:24 +0200
+	id 1MXAaN-0007Xw-FE
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 11:09:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbZHAIrE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 04:47:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbZHAIrD
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 04:47:03 -0400
-Received: from mail.icell.hu ([80.99.238.252]:52359 "EHLO mail.icell.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751498AbZHAIrC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2009 04:47:02 -0400
-X-Greylist: delayed 836 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Aug 2009 04:47:02 EDT
-Received: from source.ifleet ([10.1.1.250])
-	by mail.icell.hu (8.12.3/8.12.3/Debian-7.2) with ESMTP id n718X2Fk024860;
-	Sat, 1 Aug 2009 10:33:02 +0200
-Received: from fuge by source.ifleet with local (Exim 4.69)
-	(envelope-from <fuge@source.icell.hu>)
-	id 1MX9xN-0004gN-MP; Sat, 01 Aug 2009 10:28:45 +0200
-X-Mailer: git-send-email 1.6.4.13.ge6580
+	id S1752456AbZHAJIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2009 05:08:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbZHAJIv
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 05:08:51 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:63916 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752183AbZHAJIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 05:08:50 -0400
+Received: by ewy10 with SMTP id 10so2000254ewy.37
+        for <git@vger.kernel.org>; Sat, 01 Aug 2009 02:08:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=jhJIURHvqrU4zPWI5O0M/D02HXiEkGaNIZKU5/+cdJk=;
+        b=vbY2viYw7C7A6o1tjhTJ7pxLV+orCtyuQZ+HCpi8McjeLQwlV5WfDWGe742tLZe/aC
+         nxIBV814LSsP/ufpJJZ31HQNiJ3W3q+fHXJ0RfjLnhdrrwhbqz6BEEE++rVdhrg359S9
+         xWdPwZsjQDQVtAy/3SLW0PJAyAyN08g5r+YRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=LQAmkSlDheQGhAnM7hkDZaGiiaN48Q03thzjbZWjbOm5k96kmH5t8sxCRvRUOtWJzJ
+         G5n/+nK47/hP4CbTZi+jCRs/bsCf4wk6JHFw2ZDY4NydaPz/hnsI2ApmXOMDIv4CNiM8
+         YjDKnR3fpRrSTV0W3bj0+QQBXbmEiSjUdbShM=
+Received: by 10.210.79.3 with SMTP id c3mr2128378ebb.16.1249117729526;
+        Sat, 01 Aug 2009 02:08:49 -0700 (PDT)
+Received: from localhost.localdomain (abvt17.neoplus.adsl.tpnet.pl [83.8.217.17])
+        by mx.google.com with ESMTPS id 5sm5921780eyh.36.2009.08.01.02.08.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 01 Aug 2009 02:08:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7198VFs006528;
+	Sat, 1 Aug 2009 11:08:42 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n71989GB006518;
+	Sat, 1 Aug 2009 11:08:09 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <9b18b3110908010112va6e2ceap727c4129a054ebda@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124613>
 
-Call to_utf8 when parsing author and committer names, otherwise they wi=
-ll appear
-with bad encoding if they written by using chop_and_escape_str.
+demerphq <demerphq@gmail.com> writes:
 
-Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
----
- gitweb/gitweb.perl |    9 ++++-----
- 1 files changed, 4 insertions(+), 5 deletions(-)
+> FWIW the perl project ripped out all the snapshot generation logic
+> from gitweb, and replaced it with a tool that generates snapshots
+> correctly for our requirements (if the build process needs additional
+> files /currently/ git-archive does not support adding them), this
+> includes a disk level cache for the snapshots since creating the tar,
+> adding the additional files, then gziping is quite slow.
+> 
+> If its interesting to people I can post it and the other changes here,
+> although its not a "nice" change, as I literally ripped out the
+> existing code.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7fbd5ff..06bbf60 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -2570,22 +2570,21 @@ sub parse_commit_text {
- 		} elsif ((!defined $withparents) && ($line =3D~ m/^parent ([0-9a-fA-=
-=46]{40})$/)) {
- 			push @parents, $1;
- 		} elsif ($line =3D~ m/^author (.*) ([0-9]+) (.*)$/) {
--			$co{'author'} =3D $1;
-+			$co{'author'} =3D to_utf8($1);
- 			$co{'author_epoch'} =3D $2;
- 			$co{'author_tz'} =3D $3;
- 			if ($co{'author'} =3D~ m/^([^<]+) <([^>]*)>/) {
--				$co{'author_name'}  =3D $1;
-+				$co{'author_name'}  =3D to_utf8($1);
- 				$co{'author_email'} =3D $2;
- 			} else {
- 				$co{'author_name'} =3D $co{'author'};
- 			}
- 		} elsif ($line =3D~ m/^committer (.*) ([0-9]+) (.*)$/) {
--			$co{'committer'} =3D $1;
-+			$co{'committer'} =3D to_utf8($1);
- 			$co{'committer_epoch'} =3D $2;
- 			$co{'committer_tz'} =3D $3;
--			$co{'committer_name'} =3D $co{'committer'};
- 			if ($co{'committer'} =3D~ m/^([^<]+) <([^>]*)>/) {
--				$co{'committer_name'}  =3D $1;
-+				$co{'committer_name'}  =3D to_utf8($1);
- 				$co{'committer_email'} =3D $2;
- 			} else {
- 				$co{'committer_name'} =3D $co{'committer'};
---=20
-1.6.4.13.ge6580
+Do you mean gitweb serving http://perl5.git.perl.org/ ?
+
+Well, at least publish this version of gitweb somewhere (snapshot or
+better git repository), and add it to the list of gitweb forks at
+http://git.or.cz/gitwiki/Gitweb wiki page.
+
+Sidenote: snapshot support appeared, as far as I know, first at fork of
+gitweb that had been used by XMMS2, but the snapshot was generated by
+a separate snapshot.cgi script... written in Python.  (Now they use
+stock (if old) gitweb, I think.)
+
+P.S. Perhaps you or other Perl Mongers would be interested in creating
+yet another git web interface, in Perl, but contrary to (current)
+gitweb modular and using more of CPAN modules?  For example convert
+SVN::Web or Insurrection (or other Perl module) from Subversion (or
+other SCM) to Git (and rename it to Git::Web, or ???).
+
+P.P.S. Could you per chance post announcement of Git User's Survey 2009
+on http://perl5.git.perl.org, just like it is done on http://repo.or.cz
+and http://git.kernel.org?  TIA.
+
+-- 
+Jakub Narebski
+ShadeHawk on #git
+
+Git User's Survey 2009
+http://tinyurl.com/GitSurvey2009
