@@ -1,92 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5] Add Gitweb support for XZ compressed snapshots
-Date: Sat, 01 Aug 2009 01:14:35 -0700 (PDT)
-Message-ID: <m3zlakq7bt.fsf@localhost.localdomain>
-References: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca>
-	<4A739087.1090301@eaglescrag.net>
+From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
+Subject: [PATCH/RFC] gitweb: parse_commit_text encoding fix
+Date: Sat,  1 Aug 2009 10:28:43 +0200
+Message-ID: <1249115323-17974-1-git-send-email-zfuzesi@eaglet.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
-To: "J.H." <warthog19@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Sat Aug 01 10:14:49 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: giuseppe.bilotta@gmail.com,
+	=?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 01 10:47:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MX9js-0004bb-57
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 10:14:48 +0200
+	id 1MXAFP-0000Ek-MD
+	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 10:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751954AbZHAIOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2009 04:14:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbZHAIOi
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 04:14:38 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:37153 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbZHAIOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2009 04:14:37 -0400
-Received: by ewy10 with SMTP id 10so1986146ewy.37
-        for <git@vger.kernel.org>; Sat, 01 Aug 2009 01:14:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=bIXkSXgbSUy10gBmYrhI4+SA9rd5gBwAIBmxCct3I78=;
-        b=pXQq9KU7fSqyqnbSI7dgbslyCaZKDsBxeipcTSio5P3EcS1l3hO2jJtHk9K/4z5Qhm
-         1+sFXqujxr/L4JBMTccqJYX6Nsgfy59t2M+6fqqPYqTvH3fQJCl43jBOvG4kA+lASmaQ
-         tSbl0prsynKD5x2+SIRFBEe6cEz74FsoEDFvo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=d7iVa1WllVOgl9YMJlXdB0ER0E1yuWXJHD9u9JGINHoXWVy90JHvwRKlT/YMJkBNkr
-         zDA34ZuhxrKk8woSuS+z/oXlsXan1sVaRInO7L+EiEJ4mar218QIIk9eGI64JdCt/oO8
-         EuwDmZzrOm9qyyGzlu7bdzbCdzNxET0+dHE4M=
-Received: by 10.210.102.12 with SMTP id z12mr4216870ebb.89.1249114476419;
-        Sat, 01 Aug 2009 01:14:36 -0700 (PDT)
-Received: from localhost.localdomain (abvt17.neoplus.adsl.tpnet.pl [83.8.217.17])
-        by mx.google.com with ESMTPS id 5sm5775334eyh.56.2009.08.01.01.14.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 01 Aug 2009 01:14:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n718EWZd005718;
-	Sat, 1 Aug 2009 10:14:33 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n718EVG9005714;
-	Sat, 1 Aug 2009 10:14:31 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4A739087.1090301@eaglescrag.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751570AbZHAIrE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 04:47:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751505AbZHAIrD
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 04:47:03 -0400
+Received: from mail.icell.hu ([80.99.238.252]:52359 "EHLO mail.icell.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751498AbZHAIrC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 04:47:02 -0400
+X-Greylist: delayed 836 seconds by postgrey-1.27 at vger.kernel.org; Sat, 01 Aug 2009 04:47:02 EDT
+Received: from source.ifleet ([10.1.1.250])
+	by mail.icell.hu (8.12.3/8.12.3/Debian-7.2) with ESMTP id n718X2Fk024860;
+	Sat, 1 Aug 2009 10:33:02 +0200
+Received: from fuge by source.ifleet with local (Exim 4.69)
+	(envelope-from <fuge@source.icell.hu>)
+	id 1MX9xN-0004gN-MP; Sat, 01 Aug 2009 10:28:45 +0200
+X-Mailer: git-send-email 1.6.4.13.ge6580
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124612>
 
-"J.H." <warthog19@eaglescrag.net> writes:
+Call to_utf8 when parsing author and committer names, otherwise they wi=
+ll appear
+with bad encoding if they written by using chop_and_escape_str.
 
-> Well you can always call xz with -[1-9] to change the compression
-> level (same as gzip and bzip2) though I think a full disabling would
-> be 'more' preferable, though I'm not sure I like Jakub's suggestion of
-> just deleting it after the fact, it would work.
-[...]
+Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
+---
+ gitweb/gitweb.perl |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-The problem is that 'keys %known_snapshot_formats' serves also as list
-of allowed snapshot formats, if project specific override is enabled.
-We can add another optional flag ('disabled' => 1) if you don't want
-to delete from %known_snapshot_formats in $GITWEB_CONFIG, though I
-don't know if it is worth it.  Anyway such mechanism can be added, and
-IMHO should be added, in a separate commit.
-
-> I think more my concern is more what's enabled by default, and since
-> xz is still new (as was pointed out) it's probably worth only enabling
-> if the admin selects it to be enabled.
-
-By default (i.e. as in gitweb in git.git) 'snapshot' feature has
-disabled projects specific override.  Which means only 'tgz' snapshot
-is enabled / used.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7fbd5ff..06bbf60 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2570,22 +2570,21 @@ sub parse_commit_text {
+ 		} elsif ((!defined $withparents) && ($line =3D~ m/^parent ([0-9a-fA-=
+=46]{40})$/)) {
+ 			push @parents, $1;
+ 		} elsif ($line =3D~ m/^author (.*) ([0-9]+) (.*)$/) {
+-			$co{'author'} =3D $1;
++			$co{'author'} =3D to_utf8($1);
+ 			$co{'author_epoch'} =3D $2;
+ 			$co{'author_tz'} =3D $3;
+ 			if ($co{'author'} =3D~ m/^([^<]+) <([^>]*)>/) {
+-				$co{'author_name'}  =3D $1;
++				$co{'author_name'}  =3D to_utf8($1);
+ 				$co{'author_email'} =3D $2;
+ 			} else {
+ 				$co{'author_name'} =3D $co{'author'};
+ 			}
+ 		} elsif ($line =3D~ m/^committer (.*) ([0-9]+) (.*)$/) {
+-			$co{'committer'} =3D $1;
++			$co{'committer'} =3D to_utf8($1);
+ 			$co{'committer_epoch'} =3D $2;
+ 			$co{'committer_tz'} =3D $3;
+-			$co{'committer_name'} =3D $co{'committer'};
+ 			if ($co{'committer'} =3D~ m/^([^<]+) <([^>]*)>/) {
+-				$co{'committer_name'}  =3D $1;
++				$co{'committer_name'}  =3D to_utf8($1);
+ 				$co{'committer_email'} =3D $2;
+ 			} else {
+ 				$co{'committer_name'} =3D $co{'committer'};
+--=20
+1.6.4.13.ge6580
