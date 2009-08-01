@@ -1,66 +1,57 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [OT] git and clojure
-Date: Sat, 1 Aug 2009 15:56:25 -0600
-Message-ID: <46a038f90908011456q34cc8834tcb9db81d22653b06@mail.gmail.com>
-References: <f46c52560908010918t5ff0d97cxe638f9f8eb5a5b40@mail.gmail.com>
+From: Thell <tbfowler4@gmail.com>
+Subject: Re: [RFC] Allowing new eof whitelines while still doing whitespace trailing-space fix.
+Date: Sat, 1 Aug 2009 22:14:53 +0000 (UTC)
+Message-ID: <loom.20090801T215905-792@post.gmane.org>
+References: <1249145624.2774.16.camel@GWPortableVCS>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Rustom Mody <rustompmody@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 01 23:56:35 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 02 00:15:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXMZ8-00018K-2o
-	for gcvg-git-2@gmane.org; Sat, 01 Aug 2009 23:56:34 +0200
+	id 1MXMrI-00069V-2p
+	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 00:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752487AbZHAV40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2009 17:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbZHAV40
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 17:56:26 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:40667 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477AbZHAV4Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2009 17:56:25 -0400
-Received: by fxm17 with SMTP id 17so1976551fxm.37
-        for <git@vger.kernel.org>; Sat, 01 Aug 2009 14:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6zoziz4PvnOGMsqZbzCVnnOAfkhoMlJkqdEvUeLjQ+8=;
-        b=Pg4/IsDknFsKVRU9TFF+FfqToBqAY/lyLpmSZm5jWHz9pNxs86vaHsz26K4SaPmceh
-         AKWOyN415dWziM56SJ7T/QgNcCKBuelfPTlXdBvDVlgsAi4Tu4yakNVGSUMwpH1OlS9K
-         R1AHF/c5lnWKCqXU0kFuBTxE5WMPONxJB2S30=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fqR4UZ4W0j+W6wCxcF3RdF+eOqLsb9NRB+Lmmvu59/8XpYjw95B+bsP1d8W8s0m7pL
-         Vmh8KHIT0bo/pBD9p1peU9QpZ6/CVyGmn4uix4JPNqKY6FPHi5TsSC0NOens9rmT76bC
-         NlekKa+PkBTQJoFxP3zfS6n32HHNLXoBhoZxI=
-Received: by 10.223.122.141 with SMTP id l13mr1939061far.99.1249163785114; 
-	Sat, 01 Aug 2009 14:56:25 -0700 (PDT)
-In-Reply-To: <f46c52560908010918t5ff0d97cxe638f9f8eb5a5b40@mail.gmail.com>
+	id S1752454AbZHAWPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2009 18:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752419AbZHAWPJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 18:15:09 -0400
+Received: from main.gmane.org ([80.91.229.2]:51863 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752371AbZHAWPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 18:15:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MXMr5-0004Db-W0
+	for git@vger.kernel.org; Sat, 01 Aug 2009 22:15:07 +0000
+Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Aug 2009 22:15:07 +0000
+Received: from tbfowler4 by ip70-178-75-143.ks.ks.cox.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 01 Aug 2009 22:15:07 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 70.178.75.143 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1) Gecko/20090624 Firefox/3.5 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124651>
 
-On Sat, Aug 1, 2009 at 10:18 AM, Rustom Mody<rustompmody@gmail.com> wrote:
-> Any ideas about the link between git and clojure?
+Thell Fowler <tbfowler4 <at> gmail.com> writes:
 
-About the same as Debian and dueling banjoes.
+...
+> The patch in the follow-up post is an attempt to fix that.
+...
 
+My apologies; the patch post ended up being a top level post and trying to use
+imap-send with gmail to do an --in-reply-to was futile.  Using send-email worked
+in testing, so I'll give that a go with the patch here.
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+Thell
