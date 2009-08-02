@@ -1,93 +1,61 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Subtree merging of sub-directories between repositories?
-Date: Sun, 2 Aug 2009 14:53:31 -0400
-Message-ID: <32541b130908021153j28872a34v84dccfdfbc99b607@mail.gmail.com>
-References: <2729632a0908012337l6d84ba76o81239d324ba11cf2@mail.gmail.com> 
-	<32541b130908020130q11f1fa03yca276ab86c2ea4d5@mail.gmail.com> 
-	<2729632a0908021105m10bfb8ddx700464d06fd38023@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Sun Aug 02 20:54:07 2009
+From: David Soria Parra <sn_@gmx.net>
+Subject: [PATCH] Fix compiler warning by properly initialize failed_errno
+Date: Sun,  2 Aug 2009 21:34:35 +0200
+Message-ID: <1249241675-77329-1-git-send-email-sn_@gmx.net>
+Cc: David Soria Parra <dsp@php.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 02 21:35:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXgC7-0000tZ-0V
-	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 20:54:07 +0200
+	id 1MXgpU-0006n4-Mn
+	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 21:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332AbZHBSxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Aug 2009 14:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753302AbZHBSxv
-	(ORCPT <rfc822;git-outgoing>); Sun, 2 Aug 2009 14:53:51 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:58747 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753301AbZHBSxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Aug 2009 14:53:50 -0400
-Received: by yxe5 with SMTP id 5so1506398yxe.33
-        for <git@vger.kernel.org>; Sun, 02 Aug 2009 11:53:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LyxzM0+GJAcKDxlLGqWAfKtYlWQnGbpSxGAZacD+CpU=;
-        b=ZyFmxaQ3cV/KKtOfgohPdC0nlzgRHHSgtJUdOl3qFPiD77z+5z4AScnq+Qi0qSRrd6
-         Vi2fkhv8CPjaVb/zY21wnLxCxgbhA1Lw6AyIJPry9ZvTVClGce6+fdgkOmEXtY64s5dj
-         X/9pGYEl3peLn65ElINE/viNE+zdYafusN8EY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BPX5KmFeNl3TkyjJHb77D6/mcoQibM1eVaSVwQay4y+OtbD2y7A36IBjavY1E8RhJp
-         EJo3gUZGdlxmXEqVGDAfhrnmB3F8A7oqacjVY2ksBPvwZqEHnL3lRYVM67ddz5Ip+yMA
-         YNOHYLZWaAe16fxeBFfk0CAVfBJ3sPJKPxR9Y=
-Received: by 10.151.50.18 with SMTP id c18mr8951121ybk.98.1249239231047; Sun, 
-	02 Aug 2009 11:53:51 -0700 (PDT)
-In-Reply-To: <2729632a0908021105m10bfb8ddx700464d06fd38023@mail.gmail.com>
+	id S1753512AbZHBTel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Aug 2009 15:34:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753510AbZHBTel
+	(ORCPT <rfc822;git-outgoing>); Sun, 2 Aug 2009 15:34:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60254 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753416AbZHBTek (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Aug 2009 15:34:40 -0400
+Received: (qmail invoked by alias); 02 Aug 2009 19:34:39 -0000
+Received: from e180066103.adsl.alicedsl.de (EHLO localhost.localdomain) [85.180.66.103]
+  by mail.gmx.net (mp020) with SMTP; 02 Aug 2009 21:34:39 +0200
+X-Authenticated: #4427663
+X-Provags-ID: V01U2FsdGVkX18HqTQbutUHzXSsl9OdWdYCnmGasVlgyBnMBbqb/S
+	/I51qTmrWOUSfL
+X-Mailer: git-send-email 1.6.4.212.g4719.dirty
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124676>
 
-On Sun, Aug 2, 2009 at 2:05 PM, <skillzero@gmail.com> wrote:
-> On Sun, Aug 2, 2009 at 1:30 AM, Avery Pennarun<apenwarr@gmail.com> wrote:
->> 2) Use "git subtree split" to take the subdir of A and give it a
->> history of its own, then merge that history into a subdir of B (using
->> "git subtree add" or any other subtree merge method you want to use).
->> You can then git subtree split/merge back and forth between A and B in
->> the future to copy future changes from one to the other.
->
-> Thanks for the help. I tried #2 and it sort of worked. The history was
-> imported, but the resulting paths were flattened. Here's what I did:
-[...]
-> The full history doesn't seem to be associated with that directory. If
-> I do 'git log --name-only --topo-order', I see the full history, but
-> the files are listed as:
->
-> file.c
->
-> and I was expecting to see:
->
-> X/Y/C/file.c
->
-> Because I'd want to be able to do 'git log X/Y/C' and see all the
-> commits that affect that directory.
+From: David Soria Parra <dsp@php.net>
 
-Yeah, this is a tricky one.  Git has all the necessary information to
-"know" that the files were "moved" from file.c (in the subtree project
-history) to X/Y/C.file.c (in your superproject).  But "git log"
-doesn't use this information for anything at the moment, and
-"--follow" doesn't seem to make it work.
+Initilize failed_error in start_command to avoid compiler warnings
 
-Since I don't have the required skills or knowledge to fix git's
-history following, my hope is that this will magically start working
-in a future version of git because someone like you gets annoyed with
-it :)
+Signed-off-by: David Soria Parra <dsp@php.net>
+---
+ run-command.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Have fun,
-
-Avery
+diff --git a/run-command.c b/run-command.c
+index dc09433..510349b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -19,7 +19,7 @@ int start_command(struct child_process *cmd)
+ {
+ 	int need_in, need_out, need_err;
+ 	int fdin[2], fdout[2], fderr[2];
+-	int failed_errno;
++	int failed_errno = 0;
+ 
+ 	/*
+ 	 * In case of errors we must keep the promise to close FDs
+-- 
+1.6.4.212.g4719.dirty
