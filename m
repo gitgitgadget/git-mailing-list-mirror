@@ -1,85 +1,65 @@
-From: Aaron Cohen <remleduff@gmail.com>
-Subject: Re: [OT] git and clojure
-Date: Sat, 1 Aug 2009 22:53:10 -0400
-Message-ID: <727e50150908011953g19c7b8f2u4f348e3605c2bcf1@mail.gmail.com>
-References: <f46c52560908010918t5ff0d97cxe638f9f8eb5a5b40@mail.gmail.com>
-	 <46a038f90908011456q34cc8834tcb9db81d22653b06@mail.gmail.com>
-Reply-To: aaron@assonance.org
+From: skillzero@gmail.com
+Subject: git show on bare repository?
+Date: Sat, 1 Aug 2009 20:51:45 -0700
+Message-ID: <2729632a0908012051i28654bb7m418ff2ed00138815@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Aug 02 04:53:43 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 02 05:51:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXRCd-00008K-Rw
-	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 04:53:40 +0200
+	id 1MXS72-0003Fd-U2
+	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 05:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623AbZHBCxL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 1 Aug 2009 22:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZHBCxL
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 22:53:11 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:43722 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479AbZHBCxK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2009 22:53:10 -0400
-Received: by bwz19 with SMTP id 19so1869373bwz.37
-        for <git@vger.kernel.org>; Sat, 01 Aug 2009 19:53:10 -0700 (PDT)
+	id S1751710AbZHBDvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2009 23:51:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZHBDvq
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 23:51:46 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:17909 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479AbZHBDvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 Aug 2009 23:51:46 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1457249qwh.37
+        for <git@vger.kernel.org>; Sat, 01 Aug 2009 20:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:cc:content-type
-         :content-transfer-encoding;
-        bh=qQSSssKuQ0I3MlxI4o/2kVG5KVig0C1jcFBO4fyBUi0=;
-        b=NdvRimMdtGPotkY5eLY/0pklriHrEpXyhmWO0DLkQxRXUBDA3G8zNzaoNf6X1Aj7Jd
-         60Z9YCfxPruttGz1iza9peYUCE/AwguBMuV5ianiPvRyAmZeMrE52GGIdwkJYIDWNrOc
-         Q8HbAeA3WSq1DK4dtpay4wdLOX2Hdt6MEvFJc=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=vwjUkfzkLpPAaZFSB2OVSdH2Ve2hs8mxYaHJWVPtKPs=;
+        b=PO+3+/0Ktxa5Wo9K6LezOD8JFZzjCYWS74guhTuHS7J7oAZTOqCqeDeIeAQtQ1xdNp
+         Q+03/lSxvnB7NX2be5txdMngoKcbV8cOPIVtRlQlzS+BMdyl6lNn9Q+O4n2M3ncaUQYg
+         0AGrHpjTrBJtmtjvbGU5lWfzlcQwcB8XF5Lmk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:cc:content-type:content-transfer-encoding;
-        b=BujOGpALWxPxoJyR2UzFD09CwrZ1iu+ilcIoiI+4SQhMa9Z4IDZ8/exlql3LL5l/As
-         72k63WKMa0etOhryVU9tu0LY0oi9tLR1k9XXMFK9qGb/oIxi35d4d5/841CkXswhlSee
-         ZLU3Lecepv8x3dbPXBF9cahF635ZuCmqRX5k8=
-Received: by 10.204.60.212 with SMTP id q20mr2471824bkh.200.1249181590048; 
-	Sat, 01 Aug 2009 19:53:10 -0700 (PDT)
-In-Reply-To: <46a038f90908011456q34cc8834tcb9db81d22653b06@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=KKMS9kQmXi2SdPh8UTdc3iBWrBAK9/b/p0LJU1Di4yDAMrsbPAPX2yp4RhvIxX/eV4
+         LKeDRvuSeuk8dKYj4X3D++F8pfoc9LveuH0LO4y01DzUug8Qom0bDzdeJLCwlIwRIV7I
+         x36y66sXLgs7PREBEPPxJ9IUfnd3nTW8yZwp4=
+Received: by 10.224.29.8 with SMTP id o8mr3539300qac.31.1249185105840; Sat, 01 
+	Aug 2009 20:51:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124660>
 
-They're both based on immutable data structures.  Other than that, you'=
-ve
-got me.  Come to think of it, Clojure did fairly recently switch to usi=
-ng
-git and is now hosted on github, so it might be an artifact of that.
--- Aaron
+I could have sworn I used to be able to use git show to display the
+contents of a file from the server, but now it always says this (if I
+use -- then it doesn't show anything):
 
-On Sat, Aug 1, 2009 at 5:56 PM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
->
-> On Sat, Aug 1, 2009 at 10:18 AM, Rustom Mody<rustompmody@gmail.com> w=
-rote:
-> > Any ideas about the link between git and clojure?
->
-> About the same as Debian and dueling banjoes.
->
->
-> m
-> --
-> =C2=A0martin.langhoff@gmail.com
-> =C2=A0martin@laptop.org -- School Server Architect
-> =C2=A0- ask interesting questions
-> =C2=A0- don't get distracted with shiny stuff =C2=A0- working code fi=
-rst
-> =C2=A0- http://wiki.laptop.org/go/User:Martinlanghoff
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
+fatal: ambiguous argument 'master:file.txt': unknown revision or path
+not in the working tree.
+Use '--' to separate paths from revisions
+
+What I'm trying to do is allow people to get a single file without
+having to clone the entirely repository, like this:
+
+ssh git.example.com "cd /MyRepo.git && git show master:File.txt"
+
+If I do this with a non-bare repository, it works. The server is
+running git version 1.6.3.2 (I'm running 1.6.4 locally where it
+works).
