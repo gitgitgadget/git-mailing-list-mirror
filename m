@@ -1,84 +1,102 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: option directive to fast-import
-Date: Sat, 1 Aug 2009 18:29:10 -0700
-Message-ID: <fabb9a1e0908011829j3843c132ka5081d994aad973f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Mark A Rada <marada@uwaterloo.ca>
+Subject: [PATCHv3 2/3] gitweb: support to globally disable a snapshot format
+Date: Sat, 1 Aug 2009 22:53:22 -0400
+Message-ID: <BFCA40C6-A2D8-4BCD-9F9A-57CBC5AFFC6A@uwaterloo.ca>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Aug 02 03:29:46 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 02 04:53:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXPtS-0000by-D6
-	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 03:29:46 +0200
+	id 1MXRCf-00008K-AN
+	for gcvg-git-2@gmane.org; Sun, 02 Aug 2009 04:53:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392AbZHBB3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 Aug 2009 21:29:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751277AbZHBB3a
-	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 21:29:30 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:6797 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751215AbZHBB3a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 Aug 2009 21:29:30 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so758465eyd.37
-        for <git@vger.kernel.org>; Sat, 01 Aug 2009 18:29:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=8LyjuA7LVgk6yAhpHaRn6Jo4wuCCoJC2cgkij9Nd4gg=;
-        b=H68YIMz+3lX7ij5W8DmiTbzq7bpjKvCyYACK1qcdOCsJphtuTz4jYJS6k2GzI1dDgW
-         y5PdZjF4hC682je1KR7RfRVpODUpd8zaSO6gf9sbpgiOBRmSZ8oW9rSf6zs9GLwD50F4
-         0/qpybjqKKMawv4EheRqHjU+Yl4iAkOvsZwa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=HVgp0irtRCMkunD9DzgYAMpsaS4bUPA17Feo8u3o6S6MXsGLXyVhq2QLlykEqccFud
-         uctlZD3Oqu88vSOjhUWzDHTVcdlXwdT6vpNoat+kFBbl7B7Ed6gKzdm5r/TbC9TI+f+s
-         e8NEEUP45vzXi2fNkb4+ltBGfQxa4YZRz1PXM=
-Received: by 10.216.11.138 with SMTP id 10mr901415wex.51.1249176570076; Sat, 
-	01 Aug 2009 18:29:30 -0700 (PDT)
+	id S1751800AbZHBCxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 Aug 2009 22:53:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZHBCx1
+	(ORCPT <rfc822;git-outgoing>); Sat, 1 Aug 2009 22:53:27 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:40063 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751730AbZHBCxW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 1 Aug 2009 22:53:22 -0400
+Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n722rGjT019601
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sat, 1 Aug 2009 22:53:22 -0400 (EDT)
+X-Mailer: Apple Mail (2.935.3)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Sat, 01 Aug 2009 22:53:22 -0400 (EDT)
+X-Miltered: at mailchk-m01 with ID 4A74FF9D.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.2 at mailchk-x02
+X-Virus-Status: Clean
+X-UUID: 84c95c79-2153-417d-8167-2cc6e4b374f6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124656>
 
-Heya,
+I decided to go with the less intrusive change...
 
-What would you think of a 'option' directive to fast-import?
 
-'option' SP <option> SP <value> LF
+--
+Mark A Rada (ferrous26)
+marada@uwaterloo.ca
 
-Where <option> is:
 
-import-marks
-export-marks
-force_update
-quiet
-stats
-date-format
-depth
-active-branches
-export-pack-edges
+--------->8------------
+From: Mark Rada <marada@uwaterloo.ca>
+Date: Sat, 1 Aug 2009 13:24:03 -0400
+Subject: [PATCH 2/3] gitweb: support to globally disable a snapshot  
+format
 
-I just checked them all, and as far as I can see, as long as the
-option directives come before any data, there should be no negative
-side-effects to setting these values 'late'. The upside would be that
-the frontend can tell git fast-import it's preferences, so that the
-user does not have to type a humongous commandline, but instead can
-suffice to just go with 'foo fast-export | git fast-import'. Of
-course, the user might want to override these options manually, so the
-option directives should only be honored if no commandline flag is
-given.
+I added a 'disabled' variable to to the $known_snapshot_formats keys so
+that a Gitweb administrator can globally enable or disable a specific
+format for snapshots.
 
-Would you accept such a patch? If yes, I'll whip something up :).
+All formats are enabled by default because project specific overriding
+is disabled by default.
 
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
+  gitweb/gitweb.perl |    8 ++++++--
+  1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3398163..04aa7b2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -160,7 +160,8 @@ our %known_snapshot_formats = (
+  	# 	'suffix' => filename suffix,
+  	# 	'format' => --format for git-archive,
+  	# 	'compressor' => [compressor command and arguments]
+-	# 	                (array reference, optional)}
++	# 	                (array reference, optional),
++	# 	'disabled' => boolean (optional)}
+  	#
+  	'tgz' => {
+  		'display' => 'tar.gz',
+@@ -502,7 +503,8 @@ sub filter_snapshot_fmts {
+  		exists $known_snapshot_format_aliases{$_} ?
+  		       $known_snapshot_format_aliases{$_} : $_} @fmts;
+  	@fmts = grep {
+-		exists $known_snapshot_formats{$_} } @fmts;
++		exists $known_snapshot_formats{$_} &&
++		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
+  }
+
+  our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+@@ -5171,6 +5173,8 @@ sub git_snapshot {
+  		die_error(400, "Unknown snapshot format");
+  	} elsif (!grep($_ eq $format, @snapshot_fmts)) {
+  		die_error(403, "Unsupported snapshot format");
++	} elsif ($known_snapshot_formats{$format}{'disabled'}) {
++		die_error(403, "Snapshot format not allowed");
+  	}
+
+  	if (!defined $hash) {
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.6.4
