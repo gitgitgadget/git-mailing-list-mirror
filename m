@@ -1,70 +1,70 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: conflict status
-Date: Mon, 3 Aug 2009 20:17:33 +0200
-Message-ID: <200908032017.35101.trast@student.ethz.ch>
-References: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net> <fabb9a1e0908031037t16a828f6h4de9fb11bcc957fe@mail.gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] git-tag(1): Refer to git-check-ref-format(1) for <name>
+Date: Mon, 03 Aug 2009 21:20:02 +0300
+Message-ID: <87ab2gsqst.fsf@jondo.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael Wild <themiwi@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Aug 03 20:18:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: jari.aalto@cante.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 03 20:20:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY270-0004Cm-Nc
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 20:18:19 +0200
+	id 1MY297-0004wm-Mi
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 20:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510AbZHCSSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 14:18:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbZHCSSJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 14:18:09 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:53418 "EHLO gwse.ethz.ch"
+	id S1753123AbZHCSUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 14:20:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753113AbZHCSUT
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 14:20:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:36732 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752783AbZHCSSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 14:18:08 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 3 Aug
- 2009 20:18:07 +0200
-Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 3 Aug
- 2009 20:17:45 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
-In-Reply-To: <fabb9a1e0908031037t16a828f6h4de9fb11bcc957fe@mail.gmail.com>
+	id S1752880AbZHCSUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 14:20:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MY28s-0006oD-Vv
+	for git@vger.kernel.org; Mon, 03 Aug 2009 18:20:15 +0000
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 18:20:14 +0000
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 18:20:14 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.0.91 (gnu/linux)
+Cancel-Lock: sha1:I/ofvkv7S+ixeiesb321yicSZWg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124714>
 
-You wrote:
-> Heya,
-> 
-> On Mon, Aug 3, 2009 at 08:14, Michael Wild<themiwi@users.sourceforge.net> wrote:
-> > Generally speaking, I would like to know for each file with a conflict what
-> > it's status is, similar to what SVN does:
-> > - locally modified/created/deleted/...
-> > - remotely modified/created/deleted/...
-> 
-> Try 'git status' :),
+Explain briefly what characters are prohibited in tag <name>
+and point to git-check-ref-format(1) manual page for
+more information.
+---
+ Documentation/git-tag.txt |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-That only shows 'unmerged: foo' for me...
-
-The closest to porcelain I can get while still having all the
-information is
-
-  $ git ls-files -s foo
-  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 1       foo
-  100644 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 2       foo
-
-In other words, not porcelain at all.
-
-The third column is the stage: 1 for base, 2 for ours, 3 for theirs.
-So the above means that the file was changed between base and ours,
-and removed between base and theirs (as the entry is missing).
-
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index fa73321..1118ce2 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -17,7 +17,10 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ -----------
+-Adds a 'tag' reference in `.git/refs/tags/`
++
++Adds a 'tag' reference in `.git/refs/tags/`.  The tag <name> must pass
++linkgit:git-check-ref-format[1] which basicly means that control characters,
++space, ~, ^, :, ?, *, [ and \ are prohibited.
+ 
+ Unless `-f` is given, the tag must not yet exist in
+ `.git/refs/tags/` directory.
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.6.3.3
