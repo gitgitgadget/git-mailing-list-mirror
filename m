@@ -1,86 +1,164 @@
-From: Matt Di Pasquale <pasquale@fas.harvard.edu>
-Subject: git for pushing local subdir to website
-Date: Mon, 3 Aug 2009 13:11:13 -0400
-Message-ID: <13f0168a0908031011odd98c03ye08a1b0774fca523@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Working on gitweb (was: [PATCHv5] Add Gitweb support for XZ compressed snapshots)
+Date: Mon, 3 Aug 2009 19:26:11 +0200
+Message-ID: <200908031926.15255.jnareb@gmail.com>
+References: <B05AF655-7430-420A-A22E-389601558B0D@uwaterloo.ca> <9b18b3110908010313x38991dffx3e4a2f2a5c5fff9f@mail.gmail.com> <9b18b3110908010413w51e901dfk5a6f1666e5c3197f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 03 19:11:52 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 19:26:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY14Z-00013F-6w
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 19:11:43 +0200
+	id 1MY1Iw-0007f3-DP
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 19:26:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656AbZHCRLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 13:11:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZHCRLf
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 13:11:35 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:37789 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbZHCRLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 13:11:34 -0400
-Received: by fxm17 with SMTP id 17so2760523fxm.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 10:11:33 -0700 (PDT)
+	id S1752628AbZHCR0V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 13:26:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752530AbZHCR0V
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 13:26:21 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:38191 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362AbZHCR0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 13:26:20 -0400
+Received: by ewy10 with SMTP id 10so3203337ewy.37
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 10:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=2nyPHGNhEODTUk2XlgMtSWdTpvzFUrfFxlLUmkx3YSg=;
-        b=pQK+Kt/VwZ8McRiX+eX3NNGY272wDP1pQOVyd7HEt+3JePlSJQfo/0e1nXvQlNA9Pa
-         ieWw/BlG/Gzhwqe7jL8cNTq5v1LDOzi1XBi36EB+Y9m4H7rkHJw+AsV0Ag5hEWrgVh3X
-         PR1nttUXI15WO39I8+3wG3Q0EHcsHBdWd0vIM=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=wC4ckugMrV3yWLBvaEOka/hPsU64j37sNKptBniG48o=;
+        b=ZOfkjMgtBdjAK6Rm4DCzyorM1tS6TlY43nGcMkIt2A/gzNQT7xJeIKxpkWf5dfFkVy
+         jxyMqd5O19Z6zKpSs723HKNVBByNOWUpjRHGwtGKwFk7yO6mhPKTTgr7XHdqFJQPgTE9
+         jXMjB3knuoUwP3l3t2Zk2NsSzXlZ2MuMndvD8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        b=Xj9tmT2W9SHc+BKdT3t6bRj13YsbWJEf4vvXwDuDjhaPm1jSyeOU0x8KJILKK2p8db
-         IblJ92/BWivNPv4x6+sux3oje2B5+bIQZxA1tWQ/Q/9WlQ0MTP2kVTXHEY7e2kIWwoBX
-         KAZnuJl27USSisZ4leQ2J8mj1ijxf9J1lA2/M=
-Received: by 10.103.242.20 with SMTP id u20mr3654490mur.0.1249319493122; Mon, 
-	03 Aug 2009 10:11:33 -0700 (PDT)
-X-Google-Sender-Auth: 6317adf61073f363
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YxY0OZPnE1ZHR2E4pLMcm7aSR2CmXC1qSPKfTD2daQ0gyM2oN7Wn2J5bzL/U5ohXwK
+         Zaysy32vqgTRXriyEZoUra0CObuw5XDZMJMb6+01XqdPPKctcj2q6/z4805ngwRVh5yg
+         5pI+KxNZCyqINsr0KbO8dvg6mWBY7xFnkQZ6A=
+Received: by 10.211.202.14 with SMTP id e14mr7677775ebq.50.1249320380196;
+        Mon, 03 Aug 2009 10:26:20 -0700 (PDT)
+Received: from ?192.168.1.13? (abvc247.neoplus.adsl.tpnet.pl [83.8.200.247])
+        by mx.google.com with ESMTPS id 10sm283139eyd.12.2009.08.03.10.26.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Aug 2009 10:26:19 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <9b18b3110908010413w51e901dfk5a6f1666e5c3197f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124706>
 
-I made a post here about this here:
-http://stackoverflow.com/questions/600079/is-there-any-way-to-clone-a-git-repositorys-sub-directory-only/1223407#1223407
+Dnia sobota 1. sierpnia 2009 13:13, demerphq napisa=C5=82:
 
-Basically, I'm working alone on a website (well, it's a facebook
-app.). What's the best way to sync my local copy with my production?
-but i want the production to only be linked with the production subdir
-of my local project.
+> One thing i notice is that most/all of the existing repos are forks o=
+f git.
+>=20
+> And the changes are to gitweb.perl, persumably on the assumption that
+> people upgrade using the install process.
+>=20
+> That doesn't make it easy to track changes that are made to the
+> production version ("installed" version), unless im missing something=
+=2E
+>=20
+> How does one set up gitweb so that one can hack its sources and track
+> them in a sane way when you are not using make install-gitweb
+> (whatever) all the time?
 
-so, I have a local copy i'm working on that I've organized like so.
-call the project example. here are the dirs on my local comp. macbook.
+There are at least two possible options. First (that is the one I use)
+is to create script to update gitweb, which would run "make gitweb/gitw=
+eb.cgi",
+with appropriate option, then copy files, like gitweb-update.sh script =
+below.
 
-example -extra [this holds files i don't want to go to the webserver
-mainly for security reasons. files like .psd files or .sql files. or
-readme files. etc.] -example.com [this dir holds all the files i want
-on my server for production at http://example.com]
+Second option is to do like t/t9500* gitweb test, which means providing
+config file by using GITWEB_CONFIG environment variable, and set all=20
+required options/variables like $GIT via config file instead of via=20
+build time configuration.  See also gitweb-run.sh script below.
 
-i have local git repo here: example/.git
+-- [gitweb-update.sh] --
+#!/bin/bash
 
-now... how do i just push example.com and not extra and example.com?
+#BINDIR=3D"/usr/bin"
+BINDIR=3D"/home/local/git"
 
-do i need to make another git repo in example.com and make example.com
-a submodule?
+function make_gitweb()
+{
+	pushd "/home/jnareb/git/"
 
-i've also thought about using branches... a local branch and a
-production branch. but i only want one copy of the production files.
-because i want to be able to check out all the files and zip the dir
-and send it to someone to see.
+	make GITWEB_PROJECTROOT=3D"/home/local/scm" \
+	     GITWEB_CSS=3D"/gitweb/gitweb.css" \
+	     GITWEB_LOGO=3D"/gitweb/git-logo.png" \
+	     GITWEB_FAVICON=3D"/gitweb/git-favicon.png" \
+	     GITWEB_BLAMEJS=3D"/gitweb/blame.js" \
+	     GITWEB_HOMETEXT=3D"/home/local/scm/indextext.html" \
+	     bindir=3D$BINDIR \
+	     gitweb/gitweb.cgi
 
-that doesn't really make sense conceptually because example is one big
-project. extra is like extra files and example.com is like what i
-really want to go on web server...
+	popd
+}
 
-thanks!
+function copy_gitweb()
+{
+	cp -fv ~/git/gitweb/gitweb.{cgi,css} /home/local/gitweb/
+}
 
--matt
+make_gitweb
+copy_gitweb
+
+# end of gitweb-update.sh
+
+-- [gitweb-run.sh] --
+#!/bin/bash
+
+export GATEWAY_INTERFACE=3D"CGI/1.1"
+export HTTP_ACCEPT=3D"*/*"
+export REQUEST_METHOD=3D"GET"
+export QUERY_STRING=3D""$1""
+export PATH_INFO=3D""$2""
+
+export GITWEB_CONFIG=3D"~/git/gitweb/gitweb_config.perl"
+
+perl -- ~/git/gitweb/gitweb.perl
+
+-- [gitweb_config.perl] --
+#!/usr/bin/perl
+
+# gitweb configuration
+
+our $version =3D "current";
+#our $GIT =3D "/usr/bin/git";
+our $GIT =3D "/home/local/git/git";
+our $projectroot =3D "/home/local/scm";
+our $home_link_str =3D "projects";
+our $site_name =3D "[localhost]";
+our $site_header =3D "";
+our $site_footer =3D "";
+our $home_text =3D "indextext.html";
+our @stylesheets =3D ("file:///home/user/git/gitweb/gitweb.css");
+our $logo =3D "file:///home/user/git/gitweb/git-logo.png";
+our $favicon =3D "file:///home/user/git/gitweb/git-favicon.png";
+our $blamejs =3D "file:///home/user/git/gitweb/blame.js";
+our $projects_list =3D "";
+our $export_ok =3D "";
+our $strict_export =3D "";
+our $project_maxdepth =3D 2007;
+our @git_base_url_list =3D ("/home/user/git");
+
+$feature{'blame'}{'default'} =3D [1];
+$feature{'grep'}{'default'} =3D [1];
+$feature{'pickaxe'}{'default'} =3D [1];
+
+# end of gitweb_config.perl
+--=20
+Jakub Narebski
+Poland
