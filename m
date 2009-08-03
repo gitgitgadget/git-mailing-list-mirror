@@ -1,154 +1,85 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] gitk: new option to hide remote refs
-Date: Mon, 3 Aug 2009 23:53:36 +0200
-Message-ID: <55b7e43bcd59aa64c70edde83ac87147aa0091bb.1249336225.git.trast@student.ethz.ch>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: Please make git-am handle \r\n-damaged patches
+Date: Mon, 3 Aug 2009 15:56:31 -0600
+Organization: icecavern.net
+Message-ID: <200908031556.35634.wjl@icecavern.net>
+References: <4A7735B0.2040703@zytor.com> <7vocqw8u0x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thell Fowler <tbfowler4@gmail.com>, <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Aug 03 23:54:00 2009
+Content-Type: multipart/signed;
+  boundary="nextPart56801711.K56hDTdAY4";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 23:56:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY5Tj-0000P3-DS
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 23:53:59 +0200
+	id 1MY5WS-0001Vf-Cr
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 23:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932230AbZHCVxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 17:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754667AbZHCVxv
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 17:53:51 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:53482 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753181AbZHCVxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 17:53:50 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 3 Aug
- 2009 23:53:48 +0200
-Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 3 Aug
- 2009 23:53:48 +0200
-X-Mailer: git-send-email 1.6.4.251.g3362f
+	id S1753022AbZHCV4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 17:56:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbZHCV4k
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 17:56:40 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:56688 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751194AbZHCV4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 17:56:40 -0400
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 299F635B4F;
+	Mon,  3 Aug 2009 23:56:38 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.29-2-amd64; KDE/4.2.2; x86_64; ; )
+In-Reply-To: <7vocqw8u0x.fsf@alter.siamese.dyndns.org>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124726>
 
-In repositories with lots of remotes, looking at the history in gitk
-can be borderline insane with all the red labels for remote refs.
-Introduce a new option in the preferences that hides them.
+--nextPart56801711.K56hDTdAY4
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-Wished-for-by: Thell Fowler <tbfowler4@gmail.com>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+On Monday 03 August 2009 15:30:38 Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> > In a serious case of craniorectal immersion, the Thunderbird developers
+> > have started using \r\n line endings on saved emails:
+> >
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=3D503271
+> > https://bugzilla.mozilla.org/show_bug.cgi?id=3D507530
+> >
+> > It would be nice if git-am could handle this case automatically.
+>
+> Perhaps
+>
+>     $ dos2unix *.eml | git am
 
-I hope the IRC-to-mail matching worked out right.  I needed this too,
-for a repo where I deploy for testing directly through git (with
-hooks) -- to several machines, resulting in a forest of remote labels.
+I didn't try it, but would "git am" with "apply.whitespace" and=20
+"core.whitespace" set in some reasonable manner help? Not "automatic", but=
+=20
+may help if dos2unix isn't available for some reason.
 
+--nextPart56801711.K56hDTdAY4
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
- gitk |   18 +++++++++++++++---
- 1 files changed, 15 insertions(+), 3 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-diff --git a/gitk b/gitk
-index 4604c83..aabebac 100755
---- a/gitk
-+++ b/gitk
-@@ -1677,6 +1677,7 @@ proc readrefs {} {
-     global tagids idtags headids idheads tagobjid
-     global otherrefids idotherrefs mainhead mainheadid
-     global selecthead selectheadid
-+    global hideremotes
- 
-     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
- 	catch {unset $v}
-@@ -1689,7 +1690,7 @@ proc readrefs {} {
- 	if {![string match "refs/*" $ref]} continue
- 	set name [string range $ref 5 end]
- 	if {[string match "remotes/*" $name]} {
--	    if {![string match "*/HEAD" $name]} {
-+	    if {![string match "*/HEAD" $name] && !$hideremotes} {
- 		set headids($name) $id
- 		lappend idheads($id) $name
- 	    }
-@@ -2520,6 +2521,7 @@ proc savestuff {w} {
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
-     global autoselect extdifftool perfile_attrs markbgcolor
-+    global hideremotes
- 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -2539,6 +2541,7 @@ proc savestuff {w} {
- 	puts $f [list set wrapcomment $wrapcomment]
- 	puts $f [list set autoselect $autoselect]
- 	puts $f [list set showneartags $showneartags]
-+	puts $f [list set hideremotes $hideremotes]
- 	puts $f [list set showlocalchanges $showlocalchanges]
- 	puts $f [list set datetimeformat $datetimeformat]
- 	puts $f [list set limitdiffs $limitdiffs]
-@@ -10383,6 +10386,7 @@ proc doprefs {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
-     global tabstop limitdiffs autoselect extdifftool perfile_attrs
-+    global hideremotes
- 
-     set top .gitkprefs
-     set prefstop $top
-@@ -10391,7 +10395,7 @@ proc doprefs {} {
- 	return
-     }
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs} {
-+		   limitdiffs tabstop perfile_attrs hideremotes} {
- 	set oldprefs($v) [set $v]
-     }
-     toplevel $top
-@@ -10423,6 +10427,9 @@ proc doprefs {} {
-     checkbutton $top.ntag -text [mc "Display nearby tags"] \
- 	-font optionfont -variable showneartags
-     grid x $top.ntag -sticky w
-+    checkbutton $top.hideremotes -text [mc "Hide remote refs"] \
-+	-font optionfont -variable hideremotes
-+    grid x $top.hideremotes -sticky w
-     checkbutton $top.ldiff -text [mc "Limit diffs to listed paths"] \
- 	-font optionfont -variable limitdiffs
-     grid x $top.ldiff -sticky w
-@@ -10547,7 +10554,7 @@ proc prefscan {} {
-     global oldprefs prefstop
- 
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs} {
-+		   limitdiffs tabstop perfile_attrs hideremotes} {
- 	global $v
- 	set $v $oldprefs($v)
-     }
-@@ -10561,6 +10568,7 @@ proc prefsok {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global fontpref mainfont textfont uifont
-     global limitdiffs treediffs perfile_attrs
-+    global hideremotes
- 
-     catch {destroy $prefstop}
-     unset prefstop
-@@ -10606,6 +10614,9 @@ proc prefsok {} {
- 	  $limitdiffs != $oldprefs(limitdiffs)} {
- 	reselectline
-     }
-+    if {$hideremotes != $oldprefs(hideremotes)} {
-+	rereadrefs
-+    }
- }
- 
- proc formatdate {d} {
-@@ -11011,6 +11022,7 @@ set mingaplen 100
- set cmitmode "patch"
- set wrapcomment "none"
- set showneartags 1
-+set hideremotes 0
- set maxrefs 20
- set maxlinelen 200
- set showlocalchanges 1
--- 
-1.6.4.249.gea1ec
+iEYEABECAAYFAkp3XQ8ACgkQ8KmKTEzW49I2NQCfXbnsCmHqL0drJkyW6zBT+gn3
+WYoAn3ExjwTyqEpHWMdnbcy0kiTXylWb
+=853S
+-----END PGP SIGNATURE-----
+
+--nextPart56801711.K56hDTdAY4--
