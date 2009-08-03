@@ -1,70 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Working on Git on MS Windows
-Date: Mon, 3 Aug 2009 15:19:25 -0700
-Message-ID: <fabb9a1e0908031519n5ebbfdd2i28bf91970f4648d2@mail.gmail.com>
-References: <d411cc4a0908030753r7bbe4038lf05c416530db46ed@mail.gmail.com> 
-	<m38wi0rine.fsf_-_@localhost.localdomain> <742707500908030906h12f29050hd792911e9c74e635@mail.gmail.com> 
-	<200908031828.42426.jnareb@gmail.com> <alpine.DEB.1.00.0908040005170.8306@pacific.mpi-cbg.de>
+From: skillzero@gmail.com
+Subject: How to fetch all remote branches from remote?
+Date: Mon, 3 Aug 2009 15:20:43 -0700
+Message-ID: <2729632a0908031520n71514fffne0667c6b229f836f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Thiago Farina <thiago.farina@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 04 00:19:55 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 04 00:20:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY5so-000147-Lf
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:19:55 +0200
+	id 1MY5tj-0001Rs-EQ
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:20:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbZHCWTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 18:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754941AbZHCWTq
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:19:46 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:49080 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752922AbZHCWTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 18:19:45 -0400
-Received: by ewy10 with SMTP id 10so3416198ewy.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 15:19:45 -0700 (PDT)
+	id S1754993AbZHCWUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 18:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbZHCWUo
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:20:44 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:46101 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922AbZHCWUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 18:20:43 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1878620qwh.37
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 15:20:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NC4Pj3Cn42oSqygwDa9Z+bsk0Jd1gdyl9QDkL3X3x2E=;
-        b=E0DMsW010reKvrx8L1US2tu2UPsxxHK3ThrMp4o34zHG6pdoorscV58bAQn+SEaSJr
-         itfPnQCXLjlG+ojuQ84Thg5smOjRMOAmssBJTjFI1amT3IEPq6Tuu25wgWfCKQufXC1B
-         /Wv6r2ujAEhzRv92keiKcQkSLENc2w58lBpV4=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=/yg4QnMQO7U84dcCNyGvCCTmJJncNQfhqprulC8He9o=;
+        b=IHGhQ6rTdxh9bFUgB+djSPeIPz3NVJmibbrCeornmRQTLiBzsgt5i5eZU91y9Kc1zO
+         4VR6VVJQAEyMi5BfOzBPOB2en3m+F8b5RdtaF6cIw1rJf8bQ03TJ2+czTkgwn9zf0DT7
+         DUfS7is57vENj8dZ8+B3myQtruK8dkn7Lam3U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GEG81U8iFffabSUxnuR0eIiPP4R4ORi82/x+4WchmE+C1sTWX5j7Xaa+kjj4A1P1i+
-         zi4JMxnoZnDRa5ZkJePbh/B2sIHJZgl5Xa99r96XcajkXkuGS5J4QTpDHCHxLvoklaWA
-         HPrTwUB9Y6AsJO8qtDGL/iFv7WyWzT8TL0XEE=
-Received: by 10.216.90.74 with SMTP id d52mr1284327wef.51.1249337985092; Mon, 
-	03 Aug 2009 15:19:45 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908040005170.8306@pacific.mpi-cbg.de>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=sOEfzkob/l2Jn87C0eUAt5CVJgWqAdkKaDcQXtPomO9OejX4//1CVNPkLUrOHipWta
+         gsMwo7b62tDTS0HguS7LsXmz/PGR7W/Gt56EZGwnrezxgKdvmEP/+9hmvPIa9+4huHdZ
+         AqIJlpKqcKDMMH0WIEJmFCj9I6KR6jzTFF+So=
+Received: by 10.224.45.195 with SMTP id g3mr5329071qaf.168.1249338043901; Mon, 
+	03 Aug 2009 15:20:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124731>
 
-Heya,
+Is there a way to fetch all the remote branches of a remote? I have
+one computer that cloned a repository from a server and I want clone
+that computer's repository to another computer, but it only brings
+over the local branches from the clone. I'd like to also get all the
+remote branches so it's the same as if I had cloned directly from the
+server. Just as if I had cp -R'd the .git folder (except with the
+remote tracking info I get when I clone). The source computer's
+repository is using git-svn so I'm trying to make a copy of that
+repository in a way that I can just push and pull changes to the
+intermediate git svn repository then later do the final git svn
+dcommit.
 
-On Mon, Aug 3, 2009 at 15:07, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> I have no idea if that is possible, and I have no inclination to
-> install/buy MS Visual Studio to find out.
-
-You don't have to buy it to be able to install it, try the Express
-editions, they're free, and pretty feature complete :).
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Is the best way to just copy the whole .git folder to the destination
+computer and then add the original as a remote? That's a last resort
+for me because as new svn branches are created, I'd like to pick them
+up when I do git pull's from the second computer.
