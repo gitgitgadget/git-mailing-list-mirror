@@ -1,97 +1,94 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH 0/3] fast-import: add option command
-Date: Sun, 2 Aug 2009 21:31:54 -0700
-Message-ID: <fabb9a1e0908022131m454aee84laa5d276bba8b10e1@mail.gmail.com>
-References: <fabb9a1e0908011829j3843c132ka5081d994aad973f@mail.gmail.com> 
-	<1249189570-26576-1-git-send-email-srabbelier@gmail.com> <20090803001522.GE1033@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 03 06:32:28 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 3/3] rebase -i: use "git sequencer--helper --reset-hard"
+Date: Mon, 03 Aug 2009 04:40:22 +0200
+Message-ID: <20090803024023.3794.6487.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 06:43:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXpDn-0002Gt-FK
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 06:32:27 +0200
+	id 1MXpOk-0004to-J6
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 06:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752097AbZHCEcQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 00:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbZHCEcP
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 00:32:15 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:4901 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979AbZHCEcP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 00:32:15 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so878961eyd.37
-        for <git@vger.kernel.org>; Sun, 02 Aug 2009 21:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gBFS8D4DEHBQNFiqStyRzQtyJBozeiBkyK1MRMsV1Ww=;
-        b=lHRzb8GDaROgbz6mXfM30EF1i3f0j5i3iAY7N1Xh1myn/ugwgcuq/xrdwRPJFVV550
-         gJtrY049zs4Y0/5K5E2ATxLy9NH7Na635DL8Nrw73AwyDCXlRuE5CFcG+R0qTPaRaIzH
-         kasFpmWYqO1VGFMYklFb5YI0pUcGfFPcidvas=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=iOyrSZjX3NulSc+lMNIhuwj0Ow3egxRUBBIJw4RHP7TQ78B5/IFcUaAsFotHI2vwJ8
-         3/MYgu2CVivMZ3hUa2jI3p2xjZp9UUWvjChLqKAeIUmKratLfpMCVl3jklCKVWUGbQtv
-         XGtzBtN0o+UAAFQRoyrOOv4SH08Gs2nh4pFwA=
-Received: by 10.216.28.208 with SMTP id g58mr1159846wea.11.1249273934578; Sun, 
-	02 Aug 2009 21:32:14 -0700 (PDT)
-In-Reply-To: <20090803001522.GE1033@spearce.org>
+	id S1752229AbZHCEnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 00:43:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbZHCEnd
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 00:43:33 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:36797 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751241AbZHCEnc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 00:43:32 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6834981808F;
+	Mon,  3 Aug 2009 06:43:23 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 2B2AC818072;
+	Mon,  3 Aug 2009 06:43:21 +0200 (CEST)
+X-git-sha1: 1c15f3bd6f19b794c32d32685bd71b84afd415b7 
+X-Mailer: git-mail-commits v0.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124683>
 
-Heya,
+instead of "git reset --hard"
 
-On Sun, Aug 2, 2009 at 17:15, Shawn O. Pearce<spearce@spearce.org> wrot=
-e:>
-> Since you are changing the language format, please also update the
-> documentation of the language.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-rebase--interactive.sh |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
 
-Of course, but I wanted to know whether the change'd be accepted first =
-:).
-
-> It might be cleaner to say "option foo=3Dvalue\n" because then the
-> if block to parse the command line and the if block to parse the
-> input stream are the same. =A0When parsing argv just skip the "--"
-> and pass the rest of the argv value into the function, when parsing
-> the stream, just skip the "option " and pass the rest of the line
-> into the function.
-
-sounds like a good idea, will do.
-
-> This has come up before on the list. =A0We had somewhat decided again=
-st
-> setting options in the stream header. =A0The only option class that
-> really impacts the data itself is the date format, all others
-> are about local file paths or how noisy the command should be.
-> Thus we decided that the frontend should invoke `git fast-import`
-> itself if it cared about these options, and that's what any typical
-> frontend does.
-
-Hmmm, yes, I guess that's possible, but that would require the
-frontend to shell out, whereas the option-based approach is easier to
-the user without requiring the frontend to know how to invoke git. And
-while the only option that impacts the data format is the date format,
-the import and export marks are very relevant when the frontend wants
-to do post-processing of the exported repository. I guess the question
-is, do we want to require frontends to create a wrapper around
-'frontend | git fast-import --all-my=3Doptions', or is just "fronted |
-git fast-import" desirable enough that we want to allow this?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index c9c75c0..0041994 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -154,7 +154,8 @@ pick_one () {
+ 		die "Could not get the parent of $sha1"
+ 	current_sha1=$(git rev-parse --verify HEAD)
+ 	if test "$no_ff$current_sha1" = "$parent_sha1"; then
+-		output git reset --hard $sha1
++		git sequencer--helper --reset-hard $sha1 \
++			"$GIT_REFLOG_ACTION" "$VERBOSE"
+ 		test "a$1" = a-n && output git reset --soft $current_sha1
+ 		sha1=$(git rev-parse --short $sha1)
+ 		output warn Fast forward to $sha1
+@@ -238,7 +239,8 @@ pick_one_preserving_merges () {
+ 	case $fast_forward in
+ 	t)
+ 		output warn "Fast forward to $sha1"
+-		output git reset --hard $sha1 ||
++		git sequencer--helper --reset-hard $sha1 \
++			"$GIT_REFLOG_ACTION" "$VERBOSE" ||
+ 			die "Cannot fast forward to $sha1"
+ 		;;
+ 	f)
+@@ -536,7 +538,8 @@ first and then run 'git rebase --continue' again."
+ 			git symbolic-ref HEAD $HEADNAME
+ 			;;
+ 		esac &&
+-		output git reset --hard $HEAD &&
++		git sequencer--helper --reset-hard $HEAD \
++			"$GIT_REFLOG_ACTION" "$VERBOSE" &&
+ 		rm -rf "$DOTEST"
+ 		exit
+ 		;;
+@@ -548,7 +551,9 @@ first and then run 'git rebase --continue' again."
+ 		git rerere clear
+ 		test -d "$DOTEST" || die "No interactive rebase running"
+ 
+-		output git reset --hard && do_rest
++		git sequencer--helper --reset-hard HEAD \
++			"$GIT_REFLOG_ACTION" "$VERBOSE" &&
++		do_rest
+ 		;;
+ 	-s)
+ 		case "$#,$1" in
+-- 
+1.6.4.133.g8a5c8
