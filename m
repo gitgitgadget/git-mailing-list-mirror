@@ -1,180 +1,115 @@
-From: Matt Di Pasquale <pasquale@fas.harvard.edu>
-Subject: Re: git for pushing local subdir to website
-Date: Mon, 3 Aug 2009 15:13:43 -0400
-Message-ID: <13f0168a0908031213r59a9ea61m824ca7e5209962fc@mail.gmail.com>
-References: <13f0168a0908031011odd98c03ye08a1b0774fca523@mail.gmail.com> 
-	<200908031201.41039.wjl@icecavern.net> <13f0168a0908031109h10c02424l91938918639c6a57@mail.gmail.com> 
-	<200908031258.13787.wjl@icecavern.net>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: From P4 to Git
+Date: Tue, 04 Aug 2009 08:32:20 +1200
+Message-ID: <1249331540.12801.10.camel@maia.lan>
+References: <85ljm84lat.fsf@oqube.com>
+	 <m3fxcg3473.fsf@localhost.localdomain> <85r5vxbd8e.fsf@oqube.com>
+	 <200907311122.43918.jnareb@gmail.com>
+	 <81b0412b0907310414x7157fecey947da960ff8be1cc@mail.gmail.com>
+	 <4A76967B.7080502@vilain.net>
+	 <81b0412b0908030147i34a7440dg982c7a6e7dc51bca@mail.gmail.com>
+	 <1249299010.7164.8.camel@maia.lan>
+	 <81b0412b0908030650oc39f4a3s7c059e300b65addb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Mon Aug 03 21:14:46 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Arnaud Bailly <abailly@oqube.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 22:31:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY2zd-0002zE-KV
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 21:14:46 +0200
+	id 1MY4Bz-0002oq-Dd
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 22:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754506AbZHCTOG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 15:14:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754350AbZHCTOF
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 15:14:05 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:37578 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754497AbZHCTOE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 15:14:04 -0400
-Received: by bwz19 with SMTP id 19so2629752bwz.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 12:14:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=1rPpDRm6/We8YWFFZAhnUWp6UZIhx0vPR6zcnNbKpG0=;
-        b=OECKi5Bw44J75d9ehuFlSDy+o54Ry/gHMpoAi3KyQrOrJBajX+OUALtQLq87pImBiK
-         0aIIlEHcutHq7+OQxia8EK2SpZEKgytJXV54QK6maR1kVOddQ/Z3va9px5DHwdLaxYUf
-         eaAq6V+Zk+eomMDB1cjThiG+VOOuLHd9NWDOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=KlhDGdonJqTU14k5KvHDF/NrGggOsMgpSBbizmRHhb9u9Tg4sVUsjw+ER8h/ZOoti8
-         X73R3FN7UwkFwpt4eu86OWUfckOjzuM1YJ3kSaTnLfboG2Gu61vBhaSuhDGROreTl4B/
-         +Y+W58N9X+ScJ08OarOauqPRmF/H0Z2I+uuRs=
-Received: by 10.103.1.4 with SMTP id d4mr1902871mui.53.1249326843069; Mon, 03 
-	Aug 2009 12:14:03 -0700 (PDT)
-In-Reply-To: <200908031258.13787.wjl@icecavern.net>
-X-Google-Sender-Auth: 43cfb6e87db5cda6
+	id S1753607AbZHCUbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 16:31:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbZHCUbU
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 16:31:20 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:38939 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752074AbZHCUbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 16:31:19 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 1897221C5DC; Tue,  4 Aug 2009 08:30:46 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 8EBC621C381;
+	Tue,  4 Aug 2009 08:30:30 +1200 (NZST)
+In-Reply-To: <81b0412b0908030650oc39f4a3s7c059e300b65addb@mail.gmail.com>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124720>
 
-wow. thanks. that gave me some good ideas.
-i think u were right about rsync. it was pretty easy to set up.
-assuming the name of my app is myapp, i just put the following alias
-in my ~/.bash_profile on my local machine.
+On Mon, 2009-08-03 at 15:50 +0200, Alex Riesen wrote:
+> On Mon, Aug 3, 2009 at 13:30, Sam Vilain<sam@vilain.net> wrote:
+> > On Mon, 2009-08-03 at 10:47 +0200, Alex Riesen wrote:
+> >> Is it an import-once tool, or can the process be restarted? (because it looks
+> >> like the script needs a complicated setup).
+> >
+> > It's fully restartable.  Not only that but it uses transaction
+> > protection to make sure that its internal state doesn't get corrupted
+> > when performing the various options.
+> 
+> "varios options"? Operations? As when working on a live server?
+> Aren't P4 changelist numbers always increasing? Or you mean
+> the protection against multiple running instances of p4raw,
+> so it is also parallelizable?
 
-alias mapush=3D'rsync -e ssh -av --exclude=3D".DS_Store"
-~/Projects/myapp/myapp.com/
-matt@mattdipasquale.com:projects/myapp.com/'
+The "live" parts are never touched - only the write-only files that
+perforce writes; and the rcs files are read using rcs.
 
-btw, is there a way to make aliases that are local to certain
-directories? like typing mapush works from any directory. what if i
-just wanted the alias to be push and only work from within
-~/Projects/myapp? is that possible?
+What I was referring to by "various options" was the commands in the
+program which perform the migration.  It's a multi-step process - load
+the metadata from perforce 'load', import the file images to git blobs
+'export-blobs', trace through the path structure and decide which parts
+are the roots, and make parents 'find-branches', etc.  All parts are
+fully transaction protected, restartable and rewindable.  It also means
+that if a command crashes that you are left in a sane state.  I had to
+build it like that to keep my sanity writing and using it :-).  After
+all it was something of a reverse engineering of Perforce's internals.
 
-those aren't the actual paths i used. but u get the point.
-then i just type mapush and it does it.
+All you need is the RCS backing files, a 'checkpoint' and (optionally)
+'journal' files.  No access to the live perforce DBs is required.
 
-and i just use a local git repository in ~/Projects/myapp/.git to
-track local changes since none are made on the server... so i don't
-need a git repo there like u said...
+> > No, it's server only. ...
+> Darn. I hoped it wasn't. Can't play with it, then.
 
-it's pretty fast. but will rsync be okay if i decide to move files
-around a bit? i know git is pretty good about that. and what if i
-delete certain files? will rsync delete them... like git does? guess
-i'll figure those questions out in time.
+Yeah, in theory you could derive the internal table information by
+issuing zillions of 'p4 integrated', 'p4 filelog' commands etc.  I've
+written p4raw sub-commands which can produce the output of those
+commands but not tried to go the other way; I wasn't interested.
 
-thanks!
+> > ... I think I did get around to implementing not having
+> > to go through all the stages for branches you didn't care to import.  It's
+> > difficult though, the stage which correlates those thousands of 'integrate'
+> > records is never going to be fast.
+> Maybe if it is done locally, it can be improved? You seem to use the
+> Postgre for lookups, right?
 
--matt
+I'm sure that the queries could be improved, but Postgres is actually
+quite good at crunching the numbers.  It's just a lot of data to crunch.
 
+> That's were I hoped your project could help. I thought, if I pull in all the
+> needed changelists (selected by path/CL), there may be a way to
+> recreate a mergeable history out of this dump. At least, one involving less
+> labor then I have to do now.
 
-On Mon, Aug 3, 2009 at 2:58 PM, Wesley J. Landaker<wjl@icecavern.net> w=
-rote:
-> On Monday 03 August 2009 12:09:26 Matt Di Pasquale wrote:
->> yes... i've thought of that. that's a good idea. i just love git and
->> i've never really used rsync. how do i do that?
->> i'll go google it..
->
-> Rsync can do a lot of things, but the usual easy way to do it is to d=
-o
-> something like this to send files via rsync over an ssh connection:
->
-> rsync -av /some_dir/ user@host:/some_dir/
->
-> This is essentially the same as using scp, but rsync saves a lot of n=
-etwork
-> bandwidth by only sending the changes between the source and destinat=
-ion.
->
->> i guess it would also be nice to use git though incase i decide i wa=
-nt
->> a collaborator, right?
->
-> Setting things up to have a collaboration is kind of orthogonal to
-> installing a production version of your app, but you could use the sa=
-me
-> server (and possibly the same git repository) for both things if you =
-wanted
-> to.
->
-> Here an example of one way to do it:
->
-> On the server you could have a normal git repository in, say,
-> /home/me/myapp, and it always has the "production" branch checked out=
-=2E So
-> now the following directories are interesting:
->
-> /home/me/myapp =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-- rep=
-ository branch w/ "production" checked out
-> /home/me/myapp/.git =C2=A0 =C2=A0 =C2=A0 =C2=A0 -- the actual bare gi=
-t repository
-> /home/me/myapp/example.com/ -- the files that the web server should s=
-ee
->
-> Now, you can use symlinks (or web-server configuration) to point the
-> webserver to the right locations, for example:
->
-> http://example.com/myapp/ =C2=A0 =C2=A0 -- link to /home/me/myapp/exa=
-mple.com/
-> http://example.com/myapp.git/ -- link to /home/me/myapp/.git/
->
-> Now, collaborators can pull from the http://example.com/myapp.git and=
- get
-> the whole project, but access to http://example.com/myapp/ sees the
-> example.com subdir as it's root, and everything works normally (assum=
-ing
-> webserver configuration & permissions are correct).
->
-> Now you work on whatever branches you want, and push to the server wh=
-enever
-> you want for collaboration using whatever branches you want. As far a=
-s the
-> webserver is concerned, nothing changes when you do a push.
->
-> Then, when you are ready to change the website, you put your producti=
-on
-> changes on the "production" branch, push them, and make sure they are
-> checked out on the server (git push doesn't automatically check out t=
-he
-> files), e.g.:
->
-> client$ # just made changes in production branch and want them "live"
-> client$ git push
->
-> server$ cd /home/me/myapp
-> server$ git reset --hard
->
->> how would u set it up?
->
-> Personally, I might set something like this if I had a good reason, b=
-ut
-> otherwise, I'd host my git repository for collaboration separately, a=
-nd just
-> use rsync to install production files on the server. For one thing, t=
-hat
-> needs less prerequisites and setup on the server, so it's good if you=
- don't
-> fully control the server.
->
-> Either way, a "production" branch is a good idea so you know logicall=
-y
-> exactly what and when you released things live.
->
+Yeah... well the design of my tool is that it needs to have the perforce
+internal information.  But really you can probably consider the
+converter orphaned, I have no current need to work on it; it served a
+purpose, which was converting perl's perforce to perl.git, and that's
+history now.
+
+Sam
