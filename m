@@ -1,83 +1,77 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Mon, 3 Aug 2009 08:36:38 +0100
-Message-ID: <57518fd10908030036l22ccdcf1va2e8ee450c4f5ee5@mail.gmail.com>
-References: <20090731104602.15375.qmail@science.horizon.com> 
-	<20090803034741.23415.qmail@science.horizon.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: From P4 to Git
+Date: Mon, 03 Aug 2009 19:49:15 +1200
+Message-ID: <4A76967B.7080502@vilain.net>
+References: <85ljm84lat.fsf@oqube.com> <m3fxcg3473.fsf@localhost.localdomain>	 <85r5vxbd8e.fsf@oqube.com> <200907311122.43918.jnareb@gmail.com> <81b0412b0907310414x7157fecey947da960ff8be1cc@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, appro@fy.chalmers.se, appro@openssl.org
-To: George Spelvin <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 09:37:26 2009
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Arnaud Bailly <abailly@oqube.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 03 09:49:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXs6b-0008Fz-9f
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 09:37:13 +0200
+	id 1MXsIg-0004i0-53
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 09:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbZHCHg7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 03:36:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbZHCHg6
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 03:36:58 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:52867 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752390AbZHCHg6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 03:36:58 -0400
-Received: by gxk9 with SMTP id 9so5616097gxk.13
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 00:36:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=DY6rCckWCH5+SVwkV0SulfFeKOtS2IHRkQJEOXm7ZBo=;
-        b=eEgtyqhwoALuRSAGpxHGFS8du4Baf1TDO/wkGR0Q3k3h7F+ozd+ROhANgQvgCz7n+F
-         QwY2CU9aSLXEOQJi/E8a2l0YqDYvHn0z1cQm3xOy0LxNmUlM9c+tPti+gMjps2ZUhQuX
-         eqlw+ExtHWWbJZoXMHcrMIWSZ0C+OCSy7qPPc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=TevMVN3APP16uZptTgDtQKNgl97MS8NbovgRjXkDwRQK3gXxdQ8uLJOf/eneo6wFTe
-         XSEK6Q9SvJWfVOuieV0tuvLhnC8jGbPDvBiMakH7stDV71QR2Oyx16V9uUHDLsSfNXs2
-         lVC6HQZLUvYSTz2BtK9pTTcza9+W6wm7eVsfE=
-Received: by 10.150.225.14 with SMTP id x14mr159609ybg.32.1249285018092; Mon, 
-	03 Aug 2009 00:36:58 -0700 (PDT)
-In-Reply-To: <20090803034741.23415.qmail@science.horizon.com>
-X-Google-Sender-Auth: d5b9c4878960ae39
+	id S1752725AbZHCHtd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 03:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752706AbZHCHtc
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 03:49:32 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58974 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752678AbZHCHtc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 03:49:32 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 05C5E21C3F7; Mon,  3 Aug 2009 19:49:20 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 04BE721C3A9;
+	Mon,  3 Aug 2009 19:49:16 +1200 (NZST)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <81b0412b0907310414x7157fecey947da960ff8be1cc@mail.gmail.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124688>
 
-On Mon, Aug 3, 2009 at 4:47 AM, George Spelvin<linux@horizon.com> wrote=
-:
-> (Work in progress, state dump to mailing list archives.)
+Alex Riesen wrote:
+>> So it looks like you wouldn't _need_ to split source tree into separate
+>> smaller repositories for performance reasons.  Still it might be good
+>> idea to put separate (sub)projects into separate repositories.  But
+>> I guess you can do that even at later time (although it would be best
+>> to do this upfront).
+>>     
 >
-> This started when discussing git startup overhead due to the dynamic
-> linker. =C2=A0One big contributor is the openssl library, which is us=
-ed only
-> for its optimized x86 SHA-1 implementation. =C2=A0So I took a look at=
- it,
-> with an eye to importing the code directly into the git source tree,
-> and decided that I felt like trying to do better.
+> It looks like they use P4 branches. Which are NOT branches as Git
+> understands it (a line of history). The P4 "branches" are just directories
+> with some metadata regarding recording where the data in the directory
+> were before an act of "branching" (just a server-side recursive copy).
 >
+> In this case (and this must be, as there are no other branches in P4),
+> they'll have to split their repository.
 
-=46WIW, this doesn't work on OS X / Darwin.  'as' doesn't take a --32
-flag, it takes an -arch i386 flag.  After changing that, I get:
+p4's branches are 'close enough'.  My tool travels through the history
+of the repository forwards, detects paths where new content was placed
+and calls those roots.  When branching is detected (recorded
+file-by-file in perforce), it puts the branch source as a new parent. 
+When branches are 'integrated', it makes a fuzzy decision based on the
+number of outstanding merges it thinks are due, also based on a merge
+base calculation on the current view of the derived history.  It allows
+manual correction of this fuzzy information, and arbitrary grafting
+along the way.  Discrepancies between the fuzzy decision and the actual
+integration records are recorded in the commit log along with other
+metadata including the commit ID.
 
-as -arch i386  -o sha1-586.o sha1-586.s
-sha1-586.s:4:Unknown pseudo-op: .type
-sha1-586.s:4:Rest of line ignored. 1st junk character valued 115 (s).
-sha1-586.s:5:Alignment too large: 15. assumed.
-sha1-586.s:19:Alignment too large: 15. assumed.
-sha1-586.s:1438:Unknown pseudo-op: .size
-sha1-586.s:1438:Rest of line ignored. 1st junk character valued 115 (s)=
-=2E
-make: *** [sha1-586.o] Error 1
-
-- at which point I have no idea how to fix it.
+Sam
