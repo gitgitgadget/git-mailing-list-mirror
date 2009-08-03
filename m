@@ -1,61 +1,70 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Please make git-am handle \r\n-damaged patches
-Date: Mon, 03 Aug 2009 15:13:17 -0700
-Message-ID: <4A7760FD.8020705@zytor.com>
-References: <4A7735B0.2040703@zytor.com> <7vocqw8u0x.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Working on Git on MS Windows
+Date: Mon, 3 Aug 2009 15:19:25 -0700
+Message-ID: <fabb9a1e0908031519n5ebbfdd2i28bf91970f4648d2@mail.gmail.com>
+References: <d411cc4a0908030753r7bbe4038lf05c416530db46ed@mail.gmail.com> 
+	<m38wi0rine.fsf_-_@localhost.localdomain> <742707500908030906h12f29050hd792911e9c74e635@mail.gmail.com> 
+	<200908031828.42426.jnareb@gmail.com> <alpine.DEB.1.00.0908040005170.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 00:13:27 2009
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Thiago Farina <thiago.farina@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 04 00:19:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY5mY-0007LN-1L
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:13:26 +0200
+	id 1MY5so-000147-Lf
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932193AbZHCWNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 18:13:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754798AbZHCWNU
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:13:20 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:47132 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754158AbZHCWNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 18:13:19 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.14.3/8.14.1) with ESMTP id n73MDICx012484
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Mon, 3 Aug 2009 15:13:18 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1b3pre) Gecko/20090513 Fedora/3.0-2.3.beta2.fc11 Thunderbird/3.0b2
-In-Reply-To: <7vocqw8u0x.fsf@alter.siamese.dyndns.org>
-X-Virus-Scanned: ClamAV 0.94.2/9648/Mon Aug  3 06:27:08 2009 on terminus.zytor.com
-X-Virus-Status: Clean
+	id S1754952AbZHCWTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 18:19:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754941AbZHCWTq
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:19:46 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:49080 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922AbZHCWTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 18:19:45 -0400
+Received: by ewy10 with SMTP id 10so3416198ewy.37
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 15:19:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NC4Pj3Cn42oSqygwDa9Z+bsk0Jd1gdyl9QDkL3X3x2E=;
+        b=E0DMsW010reKvrx8L1US2tu2UPsxxHK3ThrMp4o34zHG6pdoorscV58bAQn+SEaSJr
+         itfPnQCXLjlG+ojuQ84Thg5smOjRMOAmssBJTjFI1amT3IEPq6Tuu25wgWfCKQufXC1B
+         /Wv6r2ujAEhzRv92keiKcQkSLENc2w58lBpV4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=GEG81U8iFffabSUxnuR0eIiPP4R4ORi82/x+4WchmE+C1sTWX5j7Xaa+kjj4A1P1i+
+         zi4JMxnoZnDRa5ZkJePbh/B2sIHJZgl5Xa99r96XcajkXkuGS5J4QTpDHCHxLvoklaWA
+         HPrTwUB9Y6AsJO8qtDGL/iFv7WyWzT8TL0XEE=
+Received: by 10.216.90.74 with SMTP id d52mr1284327wef.51.1249337985092; Mon, 
+	03 Aug 2009 15:19:45 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908040005170.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124730>
 
-On 08/03/2009 02:30 PM, Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
->> In a serious case of craniorectal immersion, the Thunderbird developers
->> have started using \r\n line endings on saved emails:
->>
->> https://bugzilla.mozilla.org/show_bug.cgi?id=503271
->> https://bugzilla.mozilla.org/show_bug.cgi?id=507530
->>
->> It would be nice if git-am could handle this case automatically.
-> 
-> Perhaps
-> 
->     $ dos2unix *.eml | git am
-> 
+Heya,
 
-Yes, that's what they suggested, too.  Like I need an extra step in my
-patch process.
+On Mon, Aug 3, 2009 at 15:07, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> I have no idea if that is possible, and I have no inclination to
+> install/buy MS Visual Studio to find out.
 
-	-hpa
+You don't have to buy it to be able to install it, try the Express
+editions, they're free, and pretty feature complete :).
+
+-- 
+Cheers,
+
+Sverre Rabbelier
