@@ -1,94 +1,67 @@
-From: Thiago Farina <thiago.farina@gmail.com>
-Subject: Re: Working on Git on MS Windows (was: Re: Git Logo)
-Date: Mon, 3 Aug 2009 13:06:49 -0300
-Message-ID: <742707500908030906h12f29050hd792911e9c74e635@mail.gmail.com>
-References: <d411cc4a0908030753r7bbe4038lf05c416530db46ed@mail.gmail.com>
-	 <742707500908030807k138c3fcco58ccc8af26c37d7d@mail.gmail.com>
-	 <m38wi0rine.fsf_-_@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 18:07:02 2009
+From: Michael Wild <themiwi@users.sourceforge.net>
+Subject: conflict status
+Date: Mon, 3 Aug 2009 17:14:00 +0200
+Message-ID: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 03 18:24:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY03x-0003Px-LP
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 18:07:02 +0200
+	id 1MY0KU-0002VB-2D
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 18:24:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755371AbZHCQGw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 12:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755367AbZHCQGw
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 12:06:52 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:40090 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755348AbZHCQGv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 12:06:51 -0400
-Received: by ewy10 with SMTP id 10so3140001ewy.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 09:06:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8707ADVJiFMs+83Ufi2M5bl2xBgySbPbu5fg9PGNVU0=;
-        b=RBCqyPP7pGgBUQc6UszM9LQXvqtiiO2KiS0Bw6bssrQR7aTOlyHG/3HJ69IA8cqehd
-         8g6TKBEoydEL4yKjdUTJqjoeJCJj+Q/0n4RQH7pq2Hwv7PuAgDadgRcx3xy8toiyNMM5
-         FUWK6Ll16xMqpoychX1Dbq6aHxdL9AgI6JV6A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sYCGqVWj+BSNJuan4x33WLX7/QlQZB4ik+w8NhCVhG8fpzJpNEC+JF5kEhvAZyUHNQ
-         jMhb79eJqx2liLbmkpeWXKcaXviFyh41ze4AAMDYViPPY38fJ4VY7OQILAjWZinAO1il
-         tSTsVC1i9BQ/yKkH8q7IrurOMFpamb5wZEwUk=
-Received: by 10.216.20.67 with SMTP id o45mr1294784weo.106.1249315610141; Mon, 
-	03 Aug 2009 09:06:50 -0700 (PDT)
-In-Reply-To: <m38wi0rine.fsf_-_@localhost.localdomain>
+	id S1755431AbZHCQXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 12:23:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755427AbZHCQXf
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 12:23:35 -0400
+Received: from mxout005.mail.hostpoint.ch ([217.26.49.184]:59351 "EHLO
+	mxout005.mail.hostpoint.ch" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755419AbZHCQXe (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 12:23:34 -0400
+X-Greylist: delayed 4174 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Aug 2009 12:23:34 EDT
+Received: from [10.0.2.20] (helo=asmtp002.mail.hostpoint.ch)
+	by mxout005.mail.hostpoint.ch with esmtp (Exim 4.69 (FreeBSD))
+	(envelope-from <themiwi@users.sourceforge.net>)
+	id 1MXzEe-0008UG-So
+	for git@vger.kernel.org; Mon, 03 Aug 2009 17:14:00 +0200
+Received: from [82.130.106.80] (helo=nynaeve.ifd.mavt.ethz.ch)
+	by asmtp002.mail.hostpoint.ch with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <themiwi@users.sourceforge.net>)
+	id 1MXzEe-000Cuu-NV
+	for git@vger.kernel.org; Mon, 03 Aug 2009 17:14:00 +0200
+X-Authenticated-Sender-Id: mi@miba.li
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124702>
 
-On Mon, Aug 3, 2009 at 1:02 PM, Jakub Narebski<jnareb@gmail.com> wrote:
-> Thiago Farina <thiago.farina@gmail.com> writes:
->
->> Hi guys,
->>
->> I'm new to git, I already downloaded the msysgit. I'm working with g=
-it
->> a couples weeks now. But I want to start debugging the git source co=
-de
->> in Windows. How can I do that? Can I do that using Visual Studio, or
->> there are other methods to debug git?
->>
->> Thanks all, great work!
->
-> First, please do not post unrelated message as a followup; this
-> message should be start of new thread, and have appropriate subject
-> (like the one above).
->
-> Second, do not toppost. =A0Third, only quote what is necessary.
->
->
-> Git uses GNU make as a build tool, so I am not sure if you can develo=
-p
-> Git with MS Visual Studio. =A0You should have GNU make installed if y=
-ou
-> have chosen appropriate version of msysGit (the one with developer
-> tools).
->
-Hi Jakub,
+Hi all
 
-Sorry for my mistakes, was the first time I posted to the
-mailling-list, and I didn't know about this rules.
-I can build the git with make which was installed by msysGit. But I
-want to debug, not only build.
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
->
+I'm merging two branches with a large number of conflicts.  
+Fortunately, there are many modified/deleted conflicts (locally  
+modified, remotely deleted), and I know that for those I want to pick  
+the deleted version. However, I can't seem to motivate GIT into  
+telling me for which of the conflicting files this is the case. I know  
+that git-mergetool somehow extracts this information, but looking at  
+the code, it seems to me that there must be an easier, user-level  
+method of obtaining this information.
+
+Generally speaking, I would like to know for each file with a conflict  
+what it's status is, similar to what SVN does:
+- locally modified/created/deleted/...
+- remotely modified/created/deleted/...
+
+Please excuse me if this is either trivial or has been answered many  
+times before, but neither perusing the man-pages, nor asking google  
+turned up anything remotely useful.
+
+Thanks for the help
+
+Michael
