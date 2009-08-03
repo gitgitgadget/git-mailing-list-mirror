@@ -1,65 +1,74 @@
-From: skillzero@gmail.com
-Subject: How to fetch all remote branches from remote?
-Date: Mon, 3 Aug 2009 15:20:43 -0700
-Message-ID: <2729632a0908031520n71514fffne0667c6b229f836f@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Please make git-am handle \r\n-damaged patches
+Date: Mon, 3 Aug 2009 15:21:46 -0700
+Message-ID: <fabb9a1e0908031521q579a9bf0ta834b2c9253e58e9@mail.gmail.com>
+References: <4A7735B0.2040703@zytor.com> <7vocqw8u0x.fsf@alter.siamese.dyndns.org> 
+	<4A7760FD.8020705@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 00:20:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 00:22:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY5tj-0001Rs-EQ
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:20:51 +0200
+	id 1MY5v2-0001wn-OH
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754993AbZHCWUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 18:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754987AbZHCWUo
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:20:44 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:46101 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752922AbZHCWUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 18:20:43 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1878620qwh.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 15:20:43 -0700 (PDT)
+	id S932249AbZHCWWI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 18:22:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754873AbZHCWWI
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:22:08 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:14111 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922AbZHCWWH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 Aug 2009 18:22:07 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so1029987eyd.37
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 15:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=/yg4QnMQO7U84dcCNyGvCCTmJJncNQfhqprulC8He9o=;
-        b=IHGhQ6rTdxh9bFUgB+djSPeIPz3NVJmibbrCeornmRQTLiBzsgt5i5eZU91y9Kc1zO
-         4VR6VVJQAEyMi5BfOzBPOB2en3m+F8b5RdtaF6cIw1rJf8bQ03TJ2+czTkgwn9zf0DT7
-         DUfS7is57vENj8dZ8+B3myQtruK8dkn7Lam3U=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+PJ0n791vAw4ovxQZEEdkfMZv6dFaBKN94HUPHXe88o=;
+        b=Bm204eH8jip2OD90dj+/WD9aPB7xGKHMxaAQRF47FWXrruSzlk4ug+n72JKpescx5J
+         GX1Zjp7MeNgTNeaugyptOhLlxv9OGIE5oo0ZEBx6/uxm9ZhdY0IDhh5cELICNsqWDhpE
+         uEcHPT0jo5GYrk1bMLfWE9RkKEzmAa0nQcqe8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=sOEfzkob/l2Jn87C0eUAt5CVJgWqAdkKaDcQXtPomO9OejX4//1CVNPkLUrOHipWta
-         gsMwo7b62tDTS0HguS7LsXmz/PGR7W/Gt56EZGwnrezxgKdvmEP/+9hmvPIa9+4huHdZ
-         AqIJlpKqcKDMMH0WIEJmFCj9I6KR6jzTFF+So=
-Received: by 10.224.45.195 with SMTP id g3mr5329071qaf.168.1249338043901; Mon, 
-	03 Aug 2009 15:20:43 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=ojxmfZi4ZDX9SYwND/RtcolGzjjV4UFRPW/QW3wXhp7L4/cTeYSyStrInroHcUVKmg
+         TMjfySXEHzw/MQiU4cf8Uv1hxuSfmNEl7XFkwZVhBsgSKQwxJkaH2pXAzzco+nBbrjEu
+         UnYNZY/qfrIqwOi36G9/pkGjn4fNFFIJLWSo4=
+Received: by 10.216.90.74 with SMTP id d52mr1284751wef.51.1249338126282; Mon, 
+	03 Aug 2009 15:22:06 -0700 (PDT)
+In-Reply-To: <4A7760FD.8020705@zytor.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124732>
 
-Is there a way to fetch all the remote branches of a remote? I have
-one computer that cloned a repository from a server and I want clone
-that computer's repository to another computer, but it only brings
-over the local branches from the clone. I'd like to also get all the
-remote branches so it's the same as if I had cloned directly from the
-server. Just as if I had cp -R'd the .git folder (except with the
-remote tracking info I get when I clone). The source computer's
-repository is using git-svn so I'm trying to make a copy of that
-repository in a way that I can just push and pull changes to the
-intermediate git svn repository then later do the final git svn
-dcommit.
+Heya,
 
-Is the best way to just copy the whole .git folder to the destination
-computer and then add the original as a remote? That's a last resort
-for me because as new svn branches are created, I'd like to pick them
-up when I do git pull's from the second computer.
+On Mon, Aug 3, 2009 at 15:13, H. Peter Anvin<hpa@zytor.com> wrote:
+> Yes, that's what they suggested, too. =A0Like I need an extra step in=
+ my
+> patch process.
+
+Write your own git-lazy-am.sh and put it in your path?
+
+cat > git-lazy-am.sh << EOF
+#!/bin/bash
+
+dos2unix "$@" | git am
+EOF
+
+--=20
+Cheers,
+
+Sverre Rabbelier
