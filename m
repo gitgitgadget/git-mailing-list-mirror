@@ -1,67 +1,111 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: conflict status
-Date: Mon, 3 Aug 2009 10:37:19 -0700
-Message-ID: <fabb9a1e0908031037t16a828f6h4de9fb11bcc957fe@mail.gmail.com>
-References: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Logo
+Date: Mon, 3 Aug 2009 19:48:48 +0200
+Message-ID: <200908031948.50545.jnareb@gmail.com>
+References: <d411cc4a0908030753r7bbe4038lf05c416530db46ed@mail.gmail.com> <m3d47criu5.fsf@localhost.localdomain> <alpine.LNX.2.00.0908031807430.17866@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael Wild <themiwi@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Aug 03 19:37:50 2009
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Kay Sievers <kay.sievers@suse.de>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Aug 03 19:49:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY1Tp-0004M9-Dy
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 19:37:49 +0200
+	id 1MY1eq-0000Lm-59
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 19:49:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752530AbZHCRhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 13:37:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752429AbZHCRhk
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 13:37:40 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:48340 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbZHCRhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 13:37:39 -0400
-Received: by ewy10 with SMTP id 10so3212148ewy.37
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 10:37:39 -0700 (PDT)
+	id S1752265AbZHCRsx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 Aug 2009 13:48:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbZHCRsx
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 13:48:53 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:44213 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbZHCRsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 13:48:52 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so986505eyd.37
+        for <git@vger.kernel.org>; Mon, 03 Aug 2009 10:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4V2vg5RfzQaSdN7i6b1+hTDqxI0KtwSXrMidW++PjqA=;
-        b=gOSsaASnCeiRtwRoLRYhdRxhQsTssv84Ne3ibcpKQp/DRMFqEFF5yufWwBar/NReoI
-         4H55CE5uQD45+FvQ39MhPBFNW50UvOhRTbviro7zYRB2rSutclIUwYFJ5qMTqL8+gqa7
-         IEer6qmeAme/h0GZzfX86eln40Y3yB9BBr61s=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VEQoHFAQFwhg4SXk5P5wlCQ1WWFJdSSeT+IaczUpP5k=;
+        b=CscsR4O1JYC0n7yIt4a4PAXItVym1b4Y/dj+XPTBPvUEbndP/Cw5jAzzgaF1ViNUsz
+         TPFP7cqNpO1N5VcBuVxPROXHJpTWoKPjeoIacy0r4+hBHBivtJ62zuqtAgMJnuXGqQf7
+         7dOU+DHAhhplLxTZyyiDh3CEwRWPKxL5MoLbE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=dBR0za7InpylE7I3nbaYs0HuIk4MCfwTGMJ7JkepwG/9SYMA6nd+HNVBsmkBDmfFwm
-         o9uNpjXDZ/w7O6PXVlB7CwlyWFPspX+KoQzOfKqfy67UKGwQuZ3z4mYcGkQcxzSX+wJ0
-         vLMv75zzFCoRreXQ60bvAV7B4ZQOvYaBmBXAA=
-Received: by 10.216.88.212 with SMTP id a62mr1231100wef.72.1249321059112; Mon, 
-	03 Aug 2009 10:37:39 -0700 (PDT)
-In-Reply-To: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=IoJDWOQaYzc8wMkEAgnuSNo4sHYR3rTTGoIk4gQ7wmiWGs7lI43Q2sMM8sXlsiyv2m
+         cyCVXj1dDGUZt2UJs7neSUE4gJzELLk8d++QAqwUHL6XOhy6myV8zBVF5vNgE5VImzNm
+         KwN4lGwf38FL7udGtCMTzMecmvwzt9c+H4ZxA=
+Received: by 10.216.54.72 with SMTP id h50mr1235466wec.28.1249321732321;
+        Mon, 03 Aug 2009 10:48:52 -0700 (PDT)
+Received: from ?192.168.1.13? (abvc247.neoplus.adsl.tpnet.pl [83.8.200.247])
+        by mx.google.com with ESMTPS id 10sm357794eyd.12.2009.08.03.10.48.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Aug 2009 10:48:51 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LNX.2.00.0908031807430.17866@reaper.quantumfyre.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124708>
 
-Heya,
+Dnia poniedzia=B3ek 3. sierpnia 2009 19:19, Julian Phillips napisa=B3:
+> On Mon, 3 Aug 2009, Jakub Narebski wrote:=20
+>> David Soria Parra <sn_@gmx.net> writes:
+>>> On 2009-08-03, Scott Chacon <schacon@gmail.com> wrote:
 
-On Mon, Aug 3, 2009 at 08:14, Michael Wild<themiwi@users.sourceforge.net> wrote:
-> Generally speaking, I would like to know for each file with a conflict what
-> it's status is, similar to what SVN does:
-> - locally modified/created/deleted/...
-> - remotely modified/created/deleted/...
+>>>> Who owns the copyright to the Git logo as seen here?
+>>>>
+>>>> http://git.or.cz/gitwiki/FrontPage?action=3DAttachFile&do=3Dget&ta=
+rget=3Dgit-logo.png
 
-Try 'git status' :),
+>> That doesn't help (much) to get to know who is the author of
+>> git_logo.png, and what license it is under.  I expect it to be GPLv2
+>> (or GPLv2 or later) licensed, like the rest of Git.
+>=20
+> The majority of the early commits to gitweb don't include any comment=
+s,=20
+> but I did find an early post from Kay to the mailing list lurking bur=
+ied=20
+> down there in my mail folder:
+>=20
+> http://article.gmane.org/gmane.comp.version-control.git/1075
+>=20
+> I guess that the logo referred to is the same one ...
 
--- 
-Cheers,
+Thanks a lot. The relevant part of mentioned email states:
 
-Sverre Rabbelier
+=46rom: Kay Sievers <kay.sievers <at> vrfy.org>
+KS> Many thanks to Christian Gierke for all the interface work, the nic=
+e
+KS> layout and the git logo.
+
+
+Now that you found this, I have remembered that at the top of gitweb
+code there is the following copyright statement:
+
+  # (C) 2005-2006, Kay Sievers <kay.sievers@vrfy.org>
+  # (C) 2005, Christian Gierke
+  #
+  # This program is licensed under the GPLv2
+
+which is then repeated in page header:
+
+  <!-- git web interface version $version, \
+  (C) 2005-2006, Kay Sievers <kay.sievers@vrfy.org>, Christian Gierke -=
+->
+
+--=20
+Jakub Narebski
+Poland
