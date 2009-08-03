@@ -1,76 +1,60 @@
-From: Matt Di Pasquale <pasquale@fas.harvard.edu>
-Subject: Re: git for pushing local subdir to website
-Date: Mon, 3 Aug 2009 14:09:26 -0400
-Message-ID: <13f0168a0908031109h10c02424l91938918639c6a57@mail.gmail.com>
-References: <13f0168a0908031011odd98c03ye08a1b0774fca523@mail.gmail.com> 
-	<200908031201.41039.wjl@icecavern.net>
+From: Semen Vadishev <Semen.Vadishev@gmail.com>
+Subject: Using both JGit and C Git
+Date: Mon, 03 Aug 2009 22:05:21 +0400
+Message-ID: <4A7726E1.2020501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Mon Aug 03 20:09:56 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 03 20:12:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY1yu-00014q-5G
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 20:09:56 +0200
+	id 1MY21U-000252-ET
+	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 20:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279AbZHCSJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 14:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbZHCSJr
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 14:09:47 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:50567 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783AbZHCSJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 14:09:46 -0400
-Received: by fxm28 with SMTP id 28so2667221fxm.17
-        for <git@vger.kernel.org>; Mon, 03 Aug 2009 11:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=8fJPLi0ncfd42Dvl2xA+bIQqr8mnsynsZ/+QtxYGpGI=;
-        b=kAIaRonZ1uBhDZ5FSM6tmvPSfSewXaMRxQww98lhsU24jYzQzKPJo6IO3EWN/GLJ4C
-         Gh5jHwErPkzEqM1iyTz+NuBBnXpdxqy1iUnL/TCYUTZbuknsMh+zv8of2uL/1xSsQsJr
-         nN9Qkg0GVK+AJj67unej5OmfXOnNrdHqUJXVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=xMuCFoj9Rn8nRaVXqN4aURGV7euJDfcWtOe/Sy1/WtKG9fCc5pIB630hFGCl6+mIuT
-         OXXiIcYCAzmRgXPlVGbcFIDAhny2E+PUXXuVuSuXPeWjPrrSAf0Aa1HGrqCEIri38CVx
-         uHKBncT/4JQdtHWmiwaPFWBHGmK4TWlKX+/YY=
-Received: by 10.103.182.3 with SMTP id j3mr3703221mup.54.1249322986039; Mon, 
-	03 Aug 2009 11:09:46 -0700 (PDT)
-In-Reply-To: <200908031201.41039.wjl@icecavern.net>
-X-Google-Sender-Auth: 6e29019afe0e3f73
+	id S1753500AbZHCSMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 14:12:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbZHCSMK
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 14:12:10 -0400
+Received: from mail.intellij.net ([213.182.181.98]:57477 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174AbZHCSMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 14:12:09 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Aug 2009 14:12:08 EDT
+Received: (qmail 11373 invoked by uid 89); 3 Aug 2009 18:05:27 -0000
+Received: by simscan 1.1.0 ppid: 10943, pid: 11365, t: 0.0156s
+         scanners: regex: 1.1.0
+Received: from unknown (HELO vs.labs.intellij.net) (172.26.240.171)
+  by mail.intellij.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 3 Aug 2009 18:05:27 -0000
+User-Agent: Thunderbird 2.0.0.22 (Macintosh/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124712>
 
-yes... i've thought of that. that's a good idea. i just love git and
-i've never really used rsync. how do i do that?
-i'll go google it..
-i guess it would also be nice to use git though incase i decide i want
-a collaborator, right?
-how would u set it up?
--matt
+Hello everyone,
 
-On Mon, Aug 3, 2009 at 2:01 PM, Wesley J. Landaker<wjl@icecavern.net> wrote:
-> On Monday 03 August 2009 11:11:13 Matt Di Pasquale wrote:
->> now... how do i just push example.com and not extra and example.com?
-> [...]
->> that doesn't really make sense conceptually because example is one big
->> project. extra is like extra files and example.com is like what i
->> really want to go on web server...
->
-> There are several ways to do this with git, but since you are not going to
-> make commits on the server itself, have you considered simply pushing the
-> production files you want with e.g. rsync?
->
+I'm working on git client written in Java. Now the application uses both
+implementations but our team is interested in switching to JGit
+completely some day. We consider that for the first version all
+read-only operations should be implemented with JGit and read-write
+functionality should use exec calls to git executable. We would keep
+that approach until we have even the smallest suspect that pure Java
+implementation could corrupt repository somehow. Also we have a number
+of read-write operations implemented with JGit and we will use them
+internally to collect more experience and to see if any problems will
+appear.
+
+Does anyone here already have any experience with using both JGit and C
+Git together. Is there any kind of test suites which allow to check
+JGit's behavior on different platforms comparing with native git. Is
+there any known issues/workarounds? Any feedback is much appreciated.
+
+I've noticed that such a question was raised here, but the answers are
+probably out of date now.
+
+Thanks in advance!
+-- Semyon.
