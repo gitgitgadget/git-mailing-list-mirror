@@ -1,91 +1,85 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Working on Git on MS Windows
-Date: Tue, 4 Aug 2009 00:07:01 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908040005170.8306@pacific.mpi-cbg.de>
-References: <d411cc4a0908030753r7bbe4038lf05c416530db46ed@mail.gmail.com> <m38wi0rine.fsf_-_@localhost.localdomain> <742707500908030906h12f29050hd792911e9c74e635@mail.gmail.com> <200908031828.42426.jnareb@gmail.com>
+Subject: Re: msysGit and SCons: broken?
+Date: Tue, 4 Aug 2009 00:13:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908040010220.8306@pacific.mpi-cbg.de>
+References: <4A772A43.8070503@dirk.my1.cc>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-111941174-1249337222=:8306"
-Cc: Thiago Farina <thiago.farina@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 00:06:51 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1099217918-1249337617=:8306"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+X-From: git-owner@vger.kernel.org Tue Aug 04 00:13:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MY5g9-00059f-Mp
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:06:50 +0200
+	id 1MY5mX-0007LN-A6
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 00:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932116AbZHCWGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 18:06:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754673AbZHCWGl
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:06:41 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56634 "HELO mail.gmx.net"
+	id S1754712AbZHCWNQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Aug 2009 18:13:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754158AbZHCWNQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 18:13:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38698 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752786AbZHCWGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 18:06:40 -0400
-Received: (qmail invoked by alias); 03 Aug 2009 22:06:40 -0000
+	id S1752786AbZHCWNP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Aug 2009 18:13:15 -0400
+Received: (qmail invoked by alias); 03 Aug 2009 22:13:15 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp056) with SMTP; 04 Aug 2009 00:06:40 +0200
+  by mail.gmx.net (mp002) with SMTP; 04 Aug 2009 00:13:15 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18wbXxID+IwkVk8cX/slcWUtDu6WkdR3yIKJ0vS/C
-	vUKfoFC4pYa9SX
+X-Provags-ID: V01U2FsdGVkX18z/y8YVg0z00fyto4apjzaq70whY08er3LbeeLA8
+	mnjuPLnB8s6EyQ
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200908031828.42426.jnareb@gmail.com>
+In-Reply-To: <4A772A43.8070503@dirk.my1.cc>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124728>
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-111941174-1249337222=:8306
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
+--8323328-1099217918-1249337617=:8306
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
 Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Mon, 3 Aug 2009, Jakub Narebski wrote:
+On Mon, 3 Aug 2009, Dirk Süsserott wrote:
 
-> On Mon, 3 Aug 2009, Thiago Farina wrote:
-> > On Mon, Aug 3, 2009 at 1:02 PM, Jakub Narebski<jnareb@gmail.com> wrote:
-> >> Thiago Farina <thiago.farina@gmail.com> writes:
-> >>>
-> >>> I'm new to git, I already downloaded the msysgit. I'm working with 
-> >>> git a couples weeks now. But I want to start debugging the git 
-> >>> source code in Windows. How can I do that? Can I do that using 
-> >>> Visual Studio, or there are other methods to debug git?
-> >>
-> >> Git uses GNU make as a build tool, so I am not sure if you can 
-> >> develop Git with MS Visual Studio.  You should have GNU make 
-> >> installed if you have chosen appropriate version of msysGit (the one 
-> >> with developer tools).
-> >
-> > I can build the git with make which was installed by msysGit. But I 
-> > want to debug, not only build.
+> I'm using Git for Windows (1.6.3.2.1299.gee46c)
+
+I suspect the appropriate mailing list would have been the msysGit list, 
+then.
+
+> and *used to use* SCons as a build tool. Since my last Git-update (from 
+> 1.6.1.9.g97c34 to 1.6.3.2.1299.gee46c) SCons doesn't work an longer.
+
+We do not have any SCons (or Python) support in msysGit.  If you want it 
+officially supported, I invite you to provide patches to compile and 
+install Python (see the recent work on Perl and Subversion).
+
+> I'm not exactly sure that the Git upgrade made things worse, but I 
+> didn't upgrade neither SCons (0.98) nor Python (ActivePython 2.4) and 
+> now they cease to work.
 > 
-> I don't know if you can debug msysGit with MS Visual Studio.
-
-I have no idea if that is possible, and I have no inclination to 
-install/buy MS Visual Studio to find out.
-
-However, I think I can assist anybody trying to do it.  You'll have to 
-know how to operate Visual Studio, though, and come back with specific 
-things that do not work.
-
-> I think you should be able to, as msysGit is native Windows application. 
-> But I do not program on MS Windows myself.
+> When running in git-bash, SCons tells me "TypeError: listdir() argument 
+> 1 must be (buffer overflow), not str:" and some stack trace.
 > 
-> Perhaps this question should be better asked on msysGit Google Group?
-> http://groups.google.com/group/msysgit
+> When running in native Windows' cmd.exe it works fine.
+> 
+> Is it somehow possible that the Git upgrade broke python scripts? By 
+> setting certain ENV vars or something? I don't want to blame someone for 
+> this, really, I'm just trying to track down my problem.
 
-Almost definitely.
+How does your SCons call relate to Git?  Do you call it from the Git Bash?  
+Do you call it from cmd.exe directly?  Is Git/bash in your PATH?
 
 Ciao,
 Dscho
 
---8323328-111941174-1249337222=:8306--
+--8323328-1099217918-1249337617=:8306--
