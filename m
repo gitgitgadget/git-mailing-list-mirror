@@ -1,82 +1,72 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Adding files to a git-archive when it is generated, and whats
- the 	best way to find out what branch a commit is on?
-Date: Tue, 04 Aug 2009 19:50:04 +0200
-Message-ID: <4A7874CC.9050702@lsrfire.ath.cx>
-References: <9b18b3110907290115v1f30eeat748631bb09f92517@mail.gmail.com>	 <adf1fd3d0907290141v24cf129eue3939bf1afd518d2@mail.gmail.com>	 <9b18b3110907290221o8afc72s157969ef7d707d4d@mail.gmail.com>	 <4A720393.6030607@lsrfire.ath.cx>	 <9b18b3110907310304w261ee30bw8c06c6a65e936e6e@mail.gmail.com>	 <4A759A21.7070806@lsrfire.ath.cx> <9b18b3110908020719h79cf4872p9f284346cd6a185b@mail.gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH] Let mailsplit and mailinfo handle mails with CRLF 	line-endings
+Date: Tue, 04 Aug 2009 13:50:28 -0500
+Message-ID: <pUtiIFYWaIGcw7mPKZiIk4XSCpgEimhFB1QSpwG5P0mtMWR_ZefDdg@cipher.nrlssc.navy.mil>
+References: <4A7735B0.2040703@zytor.com> <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com> 	<7v7hxk5b4y.fsf@alter.siamese.dyndns.org> <20090804172638.GA15136@blimp.localdomain> <fabb9a1e0908041034y1a43fdf6nae14ec106a82f00c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>,
-	Git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 19:50:37 2009
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 20:50:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYO9e-0000Ib-HY
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 19:50:31 +0200
+	id 1MYP5z-0000mz-Ro
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 20:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933020AbZHDRuU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2009 13:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932977AbZHDRuT
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 13:50:19 -0400
-Received: from india601.server4you.de ([85.25.151.105]:50679 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932897AbZHDRuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 13:50:19 -0400
-Received: from [10.0.1.101] (p57B7C32D.dip.t-dialin.net [87.183.195.45])
-	by india601.server4you.de (Postfix) with ESMTPSA id 9A1562F8055;
-	Tue,  4 Aug 2009 19:50:18 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-In-Reply-To: <9b18b3110908020719h79cf4872p9f284346cd6a185b@mail.gmail.com>
+	id S933284AbZHDSug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 14:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933281AbZHDSuf
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 14:50:35 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42495 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933256AbZHDSuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 14:50:35 -0400
+Received: by mail.nrlssc.navy.mil id n74IoUiY013704; Tue, 4 Aug 2009 13:50:30 -0500
+In-Reply-To: <fabb9a1e0908041034y1a43fdf6nae14ec106a82f00c@mail.gmail.com>
+X-OriginalArrivalTime: 04 Aug 2009 18:50:29.0246 (UTC) FILETIME=[6FD911E0:01CA1534]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124801>
 
-demerphq schrieb:
-> One solution is to do the work in a process specific temporary
-> directory with the correct name and then add it that way.
->=20
-> A slightly nicer approach is create the file in a common working
-> directory with a temporary name and then have it added to the archive
-> with a different name. This is actually the approach I used by
-> exploiting the the --transform option to tar. So while it might appea=
-r
-> my request is a YAGNI it is actually a IADNI (I Already Did Need It).
->=20
-> Even nicer and cleaner of course would be support something like
-> "--add-file -=3D.patch"  with the "-" meaning "read from STDIN", whic=
-h
-> then means temporary files can be avoided, assuming one only needs to
-> add a single file to the archive. This is particularly nice if the
-> content of  the file can be generated from the output of something
-> like git-describe or git rev-parse or any generic tool.
+Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Tue, Aug 4, 2009 at 10:26, Alex Riesen<raa.lkml@gmail.com> wrote:
+>>        }
+>> +       if (len > 1 && buf[len - 2] == '\r')
+>> +               buf[--len - 1] = '\n';
+>>        buf[len] = '\0';
+> 
+> How about something like:
+> 
+> +       if (len > 1 && buf[len - 2] == '\r' && (buf[len - 1] == '\n'
+> || buf[len - 1] == '\0'))
+> +               buf[--len - 1] = '\n';
+> 
+> To make sure that we're not erasing a \r somewhere in the middle of the content?
 
-This case (single file in archive, contents from stdin) could be handle=
-d
-by another option, e.g. named --add-stdin <name_in_archive>, without
-resorting to multi-valued option parameters.
+You may want to push the \r back into the buffer if it is the last character read
+too.  We may reach the limit of size characters without finding a \n, and so we
+can't tell whether the last \r we read was a solitary \r or whether it is the
+beginning of \r\n sequence.
 
-Also, if a file can be generated using a --pretty=3Dformat: string, the=
-n
-you can let git-archive expand a checked-in template by setting the
-attribute export-subst.  This works for multiple files, but doesn't if
-you need git-describe style output (yet).
+So maybe we need something like this after the 'for' loop instead:
 
-> So IMO actually this functionality would be very useful, and isnt so
-> weird when you think of it in context of generating snapshots for a
-> "git aware" build process.
 
-No doubt about it.  The question is: how to expose such functionality?
-Perhaps all that is needed for your purposes is a format place-holder
-for git-describe output?
+   if (c == '\n') {
+   	if (len > 1 && buf[len - 2] == '\r')
+		buf[--len - 1] = '\n';
+   } else if (c == '\r') {
+	ungetc(c, in);
+	len--;
+   }
 
-(git itself needs more: in addition to the files "version" and
-"git.spec", which could benefit from such a place-holder, it adds the
-generated "configure" script and "git-gui/version" to the tarball.)
-
-Ren=E9
+-brandon
