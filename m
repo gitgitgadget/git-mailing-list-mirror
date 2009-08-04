@@ -1,63 +1,78 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH 0/5] Sparse checkout resurrection
-Date: Tue, 4 Aug 2009 20:20:26 +0700
-Message-ID: <fcaeb9bf0908040620n6a8292br5e62427bc60b0256@mail.gmail.com>
-References: <1248850154-5469-1-git-send-email-pclouds@gmail.com> 
-	<2729632a0907311418m6e60b1b6g9475f7668dec0192@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: disable branch modification
+Date: Tue, 04 Aug 2009 15:36:43 +0200
+Message-ID: <4A78396B.70004@op5.se>
+References: <24550469.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Tue Aug 04 15:20:57 2009
+To: Ishaaq Chandy <ishaaq@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 15:36:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYJwk-00049E-QC
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 15:20:55 +0200
+	id 1MYKCI-0002yV-Fy
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 15:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755494AbZHDNUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 09:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755470AbZHDNUq
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 09:20:46 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:32055 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754506AbZHDNUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 09:20:45 -0400
-Received: by an-out-0708.google.com with SMTP id d40so5223260and.1
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 06:20:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=B7hRQ5r4uZXI65hwmdAI9zHk2QfCNSqBGICQx5L27rA=;
-        b=Nnlj4rBeicz+P2wK8BaDQyr/eZuroRKj1DSZybW6UWk/ifOHmFM5c+cCguhQNxdTv7
-         S3SJXfIPJ8lG+L4fkkoxp1cSsqjedzNmwwvVW6Yc28jBY5Ysry7dfTJIbE0W1ZAb80jI
-         pD72wSuQtZrs25sq7IHh3aok6HElTphwa/xFI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=r6saHPqkH9RH78zZI5O+LsVJFCdkJ1FnJWvQOeOGqCL+cPVs5anEtl78QVBzG/CjDn
-         KncdYO3ZBDDkV/+90qJnhuxt1AYWCwTCqztp1f2JLekW/FSYuWfCYl2dEbtCFTWZ03rd
-         3mv1qCbzjjhYjycV7LOc1MaPPI1N7V+K8eKOE=
-Received: by 10.100.173.20 with SMTP id v20mr8747503ane.44.1249392046115; Tue, 
-	04 Aug 2009 06:20:46 -0700 (PDT)
-In-Reply-To: <2729632a0907311418m6e60b1b6g9475f7668dec0192@mail.gmail.com>
+	id S1755549AbZHDNgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 09:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755538AbZHDNgs
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 09:36:48 -0400
+Received: from na3sys009aog104.obsmtp.com ([74.125.149.73]:33849 "HELO
+	na3sys009aog104.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755537AbZHDNgs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 09:36:48 -0400
+Received: from source ([209.85.219.209]) by na3sys009aob104.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSng5bsbSNM/NpQyKFdfBEJU4hiaRzrLG@postini.com; Tue, 04 Aug 2009 06:36:49 PDT
+Received: by mail-ew0-f209.google.com with SMTP id 5so6824361ewy.15
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 06:36:46 -0700 (PDT)
+Received: by 10.210.91.7 with SMTP id o7mr6698812ebb.25.1249393005842;
+        Tue, 04 Aug 2009 06:36:45 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 10sm2333607eyd.32.2009.08.04.06.36.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Aug 2009 06:36:45 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+In-Reply-To: <24550469.post@talk.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124788>
 
-2009/8/1  <skillzero@gmail.com>:
-> BTW...Is there a repository I can clone from that has these changes
-> and possibly future enhancements? I checked
-> <http://repo.or.cz/w/git/pclouds.git>, but I didn't see them.
+Ishaaq Chandy wrote:
+> Hi all,
+> I've got a remote git repository that I want multiple users to be able to
+> push to. This is all set up fine and working beautifully. The only thing is,
+> I want to be able to lock down the branches on this remote repo, once set up
+> users should not be able to:
+> 
+> 1. Create new branches on it
+> 2. Delete existing branches from it
+> 3. push non-fast-forward commits to it.
+> 
+> I think I'll need to write a pre-receive hook for this, but before I embark
+> on this, any helpful pointers would be appreciated.
+> 
 
-No. This is far from usable. I think I'll make "git-shape-workdir" a
-hook, put an example hook that should cover basic cases and repost.
+I did this once so that users could only push to branches in a namespace
+beginning with their username, so the user "hgb" could only write to
+"hgb/master" and never to "master" directly (for example). This provides
+maximum freedom to the users while making sure they never muck about with
+any "official" branches.
+
+The script to accomplish this is, alas, lost.
+
+Denying non-fast-forwards even if --force is in effect is a config option
+these days, I think.
+
 -- 
-Duy
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
