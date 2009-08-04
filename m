@@ -1,63 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix compiler warning by properly initialize failed_errno
-Date: Tue, 04 Aug 2009 15:22:40 -0700
-Message-ID: <7vfxc7dxsf.fsf@alter.siamese.dyndns.org>
-References: <1249241675-77329-1-git-send-email-sn_@gmx.net>
- <7vmy6g6rj1.fsf@alter.siamese.dyndns.org> <20090804092759.24120@gmx.net>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH v2] Let mailsplit and mailinfo handle mails with CRLF
+ 	line-endings
+Date: Tue, 04 Aug 2009 17:23:37 -0500
+Message-ID: <wRnQVVBBRdMB02QMyBKhevKFGLitcB-E36esB_Ar_XFs9upXB_szkQ@cipher.nrlssc.navy.mil>
+References: <4A7735B0.2040703@zytor.com> <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com> <7v7hxk5b4y.fsf@alter.siamese.dyndns.org> <20090804172638.GA15136@blimp.localdomain> <20090804210327.GA23747@blimp.localdomain> <H9KDJzU0XgndJHC8J4OETn7kxYhGP3gl0YJPR0low0hfIHjZOUsoxw@cipher.nrlssc.navy.mil> <81b0412b0908041458w7e76854bn96c4cb71a5e91e74@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: j6t@kdbg.org, git@vger.kernel.org
-To: "sn_" <sn_@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Aug 05 00:23:10 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 00:23:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYSPV-0000Oh-OH
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 00:23:10 +0200
+	id 1MYSQ9-0000dd-Bh
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 00:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933491AbZHDWWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 18:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933483AbZHDWWs
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 18:22:48 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:35556 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933480AbZHDWWs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 18:22:48 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 68C2120D37;
-	Tue,  4 Aug 2009 18:22:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id A839D20D36; Tue, 
- 4 Aug 2009 18:22:41 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 573F383A-8145-11DE-893C-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S933508AbZHDWXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 18:23:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933500AbZHDWXl
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 18:23:41 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39919 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933492AbZHDWXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 18:23:40 -0400
+Received: by mail.nrlssc.navy.mil id n74MNb2D008748; Tue, 4 Aug 2009 17:23:38 -0500
+In-Reply-To: <81b0412b0908041458w7e76854bn96c4cb71a5e91e74@mail.gmail.com>
+X-OriginalArrivalTime: 04 Aug 2009 22:23:37.0833 (UTC) FILETIME=[36709590:01CA1552]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124829>
 
-"sn_" <sn_@gmx.net> writes:
+Alex Riesen wrote:
+> On Tue, Aug 4, 2009 at 23:29, Brandon
+> Casey<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+>> Alex Riesen wrote:
+>>> +     if (c == '\n' && len > 1 && buf[len - 2] == '\r')
+>>> +             buf[--len - 1] = '\n';
+>>>       buf[len] = '\0';
+>>>
+>>>       return len;
+>> What if \r lands at character 99 and \n is at character 100?  If buf has
+>> exactly 100 characters available for writing. ...
+> 
+> Ah, yes. You're right.
+> 
+> I have strong dislike towards unget, though. How about this, instead:
+> 
+> int read_line_with_nul(char *buf, int size, FILE *in)
+> {
+> 	int len = 0, c;
+> 
+> 	while (len < size) {
+> 		c = getc(in);
+> 		if (c == EOF)
+> 			break;
+> 		buf[len++] = c;
+> 		if (c == '\n')
+> 			break;
+> 		else if (len == size)
+> 			c = 0;
+> 	}
+> 	if (c == '\n' && len > 1 && buf[len - 2] == '\r')
+> 		buf[--len - 1] = '\n';
+> 	buf[len] = '\0';
+> 
+> 	return len;
+> }
 
->> The potentially uninitialized use your compiler is worried about is inside
->> if (cmd->pid < 0) after #ifdef/#else/#endif.
->> 
->>  (1) if not on MINGW32, we would have already assigned to failed_errno
->>      after fork() returns negative value to cmd->pid;
->> 
->>  (2) if on MINGW32, we would have assigned to failed_errno unconditionally
->>      after calling mingw_spawnvpe().
->> 
->> so its worry is unfounded.
->
-> The worry is definatly unfounded, but I think it's still worth to apply
-> the attached patch to get rid of the warning using the
-> i686-apple-darwin9-gcc-4.0.1 (GCC) 4.0.1 (Apple Inc. build 5490)
-> compiler. I sended a corrected version of the patch to the ml.
 
-Oh, there was no need for you to say "but..." and everything that followed.
-I said "we should say ... instead" in my review comments, didn't I?  
+I don't see how this solves the problem.  Still if the buffer is filled,
+and the last character read is '\r', and the next character that has not
+yet been read is '\n', then the '\r' will erroneously be returned in buf.
 
-We are obviously in agreement ;-)
+Plus, I think you'll have a problem at buf[len] = '\0' if the loop runs to
+completion and len == size.
+
+-brandon
