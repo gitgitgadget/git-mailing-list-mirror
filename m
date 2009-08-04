@@ -1,68 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix compiler warning by properly initialize failed_errno
-Date: Tue, 04 Aug 2009 12:09:33 -0700
-Message-ID: <7v3a87o0pe.fsf@alter.siamese.dyndns.org>
-References: <1249241675-77329-1-git-send-email-sn_@gmx.net>
- <7vmy6g6rj1.fsf@alter.siamese.dyndns.org> <4A78834C.20002@kdbg.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Diffing M$-Word
+Date: Tue, 04 Aug 2009 21:31:31 +0200
+Message-ID: <4A788C93.10402@kdbg.org>
+References: <4A70AE1F.7070004@idmcomp.com> <36ca99e90907291345r188a2182n77a2fd5cb55a8bc4@mail.gmail.com> <4A71F2F1.4060605@idmcomp.com> <20090801111227.GA26029@gmail.com> <4A7841BF.5060308@idmcomp.com> <4A7869BD.5010209@lhanke.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org,
-	David Soria Parra <dsp@php.net>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Aug 04 21:09:59 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Dr. Lars Hanke" <lars@lhanke.de>
+X-From: git-owner@vger.kernel.org Tue Aug 04 21:32:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYPOW-00009G-0h
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 21:09:56 +0200
+	id 1MYPjz-0001UZ-DO
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 21:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933026AbZHDTJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 15:09:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933162AbZHDTJr
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 15:09:47 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:48500 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932992AbZHDTJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 15:09:46 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id A8C4E20BD3;
-	Tue,  4 Aug 2009 15:09:44 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id CDE1820BD2; Tue, 
- 4 Aug 2009 15:09:36 -0400 (EDT)
-In-Reply-To: <4A78834C.20002@kdbg.org> (Johannes Sixt's message of "Tue\, 04
- Aug 2009 20\:51\:56 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5ECD0DD6-812A-11DE-A550-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1754883AbZHDTbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 15:31:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754503AbZHDTbk
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 15:31:40 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:12286 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754405AbZHDTbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 15:31:40 -0400
+Received: from [77.119.171.106] (77.119.171.106.wireless.dyn.drei.com [77.119.171.106])
+	by bsmtp.bon.at (Postfix) with ESMTP id 2EFA6A7EB3;
+	Tue,  4 Aug 2009 21:31:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <4A7869BD.5010209@lhanke.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124804>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Dr. Lars Hanke schrieb:
+> At work I have to write a lot of reports using M$-Word and found that 
+> git is capable of managing these in an easy and meaningful way. However, 
+> diffing of course does not work. I checked the web for solutions, but 
+> somehow, I did not hit the correct search pattern.
 
-> Junio C Hamano schrieb:
->
->> We would want to be able to distinguish between a workaround for a
->> compiler that is not clever/careful enough, and a necessary
->> initialization.  In this particular case, it is the former, and we should
->> say
->>
->> 	int failed_errno = failed_errno;
->>
->> instead.
->
-> Frankly, I prefer the initialization with 0; this is not a performance
-> critical place and micro-optimization is not appropriate here.
+I use a dual solution. I defined catdoc as a textconv filter so that I can 
+see textual changes in gitk; and I use my winworddiff crude hack that I 
+posted here
 
-It is not about optimization at all.  This is about documenting the fact
-that we have audited and know that the use of this variable in the code
-that follows is Ok.  Initializing to 0 gives a false impression that the
-code may rely on that value, but in this case nobody will ever read that
-zero before overwriting it with an assignment.
+http://thread.gmane.org/gmane.comp.version-control.git/59288
 
-The compiler may optimize this out, but that is an insignificant (I agree
-this is not a performance critical codepath) side effect.
+as a external diff program (note: *not* a difftool). With these, I can 
+limp along sufficiently.
+
+-- Hannes
