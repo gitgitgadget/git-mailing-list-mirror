@@ -1,95 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Mon, 3 Aug 2009 23:40:35 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908032336460.3270@localhost.localdomain>
-References: <20090804044842.6792.qmail@science.horizon.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please make git-am handle \r\n-damaged patches
+Date: Mon, 03 Aug 2009 23:46:53 -0700
+Message-ID: <7v7hxk5b4y.fsf@alter.siamese.dyndns.org>
+References: <4A7735B0.2040703@zytor.com>
+ <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: George Spelvin <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 08:41:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 08:47:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYDiJ-0006Sx-80
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 08:41:35 +0200
+	id 1MYDnk-000877-Gy
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 08:47:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbZHDGlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 02:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755004AbZHDGlE
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 02:41:04 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57719 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755084AbZHDGlD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 02:41:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n746eaPS021248
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 3 Aug 2009 23:40:37 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n746eZSh031546;
-	Mon, 3 Aug 2009 23:40:36 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <20090804044842.6792.qmail@science.horizon.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S932464AbZHDGrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 02:47:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755005AbZHDGrE
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 02:47:04 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43800 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754664AbZHDGrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 02:47:03 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3E9021CEEA;
+	Tue,  4 Aug 2009 02:47:02 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DC0821CEE9; Tue,  4 Aug 2009
+ 02:46:54 -0400 (EDT)
+In-Reply-To: <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com>
+ (Alex Riesen's message of "Tue\, 4 Aug 2009 08\:35\:24 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9D81FC84-80C2-11DE-8196-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124760>
 
+Alex Riesen <raa.lkml@gmail.com> writes:
 
+> Maybe it is as simple as that (not tested yet,
+> and sent through gmail, so please be careful):
 
-On Mon, 4 Aug 2009, George Spelvin wrote:
-> +sha1_block_data_order:
-> +	pushl	%ebp
-> +	pushl	%ebx
-> +	pushl	%esi
-> +	pushl	%edi
-> +	movl	20(%esp),%edi
-> +	movl	24(%esp),%esi
-> +	movl	28(%esp),%eax
-> +	subl	$64,%esp
-> +	shll	$6,%eax
-> +	addl	%esi,%eax
-> +	movl	%eax,92(%esp)
-> +	movl	16(%edi),%ebp
-> +	movl	12(%edi),%edx
-> +.align	16
-> +.L000loop:
-> +	movl	(%esi),%ecx
-> +	movl	4(%esi),%ebx
-> +	bswap	%ecx
-> +	movl	8(%esi),%eax
-> +	bswap	%ebx
-> +	movl	%ecx,(%esp)
+I thought about this approach, but it made me worried about a case where
+an otherwise sane piece of e-mail has \r at the end of one line as the
+real payload.  But as long as we are talking about a text e-mail (and we
+are talking about mailsplit here and a binary payload with a CTE applied
+counts as text), I think we can safely use an approach like this.
 
-...
-
-Hmm. Does it really help to do the bswap as a separate initial phase?
-
-As far as I can tell, you load the result of the bswap just a single time 
-for each value. So the initial "bswap all 64 bytes" seems pointless.
-
-> +	/* 00_15 0 */
-> +	movl	%edx,%edi
-> +	movl	(%esp),%esi
-
-Why not do the bswap here instead?
-
-Is it because you're running out of registers for scheduling, and want to 
-use the stack pointer rather than the original source?
-
-Or does the data dependency end up being so much better that you're better 
-off doing a separate bswap loop?
-
-Or is it just because the code was written that way?
-
-Intriguing, either way.
-
-		Linus
+>
+> diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+> index ad5f6b5..02c1c92 100644
+> --- a/builtin-mailsplit.c
+> +++ b/builtin-mailsplit.c
+> @@ -58,6 +58,8 @@ int read_line_with_nul(char *buf, int size, FILE *in)
+>  		if (c == '\n' || len + 1 >= size)
+>  			break;
+>  	}
+> +	if (len && buf[len - 1] == '\r')
+> +		--len;
+>  	buf[len] = '\0';
+>
+>  	return len;
