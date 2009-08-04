@@ -1,63 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: new option to hide remote refs
-Date: Mon, 03 Aug 2009 23:28:18 -0700
-Message-ID: <7vab2g6qkd.fsf@alter.siamese.dyndns.org>
-References: <55b7e43bcd59aa64c70edde83ac87147aa0091bb.1249336225.git.trast@student.ethz.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Mon, 3 Aug 2009 23:30:25 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908032326440.3270@localhost.localdomain>
+References: <20090804044842.6792.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>,
-	Thell Fowler <tbfowler4@gmail.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 04 08:28:40 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 08:31:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYDVm-0002xm-FU
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 08:28:38 +0200
+	id 1MYDYF-0003h8-Cp
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 08:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932438AbZHDG23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 02:28:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbZHDG22
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 02:28:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38532 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932430AbZHDG22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 02:28:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A28921CDBE;
-	Tue,  4 Aug 2009 02:28:28 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0CA2D1CDBB; Tue,  4 Aug 2009
- 02:28:19 -0400 (EDT)
-In-Reply-To: <55b7e43bcd59aa64c70edde83ac87147aa0091bb.1249336225.git.trast@student.ethz.ch> (Thomas Rast's message of "Mon\, 3 Aug 2009 23\:53\:36 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 05C194BA-80C0-11DE-A055-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S932450AbZHDGbD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 02:31:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932430AbZHDGbD
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 02:31:03 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:41885 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932427AbZHDGbC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 02:31:02 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n746UQiT020545
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 3 Aug 2009 23:30:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n746UP2M014671;
+	Mon, 3 Aug 2009 23:30:26 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20090804044842.6792.qmail@science.horizon.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124756>
 
-Thomas Rast <trast@student.ethz.ch> writes:
 
-> @@ -1689,7 +1690,7 @@ proc readrefs {} {
->  	if {![string match "refs/*" $ref]} continue
->  	set name [string range $ref 5 end]
->  	if {[string match "remotes/*" $name]} {
-> -	    if {![string match "*/HEAD" $name]} {
-> +	    if {![string match "*/HEAD" $name] && !$hideremotes} {
->  		set headids($name) $id
->  		lappend idheads($id) $name
->  	    }
 
-Hmm, I wonder if it would be more useful to extend this by using $skiprefs
-pattern instead, like so:
+On Mon, 4 Aug 2009, George Spelvin wrote:
+> 
+> The actual goal of this effort is to address the dynamic linker startup
+> time issues by removing the second-largest contributor after libcurl,
+> namely openssl.  Optimizing the assembly code is just the fun part. ;-)
 
->  	if {![string match "refs/*" $ref]} continue
->  	set name [string range $ref 5 end]
-+	if {$skiprefs != "" && [string match $skiprefs $name]} continue
->  	if {[string match "remotes/*" $name]} {
-> 	    if {![string match "*/HEAD" $name]} {
-	...
+Now, I agree that it would be wonderful to get rid of the linker startup, 
+but the startup costs of openssl are very low compared to the equivalent 
+curl ones. So we can't lose _too_ much performance - especially for 
+long-running jobs where startup costs really don't even matter - in the 
+quest to get rid of those.
+
+That said, your numbers are impressive. Improving fsck by 1.1-2.2% is very 
+good. That means that you not only avodied the startup costs, you actually 
+improved on the openssl code. So it's a win-win situation.
+
+That said, it would be even better if the SHA1 code was also somewhat 
+portable to other environments (it looks like your current patch is very 
+GNU as specific), and if you had a solution for x86-64 too ;)
+
+Yeah, I'm a whiny little b*tch, aren't I?
+
+		Linus
