@@ -1,103 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: parse_commit_text encoding fix
-Date: Mon, 03 Aug 2009 23:59:44 -0700
-Message-ID: <7viqh43vz3.fsf@alter.siamese.dyndns.org>
-References: <9ab80d150908010955l3710c54bp9e2716570fd1d5ed@mail.gmail.com>
- <1249198944-19630-1-git-send-email-zfuzesi@eaglet.hu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Zolt=C3=A1n_F=C3=BCzesi?= <zfuzesi@eaglet.hu>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 09:00:00 2009
+From: Michael Wild <themiwi@users.sourceforge.net>
+Subject: Re: conflict status
+Date: Tue, 4 Aug 2009 09:10:00 +0200
+Message-ID: <4F52523A-2CEA-4CD3-A094-A2627E2A4403@users.sourceforge.net>
+References: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net> <fabb9a1e0908031037t16a828f6h4de9fb11bcc957fe@mail.gmail.com> <200908032017.35101.trast@student.ethz.ch> <7vvdl4925k.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 09:10:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYE06-0003f2-Rg
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 08:59:59 +0200
+	id 1MYEAF-0006q9-Dx
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 09:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932491AbZHDG7u convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2009 02:59:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932475AbZHDG7u
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 02:59:50 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:50725 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932462AbZHDG7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 02:59:50 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 57CEF1FCED;
-	Tue,  4 Aug 2009 02:59:50 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 875891FCEC; Tue, 
- 4 Aug 2009 02:59:46 -0400 (EDT)
-In-Reply-To: <1249198944-19630-1-git-send-email-zfuzesi@eaglet.hu>
- (=?utf-8?Q?=22Zolt=C3=A1n_F=C3=BCzesi=22's?= message of "Sun\,  2 Aug 2009
- 09\:42\:24 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 67584B70-80C4-11DE-858F-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S932507AbZHDHKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 03:10:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932504AbZHDHKM
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 03:10:12 -0400
+Received: from mxout002.mail.hostpoint.ch ([217.26.49.181]:52715 "EHLO
+	mxout002.mail.hostpoint.ch" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932503AbZHDHKE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 03:10:04 -0400
+Received: from [10.0.2.20] (helo=asmtp002.mail.hostpoint.ch)
+	by mxout002.mail.hostpoint.ch with esmtp (Exim 4.69 (FreeBSD))
+	(envelope-from <themiwi@users.sourceforge.net>)
+	id 1MYE9r-0009z5-Fd; Tue, 04 Aug 2009 09:10:03 +0200
+Received: from [82.130.106.80] (helo=nynaeve.ifd.mavt.ethz.ch)
+	by asmtp002.mail.hostpoint.ch with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69 (FreeBSD))
+	(envelope-from <themiwi@users.sourceforge.net>)
+	id 1MYE9r-000FOi-8a; Tue, 04 Aug 2009 09:10:03 +0200
+X-Authenticated-Sender-Id: mi@miba.li
+In-Reply-To: <7vvdl4925k.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124762>
 
-Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu> writes:
 
-> Call to_utf8 when parsing author and committer names, otherwise they =
-will appear
-> with bad encoding if they written by using chop_and_escape_str.
+On 3. Aug, 2009, at 20:35, Junio C Hamano wrote:
+
+> Thomas Rast <trast@student.ethz.ch> writes:
 >
-> Signed-off-by: Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>
-> ---
-
-Thanks, Zolt=C3=A1n.
-
-We should be able to set up a script that scrapes the output to test th=
-is
-kind of thing.  We may not want to have a test pattern that matches too
-strictly for the current structure and appearance of the output
-(e.g. counting nested <div>s, presentation styles and such), but if we =
-can
-robustly scrape off HTML tags (e.g. "elinks -dump") and check the
-remaining payload, it might be enough.
-
-Jakub what do you think?  I suspect that scraping approach may turn out=
- to
-be too fragile for tests to be worth doing, but I am just throwing out =
-a
-thought.
-
->  gitweb/gitweb.perl |    5 ++---
->  1 files changed, 2 insertions(+), 3 deletions(-)
+>> That only shows 'unmerged: foo' for me...
+>>
+>> The closest to porcelain I can get while still having all the
+>> information is
+>>
+>>  $ git ls-files -s foo
+>>  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 1       foo
+>>  100644 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 2       foo
+>>
+>> In other words, not porcelain at all.
 >
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7fbd5ff..4f05194 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -2570,7 +2570,7 @@ sub parse_commit_text {
->  		} elsif ((!defined $withparents) && ($line =3D~ m/^parent ([0-9a-f=
-A-F]{40})$/)) {
->  			push @parents, $1;
->  		} elsif ($line =3D~ m/^author (.*) ([0-9]+) (.*)$/) {
-> -			$co{'author'} =3D $1;
-> +			$co{'author'} =3D to_utf8($1);
->  			$co{'author_epoch'} =3D $2;
->  			$co{'author_tz'} =3D $3;
->  			if ($co{'author'} =3D~ m/^([^<]+) <([^>]*)>/) {
-> @@ -2580,10 +2580,9 @@ sub parse_commit_text {
->  				$co{'author_name'} =3D $co{'author'};
->  			}
->  		} elsif ($line =3D~ m/^committer (.*) ([0-9]+) (.*)$/) {
-> -			$co{'committer'} =3D $1;
-> +			$co{'committer'} =3D to_utf8($1);
->  			$co{'committer_epoch'} =3D $2;
->  			$co{'committer_tz'} =3D $3;
-> -			$co{'committer_name'} =3D $co{'committer'};
->  			if ($co{'committer'} =3D~ m/^([^<]+) <([^>]*)>/) {
->  				$co{'committer_name'}  =3D $1;
->  				$co{'committer_email'} =3D $2;
-> --=20
-> 1.6.4.13.ge6580
+> "git ls-files -u" would be what you want.  It shows all the paths with
+> conflicts in the index, and omits paths without conflicts in the  
+> index.
+> And the object names allow you to inspect the individual stages.
+>
+
+
+I found out about that one too (by having a look at git-mergetool),  
+and came up with the following quick hack (doesn't take any arguments/ 
+options, is very rough and slow for a large number of conflicts). For  
+each unmerged file it displays the file name, prefixed with the local  
+and remote state. Possible states are "c" for created, "m" for  
+modified and "d" for deleted. Probably there are other cases I'm not  
+aware of and require special handling.
+
+#!/bin/sh
+# displays the merge status of files
+
+# TODO all the niceties, bells and whistles...
+USAGE=''
+# requires PWD to be top-level
+unset SUBDIRECTORY_OK
+  . "$(git --exec-path)/git-sh-setup"
+# obviously...
+require_work_tree
+
+# describe the state (deleted, modified or created)
+describe_state () {
+   mode="$1"
+
+   if test -z "$mode"; then
+     printf "d "
+   else
+     if test -n "$base_mode"; then
+       printf "m "
+     else
+       printf "c "
+     fi
+   fi
+}
+
+# get all conflicts
+conflicts="$(git-status | awk '/unmerged:/{print $3;next}')"
+
+for f in $conflicts; do
+   # extract the file mode for base, local and remote
+   base_mode=$(git ls-files -u -- "$f" | awk '{if ($3==1) print $1;}')
+   local_mode=$(git ls-files -u -- "$f" | awk '{if ($3==2) print $1;}')
+   remote_mode=$(git ls-files -u -- "$f" | awk '{if ($3==3) print $1;}')
+   # create the status flags
+   describe_state "$local_mode"
+   describe_state "$remote_mode"
+   # append the file name
+   echo " $f"
+done
