@@ -1,68 +1,71 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] Add --allow-eof-whitelines to git-apply while still doing  whitespace trailing-space fixing.
-Date: Wed, 05 Aug 2009 06:15:19 +0900
-Message-ID: <20090805061519.6117@nanako3.lavabit.com>
-References: <f002290c0908010957pf14d18dv7c80270eb9af3c8@mail.gmail.com>
+Subject: Re: How to push properly a la subversion
+Date: Wed, 05 Aug 2009 06:15:04 +0900
+Message-ID: <20090805061504.6117@nanako3.lavabit.com>
+References: <4A7095CE.8030307@gmail.com>
+	<20090729195044.GA27178@dpotapov.dyndns.org>
+	<111060c20907300111u4345b1f1x784229c066fb3f88@mail.gmail.com>
+	<20090730115448.GB27178@dpotapov.dyndns.org>
+	<111060c20908040017y753a3cb4mbc4d7654192a5d1a@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Thell Fowler <tbfowler4@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 23:15:45 2009
+Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>
+To: Matthieu Stigler <matthieu.stigler@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 23:15:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYRMH-00053A-DA
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:15:45 +0200
+	id 1MYRMF-00053A-Ts
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932579AbZHDVPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 17:15:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932539AbZHDVPi
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:15:38 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:43989 "EHLO karen.lavabit.com"
+	id S1754914AbZHDVPc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 17:15:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754725AbZHDVPb
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:15:31 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:43982 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932419AbZHDVPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 17:15:38 -0400
+	id S1751941AbZHDVPb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 17:15:31 -0400
 Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 33CCC11B9BE;
-	Tue,  4 Aug 2009 16:15:39 -0500 (CDT)
+	by karen.lavabit.com (Postfix) with ESMTP id B080611B9BC;
+	Tue,  4 Aug 2009 16:15:31 -0500 (CDT)
 Received: from 9884.lavabit.com (190-14-246-42.ip.mediacommerce.com.co [190.14.246.42])
-	by lavabit.com with ESMTP id IG7KU5L9UGIH; Tue, 04 Aug 2009 16:15:39 -0500
+	by lavabit.com with ESMTP id 9L71FXLXU4DO; Tue, 04 Aug 2009 16:15:31 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=I/Pwz5Ayp7b4Ii/nU6X+/lPwl11SzaqUcx9ugzQXoAiue6/GZQ712cNVYQ3SqBibcQsr1N0PQG9oCVNnR/9lNtwB+QFU9zTpKs39Fcn1fh1R/U+E4ZzKymGWt/kmdE7DZVkMo+qrW4Gqc6xXcCWhtmaq1vxeJeLpPZk+P9Tu/5I=;
+  b=NakBkFcqk24RQSx5qVrtREST3h2qEYEUqPTz09tDbZNfuQ4PWK8HH4uFFVPR1MiTuwo43GW1tF2u35coxz9c1zSrp5IyDVqtI12fzkcDd/SFWHkcqeRwTeJCWbmnMSwVTVdk4yxJogm4yK8cdgpCLCItSEZkYcyZvZMaJMfFx+E=;
   h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <f002290c0908010957pf14d18dv7c80270eb9af3c8@mail.gmail.com>
+In-Reply-To: <111060c20908040017y753a3cb4mbc4d7654192a5d1a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124814>
 
-Quoting Thell Fowler <tbfowler4@gmail.com>
+Quoting Matthieu Stigler <matthieu.stigler@gmail.com>
 
->   - Added --allow-eof-whitelines to git apply to short-circuit removal
-> of new empty lines when tailing-space is set.
->   - Added pass-through to apply from git-am.sh
->   - Added pass-through to git-am from git-rebase.sh
->   - Added the auto-completion entries.
+> 2009/7/30 Dmitry Potapov <dpotapov@gmail.com>:
 >
-> Signed-off-by: TBFowler <thell@almostautomated.com>
+> Second, you said
+>> So, your normally should never push to the branch that is currerently checked out. (New versions of Git will warn you about that).
+>
+> Is there a way to avoid that? Manually, do I just need on post A
+> (against which it was pushed from clone B) to use:
+> git-reset --hard HEAD
+>
+> And if yes, can I automate that in hooks/post-update in A? Or post-commit in B?
 
-I like this new feature. However, this topic came up last week, and Junio said that whitespace checking should be controlled with the attributes mechanism.
+The standard way to communicate changes to a repository with a working tree A from your repository B is to pretend as if A fetches from B even when you are pushing from B to A..
 
-http://thread.gmane.org/gmane.comp.version-control.git/124113/focus=124138
+Here are some recommended readings:
 
-Please do not talk "I did this, I did that" in your proposed commit log
-message.  From Documentation/SubmittingPatches:
+ * http://git.or.cz/gitwiki/GitFaq#Whywon.27tIseechangesintheremoterepoafter.22gitpush.22.3F
+ * http://git.or.cz/gitwiki/GitFaq#push-is-reverse-of-fetch
 
-	- the body should provide a meaningful commit message, which:
-		- uses the imperative, present tense: "change",
-		  not "changed" or "changes".
-		- includes motivation for the change, and contrasts
-		  its implementation with previous behaviour
+ * "Push into another repository" item in http://www.kernel.org/pub/software/scm/git/docs/everyday.html illustrates this with an example.
 
-In other words, the messages are often written as if you are giving an order to the program to correct itself.
+ * http://article.gmane.org/gmane.comp.version-control.git/123331
 
 -- 
 Nanako Shiraishi
