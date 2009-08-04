@@ -1,69 +1,84 @@
-From: Hin-Tak Leung <hintak.leung@gmail.com>
-Subject: git gc expanding packed data?
-Date: Tue, 4 Aug 2009 21:25:12 +0100
-Message-ID: <3ace41890908041325v24ed9e2eh95ecc148305f7775@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Tue, 04 Aug 2009 13:41:06 -0700
+Message-ID: <7vljlzjorh.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.01.0908032326440.3270@localhost.localdomain>
+ <20090804080147.15201.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 22:25:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: torvalds@linux-foundation.org, git@vger.kernel.org
+To: "George Spelvin" <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 22:43:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYQZa-0007mL-Rz
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 22:25:27 +0200
+	id 1MYQrK-0007UN-3N
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 22:43:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755230AbZHDUZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 16:25:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755184AbZHDUZO
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 16:25:14 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:32822 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755176AbZHDUZN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 16:25:13 -0400
-Received: by ewy10 with SMTP id 10so636650ewy.37
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 13:25:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=6rRgAPXEqK65lzfrlee5+OOcDIuO4pGKWK7WUY7xY+U=;
-        b=jIvtPheY4nt89795aDh42FZmtw2GdbsQUGW+8Lmn4R9nApEfDOy+HG8daQHqERHb+W
-         XUm7k9XudwAkDrY79RBiZbo6UPMaRGT3A2KlSJD1kPrJ71h4RucUSJoJ/gP5d5TY7sWo
-         qBFog/b5pTEY6nA3FhHkET/R15/GVIQRJpz5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=A4JfCuQpAtgFySew3eIeTAymJWwFIRi60J5S52eWZmEDJuGgOqAytsZdfIbniBCHjL
-         Dm+9KvgYWSlSR8HtHUOhU7FHVNO7HUxlsMWOLX5inhLVmlcyhV4W4aaw6tl4qDnmL7F5
-         sLNtzkzupEL4Zbtgmn7p0Y1KDh8B/Gz8n3hMs=
-Received: by 10.216.45.65 with SMTP id o43mr1529066web.4.1249417512962; Tue, 
-	04 Aug 2009 13:25:12 -0700 (PDT)
+	id S932902AbZHDUlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 16:41:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932856AbZHDUlO
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 16:41:14 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58529 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932774AbZHDUlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 16:41:11 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 9ED4620415;
+	Tue,  4 Aug 2009 16:41:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id E941C2040F; Tue, 
+ 4 Aug 2009 16:41:07 -0400 (EDT)
+In-Reply-To: <20090804080147.15201.qmail@science.horizon.com> (George
+ Spelvin's message of "4 Aug 2009 04\:01\:47 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 25488F74-8137-11DE-9DDB-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124806>
 
-I cloned gcc's git about a week ago to work on some problems I have
-with gcc on minor platforms, just plain 'git clone
-git://gcc.gnu.org/git/gcc.git gcc' .and ran gcc fetch about daily, and
-'git rebase origin' from time to time. I don't have local changes,
-just following and monitoring what's going on in gcc. So after a week,
-I thought I'd do a git gc . Then it goes very bizarre.
+"George Spelvin" <linux@horizon.com> writes:
 
-Before I start 'git gc', .The whole of .git was about 700MB and
-git/objects/pack was a bit under 600MB, with a few other directories
-under .git/objects at 10's of K's and a few 30000-40000K's, and the
-checkout was, well, the size of gcc source code. But after I started
-git gc, the message stays in the 'counting objects' at about 900,000
-for a long time, while a lot of directories under .git/objects/ gets a
-bit large, and .git blows up to at least 7GB with a lot of small files
-under .git/objects/*/, before seeing as I will run out of disk space,
-I kill the whole lot and ran git clone again, since I don't have any
-local change and there is nothing to lose.
+> The one question I have is that currently perl is not a critical
+> compile-time dependency; it's needed for some extra stuff, but AFAIK you
+> can get most of git working without it.  Whether to add that dependency
+> or what is a Junio question.
 
-I am running git version 1.6.2.5 (fedora 11). Is there any reason why
-'git gc' does that?
+I am actually feel a lot more uneasy to apply a patch signed of by
+somebody who calls himself George Spelvin, though.
+
+Three classes of people compile git from the source:
+
+ * People who want to be on the bleeding edge and compile git for
+   themselves, even though they are on mainstream platforms where they
+   could choose distro-packaged one;
+
+ * People who produce binary packages for distribution.
+
+ * People who are on minority platforms and have no other way to get git
+   than compiling for themselves;
+
+We do not have to worry about the first two groups of people.  It won't
+be too involved for them to install Perl on their system; after all they
+are already coping with asciidoc and xmlto ;-)
+
+We can continue shipping mozilla one to help the last group.
+
+In the Makefile, we say:
+
+    # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+    # This also implies MOZILLA_SHA1.
+
+and with your change, we would start implying STANDALONE_OPENSSL_SHA1
+instead.  But if MOZILLA_SHA1 was given explicitly, we could use that.
+
+If they really really really want the extra performance out of statically
+linked OpenSSL derivative, they could prepare a preprocessed assmebly on
+some other machine and use it as the last resort if they do not have/want
+Perl.  The situation is exactly the same as the documentation set.  They
+are using HTML/man prepared on another machine (namely, mine) as the last
+resort if they do not have/want AsciiDoc toolchain.
