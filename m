@@ -1,72 +1,84 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH] Let mailsplit and mailinfo handle mails with CRLF 	line-endings
-Date: Tue, 04 Aug 2009 13:50:28 -0500
-Message-ID: <pUtiIFYWaIGcw7mPKZiIk4XSCpgEimhFB1QSpwG5P0mtMWR_ZefDdg@cipher.nrlssc.navy.mil>
-References: <4A7735B0.2040703@zytor.com> <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com> 	<7v7hxk5b4y.fsf@alter.siamese.dyndns.org> <20090804172638.GA15136@blimp.localdomain> <fabb9a1e0908041034y1a43fdf6nae14ec106a82f00c@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Fix compiler warning by properly initialize failed_errno
+Date: Tue, 04 Aug 2009 20:51:56 +0200
+Message-ID: <4A78834C.20002@kdbg.org>
+References: <1249241675-77329-1-git-send-email-sn_@gmx.net> <7vmy6g6rj1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 20:50:50 2009
+Cc: David Soria Parra <sn_@gmx.net>, git@vger.kernel.org,
+	David Soria Parra <dsp@php.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 20:52:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYP5z-0000mz-Ro
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 20:50:48 +0200
+	id 1MYP7e-0001Th-Q8
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 20:52:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933284AbZHDSug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 14:50:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933281AbZHDSuf
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 14:50:35 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42495 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933256AbZHDSuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 14:50:35 -0400
-Received: by mail.nrlssc.navy.mil id n74IoUiY013704; Tue, 4 Aug 2009 13:50:30 -0500
-In-Reply-To: <fabb9a1e0908041034y1a43fdf6nae14ec106a82f00c@mail.gmail.com>
-X-OriginalArrivalTime: 04 Aug 2009 18:50:29.0246 (UTC) FILETIME=[6FD911E0:01CA1534]
+	id S933286AbZHDSwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 14:52:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933266AbZHDSwI
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 14:52:08 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:37090 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933262AbZHDSwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 14:52:07 -0400
+Received: from [77.119.171.106] (77.119.171.106.wireless.dyn.drei.com [77.119.171.106])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9421BA7EAE;
+	Tue,  4 Aug 2009 20:52:02 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7vmy6g6rj1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124802>
 
-Sverre Rabbelier wrote:
-> Heya,
+Junio C Hamano schrieb:
+> David Soria Parra <sn_@gmx.net> writes:
 > 
-> On Tue, Aug 4, 2009 at 10:26, Alex Riesen<raa.lkml@gmail.com> wrote:
->>        }
->> +       if (len > 1 && buf[len - 2] == '\r')
->> +               buf[--len - 1] = '\n';
->>        buf[len] = '\0';
+>> From: David Soria Parra <dsp@php.net>
+>>
+>> Initilize failed_error in start_command to avoid compiler warnings
+>>
+>> Signed-off-by: David Soria Parra <dsp@php.net>
+>> ---
+>>  run-command.c |    2 +-
+>>  1 files changed, 1 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/run-command.c b/run-command.c
+>> index dc09433..510349b 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -19,7 +19,7 @@ int start_command(struct child_process *cmd)
+>>  {
+>>  	int need_in, need_out, need_err;
+>>  	int fdin[2], fdout[2], fderr[2];
+>> -	int failed_errno;
+>> +	int failed_errno = 0;
+>>  
+>>  	/*
+>>  	 * In case of errors we must keep the promise to close FDs
 > 
-> How about something like:
+> We would want to be able to distinguish between a workaround for a
+> compiler that is not clever/careful enough, and a necessary
+> initialization.  In this particular case, it is the former, and we should
+> say
 > 
-> +       if (len > 1 && buf[len - 2] == '\r' && (buf[len - 1] == '\n'
-> || buf[len - 1] == '\0'))
-> +               buf[--len - 1] = '\n';
+> 	int failed_errno = failed_errno;
 > 
-> To make sure that we're not erasing a \r somewhere in the middle of the content?
+> instead.
 
-You may want to push the \r back into the buffer if it is the last character read
-too.  We may reach the limit of size characters without finding a \n, and so we
-can't tell whether the last \r we read was a solitary \r or whether it is the
-beginning of \r\n sequence.
+Frankly, I prefer the initialization with 0; this is not a performance 
+critical place and micro-optimization is not appropriate here.
 
-So maybe we need something like this after the 'for' loop instead:
+(If this were C++ then I *know* that int x = x; is undefined behavior, 
+strictly speaking; I don't know whether it is the same with C.)
 
+Nevertheless, for both versions:
 
-   if (c == '\n') {
-   	if (len > 1 && buf[len - 2] == '\r')
-		buf[--len - 1] = '\n';
-   } else if (c == '\r') {
-	ungetc(c, in);
-	len--;
-   }
+Acked-by: Johannes Sixt <j6t@kdbg.org>
 
--brandon
+-- Hannes
