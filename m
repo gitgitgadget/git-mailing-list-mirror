@@ -1,73 +1,100 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH] send-email: remove debug trace
-Date: Tue,  4 Aug 2009 21:57:34 +0000
-Message-ID: <1249423054-3416-1-git-send-email-kusmabite@gmail.com>
-Cc: madcoder@debian.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 04 23:59:02 2009
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH v2] Let mailsplit and mailinfo handle mails with CRLF 
+	line-endings
+Date: Tue, 4 Aug 2009 23:58:13 +0200
+Message-ID: <81b0412b0908041458w7e76854bn96c4cb71a5e91e74@mail.gmail.com>
+References: <4A7735B0.2040703@zytor.com>
+	 <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com>
+	 <7v7hxk5b4y.fsf@alter.siamese.dyndns.org>
+	 <20090804172638.GA15136@blimp.localdomain>
+	 <20090804210327.GA23747@blimp.localdomain>
+	 <H9KDJzU0XgndJHC8J4OETn7kxYhGP3gl0YJPR0low0hfIHjZOUsoxw@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Aug 04 23:59:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYS27-0008Jo-HP
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:59:00 +0200
+	id 1MYS29-0008Jo-Rs
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933088AbZHDV5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 17:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933085AbZHDV5d
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:57:33 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:48924 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932893AbZHDV5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 17:57:32 -0400
-Received: by yxe5 with SMTP id 5so3388327yxe.33
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 14:57:32 -0700 (PDT)
+	id S933133AbZHDV6P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2009 17:58:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933130AbZHDV6P
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:58:15 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:33631 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933111AbZHDV6O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 17:58:14 -0400
+Received: by bwz19 with SMTP id 19so3349532bwz.37
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 14:58:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=Ln0BUEkyAtfdAlImp6idh2KiZkx91LzDL+JS6fkAmDA=;
-        b=aK9kF7pm/iZqjsQYendzn57iv2zfhFqoI3vdW6auy6z0QuFTP311CHX/oy/+l9ikBH
-         qucSceL4LRXIllueGIaMv5vVxxpnzYdTm98ata6F0EsPIpLQpoRfvCCar6Q41KSo2kXr
-         ajtxmG8JcvyQl58Nl9Z5iPYh62fezv7Xrgt8s=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ceKSeLgFAoCacjTU3x2qLg/MXqXjF6Mue9Ltg6TjLEw=;
+        b=jM3bsremhksr4AipEHj/uoU+QwNwSYkIJoHBbqUVoU4gOD+zpL5wDH2rtg4BCRirSb
+         awWWcT8mWAo9UINRKHCcRHs07XNX6YcGo2PujCFb2tmvTSCIyPqew8VaLUWm7sYlwYRV
+         Su7NtW0gES/OGf+jo9sQKlvYbJKQ4hfgKif3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=mk1yBfGjggMMTdKwLHFOE50Yuu+QhE1VEbSIWGEjKuG8v210BFQ+82bcMRD6PVR1Xz
-         MzY962xFAqXWE5s+N7O3hissGbzkQME2LA3s+RsvH4vtv/BadOUPWLy6suJpE0/4tG/b
-         Mk9bFCPGKrVSd2XvVbvgLFRwEHbsvMrb/Mo5E=
-Received: by 10.90.89.18 with SMTP id m18mr1683964agb.64.1249423052686;
-        Tue, 04 Aug 2009 14:57:32 -0700 (PDT)
-Received: from localhost (bs1.mccno.com [208.114.192.20])
-        by mx.google.com with ESMTPS id 1sm14476262agb.8.2009.08.04.14.57.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Aug 2009 14:57:32 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nQS7cicbYeO9D0iYXoDkSWKg0hDm/f2QBk38IWDrQ+iO9kTl2ay9xUXJbkR/mlvbb2
+         z4dqlTJznXTeYjdhV7SwahHXQRbMJ0PzSTxlV91OND/oiMn7CaJ2NGzYBLXiMe/Ai8fZ
+         m0GPAUDCyfQNs7Bu+kCspZiIJFQW6Y5UhHWR8=
+Received: by 10.204.59.76 with SMTP id k12mr145671bkh.136.1249423093493; Tue, 
+	04 Aug 2009 14:58:13 -0700 (PDT)
+In-Reply-To: <H9KDJzU0XgndJHC8J4OETn7kxYhGP3gl0YJPR0low0hfIHjZOUsoxw@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124822>
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
+On Tue, Aug 4, 2009 at 23:29, Brandon
+Casey<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+> Alex Riesen wrote:
+>> + =C2=A0 =C2=A0 if (c =3D=3D '\n' && len > 1 && buf[len - 2] =3D=3D =
+'\r')
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 buf[--len - 1] =3D '\n';
+>> =C2=A0 =C2=A0 =C2=A0 buf[len] =3D '\0';
+>>
+>> =C2=A0 =C2=A0 =C2=A0 return len;
+>
+> What if \r lands at character 99 and \n is at character 100? =C2=A0If=
+ buf has
+> exactly 100 characters available for writing. ...
 
-This isn't really a big deal, the print just annoyed me slightly.
+Ah, yes. You're right.
 
- git-send-email.perl |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+I have strong dislike towards unget, though. How about this, instead:
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index d508f83..0700d80 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -450,7 +450,6 @@ sub check_file_rev_conflict($) {
- 	try {
- 		$repo->command('rev-parse', '--verify', '--quiet', $f);
- 		if (defined($format_patch)) {
--			print "foo\n";
- 			return $format_patch;
- 		}
- 		die(<<EOF);
--- 
-1.6.4
+int read_line_with_nul(char *buf, int size, FILE *in)
+{
+	int len =3D 0, c;
+
+	while (len < size) {
+		c =3D getc(in);
+		if (c =3D=3D EOF)
+			break;
+		buf[len++] =3D c;
+		if (c =3D=3D '\n')
+			break;
+		else if (len =3D=3D size)
+			c =3D 0;
+	}
+	if (c =3D=3D '\n' && len > 1 && buf[len - 2] =3D=3D '\r')
+		buf[--len - 1] =3D '\n';
+	buf[len] =3D '\0';
+
+	return len;
+}
