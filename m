@@ -1,82 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Why is it important to learn git?
-Date: Tue, 04 Aug 2009 16:09:26 +0200
-Message-ID: <4A784116.2050508@op5.se>
-References: <e1a5e9a00907212208t10a071d0oe59a39b357a1111a@mail.gmail.com> <200907220952.27385.trast@student.ethz.ch>
+From: Eric Stegemoller <estegemoller@idmcomp.com>
+Subject: Re: External Diff Tool
+Date: Tue, 04 Aug 2009 10:12:15 -0400
+Message-ID: <4A7841BF.5060308@idmcomp.com>
+References: <4A70AE1F.7070004@idmcomp.com> <36ca99e90907291345r188a2182n77a2fd5cb55a8bc4@mail.gmail.com> <4A71F2F1.4060605@idmcomp.com> <20090801111227.GA26029@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Aug 04 16:09:41 2009
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 16:20:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYKhw-0000n2-1b
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 16:09:40 +0200
+	id 1MYKsO-0005XS-V4
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 16:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390AbZHDOJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 10:09:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755343AbZHDOJc
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 10:09:32 -0400
-Received: from na3sys009aog107.obsmtp.com ([74.125.149.197]:47964 "HELO
-	na3sys009aog107.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755287AbZHDOJb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 10:09:31 -0400
-Received: from source ([209.85.219.222]) by na3sys009aob107.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSnhBGgExQgSkTGDsN+xUQ9Qfcpnyse76@postini.com; Tue, 04 Aug 2009 07:09:32 PDT
-Received: by ewy22 with SMTP id 22so3816675ewy.4
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 07:09:30 -0700 (PDT)
-Received: by 10.210.66.13 with SMTP id o13mr8743873eba.88.1249394969772;
-        Tue, 04 Aug 2009 07:09:29 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 5sm107442eyf.38.2009.08.04.07.09.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Aug 2009 07:09:29 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <200907220952.27385.trast@student.ethz.ch>
+	id S1755053AbZHDOUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 10:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755479AbZHDOUO
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 10:20:14 -0400
+Received: from smtp172.iad.emailsrvr.com ([207.97.245.172]:48240 "EHLO
+	smtp172.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755433AbZHDOUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 10:20:12 -0400
+X-Greylist: delayed 477 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Aug 2009 10:20:12 EDT
+Received: from relay17.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay17.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id EF7C81B40F8;
+	Tue,  4 Aug 2009 10:12:15 -0400 (EDT)
+Received: by relay17.relay.iad.mlsrvr.com (Authenticated sender: estegemoller-AT-idmcomp.com) with ESMTPSA id B54FC1B40C1;
+	Tue,  4 Aug 2009 10:12:15 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.19 (Windows/20081209)
+In-Reply-To: <20090801111227.GA26029@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124790>
 
-Thomas Rast wrote:
-> Tim Harper wrote:
->> How has mastering the advanced features of git helped you to be a
->> better programmer?
-> 
-> I came from SVN, and I guess the most important change for me was:
-> 
->   Learning to make nice, reviewable, working, one-change-per-revision
->   commits.
-> 
+David Aguilar wrote:
+> On Thu, Jul 30, 2009 at 03:22:25PM -0400, Eric Stegemoller wrote:
+>   
+>> Bert Wesarg wrote:
+>>     
+>>> On Wed, Jul 29, 2009 at 22:16, Eric Stegemoller<estegemoller@idmcomp.com> wrote:
+>>>   
+>>>       
+>>>> Hello,
+>>>>
+>>>>  git config --global diff.tool TestTool
+>>>>  git config --global difftool.TestTool.cmd ""c:/TestTool/test.exe" "$LOCAL"
+>>>>         
+>>> Try with quoting the " inside the config value:
+>>>
+>>>   git config --global difftool.TestTool.cmd "\"c:/TestTool/test.exe\"
+>>> \"$LOCAL\" \"$REMOTE\""
+>>>   Bert
+>>>   
+>>>       
+>> Thanks, but this did not solve it. Interestingly, I have captured the  
+>> command line that is sent out by GIT and it is calling the correct  
+>> program but not adding anything to the command line. So, nothing is  
+>> there. Seeing this I have been experimenting around with the parameters  
+>> and I still it is calling the correct program but sending a blank  
+>> command line. Any suggestions on how to pursue this?
+>>
+>> Eric
+>>     
+>
+>
+> I think shell is to blame here.
+>
+> Try editing ~/.gitconfig by hand.
+>
+> I think the suggestion above forgot to escape the $ character.
+>
+> Since the $'s weren't escaped, the shell interpolated the
+> $LOCAL, etc. variables and replaced them with the empty
+> string.
+>
+>
+>   
+Escaping the $'s did the trick! Thanks for everyones help.
 
-Seconded. During the CVS days, noone bothered about history, but with
-git a it's a veritable goldmine of important information, so it's
-important to keep it clean with minimal changesets.
-
-One of our developers was very sloppy about this until he ended up
-with a bisection run landing him on a commit that fixed no less
-than seven different issues. He spent four days debugging it and
-finally had to resort to breaking the issues up and creating the
-commits as they should have been on a temporary side-branch and
-then bisecting that side-branch. Having done that, he spotted the
-error in about 15 minutes. After some swearing, he finally saw the
-light. He's actually a happier person now, since bugs that take a
-long time to solve upset him quite enormously and now he never runs
-into any :-)
-
-Apart from that, the various ways of cooperating over large distances
-(easy branching + merging, patch sending/applying utilities) are a
-huge benefit for us.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Thanks,
+Eric
