@@ -1,71 +1,89 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/3] sequencer: add "--reset-hard" option to "git sequencer--helper"
-Date: Tue, 4 Aug 2009 23:17:26 +0200
-Message-ID: <200908042317.26408.chriscool@tuxfamily.org>
-References: <20090803024023.3794.44226.chriscool@tuxfamily.org> <alpine.LNX.2.00.0908041111550.2147@iabervon.org>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH v2] Let mailsplit and mailinfo handle mails with CRLF
+ line-endings
+Date: Tue, 04 Aug 2009 16:29:54 -0500
+Message-ID: <H9KDJzU0XgndJHC8J4OETn7kxYhGP3gl0YJPR0low0hfIHjZOUsoxw@cipher.nrlssc.navy.mil>
+References: <4A7735B0.2040703@zytor.com> <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com> <7v7hxk5b4y.fsf@alter.siamese.dyndns.org> <20090804172638.GA15136@blimp.localdomain> <20090804210327.GA23747@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Aug 04 23:19:13 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 23:30:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYRNP-0005rV-34
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:16:55 +0200
+	id 1MYRaG-0005LE-IY
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 23:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932856AbZHDVQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 17:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932598AbZHDVQr
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:16:47 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47780 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932547AbZHDVQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 17:16:46 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 80C77818109;
-	Tue,  4 Aug 2009 23:16:37 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 8C5818180B8;
-	Tue,  4 Aug 2009 23:16:35 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.LNX.2.00.0908041111550.2147@iabervon.org>
-Content-Disposition: inline
+	id S932943AbZHDVaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 17:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932908AbZHDVaA
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 17:30:00 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47377 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932541AbZHDVaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 17:30:00 -0400
+Received: by mail.nrlssc.navy.mil id n74LTt4X002690; Tue, 4 Aug 2009 16:29:56 -0500
+In-Reply-To: <20090804210327.GA23747@blimp.localdomain>
+X-OriginalArrivalTime: 04 Aug 2009 21:29:55.0194 (UTC) FILETIME=[B598E5A0:01CA154A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124817>
 
-On Tuesday 04 August 2009, Daniel Barkalow wrote:
-> On Mon, 3 Aug 2009, Christian Couder wrote:
-> > This new option uses the "reset_almost_hard()" function to perform
-> > a reset.
->
-> Shouldn't it make it possible to do an almost-hard reset (that is, keep a
-> dirty working tree's changes while changing the index and HEAD to a
-> different commit)?
+Alex Riesen wrote:
+> Noticed by H. Peter Anvin.
+> 
+> It is not that uncommon to have mails with DOS line-ending,
+> notably Thunderbird and web mailers like Gmail (when saving
+> what they call "original" message).
+> 
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+> 
+> Corrected bug with unconditonal last (or very long) line shortening if
+> it contains a CR in next-to-last character. Noticed by Sverre Rabbelier.
+> 
+> It should also handle the case mentioned by Brandon Casey.
+> 
+>  builtin-mailsplit.c |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+> index ad5f6b5..48285a0 100644
+> --- a/builtin-mailsplit.c
+> +++ b/builtin-mailsplit.c
+> @@ -58,6 +58,8 @@ int read_line_with_nul(char *buf, int size, FILE *in)
+>  		if (c == '\n' || len + 1 >= size)
+>  			break;
+>  	}
+> +	if (c == '\n' && len > 1 && buf[len - 2] == '\r')
+> +		buf[--len - 1] = '\n';
+>  	buf[len] = '\0';
+>  
+>  	return len;
 
-Yeah, I will improve the documentation of this function as Junio requested.
+What if \r lands at character 99 and \n is at character 100?  If buf has
+exactly 100 characters available for writing.  Wouldn't the '\r' be stored
+into buf, but not the '\n'?  Then the 'for' loop would terminate since len + 1
+would be >= size and the code above would test whether c == '\n', and it
+would not, so the '\r' would not be removed from buf as it should be.
 
-> AFAICT, this series doesn't expose the interesting new 
-> functionality it provides.
->
-> Also, I thought that we'd found that other built-ins could be simplified
-> through the use of functions you're adding here. In particular, checkout
-> wants to change the index and working tree while preserving dirty working
-> tree changes. So it would probably be better for it to go in a library
-> object, where sequencer--helper would just make it available to shell
-> code.
+At the point where buf has been filled, and the last character read is a '\r',
+we can not tell whether the next character is a '\n' or not, so we do not know
+if it is a solitary '\r' or whether it is the start of a '\r\n' sequence.  It
+seems to me that we must push the '\r' back into the stream and allow the next
+call to read_line_with_nul() handle it, or peek to see if the next character
+is a '\n'.
 
-Yeah, I agree, but right now I'd rather keep the code quite close to what it 
-is on the sequencer repo if possible.
+Be aware that if we use the version I suggested which pushes the '\r' back
+into the input stream, I think we risk an infinite loop if size == 1.  I don't
+think that is possible from the current callers though.
 
-Thanks,
-Christian.
+-brandon
