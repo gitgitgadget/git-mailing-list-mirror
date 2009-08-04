@@ -1,78 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Have git-merge-base support multiple IDs
-Date: Mon, 03 Aug 2009 23:52:32 +0200
-Message-ID: <4A775C20.9070109@drmicha.warpmail.net>
-References: <alpine.LSU.2.00.0907311745100.4901@fbirervta.pbzchgretzou.qr> <4A731A39.3090506@drmicha.warpmail.net> <alpine.LSU.2.00.0908031539070.2603@fbirervta.pbzchgretzou.qr>
+From: Arnaud Bailly <abailly@oqube.com>
+Subject: Re: From P4 to Git
+Date: Tue, 04 Aug 2009 14:31:42 +0200
+Organization: OQube
+Message-ID: <85ljlzvjyp.fsf@oqube.com>
+References: <85ljm84lat.fsf@oqube.com> <m3fxcg3473.fsf@localhost.localdomain>
+	<85r5vxbd8e.fsf@oqube.com> <200907311122.43918.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Tue Aug 04 14:32:18 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 04 14:35:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYJ9u-0002YA-GJ
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 14:30:26 +0200
+	id 1MYJBa-0003gy-8w
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 14:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755368AbZHDMaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 08:30:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755351AbZHDMaJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 08:30:09 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48231 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755343AbZHDMaJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 08:30:09 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 44E8D3BE037;
-	Tue,  4 Aug 2009 08:30:09 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 04 Aug 2009 08:30:09 -0400
-X-Sasl-enc: t4d+22985qUCAoI+Hv7C6Fhu0orGCHuU1LjGhrmhc1zJ 1249388991
-Received: from localhost.localdomain (vpn-136-102.rz.uni-augsburg.de [137.250.136.102])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5A57C110C3;
-	Tue,  4 Aug 2009 08:29:50 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.2pre) Gecko/20090728 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <alpine.LSU.2.00.0908031539070.2603@fbirervta.pbzchgretzou.qr>
+	id S1755422AbZHDMcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 08:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755418AbZHDMcA
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 08:32:00 -0400
+Received: from main.gmane.org ([80.91.229.2]:36493 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755415AbZHDMb7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 08:31:59 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MYJBO-0008BA-Ry
+	for git@vger.kernel.org; Tue, 04 Aug 2009 12:31:58 +0000
+Received: from 80.125.172.63 ([80.125.172.63])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 12:31:58 +0000
+Received: from abailly by 80.125.172.63 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 12:31:58 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 80.125.172.63
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+Cancel-Lock: sha1:D8+OdaEyji9V45NOCpCFSGlLr38=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124780>
+X-Spam-Report: 7.0 points;
+ *  0.0 RCVD_BY_IP Received by mail server with no name
+ *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?80.125.172.63>]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124781>
 
-Jan Engelhardt venit, vidit, dixit 03.08.2009 15:39:
-> 
-> On Friday 2009-07-31 18:22, Michael J Gruber wrote:
->> Jan Engelhardt venit, vidit, dixit 31.07.2009 17:51:
->>> To determine the rebase point (i.e. first commit in a series),
->>> one can (ab)use git-merge-base:
->>>
->>>   p=$(git merge-base ab80794f faae2553)
->>>   git re -i ${p}^
->>>
->>> The twist is that merge-base in git 1.6.3.3 happens to ignore any 
->>> further arguments following two IDs. In short:
->>>
->>>   git merge-base A B C...
->>>
->>> Only yields the merge-base of A and B, and ignores C...
->>
->> Uhm, are you sure about this?
->> The first argument is special. merge-base computes the merge base between two commits:
->> - the first argument
->> - a (hypothetical) merge between all other arguments.
->> It may look a if C was ignored, though.
-> 
-> Hm indeed. Is there a better way to find the common ancestor of commits?
+Thanks all for your detailed answers.
 
-I haven't tested thorougly, but at least for the standard example
+Playing with git on various environments, I have a couple more questions
+that I could not (quickly) find answers on the web.
+ 1. when checkout-ing on NTFS, I got all my files marked as changed
+ because of file permissions set from 100644 to 100755. I see there is a
+ config flag about file permissions (core.sharedRepository ?) but not
+ sure how to use it
+ 2. I am working with NTFS on a truecrypt managed USB HD and I noticed
+ an order of magnitude difference in speed (ie. about 10x for checkout
+ of 50k files) between this and my ext3 FS  on laptop HD. Is this
+ expected ? Some people here reported slowness on non-encrypted NTFS and
+ I think I read a couple of web fragments about speed difference between
+ the 2. WDYT ?
 
-git show-branch --merge-base A B C
-
-seems to do what you want. Note that for this command, the order of
-arguments is irrelevant, whereas for git merge-base it makes a huge
-difference. Also, git show-branch documentation is a bit outdated. I
-expect to look into this...
-
-Michael
+Regards,
+-- 
+Arnaud Bailly -- OQube
+<software engineering>
+http://www.oqube.com/
