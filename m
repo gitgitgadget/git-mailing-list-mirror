@@ -1,160 +1,114 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv4] git apply: option to ignore whitespace differences
-Date: Tue, 4 Aug 2009 09:33:39 +0200
-Message-ID: <cb7bb73a0908040033u418169bbtcddbe1524d8f70ae@mail.gmail.com>
-References: <1249072858-21894-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<7v8wi03usx.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: conflict status
+Date: Tue, 04 Aug 2009 00:56:35 -0700
+Message-ID: <7vhbwoypu4.fsf@alter.siamese.dyndns.org>
+References: <DDAD985F-C9CA-4159-B382-354D4B082C19@users.sourceforge.net>
+ <fabb9a1e0908031037t16a828f6h4de9fb11bcc957fe@mail.gmail.com>
+ <200908032017.35101.trast@student.ethz.ch>
+ <7vvdl4925k.fsf@alter.siamese.dyndns.org>
+ <4F52523A-2CEA-4CD3-A094-A2627E2A4403@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 04 09:34:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>
+To: Michael Wild <themiwi@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Aug 04 09:57:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYEXR-0007Ld-MZ
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 09:34:26 +0200
+	id 1MYEtJ-0006fT-8g
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 09:57:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644AbZHDHeS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2009 03:34:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbZHDHeS
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 03:34:18 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:54882 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932509AbZHDHeR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 03:34:17 -0400
-Received: by fxm17 with SMTP id 17so3104837fxm.37
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 00:34:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=R4O4k6X5/lgLY0XnwJM7j3bMUPdq3FHkGLEmtQLzVsU=;
-        b=bzV5Htl6GM27E5HEcjUes4AqGs9YAIrIsYjN5G8/o39ulbv+1oxkeMYatN3udSEZB2
-         ZctSCaOZdmQGl9W5NhYP1co55wJzvgc5ztO6fRDWHD7dPqXzSO5dcCv+F0caD2s5wZ1p
-         UVOTWce8WgXeOABScUZbz6582DmssJXUlyVzI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DO/W7xzqhyfEgLd/fsBp1IKC7EmiuWltBe4F/S7QZgk7AIda9S5kOaH1NHHKb676Xi
-         Q06v/dfUv4CubPZUnwJS21JvhDIRXL/31d3eLDPIFo1evhSdcJwZfATfxYiD1NhPjJFf
-         YnwICzwlGUp73KKqY41gMK6tGuF1VxJNe9kXE=
-Received: by 10.204.65.65 with SMTP id h1mr5960709bki.18.1249371255503; Tue, 
-	04 Aug 2009 00:34:15 -0700 (PDT)
-In-Reply-To: <7v8wi03usx.fsf@alter.siamese.dyndns.org>
+	id S1753651AbZHDH4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 03:56:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753600AbZHDH4w
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 03:56:52 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33072 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753171AbZHDH4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 03:56:52 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5EB191C270;
+	Tue,  4 Aug 2009 03:56:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 46BEF1C25F; Tue,  4 Aug 2009
+ 03:56:37 -0400 (EDT)
+In-Reply-To: <4F52523A-2CEA-4CD3-A094-A2627E2A4403@users.sourceforge.net>
+ (Michael Wild's message of "Tue\, 4 Aug 2009 09\:10\:00 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E560F1E-80CC-11DE-9224-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124769>
 
-On Tue, Aug 4, 2009 at 9:25 AM, Junio C Hamano<gitster@pobox.com> wrote=
-:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Michael Wild <themiwi@users.sourceforge.net> writes:
+
+> # get all conflicts
+> conflicts="$(git-status | awk '/unmerged:/{print $3;next}')"
 >
->> diff --git a/t/t4107-apply-ignore-whitespace.sh b/t/t4107-apply-igno=
-re-whitespace.sh
->> new file mode 100755
->> index 0000000..8e3fce3
->> --- /dev/null
->> +++ b/t/t4107-apply-ignore-whitespace.sh
->> @@ -0,0 +1,149 @@
->> ...
->> +cat > patch3.patch <<\EOF
->> +diff --git a/main.c b/main.c
->> +--- a/main.c
->> ++++ b/main.c
->> +@@ -10,1 +10,1 @@
->> + =A0 =A0 =A0 =A0 =A0 =A0 print_int(func(i));
->> +EOF
->
-> This part is triply troublesome in that:
->
-> =A0(1) the payload ends with trailing whitespace which can be eaten b=
-y MUAs
-> =A0 =A0 (and I almost always use "git am" with --whitespace=3Dfix);
+> for f in $conflicts; do
+>   # extract the file mode for base, local and remote
+>   base_mode=$(git ls-files -u -- "$f" | awk '{if ($3==1) print $1;}')
+>   local_mode=$(git ls-files -u -- "$f" | awk '{if ($3==2) print $1;}')
+>   remote_mode=$(git ls-files -u -- "$f" | awk '{if ($3==3) print $1;}')
+>   # create the status flags
+>   describe_state "$local_mode"
+>   describe_state "$remote_mode"
+>   # append the file name
+>   echo " $f"
+> done
 
-This is also a problem with some other parts of that patch. I'll apply
-the suggestion you mention below to all of them.
+Looks an awfully inefficient way to say "git ls-files -u" to me.  If you
+do not see stage 2, you do not have it.  If you do not see stage 3, they
+do not have it.
 
-> =A0(2) even if we apply your patch correctly, it is very unobvious th=
-at you
-> =A0 =A0 are testing the case where the line has an unwanted trailing
-> =A0 =A0 whitespace; and
+If you really really want to condense the object name information out, you
+could do something like this.
 
-I'll add a comment for that that.
+-- >8 --
+#!/bin/sh
+git ls-files -u -z |
+perl -e '
+	$/ = "\0";
+        my ($last_path, @stage);
+        sub describe_mode {
+        	my $ours = $_[0];
+		my $sign;
+                if (!defined $ours) {
+                	$sign = "d";
+		} elsif (defined $stage[1]) {
+                	$sign = "m";
+		} else {
+			$sign = "c";
+                }
+		return $sign;
+        }
+	sub flush_path {
+        	printf("%s %s %s\n",
+                	describe_mode($stage[2]),
+                	describe_mode($stage[3]),
+			$last_path);
+		$last_path = undef;
+        	@stage = ();
+        }
+        while (<>) {
+		chomp;
+        	my ($mode, $sha1, $stage, $path) =
+                	/^([0-7]+) ([0-9a-f]{40}) ([1-3])\t(.*)$/;
+		if (defined $last_path) {
+			flush_path() if ($path ne $last_path);
+                }
+                $stage[$stage] = 1;
+                $last_path = $path;
+	}
+        if (defined $last_path) {
+                flush_path() if ($path ne $last_path);
+        }
+'
+-- 8< --
 
-> =A0(3) a hunk without any added/deleted lines is an obviously artific=
-ial
-> =A0 =A0 test input that would not appear in real life, something one =
-would
-> =A0 =A0 never think of doing unless one knows how "git apply" interna=
-lly
-> =A0 =A0 works. =A0It makes the test too knowledgable about the implem=
-entation.
-
-Right. I'll make it do something else too.
-
-> You can fix the first two issues by doing:
->
-> =A0 =A0 =A0 =A0sed -e 's/Z/ /g' >patch3.patch <<\EOF
-> =A0 =A0 =A0 =A0...
-> =A0 =A0 =A0 =A0+Z =A0 =A0 =A0print_int(func(i));Z
-> =A0 =A0 =A0 =A0EOF
->
-> to make invisible SP stand out more for the benefit of people reading=
- the
-> test script (I know you did not have leading SP before HT in yours, b=
-ut
-> the above illustrates the visibility issues). =A0For other tests with=
- test
-> vector patches, visibility of whitespace is not much an issue, but th=
-is
-> script is _all about_ whitespace, so anything that clarifies what is =
-going
-> on better would help.
-
-Indeed.
-
->> +test_expect_success "S =3D patch1" \
->> + =A0 =A0'git-apply patch1.patch'
->> +
->> +test_expect_failure "F =3D patch2" \
->> + =A0 =A0'git-apply patch2.patch'
->
-> Please say
->
-> =A0 =A0 =A0 =A0test_expect_success "whitespace corrupted patch does n=
-ot apply" '
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0test_must_fail git apply patch2.patch
-> =A0 =A0 =A0 =A0'
->
-> instead.
->
-> "test_expect_failure" is a declaration that the command being tested =
-(in
-> this case "git apply") is faulty. =A0It also is a request for somebod=
-y
-> interested to later fix it (again, in this case "git apply") to make =
-this
-> test pass.
->
-> But you do _not_ want this to pass without an explicit ignore option,=
- so
-> test_expect_failure is inappropriate here.
-
-Ah, interesting. This was the first test I wrote (mostly copied from
-the original patch) and I didn't have a clear idea of the difference
-between the expected failures (although the comment about  'fixing'
-that the test printed when some failing case didn't should have put me
-on the right track).
-
-I'll resend with a fixed test.
-
---=20
-Giuseppe "Oblomov" Bilotta
+I however do not think it is all that interesting, though.
