@@ -1,95 +1,78 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 1/3] sequencer: add "reset_almost_hard()" and related 
-	functions
-Date: Tue, 4 Aug 2009 15:03:11 +0200
-Message-ID: <c07716ae0908040603t12daa900l18178770a17780b1@mail.gmail.com>
-References: <20090803024023.3794.90748.chriscool@tuxfamily.org>
-	 <alpine.DEB.1.00.0908041443310.8306@pacific.mpi-cbg.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/5] grep: skip files outside sparse checkout area
+Date: Tue, 4 Aug 2009 20:14:08 +0700
+Message-ID: <fcaeb9bf0908040614r6c1ba65dw98c63a48b82df0aa@mail.gmail.com>
+References: <1248850154-5469-1-git-send-email-pclouds@gmail.com> 
+	<1248850154-5469-2-git-send-email-pclouds@gmail.com> <1248850154-5469-3-git-send-email-pclouds@gmail.com> 
+	<7vljm4st0w.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 04 15:03:24 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 04 15:14:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYJfn-0004mm-JF
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 15:03:24 +0200
+	id 1MYJqg-0001cN-CA
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 15:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153AbZHDNDM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Aug 2009 09:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755480AbZHDNDM
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 09:03:12 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:36699 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755478AbZHDNDL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 09:03:11 -0400
-Received: by fxm17 with SMTP id 17so3255932fxm.37
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 06:03:11 -0700 (PDT)
+	id S1755466AbZHDNO3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 09:14:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755287AbZHDNO2
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 09:14:28 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:65213 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754383AbZHDNO2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 09:14:28 -0400
+Received: by yxe5 with SMTP id 5so2887656yxe.33
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 06:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=VkvtPLCec//BQSzMvFR6nrH7NWfKAztLG4ujCadIDQg=;
-        b=XALlgOLxs5EmJTRmnMNSZ1mXbnIaMuXWPBMoJ8sI23bDmMcf50VTxPBQEdnVO+ncRg
-         W5sIa3hHc1nthsD+Ppd+3mSfpekqyVa4C2JHXbRmtjQ/P28bvPpLx94e0HxGt2zLTZuE
-         N75C7/GLw59TvqtxUIaI/lssIa1t4e/gSGW9I=
+        bh=27xk23dcz7oefg1koMPoS7vgj60+AsGBlpj7d2V9im8=;
+        b=tvi89u+oxecxZiRq5dRyWPCFJtFjTEqAN8uOPG3QwkZ/DRfGOLDEKMHiLxeBLegKAH
+         0f6DK1uYbw0MvU+ZPaN9AMqTlEywY3sL+PDASeRnRZ1NEfnwwoBSsmEwQTow2XMPrYAV
+         gfARk6Yryxnr+TCTvMDYDk2KM9iXSfYbPhrgs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=BwLeKRhPwvH3maPAaaJTMXdE+gFtx0OUZClZLyZUYhzJweIy7RyETHTYR3lcC4O3O3
-         Y7bNKMUv3kggI4lBmei+tzX+eOvHA966oBWKJyo6y8sTwCzYlTTpT+v51xZ417qqS8Wm
-         aMaRIZOrAXkGcZbMCciyz6DpmdZJGzvD4+Nys=
-Received: by 10.103.167.14 with SMTP id u14mr2668169muo.94.1249390991288; Tue, 
-	04 Aug 2009 06:03:11 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908041443310.8306@pacific.mpi-cbg.de>
+        b=vf4kHelO/YUPCK7dMVtscgrRj6s9Rgcpx4gwUDwz7wtfNSbMvP4tqFGnadb+ncrELN
+         hrvW5DaiN1W6O7ulntBWwBrQUCIaXWttW2icyacf7Pxh9wkbxE4RBLpkdkhl+D+m2pxk
+         amZLr0HTvlYB7B5qTOU6aMD+TTJwwq7bGTpPg=
+Received: by 10.100.229.14 with SMTP id b14mr9895360anh.156.1249391668238; 
+	Tue, 04 Aug 2009 06:14:28 -0700 (PDT)
+In-Reply-To: <7vljm4st0w.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124786>
 
-Hi,
-
-On Tue, Aug 4, 2009 at 2:45 PM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 3 Aug 2009, Christian Couder wrote:
->
->> diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper=
-=2Ec
->> index 1dda525..82a830d 100644
->> --- a/builtin-sequencer--helper.c
->> +++ b/builtin-sequencer--helper.c
->> @@ -2,16 +2,95 @@
->
-> I do not have that file in my tree. =A0Yet your 1/3 already expects i=
-t to be
-> there.
-
-This file is in pu. One of my previous patch added it.
-
-> Well, I guess I will work on finishing my rebase-i-p branch next week=
-, and
-> then see what is there in Stephan's repository, and ask him why he we=
-nt so
-> silent (after all, his code should have been polished =A0enough to be
-> included 11 months ago).
-
-Stephan started to work again on his repository a few days ago. He
-integrated some of the changes I posted to this list and some
-information about what is left to do to complete his work. That will
-make it easier for me or anyone who wants to work on this. Thanks
-Stephan!
-
-Best regards,
-Christian.
+MjAwOS83LzMxIEp1bmlvIEMgSGFtYW5vIDxnaXRzdGVyQHBvYm94LmNvbT46Cj4+IEBAIC01MjIs
+OCArNTI0LDExIEBAIHN0YXRpYyBpbnQgZ3JlcF9jYWNoZShzdHJ1Y3QgZ3JlcF9vcHQgKm9wdCwg
+Y29uc3QgY2hhciAqKnBhdGhzLCBpbnQgY2FjaGVkLAo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBjb250aW51ZTsKPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgaGl0IHw9IGdyZXBfc2hhMShvcHQsIGNlLT5zaGExLCBjZS0+bmFtZSwgMCk7
+Cj4+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0KPj4gLSDCoCDCoCDCoCDCoCDCoCDCoCBlbHNlCj4+
+ICsgwqAgwqAgwqAgwqAgwqAgwqAgZWxzZSB7Cj4+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgaWYgKGNlLT5jZV9mbGFncyAmIENFX1ZBTElEKQo+PiArIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGNvbnRpbnVlOwo+PiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBoaXQgfD0gZ3JlcF9maWxlKG9wdCwgY2UtPm5hbWUpOwo+PiArIMKgIMKg
+IMKgIMKgIMKgIMKgIH0KPj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKGNlX3N0YWdlKGNlKSkg
+ewo+PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBkbyB7Cj4+IMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG5yKys7Cj4KPiBJIGRvIG5vdCB0aGlu
+ayB0aGUgbmV3IGNvZGUgaW4gdGhpcyBodW5rIHdpbGwgYmUgcmVhY2hlZCBhcyB0aGUgb3RoZXIg
+YXJtCj4gb2YgdGhlICJlbHNlIiBncmVwcyBpbiB0aGUgaW5kZXggd2hlbiBDRV9WQUxJRCBpcyBz
+ZXQuCj4KPiBIYXMgdGhpcyBzZXJpZXMgYmVlbiB0ZXN0ZWQgb3Igc2VsZi1yZXZpZXdlZCB5ZXQ/
+CgpZZXMgYW5kIG5vLiBJdCBoYWQgYmVlbiB0ZXN0ZWQgYW5kIHNlbGYtcmV2aWV3ZWQgYmFjayB3
+aGVuIGl0IHdhcyBwYXJ0Cm9mIG9yaWdpbmFsIHNlcmllcy4gVGhlcmUgdGhlIG5ldyBjb2RlIHdh
+cyBDRV9OT19DSEVDS09VVCBjaGVjaywgbm90CkNFX1ZBTElELiBJIGdyZXBwZWQgdGhyb3VnaCBh
+bmQgcmVwbGFjZWQgd2l0aCBDRV9WQUxJRCB0byBmb3JtIGEgbmV3CmRyYWZ0IGluIG9yZGVyIHRv
+IGdldCBjb21tZW50cyBhYm91dCB0aGlzIGRpcmVjdGlvbiwgdGhpcyB0aW1lIGl0IHdhcwpub3Qg
+d2VsbCB0ZXN0ZWQgYmVjYXVzZSBteSBmb2N1cyB3YXMgaW4gdGhlIGxhc3QgcGF0Y2guCi0tIApE
+dXkK
