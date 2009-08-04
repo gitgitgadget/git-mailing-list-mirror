@@ -1,58 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/3] sequencer: add "--reset-hard" option to "git
- sequencer--helper"
-Date: Tue, 4 Aug 2009 11:34:15 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908041111550.2147@iabervon.org>
-References: <20090803024023.3794.44226.chriscool@tuxfamily.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb/README: Document $base_url
+Date: Tue, 04 Aug 2009 17:54:32 +0200
+Message-ID: <20090804155309.30788.77292.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Aug 04 17:36:01 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 04 17:54:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYM3N-0003p4-8P
-	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 17:35:53 +0200
+	id 1MYMLh-0004nj-0b
+	for gcvg-git-2@gmane.org; Tue, 04 Aug 2009 17:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932948AbZHDPeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 11:34:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932945AbZHDPeR
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 11:34:17 -0400
-Received: from iabervon.org ([66.92.72.58]:47380 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932934AbZHDPeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Aug 2009 11:34:16 -0400
-Received: (qmail 2831 invoked by uid 1000); 4 Aug 2009 15:34:15 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Aug 2009 15:34:15 -0000
-In-Reply-To: <20090803024023.3794.44226.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S932872AbZHDPyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 11:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932724AbZHDPyk
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 11:54:40 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:57000 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753281AbZHDPyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 11:54:40 -0400
+Received: by fxm17 with SMTP id 17so3363518fxm.37
+        for <git@vger.kernel.org>; Tue, 04 Aug 2009 08:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=cwNuCr+oMOfWDETbM3Llv7aKNn10AjcM9+dxT9s5pto=;
+        b=e/rVo1TpJcIRL2BhAbXlUvgWKvr+ur+sqFmOpHrXQnikxNYsUdzIm5aSCF8H7u/97F
+         PG5L5S8Vq/9Dy5QVhVKG74nRQVwgbnOyzbTEmyFTkYqyZC/lBvlizt+yu17TQWeU1VrO
+         VbWMuynMnGri0w3CVZ7+M9ua9mTlk6A5T1SN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=Afg1nns93AN7jKbINRzklcrCueNMZh9hLO+djCNiYEosqWxdpT5FtwuUxse1Ovi5sO
+         iTA9FdyWgdth4CsQoAuCA5LDtHxBdvB2VWUN+K5NHYX5iCvRX7g7nregTm1zJOs0GM2g
+         EsIpLMg5XpdanFIYUcBpeTZ2VGt0F9Xjvk/1A=
+Received: by 10.103.238.13 with SMTP id p13mr3903424mur.111.1249401279860;
+        Tue, 04 Aug 2009 08:54:39 -0700 (PDT)
+Received: from localhost.localdomain (abwk147.neoplus.adsl.tpnet.pl [83.8.234.147])
+        by mx.google.com with ESMTPS id u26sm43921442mug.21.2009.08.04.08.54.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Aug 2009 08:54:38 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n74FsWKr030834
+	for <git@vger.kernel.org>; Tue, 4 Aug 2009 17:54:35 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124793>
 
-On Mon, 3 Aug 2009, Christian Couder wrote:
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ > Or you can set up $base_url in your gitweb configuration file (which
+ > is not mentioned in the gitweb/README, unfortunately).
 
-> This new option uses the "reset_almost_hard()" function to perform
-> a reset.
+So now it is documented.
 
-Shouldn't it make it possible to do an almost-hard reset (that is, keep a 
-dirty working tree's changes while changing the index and HEAD to a 
-different commit)? AFAICT, this series doesn't expose the interesting new
-functionality it provides.
+ gitweb/README |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-Also, I thought that we'd found that other built-ins could be simplified 
-through the use of functions you're adding here. In particular, checkout 
-wants to change the index and working tree while preserving dirty working 
-tree changes. So it would probably be better for it to go in a library 
-object, where sequencer--helper would just make it available to shell 
-code.
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/gitweb/README b/gitweb/README
+index 9056d1e..baacddd 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -165,6 +165,12 @@ not include variables usually directly set during build):
+    Full URL and absolute URL of gitweb script;
+    in earlier versions of gitweb you might have need to set those
+    variables, now there should be no need to do it.
++ * $base_url
++   Base URL for relative URLs in pages generated by gitweb, 
++   (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
++   needed and used only for URLs with nonempty PATH_INFO via
++   <base href="$base_url>.  Usually gitweb sets its value correctly,
++   and there is no need to set this variable, e.g. to $my_uri or "/".
+  * $home_link
+    Target of the home link on top of all pages (the first part of view
+    "breadcrumbs").  By default set to absolute URI of a page ($my_uri).
