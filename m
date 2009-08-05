@@ -1,123 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/3] git-merge-base/git-show-branch --merge-base: Documentation and test
-Date: Wed,  5 Aug 2009 09:59:20 +0200
-Message-ID: <1249459160-3931-4-git-send-email-git@drmicha.warpmail.net>
-References: <1249459160-3931-1-git-send-email-git@drmicha.warpmail.net>
- <1249459160-3931-2-git-send-email-git@drmicha.warpmail.net>
- <1249459160-3931-3-git-send-email-git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 09:59:49 2009
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 1/2] Add push by "export"
+Date: Wed, 5 Aug 2009 11:08:23 +0200
+Message-ID: <36ca99e90908050208m52a9705focc86ca579780a55b@mail.gmail.com>
+References: <alpine.LNX.2.00.0908050056510.2147@iabervon.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 11:08:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYbPY-00031z-FP
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 09:59:48 +0200
+	id 1MYcUQ-00058S-Bw
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 11:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933742AbZHEH7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 03:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933741AbZHEH7n
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 03:59:43 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50952 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933737AbZHEH7m (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 03:59:42 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id A13533BCBA0;
-	Wed,  5 Aug 2009 03:59:42 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 05 Aug 2009 03:59:42 -0400
-X-Sasl-enc: 3fpZMoqm9W9bT1eKye7RZa6N4W/XpTua1ZyGDOUgXnRr 1249459181
-Received: from localhost (vpn-136-027.rz.uni-augsburg.de [137.250.136.27])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id ADFE42DE0B;
-	Wed,  5 Aug 2009 03:59:41 -0400 (EDT)
-X-Mailer: git-send-email 1.6.4.70.g9c084
-In-Reply-To: <1249459160-3931-3-git-send-email-git@drmicha.warpmail.net>
+	id S933850AbZHEJIZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2009 05:08:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933794AbZHEJIZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 05:08:25 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:39902 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933639AbZHEJIY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 05:08:24 -0400
+Received: by fxm28 with SMTP id 28so3643784fxm.17
+        for <git@vger.kernel.org>; Wed, 05 Aug 2009 02:08:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pWmWZTy7m6MRBiN+xSZDfBA0Gxkbj3lFoFceTwjusds=;
+        b=ZWc73nOZCUQ/PShId0SZtCv8i0ezKxdpt47PRY+Tk5X/fbm2btRr2CEgAPJWOs0BWz
+         RjT+zuvynYIqETWF0ZtjiNR1YyHJxdZzU7eGjSSwv0pfv8j4BrGPy468Mhdq+k0D2ykL
+         0veXdbN2mvC6b2h4BBiJTR18HlZ1K5Kes/PcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=w8LJvPXL86rg1JQCMMW2aze52LYzKWcsE+goBEtt5riIblCjDDCv4uvSZdsljVbfWp
+         XFLGQBm2oy67glBItD9tmKnqABsmkBgv49arr0Id83suG0GTdrjjfbvvGMmShCQIb/4Z
+         ckNGaDpf/HoGQLw6tPBzVOiwwoUcLy/kyxh7U=
+Received: by 10.223.111.129 with SMTP id s1mr1482241fap.12.1249463303816; Wed, 
+	05 Aug 2009 02:08:23 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0908050056510.2147@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124876>
 
-Currently, the documentation suggests that 'git merge-base -a' and 'git
-show-branch --merge-base' are equivalent (in fact it claims that the
-former cannot handle more than two revs).
+On Wed, Aug 5, 2009 at 07:02, Daniel Barkalow<barkalow@iabervon.org> wr=
+ote:
+> ---
+> =C2=A0Documentation/git-remote-helpers.txt | =C2=A0 33 ++++++++++++++=
+++++
+> =C2=A0transport-helper.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 | =C2=A0 62 ++++++++++++++++++++++++++++++++++
+> =C2=A02 files changed, 95 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git=
+-remote-helpers.txt
+> index 9a3c5bc..dede2e5 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -75,6 +86,10 @@ CAPABILITIES
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0and --export-marks option to git-fast-impo=
+rt for more details)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0located at the given filename.
+>
+> +'export' [flags]::
+> + =C2=A0 =C2=A0 =C2=A0 This helper supports the 'export' command. The=
+ flags specify
+> + =C2=A0 =C2=A0 =C2=A0 features of the history that may be exported (=
+see below).
+> +
+I can't find any code or usage of these flags in the patch!
 
-Alas, the handling of more than two revs is very different. Document
-this by tests and correct the documentation to reflect this.
-
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-merge-base.txt  |    4 ++++
- Documentation/git-show-branch.txt |    8 +++++---
- builtin-show-branch.c             |    2 +-
- t/t6010-merge-base.sh             |    6 ++++++
- 4 files changed, 16 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge-base.txt
-index 00e4003..ce5b369 100644
---- a/Documentation/git-merge-base.txt
-+++ b/Documentation/git-merge-base.txt
-@@ -27,6 +27,10 @@ commits on the command line.  As the most common special case, specifying only
- two commits on the command line means computing the merge base between
- the given two commits.
- 
-+As a consequence, the 'merge base' is not necessarily contained in each of the
-+commit arguments if more than two commits are specified. This is different
-+from linkgit:git-show-branch[1] when used with the `--merge-base` option.
-+
- OPTIONS
- -------
- -a::
-diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
-index 2c78c25..7343361 100644
---- a/Documentation/git-show-branch.txt
-+++ b/Documentation/git-show-branch.txt
-@@ -82,9 +82,11 @@ OPTIONS
- 	Synonym to `--more=-1`
- 
- --merge-base::
--	Instead of showing the commit list, just act like the
--	'git-merge-base -a' command, except that it can accept
--	more than two heads.
-+	Instead of showing the commit list, determine possible
-+	merge bases for the specified commits. All merge bases
-+	will be contained in all specified commits. This is
-+	different from how linkgit:git-merge-base[1] handles
-+	the case of three or more commits.
- 
- --independent::
- 	Among the <reference>s given, display only the ones that
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index 03bdea6..3510a86 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -665,7 +665,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		OPT_BOOLEAN(0, "sha1-name", &sha1_name,
- 			    "name commits with their object names"),
- 		OPT_BOOLEAN(0, "merge-base", &merge_base,
--			    "act like git merge-base -a"),
-+			    "show possible merge bases"),
- 		OPT_BOOLEAN(0, "independent", &independent,
- 			    "show refs unreachable from any other ref"),
- 		OPT_BOOLEAN(0, "topo-order", &lifo,
-diff --git a/t/t6010-merge-base.sh b/t/t6010-merge-base.sh
-index 79124ec..0144d9e 100755
---- a/t/t6010-merge-base.sh
-+++ b/t/t6010-merge-base.sh
-@@ -149,6 +149,12 @@ test_expect_success 'merge-base A B C' '
- 	test "$MM1" = "$MB"
- '
- 
-+test_expect_success 'merge-base A B C using show-branch' '
-+	MB=$(git show-branch --merge-base MMA MMB MMC) &&
-+	MMR=$(git rev-parse --verify MMR) &&
-+	test "$MMR" = "$MB"
-+'
-+
- test_expect_success 'criss-cross merge-base for octopus-step (setup)' '
- 	git reset --hard MMR &&
- 	test_tick && git commit --allow-empty -m 1 && git tag CC1 &&
--- 
-1.6.4.70.g9c084
+Bert
