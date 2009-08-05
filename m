@@ -1,129 +1,91 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Making git push output quieter
-Date: Wed, 05 Aug 2009 15:51:27 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908051545300.16073@xanadu.home>
-References: <200908042327.10912.aacid@kde.org>
- <3af572ac0908041520l327482f1u45121b6b991a3673@mail.gmail.com>
- <200908052113.06373.aacid@kde.org> <20090805192658.GI1033@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
+ curl
+Date: Wed, 5 Aug 2009 21:54:44 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908052154000.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org> <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051145250.2147@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Albert Astals Cid <aacid@kde.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 21:51:52 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:54:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYmWd-00048e-75
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:51:51 +0200
+	id 1MYmZ9-0005I7-NS
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbZHETve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 15:51:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbZHETve
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:51:34 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18653 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751520AbZHETvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 15:51:33 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KNX00MXI5B7HXW0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 05 Aug 2009 15:40:20 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090805192658.GI1033@spearce.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751893AbZHETyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 15:54:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbZHETyU
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:54:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33109 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751506AbZHETyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 15:54:19 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 19:54:19 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp044) with SMTP; 05 Aug 2009 21:54:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19zeSkPhoZzXXcLHMICSNjC+X9sXsfUKaIhTe0gSE
+	6NERhjhbzfVXrx
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0908051145250.2147@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.44
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124958>
 
-On Wed, 5 Aug 2009, Shawn O. Pearce wrote:
+Hi,
 
-> Albert Astals Cid <aacid@kde.org> wrote:
-> > A Dimecres, 5 d'agost de 2009, Pau Garcia i Quiles va escriure:
-> > > On Tue, Aug 4, 2009 at 11:27 PM, Albert Astals Cid<aacid@kde.org> wrote:
-> > > > Hi, at KDE we are starting to try to use git and one of the things that's
-> > > > bothering me is that git push is too verbose for our scripts.
-> ...
-> > > Have you tried redirecting only stdout to /dev/null, and keeping
-> > > stderr to yourself ?
+On Wed, 5 Aug 2009, Daniel Barkalow wrote:
+
+> On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> 
+> > On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 > > 
-> > Everything goes to stderr.
+> > > diff --git a/Makefile b/Makefile
+> > > index 504646a..35117fc 100644
+> > > --- a/Makefile
+> > > +++ b/Makefile
+> > > @@ -981,6 +981,7 @@ else
+> > >  		CURL_LIBCURL = -lcurl
+> > >  	endif
+> > >  	BUILTIN_OBJS += builtin-http-fetch.o
+> > > +	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
+> > >  	EXTLIBS += $(CURL_LIBCURL)
+> > >  	LIB_OBJS += http.o http-walker.o
+> > >  	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
+> > > @@ -1491,6 +1492,10 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+> > >  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> > >  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+> > >  
+> > > +git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
+> > > +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> > > +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+> > > +
+> > 
+> > Ooops, I missed this part.  How about making git-remote-https and 
+> > git-remote-ftp hardlinks to git-remote-http?
 > 
-> Sadly our use of isatty to determine if progress/verbosity should
-> be used is inconsistent.  pack-objects.c, which is what you are
-> talking about above, is using stderr to determine if progress should
-> be enabled, but other code like transport.c, which is used on the
-> client side, is using stdout.  Hence the suggestion above to redirect
-> stdout to /dev/null to try and shutoff the spew.
-> 
->   $ git grep isatty
->   builtin-commit.c:		if (isatty(0))
->   builtin-config.c:			stdout_is_tty = isatty(1);
->   builtin-pack-objects.c:	progress = isatty(2);
->   builtin-revert.c:	if (isatty(0))
->   builtin-shortlog.c:	if (!nongit && !rev.pending.nr && isatty(0))
->   builtin-unpack-objects.c:	quiet = !isatty(2);
->   color.c:		stdout_is_tty = isatty(1);
->   compat/winansi.c:	if (!isatty(fileno(stream)))
->   compat/winansi.c:	if (!isatty(fileno(stream)))
->   pack-redundant.c:	if (!isatty(0)) {
->   pager.c:	if (!isatty(1))
->   pager.c:	if (isatty(2))
->   transport.c:	args.no_progress = args.quiet || (!transport->progress && !isatty(1));
->   wt-status.c:	 * will have checked isatty on stdout).
-> 
-> I'm thinking this might be a reasonable patch to apply, Junio/Nico?
-> 
-> --8<--
-> pack-objects: Display progress only if stdout is tty
-> 
-> Client transports underneath git fetch display progress output only
-> if stdout is a tty, allowing redirection of stdout to /dev/null (or
-> a pipe) to silence progress but still report actual errors on stderr.
-> 
-> Doing the same in pack-objects means push, bundle creation and
-> repack can use the same trick to silence noisy progress progress,
-> but still obtain real errors.
-> 
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
->  builtin-pack-objects.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index 961b639..0b9234a 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -2110,7 +2110,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->  	if (!pack_compression_seen && core_compression_seen)
->  		pack_compression_level = core_compression_level;
->  
-> -	progress = isatty(2);
-> +	progress = isatty(1);
+> Sure. Is "ln ... || ln -s ... || cp ..." the right way to do this 
+> cross-platform?
 
-Doesn't this break progress reporting on a push since stdout is never a 
-tty in that case?  Same issue on a fetch although in that case the 
-progress level is provided explicitly by the caller.
+You mean as in
 
+	$(BUILT_INS): git$X
+	        $(QUIET_BUILT_IN)$(RM) $@ && \
+	        ln git$X $@ 2>/dev/null || \
+	        ln -s git$X $@ 2>/dev/null || \
+	        cp git$X $@
 
+?  I guess so ;-)
 
->  	for (i = 1; i < argc; i++) {
->  		const char *arg = argv[i];
->  
-> -- 
-> 1.6.4.70.g9c084
-> 
-> 
-> -- 
-> Shawn.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Ciao,
+Dscho
