@@ -1,74 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 3/3] transport: don't show push status if --quiet is given
-Date: Wed, 5 Aug 2009 13:30:20 -0700
-Message-ID: <fabb9a1e0908051330v24863b4fo6fc2021bafb2fdb8@mail.gmail.com>
-References: <20090805201937.GB9004@coredump.intra.peff.net> 
-	<20090805202326.GC23226@coredump.intra.peff.net> <fabb9a1e0908051327l74e06afdvf3b35b5abde2e140@mail.gmail.com> 
-	<32541b130908051329w43882ca6ne0824b01da3948aa@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3 v3] Add support for external programs for handling
+ native fetches
+Date: Wed, 5 Aug 2009 22:34:26 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908052231461.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0907310109130.2147@iabervon.org> <alpine.DEB.1.00.0908051143000.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051058130.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Albert Astals Cid <aacid@kde.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Pau Garcia i Quiles <pgquiles@elpauer.org>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 22:30:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 22:34:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYn8K-0005Cj-Ee
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:30:48 +0200
+	id 1MYnBc-0006qa-3w
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:34:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608AbZHEUal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 16:30:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbZHEUal
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:30:41 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:11717 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752489AbZHEUak (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 16:30:40 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so230676eyd.37
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 13:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qLz2XepPxWkaCodi3kheRbZLILHmL6NVoH8MHoAS05I=;
-        b=xGX2qIx/21CQr19h4U3LwMaTxyQqLS7gBs/GCiBPBbAmFSUFmWWCmyqTb1pS/eRuS4
-         2v6PhBx8UFw4jwQQV+37QFHMLG6xFmpZqyUxYfM+4Hy+gKflJXBkdPiwzVz7auJSuhCG
-         nRtDTC7re83lOAKpBjB5h/XgJe7Ipv1GsnpY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZwzMGbpIOxxAj2iwfgHeJIb2AChcSGfzwdFwqcuzJMn2MLohoK642OwVhzRQE5S5K1
-         oCv4x7gOC5l1n8dmMhF6ykS/wVC2UcbRWnuzgxKLU3cMVQpImx5oSAk28cRMgqlk95Go
-         SUyeC/3df7s2+dJJCDQfBF4gOVBQvj6gH3s+s=
-Received: by 10.216.88.71 with SMTP id z49mr1781wee.90.1249504240191; Wed, 05 
-	Aug 2009 13:30:40 -0700 (PDT)
-In-Reply-To: <32541b130908051329w43882ca6ne0824b01da3948aa@mail.gmail.com>
+	id S1752650AbZHEUeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:34:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbZHEUeD
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:34:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60029 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752561AbZHEUeB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 16:34:01 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 20:34:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp016) with SMTP; 05 Aug 2009 22:34:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lXw1CrGJl7w1lx7XLuH1VdjPdv7ZKmejCec8UvF
+	fzdCZtT8OoA1/y
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0908051058130.2147@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5600000000000001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124970>
 
-Heya,
+Hi,
 
-On Wed, Aug 5, 2009 at 13:29, Avery Pennarun<apenwarr@gmail.com> wrote:
->> Is my C getting sloppy or is this a non-looping loop? AFAICS it either
->> return 1's on the first run, or breaks?
->
-> The "break" in this case breaks out of the switch, not the for.
+On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 
-Ouch, painfull, my C _IS_ getting sloppy :(.
+> On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> 
+> > On Fri, 31 Jul 2009, Daniel Barkalow wrote:
+> > 
+> > > +	}
+> > > +	strbuf_release(&buf);
+> > > +
+> > > +	for (posn = ret; posn; posn = posn->next)
+> > > +		resolve_remote_symref(posn, ret);
+> > > +
+> > > +	return ret;
+> > > +}
+> > > +
+> > > +int transport_native_helper_init(struct transport *transport)
+> > > +{
+> > > +	struct helper_data *data = xmalloc(sizeof(*data));
+> > > +	char *eom = strchr(transport->url, ':');
+> > 
+> > "End of message"?
+> 
+> "End of method"; that's the "method" part of a URL.
 
--- 
-Cheers,
+I'd have called that "protocol".  At least that's what java.net.URL 
+calls it, and I just assume that Sun is very much in love with standards, 
+so I could imagine they picked that term from the appropriate RFC.
 
-Sverre Rabbelier
+In any case, I am much less likely to puzzle over "p" than "eom"...
+
+Ciao,
+Dscho
