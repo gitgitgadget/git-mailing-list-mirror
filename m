@@ -1,74 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
- curl
-Date: Wed, 5 Aug 2009 12:07:30 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: The XZ patch?
+Date: Wed, 05 Aug 2009 04:12:53 -0700 (PDT)
+Message-ID: <m3zlaepl8v.fsf@localhost.localdomain>
+References: <5F7EF736-9D0B-4455-A0F7-E7314B4F29E4@uwaterloo.ca>
+	<4A795790.9010805@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 12:07:21 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Aug 05 13:13:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYdOu-00013P-W7
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 12:07:17 +0200
+	id 1MYeQZ-0000tK-Gp
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 13:13:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933314AbZHEKHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 06:07:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933063AbZHEKHH
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 06:07:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35052 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933018AbZHEKHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 06:07:06 -0400
-Received: (qmail invoked by alias); 05 Aug 2009 10:07:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp064) with SMTP; 05 Aug 2009 12:07:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19i5CU0sftiRJVz/4/6hqHZx1xCJCs4rqFWZVtgqh
-	WoEX9h5/DiWt1d
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0908050053580.2147@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.46
+	id S1753456AbZHELM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 07:12:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934147AbZHELM4
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 07:12:56 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:51966 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752239AbZHELMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 07:12:55 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so851118fga.17
+        for <git@vger.kernel.org>; Wed, 05 Aug 2009 04:12:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=EWHHEsPYImNmvaZi3e/EEHXaiSyLt2TRoaE0uGypAzE=;
+        b=RY83K2m+d9z/E4hmnIRx9QtHBl4v7ADjAw2zDvK33ehbcveOrLA0fa2mAh0WUxfNh+
+         Y/0eJsTz4FE8z8kWdoXHL5SumC03twWwm5Cuy/ib0v9O/n+ZKNCaQ7/u7sO2A98M1jU3
+         F5Pk0pUzHRzGmsCRuU+Kq9Gg61lplXranhx0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=YIFu89Gte8VZsXO2ReVTn7GuoHnaVX1fgVMmpJPbZMMKxeoGAkW6uH0NmI8kNGjg9w
+         FRUz3ehdBBkBVljaua3ccQDWQl7FeBmVjeb6hs4thkHP0w8xhS7Weicu1jhLiY/O77fZ
+         O4YVCwzzDjV6++q4xDQRK0WPPbRf7wooIf1Qs=
+Received: by 10.86.81.16 with SMTP id e16mr1833605fgb.78.1249470774751;
+        Wed, 05 Aug 2009 04:12:54 -0700 (PDT)
+Received: from localhost.localdomain (abvs73.neoplus.adsl.tpnet.pl [83.8.216.73])
+        by mx.google.com with ESMTPS id l19sm8303724fgb.22.2009.08.05.04.12.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 05 Aug 2009 04:12:53 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n75BCpec014778;
+	Wed, 5 Aug 2009 13:12:51 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n75BCmOm014775;
+	Wed, 5 Aug 2009 13:12:48 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4A795790.9010805@op5.se>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124897>
 
-Hi,
+Andreas Ericsson <ae@op5.se> writes:
 
-On Wed, 5 Aug 2009, Daniel Barkalow wrote:
+> Mark A Rada wrote:
+> >
+> > I was wondering what the fate of my XZ patch was (I didn't do
+> > something dumb, did I?). Never got a response after my last
+> > submit.
 
-> diff --git a/Makefile b/Makefile
-> index 504646a..35117fc 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -981,6 +981,7 @@ else
->  		CURL_LIBCURL = -lcurl
->  	endif
->  	BUILTIN_OBJS += builtin-http-fetch.o
-> +	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
->  	EXTLIBS += $(CURL_LIBCURL)
->  	LIB_OBJS += http.o http-walker.o
->  	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
-> @@ -1491,6 +1492,10 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
->  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
->  
-> +git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
-> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-> +
+I'm sorry, I didn't reply to the last version, did I? I liked both
+patches
+ 
+> No comments usually meant noone cared enough about the implemented
+> feature to comment on it. Personally, I'd never use a compression
+> algorithm that hogs as much memory as XZ does. "Good enough" really
+> is just that, imo, and bzip2 and gzip are widely available pretty
+> much everywhere, whereas I've never heard of XZ before.
 
-Ooops, I missed this part.  How about making git-remote-https and 
-git-remote-ftp hardlinks to git-remote-http?
+Well, there were two patches in last series, and I'd rather liked the
+one that decoupled list of _known_ snapshot formats from the list of
+snapshot formats projects are _allowed to use_, when project specific
+override for 'snapshot' feature is turned on.  So for example one can
+allow project specific override (so projects can chose whether to have
+snapshot, and what formats to use) but for example disable chosing
+'tbz' (bzip2 compression) or 'txz' (XZ / LZMA2 compression) formats.
 
-Ciao,
-Dscho
+BTW. XZ is just new name (and improved format) for LZMA compression.
+Perhaps it should be disabled by default (you can be almost sure for
+gzip and bzip2 to be present on platforms one usually deploy gitweb,
+but it is not true for xz-utils).
+
+P.S. Snapshot caching.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
