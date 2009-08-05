@@ -1,62 +1,74 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] RFC - Say goodbye to the rodent
-Date: Wed, 05 Aug 2009 12:04:18 +0200
-Message-ID: <4A795922.6090908@op5.se>
-References: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
+ curl
+Date: Wed, 5 Aug 2009 12:07:30 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 12:04:54 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 12:07:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYdMX-0008Uw-T6
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 12:04:50 +0200
+	id 1MYdOu-00013P-W7
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 12:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934107AbZHEKEW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 06:04:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933243AbZHEKEW
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 06:04:22 -0400
-Received: from na3sys009aog101.obsmtp.com ([74.125.149.67]:56449 "HELO
-	na3sys009aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S933297AbZHEKEV (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 06:04:21 -0400
-Received: from source ([209.85.219.206]) by na3sys009aob101.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSnlZJAgfLQajUxDJ9BKvtZhBWz0hFICP@postini.com; Wed, 05 Aug 2009 03:04:22 PDT
-Received: by ewy2 with SMTP id 2so4552819ewy.19
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 03:04:20 -0700 (PDT)
-Received: by 10.210.52.15 with SMTP id z15mr9956978ebz.34.1249466660070;
-        Wed, 05 Aug 2009 03:04:20 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-179-205-no128.tbcn.telia.com [90.227.179.205])
-        by mx.google.com with ESMTPS id 7sm912821eyb.30.2009.08.05.03.04.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 03:04:19 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
+	id S933314AbZHEKHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 06:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933063AbZHEKHH
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 06:07:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35052 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933018AbZHEKHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 06:07:06 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 10:07:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp064) with SMTP; 05 Aug 2009 12:07:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19i5CU0sftiRJVz/4/6hqHZx1xCJCs4rqFWZVtgqh
+	WoEX9h5/DiWt1d
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0908050053580.2147@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.46
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124896>
 
-Nazri Ramliy wrote:
-> 
-> What do you guys think about this new approach of "cut-and-paste" from the
-> command line?
-> 
+Hi,
 
-Dunno, really. Tab-completion's working just fine for me, so I doubt I'll
-use it. It's definitely novel, but how much aggravation will it cause if
-not all file-managing programs support it?
+On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> diff --git a/Makefile b/Makefile
+> index 504646a..35117fc 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -981,6 +981,7 @@ else
+>  		CURL_LIBCURL = -lcurl
+>  	endif
+>  	BUILTIN_OBJS += builtin-http-fetch.o
+> +	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
+>  	EXTLIBS += $(CURL_LIBCURL)
+>  	LIB_OBJS += http.o http-walker.o
+>  	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
+> @@ -1491,6 +1492,10 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+>  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+>  
+> +git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
+> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+> +
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Ooops, I missed this part.  How about making git-remote-https and 
+git-remote-ftp hardlinks to git-remote-http?
+
+Ciao,
+Dscho
