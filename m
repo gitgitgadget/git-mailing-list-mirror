@@ -1,101 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: The XZ patch?
-Date: Wed, 05 Aug 2009 04:12:53 -0700 (PDT)
-Message-ID: <m3zlaepl8v.fsf@localhost.localdomain>
-References: <5F7EF736-9D0B-4455-A0F7-E7314B4F29E4@uwaterloo.ca>
-	<4A795790.9010805@op5.se>
+From: Ian Hobson <ian@ianhobson.co.uk>
+Subject: Advice needed - handling configuration files
+Date: Wed, 05 Aug 2009 12:35:38 +0100
+Message-ID: <4A796E8A.70407@ianhobson.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Aug 05 13:13:04 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 05 13:51:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYeQZ-0000tK-Gp
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 13:13:03 +0200
+	id 1MYf1Y-0006fx-M5
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 13:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbZHELM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 07:12:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934147AbZHELM4
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 07:12:56 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:51966 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752239AbZHELMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 07:12:55 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so851118fga.17
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 04:12:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=EWHHEsPYImNmvaZi3e/EEHXaiSyLt2TRoaE0uGypAzE=;
-        b=RY83K2m+d9z/E4hmnIRx9QtHBl4v7ADjAw2zDvK33ehbcveOrLA0fa2mAh0WUxfNh+
-         Y/0eJsTz4FE8z8kWdoXHL5SumC03twWwm5Cuy/ib0v9O/n+ZKNCaQ7/u7sO2A98M1jU3
-         F5Pk0pUzHRzGmsCRuU+Kq9Gg61lplXranhx0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=YIFu89Gte8VZsXO2ReVTn7GuoHnaVX1fgVMmpJPbZMMKxeoGAkW6uH0NmI8kNGjg9w
-         FRUz3ehdBBkBVljaua3ccQDWQl7FeBmVjeb6hs4thkHP0w8xhS7Weicu1jhLiY/O77fZ
-         O4YVCwzzDjV6++q4xDQRK0WPPbRf7wooIf1Qs=
-Received: by 10.86.81.16 with SMTP id e16mr1833605fgb.78.1249470774751;
-        Wed, 05 Aug 2009 04:12:54 -0700 (PDT)
-Received: from localhost.localdomain (abvs73.neoplus.adsl.tpnet.pl [83.8.216.73])
-        by mx.google.com with ESMTPS id l19sm8303724fgb.22.2009.08.05.04.12.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 04:12:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n75BCpec014778;
-	Wed, 5 Aug 2009 13:12:51 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n75BCmOm014775;
-	Wed, 5 Aug 2009 13:12:48 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4A795790.9010805@op5.se>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S933452AbZHELvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 07:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933321AbZHELvF
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 07:51:05 -0400
+Received: from ianhobson.com ([212.13.194.210]:39074 "EHLO smtp.ianhobson.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S933270AbZHELvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 07:51:04 -0400
+X-Greylist: delayed 926 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Aug 2009 07:51:04 EDT
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by smtp.ianhobson.com (Postfix) with ESMTP id 03DCD680AD
+	for <git@vger.kernel.org>; Wed,  5 Aug 2009 12:35:37 +0100 (BST)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124898>
 
-Andreas Ericsson <ae@op5.se> writes:
+Hi all,
 
-> Mark A Rada wrote:
-> >
-> > I was wondering what the fate of my XZ patch was (I didn't do
-> > something dumb, did I?). Never got a response after my last
-> > submit.
+Git newbie here, so please spell things out.  I've been reading the docs 
+and got quite confused  :)
 
-I'm sorry, I didn't reply to the last version, did I? I liked both
-patches
- 
-> No comments usually meant noone cared enough about the implemented
-> feature to comment on it. Personally, I'd never use a compression
-> algorithm that hogs as much memory as XZ does. "Good enough" really
-> is just that, imo, and bzip2 and gzip are widely available pretty
-> much everywhere, whereas I've never heard of XZ before.
+I have a web application that has been developed for one customer. It 
+is  just about to go to three customers -each will need their own config 
+file, css file and directory of images. Each customer may have a test 
+and production version that differ only in the config file. The 
+developer (me) also needs configuration files for various purposes 
+(scripted testing and manual testing).
 
-Well, there were two patches in last series, and I'd rather liked the
-one that decoupled list of _known_ snapshot formats from the list of
-snapshot formats projects are _allowed to use_, when project specific
-override for 'snapshot' feature is turned on.  So for example one can
-allow project specific override (so projects can chose whether to have
-snapshot, and what formats to use) but for example disable chosing
-'tbz' (bzip2 compression) or 'txz' (XZ / LZMA2 compression) formats.
+What is the best way of handling this situation, so that the config, css 
+and image files are under version control, without having to repeat 
+changes in  three branches?
 
-BTW. XZ is just new name (and improved format) for LZMA compression.
-Perhaps it should be disabled by default (you can be almost sure for
-gzip and bzip2 to be present on platforms one usually deploy gitweb,
-but it is not true for xz-utils).
+If a patch set could be created that contained all but the changes to 
+the configuration files, then that could be pulled up into the 
+mothership, and each satellite can have its own configuration. I want to 
+avoid renaming/copying files if possible because that is change that 
+goes into production untested.
 
-P.S. Snapshot caching.
+Regards
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Ian
