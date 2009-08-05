@@ -1,65 +1,108 @@
-From: "Dr. Lars Hanke" <lars@lhanke.de>
-Subject: Re: Diffing M$-Word
-Date: Wed, 05 Aug 2009 21:35:49 +0200
-Message-ID: <4A79DF15.9070000@lhanke.de>
-References: <4A70AE1F.7070004@idmcomp.com> <36ca99e90907291345r188a2182n77a2fd5cb55a8bc4@mail.gmail.com> <4A71F2F1.4060605@idmcomp.com> <20090801111227.GA26029@gmail.com> <4A7841BF.5060308@idmcomp.com> <4A7869BD.5010209@lhanke.de> <4A788C93.10402@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Shaun Cutts <shaun@cuttshome.net>
+Subject: Re: git index: how does it work?
+Date: Wed, 5 Aug 2009 21:31:50 +0200
+Message-ID: <C2C8DCE2-388B-49F4-A231-CD52779CDF48@cuttshome.net>
+References: <loom.20090805T160528-69@post.gmane.org> <fabb9a1e0908051121m6efafc02gd468a92784a73ecd@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 21:36:03 2009
+Cc: Git List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:38:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYmHK-00058u-Dc
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:36:02 +0200
+	id 1MYmK0-0006NX-LP
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:38:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbZHETfz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 15:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750845AbZHETfz
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:35:55 -0400
-Received: from moutng.kundenserver.de ([212.227.17.8]:58483 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808AbZHETfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 15:35:54 -0400
-Received: from hermod.mgr (p5B36424F.dip.t-dialin.net [91.54.66.79])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MKt72-1MYmHC1AmZ-000p4A; Wed, 05 Aug 2009 21:35:54 +0200
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by hermod.mgr (Postfix) with ESMTP id 87E2A1DC25D;
-	Wed,  5 Aug 2009 21:35:53 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at hermod.mgr
-Received: from hermod.mgr ([127.0.0.1])
-	by localhost (hermod.mgr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LEf8hepvIAlI; Wed,  5 Aug 2009 21:35:50 +0200 (CEST)
-Received: from sleipnir.mgr (sleipnir.mgr [172.16.1.3])
-	by hermod.mgr (Postfix) with ESMTP id 0CFBF1DC245;
-	Wed,  5 Aug 2009 21:35:50 +0200 (CEST)
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090706)
-In-Reply-To: <4A788C93.10402@kdbg.org>
-X-Provags-ID: V01U2FsdGVkX1/eFnpAM8viaVYS8/rRDHHisUu9JHkzSkXVSpz
- tuFbnhHtIyiXRylYdpQHsWwE2S+KlVPUF/eEe6HdbXl59kNTIm
- Gkv/BPYAAmTORRBHsz9cA==
+	id S1751232AbZHETil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 15:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbZHETik
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:38:40 -0400
+Received: from mail1.sea5.speakeasy.net ([69.17.117.3]:37295 "EHLO
+	mail1.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750867AbZHETik (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 15:38:40 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Aug 2009 15:38:40 EDT
+Received: (qmail 7574 invoked from network); 5 Aug 2009 19:32:01 -0000
+Received: from apn-95-40-13-37.dynamic.gprs.plus.pl (shaunc@[95.40.13.37])
+          (envelope-sender <shaun@cuttshome.net>)
+          by mail1.sea5.speakeasy.net (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 5 Aug 2009 19:31:57 -0000
+In-Reply-To: <fabb9a1e0908051121m6efafc02gd468a92784a73ecd@mail.gmail.com>
+X-Mailer: Apple Mail (2.935.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124956>
 
+I'll be happy to keep you posted....
 
->> At work I have to write a lot of reports using M$-Word and found that 
->> git is capable of managing these in an easy and 
-> I use a dual solution. I defined catdoc as a textconv filter so that I 
-> can see textual changes in gitk; and I use my winworddiff crude hack 
-> that I posted here
-> http://thread.gmane.org/gmane.comp.version-control.git/59288
-> as a external diff program (note: *not* a difftool). With these, I can 
-> limp along sufficiently.
-That sounds good. I'll try to setup this solution at work. I actually 
-started writing a similar thing in C# .NET, since I didn't know that you 
-could just add a .dot to supply a macro.
+... I'll put up a description once I get things worked out a bit more.  
+It will take me a month or two, though, probably.
 
-Thanks,
- - lars.
+... but as a quickie... :)
+
+The general idea is to use actual syntax parsing to understand what  
+happens in particular files, but be able to fall back on text if  
+necessary. (Maybe "smarter text" as described by Daniel would be an  
+intermediate fallback step.)
+
+No matter what the target language, files have a hierarchical  
+organization (at least as far as I am going to care about :)). My idea  
+is to write a "delta" in yaml with the tree-edit operations, as a  
+universal representation of changes. This could be edited by the user  
+if necessary -- for example: a move with edits in it might not be  
+detected, but the user could explicitly replace the delete/add pair  
+with the move/edit. Tools would be provided to verify that the edited  
+deltas actually produce the changes stated (& update them to capture  
+the next set of deltas, etc.)
+
+Suggestions from you guys as to the best way to tie this in would be  
+greatly appreciated. I think the analysis of particular file types  
+should only be loosely coupled with the rest of the system, though, as  
+otherwise it will create a rats' nest.
+
+Ideally, there would be a mechanism for an outside diff tool to  
+specify "these are the hunks", and to register a utility to apply  
+them... the smart diff tool would use the yaml tree-operation format  
+and have its own registry (or config section) for how to analyze  
+particular file types.
+
+The diff tool would also be coupled with a merge tool... in general,  
+it would be nice if there were more hooks for providing specialized  
+diff & merge.
+
+-- Shaun
+
+On Aug 5, 2009, at 8:21 PM, Sverre Rabbelier wrote:
+
+> Heya,
+>
+> On Wed, Aug 5, 2009 at 09:21, Shaun Cutts<shaun@cuttshome.net> wrote:
+>> PS I'm considering writing an extension to git where the "diff"  
+>> understands the
+>> semantics of certain types of files: hunks wouldn't just be textual  
+>> blobs but
+>> would try to represent a minimal change from one version to the  
+>> next based on an
+>> edit distance, so that, e.g. changing the location of a function  
+>> would be
+>> represented by a "move" edit, rather than two text changes.
+>
+> This sounds very similar to what Daniel was discussing in "[PATCH 2/3
+> v3] Use an external program to implement fetching with curl git" [0],
+> if you're truly interested in doing this, please do keep me posted
+> (and I suspect Dscho might also be interested in being cc-ed) :).
+>
+> [0] http://thread.gmane.org/gmane.comp.version-control.git/124503
+>
+> -- 
+> Cheers,
+>
+> Sverre Rabbelier
+>
