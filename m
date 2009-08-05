@@ -1,73 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Revamping "git status"
-Date: Wed, 05 Aug 2009 13:02:08 -0700
-Message-ID: <7v3a862fnj.fsf@alter.siamese.dyndns.org>
-References: <1249463746-21538-1-git-send-email-gitster@pobox.com>
- <200908051940.48110.trast@student.ethz.ch>
- <7v3a869lw1.fsf@alter.siamese.dyndns.org>
- <200908052052.28067.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3 v3] Use an external program to implement fetching
+ with  curl
+Date: Wed, 5 Aug 2009 22:10:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908052156360.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0907310112400.2147@iabervon.org>  <alpine.DEB.1.00.0908051203550.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051135080.2147@iabervon.org> <fabb9a1e0908051115u145b2b0bi2973bcf41d5ef68f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 05 22:02:27 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 22:09:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYmgs-0000T5-5I
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:02:26 +0200
+	id 1MYmo3-0003s3-PJ
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbZHEUCS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 16:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750964AbZHEUCS
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:02:18 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:42019 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750734AbZHEUCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 16:02:17 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id C57A622424;
-	Wed,  5 Aug 2009 16:02:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 10A4522423; Wed, 
- 5 Aug 2009 16:02:11 -0400 (EDT)
-In-Reply-To: <200908052052.28067.trast@student.ethz.ch> (Thomas Rast's
- message of "Wed\, 5 Aug 2009 20\:52\:26 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E005B6D4-81FA-11DE-86C5-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1752516AbZHEUJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:09:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbZHEUJq
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:09:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37734 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752446AbZHEUJp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 16:09:45 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 20:09:45 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp009) with SMTP; 05 Aug 2009 22:09:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19EJCpEPB1EJLBybTf80P9mP8De/t8EiIRQKsbp6Y
+	uJ+LAFg6tM4Li5
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <fabb9a1e0908051115u145b2b0bi2973bcf41d5ef68f@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124961>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Hi,
 
-> So it detects there are worktree changes, but then decides not to show
-> them because it's an unmerged entry.  I think the following should go
-> in 3/5, but note that I haven't looked at the rest of the code to
-> check if it breaks anything:
+On Wed, 5 Aug 2009, Sverre Rabbelier wrote:
 
-Thanks.  Shouldn't it go in 4/5 instead, though?
+> On Wed, Aug 5, 2009 at 08:45, Daniel Barkalow<barkalow@iabervon.org> 
+> wrote:
+> > Someday, I want to have a diff output format that makes these things 
+> > clear somehow. I think it would be not-too-hard to get the diff code 
+> > to determine that an addition matches or almost matches a deletion (or 
+> > some unchanged code), and provide library access to this information, 
+> > but representing it to humans (and getting patch to still work) is 
+> > hard.
+> 
+> I started on this a while ago (as part of some post-GSoC git-stats 
+> work), but I had a hard time finding a good rule to determine whether an 
+> added hunk is similar enough to a deleted hunk elsewhere. Perhaps a 
+> variant of Levenshtein can be used to determine how different two hunks 
+> are; I tried diffing the two hunks and then looking at the ration 
+> between the size of the diff and the size of the original hunk, but as 
+> said that didn't really work out.
 
-> -- 8< --
-> diff --git i/wt-status.c w/wt-status.c
-> index 6370fe2..5a68297 100644
-> --- i/wt-status.c
-> +++ w/wt-status.c
-> @@ -400,7 +400,8 @@ static int wt_status_check_worktree_changes(struct wt_status *s)
->  	for (i = 0; i < s->change.nr; i++) {
->  		struct wt_status_change_data *d;
->  		d = s->change.items[i].util;
-> -		if (!d->worktree_status)
-> +		if (!d->worktree_status
-> +		    || d->index_status == DIFF_STATUS_UNMERGED)
->  			continue;
->  		changes = 1;
->  		if (d->worktree_status == DIFF_STATUS_DELETED)
-> -- >8 --
+I think that there are two complications:
 
-Not "d->worktree_status"?  That would be more consistent with what
-wt_status_print_changed() actually ends up checking.
+- how to present it in a format that helps the human to understand, yet is 
+  well-defined enough to be used as a machine-readable edit script (I 
+  really do not think that it can be well-designed if it only fulfills one 
+  of the two purposes).  I could imagine something like this:
+
+	diff --git a/remote-curl.c b/remote-curl.c
+	partial copy from transport.c +394,130
+		#ifndef NO_CURL
+		static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
+		{
+		[...]
+		}
+
+		#endif
+	@@ -1,4 +1,6
+	+#include "cache.h"
+	+#include "transport.h"
+	+#include "refs.h"
+	+
+	 #ifndef NO_CURL
+	 static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
+
+- how to determine efficiently where to spend a lot of time to determine 
+  what could be similar enough.
+
+For example, the diff would still look pretty unreadable if you determined 
+that there was a code move which involved a reindentation, so I am not at 
+all sure if it is worth to try hard to detect that that was a move after 
+all.
+
+Ciao,
+Dscho
