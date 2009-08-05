@@ -1,94 +1,71 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 4/4] rebase -i: use "git sequencer--helper --reset-hard"
-Date: Wed, 05 Aug 2009 22:53:00 +0200
-Message-ID: <20090805205301.3673.71764.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 23:32:25 2009
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 07/13] Add a config option for remotes to specify a
+ foreign vcs
+Date: Wed, 5 Aug 2009 17:46:51 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0908051724120.2147@iabervon.org>
+References: <alpine.LNX.2.00.0908050055500.2147@iabervon.org> <alpine.DEB.1.00.0908052251430.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051658530.2147@iabervon.org> <alpine.DEB.1.00.0908052319210.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 05 23:47:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYo5r-0006vK-J0
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 23:32:20 +0200
+	id 1MYoK3-0004bZ-0f
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 23:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752500AbZHEVcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 17:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752244AbZHEVcK
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 17:32:10 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:49524 "EHLO smtp3-g21.free.fr"
+	id S1752614AbZHEVqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 17:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752517AbZHEVqv
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 17:46:51 -0400
+Received: from iabervon.org ([66.92.72.58]:49339 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752159AbZHEVcH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 17:32:07 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 21E3681809D;
-	Wed,  5 Aug 2009 23:31:58 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id DA08E8180C2;
-	Wed,  5 Aug 2009 23:31:55 +0200 (CEST)
-X-git-sha1: ad5f90c09b7ebf561751b7d755e0c10938f0f86f 
-X-Mailer: git-mail-commits v0.5.2
+	id S1752222AbZHEVqu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 17:46:50 -0400
+Received: (qmail 21864 invoked by uid 1000); 5 Aug 2009 21:46:51 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Aug 2009 21:46:51 -0000
+In-Reply-To: <alpine.DEB.1.00.0908052319210.8306@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124998>
 
-instead of "git reset --hard"
+On Wed, 5 Aug 2009, Johannes Schindelin wrote:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-rebase--interactive.sh |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+> Hi,
+> 
+> On Wed, 5 Aug 2009, Daniel Barkalow wrote:
+> 
+> > On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> > 
+> > > On Wed, 5 Aug 2009, Daniel Barkalow wrote:
+> > > 
+> > > > If this is set, the url is not required, and the transport always 
+> > > > uses a helper named "git-remote-<value>".
+> > > 
+> > > I wonder what's wrong with saying "git config remote.origin.url p4:" 
+> > > instead of having two different code paths that do essentially the 
+> > > same.
+> > 
+> > I believe some cases will want to use a URL which is "http://something" 
+> > and have some other option cause the code to use "git helper-svn".
+> 
+> I actually would rather have "svn-http://something" because it tells me 
+> right away and in red letters what is happening.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index c9c75c0..0041994 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -154,7 +154,8 @@ pick_one () {
- 		die "Could not get the parent of $sha1"
- 	current_sha1=$(git rev-parse --verify HEAD)
- 	if test "$no_ff$current_sha1" = "$parent_sha1"; then
--		output git reset --hard $sha1
-+		git sequencer--helper --reset-hard $sha1 \
-+			"$GIT_REFLOG_ACTION" "$VERBOSE"
- 		test "a$1" = a-n && output git reset --soft $current_sha1
- 		sha1=$(git rev-parse --short $sha1)
- 		output warn Fast forward to $sha1
-@@ -238,7 +239,8 @@ pick_one_preserving_merges () {
- 	case $fast_forward in
- 	t)
- 		output warn "Fast forward to $sha1"
--		output git reset --hard $sha1 ||
-+		git sequencer--helper --reset-hard $sha1 \
-+			"$GIT_REFLOG_ACTION" "$VERBOSE" ||
- 			die "Cannot fast forward to $sha1"
- 		;;
- 	f)
-@@ -536,7 +538,8 @@ first and then run 'git rebase --continue' again."
- 			git symbolic-ref HEAD $HEADNAME
- 			;;
- 		esac &&
--		output git reset --hard $HEAD &&
-+		git sequencer--helper --reset-hard $HEAD \
-+			"$GIT_REFLOG_ACTION" "$VERBOSE" &&
- 		rm -rf "$DOTEST"
- 		exit
- 		;;
-@@ -548,7 +551,9 @@ first and then run 'git rebase --continue' again."
- 		git rerere clear
- 		test -d "$DOTEST" || die "No interactive rebase running"
- 
--		output git reset --hard && do_rest
-+		git sequencer--helper --reset-hard HEAD \
-+			"$GIT_REFLOG_ACTION" "$VERBOSE" &&
-+		do_rest
- 		;;
- 	-s)
- 		case "$#,$1" in
--- 
-1.6.4.133.g8a5c8
+I think it's much more useful to have the URL that git uses for a 
+subversion repo be identical to the URL that svn uses for the same repo.
+
+Of course, users should also be able to use something like 
+"svn-http://something" or "svn:http://something", but I think we'd get a 
+lot of confusion if we don't support a remote.*.url of exactly what a 
+svn-using project webpage says their repo url is.
+
+	-Daniel
+*This .sig left intentionally blank*
