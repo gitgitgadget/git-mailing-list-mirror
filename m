@@ -1,129 +1,170 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: [PATCH] RFC - Say goodbye to the rodent
-Date: Wed,  5 Aug 2009 17:51:40 +0800
-Message-ID: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 11:58:17 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3 v3] Add support for external programs for handling
+ native fetches
+Date: Wed, 5 Aug 2009 12:01:05 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908051143000.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0907310109130.2147@iabervon.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 12:01:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYdGC-00060Q-To
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 11:58:17 +0200
+	id 1MYdIv-0007AX-47
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 12:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934091AbZHEJ6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 05:58:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934076AbZHEJ6I
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 05:58:08 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:58745 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934086AbZHEJ6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 05:58:07 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so710573wah.21
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 02:58:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer;
-        bh=op1n7latUeNiSqkxEdsUyui6xCVktKi+tIxcEJ9J7Eo=;
-        b=q5JGGiC4RPIP5u1LdD6QYHoeVJeuVsR0NDB8KkX5wyB/irDeDpHWAL0GpGMv7prgkC
-         O9t11JSkHFW8ojz9PYb5o+rISFwu386sI4jiLEZ4FAnYKfnC+ER1IuEEgUHJHGQ/sUkI
-         4zdOP+IfUzAaVsxFmA0IOsOxFzpu5PgOxOUk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=sknGSN0KooauBBhHZRlDh/dOtVHWs0g1VkzpMCk27bYRCktOgdFDOBCeZovW9z8B6c
-         ALbY5vBO4FGnzSv+ho+enEI4HiGqFJSmC8ZzWzBqfpQ7OD8kHcAxjgBDCe42qY5mPoS7
-         rHWC1u4RbrFFAnnIKh/FGFmgbe/zYU/3H56Kc=
-Received: by 10.115.55.4 with SMTP id h4mr9199354wak.34.1249465805935;
-        Wed, 05 Aug 2009 02:50:05 -0700 (PDT)
-Received: from localhost.localdomain ([115.132.128.228])
-        by mx.google.com with ESMTPS id k14sm13017099waf.25.2009.08.05.02.50.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 02:50:05 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.13.ge6580
+	id S934101AbZHEKAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 06:00:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934100AbZHEKAn
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 06:00:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42982 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934092AbZHEKAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 06:00:42 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 10:00:41 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp021) with SMTP; 05 Aug 2009 12:00:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Kv3sAfC9KB0GUvbkTbMknA9IauChavZ6n8RhUp7
+	K+2vG7YqbRN6fi
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0907310109130.2147@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.47
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124893>
 
-Hello list,
+Hi,
 
-Git status provides a list of modified/staged files etc.
+On Fri, 31 Jul 2009, Daniel Barkalow wrote:
 
-Normally I use the mouse to cut and paste the filenames in subsequent git
-operations.
+> dscho: it turned out that disconnect...() is a method defined to return 
+> int.
 
-Oftentimes I get tired of moving my hand away from the comfort of the home rows
-of my keybard in order to grab the mouse to highlight the files that I'd like
-to operate on.
+Okay, thanks for the clarification.
 
-This patch is my attempt at scratching this itch.  It is, at best, works fine;
-albeit a little bit experimental.  I may have overlooked a dozen things -
-variable names, places where I define the variables etc. If people find this useful
-I'll look into polishing the code. All seem to work well. Running make test
-does not break anything. I have not written test case for them.
+> +static int fetch(struct transport *transport,
+> +		 int nr_heads, const struct ref **to_fetch)
+> +{
+> +	struct helper_data *data = transport->data;
+> +	struct child_process *helper;
+> +	const struct ref *posn;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	int i, count;
+> +	FILE *file;
+> +
+> +	count = 0;
+> +	for (i = 0; i < nr_heads; i++) {
+> +		posn = to_fetch[i];
+> +		if (posn->status & REF_STATUS_UPTODATE)
+> +			continue;
+> +		count++;
+> +	}
 
-The idea is that "git status --id" shows a unique id for each file in its output
-(modified/staged/unknown/etc). The ids and the corresponding filenames are
-stored in .git/FILE_IDS. This file gets overwritten everytime you run "git
-status --id"
+I still do not like it, but I guess you refuse to please me here.
 
-Subsequent git operations can be taught to accept the --id command line option
-to tell them what files to operate on. They will read the FILE_IDS to find out
-which file to operate based on the given id.  In the patch series I have taught
-the add, checkout, commit, rm and reset commands the --id option.
+> +
+> +	if (!count)
+> +		return 0;
+> +
+> +	helper = get_helper(transport);
+> +
+> +	if (!data->fetch)
+> +		return -1;
+> +
+> +	file = xfdopen(helper->out, "r");
+> +	for (i = 0; i < nr_heads; i++) {
+> +		posn = to_fetch[i];
+> +		if (posn->status & REF_STATUS_UPTODATE)
+> +			continue;
+> +		write_in_full(helper->in, "fetch ", 6);
+> +		write_in_full(helper->in, sha1_to_hex(posn->old_sha1), 40);
+> +		write_in_full(helper->in, " ", 1);
+> +		write_in_full(helper->in, posn->name, strlen(posn->name));
+> +		write_in_full(helper->in, "\n", 1);
 
-Example:
+How about
 
-$ git status --id
-# On branch local
-# Changed but not updated:
-#   (use "git add <file>..." to update what will be committed)
-#   (use "git checkout -- <file>..." to discard changes in working directory)
-#
-#       modified:   builtin-write-tree.c (m1)
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       file1.c (x1)
-#       file2.c (x2)
+		strbuf_addf(&buf, "fetch %s %s\n", 
+			sha1_to_hex(posn->old_sha1), posn->name);
+		write_in_full(helper->in, buf.buf, buf.len);
 
+instead?  It is not only much more readable, but also less error-prone.
 
-Note the id at the end of the files.
+> +static struct ref *get_refs_list(struct transport *transport, int for_push)
+> +{
+> +	struct child_process *helper;
+> +	struct ref *ret = NULL;
+> +	struct ref **tail = &ret;
+> +	struct ref *posn;
+> +	struct strbuf buf = STRBUF_INIT;
+> +	FILE *file;
+> +
+> +	helper = get_helper(transport);
+> +	write_in_full(helper->in, "list\n", 5);
 
-Now we can do the following:
+Speaking of error-prone: we introduced e.g. prefixcmp() for the sole 
+purpose of avoiding errors due to hard-coded constants.  I would strongly 
+suggest to introduce a helper here instead of having all those constants 
+that every reviewer has to check (which is no fun).
 
-$ git add --id m1
+> +		if (strbuf_getline(&buf, file, '\n') == EOF)
+> +			exit(128); /* child died, message supplied already */
+> +
+> +		if (!*buf.buf)
+> +			break;
+> +
+> +		eov = strchr(buf.buf, ' ');
+> +		if (!eov)
+> +			die("Malformed response in ref list: %s", buf.buf);
+> +                eon = strchr(eov + 1, ' ');
+> +		*eov = '\0';
+> +                if (eon)
 
-Ids are specified via the --id command line option, and can be separated with
-commas if you want to specify more than one of them:
+Funny indentation?
 
-$ git add --id m1,x2
+> +                        *eon = '\0';
 
-You get the idea ...
+Please register a complaint about your naming ("posn", "eov", "eon"), and 
+also please register a complaint about the rather confusing order of 
+your statements.
 
-What do you guys think about this new approach of "cut-and-paste" from the
-command line?
+> +		*tail = alloc_ref(eov + 1);
+> +		if (buf.buf[0] == '@')
+> +			(*tail)->symref = xstrdup(buf.buf + 1);
+> +		else if (buf.buf[0] != '?')
+> +			get_sha1_hex(buf.buf, (*tail)->old_sha1);
+> +		tail = &((*tail)->next);
+> +		strbuf_reset(&buf);
 
-Where would be the best place to put the file id? end? beginning? before ':'?
-The argument to --id could be improved so that it understand regexes for file ids.
+For clarity's sake, this should be done _before_ the strbuf is filled, not 
+after it (because then everybody has to think harder why the code is still 
+correct, but the performance is _exactly_ the same).
 
-Comments are welcomed.
+> +	}
+> +	strbuf_release(&buf);
+> +
+> +	for (posn = ret; posn; posn = posn->next)
+> +		resolve_remote_symref(posn, ret);
+> +
+> +	return ret;
+> +}
+> +
+> +int transport_native_helper_init(struct transport *transport)
+> +{
+> +	struct helper_data *data = xmalloc(sizeof(*data));
+> +	char *eom = strchr(transport->url, ':');
 
-Nazri.
+"End of message"?
 
--- 
+All in all, I like this patch much better, thank you!
 
- builtin-add.c      |   19 +++++--
- builtin-checkout.c |   26 ++++++---
- builtin-commit.c   |    4 +-
- builtin-reset.c    |   32 +++++++----
- builtin-rm.c       |   11 ++++-
- cache.h            |    1 +
- path.c             |   44 ++++++++++++++++
- wt-status.c        |  146 ++++++++++++++++++++++++++++++++++++++++++++++++----
- wt-status.h        |    1 +
- 9 files changed, 245 insertions(+), 39 deletions(-)
+Ciao,
+Dscho
