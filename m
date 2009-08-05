@@ -1,81 +1,55 @@
-From: "lists@mgreg.com" <lists@mgreg.com>
-Subject: Re: Merging to and from non-current branches.
-Date: Tue, 4 Aug 2009 22:48:41 -0400
-Message-ID: <518952FC-626C-43FB-BD53-98DE849C9751@mgreg.com>
-References: <D5200130-C7D7-4010-BF62-3A3374F2E3B0@mgreg.com> <alpine.LNX.2.00.0908042236240.2147@iabervon.org>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 04:48:52 2009
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 0/4] Re: Please make git-am handle \r\n-damaged patches
+Date: Tue,  4 Aug 2009 22:31:55 -0500
+Message-ID: <r3l_p2g-BpVHWKE-kMWIRzBGUCnzo9_l7hOHzYLG_4X6oEjXrJ4rJdB10yXPT2jmJJ7ppBmr-x8@cipher.nrlssc.navy.mil>
+References: <7vmy6fdxst.fsf@alter.siamese.dyndns.org>
+Cc: nanako3@lavabit.com, raa.lkml@gmail.com, hpa@zytor.com,
+	git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 05 05:32:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYWYd-0006M8-VE
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 04:48:52 +0200
+	id 1MYXFA-0001Tz-Q2
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 05:32:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933414AbZHECso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Aug 2009 22:48:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933389AbZHECso
-	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 22:48:44 -0400
-Received: from smtpauth05.prod.mesa1.secureserver.net ([64.202.165.99]:47028
-	"HELO smtpauth05.prod.mesa1.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S933209AbZHECsn (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Aug 2009 22:48:43 -0400
-Received: (qmail 2022 invoked from network); 5 Aug 2009 02:48:42 -0000
-Received: from unknown (76.177.133.127)
-  by smtpauth05.prod.mesa1.secureserver.net (64.202.165.99) with ESMTP; 05 Aug 2009 02:48:42 -0000
-In-Reply-To: <alpine.LNX.2.00.0908042236240.2147@iabervon.org>
-X-Mailer: Apple Mail (2.935.3)
+	id S933416AbZHEDci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Aug 2009 23:32:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933382AbZHEDci
+	(ORCPT <rfc822;git-outgoing>); Tue, 4 Aug 2009 23:32:38 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:59631 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933348AbZHEDch (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Aug 2009 23:32:37 -0400
+Received: by mail.nrlssc.navy.mil id n753WSkX014958; Tue, 4 Aug 2009 22:32:29 -0500
+In-Reply-To: <7vmy6fdxst.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 05 Aug 2009 03:32:28.0678 (UTC) FILETIME=[5BAF2260:01CA157D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124840>
 
+From: Brandon Casey <drafnel@gmail.com>
 
-On Aug 4, 2009, at 10:45 PM, Daniel Barkalow wrote:
+Convert mailinfo and mailsplit to use strbufs before attempting to address
+the CRLF issue for saved emails.
 
-> On Tue, 4 Aug 2009, lists@mgreg.com wrote:
->
->> Hi All,
->>
->> I've been reading up on some of the GIT commands and I'm not sure  
->> if what I
->> want/need exists.  Basically I want to merge all changes from one  
->> branch to
->> another, regardless of whether I'm in either of those branches.  At  
->> the very
->> least I would like to merge an existing "development" branch with  
->> the "master"
->> branch without needing to first check out master.  I've seen  
->> rebase, but I'm
->> not absolutely sure what that's doing.  Thoughts?
->
-> It can't work, because you need to be able to use the working tree to
-> resolve any conflicts that arise during the merge. Merging without
-> checking out a branch is a bit like building without checking out a
-> branch; it would be avoiding using the filesystem for what it's  
-> there for.
->
-> 	-Daniel
-> *This .sig left intentionally blank*
->
+Brandon Casey (3):
+  strbuf: add new function strbuf_getwholeline()
+  builtin-mailinfo,builtin-mailsplit: use strbufs
+  builtin-mailsplit.c: remove read_line_with_nul() since it is no
+    longer used
 
+Junio C Hamano (1):
+  Allow mailsplit to handle mails with CRLF line-endings
 
-Hi Daniel,
-
-I appreciate your post.  I understand what you're saying, and I'm not  
-so much concerned about the logistics of what need to occur so much as  
-a single command to intuitively handle it.  I've been doing a great  
-deal of incremental development lately and it becomes rather tedious  
-to have to checkout master, merge dev, re-checkout dev and proceed.   
-I'm not sure why this isn't currently possible with a single command.   
-I suppose I could write a shell script to do so, but that's a little  
-less "native" than I'd like.
-
-Best,
-
-Michael
+ builtin-mailinfo.c  |    8 +-------
+ builtin-mailsplit.c |   44 ++++++++++++++------------------------------
+ builtin.h           |    1 -
+ git-am.sh           |    8 +++++++-
+ strbuf.c            |   15 ++++++++++++---
+ strbuf.h            |    1 +
+ t/t3400-rebase.sh   |   26 ++++++++++++++++++++++++--
+ 7 files changed, 59 insertions(+), 44 deletions(-)
