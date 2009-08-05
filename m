@@ -1,72 +1,69 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 4/4] Allow mailsplit (and hence git-am) to handle mails 
-	with CRLF line-endings
-Date: Wed, 5 Aug 2009 07:49:10 +0200
-Message-ID: <81b0412b0908042249g23f7487eo5bf1b9c9027024c@mail.gmail.com>
-References: <7vmy6fdxst.fsf@alter.siamese.dyndns.org>
-	 <r3l_p2g-BpVHWKE-kMWIRzBGUCnzo9_l7hOHzYLG_4X6oEjXrJ4rJdB10yXPT2jmJJ7ppBmr-x8@cipher.nrlssc.navy.mil>
-	 <r3l_p2g-BpVHWKE-kMWIRydJaW0FHLKBpE497REXzOgqPjLUFjPkJ-YKp1tkrIs3CwcppURiH8o@cipher.nrlssc.navy.mil>
-	 <r3l_p2g-BpVHWKE-kMWIR9UKBn9dqjBL2asOE11gruEtEyCyQOOh37zkh5F2bJkihtkN8WUp4d0@cipher.nrlssc.navy.mil>
-	 <r3l_p2g-BpVHWKE-kMWIR-hbNfTwGmUrXhM-lhoS9dZKPidslwcauSWyJW7X27JpF_HWaZz1tHI@cipher.nrlssc.navy.mil>
-	 <r3l_p2g-BpVHWKE-kMWIRydBBfOVeq5L9RbpHa_iUxak9BjwONJobsuScOrzURDhi2RTa-0nDQY@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: gitster@pobox.com, nanako3@lavabit.com, hpa@zytor.com,
-	git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Aug 05 07:49:20 2009
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 1/2] git-rev-list.txt: Correct description for multiple arguments
+Date: Wed,  5 Aug 2009 09:58:36 +0200
+Message-ID: <1249459117-3853-1-git-send-email-git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 05 09:59:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYZNH-00026Y-Vf
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 07:49:20 +0200
+	id 1MYbOn-0002hr-T5
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 09:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933468AbZHEFtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 01:49:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933461AbZHEFtM
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 01:49:12 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:47056 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933452AbZHEFtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 01:49:11 -0400
-Received: by fxm17 with SMTP id 17so3682490fxm.37
-        for <git@vger.kernel.org>; Tue, 04 Aug 2009 22:49:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OejzlGsaZWhwbtal0U8V4o0LFLTyYHgj4VUkGDQs2+o=;
-        b=GkGYTlp4/oHk7ScgNz+x8NcdZYZVn3Bvq6sytRM2hrBhEICJE/RsttAttNaD8nbb5S
-         ObFuNSd0OkvebgcuEda6LnMiJWtJGcfLRQ1I1sFsA5VNirlSGk28CkJiuaRUrUbps6Yw
-         je/DXS29w1ckZh1NZIMBD3jnmN8q/ZBUr7j5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iRAr+KflQPQfFc7UkQ1+jxGaYZY6mqhLJixeH+9otEPm4pNzJYNBSDz+DITyvQ3EAG
-         uHmz7jFdonvNLS8OwAQd4OKkbcO1U8xcawk0q5Y2o9H2fNz6IwGlnxHd/zP8MToA/VNH
-         CNNNWM20K2RsYCyQ4VJYhNvdelA3+k/iUw0NM=
-Received: by 10.204.76.199 with SMTP id d7mr522456bkk.84.1249451350616; Tue, 
-	04 Aug 2009 22:49:10 -0700 (PDT)
-In-Reply-To: <r3l_p2g-BpVHWKE-kMWIRydBBfOVeq5L9RbpHa_iUxak9BjwONJobsuScOrzURDhi2RTa-0nDQY@cipher.nrlssc.navy.mil>
+	id S933650AbZHEH6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 03:58:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933578AbZHEH6w
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 03:58:52 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59432 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933355AbZHEH6w (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 03:58:52 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 7CF033BDF6B;
+	Wed,  5 Aug 2009 03:58:52 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 05 Aug 2009 03:58:52 -0400
+X-Sasl-enc: uv7uZQ5355SWW8TGQb1HSnC1vFivbUKNpFsSR9DmnRkA 1249459131
+Received: from localhost (vpn-136-027.rz.uni-augsburg.de [137.250.136.27])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 576DB2B6B;
+	Wed,  5 Aug 2009 03:58:51 -0400 (EDT)
+X-Mailer: git-send-email 1.6.4.70.g9c084
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124870>
 
-T24gV2VkLCBBdWcgNSwgMjAwOSBhdCAwNTozMSwgQnJhbmRvbiBDYXNleTxjYXNleUBucmxzc2Mu
-bmF2eS5taWw+IHdyb3RlOgo+IEBAIC02OSw2ICs3MCwxMiBAQCBzdGF0aWMgaW50IHNwbGl0X29u
-ZShGSUxFICptYm94LCBjb25zdCBjaGFyICpuYW1lLCBpbnQgYWxsb3dfYmFyZSkKPiDCoCDCoCDC
-oCDCoCAqICJGcm9tICIgYW5kIGhhdmluZyBzb21ldGhpbmcgdGhhdCBsb29rcyBsaWtlIGEgZGF0
-ZSBmb3JtYXQuCj4gwqAgwqAgwqAgwqAgKi8KPiDCoCDCoCDCoCDCoGZvciAoOzspIHsKPiArIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIGlmICgha2VlcF9jciAmJiBidWYubGVuID4gMSAmJiBidWYuYnVm
-W2J1Zi5sZW4tMV0gPT0gJ1xuJyAmJgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgYnVmLmJ1ZltidWYubGVuLTJdID09ICdccicpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIHN0cmJ1Zl9zZXRsZW4oJmJ1ZiwgYnVmLmxlbi0yKTsKPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmJ1Zl9hZGRjaCgmYnVmLCAnXG4nKTsKPiArIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIH0KPiArCgpUaGF0J3MgbXVjaCBiZXR0ZXIgdGhlbiBhbnkgb24t
-dGhlLWZseSBjb3JyZWN0aW9ucyA6KQo=
+"git rev-list A B" really lists those commits which are included in A or
+B, i.e. it lists those in A and those in B. Say so, because saying
+"which are included in A and B" would mean those who are in both A and
+B.
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Patch against master.
+
+The current description is simply wrong, which is why I strongly suggest this fix.
+The upcoming suggests an extra paragraph for clarifying the use of multiple
+revision arguments.
+
+ Documentation/git-rev-list.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
+index a765cfa..847cc7d 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -63,7 +63,7 @@ command:
+ 	$ git rev-list foo bar ^baz
+ -----------------------------------------------------------------------
+ 
+-means "list all the commits which are included in 'foo' and 'bar', but
++means "list all the commits which are included in 'foo' or 'bar', but
+ not in 'baz'".
+ 
+ A special notation "'<commit1>'..'<commit2>'" can be used as a
+-- 
+1.6.4.70.g9c084
