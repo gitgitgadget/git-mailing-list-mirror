@@ -1,91 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
- curl
-Date: Wed, 5 Aug 2009 21:54:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908052154000.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org> <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051145250.2147@iabervon.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] RFC - Say goodbye to the rodent
+Date: Wed, 05 Aug 2009 16:01:20 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908051558220.16073@xanadu.home>
+References: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
+ <20090805190256.GA9004@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 21:54:30 2009
+Content-Transfer-Encoding: 7BIT
+Cc: Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 05 22:01:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYmZ9-0005I7-NS
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:54:28 +0200
+	id 1MYmg6-00006q-Dj
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:01:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751893AbZHETyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 15:54:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751758AbZHETyU
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:54:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33109 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751506AbZHETyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 15:54:19 -0400
-Received: (qmail invoked by alias); 05 Aug 2009 19:54:19 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp044) with SMTP; 05 Aug 2009 21:54:19 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zeSkPhoZzXXcLHMICSNjC+X9sXsfUKaIhTe0gSE
-	6NERhjhbzfVXrx
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0908051145250.2147@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+	id S1751365AbZHEUBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:01:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750921AbZHEUB3
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:01:29 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:56991 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750734AbZHEUB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 16:01:29 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KNX004805RN08Z0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 05 Aug 2009 15:50:12 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090805190256.GA9004@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124959>
 
-Hi,
+On Wed, 5 Aug 2009, Jeff King wrote:
 
-On Wed, 5 Aug 2009, Daniel Barkalow wrote:
-
-> On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> On Wed, Aug 05, 2009 at 05:51:40PM +0800, Nazri Ramliy wrote:
 > 
-> > On Wed, 5 Aug 2009, Daniel Barkalow wrote:
-> > 
-> > > diff --git a/Makefile b/Makefile
-> > > index 504646a..35117fc 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -981,6 +981,7 @@ else
-> > >  		CURL_LIBCURL = -lcurl
-> > >  	endif
-> > >  	BUILTIN_OBJS += builtin-http-fetch.o
-> > > +	PROGRAMS += git-remote-http$X git-remote-https$X git-remote-ftp$X git-http-fetch$X
-> > >  	EXTLIBS += $(CURL_LIBCURL)
-> > >  	LIB_OBJS += http.o http-walker.o
-> > >  	curl_check := $(shell (echo 070908; curl-config --vernum) | sort -r | sed -ne 2p)
-> > > @@ -1491,6 +1492,10 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
-> > >  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> > >  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-> > >  
-> > > +git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
-> > > +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> > > +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-> > > +
-> > 
-> > Ooops, I missed this part.  How about making git-remote-https and 
-> > git-remote-ftp hardlinks to git-remote-http?
+> > The idea is that "git status --id" shows a unique id for each file in
+> > its output (modified/staged/unknown/etc). The ids and the
+> > corresponding filenames are stored in .git/FILE_IDS. This file gets
+> > overwritten everytime you run "git status --id"
 > 
-> Sure. Is "ln ... || ln -s ... || cp ..." the right way to do this 
-> cross-platform?
+> But files _already_ have a unique id: the filename. You never say why
+> those unique ids must be cut-and-pasted using the mouse when your unique
+> ids would be suitable for typing, but I'll assume it's because your
+> unique ids are much shorter than your filenames.
+> 
+> There are already two classes of solutions to this problem:
+> 
+>   1. Make typing the filenames easier. Generally, this is accomplished
+>      by tab completion. Even stock bash (and other shells) should
+>      complete filenames easily, but you can also complete much more
+>      using the programmable bash completion included with git.
+> 
+>      The main advantage of this approach is that it is totally
+>      generalizable. Anytime you have to input a filename, you can use
+>      it.
+> 
+>   2. Structure your workflow to iterate over the list of items to be
+>      acted on, and then select actions for each item. This is what "git
+>      add -i" does, as well as "git mergetool" and "git difftool".
+> 
+>      This can save a lot of typing over (1), but requires a new script
+>      for every such workflow (e.g., the scripts above cover only adding,
+>      resolving merges, and diffing; you would need a new script to
+>      iterate over files, doing "git checkout" on each one, for example).
 
-You mean as in
+BTW I often use this incantation:
 
-	$(BUILT_INS): git$X
-	        $(QUIET_BUILT_IN)$(RM) $@ && \
-	        ln git$X $@ 2>/dev/null || \
-	        ln -s git$X $@ 2>/dev/null || \
-	        cp git$X $@
+	xargs git add
+	[paste list of files obtained from git status output]
+	^D
 
-?  I guess so ;-)
 
-Ciao,
-Dscho
+Nicolas
