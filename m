@@ -1,77 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 08/13] Add support for "import" helper command
-Date: Wed, 5 Aug 2009 22:56:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908052254570.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0908050055550.2147@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Wed, 5 Aug 2009 13:55:28 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain>
+References: <20090805181755.22765.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
 X-From: git-owner@vger.kernel.org Wed Aug 05 22:56:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYnXZ-00088T-Le
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:56:54 +0200
+	id 1MYnXa-00088T-FY
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751529AbZHEU4d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 16:56:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbZHEU4d
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:56:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53524 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751267AbZHEU4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 16:56:33 -0400
-Received: (qmail invoked by alias); 05 Aug 2009 20:56:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp062) with SMTP; 05 Aug 2009 22:56:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/00o0a30H0BhxPkllnVv6PVMmnkGManX0GAwqIIg
-	l2JOCF5Put9v2v
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0908050055550.2147@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1751664AbZHEU4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:56:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbZHEU4j
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:56:39 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42909 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751591AbZHEU4j (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 16:56:39 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n75KtS1Q021367
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 5 Aug 2009 13:55:29 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n75KtSqK022119;
+	Wed, 5 Aug 2009 13:55:28 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <20090805181755.22765.qmail@science.horizon.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124980>
 
-Hi,
 
-On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 
-> This command, supported if the "import" capability is advertized,
-> allows a helper to support fetching by outputting a git-fast-import
-> stream.
+On Wed, 5 Aug 2009, George Spelvin wrote:
+> 
+> > We can continue shipping mozilla one to help the last group.
+> 
+> Of course, we always need a C fallback.  Would you like a faster one?
 
-  If both the "import" and the "fetch" capability are advertised, the 
-  "import" capability is ignored.
+I actually looked at code generation (on x86-64) for the C fallback, and 
+it should be quite doable to re-write the C one to generate good code on 
+x86-64.
 
-> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> index 173ee23..e9aa67e 100644
-> --- a/Documentation/git-remote-helpers.txt
-> +++ b/Documentation/git-remote-helpers.txt
-> @@ -43,6 +43,13 @@ Commands are given by the caller on the helper's standard input, one per line.
->  +
->  Supported if the helper has the "fetch" capability.
->  
-> +'import' <name>::
-> +	Produces a fast-import stream which imports the current value
-> +	of the named ref. It may additionally import other refs as
-> +	needed to construct the history efficiently.
-> ++
-> +Supported if the helper has the "import" capability.
+On 32-bit x86, I suspect the register pressures are so intense that it's 
+unrealistic to expect gcc to do a good job, but the Mozilla SHA1 C code 
+really seems _designed_ to be slow in stupid ways (that whole "byte at a 
+time into a word buffer with shifts" is a really really sucky way to 
+handle the endianness issues).
 
-                                                      , but ignored if the 
-+helper offers the "fetch" capability.
+So if you'd like to look at the C version, that's definitely worth it. 
+Much bigger bang for the buck than trying to schedule asm language and 
+having to deal with different assemblers/linkers/whatnot.
 
-Ciao,
-Dscho
-
---
-Sent from my EeePC
+		Linus
