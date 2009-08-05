@@ -1,72 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Message from git reset: confusing?
-Date: Wed, 05 Aug 2009 17:25:23 +0200
-Message-ID: <vpqab2e7064.fsf@bauges.imag.fr>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-describe: Die early if there are no possible
+	descriptions
+Date: Wed, 5 Aug 2009 08:34:12 -0700
+Message-ID: <20090805153411.GG1033@spearce.org>
+References: <20090805141740.GA16846@atjola.homenet>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 05 17:26:57 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bj?rn Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 05 17:34:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYiN2-0008O6-94
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 17:25:40 +0200
+	id 1MYiVS-00073x-CF
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 17:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbZHEPZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 11:25:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755449AbZHEPZ3
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 11:25:29 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38991 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753810AbZHEPZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 11:25:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n75FNIpc004109
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Aug 2009 17:23:18 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MYiMl-0003Zi-GU; Wed, 05 Aug 2009 17:25:23 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MYiMl-0002oj-F5; Wed, 05 Aug 2009 17:25:23 +0200
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 05 Aug 2009 17:23:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n75FNIpc004109
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1250090598.32374@F+6aqdeS7D2VgNHV8ecRtQ
+	id S1755780AbZHEPeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 11:34:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755778AbZHEPeM
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 11:34:12 -0400
+Received: from george.spearce.org ([209.20.77.23]:51125 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755744AbZHEPeL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 11:34:11 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 18494381FD; Wed,  5 Aug 2009 15:34:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090805141740.GA16846@atjola.homenet>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124914>
 
-Hi,
+Bj?rn Steinbrink <B.Steinbrink@gmx.de> wrote:
+> If we found no refs that may be used for git-describe with the current
+> options, then die early instead of pointlessly walking the whole history.
+> 
+> Signed-off-by: Bj?rn Steinbrink <B.Steinbrink@gmx.de>
+> ---
+> In git.git with all the tags dropped, this makes "git describe" go down
+> from 0.244 to 0.003 seconds for me. This is especially noticeable with
+> "git submodule" which calls describe with increasing levels of allowed
+> refs to be matched. Without tags, this means that it walks the whole
+> history in the submodule twice (first annotated, then plain tags), just
+> to find out that it can't describe the thing anyway.
+> 
+> I'm not particularly sure about found_names actually counting the found
+> names, it was just out of the thought that maybe the walking code could
+> make use of it, but I didn't actually check that and ran out of time, so
+> I'm sending this version, hoping that it doesn't suck too much.
 
-I was wondering what was the motivation for the output of "git merge":
+This seems reasonable to me.  Really you don't need found_names
+to be a counter, but could just always set it to 1 every time the
+add_to_known_names function is called.  All you care about is that
+add_to_known_names was invoked at least once.
 
-$ git reset file
-file: locally modified
-$ 
+Also, I really think that first paragraph after the --- should
+have been part of the commit message.  The message above doesn't
+justify the change, even if it is fairly trivial, without that
+additional explanation.
 
-I find this message misleading, since it gives me the feeling that
-"git reset" errored out because of the file being locally modified (I
-also got the remark from a git beginner to whom I was showing the
-command: "hey, why didn't it work??").
-
-And indeed, I do not understand the motivation for showing this
-message. When I stage content (git add), Git tells me nothing, so why
-should it do so when I unstage content? If I want to know the state of
-the index after running reset, I'll run "git status" myself ...
-
-I'd suggest adding a -v|--verbose flag to git reset, and default to
-being quiet (the already existing -q flag would still be used, to
-disable progress indicator). What do other people think?
+> @@ -39,6 +40,8 @@ static void add_to_known_names(const char *path,
+>  			       const unsigned char *sha1)
+>  {
+>  	struct commit_name *e = commit->util;
+> +	if (!e)
+> +		found_names++;
+>  	if (!e || e->prio < prio) {
+>  		size_t len = strlen(path)+1;
+>  		free(e);
 
 -- 
-Matthieu
+Shawn.
