@@ -1,73 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 09/13] Allow helpers to report in "list" command that
- the ref is unchanged
-Date: Wed, 5 Aug 2009 17:18:35 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908051717580.2147@iabervon.org>
-References: <alpine.LNX.2.00.0908050056000.2147@iabervon.org> <alpine.DEB.1.00.0908052258440.8306@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 07/13] Add a config option for remotes to specify a
+ foreign vcs
+Date: Wed, 5 Aug 2009 23:20:26 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908052319210.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0908050055500.2147@iabervon.org> <alpine.DEB.1.00.0908052251430.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051658530.2147@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Johan Herland <johan@herland.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 05 23:18:47 2009
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Aug 05 23:20:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYnsj-0000l1-SH
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 23:18:46 +0200
+	id 1MYnu8-0001ME-3w
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 23:20:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbZHEVSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 17:18:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751946AbZHEVSf
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 17:18:35 -0400
-Received: from iabervon.org ([66.92.72.58]:44224 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751374AbZHEVSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 17:18:35 -0400
-Received: (qmail 17376 invoked by uid 1000); 5 Aug 2009 21:18:35 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Aug 2009 21:18:35 -0000
-In-Reply-To: <alpine.DEB.1.00.0908052258440.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752019AbZHEVUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 17:20:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbZHEVUC
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 17:20:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52242 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751930AbZHEVUC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 17:20:02 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 21:20:01 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp063) with SMTP; 05 Aug 2009 23:20:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1//otFhFOL/OkEDX8gsBhku8ERqMXcEU7jTJbLCLD
+	oTv/1ymL7zB3F/
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0908051658530.2147@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6899999999999999
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124990>
 
-On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
-> 
-> On Wed, 5 Aug 2009, Daniel Barkalow wrote:
-> 
-> > +			if (strstr(eon + 1, "unchanged")) {
-> 
-> I guess we'll want to have a helper like this already:
-> 
-> 	static int has_attribute(const char *tail, const char *attr) {
-> 		int len;
-> 
-> 		if (!tail)
-> 			return 0;
-> 
-> 		len = strlen(attr);
-> 		for (;;) {
-> 			const char *space = strchrnul(tail, ' ');
-> 			if (len == space - tail && !strncmp(tail, attr, len))
-> 				return 1;
-> 			if (!*space)
-> 				return 0;
-> 			tail = space + 1;
-> 		}
-> 	}
-> 
-> This guards against attributes that are substrings of other attributes.  
-> (You want to future-proof the attributes system, after all, i.e. handle 
-> helpers returning attributes unknown to the current Git.)
+On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 
-Good point.
+> On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> 
+> > On Wed, 5 Aug 2009, Daniel Barkalow wrote:
+> > 
+> > > If this is set, the url is not required, and the transport always 
+> > > uses a helper named "git-remote-<value>".
+> > 
+> > I wonder what's wrong with saying "git config remote.origin.url p4:" 
+> > instead of having two different code paths that do essentially the 
+> > same.
+> 
+> I believe some cases will want to use a URL which is "http://something" 
+> and have some other option cause the code to use "git helper-svn".
 
-	-Daniel
-*This .sig left intentionally blank*
+I actually would rather have "svn-http://something" because it tells me 
+right away and in red letters what is happening.
+
+Ciao,
+Dscho
