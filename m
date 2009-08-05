@@ -1,129 +1,84 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 0/5] Revamping "git status"
-Date: Wed, 5 Aug 2009 20:52:26 +0200
-Message-ID: <200908052052.28067.trast@student.ethz.ch>
-References: <1249463746-21538-1-git-send-email-gitster@pobox.com> <200908051940.48110.trast@student.ethz.ch> <7v3a869lw1.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] RFC - Say goodbye to the rodent
+Date: Wed, 5 Aug 2009 15:02:56 -0400
+Message-ID: <20090805190256.GA9004@coredump.intra.peff.net>
+References: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 20:53:00 2009
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 21:03:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYlbb-00019c-5J
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 20:52:55 +0200
+	id 1MYllb-00062C-5R
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 21:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbZHESwo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 14:52:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752144AbZHESwm
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 14:52:42 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:7016 "EHLO gwse.ethz.ch"
+	id S1752371AbZHETDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 15:03:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbZHETDD
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 15:03:03 -0400
+Received: from peff.net ([208.65.91.99]:41626 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752143AbZHESwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 14:52:40 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 5 Aug
- 2009 20:52:39 +0200
-Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 5 Aug
- 2009 20:52:39 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
-In-Reply-To: <7v3a869lw1.fsf@alter.siamese.dyndns.org>
+	id S1752351AbZHETDB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 15:03:01 -0400
+Received: (qmail 11757 invoked by uid 107); 5 Aug 2009 19:05:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 05 Aug 2009 15:05:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Aug 2009 15:02:56 -0400
+Content-Disposition: inline
+In-Reply-To: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124952>
 
-Junio C Hamano wrote:
-> 
-> -	while (pos <= active_nr) {
-> +	while (pos < active_nr) {
+On Wed, Aug 05, 2009 at 05:51:40PM +0800, Nazri Ramliy wrote:
 
-Thanks, that fixes it.
+> The idea is that "git status --id" shows a unique id for each file in
+> its output (modified/staged/unknown/etc). The ids and the
+> corresponding filenames are stored in .git/FILE_IDS. This file gets
+> overwritten everytime you run "git status --id"
 
-It gives a weird output now, however:
+But files _already_ have a unique id: the filename. You never say why
+those unique ids must be cut-and-pasted using the mouse when your unique
+ids would be suitable for typing, but I'll assume it's because your
+unique ids are much shorter than your filenames.
 
-  # On branch side
-  # Unmerged paths:
-  #   (use "git reset HEAD <file>..." to unstage)
-  #   (use "git add <file>..." to mark resolution)
-  #
-  #	deleted by us       : foo
-  #
-  # Changed but not updated:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #
-  no changes added to commit (use "git add" and/or "git commit -a")
+There are already two classes of solutions to this problem:
 
-So it detects there are worktree changes, but then decides not to show
-them because it's an unmerged entry.  I think the following should go
-in 3/5, but note that I haven't looked at the rest of the code to
-check if it breaks anything:
+  1. Make typing the filenames easier. Generally, this is accomplished
+     by tab completion. Even stock bash (and other shells) should
+     complete filenames easily, but you can also complete much more
+     using the programmable bash completion included with git.
 
--- 8< --
-diff --git i/wt-status.c w/wt-status.c
-index 6370fe2..5a68297 100644
---- i/wt-status.c
-+++ w/wt-status.c
-@@ -400,7 +400,8 @@ static int wt_status_check_worktree_changes(struct wt_status *s)
- 	for (i = 0; i < s->change.nr; i++) {
- 		struct wt_status_change_data *d;
- 		d = s->change.items[i].util;
--		if (!d->worktree_status)
-+		if (!d->worktree_status
-+		    || d->index_status == DIFF_STATUS_UNMERGED)
- 			continue;
- 		changes = 1;
- 		if (d->worktree_status == DIFF_STATUS_DELETED)
--- >8 --
+     The main advantage of this approach is that it is totally
+     generalizable. Anytime you have to input a filename, you can use
+     it.
 
-And with that fixed, the test I posted earlier should be changed to
-the following so that it checks the output (the old version detects
-failure even for a working git-status, because that exits 1):
+  2. Structure your workflow to iterate over the list of items to be
+     acted on, and then select actions for each item. This is what "git
+     add -i" does, as well as "git mergetool" and "git difftool".
 
--- 8< --
-diff --git a/t/t7060-wtstatus.sh b/t/t7060-wtstatus.sh
-index 5ad2cd1..76b20b2 100755
---- a/t/t7060-wtstatus.sh
-+++ b/t/t7060-wtstatus.sh
-@@ -28,4 +28,29 @@ test_expect_success 'Report new path with conflict' '
- 	test_cmp expect actual
- '
- 
-+cat > expect <<EOF
-+# On branch side
-+# Unmerged paths:
-+#   (use "git reset HEAD <file>..." to unstage)
-+#   (use "git add <file>..." to mark resolution)
-+#
-+#	deleted by us       : foo
-+#
-+no changes added to commit (use "git add" and/or "git commit -a")
-+EOF
-+
-+test_expect_success 'M/D conflict does not segfault' '
-+	mkdir mdconflict &&
-+	cd mdconflict &&
-+	git init &&
-+	test_commit initial foo '' &&
-+	test_commit modify foo foo &&
-+	git checkout -b side HEAD^ &&
-+	git rm foo &&
-+	git commit -m delete &&
-+	test_must_fail git merge master &&
-+	test_must_fail git status > ../actual &&
-+	test_cmp ../expect ../actual
-+'
-+
- test_done
--- >8 --
+     This can save a lot of typing over (1), but requires a new script
+     for every such workflow (e.g., the scripts above cover only adding,
+     resolving merges, and diffing; you would need a new script to
+     iterate over files, doing "git checkout" on each one, for example).
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I think your solution is a third class, which is to assign a mapping of
+shorter ids to items that persists over multiple commands. But it's not
+clear to me where it has an advantage over the existing two solutions.
+It is actually less general than (1), because you have to have assigned
+the mappings beforehand. But it is not nearly as convenient as (2).
+
+In addition, it's more complicated to implement and use, because you
+have to care about the persistence of the mapping (i.e., how long does
+it last, which commands reset it, etc).
+
+So while it is somewhat clever, I don't think it is worth merging to
+mainline git; it introduces complexity to solve a problem that already
+has overlapping solutions.
+
+-Peff
