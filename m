@@ -1,115 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Help/Advice needed on diff bug in xutils.c
-Date: Wed, 5 Aug 2009 22:45:20 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908052239180.8306@pacific.mpi-cbg.de>
-References: <1249428804.2774.52.camel@GWPortableVCS>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] transport: don't show push status if --quiet is
+ given
+Date: Wed, 5 Aug 2009 16:48:35 -0400
+Message-ID: <20090805204835.GA24539@coredump.intra.peff.net>
+References: <20090805201937.GB9004@coredump.intra.peff.net>
+ <20090805202326.GC23226@coredump.intra.peff.net>
+ <7vhbwm0zcs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Thell Fowler <tbfowler4@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 22:45:04 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Albert Astals Cid <aacid@kde.org>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 22:48:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYnM7-0003Gk-Q9
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:45:04 +0200
+	id 1MYnPn-0004or-KU
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752681AbZHEUo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 16:44:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbZHEUoz
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:44:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51552 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752670AbZHEUoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 16:44:55 -0400
-Received: (qmail invoked by alias); 05 Aug 2009 20:44:55 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp052) with SMTP; 05 Aug 2009 22:44:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+d9MpLEnmdMCb9NI0BBmPmwxCyDgpsZprWIOaxVR
-	wwskJZQdtGmFMi
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <1249428804.2774.52.camel@GWPortableVCS>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1752686AbZHEUsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:48:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZHEUsk
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:48:40 -0400
+Received: from peff.net ([208.65.91.99]:60577 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752295AbZHEUsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 16:48:39 -0400
+Received: (qmail 12636 invoked by uid 107); 5 Aug 2009 20:50:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 05 Aug 2009 16:50:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Aug 2009 16:48:35 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhbwm0zcs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124976>
 
-Hi,
+On Wed, Aug 05, 2009 at 01:39:31PM -0700, Junio C Hamano wrote:
 
-On Tue, 4 Aug 2009, Thell Fowler wrote:
-
-> There is a bug in git diff (ignoring whitespace) that does not take into 
-> account a trailing space at the end of a line at the end of a file when 
-> no new line follows.
+> > When --quiet is given, the user generally only wants to see
+> > errors.
 > 
-> Here is the example of the bug:
-> mkdir test_ws_eof
-> cd test_ws_eof
-> git init
-> echo -n "Test" > test.txt
-> git add .
-> git commit -m'test'
-> git symbolic-ref HEAD refs/heads/with_space
-> rm .git/index
-> git clean -f
-> echo -n "Test ">test.txt
-> git add .
-> git commit -m'test'
-> # Ignoring all whitespace there shouldn't be a diff.
-> git diff -w master -- test.txt
-> # Ignoring space at eol there shouldn't be a diff
-> git diff --ignore-space-at-eol master -- test.txt
-> # Ignoring with -b might have a case for a diff showing.
-> git diff -b master -- test.txt
-
-If you turn that into a patch to, say, t/t4015-diff-whitespace.sh (adding 
-a test_expect_failure for a known bug), it is much easier to convince 
-developers to work on the issue.
-
-> In the xutils.c xdl_hash_record_with_whitespace function the trailing 
-> space prior to eof was being calculated into the hash, I fixed that with 
-> the change below, but there is still a difference being noted in 
-> xdl_recmatch because of the size difference.
+> That does not match what my cron job at day job expects.
 > 
-> Before I go changing something that shouldn't be changed could someone
-> provide some input please?
+> I'd welcome the warm and fuzzy feeling of seeing "ah, yes, we had changes
+> on those branches to push out last night".
 > 
-> Thanks for reading,
-> Thell
-> 
-> diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> index 04ad468..623da92 100644
-> --- a/xdiff/xutils.c
-> +++ b/xdiff/xutils.c
-> @@ -243,17 +243,17 @@ static unsigned long
-> xdl_hash_record_with_whitespace(char
-> const **data,
->                 if (isspace(*ptr)) {
->                         const char *ptr2 = ptr;
->                         while (ptr + 1 < top && isspace(ptr[1])
-> -                                       && ptr[1] != '\n')
-> +                                       && ( ptr[1] != '\n' && ptr[1] !=
-> '\0' ) )
+> Maybe it is just me, but my gut feeling is that it would be more
+> appropriate to squelch only "already up to date" refs at least, at the
+> default level of quietness.
 
-First, your coding style is different from the surrounding code.  I think 
-it goes without saying that this should be fixed.
+I don't understand. Isn't that what "git push" _already_ does? Or are
+you saying you would like the "squelch progress" feature of 2/3, but not
+the "squelch ref status" of 3/3? In that case, are you not already doing
+something to squelch the progress?
 
-Second, you do not need the parentheses at all (and therefore they should 
-go).
+We could accomodate that by doubling --quiet to suppress ref status,
+though the transport interface seems to rely on flags (I guess we could
+have QUIET and REALLY_QUIET).
 
-Third, libxdiff does not assume to be fed NUL delimited strings.
-
-Fourth, that condition "ptr + 1 < top" is already doing what you tried to 
-accomplish here.
-
-So I guess that you need to do add "ptr + 1 < top" checks 
-instead.
-
-Thanks,
-Dscho
+-Peff
