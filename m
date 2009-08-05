@@ -1,241 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] shortstatus: a new command
-Date: Wed,  5 Aug 2009 02:15:46 -0700
-Message-ID: <1249463746-21538-6-git-send-email-gitster@pobox.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/5] Revamping "git status"
+Date: Wed, 5 Aug 2009 11:49:37 +0200
+Message-ID: <200908051149.40980.trast@student.ethz.ch>
 References: <1249463746-21538-1-git-send-email-gitster@pobox.com>
- <1249463746-21538-2-git-send-email-gitster@pobox.com>
- <1249463746-21538-3-git-send-email-gitster@pobox.com>
- <1249463746-21538-4-git-send-email-gitster@pobox.com>
- <1249463746-21538-5-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 05 11:17:15 2009
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="nextPart2185682.PEb6JhAha6";
+	protocol="application/pgp-signature"; micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 11:50:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYccU-0008UQ-NM
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 11:17:15 +0200
+	id 1MYd8c-0003SJ-M9
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 11:50:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933922AbZHEJQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 05:16:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933875AbZHEJQL
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 05:16:11 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46392 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933917AbZHEJQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 05:16:01 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 8284F210B9
-	for <git@vger.kernel.org>; Wed,  5 Aug 2009 05:16:02 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id DF8BD210B8 for
- <git@vger.kernel.org>; Wed,  5 Aug 2009 05:16:01 -0400 (EDT)
-X-Mailer: git-send-email 1.6.4.18.g07a4a
-In-Reply-To: <1249463746-21538-5-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 98C11534-81A0-11DE-A6F4-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S933148AbZHEJuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 05:50:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933096AbZHEJuQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 05:50:16 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:6617 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933063AbZHEJuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 05:50:14 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 5 Aug
+ 2009 11:50:13 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 5 Aug
+ 2009 11:49:52 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
+In-Reply-To: <1249463746-21538-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124884>
 
-Add a new command that gives the status in
+--nextPart2185682.PEb6JhAha6
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-    XY PATH1 -> PATH2
+Junio C Hamano wrote:
+>=20
+> Junio C Hamano (5):
+>   diff-index: report unmerged new entries
+>   diff-index: keep the original index intact
+>   wt-status.c: rework the way changes to the index and work tree are
+>     summarized
+>   status: show worktree status of conflicted paths separately
+>   shortstatus: a new command
 
-format to be more machine readable than output from "git status", which is
-about previewing of "git commit" with the same arguments.
+I was quite eager to try this, mainly for 4/5, and I still had the
+testing repository from the last thread around:
 
-PATH1 is the path in the HEAD, and " -> PATH2" part is shown only when
-PATH1 corresponds to a different path in the index/worktree.
+  $ git ls-files -s
+  100644 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 1       foo
+  100644 d00491fd7e5bb6fa28c517a0bb32b8b506539d4d 2       foo
 
-For unmerged entries, X shows the status of stage #2 (i.e. ours) and Y
-shows the status of stage #3 (i.e. theirs).  For entries that do not have
-conflicts, X shows the status of the index, and Y shows the status of the
-work tree.
+Here we go!
 
-    X          Y     Meaning
-    -------------------------------------------------
-              [MD]   not updated
-    M        [ MD]   updated in index
-    A        [ MD]   added to index
-    D        [ MD]   deleted from index
-    R        [ MD]   renamed in index
-    C        [ MD]   copied in index
-    [MARC]           index and work tree matches
-    [ MARC]     M    work tree changed since index
-    [ MARC]     D    deleted in work tree
-    D           D    unmerged, both deleted
-    A           U    unmerged, added by us
-    U           D    unmerged, deleted by them
-    U           A    unmerged, added by them
-    D           U    unmerged, deleted by us
-    A           A    unmerged, both added
-    U           U    unmerged, both modified
+  $ git status
+  # On branch master                           =20
+  Segmentation fault
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile         |    1 +
- builtin-commit.c |   94 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- builtin.h        |    1 +
- git.c            |    1 +
- 4 files changed, 97 insertions(+), 0 deletions(-)
+Uh oh.  So gdb it is then...
 
-diff --git a/Makefile b/Makefile
-index daf4296..bcefbd3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -378,6 +378,7 @@ BUILT_INS += git-init$X
- BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
-+BUILT_INS += git-shortstatus$X
- BUILT_INS += git-show$X
- BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 6d12c2e..7a4ddab 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -24,6 +24,7 @@
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
-+#include "quote.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	"git commit [options] [--] <filepattern>...",
-@@ -35,6 +36,11 @@ static const char * const builtin_status_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_shortstatus_usage[] = {
-+	"git shortstatus [options]",
-+	NULL
-+};
-+
- static unsigned char head_sha1[20], merge_head_sha1[20];
- static char *use_message_buffer;
- static const char commit_editmsg[] = "COMMIT_EDITMSG";
-@@ -813,6 +819,94 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	return argc;
- }
- 
-+#define quote_path quote_path_relative
-+
-+static void show_unmerged(int null_termination, struct string_list_item *it,
-+			  struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+	const char *how = "??";
-+
-+	switch (d->stagemask >> 1) {
-+	case 1: how = "DD"; break; /* both deleted */
-+	case 2: how = "AU"; break; /* added by us */
-+	case 3: how = "UD"; break; /* deleted by them */
-+	case 4: how = "UA"; break; /* added by them */
-+	case 5: how = "DU"; break; /* deleted by us */
-+	case 6: how = "AA"; break; /* both added */
-+	case 7: how = "UU"; break; /* both modified */
-+	}
-+	printf("%s ", how);
-+	if (null_termination) {
-+		fprintf(stdout, "%s%c", it->string, 0);
-+	} else {
-+		struct strbuf onebuf = STRBUF_INIT;
-+		const char *one;
-+		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		printf("%s\n", one);
-+		strbuf_release(&onebuf);
-+	}
-+}
-+
-+static void show_status(int null_termination, struct string_list_item *it,
-+		struct wt_status *s)
-+{
-+	struct wt_status_change_data *d = it->util;
-+
-+	printf("%c%c ",
-+	       !d->index_status ? ' ' : d->index_status,
-+	       !d->worktree_status ? ' ' : d->worktree_status);
-+	if (null_termination) {
-+		fprintf(stdout, "%s%c", it->string, 0);
-+		if (d->head_path)
-+			fprintf(stdout, "%s%c", d->head_path, 0);
-+	} else {
-+		struct strbuf onebuf = STRBUF_INIT;
-+		const char *one;
-+		if (d->head_path) {
-+			one = quote_path(d->head_path, -1, &onebuf, s->prefix);
-+			printf("%s -> ", one);
-+			strbuf_release(&onebuf);
-+		}
-+		one = quote_path(it->string, -1, &onebuf, s->prefix);
-+		printf("%s\n", one);
-+		strbuf_release(&onebuf);
-+	}
-+}
-+
-+int cmd_shortstatus(int argc, const char **argv, const char *prefix)
-+{
-+	struct wt_status s;
-+	static int null_termination;
-+	int i;
-+	static struct option builtin_shortstatus_options[] = {
-+		OPT_BOOLEAN('z', "null", &null_termination,
-+			    "terminate entries with NUL"),
-+		OPT_END(),
-+	};
-+
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_shortstatus_options,
-+			     builtin_shortstatus_usage, 0);
-+
-+	read_cache();
-+	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
-+	wt_status_prepare(&s);
-+	wt_status_collect_changes(&s);
-+	for (i = 0; i < s.change.nr; i++) {
-+		struct wt_status_change_data *d;
-+		struct string_list_item *it;
-+
-+		it = &(s.change.items[i]);
-+		d = it->util;
-+		if (d->stagemask)
-+			show_unmerged(null_termination, it, &s);
-+		else
-+			show_status(null_termination, it, &s);
-+	}
-+	return 0;
-+}
-+
- int cmd_status(int argc, const char **argv, const char *prefix)
- {
- 	const char *index_file;
-diff --git a/builtin.h b/builtin.h
-index 20427d2..825a96f 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -96,6 +96,7 @@ extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
-+extern int cmd_shortstatus(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_tag(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 807d875..3977d60 100644
---- a/git.c
-+++ b/git.c
-@@ -348,6 +348,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "rm", cmd_rm, RUN_SETUP },
- 		{ "send-pack", cmd_send_pack, RUN_SETUP },
- 		{ "shortlog", cmd_shortlog, USE_PAGER },
-+		{ "shortstatus", cmd_shortstatus, RUN_SETUP | NEED_WORK_TREE },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
--- 
-1.6.4.18.g07a4a
+# On branch master                                                         =
+ =20
+
+  Program received signal SIGSEGV, Segmentation fault.
+  0x00007ffff7353844 in strcmp () from /lib64/libc.so.6
+  (gdb) bt                                            =20
+  #0  0x00007ffff7353844 in strcmp () from /lib64/libc.so.6
+  #1  0x00000000004cc577 in unmerged_mask (path=3DCannot access memory at a=
+ddress 0xfffff070                                                          =
+             =20
+  ) at wt-status.c:241                                                     =
+      =20
+  Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+=2E.. or maybe not.  valgrind is slightly more helpful:
+
+  =3D=3D29421=3D=3D Invalid read of size 1
+  =3D=3D29421=3D=3D    at 0x4C26101: strcmp (in /usr/lib64/valgrind/amd64-l=
+inux/vgpreload_memcheck.so)
+  =3D=3D29421=3D=3D    by 0x4CC576: unmerged_mask (wt-status.c:241)
+  =3D=3D29421=3D=3D    by 0x4CC6AA: wt_status_collect_updated_cb (wt-status=
+=2Ec:275)
+  =3D=3D29421=3D=3D    by 0x484172: diff_flush (diff.c:3337)
+  =3D=3D29421=3D=3D    by 0x47A0E5: run_diff_index (diff-lib.c:445)
+  =3D=3D29421=3D=3D    by 0x4CC804: wt_status_collect_changes_index (wt-sta=
+tus.c:306)
+  =3D=3D29421=3D=3D    by 0x4CC922: wt_status_collect_changes (wt-status.c:=
+340)
+  =3D=3D29421=3D=3D    by 0x4CD1A0: wt_status_print (wt-status.c:561)
+  =3D=3D29421=3D=3D    by 0x41BFBD: run_status (builtin-commit.c:369)
+  =3D=3D29421=3D=3D    by 0x41D97F: cmd_status (builtin-commit.c:927)
+  =3D=3D29421=3D=3D    by 0x4048C2: run_builtin (git.c:246)
+  =3D=3D29421=3D=3D    by 0x404A4D: handle_internal_command (git.c:394)
+  =3D=3D29421=3D=3D  Address 0x48 is not stack'd, malloc'd or (recently) fr=
+ee'd
+  =3D=3D29421=3D=3D
+  =3D=3D29421=3D=3D Process terminating with default action of signal 11 (S=
+IGSEGV)
+  =3D=3D29421=3D=3D  Access not within mapped region at address 0x48
+  =3D=3D29421=3D=3D    at 0x4C26101: strcmp (in /usr/lib64/valgrind/amd64-l=
+inux/vgpreload_memcheck.so)
+  =3D=3D29421=3D=3D    by 0x4CC576: unmerged_mask (wt-status.c:241)
+  =3D=3D29421=3D=3D    by 0x4CC6AA: wt_status_collect_updated_cb (wt-status=
+=2Ec:275)
+  =3D=3D29421=3D=3D    by 0x484172: diff_flush (diff.c:3337)
+  =3D=3D29421=3D=3D    by 0x47A0E5: run_diff_index (diff-lib.c:445)
+  =3D=3D29421=3D=3D    by 0x4CC804: wt_status_collect_changes_index (wt-sta=
+tus.c:306)
+  =3D=3D29421=3D=3D    by 0x4CC922: wt_status_collect_changes (wt-status.c:=
+340)
+  =3D=3D29421=3D=3D    by 0x4CD1A0: wt_status_print (wt-status.c:561)
+  =3D=3D29421=3D=3D    by 0x41BFBD: run_status (builtin-commit.c:369)
+  =3D=3D29421=3D=3D    by 0x41D97F: cmd_status (builtin-commit.c:927)
+  =3D=3D29421=3D=3D    by 0x4048C2: run_builtin (git.c:246)
+  =3D=3D29421=3D=3D    by 0x404A4D: handle_internal_command (git.c:394)
+
+I also tried finding out which exact commit was causing this, but 4/5
+still segfaults and 1-3 don't even compile:
+
+  builtin-commit.c: In function =E2=80=98show_unmerged=E2=80=99:           =
+                      =20
+  builtin-commit.c:827: error: dereferencing pointer to incomplete type    =
+      =20
+  builtin-commit.c: In function =E2=80=98show_status=E2=80=99:             =
+                      =20
+  builtin-commit.c:854: error: dereferencing pointer to incomplete type
+  [etc]
+
+These are referring to use of a 'struct wt_status_change_data *', but
+the struct declaration is only in 4/5.  Am I missing something?
+
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
+
+--nextPart2185682.PEb6JhAha6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEABECAAYFAkp5VbQACgkQqUud07tmzP0h5ACePCm4DHsC+PLYc1ucShHB6Reg
+XxAAniBuJ47qJmZN1U+6yr+rqGEV6PRK
+=RC1C
+-----END PGP SIGNATURE-----
+
+--nextPart2185682.PEb6JhAha6--
