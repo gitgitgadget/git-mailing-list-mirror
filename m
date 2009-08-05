@@ -1,104 +1,83 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: blame on a deleted/renamed file
-Date: Wed, 5 Aug 2009 18:56:18 +0200
-Message-ID: <20090805165618.GB17792@atjola.homenet>
-References: <449c10960908050516k25ef0a92sd8616de29a93ea5f@mail.gmail.com>
- <20090805123754.GA13340@atjola.homenet>
- <449c10960908050654v3823da76p1ddb5a2bbb5c323d@mail.gmail.com>
- <20090805140941.GB13340@atjola.homenet>
- <449c10960908050849pa4df6c6x3f5aa4510e9a2642@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Revamping "git status"
+Date: Wed, 05 Aug 2009 09:57:53 -0700
+Message-ID: <7vbpmub3la.fsf@alter.siamese.dyndns.org>
+References: <1249463746-21538-1-git-send-email-gitster@pobox.com>
+ <200908051149.40980.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 18:56:32 2009
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 05 18:58:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYjmx-0007j9-1n
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 18:56:31 +0200
+	id 1MYjoR-0008PO-4x
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 18:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934524AbZHEQ4W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2009 12:56:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934517AbZHEQ4W
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 12:56:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50163 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934516AbZHEQ4V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 12:56:21 -0400
-Received: (qmail invoked by alias); 05 Aug 2009 16:56:20 -0000
-Received: from i59F55BB1.versanet.de (EHLO atjola.homenet) [89.245.91.177]
-  by mail.gmx.net (mp035) with SMTP; 05 Aug 2009 18:56:20 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19YnBUaI6RYYKNxrcVrllX96C6egm1WeMWR5JN/EI
-	QBMD+uk877HVu2
-Content-Disposition: inline
-In-Reply-To: <449c10960908050849pa4df6c6x3f5aa4510e9a2642@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.52
+	id S934517AbZHEQ57 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2009 12:57:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934650AbZHEQ56
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 12:57:58 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:57692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934381AbZHEQ56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 12:57:58 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id AD42D21383;
+	Wed,  5 Aug 2009 12:57:58 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 102F121381; Wed, 
+ 5 Aug 2009 12:57:54 -0400 (EDT)
+In-Reply-To: <200908051149.40980.trast@student.ethz.ch> (Thomas Rast's
+ message of "Wed\, 5 Aug 2009 11\:49\:37 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 20E1966A-81E1-11DE-84B4-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124923>
 
-On 2009.08.05 10:49:09 -0500, Dan McGee wrote:
-> 2009/8/5 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> > Hm, I still don't see what you mean. For some lines it stopped at
-> > e19d7da4, yeah, but those were new lines, added in that commit, at =
-least
-> > those that I checked (e.g. "local ct=3D0" in generate_checksums()).=
- For
-> > the others, it already went back further.
->=20
-> Thought I'd just clarify the lines off-list that I actually cared abo=
-ut:
->=20
->     # fix flyspray #6246
->     local file_type=3D$(file -bizL "$file")
->     local cmd=3D''
->     case "$file_type" in
->       *application/x-tar*|*application/zip*|*application/x-zip*|*appl=
-ication/x-cpio*)
->         cmd=3D"bsdtar -x -f" ;;
->       *application/x-gzip*)
->         cmd=3D"gunzip -d -f" ;;
->       *application/x-bzip*)
->         cmd=3D"bunzip2 -f" ;;
->       *application/x-xz*)
->         cmd=3D"xz -d -f" ;;
->       *)
->         # Don't know what to use to extract this file,
->         # skip to the next file
->         continue;;
->=20
-> Which moved in that commit into a bash function, and I wanted to trac=
-e
-> them back further.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Ah, ok. Most of these got changed later, so the blame is right for them=
-,
-but for example the *application/x-gzip*) line was just literally moved
-in the file, and blame should be able to follow at least that one. And
-it does that as long as you don't cross commit
-68c10690eae369928b6cdc2d658588ad06e4b1a5, which changed the cmd=3D"..."
-lines. Even with -M5 -C5 -C5 -C5 (which should set the scores low
-enough, and enables the hardest following mode) it starts to blame that
-line to e19d7da4 then. The same is true if you blame too few lines.
+> I also tried finding out which exact commit was causing this, but 4/5
+> still segfaults and 1-3 don't even compile:
+>
+>   builtin-commit.c: In function =E2=80=98show_unmerged=E2=80=99:     =
+                            =20
+>   builtin-commit.c:827: error: dereferencing pointer to incomplete ty=
+pe          =20
+>   builtin-commit.c: In function =E2=80=98show_status=E2=80=99:       =
+                            =20
+>   builtin-commit.c:854: error: dereferencing pointer to incomplete ty=
+pe
+>   [etc]
+>
+> These are referring to use of a 'struct wt_status_change_data *', but
+> the struct declaration is only in 4/5.  Am I missing something?
 
-git blame -M5 -C5 -C5 -C5 -w -L/x-gzip/,+3 \
-	68c10690eae369928b6cdc2d658588ad06e4b1a5^ -- scripts/makepkg.sh.in
+I suspect you have a botched patch application.
 
-vs.
+The result of applying up to [PATCH 3/5] does not even have
+show_unmerged/show_status in builtin-commit.c.  These two functions are
+introduced by [PATCH 5/5] to implement shortstatus.
 
-git blame -M5 -C5 -C5 -C5 -w -L/x-gzip/,+2 \
-	68c10690eae369928b6cdc2d658588ad06e4b1a5^ -- scripts/makepkg.sh.in
+I've applied what came back on the list on top of 07a4a3b (Fix typos on
+pt_BR/gittutorial.txt translation, 2009-07-31) and all five states comp=
+ile
+just fine.
 
-The first one follows back to 7ed7977e, the other stops at e19d7da4.
-
-I wonder whether that's a plain limitation, or a bug...
-
-Bj=F6rn
+    $ git rev-list 07a4a3b.. |
+      while read sha1
+      do
+            git rev-parse $sha1^{tree}
+      done
+    86363b25b84041cf14110dcc3136f56915778f71
+    4625f5bbc43e1158d00aca8b2356047606c0babd
+    895698143b2c29af8bfe0cdf6c3f57de3bf080d8
+    3c565041ba6e432ff9064a1d8302f49ef33c2605
+    c0c2b9c2a55e3df9cce448d59e5d557d07d78a4b
