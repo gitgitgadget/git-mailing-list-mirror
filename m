@@ -1,126 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] RFC - Say goodbye to the rodent
-Date: Wed, 05 Aug 2009 13:54:36 +0200
-Message-ID: <vpqljlycw77.fsf@bauges.imag.fr>
-References: <1249465906-3940-1-git-send-email-ayiehere@gmail.com>
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: blame on a deleted/renamed file
+Date: Wed, 5 Aug 2009 07:16:13 -0500
+Message-ID: <449c10960908050516k25ef0a92sd8616de29a93ea5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 13:54:53 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 05 14:16:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYf50-0007ws-VD
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 13:54:51 +0200
+	id 1MYfPr-00007x-4k
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 14:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933503AbZHELyo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 07:54:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933321AbZHELyn
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 07:54:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59319 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933301AbZHELym (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 07:54:42 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n75Bron5018787
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 5 Aug 2009 13:53:50 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MYf4m-0001La-HH; Wed, 05 Aug 2009 13:54:36 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MYf4m-0008Sx-Ft; Wed, 05 Aug 2009 13:54:36 +0200
-In-Reply-To: <1249465906-3940-1-git-send-email-ayiehere@gmail.com> (Nazri Ramliy's message of "Wed\,  5 Aug 2009 17\:51\:40 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 05 Aug 2009 13:53:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n75Bron5018787
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1250078031.83593@Qz21yYuKI/6ivCOBrgZbyQ
+	id S933688AbZHEMQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 08:16:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933622AbZHEMQO
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 08:16:14 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:44902 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933615AbZHEMQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 08:16:14 -0400
+Received: by ewy10 with SMTP id 10so47716ewy.37
+        for <git@vger.kernel.org>; Wed, 05 Aug 2009 05:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=yif2F72aFlqYA2fXvVfKKtbBDtFFnsILOsO6iLkZ4PQ=;
+        b=cGOsSSp6BeoAOjyTxDq/0ZeX+ti1O1ru6Cqxuit4bQEFf72rr2vomL45NIx+3FTiu9
+         Ivz7aJ8+QiESKrt6hufEVO8oVs40r7FB5zT5DtkfcT4PIOhPZJ54FD/KUI/EGDn9ow9s
+         CW9ZzD13ce+VDLXyQiO6zNrO3mjsE0I/6IaTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=nf3szvN0Ap4xn1IbLqtdtTkYzKt12fOBlCeAeIuYjHw4bHFDb57mmnrXzuYF7/bpJO
+         z4dDNYwiEqrXodHtu0x9EA5YakjZ1XWx+6zuSl+aeRHKaDwGW9xt2kPKijCLU+Iq/x0K
+         IKsH4qHD93yjnccqGbStTpHZpMqxcF832v6H8=
+Received: by 10.216.29.208 with SMTP id i58mr1790136wea.85.1249474574012; Wed, 
+	05 Aug 2009 05:16:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124900>
 
-Nazri Ramliy <ayiehere@gmail.com> writes:
+Is there no easy way in git to get a blame on a file that has either
+been renamed or deleted? I'll step through my thought process, and a
+quick google and read of the manpage returned nothing obvious. Here is
+the repository in question if it matters:
+git://projects.archlinux.org/pacman.git. I located a particular commit
+I was interested using a plain git-blame:
+$ git blame scripts/makepkg.sh.in
 
-> Oftentimes I get tired of moving my hand away from the comfort of the home rows
-> of my keybard in order to grab the mouse to highlight the files that I'd like
-> to operate on.
+OK, looks like lines moved around enough that we got stuck here, let's
+see what this patch did:
+$ git show e19d7da4
 
-Usually, when you cut-and-paste from $(git status), it's to run a
-staging/unstaging command, or to view a diff.
+OK, it did a move of a bunch of lines into functions that GIT couldn't
+quite track:
+$ git annotate --follow "scripts/makepkg.in" e19d7da4~1
+fatal: cannot stat path 'scripts/makepkg.in': No such file or directory
 
-Actually, "git add -i" is already a pretty good way of doing this,
-with few keystrokes.
-> Example:
->
-> $ git status --id
-> # On branch local
-> # Changed but not updated:
-> #   (use "git add <file>..." to update what will be committed)
-> #   (use "git checkout -- <file>..." to discard changes in working directory)
-> #
-> #       modified:   builtin-write-tree.c (m1)
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       file1.c (x1)
-> #       file2.c (x2)
+$ git annotate --follow "scripts/makepkg.sh.in" e19d7da4~1
+fatal: no such path scripts/makepkg.sh.in in e19d7da4~1
 
-$ git add -i
-           staged     unstaged path
-  1:    unchanged        +1/-0 builtin-write-tree.c
+Help? Or do I need to think about writing some sort of patch for it?
+This is the first thing I have seen svn be able to do[1] that git
+can't. :)
 
-*** Commands ***
-  1: [s]tatus     2: [u]pdate     3: [r]evert     4: [a]dd untracked
-  5: [p]atch      6: [d]iff       7: [q]uit       8: [h]elp
+-Dan
 
-> Now we can do the following:
->
-> $ git add --id m1
-
-What now> u
-           staged     unstaged path
-  1:    unchanged        +1/-0 [b]uiltin-write-tree.c
-Update>> 1
-           staged     unstaged path
-* 1:    unchanged        +1/-0 [b]uiltin-write-tree.c
-Update>> 
-updated one path
-
-*** Commands ***
-  1: [s]tatus     2: [u]pdate     3: [r]evert     4: [a]dd untracked
-  5: [p]atch      6: [d]iff       7: [q]uit       8: [h]elp
-
-> Ids are specified via the --id command line option, and can be separated with
-> commas if you want to specify more than one of them:
->
-> $ git add --id m1,x2
-
-What now> a
-  1: file1.c
-  2: file2.c
-Add untracked>> 1
-* 1: file1.c
-  2: file2.c
-Add untracked>> 2
-* 1: file1.c
-* 2: file2.c
-Add untracked>> 
-added 2 paths
-
-for these examples, I have far fewer keystrokes with "git add -i" than
-you have. I don't think it's worth adding yet-another-option to most
-Git commands since it doesn't really bring much IMHO.
-
--- 
-Matthieu
+[1] svn annotate http://path/to/repo/path/to/file@2345
