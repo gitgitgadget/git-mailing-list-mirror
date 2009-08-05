@@ -1,123 +1,123 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] tortoisegit 0.9.1.0
-Date: Wed, 5 Aug 2009 22:00:39 +0800
-Message-ID: <1976ea660908050700u9b16a8ci169825b121f02cb9@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: blame on a deleted/renamed file
+Date: Wed, 5 Aug 2009 16:09:41 +0200
+Message-ID: <20090805140941.GB13340@atjola.homenet>
+References: <449c10960908050516k25ef0a92sd8616de29a93ea5f@mail.gmail.com>
+ <20090805123754.GA13340@atjola.homenet>
+ <449c10960908050654v3823da76p1ddb5a2bbb5c323d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org,
-	tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-users@googlegroups.com,
-	tortoisegit-announce@googlegroups.com, tortoisegit@googlegroups.com
-X-From: git-owner@vger.kernel.org Wed Aug 05 16:03:25 2009
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Dan McGee <dpmcgee@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 16:10:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYh2u-0002on-2Z
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 16:00:48 +0200
+	id 1MYhBh-0001P9-8l
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 16:09:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934434AbZHEOAk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2009 10:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934386AbZHEOAk
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 10:00:40 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:45208 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934363AbZHEOAj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 10:00:39 -0400
-Received: by qyk34 with SMTP id 34so85732qyk.33
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 07:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=uW1TricM9X0NLnMs6aeOLkxYLAYttRJ4e5ZOA2Htkr4=;
-        b=x8+OfIJtX/J9nYr7bmXmg5n2LncIBjHSYvJ3VgPqBWgckpFQ+3EVDgVpZdmwmqEQtr
-         c4ltibg71Gga+YdASQkw1+wA4UEvJ/8TKyVx2JuvQ1SZ3cGcZBxS8EGWZH6JQdcIhGmo
-         xxLOQboTqhuwUQb9btFKwLxJpjdH9T+vG+GC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=rqpF9BCNJk05ocNuMGAzV2233NKOpKtNZ6rGNgOzwd4cgUhvzsdeu9edYL4w8kUFHM
-         B4nYuWScdlCUzBxCMJYMyH2svfTYIHv4jVmoh1Z/lBbRezlZ9zdkDHQYExG+Us3bvuvV
-         KzXdt5pOEsVt3cbRDacxUr4U527oQ/gv6Ye+U=
-Received: by 10.224.19.213 with SMTP id c21mr7071494qab.185.1249480839699; 
-	Wed, 05 Aug 2009 07:00:39 -0700 (PDT)
+	id S933912AbZHEOJp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Aug 2009 10:09:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933568AbZHEOJp
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 10:09:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56829 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933270AbZHEOJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 10:09:44 -0400
+Received: (qmail invoked by alias); 05 Aug 2009 14:09:43 -0000
+Received: from i59F55BB1.versanet.de (EHLO atjola.homenet) [89.245.91.177]
+  by mail.gmx.net (mp010) with SMTP; 05 Aug 2009 16:09:43 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX182fsZJ8ns2sulDEoZ8QTUhD75SRIg+3UaeIqkv2q
+	472yVMD7CSVBWI
+Content-Disposition: inline
+In-Reply-To: <449c10960908050654v3823da76p1ddb5a2bbb5c323d@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124909>
 
-http://tortoisegit.googlecode.com/files/TortoiseGit-0.9.1.0-64bit.msi
-http://tortoisegit.googlecode.com/files/TortoiseGit-0.9.1.0-32bit.msi
+On 2009.08.05 08:54:09 -0500, Dan McGee wrote:
+> 2009/8/5 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
+> > On 2009.08.05 07:16:13 -0500, Dan McGee wrote:
+> >> Is there no easy way in git to get a blame on a file that has eith=
+er
+> >> been renamed or deleted? I'll step through my thought process, and=
+ a
+> >> quick google and read of the manpage returned nothing obvious. Her=
+e is
+> >> the repository in question if it matters:
+> >> git://projects.archlinux.org/pacman.git. I located a particular co=
+mmit
+> >> I was interested using a plain git-blame:
+> >> $ git blame scripts/makepkg.sh.in
+> >>
+> >> OK, looks like lines moved around enough that we got stuck here, l=
+et's
+> >
+> > How did it get stuck? The output I see follows the changes the whol=
+e way
+> > back through scripts/makepkg.in, scripts/makepkg.in and scripts/mak=
+epkg.
+>=20
+> I said nothing about it not following renames. I asked about it
+> following *those lines*. I know it already made the jump from
+> scripts/makepkg.sh.in to scripts/makepkg.in, sorry if I wasn't clear
+> there.
 
-=3D Release 0.9.1.0 =3D
-=3D=3D Features =3D=3D
+Hm, I still don't see what you mean. For some lines it stopped at
+e19d7da4, yeah, but those were new lines, added in that commit, at leas=
+t
+those that I checked (e.g. "local ct=3D0" in generate_checksums()). For
+the others, it already went back further.
 
-=A0* Add Sync Dialog like TortoiseHg.
-=A0 Put pull, fetch, push, apply patch and email patch together. You
-can Know what change pull and push. Show changed file list.
+> > And scripts/makepkg.in got added in e19d7da4, so its parent didn't =
+have
+> > it.
+>=20
+> Not sure where you are seeing that, it was changed in that revision,
+> not added...
 
-=A0* Enhance Rebase dialog. Add force rebase checkbox. Disable start
-button when no item rebase. Don't show merge commit
+No idea, I guess I got confused by the various makepkg.* versions :-/
+Especially by the "stab in the dark" blame call. ;-)
 
-=A0* Add post action button for rebase dialog. Such as send patch by em=
-ail
-=A0 After rebase, you can click button to send patch email directly.
+> >> $ git annotate --follow "scripts/makepkg.sh.in" e19d7da4~1
+> >> fatal: no such path scripts/makepkg.sh.in in e19d7da4~1
+> >
+> > Same deal, scripts/makepkg.sh.in didn't exist in e19d7da4~1 either,=
+ it
+> > got renamed from scripts/makepkg.in in b5f8a44be
+>=20
+> That was my whole point here- I was stabbing in the dark so I showed
+> you everything I tried because the git-annotate manpage failed me.
+>=20
+> >> Help? Or do I need to think about writing some sort of patch for i=
+t?
+> >> This is the first thing I have seen svn be able to do[1] that git
+> >> can't. :)
+> >
+> > Uhm, no, svn fails in the exact same way, not quite unexpected.
+[...]
+> > doener@atjola:h $ svn blame file://$PWD/repo/bar
+> > doener@atjola:h $ svn blame file://$PWD/repo/bar@1
+> > svn: '/bar' is not a file in revision 1
+>=20
+> svn blame file://$PWD/repo/foo@1 works perfectly though, that was my =
+use case.
 
-=A0* Add =A0launch rebase option at fetch dialog.
+Yeah, with the old name, and that works in git too, same deal as with
+the previous one, I've been totally confused, sorry.
 
-=A0* Improve push dialog.
-=A0 Default settings from local repositories pushing to remote
-repository Choose track remote and remote branch! Add short-cut at
-push dialog
-=A0 Add "F5" refresh remote and branch info at push dialog
+> Sorry for doing like a point-by-point refute of your response here, I
+> probably wasn't clear enough in my original email.
 
-=A0* Add Clean Untracked version type
-=A0 User can choose clean untracked file, clean ignore file, clean all.
+No problem, pointing out my mistakes is the best you could do. And
+basically, I (wrongly) did the same to your mail. ;-)
 
-=A0* Enhancement: "Git Clone" from SVN repository with additional start
-revision number option (-r xxx:HEAD)
-
-=A0* Improve Commit dialog
-=A0 Add recent message back to context menu.
-=A0 The "Message" field of the Commit dialog should have a shortcut key
-(Alt-M is a good choice)
-=A0 Make "Whole project" directory checked by default when the user
-commits in the root of the project.
-=A0 When using "Commit" to also add files, if you forget to check the
-new files and press "Ok", you get the dialog "Nothing Commit" and then
-the whole Commit dialog closes. Keep the dialog open after this
-message.
-
-
-=A0* Improve setting dialog
-=A0 Settings: Git -> Remote: When creating the first remote, the
-"Remote" should have "origin" as default.
-=A0 Fix setting dialog remote page tab order
-=A0 Push: When you press "Manage" under Destinations, the Settings
-dialog opening should have "Git -> Remote" selected by default.
-
-=3D=3D Bug Fix =3D=3D
-=A0* Fixed issue #124: Incorrect Date header in patch e-mail
-=A0* Fixed issue #122: Garbage text in "Git Command Progress" /
-suspected buffer overflow Improve commit speed when many added files.
-=A0* Fixed issue #121: Refresh in "Check for modifications" dialog
-duplicates added state entries when new repository
-=A0* Fixed issue #71: (TortoiseProc problem)Icon Overlays don't work in
-root of drive When m_CurrentDir =3DC:\, not C:, =A0pathlist calulate
-wrong.
-=A0* Fixed issue #116: SVN Rebase doesn't work
-=A0* Fixed issue #115: Windows XP: Initial "Git Clone..." from SVN
-Repository doesn't work
-=A0* Fix "ESC" =3D "push" when after commit and Add Alt-P =A0for Push
-=A0* Fixed issue #111: Undo Add does not work (keep added file) and
-enable "F5" at revert dialog
-=A0* Fixed issue #109: clone on bare local repository fails Clear trail
-slash \ or/
-=A0* Fixed issue #104: Doubleclicking changed submodule dir in Check Fo=
-r
-Modifications dlg, crashes TGit Fix log dialog double click submodule
-problem
+Bj=F6rn
