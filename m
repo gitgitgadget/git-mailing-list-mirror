@@ -1,69 +1,76 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/6] Teach --id/-d to "git status"
-Date: Wed, 5 Aug 2009 11:30:05 -0700
-Message-ID: <fabb9a1e0908051130s3cd0965cy4a5b5430ffb2b0a8@mail.gmail.com>
-References: <1249465906-3940-1-git-send-email-ayiehere@gmail.com> 
-	<1249465906-3940-2-git-send-email-ayiehere@gmail.com> <81b0412b0908051111g4433e12epa540e0a2f07b62b@mail.gmail.com> 
-	<fabb9a1e0908051125m3eecb065m5fb4ea2b55f69b91@mail.gmail.com> 
-	<7vtz0m5d61.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: The XZ patch?
+Date: Wed, 05 Aug 2009 11:31:31 -0700
+Message-ID: <7vhbwm5czg.fsf@alter.siamese.dyndns.org>
+References: <5F7EF736-9D0B-4455-A0F7-E7314B4F29E4@uwaterloo.ca>
+ <4A795790.9010805@op5.se> <m3zlaepl8v.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 20:31:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Mark A Rada <marada@uwaterloo.ca>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 05 20:33:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYlH2-0007gM-RQ
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 20:31:41 +0200
+	id 1MYlIX-00005j-L5
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 20:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987AbZHESab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 14:30:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbZHESa3
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 14:30:29 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:8005 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751610AbZHESaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 14:30:25 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so211716eyd.37
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 11:30:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VT5pdiCo5nNnmem1eqeiWTW6qrjInGLYXocjB/7njmg=;
-        b=o9vLW6yTFodYQw7YJcShm3IWNdesVVNQw97FtXWuMp3M7QUHm2ir6gahkmdv78ZyMf
-         HZF5TfDZ5PCZ9MubD9HTh5UFXzVX3wgQibTGw0lQRkpIhARQED2cfl/BCXqdBUFYjtAR
-         l6gxsCEWcnu5Dro/0Orar+OmFAHok9V+kWTWQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=exvLzYEh0VPTKl9Yxm2vjb9NjL5opE1w2Cp1dudNgwaxeZfifK4Mc4xXJQkONK+TW+
-         oDKVOVacbQ1hWfhqKCAGBAdhRae/DQFx5Qk3R/n5HRwuvxaQFdnfcvTe8IiQAErG/1ay
-         CcuXkPy20HJg9RDsNqZJKNdjbm66tzuV2jjZY=
-Received: by 10.216.91.15 with SMTP id g15mr1770934wef.24.1249497025135; Wed, 
-	05 Aug 2009 11:30:25 -0700 (PDT)
-In-Reply-To: <7vtz0m5d61.fsf@alter.siamese.dyndns.org>
+	id S1751749AbZHESbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 14:31:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbZHESbp
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 14:31:45 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35663 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751666AbZHESbo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 14:31:44 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A06D01EE29;
+	Wed,  5 Aug 2009 14:31:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F31171EE24; Wed,  5 Aug 2009
+ 14:31:33 -0400 (EDT)
+In-Reply-To: <m3zlaepl8v.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Wed\, 05 Aug 2009 04\:12\:53 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3999781E-81EE-11DE-A606-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124946>
 
-Heya,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Wed, Aug 5, 2009 at 11:27, Junio C Hamano<gitster@pobox.com> wrote:
-> Sounds useless.
+> Andreas Ericsson <ae@op5.se> writes:
+>
+>> Mark A Rada wrote:
+>> >
+>> > I was wondering what the fate of my XZ patch was (I didn't do
+>> > something dumb, did I?). Never got a response after my last
+>> > submit.
+>
+> I'm sorry, I didn't reply to the last version, did I? I liked both
+> patches
+>  
+>> No comments usually meant noone cared enough about the implemented
+>> feature to comment on it. Personally, I'd never use a compression
+>> algorithm that hogs as much memory as XZ does. "Good enough" really
+>> is just that, imo, and bzip2 and gzip are widely available pretty
+>> much everywhere, whereas I've never heard of XZ before.
+>
+> Well, there were two patches in last series, and I'd rather liked the
+> one that decoupled list of _known_ snapshot formats from the list of
+> snapshot formats projects are _allowed to use_, when project specific
+> override for 'snapshot' feature is turned on.  So for example one can
+> allow project specific override (so projects can chose whether to have
+> snapshot, and what formats to use) but for example disable chosing
+> 'tbz' (bzip2 compression) or 'txz' (XZ / LZMA2 compression) formats.
 
-It's actually called "[PATCH] RFC - Say goodbye to the rodent"; can't
-find it on GMane though.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+I kind of liked the generic "disabling" support, even though I was
+uninterested in adding xz or any other formats.  Perhaps it is more useful
+if the patches were in reverse order.  First allow site administrators to
+selectively disable the current set of formats, with documentation updates
+for that feature, then finally add xz.
