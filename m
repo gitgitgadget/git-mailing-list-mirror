@@ -1,71 +1,57 @@
 From: Tony Finch <dot@dotat.at>
-Subject: Re: [PATCH 2/2] Documentation: git-send-email: correct statement
- about standard ports
-Date: Wed, 5 Aug 2009 23:40:36 +0100
-Message-ID: <alpine.LSU.2.00.0908052303010.15736@hermes-2.csi.cam.ac.uk>
-References: <1248995334-28545-1-git-send-email-wjl@icecavern.net> <1248995334-28545-2-git-send-email-wjl@icecavern.net> <7vzlaku9d4.fsf@alter.siamese.dyndns.org>
+Subject: Re: Please make git-am handle \r\n-damaged patches
+Date: Thu, 6 Aug 2009 00:10:30 +0100
+Message-ID: <alpine.LSU.2.00.0908060009400.15736@hermes-2.csi.cam.ac.uk>
+References: <4A7735B0.2040703@zytor.com>  <81b0412b0908032335s3363849aj32a0e93efa15c012@mail.gmail.com>  <7v7hxk5b4y.fsf@alter.siamese.dyndns.org> <40aa078e0908041359p79b111eo2f389dde25bb0876@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 00:40:55 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 06 01:11:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYpAC-0001lP-DR
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 00:40:52 +0200
+	id 1MYpdT-0003QD-QL
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 01:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918AbZHEWkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 18:40:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbZHEWkk
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 18:40:40 -0400
-Received: from ppsw-1.csi.cam.ac.uk ([131.111.8.131]:52055 "EHLO
-	ppsw-1.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752853AbZHEWkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 18:40:39 -0400
+	id S1752999AbZHEXKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 19:10:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752981AbZHEXKg
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 19:10:36 -0400
+Received: from ppsw-7.csi.cam.ac.uk ([131.111.8.137]:49020 "EHLO
+	ppsw-7.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752957AbZHEXKf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 19:10:35 -0400
 X-Cam-AntiVirus: no malware found
 X-Cam-SpamDetails: not scanned
 X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:38637)
-	by ppsw-1.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.151]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1MYp9w-0005MF-4x (Exim 4.70)
-	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 05 Aug 2009 23:40:36 +0100
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:46993)
+	by ppsw-7.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1MYpcs-0004kr-PV (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 06 Aug 2009 00:10:30 +0100
 Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local-esmtp id 1MYp9w-00088Y-Gp (Exim 4.67)
-	(return-path <fanf2@hermes.cam.ac.uk>); Wed, 05 Aug 2009 23:40:36 +0100
+	with local-esmtp id 1MYpcs-0001qm-Si (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 06 Aug 2009 00:10:30 +0100
 X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
-In-Reply-To: <7vzlaku9d4.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <40aa078e0908041359p79b111eo2f389dde25bb0876@mail.gmail.com>
 User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125014>
 
-On Fri, 31 Jul 2009, Junio C Hamano wrote:
+On Tue, 4 Aug 2009, Erik Faye-Lund wrote:
 >
-> As you noted, port 465 has been used as a well-known de-facto port to run
-> SMTP over SSL at many places.  I do not think it would help anybody by
-> clarifying that it is a "non-standard" port here.
+> RFC 2822, section 2.3 explicitly states that a CR should not occur
+> without a LF (and vice versa, but the e-mail client might convert CRLF
+> to LF when saving to file), so I think this should be safe.
 
-(off topic pedantry)
-
-465 was at one time the de jure standard IANA registered port for smtps
-(not "ssmtp") alongside the imaps and pop3s ports. The IETF foolishly
-withdrew the registration for political reasons and it was subsequently
-re-assigned to something else. Since the withdrawal there has been no
-registered port for smtps, but smtps is required to support Outlook (not
-just Outlook Express). Therefore operators have ignored the IETF's
-mistake.
-
-This is another example of IP "as she is spoke" being different from what
-the standards say. Another good example is TCP congestion control which
-wasn't described in an RFC until RFC 2001.
-
-Also, MUAs typically use SSL to mean TLS-on-connect and TLS to mean
-STARTTLS, and the setting has no bearing on whether it uses version
-3.0 and earlier or 3.1 and later of the protocol.
+The rare BINARYMIME extension relaxes this requirement.
 
 Tony.
 -- 
