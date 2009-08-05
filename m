@@ -1,68 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Wed, 5 Aug 2009 13:55:28 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain>
-References: <20090805181755.22765.qmail@science.horizon.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/3 v3] Add support for external programs for handling
+ native fetches
+Date: Wed, 5 Aug 2009 16:58:23 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0908051648580.2147@iabervon.org>
+References: <alpine.LNX.2.00.0907310109130.2147@iabervon.org> <alpine.DEB.1.00.0908051143000.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051058130.2147@iabervon.org> <alpine.DEB.1.00.0908052231461.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: George Spelvin <linux@horizon.com>
-X-From: git-owner@vger.kernel.org Wed Aug 05 22:56:55 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 05 22:58:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYnXa-00088T-FY
-	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:56:55 +0200
+	id 1MYnZ9-0000Po-HY
+	for gcvg-git-2@gmane.org; Wed, 05 Aug 2009 22:58:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751664AbZHEU4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 16:56:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbZHEU4j
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:56:39 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42909 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751591AbZHEU4j (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 16:56:39 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n75KtS1Q021367
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 5 Aug 2009 13:55:29 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n75KtSqK022119;
-	Wed, 5 Aug 2009 13:55:28 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <20090805181755.22765.qmail@science.horizon.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751272AbZHEU6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 16:58:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbZHEU6X
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 16:58:23 -0400
+Received: from iabervon.org ([66.92.72.58]:50634 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751095AbZHEU6X (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Aug 2009 16:58:23 -0400
+Received: (qmail 15246 invoked by uid 1000); 5 Aug 2009 20:58:23 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 5 Aug 2009 20:58:23 -0000
+In-Reply-To: <alpine.DEB.1.00.0908052231461.8306@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/124981>
 
+On Wed, 5 Aug 2009, Johannes Schindelin wrote:
 
-
-On Wed, 5 Aug 2009, George Spelvin wrote:
+> Hi,
 > 
-> > We can continue shipping mozilla one to help the last group.
+> On Wed, 5 Aug 2009, Daniel Barkalow wrote:
 > 
-> Of course, we always need a C fallback.  Would you like a faster one?
+> > On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+> > 
+> > > On Fri, 31 Jul 2009, Daniel Barkalow wrote:
+> > > 
+> > > > +	}
+> > > > +	strbuf_release(&buf);
+> > > > +
+> > > > +	for (posn = ret; posn; posn = posn->next)
+> > > > +		resolve_remote_symref(posn, ret);
+> > > > +
+> > > > +	return ret;
+> > > > +}
+> > > > +
+> > > > +int transport_native_helper_init(struct transport *transport)
+> > > > +{
+> > > > +	struct helper_data *data = xmalloc(sizeof(*data));
+> > > > +	char *eom = strchr(transport->url, ':');
+> > > 
+> > > "End of message"?
+> > 
+> > "End of method"; that's the "method" part of a URL.
+> 
+> I'd have called that "protocol".  At least that's what java.net.URL 
+> calls it, and I just assume that Sun is very much in love with standards, 
+> so I could imagine they picked that term from the appropriate RFC.
 
-I actually looked at code generation (on x86-64) for the C fallback, and 
-it should be quite doable to re-write the C one to generate good code on 
-x86-64.
+Actually, it turns out to be officially "scheme" (although commonly called 
+"protocol"). I'll just call the variable "colon" and avoid the whole 
+issue, since it's not trying to really manage official URLs.
 
-On 32-bit x86, I suspect the register pressures are so intense that it's 
-unrealistic to expect gcc to do a good job, but the Mozilla SHA1 C code 
-really seems _designed_ to be slow in stupid ways (that whole "byte at a 
-time into a word buffer with shifts" is a really really sucky way to 
-handle the endianness issues).
-
-So if you'd like to look at the C version, that's definitely worth it. 
-Much bigger bang for the buck than trying to schedule asm language and 
-having to deal with different assemblers/linkers/whatnot.
-
-		Linus
+	-Daniel
+*This .sig left intentionally blank*
