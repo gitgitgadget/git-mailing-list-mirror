@@ -1,122 +1,151 @@
-From: Artur Skawina <art.08.09@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Thu, 06 Aug 2009 05:19:33 +0200
-Message-ID: <4A7A4BC5.7010106@gmail.com>
-References: <20090805181755.22765.qmail@science.horizon.com> <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain> <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain> <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain> <alpine.LFD.2.00.0908052144430.16073@xanadu.home> <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain>
+Date: Wed, 5 Aug 2009 20:31:47 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908052024081.3390@localhost.localdomain>
+References: <20090805181755.22765.qmail@science.horizon.com> <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain> <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain> <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
+ <alpine.LFD.2.00.0908052144430.16073@xanadu.home> <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain> <4A7A4BC5.7010106@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Nicolas Pitre <nico@cam.org>, George Spelvin <linux@horizon.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 05:19:53 2009
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 06 05:32:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYtWA-00029Q-Oz
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 05:19:51 +0200
+	id 1MYtiY-0004x0-3G
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 05:32:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753737AbZHFDTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Aug 2009 23:19:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753609AbZHFDTh
-	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 23:19:37 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:56960 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753545AbZHFDTg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Aug 2009 23:19:36 -0400
-Received: by ewy10 with SMTP id 10so485559ewy.37
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 20:19:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=P1QxpGtWqyAdSyrVdblAFVnK6y2bqJ+NDN2H/AS2fEI=;
-        b=X2UA2LTl/poxVbjSQ13OH6vYNXKshEVUvRb593vaiISe70LFyfEjxkwGf7JwuLMaSj
-         WZJfEJ8bRb6TZfLyH9x77OYhmhNP7HuvV0Uuu71qUZHN6JXssMa+vexsZRCHGr//Aqjc
-         ng2zx3dVOkbJNR2Tw0yYLrENA+dhod9vpeoy0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=xbyv8e3jYbkc2hMRrPCunhgrM0pbap/44WOzkekcNF+ybbGlHXgiV1SKD+Cxz6ZRzb
-         Lz8Nj9kywjkUIFWRgtbDTflrpPPTPsS53h2evaMft5mBT+xxGldTFL16i+acULWe3ZkK
-         eWKRIfNk9Emh9LCkk5QLK+8xgru4SJpferQrQ=
-Received: by 10.210.92.8 with SMTP id p8mr11446164ebb.15.1249528776004;
-        Wed, 05 Aug 2009 20:19:36 -0700 (PDT)
-Received: from ?172.19.43.221? (ip-89-174-122-237.multimo.pl [89.174.122.237])
-        by mx.google.com with ESMTPS id 28sm1468461eye.24.2009.08.05.20.19.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 20:19:35 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
-In-Reply-To: <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain>
-X-Enigmail-Version: 0.95.7
+	id S1754007AbZHFDc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Aug 2009 23:32:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753965AbZHFDc3
+	(ORCPT <rfc822;git-outgoing>); Wed, 5 Aug 2009 23:32:29 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:45381 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753958AbZHFDc2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Aug 2009 23:32:28 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n763VlrN018200
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 5 Aug 2009 20:31:48 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n763VlRK007208;
+	Wed, 5 Aug 2009 20:31:47 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <4A7A4BC5.7010106@gmail.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.467 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125025>
 
-Linus Torvalds wrote:
-> 
-> The bigger issue seems to be that it's shifter-limited, or that's what I 
-> take away from my profiles. I suspect it's even _more_ shifter-limited on 
-> some other micro-architectures, because gcc is being stupid, and generates
-> 
-> 	ror $31,%eax
-> 
-> from the "left shift + right shift" combination. It seems to -always- 
-> generate a "ror", rather than trying to generate 'rot' if the shift count 
-> would be smaller that way.
-> 
-> And I know _some_ old micro-architectures will literally internally loop 
-> on the rol/ror counts, so "ror $31" can be _much_ more expensive than "rol 
-> $1".
-> 
-> That isn't the case on my Nehalem, though. But I can't seem to get gcc to 
-> generate better code without actually using inline asm..
 
-The compiler does the right thing w/ something like this:
 
-+#if __GNUC__>1 && defined(__i386)
-+#define SHA_ROT(data,bits) ({ \
-+  unsigned d = (data); \
-+  if (bits<16) \
-+    __asm__ ("roll %1,%0" : "=r" (d) : "I" (bits), "0" (d)); \
-+  else \
-+    __asm__ ("rorl %1,%0" : "=r" (d) : "I" (32-bits), "0" (d)); \
-+  d; \
-+  })
-+#else
- #define SHA_ROT(X,n) (((X) << (n)) | ((X) >> (32-(n))))
-+#endif
+On Thu, 6 Aug 2009, Artur Skawina wrote:
+> 
+> >  #define T_0_19(t) \
+> > -	TEMP = SHA_ROT(A,5) + (((C^D)&B)^D)     + E + W[t] + 0x5a827999; \
+> > -	E = D; D = C; C = SHA_ROT(B, 30); B = A; A = TEMP;
+> > +	TEMP = SHA_ROL(A,5) + (((C^D)&B)^D)     + E + W[t] + 0x5a827999; \
+> > +	E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP;
+> >  
+> >  	T_0_19( 0); T_0_19( 1); T_0_19( 2); T_0_19( 3); T_0_19( 4);
+> >  	T_0_19( 5); T_0_19( 6); T_0_19( 7); T_0_19( 8); T_0_19( 9);
+> 
+> unrolling these otoh is a clear loss (iirc ~10%). 
+
+I can well imagine. The P4 decode bandwidth is abysmal unless you get 
+things into the trace cache, and the trace cache is of a very limited 
+size.
+
+However, on at least Nehalem, unrolling it all is quite a noticeable win.
+
+The way it's written, I can easily make it do one or the other by just 
+turning the macro inside a loop (and we can have a preprocessor flag to 
+choose one or the other), but let me work on it a bit more first.
+
+I'm trying to move the htonl() inside the loops (the same way I suggested 
+George do with his assembly), and it seems to help a tiny bit. But I may 
+be measuring noise.
+
+However, right now my biggest profile hit is on this irritating loop:
+
+	/* Unroll it? */
+	for (t = 16; t <= 79; t++)
+		W[t] = SHA_ROL(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
+
+and I haven't been able to move _that_ into the other iterations yet.
+
+Here's my micro-optimization update. It does the first 16 rounds (of the 
+first 20-round thing) specially, and takes the data directly from the 
+input array. I'm _this_ close to breaking the 28s second barrier on 
+git-fsck, but not quite yet.
+
+			Linus
+
+---
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH] block-sha1: make the 'ntohl()' part of the first SHA1 loop
+
+This helps a teeny bit.  But what I -really- want to do is to avoid the
+whole 80-array loop, and do the xor updates as I go along..
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ block-sha1/sha1.c |   28 ++++++++++++++++------------
+ 1 files changed, 16 insertions(+), 12 deletions(-)
+
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index a45a3de..39a5bbb 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -100,27 +100,31 @@ static void blk_SHA1Block(blk_SHA_CTX *ctx, const unsigned int *data)
+ 	unsigned int A,B,C,D,E,TEMP;
+ 	unsigned int W[80];
  
-which doesn't obfuscate the code as much.
-(I needed the asm on p4 anyway, as w/o it the mozilla version is even
- slower than an rfc3174 one. rol vs ror makes no measurable difference)
-
->  static void blk_SHA1Block(blk_SHA_CTX *ctx, const unsigned int *data)
->  {
-> @@ -93,7 +105,7 @@ static void blk_SHA1Block(blk_SHA_CTX *ctx, const unsigned int *data)
->  
->  	/* Unroll it? */
->  	for (t = 16; t <= 79; t++)
-> -		W[t] = SHA_ROT(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
-> +		W[t] = SHA_ROL(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
-
-unrolling this once (but not more) is a win, at least on p4.
-
->  #define T_0_19(t) \
-> -	TEMP = SHA_ROT(A,5) + (((C^D)&B)^D)     + E + W[t] + 0x5a827999; \
-> -	E = D; D = C; C = SHA_ROT(B, 30); B = A; A = TEMP;
-> +	TEMP = SHA_ROL(A,5) + (((C^D)&B)^D)     + E + W[t] + 0x5a827999; \
-> +	E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP;
->  
->  	T_0_19( 0); T_0_19( 1); T_0_19( 2); T_0_19( 3); T_0_19( 4);
->  	T_0_19( 5); T_0_19( 6); T_0_19( 7); T_0_19( 8); T_0_19( 9);
-
-unrolling these otoh is a clear loss (iirc ~10%). 
-
-artur
+-	for (t = 0; t < 16; t++)
+-		W[t] = htonl(data[t]);
+-
+-	/* Unroll it? */
+-	for (t = 16; t <= 79; t++)
+-		W[t] = SHA_ROL(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
+-
+ 	A = ctx->H[0];
+ 	B = ctx->H[1];
+ 	C = ctx->H[2];
+ 	D = ctx->H[3];
+ 	E = ctx->H[4];
+ 
+-#define T_0_19(t) \
++#define T_0_15(t) \
++	TEMP = htonl(data[t]); W[t] = TEMP; \
++	TEMP += SHA_ROL(A,5) + (((C^D)&B)^D)     + E + 0x5a827999; \
++	E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP; \
++
++	T_0_15( 0); T_0_15( 1); T_0_15( 2); T_0_15( 3); T_0_15( 4);
++	T_0_15( 5); T_0_15( 6); T_0_15( 7); T_0_15( 8); T_0_15( 9);
++	T_0_15(10); T_0_15(11); T_0_15(12); T_0_15(13); T_0_15(14);
++	T_0_15(15);
++
++	/* Unroll it? */
++	for (t = 16; t <= 79; t++)
++		W[t] = SHA_ROL(W[t-3] ^ W[t-8] ^ W[t-14] ^ W[t-16], 1);
++
++#define T_16_19(t) \
+ 	TEMP = SHA_ROL(A,5) + (((C^D)&B)^D)     + E + W[t] + 0x5a827999; \
+ 	E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP;
+ 
+-	T_0_19( 0); T_0_19( 1); T_0_19( 2); T_0_19( 3); T_0_19( 4);
+-	T_0_19( 5); T_0_19( 6); T_0_19( 7); T_0_19( 8); T_0_19( 9);
+-	T_0_19(10); T_0_19(11); T_0_19(12); T_0_19(13); T_0_19(14);
+-	T_0_19(15); T_0_19(16); T_0_19(17); T_0_19(18); T_0_19(19);
++	T_16_19(16); T_16_19(17); T_16_19(18); T_16_19(19);
+ 
+ #define T_20_39(t) \
+ 	TEMP = SHA_ROL(A,5) + (B^C^D)           + E + W[t] + 0x6ed9eba1; \
