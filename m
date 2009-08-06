@@ -1,95 +1,94 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Thu, 6 Aug 2009 16:42:01 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908061625300.3390@localhost.localdomain>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
- <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <alpine.LFD.2.01.0908061531310.3390@localhost.localdomain>
- <4A7B64F1.2000309@gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to	significantly
+ speed up packing/walking
+Date: Thu, 06 Aug 2009 19:43:16 -0400
+Message-ID: <4A7B6A94.9020200@gmail.com>
+References: <op.ux8i6hrbtdk399@sirnot.private> <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de> <4A7AEFA8.5010001@drmicha.warpmail.net> <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com> <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de> <c77435a80908061301n5e855aeci16af392ed3128651@mail.gmail.com> <c77435a80908061330h2461012at8b877970cab4906b@mail.gmail.com> <20090806203223.GK1033@spearce.org> <4A7B68C4.8070406@gmail.com> <20090806233739.GL1033@spearce.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 01:42:14 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Nick Edelen <sirnot@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Sam Vilain <sam@vilain.net>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 07 01:43:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZCb7-0002ie-TP
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 01:42:14 +0200
+	id 1MZCcV-00033P-B7
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 01:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756565AbZHFXmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 19:42:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755715AbZHFXmF
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 19:42:05 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:33239 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754670AbZHFXmE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 19:42:04 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76Ng2rn019702
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Aug 2009 16:42:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76Ng1Fo001630;
-	Thu, 6 Aug 2009 16:42:01 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4A7B64F1.2000309@gmail.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756932AbZHFXnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 19:43:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756587AbZHFXnV
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 19:43:21 -0400
+Received: from mail-yw0-f177.google.com ([209.85.211.177]:35035 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756597AbZHFXnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 19:43:19 -0400
+Received: by ywh7 with SMTP id 7so1638602ywh.21
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 16:43:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=EA7RTyJQJYcUoJSXzOm6ym4uSSAC74jbrlfIMfJA5i0=;
+        b=CQhqIPebrLIhvWM4/CcV11Pqv5X8I7EAp7IHDTgNtqsdIRrw7QH3yNg7TDdqyxVr6+
+         dDE88Ovkmv/Cb266wHrkV81PGp+TAqF3cZAMQ9Zr3hGcTnMOxsByITiM/2pRNKk77B8W
+         m7nHpn9+AUIXLYrnyHZv0+tSQlhqZt/SIX8qQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=mNNc2qa5aCIciV7RphPsgRTu5LyfnRAr8Ggf2WWNIToFw1mu5DKk5vkzammVCHrRRy
+         7LFmjGIt4LWUvMoZkHDNnDOkLIYaBRqYpJIDzsQFYz5VJn67q5eWBWEiqrh1tkrUkXNP
+         sCRiSrT00HOH2r77bpDDcND7BQwoOtu8y4+wI=
+Received: by 10.90.100.20 with SMTP id x20mr364956agb.45.1249602198663;
+        Thu, 06 Aug 2009 16:43:18 -0700 (PDT)
+Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
+        by mx.google.com with ESMTPS id 20sm1221993agd.63.2009.08.06.16.43.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 16:43:17 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <20090806233739.GL1033@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125144>
 
-
-
-On Fri, 7 Aug 2009, Artur Skawina wrote:
+Shawn O. Pearce wrote:
+> A Large Angry SCM <gitzilla@gmail.com> wrote:
+>> Shawn O. Pearce wrote:
+>>> Nick Edelen <sirnot@gmail.com> wrote:
+>>>> Hrmm, I just realized that it dosn't actually cache paths/names...
+>>> You may not need the path name, but instead the hash value that
+>>> pack-objects computes from the path name.
+>> Please do NOT expose the hash values. The hash used by pack-objects is  
+>> an implementation detail of the heuristics used by the _current_ object  
+>> packing code. It would be a real shame to have to maintain backward  
+>> compatibility with it at some future date after the packing machinery  
+>> has changed.
 > 
-> Actually that's even more of a reason to make sure the code doesn't suck :)
-> The difference on less perverse cpus will usually be small, but on P4 it
-> can be huge.
+> This is a local cache.  If there was a version number in the header,
+> and the hash function changes, we could just bump the version number
+> and invalidate all of the caches.
+> 
+> No sense in storing (and doing IO of) huge duplicate string values
+> for something where we really only need 32 bits, and where a
+> recompute from scratch only costs a minute.
+> 
 
-No. First off, the things you have to do on P4 are just insane. See the 
-email I just sent out asking you to test whether two 1-bit rotates might 
-be faster than 1 2-bit rotate.
-
-So optimizing for P4 is often the wrong thing.
-
-Secondly, P4's are going away. You may have one, but they are getting 
-rare. So optimizing for them is a losing proposition in the long run.
-
-> A few years back I found my old ip checksum microbenchmark, and when I ran
-> it on a P4 (prescott iirc) i didn't believe my eyes. The straightforward 
-> 32-bit C implementation was running circles around the in-kernel one...
-> And a few tweaks to the assembler version got me another ~100% speedup.[1]
-
-Yeah, not very surprising. The P4 is very good at the simplest possible 
-kind of code that does _nothing_ fancy.
-
-But then it completely chokes on some code. I mean _totally_. It slows 
-down by a huge amount if there is anything but the most trivial kinds of 
-instructions. And by "trivial", I mean _really_ trivial. Shifts (as in 
-SHA1), but iirc also things like "adc" (add with carry) etc.
-
-So it's not hard to write code that works well on other uarchs, and then 
-totally blow up on P4. I think it doesn't rename the flags at all, so any 
-flag dependency (carry being the most common one) will stall things 
-horrible.
-
-There's also a very subtle store forwarding failure thing (and a lot of 
-other events) that causes a nasty micro-architectural replay trap, and 
-again you go from "running like a bat out of hell" to "slower than a i486 
-at a tenth the frequency".
-
-Really. It's disgusting. Perfectly fine code can run really slowly on the 
-P4 just because it hits some random internal micro-architectural flaw. And 
-there's a _lot_ of those "glass jaw" issues.
-
-The best way to avoid them is to use _only_ simple ALU instructions (add, 
-sub, and/or/not), and to be _very_ careful with loads and stores. 
-
-		Linus
+That will work for me if the cache gets a version number and iff the 
+pack-objects hash code gets big warning comments about the cache code 
+dependency.
