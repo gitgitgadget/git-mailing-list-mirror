@@ -1,162 +1,141 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] push: point to 'git pull' and 'git push --force' in case
- of non-fast forward
-Date: Thu, 06 Aug 2009 22:04:48 +0200
-Message-ID: <4A7B3760.2000303@drmicha.warpmail.net>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
+Date: Thu, 06 Aug 2009 22:08:44 +0200
+Message-ID: <4A7B384C.2020407@gmail.com>
+References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 06 22:05:30 2009
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 22:08:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ9DM-0007du-3d
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 22:05:28 +0200
+	id 1MZ9Gj-0000gy-6M
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 22:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667AbZHFUFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 16:05:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756661AbZHFUFG
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 16:05:06 -0400
-Received: from out4.smtp.messagingengine.com ([66.111.4.28]:53197 "EHLO
-	out4.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756659AbZHFUFF (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 16:05:05 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 809BDB080;
-	Thu,  6 Aug 2009 16:05:04 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 06 Aug 2009 16:05:04 -0400
-X-Sasl-enc: Rt/DcgkhxnbXW9UFkdhkusNr4Lhx5LqMKxeNzfp77tfB 1249589103
-Received: from localhost.localdomain (vpn-136-007.rz.uni-augsburg.de [137.250.136.7])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2F5C138B2;
-	Thu,  6 Aug 2009 16:05:03 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.2pre) Gecko/20090728 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1756217AbZHFUIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 16:08:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756185AbZHFUIs
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 16:08:48 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:57432 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753343AbZHFUIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 16:08:47 -0400
+Received: by bwz9 with SMTP id 9so998932bwz.41
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 13:08:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=BuJcm7CSfgXloxZvKvCQTfGD7381KT+mvS7gEr2nZog=;
+        b=F6xaOEZ9+I0rqnFOkt6kZT5VgPshcsLaEYuIwoECOQ036LNq98WvUBgxNgmWQVZZ33
+         m4RloWSCMenwbtG0Yoo7bTQW+ziHesAmg67lmkehLUTC1PhhG4M3SEiTQq/ewQLVEnrb
+         a46XKplgmGrELAuHs+2rq3ua6xT9xBNbTDtkA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=lgFfiRHtTnrJ128dj5X7XTvihBRG5ycTYpVmvFtUtM260NDcy6DBp335fbncXJ1eO/
+         I1Hw5gWX60mElfKcCxyVcIjyq1+Wg4J5KMxvVAFSWOdYb9XFeIACsGvhPtuBl3H7VUIN
+         TCtygd30cV6qyJiPgySKedh/W/mVxsvUn8VpA=
+Received: by 10.204.52.2 with SMTP id f2mr2438028bkg.90.1249589326738;
+        Thu, 06 Aug 2009 13:08:46 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-89-174-123-173.multimo.pl [89.174.123.173])
+        by mx.google.com with ESMTPS id k29sm1073008fkk.56.2009.08.06.13.08.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 13:08:46 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125120>
 
-Matthieu Moy venit, vidit, dixit 06.08.2009 19:32:
-> 'git push' failing because of non-fast forward is a very common situation,
-> and a beginner does not necessarily understand "fast forward" immediately.
+Linus Torvalds wrote:
 > 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> That may be a bit verbose, but I think it's worth it.
+> On Thu, 6 Aug 2009, Artur Skawina wrote:
+>> Oh, i noticed that '-mtune' makes quite a difference, it can change
+>> the relative performance of the functions significantly, in unobvious
+>> ways; depending on which cpu gcc tunes for (build config or -mtune);
+>> some implementations slow down, others become a bit faster.
 > 
-> Ideally, there should be a core.expertUser config variable to disable
-> these kind of messages, but that's another story.
+> That probably is mainly true for P4, although it's quite possible that it 
+> has an effect for just what the register allocator does, and then for 
+> spilling.
 > 
->  builtin-push.c |    9 ++++++++-
->  transport.c    |   10 +++++++---
->  transport.h    |    3 ++-
->  3 files changed, 17 insertions(+), 5 deletions(-)
+> And it looks like _all_ the tweakability is in the spilling. Nothing else 
+> matters.
 > 
-> diff --git a/builtin-push.c b/builtin-push.c
-> index 1d92e22..214ca77 100644
-> --- a/builtin-push.c
-> +++ b/builtin-push.c
-> @@ -140,6 +140,7 @@ static int do_push(const char *repo, int flags)
->  		struct transport *transport =
->  			transport_get(remote, url[i]);
->  		int err;
-> +		int nonfastforward;
->  		if (receivepack)
->  			transport_set_option(transport,
->  					     TRANS_OPT_RECEIVEPACK, receivepack);
-> @@ -148,13 +149,19 @@ static int do_push(const char *repo, int flags)
->  
->  		if (flags & TRANSPORT_PUSH_VERBOSE)
->  			fprintf(stderr, "Pushing to %s\n", url[i]);
-> -		err = transport_push(transport, refspec_nr, refspec, flags);
-> +		err = transport_push(transport, refspec_nr, refspec, flags,
-> +				     &nonfastforward);
->  		err |= transport_disconnect(transport);
->  
->  		if (!err)
->  			continue;
->  
->  		error("failed to push some refs to '%s'", url[i]);
-> +		if (nonfastforward) {
-> +			printf("Some branch push were rejected due to non-fast forward:\n");
-> +			printf("Merge the remote changes (git pull) before pushing your's\n");
-> +			printf("or use git push --force to discard the remote changes.\n");
-> +		}
->  		errs++;
->  	}
->  	return !!errs;
+> How does this patch work for you? It avoids doing that C-level register 
+> rotation, and instead rotates the register names with the preprocessor.
+> 
+> I realize it's ugly as hell, but it does make it easier for gcc to see 
+> what's going on.
+> 
+> The patch is against my git patches, but I think it should apply pretty 
+> much as-is to your sha1bench sources too. Does it make any difference for 
+> you?
 
-May I suggest "Some push was rejected because it would not result in a
-fast forward:\n Merge in the remote changes (using git pull) before
-pushing yours\n or use..."?
+it's a bit slower (P4):
 
-Cheers,
-Michael
+before: linus          0.6288       97.06
+after:  linus          0.6604       92.42
 
-> diff --git a/transport.c b/transport.c
-> index de0d587..f231b35 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -820,7 +820,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
->  }
->  
->  static void print_push_status(const char *dest, struct ref *refs,
-> -							  int verbose, int porcelain)
-> +			      int verbose, int porcelain, int * nonfastforward)
->  {
->  	struct ref *ref;
->  	int n = 0;
-> @@ -835,11 +835,14 @@ static void print_push_status(const char *dest, struct ref *refs,
->  		if (ref->status == REF_STATUS_OK)
->  			n += print_one_push_status(ref, dest, n, porcelain);
->  
-> +	*nonfastforward = 0;
->  	for (ref = refs; ref; ref = ref->next) {
->  		if (ref->status != REF_STATUS_NONE &&
->  		    ref->status != REF_STATUS_UPTODATE &&
->  		    ref->status != REF_STATUS_OK)
->  			n += print_one_push_status(ref, dest, n, porcelain);
-> +		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD)
-> +			*nonfastforward = 1;
->  	}
->  }
->  
-> @@ -997,7 +1000,8 @@ int transport_set_option(struct transport *transport,
->  }
->  
->  int transport_push(struct transport *transport,
-> -		   int refspec_nr, const char **refspec, int flags)
-> +		   int refspec_nr, const char **refspec, int flags,
-> +		   int * nonfastforward)
->  {
->  	verify_remote_names(refspec_nr, refspec);
->  
-> @@ -1024,7 +1028,7 @@ int transport_push(struct transport *transport,
->  
->  		ret = transport->push_refs(transport, remote_refs, flags);
->  
-> -		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
-> +		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, nonfastforward);
->  
->  		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
->  			struct ref *ref;
-> diff --git a/transport.h b/transport.h
-> index 51b5397..639f13d 100644
-> --- a/transport.h
-> +++ b/transport.h
-> @@ -68,7 +68,8 @@ int transport_set_option(struct transport *transport, const char *name,
->  			 const char *value);
->  
->  int transport_push(struct transport *connection,
-> -		   int refspec_nr, const char **refspec, int flags);
-> +		   int refspec_nr, const char **refspec, int flags,
-> +		   int * nonfastforward);
->  
->  const struct ref *transport_get_remote_refs(struct transport *transport);
->  
+i was trying similar things, like the example below, too, but it wasn't a
+win on 32 bit...
+
+artur
+
+[the iteration below is functionally correct, but scheduling is most likely
+ fubared as it wasn't a win and i was checking how much a difference it made
+ on P4 -- ~-20..~0%, but never faster (relative to linusas2; it _is_ faster
+ than 'linus'. Dropped this version when merging your new preprocessor macros.]
+
+@@ -125,6 +127,8 @@
+ #define W(x) (array[(x)&15])
+ #define SHA_XOR(t) \
+        TEMP = SHA_ROL(W(t+13) ^ W(t+8) ^ W(t+2) ^ W(t), 1); W(t) = TEMP;
++#define SHA_XOR2(t) \
++       SHA_ROL(W(t+13) ^ W(t+8) ^ W(t+2) ^ W(t), 1)
+ 
+ #define T_16_19(t) \
+         { unsigned TEMP;\
+@@ -139,10 +143,27 @@
+ #endif
+ 
+ #define T_20_39(t) \
+-        { unsigned TEMP;\
+-       SHA_XOR(t); \
+-       TEMP += (B^C^D) + E + 0x6ed9eba1; \
+-       E = D; D = C; C = SHA_ROR(B, 2); B = A; TEMP += SHA_ROL(A,5); A = TEMP; }
++        if (t%2==0) {\
++               unsigned TEMP;\
++               unsigned TEMP2;\
++               \
++               TEMP   = SHA_XOR2(t); \
++               TEMP2  = SHA_XOR2(t+1); \
++               W(t)   = TEMP;\
++               W(t+1) = TEMP2;\
++               TEMP   += E + 0x6ed9eba1; \
++               E      = C;\
++               TEMP   += (B^E^D); \
++               TEMP2  += D + 0x6ed9eba1; \
++               D      = SHA_ROR(B, 2);\
++               B      = SHA_ROL(A, 5);\
++               B      += TEMP;\
++               C      = SHA_ROR(A, 2);\
++               A      ^= E; \
++               A      ^= D; \
++               A      += TEMP2;\
++               A      += SHA_ROL(B, 5);\
++       }
+ 
+ #if UNROLL
+        T_20_39(20); T_20_39(21); T_20_39(22); T_20_39(23); T_20_39(24);
