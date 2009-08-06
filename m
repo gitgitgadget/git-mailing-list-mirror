@@ -1,70 +1,67 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Thu, 6 Aug 2009 20:49:29 +0200
-Message-ID: <40aa078e0908061149s3d08bcc5qbd86bfa4e5624006@mail.gmail.com>
-References: <20090805181755.22765.qmail@science.horizon.com>
-	 <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain>
-	 <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain>
-	 <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Breaking "git status"
+Date: Thu, 06 Aug 2009 12:06:26 -0700
+Message-ID: <7vhbwklq31.fsf@alter.siamese.dyndns.org>
+References: <1249463746-21538-1-git-send-email-gitster@pobox.com>
+ <1249463746-21538-2-git-send-email-gitster@pobox.com>
+ <1249463746-21538-3-git-send-email-gitster@pobox.com>
+ <1249463746-21538-4-git-send-email-gitster@pobox.com>
+ <1249463746-21538-5-git-send-email-gitster@pobox.com>
+ <1249463746-21538-6-git-send-email-gitster@pobox.com>
+ <20090806153339.GC1970@coredump.intra.peff.net>
+ <7vljlwnc6j.fsf_-_@alter.siamese.dyndns.org>
+ <20090806164247.GA1073@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: George Spelvin <linux@horizon.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 20:49:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 06 21:06:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ820-0007v7-1Z
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 20:49:40 +0200
+	id 1MZ8IT-0007D4-Qn
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 21:06:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754117AbZHFStb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 14:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZHFSta
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 14:49:30 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:52366 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355AbZHFSta (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 14:49:30 -0400
-Received: by bwz9 with SMTP id 9so954077bwz.41
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 11:49:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0UpsrIopZQ+D0ni3bThUpVYC8/3g97D+qb0RcRcLESA=;
-        b=cnrZM3vfKZanFbaMfl0PaLA/etzRJC/BIRuDXezR5R+NR79mia/nvhv2vSbh5xPltn
-         WKpPedA0pQOStwyDoPN0QnYPYA2mlP01QN6bTXmqC5KgVsFG3yF+FIEkqkuNqzkMWk2P
-         6CGUjDThajquTh/lwYdg4/Cby0x5ErqhjvkdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=P9byCJknmGJgM0Pn2AzJBEkjjJmYss1+QPzPuUHemUC/nRW7Sajvr8am7kokoy7/XU
-         YXvAgJuaeOJwwY9FREr/h1c2K/aSUGXiiSFOxiSM2FlxCBQSAm1q3fYZjbeLjmzbXAy9
-         jFs70Fpfj7FjkRkTiGVRn1b00y90doMKPYwW4=
-Received: by 10.204.71.135 with SMTP id h7mr1119640bkj.168.1249584569758; Thu, 
-	06 Aug 2009 11:49:29 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
+	id S1755409AbZHFTGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 15:06:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbZHFTGa
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 15:06:30 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:46737 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753595AbZHFTGa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 15:06:30 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 99E1623E0A;
+	Thu,  6 Aug 2009 15:06:30 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0B18923E07; Thu, 
+ 6 Aug 2009 15:06:27 -0400 (EDT)
+In-Reply-To: <20090806164247.GA1073@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 6 Aug 2009 12\:42\:47 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3FF52DCE-82BC-11DE-BF0F-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125106>
 
-On Thu, Aug 6, 2009 at 3:18 AM, Linus
-Torvalds<torvalds@linux-foundation.org> wrote:
-> I note that MINGW does NO_OPENSSL by default, for example, and maybe the
-> MINGW people want to test the patch out and enable BLK_SHA1 rather than
-> the original Mozilla one.
+Jeff King <peff@peff.net> writes:
 
-We recently got OpenSSL in msysgit. The NO_OPENSSL-switch hasn't been
-flipped yet, though. (We did OpenSSL to get https-support in cURL...)
+> I wonder if introducing such a configuration option is not going to
+> cause more confusion in the long run than simply switching. As a
+> script-writer, you are not helping me at all because I can't make any
+> assumptions about how the user has set the variable.
+>
+> I guess you are helping those who want to keep "git status" as-is
+> forever for their own typing.
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+Not really.  I meant to be helpful to people who would say "Ok, I read the
+transition plan, and I understand I eventually need to switch, but I
+cannot afford to right at this momennt.  I'd transition on the timetable
+of my choosing, rather than on the calendar git developers arbitrarily
+set."
+
+But you are right.  This would not really help scripts transition.
