@@ -1,117 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to 
- significantly speed up packing/walking
-Date: Thu, 6 Aug 2009 21:06:59 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
-References: <op.ux8i6hrbtdk399@sirnot.private>  <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>  <4A7AEFA8.5010001@drmicha.warpmail.net> <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
+Date: Thu, 06 Aug 2009 21:10:00 +0200
+Message-ID: <4A7B2A88.2040602@gmail.com>
+References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Edelen <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 21:06:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 21:10:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ8IU-0007D4-JW
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 21:06:43 +0200
+	id 1MZ8Lu-0000KJ-L8
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 21:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755665AbZHFTGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 15:06:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755521AbZHFTGe
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 15:06:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58973 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755397AbZHFTGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 15:06:33 -0400
-Received: (qmail invoked by alias); 06 Aug 2009 19:06:33 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp063) with SMTP; 06 Aug 2009 21:06:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18RLtIzrIMRogwWd5PB2sVO0e7kLnDlk88IMwdWgL
-	EQCCn0oKRHalLU
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1755831AbZHFTKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 15:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755686AbZHFTKF
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 15:10:05 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:36086 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755397AbZHFTKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 15:10:04 -0400
+Received: by yxe5 with SMTP id 5so1325690yxe.33
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 12:10:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=Zf079DOm5O/fyglREoyhT8cHhbRSPkgjnaBUeYuRmzg=;
+        b=qSd2GKXxzvESmAxJK7stBxiZDTwKl4ZnXT9T9PrS/hvWyoDo2pM12bmw0z59jLlhhS
+         WRTLk5GTnyYJPkQWfBOwPDnrNdXBzdBldCsmylb/BamMWvI80rfcw0sXjmAqTvH5+/uz
+         YmYLwOy7ERiKXRlvbHPxTqO4qBvyKvz8OlMkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=EWEYN7YC9v0zWSytgGz3BhzEeMENOcF6SmTFdA3hmP5dJo5YL+NjZkAg9vlWluBVAq
+         ZHJleB5hF4CWFcHeXsMRBZOTsQ9wtNH/9/i8TPWQel8ryn5b10clRBIZvmfR2qxbCkVZ
+         k9kT9btODF8F24AMEDGqrcQChQAgkEsRsol1Y=
+Received: by 10.90.26.3 with SMTP id 3mr177731agz.30.1249585804598;
+        Thu, 06 Aug 2009 12:10:04 -0700 (PDT)
+Received: from ?172.19.43.221? ([72.14.241.7])
+        by mx.google.com with ESMTPS id 39sm848725agb.44.2009.08.06.12.10.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 12:10:03 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125108>
 
-Hi,
-
-On Thu, 6 Aug 2009, Nick Edelen wrote:
-
-> > Sorry, I forgot the details, could you quickly remind me why these 
-> > caches are not in the pack index files?
+Linus Torvalds wrote:
 > 
-> Er, I'm not sure what you mean.  Are you asking why these revision 
-> caches are required if we have a pack index, or why they aren't in the 
-> pack index, or something different?  I'm thinking probably the second:
-
-Yep.
-
-> the short answer is that cache slices are totally independant of pack 
-> files.
-
-My idea with that was that you already have a SHA-1 map in the pack index, 
-and if all you want to be able to accelerate the revision walker, you'd 
-probably need something that adds yet another mapping, from commit to 
-parents and tree, and from tree to sub-tree and blob (so you can avoid 
-unpacking commit and tree objects).
-
-I just thought that it could be more efficient to do it at the time the 
-pack index is written _anyway_, as nothing will change in the pack after 
-that anyway.
-
-But I guess I can answer my question easily myself: the boundary commits 
-will not be handled that way.
-
-Still, there is some redundancy between the pack index and your cache, as 
-you have to write out the whole list of SHA-1s all over again.  I guess it 
-is time to look at the code instead of asking stupid questions.
-
-> It might be possible to somehow merge revision cache slices with pack 
-> indexes, but I don't think it'd be a very suitable modification.  The 
-> rev-cache slices are meant to act almost like topo-relation pack files: 
-> new slices are simply new files, seperate slice files can be fused 
-> ("repacked") into a larger one, the index is a (recreatable) single file 
-> associating file (positions) with objects.  The format was geared to 
-> reducing potential cache/data loss and preventing overly large cache 
-> slices.
+> On Thu, 6 Aug 2009, Artur Skawina wrote:
+>> For those curious just how close the C version is to the various
+>> asm and C implementations, the q&d microbenchmark is at 
+>> http://www.src.multimo.pl/YDpqIo7Li27O0L0h/sha1bench.tar.gz
 > 
-> >> Hmpf.
-> >>
-> >> We got rid of the last Python script in Git a long time ago, but now 
-> >> two different patch series try to sneak that dependency (at least for 
-> >> testing) back in.
-> >>
-> >> That's all the worse because we cannot use Python in msysGit, and 
-> >> Windows should be a platform benefitting dramatically from your work.
-> >
-> > In fact, the test the script performs could be easily rephrased with 
-> > "sort", "uniq" and "comm". OTOH: If the walker is supposed to return 
-> > the exact same orderd list of commits you can just use test_cmp.
+> Hmm. That thing doesn't work at all on x86-64. Even apart from the asm 
+> sources, your timing thing does soem really odd things (why do you do that 
+> odd "iret" in GETCYCLES and GETTIME?). You're better off using 
+> lfence/mfence/cpuid, and I think you could make it work on 64-bit that 
+> way too.
+
+yes, it's 32-bit only, i should have mentioned that. The timing
+code was written more than a decade ago, it really works on p2,
+haven't updated it, it's all just c&p'ed ever since. All of it
+can be safely disabled; on p2 you could account for every cycle,
+nowadays gettimeofday is more than enough.
+
+> I just hacked it away for testing.
 > 
-> The language that script is written in isn't important.  I originally
-> wrote it in python because I wanted something quick and wasn't much of
-> a sh guru (sorry :-/ ).  As Micheal said I've no doubt it can easily
-> be converted to shell script
+>> In short: 88% of openssl speed on P3, 42% on P4, 66% on Atom.
+> 
+> I'll use this to see if I can improve the 32-bit case.
+> 
+> On Nehalem, with your benchmark, I get:
+> 
+> 	#             TIME[s] SPEED[MB/s]
+> 	rfc3174         5.122       119.2
+> 	# New hash result: d829b9e028e64840094ab6702f9acdf11bec3937
+> 	rfc3174         5.153       118.5
+> 	linus           2.092       291.8
+> 	linusas         2.056       296.8
+> 	linusas2        1.909       319.8
+> 	mozilla         5.139       118.8
+> 	mozillaas       5.775       105.7
+> 	openssl         1.627       375.1
+> 	spelvin         1.678       363.7
+> 	spelvina        1.603       380.8
+> 	nettle          1.592       383.4
+> 
+> And with the hacked version to get some 64-bit numbers:
+> 
+> 	#             TIME[s] SPEED[MB/s]
+> 	rfc3174         3.992       152.9
+> 	# New hash result: b78fd74c0033a4dfe0ededccb85ab00cb56880ab
+> 	rfc3174         3.991       152.9
+> 	linus            1.54       396.3
+> 	linusas         1.533       398.1
+> 	linusas2        1.603       380.9
+> 	mozilla         4.352       140.3
+> 	mozillaas       4.227       144.4
+> 
+> so as you can see, your improvements in 32-bit mode are actually 
+> de-provements in 64-bit mode (ok, your first one seems to be a tiny 
+> improvement, but I think it's in the noise).
 
-That is not what I wanted to hear.
+Actually i didn't keep anything that wasn't a win, one reason
+why linusas2 stayed was that it really surprised me, i'd have
+expected for gcc to do a lot worse w/ the many temporaries and
+the compiler came up w/ a 70% gain; gcc really must have improved
+when i wasn't looking.
 
-> -- in fact, I'll try to get a shell version working today.
+> But you're right, I need to try to improve the 32-bit case.
 
-That is.
+I never said anything like that. :) there probably isn't all that
+much that can be done. I tried a few things, but never saw any 
+improvement above measurement noise (a few percent). Would have
+though that overlapping the iterations a bit would be a gain, but
+that didn't do much (-20%..0), maybe on 64 bit, with more registers...
 
-Thanks,
-Dscho
+Oh, i noticed that '-mtune' makes quite a difference, it can change
+the relative performance of the functions significantly, in unobvious
+ways; depending on which cpu gcc tunes for (build config or -mtune);
+some implementations slow down, others become a bit faster.
+
+artur
