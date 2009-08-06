@@ -1,78 +1,95 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: 6 Aug 2009 03:03:12 -0400
-Message-ID: <20090806070312.13791.qmail@science.horizon.com>
-References: <4A7A67C5.8060109@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, linux@horizon.com,
-	nico@cam.org
-To: art.08.09@gmail.com, torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Thu Aug 06 09:03:42 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2] gitk: fix direction of symmetric difference in optimized mode
+Date: Thu, 6 Aug 2009 09:19:26 +0200
+Message-ID: <200908060919.27780.trast@student.ethz.ch>
+References: <0fd5fc0f09779bb04c02b54d6ec8f43087a51bca.1249130587.git.trast@student.ethz.ch> <8a2113bfa2f1eaf6a13587cadfbaae81c8914947.1249506383.git.trast@student.ethz.ch> <19066.8802.98042.957009@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 09:19:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYx0o-0000js-5U
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 09:03:42 +0200
+	id 1MYxGQ-0006Vm-4r
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 09:19:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015AbZHFHDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 03:03:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbZHFHDN
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 03:03:13 -0400
-Received: from science.horizon.com ([71.41.210.146]:33751 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751858AbZHFHDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 03:03:13 -0400
-Received: (qmail 13792 invoked by uid 1000); 6 Aug 2009 03:03:12 -0400
-In-Reply-To: <4A7A67C5.8060109@gmail.com>
+	id S1752635AbZHFHTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 03:19:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbZHFHTm
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 03:19:42 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:19627 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752075AbZHFHTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 03:19:41 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 6 Aug
+ 2009 09:19:39 +0200
+Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 6 Aug
+ 2009 09:19:39 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
+In-Reply-To: <19066.8802.98042.957009@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125048>
 
-> On Thu, 6 Aug 2009, Artur Skawina wrote:
->> #             TIME[s] SPEED[MB/s]
->> rfc3174         1.357       44.99
->> rfc3174         1.352       45.13
->> mozilla         1.509       40.44
->> mozillaas       1.133       53.87
->> linus          0.5818       104.9
+Paul Mackerras wrote:
+> Thomas Rast writes:
+> 
+> > The confusing part of this, but also how I stumbled across the real
+> > bug, was that I was playing with --show-all and that flipped the
+> > direction *again*.  Turns out the option is not recognized by gitk and
+> > lets it go back to unoptimized mode, where the bug does not exist.
+> 
+> What does --show-all do?  Maybe I need to add support for it to gitk.
 
-> #Initializing... Rounds: 1000000, size: 62500K, time: 1.421s, speed: 42.97MB/s
-> #             TIME[s] SPEED[MB/s]
-> rfc3174         1.403        43.5
-> # New hash result: b747042d9f4f1fdabd2ac53076f8f830dea7fe0f
-> rfc3174         1.403       43.51
-> linus          0.5891       103.6
-> linusas        0.5337       114.4
-> mozilla         1.535       39.76
-> mozillaas       1.128       54.13
+Support for _displaying_ it was added to gitk in 1407ade, even before
+the option was added to the revision walker.  Since it's a debugging
+option, I doubt it's worth handling this in the optimized code path.
 
-I'm trying to absorb what you're learning about P4 performance, but
-I'm getting confused... what is what in these benchmarks?
+But anyway, it does not do what I hoped :-(
 
-The major architectural decisions I see are:
+It shows commits that were walked, but found uninteresting, with a ^
+in front.  See the long explanation in 3131b71; you can try
 
-1) Three possible ways to compute the W[] array for rounds 16..79:
-	1a) Compute W[16..79] in a loop beforehand (you noted that unrolling
-	    two copies helped significantly.)
-	1b) Compute W[16..79] as part of hash rounds 16..79.
-	1c) Compute W[0..15] in-place as part of hash rounds 16..79
+  gitk --show-all origin/next..origin/pu
 
-2) The main hashing can be rolled up or unrolled:
-	2a) Four 20-round loops.  (In case of options 1b and 1c, the
-	    first one might be split into a 16 and a 4.)
-	2b) Four 4-round loops, each unrolled 5x.  (See the ARM assembly.)
-	2c) all 80 rounds unrolled.
+for a nice example in git.git.
 
-As Linus noted, 1c is not friends with options 2a and 2b, because the
-W() indexing math is not longer a compile-time constant.
+I was _actually_ looking for an option to make --cherry-pick
+--left-right history connected again, as I was trying to make sense of
+an SVN history basically by saying
 
-Linus has posted 1a+2c and 1c+2c.  You posted some code that could be
-2a or 2c depending on an UNROLL preprocessor #define.  Which combinations
-are your "linus" and "linusas" code?
+  gitk --left-right --cherry-pick svn/2.2...svn/trunk
 
-You talk about "and my atom seems to like the compact loops too", but
-I'm not sure which loops those are.
+(Incidentally this SVN is publicly available at
+https://secure.a-eskwadraat.nl/svn/domjudge, but I doubt it's worth
+the cloning.)
 
-Thanks.
+The problem with this is that it disconnects history, so I was looking
+for an option to either get back the commits omitted by --cherry-pick
+(but of course flagged in some way that shows they're duplicated) or
+fix the parent pointers so that history becomes connected again.  Some
+of my guesses were --sparse, --full-history and --show-all, but none
+achieve this.
+
+[I *think* --sparse comes closest, but it's about TREESAME-type
+uninteresting commits, not about --cherry-pick.  --full-history is
+only about the merges that are TREESAME, so that's out.  --show-all
+apparently is something entirely different.]
+
+Sadly, it's really the underlying git-rev-list that is "broken" in the
+sense that it does not fix the parent lists.  And git log --graph
+handles it much worse than gitk.  I've added the authors of the
+relevant features to Cc; maybe you can help?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
