@@ -1,76 +1,79 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] gitignore: git-remote-ftp git-remote-http and git-remote-https
-Date: Thu,  6 Aug 2009 17:38:31 +0200
-Message-ID: <8dc576fd37e450975746688994599ea61b539bdb.1249573014.git.nicolas.s.dev@gmx.fr>
-Cc: Daniel Barkalow <barkalow@iabervon.org>, <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 17:39:21 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] wt-status.c: rework the way changes to the index and
+ work tree are summarized
+Date: Thu, 06 Aug 2009 08:50:15 -0700
+Message-ID: <7vhbwlndqg.fsf@alter.siamese.dyndns.org>
+References: <1249463746-21538-1-git-send-email-gitster@pobox.com>
+ <1249463746-21538-2-git-send-email-gitster@pobox.com>
+ <1249463746-21538-3-git-send-email-gitster@pobox.com>
+ <1249463746-21538-4-git-send-email-gitster@pobox.com>
+ <20090806144638.GA1970@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 06 17:50:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ53n-0002nE-4g
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 17:39:19 +0200
+	id 1MZ5Ea-00088O-UG
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 17:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756012AbZHFPip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 11:38:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755516AbZHFPip
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 11:38:45 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:44181 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753756AbZHFPio (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 11:38:44 -0400
-Received: by mail-ew0-f214.google.com with SMTP id 10so877264ewy.37
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 08:38:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=5D2BJV3PgRapl+oQ/wY2sWFgIwLIxljxlgIJjQnMeJI=;
-        b=BEtP+L69MjtTH2u+aN3oLzit832YZFVuZRpVB1e2bVmYmhbG9a4Oe2m1nHYQzQRB3a
-         HFBHh+Oime32G5vGeB+Hc7X63xb4lYRB2zxMlKRykK+w0C2H7PAWCWWCvSHSPmXEef+i
-         /Bx1yb7IHuJWnVYB7BIfqIjlajfRwUNnkdP7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=BjRh/7I1GURV2pUUCvQCiPk8t0p/5sgjutx1CjYKjO8p/Uei36OpYjP0cqy54b1ySV
-         a9+V5KnN7IghnD+sOBgq90hXtxNWjgNaz70qs7yLRzxrE44b7oeWdmV1YP2KFuP8jL1/
-         JDO+ANqWDpBaCFXTilbzmWvitKhuNr7cMWBn4=
-Received: by 10.210.53.1 with SMTP id b1mr9807550eba.62.1249573123572;
-        Thu, 06 Aug 2009 08:38:43 -0700 (PDT)
-Received: from localhost (91-164-149-117.rev.libertysurf.net [91.164.149.117])
-        by mx.google.com with ESMTPS id 28sm574154eyg.42.2009.08.06.08.38.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Aug 2009 08:38:42 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.112.gc57a6
+	id S1755921AbZHFPuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 11:50:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755888AbZHFPuU
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 11:50:20 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:63221 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755884AbZHFPuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 11:50:20 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 45DA623089;
+	Thu,  6 Aug 2009 11:50:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 52C5F23088; Thu, 
+ 6 Aug 2009 11:50:17 -0400 (EDT)
+In-Reply-To: <20090806144638.GA1970@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 6 Aug 2009 10\:46\:39 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D8492C4A-82A0-11DE-B9EE-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125089>
 
-Since commit a2d725b we use a new external program.
-Ignore the related compiled files.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
- .gitignore |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> On Wed, Aug 05, 2009 at 02:15:44AM -0700, Junio C Hamano wrote:
+>
+>> diff --git a/wt-status.c b/wt-status.c
+>> index 47735d8..1614352 100644
+>> --- a/wt-status.c
+>> +++ b/wt-status.c
+>> @@ -20,6 +20,7 @@ static char wt_status_colors[][COLOR_MAXLEN] = {
+>>  	GIT_COLOR_RED,    /* WT_STATUS_CHANGED */
+>>  	GIT_COLOR_RED,    /* WT_STATUS_UNTRACKED */
+>>  	GIT_COLOR_RED,    /* WT_STATUS_NOBRANCH */
+>> +	GIT_COLOR_YELLOW, /* WT_STATUS_UNMERGED */
+>>  };
+>
+> Does this belong in 3/5? It looks like the WT_STATUS_UNMERGED symbol is
+> not used at all until 4/5, which seems like the more logical place
+> (since it deals explicitly with unmerged entries). Also, why does it
+> start yellow here and then turn to red in the next patch?
+>
+> And related:
+>
+>> diff --git a/wt-status.h b/wt-status.h
+>> index 78add09..f80142f 100644
+>> --- a/wt-status.h
+>> +++ b/wt-status.h
+>> [...]
+>>  	WT_STATUS_NOBRANCH,
+>> +	WT_STATUS_UNMERGED,
 
-diff --git a/.gitignore b/.gitignore
-index 10808e3..c446290 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -104,6 +104,9 @@ git-receive-pack
- git-reflog
- git-relink
- git-remote
-+git-remote-ftp
-+git-remote-http
-+git-remote-https
- git-repack
- git-replace
- git-repo-config
--- 
-1.6.4.112.gc57a6
+Thanks.  For the same reason, stagemask and unmerged_mask() helper
+function should move from 3/5 to 4/5.
