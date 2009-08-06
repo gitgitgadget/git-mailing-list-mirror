@@ -1,63 +1,99 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Thu, 6 Aug 2009 16:04:27 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908061559120.3390@localhost.localdomain>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
- <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <4A7B5F4C.30102@gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: What's in git.git (Aug 2009, #01; Wed, 05)
+Date: Fri, 7 Aug 2009 01:17:59 +0200
+Message-ID: <20090806231759.GC12924@vidovic>
+References: <7vd479x6hx.fsf@alter.siamese.dyndns.org> <MEhvdM_GHnyaFj9ZU3lxKS47vmOk5BKslGm0FxkE_lg0SQT5Zx6KhA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 01:04:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Aug 07 01:18:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZC0k-0007Nn-8M
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 01:04:38 +0200
+	id 1MZCE1-0003LE-8O
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 01:18:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756451AbZHFXEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 19:04:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753537AbZHFXE3
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 19:04:29 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:40211 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756134AbZHFXE3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 19:04:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76N4Sef016476
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Aug 2009 16:04:29 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76N4RkJ002947;
-	Thu, 6 Aug 2009 16:04:27 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4A7B5F4C.30102@gmail.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756858AbZHFXSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 19:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756798AbZHFXSG
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 19:18:06 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:46714 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756432AbZHFXSF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 19:18:05 -0400
+Received: by ewy10 with SMTP id 10so1187496ewy.37
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 16:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=irmSPOzbNN7I1GBLPXoFHN6ue9NaZvtL1jEqcdq1qLM=;
+        b=pKrGajwEPgbU/ST/oE0k3bDfNuZ012Xm8kG9sGzXWsBPhlYaGOp5+k8XqFbe5L678e
+         MG9mfDfryHiJf9y6jW1isdYaxHPf2XyP8LqjRjG06mUqoZg6Ml6oCWnNUueNFAiugr1n
+         lTun2Z25S8NiyIQnkNQV774CVwBXO+SzWJYSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=O6JZjhLyWUZG6ZQu/5zAwTB1AiNNLO6TxPvYn4mqS5magMxqu6wHv52tIakWmR3VIK
+         VEB5xzioESdYK8LtfL9/MQGd2ifYMVLjDs77WDTtr40LPpffU9RqWc3VJ7R0nH/3g0dD
+         X8gR7IoxVSfreeiBmfPS4L0th6Wsev9fv+N3g=
+Received: by 10.210.115.15 with SMTP id n15mr137319ebc.2.1249600682792;
+        Thu, 06 Aug 2009 16:18:02 -0700 (PDT)
+Received: from @ (91-164-149-117.rev.libertysurf.net [91.164.149.117])
+        by mx.google.com with ESMTPS id 10sm1192153eyd.37.2009.08.06.16.18.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 16:18:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <MEhvdM_GHnyaFj9ZU3lxKS47vmOk5BKslGm0FxkE_lg0SQT5Zx6KhA@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125137>
 
+The 06/08/09, Brandon Casey wrote:
 
-
-On Fri, 7 Aug 2009, Artur Skawina wrote:
+> I think we should at least do this to fall back to mbox format:
 > 
-> hmm, I might be able to try it on some old willamette, but my prescott's
-> mobo died, so i can't verify that right now.
+> diff --git a/git-am.sh b/git-am.sh
+> index d64d997..94fa9c9 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -187,6 +187,7 @@ check_patch_format () {
+>  				patch_format=stgit
+>  				;;
+>  			*)
+> +				patch_format=mbox
+>  				;;
+>  			esac
+>  			;;
 
-I think willamette and northwood are basically the same wrt shifters (and 
-pretty much everything else too, for that matter).  I think northwood is a 
-shrink, and had an increased cache size (and higher frequencies). But I 
-think core-wise, they're very similar.
+This is even better that all my crap. But I think we should squash
+this:
 
-It was prescott that changed a lot (mostly for the worse - the shifter was 
-one of the few upsides of prescott, although increased frequency often 
-made up for the downsides).
+---
+ git-am.sh |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
 
-		Linus
+diff --git a/git-am.sh b/git-am.sh
+index 94fa9c9..e8ec8d7 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -254,9 +254,6 @@ split_patches () {
+                this=
+                msgnum=
+                ;;
+-       *)
+-               clean_abort "Patch format $patch_format is not supported."
+-               ;;
+        esac
+ }
+
+
+-- 
+Nicolas Sebrecht
