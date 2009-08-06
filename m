@@ -1,79 +1,82 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: What's in git.git (Aug 2009, #01; Wed, 05)
-Date: Thu, 06 Aug 2009 17:24:00 -0500
-Message-ID: <MEhvdM_GHnyaFj9ZU3lxKS47vmOk5BKslGm0FxkE_lg0SQT5Zx6KhA@cipher.nrlssc.navy.mil>
-References: <7vd479x6hx.fsf@alter.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
+Date: Thu, 6 Aug 2009 15:27:36 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain>
+References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
+ <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 00:24:15 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 00:27:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZBNc-0001xm-J6
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 00:24:13 +0200
+	id 1MZBR4-00033A-2s
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 00:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754577AbZHFWYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 18:24:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754557AbZHFWYD
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 18:24:03 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57981 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754340AbZHFWYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 18:24:03 -0400
-Received: by mail.nrlssc.navy.mil id n76MO1av015547; Thu, 6 Aug 2009 17:24:01 -0500
-In-Reply-To: <7vd479x6hx.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 Aug 2009 22:24:00.0839 (UTC) FILETIME=[98FA8570:01CA16E4]
+	id S1754674AbZHFW1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 18:27:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754555AbZHFW1i
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 18:27:38 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35849 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754340AbZHFW1h (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 18:27:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76MRaRL013321
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Aug 2009 15:27:37 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76MRaMo005752;
+	Thu, 6 Aug 2009 15:27:36 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <4A7B509A.5010405@gmail.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125132>
-
-Junio C Hamano wrote:
-> The 1.6.4 release seems to have been quite solid, and there is no
-> brown-paper-bag bugfixes on 'maint' yet ;-).
-
-Found one.
-
-I didn't realize the whole git-am discussion did _not_ result in a
-fix being applied.  But git-am will currently refuse to apply any
-patch from email that does not have "From " or "From: " in the first
-three lines of the email.  For those of us whose mail servers prepend
-many lines of the form:
-
-Received: from XXX ([XXX]) by XXX with Microsoft SMTPSVC(6.0.3790.2825);
-	 Tue, 14 Jul 2009 07:24:06 -0500
-Received: by XXX id n6ECJvlh010405; Tue, 14 Jul 2009 07:24:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbZGNMYD (ORCPT <rfc822;XXX@XXX>);
-	Tue, 14 Jul 2009 08:24:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbZGNMYC
-	(ORCPT <rfc822;git-outgoing>); Tue, 14 Jul 2009 08:24:02 -0400
-Received: from mail-ew0-f226.google.com ([209.85.219.226]:50485 "EHLO
-	mail-ew0-f226.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751626AbZGNMYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Jul 2009 08:24:01 -0400
-
-We can not apply any patches saved from email.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125133>
 
 
-I think we should at least do this to fall back to mbox format:
 
-diff --git a/git-am.sh b/git-am.sh
-index d64d997..94fa9c9 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -187,6 +187,7 @@ check_patch_format () {
- 				patch_format=stgit
- 				;;
- 			*)
-+				patch_format=mbox
- 				;;
- 			esac
- 			;;
+On Thu, 6 Aug 2009, Artur Skawina wrote:
+> 
+> Does this make any difference for you? For me it's the best one so far
+> (the linusas2 number clearly shows that for me the register renaming does
+> nothing; other than that the functions should be very similar)
 
--brandon
+Nope. If anything, it's bit slower, but it might be in the noise. I 
+generally got 330MB/s with my "cpp renaming" on Nehalem (32-bit - the 
+64-bit numbers are ~400MB/s), but with this I got 325MB/s twice in a row, 
+which matches the linusas2 numbers pretty exactly.
+
+But it seems to make a big difference for you.
+
+Btw, _what_ P4 do you have (Northwood or Prescott)?
+
+The Intel optimization manuals very much talk about avoiding rotates. And 
+they mention "with a CPUID signature corresponding to family 15 and model 
+encoding of 0, 1, or 2" specifically as being longer latency. That's 
+basically pre-prescott P4, I think.
+
+Anyway, on P4 I think you have two double-speed integer issue ports (ie 
+max four ops per cycle), but only one of them takes a rotate, and only in 
+the first half of the cycle (ie just one shift per cycle).
+
+And afaik, that is actually the _improved_ state in Prescott. The older 
+P4's didn't have a full shifter unit at all, iirc: shifts were "complex 
+instructions" in Northwood and weren't even single-clock.
+
+In Core 2, I think there's still just one shifter unit, but at least it's 
+as fast as all the other units. So P4 really does stand out as sucking as 
+far as shifts are concerned, and if you have an older P4, it will be even 
+worse.
+
+		Linus
