@@ -1,69 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Newbie patch question
-Date: Thu, 06 Aug 2009 15:13:31 +0200
-Message-ID: <vpq4osl2ih0.fsf@bauges.imag.fr>
-References: <396c099f0908060554i34dc74dfubcfec89735a98833@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Luke Diamand <luke@diamand.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 15:13:53 2009
+From: Mark A Rada <marada@uwaterloo.ca>
+Subject: [PATCH 1/3] gitweb: support to globally disable a snapshot format
+Date: Thu, 6 Aug 2009 10:25:39 -0400
+Message-ID: <3A789521-06A0-4762-8E13-FFCF737D041D@uwaterloo.ca>
+Mime-Version: 1.0 (Apple Message framework v935.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 06 16:25:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ2n0-0005cF-OO
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 15:13:51 +0200
+	id 1MZ3un-0000DF-UE
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 16:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755767AbZHFNNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 09:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755750AbZHFNNl
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 09:13:41 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:49431 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755744AbZHFNNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 09:13:40 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n76DBNdE014579
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 6 Aug 2009 15:11:23 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MZ2mh-0006YW-QO; Thu, 06 Aug 2009 15:13:31 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MZ2mh-00049z-P2; Thu, 06 Aug 2009 15:13:31 +0200
-In-Reply-To: <396c099f0908060554i34dc74dfubcfec89735a98833@mail.gmail.com> (Luke Diamand's message of "Thu\, 6 Aug 2009 13\:54\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 06 Aug 2009 15:11:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n76DBNdE014579
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1250169084.32999@UmPOzuAXb5CoixYODXbipg
+	id S1753174AbZHFOZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 10:25:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753134AbZHFOZt
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 10:25:49 -0400
+Received: from services10.student.cs.uwaterloo.ca ([129.97.152.18]:62032 "EHLO
+	services10.student.cs.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752782AbZHFOZt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 10:25:49 -0400
+Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+	(authenticated bits=0)
+	by services10.student.cs.uwaterloo.ca (8.13.8/8.13.8) with ESMTP id n76EPjCT000257
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Thu, 6 Aug 2009 10:25:48 -0400 (EDT)
+X-Mailer: Apple Mail (2.935.3)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (services10.student.cs.uwaterloo.ca [129.97.152.13]); Thu, 06 Aug 2009 10:25:49 -0400 (EDT)
+X-Miltered: at mailchk-m04 with ID 4A7AE7E9.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: ClamAV version 0.94.2, clamav-milter version 0.94.2 on localhost
+X-Virus-Status: Clean
+X-UUID: 6b05e162-01f8-446d-bdf8-c868de142dca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125070>
 
-Luke Diamand <luke@diamand.org> writes:
+Allow Gitweb administrators to set a 'disabled' key in the
+%known_snapshot_formats hash to disable a specific snapshot format.
 
-> Hi!
->
-> I submitted a patch a while back to speed up git-p4. What steps should
-> I take next to move it on? Did I submit the patch wrong in the first
-> place?
+All formats are enabled by default to maintain backwards compatibility.
 
-Two hints (I didn't follow your patch in particular):
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
+  gitweb/gitweb.perl |    8 ++++++--
+  1 files changed, 6 insertions(+), 2 deletions(-)
 
-Read Documentation/SubmittingPatches if not done already.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 37120a3..a0cdf31 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -160,7 +160,8 @@ our %known_snapshot_formats = (
+  	# 	'suffix' => filename suffix,
+  	# 	'format' => --format for git-archive,
+  	# 	'compressor' => [compressor command and arguments]
+-	# 	                (array reference, optional)}
++	# 	                (array reference, optional)
++	# 	'disabled' => boolean (optional)}
+  	#
+  	'tgz' => {
+  		'display' => 'tar.gz',
+@@ -494,7 +495,8 @@ sub filter_snapshot_fmts {
+  		exists $known_snapshot_format_aliases{$_} ?
+  		       $known_snapshot_format_aliases{$_} : $_} @fmts;
+  	@fmts = grep {
+-		exists $known_snapshot_formats{$_} } @fmts;
++		exists $known_snapshot_formats{$_} &&
++		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
+  }
 
-Read the "What's in git.git" and "What's cooking in git.git" messages
-on this list and the threads below your patch to know what's going on
-with it.
+  our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+@@ -5166,6 +5168,8 @@ sub git_snapshot {
+  		die_error(400, "Unknown snapshot format");
+  	} elsif (!grep($_ eq $format, @snapshot_fmts)) {
+  		die_error(403, "Unsupported snapshot format");
++	} elsif ($known_snapshot_formats{$format}{'disabled'}) {
++		die_error(403, "Snapshot format not allowed");
+  	}
 
+  	if (!defined $hash) {
 -- 
-Matthieu
+1.6.4
