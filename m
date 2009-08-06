@@ -1,121 +1,135 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Thu, 6 Aug 2009 13:53:11 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
- <4A7B384C.2020407@gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH] Re: push: point to 'git pull' and 'git push --force' in
+	case of non-fast forward
+Date: Thu, 6 Aug 2009 23:16:10 +0200
+Message-ID: <20090806211610.GB12924@vidovic>
+References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr> <7v7hxgk8c9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 22:53:40 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 06 23:16:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ9xz-00032k-PB
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 22:53:40 +0200
+	id 1MZAJz-0003VO-Ax
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 23:16:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756224AbZHFUxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 16:53:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756181AbZHFUxb
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 16:53:31 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38604 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755955AbZHFUxa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 16:53:30 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76KrBrS005622
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 Aug 2009 13:53:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n76KrBdv008966;
-	Thu, 6 Aug 2009 13:53:11 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4A7B384C.2020407@gmail.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756223AbZHFVQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 17:16:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756094AbZHFVQO
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 17:16:14 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:46659 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756027AbZHFVQO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 17:16:14 -0400
+Received: by ewy10 with SMTP id 10so1126069ewy.37
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 14:16:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=cBsfux/k3TMDLjXVuG4bThxMNIf1pAmLZafD+2ixvSM=;
+        b=TSKfjbdMUb+SlARWRyEdA7s7wfgYUfjn+2gq3X7DhBFEMIaHQTZuKRdgJS+ENHjD1Y
+         zgmOKvnrkZRAMfGMaaxZXY2ewKBk714O2m446dua71gFHlxI5/HN/G2sC8CuLevs36Ol
+         wqnBBRJi/AFeTHJzbWRu55rzHSRVu6Xt0leds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XhA4XXVsK0cdnQ+z8gUqEKhT2WXfzNXoX/1CU0cfwYhbxhNEEmC5giNAIcqruVrHRO
+         Ps1GvgMF7xOLLI9xKjIoe90R1wQukGnvjOVT2IghDE8uEwOSTy06f5YA44oP+nixI9mH
+         Tmzyd+r75axx7XoCO+o+9us8F8i8RkT/WygO0=
+Received: by 10.211.199.11 with SMTP id b11mr395562ebq.68.1249593373571;
+        Thu, 06 Aug 2009 14:16:13 -0700 (PDT)
+Received: from @ (91-164-149-117.rev.libertysurf.net [91.164.149.117])
+        by mx.google.com with ESMTPS id 28sm1038012eyg.32.2009.08.06.14.16.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 14:16:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v7hxgk8c9.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125126>
 
+The 06/08/09, Junio C Hamano wrote:
 
-
-On Thu, 6 Aug 2009, Artur Skawina wrote:
+>  Documentation/git-push.txt |   75 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 files changed, 75 insertions(+), 0 deletions(-)
 > 
-> it's a bit slower (P4):
-> 
-> before: linus          0.6288       97.06
-> after:  linus          0.6604       92.42
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 2653388..c1ae82d 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -195,6 +195,81 @@ reason::
+>  	refs, no explanation is needed. For a failed ref, the reason for
+>  	failure is described.
+>  
+> +Note about fast-forwards
+> +------------------------
+> +
+> +When an update changes a branch (or more in general, a ref) that used to
+> +point at commit A to point at another commit B, it is called a
+> +fast-forward update if and only if B is a descendant of A.
+> +
+> +In a fast-forward update from A to B, the set of commits that the original
+> +commit A built on top of is a subset of the commits the new commit B
+> +builds on top of.  Hence, it does not lose any history.
+> +
+> +In contrast, a non-fast-forward update will lose history.
 
-Hmm. Ok, I just tested with your harness, and I get
+I believe that this sentence a bit too much scaring for the beginner.
+There are two kinds of update (push and pull). We loose history only
+when pushing. I know this applies to Documentation/git-push.txt but out
+of this context (and because we talk about pull near from here), I think
+it would be clearer to say something like:
 
-	#             TIME[s] SPEED[MB/s]
-	rfc3174           5.1       119.7
-	rfc3174         5.097       119.7
-	linus           1.836       332.5
-	linusas         2.006       304.3
-	linusas2        1.879       324.9
-	mozilla         5.562       109.7
-	mozillaas       5.913       103.2
-	openssl         1.613       378.5
-	spelvin         1.698       359.5
-	spelvina        1.602         381
-	nettle          1.594       382.9
+	In contrast, a non-fast-forward push will loose history.
 
-with it, so it is faster for me. So your slowdown seems to be yet another 
-P4 thing. Dang crazy micro-architecture.
+>                                                             For example,
+> +suppose you and somebody else started at the same commit X, and you built
+> +a history leading to commit B while the other person built a history
+> +leading to commit A.  The history looks like this:
+> +
+> +----------------
+> +
+> +      B
+> +     /
+> + ---X---A
+> +
+> +----------------
 
-Of course, it might be a compiler version difference too. I'm using 
-gcc-4.4.0.
+<...>
 
-With the cpp variable renaming, the compiler really has less to be smart 
-about, but spill decisions will still matter a lot.
+> +Alternatively, you can rebase your change between X and B on top of A,
+> +with "git pull --rebase", and push the result back.  The rebase will
+> +create a new commit D that builds the change between X and B on top of
+> +A.
+> +
+> +----------------
+> +
+> +      B   D
+> +     /   /
+> + ---X---A
+> +
+> +----------------
 
-(My old 32-bit numbers were 
+Wouldn't "git pull --rebase" loose B? Shouldn't we have this
 
-        linus           2.092       291.8
+  ----------------
+  
+            D
+           /
+   ---X---A
+  
+  ----------------
 
-so it's a clear improvement on my machine and with my compiler).
+instead?
 
-It also seems to improve the 64-bit numbers a small bit, I'm getting
-
-	#             TIME[s] SPEED[MB/s]
-	rfc3174          3.98       153.3
-	rfc3174         3.972       153.7
-	linus           1.514       403.1
-	linusas         1.555       392.6
-	linusas2        1.599       381.7
-	mozilla          4.34       140.6
-	mozillaas       4.223       144.5
-
-with my 64-bit compile, so on a Nehalem it's the best one of the C ones by 
-a noticeable margin. (My original 64-bit numbers were
-
-        linus            1.54       396.3
-
-and while the numbers seem to fluctuate a bit, the fluctuation is roughly 
-in the 1% range, so that improvement seems to be statistically 
-significant.
-
-Oh, I did make a small change, but I doubt it matters. Instead of doing
-
-	TEMP += E + SHA_ROL(A,5) + (fn) + (constant); \
-	B = SHA_ROR(B, 2); E = TEMP; } while (0)
-
-I now do
-
-	E += TEMP + SHA_ROL(A,5) + (fn) + (constant); \
-	B = SHA_ROR(B, 2); } while (0)
-
-which is a bit more logical (the old TEMP usage was just due to a fairly 
-mindless conversion). That _might_ have lower register pressure if the 
-compiler is silly enough to not notice that it can do it. Maybe that 
-matters.
-
-			Linus
+-- 
+Nicolas Sebrecht
