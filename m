@@ -1,120 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: push: point to 'git pull' and 'git push --force' in
- case of non-fast forward
-Date: Thu, 06 Aug 2009 14:32:13 -0700
-Message-ID: <7vprb8d3xe.fsf@alter.siamese.dyndns.org>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
- <7v7hxgk8c9.fsf@alter.siamese.dyndns.org> <20090806211610.GB12924@vidovic>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
+Date: Thu, 06 Aug 2009 23:39:16 +0200
+Message-ID: <4A7B4D84.80906@gmail.com>
+References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain> <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 06 23:32:35 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 23:39:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZAZd-00010a-QA
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 23:32:34 +0200
+	id 1MZAgJ-0003J7-Nw
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 23:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756789AbZHFVcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 17:32:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756311AbZHFVcX
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 17:32:23 -0400
-Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:58343 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756788AbZHFVcU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 17:32:20 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 5E44323849;
-	Thu,  6 Aug 2009 17:32:20 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 0BD4C23848; Thu, 
- 6 Aug 2009 17:32:15 -0400 (EDT)
-In-Reply-To: <20090806211610.GB12924@vidovic> (Nicolas Sebrecht's message of
- "Thu\, 6 Aug 2009 23\:16\:10 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F37D85E-82D0-11DE-8D95-F699A5B33865-77302942!a-sasl-quonix.pobox.com
+	id S1756792AbZHFVjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 17:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756791AbZHFVjT
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 17:39:19 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:33209 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755728AbZHFVjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 17:39:18 -0400
+Received: by ewy10 with SMTP id 10so1139278ewy.37
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 14:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=C/wNCWPzhUTsctC44nxEYnKZFy5ANwX4ziC3y86rpFo=;
+        b=lxT3F889GEXdfXfWxY3B/ze0J4Xc003UYqSg7AJWrU1xitFAAvKfq21bHLWx8bCeW0
+         yExnDWQ2QDQ/MAtiBHznMXOnkCUWloUUY2pIygyliDhbA7Nh+duGCdCDqrYhMzHsp++U
+         s6lGKBHeeoECk4E05GeSIxeI9zcVLJdpo8ELI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=L0dtHycucqzVgKDmV6YwkEfNJxn9pRF+IX/TqszXYpEKYMvAzubzzry7EO3KCpfIVu
+         EAQN8Hz0w6SvhdtiJPEjecX2LguO0MDKcTnYNYcR0OTrO3UPHTR5r6q6BMpoBTRuDJAd
+         a/r8JPQ6vGS75Jc0O5lC5/cwN4RssexAqQo+I=
+Received: by 10.210.52.15 with SMTP id z15mr17134ebz.36.1249594758403;
+        Thu, 06 Aug 2009 14:39:18 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-89-174-40-143.multimo.pl [89.174.40.143])
+        by mx.google.com with ESMTPS id 28sm1061379eye.34.2009.08.06.14.39.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 14:39:18 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125130>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Linus Torvalds wrote:
+> 
+> with it, so it is faster for me. So your slowdown seems to be yet another 
+> P4 thing. Dang crazy micro-architecture.
+> 
+> Of course, it might be a compiler version difference too. I'm using 
+> gcc-4.4.0.
 
->> +Note about fast-forwards
->> +------------------------
->> +
->> +When an update changes a branch (or more in general, a ref) that used to
->> +point at commit A to point at another commit B, it is called a
->> +fast-forward update if and only if B is a descendant of A.
->> +
->> +In a fast-forward update from A to B, the set of commits that the original
->> +commit A built on top of is a subset of the commits the new commit B
->> +builds on top of.  Hence, it does not lose any history.
->> +
->> +In contrast, a non-fast-forward update will lose history.
->
-> I believe that this sentence a bit too much scaring for the beginner.
-> There are two kinds of update (push and pull). We loose history only
-> when pushing.
+gcc version 4.4.1 20090603 (prerelease)
 
-Three points that makes me think your suggested update is not appropriate
-are:
+> Oh, I did make a small change, but I doubt it matters. Instead of doing
+> 
+> 	TEMP += E + SHA_ROL(A,5) + (fn) + (constant); \
+> 	B = SHA_ROR(B, 2); E = TEMP; } while (0)
+> 
+> I now do
+> 
+> 	E += TEMP + SHA_ROL(A,5) + (fn) + (constant); \
+> 	B = SHA_ROR(B, 2); } while (0)
+> 
+> which is a bit more logical (the old TEMP usage was just due to a fairly 
+> mindless conversion). That _might_ have lower register pressure if the 
+> compiler is silly enough to not notice that it can do it. Maybe that 
+> matters.
 
- (1) This patch is about git-push documentation;
+before: linus          0.6622       92.17
+after:  linus          0.6631       92.05
+after:  linus          0.6601       92.46
+after:  linus          0.6624       92.14
 
- (2) The opposite of git-push is git-fetch, not git-pull; and a non
-     fast-forward fetch does lose history if you start building on a
-     now-rewound tip of the remote tracking branch; and
-
- (3) We _do_ want this section to be scary.  We want the readers to be
-     fully aware of the implications before tempting them with the --force
-     option.
-
->> +Alternatively, you can rebase your change between X and B on top of A,
->> +with "git pull --rebase", and push the result back.  The rebase will
->> +create a new commit D that builds the change between X and B on top of
->> +A.
->> +
->> +----------------
->> +
->> +      B   D
->> +     /   /
->> + ---X---A
->> +
->> +----------------
->
-> Wouldn't "git pull --rebase" loose B? Shouldn't we have this
->
->   ----------------
->   
->             D
->            /
->    ---X---A
->   
->   ----------------
->
-> instead?
-
-This makes B _loose_ (or, dangling), but does not _lose_ it.  It is still
-reachable from the reflog.
-
-We could choose to not draw it for simplicity, or we could annotate it
-like this for completeness (and to give a warm-fuzzy feeling to the reader
-that nothing is lost).
-
-----------------
-
-       branch@{1} (reachable from reflog)
-             branch
-      B      D
-     /      /
- ---X------A
-
-----------------
-
-I don't know which is better.  If we were printing in colours in the
-documentation, I would keep B but draw it in light gray.
+IOW, no difference, just noise.
