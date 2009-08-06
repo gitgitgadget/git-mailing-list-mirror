@@ -1,95 +1,107 @@
-From: Philip Herron <herron.philip@googlemail.com>
-Subject: Hash Tables
-Date: Thu, 06 Aug 2009 05:35:40 +0100
-Message-ID: <4A7A5D9C.7000604@googlemail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Wed, 5 Aug 2009 21:50:21 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908052137400.3390@localhost.localdomain>
+References: <20090805181755.22765.qmail@science.horizon.com> <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain> <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain> <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
+ <alpine.LFD.2.00.0908052144430.16073@xanadu.home> <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain> <4A7A4BC5.7010106@gmail.com> <alpine.LFD.2.01.0908052024081.3390@localhost.localdomain> <alpine.LFD.2.01.0908052043082.3390@localhost.localdomain>
+ <alpine.LFD.2.01.0908052056500.3390@localhost.localdomain> <4A7A5BE2.5070401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 06 06:36:35 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, George Spelvin <linux@horizon.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 06 06:51:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYuiR-0002Yz-AL
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 06:36:35 +0200
+	id 1MYuwo-0005sz-Mt
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 06:51:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbZHFEfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 00:35:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbZHFEfn
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 00:35:43 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:40897 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785AbZHFEfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 00:35:42 -0400
-Received: by ewy10 with SMTP id 10so508673ewy.37
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 21:35:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:x-enigmail-version:openpgp
-         :content-type:content-transfer-encoding;
-        bh=Dtd5zehxzRS2Vawsqy7f96dCjGugXahnldLDUHjIw7I=;
-        b=apNEU7qZ/2EtKbTrwIEju3rR6hWQRYsVAgyvfGqoRaJHNUwnJvdDGOpiI6qNYLWJMh
-         Diqn8jlvnPkkCtbQu66XmHQbonW/V0Sd0M019jcQa73nNClEK58vR3uA+PovT8BKoNhM
-         NAOPICXpCBOJrkZiA0AG68ueg3hWFUFBLijRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:openpgp:content-type:content-transfer-encoding;
-        b=PnsiBSMC06WPFXkS6dWqZTy0rSJbjXPSm3XExkikXk2xcAF1GKRTJnpRM+lS7XiYre
-         VqEUFCRVYJ4Eh9m4L3wglMdtHjFJw819qxf3eSDcafIDE/N+qoKZYpEhq0YTgZWskCb1
-         CG05z+oxUnMx/7W8kmi7okHGbgqaMfz24Rwjs=
-Received: by 10.210.77.14 with SMTP id z14mr1070946eba.90.1249533342822;
-        Wed, 05 Aug 2009 21:35:42 -0700 (PDT)
-Received: from ?192.168.1.12? (host86-141-209-104.range86-141.btcentralplus.com [86.141.209.104])
-        by mx.google.com with ESMTPS id 7sm1876914eyb.20.2009.08.05.21.35.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 21:35:42 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-X-Enigmail-Version: 0.95.7
-OpenPGP: url=http://keyserver.ubuntu.com:11371/
+	id S1750982AbZHFEvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 00:51:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750715AbZHFEvI
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 00:51:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46204 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750706AbZHFEvH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 00:51:07 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n764oMsA023153
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 5 Aug 2009 21:50:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n764oL8A009349;
+	Wed, 5 Aug 2009 21:50:21 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <4A7A5BE2.5070401@gmail.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.466 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125038>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
 
-Hey guys
 
-This is my first time posting to git mailing-list didn't get much
-response from irc.
+On Thu, 6 Aug 2009, Artur Skawina wrote:
+> 
+> #             TIME[s] SPEED[MB/s]
+> rfc3174         1.357       44.99
+> rfc3174         1.352       45.13
+> mozilla         1.509       40.44
+> mozillaas       1.133       53.87
+> linus          0.5818       104.9
+> 
+> so it's more than twice as fast as the mozilla implementation.
 
-I've been loving git and just been poking at its hash tables in
-hash.{c,h}, which are very nice. I've been implementing my own hash
-tables and i have some questions on how you guys done it.
+So that's some general SHA1 benchmark you have?
 
-1 - Are you using the sha1.c as your hashing function? And why did you
-choose it, I have been playing with a few different ones to see how it
-goes.
+I hope it tests correctness too. 
 
-2 -table lookup i see your hash_table has an unsigned int nr, not
-quite sure what that is for num_remaing      or something is what i
-first thought.
-    But i see in your table lookup you use hash % size and it returns
-an index to the array. And would love       to  know how that works.
-Is size the current number of hash entries in the table?
+Although I can't imagine it being wrong - I've made mistakes (oh, yes, 
+many mistakes) when trying to convert the code to something efficient, and 
+even the smallest mistake results in 'git fsck' immediately complaining 
+about every single object.
 
-3 - what is the initial table size as in when you first insert an
-entry into the table, the array must be                allocated to a
-length, and you grow when you reach a threshold.
+But still. I literally haven't tested it any other way (well, the git 
+test-suite ends up doing a fair amount of testing too, and I _have_ run 
+that).
 
-Anyways thanks!
+As to my atom testing: my poor little atom is a sad little thing, and 
+it's almost painful to benchmark that thing. But it's worth it to look at 
+how the 32-bit code compares to the openssl asm code too:
 
-- --Phil
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+ - BLK_SHA1:
 
-iEYEARECAAYFAkp6XZsACgkQAhcOgIaQQ2HWGgCfU6l909k7/JK3gf6BB2Cu35xB
-jBIAn2Jl6UWp5ZvTXJxUWc91tgn//z25
-=6l91
------END PGP SIGNATURE-----
+	real	2m27.160s
+	user	2m23.651s
+	sys	0m2.392s
+
+ - OpenSSL:
+
+	real	2m12.580s
+	user	2m9.998s
+	sys	0m1.811s
+
+ - Mozilla-SHA1:
+
+	real	3m21.836s
+	user	3m18.369s
+	sys	0m2.862s
+
+As expected, the hand-tuned assembly does better (and by a bigger margin). 
+Probably partly because scheduling is important when in-order, and partly 
+because gcc will have a harder time with the small register set.
+
+But it's still a big improvement over mozilla one.
+
+(This is, as always, 'git fsck --full'. It spends about 50% on that SHA1 
+calculation, so the SHA1 speedup is larger than you see from just th 
+enumbers)
+
+		Linus
