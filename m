@@ -1,76 +1,76 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: msysGit and SCons: broken?
-Date: Thu, 06 Aug 2009 21:45:46 +0200
-Message-ID: <4A7B32EA.2080505@dirk.my1.cc>
-References: <4A772A43.8070503@dirk.my1.cc> <alpine.DEB.1.00.0908040010220.8306@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 06 21:45:58 2009
+From: Tim Harper <timcharper@gmail.com>
+Subject: [PATCH] clarify error message when an abbreviated non-existent commit was specified
+Date: Thu,  6 Aug 2009 13:53:55 -0600
+Message-ID: <1249588435-23400-1-git-send-email-timcharper@gmail.com>
+References: <20090806193413.GJ1033@spearce.org>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Tim Harper <timcharper@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 06 21:54:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ8uU-0007mo-1O
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 21:45:58 +0200
+	id 1MZ92O-0002Tc-G1
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 21:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756548AbZHFTpu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Aug 2009 15:45:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756224AbZHFTpu
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 15:45:50 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:34679 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755686AbZHFTpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 15:45:49 -0400
-Received: from [84.176.71.177] (helo=[192.168.2.100])
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1MZ8uK-0000F3-Ad; Thu, 06 Aug 2009 21:45:48 +0200
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-In-Reply-To: <alpine.DEB.1.00.0908040010220.8306@pacific.mpi-cbg.de>
-X-Df-Sender: 757646
+	id S1756563AbZHFTx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 15:53:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756197AbZHFTx7
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 15:53:59 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:59334 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755686AbZHFTx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 15:53:58 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so236105wah.21
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 12:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=s624BSSTEHixbI7umGEhd++eoEBY5r8eWQSxXcGuzSI=;
+        b=AfK+0ZWcTU/hEycAwjDsXeI+4PflWNAV+AYVdkmVF8hzAf8qqwq03DKfN5QBHD9kE/
+         xjV2ZULvLs18qHF1Ych4RhkYV8HrXxGb2EYr+6gWC18r+DNr6ujOMvoqzPrfbk3zvuca
+         GaGAEwmJlXC5qXDMI57PQpNbxh7aG0MS/jtQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Zi26WFfn1k96lcrr1V0MyLei0r5ztiuWiotvGwqzU0bh+BvZbi0ts/S7fHfpnIghUR
+         yjM66JYALUxL0ePWHGohPCPxekqyt+I3ZymAV0Ge+Euxo5VEQGCn/C/CHokRbKQewuPf
+         dnt3pVC9wS2mElx7zLvPUxCa07MNIYyTP/x1E=
+Received: by 10.114.204.6 with SMTP id b6mr364694wag.93.1249588439241;
+        Thu, 06 Aug 2009 12:53:59 -0700 (PDT)
+Received: from localhost ([66.236.74.194])
+        by mx.google.com with ESMTPS id k14sm453337waf.60.2009.08.06.12.53.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 12:53:58 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4
+In-Reply-To: <20090806193413.GJ1033@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125116>
 
-Am 04.08.2009 00:13 schrieb Johannes Schindelin:
-> On Mon, 3 Aug 2009, Dirk S=FCsserott wrote:
->=20
-> I suspect the appropriate mailing list would have been the msysGit li=
-st,=20
-> then.
+When running the command 'git branch --contains efabdfb' on a repository that doesn't yet have efabdfb, git reports: "malformed object name efabdfb". To the uninitiated, this makes little sense (as far as they are concerned, efabdfb is perfectly formed).
 
-Sorry, next time I'll have a look there, but I'm more familiar with thi=
-s=20
-list. :-)
+This commit changes the message to "malformed object name or no such commit: efabdfb"
+---
+ parse-options.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> How does your SCons call relate to Git?  Do you call it from the Git =
-Bash? =20
-> Do you call it from cmd.exe directly?  Is Git/bash in your PATH?
-
-My SCons call doesn't actually relate to Git. I just use the Git-bash a=
-s=20
-my favorite shell under Windows. It's by far better than the regular=20
-cmd.exe. Despite I'm using Windows, I'm a "shell person" and prefer not=
-=20
-to use only my index finger to direct the computer :-). Git-bash gives=20
-that opportunity.
-
-I used to call SCons from Git-bash and it worked. After Git's upgrade=20
-(or some other unknown change) I did the same and it didn't work from=20
-Git-bash, but it still worked from cmd.exe. Git-bash ist not in my PATH=
-=20
-when I run cmd.exe.
-
-Don't bother, I just posed the question and hoped someone says "yeah, I=
-=20
-faced the same problem and solved it like this: ...". I'll use a=20
-workaround and post a solution if I find one.
-
-     Dirk
+diff --git a/parse-options.c b/parse-options.c
+index 3b71fbb..95eb1c4 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -615,7 +615,7 @@ int parse_opt_with_commit(const struct option *opt, const char *arg, int unset)
+ 	if (!arg)
+ 		return -1;
+ 	if (get_sha1(arg, sha1))
+-		return error("malformed object name %s", arg);
++		return error("malformed object name or no such commit: %s", arg);
+ 	commit = lookup_commit_reference(sha1);
+ 	if (!commit)
+ 		return error("no such commit %s", arg);
+-- 
+1.6.4
