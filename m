@@ -1,168 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Message from git reset: confusing?
-Date: Thu, 06 Aug 2009 11:42:51 +0200
-Message-ID: <vpqprb946sk.fsf@bauges.imag.fr>
-References: <vpqab2e7064.fsf@bauges.imag.fr>
-	<7v1vnqb2hc.fsf@alter.siamese.dyndns.org>
-	<32541b130908051042x5308e8fte7b3ead6bf1f24ee@mail.gmail.com>
-	<fabb9a1e0908051125n3e125209n88a9fd86d6fa7534@mail.gmail.com>
+From: "Nick Edelen" <sirnot@gmail.com>
+Subject: [PATCH 0/5] Suggested for PU: revision caching system to
+ significantly speed up packing/walking
+Date: Thu, 06 Aug 2009 11:55:21 +0200
+Message-ID: <op.ux8i6hrbtdk399@sirnot.private>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 06 11:43:17 2009
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jeff King" <peff@peff.net>, "Sam Vilain" <sam@vilain.net>,
+	"Shawn O. Pearce" <spearce@spearc
+X-From: git-owner@vger.kernel.org Thu Aug 06 11:55:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYzVE-0003ZK-7l
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 11:43:16 +0200
+	id 1MYzhB-0007x8-Lu
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 11:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712AbZHFJnJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Aug 2009 05:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbZHFJnH
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 05:43:07 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41236 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754561AbZHFJnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 05:43:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n769g2c1027527
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 6 Aug 2009 11:42:03 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MYzUp-000435-Vv; Thu, 06 Aug 2009 11:42:52 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MYzUp-000701-Ue; Thu, 06 Aug 2009 11:42:51 +0200
-In-Reply-To: <fabb9a1e0908051125n3e125209n88a9fd86d6fa7534@mail.gmail.com> (Sverre Rabbelier's message of "Wed\, 5 Aug 2009 11\:25\:07 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 06 Aug 2009 11:42:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n769g2c1027527
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1250156524.41194@fXPqD7Y74IN9Xy/z7kiWAw
+	id S1754757AbZHFJz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 05:55:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbZHFJz0
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 05:55:26 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:47691 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752285AbZHFJzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 05:55:24 -0400
+Received: by ewy10 with SMTP id 10so642311ewy.37
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 02:55:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:to:subject:from
+         :content-type:mime-version:content-transfer-encoding:message-id
+         :user-agent;
+        bh=A0ipXHVwk/M405wg+lQ+m9H01kIddJoGoKJPFt3WYc8=;
+        b=eJchMAoYLnv7+HJit3S93zC6qKsAyMQ5UnxCpfpj6mEpOhnjWzCL5FywoxxP+vmgvY
+         dpIWMl5iIOJzrATTtuxu0fbAgRdj3VqGgkrhST8oyIpj3jE1oh6g8cazCB8sf+Tz/eOI
+         rFFbpbLsLfuI/ClIzSy1QeKanl/69+WNWNdHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:to:subject:from:content-type:mime-version
+         :content-transfer-encoding:message-id:user-agent;
+        b=TpTdTnY8qSeGRK/hNVwJlHxnTIZF8xxi31VDX6pKyMsoT9SAY/dH6+zc47n+6O0rml
+         E0Mh/Yk5+nt/VhU+iYEY71ye3mqHtYgbH1A25blOq54hpTGQDuFxn8h1v4HSiFWi++9f
+         TGdF6Luva5I8e8j4c1HC7rLqbacIBgSCCZhbM=
+Received: by 10.210.28.4 with SMTP id b4mr11649775ebb.47.1249552523910;
+        Thu, 06 Aug 2009 02:55:23 -0700 (PDT)
+Received: from sirnot.private (dhcp-077-251-020-197.chello.nl [77.251.20.197])
+        by mx.google.com with ESMTPS id 10sm2341081eyd.7.2009.08.06.02.55.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 02:55:23 -0700 (PDT)
+User-Agent: Opera Mail/9.63 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125056>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+SUGGESTED FOR 'PU':
 
-> Heya,
->
-> On Wed, Aug 5, 2009 at 10:42, Avery Pennarun<apenwarr@gmail.com> wrot=
-e:
->> Yes. =A0I think the problem is that the current output looks more li=
-ke
->> an error message than a status report.
->
-> Definitely.
+Traversing objects is currently very costly, as every commit and tree must be 
+loaded and parsed.  Much time and energy could be saved by caching metadata and 
+topological info in an efficient, easily accessible manner.  Furthermore, this 
+could improve git's interfacing potential, by providing a condensed summary of 
+a repository's commit tree.
 
-This is my biggest issue, indeed. Actually, several things bother me
-(by decreasing annoyance):
+This is a series to implement such a revision caching mechanism, aptly named 
+rev-cache.  The series will provide:
+ - a core API to manipulate and traverse caches
+ - an integration into the internal revision walker
+ - a porcelain front-end providing access to users and (shell) applications
+ - a series of tests to verify/demonstrate correctness
+ - documentation of the API, porcelain and core concepts
 
-1) It looks like an error message, and user can think git reset
-failed.
+In cold starts rev-cache has sped up packing and walking by a factor of 4, and 
+over twice that on warm starts.  Some times on slax for the linux repository:
 
-2) It's inconsistant with the usual status display. I'd prefer an
-output like "git diff --name-only" or "git status".
+rev-list --all --objects >/dev/null
+ default
+   cold    1:13
+   warm    0:43
+ rev-cache'd
+   cold    0:19
+   warm    0:02
 
-3) It's verbose. Junio's reply addresses this point. I'm not really
-convinced that verbosity by default is a good thing, but I don't think
-I can convince Junio either ;-), and I don't care that much.
+pack-objects --revs --all --stdout >/dev/null
+ default
+   cold    2:44
+   warm    1:21
+ rev-cache'd
+   cold    0:44
+   warm    0:10
 
-So, let's address 1) and 2) only.
+The mechanism is minimally intrusive: most of the changes take place in 
+seperate files, and only a handful of git's existing functions are modified.
 
->> I would find it very pleasant if the output looked more like the
->> output of "git checkout" (no parameters) in the no-files-specified
->> case.
->
-> Perhaps instead we could get away with simply adding a header like
-> 'git status' does? And perhaps change the wording some.
+Hope you find this useful.
 
-Just this patch would already solve 1) above mostly. At first, I
-wanted the message to say "reset successfull", but it's harder than it
-seems, since the output is printf-ed as the work is done, so one knows
-that reset is successful only after displaying the whole thing:
+ - Nick
 
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 5fa1789..6b16a00 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -108,6 +108,7 @@ static int update_index_refresh(int fd, struct lock=
-_file *index_lock, int flags)
-        if (read_cache() < 0)
-                return error("Could not read index");
-=20
-+       printf("Unstaged changes after reset:\n");
-        result =3D refresh_cache(flags) ? 1 : 0;
-        if (write_cache(fd, active_cache, active_nr) ||
-                        commit_locked_index(index_lock))
-
-=46or 2), something along the lines of:
-
-diff --git a/read-cache.c b/read-cache.c
-index 4e3e272..3a99a2b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1075,10 +1075,13 @@ int refresh_index(struct index_state *istate, u=
-nsigned int flags, const char **p
-        int not_new =3D (flags & REFRESH_IGNORE_MISSING) !=3D 0;
-        int ignore_submodules =3D (flags & REFRESH_IGNORE_SUBMODULES) !=
-=3D 0;
-        unsigned int options =3D really ? CE_MATCH_IGNORE_VALID : 0;
--       const char *needs_update_message;
-+       const char *needs_update_fmt;
-+       const char *needs_merge_fmt;
-=20
--       needs_update_message =3D ((flags & REFRESH_SAY_CHANGED)
--                               ? "locally modified" : "needs update");
-+       needs_update_fmt =3D ((flags & REFRESH_SAY_CHANGED)
-+                               ? "M\t%s\n" : "%s: needs update\n");
-+       needs_merge_fmt =3D ((flags & REFRESH_SAY_CHANGED)
-+                               ? "U\t%s\n" : "%s: needs merge\n");
-        for (i =3D 0; i < istate->cache_nr; i++) {
-                struct cache_entry *ce, *new;
-                int cache_errno =3D 0;
-@@ -1094,7 +1097,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags, const char **p
-                        i--;
-                        if (allow_unmerged)
-                                continue;
--                       printf("%s: needs merge\n", ce->name);
-+                       printf(needs_merge_fmt, ce->name);
-                        has_errors =3D 1;
-                        continue;
-                }
-@@ -1117,7 +1120,7 @@ int refresh_index(struct index_state *istate, uns=
-igned int flags, const char **p
-                        }
-                        if (quiet)
-                                continue;
--                       printf("%s: %s\n", ce->name, needs_update_messa=
-ge);
-+                       printf(needs_update_fmt, ce->name);
-                        has_errors =3D 1;
-                        continue;
-                }
-
-would do. See d14e7407b3 ("needs update" considered harmful, Sun Jul
-20 00:21:38 2008) for the previous improvement on the subject. The
-problem with this second patch is that it says "M" where "diff
---name-status" would say "D" for example, which is a bit strange. If
-the idea of the patch is accepted, REFRESH_SAY_CHANGED should also be
-renamed to reflect its new nature, to stg like
-REFRESH_PORCELAIN_OUTPUT.
-
-Any opinion? Am I going in the right direction?
-
---=20
-Matthieu
+ Documentation/rev-cache.txt           |   51 +
+ Documentation/technical/rev-cache.txt |  336 ++++++
+ Makefile                              |    2 +
+ blob.c                                |    1 +
+ blob.h                                |    1 +
+ builtin-rev-cache.c                   |  284 +++++
+ builtin.h                             |    1 +
+ commit.c                              |    3 +
+ commit.h                              |    2 +
+ git.c                                 |    1 +
+ list-objects.c                        |   49 +-
+ rev-cache.c                           | 1832 +++++++++++++++++++++++++++++++++
+ revision.c                            |   89 ++-
+ revision.h                            |   46 +-
+ t/t6015-rev-cache-list.sh             |  228 ++++
+ t/t6015-sha1-dump-diff.py             |   36 +
+ 16 files changed, 2937 insertions(+), 25 deletions(-)
+ create mode 100755 Documentation/rev-cache.txt
+ create mode 100755 Documentation/technical/rev-cache.txt
+ create mode 100755 builtin-rev-cache.c
+ create mode 100755 rev-cache.c
+ create mode 100755 t/t6015-rev-cache-list.sh
+ create mode 100755 t/t6015-sha1-dump-diff.py
