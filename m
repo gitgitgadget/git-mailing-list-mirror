@@ -1,89 +1,144 @@
-From: Philip Herron <herron.philip@googlemail.com>
-Subject: Re: Hash Tables
-Date: Thu, 06 Aug 2009 06:17:10 +0100
-Message-ID: <4A7A6756.4010305@googlemail.com>
-References: <4A7A5D9C.7000604@googlemail.com>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Thu, 06 Aug 2009 07:19:01 +0200
+Message-ID: <4A7A67C5.8060109@gmail.com>
+References: <20090805181755.22765.qmail@science.horizon.com> <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain> <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain> <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain> <alpine.LFD.2.00.0908052144430.16073@xanadu.home> <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain> <4A7A4BC5.7010106@gmail.com> <alpine.LFD.2.01.0908052024081.3390@localhost.localdomain> <alpine.LFD.2.01.0908052043082.3390@localhost.localdomain> <alpine.LFD.2.01.0908052056500.3390@localhost.localdomain> <4A7A5BE2.5070401@gmail.com> <alpine.LFD.2.01.0908052137400.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 06 07:17:45 2009
+Cc: Nicolas Pitre <nico@cam.org>, George Spelvin <linux@horizon.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 07:19:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYvMF-0003rq-Hn
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 07:17:44 +0200
+	id 1MYvNi-0004Gn-RF
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 07:19:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753339AbZHFFRO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 01:17:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753279AbZHFFRN
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 01:17:13 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:34652 "EHLO
+	id S1753279AbZHFFTG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 01:19:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752060AbZHFFTG
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 01:19:06 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:42703 "EHLO
 	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752060AbZHFFRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 01:17:13 -0400
-Received: by ewy10 with SMTP id 10so520545ewy.37
-        for <git@vger.kernel.org>; Wed, 05 Aug 2009 22:17:13 -0700 (PDT)
+	with ESMTP id S1751911AbZHFFTE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 01:19:04 -0400
+Received: by ewy10 with SMTP id 10so521080ewy.37
+        for <git@vger.kernel.org>; Wed, 05 Aug 2009 22:19:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :x-enigmail-version:openpgp:content-type:content-transfer-encoding;
-        bh=fAfHhC17Oela7QGDzRM7FEEjZyz/uWnoB8dgNKMBME0=;
-        b=Hfn/rM9d3AKgJyhijAiLSpfFkA3BmRRPxIL5nEmaYzxQJijnoIC8xU2YrING6Md2QE
-         YVLzuavTBOl74My/5Nhv6Tv0oB0sT2JPB0aShSt9kZ/mWVvCZWc7EUD27K3IqRPX+vk4
-         ed6hl2CfrxRIf4FWL3U4JTc0P65r63IiwCe50=
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=4XyXsvcyTt6l/udINthakGHzQg3zkNy6FscJ9FXsBIA=;
+        b=bZdF0WaVl6WoHDrAZNKDMAwjfX0kMbHSpmoPwkMKGyNx8rN+mhr37NBLU6Oxp1ECG4
+         6145YUmLRsM2mkIR/Z2CKb6Sbf4TGMSzeHAiwMHK1GHtfKYMXRd8RYWr7ZEy+jntWMIg
+         mMDwILgBJZBSbs+A2Bn+V02Eu4/i5ACKz8wp8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-enigmail-version:openpgp:content-type
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding;
-        b=V9MLjTPJMZ42i5Dp4HbjuTTIfiUuijF+cbo+l1108qfAJxaAqB//uPnXHQRJV5IQiV
-         x1YJlV3dkUoOkhoWIwcMsmtuCZa0bxi1JToHZ43696R/kZqjLqzur8wOnqcfNDOewjEn
-         YwcHGDKULbwERbsV7Bh4kFfprI4DivLwFrq7k=
-Received: by 10.210.65.1 with SMTP id n1mr1892783eba.28.1249535832971;
-        Wed, 05 Aug 2009 22:17:12 -0700 (PDT)
-Received: from ?192.168.1.12? (host86-141-209-104.range86-141.btcentralplus.com [86.141.209.104])
-        by mx.google.com with ESMTPS id 7sm3361034eyb.30.2009.08.05.22.17.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 05 Aug 2009 22:17:12 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <4A7A5D9C.7000604@googlemail.com>
+        b=UHhDyF5L2UyrBGoFUg6EgCjrw6jkzch/7HHC3KPOJBz7S25A8IN5VAmKtoC/+w096i
+         mgT55WE5LutmqoaUKn1xCbs84jjs9VbeT653eJ0wAZvIhkbwoSocj0mhtBtlW+JbsTC7
+         QUZ+PXF587IzI111tYP8SMfqNAnPAHKjKGuZc=
+Received: by 10.210.56.3 with SMTP id e3mr587838eba.99.1249535943754;
+        Wed, 05 Aug 2009 22:19:03 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-89-174-122-128.multimo.pl [89.174.122.128])
+        by mx.google.com with ESMTPS id 7sm3387770eyb.10.2009.08.05.22.19.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 05 Aug 2009 22:19:03 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <alpine.LFD.2.01.0908052137400.3390@localhost.localdomain>
 X-Enigmail-Version: 0.95.7
-OpenPGP: url=http://keyserver.ubuntu.com:11371/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125042>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Linus Torvalds wrote:
+> 
+> On Thu, 6 Aug 2009, Artur Skawina wrote:
+>> #             TIME[s] SPEED[MB/s]
+>> rfc3174         1.357       44.99
+>> rfc3174         1.352       45.13
+>> mozilla         1.509       40.44
+>> mozillaas       1.133       53.87
+>> linus          0.5818       104.9
+>>
+>> so it's more than twice as fast as the mozilla implementation.
+> 
+> So that's some general SHA1 benchmark you have?
+> 
+> I hope it tests correctness too. 
 
-Hey
+yep, sort of, i just check that all versions return the same result
+when hashing some pseudorandom data.
 
-Sorry for the mail i played around with the hash.c and i see how it
-works now! Feel little bit stupid what threw me off was the  alloc_nr(
-); but its defined to #define alloc_nr(x) (((x)+16)*3/2) which is
-quite nice.
+> As to my atom testing: my poor little atom is a sad little thing, and 
+> it's almost painful to benchmark that thing. But it's worth it to look at 
+> how the 32-bit code compares to the openssl asm code too:
+> 
+>  - BLK_SHA1:
+> 	real	2m27.160s
+>  - OpenSSL:
+> 	real	2m12.580s
+>  - Mozilla-SHA1:
+> 	real	3m21.836s
+> 
+> As expected, the hand-tuned assembly does better (and by a bigger margin). 
+> Probably partly because scheduling is important when in-order, and partly 
+> because gcc will have a harder time with the small register set.
+> 
+> But it's still a big improvement over mozilla one.
+> 
+> (This is, as always, 'git fsck --full'. It spends about 50% on that SHA1 
+> calculation, so the SHA1 speedup is larger than you see from just th 
+> enumbers)
 
-and the nr threw me off but i see how it works now its actually the
-similar as what i was doing in my program, but your grow table was
-better because of alloc_nr acts like a threshold to grow and scale
-better, mine just added on another chunk of 32 elements just because
-it seemed like a good number to get something working.
+I'll start looking at other cpus once i integrate the asm versions into
+my benchmark. 
 
-Question still stands is the hashing function one, which one and why?
+P4s really are "special". Even something as simple as this on top of your
+version:
 
-Thanks loads, Sorry for bad posts!
+@@ -129,8 +133,8 @@
+ 
+ #define T_20_39(t) \
+        SHA_XOR(t); \
+-       TEMP += SHA_ROL(A,5) + (B^C^D) + E + 0x6ed9eba1; \
+-       E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP;
++       TEMP += SHA_ROL(A,5) + (B^C^D) + E; \
++       E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP + 0x6ed9eba1;
+ 
+        T_20_39(20); T_20_39(21); T_20_39(22); T_20_39(23); T_20_39(24);
+        T_20_39(25); T_20_39(26); T_20_39(27); T_20_39(28); T_20_39(29);
+@@ -139,8 +143,8 @@
+ 
+ #define T_40_59(t) \
+        SHA_XOR(t); \
+-       TEMP += SHA_ROL(A,5) + ((B&C)|(D&(B|C))) + E + 0x8f1bbcdc; \
+-       E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP;
++       TEMP += SHA_ROL(A,5) + ((B&C)|(D&(B|C))) + E; \
++       E = D; D = C; C = SHA_ROR(B, 2); B = A; A = TEMP + 0x8f1bbcdc;
+ 
+        T_40_59(40); T_40_59(41); T_40_59(42); T_40_59(43); T_40_59(44);
+        T_40_59(45); T_40_59(46); T_40_59(47); T_40_59(48); T_40_59(49);
 
-- --Phil
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+saves another 10% or so:
 
-iEYEARECAAYFAkp6Z1UACgkQAhcOgIaQQ2FvQwCdGAgcuAUNG2/YyyzhXct3J2qc
-azwAninE/8I+Z4T4h294tCzXlLzmyGqW
-=Vahj
------END PGP SIGNATURE-----
+#Initializing... Rounds: 1000000, size: 62500K, time: 1.421s, speed: 42.97MB/s
+#             TIME[s] SPEED[MB/s]
+rfc3174         1.403        43.5
+# New hash result: b747042d9f4f1fdabd2ac53076f8f830dea7fe0f
+rfc3174         1.403       43.51
+linus          0.5891       103.6
+linusas        0.5337       114.4
+mozilla         1.535       39.76
+mozillaas       1.128       54.13
+
+
+artur
