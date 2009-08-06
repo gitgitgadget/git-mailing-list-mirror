@@ -1,95 +1,96 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] gitk: fix direction of symmetric difference in optimized mode
-Date: Thu, 6 Aug 2009 09:19:26 +0200
-Message-ID: <200908060919.27780.trast@student.ethz.ch>
-References: <0fd5fc0f09779bb04c02b54d6ec8f43087a51bca.1249130587.git.trast@student.ethz.ch> <8a2113bfa2f1eaf6a13587cadfbaae81c8914947.1249506383.git.trast@student.ethz.ch> <19066.8802.98042.957009@cargo.ozlabs.ibm.com>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Thu, 06 Aug 2009 09:45:01 +0200
+Message-ID: <4A7A89FD.4040800@gmail.com>
+References: <20090805181755.22765.qmail@science.horizon.com> <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain> <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain> <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain> <alpine.LFD.2.00.0908052144430.16073@xanadu.home> <alpine.LFD.2.01.0908051902580.3390@localhost.localdomain> <4A7A4BC5.7010106@gmail.com> <alpine.LFD.2.01.0908052024081.3390@localhost.localdomain> <4A7A5723.6070704@gmail.com> <alpine.LFD.2.01.0908052120330.3390@localhost.localdomain> <4A7A6DBC.9010107@gmail.com> <4A7A7074.1060506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: =?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	<git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Adam Simpkins <adam@adamsimpkins.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 09:19:51 2009
+Cc: Nicolas Pitre <nico@cam.org>, George Spelvin <linux@horizon.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 09:45:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MYxGQ-0006Vm-4r
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 09:19:50 +0200
+	id 1MYxf5-0007Ep-3m
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 09:45:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635AbZHFHTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 03:19:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbZHFHTm
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 03:19:42 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:19627 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075AbZHFHTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 03:19:41 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 6 Aug
- 2009 09:19:39 +0200
-Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 6 Aug
- 2009 09:19:39 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.2.98; x86_64; ; )
-In-Reply-To: <19066.8802.98042.957009@cargo.ozlabs.ibm.com>
+	id S1752125AbZHFHpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 03:45:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbZHFHpH
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 03:45:07 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:60692 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751701AbZHFHpG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 03:45:06 -0400
+Received: by fxm28 with SMTP id 28so572509fxm.17
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 00:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=+JACJk91mYKeQVNspJcLihYCwYs40OO2u0fHkR6x8tM=;
+        b=P3I3cDPTOxnYyQ5P395+GQ2ajUT1h3a3xEo87HpWSolCIsjqpLeIzKeycgdDqKiUoa
+         J4ydSjdg3wA0cKjFOqfNsRlqxmRQ0KhxDNoOATJlnQ95A6eFchsdua28jbO58QIcuxyJ
+         XFSUxIh/eAqpk+CxLft0RdX7asyVqlnvC9Nto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=C+ntp9kRpCfG7NyZ+tMUJlsVqU4W2pGz2UYP44MEDKpv2IV+aP1tOKrNp1+lcQokzX
+         ddNt23vQkMDNqJlDmvRXZIDqH6RHhEEe4Ii+DBmA/YOVkYFT6YmBLr++Ab3qh+qXG4Dv
+         CBUaNbanvxvVK2CfZJ6GtG8AJktTLbsNjIdUo=
+Received: by 10.103.239.2 with SMTP id q2mr708112mur.83.1249544704361;
+        Thu, 06 Aug 2009 00:45:04 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-94-42-19-54.multimo.pl [94.42.19.54])
+        by mx.google.com with ESMTPS id y6sm57798506mug.40.2009.08.06.00.45.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 00:45:03 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <4A7A7074.1060506@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125049>
 
-Paul Mackerras wrote:
-> Thomas Rast writes:
+Artur Skawina wrote:
 > 
-> > The confusing part of this, but also how I stumbled across the real
-> > bug, was that I was playing with --show-all and that flipped the
-> > direction *again*.  Turns out the option is not recognized by gitk and
-> > lets it go back to unoptimized mode, where the bug does not exist.
-> 
-> What does --show-all do?  Maybe I need to add support for it to gitk.
+> and my atom seems to like the compact loops too: 
 
-Support for _displaying_ it was added to gitk in 1407ade, even before
-the option was added to the revision walker.  Since it's a debugging
-option, I doubt it's worth handling this in the optimized code path.
+no, that was wrong, i forgot to turn off the ondemand governor...
 
-But anyway, it does not do what I hoped :-(
+the unrolled loops are in fact much faster and the numbers
+look more reasonable, after a few tweaks even on a P4.
+Now i just need to check how well it does compared to the
+asm implementations...
 
-It shows commits that were walked, but found uninteresting, with a ^
-in front.  See the long explanation in 3131b71; you can try
+artur
 
-  gitk --show-all origin/next..origin/pu
-
-for a nice example in git.git.
-
-I was _actually_ looking for an option to make --cherry-pick
---left-right history connected again, as I was trying to make sense of
-an SVN history basically by saying
-
-  gitk --left-right --cherry-pick svn/2.2...svn/trunk
-
-(Incidentally this SVN is publicly available at
-https://secure.a-eskwadraat.nl/svn/domjudge, but I doubt it's worth
-the cloning.)
-
-The problem with this is that it disconnects history, so I was looking
-for an option to either get back the commits omitted by --cherry-pick
-(but of course flagged in some way that shows they're duplicated) or
-fix the parent pointers so that history becomes connected again.  Some
-of my guesses were --sparse, --full-history and --show-all, but none
-achieve this.
-
-[I *think* --sparse comes closest, but it's about TREESAME-type
-uninteresting commits, not about --cherry-pick.  --full-history is
-only about the merges that are TREESAME, so that's out.  --show-all
-apparently is something entirely different.]
-
-Sadly, it's really the underlying git-rev-list that is "broken" in the
-sense that it does not fix the parent lists.  And git log --graph
-handles it much worse than gitk.  I've added the authors of the
-relevant features to Cc; maybe you can help?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+#             TIME[s] SPEED[MB/s]
+# ATOM
+rfc3174         2.199       27.75
+linus          0.8642       70.62
+linusas         1.606       38.01
+linusas2       0.8763       69.65
+mozilla         2.813        21.7
+mozillaas       2.539       24.04
+# P4
+rfc3174         1.402       43.53
+linus          0.5835       104.6
+linusas        0.4625         132
+linusas2       0.4456         137
+mozilla         1.529       39.91
+mozillaas       1.131       53.96
+# P3
+rfc3174         5.019       12.16
+linus            1.86       32.81
+linusas         3.108       19.64
+linusas2        1.812       33.68
+mozilla         6.431        9.49
+mozillaas       5.868        10.4
