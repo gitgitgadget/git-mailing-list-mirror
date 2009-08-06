@@ -1,71 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Merging to and from non-current branches.
-Date: Thu, 06 Aug 2009 11:43:16 -0700
-Message-ID: <7vprb8lr5n.fsf@alter.siamese.dyndns.org>
-References: <D5200130-C7D7-4010-BF62-3A3374F2E3B0@mgreg.com>
- <alpine.LNX.2.00.0908042236240.2147@iabervon.org>
- <518952FC-626C-43FB-BD53-98DE849C9751@mgreg.com>
- <81b0412b0908051428g40b7678ewc549f079abbd03ee@mail.gmail.com>
- <C766A4F9-C12B-4F94-8B24-9BD3665B70E8@mgreg.com>
- <alpine.LNX.2.00.0908061320030.2147@iabervon.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Thu, 6 Aug 2009 20:49:29 +0200
+Message-ID: <40aa078e0908061149s3d08bcc5qbd86bfa4e5624006@mail.gmail.com>
+References: <20090805181755.22765.qmail@science.horizon.com>
+	 <alpine.LFD.2.01.0908051352280.3390@localhost.localdomain>
+	 <alpine.LFD.2.01.0908051545000.3390@localhost.localdomain>
+	 <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "lists\@mgreg.com" <lists@mgreg.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Aug 06 20:43:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: George Spelvin <linux@horizon.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 06 20:49:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZ7w7-0005Cs-Sr
-	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 20:43:36 +0200
+	id 1MZ820-0007v7-1Z
+	for gcvg-git-2@gmane.org; Thu, 06 Aug 2009 20:49:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754082AbZHFSn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 14:43:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753339AbZHFSn1
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 14:43:27 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34769 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217AbZHFSn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 14:43:26 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9BC71F1F9;
-	Thu,  6 Aug 2009 14:43:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 501281F1F4; Thu,  6 Aug 2009
- 14:43:19 -0400 (EDT)
-In-Reply-To: <alpine.LNX.2.00.0908061320030.2147@iabervon.org> (Daniel
- Barkalow's message of "Thu\, 6 Aug 2009 13\:41\:58 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 069DC7AA-82B9-11DE-B11E-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754117AbZHFStb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 14:49:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbZHFSta
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 14:49:30 -0400
+Received: from mail-bw0-f213.google.com ([209.85.218.213]:52366 "EHLO
+	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355AbZHFSta (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 14:49:30 -0400
+Received: by bwz9 with SMTP id 9so954077bwz.41
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 11:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0UpsrIopZQ+D0ni3bThUpVYC8/3g97D+qb0RcRcLESA=;
+        b=cnrZM3vfKZanFbaMfl0PaLA/etzRJC/BIRuDXezR5R+NR79mia/nvhv2vSbh5xPltn
+         WKpPedA0pQOStwyDoPN0QnYPYA2mlP01QN6bTXmqC5KgVsFG3yF+FIEkqkuNqzkMWk2P
+         6CGUjDThajquTh/lwYdg4/Cby0x5ErqhjvkdQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=P9byCJknmGJgM0Pn2AzJBEkjjJmYss1+QPzPuUHemUC/nRW7Sajvr8am7kokoy7/XU
+         YXvAgJuaeOJwwY9FREr/h1c2K/aSUGXiiSFOxiSM2FlxCBQSAm1q3fYZjbeLjmzbXAy9
+         jFs70Fpfj7FjkRkTiGVRn1b00y90doMKPYwW4=
+Received: by 10.204.71.135 with SMTP id h7mr1119640bkj.168.1249584569758; Thu, 
+	06 Aug 2009 11:49:29 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.01.0908051800030.3390@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125105>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Thu, Aug 6, 2009 at 3:18 AM, Linus
+Torvalds<torvalds@linux-foundation.org> wrote:
+> I note that MINGW does NO_OPENSSL by default, for example, and maybe the
+> MINGW people want to test the patch out and enable BLK_SHA1 rather than
+> the original Mozilla one.
 
->> As I said, I understand what is being said, but in IMHO it would seem that a
->> merge of that nature would be immediately desirable.  Think of it more as a
->> local "push".
->
-> You mean like "git push . dev:master"? That does work in the case where a 
-> content merge is not required (although not otherwise).
+We recently got OpenSSL in msysgit. The NO_OPENSSL-switch hasn't been
+flipped yet, though. (We did OpenSSL to get https-support in cURL...)
 
-Just to clarify.
-
-It works _only_ when the push is a fast forward, i.e. where a merge is not
-required.
-
-That is different from working in a case "where a content merge is not
-required".
-
-The word "content merge" is often used in contrast to "tree level merge",
-meaning the latter can be finished by flipping stages inside the index by
-the three-way read-tree (--aggressive) while the former needs to call out
-to "merge-one-file".
-
-But the push will be rejected if you need _any_ kind of merge.
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
