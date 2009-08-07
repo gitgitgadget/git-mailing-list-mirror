@@ -1,68 +1,120 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to
- significantly speed up packing/walking
-Date: Fri, 07 Aug 2009 00:42:14 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908070036450.16073@xanadu.home>
-References: <op.ux8i6hrbtdk399@sirnot.private>
- <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>
- <4A7AEFA8.5010001@drmicha.warpmail.net>
- <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
- <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
- <c77435a80908061301n5e855aeci16af392ed3128651@mail.gmail.com>
- <c77435a80908061330h2461012at8b877970cab4906b@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
+ curl
+Date: Thu, 06 Aug 2009 22:08:09 -0700
+Message-ID: <7v63d06wjq.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org>
+ <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de>
+ <alpine.LNX.2.00.0908051145250.2147@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Sam Vilain <sam@vilain.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Edelen <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 06:42:31 2009
+	git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Aug 07 07:08:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZHHi-0006q4-WD
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 06:42:31 +0200
+	id 1MZHgo-0005JQ-2g
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 07:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735AbZHGEmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 00:42:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754513AbZHGEmV
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 00:42:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:64509 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754532AbZHGEmT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 00:42:19 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KNZ009PZP2EXZV0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 07 Aug 2009 00:42:15 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <c77435a80908061330h2461012at8b877970cab4906b@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754493AbZHGFIS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 01:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753981AbZHGFIS
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 01:08:18 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:60085 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbZHGFIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 01:08:17 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTP id 6C50623572;
+	Fri,  7 Aug 2009 01:08:16 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-sasl-quonix.sasl.smtp.pobox.com (Postfix) with ESMTPSA id 78F6223571; Fri, 
+ 7 Aug 2009 01:08:11 -0400 (EDT)
+In-Reply-To: <alpine.LNX.2.00.0908051145250.2147@iabervon.org> (Daniel
+ Barkalow's message of "Wed\, 5 Aug 2009 11\:52\:22 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 50B2F4B2-8310-11DE-9F23-F699A5B33865-77302942!a-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125177>
 
-On Thu, 6 Aug 2009, Nick Edelen wrote:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> Hrmm, I just realized that it dosn't actually cache paths/names...
-> This obviously has no bearing on its use in packing, but I should
-> either add that in or restrict usage in non-packing-related walks.
-> Weird how things like that escape you.
+> On Wed, 5 Aug 2009, Johannes Schindelin wrote:
+>
+>> Ooops, I missed this part.  How about making git-remote-https and 
+>> git-remote-ftp hardlinks to git-remote-http?
+>
+> Sure. Is "ln ... || ln -s ... || cp ..." the right way to do this 
+> cross-platform?
 
-Actually it is really the packing related walk that would benefit the 
-most from this work.  The "counting objects" phase of a clone may take 
-quite a while with some repositories.  Most other operations don't care 
-as much because the rev walk is done incrementally whereas the packing 
-operation needs to perform it all up front.
+I've queued the first three from this series to 'next' (and the rest to
+'pu'), as I wanted to give wider testing to the smaller footprint git with
+the libcurl-less-ness they bring in, with Linus's standalone SHA-1.
 
+Since then two fix-ups (adding git-remote-* to .gitignore and the
+dependency fix to git-http-fetch) were posted to the list, which I also
+rebased in to the series, making the total number of patches merged to
+'next' from the series 5.
 
-Nicolas
+If there are major changes/rewrites/redesign in the remaining part of the
+series that are only in 'pu', please feel free to either send incrementals
+or replacements.
+
+I do not think I've seen any issues raised but unresolved against the part
+from this series already in 'next', other than that this builds three
+copies of git-remote-* programs based on libcurl.  I'll rebase a patch
+like this in after the Makefile fixup ae209bd (http-fetch: Fix Makefile
+dependancies, 2009-08-06) and queue the result to 'next'.
+
+I suspect that the "install" target may need a patch similar to this one,
+though...
+
+-- >8 --
+Subject: Makefile: do not link three copies of git-remote-* programs
+
+Instead, link only one and make the rest hardlinks/copies, like we do for
+the built-ins. 
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ Makefile |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2900057..38924f2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1256,6 +1256,7 @@ ifndef V
+ 	QUIET_LINK     = @echo '   ' LINK $@;
+ 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
+ 	QUIET_GEN      = @echo '   ' GEN $@;
++	QUIET_LNCP     = @echo '   ' LN/CP $@;
+ 	QUIET_SUBDIR0  = +@subdir=
+ 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
+ 			 $(MAKE) $(PRINT_DIR) -C $$subdir
+@@ -1494,10 +1495,16 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
+-git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
++git-remote-http$X: remote-curl.o http.o http-walker.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+ 
++git-remote-https$X git-remote-ftp$X: git-remote-http$X
++	$(QUIET_LNCP)$(RM) $@ && \
++	ln git-remote-http$X $@ 2>/dev/null || \
++	ln -s  git-remote-http$X $@ 2>/dev/null || \
++	cp git-remote-http$X $@
++
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)) git.o: $(LIB_H) $(wildcard */*.h)
+ builtin-revert.o wt-status.o: wt-status.h
