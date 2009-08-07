@@ -1,72 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make 'submodule update' honor the 'update' setting in
- .gitmodules.
-Date: Fri, 07 Aug 2009 14:54:53 -0700
-Message-ID: <7veirns30y.fsf@alter.siamese.dyndns.org>
-References: <1249530977-17501-1-git-send-email-foldr@codedgers.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 1/5] revision caching documentation: man page and
+ technical discussion
+Date: Sat, 08 Aug 2009 09:58:14 +1200
+Message-ID: <1249682294.6221.2.camel@maia.lan>
+References: <op.ux8i6lq9tdk399@sirnot.private> <4A7B9ACA.1060601@vilain.net>
+	 <4A7C18F2.2000905@dawes.za.net>
+	 <alpine.DEB.1.00.0908071419590.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mikhail Glushenkov <foldr@codedgers.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 23:55:06 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Rogan Dawes <discard@dawes.za.net>, Nick Edelen <sirnot@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 07 23:56:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZXOz-0002TU-RY
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 23:55:06 +0200
+	id 1MZXQH-0002vp-Bg
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 23:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407AbZHGVy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 17:54:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbZHGVy6
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 17:54:58 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48736 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751699AbZHGVy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 17:54:57 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 24B3D2181;
-	Fri,  7 Aug 2009 17:54:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 70D602180; Fri,  7 Aug
- 2009 17:54:55 -0400 (EDT)
-In-Reply-To: <1249530977-17501-1-git-send-email-foldr@codedgers.com> (Mikhail
- Glushenkov's message of "Thu\,  6 Aug 2009 05\:56\:17 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F2E52868-839C-11DE-AEEB-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752778AbZHGV4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 17:56:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752741AbZHGV4S
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 17:56:18 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:47484 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752353AbZHGV4R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 17:56:17 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id AF5B321C47C; Sat,  8 Aug 2009 09:56:17 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id E9EA821C32F;
+	Sat,  8 Aug 2009 09:56:12 +1200 (NZST)
+In-Reply-To: <alpine.DEB.1.00.0908071419590.8306@pacific.mpi-cbg.de>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125231>
 
-Mikhail Glushenkov <foldr@codedgers.com> writes:
+On Fri, 2009-08-07 at 14:20 +0200, Johannes Schindelin wrote:
+> > I think the word he had in mind was "coalesce".
+> As Git users typically have a quite good idea what a "merge" is, I'd 
+> prefer that word anyway.
 
-> Make the 'submodule update' command honor the 'submodule.$path.update' setting
-> in .gitmodules unless this setting is overridden in '.git/config' or with
-> --rebase/--merge options.
+I don't like that so much, given that "merge" has quite a specific
+meaning.  But not really that fussed.  In this case it's more like a
+'gc' or 'repack'; an internal reshuffle of an index to make it a single
+one and not many.
 
-I haven't been involved in recent updates to "git submodule", but the
-change in this patch feels somewhat wrong.
-
-The contents of in-tree .gitmodules are meant to be consulted to only
-prime the settings in .git/config, and after that they are never used
-without user's explicit concent (e.g. "sync").  At least that is the way I
-understand how the current "git submodule" command is designed.
-
-This change actively breaks the pattern.  It makes sense to set up values
-for "submodule.*.update" when the defaults suggested by the project are
-copied out of .gitmodules to prime .git/config upon "submodule init", but
-not at runtime in "update" command like this.
-
-I am puzzled.  What problem are you trying to solve?
-
-"submodule init" seems to already copy "update" setting from .gitmodules
-to .git/config.  At least, it seems to have a code to try to do so.
-
-Perhaps you would want to (1) add the "submodule.*.update" to the set of
-configurations to be copied upon "sync", not just URL? and (2) add a way
-to allow users to inspect how values in .git/config and .gitmodules are
-different, and update .git/config with selected values, possibly in an
-interactive manner?
+Sam
