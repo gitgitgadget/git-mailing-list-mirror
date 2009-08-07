@@ -1,72 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] revision caching documentation: man page and technical
-   discussion
-Date: Fri, 7 Aug 2009 14:20:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908071419590.8306@pacific.mpi-cbg.de>
-References: <op.ux8i6lq9tdk399@sirnot.private> <4A7B9ACA.1060601@vilain.net> <4A7C18F2.2000905@dawes.za.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sam Vilain <sam@vilain.net>, Nick Edelen <sirnot@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Rogan Dawes <discard@dawes.za.net>
-X-From: git-owner@vger.kernel.org Fri Aug 07 14:20:26 2009
+From: Mark A Rada <markrada26@gmail.com>
+Subject: Gitweb giving me some warnings in Apache's error_log
+Date: Fri, 7 Aug 2009 09:00:12 -0400
+Message-ID: <533D6DDF-4DAC-4A86-A6F7-95B54B77E48B@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 07 15:00:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZOQr-0008VY-8z
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 14:20:25 +0200
+	id 1MZP3f-0000cb-Sm
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 15:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757631AbZHGMUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 08:20:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757366AbZHGMUP
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 08:20:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45515 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757258AbZHGMUO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 08:20:14 -0400
-Received: (qmail invoked by alias); 07 Aug 2009 12:20:13 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 07 Aug 2009 14:20:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/az9YgwL3an1ek3YTP4wBW/MYQp7eO6/dj6zd9eg
-	qpKSDMgeS7RUhX
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4A7C18F2.2000905@dawes.za.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.7
+	id S1757870AbZHGNAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 09:00:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757851AbZHGNAU
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 09:00:20 -0400
+Received: from mail-yw0-f177.google.com ([209.85.211.177]:43501 "EHLO
+	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755837AbZHGNAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 09:00:18 -0400
+Received: by ywh7 with SMTP id 7so2101516ywh.21
+        for <git@vger.kernel.org>; Fri, 07 Aug 2009 06:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:mime-version:subject:date
+         :x-mailer;
+        bh=6BtZ4PcBLaB1pI+2zNIDy88PdKAMWIdkMrjq9nKE0yk=;
+        b=f3UCZ8lZWisUC8te5Kx5YVGSVHUzWFoQtjdJebqucVFch4UVJxt7adwCCVUOZvpuio
+         0G2oCYnygd2IdLJKKEee/EHyupB7xi4QmN6NS4ZOSCCfDrkS8TOYkuxgn45cbER8xDbQ
+         rbB5XxgnWckkCaHU+V34dBtkZvPeFsaQy3bPw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=SHdD6KLnU6s+ddXxfcZrDysaThHM3jz/oc3a+e9tWoSlApfbjJK/+QwtVgC/GfiQSJ
+         WZkP8a1l/nEjE5jmnQVjmmNHY8dl6ZV1KNQbqnBiXg7/WS469jQn6Xsz0Lk4b6Mc5BE/
+         8+7VI9k4G4FimZuTvTl2bawfmDRgt1M0kJQo4=
+Received: by 10.100.201.7 with SMTP id y7mr247878anf.115.1249650017754;
+        Fri, 07 Aug 2009 06:00:17 -0700 (PDT)
+Received: from ?192.168.1.102? (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+        by mx.google.com with ESMTPS id d35sm945363and.15.2009.08.07.06.00.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 07 Aug 2009 06:00:15 -0700 (PDT)
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125194>
 
-Hi,
+It doesn't seem to cause any other problems, but I don't know if it is  
+significant or not.
 
-On Fri, 7 Aug 2009, Rogan Dawes wrote:
+[Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$project_maxdepth"  
+may be unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line  
+2296.
+[Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$projectroot" may be  
+unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line 2304.
 
-> Sam Vilain wrote:
-> 
-> >> +`fuse`::
-> >> +	Coagulate several cache slices into a single large slice.
-> >>   
-> > 
-> > Coagulate?  You mean, the revision caches will stop being liquid and go
-> > gluggy, like a pool of blood clotting?
-> > 
-> > How about "combine" :-) - and the option might be better called
-> > something simple like that, too.
-> 
-> I think the word he had in mind was "coalesce".
 
-As Git users typically have a quite good idea what a "merge" is, I'd 
-prefer that word anyway.
+Apache 2.2.12/ mod_perl 2.04/ perl 5.8.8
 
-Ciao,
-Dscho
+
+--
+Mark A Rada (ferrous26)
+marada@uwaterloo.ca
