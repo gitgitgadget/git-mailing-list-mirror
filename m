@@ -1,93 +1,95 @@
-From: Alex Blewitt <alex.blewitt@gmail.com>
-Subject: Problem running 'make install' as root when on mounted fs
-Date: Fri, 7 Aug 2009 11:08:24 +0100
-Message-ID: <8F9F4A8A-9515-4A7D-90EE-4BD3DA3F7A2B@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Tobia Conforto <tobia.conforto@gmail.com>
+Subject: Droppable Git Gui in Mac OS X
+Date: Fri, 7 Aug 2009 10:12:11 +0000 (UTC)
+Message-ID: <loom.20090807T090458-788@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 07 12:08:43 2009
+X-From: git-owner@vger.kernel.org Fri Aug 07 12:13:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZMNO-0007td-7R
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 12:08:42 +0200
+	id 1MZMRZ-0001H2-BQ
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 12:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755944AbZHGKI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 06:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755881AbZHGKI3
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 06:08:29 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:19506 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751831AbZHGKI2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 06:08:28 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so493169eyd.37
-        for <git@vger.kernel.org>; Fri, 07 Aug 2009 03:08:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=65K7dwaD80KbS5mLXsts1XonxtXQBDd8aM7wxUsza2I=;
-        b=gBIRjgh05Y3WgcVDKphP6wGVE4eoHym5cLh9DoDhvvUGwRi0Vj7Z+PZDDeG1o1H9pD
-         fTrtswcJCrodWDZtB83O/sPNpyRSfP/mltWIUxXYzBVI6mCMmdV+wUmplbmDCowzH4AZ
-         Oh1ZLC5UdnM7W2SbzmzrXVLL+EkaVBh8sMBxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=KdiKZZq9oAxcCIUXMJABKwdW19kGdUaUrLKKBXcd3B12D7ommnatA2lSO04gSTpUDI
-         ofX0qaQ9fiAREx7t8LKEQ0IWanZNE1GtBpA5PSd6PEp+xMJso2hljjvAK8D0x0O2LGUy
-         YpJxnjNiFjkfs0GTrEQD58Kz6THB8NBiGP1lk=
-Received: by 10.210.62.12 with SMTP id k12mr1194196eba.19.1249639708119;
-        Fri, 07 Aug 2009 03:08:28 -0700 (PDT)
-Received: from bigmac.int.bandlem.com (gateway.bandlem.com [217.155.97.59])
-        by mx.google.com with ESMTPS id 5sm2412907eyf.18.2009.08.07.03.08.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Aug 2009 03:08:26 -0700 (PDT)
-X-Mailer: Apple Mail (2.936)
+	id S1757394AbZHGKMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 06:12:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757392AbZHGKMX
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 06:12:23 -0400
+Received: from main.gmane.org ([80.91.229.2]:57674 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757218AbZHGKMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 06:12:22 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1MZMQu-0004nN-QH
+	for git@vger.kernel.org; Fri, 07 Aug 2009 10:12:20 +0000
+Received: from static-217-133-32-17.clienti.tiscali.it ([217.133.32.17])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Aug 2009 10:12:20 +0000
+Received: from tobia.conforto by static-217-133-32-17.clienti.tiscali.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Aug 2009 10:12:20 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 217.133.32.17 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_7; en-us) AppleWebKit/530.19.2 (KHTML, like Gecko) Version/4.0.2 Safari/530.19)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125190>
 
-I just tried building and installing Git on Mac OSX. My home directory  
-is NFS mounted, to which I have write (but root doesn't).
+Hello
 
-When I do make, everything compiles OK
-When I do sudo make install, I get '/bin/sh: GIT-BUILD-OPTIONS:  
-permission denied'
+I'm using Git 1.6.3.3 on Mac OS X 10.5.7, installed using MacPorts 1.710
 
-It seems that make install is re-running the GIT-BUILD-OPTIONS target,  
-and that tries to write to the current directory. In my case, on an  
-NFS mounted home, root doesn't have write permissions to the local dir  
-and so the install step fails.
+I noticed that Git Gui cannot be launched on an existing repository by
+simply dragging the repository folder onto Git Gui's icon in the dock,
+but this is a standard UI feature in OS X.
 
-I could build on a local partition (e.g. /tmp) but I'd prefer to have  
-the code on my local drive so that I can do a git update and other  
-such changes subsequently. I was able to get it to work by removing  
-the echo>> from the GIT-BUILD-OPTIONS step after having built the code  
-the first time.
+Here is a fix "Git Gui.app" (which MacPorts installs in
+/opt/local/share/git-gui/lib) to enable this feature.
 
-The problem basically seems to be:
+The change to Info.plist enables dropping folders onto the application.
+The modified AppMain.tcl, before launching the application, receives the
+one pending OpenDocument event and cd's to the repository folder.
 
-install: all
-all:: ... GIT-BUILD-OPTIONS
+-Tobia
 
-I think it would be possible to restrict the GIT-BUILD-OPTIONS to be  
-generated during a build phase, so restructuring the Makefile like:
 
-install: build
-all:: build GIT-BUILD-OPTIONS
-build: ...
+--- Git Gui.app/Contents/Info.plist
++++ Git Gui.app/Contents/Info.plist
+@@ -24,5 +24,16 @@
+ 	<string>GITg</string>
+ 	<key>CFBundleVersion</key>
+ 	<string>0.12.0</string>
++	<key>CFBundleDocumentTypes</key>
++	<array>
++		<dict>
++			<key>CFBundleTypeOSTypes</key>
++			<array>
++				<string>fold</string>
++			</array>
++			<key>CFBundleTypeRole</key>
++			<string>Viewer</string>
++		</dict>
++	</array>
+ </dict>
+ </plist>
+--- Git Gui.app/Contents/Resources/Scripts/AppMain.tcl
++++ Git Gui.app/Contents/Resources/Scripts/AppMain.tcl
+@@ -19,4 +19,9 @@
 
-would then mean the install phase wouldn't have to touch the GIT-BUILD- 
-OPTIONS step.
-
-Does that sound reasonable? I'm happy to test it out and submit a  
-patch if people agree (and/or have opinions on what the inner target  
-'build' should be called)
-
-Alex
+ unset gitexecdir gitguilib
+ set argv [lrange $argv 1 end]
+-source $AppMain_source
++
++proc ::tk::mac::OpenDocument {args} {
++	cd [lindex $args 0]
++}
++
++after 1 { source $AppMain_source }
