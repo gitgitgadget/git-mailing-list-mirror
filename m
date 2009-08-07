@@ -1,100 +1,112 @@
-From: Artur Skawina <art.08.09@gmail.com>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Fri, 07 Aug 2009 02:53:53 +0200
-Message-ID: <4A7B7B21.1000001@gmail.com>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain> <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <4A7B5F4C.30102@gmail.com> <alpine.LFD.2.01.0908061559120.3390@localhost.localdomain> <alpine.LFD.2.01.0908061609340.3390@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 07 02:54:06 2009
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 2/3] mailinfo: allow individual e-mail files as input
+Date: Thu,  6 Aug 2009 20:08:12 -0500
+Message-ID: <COrzR9ThNBy5SQ7chsXyUB30jVGIijxZQ3LI9L_y7Ab5vWcDcy_HolvjjuHTC7DHI9ntV-eR_v0@cipher.nrlssc.navy.mil>
+References: <MEhvdM_GHnyaFj9ZU3lxKS47vmOk5BKslGm0FxkE_lg0SQT5Zx6KhA@cipher.nrlssc.navy.mil> <COrzR9ThNBy5SQ7chsXyUOUuBmX-VWMCz3MUVwvBOlIZzlIXRRMP6EMS7BRy_6uJvxt5H-FbtdY@cipher.nrlssc.navy.mil>
+Cc: ni.s@laposte.net, giuseppe.bilotta@gmail.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 07 03:09:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZDif-0000CC-JZ
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 02:54:06 +0200
+	id 1MZDxZ-0004W5-2e
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 03:09:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754395AbZHGAx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 20:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754177AbZHGAx5
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 20:53:57 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:65005 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754093AbZHGAx5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 20:53:57 -0400
-Received: by bwz9 with SMTP id 9so1111285bwz.41
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 17:53:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=rYhihnrvS1sCS3u8HQe5XxlTKYIGtLhAPUM+6jGPSmU=;
-        b=rTGQ/XwPQIKIKJ2oyKXYalc6CWQx6FtkKOijWpkr30zsmsctwZyyrl62puHtWIU1HV
-         ovTArJ2LEwwXb0XzurvZ8Jf+qA1WPqjr7OGbXIi2Qovy6kvvyn4feOGoNP+ILnhPG9ZS
-         NruaZ2jH+Eqf+ILaBEk630e5lRnCtZsjHvqKY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=DkJkKYbE508qx54lOg+qIDB93ISMsGer27O5SDQ/eVRmSo/cbelajAOyaN3r8gS42F
-         TX6A1XH6+ux+UOIuJhV8OE514VxXSSwnZk0MT5G4LQTt9x+VCWPY2Ecqfkm2U4udjpYp
-         1Nf0cLDCkFQBCmTznAhc4RoFzLRPZsHNrm5xc=
-Received: by 10.102.244.4 with SMTP id r4mr216013muh.90.1249606435661;
-        Thu, 06 Aug 2009 17:53:55 -0700 (PDT)
-Received: from ?172.19.43.221? (ip-89-174-40-138.multimo.pl [89.174.40.138])
-        by mx.google.com with ESMTPS id i5sm2424523mue.55.2009.08.06.17.53.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Aug 2009 17:53:54 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
-In-Reply-To: <alpine.LFD.2.01.0908061609340.3390@localhost.localdomain>
-X-Enigmail-Version: 0.95.7
+	id S1756107AbZHGBJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 21:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754509AbZHGBJI
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 21:09:08 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33962 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752686AbZHGBJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 21:09:06 -0400
+Received: by mail.nrlssc.navy.mil id n77191WP024819; Thu, 6 Aug 2009 20:09:02 -0500
+In-Reply-To: <COrzR9ThNBy5SQ7chsXyUOUuBmX-VWMCz3MUVwvBOlIZzlIXRRMP6EMS7BRy_6uJvxt5H-FbtdY@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 07 Aug 2009 01:09:01.0876 (UTC) FILETIME=[A674DF40:01CA16FB]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125149>
 
-Linus Torvalds wrote:
-> 
-> Just out of curiosity, does anything change if you change the
-> 
-> 	B = SHA_ROR(B,2)
-> 
-> into a
-> 
-> 	B = SHA_ROR(SHA_ROR(B,1),1)
-> 
-> instead? It's very possible that it becomes _much_ worse, but I guess it's 
+From: Junio C Hamano <gitster@pobox.com>
 
-Did try that yesterday, didn't help. Will recheck now.. yep:
+We traditionally allowed a mbox file or a directory name of a maildir (but
+never an individual file inside a maildir) to be given to "git am".  Even
+though an individual file in a maildir (or more generally, a piece of
+RFC2822 e-mail) is not a mbox file, it contains enough information to
+create a commit out of it, so there is no reason to reject one.  Running
+mailsplit on such a file feels stupid, but it does not hurt.
 
-before: linus          0.3554       171.7
-after:  linus           0.407         150
+This builds on top of a5a6755 (git-am foreign patch support: introduce
+patch_format, 2009-05-27) that introduced mailbox format detection.  The
+codepath to deal with a mbox requires it to begin with "From " line and
+also allows it to begin with "From: ", but a random piece of e-mail can
+and often do begin with any valid RFC2822 header lines.
 
-still true for the current version.
+Instead of checking the first line, we extract all the lines up to the
+first empty line, and make sure they look like e-mail headers.
 
-> So optimizing for P4 is often the wrong thing.
-> 
-> Secondly, P4's are going away. You may have one, but they are getting 
-> rare. So optimizing for them is a losing proposition in the long run.
+This fixes the test in t4150-am.
 
-Sure, no argument; it's just that avoiding the P4 pitfalls is usually
-not that hard and the impact on other, non-netburst, archs is low.
-There are a lot of P4s out there and they're not going away soon.
-(i'm still keeping most of my git trees on a P3...)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
 
-For generic C code such as this the difference for your i7 was -2% and
-+70% for my P4; all the other (but one, i think) optimizations which
-worked on P4 also applied to 32-bit i7. As i happen to have a p4 i can
-just as well test the code on it, many improvements will likely apply
-to other cpus too. That's all, i doubt anybody seriously considered
-"optimizing for P4"; there is a reason intel discontinued them :)
 
-The atom is a more important target, but only the asm versions did well
-there so far.
+Junio,
 
-artur
+You'll notice that I changed your grep -E to an egrep and dropped the -e.
+I do not see any other grep which uses -e, and I seem to recall Jeff King
+actively removing -e claiming that some greps do not recognize it.  I do not
+have a perfect memory though, so apologies to Jeff if I am mistaken.
+
+-brandon
+
+
+ git-am.sh     |   14 ++++++++++++++
+ t/t4150-am.sh |    2 +-
+ 2 files changed, 15 insertions(+), 1 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index d64d997..dd60f5d 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -191,6 +191,20 @@ check_patch_format () {
+ 			esac
+ 			;;
+ 		esac
++		if test -z "$patch_format" &&
++			test -n "$l1" &&
++			test -n "$l2" &&
++			test -n "$l3"
++		then
++			# This begins with three non-empty lines.  Is this a
++			# piece of e-mail a-la RFC2822?  Grab all the headers,
++			# discarding the indented remainder of folded lines,
++			# and see if it looks like that they all begin with the
++			# header field names...
++			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
++			egrep -v '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
++			patch_format=mbox
++		fi
+ 	} < "$1" || clean_abort
+ }
+ 
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index ad2a85f..4e8e176 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -114,7 +114,7 @@ test_expect_success 'am applies patch correctly' '
+ 	test "$(git rev-parse second^)" = "$(git rev-parse HEAD^)"
+ '
+ 
+-test_expect_failure 'am correctly applies patch from email lacking "From" in first 3 lines' '
++test_expect_success 'am correctly applies patch from email lacking "From" in first 3 lines' '
+ 	git checkout first &&
+ 	git am patch1.eml &&
+ 	! test -d .git/rebase-apply &&
+-- 
+1.6.4
