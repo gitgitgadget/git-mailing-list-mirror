@@ -1,92 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] clarify error message when an abbreviated non-existent 
- commit was specified
-Date: Thu, 06 Aug 2009 22:36:41 -0700
-Message-ID: <7vk51g5gnq.fsf@alter.siamese.dyndns.org>
-References: <20090806193413.GJ1033@spearce.org>
- <1249588435-23400-1-git-send-email-timcharper@gmail.com>
- <e1a5e9a00908062217q4bd1ecafm5fd5e060aecfa467@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to
+ significantly speed up packing/walking
+Date: Fri, 7 Aug 2009 08:05:25 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908070801540.8306@pacific.mpi-cbg.de>
+References: <op.ux8i6hrbtdk399@sirnot.private> <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de> <4A7AEFA8.5010001@drmicha.warpmail.net> <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com> <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
+ <c77435a80908061301n5e855aeci16af392ed3128651@mail.gmail.com> <c77435a80908061330h2461012at8b877970cab4906b@mail.gmail.com> <20090806203223.GK1033@spearce.org> <4A7B68C4.8070406@gmail.com> <20090806233739.GL1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tim Harper <timcharper@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 07:36:57 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Nick Edelen <sirnot@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, Sam Vilain <sam@vilain.net>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 07 08:05:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZI8P-0004mP-09
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 07:36:57 +0200
+	id 1MZIZh-0004NQ-7L
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 08:05:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239AbZHGFgt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Aug 2009 01:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZHGFgt
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 01:36:49 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53461 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750810AbZHGFgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 01:36:49 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 62E28205B9;
-	Fri,  7 Aug 2009 01:36:49 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4BAC0205B8; Fri,  7 Aug 2009
- 01:36:42 -0400 (EDT)
-In-Reply-To: <e1a5e9a00908062217q4bd1ecafm5fd5e060aecfa467@mail.gmail.com>
- (Tim Harper's message of "Thu\, 6 Aug 2009 23\:17\:48 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4DAB7D26-8314-11DE-ADBB-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1752835AbZHGGE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 02:04:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752786AbZHGGE6
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 02:04:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32822 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752764AbZHGGE6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 02:04:58 -0400
+Received: (qmail invoked by alias); 07 Aug 2009 06:04:57 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp070) with SMTP; 07 Aug 2009 08:04:57 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/h+DBGPF7hbLGMy8O4AtuJTu4YuAIsrApj90Ggu3
+	byH8ZHym6XQj3N
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090806233739.GL1033@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.61
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125183>
 
-Tim Harper <timcharper@gmail.com> writes:
 
->> diff --git a/parse-options.c b/parse-options.c
->> index 3b71fbb..95eb1c4 100644
->> --- a/parse-options.c
->> +++ b/parse-options.c
->> @@ -615,7 +615,7 @@ int parse_opt_with_commit(const struct option *o=
-pt, const char *arg, int unset)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!arg)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (get_sha1(arg, sha1))
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("mal=
-formed object name %s", arg);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("mal=
-formed object name or no such commit: %s", arg);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit =3D lookup_commit_reference(sha1);
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!commit)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return error(=
-"no such commit %s", arg);
->> --
->> 1.6.4
->
-> Does nobody think this is a good idea?
 
-Probably people don't care enough.  I certainly didn't pay much attenti=
-on
-to the discussion on a rather trivial patch that was not yet signed off=
-=2E
+On Thu, 6 Aug 2009, Shawn O. Pearce wrote:
 
-I'd probably write along this line instead, if I cared enough. =20
+> A Large Angry SCM <gitzilla@gmail.com> wrote:
+> > Shawn O. Pearce wrote:
+> >> Nick Edelen <sirnot@gmail.com> wrote:
+> >>> Hrmm, I just realized that it dosn't actually cache paths/names...
+> >>
+> >> You may not need the path name, but instead the hash value that 
+> >> pack-objects computes from the path name.
+> >
+> > Please do NOT expose the hash values. The hash used by pack-objects is 
+> > an implementation detail of the heuristics used by the _current_ 
+> > object packing code. It would be a real shame to have to maintain 
+> > backward compatibility with it at some future date after the packing 
+> > machinery has changed.
+> 
+> This is a local cache.  If there was a version number in the header, and 
+> the hash function changes, we could just bump the version number and 
+> invalidate all of the caches.
+> 
+> No sense in storing (and doing IO of) huge duplicate string values for 
+> something where we really only need 32 bits, and where a recompute from 
+> scratch only costs a minute.
 
-	if (get_sha1(arg, sha1) ||
-            !(commit =3D lookup_commit_reference(sha1)))
-		return error("no such commit: %s", arg);
+FWIW it was this redundancy in duplicate (unpacked) string redundancy 
+I meant, but I did a poor job at expressing myself, and consequently Nick 
+did not understand what I want (and I'm on a slow connection, so I deleted 
+the mail halfway through looking if there are some real answers hidden in 
+the huge quoted part instead of replying).
 
-I think the important part of the message is that whatever the user gav=
-e
-us when we expected to see a string that names a commit was not a commi=
-t;
-it is immaterial if the failure was because an abbreviated hexadecimal
-form was mistyped (get_sha1() would fail in this case) or because a tag
-that points at a non commit, e.g. "v2.6.11-tree", was given (l-c-r will
-fail in that case).
+And the fragility of the dependency to the implementation detail of the 
+pack index suggests to me that my intuition that this whole thing should 
+be more tightly integrated with the pack index was not totally off the 
+mark.
 
-Giving two different messages depending on the nature of an error will
-help debugging parse_opt_with_commit(), but that benefit is secondary.
+Ciao,
+Dscho
