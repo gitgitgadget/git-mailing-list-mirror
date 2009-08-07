@@ -1,65 +1,59 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] rebase -i: use "git sequencer--helper --reset-hard"
-Date: Mon, 3 Aug 2009 08:29:21 +0200
-Message-ID: <200908030829.21424.chriscool@tuxfamily.org>
-References: <20090803024023.3794.6487.chriscool@tuxfamily.org> <fabb9a1e0908022158g2578071ewd44bc8d730fb2b8b@mail.gmail.com>
+From: Edke <edke.kraken@gmail.com>
+Subject: problems setting gitattribute ident for a whole directory
+Date: Fri, 7 Aug 2009 08:21:22 -0700 (PDT)
+Message-ID: <24866724.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 03 08:30:15 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 07 17:21:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MXr2X-0000RL-Mk
-	for gcvg-git-2@gmane.org; Mon, 03 Aug 2009 08:28:58 +0200
+	id 1MZRG9-0003Dd-NB
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 17:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751928AbZHCG2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Aug 2009 02:28:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbZHCG2n
-	(ORCPT <rfc822;git-outgoing>); Mon, 3 Aug 2009 02:28:43 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:34362 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751629AbZHCG2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Aug 2009 02:28:43 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id A289781810F;
-	Mon,  3 Aug 2009 08:28:34 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 90528818036;
-	Mon,  3 Aug 2009 08:28:31 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <fabb9a1e0908022158g2578071ewd44bc8d730fb2b8b@mail.gmail.com>
-Content-Disposition: inline
+	id S1753576AbZHGPVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 11:21:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753535AbZHGPVW
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 11:21:22 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:55363 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753519AbZHGPVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 11:21:21 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1MZRFy-0003ga-5Z
+	for git@vger.kernel.org; Fri, 07 Aug 2009 08:21:22 -0700
+X-Nabble-From: edke.kraken@gmail.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125202>
 
-Hi,
 
-On Monday 03 August 2009, Sverre Rabbelier wrote:
-> Heya,
->
-> On Sun, Aug 2, 2009 at 19:40, Christian Couder<chriscool@tuxfamily.org> 
-wrote:
-> > instead of "git reset --hard"
->
-> Hmmm, why though? The commit message (either this one or those earlier
-> in the series) don't really explain. What are the advantages of using
-> this new 'git reset --hard' alternative?
+Hello. 
 
-This is part of my work to port git-rebase--interactive.sh to C using code 
-from the sequencer project. So the advantage is that it introduces and uses 
-the reset_almost_hard() function that will be used in the end when 
-everything is done by C code.
+I'm moving from SVN to Git, started just two days ago. I'm amazed with Git
+so far, also using it with SVN solid.
 
-Regards,
-Christian.
+I'm having few difficulties setting ident attribute:
+
+1) Setting it for a whole directory. I tried .git/info/attributes,
+.gitattributes in root of my project, I tried some patterns ( app/*, app/,
+app* ), nothing work so far. Using app/* works for files placed in app
+folder but I need to apply this attribute for a whole directory
+(recursively). 
+
+2) If applied correctly, will it work with files that already exists in
+project ? 
+
+3) What I need to do so that changes (replacing $Id$ with hash) will show in
+all affected files ? I found some tutorial, where author applies this as rm
+file; git checkout -- file. But how should I proceed for a whole project ? 
+-- 
+View this message in context: http://www.nabble.com/problems-setting-gitattribute-ident-for-a-whole-directory-tp24866724p24866724.html
+Sent from the git mailing list archive at Nabble.com.
