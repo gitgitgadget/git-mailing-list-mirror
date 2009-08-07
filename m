@@ -1,110 +1,95 @@
-From: Artur Skawina <art.08.09@gmail.com>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Fri, 07 Aug 2009 03:30:36 +0200
-Message-ID: <4A7B83BC.1040606@gmail.com>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain> <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <4A7B5F4C.30102@gmail.com> <alpine.LFD.2.01.0908061559120.3390@localhost.localdomain> <alpine.LFD.2.01.0908061609340.3390@localhost.localdomain> <alpine.LFD.2.01.0908061709400.3390@localhost.localdomain>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH 2/3] Re: mailinfo: allow individual e-mail files as input
+Date: Fri, 7 Aug 2009 03:36:50 +0200
+Message-ID: <20090807013650.GE12924@vidovic>
+References: <MEhvdM_GHnyaFj9ZU3lxKS47vmOk5BKslGm0FxkE_lg0SQT5Zx6KhA@cipher.nrlssc.navy.mil> <COrzR9ThNBy5SQ7chsXyUOUuBmX-VWMCz3MUVwvBOlIZzlIXRRMP6EMS7BRy_6uJvxt5H-FbtdY@cipher.nrlssc.navy.mil> <COrzR9ThNBy5SQ7chsXyUB30jVGIijxZQ3LI9L_y7Ab5vWcDcy_HolvjjuHTC7DHI9ntV-eR_v0@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 07 03:30:52 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, giuseppe.bilotta@gmail.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Aug 07 03:37:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZEIF-0001Ua-2x
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 03:30:51 +0200
+	id 1MZEOK-00035u-FX
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 03:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756499AbZHGBaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 21:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756133AbZHGBaj
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 21:30:39 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:58595 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754096AbZHGBai (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 21:30:38 -0400
-Received: by bwz9 with SMTP id 9so1120784bwz.41
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 18:30:37 -0700 (PDT)
+	id S1753452AbZHGBgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 21:36:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbZHGBgz
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 21:36:55 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:33147 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbZHGBgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Aug 2009 21:36:54 -0400
+Received: by ewy10 with SMTP id 10so1239926ewy.37
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 18:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=RHMB7L6tblxj99dyd+rEmcpunD7ris/BY6ADeDEgfUU=;
-        b=DbvlxoB754UeJuXKuC8Hz2QW/r+VRhlHjp34rZJItmKFxbj8Sm7znfSt5Wm5X0cyDG
-         uqSlSi7We9vxksb/2jatj+i8hjCU/hmxzq0T3s3+t+wBhBox2BQZUy2sgGEd/loz1TCr
-         k0zE1CKqrGHihOYHZEEnaJyIc2/Uvfb3NQRQI=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=3+RtsX/D0/vLiYTqMfXuklPHyKZgJF0D04948YN5a3A=;
+        b=rSa0gUXmUpyHHVC7AtnlpnIHVTFIW/tQzsktGHes71OsFf35JTDQ6PvMeJoazgCQXe
+         43EPfNROjuKYGBstpNnOvSEvMUBFP0kSu8rMX4HvoeXvZZK4Os4dgMkW0BXXimvvTTrl
+         kGu1hjFWb7upYecybuXcR/s0jyzLw7lgmTzF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=IFp0MiYOl+pkI2jaLMi+cPBo/+k78RcOChjObgYPqr98TkFOSq7KorfsNVuaNUbJtz
-         T4UdEPXUDjcXrdBW5iAKgriTJaBY87uQLITUruo3xv2QT77CCwh/D63b8HIctbcryXKe
-         jQnyhTofrbgToaHBwnGRqLInTZtKZDYQdbKKY=
-Received: by 10.204.70.9 with SMTP id b9mr852374bkj.135.1249608637837;
-        Thu, 06 Aug 2009 18:30:37 -0700 (PDT)
-Received: from ?172.19.43.221? (ip-89-174-83-224.multimo.pl [89.174.83.224])
-        by mx.google.com with ESMTPS id d13sm1612474fka.32.2009.08.06.18.30.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Aug 2009 18:30:37 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
-In-Reply-To: <alpine.LFD.2.01.0908061709400.3390@localhost.localdomain>
-X-Enigmail-Version: 0.95.7
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GaQWGMW0Tndb+jh89gzfJE4Kex7Hz/7g5qj5M4EG22+O2NigENzabCX74nUuPz8dPF
+         SIGe1rt/AFkmjRSW4gRCberbdG2FdHZisJbdbJctEBgRyBEXx/u3A2MEi4LB+aOqsimW
+         tV4Kw4zih/bM4e/delF8yC9AJWEuA79pdJtf4=
+Received: by 10.211.178.12 with SMTP id f12mr663940ebp.31.1249609013122;
+        Thu, 06 Aug 2009 18:36:53 -0700 (PDT)
+Received: from @ (91-164-149-117.rev.libertysurf.net [91.164.149.117])
+        by mx.google.com with ESMTPS id 24sm1361954eyx.43.2009.08.06.18.36.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Aug 2009 18:36:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <COrzR9ThNBy5SQ7chsXyUB30jVGIijxZQ3LI9L_y7Ab5vWcDcy_HolvjjuHTC7DHI9ntV-eR_v0@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125156>
 
-Linus Torvalds wrote:
+The 06/08/09, Brandon Casey wrote:
+
+>  git-am.sh     |   14 ++++++++++++++
+>  t/t4150-am.sh |    2 +-
+>  2 files changed, 15 insertions(+), 1 deletions(-)
 > 
-> On Thu, 6 Aug 2009, Linus Torvalds wrote:
->> In particular, I'm thinking about the warnign in the intel optimization 
->> manual:
->>
->> 	The rotate by immediate and rotate by register instructions are 
->> 	more expensive than a shift. The rotate by 1 instruction has the 
->> 	same latency as a shift.
->>
->> so it's very possible that "rotate by 1" is much better than other 
->> rotates.
-> 
-> Hmm. Probably not. Googling more seems to indicate that rotates and shifts 
-> have a fixed 4-cycle latency on Northwood. I'm not seeing anything that 
-> indicates that a single-bit rotate/shift would be any faster.
-> 
-> (And remember, if 4 cycles doesn't sound so bad: that's enough of a 
-> latency to do _16_ "simple" ALU's, since they can be double-pumped in the 
-> two regular ALU's).
+> diff --git a/git-am.sh b/git-am.sh
+> index d64d997..dd60f5d 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -191,6 +191,20 @@ check_patch_format () {
+>  			esac
+>  			;;
+>  		esac
+> +		if test -z "$patch_format" &&
+> +			test -n "$l1" &&
+> +			test -n "$l2" &&
+> +			test -n "$l3"
+> +		then
+> +			# This begins with three non-empty lines.  Is this a
+> +			# piece of e-mail a-la RFC2822?  Grab all the headers,
+> +			# discarding the indented remainder of folded lines,
+> +			# and see if it looks like that they all begin with the
+> +			# header field names...
+> +			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
+> +			egrep -v '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
+> +			patch_format=mbox
+> +		fi
+>  	} < "$1" || clean_abort
+>  }
 
-looking at the generated code, there is a lot of ro[rl] movement, so it's
-likely that contributes to the problem.
+May I ask why you resurrect this "first three lines check for rfc2822"
+instead of dumbly falling back to the "mbox" patch_format? Performance?
 
-I also see 44 extra lea instructions, 44 less adds and changes like:
-        [...]
-        mov    XX(%eRX),%eRX
-        xor    XX(%eRX),%eRX
--       and    %eRX,%eRX
-+       and    XX(%eRX),%eRX
-        xor    XX(%eRX),%eRX
--       add    %eRX,%eRX
--       ror    $0x2,%eRX
--       mov    %eRX,XX(%eRX)
-+       lea    (%eRX,%eRX,1),%eRX
-        mov    XX(%eRX),%eRX
-        bswap  %eRX
-        mov    %eRX,XX(%eRX)
-        mov    %eRX,%eRX
-+       ror    $0x2,%eRX
-+       mov    %eRX,XX(%eRX)
-+       mov    %eRX,%eRX
-        rol    $0x5,%eRX
-        mov    XX(%eRX),%eRX
--       mov    XX(%eRX),%eRX
-        [...]
-which could mean that gcc did a better job of register allocation
-(where "better job" might be just luck).
-
-artur
+-- 
+Nicolas Sebrecht
