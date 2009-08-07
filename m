@@ -1,99 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to 
- significantly speed up packing/walking
-Date: Fri, 7 Aug 2009 08:12:34 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908070808340.8306@pacific.mpi-cbg.de>
-References: <op.ux8i6hrbtdk399@sirnot.private>  <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>  <4A7AEFA8.5010001@drmicha.warpmail.net> <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com> <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
- <4A7B95A8.2010000@vilain.net>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [ANNOUNCE] tortoisegit 0.9.1.0
+Date: Fri, 7 Aug 2009 09:48:28 +0300
+Message-ID: <43d8ce650908062348x3bbfac30w6be13ffce43b33d9@mail.gmail.com>
+References: <1976ea660908050700u9b16a8ci169825b121f02cb9@mail.gmail.com>
+	 <e1a5e9a00908062225y112984d9gc0486ebcda25ab57@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nick Edelen <sirnot@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Fri Aug 07 08:12:24 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
+	tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
+	tortoisegit-users@googlegroups.com,
+	tortoisegit-announce@googlegroups.com, tortoisegit@googlegroups.com
+To: Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 08:48:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZIgf-0006Kv-H9
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 08:12:22 +0200
+	id 1MZJFm-00011x-Mz
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 08:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754808AbZHGGML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 02:12:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754859AbZHGGMK
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 02:12:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43806 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752786AbZHGGMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 02:12:07 -0400
-Received: (qmail invoked by alias); 07 Aug 2009 06:12:06 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp046) with SMTP; 07 Aug 2009 08:12:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+W70pbjZmWvx30LQ2zPLQqaSJxRhU/QbNhSwKMYT
-	SLDmN3nbCLECxk
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <4A7B95A8.2010000@vilain.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.63
+	id S1755354AbZHGGs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 02:48:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754982AbZHGGs3
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 02:48:29 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:34849 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754811AbZHGGs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 02:48:28 -0400
+Received: by gxk9 with SMTP id 9so1830694gxk.13
+        for <git@vger.kernel.org>; Thu, 06 Aug 2009 23:48:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MBXbHsmC62qKtLnojWkc84xcOqyN8uRVKIMWPBWSnYc=;
+        b=dNPPZxKF7Uvdn94nX0fSBhVXh3HoapR2Sck3bNgn1ipolSu8I/N3ZcYta7H97J4E+y
+         lc+ag+n/IZvDGO4aTTWFWnhXAKEiaxIRlAoVhkfyePVKL73wsHCp9hSLZxtIZwKq3b2S
+         XrHvSDPBCsCJhKAY/6fNys/tzjWxislYnsXBc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=inhPbqHT28aFYgc972L/4F3rDAsrHQdeLbgI4Z7iS1clsHUM407AH9GBpiJpYCJbW+
+         gD/XgArovjU3W0fmrJtN8OjqIyaSH3ei7iaiMQ5JFMwDKCnDV6xsxoMeD0hZFpHWeHDn
+         bOK7XrVvPU9cKW9JvrY9cP5rxmbVqCnoZmsJA=
+Received: by 10.151.105.18 with SMTP id h18mr1810755ybm.45.1249627708877; Thu, 
+	06 Aug 2009 23:48:28 -0700 (PDT)
+In-Reply-To: <e1a5e9a00908062225y112984d9gc0486ebcda25ab57@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125186>
 
-Hi,
+How hard would it be to port this to KDE?
+What would be involved?
 
-On Fri, 7 Aug 2009, Sam Vilain wrote:
 
-> Johannes Schindelin wrote:
-> >> the short answer is that cache slices are totally independant of pack 
-> >> files.
-> >>     
-> >
-> > My idea with that was that you already have a SHA-1 map in the pack 
-> > index, and if all you want to be able to accelerate the revision 
-> > walker, you'd probably need something that adds yet another mapping, 
-> > from commit to parents and tree, and from tree to sub-tree and blob 
-> > (so you can avoid unpacking commit and tree objects).
-> >   
-> 
-> Tying indexes together like that is not a good idea in the database
-> world.
-
-This is not the same index as in the database world.  It is more 
-comparable with a cached view.  And there, it is generally a good idea to 
-keep related things in the same cached view (with an outer join), rather 
-than having two primary keys for almost every record.
-
-> Especially as in this case as Nick mentions, the domain is subtly 
-> different (ie pack vs dag). Unfortunately you just can't try to pretend 
-> that they will always be the same; you can't force a full repack on 
-> every ref change!
-
-No, but you do not need that, either.  In the setting that is most likely 
-the most thankful one, i.e. a git:// server, you _want_ to keep the 
-repository "as packed as possible", otherwise the rev cache improvements 
-will be lost in the bad packing performance anyway.
-
-> > Still, there is some redundancy between the pack index and your cache, 
-> > as you have to write out the whole list of SHA-1s all over again.  I 
-> > guess it is time to look at the code instead of asking stupid 
-> > questions.
-> >   
-> 
-> "Disk is cheap" :-)
-
-Disk I/O ain't.
-
-(Size of the I/O caches, yaddayadda, I'm sure you get my point).
-
-Ciao,
-Dscho
+John
