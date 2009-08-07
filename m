@@ -1,147 +1,195 @@
-From: Mark Rada <markrada26@gmail.com>
-Subject: Re: Gitweb giving me some warnings in Apache's error_log
-Date: Fri, 7 Aug 2009 13:56:03 -0400
-Message-ID: <88f4c4ee0908071056g5d9da83ft77d56ec2e5e84bac@mail.gmail.com>
-References: <533D6DDF-4DAC-4A86-A6F7-95B54B77E48B@gmail.com>
-	 <m3my6bpv6v.fsf@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Change mentions of "git programs" to "git commands"
+Date: Fri, 07 Aug 2009 11:15:42 -0700
+Message-ID: <7v4osj1odt.fsf@alter.siamese.dyndns.org>
+References: <4a7c3971.170d660a.3caa.20b3@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 20:04:27 2009
+To: Ori Avtalion <ori@avtalion.name>
+X-From: git-owner@vger.kernel.org Fri Aug 07 20:16:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZTnk-0002Zn-WB
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 20:04:25 +0200
+	id 1MZTz3-0007yz-Pv
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 20:16:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898AbZHGSEP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Aug 2009 14:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754895AbZHGSEP
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 14:04:15 -0400
-Received: from mail-bw0-f215.google.com ([209.85.218.215]:46560 "EHLO
-	mail-bw0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754874AbZHGSEO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Aug 2009 14:04:14 -0400
-X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Aug 2009 14:04:13 EDT
-Received: by bwz11 with SMTP id 11so1598596bwz.39
-        for <git@vger.kernel.org>; Fri, 07 Aug 2009 11:04:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5nKPxMxSO3WQC9EGpv5g16Mr8JpJG98pcnyjEgVOmdA=;
-        b=XLDque4lofTSqCLrD0KR617z/LVfPvg1LqVWcRhKJ9R+BoJE+OaQPtT9flkV/kF3eE
-         YU2jQ4cSHoHL7jbQxvG1mCCAk/5IXcXFkZ6leOhf/IsFGhbSn4CUdxQcAmTiICtmPMc8
-         l8F/0KGzHY8MZDfMBXNUp/U2o3HonJX5/Vdfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NpZENR0f3jox7EjA6JhAgOQa33wvhPYgFrtfGHIFf4bp4R1bRDe7lHVswO4GXrwGlN
-         kRO5xy69L7k0xy5SSu9rdB5JBO7pLuvAS6tCYUku1oQBV/eohoQa0lnUryy75LZtjgIc
-         ZMsm41MkihL8F+kH5RaV5lZvhied128ld1amo=
-Received: by 10.204.58.136 with SMTP id g8mr69208bkh.50.1249667763974; Fri, 07 
-	Aug 2009 10:56:03 -0700 (PDT)
-In-Reply-To: <m3my6bpv6v.fsf@localhost.localdomain>
+	id S932169AbZHGSPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 14:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932146AbZHGSPt
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 14:15:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:59670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S932139AbZHGSPt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 14:15:49 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1C64C156A;
+	Fri,  7 Aug 2009 14:15:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2A82C1567; Fri,  7 Aug
+ 2009 14:15:44 -0400 (EDT)
+In-Reply-To: <4a7c3971.170d660a.3caa.20b3@mx.google.com> (Ori Avtalion's
+ message of "Fri\, 7 Aug 2009 17\:24\:21 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 557C5524-837E-11DE-9F88-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125208>
 
-Let me double check my understanding.
+Ori Avtalion <ori@avtalion.name> writes:
 
-The warnings will not occur if Gitweb is run as a regular CGI script
-because then it won't be nested inside a call from
-ModPerl::Registry?
+> Most of the docs and printouts refer to "commands".
+> This patch changes the other terminology to be consistent.
 
-Will it also not complain if I provided my own $project_list in the fir=
-st place?
+Thanks, but not really.
 
-Also, I looked at some examples from the second and third page of an ar=
-ticle
-on the subject, http://www.perl.com/pub/a/2002/05/07/mod_perl.html?
-and it looks "fixable". Is there a particular reason why any of them ar=
-e not
-desirable?
+> @@ -605,7 +605,7 @@ color.interactive.<slot>::
+>  	Use customized color for 'git-add --interactive'
+>  	output. `<slot>` may be `prompt`, `header`, `help` or `error`, for
+>  	four distinct types of normal output from interactive
+> -	programs.  The values of these variables may be specified as
+> +	commands.  The values of these variables may be specified as
 
-Note: I haven't tried anything yet, just wondering if you know off hand
+This is good.
 
---
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
+>  color.pager::
+> @@ -1113,7 +1113,7 @@ instaweb.port::
+>  	linkgit:git-instaweb[1].
+>  
+>  interactive.singlekey::
+> -	In interactive programs, allow the user to provide one-letter
+> +	In interactive commands, allow the user to provide one-letter
 
+This is good.
 
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index d313795..20bf512 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -1,7 +1,7 @@
+>  -q::
+>  --quiet::
+>  	Pass --quiet to git-fetch-pack and silence any other internally
+> -	used programs.
+> +	used utilities.
 
-On Fri, Aug 7, 2009 at 10:14 AM, Jakub Narebski<jnareb@gmail.com> wrote=
-:
-> Mark A Rada <markrada26@gmail.com> writes:
->
->> It doesn't seem to cause any other problems, but I don't know if it =
-is
->> significant or not.
->>
->> [Fri Aug =A07 08:51:13 2009] gitweb.cgi: Variable "$project_maxdepth=
-"
->> may be unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi lin=
-e
->> 2296.
->> [Fri Aug =A07 08:51:13 2009] gitweb.cgi: Variable "$projectroot" may=
- be
->> unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line 2304.
->>
->>
->> Apache 2.2.12/ mod_perl 2.04/ perl 5.8.8
->
-> From perldiag(1) manpage:
->
-> =A0Variable "%s" may be unavailable
->
-> =A0 =A0(W closure) An inner (nested) anonymous subroutine is inside a
-> =A0 =A0named subroutine, and outside that is another subroutine; and =
-the
-> =A0 =A0anonymous (innermost) subroutine is referencing a lexical vari=
-able
-> =A0 =A0defined in the outermost subroutine. =A0For example:
->
-> =A0 =A0 =A0sub outermost { my $a; sub middle { sub { $a } } }
->
-> =A0 =A0If the anonymous subroutine is called or referenced (directly =
-or
-> =A0 =A0indirectly) from the outermost subroutine, it will share the
-> =A0 =A0variable as you would expect. =A0But if the anonymous subrouti=
-ne is
-> =A0 =A0called or referenced when the outermost subroutine is not acti=
-ve,
-> =A0 =A0it will see the value of the shared variable as it was before =
-and
-> =A0 =A0during the *first* call to the outermost subroutine, which is
-> =A0 =A0probably not what you want.
->
-> =A0 =A0In these circumstances, it is usually best to make the middle
-> =A0 =A0subroutine anonymous, using the "sub {}" syntax. =A0Perl has
-> =A0 =A0specific support for shared variables in nested anonymous
-> =A0 =A0subroutines; a named subroutine in between interferes with thi=
-s
-> =A0 =A0feature.
->
-> The warning is about 'wanted' anonymous subroutine passed to
-> File::Find::find. =A0The "middle" subroutine is git_get_projects_list=
-,
-> and the "outermost" is mod_perl / ModPerl::Registry request loop.
->
-> We can't make git_get_projects_list anonymous, but anonymous
-> subroutine is not called or referenced outside git_get_projects_list,
-> nor it is called or referenced outside mod_perl request/event loop.
->
-> This warning is harmless... but I do not know how to silence it.
->
-> --
-> Jakub Narebski
-> Poland
-> ShadeHawk on #git
->
+This does not have much to do with what you claim to have done in the
+commit log message nor the title.  Probably "utilities" is a slightly
+better word than "programs" in this context but not by a wide margin.
+
+> -'git-rev-list' is a very essential git program, since it
+> +'git-rev-list' is a very essential git command, since it
+>  provides the ability to build and traverse commit ancestry graphs. For
+>  this reason, it has a lot of different options that enables it to be
+>  used by commands as different as 'git-bisect' and
+
+Ok, but probably we would want to say "git rev-list" here.
+
+>  --exec-path::
+> -	Path to wherever your core git programs are installed.
+> +	Path to wherever your core git commands are installed.
+
+I do not think this is a good change.
+
+When you talk about git "command", e.g. "'git rev-list' is an essential
+command", you are talking about an abstract concept.  In the reader's
+world view, there is one single toplevel program called "git" and it has
+various commands, one of which is 'rev-list'.  But this description is not
+about an abstract concept of command, but is about a particular
+implementation detail.  For every git command, there is a corresponding
+git _program_ that implements that command, and --exec-path tells you (or
+you use --exec-path to tell the git toplevel program) where they are.
+
+You kept this intact in gitcore-tutorial:
+
+    ... Also
+    you need to make sure that you have the 'git-receive-pack'
+    program on the `$PATH`.
+
+and I think you did the right thing.  This is about a concrete instance of
+a program.  If you really really want to say _command_, you would probably
+want to do something like this instead:
+
+ --exec-path::
+-	Path to wherever your core git programs are installed.
++	Path to the directory that holds programs that implements git commands.
+
+> @@ -327,7 +327,7 @@ Synching repositories
+>  
+>  include::cmds-synchingrepositories.txt[]
+>  
+> -The following are helper programs used by the above; end users
+> +The following are helper commands used by the above; end users
+>  typically do not use them directly.
+
+Ok.
+
+>  The attribute `merge` affects how three versions of a file is
+>  merged when a file-level merge is necessary during `git merge`,
+> -and other programs such as `git revert` and `git cherry-pick`.
+> +and other commands such as `git revert` and `git cherry-pick`.
+
+Ok.
+
+> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore-tutorial.txt
+> index 7ba5e58..b3640c4 100644
+> --- a/Documentation/gitcore-tutorial.txt
+> +++ b/Documentation/gitcore-tutorial.txt
+> @@ -12,7 +12,7 @@ git *
+>  DESCRIPTION
+>  -----------
+>  
+> -This tutorial explains how to use the "core" git programs to set up and
+> +This tutorial explains how to use the "core" git commands to set up and
+>  work with a git repository.
+>  
+>  If you just need to use git as a revision control system you may prefer
+
+Ok.
+
+> @@ -1328,7 +1328,7 @@ into it later. Obviously, this repository creation needs to be
+>  done only once.
+>  
+>  [NOTE]
+> -'git-push' uses a pair of programs,
+> +'git-push' uses a pair of commands,
+>  'git-send-pack' on your local machine, and 'git-receive-pack'
+>  on the remote machine. The communication between the two over
+>  the network internally uses an SSH connection.
+
+Ok.
+
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> index 0b88a51..67ebffa 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -4131,7 +4131,7 @@ What does this mean?
+>  
+>  `git rev-list` is the original version of the revision walker, which
+>  _always_ printed a list of revisions to stdout.  It is still functional,
+> -and needs to, since most new Git programs start out as scripts using
+> +and needs to, since most new Git commands start out as scripts using
+>  `git rev-list`.
+
+Ok.
+
+>  `git rev-parse` is not as important any more; it was only used to filter out
+> diff --git a/help.c b/help.c
+> index 6c46d8b..57a0e0e 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -334,7 +334,7 @@ const char *help_unknown_cmd(const char *cmd)
+>  		const char *assumed = main_cmds.names[0]->name;
+>  		main_cmds.names[0] = NULL;
+>  		clean_cmdnames(&main_cmds);
+> -		fprintf(stderr, "WARNING: You called a Git program named '%s', "
+> +		fprintf(stderr, "WARNING: You called a Git command named '%s', "
+>  			"which does not exist.\n"
+>  			"Continuing under the assumption that you meant '%s'\n",
+>  			cmd, assumed);
+
+Ok.
