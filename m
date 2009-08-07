@@ -1,94 +1,75 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to	significantly
- speed up packing/walking
-Date: Thu, 06 Aug 2009 19:43:16 -0400
-Message-ID: <4A7B6A94.9020200@gmail.com>
-References: <op.ux8i6hrbtdk399@sirnot.private> <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de> <4A7AEFA8.5010001@drmicha.warpmail.net> <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com> <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de> <c77435a80908061301n5e855aeci16af392ed3128651@mail.gmail.com> <c77435a80908061330h2461012at8b877970cab4906b@mail.gmail.com> <20090806203223.GK1033@spearce.org> <4A7B68C4.8070406@gmail.com> <20090806233739.GL1033@spearce.org>
-Reply-To: gitzilla@gmail.com
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
+Date: Thu, 6 Aug 2009 17:13:04 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908061709400.3390@localhost.localdomain>
+References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
+ <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <4A7B5F4C.30102@gmail.com>
+ <alpine.LFD.2.01.0908061559120.3390@localhost.localdomain> <alpine.LFD.2.01.0908061609340.3390@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nick Edelen <sirnot@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Sam Vilain <sam@vilain.net>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 07 01:43:40 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 02:13:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZCcV-00033P-B7
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 01:43:39 +0200
+	id 1MZD5K-0005dF-GI
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 02:13:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756932AbZHFXnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Aug 2009 19:43:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756587AbZHFXnV
-	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 19:43:21 -0400
-Received: from mail-yw0-f177.google.com ([209.85.211.177]:35035 "EHLO
-	mail-yw0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756597AbZHFXnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Aug 2009 19:43:19 -0400
-Received: by ywh7 with SMTP id 7so1638602ywh.21
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 16:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=EA7RTyJQJYcUoJSXzOm6ym4uSSAC74jbrlfIMfJA5i0=;
-        b=CQhqIPebrLIhvWM4/CcV11Pqv5X8I7EAp7IHDTgNtqsdIRrw7QH3yNg7TDdqyxVr6+
-         dDE88Ovkmv/Cb266wHrkV81PGp+TAqF3cZAMQ9Zr3hGcTnMOxsByITiM/2pRNKk77B8W
-         m7nHpn9+AUIXLYrnyHZv0+tSQlhqZt/SIX8qQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=mNNc2qa5aCIciV7RphPsgRTu5LyfnRAr8Ggf2WWNIToFw1mu5DKk5vkzammVCHrRRy
-         7LFmjGIt4LWUvMoZkHDNnDOkLIYaBRqYpJIDzsQFYz5VJn67q5eWBWEiqrh1tkrUkXNP
-         sCRiSrT00HOH2r77bpDDcND7BQwoOtu8y4+wI=
-Received: by 10.90.100.20 with SMTP id x20mr364956agb.45.1249602198663;
-        Thu, 06 Aug 2009 16:43:18 -0700 (PDT)
-Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
-        by mx.google.com with ESMTPS id 20sm1221993agd.63.2009.08.06.16.43.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Aug 2009 16:43:17 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20090806233739.GL1033@spearce.org>
+	id S1756580AbZHGANI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Aug 2009 20:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754670AbZHGANI
+	(ORCPT <rfc822;git-outgoing>); Thu, 6 Aug 2009 20:13:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:59709 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754017AbZHGANH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Aug 2009 20:13:07 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n770D4Lq021596
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 Aug 2009 17:13:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n770D4vI021340;
+	Thu, 6 Aug 2009 17:13:04 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.01.0908061609340.3390@localhost.localdomain>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.966 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125145>
 
-Shawn O. Pearce wrote:
-> A Large Angry SCM <gitzilla@gmail.com> wrote:
->> Shawn O. Pearce wrote:
->>> Nick Edelen <sirnot@gmail.com> wrote:
->>>> Hrmm, I just realized that it dosn't actually cache paths/names...
->>> You may not need the path name, but instead the hash value that
->>> pack-objects computes from the path name.
->> Please do NOT expose the hash values. The hash used by pack-objects is  
->> an implementation detail of the heuristics used by the _current_ object  
->> packing code. It would be a real shame to have to maintain backward  
->> compatibility with it at some future date after the packing machinery  
->> has changed.
-> 
-> This is a local cache.  If there was a version number in the header,
-> and the hash function changes, we could just bump the version number
-> and invalidate all of the caches.
-> 
-> No sense in storing (and doing IO of) huge duplicate string values
-> for something where we really only need 32 bits, and where a
-> recompute from scratch only costs a minute.
-> 
 
-That will work for me if the cache gets a version number and iff the 
-pack-objects hash code gets big warning comments about the cache code 
-dependency.
+
+On Thu, 6 Aug 2009, Linus Torvalds wrote:
+> 
+> In particular, I'm thinking about the warnign in the intel optimization 
+> manual:
+> 
+> 	The rotate by immediate and rotate by register instructions are 
+> 	more expensive than a shift. The rotate by 1 instruction has the 
+> 	same latency as a shift.
+> 
+> so it's very possible that "rotate by 1" is much better than other 
+> rotates.
+
+Hmm. Probably not. Googling more seems to indicate that rotates and shifts 
+have a fixed 4-cycle latency on Northwood. I'm not seeing anything that 
+indicates that a single-bit rotate/shift would be any faster.
+
+(And remember, if 4 cycles doesn't sound so bad: that's enough of a 
+latency to do _16_ "simple" ALU's, since they can be double-pumped in the 
+two regular ALU's).
+
+I think long-running ALU ops that feed into a store (spill) also happen to 
+be the thing that makes the dreaded store-buffer replay trap nasties 
+happen more (load vs store scheduled badly, and then you end up spending 
+tens of cycles just replaying).
+
+			Linus
