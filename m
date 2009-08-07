@@ -1,123 +1,76 @@
-From: "George Spelvin" <linux@horizon.com>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: 7 Aug 2009 03:36:01 -0400
-Message-ID: <20090807073601.7651.qmail@science.horizon.com>
-Cc: art.08.09@gmail.com, git@vger.kernel.org, linux@horizon.com
-To: torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Fri Aug 07 09:36:24 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] git-ls-files.txt: clarify what "other files" mean for --other
+Date: Fri, 07 Aug 2009 10:15:01 +0200
+Message-ID: <vpqprb8xcoq.fsf@bauges.imag.fr>
+References: <1249571508-21897-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vmy6cfz9j.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 10:15:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZJzz-0007ZT-9V
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 09:36:23 +0200
+	id 1MZKbp-0004hz-9E
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 10:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757083AbZHGHgL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 03:36:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757065AbZHGHgL
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 03:36:11 -0400
-Received: from science.horizon.com ([71.41.210.146]:12461 "HELO
-	science.horizon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757077AbZHGHgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 03:36:03 -0400
-Received: (qmail 7652 invoked by uid 1000); 7 Aug 2009 03:36:01 -0400
+	id S1757230AbZHGIPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 04:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757200AbZHGIPP
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 04:15:15 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56859 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757212AbZHGIPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 04:15:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n778E9m5021227
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 7 Aug 2009 10:14:09 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MZKbN-0000hK-6h; Fri, 07 Aug 2009 10:15:01 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MZKbN-0006Wq-3g; Fri, 07 Aug 2009 10:15:01 +0200
+In-Reply-To: <7vmy6cfz9j.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 06 Aug 2009 13\:44\:40 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 07 Aug 2009 10:14:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n778E9m5021227
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1250237651.19214@2u2kXnnc6pTEZo+UycvBzQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125188>
 
-> Basically, older P4's will I think shift one bit at a time. So while even 
-> Prescott is relatively weak in the shifter department, pre-prescott 
-> (Willamette and Northwood) are _really_ weak. If your P4 is one of those, 
-> you really shouldn't use it to decide on optimizations.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for the warning.  The only P4 I have a login on is a Willamette, so
-I guess it's a bad optimization target:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>> Actually, if it was not about backward compatibility, I'd just replace
+>> -o, --other with -u, --untracked and talk about "untracked" everywhere,
+>> but compatibility matters more than consistancy for plumbing.
+>
+> "ls-files -u" talks about (u)nmerged files.
 
-processor       : 0
-vendor_id       : GenuineIntel
-cpu family      : 15
-model           : 1
-model name      : Intel(R) Pentium(R) 4 CPU 1.60GHz
-stepping        : 2
-cpu MHz         : 1593.888
-cache size      : 256 KB
-fdiv_bug        : no
-hlt_bug         : no
-f00f_bug        : no
-coma_bug        : no
-fpu             : yes
-fpu_exception   : yes
-cpuid level     : 2
-wp              : yes
-flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pebs bts
-bogomips        : 3187.77
-clflush size    : 64
-power management:
+(forgot this, so -u is even less an option)
 
+> What consistency did you have in mind?
 
+I found no place outside git ls-files where Git talks about "other"
+files. Everywhere else, it talks about Untracked files.
 
-BTW, I'm having a bit of a problem with sha1bench.  Because the number
-of rounds is multiplied by 10 until it takes more than mintime, and
-the watchdog timer is set to 12*mintime, if I just barely miss the
-threshold, I can hit the watchdog on any code that's more than 20% slower
-than the reference rfc3174 code:
+As for the -u option, git status/commit -u[mode] is for Untracked
+files, not unmerged ones.
 
-# /tmp/sha1bench 
-#Initializing... Rounds: 10000000, size: 625000K, time: 6.904s, speed: 88.41MB/s
-#             TIME[s] SPEED[MB/s]
-rfc3174         6.912       88.31
-# New hash result: 0489b02aee9fbd82b0bb0cba96f8047e42f543b8
-rfc3174         6.911       88.31
-linus           3.002       203.3
-linusas         3.253       187.7
-linusas2        3.059       199.6
-mozilla         10.86       56.22
-mozillaas       10.33       59.09
-openssl         2.145       284.5
-spelvin         1.933       315.8
-spelvina        1.933       315.8
-nettle          2.161       282.4
-
-I had to bump it to 20 times to be able to get past the mozilla code.
-
-You can still have nice round numbers with smaller incements of 2x or 2.5x:
-
-    do {
--      rounds *= 10;
-+      rounds *= 2;
-+      if (rounds % 9 == 4)
-+        rounds += rounds/4;     /* Step 1, 2, 5, 10, 20, 50, 100... */
-       uWATCHDOG(mintime*20);
-       t1 = GETTIME();
-       for (i=0; i<rounds; i++) {
-          SHA1Input(sc, arr512b, sizeof(arr512b));
-          if (i<64) {
-             SHA1Result(sc, arr512b+
-                     (i+arr512b[i]+arr512b[arr512b[i]%64]+
-                      arr512b[63-i]+arr512b[arr512b[63-i]%64]) %
-                     (sizeof(arr512b)-20));
-             SHA1Reset(sc);
-             }
-          }
-       t2 = GETTIME(); td = t2-t1;
-       }
-    while (td<mintime);
-
-And yeah, my P4 is touchy:
-n# /var/tmp/sha1bench 
-#Initializing... Rounds: 500000, size: 31250K, time: 0.9736s, speed: 31.35MB/s
-#             TIME[s] SPEED[MB/s]
-rfc3174        0.9931       30.73
-# New hash result: 2872616106e163ae9c7c8d12a38bef032323c844
-rfc3174        0.9491       32.16
-linus          0.4906        62.2
-linusas        0.5799       52.62
-linusas2       0.4859       62.81
-mozilla         1.302       23.44
-mozillaas       1.234       24.74
-openssl         0.226         135
-spelvin        0.2298       132.8
-spelvina       0.2494       122.4
-nettle         0.3687       82.78
+--
+Matthieu
