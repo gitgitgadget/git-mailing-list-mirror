@@ -1,117 +1,103 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Gitweb giving me some warnings in Apache's error_log
-Date: Fri, 07 Aug 2009 07:14:52 -0700 (PDT)
-Message-ID: <m3my6bpv6v.fsf@localhost.localdomain>
-References: <533D6DDF-4DAC-4A86-A6F7-95B54B77E48B@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to
+ significantly speed up packing/walking
+Date: Fri, 07 Aug 2009 10:18:14 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908071010580.16073@xanadu.home>
+References: <op.ux8i6hrbtdk399@sirnot.private>
+ <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>
+ <4A7AEFA8.5010001@drmicha.warpmail.net>
+ <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
+ <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
+ <4A7B95A8.2010000@vilain.net>
+ <alpine.LFD.2.00.0908070031160.16073@xanadu.home>
+ <alpine.DEB.1.00.0908070806350.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark A Rada <markrada26@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 16:15:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Sam Vilain <sam@vilain.net>, Nick Edelen <sirnot@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 07 16:19:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZQDn-0003So-DH
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 16:15:03 +0200
+	id 1MZQHe-0005dd-OH
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 16:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757439AbZHGOOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 10:14:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757419AbZHGOOx
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 10:14:53 -0400
-Received: from mail-yw0-f183.google.com ([209.85.211.183]:52702 "EHLO
-	mail-yw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754082AbZHGOOx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 10:14:53 -0400
-Received: by mail-yw0-f183.google.com with SMTP id 13so1981546ywh.15
-        for <git@vger.kernel.org>; Fri, 07 Aug 2009 07:14:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=x7P7LfyUDvLQk9tcqqvgUcE5HPyzLC2h3LVd1lA+Ms4=;
-        b=kyy/rkEWWOvuEW/k153p5TBirWxHlhhUFOizhzBWJF9IojKjpEwWLKePyWO3EDLxPe
-         l6XB2CZsqW3txN94m1JfT8zUZyYnpxmzRTa+5eQMrO/koww9RabX/X4mPiTeaY8ENCj9
-         SMLWhG1V13fhct/Si95WFA9am+sux8u5dSf5c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=i4HSITAg4yEuHD5ImJFd42cMOXzBi/BFjABGk3ZkOk0qAHicS18agABgufyfa/YwcX
-         OGEMMLHyPCD8N5NCfeZ+eH7n5eOjo4c+lONPuNW4vXJuUI0R3AtJ0NbJuqHMKIFqwzo+
-         K8GKir2i7YkF0Zec5gAINw9CNQRVV57zA8KYQ=
-Received: by 10.100.42.19 with SMTP id p19mr346289anp.137.1249654493995;
-        Fri, 07 Aug 2009 07:14:53 -0700 (PDT)
-Received: from localhost.localdomain ([72.14.241.7])
-        by mx.google.com with ESMTPS id 9sm3073127agc.22.2009.08.07.07.14.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Aug 2009 07:14:52 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n77EEnbV020079;
-	Fri, 7 Aug 2009 16:14:49 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n77EEmo1020076;
-	Fri, 7 Aug 2009 16:14:48 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <533D6DDF-4DAC-4A86-A6F7-95B54B77E48B@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757495AbZHGOSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 10:18:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757399AbZHGOSf
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 10:18:35 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:54848 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754082AbZHGOSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 10:18:34 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KO000A6QFQEUV50@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 07 Aug 2009 10:18:15 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.DEB.1.00.0908070806350.8306@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125198>
 
-Mark A Rada <markrada26@gmail.com> writes:
+On Fri, 7 Aug 2009, Johannes Schindelin wrote:
 
-> It doesn't seem to cause any other problems, but I don't know if it is
-> significant or not.
+> Hi,
 > 
-> [Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$project_maxdepth"
-> may be unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line
-> 2296.
-> [Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$projectroot" may be
-> unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line 2304.
+> On Fri, 7 Aug 2009, Nicolas Pitre wrote:
 > 
+> > On Fri, 7 Aug 2009, Sam Vilain wrote:
+> > 
+> > > Johannes Schindelin wrote:
+> > > >> the short answer is that cache slices are totally independant of 
+> > > >> pack files.
+> > > >>     
+> > > >
+> > > > My idea with that was that you already have a SHA-1 map in the pack 
+> > > > index, and if all you want to be able to accelerate the revision 
+> > > > walker, you'd probably need something that adds yet another mapping, 
+> > > > from commit to parents and tree, and from tree to sub-tree and blob 
+> > > > (so you can avoid unpacking commit and tree objects).
+> > > >   
+> > > 
+> > > Tying indexes together like that is not a good idea in the database 
+> > > world. Especially as in this case as Nick mentions, the domain is 
+> > > subtly different (ie pack vs dag). Unfortunately you just can't try to 
+> > > pretend that they will always be the same; you can't force a full 
+> > > repack on every ref change!
+> > 
+> > Right.  And the rev cache must work even if the repository is not 
+> > packed.
 > 
-> Apache 2.2.12/ mod_perl 2.04/ perl 5.8.8
+> Umm, why?  AFAICT the principal purpose of the rev cache is to help work 
+> loads on, say, www.kernel.org.
 
->From perldiag(1) manpage:
+So what?
 
-  Variable "%s" may be unavailable
+Speeding up rev-list with a rev cache is completely orthogonal to 
+whether the repository is packed or not.  It is like having a "git diff" 
+result cache: no one would think of stuffing that in the pack index.
 
-    (W closure) An inner (nested) anonymous subroutine is inside a
-    named subroutine, and outside that is another subroutine; and the
-    anonymous (innermost) subroutine is referencing a lexical variable
-    defined in the outermost subroutine.  For example:
+If we want to improve on the repository packing format, that must be 
+doable without bothering with an independent concept such as a rev 
+cache.
 
-      sub outermost { my $a; sub middle { sub { $a } } }
+> I am unlikely to notice the improvements in my regular "git log" calls 
+> that only show a couple of pages before I quit the pager.
 
-    If the anonymous subroutine is called or referenced (directly or
-    indirectly) from the outermost subroutine, it will share the
-    variable as you would expect.  But if the anonymous subroutine is
-    called or referenced when the outermost subroutine is not active,
-    it will see the value of the shared variable as it was before and
-    during the *first* call to the outermost subroutine, which is
-    probably not what you want.
+Indeed.  But what is your point again?
 
-    In these circumstances, it is usually best to make the middle
-    subroutine anonymous, using the "sub {}" syntax.  Perl has
-    specific support for shared variables in nested anonymous
-    subroutines; a named subroutine in between interferes with this
-    feature.
 
-The warning is about 'wanted' anonymous subroutine passed to
-File::Find::find.  The "middle" subroutine is git_get_projects_list,
-and the "outermost" is mod_perl / ModPerl::Registry request loop.
-
-We can't make git_get_projects_list anonymous, but anonymous
-subroutine is not called or referenced outside git_get_projects_list,
-nor it is called or referenced outside mod_perl request/event loop.
-
-This warning is harmless... but I do not know how to silence it.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Nicolas
