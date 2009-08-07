@@ -1,61 +1,52 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] push: point to 'git pull' and 'git push --force' in case of non-fast forward
-Date: Fri, 07 Aug 2009 21:21:13 +0200
-Message-ID: <vpqzlabwhue.fsf@bauges.imag.fr>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
-	<4A7B3760.2000303@drmicha.warpmail.net>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Problem compiling git-1.6.4 on OpenServer 6.0
+Date: Fri, 7 Aug 2009 13:27:51 -0600
+Message-ID: <alpine.LNX.2.00.0908071326250.13290@suse104.zenez.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Aug 07 21:24:25 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 07 21:34:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZV37-00039T-Hx
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 21:24:22 +0200
+	id 1MZVCw-0007MC-LN
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 21:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933141AbZHGTYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 15:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933119AbZHGTYL
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 15:24:11 -0400
-Received: from imag.imag.fr ([129.88.30.1]:50876 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933112AbZHGTYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 15:24:10 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n77JLETK013251
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 7 Aug 2009 21:21:14 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MZV06-0006tZ-1e; Fri, 07 Aug 2009 21:21:14 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MZV06-0007Vc-0N; Fri, 07 Aug 2009 21:21:14 +0200
-In-Reply-To: <4A7B3760.2000303@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu\, 06 Aug 2009 22\:04\:48 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 07 Aug 2009 21:21:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S933119AbZHGTeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 15:34:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933090AbZHGTeN
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 15:34:13 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:55995 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933057AbZHGTeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 15:34:13 -0400
+X-Greylist: delayed 380 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Aug 2009 15:34:12 EDT
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id E7B506C10EB; Fri,  7 Aug 2009 13:27:51 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id D201193852B
+	for <git@vger.kernel.org>; Fri,  7 Aug 2009 13:27:51 -0600 (MDT)
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125211>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hello,
 
-> May I suggest "Some push was rejected because it would not result in a
-> fast forward:\n Merge in the remote changes (using git pull) before
-> pushing yours\n or use..."?
+I just tried to compile the latest git and I get this error.
 
-Are you sure this is "Some push _was_ ..."? In the general case,
-several branches are rejected, so that would be "were", no?
+CC builtin-pack-objects.o
+UX:acomp: ERROR: "builtin-pack-objects.c", line 1602: integral constant 
+expression expected
+gmake: *** [builtin-pack-objects.o] Error 1
+
+I will look into it when I have a bit more time, but this is a heads up.
+
+Thanks,
 
 -- 
-Matthieu
+Boyd Gerber <gerberb@zenez.com> 801 849-0213
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
