@@ -1,88 +1,111 @@
-From: Artur Skawina <art.08.09@gmail.com>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Fri, 07 Aug 2009 06:16:50 +0200
-Message-ID: <4A7BAAB2.8040807@gmail.com>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain> <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <alpine.LFD.2.01.0908061909310.3390@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: Performance issue of 'git branch'
+Date: Fri, 7 Aug 2009 00:21:33 -0400
+Message-ID: <20090807042132.GA14751@sigill.intra.peff.net>
+References: <20090723160740.GA5736@Pilar.aei.mpg.de>
+ <alpine.LFD.2.01.0907230913230.21520@localhost.localdomain>
+ <20090723165335.GA15598@Pilar.aei.mpg.de>
+ <alpine.LFD.2.01.0907231158280.21520@localhost.localdomain>
+ <alpine.LFD.2.01.0907231212180.21520@localhost.localdomain>
+ <20090723195548.GA28494@Pilar.aei.mpg.de>
+ <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain>
+ <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain>
+ <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
+ <alpine.LFD.2.01.0907241505400.3960@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Carlos R. Mafra" <crmafra2@gmail.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 07 06:17:03 2009
+X-From: git-owner@vger.kernel.org Fri Aug 07 06:21:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZGt4-0000Ob-8A
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 06:17:02 +0200
+	id 1MZGxY-0001Mg-Uk
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 06:21:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753186AbZHGEQx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 00:16:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753151AbZHGEQw
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 00:16:52 -0400
-Received: from mail-bw0-f213.google.com ([209.85.218.213]:64412 "EHLO
-	mail-bw0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752448AbZHGEQw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 00:16:52 -0400
-Received: by bwz9 with SMTP id 9so1159281bwz.41
-        for <git@vger.kernel.org>; Thu, 06 Aug 2009 21:16:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=KcyC6bd3tE07g9a1p/t7xiiCOXhqKWCRtHKVvjGzKvQ=;
-        b=iGpbsaWHhuzgWTeXSDcAqkmNom4MqdyqfG/3qhqXmfyhbwy0uJdhmQGM7UvOIO/qzE
-         dHdRSkSHWRcttJTQ5tnB3MO2a0qwySXI6oT7ZcxgcVDk96GOle0io9zGhRNTSrROjuqu
-         QJIngpUfbuTc/lWicYphX0ka8PRFYxQ3KdbXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=OBEwc/ltYBs/aOzlYbXWwUTS8gfnWp9rV5Eydoh1tYDr9rJeUTEuxWzYcEa9oYHpwM
-         JUP8RsFXIA014um0Jl/ocxV5oytvzm+/4sp0q661jnx1Jiqm/IIjr6yU0Nir+i9QBWjm
-         TWaL0hfh6DLQqPzQClc8/QBlw5GXfvHBUgzUY=
-Received: by 10.204.115.130 with SMTP id i2mr2753286bkq.162.1249618611859;
-        Thu, 06 Aug 2009 21:16:51 -0700 (PDT)
-Received: from ?172.19.43.221? (ip-89-174-120-213.multimo.pl [89.174.120.213])
-        by mx.google.com with ESMTPS id c28sm1714158fka.49.2009.08.06.21.16.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Aug 2009 21:16:51 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
-In-Reply-To: <alpine.LFD.2.01.0908061909310.3390@localhost.localdomain>
-X-Enigmail-Version: 0.95.7
+	id S1752502AbZHGEVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 00:21:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752448AbZHGEVe
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 00:21:34 -0400
+Received: from peff.net ([208.65.91.99]:57622 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752273AbZHGEVd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 00:21:33 -0400
+Received: (qmail 6488 invoked by uid 107); 7 Aug 2009 04:23:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Aug 2009 00:23:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Aug 2009 00:21:33 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.01.0907241505400.3960@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125173>
 
-Linus Torvalds wrote:
+On Fri, Jul 24, 2009 at 03:13:07PM -0700, Linus Torvalds wrote:
+
+> Subject: [PATCH] git-http-fetch: not a builtin
 > 
-> Here's the plain "linus" baseline (ie the "Do register rotation in cpp") 
-> thing, with the fixed "E += TEMP .." thing):
+> We should really try to avoid having a dependency on the curl libraries
+> for the core 'git' executable. It adds huge overheads, for no advantage.
+> 
+> This splits up git-http-fetch so that it isn't built-in.  We still do
+> end up linking with curl for the git binary due to the transport.c http
+> walker, but that's at least partially an independent issue.
+>
+> [...]
+>
+> +git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
+> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+> +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
 
-> 	linus          0.4018       151.9
+Err, this seems to horribly break git-http-fetch (see if you can spot
+the logic error in dependencies). Patch is below.
 
-> and here it is with your patch:
+Nobody noticed, I expect, because nothing in git _uses_ http-fetch
+anymore, now that git-clone is no longer a shell script. I only noticed
+because it tried to build http-push on one of my NO_EXPAT machines.
 
-> 	linus          0.4653       131.2
+It might be an interesting exercise to dust off the old shell scripts
+once in a while and see if they still pass their original tests while
+running on top of a more modern git. It would test that we haven't
+broken the plumbing interfaces.
 
-> (ok, so the numbers aren't horribly stable, but the "plain linus" thing 
-> consistently outperforms here - and underperforms with your patch).
+-- >8 --
+Subject: [PATCH] Makefile: build http-fetch against http-fetch.o
 
-Well, I'd be surprised if one C version would always be the winner on
-every single cpu; that 13% loss[1] I think would be an acceptable compromise,
-if the goal is to have one implementation that does reasonably well on all
-cpus.
+As opposed to http-push.o. We can also drop EXPAT_LIBEXPAT,
+since fetch does not need it.
 
-That's why i asked how the change did on nehalem; if it's a measurable loss
-on anything modern (core2+), then of course the P4s must suffer; and one
-could always blame the compiler ;)
-It's not like the difference in sha1 overhead will be noticeable in normal
-git use.
+This appears to be a bad cut-and-paste in commit 1088261f.
 
-artur
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-[1] I suspect the old gcc is a factor (4.0.4 does <100M/s here).
+diff --git a/Makefile b/Makefile
+index 97d904b..d6362d3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1502,9 +1502,9 @@ http.o http-walker.o http-push.o: http.h
+ 
+ http.o http-walker.o: $(LIB_H)
+ 
+-git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
++git-http-fetch$X: revision.o http.o http-fetch.o http-walker.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(LIBS) $(CURL_LIBCURL)
+ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+ 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+-- 
+1.6.4.117.g6056d.dirty
