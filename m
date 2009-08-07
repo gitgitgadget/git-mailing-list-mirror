@@ -1,111 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Performance issue of 'git branch'
-Date: Fri, 7 Aug 2009 00:21:33 -0400
-Message-ID: <20090807042132.GA14751@sigill.intra.peff.net>
-References: <20090723160740.GA5736@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907230913230.21520@localhost.localdomain>
- <20090723165335.GA15598@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907231158280.21520@localhost.localdomain>
- <alpine.LFD.2.01.0907231212180.21520@localhost.localdomain>
- <20090723195548.GA28494@Pilar.aei.mpg.de>
- <alpine.LFD.2.01.0907241327410.3960@localhost.localdomain>
- <alpine.LFD.2.01.0907241346450.3960@localhost.localdomain>
- <alpine.LFD.2.01.0907241349390.3960@localhost.localdomain>
- <alpine.LFD.2.01.0907241505400.3960@localhost.localdomain>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to
+ significantly speed up packing/walking
+Date: Fri, 07 Aug 2009 00:35:35 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908070031160.16073@xanadu.home>
+References: <op.ux8i6hrbtdk399@sirnot.private>
+ <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>
+ <4A7AEFA8.5010001@drmicha.warpmail.net>
+ <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
+ <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
+ <4A7B95A8.2010000@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Carlos R. Mafra" <crmafra2@gmail.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Aug 07 06:21:42 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nick Edelen <sirnot@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Aug 07 06:36:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZGxY-0001Mg-Uk
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 06:21:41 +0200
+	id 1MZHBP-0005RN-Cj
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 06:35:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752502AbZHGEVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 00:21:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752448AbZHGEVe
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 00:21:34 -0400
-Received: from peff.net ([208.65.91.99]:57622 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752273AbZHGEVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 00:21:33 -0400
-Received: (qmail 6488 invoked by uid 107); 7 Aug 2009 04:23:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Aug 2009 00:23:46 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Aug 2009 00:21:33 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.01.0907241505400.3960@localhost.localdomain>
+	id S1751175AbZHGEfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 00:35:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750840AbZHGEfm
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 00:35:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:57209 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766AbZHGEfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 00:35:41 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KNZ004B7O8PC2X3@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 07 Aug 2009 00:24:27 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4A7B95A8.2010000@vilain.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125174>
 
-On Fri, Jul 24, 2009 at 03:13:07PM -0700, Linus Torvalds wrote:
+On Fri, 7 Aug 2009, Sam Vilain wrote:
 
-> Subject: [PATCH] git-http-fetch: not a builtin
+> Johannes Schindelin wrote:
+> >> the short answer is that cache slices are totally independant of pack 
+> >> files.
+> >>     
+> >
+> > My idea with that was that you already have a SHA-1 map in the pack index, 
+> > and if all you want to be able to accelerate the revision walker, you'd 
+> > probably need something that adds yet another mapping, from commit to 
+> > parents and tree, and from tree to sub-tree and blob (so you can avoid 
+> > unpacking commit and tree objects).
+> >   
 > 
-> We should really try to avoid having a dependency on the curl libraries
-> for the core 'git' executable. It adds huge overheads, for no advantage.
-> 
-> This splits up git-http-fetch so that it isn't built-in.  We still do
-> end up linking with curl for the git binary due to the transport.c http
-> walker, but that's at least partially an independent issue.
->
-> [...]
->
-> +git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
-> +	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> +		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
+> Tying indexes together like that is not a good idea in the database
+> world. Especially as in this case as Nick mentions, the domain is subtly
+> different (ie pack vs dag). Unfortunately you just can't try to pretend
+> that they will always be the same; you can't force a full repack on
+> every ref change!
 
-Err, this seems to horribly break git-http-fetch (see if you can spot
-the logic error in dependencies). Patch is below.
+Right.  And the rev cache must work even if the repository is not 
+packed. So pack index and rev caching are orthogonal things and are best 
+kept separate on disk.
 
-Nobody noticed, I expect, because nothing in git _uses_ http-fetch
-anymore, now that git-clone is no longer a shell script. I only noticed
-because it tried to build http-push on one of my NO_EXPAT machines.
+How big this cache might get would be interesting indeed.
 
-It might be an interesting exercise to dust off the old shell scripts
-once in a while and see if they still pass their original tests while
-running on top of a more modern git. It would test that we haven't
-broken the plumbing interfaces.
 
--- >8 --
-Subject: [PATCH] Makefile: build http-fetch against http-fetch.o
-
-As opposed to http-push.o. We can also drop EXPAT_LIBEXPAT,
-since fetch does not need it.
-
-This appears to be a bad cut-and-paste in commit 1088261f.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Makefile |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 97d904b..d6362d3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1502,9 +1502,9 @@ http.o http-walker.o http-push.o: http.h
- 
- http.o http-walker.o: $(LIB_H)
- 
--git-http-fetch$X: revision.o http.o http-push.o $(GITLIBS)
-+git-http-fetch$X: revision.o http.o http-fetch.o http-walker.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
-+		$(LIBS) $(CURL_LIBCURL)
- git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
--- 
-1.6.4.117.g6056d.dirty
+Nicolas
