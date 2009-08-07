@@ -1,71 +1,117 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] push: point to 'git pull' and 'git push --force' in case
  of non-fast forward
-Date: Fri, 07 Aug 2009 21:46:11 +0200
-Message-ID: <4A7C8483.10704@drmicha.warpmail.net>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>	<4A7B3760.2000303@drmicha.warpmail.net> <vpqzlabwhue.fsf@bauges.imag.fr>
+Date: Fri, 07 Aug 2009 13:05:44 -0700
+Message-ID: <7vd477v17r.fsf@alter.siamese.dyndns.org>
+References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
+ <7v7hxgk8c9.fsf@alter.siamese.dyndns.org> <vpqvdkzwh3j.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	gitster@pobox.com
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Aug 07 21:46:49 2009
+X-From: git-owner@vger.kernel.org Fri Aug 07 22:06:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZVOp-0004GW-IC
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 21:46:48 +0200
+	id 1MZVhO-0004zV-U7
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 22:05:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933195AbZHGTqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 15:46:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933185AbZHGTqi
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 15:46:38 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40051 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755017AbZHGTqh (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Aug 2009 15:46:37 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1A5211329;
-	Fri,  7 Aug 2009 15:46:37 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 07 Aug 2009 15:46:37 -0400
-X-Sasl-enc: n7UjtrHt1JG+1UlYutLNAugspXBo4yxP55ads0EYxNru 1249674395
-Received: from localhost.localdomain (vpn-137-043.rz.uni-augsburg.de [137.250.137.43])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6C76D4404;
-	Fri,  7 Aug 2009 15:46:30 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.2pre) Gecko/20090728 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <vpqzlabwhue.fsf@bauges.imag.fr>
+	id S933522AbZHGUFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 16:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933328AbZHGUFt
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 16:05:49 -0400
+Received: from a-sasl-quonix.sasl.smtp.pobox.com ([208.72.237.25]:45547 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S933185AbZHGUFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 16:05:49 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 36A841BF3;
+	Fri,  7 Aug 2009 16:05:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 742031BF2; Fri,  7 Aug
+ 2009 16:05:46 -0400 (EDT)
+In-Reply-To: <vpqvdkzwh3j.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Fri\, 07 Aug 2009 21\:37\:20 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B37517F6-838D-11DE-A234-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125215>
 
-Matthieu Moy venit, vidit, dixit 07.08.2009 21:21:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> May I suggest "Some push was rejected because it would not result in a
->> fast forward:\n Merge in the remote changes (using git pull) before
->> pushing yours\n or use..."?
-> 
-> Are you sure this is "Some push _was_ ..."? In the general case,
-> several branches are rejected, so that would be "were", no?
-> 
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Well, I'm certainly sure about the "yours" vs "your's" and about the
-rewording of "due to".
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> +Alternatively, you can rebase your change between X and B on top of A,
+>> +with "git pull --rebase", and push the result back.  The rebase will
+>> +create a new commit D that builds the change between X and B on top of
+>> +A.
+>> +
+>> +----------------
+>> +
+>> +      B   D
+>> +     /   /
+>> + ---X---A
+>> +
+>> +----------------
+>> +
+>> +Again, updating A with this commit will fast-forward and your push will be
+>> +accepted.
+>
+> Maybe add something about --force ? I don't like my wording very much,
+> but a first try is this:
+>
+> Lastly, you can decide that the B shouldn't have existed, and delete
+> it. This is to do with a lot of care, not only because it will discard
+> the changes introduced in B, but also because if B has been pulled by
+> someone else, he will have a view of history inconsistant with the
+> original repository. This is done with the --force option.
 
-If you want plural then please use "Some pushes were". I suggested the
-singular, "A push was" or "Some push was". "Some" can denote an amount
-but it is also used as a determiner in sentences like: "Some guy here
-pretends to know English although he's not a native speaker." That would
-be me :)
+To be consistent with the flow, I think you are discarding A in the
+example, not B.  A is what somebody else pushed out before your failed
+attempt of pushing B, and --force will discard A, replacing its history
+with yours.
 
-We don't know how many pushes failed, only that at least one did. Being
-a mathematician I have to use the singular here, but feel free to use
-the plural (also for the noun).
+Of course, you also could decide that somebody else's change A is vastly
+superior than your crappy B, and you may decide to do "git reset --hard A"
+to get rid of your history locally; but you wouldn't be using "git push"
+after that.  It is an equally valid outcome in the example situation and
+until you fetch to see what A is, you cannot decide.
 
-Cheers,
-Michael
+So, probably the order to teach would be:
+
+ - You can pull to merge, or pull --rebase to rebase; either way, you are
+   trying to preserve both histories.  [I've written on this in the
+   previous message]
+
+ - But you may realize that the commit by the other (i.e. A) was an
+   incorrect solution to the same problem you solved with your B.  You
+   _could_ force the push to replace it with B in such a case.  You need
+   to tell the person who pushed A (and everybody else who might have
+   fetched A and built on top) to discard their history (and rebuild their
+   work that was done on top of A on top of B). [This is yours with A <=> B]
+
+ - Alternatively you may realize that the commit by the other (i.e. A) was
+   much better solution to the same problem you tried to solve with your
+   B.  In such a case, you can simply discard B in your history with "git
+   reset --hard A" after fetching.  You wouldn't be pushing anything back
+   in this case.
+
+I actually do not think it is appropriate to teach --force in an example
+that involves more than one person (iow, in the context of the example in
+my patch).  A lot better alternative in such a case is to "git merge -s
+ours A" and push the result out, which keeps the fast-forwardness for the
+person who did A, and others who pulled and built on top of A already.
+
+So scratch your "lastly", replace it (and the second point in my list
+above) with:
+
+ - You may realize that the commit by the other (i.e. A) was an incorrect
+   solution to the same problem you solved with your B.  In such a case,
+   do _not_ use --force to remove A from the public history.  Instead,
+   resolve the merge (in the previous instruction) favoring your solution,
+   e.g. "git pull -s ours", and push the result out.
