@@ -1,123 +1,92 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 02/13] Use an external program to implement fetching with
- curl
-Date: Fri, 7 Aug 2009 01:34:04 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908070111410.2147@iabervon.org>
-References: <alpine.LNX.2.00.0908050053580.2147@iabervon.org> <alpine.DEB.1.00.0908051206460.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0908051145250.2147@iabervon.org> <7v63d06wjq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clarify error message when an abbreviated non-existent 
+ commit was specified
+Date: Thu, 06 Aug 2009 22:36:41 -0700
+Message-ID: <7vk51g5gnq.fsf@alter.siamese.dyndns.org>
+References: <20090806193413.GJ1033@spearce.org>
+ <1249588435-23400-1-git-send-email-timcharper@gmail.com>
+ <e1a5e9a00908062217q4bd1ecafm5fd5e060aecfa467@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 07 07:34:17 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Tim Harper <timcharper@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 07 07:36:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZI5p-00042G-46
-	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 07:34:17 +0200
+	id 1MZI8P-0004mP-09
+	for gcvg-git-2@gmane.org; Fri, 07 Aug 2009 07:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752320AbZHGFeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 01:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZHGFeF
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 01:34:05 -0400
-Received: from iabervon.org ([66.92.72.58]:59516 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750810AbZHGFeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 01:34:04 -0400
-Received: (qmail 24449 invoked by uid 1000); 7 Aug 2009 05:34:04 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Aug 2009 05:34:04 -0000
-In-Reply-To: <7v63d06wjq.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752239AbZHGFgt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Aug 2009 01:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751808AbZHGFgt
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 01:36:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53461 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810AbZHGFgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 01:36:49 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 62E28205B9;
+	Fri,  7 Aug 2009 01:36:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4BAC0205B8; Fri,  7 Aug 2009
+ 01:36:42 -0400 (EDT)
+In-Reply-To: <e1a5e9a00908062217q4bd1ecafm5fd5e060aecfa467@mail.gmail.com>
+ (Tim Harper's message of "Thu\, 6 Aug 2009 23\:17\:48 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DAB7D26-8314-11DE-ADBB-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125182>
 
-On Thu, 6 Aug 2009, Junio C Hamano wrote:
+Tim Harper <timcharper@gmail.com> writes:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Wed, 5 Aug 2009, Johannes Schindelin wrote:
-> >
-> >> Ooops, I missed this part.  How about making git-remote-https and 
-> >> git-remote-ftp hardlinks to git-remote-http?
-> >
-> > Sure. Is "ln ... || ln -s ... || cp ..." the right way to do this 
-> > cross-platform?
-> 
-> I've queued the first three from this series to 'next' (and the rest to
-> 'pu'), as I wanted to give wider testing to the smaller footprint git with
-> the libcurl-less-ness they bring in, with Linus's standalone SHA-1.
-> 
-> Since then two fix-ups (adding git-remote-* to .gitignore and the
-> dependency fix to git-http-fetch) were posted to the list, which I also
-> rebased in to the series, making the total number of patches merged to
-> 'next' from the series 5.
+>> diff --git a/parse-options.c b/parse-options.c
+>> index 3b71fbb..95eb1c4 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -615,7 +615,7 @@ int parse_opt_with_commit(const struct option *o=
+pt, const char *arg, int unset)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!arg)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -1;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (get_sha1(arg, sha1))
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("mal=
+formed object name %s", arg);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("mal=
+formed object name or no such commit: %s", arg);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit =3D lookup_commit_reference(sha1);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!commit)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return error(=
+"no such commit %s", arg);
+>> --
+>> 1.6.4
 >
-> If there are major changes/rewrites/redesign in the remaining part of the
-> series that are only in 'pu', please feel free to either send incrementals
-> or replacements.
+> Does nobody think this is a good idea?
 
-Great. Johannes had a bunch of suggestions for making it less error-prone 
-to extend, which I hope to get to this weekend.
+Probably people don't care enough.  I certainly didn't pay much attenti=
+on
+to the discussion on a rather trivial patch that was not yet signed off=
+=2E
 
-> I do not think I've seen any issues raised but unresolved against the part
-> from this series already in 'next', other than that this builds three
-> copies of git-remote-* programs based on libcurl.  I'll rebase a patch
-> like this in after the Makefile fixup ae209bd (http-fetch: Fix Makefile
-> dependancies, 2009-08-06) and queue the result to 'next'.
+I'd probably write along this line instead, if I cared enough. =20
 
-I think there were remaining improvements (e.g., transport-helper.c could 
-write commands with strbufs), but nothing that couldn't just as well be 
-applied afterwards.
+	if (get_sha1(arg, sha1) ||
+            !(commit =3D lookup_commit_reference(sha1)))
+		return error("no such commit: %s", arg);
 
-> I suspect that the "install" target may need a patch similar to this one,
-> though...
+I think the important part of the message is that whatever the user gav=
+e
+us when we expected to see a string that names a commit was not a commi=
+t;
+it is immaterial if the failure was because an abbreviated hexadecimal
+form was mistyped (get_sha1() would fail in this case) or because a tag
+that points at a non commit, e.g. "v2.6.11-tree", was given (l-c-r will
+fail in that case).
 
-Ah, yes, avoiding the duplication in the build directory isn't a big win 
-if the installed location doesn't get links.
-
-> -- >8 --
-> Subject: Makefile: do not link three copies of git-remote-* programs
-> 
-> Instead, link only one and make the rest hardlinks/copies, like we do for
-> the built-ins. 
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  Makefile |    9 ++++++++-
->  1 files changed, 8 insertions(+), 1 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 2900057..38924f2 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1256,6 +1256,7 @@ ifndef V
->  	QUIET_LINK     = @echo '   ' LINK $@;
->  	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
->  	QUIET_GEN      = @echo '   ' GEN $@;
-> +	QUIET_LNCP     = @echo '   ' LN/CP $@;
->  	QUIET_SUBDIR0  = +@subdir=
->  	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
->  			 $(MAKE) $(PRINT_DIR) -C $$subdir
-> @@ -1494,10 +1495,16 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
->  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
->  
-> -git-remote-http$X git-remote-https$X git-remote-ftp$X: remote-curl.o http.o http-walker.o $(GITLIBS)
-> +git-remote-http$X: remote-curl.o http.o http-walker.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
->  		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
->  
-> +git-remote-https$X git-remote-ftp$X: git-remote-http$X
-> +	$(QUIET_LNCP)$(RM) $@ && \
-> +	ln git-remote-http$X $@ 2>/dev/null || \
-> +	ln -s  git-remote-http$X $@ 2>/dev/null || \
-> +	cp git-remote-http$X $@
-
-Maybe "$<" for "git-remote-http$X", since that would make the rule portion 
-generic.
+Giving two different messages depending on the nature of an error will
+help debugging parse_opt_with_commit(), but that benefit is secondary.
