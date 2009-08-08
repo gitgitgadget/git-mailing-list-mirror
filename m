@@ -1,72 +1,155 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git gc expanding packed data?
-Date: Sat, 08 Aug 2009 15:25:27 +0200
-Message-ID: <m21vnm8mk8.fsf@igel.home>
-References: <m2tz0j154o.fsf@igel.home>
-	<3ace41890908080605k4ec6661bmcb4c87e10bc5fd87@mail.gmail.com>
+From: Ori Avtalion <ori@avtalion.name>
+Subject: Re: [PATCH] Change mentions of "git programs" to "git commands"
+Date: Sat, 08 Aug 2009 16:26:10 +0300
+Message-ID: <4A7D7CF2.40902@avtalion.name>
+References: <4a7c3971.170d660a.3caa.20b3@mx.google.com> <7v4osj1odt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 08 15:25:42 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 08 15:26:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZlvZ-000531-U1
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 15:25:42 +0200
+	id 1MZlwG-0005He-Hp
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 15:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339AbZHHNZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 09:25:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751656AbZHHNZc
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 09:25:32 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:40606 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbZHHNZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 09:25:32 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id B2A2E1C1547D;
-	Sat,  8 Aug 2009 15:25:30 +0200 (CEST)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id 4C42690275;
-	Sat,  8 Aug 2009 15:25:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id dhhvoX0maqOa; Sat,  8 Aug 2009 15:25:28 +0200 (CEST)
-Received: from igel.home (DSL01.83.171.176.2.ip-pool.NEFkom.net [83.171.176.2])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sat,  8 Aug 2009 15:25:28 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id A1CA510C0D1; Sat,  8 Aug 2009 15:25:27 +0200 (CEST)
-X-Yow: I HIJACKED a 747 to get here!!  I hope those fabulous CONEHEADS are at HOME!!
-In-Reply-To: <3ace41890908080605k4ec6661bmcb4c87e10bc5fd87@mail.gmail.com>
-	(Hin-Tak Leung's message of "Sat, 8 Aug 2009 14:05:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1753179AbZHHN0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 09:26:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbZHHN0Q
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 09:26:16 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:59308 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752559AbZHHN0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 09:26:15 -0400
+Received: by fxm28 with SMTP id 28so232724fxm.17
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 06:26:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=OXyio6YJmeHJxExtF/zJxl/nGQP2GF3N369+cul9qPY=;
+        b=lpW8mPWAxyHBWUZrwAq+PNJ0yAUS8uBG1EPAyfJ16010LlLnTCFQ+5PPRQieaS1r43
+         jz+XYHyEfq6xH8YSLlShiVJaJwvu62Q3Qa7NQIfrbERxCA284+Beav8FqPEUO4eGQtZn
+         q0cRUnfGJIsEcE6InEJVcIQl+ZeqoQkQieERc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=sihAxpkcwL+NvAmFIeJjGeDLmBGX7INrIgmXxuxsZ3cR+IvdtvuGWzWA7dLYL/aci4
+         VUqRn9tlJg8V8EzSCzyaFksUnDSmGJBAnXz+ro2KVJtgT9mmd/Bf11C99hPCxLUfNjd1
+         g0w2ng1LfGzi79VsIT/64W5Sl8DpocpdKeXm0=
+Received: by 10.103.1.7 with SMTP id d7mr980751mui.122.1249737975503;
+        Sat, 08 Aug 2009 06:26:15 -0700 (PDT)
+Received: from ?192.168.1.55? (bzq-82-81-24-228.red.bezeqint.net [82.81.24.228])
+        by mx.google.com with ESMTPS id j9sm10503081mue.26.2009.08.08.06.26.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Aug 2009 06:26:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1.3pre) Gecko/20090807 Shredder/3.0b4pre
+In-Reply-To: <7v4osj1odt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125278>
 
-Hin-Tak Leung <hintak.leung@gmail.com> writes:
+On 08/07/2009 09:15 PM, Junio C Hamano wrote:
+> Ori Avtalion<ori@avtalion.name>  writes:
+>
+>> Most of the docs and printouts refer to "commands".
+>> This patch changes the other terminology to be consistent.
+>
+> Thanks, but not really.
+>
+>> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+>> index d313795..20bf512 100644
+>> --- a/Documentation/fetch-options.txt
+>> +++ b/Documentation/fetch-options.txt
+>> @@ -1,7 +1,7 @@
+>>   -q::
+>>   --quiet::
+>>   	Pass --quiet to git-fetch-pack and silence any other internally
+>> -	used programs.
+>> +	used utilities.
+>
+> This does not have much to do with what you claim to have done in the
+> commit log message nor the title.  Probably "utilities" is a slightly
+> better word than "programs" in this context but not by a wide margin.
+>
 
-> Thanks... It is a difference between svn and git mentality probably -
+I picked the word from the glossary definition of "core git":
 
-It is just that the remote is a git-svn tree, with only a few branches
-created as local branches.
+   "Fundamental data structures and utilities of git. [...]"
 
-> The case with gcc is probably quite extreme - many user branches, and
-> very large code base - but is there anything on the git side with git
-> gc which can lessen this kind of pathological behavior (expanding
-> packs)?
+If that doesn't fit, how about:
+    "Pass --quiet to git-fetch-pack and silence other output" ?
 
-If you fetch all refs, not only refs/heads/*, all objects will be
-referenced.
+>> -'git-rev-list' is a very essential git program, since it
+>> +'git-rev-list' is a very essential git command, since it
+>>   provides the ability to build and traverse commit ancestry graphs. For
+>>   this reason, it has a lot of different options that enables it to be
+>>   used by commands as different as 'git-bisect' and
+>
+> Ok, but probably we would want to say "git rev-list" here.
 
-Andreas.
+In that case, shouldn't all of the manpages be changed to say "git foo" 
+instead of "git-foo" under the NAME section?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+I see the "git-foo" notation as a convention for git commands.
+It may be for historical reasons, but the manpage for the "pull" git 
+command is "git-pull", and that is how commands are mentioned all over 
+the documentation.
+
+>
+>>   --exec-path::
+>> -	Path to wherever your core git programs are installed.
+>> +	Path to wherever your core git commands are installed.
+>
+> I do not think this is a good change.
+>
+> When you talk about git "command", e.g. "'git rev-list' is an essential
+> command", you are talking about an abstract concept.  In the reader's
+> world view, there is one single toplevel program called "git" and it has
+> various commands, one of which is 'rev-list'.  But this description is not
+> about an abstract concept of command, but is about a particular
+> implementation detail.  For every git command, there is a corresponding
+> git _program_ that implements that command, and --exec-path tells you (or
+> you use --exec-path to tell the git toplevel program) where they are.
+>
+> You kept this intact in gitcore-tutorial:
+>
+>      ... Also
+>      you need to make sure that you have the 'git-receive-pack'
+>      program on the `$PATH`.
+>
+> and I think you did the right thing.  This is about a concrete instance of
+> a program.  If you really really want to say _command_, you would probably
+> want to do something like this instead:
+>
+>   --exec-path::
+> -	Path to wherever your core git programs are installed.
+> +	Path to the directory that holds programs that implements git commands.
+>
+
+I agree with the suggestion.
+
+
+I found a few other instances that should probably be changed.
+
+In git.txt:
+"The following are helper programs used by the above"
+                           ^^^^^^^^
+                           commands
+
+In git-mailsplit.txt (and cmds-purehelpers.txt):
+    "Simple UNIX mbox splitter program."
+
+Maybe the word "program" should just be dropped.
+
+
+I'll submit a new patch once there's an agreement on the changes.
+
+-Ori
