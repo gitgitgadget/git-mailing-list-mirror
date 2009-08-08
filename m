@@ -1,89 +1,96 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] block-sha1: improved SHA1 hashing
-Date: Sat, 8 Aug 2009 10:10:35 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908081004560.3288@localhost.localdomain>
-References: <alpine.LFD.2.01.0908060803140.3390@localhost.localdomain> <4A7B1166.8020507@gmail.com> <alpine.LFD.2.01.0908061052320.3390@localhost.localdomain> <4A7B2A88.2040602@gmail.com> <alpine.LFD.2.01.0908061233360.3390@localhost.localdomain>
- <4A7B384C.2020407@gmail.com> <alpine.LFD.2.01.0908061329320.3390@localhost.localdomain> <4A7B4D84.80906@gmail.com> <4A7B509A.5010405@gmail.com> <alpine.LFD.2.01.0908061502570.3390@localhost.localdomain> <alpine.LFD.2.01.0908061909310.3390@localhost.localdomain>
- <alpine.LFD.2.01.0908071614310.3288@localhost.localdomain> <4A7CBD28.6070306@gmail.com> <4A7CBF47.9000903@gmail.com> <alpine.LFD.2.01.0908071700290.3288@localhost.localdomain> <4A7CC380.3070008@gmail.com> <alpine.LFD.2.01.0908072107170.3288@localhost.localdomain>
- <4A7D0E7B.3030601@gmail.com>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: git failing to create new branches, depending on the name
+Date: Sat, 08 Aug 2009 19:33:21 +0200
+Message-ID: <4A7DB6E1.3000302@gmail.com>
+References: <4A7D9AA7.1030709@gmail.com> <200908081904.58186.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 08 19:11:18 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Aug 08 19:33:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZpRu-0001bC-AV
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 19:11:18 +0200
+	id 1MZpnd-0000vs-Ov
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 19:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581AbZHHRLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 13:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752559AbZHHRLI
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 13:11:08 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36366 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752459AbZHHRLH (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Aug 2009 13:11:07 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n78HAZnN016833
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 8 Aug 2009 10:10:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n78HAZcd015931;
-	Sat, 8 Aug 2009 10:10:35 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4A7D0E7B.3030601@gmail.com>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.965 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1752514AbZHHRd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 13:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZHHRd1
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 13:33:27 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:45803 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbZHHRd0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 13:33:26 -0400
+Received: by bwz19 with SMTP id 19so1951244bwz.37
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 10:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=wSTt9ssIbtgdG8TwusjCyf/PaKDp8WpOQi0rc6Q3asw=;
+        b=AjFWtkA+X6dZrLcoboTlBadQzAEqOnY0/j9N8VAFQcUssna89/gKjkzigu8PHb4AOy
+         1fbQJHt2K6Eihw95ZiHetDAxo8hbcINlUA4juX1jFrA3x6zkQjIis2PvCU9hhMfiOdpd
+         PMzS8raq5/7JhfgUjgj74tHO4MybKMx9ga0wg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=Or1YqCC11tUn2aDLYJik3mn51nFktD1p1a+R4G6JGkeNO5ySeg6JT60jxRJJCjnrlz
+         hquQZj912bBdkhu4XeOfukbCULUZGrzmF8PE9ksGeQtQlIZWAFcAebrAk8pdr8cu6iLs
+         xSSr1EYtYY554Q6wkWzp9qaZ+KcQ5/DjRjagY=
+Received: by 10.103.252.5 with SMTP id e5mr1070485mus.136.1249752803494;
+        Sat, 08 Aug 2009 10:33:23 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-89-174-122-138.multimo.pl [89.174.122.138])
+        by mx.google.com with ESMTPS id u26sm11421999mug.51.2009.08.08.10.33.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Aug 2009 10:33:23 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <200908081904.58186.trast@student.ethz.ch>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125292>
 
-
-
-On Sat, 8 Aug 2009, Artur Skawina wrote:
+Thomas Rast wrote:
+> Artur Skawina wrote:
+>> + git checkout -f -b branch-g90bc1a6 askern/release
+>> fatal: git checkout: branch branch-g90bc1a6 already exists
 > 
-> I've inlined the byteswapping in 'opensslb', maybe that one will
-> do a bit better.
+> This bisects to
 > 
-> http://www.src.multimo.pl/YDpqIo7Li27O0L0h/sha1bench.tar.gz
+> commit 352eadc40024b141e1295693654ec20cc123844f
+> Author: Daniel Barkalow <barkalow@iabervon.org>
+> Date:   Sun Sep 21 14:36:06 2008 -0400
+> 
+>     Check early that a new branch is new and valid
 
-Hmm. Testing on my atom, the inlined bswap is worse, but the asm versions 
-are generally superior to any C one:
+> Not sure this is a bug though.  If we allow branch names that are
 
-	#             TIME[s] SPEED[MB/s]
-	rfc3174         2.194       27.82
-	rfc3174          2.19       27.87
-	linus           0.947       64.45
-	linusph        0.9381       65.06
-	linusv         0.8943       68.25
-	linusvph       0.8803       69.34
-	linusasm       0.9349       65.29
-	linusp4         1.006       60.66
-	linusas         1.062       57.48
-	linusas2        1.009        60.5
-	mozilla         2.264       26.96
-	mozillaas       2.197       27.78
-	openssl         0.648       94.19
-	opensslb       0.7419       82.27
-	spelvin         0.636       95.96
-	spelvina       0.6671       91.49
-	nettle          0.717       85.12
-	nettle-ror     0.7137       85.52
-	nettle-p4sch   0.7158       85.27
+well, it didn't say it didn't like the name, and sent me looking
+for bugs in my scripts for quite a while, until i realized what's
+going on...
 
-Interestingly, -mtune=prescott does well for that 'linusv' version on atom 
-too, and gets it up to
+> ambiguous to rev-parse, what do they resolve to?  E.g., in the
+> presence of only 'master', 'master-g01234567' is defined to be the
+> same as 01234567.  What is it if you also have a *branch* called
+> 'master-g01234567'?
 
-	linusv         0.8365       72.96
+I'd expect the branch namespace to take precedence, unless branches
+ending in -g01234567 are illegal, but that seems like an odd limitation.
 
-and it's the only one that improves. Odd interactions.
+Note that currently this works:
 
-			Linus
++ ( cd /tmp/build-tree/ && git checkout -f whatever/random-name-g90bc1a6 )
+HEAD is now at 90bc1a6... Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+
+which doesn't seem right either.
+
+artur
