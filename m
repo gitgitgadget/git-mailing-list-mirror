@@ -1,90 +1,76 @@
-From: Mark A Rada <marada@uwaterloo.ca>
-Subject: [PATCH] gitweb: squelch harmless variable scoping errors
-Date: Sat, 8 Aug 2009 12:50:35 -0400
-Message-ID: <F203660D-5123-475D-8288-F398EA670002@mailservices.uwaterloo.ca>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git failing to create new branches, depending on the name
+Date: Sat, 8 Aug 2009 19:04:57 +0200
+Message-ID: <200908081904.58186.trast@student.ethz.ch>
+References: <4A7D9AA7.1030709@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 08 19:03:01 2009
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 08 19:05:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZpJs-0006SN-0a
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 19:03:00 +0200
+	id 1MZpMU-0007an-6F
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 19:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbZHHRCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 13:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbZHHRCj
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 13:02:39 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:41824 "EHLO
-	psyche.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752087AbZHHRCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 13:02:39 -0400
-X-Greylist: delayed 712 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Aug 2009 13:02:38 EDT
-Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
-	(authenticated bits=0)
-	by psyche.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n78GoZpU030369
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 8 Aug 2009 12:50:40 -0400
-X-Mailer: Apple Mail (2.936)
-X-UUID: 1fb16d18-3b10-4d36-8b3e-c50916fb03ae
+	id S1752542AbZHHRFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 13:05:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbZHHRFe
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 13:05:34 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:19214 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752512AbZHHRFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 13:05:34 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 8 Aug
+ 2009 19:05:33 +0200
+Received: from thomas.localnet (77.56.221.170) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 8 Aug
+ 2009 19:05:11 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <4A7D9AA7.1030709@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125290>
 
-I fiddled around a bit and this solution seems to work, but is a bit  
-odd, as
-the method is declared obsolete in the Perl documentation (v5.8.8).
+Artur Skawina wrote:
+> + git checkout -f -b branch-g90bc1a6 askern/release
+> fatal: git checkout: branch branch-g90bc1a6 already exists
 
-What do you think?
+This bisects to
 
---
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
+commit 352eadc40024b141e1295693654ec20cc123844f
+Author: Daniel Barkalow <barkalow@iabervon.org>
+Date:   Sun Sep 21 14:36:06 2008 -0400
+
+    Check early that a new branch is new and valid
+
+    If you fail to update refs to change branches in checkout, your index
+    and working tree are left already updated. We don't have an easy way
+    to undo this, but at least we can check things that would make the
+    creation of a new branch fail. These checks were in the shell version,
+    and were lost in the C conversion.
+
+    The messages are from the shell version, and should probably be made nicer.
+
+    [jc: added test to t7201]
+
+    Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
 
---->8---
-This will use the 'vars' method of declaring global variables instead
-of the 'our' method.
+Not sure this is a bug though.  If we allow branch names that are
+ambiguous to rev-parse, what do they resolve to?  E.g., in the
+presence of only 'master', 'master-g01234567' is defined to be the
+same as 01234567.  What is it if you also have a *branch* called
+'master-g01234567'?
 
-Though 'vars' has been obsoleted, it has the advantage of pre-declaring
-global symbols; this ensures that those symbols will be available to
-routines loaded later, whereas 'our' does not seem to do this.
-
-The result is that when using mod_perl you will no longer get any
-warnings printed to your error_log.
-
-Signed-off-by: Mark Rada <marada@uwaterloo.ca>
----
-gitweb/gitweb.perl |    8 +++++---
-1 files changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 37120a3..0544aa2 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -57,12 +57,14 @@ if ($path_info) {
-our $GIT = "++GIT_BINDIR++/git";
-
-# absolute fs-path which will be prepended to the project path
--#our $projectroot = "/pub/scm";
--our $projectroot = "++GITWEB_PROJECTROOT++";
-+use vars qw($projectroot);
-+#$projectroot = "/pub/scm";
-+$projectroot = "++GITWEB_PROJECTROOT++";
-
-# fs traversing limit for getting project list
-# the number is relative to the projectroot
--our $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
-+use vars qw($project_maxdepth);
-+$project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
-
-# target of the home link on top of all pages
-our $home_link = $my_uri || "/";
 -- 
-1.6.4
+Thomas Rast
+trast@{inf,student}.ethz.ch
