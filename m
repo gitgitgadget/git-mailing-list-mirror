@@ -1,161 +1,53 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] push: point to 'git pull' and 'git push --force' in case of non-fast forward
-Date: Sat,  8 Aug 2009 09:51:08 +0200
-Message-ID: <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Teemu Likonen <tlikonen@iki.fi>
+Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in case of non-fast forward
+Date: Sat, 08 Aug 2009 11:35:38 +0300
+Message-ID: <87prb6r9d1.fsf@iki.fi>
 References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Aug 08 09:54:55 2009
+	<1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Aug 08 10:35:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZglP-0004lg-Gn
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 09:54:51 +0200
+	id 1MZhP5-0008DE-Ku
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 10:35:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933641AbZHHHye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 03:54:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933459AbZHHHye
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 03:54:34 -0400
-Received: from imag.imag.fr ([129.88.30.1]:40408 "EHLO imag.imag.fr"
+	id S1754206AbZHHIfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 04:35:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbZHHIfn
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 04:35:43 -0400
+Received: from mta-out.inet.fi ([195.156.147.13]:32978 "EHLO jenni2.inet.fi"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932154AbZHHHyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 03:54:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n787pFrm023193
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 8 Aug 2009 09:51:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MZghu-00036Q-Vc; Sat, 08 Aug 2009 09:51:14 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MZghu-0002rT-UL; Sat, 08 Aug 2009 09:51:14 +0200
-X-Mailer: git-send-email 1.6.4.62.g39c83.dirty
-In-Reply-To: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 08 Aug 2009 09:51:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752437AbZHHIfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 04:35:42 -0400
+Received: from mithlond.arda.local (80.220.180.181) by jenni2.inet.fi (8.5.014)
+        id 4A777091002A5CE0; Sat, 8 Aug 2009 11:35:40 +0300
+Received: from dtw by mithlond.arda.local with local (Exim 4.69)
+	(envelope-from <tlikonen@iki.fi>)
+	id 1MZhOs-0006vM-Vc; Sat, 08 Aug 2009 11:35:38 +0300
+In-Reply-To: <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Sat, 8 Aug 2009 09:51:08 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125264>
 
-'git push' failing because of non-fast forward is a very common situation,
-and a beginner does not necessarily understand "fast forward" immediately.
+On 2009-08-08 09:51 (+0200), Matthieu Moy wrote:
+> 'git push' failing because of non-fast forward is a very common situation,
+> and a beginner does not necessarily understand "fast forward" immediately.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-(hmm, I thought I had sent this v2 already, but seems I didn't)
+> +		if (nonfastforward) {
+> +			printf("Push was rejected because it would not result in a fast forward:\n"
+> +			       "Merge in the remote changes (using git pull) before pushing yours,\n"
+> +			       "or use git push --force to discard the remote changes.\n"
+> +			       "See 'non-fast forward' section of 'git push --help' for details.\n");
+> +		}
 
-With grammar fixes from Michael J Gruber.
-
-Junio, this comes on top of your patch, since it refers to the
-to-be-added section in 'git push --help'.
-
- builtin-push.c |   10 +++++++++-
- transport.c    |   10 +++++++---
- transport.h    |    3 ++-
- 3 files changed, 18 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-push.c b/builtin-push.c
-index 1d92e22..5d4df7f 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -140,6 +140,7 @@ static int do_push(const char *repo, int flags)
- 		struct transport *transport =
- 			transport_get(remote, url[i]);
- 		int err;
-+		int nonfastforward;
- 		if (receivepack)
- 			transport_set_option(transport,
- 					     TRANS_OPT_RECEIVEPACK, receivepack);
-@@ -148,13 +149,20 @@ static int do_push(const char *repo, int flags)
- 
- 		if (flags & TRANSPORT_PUSH_VERBOSE)
- 			fprintf(stderr, "Pushing to %s\n", url[i]);
--		err = transport_push(transport, refspec_nr, refspec, flags);
-+		err = transport_push(transport, refspec_nr, refspec, flags,
-+				     &nonfastforward);
- 		err |= transport_disconnect(transport);
- 
- 		if (!err)
- 			continue;
- 
- 		error("failed to push some refs to '%s'", url[i]);
-+		if (nonfastforward) {
-+			printf("Push was rejected because it would not result in a fast forward:\n"
-+			       "Merge in the remote changes (using git pull) before pushing yours,\n"
-+			       "or use git push --force to discard the remote changes.\n"
-+			       "See 'non-fast forward' section of 'git push --help' for details.\n");
-+		}
- 		errs++;
- 	}
- 	return !!errs;
-diff --git a/transport.c b/transport.c
-index de0d587..f231b35 100644
---- a/transport.c
-+++ b/transport.c
-@@ -820,7 +820,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count, i
- }
- 
- static void print_push_status(const char *dest, struct ref *refs,
--							  int verbose, int porcelain)
-+			      int verbose, int porcelain, int * nonfastforward)
- {
- 	struct ref *ref;
- 	int n = 0;
-@@ -835,11 +835,14 @@ static void print_push_status(const char *dest, struct ref *refs,
- 		if (ref->status == REF_STATUS_OK)
- 			n += print_one_push_status(ref, dest, n, porcelain);
- 
-+	*nonfastforward = 0;
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (ref->status != REF_STATUS_NONE &&
- 		    ref->status != REF_STATUS_UPTODATE &&
- 		    ref->status != REF_STATUS_OK)
- 			n += print_one_push_status(ref, dest, n, porcelain);
-+		if (ref->status == REF_STATUS_REJECT_NONFASTFORWARD)
-+			*nonfastforward = 1;
- 	}
- }
- 
-@@ -997,7 +1000,8 @@ int transport_set_option(struct transport *transport,
- }
- 
- int transport_push(struct transport *transport,
--		   int refspec_nr, const char **refspec, int flags)
-+		   int refspec_nr, const char **refspec, int flags,
-+		   int * nonfastforward)
- {
- 	verify_remote_names(refspec_nr, refspec);
- 
-@@ -1024,7 +1028,7 @@ int transport_push(struct transport *transport,
- 
- 		ret = transport->push_refs(transport, remote_refs, flags);
- 
--		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain);
-+		print_push_status(transport->url, remote_refs, verbose | porcelain, porcelain, nonfastforward);
- 
- 		if (!(flags & TRANSPORT_PUSH_DRY_RUN)) {
- 			struct ref *ref;
-diff --git a/transport.h b/transport.h
-index 51b5397..639f13d 100644
---- a/transport.h
-+++ b/transport.h
-@@ -68,7 +68,8 @@ int transport_set_option(struct transport *transport, const char *name,
- 			 const char *value);
- 
- int transport_push(struct transport *connection,
--		   int refspec_nr, const char **refspec, int flags);
-+		   int refspec_nr, const char **refspec, int flags,
-+		   int * nonfastforward);
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- 
--- 
-1.6.4.62.g39c83.dirty
+I'd like to add that some projects that use Git in (partially)
+centralized manner prefer "git pull --rebase" before "git push".
