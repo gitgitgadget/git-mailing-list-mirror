@@ -1,108 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change mentions of "git programs" to "git commands"
-Date: Sat, 08 Aug 2009 09:12:54 -0700
-Message-ID: <7v8whul1x5.fsf@alter.siamese.dyndns.org>
-References: <4a7c3971.170d660a.3caa.20b3@mx.google.com>
- <7v4osj1odt.fsf@alter.siamese.dyndns.org> <4A7D7CF2.40902@avtalion.name>
+From: Boyd Lynn Gerber <gerberb@zenez.com>
+Subject: Re: Problem compiling git-1.6.4 on OpenServer 6.0
+Date: Sat, 8 Aug 2009 10:14:32 -0600
+Message-ID: <alpine.LNX.2.00.0908081013090.13290@suse104.zenez.com>
+References: <alpine.LNX.2.00.0908071326250.13290@suse104.zenez.com> <cY-iS6BS6knyjPKeVQI3ZIsIw3A3y5VK1oW-MNzUUztRn8CbeqRdew@cipher.nrlssc.navy.mil> <alpine.LNX.2.00.0908071523550.13290@suse104.zenez.com>
+ <DHem56NUSFhg2VqQu1N0qVr3U86qJOp4OZZAEwV2Edz0-YuWJpDtgA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ori Avtalion <ori@avtalion.name>
-X-From: git-owner@vger.kernel.org Sat Aug 08 18:13:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Sat Aug 08 18:14:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZoXa-0005wL-T5
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 18:13:07 +0200
+	id 1MZoZB-0006XZ-17
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 18:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750856AbZHHQM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 12:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750777AbZHHQM7
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 12:12:59 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42533 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbZHHQM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 12:12:58 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A8BBE315A;
-	Sat,  8 Aug 2009 12:12:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C98133158; Sat,  8 Aug
- 2009 12:12:55 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 56C82A26-8436-11DE-AD20-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751310AbZHHQOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 12:14:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbZHHQOf
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 12:14:35 -0400
+Received: from suse104.zenez.com ([198.60.105.164]:44098 "EHLO
+	suse104.zenez.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751144AbZHHQOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 12:14:34 -0400
+Received: by suse104.zenez.com (Postfix, from userid 1000)
+	id 1BDECAB8030; Sat,  8 Aug 2009 10:14:33 -0600 (MDT)
+Received: from localhost (localhost [127.0.0.1])
+	by suse104.zenez.com (Postfix) with ESMTP id 05BE293852B;
+	Sat,  8 Aug 2009 10:14:32 -0600 (MDT)
+In-Reply-To: <DHem56NUSFhg2VqQu1N0qVr3U86qJOp4OZZAEwV2Edz0-YuWJpDtgA@cipher.nrlssc.navy.mil>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125285>
 
-Ori Avtalion <ori@avtalion.name> writes:
-
-> On 08/07/2009 09:15 PM, Junio C Hamano wrote:
->> Ori Avtalion<ori@avtalion.name>  writes:
+On Fri, 7 Aug 2009, Brandon Casey wrote:
+> Boyd Lynn Gerber wrote:
+>> On Fri, 7 Aug 2009, Brandon Casey wrote:
+>>> Boyd Lynn Gerber wrote:
+>>>> I just tried to compile the latest git and I get this error.
+>>>>
+>>>> CC builtin-pack-objects.o
+>>>> UX:acomp: ERROR: "builtin-pack-objects.c", line 1602: integral constant
+>>>> expression expected
+>>>> gmake: *** [builtin-pack-objects.o] Error 1
+>>>>
+>>>> I will look into it when I have a bit more time, but this is a heads up.
+>>>
+>>> Did you set THREADED_DELTA_SEARCH=1 when you compiled?  That could be the
+>>> problem.
+>>>
+>>> Line 1602 of builtin-pack-objects.c is wrapped in #ifdef
+>>> THREADED_DELTA_SEARCH,
+>>> so it is only compiled if THREADED_DELTA_SEARCH has been set.  Also,
+>>> it's not
+>>> a new line, it has been around since 2007.
 >>
->>> Most of the docs and printouts refer to "commands".
->>> This patch changes the other terminology to be consistent.
->>
->> Thanks, but not really.
->>
->>> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
->>> index d313795..20bf512 100644
->>> --- a/Documentation/fetch-options.txt
->>> +++ b/Documentation/fetch-options.txt
->>> @@ -1,7 +1,7 @@
->>>   -q::
->>>   --quiet::
->>>   	Pass --quiet to git-fetch-pack and silence any other internally
->>> -	used programs.
->>> +	used utilities.
->>
->> This does not have much to do with what you claim to have done in the
->> commit log message nor the title.  Probably "utilities" is a slightly
->> better word than "programs" in this context but not by a wide margin.
+>> Removing it and the -pthread allows it to build.  I am now running the
+>> tests.  The I need to find out why it is being set.
 >
-> If that doesn't fit,...
+> Did you run configure?  which generates a config.mak.autogen file?
+> There were some changes related to pthreads in configure.ac in March,
+> and another back in Nov 2008.  Specifically commits 1973b0d7, and
+> d937c374.
 
-My comment on this part was not "Don't change this wording, the original
-is much better", but was primarily "you said this commit is about
-replacing 'program' with 'command' for consistency, but this change does
-not belong to that category.  Either make a separate commit for this
-change separate from all the rest, or change the wording of the commit log
-message to cover this one as well".
+Yes, I am working through them and will submit a patch once I get it 
+working properly without breaking someone elses configuration.
 
->    "Pass --quiet to git-fetch-pack and silence other output" ?
->
->>> -'git-rev-list' is a very essential git program, since it
->>> +'git-rev-list' is a very essential git command, since it
->>>   provides the ability to build and traverse commit ancestry graphs. For
->>>   this reason, it has a lot of different options that enables it to be
->>>   used by commands as different as 'git-bisect' and
->>
->> Ok, but probably we would want to say "git rev-list" here.
-> ...
-> I see the "git-foo" notation as a convention for git commands.
-> It may be for historical reasons, but the manpage for the "pull" git
-> command is "git-pull", and that is how commands are mentioned all over
-> the documentation.
+Thanks,
 
-This was "because you are changing the exact sentence anyway, why not do
-this while you are at it".  But you are probably right.  We try to write
-"git foo" when we talk about what users would type, but say "git-foo" when
-we talk about the command itself.  When we talk about the concept of what
-the command achieves, we sometimes say just "foo".
-
-> In git.txt:
-> "The following are helper programs used by the above"
->                           ^^^^^^^^
->                           commands
->
-> In git-mailsplit.txt (and cmds-purehelpers.txt):
->    "Simple UNIX mbox splitter program."
->
-> Maybe the word "program" should just be dropped.
-
-That may be an option and I kind of like it; but I'd rather hear from
-others first.
+-- 
+Boyd Gerber <gerberb@zenez.com> 801 849-0213
+ZENEZ	1042 East Fort Union #135, Midvale Utah  84047
