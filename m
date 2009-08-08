@@ -1,74 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in case of non-fast forward
-Date: Sat, 08 Aug 2009 17:22:53 +0200
-Message-ID: <vpqab2aqqia.fsf@bauges.imag.fr>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
-	<87prb6r9d1.fsf@iki.fi>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: git failing to create new branches, depending on the name
+Date: Sat, 08 Aug 2009 17:32:55 +0200
+Message-ID: <4A7D9AA7.1030709@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Teemu Likonen <tlikonen@iki.fi>
-X-From: git-owner@vger.kernel.org Sat Aug 08 17:27:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 08 17:33:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZnps-00059o-Tt
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 17:27:57 +0200
+	id 1MZnuw-0007Mv-Rs
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 17:33:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbZHHP1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 11:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752088AbZHHP1r
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 11:27:47 -0400
-Received: from imag.imag.fr ([129.88.30.1]:57387 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752087AbZHHP1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 11:27:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n78FMraA009220
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 8 Aug 2009 17:22:54 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MZnkz-0006ja-KN; Sat, 08 Aug 2009 17:22:53 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MZnkz-0003eC-Iz; Sat, 08 Aug 2009 17:22:53 +0200
-In-Reply-To: <87prb6r9d1.fsf@iki.fi> (Teemu Likonen's message of "Sat\, 08 Aug 2009 11\:35\:38 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 08 Aug 2009 17:22:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752368AbZHHPdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 11:33:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbZHHPdB
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 11:33:01 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:62988 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbZHHPdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 11:33:00 -0400
+Received: by fxm28 with SMTP id 28so265103fxm.17
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 08:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        bh=4jJzmKtNN0JPFpOedvIK3qGrsOgu3QVXALkV7RVjx44=;
+        b=mpMTq5oyw3zwnfPuFTuzbGxkib69PBHw7FNw5s4w6hvKmmqV5HS62S+mF56efQCi5B
+         g5iojWYSQUbftWlk5zXMa9IzJfMQJTduVIcsD88f9BGWFBZBbM4FKE/7tNQlGWAmzLqI
+         ZNP2WkiLzcCsg+9mNcs+035zDJ1oeL/BPUsl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        b=Nh4lJwB+lyknmxKuWXVFuYop6KuVkjx4n9u/RaJMUAg63CHLOz7BxZlTDSqCFkL+CK
+         tNATdcrNIDIyPA+PIXbrtP4MgT0HJYYg5hTEm/kRaWDsIFxyyqB3nzCQ5ibX7eKQRx2p
+         YwbVluMRoEi+FRERfa0CknjWE6GnaYr1D6jlQ=
+Received: by 10.204.69.66 with SMTP id y2mr2763867bki.40.1249745578522;
+        Sat, 08 Aug 2009 08:32:58 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-94-42-1-199.multimo.pl [94.42.1.199])
+        by mx.google.com with ESMTPS id 13sm4220677fks.22.2009.08.08.08.32.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Aug 2009 08:32:58 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125282>
 
-Teemu Likonen <tlikonen@iki.fi> writes:
+One of my build scripts, which takes a 'work' git tree, clones it to
+make a build tree, then creates an unique branch there and goes on
+to do the rest of the work, started mysteriously failing recently
+.
+Turns out git doesn't like the branch names that my script is
+choosing and git-checkout fails with a misleading fatal error.
+I don't remember changing the script recently and it used to work
+for months, something must have changed.
 
-> On 2009-08-08 09:51 (+0200), Matthieu Moy wrote:
->> 'git push' failing because of non-fast forward is a very common situation,
->> and a beginner does not necessarily understand "fast forward" immediately.
->
->> +		if (nonfastforward) {
->> +			printf("Push was rejected because it would not result in a fast forward:\n"
->> +			       "Merge in the remote changes (using git pull) before pushing yours,\n"
->> +			       "or use git push --force to discard the remote changes.\n"
->> +			       "See 'non-fast forward' section of 'git push --help' for details.\n");
->> +		}
->
-> I'd like to add that some projects that use Git in (partially)
-> centralized manner prefer "git pull --rebase" before "git push".
+This is what i did while trying to find why the checkout is failing:
 
-Right, but I don't think this error message is the place to discuss
-that. Anything involving rebasing should be taken with care, and
-pointing the user to it in a short sentence sounds like "try shooting
-yourself in the foot, and read the man page if it hurts" ;-).
++ git --version
+git version 1.6.4
++ rm -rf /tmp/build-tree
++ git clone -l -s -n -o askern --reference /tmp/work-tree /tmp/work-tree /tmp/build-tree
+Initialized empty Git repository in /tmp/build-tree/.git/
++ cd /tmp/build-tree
++ git branch -a | grep g90bc1a6 
++ git checkout -f -b branch-g90bc1a6 askern/release
+fatal: git checkout: branch branch-g90bc1a6 already exists
+# WTF?
++ (
++  cd /tmp/work-tree
++  git branch -a | grep g90bc1a6
++ )
+# nothing in parent repo either.
++ git checkout -f branch-g90bc1a6 
+Checking out files: 100% (29109/29109), done.
+Note: moving to 'branch-g90bc1a6' which isn't a local branch
+If you want to create a new branch from this checkout, you may do so
+(now or later) by using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 90bc1a6... Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+# so where is coming from?
++ git branch -a | grep g90bc1a6
++ git status
+# Not currently on any branch.
+nothing to commit (working directory clean)
++  git show --pretty=short 90bc1a6 | cat
+commit 90bc1a658a53f8832ee799685703977a450e5af9
+Merge: 6ce90c4 54822de
+Author: Linus Torvalds <torvalds@linux-foundation.org>
 
--- 
-Matthieu
+    Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+# Aha
+
+So what appears to be happening is that the script picks up the
+90bc1a6 suffix (it gets it from git-describe), uses it as part
+of the branch name and then git misinterprets it.
+(the actual names used by the script are much longer, i used
+"branch-g90bc1a6" only to figure what was going on)
+
+artur
