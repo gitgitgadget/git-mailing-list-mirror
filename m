@@ -1,54 +1,98 @@
-From: Mark Polesky <markpolesky@yahoo.com>
-Subject: gitk won't stay open
-Date: Sat, 8 Aug 2009 16:44:00 -0700 (PDT)
-Message-ID: <204834.32292.qm@web83403.mail.sp1.yahoo.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH 0/5] Suggested for PU: revision caching system to
+ significantly speed up packing/walking
+Date: Sun, 09 Aug 2009 11:54:18 +1200
+Message-ID: <1249775658.7114.66.camel@maia.lan>
+References: <op.ux8i6hrbtdk399@sirnot.private>
+	 <alpine.DEB.1.00.0908061645470.8306@pacific.mpi-cbg.de>
+	 <4A7AEFA8.5010001@drmicha.warpmail.net>
+	 <c77435a80908061039p30b83511qb7c378cfd68a6cf6@mail.gmail.com>
+	 <alpine.DEB.1.00.0908062030340.8306@pacific.mpi-cbg.de>
+	 <4A7B95A8.2010000@vilain.net>
+	 <alpine.LFD.2.00.0908070031160.16073@xanadu.home>
+	 <alpine.DEB.1.00.0908070806350.8306@pacific.mpi-cbg.de>
+	 <alpine.LFD.2.00.0908071010580.16073@xanadu.home>
+	 <alpine.DEB.1.00.0908081709380.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 09 01:50:49 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@cam.org>, Nick Edelen <sirnot@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Aug 09 01:52:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZvgW-0005vg-Ln
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 01:50:49 +0200
+	id 1MZvi0-0006Ei-NX
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 01:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299AbZHHXul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 19:50:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753140AbZHHXuk
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 19:50:40 -0400
-Received: from web83403.mail.sp1.yahoo.com ([69.147.64.51]:47737 "HELO
-	web83403.mail.sp1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753131AbZHHXuk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Aug 2009 19:50:40 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Aug 2009 19:50:40 EDT
-Received: (qmail 32520 invoked by uid 60001); 8 Aug 2009 23:44:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1249775041; bh=x5IIh7rmK+xOZysDKwVRo/yXz5CW87byeu2IC7UiuvY=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=O+1piesc4DvGjLxl56DYLvVTPdJcMk10WdBt4XNK26PEPr59w35R+1Lk7NeJTjBLuwVNjVKi5vL/QaZYh/ISHx84ZHY2d69hrfW3U25EW8d9hQf+VdqFTiV5MO96NPfeMfr2GOt+uh2H8kQkykS2ekA+lAngLu0AT+x6KfBaP50=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=MBotAtZMtQ+lX2M0Qsoh75I1Z6dJkCJVugEuA4Y17WE+rMUR9tGs24nV2Kz8fJVeNDLJd7JN6Unx215TpsHyje0z+vkwDQ1Lkvm2YIVMvicRPqa2DRhpSHarKEmq5C4LPRXjCPQaQX1XV8ng6+LW6fJvS9q0gQR+ZS+4Wo3y6EA=;
-X-YMail-OSG: R9x1xz8VM1k1eAueZ5TvebR75mYD_XwFm.5JdQmUYbIvTWU..wx5NR7UjMNSLE7hhj3610wEmPlVQlZMweqGm3j4DmhKG0bJSLMObcfumpfJ8MiZ8OAxBR_JfGn66z.uaJc2ARt1vjuEiXieQpMQJmz0BwTxW_RCxoOakV1qKhD_rDFeMSzctyL9okrfqgE7YJbXeXbUEtZC9N2enwdsuh8ErRZaj..QnX8AZhIsHWMREAbK9acfHVlzPIULTPjPw9jV4dYJw3EJkfo82tQ4n7uyoHxICCzRg60IEzq.gXcswuGPRtKH6QoKPycOslRYO6tp
-Received: from [72.220.150.208] by web83403.mail.sp1.yahoo.com via HTTP; Sat, 08 Aug 2009 16:44:00 PDT
-X-Mailer: YahooMailRC/1358.27 YahooMailWebService/0.7.289.10
+	id S1753319AbZHHXwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 19:52:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753304AbZHHXwN
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 19:52:13 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:38259 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753303AbZHHXwM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 19:52:12 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 4CFA1FD50B; Sun,  9 Aug 2009 11:52:11 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 27CCB21C3C5;
+	Sun,  9 Aug 2009 11:52:06 +1200 (NZST)
+In-Reply-To: <alpine.DEB.1.00.0908081709380.8306@pacific.mpi-cbg.de>
+X-Mailer: Evolution 2.24.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125313>
 
+On Sat, 2009-08-08 at 17:18 +0200, Johannes Schindelin wrote:
+> > Speeding up rev-list with a rev cache is completely orthogonal to 
+> > whether the repository is packed or not.
+> 
+> No, it is not.
+> 
+> For both technical and practical reasons, caching revision walker data is
+> very closely related to packing.
+> [...]
+> ... the rev cache has a certain target audience, 
+> and that the regular user is not part of that audience, and that it just 
+> so happens that the _technical_ similarities with the pack index can be 
+> exploited in those scenarios?
+> 
+> IOW we can be pretty certain that a heavy-load server has a fully (or 
+> next-to-fully) packed object database.  The pack indices already contain a 
+> SHA-1 table that we can simply reuse.  And it should not be hard (or 
+> fragile) at all to put the "cached" information about parents, 
+> referenced tree and blob objects into that file, into a different section.
 
-Hi.
+I think your argument would work better if packs and bundles were the
+same thing, and we always stored bundles in the objects/packs directory,
+but they're not and we don't.  You can't assume that a pack has any
+particular properties, such as representing the objects returned from a
+single rev-cache walk.  And I will say that *especially* on a busy git
+server, serving active projects you can't expect people to repack their
+repository for every single update.  Repacking daily or so by a batch
+job, sure.  Expecting the repository to always be fully packed?  No.
+Too much churn, or inefficient packing.  You can't just pretend that the
+mixed packed/loose case doesn't exist.
 
-When I type gitk, the new window opens for about one
-second, showing the history of commits, and then
-quickly closes on its own. I'm on Windows XP.
+The 10% size seems a very good bang for your buck to me and a good
+start.
 
-Is there a known cause for this?
-
-Thanks.
-- Mark
-
-
-
-      
+Sam
