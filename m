@@ -1,79 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in
- case of non-fast forward
-Date: Sat, 08 Aug 2009 09:25:07 -0700
-Message-ID: <7vy6pujmsc.fsf@alter.siamese.dyndns.org>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
- <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
- <87prb6r9d1.fsf@iki.fi> <vpqab2aqqia.fsf@bauges.imag.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [RFC PATCH] Simplify away duplicate commits with --cherry-pick --parents
+Date: Sat, 8 Aug 2009 18:34:26 +0200
+Message-ID: <50f4386635a3ab08ee7fd432d672f775cc760f39.1249749019.git.trast@student.ethz.ch>
+References: <200908060919.27780.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat Aug 08 18:25:25 2009
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
+	Adam Simpkins <adam@adamsimpkins.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 08 18:34:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZojU-0001Ul-H0
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 18:25:25 +0200
+	id 1MZosg-0004ry-Hl
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 18:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751814AbZHHQZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 12:25:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751810AbZHHQZP
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 12:25:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50583 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751586AbZHHQZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 12:25:14 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DE8792276B;
-	Sat,  8 Aug 2009 12:25:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8417F2276A; Sat,  8 Aug 2009
- 12:25:09 -0400 (EDT)
-In-Reply-To: <vpqab2aqqia.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Sat\, 08 Aug 2009 17\:22\:53 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0CFF6380-8438-11DE-8E2A-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751873AbZHHQek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 12:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751810AbZHHQek
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 12:34:40 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:21870 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751586AbZHHQej (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 12:34:39 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 8 Aug
+ 2009 18:34:38 +0200
+Received: from localhost.localdomain (77.56.221.170) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 8 Aug
+ 2009 18:34:38 +0200
+X-Mailer: git-send-email 1.6.4.201.g5a53b
+In-Reply-To: <200908060919.27780.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125288>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+The current --cherry-pick declares commits SHOWN that are found to be
+duplicates.  Unfortunately this disconnects the history at every such
+duplicate, making it quite hard to follow in graphical viewers.
 
-> Teemu Likonen <tlikonen@iki.fi> writes:
->
->> On 2009-08-08 09:51 (+0200), Matthieu Moy wrote:
->>> 'git push' failing because of non-fast forward is a very common situation,
->>> and a beginner does not necessarily understand "fast forward" immediately.
->>
->>> +		if (nonfastforward) {
->>> +			printf("Push was rejected because it would not result in a fast forward:\n"
->>> +			       "Merge in the remote changes (using git pull) before pushing yours,\n"
->>> +			       "or use git push --force to discard the remote changes.\n"
->>> +			       "See 'non-fast forward' section of 'git push --help' for details.\n");
->>> +		}
->>
->> I'd like to add that some projects that use Git in (partially)
->> centralized manner prefer "git pull --rebase" before "git push".
->
-> Right, but I don't think this error message is the place to discuss
-> that. Anything involving rebasing should be taken with care, and
-> pointing the user to it in a short sentence sounds like "try shooting
-> yourself in the foot, and read the man page if it hurts" ;-).
+Add an extra stage of parent rewriting after scanning for duplicates,
+which simplifies the history to omit all duplicate commits.  This
+cannot easily be shifted to the existing parent rewriting because
+cherry_pick_list() always comes last in the entire filtering process
+(presumably because it is the most expensive).
 
-Instead of saying "Merge in", we could say "Integrate" to cover both
-practices.  I also happen to think that the mention of --force falls into
-the same category as "try shooting and then study if it hurgs".
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-So how about phrasing it like this?
+I wrote:
+> The problem with [gitk --left-right --cherry-pick A...B] is that it
+> disconnects history
+[...]
+> Sadly, it's really the underlying git-rev-list that is "broken" in the
+> sense that it does not fix the parent lists.  And git log --graph
+> handles it much worse than gitk.
 
-    Non-fast forward pushes were rejected because you would discard remote
-    changes you have not seen.  Integrate them with your changes and then
-    push again. See 'non-fast forward' section of 'git push --help'.
+Maybe this is an approach.  It unfortunately breaks down if merges can
+disappear because of patch-ids too.  Can they?
 
-I think you can throw in a discussion on --force to the manual page, too.
+(In the case where a merge is flagged SHOWN, it might have its parent
+list reduced to one at some point, and then later filterings would
+simplify it away whereas earlier ones didn't.)
+
+Also, I'm not entirely sure we want to do this without any guards
+except rewrite_parents.
+
+On the plus side, the issues with git log --graph vanish because
+history is again connected :-)
+
+
+ revision.c |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 9f5dac5..9e24514 100644
+--- a/revision.c
++++ b/revision.c
+@@ -517,6 +517,8 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 	return 0;
+ }
+ 
++static int remove_duplicate_parents(struct commit *commit);
++
+ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ {
+ 	struct commit_list *p;
+@@ -599,6 +601,25 @@ static void cherry_pick_list(struct commit_list *list, struct rev_info *revs)
+ 		commit->util = NULL;
+ 	}
+ 
++	if (revs->rewrite_parents) {
++		/* Prune away commits we've just found to be duplicates */
++		for (p = list; p; p = p->next) {
++			struct commit *commit = p->item;
++			struct commit_list *pp;
++
++			for (pp = commit->parents; pp; pp = pp->next) {
++				struct commit *parent = pp->item;
++				while (parent->object.flags & SHOWN
++				       && parent->parents
++				       && !parent->parents->next)
++					parent = parent->parents->item;
++				pp->item = parent;
++			}
++
++			remove_duplicate_parents(commit);
++		}
++	}
++
+ 	free_patch_ids(&ids);
+ }
+ 
+-- 
+1.6.4.199.g24c3
