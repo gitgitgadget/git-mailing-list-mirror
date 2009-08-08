@@ -1,85 +1,74 @@
 From: Emmanuel Trillaud <etrillaud@gmail.com>
-Subject: [PATCH 1/9] add long options completion for 'git checkout'
-Date: Sat, 8 Aug 2009 10:55:21 +0200
-Message-ID: <9f50533b0908080155o45163caby4f91b05ac1152a81@mail.gmail.com>
+Subject: [PATCH 2/9] add missing long options to 'git difftool' completion
+Date: Sat, 8 Aug 2009 10:55:45 +0200
+Message-ID: <9f50533b0908080155w55c89c36l6237c93f7ac00383@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Aug 08 10:55:41 2009
+X-From: git-owner@vger.kernel.org Sat Aug 08 10:56:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZhiF-0004u9-Bw
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 10:55:39 +0200
+	id 1MZhiZ-00050f-Lm
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 10:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754860AbZHHIzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 04:55:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754834AbZHHIzW
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 04:55:22 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:55025 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754221AbZHHIzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 04:55:22 -0400
-Received: by fxm28 with SMTP id 28so169935fxm.17
-        for <git@vger.kernel.org>; Sat, 08 Aug 2009 01:55:22 -0700 (PDT)
+	id S1754953AbZHHIzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Aug 2009 04:55:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754938AbZHHIzp
+	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 04:55:45 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:46859 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754918AbZHHIzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Aug 2009 04:55:45 -0400
+Received: by bwz19 with SMTP id 19so1826831bwz.37
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 01:55:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=ZtyHppf1HuvaeL96QyawMJgy1BoEPqH7VPNVgOGpRuQ=;
-        b=m3IiGT3aqT5X0rJJUGiXZW6rEkkhEq1iONPW4Z45KKkxEmXvNbl+E26cjDMrRyw5zp
-         DpSH8g9dDDqgcGONBtoIhLv/2k1ooIiddj6Q56zPRJdjyXd/Fgnsot0ItNQeYRLd+g5T
-         sX8iQnCBlEenRkBRptzdOBNO02eJhIYW7ww2E=
+        bh=M5Qmi4Aclo1tNxU5/vY9PN/ICMHtOuDCqddnL/P7dOs=;
+        b=DFRmVQjOP0GaR96y5B+JEqcC2m2KTLyNuzauyPaD0c/P/pJIgg89EimC0WlXNRtp97
+         L2k1NQmmFmvuVZ3wpsa6w/jF21Cjgg4pc2b2loYSLhOWJIvx3s8I9eV5pdQfDtORdbQP
+         sh/5eX1CI8QYldFrWIYlZKQZdOpXJ/vWlIhCk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        b=h2GU+6hoAnXM3Ibn1lBBQJmi7fBbpGPgLLV/fwA/NzWXb390AM8rjjWYStYonWgDir
-         YGT33PAMmkF5V2Kb84S79kCp9UXzmDWesOZhAijjSZku4wPfnGgikh8YrKPECVgLG34S
-         dvrF84RODHaDYaXiinSDEmm8wt/GftEKRanhw=
-Received: by 10.204.118.70 with SMTP id u6mr3928684bkq.198.1249721721823; Sat, 
-	08 Aug 2009 01:55:21 -0700 (PDT)
+        b=QGsNvCdekTkr2ilY8deAF9/X3RyIugc+1jEpZflHLWzkvfxISUZ4z6LX1aqePulWZF
+         X1WnHVpfM7YB4i8PWhyN+yHnb/+e5BzX+76b8MkgYUv7OqTD7HEc3/dco1Ks7p7akLs0
+         1QMoDTV+fCc+vkCDFcjhzs7vOM69QyXoOzgcU=
+Received: by 10.204.103.210 with SMTP id l18mr3944210bko.206.1249721745050; 
+	Sat, 08 Aug 2009 01:55:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125266>
 
-add long options completion to git checkout
+according to its man page, git-difftool has 3 long options :
+--tools=, --no-prompt and --prompt. The last 2 options are missing.
 
 Signed-off-by: Emmanuel Trillaud <etrillaud@gmail.com>
 ---
- contrib/completion/git-completion.bash |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash
 b/contrib/completion/git-completion.bash
-index 745b5fb..bc5427f 100755
+index bc5427f..9e86d28 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -815,8 +815,18 @@ _git_bundle ()
- _git_checkout ()
- {
- 	__git_has_doubledash && return
--
--	__gitcomp "$(__git_refs)"
-+    case "${COMP_WORDS[COMP_CWORD]}" in
-+    --*)
-+        __gitcomp "
-+            --ours --theirs --track --no-track --merge
-+            --conflict=
-+            "
-+            ;;
-+    *)
-+        __gitcomp "$(__git_refs)"
-+        ;;
-+    esac
-+	
- }
-
- _git_cherry ()
+@@ -960,7 +960,7 @@ _git_difftool ()
+ 		return
+ 		;;
+ 	--*)
+-		__gitcomp "--tool="
++		__gitcomp "--tool= --no-prompt --prompt"
+ 		return
+ 		;;
+ 	esac
 -- 
 1.6.4
