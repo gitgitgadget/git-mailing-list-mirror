@@ -1,63 +1,68 @@
-From: Caleb Adam Haye <caleb@firecollective.com>
-Subject: git ssl error
-Date: Fri, 7 Aug 2009 17:45:12 -0700
-Message-ID: <ccf1fc2c0908071745j142c4dd0teccd276eab13203c@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git gc expanding packed data?
+Date: Sat, 08 Aug 2009 03:11:35 +0200
+Message-ID: <m2tz0j154o.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 08 02:45:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Hin-Tak Leung <hintak.leung@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Aug 08 03:11:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZa45-0000V0-7v
-	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 02:45:41 +0200
+	id 1MZaTN-00070L-9D
+	for gcvg-git-2@gmane.org; Sat, 08 Aug 2009 03:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755180AbZHHApc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Aug 2009 20:45:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755165AbZHHApc
-	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 20:45:32 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:46294 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755122AbZHHApb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Aug 2009 20:45:31 -0400
-Received: by gxk9 with SMTP id 9so2602968gxk.13
-        for <git@vger.kernel.org>; Fri, 07 Aug 2009 17:45:32 -0700 (PDT)
-Received: by 10.151.15.3 with SMTP id s3mr2989186ybi.270.1249692332180; Fri, 
-	07 Aug 2009 17:45:32 -0700 (PDT)
+	id S1754135AbZHHBLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Aug 2009 21:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753101AbZHHBLk
+	(ORCPT <rfc822;git-outgoing>); Fri, 7 Aug 2009 21:11:40 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:37462 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752600AbZHHBLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Aug 2009 21:11:39 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id 606021C00100;
+	Sat,  8 Aug 2009 03:11:39 +0200 (CEST)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id 0AEB49027D;
+	Sat,  8 Aug 2009 03:11:39 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id zGvwiBMqhFc1; Sat,  8 Aug 2009 03:11:37 +0200 (CEST)
+Received: from igel.home (DSL01.83.171.175.39.ip-pool.NEFkom.net [83.171.175.39])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sat,  8 Aug 2009 03:11:37 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 1CA2310C1BE; Sat,  8 Aug 2009 03:11:35 +0200 (CEST)
+X-Yow: HELLO KITTY gang terrorizes town, family STICKERED to death!
+In-Reply-To: Nicolas Pitre's message of "Wed\, Aug 5\, 2009 at 11\:39 PM"
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125236>
 
-I'm having trouble using git over SSL.
+Nicolas Pitre <nico@cam.org> writes:
 
-git clone https://myserver.com/git/my-project.git
-Initialized empty Git repository in /Users/username/my-project/.git/
-fatal: https://myserver.com/git/my-project.git/info/refs download
-error - SSL certificate problem, verify that the CA cert is OK.
-Details:
-error:14090086:SSL routines:SSL3_GET_SERVER_CERTIFICATE:certificate
-verify failed
+> It appears that the git installation serving clone requests for
+> git://gcc.gnu.org/git/gcc.git generates lots of unreferenced objects. I
+> just cloned it and the pack I was sent contains 1383356 objects (can be
+> determined with 'git show-index < .git/objects/pack/*.idx | wc -l').
+> However, there are only 978501 actually referenced objects in that
+> cloned repository ( 'git rev-list --all --objects | wc -l').  That makes
+> for 404855 useless objects in the cloned repository.
 
-The SSL Checker (http://www.sslshopper.com/ssl-checker.html) seems to
-think everying is fine w/ the SSL config.
+Those objects are not useless.  They are referenced by the remote refs
+on the remote side, which are not fetched by default.  If you clone a
+mirror of the repository you'll see no unreferenced objects.
 
-I think the problem is that I need to install the ca-certificates
-locally, but i think i have done that... not sure if it's done
-correctly though
+Andreas.
 
-Please help
-
---
-Caleb Adam Haye
-caleb@firecollective.com
-
-The information contained in this message is confidential and intended
-only for the use of the individual or entity named above, and may be
-privileged. Any unauthorized review, use, disclosure, or distribution
-is prohibited. If you are not the intended recipient, please reply to
-the sender immediately, stating that you have received the message in
-error, then please delete this e-mail. Thank you.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
