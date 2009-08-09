@@ -1,82 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] Use a clearer style to issue commands to remote
- helpers
-Date: Sun, 9 Aug 2009 22:17:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908092211030.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0908091526350.27553@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in
+ case of non-fast forward
+Date: Sun, 09 Aug 2009 13:22:56 -0700
+Message-ID: <7vljls7n4v.fsf@alter.siamese.dyndns.org>
+References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
+ <87prb6r9d1.fsf@iki.fi> <vpqab2aqqia.fsf@bauges.imag.fr>
+ <7vy6pujmsc.fsf@alter.siamese.dyndns.org> <vpq63cwdee3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Aug 09 22:17:17 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sun Aug 09 22:23:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaEpO-0003Xk-JZ
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 22:17:15 +0200
+	id 1MaEvG-0005SU-Vv
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 22:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753007AbZHIUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 16:16:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752854AbZHIUQy
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 16:16:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45199 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752637AbZHIUQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 16:16:53 -0400
-Received: (qmail invoked by alias); 09 Aug 2009 20:16:53 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp051) with SMTP; 09 Aug 2009 22:16:53 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+epwJW2BmeByABrCWWQqqYvRFD7VhQh9UbIB3Oer
-	XZvBsDqBy8smG1
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0908091526350.27553@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753198AbZHIUXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 16:23:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbZHIUXK
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 16:23:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60443 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752637AbZHIUXK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 16:23:10 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ABBB3463F;
+	Sun,  9 Aug 2009 16:23:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5960463C; Sun,  9 Aug
+ 2009 16:23:05 -0400 (EDT)
+In-Reply-To: <vpq63cwdee3.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Sun\, 09 Aug 2009 20\:35\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 750CF13C-8522-11DE-B857-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125377>
 
-Hi,
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-On Sun, 9 Aug 2009, Daniel Barkalow wrote:
+>> So how about phrasing it like this?
+>>
+>>     Non-fast forward pushes were rejected because you would discard remote
+>>     changes you have not seen.  Integrate them with your changes and then
+>>     push again. See 'non-fast forward' section of 'git push --help'.
+>
+> I thing not pointing to 'git pull' in the message really defeats the
+> purpose of the patch. I don't find an error message only telling me
+> "go read the doc as you should have done from the beginning" really
+> helps.
 
-> This style is overkill for some commands, but it's worthwhile to use
-> the same style to issue all commands, and it's useful to avoid
-> open-coding string lengths.
-> 
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
+What the above three lines does much more than that.
 
-Thanks.  I am positively surprised that you did this patch in spite of the 
-basis already being in 'next'.
+If you read "would discard remote changes" and understand that it is what
+you want, then you may know to try --force, without having to read the
+doc, or if you do not remember --force, "git push --help" would remind
+you.
 
-> +	strbuf_addstr(&buf, "capabilities\n");
-> +	write_in_full(helper->in, buf.buf, buf.len);
-> +	strbuf_reset(&buf);
+If you read "Integrate them with your changes" and understand that it is
+talking about "git pull" or "git pull --rebase", then you do not have to
+read the doc.  It should "click".
 
-Hmm.  I think you use the same paradigm three times.  Maybe it is time to 
-heed the DRY principle and introduce a helper function?
-
-Maybe something like
-
-void fprintf_in_full(struct strbuf *buf, int fd, const char *format, ...)
-{
-	va_list ap;
-
-	va_start(ap, format);
-	strbuf_reset(buf);
-	strbuf_vaddf(buf, format, ap);
-	write_in_full(fd, buf->buf, buf->len);
-	va_end(ap);
-}
-
-But I keep forgetting that there is no strbuf_vaddf() in 'next'... maybe 
-it is high time that I forget my promise and re-submit that series?
-
-Ciao,
-Dscho
+If you lack such a basic understanding, you are better off go reading the
+doc after all.
