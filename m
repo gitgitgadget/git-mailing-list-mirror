@@ -1,75 +1,73 @@
-From: Joel Mahoney <joelmahoney@gmail.com>
-Subject: fatal: bad revision 'HEAD'
-Date: Sun, 9 Aug 2009 15:15:46 -0600
-Message-ID: <06DCECD0-45F0-4695-86D4-7C54EFE4E640@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 8/8] Allow helpers to request marks for fast-import
+Date: Sun, 09 Aug 2009 23:25:52 +0200
+Message-ID: <200908092325.53040.johan@herland.net>
+References: <alpine.LNX.2.00.0908091527480.27553@iabervon.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 09 23:16:28 2009
+X-From: git-owner@vger.kernel.org Sun Aug 09 23:26:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaFkg-0004jq-Go
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 23:16:27 +0200
+	id 1MaFu9-0007e4-PA
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 23:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872AbZHIVQS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 17:16:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752857AbZHIVQS
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 17:16:18 -0400
-Received: from mail-pz0-f196.google.com ([209.85.222.196]:35134 "EHLO
-	mail-pz0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752789AbZHIVQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 17:16:18 -0400
-Received: by pzk34 with SMTP id 34so2528431pzk.4
-        for <git@vger.kernel.org>; Sun, 09 Aug 2009 14:16:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=dUnhJcb+r7DVcW+96VSVrnMZ/k9tshw4kcoLiCmi5rM=;
-        b=SFXa6B2R9BOeZbshBXSaS1tWuGBepPFHC7k7sKdanOboFBvbekgW6MjyFJHrMQUiX7
-         fYVL4lkGm/uGoYuxyFzNJJ/mnnHmXc8OPQGUjvdmuavZTkPSbSNw9dTYVig/5Eq2hYve
-         GW/BIdh4ENv6OKG5sVARo0hFVksmcfF9We0sE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=kMF/yKHtcYYSmui8l+3APMNiN7ogI2uUpnvmWgrI8xKatDRZwlGr7tlWXJTzK73nYc
-         6nqAc2Ik6dqDx2Y6s6amR+LzUJnrJgkJCBILiHzkymf8ZB+ex5nGjBIwTEjxowWfhP9U
-         LwnA246sQ76sEiA63zJwU/kWEgoa67G+crziE=
-Received: by 10.115.33.4 with SMTP id l4mr5250895waj.38.1249852578985;
-        Sun, 09 Aug 2009 14:16:18 -0700 (PDT)
-Received: from ?192.168.0.134? ([63.225.113.121])
-        by mx.google.com with ESMTPS id k37sm6145308waf.7.2009.08.09.14.16.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 09 Aug 2009 14:16:18 -0700 (PDT)
-X-Mailer: Apple Mail (2.935.3)
+	id S1752688AbZHIVZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 17:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbZHIVZy
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 17:25:54 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:40679 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751972AbZHIVZy (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2009 17:25:54 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO4004KBOV62U20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 09 Aug 2009 23:25:54 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO400EQYOV59D10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 09 Aug 2009 23:25:54 +0200 (MEST)
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
+ Antispam-Data: 2009.8.9.211217
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <alpine.LNX.2.00.0908091527480.27553@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125383>
 
-Hello,
+On Sunday 09 August 2009, Daniel Barkalow wrote:
+> From: Johan Herland <johan@herland.net>
+>
+> The 'marks' capability is reported by the remote helper if it requires
+> the fast-import marks database to loaded/saved by any git-fast-import
+> process that is provided by the transport machinery. The feature is
+> advertised along with exactly one argument: the location of the file
+> containing the marks database.
+>
+> Signed-off-by: Johan Herland <johan@herland.net>
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 
-I am having trouble installing Ruby on Rails plugins from github.   
-when I run e.g. script/install plugin git://github.com/thoughtbot/ 
-paperclip.git I get:
+Note that this patch can be dropped if Sverre Rabbelier's suggestion of 
+adding an "option" command to fast-import is accepted: 
+http://thread.gmane.org/gmane.comp.version-control.git/124655
 
- > Initialized empty Git repository in /path/to/my/project/vendor/ 
-plugins/paperclip/.git/
- > fatal: bad revision 'HEAD'
- > refusing to pull with rebase: your working tree is not up-to-date
+In that case, the CVS helper (or any other helper) can use the "option" 
+fast-import command instead of having to tell transport-helper.c to invoke 
+fast-import appropriately. Seems like a somewhat cleaner solution to me...
 
-I don't have any problems with git in general, but this error happens  
-every time I try to install from github - even when it's a brand new  
-rails app.
 
-the github support team tells me it looks like a git issue - any  
-suggestions would be appreciated!
+Have fun!
 
-thanks,
-Joel
+...Johan
