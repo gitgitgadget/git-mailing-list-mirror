@@ -1,127 +1,121 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/3] merge: fix incorrect merge message for ambiguous
- tag/branch
-Date: Sun, 9 Aug 2009 06:02:24 -0400
-Message-ID: <20090809100224.GB25231@coredump.intra.peff.net>
+Subject: [PATCH 3/3] merge: indicate remote tracking branches in merge
+ message
+Date: Sun, 9 Aug 2009 06:02:51 -0400
+Message-ID: <20090809100251.GC25231@coredump.intra.peff.net>
 References: <20090809100045.GA25197@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 12:02:35 2009
+X-From: git-owner@vger.kernel.org Sun Aug 09 12:03:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma5EY-0004ta-Oo
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 12:02:35 +0200
+	id 1Ma5Ey-000511-SX
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 12:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753775AbZHIKC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 06:02:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753755AbZHIKC0
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 06:02:26 -0400
-Received: from peff.net ([208.65.91.99]:52372 "EHLO peff.net"
+	id S1753799AbZHIKCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 06:02:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788AbZHIKCw
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 06:02:52 -0400
+Received: from peff.net ([208.65.91.99]:52374 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753748AbZHIKCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 06:02:25 -0400
-Received: (qmail 3123 invoked by uid 107); 9 Aug 2009 10:04:39 -0000
+	id S1753787AbZHIKCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 06:02:52 -0400
+Received: (qmail 3145 invoked by uid 107); 9 Aug 2009 10:05:06 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 09 Aug 2009 06:04:39 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Aug 2009 06:02:24 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 09 Aug 2009 06:05:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Aug 2009 06:02:51 -0400
 Content-Disposition: inline
 In-Reply-To: <20090809100045.GA25197@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125340>
 
-If we have both a tag and a branch named "foo", then calling
-"git merge foo" will warn about the ambiguous ref, but merge
-the tag.
+Previously when merging directly from a local tracking
+branch like:
 
-When generating the commit message, though, we simply
-checked whether "refs/heads/foo" existed, and if it did,
-assumed it was a branch. This led to the statement "Merge
-branch 'foo'" in the commit message, which is quite wrong.
+  git merge origin/master
 
-Instead, we should use dwim_ref to find the actual ref used,
-and describe it appropriately.
+The merge message said:
 
-In addition to the test in t7608, we must also tweak the
-expected output of t4202, which was accidentally triggering
-this bug.
+   Merge commit 'origin/master'
+
+     * commit 'origin/master':
+       ...
+
+Instead, let's be more explicit about what we are merging:
+
+   Merge remote branch 'origin/master'
+
+     * origin/master:
+       ...
+
+We accomplish this by recognizing remote tracking branches
+in git-merge when we build the simulated FETCH_HEAD output
+that we feed to fmt-merge-msg.
+
+In addition to a new test in t7608, we have to tweak the
+expected output of t3409, which does such a merge.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin-merge.c           |   15 +++++++--------
- t/t4202-log.sh            |    4 ++--
- t/t7608-merge-messages.sh |    2 +-
- 3 files changed, 10 insertions(+), 11 deletions(-)
+ builtin-merge.c                   |    5 +++++
+ t/t3409-rebase-preserve-merges.sh |    2 +-
+ t/t7608-merge-messages.sh         |   10 ++++++++++
+ 3 files changed, 16 insertions(+), 1 deletions(-)
 
 diff --git a/builtin-merge.c b/builtin-merge.c
-index 82b5466..f7db148 100644
+index f7db148..f4de73f 100644
 --- a/builtin-merge.c
 +++ b/builtin-merge.c
-@@ -358,6 +358,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf bname = STRBUF_INIT;
- 	const char *ptr;
-+	char *found_ref;
- 	int len, early;
- 
- 	strbuf_branchname(&bname, remote);
-@@ -368,14 +369,12 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	if (!remote_head)
- 		die("'%s' does not point to a commit", remote);
- 
--	strbuf_addstr(&buf, "refs/heads/");
--	strbuf_addstr(&buf, remote);
--	resolve_ref(buf.buf, branch_head, 0, NULL);
--
--	if (!hashcmp(remote_head->sha1, branch_head)) {
--		strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
--			sha1_to_hex(branch_head), remote);
--		goto cleanup;
-+	if (dwim_ref(remote, strlen(remote), branch_head, &found_ref) > 0) {
-+		if (!prefixcmp(found_ref, "refs/heads/")) {
-+			strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
+@@ -375,6 +375,11 @@ static void merge_name(const char *remote, struct strbuf *msg)
+ 				    sha1_to_hex(branch_head), remote);
+ 			goto cleanup;
+ 		}
++		if (!prefixcmp(found_ref, "refs/remotes/")) {
++			strbuf_addf(msg, "%s\t\tremote branch '%s' of .\n",
 +				    sha1_to_hex(branch_head), remote);
 +			goto cleanup;
 +		}
  	}
  
  	/* See if remote matches <name>^^^.. or <name>~<number> */
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 48e0088..1e952ca 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -320,11 +320,11 @@ test_expect_success 'set up more tangled history' '
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index e6c8327..297d165 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -71,7 +71,7 @@ test_expect_success 'rebase -p fakes interactive rebase' '
+ 	git fetch &&
+ 	git rebase -p origin/topic &&
+ 	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
+-	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge commit" | wc -l)
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote branch " | wc -l)
+ 	)
  '
  
- cat > expect <<\EOF
--*   Merge branch 'reach'
-+*   Merge commit 'reach'
- |\
- | \
- |  \
--*-. \   Merge branches 'octopus-a' and 'octopus-b'
-+*-. \   Merge commit 'octopus-a'; commit 'octopus-b'
- |\ \ \
- * | | | seventh
- | | * | octopus-b
 diff --git a/t/t7608-merge-messages.sh b/t/t7608-merge-messages.sh
-index 9d10583..81ced8a 100755
+index 81ced8a..28d5679 100755
 --- a/t/t7608-merge-messages.sh
 +++ b/t/t7608-merge-messages.sh
-@@ -38,7 +38,7 @@ test_expect_success 'merge tag' '
- 	check_oneline "Merge commit Qtag-1Q"
+@@ -47,4 +47,14 @@ test_expect_success 'ambiguous tag' '
+ 	check_oneline "Merge commit QambiguousQ"
  '
  
--test_expect_failure 'ambiguous tag' '
-+test_expect_success 'ambiguous tag' '
- 	git checkout -b ambiguous master &&
- 	test_commit ambiguous &&
- 	git checkout master &&
++test_expect_success 'remote branch' '
++	git checkout -b remote master &&
++	test_commit remote-1 &&
++	git update-ref refs/remotes/origin/master remote &&
++	git checkout master &&
++	test_commit master-5 &&
++	git merge origin/master &&
++	check_oneline "Merge remote branch Qorigin/masterQ"
++'
++
+ test_done
 -- 
 1.6.4.178.g7a987
