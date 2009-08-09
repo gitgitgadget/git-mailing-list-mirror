@@ -1,69 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix potential infinite loop given large unsigned integer
-Date: Sat, 08 Aug 2009 23:19:18 -0700
-Message-ID: <7vy6pta4rd.fsf@alter.siamese.dyndns.org>
-References: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
+From: Meinrad Recheis <meinrad.recheis@gmail.com>
+Subject: [ANN] git# (GitSharp) project status
+Date: Sun, 9 Aug 2009 08:41:51 +0200
+Message-ID: <43d756720908082341p2f2a7a75yb1fdf85982fdb8f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ryan Flynn <parseerror@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 08:19:44 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 09 08:42:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma1ks-0001TH-Ke
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 08:19:43 +0200
+	id 1Ma26e-0005WV-K5
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 08:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969AbZHIGTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 02:19:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751968AbZHIGTZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 02:19:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56574 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751603AbZHIGTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 02:19:24 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 149A022609;
-	Sun,  9 Aug 2009 02:19:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09D5622606; Sun,  9 Aug 2009
- 02:19:20 -0400 (EDT)
-In-Reply-To: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
- (Ryan Flynn's message of "Sun\, 9 Aug 2009 00\:41\:21 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9539A548-84AC-11DE-9771-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751968AbZHIGlw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Aug 2009 02:41:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbZHIGlw
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 02:41:52 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:56192 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511AbZHIGlw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2009 02:41:52 -0400
+Received: by bwz19 with SMTP id 19so2091381bwz.37
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 23:41:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=NnEER5teTxAcwR794AM08Mz8o76gx59RN7u6eKAFw/k=;
+        b=VZYqos2nl2PaENtm5+ZEBhQHpgDz+f7rS6kVhzNhUKJm2nKFfDaCYUIIWA7I4MRvJD
+         aMn4a8aOin217ausNhE+sMKgf5z/TltX8dZxxmgjV++uLiiiss2mVprd8qPKkniJYaoD
+         lYxxrITSEPMT2Ki0N2sEEcyTqerXSaIu8evN4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=vbysza1YHIWJRr4us6ISvjVMMMwnfQk8NE0wJRMuEO09eXU8As7fVZURbtkT5jjXlA
+         P4GY6YBlEpytJDMZ4YWwZWG9qFz+DUmU2Q+ICbgwJl1nhvkL+DPVCJ1ZWJoLifFXAOoO
+         OXqShkYaga9cZcs4cPWST7uFLNPSjRQ0/N8b4=
+Received: by 10.223.121.6 with SMTP id f6mr35031far.51.1249800111751; Sat, 08 
+	Aug 2009 23:41:51 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125321>
 
-Ryan Flynn <parseerror@gmail.com> writes:
+Hi,
+Thanks to massive contributions from various people the project
+GitSharp has progressed very fast.
 
-> given n, tried to find i greater than n via i=1, iterate i *= 10.
-> given n sufficiently close to UINT_MAX this will overflow; which can
-> produce i==0, which results in an infinite loop. iteratively dividing
-> n /= 10 does not have this problem, and though division is slower than
-> multiplication this only runs once per `git format-patch
-> --cover-letter`
->
-> Signed-off-by: pizza <parseerror@gmail.com>
+GitSharp now counts about 17753 lines of code, the jgit.lib snapshot
+we are porting from counts 24588 lines. This means that roughly 72% of
+the porting work are done! About two months ago, when I announced the
+project on this list only about 25% had been done.
+There is also still much testing work to do=A0(426 tests of=A0approx.=A0=
+1000
+tests are ported)=A0and a lot of bugs to fix (28 tests are failing) til=
+l
+all the ported code may be considered as correct.
 
-Pizza?
+I want to say thanks to the git community, to the jgit folks and to
+all who contributed to GitSharp!
+=46or more info visit=A0http://www.eqqon.com/index.php/GitSharp
 
-This is somewhat amusing.
-
- - digits_in_number() is called only with opt->total that is "int";
-
- - opt->total is the total number of patches.
-
- - the return value is used like this:
-
-     sprintf(buf, "%0*d", digits_in_number(opt->total), opt->nr);
-
-   and opt->nr runs from 1 to opt->total; the use of "d" would be already
-   wrong anyway even if you computed digits_in_number() correctly.
-
-Perhaps we should get rid of this function altogether?
+Cheers,
+-- henon
