@@ -1,130 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge: indicate remote tracking branches in merge
- message
-Date: Sun, 09 Aug 2009 00:31:04 -0700
-Message-ID: <7vab29a1fr.fsf@alter.siamese.dyndns.org>
-References: <20090809065936.GA24112@coredump.intra.peff.net>
+Subject: Re: [PATCH] fix potential infinite loop given large unsigned integer
+Date: Sun, 09 Aug 2009 00:38:08 -0700
+Message-ID: <7v3a81a13z.fsf@alter.siamese.dyndns.org>
+References: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
+ <7vy6pta4rd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 09 09:31:46 2009
+Cc: Ryan Flynn <parseerror@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 09 09:39:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma2sa-0006k9-W0
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 09:31:45 +0200
+	id 1Ma2zg-0008KS-A6
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 09:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750938AbZHIHbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 03:31:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbZHIHbe
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 03:31:34 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37314 "EHLO
+	id S1751095AbZHIHir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 03:38:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbZHIHiq
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 03:38:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37093 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731AbZHIHbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 03:31:34 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 642CB228CA;
-	Sun,  9 Aug 2009 03:31:34 -0400 (EDT)
+	with ESMTP id S1750725AbZHIHiq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 03:38:46 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A61063D98;
+	Sun,  9 Aug 2009 03:38:46 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 30568228C7; Sun,  9 Aug 2009
- 03:31:24 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BB0BC3D97; Sun,  9 Aug
+ 2009 03:38:29 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AA4D0E34-84B6-11DE-8F84-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: ABF66004-84B7-11DE-9EE7-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125326>
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Previously when merging directly from a local tracking
-> branch like:
+> Ryan Flynn <parseerror@gmail.com> writes:
 >
->   git merge origin/master
+>> given n, tried to find i greater than n via i=1, iterate i *= 10.
+>> given n sufficiently close to UINT_MAX this will overflow; which can
+>> produce i==0, which results in an infinite loop. iteratively dividing
+>> n /= 10 does not have this problem, and though division is slower than
+>> multiplication this only runs once per `git format-patch
+>> --cover-letter`
+>>
+>> Signed-off-by: pizza <parseerror@gmail.com>
 >
-> The merge message said:
+> Pizza?
 >
->    Merge commit 'origin/master'
+> This is somewhat amusing.
 >
->      * commit 'origin/master':
->        ...
+>  - digits_in_number() is called only with opt->total that is "int";
 >
-> Instead, let's be more explicit about what we are merging:
+>  - opt->total is the total number of patches.
 >
->    Merge remote branch 'origin/master'
+>  - the return value is used like this:
 >
->      * origin/master:
->        ...
+>      sprintf(buf, "%0*d", digits_in_number(opt->total), opt->nr);
 >
-> We accomplish this by recognizing remote tracking branches
-> in git-merge when we build the simulated FETCH_HEAD output
-> that we feed to fmt-merge-msg.
+>    and opt->nr runs from 1 to opt->total; the use of "d" would be already
+>    wrong anyway even if you computed digits_in_number() correctly.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is a repost of
->
->   http://article.gmane.org/gmane.comp.version-control.git/119909
->
-> which got no response from you. I think it is a good idea, but I am not
-> deeply committed to it. I mainly want a yes or no so I can clean it out
-> of my patch queue.
+> Perhaps we should get rid of this function altogether?
 
-I somewhat suspect that the patch was not applied because it also lacked
-necessary adjustments to tests.  With this patch, I think the tests would
-fail.
+Or perhaps something stupid like this...
 
-Nevertheless, I think it is a good thing to do.  But I am unsure about the
-implementation.
+ builtin-log.c |    6 +++++-
+ log-tree.c    |   12 +-----------
+ revision.h    |    2 +-
+ 3 files changed, 7 insertions(+), 13 deletions(-)
 
-Shouldn't it instead feed what it got from the end user to the dwim
-machinery, and make sure it dwims into refs/remotes/ hierarchy?
-
-In other words, like this.  Note that it would be much clearer to see
-what's needed, if you want to extend it to refs/tags hierarchy ;-)
-
- builtin-merge.c |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/builtin-merge.c b/builtin-merge.c
-index 82b5466..f4de73f 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -358,6 +358,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf bname = STRBUF_INIT;
- 	const char *ptr;
-+	char *found_ref;
- 	int len, early;
+diff --git a/builtin-log.c b/builtin-log.c
+index 3817bf1..321e8f5 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1096,8 +1096,12 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	total = nr;
+ 	if (!keep_subject && auto_number && total > 1)
+ 		numbered = 1;
+-	if (numbered)
++	if (numbered) {
++		static char num_buf[64];
+ 		rev.total = total + start_number - 1;
++		sprintf(num_buf, "%d", rev.total);
++		rev.num_width = strlen(num_buf);
++	}
+ 	if (in_reply_to || thread || cover_letter)
+ 		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
+ 	if (in_reply_to) {
+diff --git a/log-tree.c b/log-tree.c
+index 6f73c17..0d32a6c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -158,16 +158,6 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
+ 	strbuf_addch(sb, '\n');
+ }
  
- 	strbuf_branchname(&bname, remote);
-@@ -368,14 +369,17 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 	if (!remote_head)
- 		die("'%s' does not point to a commit", remote);
- 
--	strbuf_addstr(&buf, "refs/heads/");
--	strbuf_addstr(&buf, remote);
--	resolve_ref(buf.buf, branch_head, 0, NULL);
+-static unsigned int digits_in_number(unsigned int number)
+-{
+-	unsigned int i = 10, result = 1;
+-	while (i <= number) {
+-		i *= 10;
+-		result++;
+-	}
+-	return result;
+-}
 -
--	if (!hashcmp(remote_head->sha1, branch_head)) {
--		strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
--			sha1_to_hex(branch_head), remote);
--		goto cleanup;
-+	if (dwim_ref(remote, strlen(remote), branch_head, &found_ref) > 0) {
-+		if (!prefixcmp(found_ref, "refs/heads/")) {
-+			strbuf_addf(msg, "%s\t\tbranch '%s' of .\n",
-+				    sha1_to_hex(branch_head), remote);
-+			goto cleanup;
-+		}
-+		if (!prefixcmp(found_ref, "refs/remotes/")) {
-+			strbuf_addf(msg, "%s\t\tremote branch '%s' of .\n",
-+				    sha1_to_hex(branch_head), remote);
-+			goto cleanup;
-+		}
- 	}
- 
- 	/* See if remote matches <name>^^^.. or <name>~<number> */
+ static int has_non_ascii(const char *s)
+ {
+ 	int ch;
+@@ -212,7 +202,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		snprintf(buffer, sizeof(buffer),
+ 			 "Subject: [%s %0*d/%d] ",
+ 			 opt->subject_prefix,
+-			 digits_in_number(opt->total),
++			 opt->num_width,
+ 			 opt->nr, opt->total);
+ 		subject = buffer;
+ 	} else if (opt->total == 0 && opt->subject_prefix && *opt->subject_prefix) {
+diff --git a/revision.h b/revision.h
+index fb74492..21e4d9d 100644
+--- a/revision.h
++++ b/revision.h
+@@ -84,7 +84,7 @@ struct rev_info {
+ 	unsigned int	abbrev;
+ 	enum cmit_fmt	commit_format;
+ 	struct log_info *loginfo;
+-	int		nr, total;
++	int		nr, total, num_width;
+ 	const char	*mime_boundary;
+ 	const char	*patch_suffix;
+ 	int		numbered_files;
