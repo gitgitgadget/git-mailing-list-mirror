@@ -1,83 +1,105 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: [PATCH 1/6 (v2)] revision caching documentation: man page and 
-	technical discussion
-Date: Sun, 9 Aug 2009 16:01:22 +0200
-Message-ID: <c77435a80908090701x3aa2584fq353df1886ed1b02@mail.gmail.com>
-References: <op.uyb1uuu4tdk399@sirnot.private>
-	 <7vbpmqi2d4.fsf@alter.siamese.dyndns.org>
+From: Martin Nordholts <enselic@gmail.com>
+Subject: [PATCH] git-blame.el: Add `git-blame-show-full-message'
+Date: Sun, 09 Aug 2009 16:27:36 +0200
+Message-ID: <1249828056.11623.5.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 16:01:33 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 09 16:24:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma8xn-0004qY-KR
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 16:01:32 +0200
+	id 1Ma9KQ-0003e7-8o
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 16:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003AbZHIOBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 10:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753999AbZHIOBX
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 10:01:23 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:48251 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750942AbZHIOBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 10:01:22 -0400
-Received: by ewy10 with SMTP id 10so2498058ewy.37
-        for <git@vger.kernel.org>; Sun, 09 Aug 2009 07:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hh+FmIDMNeUStu/dUWirDSXphMl+vVgl+YtFIYf4NHk=;
-        b=mbMNf7WaBLCF0LrtdwoZmN1FAgU7iTfei2iC92bI7C41UH4COgZyHU7MKxdLUKy/qd
-         7mZi4R5N9KBkjsd4clD9gL28r/H0PayDMg8DKVAiMaSbh1BsrK/Dkrwuz8lXeDOHbLhK
-         BWz5UgmFJpGpuNDQb9qFp3UHz7Qp67QPAk4rc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sqSWG3vMeykcX9OY5eU/kMS7SLgsDKR906P7R8LDT/hMNPvGk6gshn8Sz3ZCBE34JC
-         FluA9RXNr33KTBaxatPLnJx4IPlgzIZCyeFqJb3PEZ+vkNL229HbdlHvjlF/mkSDAV6k
-         0GbBRocr35ZIv/FA0EIij8az/DsgCkwko4grg=
-Received: by 10.216.10.208 with SMTP id 58mr670674wev.82.1249826482239; Sun, 
-	09 Aug 2009 07:01:22 -0700 (PDT)
-In-Reply-To: <7vbpmqi2d4.fsf@alter.siamese.dyndns.org>
+	id S1754013AbZHIOYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 10:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754012AbZHIOYq
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 10:24:46 -0400
+Received: from proxy3.bredband.net ([195.54.101.73]:52451 "EHLO
+	proxy3.bredband.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753553AbZHIOYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 10:24:45 -0400
+Received: from iph2.telenor.se (195.54.127.133) by proxy3.bredband.net (7.3.140.3)
+        id 49F597CD026D035A for git@vger.kernel.org; Sun, 9 Aug 2009 16:24:45 +0200
+X-SMTPAUTH-B2: 
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArE3AGh4fkrVcXKrPGdsb2JhbAAImjgBAQEBN6EFkAWEGAWCJw
+X-IronPort-AV: E=Sophos;i="4.43,349,1246831200"; 
+   d="scan'208";a="34195498"
+Received: from c-ab7271d5.017-113-6c756e10.cust.bredbandsbolaget.se (HELO [192.168.1.2]) ([213.113.114.171])
+  by iph2.telenor.se with ESMTP; 09 Aug 2009 16:24:45 +0200
+X-Mailer: Evolution 2.26.3 (2.26.3-1.fc11) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125346>
 
-Wow, thank you very much for your commentary!
+Add an interactively callable function `git-blame-show-full-message'
+that shows the full commit message with --pretty=full in the echo
+area.
 
-Unfortunately I don't have a stable internet connection this week
-(although I can get on at minimum once a day), but I'll rework the
-docs today and upload a new patch for them tomorrow or the next day.
-I'll also fix the file permissions ;-)
+The purpose of the function is to allow a user of git-blame.el to
+browse around in a file until an interesting commit oneliner is shown,
+at which point the user can invoke `git-blame-show-full-message' to
+get more verbose information.
 
-As you said, I'll answer most of your questions in the revised docs,
-but I have one question about the time field size.  git uses unsigned
-long internally for its commit date, so it'd be limited by the 32bits
-a long is on 32bit archs.  So, wouldn't the commit times effectively
-be a uin32_t?  I mean if not I can change it; I just figured I'd save
-some space.
+Signed-off-by: Martin Nordholts <martinn@src.gnome.org>
+---
+ contrib/emacs/git-blame.el |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
 
-Other than that there shouldn't be an overflow problem, unless
-someone's merging over 63 branches in one go.  Maybe I'll expand that
-a bit just in case though...
-
-Thanks again,
- - Nick
+diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
+index 4fa70c5..443ebce 100644
+--- a/contrib/emacs/git-blame.el
++++ b/contrib/emacs/git-blame.el
+@@ -40,7 +40,8 @@
+ ;; turn it on while viewing a file, the editor buffer will be updated by
+ ;; setting the background of individual lines to a color that reflects
+ ;; which commit it comes from.  And when you move around the buffer, a
+-;; one-line summary will be shown in the echo area.
++;; one-line summary will be shown in the echo area.  To get the complete
++;; commit message, invoke `git-blame-show-full-message'.
+ 
+ ;;; Installation:
+ ;;
+@@ -340,7 +341,7 @@ See also function `git-blame-mode'."
+ 			 (git-blame-random-pop git-blame-colors)
+ 		       git-blame-ancient-color)))
+           (setq info (list hash src-line res-line num-lines
+-                           (git-describe-commit hash)
++                           (git-describe-commit hash git-blame-log-oneline-format)
+                            (cons 'color color))))
+         (puthash hash info git-blame-cache))
+       (goto-line res-line)
+@@ -375,11 +376,11 @@ See also function `git-blame-mode'."
+         (car info)
+       (error "No commit info"))))
+ 
+-(defun git-describe-commit (hash)
++(defun git-describe-commit (hash pretty-format)
+   (with-temp-buffer
+     (call-process "git" nil t nil
+                   "log" "-1"
+-		  (concat "--pretty=" git-blame-log-oneline-format)
++		  (concat "--pretty=" pretty-format)
+                   hash)
+     (buffer-substring (point-min) (point-max))))
+ 
+@@ -392,6 +393,11 @@ See also function `git-blame-mode'."
+       (message "%s" (nth 4 info))
+       (setq git-blame-last-identification info))))
+ 
++(defun git-blame-show-full-message  ()
++  "Show full log message about current commit"
++  (interactive)
++  (message (git-describe-commit (git-blame-current-commit) "full")))
++
+ ;; (defun git-blame-after-save ()
+ ;;   (when git-blame-mode
+ ;;     (git-blame-cleanup)
+-- 
+1.6.2.5
