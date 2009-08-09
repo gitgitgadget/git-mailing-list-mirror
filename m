@@ -1,104 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] merge: indicate remote tracking branches in merge
- message
-Date: Sun, 9 Aug 2009 06:07:12 -0400
-Message-ID: <20090809100712.GA26250@coredump.intra.peff.net>
-References: <20090809065936.GA24112@coredump.intra.peff.net>
- <7vab29a1fr.fsf@alter.siamese.dyndns.org>
- <20090809074035.GA4778@coredump.intra.peff.net>
- <20090809091443.GA676@coredump.intra.peff.net>
- <20090809100045.GA25197@coredump.intra.peff.net>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH] fix potential infinite loop given large unsigned integer
+Date: Sun, 9 Aug 2009 14:25:40 +0200
+Message-ID: <40aa078e0908090525h7b4d6efeh658e2edcfbe16c7e@mail.gmail.com>
+References: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
+	 <7vy6pta4rd.fsf@alter.siamese.dyndns.org>
+	 <7v3a81a13z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ryan Flynn <parseerror@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 12:07:29 2009
+X-From: git-owner@vger.kernel.org Sun Aug 09 14:25:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma5JE-0006VG-6h
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 12:07:24 +0200
+	id 1Ma7TC-0000ZN-LO
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 14:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753748AbZHIKHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 06:07:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753699AbZHIKHO
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 06:07:14 -0400
-Received: from peff.net ([208.65.91.99]:41628 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753673AbZHIKHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 06:07:13 -0400
-Received: (qmail 3177 invoked by uid 107); 9 Aug 2009 10:09:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 09 Aug 2009 06:09:27 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Aug 2009 06:07:12 -0400
-Content-Disposition: inline
-In-Reply-To: <20090809100045.GA25197@coredump.intra.peff.net>
+	id S1752873AbZHIMZm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Aug 2009 08:25:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752754AbZHIMZm
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 08:25:42 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:43340 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbZHIMZl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2009 08:25:41 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so972279qwh.37
+        for <git@vger.kernel.org>; Sun, 09 Aug 2009 05:25:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pWSRgQ+fpG0pHnewypqxixGnNpoi6ge8dhboxablZgY=;
+        b=SvyhwVVUfqsQqTGdvWgREp7o67+sMuG8+XpV2PqYxex56wOUUWBEV1mAJDsteoEiHB
+         96eEzCn6maN5OVvjJA/Wva0fnEb/FY5Q9rwXMWWdw+bFDUEDp7BiG+NBSSBc/maGbMcH
+         QX6z4/1c/nGgPNSwkt1sE5kzG4VtI23vWyZmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ctRU9IkEViqmDKXfAFrwvDoAHysX7vs6uAeErhe7KEJ+noRsxcoApK7wIgkQH5Ow49
+         hblcuL8F3VuhIm1/Up5OQRWXkTZs8OKIGZ6ugR81fNdptWQD0HsdYFguEHtdy0iCnLwR
+         t63w1El7hPdtAOYTvClOWRxr0/rG5Ogl7iEkE=
+Received: by 10.224.37.136 with SMTP id x8mr2405403qad.232.1249820740855; Sun, 
+	09 Aug 2009 05:25:40 -0700 (PDT)
+In-Reply-To: <7v3a81a13z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125342>
 
-On Sun, Aug 09, 2009 at 06:00:45AM -0400, Jeff King wrote:
+On Sun, Aug 9, 2009 at 9:38 AM, Junio C Hamano<gitster@pobox.com> wrote=
+:
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 static char num_buf[64];
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0rev.total =3D total + start_number - 1=
+;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 sprintf(num_buf, "%d", rev.total);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 rev.num_width =3D strlen(num_buf);
 
->   [1/3] add tests for merge message headings
->   [2/3] merge: fix incorrect merge message for ambiguous tag/branch
->   [3/3] merge: indicate remote tracking branches in merge message
+how about
+rev.num_width =3D (int)log10((double)rev.total) + 1;
 
-And here is the 4/3 you mentioned earlier:
+hm?
 
--- >8 --
-Subject: [PATCH] merge: describe tags as such in merge message
+log10() appears to be C99, but can be emulated on earlier C-versions by=
+ doing
+#define log10(x) (log(x) / log(10.0))
 
-Previously, merging a tag directly via "git merge tag" would
-get you the message "Merge commit 'tag'". It is a little
-more descriptive to note that it was actually a tag (i.e.,
-"Merge tag 'tag'").
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-merge.c           |    5 +++++
- t/t7608-merge-messages.sh |    4 ++--
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-merge.c b/builtin-merge.c
-index f4de73f..db74901 100644
---- a/builtin-merge.c
-+++ b/builtin-merge.c
-@@ -380,6 +380,11 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 				    sha1_to_hex(branch_head), remote);
- 			goto cleanup;
- 		}
-+		if (!prefixcmp(found_ref, "refs/tags/")) {
-+			strbuf_addf(msg, "%s\t\ttag '%s' of .\n",
-+				    sha1_to_hex(branch_head), remote);
-+			goto cleanup;
-+		}
- 	}
- 
- 	/* See if remote matches <name>^^^.. or <name>~<number> */
-diff --git a/t/t7608-merge-messages.sh b/t/t7608-merge-messages.sh
-index 28d5679..3ee0983 100755
---- a/t/t7608-merge-messages.sh
-+++ b/t/t7608-merge-messages.sh
-@@ -35,7 +35,7 @@ test_expect_success 'merge tag' '
- 	git checkout master &&
- 	test_commit master-3 &&
- 	git merge tag-1 &&
--	check_oneline "Merge commit Qtag-1Q"
-+	check_oneline "Merge tag Qtag-1Q"
- '
- 
- test_expect_success 'ambiguous tag' '
-@@ -44,7 +44,7 @@ test_expect_success 'ambiguous tag' '
- 	git checkout master &&
- 	test_commit master-4 &&
- 	git merge ambiguous &&
--	check_oneline "Merge commit QambiguousQ"
-+	check_oneline "Merge tag QambiguousQ"
- '
- 
- test_expect_success 'remote branch' '
--- 
-1.6.4.178.g7a987
+--=20
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
