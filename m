@@ -1,65 +1,81 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git gc expanding packed data?
-Date: Sat, 08 Aug 2009 22:56:57 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908082246020.440@xanadu.home>
-References: <m2tz0j154o.fsf@igel.home>
+From: Ryan Flynn <parseerror@gmail.com>
+Subject: [PATCH] fix potential infinite loop given large unsigned integer
+Date: Sun, 9 Aug 2009 00:41:21 -0400
+Message-ID: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Hin-Tak Leung <hintak.leung@gmail.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Aug 09 04:57:18 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 09 06:41:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MZyay-0005FK-Ng
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 04:57:17 +0200
+	id 1Ma0Dz-00011L-LV
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 06:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbZHIC5F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Aug 2009 22:57:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753081AbZHIC5E
-	(ORCPT <rfc822;git-outgoing>); Sat, 8 Aug 2009 22:57:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:26212 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752715AbZHIC5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Aug 2009 22:57:01 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KO300G3V9IXOV30@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 08 Aug 2009 22:56:57 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <m2tz0j154o.fsf@igel.home>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751086AbZHIElW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 00:41:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbZHIElV
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 00:41:21 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:58268 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750757AbZHIElV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 00:41:21 -0400
+Received: by vws2 with SMTP id 2so2176760vws.4
+        for <git@vger.kernel.org>; Sat, 08 Aug 2009 21:41:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=ttssrO+Zt5npMyE3D8BEEV1ELtUWRCsnk5tIsCfmGtQ=;
+        b=dgy6nCSfmfupP//t+OGfLCa12V9cRFPIWbeTE4hlm1UDNA4LRPjBj5ObwexE7jLOHp
+         Uiq9sQqbZFrodeP96kBsDbz7QOobWpuMGeH1qHDYbBATrusdPnhIpvQ4uAYMoZxyHvEZ
+         SE2ggRg/9Aj08M6ENw95JLImUmuf1Bl1/1P+E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=kn2nu0jX9As3tw9pwdI59LfE2va/6NxfrE4+M8yqLBDJWHTKtS08uZgWzI06w2EjQS
+         En1xhqH8F8lsckNxM1j6fujEZVRjSV1uIbk5+BM+8+hSo9iucE6XBqTjFc+QaCthlDGr
+         SNFRcKru6XKyqWMeJfWSL24xOVDjBZtIJdRaM=
+Received: by 10.220.86.133 with SMTP id s5mr2991681vcl.50.1249792881798; Sat, 
+	08 Aug 2009 21:41:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125319>
 
-On Sat, 8 Aug 2009, Andreas Schwab wrote:
+given n, tried to find i greater than n via i=1, iterate i *= 10.
+given n sufficiently close to UINT_MAX this will overflow; which can
+produce i==0, which results in an infinite loop. iteratively dividing
+n /= 10 does not have this problem, and though division is slower than
+multiplication this only runs once per `git format-patch
+--cover-letter`
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > It appears that the git installation serving clone requests for
-> > git://gcc.gnu.org/git/gcc.git generates lots of unreferenced objects. I
-> > just cloned it and the pack I was sent contains 1383356 objects (can be
-> > determined with 'git show-index < .git/objects/pack/*.idx | wc -l').
-> > However, there are only 978501 actually referenced objects in that
-> > cloned repository ( 'git rev-list --all --objects | wc -l').  That makes
-> > for 404855 useless objects in the cloned repository.
-> 
-> Those objects are not useless.  They are referenced by the remote refs
-> on the remote side, which are not fetched by default.  If you clone a
-> mirror of the repository you'll see no unreferenced objects.
+Signed-off-by: pizza <parseerror@gmail.com>
+---
+ log-tree.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-If you do a clone using the git:// protocol and the server sends you 
-only the ref for the trunk branch, then it should send you only objects 
-reachable from that branch.  Any extra objects sent by the server are 
-useless to me and wastes my and everyone else's bandwidth, and on my 
-next repack those objects are pruned anyway.  The point of the git 
-protocol is _not_ necessarily to send a copy of the remote pack file 
-over, even during a clone.
+diff --git a/log-tree.c b/log-tree.c
+index 6f73c17..53a1bd2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -160,9 +160,9 @@ static void append_signoff(struct strbuf *sb,
+const char *signoff)
 
-
-Nicolas
+ static unsigned int digits_in_number(unsigned int number)
+ {
+-       unsigned int i = 10, result = 1;
+-       while (i <= number) {
+-               i *= 10;
++       unsigned int result = 1;
++       while (number > 9) {
++    number /= 10;
+                result++;
+        }
+        return result;
+-- 
+1.6.0.4
