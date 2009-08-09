@@ -1,72 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in
- case of non-fast forward
-Date: Sun, 09 Aug 2009 13:22:56 -0700
-Message-ID: <7vljls7n4v.fsf@alter.siamese.dyndns.org>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
- <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
- <87prb6r9d1.fsf@iki.fi> <vpqab2aqqia.fsf@bauges.imag.fr>
- <7vy6pujmsc.fsf@alter.siamese.dyndns.org> <vpq63cwdee3.fsf@bauges.imag.fr>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Implementing $Date$ substitution - problem with git status
+Date: Sun, 09 Aug 2009 21:37:48 +0200 (CEST)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sun Aug 09 22:23:19 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 09 22:38:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaEvG-0005SU-Vv
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 22:23:19 +0200
+	id 1MaF9W-0001cy-Sl
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 22:38:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198AbZHIUXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 16:23:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbZHIUXK
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 16:23:10 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60443 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752637AbZHIUXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 16:23:10 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ABBB3463F;
-	Sun,  9 Aug 2009 16:23:10 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5960463C; Sun,  9 Aug
- 2009 16:23:05 -0400 (EDT)
-In-Reply-To: <vpq63cwdee3.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Sun\, 09 Aug 2009 20\:35\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 750CF13C-8522-11DE-B857-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752985AbZHIUhx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 16:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZHIUhx
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 16:37:53 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:39067 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752802AbZHIUhw (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2009 16:37:52 -0400
+X-Greylist: delayed 3602 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Aug 2009 16:37:52 EDT
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO4006U4JV1MQD0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 09 Aug 2009 21:37:49 +0200 (MEST)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO400ACJJV1T2D0@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 09 Aug 2009 21:37:49 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.9.192416
+Received: by perkele (Postfix, from userid 501)	id 7F10D2FC1C; Sun,
+ 09 Aug 2009 21:37:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 77BD02FC18	for <git@vger.kernel.org>; Sun,
+ 09 Aug 2009 21:37:48 +0200 (CEST)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125378>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Hi!
 
->> So how about phrasing it like this?
->>
->>     Non-fast forward pushes were rejected because you would discard remote
->>     changes you have not seen.  Integrate them with your changes and then
->>     push again. See 'non-fast forward' section of 'git push --help'.
->
-> I thing not pointing to 'git pull' in the message really defeats the
-> purpose of the patch. I don't find an error message only telling me
-> "go read the doc as you should have done from the beginning" really
-> helps.
+I finally got around to moving my web site repository over from CVS to Git, 
+and to not have to redo everything about how it is set up, I set up a filter 
+that fakes CVS' handling of "$Date$" keywords. Since I cannot access any 
+information about the file from the "smudge" filter, I set up a "clean" 
+filter that edits the $Date$ token on "git add":
 
-What the above three lines does much more than that.
+   #!/usr/bin/perl -wTp -i.bak
+   if (/\$Date:?[^\$]*\$/)
+   {
+     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+     my $now = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year + 1900,
+                       $mon + 1, $mday, $hour, $min, $sec);
+     s/\$Date:?[^\$]*\$/\$Date: ${now} \$/;
+   }
 
-If you read "would discard remote changes" and understand that it is what
-you want, then you may know to try --force, without having to read the
-doc, or if you do not remember --force, "git push --help" would remind
-you.
+In .gitattributes I have lines like:
 
-If you read "Integrate them with your changes" and understand that it is
-talking about "git pull" or "git pull --rebase", then you do not have to
-read the doc.  It should "click".
+   *.html filter=date crlf=true ident
 
-If you lack such a basic understanding, you are better off go reading the
-doc after all.
+and filter.date.clean is set to point to the script above in .git/config.
+
+This works fine, except that I have some problems with files that I cannot 
+get to be "clean" in git status. "git diff" shows only a difference in the 
+"$Date$" token, which is different each time I run "git diff" (the "+" line 
+shows the current time):
+
+   diff --git a/.htaccess b/.htaccess
+   index 2dfbc32..d8ac343 100644
+   --- a/.htaccess
+   +++ b/.htaccess
+   @@ -2,7 +2,7 @@
+    # -----------------------------------------------------
+
+    # $Id$
+   -# $Date: 2009-08-09 19:52:30 $
+   +# $Date: 2009-08-09 20:31:56 $
+   [...]
+
+Strangely, the $Id$ line above (which is handled by me adding the "ident" 
+attribute to all text files), does not exhibit the same problem.
+
+Doing "git reset --hard" or "git checkout master filename" does not help, 
+the file is still believed to be modified by git.
+
+
+Does anyone know if there is a way to get this to work, or am I screwed for 
+trying to do things I'm not supposed to? :-)
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
