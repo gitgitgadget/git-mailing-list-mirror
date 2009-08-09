@@ -1,110 +1,106 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] merge: indicate remote tracking branches in merge
- message
-Date: Sun, 9 Aug 2009 05:14:43 -0400
-Message-ID: <20090809091443.GA676@coredump.intra.peff.net>
-References: <20090809065936.GA24112@coredump.intra.peff.net>
- <7vab29a1fr.fsf@alter.siamese.dyndns.org>
- <20090809074035.GA4778@coredump.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v4 0/5] {checkout,reset,stash} --patch
+Date: Sun, 9 Aug 2009 11:17:16 +0200
+Message-ID: <200908091117.19167.trast@student.ethz.ch>
+References: <200907271210.40001.trast@student.ethz.ch> <cover.1248815580.git.trast@student.ethz.ch> <20090809065207.GA14093@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 11:14:59 2009
+Content-Type: multipart/signed; boundary="nextPart3981183.Kghn4dhapm";
+	protocol="application/pgp-signature"; micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 09 11:17:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma4UU-0007cL-AO
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 11:14:58 +0200
+	id 1Ma4X9-0008Fd-BA
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 11:17:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753389AbZHIJOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 05:14:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753387AbZHIJOq
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 05:14:46 -0400
-Received: from peff.net ([208.65.91.99]:41451 "EHLO peff.net"
+	id S1753434AbZHIJRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 05:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZHIJRf
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 05:17:35 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:56020 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751674AbZHIJOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 05:14:45 -0400
-Received: (qmail 2875 invoked by uid 107); 9 Aug 2009 09:16:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 09 Aug 2009 05:16:58 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 09 Aug 2009 05:14:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20090809074035.GA4778@coredump.intra.peff.net>
+	id S1753396AbZHIJRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 05:17:34 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sun, 9 Aug
+ 2009 11:17:35 +0200
+Received: from thomas.localnet (77.56.221.170) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sun, 9 Aug
+ 2009 11:17:32 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <20090809065207.GA14093@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125335>
 
-On Sun, Aug 09, 2009 at 03:40:35AM -0400, Jeff King wrote:
+--nextPart3981183.Kghn4dhapm
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > Shouldn't it instead feed what it got from the end user to the dwim
-> > machinery, and make sure it dwims into refs/remotes/ hierarchy?
-> 
-> I'm not sure that is all that different in practice than what is
-> happening now. Mainly I did it the way I did so that I didn't touch the
-> code path for detecting local branches.
-> 
-> But assuming they are functionally identical, I think your patch is much
-> more readable.
+Jeff King wrote:
+> I finally got a few minutes to look at this. I tried "checkout --patch"
+> first, which was very confusing:
+>=20
+>   $ echo old content >file && git add file && git commit -m old
+>   $ echo new content >>file
+>   $ git checkout --patch file
+>   diff --git a/file b/file
+>   index 33194a0..805c3b0 100644
+>   --- a/file
+>   +++ b/file
+>   @@ -1 +1,2 @@
+>    old content
+>    +new content
+>   Check out this hunk [y,n,q,a,d,/,e,?]?
+>=20
+> Shouldn't the diff be reversed? That is, I think what users would like
+> to see is "bring this hunk over from the index to the working tree". But
+> we have the opposite (a hunk that is in the working tree that we would
+> like to undo).
 
-I tested your patch; the two methods aren't identical. In fact, yours
-fixes a bug. :)
+Well, my thinking for the initial (restricted; you couldn't say 'git
+checkout -p HEAD~14') version went something like this: 'reset -p'
+should be the opposite of 'add -p', so it offers the same hunks with
+the question "Reset?".  Then 'checkout -p' should somehow follow suit,
+but asked "Discard?" (IIRC I even had it in all caps).
 
-In t4202, we have a branch name and a tag name that are the same
-(octopus-a), and we "git merge octopus-a". This actually merges the tag,
-but because the branch name existed, we write "Merge branch 'octopus-a'"
-in the log, which is not true. With your patch, it does the right thing
-and says "Merge commit 'octopus-a'".
+I'm not 100% happy with your suggested forward patches strategy
+because I think (particularly for people with colors enabled, and I
+suspect we all have), it's less confusing "my" way if they go through
+'add -p' and suddenly think "oops, mistake, I need to reset that": it
+is much easier for the (at least for my) eye to find the same hunk
+again if it is really 100% the same.  Probably we would have to change
+the verb to "discard" again, though.
 
-The simple thing is to just update the "expect" text. Though the current
-behavior does show off the ability to collape the two branches and say
+OTOH this does become rather weird once you specify anything other
+than HEAD.  And while we could of course switch the approach if the
+user does that, and hope that he'll understand on the grounds that
+it's an advanced usage, I'm not sure switching is a good idea in
+general.
 
-  Merge branches 'octopus-a' and 'octopus-b'
+=2D-=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
 
-instead of
+--nextPart3981183.Kghn4dhapm
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part.
 
-  Merge commit 'octopus-a'; commit 'octopus-b'
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
 
-which we could preserve that by renaming the tags, as below.
+iEYEABECAAYFAkp+lB8ACgkQqUud07tmzP3YvACePqFGFgjT60GwCzv+DsFpid/b
+TvYAoJ4cB6awn9CbgC786Yb1ZLvRf0kw
+=dhD7
+-----END PGP SIGNATURE-----
 
----
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 48e0088..9d0db2a 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -306,13 +306,13 @@ test_expect_success 'set up more tangled history' '
- 	git checkout master &&
- 	git merge tangle &&
- 	git checkout -b reach &&
--	test_commit reach &&
-+	test_commit reach-1 &&
- 	git checkout master &&
- 	git checkout -b octopus-a &&
--	test_commit octopus-a &&
-+	test_commit octopus-a-1 &&
- 	git checkout master &&
- 	git checkout -b octopus-b &&
--	test_commit octopus-b &&
-+	test_commit octopus-b-1 &&
- 	git checkout master &&
- 	test_commit seventh &&
- 	git merge octopus-a octopus-b
-@@ -327,12 +327,12 @@ cat > expect <<\EOF
- *-. \   Merge branches 'octopus-a' and 'octopus-b'
- |\ \ \
- * | | | seventh
--| | * | octopus-b
-+| | * | octopus-b-1
- | |/ /
- |/| |
--| * | octopus-a
-+| * | octopus-a-1
- |/ /
--| * reach
-+| * reach-1
- |/
- *   Merge branch 'tangle'
- |\
+--nextPart3981183.Kghn4dhapm--
