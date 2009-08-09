@@ -1,68 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge: indicate remote tracking branches in merge
- message
-Date: Sun, 09 Aug 2009 12:36:17 -0700
-Message-ID: <7vprb47pam.fsf@alter.siamese.dyndns.org>
-References: <20090809065936.GA24112@coredump.intra.peff.net>
- <7vab29a1fr.fsf@alter.siamese.dyndns.org>
- <20090809074035.GA4778@coredump.intra.peff.net>
- <20090809091443.GA676@coredump.intra.peff.net>
- <20090809100045.GA25197@coredump.intra.peff.net>
- <20090809100712.GA26250@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/8] Use a clearer style to issue commands to remote
+ helpers
+Date: Sun, 9 Aug 2009 22:17:26 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908092211030.8306@pacific.mpi-cbg.de>
+References: <alpine.LNX.2.00.0908091526350.27553@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 09 21:36:40 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Aug 09 22:17:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaEC7-00084w-Qn
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 21:36:40 +0200
+	id 1MaEpO-0003Xk-JZ
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 22:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486AbZHITgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 15:36:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZHITgX
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 15:36:23 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53483 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751450AbZHITgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 15:36:22 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 55E9D23269;
-	Sun,  9 Aug 2009 15:36:23 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 71EE323268; Sun,  9 Aug 2009
- 15:36:19 -0400 (EDT)
-In-Reply-To: <20090809100712.GA26250@coredump.intra.peff.net> (Jeff King's
- message of "Sun\, 9 Aug 2009 06\:07\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EBBA899A-851B-11DE-8733-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1753007AbZHIUQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 16:16:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752854AbZHIUQy
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 16:16:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45199 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752637AbZHIUQx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 16:16:53 -0400
+Received: (qmail invoked by alias); 09 Aug 2009 20:16:53 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp051) with SMTP; 09 Aug 2009 22:16:53 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+epwJW2BmeByABrCWWQqqYvRFD7VhQh9UbIB3Oer
+	XZvBsDqBy8smG1
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LNX.2.00.0908091526350.27553@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125376>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Sun, Aug 09, 2009 at 06:00:45AM -0400, Jeff King wrote:
->
->>   [1/3] add tests for merge message headings
->>   [2/3] merge: fix incorrect merge message for ambiguous tag/branch
->>   [3/3] merge: indicate remote tracking branches in merge message
->
-> And here is the 4/3 you mentioned earlier:
->
-> -- >8 --
-> Subject: [PATCH] merge: describe tags as such in merge message
->
-> Previously, merging a tag directly via "git merge tag" would
-> get you the message "Merge commit 'tag'". It is a little
-> more descriptive to note that it was actually a tag (i.e.,
-> "Merge tag 'tag'").
+On Sun, 9 Aug 2009, Daniel Barkalow wrote:
 
-Maybe "Merge version 'v1.6.3'" or "Merge commit tagged as 'v1.6.3'"? 
-I dunno.
+> This style is overkill for some commands, but it's worthwhile to use
+> the same style to issue all commands, and it's useful to avoid
+> open-coding string lengths.
+> 
+> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+
+Thanks.  I am positively surprised that you did this patch in spite of the 
+basis already being in 'next'.
+
+> +	strbuf_addstr(&buf, "capabilities\n");
+> +	write_in_full(helper->in, buf.buf, buf.len);
+> +	strbuf_reset(&buf);
+
+Hmm.  I think you use the same paradigm three times.  Maybe it is time to 
+heed the DRY principle and introduce a helper function?
+
+Maybe something like
+
+void fprintf_in_full(struct strbuf *buf, int fd, const char *format, ...)
+{
+	va_list ap;
+
+	va_start(ap, format);
+	strbuf_reset(buf);
+	strbuf_vaddf(buf, format, ap);
+	write_in_full(fd, buf->buf, buf->len);
+	va_end(ap);
+}
+
+But I keep forgetting that there is no strbuf_vaddf() in 'next'... maybe 
+it is high time that I forget my promise and re-submit that series?
+
+Ciao,
+Dscho
