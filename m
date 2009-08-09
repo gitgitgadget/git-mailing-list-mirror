@@ -1,149 +1,68 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 5/8] Add a config option for remotes to specify a foreign
- vcs
-Date: Sun, 9 Aug 2009 15:28:19 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] merge: indicate remote tracking branches in merge
+ message
+Date: Sun, 09 Aug 2009 12:36:17 -0700
+Message-ID: <7vprb47pam.fsf@alter.siamese.dyndns.org>
+References: <20090809065936.GA24112@coredump.intra.peff.net>
+ <7vab29a1fr.fsf@alter.siamese.dyndns.org>
+ <20090809074035.GA4778@coredump.intra.peff.net>
+ <20090809091443.GA676@coredump.intra.peff.net>
+ <20090809100045.GA25197@coredump.intra.peff.net>
+ <20090809100712.GA26250@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Brian Gernhardt <benji@silverinsanity.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 09 21:29:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 09 21:36:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaE4h-0005Sd-An
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 21:28:59 +0200
+	id 1MaEC7-00084w-Qn
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 21:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbZHIT2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 15:28:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbZHIT2V
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 15:28:21 -0400
-Received: from iabervon.org ([66.92.72.58]:33234 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752779AbZHIT2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 15:28:19 -0400
-Received: (qmail 12219 invoked by uid 1000); 9 Aug 2009 19:28:19 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 9 Aug 2009 19:28:19 -0000
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752486AbZHITgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 15:36:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZHITgX
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 15:36:23 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53483 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450AbZHITgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 15:36:22 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 55E9D23269;
+	Sun,  9 Aug 2009 15:36:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 71EE323268; Sun,  9 Aug 2009
+ 15:36:19 -0400 (EDT)
+In-Reply-To: <20090809100712.GA26250@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 9 Aug 2009 06\:07\:12 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EBBA899A-851B-11DE-8733-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125375>
 
-If this is set, the url is not required, and the transport always uses
-a helper named "git-remote-<value>".
+Jeff King <peff@peff.net> writes:
 
-It is a separate configuration option in order to allow a sensible
-configuration for foreign systems which either have no meaningful urls
-for repositories or which require urls that do not specify the system
-used by the repository at that location. However, this only affects
-how the name of the helper is determined, not anything about the
-interaction with the helper, and the contruction is such that, if the
-foreign scm does happen to use a co-named url method, a url with that
-method may be used directly.
+> On Sun, Aug 09, 2009 at 06:00:45AM -0400, Jeff King wrote:
+>
+>>   [1/3] add tests for merge message headings
+>>   [2/3] merge: fix incorrect merge message for ambiguous tag/branch
+>>   [3/3] merge: indicate remote tracking branches in merge message
+>
+> And here is the 4/3 you mentioned earlier:
+>
+> -- >8 --
+> Subject: [PATCH] merge: describe tags as such in merge message
+>
+> Previously, merging a tag directly via "git merge tag" would
+> get you the message "Merge commit 'tag'". It is a little
+> more descriptive to note that it was actually a tag (i.e.,
+> "Merge tag 'tag'").
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
----
- Documentation/config.txt |    4 ++++
- remote.c                 |    4 +++-
- remote.h                 |    2 ++
- transport-helper.c       |   14 ++++++++++----
- transport.c              |    5 +++++
- 5 files changed, 24 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index bcaec0d..f0144b1 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1380,6 +1380,10 @@ remote.<name>.tagopt::
- 	Setting this value to \--no-tags disables automatic tag following when
- 	fetching from remote <name>
- 
-+remote.<name>.vcs::
-+	Setting this to a value <vcs> will cause git to interact with
-+	the remote with the git-remote-<vcs> helper.
-+
- remotes.<group>::
- 	The list of remotes which are fetched by "git remote update
- 	<group>".  See linkgit:git-remote[1].
-diff --git a/remote.c b/remote.c
-index e6f5cd2..057ac02 100644
---- a/remote.c
-+++ b/remote.c
-@@ -50,7 +50,7 @@ static char buffer[BUF_SIZE];
- 
- static int valid_remote(const struct remote *remote)
- {
--	return !!remote->url;
-+	return remote->url || remote->foreign_vcs;
- }
- 
- static const char *alias_url(const char *url)
-@@ -427,6 +427,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	} else if (!strcmp(subkey, ".proxy")) {
- 		return git_config_string((const char **)&remote->http_proxy,
- 					 key, value);
-+	} else if (!strcmp(subkey, ".vcs")) {
-+		return git_config_string(&remote->foreign_vcs, key, value);
- 	}
- 	return 0;
- }
-diff --git a/remote.h b/remote.h
-index 5db8420..ac0ce2f 100644
---- a/remote.h
-+++ b/remote.h
-@@ -11,6 +11,8 @@ struct remote {
- 	const char *name;
- 	int origin;
- 
-+	const char *foreign_vcs;
-+
- 	const char **url;
- 	int url_nr;
- 	int url_alloc;
-diff --git a/transport-helper.c b/transport-helper.c
-index a5ac575..536dd06 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -162,10 +162,16 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- int transport_helper_init(struct transport *transport)
- {
- 	struct helper_data *data = xcalloc(sizeof(*data), 1);
--	char *eom = strchr(transport->url, ':');
--	if (!eom)
--		return -1;
--	data->name = xstrndup(transport->url, eom - transport->url);
-+
-+	if (transport->remote->foreign_vcs) {
-+		data->name = xstrdup(transport->remote->foreign_vcs);
-+		transport->url = transport->remote->foreign_vcs;
-+	} else {
-+		char *eom = strchr(transport->url, ':');
-+		if (!eom)
-+			return -1;
-+		data->name = xstrndup(transport->url, eom - transport->url);
-+	}
- 
- 	transport->data = data;
- 	transport->get_refs_list = get_refs_list;
-diff --git a/transport.c b/transport.c
-index b21e82e..19f330a 100644
---- a/transport.c
-+++ b/transport.c
-@@ -815,6 +815,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		url = remote->url[0];
- 	ret->url = url;
- 
-+	if (remote && remote->foreign_vcs) {
-+		transport_helper_init(ret);
-+		return ret;
-+	}
-+
- 	if (!prefixcmp(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
--- 
-1.6.4.183.g77eb9.dirty
+Maybe "Merge version 'v1.6.3'" or "Merge commit tagged as 'v1.6.3'"? 
+I dunno.
