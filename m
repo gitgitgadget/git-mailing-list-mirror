@@ -1,106 +1,81 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v4 0/5] {checkout,reset,stash} --patch
-Date: Sun, 9 Aug 2009 11:17:16 +0200
-Message-ID: <200908091117.19167.trast@student.ethz.ch>
-References: <200907271210.40001.trast@student.ethz.ch> <cover.1248815580.git.trast@student.ethz.ch> <20090809065207.GA14093@coredump.intra.peff.net>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] Document 'stash clear' recovery via unreachable commits
+Date: Sun, 9 Aug 2009 14:56:52 +0530
+Message-ID: <2e24e5b90908090226r1941c383j40853fd811ae3a73@mail.gmail.com>
+References: <9e8ddf7c6c4d4df4150bff0467b461bfff92a401.1249778711.git.trast@student.ethz.ch>
+	 <7veirlbwws.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart3981183.Kghn4dhapm";
-	protocol="application/pgp-signature"; micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 09 11:17:44 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 09 11:27:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ma4X9-0008Fd-BA
-	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 11:17:43 +0200
+	id 1Ma4g9-0002jF-TV
+	for gcvg-git-2@gmane.org; Sun, 09 Aug 2009 11:27:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753434AbZHIJRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 05:17:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZHIJRf
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 05:17:35 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:56020 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753396AbZHIJRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 05:17:34 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sun, 9 Aug
- 2009 11:17:35 +0200
-Received: from thomas.localnet (77.56.221.170) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sun, 9 Aug
- 2009 11:17:32 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
-In-Reply-To: <20090809065207.GA14093@coredump.intra.peff.net>
+	id S1753456AbZHIJ0x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Aug 2009 05:26:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZHIJ0x
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 05:26:53 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:60425 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753394AbZHIJ0w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Aug 2009 05:26:52 -0400
+Received: by yxe5 with SMTP id 5so3122696yxe.33
+        for <git@vger.kernel.org>; Sun, 09 Aug 2009 02:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9Yd45aCthwGvPFPezsh7mQzB/ww68N2ZZHASWC4cnoQ=;
+        b=aWDizMWwm6ywIn2uCBqA2h4LfvOJ8Ct4LVeEIlVkq6eKPZAFG5bhPAvi9nCyv7rBUy
+         8YN53mQYQtigByL2CFnB4P8zNBavLnW0u7lVp0tHNT6d+90po3VRQ79Gbv0GjoASSQnJ
+         0Iic9Vv8BCNtBvJF/Duk4u29Rxp32eLJSndSY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RWTEXZAZcH7DkjX9+elcicNcosboBEXABK1FKz+vhIhX5BhhzpRTaVp3/y9aYfaJVU
+         q6FZ2k9rlAtXFdOUfQl15nq4dahuPxZjcrBzGm9s01inKaMDRDNVBGIakKAnki+WSSOR
+         LdEaHqO8NxYpW2F8/XwfeG0zeAZCc20UPpJGg=
+Received: by 10.231.32.134 with SMTP id c6mr1232593ibd.34.1249810012618; Sun, 
+	09 Aug 2009 02:26:52 -0700 (PDT)
+In-Reply-To: <7veirlbwws.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125336>
 
---nextPart3981183.Kghn4dhapm
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+2009/8/9 Junio C Hamano <gitster@pobox.com>
+>
+> Thomas Rast <trast@student.ethz.ch> writes:
 
-Jeff King wrote:
-> I finally got a few minutes to look at this. I tried "checkout --patch"
-> first, which was very confusing:
->=20
->   $ echo old content >file && git add file && git commit -m old
->   $ echo new content >>file
->   $ git checkout --patch file
->   diff --git a/file b/file
->   index 33194a0..805c3b0 100644
->   --- a/file
->   +++ b/file
->   @@ -1 +1,2 @@
->    old content
->    +new content
->   Check out this hunk [y,n,q,a,d,/,e,?]?
->=20
-> Shouldn't the diff be reversed? That is, I think what users would like
-> to see is "bring this hunk over from the index to the working tree". But
-> we have the opposite (a hunk that is in the working tree that we would
-> like to undo).
 
-Well, my thinking for the initial (restricted; you couldn't say 'git
-checkout -p HEAD~14') version went something like this: 'reset -p'
-should be the opposite of 'add -p', so it offers the same hunks with
-the question "Reset?".  Then 'checkout -p' should somehow follow suit,
-but asked "Discard?" (IIRC I even had it in all caps).
+>
+> > Unless you have merges of branch names containing WIP, or edit your
+> > merge messages to say WIP, there will be no false positives.
+>
+> That may be true, but I suspect that people's stash entries that are =
+worth
+> saving are given their own messages with "git stash save 'message'" a=
+nd do
+> not necessarily say WIP. =A0I wish if there were a better way to iden=
+tify
+> them, but I do not think of any offhand.
 
-I'm not 100% happy with your suggested forward patches strategy
-because I think (particularly for people with colors enabled, and I
-suspect we all have), it's less confusing "my" way if they go through
-'add -p' and suddenly think "oops, mistake, I need to reset that": it
-is much easier for the (at least for my) eye to find the same hunk
-again if it is really 100% the same.  Probably we would have to change
-the verb to "discard" again, though.
+gitk $(git fsck | grep commit | cut -f3 -d' ') --since=3D'1 week ago'
 
-OTOH this does become rather weird once you specify anything other
-than HEAD.  And while we could of course switch the approach if the
-user does that, and hope that he'll understand on the grounds that
-it's an advanced usage, I'm not sure switching is a good idea in
-general.
+The --since clause limits the display to stashes lost recently; adjust =
+to taste.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
-
---nextPart3981183.Kghn4dhapm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkp+lB8ACgkQqUud07tmzP3YvACePqFGFgjT60GwCzv+DsFpid/b
-TvYAoJ4cB6awn9CbgC786Yb1ZLvRf0kw
-=dhD7
------END PGP SIGNATURE-----
-
---nextPart3981183.Kghn4dhapm--
+A "stash" has a very recognisable, triangular, shape in the commit DAG
+-- with gitk you can visually find stashes really fast even if your
+time limit is too broad or you have too many other kinds of
+unreachable commits perhaps due to too many rebase etc.
