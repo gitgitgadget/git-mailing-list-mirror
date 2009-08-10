@@ -1,102 +1,148 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: give a hint/solution for "It looks like git-am is in progress. 
-	Cannot rebase."
-Date: Mon, 10 Aug 2009 16:59:03 +0100
-Message-ID: <43d8ce650908100859m50379376y410a67b69244f38a@mail.gmail.com>
-References: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH (resend) 2/3] http.c: replace usage of temporary variable
+ for urls
+Date: Mon, 10 Aug 2009 23:59:55 +0800
+Message-ID: <20090810235955.1a659e6c.rctay89@gmail.com>
+References: <be6fef0d0908100847h7e9b53a2ofdf318e9958be3b2@mail.gmail.com>
+ <20090810235548.110c43a6.rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 17:59:13 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Jeff Lasslett <jeff.lasslett@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Aug 10 18:00:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaXHE-0004SO-My
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 17:59:13 +0200
+	id 1MaXIe-00056E-6M
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 18:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410AbZHJP7E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Aug 2009 11:59:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbZHJP7D
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 11:59:03 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:50734 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755211AbZHJP7C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2009 11:59:02 -0400
-Received: by yxe5 with SMTP id 5so3916659yxe.33
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 08:59:03 -0700 (PDT)
+	id S1755298AbZHJQAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 12:00:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751809AbZHJQAM
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 12:00:12 -0400
+Received: from rv-out-0506.google.com ([209.85.198.238]:24394 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751227AbZHJQAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 12:00:10 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so1030718rvb.1
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 09:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=L9yzlFH2IEhbIQu7aq90sqJI6b6lrYQstwnd53gduOU=;
-        b=SCpCa8VFuoPHftS7Qhc1m1iZ+aT7WYepFcAtf3UMtkKM7k9MnW/lW2GKKYbd9VUY7A
-         ROmXeQPVsiMWMGNdJEA7Osm3xcnOo99jLS1mhe6f82J0/CeQwOfsrSiYWVTRpWTGN5AM
-         nxbVdmsnGaMXUTvqCnKOruprsrFic5fZPhgaE=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=xKyCPI0MTM2u1UuQPVj2aOLefzUpVc/00hSoLMtWr3E=;
+        b=bW1xHJqAy1V0SIz0Z5Cue2bYWUwRD+ErFiVGevRFkK2/mE2YWF9HxwfeOGoqeTnEPS
+         SxnOH93Bx9hKYotrB4kuMl34r6usoeEth5Yek5e3og1k2BTClrPIfH2cvDOJdqleS0jS
+         gxUwtkXzXHEI1ojRcywzBHaOJPJ8QfvLuo2XE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ektHm0VWPTYJQ0lCt5hSYeGg6DEK7GTmP2zk3jHfEKsfJsqdMd81v2AeHvALEBYXU3
-         aVtJlscK51UqdMRVAACIboZF2Wc39SYfJmY/Ih51PD8YT7IBaBmwiLNSynK2bVxvglZL
-         WYpuisuyPbp1qTGSywfvNQjzthmsGRg/wzjvU=
-Received: by 10.150.91.1 with SMTP id o1mr8524093ybb.239.1249919943045; Mon, 
-	10 Aug 2009 08:59:03 -0700 (PDT)
-In-Reply-To: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=DgDTSSDiKPvumnJ+HOS2rFKgsEMFV7fLrt16VbSA0NeDBf+wRQOx3HE5VMxVFonMuK
+         SHtH12ri2DkkDcdb98iOwRxmDaUCNlHieu2iEtZhynW9kHg2Z6amB0LIQ0kf42lH3EDw
+         JUeBnMctLrMKOU8mdr6cHXEhGQ880JsGIpJaE=
+Received: by 10.140.170.12 with SMTP id s12mr1657808rve.296.1249920011490;
+        Mon, 10 Aug 2009 09:00:11 -0700 (PDT)
+Received: from your-cukc5e3z5n (cm189.zeta152.maxonline.com.sg [116.87.152.189])
+        by mx.google.com with ESMTPS id k41sm22899974rvb.18.2009.08.10.09.00.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 Aug 2009 09:00:11 -0700 (PDT)
+In-Reply-To: <20090810235548.110c43a6.rctay89@gmail.com>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125473>
 
-2009/8/10 Lucian Adrian Grijincu <lucian.grijincu@gmail.com>:
-> Hi,
->
-> I ran git-am instead of git-apply on my repo. The git-am complained
-> about the input data, I completely ignored it because I never use
-> git-am (except on typos + tab-completions like today).
->
-> Later, after a few commits I wanted to rebase (interactively) my tree
-> to merge a few commits.
-> =C2=A0$ git rebase -i HEAD~4
-> =C2=A0It looks like git-am is in progress. Cannot rebase.
->
-> Ok, the message is nice, it tells me it can't do something, but I'm
-> stupid enough not to know how to proceed.
-> I see that this message is the same in HEAD (master and next).
->
-> It would be nice if git would output one or two hints. For example:
-> * run "git cancel-a-git-am-in-progress" to cancel a git-am in progres=
-s
-> * run "git commit-the-git-am-in-progress" to commit the git-am in pro=
-gress
+Use preq->url in new_http_pack_request and freq->url in
+new_http_object_request when calling curl_setopt(CURLOPT_URL), instead
+of using an intermediate variable, 'url'.
 
-+1
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ http.c |   15 ++++++---------
+ 1 files changed, 6 insertions(+), 9 deletions(-)
 
-git am --help  suggests  --abort      btw.  That would be the most
-obvious guess :-)
+diff --git a/http.c b/http.c
+index cfe32f5..98f9707 100644
+--- a/http.c
++++ b/http.c
+@@ -1004,7 +1004,6 @@ int finish_http_pack_request(struct http_pack_request *preq)
+ struct http_pack_request *new_http_pack_request(
+ 	struct packed_git *target, const char *base_url)
+ {
+-	char *url;
+ 	char *filename;
+ 	long prev_posn = 0;
+ 	char range[RANGE_HEADER_SIZE];
+@@ -1018,8 +1017,7 @@ struct http_pack_request *new_http_pack_request(
+ 	end_url_with_slash(&buf, base_url);
+ 	strbuf_addf(&buf, "objects/pack/pack-%s.pack",
+ 		sha1_to_hex(target->sha1));
+-	url = strbuf_detach(&buf, NULL);
+-	preq->url = xstrdup(url);
++	preq->url = strbuf_detach(&buf, NULL);
 
+ 	filename = sha1_pack_name(target->sha1);
+ 	snprintf(preq->filename, sizeof(preq->filename), "%s", filename);
+@@ -1035,7 +1033,7 @@ struct http_pack_request *new_http_pack_request(
+ 	preq->slot->local = preq->packfile;
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_FILE, preq->packfile);
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite);
+-	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, url);
++	curl_easy_setopt(preq->slot->curl, CURLOPT_URL, preq->url);
+ 	curl_easy_setopt(preq->slot->curl, CURLOPT_HTTPHEADER,
+ 		no_pragma_header);
 
+@@ -1059,6 +1057,7 @@ struct http_pack_request *new_http_pack_request(
 
-> Of course, the commands need to be replaced with some valid git
-> commands, but I don't know which those commands are :)
->
-> The message is generated in git-rebase.sh by this code:
-> =C2=A0test -f "$GIT_DIR"/rebase-apply/applying &&
-> =C2=A0die 'It looks like git-am is in progress. Cannot rebase.'
->
-> For now I think I'll `rm -rf .git/rebase-apply` (and hopefully not
-> break anything).
->
-> --
-> =C2=A0.
-> ..: Lucian
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+ abort:
+ 	free(filename);
++	free(preq->url);
+ 	free(preq);
+ 	return NULL;
+ }
+@@ -1099,7 +1098,6 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	char *hex = sha1_to_hex(sha1);
+ 	char *filename;
+ 	char prevfile[PATH_MAX];
+-	char *url;
+ 	int prevlocal;
+ 	unsigned char prev_buf[PREV_BUF_SIZE];
+ 	ssize_t prev_read = 0;
+@@ -1153,8 +1151,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+
+ 	git_SHA1_Init(&freq->c);
+
+-	url = get_remote_object_url(base_url, hex, 0);
+-	freq->url = xstrdup(url);
++	freq->url = get_remote_object_url(base_url, hex, 0);
+
+ 	/*
+ 	 * If a previous temp file is present, process what was already
+@@ -1199,7 +1196,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_FILE, freq);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr);
+-	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, url);
++	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, freq->url);
+ 	curl_easy_setopt(freq->slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
+
+ 	/*
+@@ -1219,9 +1216,9 @@ struct http_object_request *new_http_object_request(const char *base_url,
+
+ 	return freq;
+
+-	free(url);
+ abort:
+ 	free(filename);
++	free(freq->url);
+ 	free(freq);
+ 	return NULL;
+ }
+--
+1.6.3.1
