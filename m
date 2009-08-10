@@ -1,66 +1,140 @@
-From: Erez Zilber <erezzi.list@gmail.com>
-Subject: gitweb stops working sometimes
-Date: Mon, 10 Aug 2009 11:01:43 +0300
-Message-ID: <ce513bcc0908100101u70ade553h9d7dc413cb6a276d@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
+ vcs
+Date: Mon, 10 Aug 2009 10:32:12 +0200
+Message-ID: <200908101032.12835.johan@herland.net>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
+ <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0908092153520.27553@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 10:01:55 2009
+X-From: git-owner@vger.kernel.org Mon Aug 10 10:32:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaPpH-0003RV-FA
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:01:51 +0200
+	id 1MaQIt-0008CO-LU
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752050AbZHJIBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 04:01:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751889AbZHJIBn
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:01:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:33155 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751750AbZHJIBm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 04:01:42 -0400
-Received: by an-out-0708.google.com with SMTP id d40so3210512and.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 01:01:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=M92svYf7aHQ8UvXLPXsLXMNPnJipxPIk9uxG/AMuuMI=;
-        b=JZsBvOrLWUa0ytMkb4uhSDS//u4coAq+PswQ3No2ecbcBbkO2D0Sfpb4yv73bYjIE1
-         DSf+tyIwnWcT44UOxjUQ+Gmu8pxJR5Hy+yPwgYwwT8beaBpMeucz5uMKk8yRnHiXr5eW
-         ySoATF4FXb1OA9ftKOR/8hEINGIHWJ2tRVeHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=OJDLLQDdSkdTJt4I04jrpabpN0ysyzrnFZwQBK4Okl9jP0WIT1E430Vs2Mv9jb3ReE
-         WWaNs5+G8/j57u1Pu60fFF3bXVkJez8uMPxgBSjI7mAf0P1aGqqm2ET4lx60J6kA/cQR
-         Ah9cDoAfmBA+ZGbCZCNSlSW0trDLoSnRxdTOY=
-Received: by 10.100.111.7 with SMTP id j7mr3094890anc.179.1249891303565; Mon, 
-	10 Aug 2009 01:01:43 -0700 (PDT)
+	id S1751922AbZHJIcT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 04:32:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbZHJIcS
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:32:18 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:63614 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751803AbZHJIcR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2009 04:32:17 -0400
+Content-disposition: inline
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO5004S8JPQ2UB0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 10 Aug 2009 10:32:14 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KO500EFIJPP2U60@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 10 Aug 2009 10:32:14 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.10.81530
+User-Agent: KMail/1.11.4 (Linux/2.6.30-ARCH; KDE/4.2.4; x86_64; ; )
+In-reply-to: <alpine.LNX.2.00.0908092153520.27553@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125405>
 
-Hi,
+On Monday 10 August 2009, Daniel Barkalow wrote:
+> On Sun, 9 Aug 2009, Junio C Hamano wrote:
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> > > If this is set, the url is not required, and the transport always
+> > > uses a helper named "git-remote-<value>".
+> > >
+> > > It is a separate configuration option in order to allow a sensible
+> > > configuration for foreign systems which either have no meaningful
+> > > urls for repositories or which require urls that do not specify the
+> > > system used by the repository at that location. However, this only
+> > > affects how the name of the helper is determined, not anything about
+> > > the interaction with the helper, and the contruction is such that, if
+> > > the foreign scm does happen to use a co-named url method, a url with
+> > > that method may be used directly.
+> >
+> > Personally, I do not like this.
+> >
+> > Why isn't it enough to define the canonical remote name git takes as
+> > "<name of the helper>:<whatever string the helper understands>"?
+>
+> [...]
+>
+> The only way I've been able to come up with to support this at all
+> usefully is to have a bunch of helper-specific options that specify what
+> the helper needs to know about the locations you consider to be part of
+> the project and an option that tells git that this remote uses the p4
+> helper. I'm not sure what makes sense for other helpers, but the case I
+> actually use needs something like what's in this patch.
 
-I'm running gitweb on a centos 5.3 server and it works well 99% of the
-time. Sometimes, I see the following behavior:
-1. I'm able to load the page that shows all git trees.
-2. When I click on one of the links that should show a specific tree,
-it opens a page with the following text: "<div
-class="title">&nbsp;</div>
-"
+I'm somewhat agnostic on this issue. At the moment, I follow the P4 cues,
+and use a config like this:
 
-If I restart httpd, it doesn't help. The only solution that I found so
-far is to reboot the server and then everything works. However,
-rebooting the server is a bad solution.
+    [remote "foo"]
+        vcs = cvs
+        cvsRoot = ":pserver:user@cvs.server.example.com/var/cvs/cvsroot"
+        cvsModule = "bar"
+        ...
 
-Any idea?
+But I could just as well use a config like this instead:
 
-Thanks,
-Erez
+    [remote "foo"]
+        url = "cvs::pserver:user@cvs.server.example.com/var/cvs/cvsroot#bar"
+        ...
+
+Either is fine with me, although I suspect users might find the
+current/first alternative easier to parse.
+
+> I think it makes sense for svn access to support just having a url
+> option like "svn://something (svn native protocol)", or
+> "svn+ssh://something (svn protocol over ssh)" or "svn+https://something
+> (https access to a svn repo)", or some other similar syntax, but this is
+> a poor fit for p4.
+>
+> In order to support this, there just needs to be a call to check whether
+> "remote-<something>" is an available git command (without running it or
+> giving an error), and the helper code should be used if it is. This is
+> actually required so that people with workstations whose domain is
+> .kernel.org and who have cloned "master:/home/linus/something.git" don't
+> start getting "remote-master isn't a git command" errors (that is,
+> misinterpreting ssh-format location hostnames as helper names. Johan,
+> perhaps you could write that for your CVS helper?
+
+Sorry, not following you here. Write exactly what?
+
+- The code in the transport layer for checking if "remote-<something>"
+  is an available git command?
+
+- The code in my CVS helper for handling the ssh-format misinterpretation,
+  i.e. the case where someone has a git/ssh server called "cvs"? If so,
+  how should this be handled?
+
+> I think that, ideally, helpers for foreign systems would be portable
+> across multiple native systems. The svn helper could be a program
+> "svn-remote-access-helper", and anything that speaks fast-import (e.g.,
+> bzr or hg) would be able to use it. When installing it for git, you'd
+> symlink it to git-remote-svn; if you decided to install
+> "svn-remote-access-helper-ng", you'd change the symlink.
+
+In that case, helpers must keep their metadata in a repo-independent
+format. Currently that is outside the scope of my CVS helper, since I'm
+leveraging git-notes for most of the CVS helper's metadata.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
