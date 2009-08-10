@@ -1,61 +1,148 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] push: point to 'git pull' and 'git push --force' in
- case of non-fast forward
-Date: Mon, 10 Aug 2009 01:49:07 -0700
-Message-ID: <7v1vnk3vgc.fsf@alter.siamese.dyndns.org>
-References: <1249579933-1782-1-git-send-email-Matthieu.Moy@imag.fr>
- <1249717868-10946-1-git-send-email-Matthieu.Moy@imag.fr>
- <87prb6r9d1.fsf@iki.fi> <vpqab2aqqia.fsf@bauges.imag.fr>
- <7vy6pujmsc.fsf@alter.siamese.dyndns.org> <vpq63cwdee3.fsf@bauges.imag.fr>
- <7vljls7n4v.fsf@alter.siamese.dyndns.org> <vpq8whsawjs.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 10 10:50:13 2009
+Subject: [PATCH v3 1/8] commit: --dry-run
+Date: Mon, 10 Aug 2009 01:54:18 -0700
+Message-ID: <1249894465-11018-2-git-send-email-gitster@pobox.com>
+References: <1249894465-11018-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 10 10:54:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaQa1-0005aD-Q3
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:50:10 +0200
+	id 1MaQeT-0007fg-0i
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbZHJItO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 04:49:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752377AbZHJItO
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:49:14 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41897 "EHLO
+	id S1752790AbZHJIya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 04:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbZHJIy3
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:54:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38506 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752392AbZHJItN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 04:49:13 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C1C3F5666;
-	Mon, 10 Aug 2009 04:49:12 -0400 (EDT)
+	with ESMTP id S1752769AbZHJIy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 04:54:28 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0882824660
+	for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:30 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 248205664; Mon, 10 Aug
- 2009 04:49:09 -0400 (EDT)
-In-Reply-To: <vpq8whsawjs.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon\, 10 Aug 2009 10\:43\:35 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AD56E3FA-858A-11DE-837D-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 26D882465F for
+ <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:28 -0400 (EDT)
+X-Mailer: git-send-email 1.6.4.173.g72959
+In-Reply-To: <1249894465-11018-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 6A6AE0E0-858B-11DE-BB49-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125412>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+This teaches --dry-run option to "git commit".
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> If you read "Integrate them with your changes" and understand that it is
->> talking about "git pull" or "git pull --rebase", then you do not have to
->> read the doc.  It should "click".
->
-> But what's the point is being so vague, while you could just add "(see
-> git pull)"? See what you've just wrote: one should "understand that it
-> is about ...". So, why write Y thinking that the user should
-> understand that it is about X while you could write X directly?
+It is the same as "git status", but in the longer term we would want to
+change the semantics of "git status" not to be the preview of commit, and
+this is the first step for doing so.
 
-In order to cover both "pull" and "pull --rebase"?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-commit.txt |    7 ++++++-
+ builtin-commit.c             |   29 ++++++++++++++++-------------
+ 2 files changed, 22 insertions(+), 14 deletions(-)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index b5d81be..d01ff5a 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -8,7 +8,7 @@ git-commit - Record changes to the repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend]
++'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dry-run]
+ 	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
+ 	   [--allow-empty] [--no-verify] [-e] [--author=<author>]
+ 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
+@@ -198,6 +198,11 @@ specified.
+ --quiet::
+ 	Suppress commit summary message.
+ 
++--dry-run::
++	Do not create a commit, but show a list of paths that are
++	to be committed, paths with local changes that will be left
++	uncommitted and paths that are untracked.
++
+ \--::
+ 	Do not interpret any more arguments as options.
+ 
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 6d12c2e..3a7e35d 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -51,7 +51,7 @@ static const char *template_file;
+ static char *edit_message, *use_message;
+ static char *author_name, *author_email, *author_date;
+ static int all, edit_flag, also, interactive, only, amend, signoff;
+-static int quiet, verbose, no_verify, allow_empty;
++static int quiet, verbose, no_verify, allow_empty, dry_run;
+ static char *untracked_files_arg;
+ /*
+  * The default commit message cleanup mode will remove the lines
+@@ -103,6 +103,7 @@ static struct option builtin_commit_options[] = {
+ 	OPT_BOOLEAN(0, "interactive", &interactive, "interactively add files"),
+ 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
+ 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
++	OPT_BOOLEAN(0, "dry-run", &dry_run, "show what would be committed"),
+ 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
+ 	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+ 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
+@@ -813,28 +814,28 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	return argc;
+ }
+ 
+-int cmd_status(int argc, const char **argv, const char *prefix)
++static int dry_run_commit(int argc, const char **argv, const char *prefix)
+ {
+-	const char *index_file;
+ 	int commitable;
++	const char *index_file;
+ 
+-	git_config(git_status_config, NULL);
++	index_file = prepare_index(argc, argv, prefix, 1);
++	commitable = run_status(stdout, index_file, prefix, 0);
++	rollback_index_files();
+ 
++	return commitable ? 0 : 1;
++}
++
++int cmd_status(int argc, const char **argv, const char *prefix)
++{
++	git_config(git_status_config, NULL);
+ 	if (wt_status_use_color == -1)
+ 		wt_status_use_color = git_use_color_default;
+-
+ 	if (diff_use_color_default == -1)
+ 		diff_use_color_default = git_use_color_default;
+ 
+ 	argc = parse_and_validate_options(argc, argv, builtin_status_usage, prefix);
+-
+-	index_file = prepare_index(argc, argv, prefix, 1);
+-
+-	commitable = run_status(stdout, index_file, prefix, 0);
+-
+-	rollback_index_files();
+-
+-	return commitable ? 0 : 1;
++	return dry_run_commit(argc, argv, prefix);
+ }
+ 
+ static void print_summary(const char *prefix, const unsigned char *sha1)
+@@ -909,6 +910,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		wt_status_use_color = git_use_color_default;
+ 
+ 	argc = parse_and_validate_options(argc, argv, builtin_commit_usage, prefix);
++	if (dry_run)
++		return dry_run_commit(argc, argv, prefix);
+ 
+ 	index_file = prepare_index(argc, argv, prefix, 0);
+ 
+-- 
+1.6.4.173.g72959
