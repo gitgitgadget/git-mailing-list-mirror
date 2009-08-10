@@ -1,137 +1,139 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: Help/Advice needed on diff bug in xutils.c
-Date: Mon, 10 Aug 2009 13:54:44 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908101211590.32213@GWPortableVCS>
-References: <1249428804.2774.52.camel@GWPortableVCS> <alpine.DEB.1.00.0908052239180.8306@pacific.mpi-cbg.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
+ vcs
+Date: Mon, 10 Aug 2009 15:30:44 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0908101205120.27553@iabervon.org>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org> <7v1vnk79lt.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908092153520.27553@iabervon.org> <200908101032.12835.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 10 20:55:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Aug 10 21:30:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Maa1I-0007Zr-M6
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 20:54:57 +0200
+	id 1Maaa5-0005AF-Kd
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 21:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750814AbZHJSys (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 14:54:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750799AbZHJSys
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 14:54:48 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:43294 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbZHJSyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 14:54:47 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1Maa19-0004EJ-GY; Mon, 10 Aug 2009 13:54:47 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <alpine.DEB.1.00.0908052239180.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752062AbZHJTap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 15:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbZHJTap
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 15:30:45 -0400
+Received: from iabervon.org ([66.92.72.58]:37371 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751447AbZHJTao (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 15:30:44 -0400
+Received: (qmail 24536 invoked by uid 1000); 10 Aug 2009 19:30:44 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 10 Aug 2009 19:30:44 -0000
+In-Reply-To: <200908101032.12835.johan@herland.net>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125498>
 
-Johannes Schindelin (Johannes.Schindelin@gmx.de) wrote on Aug 5, 2009:
+On Mon, 10 Aug 2009, Johan Herland wrote:
 
-> On Tue, 4 Aug 2009, Thell Fowler wrote:
->
->> There is a bug in git diff (ignoring whitespace) that does not take into
->> account a trailing space at the end of a line at the end of a file when
->> no new line follows.
+> On Monday 10 August 2009, Daniel Barkalow wrote:
+> > On Sun, 9 Aug 2009, Junio C Hamano wrote:
+> > > Daniel Barkalow <barkalow@iabervon.org> writes:
+> > > > If this is set, the url is not required, and the transport always
+> > > > uses a helper named "git-remote-<value>".
+> > > >
+> > > > It is a separate configuration option in order to allow a sensible
+> > > > configuration for foreign systems which either have no meaningful
+> > > > urls for repositories or which require urls that do not specify the
+> > > > system used by the repository at that location. However, this only
+> > > > affects how the name of the helper is determined, not anything about
+> > > > the interaction with the helper, and the contruction is such that, if
+> > > > the foreign scm does happen to use a co-named url method, a url with
+> > > > that method may be used directly.
+> > >
+> > > Personally, I do not like this.
+> > >
+> > > Why isn't it enough to define the canonical remote name git takes as
+> > > "<name of the helper>:<whatever string the helper understands>"?
+> >
+> > [...]
+> >
+> > The only way I've been able to come up with to support this at all
+> > usefully is to have a bunch of helper-specific options that specify what
+> > the helper needs to know about the locations you consider to be part of
+> > the project and an option that tells git that this remote uses the p4
+> > helper. I'm not sure what makes sense for other helpers, but the case I
+> > actually use needs something like what's in this patch.
+> 
+> I'm somewhat agnostic on this issue. At the moment, I follow the P4 cues,
+> and use a config like this:
+> 
+>     [remote "foo"]
+>         vcs = cvs
+>         cvsRoot = ":pserver:user@cvs.server.example.com/var/cvs/cvsroot"
+>         cvsModule = "bar"
+>         ...
+> 
+> But I could just as well use a config like this instead:
+> 
+>     [remote "foo"]
+>         url = "cvs::pserver:user@cvs.server.example.com/var/cvs/cvsroot#bar"
+>         ...
+> 
+> Either is fine with me, although I suspect users might find the
+> current/first alternative easier to parse.
 
-First, please forgive my hubris at thinking I had _found_ a bug when my 
-ignorance of the issue was so obvious.  I am definitely humbled after 
-reading every post in the archive having to do with whitespace and diff.
+I suspect there will be some users who want (1) and some who want (2), and 
+both ought to work.
 
->>
->> Here is the example of the bug:
->> mkdir test_ws_eof
->> cd test_ws_eof
->> git init
->> echo -n "Test" > test.txt
->> git add .
->> git commit -m'test'
->> git symbolic-ref HEAD refs/heads/with_space
->> rm .git/index
->> git clean -f
->> echo -n "Test ">test.txt
->> git add .
->> git commit -m'test'
->> # Ignoring all whitespace there shouldn't be a diff.
->> git diff -w master -- test.txt
->> # Ignoring space at eol there shouldn't be a diff
->> git diff --ignore-space-at-eol master -- test.txt
->> # Ignoring with -b might have a case for a diff showing.
->> git diff -b master -- test.txt
->
-> If you turn that into a patch to, say, t/t4015-diff-whitespace.sh (adding
-> a test_expect_failure for a known bug), it is much easier to convince
-> developers to work on the issue.
->
+> > I think it makes sense for svn access to support just having a url
+> > option like "svn://something (svn native protocol)", or
+> > "svn+ssh://something (svn protocol over ssh)" or "svn+https://something
+> > (https access to a svn repo)", or some other similar syntax, but this is
+> > a poor fit for p4.
+> >
+> > In order to support this, there just needs to be a call to check whether
+> > "remote-<something>" is an available git command (without running it or
+> > giving an error), and the helper code should be used if it is. This is
+> > actually required so that people with workstations whose domain is
+> > .kernel.org and who have cloned "master:/home/linus/something.git" don't
+> > start getting "remote-master isn't a git command" errors (that is,
+> > misinterpreting ssh-format location hostnames as helper names. Johan,
+> > perhaps you could write that for your CVS helper?
+> 
+> Sorry, not following you here. Write exactly what?
+> 
+> - The code in the transport layer for checking if "remote-<something>"
+>   is an available git command?
 
-Thank you.  In progress.
+That's what I was thinking.
 
-I am curious if t4015 is planned to be to be rewritten to follow what 
-Junio had outlined and Giuseppe implemented for 
-t4107-apply-ignore-whitespace.sh to make the spaces more obvious to the reader:
+> - The code in my CVS helper for handling the ssh-format misinterpretation,
+>   i.e. the case where someone has a git/ssh server called "cvs"? If so,
+>   how should this be handled?
 
-One other question on the making of the test in regards to the 
-following quote from:
-http://article.gmane.org/gmane.comp.version-control.git/124765
-where Junio C Hamano wrote:
+I'd been thinking that people's servers wouldn't be named "cvs", but they 
+might be named things that aren't clearly not plausible names for helpers. 
+So I don't think there should be a need to deal with misdirected names 
+going to actual helpers, just names for helpers that don't exist.
 
->>>>	sed -e 's/Z/ /g' >patch3.patch <<\EOF
->>>>        ...
->>>>        +Z 	print_int(func(i));Z
->>>>        EOF
->>>>
->>>> to make invisible SP stand out more for the benefit of people reading 
->>>> the test script (I know you did not have leading SP before HT in 
->>>> yours, but the above illustrates the visibility issues).  For other 
->>>> tests with test vector patches, visibility of whitespace is not much 
->>>> an issue, but this script is _all about_ whitespace, so anything that 
->>>> clarifies what is going on better would help.
+> > I think that, ideally, helpers for foreign systems would be portable
+> > across multiple native systems. The svn helper could be a program
+> > "svn-remote-access-helper", and anything that speaks fast-import (e.g.,
+> > bzr or hg) would be able to use it. When installing it for git, you'd
+> > symlink it to git-remote-svn; if you decided to install
+> > "svn-remote-access-helper-ng", you'd change the symlink.
+> 
+> In that case, helpers must keep their metadata in a repo-independent
+> format. Currently that is outside the scope of my CVS helper, since I'm
+> leveraging git-notes for most of the CVS helper's metadata.
 
-The test being implemented was t4107-apply-ignore-whitespace.sh.
+Yeah, that's one of several tricky issues. I don't think there's enough 
+experience yet to design something to support portable helpers, but I 
+think it's worth thinking about.
 
-Are there any plans to have t4015-diff-whitespace.sh tests rewritten in 
-the same fashion?
-
-> First, your coding style is different from the surrounding code.  I think
-> it goes without saying that this should be fixed.
->
-> Second, you do not need the parentheses at all (and therefore they should
-> go).
->
-> Third, libxdiff does not assume to be fed NUL delimited strings.
->
-
-You're absolutely right, I'll be more aware in the future.
-
-> Fourth, that condition "ptr + 1 < top" is already doing what you tried to
-> accomplish here.
->
-> So I guess that you need to do add "ptr + 1 < top" checks
-> instead.
->
-
-I'll give it another go.
-
-Thank you for the advice Dscho.
-
--- 
-Thell
+	-Daniel
+*This .sig left intentionally blank*
