@@ -1,60 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [Feature Request] git export
-Date: Mon, 10 Aug 2009 09:54:24 -0700
-Message-ID: <7vk51b38zj.fsf@alter.siamese.dyndns.org>
+Date: Mon, 10 Aug 2009 18:56:39 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908101855260.8324@intel-tinevez-2-302>
 References: <200908101822.59940.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: thomas@koch.ro
-X-From: git-owner@vger.kernel.org Mon Aug 10 18:55:01 2009
+To: Thomas Koch <thomas@koch.ro>
+X-From: git-owner@vger.kernel.org Mon Aug 10 18:57:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaY9E-0002TA-M7
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 18:55:01 +0200
+	id 1MaYBF-0003Fw-Nj
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 18:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270AbZHJQyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 12:54:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755372AbZHJQyv
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 12:54:51 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45413 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755366AbZHJQyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 12:54:50 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D19A5089;
-	Mon, 10 Aug 2009 12:54:48 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAF315084; Mon, 10 Aug
- 2009 12:54:41 -0400 (EDT)
-In-Reply-To: <200908101822.59940.thomas@koch.ro> (Thomas Koch's message of
- "Mon\, 10 Aug 2009 18\:22\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 838AA2B6-85CE-11DE-A31A-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S932311AbZHJQ4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 12:56:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932309AbZHJQ4l
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 12:56:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36244 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932308AbZHJQ4k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 12:56:40 -0400
+Received: (qmail invoked by alias); 10 Aug 2009 16:56:40 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp035) with SMTP; 10 Aug 2009 18:56:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Wy2txx3+WP7CcyI/VWfdP8ak/+/YcsCROYDrk0Z
+	ngkGBj6VeVOBvv
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200908101822.59940.thomas@koch.ro>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125489>
 
-Thomas Koch <thomas@koch.ro> writes:
+Hi,
+
+On Mon, 10 Aug 2009, Thomas Koch wrote:
 
 > could you please provide a simple solution to save a tree object into an 
 > arbitrary location?
+>
 > I found some hints, that it would be possible by missusing either git 
-> checkout-index or git-archive, but I think that it shouldn't require that much 
+> checkout-index or git-archive, but I think that it shouldn't require 
+> that much GIT FU to do such a simple thing.
 
-If you are talking about a tree object, then git-archive is what you want.
-It was invented almost for this exact purpose, but unlike "export" that
-would only copy to a directory, you can get a tarball out of it when you
-do not want to expand the result into a directory; it is more versatile
-form.  The manual page for the command has an example (look for
-"/var/tmp") so I won't repeat the cut-and-paste recipe here.
+You can check out Documentation/install-doc-quick.sh and find that 
+something like
 
-If you are not talking about a tree object but is talking about the
-contents recorded in your index, checkout-index with the --prefix option
-may be what you want.  The manual page for the command has an example
-(look for "--prefix=git-export-dir/") so I won't repeat it here.
+	GIT_INDEX_FILE=.git/tmp
+	export GIT_INDEX_FILE
+	git read-tree $TREE
+	git checkout-index -a -f --prefix=/the/path
+	unset GIT_INDEX_FILE
+
+should work.
+
+Hth,
+Dscho
