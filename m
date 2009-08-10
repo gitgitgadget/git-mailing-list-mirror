@@ -1,66 +1,80 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: backups with git
-Date: Mon, 10 Aug 2009 11:51:13 +0100
-Message-ID: <43d8ce650908100351w10e4d49cne8cff6f7e900f07a@mail.gmail.com>
-References: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Optimize git-favicon.png
+Date: Mon, 10 Aug 2009 13:00:51 +0200
+Message-ID: <20090810110002.4448.88448.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Roald de Vries <rdv@roalddevries.nl>
-X-From: git-owner@vger.kernel.org Mon Aug 10 12:51:25 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 10 13:01:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaSTK-0006rE-Kv
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 12:51:23 +0200
+	id 1MaScj-0001aJ-SC
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 13:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804AbZHJKvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 06:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753794AbZHJKvO
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 06:51:14 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:49128 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753657AbZHJKvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 06:51:13 -0400
-Received: by gxk9 with SMTP id 9so4007890gxk.13
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 03:51:13 -0700 (PDT)
+	id S1753840AbZHJLA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 07:00:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbZHJLA5
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 07:00:57 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:60014 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093AbZHJLA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 07:00:56 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so712098fga.17
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:from:subject:to:date
+         :message-id:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=6a/r5DwTHIDa3jmN+CYHM+BjQ3pvj+Cdkj76nzSOb5w=;
-        b=swqZc4EwzBbaJ28o2fYQDjVo8WxGafkPkrHTuvrSlqpKz80d/IyoalPFeY6bt1iL56
-         WM767JMDxoBZb9uI+iZ/pHkiErvHvl4oxz/rtheocwWdlKFhjRB8qfLe3+xT9uNZom4A
-         6X42ms3fi+jx/Ume1bX2wlhmr78ycNE6gobhg=
+        bh=1ZWz4aFb72fqMcbMvRCjVS5lwFzQzxRWGd4ktupeKmo=;
+        b=oZQ/FbOe04PcurK7J53i1Y4df8F+ElNk/4jSKfVwkFYkXXk8S6v6pul1UtACRVZTk2
+         5Zg2hYKX8U3Scy9Yrobn8p5qiGh/rONB1vdpGMFq3pSy/6SqLDakbLVMbG/CfjRoPqAu
+         ZFTvSJCl/LKjVXSsREL01jZPr2dsQdof3gRdE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KXavbIiGj4wpwAmvbsXtEnaKQmvL0tz6Ztgq4zUA/fgJyCqX26MxRFNb768LDRPNdS
-         c3NlAH8arquwk+lnJ2XaAmbJF12dXDgJ6HD8I+YGhii9R+3QtdjDYO78F/ro0btNWVIU
-         5e6haX2LZq5ZrwKVqGhR8dMHXtWChWteoxF4o=
-Received: by 10.151.78.9 with SMTP id f9mr7906082ybl.329.1249901473700; Mon, 
-	10 Aug 2009 03:51:13 -0700 (PDT)
-In-Reply-To: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
+        h=from:subject:to:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=IkjV/oGDB+toTNRHkIu/8xanaW6eC23Cv09U00ZmCK9xAh52aZLafIkd+xebdgIxzW
+         qE2vWAWllkwljeT0+QNldcZk2sZshzkKITanIrN7MvPbYgtKRImTN0YyMSBCQkR+T5KH
+         GG9owQ6BZ2ejcoebcv74cY6bLBjadpZXszx8w=
+Received: by 10.86.50.4 with SMTP id x4mr2985185fgx.76.1249902056997;
+        Mon, 10 Aug 2009 04:00:56 -0700 (PDT)
+Received: from localhost.localdomain (abvr219.neoplus.adsl.tpnet.pl [83.8.215.219])
+        by mx.google.com with ESMTPS id 12sm10121350fgg.1.2009.08.10.04.00.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 Aug 2009 04:00:56 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7AB0prm004494
+	for <git@vger.kernel.org>; Mon, 10 Aug 2009 13:00:53 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125432>
 
-2009/8/10 Roald de Vries <rdv@roalddevries.nl>:
-> Dear all,
->
-> I'm thinking of using git as a backup solution for my whole system, setting
-> my $GIT_DIR to something like "/backupdisc/backup". Does that seem sensible?
-> In his Google tech talk, Linus said that git was not good at huge projects;
-> I guess that would apply to backups. On the other hand, maybe a backup
-> doesn't need to be as fast as he wants git to be for projects. Has anybody
-> used git like this? And was it a good experience?
+Reduce size of git-favicon.png using Smush.it(TM) online PNG optimizer
+  http://developer.yahoo.com/yslow/smushit/
+from 164 bytes to 118 bytes (28% reduction).
 
-Perhaps you want something more like btrfs.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Smush.it(TM) could not improve git-logo.png
 
-John
+ gitweb/git-favicon.png |  Bin 164 -> 118 bytes
+ 1 files changed, 0 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/git-favicon.png b/gitweb/git-favicon.png
+index de637c0608090162a6ce6b51d5f9bfe512cf8bcf..1f8bfa70d674b1073a40ea66ba8c745dfdbaa59d 100644
+GIT binary patch
+delta 64
+zcmZ3&ST@1NO4ZZFF@)oKas(?2&y5Z?Rz5Y3MuF&EM%rD8Sy?F(EeyqhTNxQ99#M`y
+TnP0Y$0SG)@{an^LB{Ts5d%zSA
+
+delta 110
+zcmXS0!Z^VugR{URvY3H^TNs2H8D`CqU|?Xd^K@|xsbFM1xKYr-L4@_d*Jr0+dMpU|
+zSh|pTqEw4`hlFuidz*uTz>4DC^A21PSh4+E+}|Dh9hQ}@lhS2sls~7={piN!fAT<+
+O7(8A5T-G@yGywqcawy0E
