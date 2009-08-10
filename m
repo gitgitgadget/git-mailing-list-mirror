@@ -1,110 +1,82 @@
-From: Jeff Lasslett <jeff.lasslett@gmail.com>
-Subject: [PATCH] Check return value of ftruncate call in http.c.  Remove possible mem leak
-Date: Mon, 10 Aug 2009 23:42:27 +1000
-Message-ID: <1249911747-28490-1-git-send-email-jeff.lasslett@gmail.com>
-Cc: Jeff Lasslett <jeff.lasslett@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 10 15:43:07 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: backups with git
+Date: Mon, 10 Aug 2009 19:08:49 +0530
+Message-ID: <2e24e5b90908100638m797ccf8ei8437714952b4f2d5@mail.gmail.com>
+References: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Roald de Vries <rdv@roalddevries.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 10 15:44:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaV9V-0004e4-Q3
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 15:43:06 +0200
+	id 1MaVAq-000551-2d
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 15:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754277AbZHJNmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 09:42:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754216AbZHJNmx
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 09:42:53 -0400
-Received: from rv-out-0506.google.com ([209.85.198.227]:18078 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754200AbZHJNmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 09:42:53 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so1001460rvb.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 06:42:54 -0700 (PDT)
+	id S1754749AbZHJNoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 09:44:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754732AbZHJNoW
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 09:44:22 -0400
+Received: from mail-yw0-f193.google.com ([209.85.211.193]:35076 "EHLO
+	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754731AbZHJNoV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 09:44:21 -0400
+X-Greylist: delayed 328 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Aug 2009 09:44:20 EDT
+Received: by ywh31 with SMTP id 31so3878346ywh.4
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 06:44:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=bGlHlGysgVyrXyoVdJAmXz62GrxO4DENB6J0ZvczOwE=;
-        b=MN/HDHmFQQM2UorORBvb2+tRo0llUGcjNZgduPiDViTevMwJHJyirzJBrxxxPfnwqK
-         NuK8fEzAH7wk2KZMPujHoVAg55WQ4x2MQuLOYpm1iskNBU2ZWiPZdH6qKv5UeVE9iWQb
-         Pk2p5JmNuyBUHk86Axj69YvJaek7eahTl7KMo=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Cv8ZZvIYjzQVwuJ7o5PVk++/WRQ7N2P12nxS58eIOtw=;
+        b=HaEeh+MWjq1VRYFKM1duT3XejFk8U9e2oRWglWxM8nBdYkiqVBlY5D5p+3aOU80PQn
+         OY40WkN73RWBdwQaHdo5BKFj4lKJvg5M/+eh6VRF/D0DXOMu0uUDXkEq+yXfNqF1LQ2A
+         Q02AmaH18/u1IjiHbY+2grAgc+k9qxNtJDyu8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=CMRAAUz+QnXwyETIl+MuSd5C6cC8c2dQSlE+2QdXAVTdK7WaVWzJhGuVYFTySgH2J9
-         CrlX4KN4/+UtojtwVEA3mEAn8lv1FmkBxlW+aUVUZpEp6b9g03glp0hY8OQrEbEt/cba
-         IlkwYbrLyijV784j+QoNp3iFiXgFoxOwa7bVs=
-Received: by 10.142.192.7 with SMTP id p7mr639716wff.218.1249911774166;
-        Mon, 10 Aug 2009 06:42:54 -0700 (PDT)
-Received: from localhost.localdomain (CPE-58-165-23-40.vic.bigpond.net.au [58.165.23.40])
-        by mx.google.com with ESMTPS id 32sm12320369wfa.13.2009.08.10.06.42.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 06:42:53 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.59.g4d590.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bH8TRMl399/b4oxDTBTAy1ugiQ34x5eXH5BbRaZI9JiLtycaWsqe4D6HehiiPKB42k
+         wZOlZGMsBn2ENTYz0uuRo9Jok3DEbZP1B/pHGumY3LO28FdEOAdY97HtYXW502MyN70B
+         rHpNYkxDtmi91WHHWPINRboWDag0l5ZLfH9Z0=
+Received: by 10.231.32.134 with SMTP id c6mr1560175ibd.34.1249911529713; Mon, 
+	10 Aug 2009 06:38:49 -0700 (PDT)
+In-Reply-To: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125443>
 
-In new_http_object_request(), check ftruncate() call return value and
-handle possible errors.  Remove possible leak of mem pointed to by url.
+On Mon, Aug 10, 2009 at 1:57 PM, Roald de Vries<rdv@roalddevries.nl> wrote:
 
-Signed-off-by: Jeff Lasslett <jeff.lasslett@gmail.com>
----
- http.c |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
+> I'm thinking of using git as a backup solution for my whole system, setting
+> my $GIT_DIR to something like "/backupdisc/backup". Does that seem sensible?
 
-diff --git a/http.c b/http.c
-index a2720d5..e8317e1 100644
---- a/http.c
-+++ b/http.c
-@@ -1098,7 +1098,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 	char *hex = sha1_to_hex(sha1);
- 	char *filename;
- 	char prevfile[PATH_MAX];
--	char *url;
-+	char *url = NULL;
- 	int prevlocal;
- 	unsigned char prev_buf[PREV_BUF_SIZE];
- 	ssize_t prev_read = 0;
-@@ -1189,7 +1189,11 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 		if (prev_posn>0) {
- 			prev_posn = 0;
- 			lseek(freq->localfile, 0, SEEK_SET);
--			ftruncate(freq->localfile, 0);
-+			if (ftruncate(freq->localfile, 0) < 0) {
-+				error("Couldn't truncate temporary file %s for %s: %s",
-+					  freq->tmpfile, freq->filename, strerror(errno));
-+				goto abort;
-+			}
- 		}
- 	}
- 
-@@ -1198,7 +1202,7 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 	curl_easy_setopt(freq->slot->curl, CURLOPT_FILE, freq);
- 	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
- 	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr);
--	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, url);
-+	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, freq->url);
- 	curl_easy_setopt(freq->slot->curl, CURLOPT_HTTPHEADER, no_pragma_header);
- 
- 	/*
-@@ -1216,10 +1220,12 @@ struct http_object_request *new_http_object_request(const char *base_url,
- 				 CURLOPT_HTTPHEADER, range_header);
- 	}
- 
-+	free(url);
- 	return freq;
- 
--	free(url);
- abort:
-+	free(url);
-+	free(freq->url);
- 	free(filename);
- 	free(freq);
- 	return NULL;
--- 
-1.6.4.59.g4d590.dirty
+The two questions you have to ask yourself are: will I ever branch and
+merge in this "repo", and do I really want versions from weeks and
+months ago?
+
+A "no" to the first question means you're essentially using a very
+powerful VCS as a mere backup system.  I suggest rdiff-backup or (if
+it's mature enough now, not sure) duplicity..
+
+A "no" to the second question means you're needlessly keeping lots of
+old data, and have to jump through hoops to get rid of it if you need
+to.
+
+There's a limit to how much you can Macgyver git into doing what it is
+not intended for :-)
+
+Having said all that, I do use git to manage parts of my $HOME that do
+satisfy those constraints (config files, ~/bin, etc) -- I do sometimes
+branch and merge, and I do want really old versions.  I do this by
+putting all of them in a repo, and symlinking them to $HOME.
+
+Regards,
+
+Sitaram
