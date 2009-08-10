@@ -1,148 +1,57 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 1/8] commit: --dry-run
-Date: Mon, 10 Aug 2009 01:54:18 -0700
-Message-ID: <1249894465-11018-2-git-send-email-gitster@pobox.com>
-References: <1249894465-11018-1-git-send-email-gitster@pobox.com>
+Subject: [PATCH v3 0/8] shortstatus updates
+Date: Mon, 10 Aug 2009 01:54:17 -0700
+Message-ID: <1249894465-11018-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 10:54:45 2009
+X-From: git-owner@vger.kernel.org Mon Aug 10 10:54:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaQeT-0007fg-0i
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:54:45 +0200
+	id 1MaQeS-0007fg-9W
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 10:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790AbZHJIya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 04:54:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbZHJIy3
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:54:29 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38506 "EHLO
+	id S1752728AbZHJIy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 04:54:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752583AbZHJIy0
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 04:54:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44888 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752769AbZHJIy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 04:54:28 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0882824660
-	for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:30 -0400 (EDT)
+	with ESMTP id S1752501AbZHJIy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 04:54:26 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89FFC569B
+	for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:27 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 26D882465F for
- <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:28 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2DED1569A for
+ <git@vger.kernel.org>; Mon, 10 Aug 2009 04:54:27 -0400 (EDT)
 X-Mailer: git-send-email 1.6.4.173.g72959
-In-Reply-To: <1249894465-11018-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 6A6AE0E0-858B-11DE-BB49-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 68F51F14-858B-11DE-BF20-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125413>
 
-This teaches --dry-run option to "git commit".
+Another round of "git status won't be a preview of git commit someday".
+This builds on the part that are already in 'pu', and is queued in 'pu'.
 
-It is the same as "git status", but in the longer term we would want to
-change the semantics of "git status" not to be the preview of commit, and
-this is the first step for doing so.
+Junio C Hamano (8):
+  commit: --dry-run
+  wt-status: move many global settings to wt_status structure
+  wt-status: move wt_status_colors[] into wt_status structure
+  Make git_status_config() file scope static to builtin-commit.c
+  wt-status: collect untracked files in a separate "collect" phase
+  git stat: the beginning
+  git stat: pathspec limits, unlike traditional "git status"
+  git stat -s: short status output
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-commit.txt |    7 ++++++-
- builtin-commit.c             |   29 ++++++++++++++++-------------
- 2 files changed, 22 insertions(+), 14 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index b5d81be..d01ff5a 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,7 +8,7 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend]
-+'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dry-run]
- 	   [(-c | -C) <commit>] [-F <file> | -m <msg>]
- 	   [--allow-empty] [--no-verify] [-e] [--author=<author>]
- 	   [--cleanup=<mode>] [--] [[-i | -o ]<file>...]
-@@ -198,6 +198,11 @@ specified.
- --quiet::
- 	Suppress commit summary message.
- 
-+--dry-run::
-+	Do not create a commit, but show a list of paths that are
-+	to be committed, paths with local changes that will be left
-+	uncommitted and paths that are untracked.
-+
- \--::
- 	Do not interpret any more arguments as options.
- 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 6d12c2e..3a7e35d 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -51,7 +51,7 @@ static const char *template_file;
- static char *edit_message, *use_message;
- static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
--static int quiet, verbose, no_verify, allow_empty;
-+static int quiet, verbose, no_verify, allow_empty, dry_run;
- static char *untracked_files_arg;
- /*
-  * The default commit message cleanup mode will remove the lines
-@@ -103,6 +103,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_BOOLEAN(0, "interactive", &interactive, "interactively add files"),
- 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
- 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
-+	OPT_BOOLEAN(0, "dry-run", &dry_run, "show what would be committed"),
- 	OPT_BOOLEAN(0, "amend", &amend, "amend previous commit"),
- 	{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, "mode", "show untracked files, optional modes: all, normal, no. (Default: all)", PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
- 	OPT_BOOLEAN(0, "allow-empty", &allow_empty, "ok to record an empty change"),
-@@ -813,28 +814,28 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	return argc;
- }
- 
--int cmd_status(int argc, const char **argv, const char *prefix)
-+static int dry_run_commit(int argc, const char **argv, const char *prefix)
- {
--	const char *index_file;
- 	int commitable;
-+	const char *index_file;
- 
--	git_config(git_status_config, NULL);
-+	index_file = prepare_index(argc, argv, prefix, 1);
-+	commitable = run_status(stdout, index_file, prefix, 0);
-+	rollback_index_files();
- 
-+	return commitable ? 0 : 1;
-+}
-+
-+int cmd_status(int argc, const char **argv, const char *prefix)
-+{
-+	git_config(git_status_config, NULL);
- 	if (wt_status_use_color == -1)
- 		wt_status_use_color = git_use_color_default;
--
- 	if (diff_use_color_default == -1)
- 		diff_use_color_default = git_use_color_default;
- 
- 	argc = parse_and_validate_options(argc, argv, builtin_status_usage, prefix);
--
--	index_file = prepare_index(argc, argv, prefix, 1);
--
--	commitable = run_status(stdout, index_file, prefix, 0);
--
--	rollback_index_files();
--
--	return commitable ? 0 : 1;
-+	return dry_run_commit(argc, argv, prefix);
- }
- 
- static void print_summary(const char *prefix, const unsigned char *sha1)
-@@ -909,6 +910,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		wt_status_use_color = git_use_color_default;
- 
- 	argc = parse_and_validate_options(argc, argv, builtin_commit_usage, prefix);
-+	if (dry_run)
-+		return dry_run_commit(argc, argv, prefix);
- 
- 	index_file = prepare_index(argc, argv, prefix, 0);
- 
--- 
-1.6.4.173.g72959
+ Documentation/git-commit.txt |    7 +-
+ Makefile                     |    1 +
+ builtin-commit.c             |  312 +++++++++++++++++++++++++++++++++++-------
+ builtin.h                    |    1 +
+ git.c                        |    1 +
+ wt-status.c                  |  206 ++++++++++++----------------
+ wt-status.h                  |   17 ++-
+ 7 files changed, 367 insertions(+), 178 deletions(-)
