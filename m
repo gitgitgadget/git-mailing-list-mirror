@@ -1,55 +1,98 @@
-From: John Bito <jwbito@gmail.com>
-Subject: [EGIT] Push to GitHub caused corruption
-Date: Mon, 10 Aug 2009 14:46:34 -0700
-Message-ID: <3ae83b000908101446q2d4f1101we4bbd7023f78b03@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bug with .git file and aliases
+Date: Tue, 11 Aug 2009 01:05:38 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908110101110.8306@pacific.mpi-cbg.de>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>  <20090720152117.GB5347@coredump.intra.peff.net> <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 10 23:46:44 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-2133827291-1249945540=:8306"
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Geoffrey Irving <irving@naml.us>
+X-From: git-owner@vger.kernel.org Tue Aug 11 01:05:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MachX-0001Zk-Q3
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 23:46:44 +0200
+	id 1Madvp-0005AG-Hr
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 01:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753929AbZHJVqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 17:46:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753895AbZHJVqe
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 17:46:34 -0400
-Received: from mail-gx0-f213.google.com ([209.85.217.213]:36991 "EHLO
-	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753877AbZHJVqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 17:46:33 -0400
-Received: by gxk9 with SMTP id 9so4565769gxk.13
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 14:46:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=ZqwkOnOcgzR9geOigEL3xjjv18DJY3ONJZitl1WapTU=;
-        b=KyB33CLhsYxtlfTmPEHaszmJfGLb5v84Em9gcGB1R5Qb6tgRVPnL892fc5X29J0Fto
-         4p6B0OcerfpV3+w3SGU5/+d5PKe3+DAbJ1YV2xLQACj4Abidgd6DxY58KUczqktge4vf
-         TbgX8orFl6iVEsxLBetzHDybiPpurMl6zUpWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=FMH2s98B7IHdnHGPxRp3FVUIrGFvehMiGk9uIIy2C589LmeitcAWChf9PNJS1j6LmE
-         1QtufY8WiplVE8+HGwiT6qiC1yyDuweahedYAesxnCx8zCFYNb0MhUuxZUIogIvVZWdf
-         pl2OffVARIBsjvjShcYPJD5vnd1K1GqSutfz8=
-Received: by 10.90.28.16 with SMTP id b16mr4432930agb.44.1249940794319; Mon, 
-	10 Aug 2009 14:46:34 -0700 (PDT)
+	id S1751895AbZHJXFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 19:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbZHJXFF
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 19:05:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49422 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751339AbZHJXFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 19:05:04 -0400
+Received: (qmail invoked by alias); 10 Aug 2009 23:05:04 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp018) with SMTP; 11 Aug 2009 01:05:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1803KoZ/ys0qNtWLQNG1NloWJeuQioqeEoaSFuwPm
+	D/3lYD7x7tWkQW
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125502>
 
-Using the 'release' build of EGit (0.4.9.200906240051) I pushed a
-commit to GitHub.  After that, using git to pull, I get 'bad tree
-object' resulting in 'remote: aborting due to possible repository
-corruption on the remote side'.  I had a similar problem back in April
-(using integration builds of 0.4.0).  I'm willing to investigate if
-there's interest in finding the root of the problem.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-2133827291-1249945540=:8306
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Mon, 10 Aug 2009, Geoffrey Irving wrote:
+
+> On Mon, Jul 20, 2009 at 11:21 AM, Jeff King<peff@peff.net> wrote:
+> > On Mon, Jul 20, 2009 at 09:54:12AM -0400, Geoffrey Irving wrote:
+> >
+> >> git 1.6.3.3 has a bug related to .git file support and aliases.
+> >> Specifically, if you make an alias for status and call it from a
+> >> subdirectory, git status chdirs into the true .git dir but then
+> >> chdir's back to the wrong place in order to run the lstats for status.
+> >>  The result is that git status thinks all files have disappeared.
+> >
+> > Yeah, this is a known problem. The problem is that the 'git' wrapper
+> > sets up the environment only partially when running aliases, and then
+> > the resulting command ends up confused about where the worktree is. I
+> > really don't remember the specifics, but you can probably find some
+> > discussion in the list archives.  Fixing it, IIRC, required some
+> > refactoring of the setup code (which I had hoped to get to at some
+> > point, but I am way behind on my git todo list).
+> 
+> The attached patch fixes the bug for me.  I'll leave it to others to
+> determine whether this is a good way to fix the problem.
+
+Note that you made it particularly hard to comment on your patch by not 
+granting us the wish stated in Documentation/SubmittingPatches, namely to 
+inline your patch.
+
+I'll just forego inlining it myself, as I am way past my bed-time and 
+cannot be bothered.
+
+However, I think that it is necessary to comment on your patch.
+
+There is a few style issues, such as declaring offset outside of the 
+block that is the only user, and there is the issue that you go out of 
+your way to append a slash if you're resetting the work tree, but not when 
+not resetting it.
+
+But the bigger issue is that you now broke overriding the work tree via 
+the command line.
+
+The proper fix, of course, is to avoid calling the function with the wrong 
+path to begin with.
+
+Ciao,
+Dscho
+
+--8323328-2133827291-1249945540=:8306--
