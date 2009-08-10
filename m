@@ -1,52 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-instaweb: fix mod_perl detection for apache2
-Date: Sun, 09 Aug 2009 18:38:40 -0700
-Message-ID: <7vprb45ty7.fsf@alter.siamese.dyndns.org>
-References: <4C22ECF8-8FBE-4E45-A7CF-EA1203B49AA7@mailservices.uwaterloo.ca>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark A Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Mon Aug 10 03:38:59 2009
+From: Mark A Rada <marada@uwaterloo.ca>
+Subject: Instaweb using ModPerl::Registry over ModPerl::RegistryBB
+Date: Sun, 9 Aug 2009 21:51:56 -0400
+Message-ID: <BC9876EF-222F-4023-B5FE-5C30A0D3C683@mailservices.uwaterloo.ca>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 10 03:52:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaJqk-0003zd-II
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 03:38:59 +0200
+	id 1MaK3n-0006k8-88
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 03:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610AbZHJBio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Aug 2009 21:38:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbZHJBio
-	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 21:38:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54387 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545AbZHJBio (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Aug 2009 21:38:44 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C360243E4;
-	Sun,  9 Aug 2009 21:38:44 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4206943E3; Sun,  9 Aug
- 2009 21:38:42 -0400 (EDT)
-In-Reply-To: <4C22ECF8-8FBE-4E45-A7CF-EA1203B49AA7@mailservices.uwaterloo.ca>
- (Mark A. Rada's message of "Sat\, 8 Aug 2009 18\:24\:02 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8AA7C6B2-854E-11DE-951F-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754673AbZHJBwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Aug 2009 21:52:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754562AbZHJBwG
+	(ORCPT <rfc822;git-outgoing>); Sun, 9 Aug 2009 21:52:06 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:34555 "EHLO
+	psyche.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754545AbZHJBwF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Aug 2009 21:52:05 -0400
+Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
+	(authenticated bits=0)
+	by psyche.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7A1puA0010868
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sun, 9 Aug 2009 21:52:03 -0400
+X-Mailer: Apple Mail (2.936)
+X-UUID: 28e34d9b-e7e9-4079-bc66-9d5008b75e4a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125397>
 
-Mark A Rada <marada@uwaterloo.ca> writes:
+Hi,
 
-> The script was looking for something that matched the '^our $gitbin'
-> regex, which no longer exists in gitweb.cgi.
->
-> Now it looks for 'MOD_PERL', which should be on the line that checks
-> to see if the script is running in a mod_perl environment.
+I've noticed that the instaweb script uses ModPerl::Registry over  
+ModPerl::RegistryBB.
 
-Thanks.  That sounds like an ancient bug that in turn perhaps suggests
-nobody uses instaweb.  Will apply to 'maint'..
+RegistryBB is supposed to be a bit lighter (read faster) by not  
+performing some checks
+(according to the documentation), and appears to not break gitweb. So  
+my question is
+that I am wondering if this has come up in the past, or someone else  
+knows a reason
+why Registry should be used over RegistryBB (safety, breaks something  
+I haven't
+tried)?
+
+
+--
+Mark A Rada (ferrous26)
+marada@uwaterloo.ca
