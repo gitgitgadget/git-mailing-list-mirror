@@ -1,114 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] Using VC build git
-Date: Mon, 10 Aug 2009 16:29:59 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908101609170.8324@intel-tinevez-2-302>
-References: <1976ea660908100656u57407131h83761329468607a8@mail.gmail.com> <alpine.DEB.1.00.0908101606220.8324@intel-tinevez-2-302>
+From: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>
+Subject: give a hint/solution for "It looks like git-am is in progress. Cannot 
+	rebase."
+Date: Mon, 10 Aug 2009 17:34:04 +0300
+Message-ID: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 16:30:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 10 16:34:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaVt7-0007bY-Ab
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 16:30:13 +0200
+	id 1MaVxI-00012W-W3
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 16:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754997AbZHJOaC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 10:30:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754560AbZHJOaC
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 10:30:02 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55435 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753516AbZHJOaA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 10:30:00 -0400
-Received: (qmail invoked by alias); 10 Aug 2009 14:30:00 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp004) with SMTP; 10 Aug 2009 16:30:00 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19f2eVk57FfXXqOwsGawHVLaMA87ptWocY5vO6w2B
-	MRfglTMx6fRlGa
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.DEB.1.00.0908101606220.8324@intel-tinevez-2-302>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1754882AbZHJOeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 10:34:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbZHJOeY
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 10:34:24 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:49536 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752495AbZHJOeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 10:34:24 -0400
+Received: by fxm28 with SMTP id 28so949293fxm.17
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 07:34:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=UwQfyCpy+EeXK0UkJw3qaJIVMWzcOQatO2Jp7iRLmeE=;
+        b=JBT5i2bNIutD2UAYlvTsOGC4bQQxSa45zKRLEi4Fo4RD0lhAVxC8qYQXKDpAH2qL96
+         BhIajfZcJRsGi020ZytBPdfhkM4szOR7qF7Hyd2LGEx9nBty68Ip0UhjJb81kt4MyBv5
+         OmbEERNmTLByxoSEcq7jmfZ4vyP4qyXWyAi9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=M+ooVj8oFRJ59wKglnk6+O0kZhjQQH/Bhf3wNo1X4lGdm52holuHDKZBr7YL9PEmZb
+         RH8Ff1zmsmsBTcclrwiS5/Nn86G0zXGG9Ah0IzPI6l/ZhO/mMXKNx0GqWCW4c56puCNV
+         fY2O5u54tI9g9sR4fCOqAMXMvP0Y7FCOvV2yo=
+Received: by 10.103.240.15 with SMTP id s15mr1904574mur.45.1249914864198; Mon, 
+	10 Aug 2009 07:34:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125450>
 
 Hi,
 
-On Mon, 10 Aug 2009, Johannes Schindelin wrote:
+I ran git-am instead of git-apply on my repo. The git-am complained
+about the input data, I completely ignored it because I never use
+git-am (except on typos + tab-completions like today).
 
-> Please, we have _high_ standards in git.git, and I really do not want to 
-> have to take anything to Junio that does not fulfill that standard.
+Later, after a few commits I wanted to rebase (interactively) my tree
+to merge a few commits.
+  $ git rebase -i HEAD~4
+  It looks like git-am is in progress. Cannot rebase.
 
-To elaborate:  if I see something like this in the --stat:
+Ok, the message is nice, it tells me it can't do something, but I'm
+stupid enough not to know how to proceed.
+I see that this message is the same in HEAD (master and next).
 
- contrib/vcbuild/include/zlib.h        | 1357 +++++++++++++++++++++++++++++++++
- contrib/vcbuild/lib/zlib.lib          |  Bin 0 -> 104148 bytes
+It would be nice if git would output one or two hints. For example:
+* run "git cancel-a-git-am-in-progress" to cancel a git-am in progress
+* run "git commit-the-git-am-in-progress" to commit the git-am in progress
 
-... I know already that there is no way this can make it into git.git.  
-There just is not.
+Of course, the commands need to be replaced with some valid git
+commands, but I don't know which those commands are :)
 
-Also, if the first commit says nothing else than "Rebase to v1.6.4", it 
-is pretty obvious to me that I will not sign off on that (and I just guess 
-that is the very reason you did not sign off on that, either).
+The message is generated in git-rebase.sh by this code:
+  test -f "$GIT_DIR"/rebase-apply/applying &&
+  die 'It looks like git-am is in progress. Cannot rebase.'
 
-Further, putting anything into contrib/ that really belongs into contrib/ 
-is not cutting it, either.
+For now I think I'll `rm -rf .git/rebase-apply` (and hopefully not
+break anything).
 
-And I am pretty astonished that mingw.[ch] is touched, as VC is definitely 
-not MinGW32.
-
-Changing 1000+ lines of libgit.vcproj in almost every commit is also 
-something I really do not look upon favorably.
-
-Finally, if _no single_ commit message says _anything_ about the reasons 
-why you had to change code outside of vcbuild/, I am only puzzled.
-
-Now, I want to give you a pretty clear idea what has to be done if this is 
-going into 4msysgit.git, ever, because you obviously spent a lot of time 
-on it, and other people want it, too:
-
-- changing "open" to "_open" in mingw.c is a no-no-no.  If you need to use 
-  "_open" in VC, then define "open" in the compile flags for mingw.c, but 
-  leave code that is not written for VC alone.
-
-- introducing trailing whitespace is usually a sign of not caring enough 
-  about clean and neat code.  So just don't do it.
-
-- making link() fail on MinGW32 just to be able to compile it with VC is 
-  outright rude against all people who use a free and open compiler 
-  instead of a closed one.
-
-- changing an "_snprintf" to "_vsnprintf" in vcbuild/porting.c without 
-  anything else is a clear and loud sign that the code before was broken, 
-  and that you fix a faulty patch in a later patch.  This is not how we do 
-  things in git.git.  We fix the proper patch before the patch series is 
-  accepted into mainline.
-
-- violating the coding style -- even if it is in your VC-specific part -- 
-  is not an option.  You need to fix the coding style.
-
-- violating the coding style in files that are not VC-specific is not an 
-  option at all.  You really need to fix it.
-
-- changing the default editor from "vi" to "notepad2" will break almost 
-  every existing Git user's setup.  That is just inexcusable.
-
-Note: these comments are _just for the last_ of your 5 patches.
-
-Just a brief comment on the 4th patch, because I really do not want to 
-spend more time on this round of patches: spelling the opendir() function 
-as "open dir" function in the commit message is misleading, to say the 
-least, and moving code that was added in a previous patch in the same 
-patch series just shows that it was a mistake to begin with.  Besides, 
-don't move anything into mingw.c if MinGW32 does not need it.
-
-Hth,
-Dscho
+-- 
+ .
+..: Lucian
