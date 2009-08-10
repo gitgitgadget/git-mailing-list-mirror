@@ -1,119 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Gitweb giving me some warnings in Apache's error_log
-Date: Mon, 10 Aug 2009 16:57:11 +0200
-Message-ID: <200908101657.13301.jnareb@gmail.com>
-References: <533D6DDF-4DAC-4A86-A6F7-95B54B77E48B@gmail.com> <m3my6bpv6v.fsf@localhost.localdomain> <88f4c4ee0908071056g5d9da83ft77d56ec2e5e84bac@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: A tiny documentation patch
+Date: Mon, 10 Aug 2009 16:59:27 +0200
+Message-ID: <200908101659.28291.trast@student.ethz.ch>
+References: <20090810144419.GB24183@headley>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark Rada <markrada26@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 16:57:32 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: =?utf-8?q?=C5=A0t=C4=9Bp=C3=A1n_N=C4=9Bmec?= <stepnem@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 10 17:00:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaWJW-0001tA-Vf
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 16:57:31 +0200
+	id 1MaWME-00035T-BD
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 17:00:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998AbZHJO5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 10:57:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZHJO5S
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 10:57:18 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:61317 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668AbZHJO5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 10:57:18 -0400
-Received: by bwz19 with SMTP id 19so2621319bwz.37
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 07:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=lTPFp8VdOokZ6DkTDQiru4QtlMIbCI5mKARlWfY7/so=;
-        b=aPFGGHF5cex2wPe1jAPerNbXm3wdB9ThdHch+4lvudBnbQtwheLSLA67xt3k5bKLa7
-         cHG2B0usCCQiCSC0H5SbxLHIfitiQbZ71lvPjLm6IGKg0/FpOl6emy1SpHkv/N+onwQP
-         wuHOgTdxs71igTMfJ4glUMtHBsAzqK+69hzns=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=ON8ex5gnhBx8ce0CKUzulRJoG0T78MKd/FtUAaGwlf37VOHGaa/vJlMErIS0t9+/Gd
-         PbjsGxExXLxJhcEiTFncmU52iDFRdT2R6IdWxmy3mc1Mtim9xxUQ3Hl12F5uLDoUvwgB
-         2NKtWkMC5sqnQQ2SFnUS8JqnC45XVKLnNnN1o=
-Received: by 10.103.12.19 with SMTP id p19mr1944141mui.110.1249916237849;
-        Mon, 10 Aug 2009 07:57:17 -0700 (PDT)
-Received: from ?192.168.1.13? (abwq118.neoplus.adsl.tpnet.pl [83.8.240.118])
-        by mx.google.com with ESMTPS id j10sm20353480muh.59.2009.08.10.07.57.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 07:57:16 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <88f4c4ee0908071056g5d9da83ft77d56ec2e5e84bac@mail.gmail.com>
-Content-Disposition: inline
+	id S1753033AbZHJPAG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Aug 2009 11:00:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752680AbZHJPAG
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 11:00:06 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:8314 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751528AbZHJPAF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2009 11:00:05 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 10 Aug
+ 2009 17:00:03 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 10 Aug
+ 2009 16:59:41 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <20090810144419.GB24183@headley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125454>
 
-On Fri, 7 Aug 2009, Mark Rada wrote:
-> On Fri, Aug 7, 2009 at 10:14 AM, Jakub Narebski<jnareb@gmail.com> wrote:
->> Mark A Rada <markrada26@gmail.com> writes:
->>
->>> It doesn't seem to cause any other problems, but I don't know if it is
->>> significant or not.
->>>
->>> [Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$project_maxdepth"
->>> may be unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line
->>> 2296.
->>> [Fri Aug  7 08:51:13 2009] gitweb.cgi: Variable "$projectroot" may be
->>> unavailable at /var/www/private/gitweb/cgi-bin/gitweb.cgi line 2304.
->>>
->>>
->>> Apache 2.2.12/ mod_perl 2.04/ perl 5.8.8
->>
->> From perldiag(1) manpage:
->>
->>  Variable "%s" may be unavailable
->>
->>    (W closure) An inner (nested) anonymous subroutine is inside a
->>    named subroutine, and outside that is another subroutine; and the
->>    anonymous (innermost) subroutine is referencing a lexical variable
->>    defined in the outermost subroutine.
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec wrote:
+> here's the patch.
+
+Please read Documentation/SubmittingPatches.  In particular, you
+should send your patch inline (git-send-email can help) and add a
+Signed-off-by.
+
+> I noticed a few typos in the git-remote manpage
 [...]
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.=
+txt
+[...]
+> -In mirror mode, enabled with `\--mirror`, the refs will not be store=
+d
+> +In mirror mode, enabled with `--mirror`, the refs will not be stored
+[...]
+> -mode, furthermore, `git push` will always behave as if `\--mirror`
+> +mode, furthermore, `git push` will always behave as if `--mirror`
 
->> The warning is about 'wanted' anonymous subroutine passed to
->> File::Find::find.  The "middle" subroutine is git_get_projects_list,
->> and the "outermost" is mod_perl / ModPerl::Registry request loop.
->>
->> We can't make git_get_projects_list anonymous, but anonymous
->> subroutine is not called or referenced outside git_get_projects_list,
->> nor it is called or referenced outside mod_perl request/event loop.
->>
->> This warning is harmless... but I do not know how to silence it.
+While I'm not sure how far back you'd have to go to find an asciidoc
+that does need this escaping, it's definitely *not* a typo.  In some
+instances, -- turns into em dashes.
 
-> Let me double check my understanding.
-> 
-> The warnings will not occur if Gitweb is run as a regular CGI script
-> because then it won't be nested inside a call from ModPerl::Registry?
+If you are seeing stray backslashes in the output (I don't), I suspect
+you are either running asciidoc 8.x but forgot to set ASCIIDOC8, or
+8.4.1+ and are missing the patch 71c020c (Disable asciidoc 8.4.1+
+semantics for `{plus}` and friends, 2009-07-25).
 
-Yes, it is true that this happens only when running gitweb as mod_perl
-legacy script using ModPerl::Registry.  Otherwise it would be caught
-when running t/t9500-gitweb-standalone-no-errors.sh test.
+> -With `--dry-run` option, report what branches will be pruned, but do=
+ no
+> +With `--dry-run` option, report what branches will be pruned, but do=
+ not
+>  actually prune them.
 
-> 
-> Will it also not complain if I provided my own $projects_list in the
-> first place?
+Ok.
 
-Yes, it would not, because the code is run only when $projects_list is
-a directory to search for git repositories.  If $projects_list is
-a file you wouldn't get this warning (and it might be slightly faster,
-if less flexible, as you would need to regenerate this file when adding
-or removing, or renaming, or changing owner of repositories).
+>  remotes.<group>.  If a named group is not specified on the command l=
+ine,
+> -the configuration parameter remotes.default will get used; if
+> +the configuration parameter remotes.default will be used; if
 
--- 
-Jakub Narebski
-Poland
+Ok.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
