@@ -1,80 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Optimize git-favicon.png
-Date: Mon, 10 Aug 2009 13:00:51 +0200
-Message-ID: <20090810110002.4448.88448.stgit@localhost.localdomain>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH] fix potential infinite loop given large unsigned integer
+Date: Mon, 10 Aug 2009 13:12:02 +0200
+Message-ID: <40aa078e0908100412l3c2afd1bnda9b10aaf1de383f@mail.gmail.com>
+References: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>
+	 <7v3a81a13z.fsf@alter.siamese.dyndns.org>
+	 <40aa078e0908090525h7b4d6efeh658e2edcfbe16c7e@mail.gmail.com>
+	 <200908100724.53345.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 13:01:06 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ryan Flynn <parseerror@gmail.com>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Aug 10 13:12:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaScj-0001aJ-SC
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 13:01:06 +0200
+	id 1MaSnx-00067l-5x
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 13:12:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840AbZHJLA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 07:00:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbZHJLA5
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 07:00:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:60014 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751093AbZHJLA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 07:00:56 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so712098fga.17
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:00:57 -0700 (PDT)
+	id S1753923AbZHJLMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 07:12:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753910AbZHJLMD
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 07:12:03 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:51416 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753868AbZHJLMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 07:12:01 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1119368qwh.37
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 04:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:date
-         :message-id:user-agent:mime-version:content-type
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=1ZWz4aFb72fqMcbMvRCjVS5lwFzQzxRWGd4ktupeKmo=;
-        b=oZQ/FbOe04PcurK7J53i1Y4df8F+ElNk/4jSKfVwkFYkXXk8S6v6pul1UtACRVZTk2
-         5Zg2hYKX8U3Scy9Yrobn8p5qiGh/rONB1vdpGMFq3pSy/6SqLDakbLVMbG/CfjRoPqAu
-         ZFTvSJCl/LKjVXSsREL01jZPr2dsQdof3gRdE=
+        bh=MvfEH3SI5QHrBStquMQCkc14Ql9MOKMYe1HYJVeKuIQ=;
+        b=BvHYbdKNRcWEdxgXQBUatcfyEueW2tTAcCUG35qjRe+ydKwFNJFl5gkJ3yeu2ZxdsP
+         UmmNSEvrIyw66XS0ntWuZvVn5rl7jUZVRo3Sx1bmE/Wnhix0HdK1Ti4u+SjCFWV5FC68
+         6gJclya4XS+VnbH3ELqyNh61NF43vl41vvDjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=IkjV/oGDB+toTNRHkIu/8xanaW6eC23Cv09U00ZmCK9xAh52aZLafIkd+xebdgIxzW
-         qE2vWAWllkwljeT0+QNldcZk2sZshzkKITanIrN7MvPbYgtKRImTN0YyMSBCQkR+T5KH
-         GG9owQ6BZ2ejcoebcv74cY6bLBjadpZXszx8w=
-Received: by 10.86.50.4 with SMTP id x4mr2985185fgx.76.1249902056997;
-        Mon, 10 Aug 2009 04:00:56 -0700 (PDT)
-Received: from localhost.localdomain (abvr219.neoplus.adsl.tpnet.pl [83.8.215.219])
-        by mx.google.com with ESMTPS id 12sm10121350fgg.1.2009.08.10.04.00.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 04:00:56 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7AB0prm004494
-	for <git@vger.kernel.org>; Mon, 10 Aug 2009 13:00:53 +0200
-User-Agent: StGIT/0.14.3
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RalJy6NBlHVkICtBPqqKpmf/WPKrYofjjrz3xHadhB7eP0/YV4lCXKc08pLDVI8lbu
+         40Yv2qiXtWRehssbdvOZ/y7iIPZxbCLufynXmkTk+RXojp0aejvqpyu0t4f+LMGWMpTD
+         r1EjERRThhm9oPGf6oxo2oJPbbRYCTfnQHQD0=
+Received: by 10.224.11.1 with SMTP id r1mr2943338qar.174.1249902722174; Mon, 
+	10 Aug 2009 04:12:02 -0700 (PDT)
+In-Reply-To: <200908100724.53345.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125433>
 
-Reduce size of git-favicon.png using Smush.it(TM) online PNG optimizer
-  http://developer.yahoo.com/yslow/smushit/
-from 164 bytes to 118 bytes (28% reduction).
+On Mon, Aug 10, 2009 at 7:24 AM, Christian
+Couder<chriscool@tuxfamily.org> wrote:
+>> log10() appears to be C99, but can be emulated on earlier C-versions by
+>> doing #define log10(x) (log(x) / log(10.0))
+>
+> That would mean linking with -lm?
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Smush.it(TM) could not improve git-logo.png
+I guess so. Are we currently trying to avoid linking to the math-parts of libc?
 
- gitweb/git-favicon.png |  Bin 164 -> 118 bytes
- 1 files changed, 0 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/git-favicon.png b/gitweb/git-favicon.png
-index de637c0608090162a6ce6b51d5f9bfe512cf8bcf..1f8bfa70d674b1073a40ea66ba8c745dfdbaa59d 100644
-GIT binary patch
-delta 64
-zcmZ3&ST@1NO4ZZFF@)oKas(?2&y5Z?Rz5Y3MuF&EM%rD8Sy?F(EeyqhTNxQ99#M`y
-TnP0Y$0SG)@{an^LB{Ts5d%zSA
-
-delta 110
-zcmXS0!Z^VugR{URvY3H^TNs2H8D`CqU|?Xd^K@|xsbFM1xKYr-L4@_d*Jr0+dMpU|
-zSh|pTqEw4`hlFuidz*uTz>4DC^A21PSh4+E+}|Dh9hQ}@lhS2sls~7={piN!fAT<+
-O7(8A5T-G@yGywqcawy0E
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
