@@ -1,89 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fix potential infinite loop given large unsigned
- integer
-Date: Mon, 10 Aug 2009 18:53:34 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908101850570.8324@intel-tinevez-2-302>
-References: <a3f15ee60908082141l7b2134cg5ddcef17c45fc888@mail.gmail.com>  <7v3a81a13z.fsf@alter.siamese.dyndns.org>  <40aa078e0908090525h7b4d6efeh658e2edcfbe16c7e@mail.gmail.com>  <200908100724.53345.chriscool@tuxfamily.org> 
- <40aa078e0908100412l3c2afd1bnda9b10aaf1de383f@mail.gmail.com>  <alpine.DEB.1.00.0908101421340.8324@intel-tinevez-2-302> <a3f15ee60908100917k2a2d6de7ndd5e4ddd1d926cc3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Feature Request] git export
+Date: Mon, 10 Aug 2009 09:54:24 -0700
+Message-ID: <7vk51b38zj.fsf@alter.siamese.dyndns.org>
+References: <200908101822.59940.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-883654123-1249923215=:8324"
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ryan Flynn <parseerror@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 18:53:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: thomas@koch.ro
+X-From: git-owner@vger.kernel.org Mon Aug 10 18:55:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaY82-00021P-B0
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 18:53:46 +0200
+	id 1MaY9E-0002TA-M7
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 18:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932211AbZHJQxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 12:53:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755366AbZHJQxg
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 12:53:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47557 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754990AbZHJQxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 12:53:36 -0400
-Received: (qmail invoked by alias); 10 Aug 2009 16:53:35 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp051) with SMTP; 10 Aug 2009 18:53:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+5xI1s+iC5ZHkgYizu2zytNFq0FrQmBZrGJ5qjc2
-	uO6YmYgxPERj4j
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <a3f15ee60908100917k2a2d6de7ndd5e4ddd1d926cc3@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S932270AbZHJQyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 12:54:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755372AbZHJQyv
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 12:54:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45413 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755366AbZHJQyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 12:54:50 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D19A5089;
+	Mon, 10 Aug 2009 12:54:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DAF315084; Mon, 10 Aug
+ 2009 12:54:41 -0400 (EDT)
+In-Reply-To: <200908101822.59940.thomas@koch.ro> (Thomas Koch's message of
+ "Mon\, 10 Aug 2009 18\:22\:59 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 838AA2B6-85CE-11DE-A31A-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125488>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Thomas Koch <thomas@koch.ro> writes:
 
---8323329-883654123-1249923215=:8324
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> could you please provide a simple solution to save a tree object into an 
+> arbitrary location?
+> I found some hints, that it would be possible by missusing either git 
+> checkout-index or git-archive, but I think that it shouldn't require that much 
 
-Hi,
+If you are talking about a tree object, then git-archive is what you want.
+It was invented almost for this exact purpose, but unlike "export" that
+would only copy to a directory, you can get a tarball out of it when you
+do not want to expand the result into a directory; it is more versatile
+form.  The manual page for the command has an example (look for
+"/var/tmp") so I won't repeat the cut-and-paste recipe here.
 
-[please cull the quoted text to what you are actually replying to.  
-Thanks]
-
-On Mon, 10 Aug 2009, Ryan Flynn wrote:
-
-> On Mon, Aug 10, 2009 at 8:24 AM, Johannes
-> Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> >
-> > static unsigned int digits_of_number(unsigned int number) {
-> >     unsigned int result;
-> >     for (result = 1; number; number /= 10, result++)
-> >         ; /* do nothing */
-> >     return result;
-> > }
-> 
-> whoops, actually yours: digits_of_number(1) -> 2
-
-static unsigned int digits(unsigned int number)
-{
-        unsigned int result;
-        for (result = 1; (number /= 10); result++)
-                ; /* do nothing */
-        return result;
-}
-
-I'm sorry, I forgot the "something like this" in my mail.
-
-This version is actually tested.
-
-It has non-optimal runtime, but then, it does not really matter.
-
-Ciao,
-Dscho
---8323329-883654123-1249923215=:8324--
+If you are not talking about a tree object but is talking about the
+contents recorded in your index, checkout-index with the --prefix option
+may be what you want.  The manual page for the command has an example
+(look for "--prefix=git-export-dir/") so I won't repeat it here.
