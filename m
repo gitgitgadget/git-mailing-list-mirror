@@ -1,98 +1,127 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: bug with .git file and aliases
-Date: Tue, 11 Aug 2009 01:05:38 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908110101110.8306@pacific.mpi-cbg.de>
-References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com>  <20090720152117.GB5347@coredump.intra.peff.net> <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: block-sha1: improve code on large-register-set machines
+Date: Mon, 10 Aug 2009 16:52:07 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908101637440.3417@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-2133827291-1249945540=:8306"
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-To: Geoffrey Irving <irving@naml.us>
-X-From: git-owner@vger.kernel.org Tue Aug 11 01:05:35 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 01:52:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Madvp-0005AG-Hr
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 01:05:34 +0200
+	id 1MaefZ-0001Qg-P1
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 01:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895AbZHJXFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 19:05:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751679AbZHJXFF
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 19:05:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49422 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751339AbZHJXFE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 19:05:04 -0400
-Received: (qmail invoked by alias); 10 Aug 2009 23:05:04 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp018) with SMTP; 11 Aug 2009 01:05:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1803KoZ/ys0qNtWLQNG1NloWJeuQioqeEoaSFuwPm
-	D/3lYD7x7tWkQW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1751192AbZHJXwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 19:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbZHJXwl
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 19:52:41 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:43051 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750969AbZHJXwk (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2009 19:52:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7ANq7mJ030079
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 10 Aug 2009 16:52:09 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7ANq7kS027404;
+	Mon, 10 Aug 2009 16:52:07 -0700
+X-X-Sender: torvalds@localhost.localdomain
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.464 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125503>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-2133827291-1249945540=:8306
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+For x86 performance (especially in 32-bit mode) I added that hack to write 
+the SHA1 internal temporary hash using a volatile pointer, in order to get 
+gcc to not try to cache the array contents. Because gcc will do all the 
+wrong things, and then spill things in insane random ways.
 
-Hi,
+But on architectures like PPC, where you have 32 registers, it's actually 
+perfectly reasonable to put the whole temporary array[] into the register 
+set, and gcc can do so.
 
-On Mon, 10 Aug 2009, Geoffrey Irving wrote:
+So make the 'volatile unsigned int *' cast be dependent on a 
+SMALL_REGISTER_SET preprocessor symbol, and enable it (currently) on just 
+x86 and x86-64.  With that, the routine is fairly reasonable even when 
+compared to the hand-scheduled PPC version. Ben Herrenschmidt reports on 
+a G5:
 
-> On Mon, Jul 20, 2009 at 11:21 AM, Jeff King<peff@peff.net> wrote:
-> > On Mon, Jul 20, 2009 at 09:54:12AM -0400, Geoffrey Irving wrote:
-> >
-> >> git 1.6.3.3 has a bug related to .git file support and aliases.
-> >> Specifically, if you make an alias for status and call it from a
-> >> subdirectory, git status chdirs into the true .git dir but then
-> >> chdir's back to the wrong place in order to run the lstats for status.
-> >>  The result is that git status thinks all files have disappeared.
-> >
-> > Yeah, this is a known problem. The problem is that the 'git' wrapper
-> > sets up the environment only partially when running aliases, and then
-> > the resulting command ends up confused about where the worktree is. I
-> > really don't remember the specifics, but you can probably find some
-> > discussion in the list archives.  Fixing it, IIRC, required some
-> > refactoring of the setup code (which I had hoped to get to at some
-> > point, but I am way behind on my git todo list).
-> 
-> The attached patch fixes the bug for me.  I'll leave it to others to
-> determine whether this is a good way to fix the problem.
+ * Paulus asm version:       about 3.67s
+ * Yours with no change:     about 5.74s
+ * Yours without "volatile": about 3.78s
 
-Note that you made it particularly hard to comment on your patch by not 
-granting us the wish stated in Documentation/SubmittingPatches, namely to 
-inline your patch.
+so with this the C version is within about 3% of the asm one.
 
-I'll just forego inlining it myself, as I am way past my bed-time and 
-cannot be bothered.
+And add a lot of commentary on what the heck is going on.
 
-However, I think that it is necessary to comment on your patch.
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
-There is a few style issues, such as declaring offset outside of the 
-block that is the only user, and there is the issue that you go out of 
-your way to append a slash if you're resetting the work tree, but not when 
-not resetting it.
+I also asked David Miller to test the non-volatile version on Sparc, but I 
+suspect it will have the same pattern. ia64 likewise (but I have not asked 
+anybody to test).
 
-But the bigger issue is that you now broke overriding the work tree via 
-the command line.
+Of the other architectures, ARM probably would wants SMALL_REGISTER_SET, 
+but I suspect the problem there is the htonl() (on little-endian), and 
+possibly the unaligned loads - at least on older ARM. The latter is 
+something gcc could be taught about, though (the SHA_SRC macro would just 
+need to use a pointer that goes through a packed struct member or 
+something).
 
-The proper fix, of course, is to avoid calling the function with the wrong 
-path to begin with.
+ block-sha1/sha1.c |   25 ++++++++++++++++++++++++-
+ 1 files changed, 24 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
-
---8323328-2133827291-1249945540=:8306--
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index 36da763..9bc8b8a 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -82,6 +82,7 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
+ #define SHA_ASM(op, x, n) ({ unsigned int __res; asm(op " %1,%0":"=r" (__res):"i" (n), "0" (x)); __res; })
+ #define SHA_ROL(x,n)	SHA_ASM("rol", x, n)
+ #define SHA_ROR(x,n)	SHA_ASM("ror", x, n)
++#define SMALL_REGISTER_SET
+ 
+ #else
+ 
+@@ -93,7 +94,29 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
+ 
+ /* This "rolls" over the 512-bit array */
+ #define W(x) (array[(x)&15])
+-#define setW(x, val) (*(volatile unsigned int *)&W(x) = (val))
++
++/*
++ * If you have 32 registers or more, the compiler can (and should)
++ * try to change the array[] accesses into registers. However, on
++ * machines with less than ~25 registers, that won't really work,
++ * and at least gcc will make an unholy mess of it.
++ *
++ * So to avoid that mess which just slows things down, we force
++ * the stores to memory to actually happen (we might be better off
++ * with a 'W(t)=(val);asm("":"+m" (W(t))' there instead, as
++ * suggested by Artur Skawina - that will also make gcc unable to
++ * try to do the silly "optimize away loads" part because it won't
++ * see what the value will be).
++ *
++ * Ben Herrenschmidt reports that on PPC, the C version comes close
++ * to the optimized asm with this (ie on PPC you don't want that
++ * 'volatile', since there are lots of registers).
++ */
++#ifdef SMALL_REGISTER_SET
++  #define setW(x, val) (*(volatile unsigned int *)&W(x) = (val))
++#else
++  #define setW(x, val) (W(x) = (val))
++#endif
+ 
+ /*
+  * Where do we get the source from? The first 16 iterations get it from
