@@ -1,63 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: .gitignore vs untracked working file
-Date: Mon, 10 Aug 2009 15:14:48 +0200
-Message-ID: <4A801D48.3020902@viscovery.net>
-References: <286817520908100257n35b178ebu387161658554b4a@mail.gmail.com>	 <20090810100148.GB22200@pengutronix.de>	 <286817520908100317k4e98faf9n4e852b7abd4719fe@mail.gmail.com>	 <4A800785.8050909@viscovery.net> <286817520908100559u6cdcaab0u3a7fdb92cd43eed9@mail.gmail.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: backups with git
+Date: Mon, 10 Aug 2009 09:20:59 -0400
+Message-ID: <46a038f90908100620l2ddc9fa9t507990bae58d6031@mail.gmail.com>
+References: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-To: Rostislav Svoboda <rostislav.svoboda@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 15:14:59 2009
+Cc: git@vger.kernel.org
+To: Roald de Vries <rdv@roalddevries.nl>
+X-From: git-owner@vger.kernel.org Mon Aug 10 15:21:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaUiI-0000RP-Ke
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 15:14:59 +0200
+	id 1MaUoH-0002lG-TH
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 15:21:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754616AbZHJNOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 09:14:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754512AbZHJNOu
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 09:14:50 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:62181 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754485AbZHJNOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 09:14:50 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MaUi9-00079a-Eo; Mon, 10 Aug 2009 15:14:49 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2D2106B7; Mon, 10 Aug 2009 15:14:49 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <286817520908100559u6cdcaab0u3a7fdb92cd43eed9@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.0 (-)
+	id S1754572AbZHJNVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 09:21:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754569AbZHJNVA
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 09:21:00 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:47674 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754232AbZHJNU7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 09:20:59 -0400
+Received: by bwz19 with SMTP id 19so2560206bwz.37
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 06:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UG9wg4wM3nsuDhN7Ny5tDbr9AORM/cAhjmMMY/YqvhQ=;
+        b=pqVi98h4tYpHQoyw3fGi49xULW2lDnNBsjiWefHq4JUF1DR9PaH6TNSBfnvGai+HDu
+         0eRBdSxSCJtxZ1rnxg10VvlHZIyGdVkZrU56MqBY7ihkveYeujsiuS1xU9ZPpK3bjlET
+         OruWkJ6ZxmPUQ8cYI7b0deG4l9chRXgG7wcKc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rYXzxugDwTievaIbLWwKVteJncrTTsVld1m1f2XOeJIYXefSi4I1JmYrnhakoWfjsG
+         NWeNCIrS1zoX5WF+HijNmRPMVY1MggfvnqDBjimyOR4bMLnkPaZ3T+78cDYMQu4MNQ6I
+         j3v9jHB8vN35BtA8wi0xfGo7F/y/unZ3BM/S8=
+Received: by 10.223.104.74 with SMTP id n10mr211730fao.101.1249910459109; Mon, 
+	10 Aug 2009 06:20:59 -0700 (PDT)
+In-Reply-To: <41CB836B-6057-448E-805F-F25EAF765D27@roalddevries.nl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125441>
 
-Rostislav Svoboda schrieb:
-> $ git ls-tree master Project/bin/path/file.jjt
-> 100644 blob 8d5e24f12c37fd1a435de2d4402591f5b0c2a3cc
-> Project/bin/path/file.jjt
-> 
-> There's a file.jjt in the repo already! But guys! I bet I'm not the
-> first one having this problem. Do you think it would be wise to have a
-> kind of a check returning
->     'The file '...' ignored in the branch X is not ignored in the
-> branch Y (or something)'
+On Mon, Aug 10, 2009 at 4:27 AM, Roald de Vries<rdv@roalddevries.nl> wrote:
+> I'm thinking of using git as a backup solution for my whole system, setting
 
-This is not only about ignored files, but untracked files. And the check
-is already there: git said:
+There are lots of little problems. The two main ones are, IMHO
 
-Untracked working tree file 'Project/bin/path/file.jjt' would be
-overwritten by merge.
+ - permissions & ownership
+ - large files
 
--- Hannes
+Some ppl use it for their homedir, and it can be a moderate success as
+long as they don't deal with large files.
+
+cheers,
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
