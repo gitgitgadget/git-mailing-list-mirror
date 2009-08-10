@@ -1,80 +1,102 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH (resend) 1/3] http.c: free preq when aborting
-Date: Mon, 10 Aug 2009 23:55:48 +0800
-Message-ID: <20090810235548.110c43a6.rctay89@gmail.com>
-References: <be6fef0d0908100847h7e9b53a2ofdf318e9958be3b2@mail.gmail.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: give a hint/solution for "It looks like git-am is in progress. 
+	Cannot rebase."
+Date: Mon, 10 Aug 2009 16:59:03 +0100
+Message-ID: <43d8ce650908100859m50379376y410a67b69244f38a@mail.gmail.com>
+References: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Jeff Lasslett <jeff.lasslett@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 10 17:56:11 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 10 17:59:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaXEH-0002uq-96
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 17:56:09 +0200
+	id 1MaXHE-0004SO-My
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 17:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755378AbZHJP4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 11:56:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755135AbZHJPz7
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 11:55:59 -0400
-Received: from rv-out-0506.google.com ([209.85.198.237]:23790 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750856AbZHJPz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 11:55:59 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so1029862rvb.1
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 08:56:00 -0700 (PDT)
+	id S1755410AbZHJP7E convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Aug 2009 11:59:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbZHJP7D
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 11:59:03 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:50734 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755211AbZHJP7C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Aug 2009 11:59:02 -0400
+Received: by yxe5 with SMTP id 5so3916659yxe.33
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 08:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=o5VGO6vOPHJRdDus1zwaOOH+H0qJcspav+zNqiSeW54=;
-        b=eqyI8Q82opIxlOPJIIfL5pt+yTiFW/LD6VKBfJvv9vR8iFg/oeY8xfRtn3/tlCwufz
-         HD3qldHN2DVbE2Jwd3/g8UZPwhg+06jRzx64ivsqCFi1aw3LHw193NtUnt7GH/bhK8Tu
-         iyyncNP4xoQr+0DzXDPf3MIzL9s+CT0k4PonU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=L9yzlFH2IEhbIQu7aq90sqJI6b6lrYQstwnd53gduOU=;
+        b=SCpCa8VFuoPHftS7Qhc1m1iZ+aT7WYepFcAtf3UMtkKM7k9MnW/lW2GKKYbd9VUY7A
+         ROmXeQPVsiMWMGNdJEA7Osm3xcnOo99jLS1mhe6f82J0/CeQwOfsrSiYWVTRpWTGN5AM
+         nxbVdmsnGaMXUTvqCnKOruprsrFic5fZPhgaE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=Z6q7jiwejnRNXX8LFsOspttl5S6MYOszd1LCFnQL+8F0SToYyXVjUCUxDJLI9l5RqS
-         VnF+V32+ofY271o7Wcc8Qup0UnZYRPg/tPkblmiB8gLu+MZognHsQ7kUwE31ZGbxkKp0
-         9GoLUtQTT+i6MsD4oOaJvFNBu27T/GVPXehCs=
-Received: by 10.140.125.1 with SMTP id x1mr671219rvc.261.1249919760348;
-        Mon, 10 Aug 2009 08:56:00 -0700 (PDT)
-Received: from your-cukc5e3z5n (cm189.zeta152.maxonline.com.sg [116.87.152.189])
-        by mx.google.com with ESMTPS id c20sm25645928rvf.51.2009.08.10.08.55.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 08:55:59 -0700 (PDT)
-In-Reply-To: <be6fef0d0908100847h7e9b53a2ofdf318e9958be3b2@mail.gmail.com>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ektHm0VWPTYJQ0lCt5hSYeGg6DEK7GTmP2zk3jHfEKsfJsqdMd81v2AeHvALEBYXU3
+         aVtJlscK51UqdMRVAACIboZF2Wc39SYfJmY/Ih51PD8YT7IBaBmwiLNSynK2bVxvglZL
+         WYpuisuyPbp1qTGSywfvNQjzthmsGRg/wzjvU=
+Received: by 10.150.91.1 with SMTP id o1mr8524093ybb.239.1249919943045; Mon, 
+	10 Aug 2009 08:59:03 -0700 (PDT)
+In-Reply-To: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125472>
 
-Free preq in new_http_pack_request when aborting. preq was allocated
-before jumping to the 'abort' label so this is safe.
+2009/8/10 Lucian Adrian Grijincu <lucian.grijincu@gmail.com>:
+> Hi,
+>
+> I ran git-am instead of git-apply on my repo. The git-am complained
+> about the input data, I completely ignored it because I never use
+> git-am (except on typos + tab-completions like today).
+>
+> Later, after a few commits I wanted to rebase (interactively) my tree
+> to merge a few commits.
+> =C2=A0$ git rebase -i HEAD~4
+> =C2=A0It looks like git-am is in progress. Cannot rebase.
+>
+> Ok, the message is nice, it tells me it can't do something, but I'm
+> stupid enough not to know how to proceed.
+> I see that this message is the same in HEAD (master and next).
+>
+> It would be nice if git would output one or two hints. For example:
+> * run "git cancel-a-git-am-in-progress" to cancel a git-am in progres=
+s
+> * run "git commit-the-git-am-in-progress" to commit the git-am in pro=
+gress
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- http.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
++1
 
-diff --git a/http.c b/http.c
-index a2720d5..cfe32f5 100644
---- a/http.c
-+++ b/http.c
-@@ -1059,6 +1059,7 @@ struct http_pack_request *new_http_pack_request(
+git am --help  suggests  --abort      btw.  That would be the most
+obvious guess :-)
 
- abort:
- 	free(filename);
-+	free(preq);
- 	return NULL;
- }
 
---
-1.6.3.1
+
+> Of course, the commands need to be replaced with some valid git
+> commands, but I don't know which those commands are :)
+>
+> The message is generated in git-rebase.sh by this code:
+> =C2=A0test -f "$GIT_DIR"/rebase-apply/applying &&
+> =C2=A0die 'It looks like git-am is in progress. Cannot rebase.'
+>
+> For now I think I'll `rm -rf .git/rebase-apply` (and hopefully not
+> break anything).
+>
+> --
+> =C2=A0.
+> ..: Lucian
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
