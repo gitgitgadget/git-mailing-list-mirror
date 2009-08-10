@@ -1,139 +1,122 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
- vcs
-Date: Mon, 10 Aug 2009 15:30:44 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908101205120.27553@iabervon.org>
-References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org> <7v1vnk79lt.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908092153520.27553@iabervon.org> <200908101032.12835.johan@herland.net>
+From: Geoffrey Irving <irving@naml.us>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 10 Aug 2009 16:22:01 -0400
+Message-ID: <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com> 
+	<20090720152117.GB5347@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Aug 10 21:30:54 2009
+Content-Type: multipart/mixed; boundary=00163628372ed8b7680470cf57b9
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 10 22:22:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Maaa5-0005AF-Kd
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 21:30:54 +0200
+	id 1MabO2-0007ru-Mq
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 22:22:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062AbZHJTap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 15:30:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbZHJTap
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 15:30:45 -0400
-Received: from iabervon.org ([66.92.72.58]:37371 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447AbZHJTao (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 15:30:44 -0400
-Received: (qmail 24536 invoked by uid 1000); 10 Aug 2009 19:30:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 10 Aug 2009 19:30:44 -0000
-In-Reply-To: <200908101032.12835.johan@herland.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752763AbZHJUWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 16:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbZHJUWV
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 16:22:21 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:49291 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752574AbZHJUWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 16:22:20 -0400
+Received: by vws2 with SMTP id 2so2928518vws.4
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 13:22:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=YAJ6ZQjvhLm8lyJyd8dZECv/QzgvRc8UMenApLKUVnk=;
+        b=Nuu7P18yGhw9p32l+9yCdjpkMZm7iqgwQHPebJhYoK11bUFBkuR6nQVgorFIhDpy4P
+         qdtiUrDJI1RXbQsTNILYF4FGd0//vxVl6eNAtdm4egu1mcwVvy8xsY4ikC0Tf1IsZvhS
+         xpAjoc0lyM9YzooieSlI9DxRBuwhwGWL8PMkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=PKZ+xhVO+huyWsMfA565Bu4Owa2wGNeldRCIMilVrwaALrDFlJyHJ0O+EFAz88OY4V
+         F0/9RkgHZxch9bsn9KpesuMTgvnT/a2fLVp3tx1xpq1uaU42LPdIKkkBGfHHGLwFq2Xf
+         QSz6vm0ZfcDKld/nYQgbnvPc0cmEQejOyntec=
+Received: by 10.220.83.210 with SMTP id g18mr5279239vcl.65.1249935741203; Mon, 
+	10 Aug 2009 13:22:21 -0700 (PDT)
+In-Reply-To: <20090720152117.GB5347@coredump.intra.peff.net>
+X-Google-Sender-Auth: a9bad1983915c5b9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125499>
 
-On Mon, 10 Aug 2009, Johan Herland wrote:
+--00163628372ed8b7680470cf57b9
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-> On Monday 10 August 2009, Daniel Barkalow wrote:
-> > On Sun, 9 Aug 2009, Junio C Hamano wrote:
-> > > Daniel Barkalow <barkalow@iabervon.org> writes:
-> > > > If this is set, the url is not required, and the transport always
-> > > > uses a helper named "git-remote-<value>".
-> > > >
-> > > > It is a separate configuration option in order to allow a sensible
-> > > > configuration for foreign systems which either have no meaningful
-> > > > urls for repositories or which require urls that do not specify the
-> > > > system used by the repository at that location. However, this only
-> > > > affects how the name of the helper is determined, not anything about
-> > > > the interaction with the helper, and the contruction is such that, if
-> > > > the foreign scm does happen to use a co-named url method, a url with
-> > > > that method may be used directly.
-> > >
-> > > Personally, I do not like this.
-> > >
-> > > Why isn't it enough to define the canonical remote name git takes as
-> > > "<name of the helper>:<whatever string the helper understands>"?
-> >
-> > [...]
-> >
-> > The only way I've been able to come up with to support this at all
-> > usefully is to have a bunch of helper-specific options that specify what
-> > the helper needs to know about the locations you consider to be part of
-> > the project and an option that tells git that this remote uses the p4
-> > helper. I'm not sure what makes sense for other helpers, but the case I
-> > actually use needs something like what's in this patch.
-> 
-> I'm somewhat agnostic on this issue. At the moment, I follow the P4 cues,
-> and use a config like this:
-> 
->     [remote "foo"]
->         vcs = cvs
->         cvsRoot = ":pserver:user@cvs.server.example.com/var/cvs/cvsroot"
->         cvsModule = "bar"
->         ...
-> 
-> But I could just as well use a config like this instead:
-> 
->     [remote "foo"]
->         url = "cvs::pserver:user@cvs.server.example.com/var/cvs/cvsroot#bar"
->         ...
-> 
-> Either is fine with me, although I suspect users might find the
-> current/first alternative easier to parse.
+On Mon, Jul 20, 2009 at 11:21 AM, Jeff King<peff@peff.net> wrote:
+> On Mon, Jul 20, 2009 at 09:54:12AM -0400, Geoffrey Irving wrote:
+>
+>> git 1.6.3.3 has a bug related to .git file support and aliases.
+>> Specifically, if you make an alias for status and call it from a
+>> subdirectory, git status chdirs into the true .git dir but then
+>> chdir's back to the wrong place in order to run the lstats for status.
+>> =A0The result is that git status thinks all files have disappeared.
+>
+> Yeah, this is a known problem. The problem is that the 'git' wrapper
+> sets up the environment only partially when running aliases, and then
+> the resulting command ends up confused about where the worktree is. I
+> really don't remember the specifics, but you can probably find some
+> discussion in the list archives. =A0Fixing it, IIRC, required some
+> refactoring of the setup code (which I had hoped to get to at some
+> point, but I am way behind on my git todo list).
 
-I suspect there will be some users who want (1) and some who want (2), and 
-both ought to work.
+The attached patch fixes the bug for me.  I'll leave it to others to
+determine whether this is a good way to fix the problem.
 
-> > I think it makes sense for svn access to support just having a url
-> > option like "svn://something (svn native protocol)", or
-> > "svn+ssh://something (svn protocol over ssh)" or "svn+https://something
-> > (https access to a svn repo)", or some other similar syntax, but this is
-> > a poor fit for p4.
-> >
-> > In order to support this, there just needs to be a call to check whether
-> > "remote-<something>" is an available git command (without running it or
-> > giving an error), and the helper code should be used if it is. This is
-> > actually required so that people with workstations whose domain is
-> > .kernel.org and who have cloned "master:/home/linus/something.git" don't
-> > start getting "remote-master isn't a git command" errors (that is,
-> > misinterpreting ssh-format location hostnames as helper names. Johan,
-> > perhaps you could write that for your CVS helper?
-> 
-> Sorry, not following you here. Write exactly what?
-> 
-> - The code in the transport layer for checking if "remote-<something>"
->   is an available git command?
+Thanks,
+Geoffrey
 
-That's what I was thinking.
+--00163628372ed8b7680470cf57b9
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-setup.c-fix-work-tree-setup-for-.git-files-and-alias.patch"
+Content-Disposition: attachment; 
+	filename="0001-setup.c-fix-work-tree-setup-for-.git-files-and-alias.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fy7ne2z50
 
-> - The code in my CVS helper for handling the ssh-format misinterpretation,
->   i.e. the case where someone has a git/ssh server called "cvs"? If so,
->   how should this be handled?
-
-I'd been thinking that people's servers wouldn't be named "cvs", but they 
-might be named things that aren't clearly not plausible names for helpers. 
-So I don't think there should be a need to deal with misdirected names 
-going to actual helpers, just names for helpers that don't exist.
-
-> > I think that, ideally, helpers for foreign systems would be portable
-> > across multiple native systems. The svn helper could be a program
-> > "svn-remote-access-helper", and anything that speaks fast-import (e.g.,
-> > bzr or hg) would be able to use it. When installing it for git, you'd
-> > symlink it to git-remote-svn; if you decided to install
-> > "svn-remote-access-helper-ng", you'd change the symlink.
-> 
-> In that case, helpers must keep their metadata in a repo-independent
-> format. Currently that is outside the scope of my CVS helper, since I'm
-> leveraging git-notes for most of the CVS helper's metadata.
-
-Yeah, that's one of several tricky issues. I don't think there's enough 
-experience yet to design something to support portable helpers, but I 
-think it's worth thinking about.
-
-	-Daniel
-*This .sig left intentionally blank*
+RnJvbSBlYzQ3YWEwOWU1YmM4ZDlhOGMwN2NjYTlmOGVmMTdhOTg5ODgxOWMxIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBHZW9mZnJleSBJcnZpbmcgPGlydmluZ0BuYW1sLnVzPgpEYXRl
+OiBNb24sIDEwIEF1ZyAyMDA5IDE1OjU5OjIxIC0wNDAwClN1YmplY3Q6IFtQQVRDSF0gc2V0dXAu
+YzogZml4IHdvcmsgdHJlZSBzZXR1cCBmb3IgLmdpdC1maWxlcyBhbmQgYWxpYXNlcwoKV2hlbiAu
+Z2l0LWZpbGVzIGFuZCBhbGlhc2VzIGFyZSB1c2VkIHRvZ2V0aGVyLCB0aGUgc2V0dXAgbWFjaGlu
+ZXJ5CmdldHMgY29uZnVzZWQgYW5kIGVuZHMgdXAgd2l0aCB0aGUgd3Jvbmcgd29ya190cmVlLiAg
+U3BlY2lmaWNhbGx5LApnaXRfd29ya190cmVlX2NmZyBpcyBzZXQgdG8gdGhlIGNvcnJlY3QgdmFs
+dWUgZmlyc3QsIGJ1dCBzZXRfd29ya190cmVlCnJlc2V0cyBnaXRfd29ya190cmVlX2NmZyB0byB0
+aGUgY3VycmVudCBkaXJlY3RvcnksIHdoaWNoIChhdCBsZWFzdCBpbgp0aGlzIGNhc2UpIGlzIGlu
+Y29ycmVjdC4KCnNldF93b3JrX3RyZWUgbm93IGRldGVjdHMgdGhpcyBjYXNlIGJ5IGNoZWNraW5n
+IHRvIHNlZSBpZgpnaXRfd29ya190cmVlX2NmZyBpcyBhbHJlYWR5IHNldC4gIElmIHNvLCBpdCBs
+ZWF2ZXMgZ2l0X3dvcmtfdHJlZV9jZmcKdW5jaGFuZ2VkIGFuZCBpbnN0ZWFkIHVzZXMgdGhlIGN1
+cnJlbnQgZGlyZWN0b3J5IHRvIGNvbXB1dGUgYW5kIHJldHVybgp0aGUgY29ycmVjdCBwcmVmaXgg
+KHdoZXJlIHdlIGFyZSByZWxhdGl2ZSB0byB0aGUgd29yayB0cmVlKS4KClNpZ25lZC1vZmYtYnk6
+IEdlb2ZmcmV5IElydmluZyA8aXJ2aW5nQG5hbWwudXM+Ci0tLQogc2V0dXAuYyB8ICAgMTUgKysr
+KysrKysrKysrKy0tCiAxIGZpbGVzIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDIgZGVsZXRp
+b25zKC0pCgpkaWZmIC0tZ2l0IGEvc2V0dXAuYyBiL3NldHVwLmMKaW5kZXggZTM3ODFiNi4uOTdm
+N2ViMSAxMDA2NDQKLS0tIGEvc2V0dXAuYworKysgYi9zZXR1cC5jCkBAIC0xOTgsMTMgKzE5OCwy
+NCBAQCBpbnQgaXNfaW5zaWRlX3dvcmtfdHJlZSh2b2lkKQogc3RhdGljIGNvbnN0IGNoYXIgKnNl
+dF93b3JrX3RyZWUoY29uc3QgY2hhciAqZGlyKQogewogCWNoYXIgYnVmZmVyW1BBVEhfTUFYICsg
+MV07CisJc2l6ZV90IG9mZnNldDsKIAogCWlmICghZ2V0Y3dkKGJ1ZmZlciwgc2l6ZW9mKGJ1ZmZl
+cikpKQogCQlkaWUgKCJDb3VsZCBub3QgZ2V0IHRoZSBjdXJyZW50IHdvcmtpbmcgZGlyZWN0b3J5
+Iik7Ci0JZ2l0X3dvcmtfdHJlZV9jZmcgPSB4c3RyZHVwKGJ1ZmZlcik7CiAJaW5zaWRlX3dvcmtf
+dHJlZSA9IDE7CiAKLQlyZXR1cm4gTlVMTDsKKwlpZiAoIWdpdF93b3JrX3RyZWVfY2ZnKSB7CisJ
+CWdpdF93b3JrX3RyZWVfY2ZnID0geHN0cmR1cChidWZmZXIpOworCQlyZXR1cm4gTlVMTDsKKwl9
+IGVsc2UgeworCQlvZmZzZXQgPSBzdHJsZW4oZ2l0X3dvcmtfdHJlZV9jZmcpOworCQlpZiAobWVt
+Y21wKGdpdF93b3JrX3RyZWVfY2ZnLCBidWZmZXIsIG9mZnNldCkKKwkJCXx8IChidWZmZXJbb2Zm
+c2V0XSAmJiBidWZmZXJbb2Zmc2V0XSAhPSAnLycpKQorCQkJZGllICgiZmF0YWw6IG5vdCBpbnNp
+ZGUgd29yayB0cmVlIChzaG91bGQgbm90IGhhcHBlbikiKTsKKwkJaWYgKCFidWZmZXJbb2Zmc2V0
+XSB8fCAhYnVmZmVyW29mZnNldCsxXSkKKwkJCXJldHVybiBOVUxMOworCQlyZXR1cm4geHN0cmR1
+cChzdHJjYXQoYnVmZmVyICsgb2Zmc2V0ICsgMSwgIi8iKSk7CisJfQogfQogCiB2b2lkIHNldHVw
+X3dvcmtfdHJlZSh2b2lkKQotLSAKMS42LjMuMwoK
+--00163628372ed8b7680470cf57b9--
