@@ -1,82 +1,123 @@
-From: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>
-Subject: give a hint/solution for "It looks like git-am is in progress. Cannot 
-	rebase."
-Date: Mon, 10 Aug 2009 17:34:04 +0300
-Message-ID: <acf3f2e60908100734l6388d9a8k90ed835304a69918@mail.gmail.com>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: A tiny documentation patch
+Date: Mon, 10 Aug 2009 16:44:19 +0200
+Message-ID: <20090810144419.GB24183@headley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="GID0FwUMdk1T2AWN"
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 10 16:34:40 2009
+X-From: git-owner@vger.kernel.org Mon Aug 10 16:43:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaVxI-00012W-W3
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 16:34:33 +0200
+	id 1MaW5g-0004nh-Rw
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 16:43:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882AbZHJOeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 10:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbZHJOeY
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 10:34:24 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:49536 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752495AbZHJOeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 10:34:24 -0400
-Received: by fxm28 with SMTP id 28so949293fxm.17
-        for <git@vger.kernel.org>; Mon, 10 Aug 2009 07:34:24 -0700 (PDT)
+	id S1755338AbZHJOm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 10:42:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755328AbZHJOm5
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 10:42:57 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:51720 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755036AbZHJOm5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 10:42:57 -0400
+Received: by bwz19 with SMTP id 19so2612158bwz.37
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 07:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=UwQfyCpy+EeXK0UkJw3qaJIVMWzcOQatO2Jp7iRLmeE=;
-        b=JBT5i2bNIutD2UAYlvTsOGC4bQQxSa45zKRLEi4Fo4RD0lhAVxC8qYQXKDpAH2qL96
-         BhIajfZcJRsGi020ZytBPdfhkM4szOR7qF7Hyd2LGEx9nBty68Ip0UhjJb81kt4MyBv5
-         OmbEERNmTLByxoSEcq7jmfZ4vyP4qyXWyAi9A=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=rqlj+eWpuPxKrcukQ7qZxFCRNizPhvmtHqDtl2dYOvA=;
+        b=nrSh5JVoTwfhhaUtzLLDmyTtvPSzedDCt/dW+ZatwlSuG0Ib1DeGcfMWLu1ZLSHS4j
+         tQoMxebENTYs76LEBDEBfOfQ6QBhGk0Kzg9ZuXAV/x+PO3SDyhSgBuy65mIGcCBt5FPN
+         6VI35gaOKfFYkASsjvrRWgbnT/RzAQl9xtl0E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=M+ooVj8oFRJ59wKglnk6+O0kZhjQQH/Bhf3wNo1X4lGdm52holuHDKZBr7YL9PEmZb
-         RH8Ff1zmsmsBTcclrwiS5/Nn86G0zXGG9Ah0IzPI6l/ZhO/mMXKNx0GqWCW4c56puCNV
-         fY2O5u54tI9g9sR4fCOqAMXMvP0Y7FCOvV2yo=
-Received: by 10.103.240.15 with SMTP id s15mr1904574mur.45.1249914864198; Mon, 
-	10 Aug 2009 07:34:24 -0700 (PDT)
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=wn0hF0/y7m+t+QG6EBDlJPJJuxfWcEInH74M0mBVb0AKHWHEbtLrElHsYlHsFach0n
+         GDqDv/KJURyesoGY2rbi1cw97edSwJXY6Ll2JS7aIZo4rta11yZP/pcPZtVz3e/BFARy
+         /RgpEWWbGOiZKU1GmXXA0UIfLA6sLye1dSzQ4=
+Received: by 10.204.63.208 with SMTP id c16mr6076307bki.131.1249915376913;
+        Mon, 10 Aug 2009 07:42:56 -0700 (PDT)
+Received: from localhost (topol.nat.praha12.net [78.102.11.1])
+        by mx.google.com with ESMTPS id 22sm6859847fkr.30.2009.08.10.07.42.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 Aug 2009 07:42:55 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125451>
 
-Hi,
 
-I ran git-am instead of git-apply on my repo. The git-am complained
-about the input data, I completely ignored it because I never use
-git-am (except on typos + tab-completions like today).
+--GID0FwUMdk1T2AWN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Later, after a few commits I wanted to rebase (interactively) my tree
-to merge a few commits.
-  $ git rebase -i HEAD~4
-  It looks like git-am is in progress. Cannot rebase.
+ Hello,
 
-Ok, the message is nice, it tells me it can't do something, but I'm
-stupid enough not to know how to proceed.
-I see that this message is the same in HEAD (master and next).
+I noticed a few typos in the git-remote manpage, so I fixed the txt
+source file and here's the patch.
 
-It would be nice if git would output one or two hints. For example:
-* run "git cancel-a-git-am-in-progress" to cancel a git-am in progress
-* run "git commit-the-git-am-in-progress" to commit the git-am in progress
+ Best regards and thank you for Git!
 
-Of course, the commands need to be replaced with some valid git
-commands, but I don't know which those commands are :)
+Štěpán Němec
 
-The message is generated in git-rebase.sh by this code:
-  test -f "$GIT_DIR"/rebase-apply/applying &&
-  die 'It looks like git-am is in progress. Cannot rebase.'
+--GID0FwUMdk1T2AWN
+Content-Type: text/x-diff; charset=utf-8
+Content-Disposition: attachment; filename="0001-Fix-typos-in-git-remote.txt.patch"
 
-For now I think I'll `rm -rf .git/rebase-apply` (and hopefully not
-break anything).
+>From 65ae3e5cdb241aaaed96a7aeecffb6d305d0b07c Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?=C5=A0t=C4=9Bp=C3=A1n=20N=C4=9Bmec?= <stepnem@gmail.com>
+Date: Mon, 10 Aug 2009 16:29:08 +0200
+Subject: [PATCH] Fix typos in git-remote.txt
 
+---
+ Documentation/git-remote.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 9e2b4ea..0964cee 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -56,10 +56,10 @@ multiple branches without grabbing all branches.
+ With `-m <master>` option, `$GIT_DIR/remotes/<name>/HEAD` is set
+ up to point at remote's `<master>` branch. See also the set-head command.
+ +
+-In mirror mode, enabled with `\--mirror`, the refs will not be stored
++In mirror mode, enabled with `--mirror`, the refs will not be stored
+ in the 'refs/remotes/' namespace, but in 'refs/heads/'.  This option
+ only makes sense in bare repositories.  If a remote uses mirror
+-mode, furthermore, `git push` will always behave as if `\--mirror`
++mode, furthermore, `git push` will always behave as if `--mirror`
+ was passed.
+ 
+ 'rename'::
+@@ -114,14 +114,14 @@ These stale branches have already been removed from the remote repository
+ referenced by <name>, but are still locally available in
+ "remotes/<name>".
+ +
+-With `--dry-run` option, report what branches will be pruned, but do no
++With `--dry-run` option, report what branches will be pruned, but do not
+ actually prune them.
+ 
+ 'update'::
+ 
+ Fetch updates for a named set of remotes in the repository as defined by
+ remotes.<group>.  If a named group is not specified on the command line,
+-the configuration parameter remotes.default will get used; if
++the configuration parameter remotes.default will be used; if
+ remotes.default is not defined, all remotes which do not have the
+ configuration parameter remote.<name>.skipDefaultUpdate set to true will
+ be updated.  (See linkgit:git-config[1]).
 -- 
- .
-..: Lucian
+1.6.3.3
+
+
+--GID0FwUMdk1T2AWN--
