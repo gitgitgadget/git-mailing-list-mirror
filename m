@@ -1,61 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH] Provide a more JavaBeans-style 'getName' accessor
-	for the id Signed-off-by: Alex Blewitt <alex.blewitt@gmail.com>
-Date: Mon, 10 Aug 2009 13:59:07 -0700
-Message-ID: <20090810205907.GY1033@spearce.org>
-References: <1241909854-11498-1-git-send-email-alex.blewitt@gmail.com> <20090810155207.GW1033@spearce.org> <E861EAC5-150C-4CF8-AD0F-EBF15CEAE114@gmail.com>
+From: John Bito <jwbito@gmail.com>
+Subject: [EGIT] Push to GitHub caused corruption
+Date: Mon, 10 Aug 2009 14:46:34 -0700
+Message-ID: <3ae83b000908101446q2d4f1101we4bbd7023f78b03@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "robin.rosenberg@dewire.com" <robin.rosenberg@dewire.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Alex Blewitt <alex.blewitt@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 10 22:59:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 10 23:46:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mabxk-0000AM-3z
-	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 22:59:24 +0200
+	id 1MachX-0001Zk-Q3
+	for gcvg-git-2@gmane.org; Mon, 10 Aug 2009 23:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753488AbZHJU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 16:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753476AbZHJU7H
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 16:59:07 -0400
-Received: from george.spearce.org ([209.20.77.23]:53438 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753316AbZHJU7G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 16:59:06 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 30D54381FD; Mon, 10 Aug 2009 20:59:07 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <E861EAC5-150C-4CF8-AD0F-EBF15CEAE114@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753929AbZHJVqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 17:46:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753895AbZHJVqe
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 17:46:34 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:36991 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753877AbZHJVqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 17:46:33 -0400
+Received: by gxk9 with SMTP id 9so4565769gxk.13
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 14:46:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=ZqwkOnOcgzR9geOigEL3xjjv18DJY3ONJZitl1WapTU=;
+        b=KyB33CLhsYxtlfTmPEHaszmJfGLb5v84Em9gcGB1R5Qb6tgRVPnL892fc5X29J0Fto
+         4p6B0OcerfpV3+w3SGU5/+d5PKe3+DAbJ1YV2xLQACj4Abidgd6DxY58KUczqktge4vf
+         TbgX8orFl6iVEsxLBetzHDybiPpurMl6zUpWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=FMH2s98B7IHdnHGPxRp3FVUIrGFvehMiGk9uIIy2C589LmeitcAWChf9PNJS1j6LmE
+         1QtufY8WiplVE8+HGwiT6qiC1yyDuweahedYAesxnCx8zCFYNb0MhUuxZUIogIvVZWdf
+         pl2OffVARIBsjvjShcYPJD5vnd1K1GqSutfz8=
+Received: by 10.90.28.16 with SMTP id b16mr4432930agb.44.1249940794319; Mon, 
+	10 Aug 2009 14:46:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125501>
 
-Alex Blewitt <alex.blewitt@gmail.com> wrote:
-> That patch was originally mailed on the 11th May. Has it taken until now 
-> to notice the problem, or was the other method added in the last month or 
-> so? If I'm to blame, I apologise but didn't note any compile time issues 
-> at the time.
-
-Arrgh, you are right, I lost this patch in my inbox, and in the
-interm we applied new features to RevTag which added getName there.
-
-> On 10 Aug 2009, at 16:52, "Shawn O. Pearce" <spearce@spearce.org> wrote:
->> Obviously you didn't compile test this in JGit:
-
-Never mind.
-
->> ./org/spearce/jgit/revwalk/RevTag.java:206: getName() in
->> org.spearce.jgit.revwalk.RevTag cannot override getName() in
->> org.spearce.jgit.lib.AnyObjectId; overridden method is final
-
-I can't apply this patch because getName() on RevTag is already
-defined with a different meaning.  :-(
-
--- 
-Shawn.
+Using the 'release' build of EGit (0.4.9.200906240051) I pushed a
+commit to GitHub.  After that, using git to pull, I get 'bad tree
+object' resulting in 'remote: aborting due to possible repository
+corruption on the remote side'.  I had a similar problem back in April
+(using integration builds of 0.4.0).  I'm willing to investigate if
+there's interest in finding the root of the problem.
