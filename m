@@ -1,105 +1,85 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: block-sha1: improve code on large-register-set machines
-Date: Tue, 11 Aug 2009 16:20:57 -0500
-Message-ID: <fLYKSyures_wcvAvAV9-MgKQlhk959HJpx-pKz7T1n-Mel7f2RBkMw@cipher.nrlssc.navy.mil>
-References: <alpine.LFD.2.01.0908101637440.3417@localhost.localdomain> <alpine.LFD.2.00.0908102246210.10633@xanadu.home> <alpine.LFD.2.01.0908110758160.3417@localhost.localdomain> <alpine.LFD.2.00.0908111254290.10633@xanadu.home> <alpine.LFD.2.00.0908111517390.10633@xanadu.home>
+From: Emmanuel Trillaud <etrillaud@gmail.com>
+Subject: Re: How do gmail users try out patches from this list?
+Date: Tue, 11 Aug 2009 23:24:00 +0200
+Message-ID: <20090811232400.24824426@eleanor>
+References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
+	<20090811224717.785dcd27@eleanor>
+	<fabb9a1e0908111355m1a15d81cs7f33e1bbc5e1701b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 23:22:05 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 23:29:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaynA-0001uZ-To
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:22:01 +0200
+	id 1MayuA-0004Xw-Dw
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755223AbZHKVVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 17:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755092AbZHKVVv
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:21:51 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38721 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755075AbZHKVVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 17:21:51 -0400
-Received: by mail.nrlssc.navy.mil id n7BLKxr3001243; Tue, 11 Aug 2009 16:20:59 -0500
-In-Reply-To: <alpine.LFD.2.00.0908111517390.10633@xanadu.home>
-X-OriginalArrivalTime: 11 Aug 2009 21:20:58.0048 (UTC) FILETIME=[9E532C00:01CA1AC9]
+	id S1754060AbZHKV3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 17:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbZHKV3F
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:29:05 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:45527 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753556AbZHKV3E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 17:29:04 -0400
+Received: by ewy10 with SMTP id 10so4119796ewy.37
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:29:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=c2nX3TYAvcVcXw88P1ZxzAMqnmgKCPakSTDP9RyFCRU=;
+        b=i7ubkJsY985mwduOUMfOnOKQz7ZNQLEjn8WRlTHGt4SHEC7n8ZHaFGFrvmk+pln70K
+         Bqyc23oPRwJpIQPD4veFwW1KGrn7kSXvSS30Il/LCYg5NSA+MKtJic3hDg0XMgjLlTS1
+         2/LKvePJZbIZq7mvc+Q3TNfEo4X7pblzibIxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=v26dbKHG58FRYGmbl3U5Bh9Sq5oEE1XyfEHaJJsohSWEyS5zkdwQ3r9o5uMNLTaL19
+         3ySO2kJv15llq+AwFE0+qZ4Ccz9FreiGxt9vMFiczfr1L5UURs9WZKRg0+ZErMUbPJ8O
+         GtfjIrpTlTcOGAAtq3mlYFbSlfb6Kj/0GxvrY=
+Received: by 10.211.195.15 with SMTP id x15mr1511148ebp.9.1250026143948;
+        Tue, 11 Aug 2009 14:29:03 -0700 (PDT)
+Received: from eleanor (cxr69-1-87-88-216-137.dsl.club-internet.fr [87.88.216.137])
+        by mx.google.com with ESMTPS id 5sm956168eyh.36.2009.08.11.14.29.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 11 Aug 2009 14:29:03 -0700 (PDT)
+In-Reply-To: <fabb9a1e0908111355m1a15d81cs7f33e1bbc5e1701b@mail.gmail.com>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125602>
 
-Nicolas Pitre wrote:
-> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
-> 
->> On Tue, 11 Aug 2009, Linus Torvalds wrote:
->>
->>> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
->>>> #define SHA_SRC(t) \
->>>>   ({ unsigned char *__d = (unsigned char *)&data[t]; \
->>>>      (__d[0] << 24) | (__d[1] << 16) | (__d[2] << 8) | (__d[3] << 0); })
->>>>
->>>> And this provides the exact same performance as the ntohl() based 
->>>> version (4.980s) except that this now cope with unaligned buffers too.
->>> The actual object SHA1 calculations are likely not aligned (we do that 
->>> object header thing), and if you can't do the htonl() any better way I 
->>> guess the byte-based thing is the way to go..
-> 
-> OK, even better: 4.400s.
-> 
-> This is with this instead of the above:
-> 
-> #define SHA_SRC(t) \
->    ({   unsigned char *__d = (unsigned char *)data; \
->         (__d[(t)*4 + 0] << 24) | (__d[(t)*4 + 1] << 16) | \
->         (__d[(t)*4 + 2] <<  8) | (__d[(t)*4 + 3] <<  0); })
-> 
-> The previous version would allocate a new register for __d and then 
-> index it with an offset of 0, 1, 2 or 3.  This version always uses the 
-> register containing the data pointer with absolute offsets.  The binary 
-> is a bit smaller too.
+Huuu! Sorry!
+I read your mail too fast.
+If you manage to save the interresting mails localy in the mailbox
+format (claws mail and thunderbird can do that), you can
+then use 'git am' to apply the patches (an example:
+http://www.kernel.org/pub/software/scm/git/docs/everyday.html#Integrato=
+r).
 
-In that case, why not change the interface of blk_SHA1Block() so that its
-second argument is const unsigned char* and get rid of __d and the { } ?
+Best regards
 
-Then it will look like this:
+Emmanuel Trillaud
 
-   static void blk_SHA1Block(blk_SHA_CTX *ctx, const unsigned char *data);
+Le Tue, 11 Aug 2009 13:55:38 -0700,
+Sverre Rabbelier <srabbelier@gmail.com> a =C3=A9crit :
 
-   ...
-
-   #define SHA_SRC(t) \
-       ( (data[(t)*4 + 0] << 24) | (data[(t)*4 + 1] << 16) | \
-         (data[(t)*4 + 2] <<  8) | (data[(t)*4 + 3] <<  0) )
-
-
-Plus, we need something like the following to handle storing the hash to
-an unaligned buffer (warning copy/pasted):
-
-@@ -73,8 +74,12 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *c
- 
-        /* Output hash
-         */
--       for (i = 0; i < 5; i++)
--               ((unsigned int *)hashout)[i] = htonl(ctx->H[i]);
-+       for (i = 0; i < 5; i++) {
-+               *hashout++ = (unsigned char) (ctx->H[i] >> 24);
-+               *hashout++ = (unsigned char) (ctx->H[i] >> 16);
-+               *hashout++ = (unsigned char) (ctx->H[i] >> 8);
-+               *hashout++ = (unsigned char) (ctx->H[i] >> 0);
-+       }
- }
- 
- #if defined(__i386__) || defined(__x86_64__)
-
-
-With these two changes plus a few other minor tweaks, the block-sha1 code compiles
-and passes the test suite on sparc (solaris 7) and mips (irix 6.5).
-
--brandon
+> Heya,
+>=20
+> On Tue, Aug 11, 2009 at 13:47, Emmanuel Trillaud<etrillaud@gmail.com>
+> wrote:
+> > To quote Documentation/SubmittingPatches:
+>=20
+> Not relevant, these instructions are for the other way around; that
+> is, sending your patches _to_ the ML, rather than getting patches
+> _from_ the ML.
+>=20
