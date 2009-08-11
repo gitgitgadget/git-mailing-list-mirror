@@ -1,160 +1,189 @@
-From: Robin Rosenberg <robin.rosenberg@gmail.com>
-Subject: [JGIT PATCH] Improve error handling for writing FETCH_HEAD
-Date: Tue, 11 Aug 2009 07:48:06 +0200
-Message-ID: <1249969686-11232-1-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 16:23:51 2009
+From: Matthew Lear <matt@bubblegen.co.uk>
+Subject: Re: Unable to checkout a branch after cloning
+Date: Tue, 11 Aug 2009 15:24:59 +0100
+Message-ID: <4A817F3B.7070308@bubblegen.co.uk>
+References: <4A814392.4080803@bubblegen.co.uk> <4A815E49.60406@drmicha.warpmail.net> <4A81613F.2080309@bubblegen.co.uk> <4A817840.9000405@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 11 16:25:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MasGU-0001V1-GY
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:23:50 +0200
+	id 1MasHq-0002Bg-AB
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754688AbZHKOXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 10:23:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZHKOXh
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:23:37 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:53590 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752998AbZHKOXg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 10:23:36 -0400
-Received: by ewy10 with SMTP id 10so3813723ewy.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 07:23:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=HfmFeb/2Ala9CmMbDbZnG1aBV91isdvlpRg0Ffklox8=;
-        b=RJ7ndEG44CGpYrJPJ+FYlDXLngM8OOsOXwT7uAuJN9iK3A5SwfrkC4xPDY7B2ZaXfW
-         lLyEA+5AARBOhidsU9hzZdVD2GqmPxluL/DV/iV+4lXaqy7zGBzOZ2KokELzfKCvpvti
-         KZojRb4NKAV789EMIYyvk3dJhbBJEpzVR0aws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=nKc7lZeZ+v5wn8wDrk/Dc/Lt/B8GAMHW56tmNrcbif81qxW2kP/OSff/DH36WQ9uRv
-         yNA4dhrr+zjskjgcNmvZTe+ta/NSadjU6vdYcMrG+jXs+RsMOMmT60OJ+coe568adVjP
-         vccmN9cM5mF1+glLdPbJIEqy1hq6YfROgBvco=
-Received: by 10.211.178.8 with SMTP id f8mr379262ebp.75.1249969691557;
-        Mon, 10 Aug 2009 22:48:11 -0700 (PDT)
-Received: from localhost.localdomain (h59n1fls34o811.telia.com [213.67.102.59])
-        by mx.google.com with ESMTPS id 10sm1924884eyd.47.2009.08.10.22.48.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 22:48:11 -0700 (PDT)
-X-Mailer: git-send-email 1.6.3.2.199.g7340d
+	id S1754049AbZHKOZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 10:25:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753297AbZHKOZD
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:25:03 -0400
+Received: from relay.pcl-ipout02.plus.net ([212.159.7.100]:46129 "EHLO
+	relay.pcl-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751881AbZHKOZB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 10:25:01 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEABocgUrUnw4T/2dsb2JhbADSV4QZBQ
+Received: from pih-relay06.plus.net ([212.159.14.19])
+  by relay.pcl-ipout02.plus.net with ESMTP; 11 Aug 2009 15:25:00 +0100
+Received: from [80.229.236.194] (helo=[192.136.1.12])
+	 by pih-relay06.plus.net with esmtp (Exim) id 1MasHc-0001IS-AW; Tue, 11 Aug 2009 15:25:00 +0100
+User-Agent: Thunderbird 2.0.0.22 (X11/20090626)
+In-Reply-To: <4A817840.9000405@drmicha.warpmail.net>
+X-Plusnet-Relay: 7d41d6eb93134f09f8a38e65a7d1f943
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125563>
 
-PrintWriter hides error handling from us and we want it. We
-also want \n as line terminator so Writer is just as simple. Try-
-finally blocks added for cleanup on failure.
+Michael J Gruber wrote:
+> Matthew Lear venit, vidit, dixit 11.08.2009 14:17:
+>> Hi Michael - thanks for your reply.
+>> Michael J Gruber wrote:
+>>> Matthew Lear venit, vidit, dixit 11.08.2009 12:10:
+>>>> Hi all,
+>>>>
+>>>> Apologies for perhaps a silly question, but I'd very much appreciate a
+>>>> little bit of assistance.
+>>>>
+>>>> I've set up a git repository on a machine accessible from the internet
+>>>> with the intention to share code with another developer. We clone the
+>>>> repository, commit changes then push back as you'd expect. The server
+>>>> runs gitweb for repository browsing. Clients are running git v1.6.0.6.
+>>>>
+>>>> When I created the initial repository I also created two additional
+>>>> branches - 'upstream' and 'custom'. The former is to act as a 'vendor
+>>>> branch' and the latter contains code specific to the custom platform
+>>>> that we're working on. The master branch contains merges from the
+>>>> upstream branch and also changes that we've made. The custom branch
+>>>> contains merges from master with custom platform specific changes.
+>>>>
+>>>> I've committed changes and on both upstream and custom branches as work
+>>>> progressed, merged them where appropriate, added tags etc and pushed
+>>>> everything to the remote repository. No problem. I can view the
+>>>> branches, tags etc in gitweb and everything looks fine.
+>>>>
+>>>> However, I can clone a new repository just fine but I'm unable to
+>>>> checkout the upstream or custom branches. After cloning, only the master
+>>>> branch is available, ie:
+>>>>
+>>>>> git checkout upstream
+>>>> error: pathspec 'upstream' did not match any file(s) known to git.
+>>>>
+>>>>> git branch -a
+>>>> * master
+>>>>   origin/HEAD
+>>>>   origin/master
+>>>>
+>>>> .git/config:
+>>>>
+>>>> [core]
+>>>>         repositoryformatversion = 0
+>>>>         filemode = true
+>>>>         bare = false
+>>>>         logallrefupdates = true
+>>>> [remote "origin"]
+>>>>         url = https://mysite/git/project.git
+>>>>         fetch = +refs/heads/*:refs/remotes/origin/*
+>>>> [branch "master"]
+>>>>         remote = origin
+>>>>         merge = refs/heads/master
+>>>>
+>>>> But the initial local repository where I work (ie created the branches,
+>>>> committed changes, tag, push etc) seems to be fine, ie
+>>>>
+>>>>> git checkout upstream
+>>>> Switched to branch "upstream"
+>>>>
+>>>>> git branch -a
+>>>>   custom
+>>>> * master
+>>>>   upstream
+>>>>
+>>>> .git/config:
+>>>>
+>>>> [core]
+>>>>         repositoryformatversion = 0
+>>>>         filemode = true
+>>>>         bare = false
+>>>>         logallrefupdates = true
+>>>> [remote "origin"]
+>>>>         url = https://mysite/git/project.git
+>>>>         fetch = +refs/heads/*:refs/remotes/origin/*
+>>>>
+>>>>
+>>>> Developers need to be able to clone the repository and then switch to
+>>>> the appropriate branch in order to work. However it seems that after a
+>>>> clone, only the master branch is available.
+>>>>
+>>>> Why is this?
+>>>>
+>>>> Any help would be much appreciated indeed.
+>>> If I understand you correctly you have 3 repos: the "initial" one on
+>>> which everything is as expected, the "server" one and the "new clone"
+>>> which is missing branches.
+>> Yes, that's correct.
+>>
+>>> Now: How's the server one doing, i.e. what does "git ls-remote
+>>> https://mysite/git/project.git" say? I suspect that one either does not
+>>> have the branches (you haven't told us how you pushed) or in the wrong
+>>> place (remotes/).
+>>> git ls-remote https://mysite/git/project.git
+>> 065f5f13d5f8e786729db1623cc53767c963e959        HEAD
+>> 065f5f13d5f8e786729db1623cc53767c963e959        refs/heads/master
+>>
+>> Hmm. So it seems that the branches are not actually on the server
+>> repository. So how come I can see them with gitweb..?
+>>
+>> I've been pushing from the 'initial' repository with git push --all and
+>> git push --tags.
+>>
+>> However, when I try a git push from the initial repository I get the
+>> following:
+>>
+>>> git push --all
+>> Fetching remote heads...
+>>   refs/
+>>   refs/heads/
+>>   refs/tags/
+>> 'refs/heads/custom': up-to-date
+>> 'refs/heads/master': up-to-date
+>> 'refs/heads/upstream': up-to-date
+>>
+>> -- Matt
+> 
+> Does the situation improve if, on the server, you run git
+> update-server-info? Do you have a post-update hook there?
+> 
+> Michael
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
- .../spearce/jgit/transport/FetchHeadRecord.java    |   25 +++++++++---------
- .../org/spearce/jgit/transport/FetchProcess.java   |   27 ++++++++++---------
- 2 files changed, 27 insertions(+), 25 deletions(-)
+I ran git update-server-info on the server machine. I read about this
+and thought I had made the necessary change to add it as a post commit
+hook. I guess not (so will double check). However, something is still
+not quite right upon cloning:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
-index d957028..62ec38a 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
-@@ -41,7 +41,8 @@
- import static org.spearce.jgit.lib.Constants.R_REMOTES;
- import static org.spearce.jgit.lib.Constants.R_TAGS;
- 
--import java.io.PrintWriter;
-+import java.io.IOException;
-+import java.io.Writer;
- 
- import org.spearce.jgit.lib.ObjectId;
- 
-@@ -54,7 +55,7 @@
- 
- 	URIish sourceURI;
- 
--	void write(final PrintWriter pw) {
-+	void write(final Writer pw) throws IOException {
- 		final String type;
- 		final String name;
- 		if (sourceName.startsWith(R_HEADS)) {
-@@ -71,16 +72,16 @@ void write(final PrintWriter pw) {
- 			name = sourceName;
- 		}
- 
--		pw.print(newValue.name());
--		pw.print('\t');
-+		pw.write(newValue.name());
-+		pw.write('\t');
- 		if (notForMerge)
--			pw.print("not-for-merge");
--		pw.print('\t');
--		pw.print(type);
--		pw.print(" '");
--		pw.print(name);
--		pw.print("' of ");
--		pw.print(sourceURI);
--		pw.println();
-+			pw.write("not-for-merge");
-+		pw.write('\t');
-+		pw.write(type);
-+		pw.write(" '");
-+		pw.write(name);
-+		pw.write("' of ");
-+		pw.write(sourceURI.toString());
-+		pw.write("\n");
- 	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
-index 08d7d65..c899c8c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
-@@ -41,7 +41,7 @@
- import java.io.File;
- import java.io.IOException;
- import java.io.OutputStreamWriter;
--import java.io.PrintWriter;
-+import java.io.Writer;
- import java.util.ArrayList;
- import java.util.Collection;
- import java.util.Collections;
-@@ -264,20 +264,21 @@ private void removeFetchHeadRecord(final ObjectId want) {
- 	private void updateFETCH_HEAD(final FetchResult result) throws IOException {
- 		final LockFile lock = new LockFile(new File(transport.local
- 				.getDirectory(), "FETCH_HEAD"));
--		if (lock.lock()) {
--			final PrintWriter pw = new PrintWriter(new OutputStreamWriter(lock
--					.getOutputStream())) {
--				@Override
--				public void println() {
--					print('\n');
-+		try {
-+			if (lock.lock()) {
-+				final Writer w = new OutputStreamWriter(lock.getOutputStream());
-+				try {
-+					for (final FetchHeadRecord h : fetchHeadUpdates) {
-+						h.write(w);
-+						result.add(h);
-+					}
-+				} finally {
-+					w.close();
- 				}
--			};
--			for (final FetchHeadRecord h : fetchHeadUpdates) {
--				h.write(pw);
--				result.add(h);
-+				lock.commit();
- 			}
--			pw.close();
--			lock.commit();
-+		} finally {
-+			lock.unlock();
- 		}
- 	}
- 
--- 
-1.6.3.2.199.g7340d
+> git clone https://mysite/git/project.git
+Initialized empty Git repository in /home/matt/git-repos/project/.git/
+Checking out files: 100% (26747/26747), done.
+
+> git branch -a
+* master
+  origin/HEAD
+  origin/custom
+  origin/master
+  origin/upstream
+
+> git checkout upstream
+error: pathspec 'upstream' did not match any file(s) known to git.
+
+So it seems that the cloned repository is now aware of the branches
+(improvement) but I'm still unable to switch to a branch.
+
+This is probably now a case of me reading the manual but I'd appreciate
+your thoughts nonetheless.
+
+Thanks for your continued feedback,
+--  Matt
