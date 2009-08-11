@@ -1,213 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Unable to checkout a branch after cloning
-Date: Tue, 11 Aug 2009 16:32:57 +0200
-Message-ID: <4A818119.6000302@drmicha.warpmail.net>
-References: <4A814392.4080803@bubblegen.co.uk> <4A815E49.60406@drmicha.warpmail.net> <4A81613F.2080309@bubblegen.co.uk> <4A817840.9000405@drmicha.warpmail.net> <4A817F3B.7070308@bubblegen.co.uk>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH] Re: [TRIVIAL] Documentation: merge: one <remote> is
+	required
+Date: Tue, 11 Aug 2009 16:42:53 +0200
+Message-ID: <20090811144253.GA12956@vidovic>
+References: <1249995838.1589.3.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Matthew Lear <matt@bubblegen.co.uk>
-X-From: git-owner@vger.kernel.org Tue Aug 11 16:33:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Paul Bolle <pebolle@tiscali.nl>
+X-From: git-owner@vger.kernel.org Tue Aug 11 16:43:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MasPw-0006YK-J0
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:33:37 +0200
+	id 1MasZB-00035d-AS
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:43:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846AbZHKOdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 10:33:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754863AbZHKOdN
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:33:13 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47656 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754834AbZHKOdM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 10:33:12 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 61C741342C;
-	Tue, 11 Aug 2009 10:33:12 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 11 Aug 2009 10:33:12 -0400
-X-Sasl-enc: FFTcNGgTDO1Tdha2QVBQDQWIQoCOTgw5qVkzIsBbExUK 1250001191
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A72FD2E5F3;
-	Tue, 11 Aug 2009 10:33:11 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3pre) Gecko/20090811 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <4A817F3B.7070308@bubblegen.co.uk>
+	id S1754919AbZHKOm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 10:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754863AbZHKOm7
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:42:59 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:64233 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754827AbZHKOm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 10:42:58 -0400
+Received: by ewy10 with SMTP id 10so3829361ewy.37
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 07:42:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=VnsfkOrLPmijTGkGrmEzTFUqCFhGqSETzuTUIMncDok=;
+        b=k0d2eWzyeEElEctrtavBpUifXwly9L6Q3+6ADzYOjHu29reaf0jwbYAFBhMwiNwVHi
+         SxyNzbbyKVD3m9orNeDSc/RzfbtBsun3T9ddkHB5J4a7KtHHpetCsV4yypH4rv9I147/
+         PMAM9u1JL+zoA79myEXwVsK2ghbD61Y/ni40I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xRFkNaVk4/pShyTwIGQdfOWVm59mBGcgpu8KIXLODn6nNgvNe7ZyK2ZMMyD49Weovc
+         0vmTY3/XHeEdvdZk03JVAx9yRsNcpT5gOymFJ6M37hquwaSn+0buQEKRs6iOu03LAwLz
+         CUWlEifJSJIiKF2RHR/xf1yhDqUT0QfRTutHo=
+Received: by 10.210.129.20 with SMTP id b20mr6555329ebd.78.1250001778907;
+        Tue, 11 Aug 2009 07:42:58 -0700 (PDT)
+Received: from @ (91-164-138-47.rev.libertysurf.net [91.164.138.47])
+        by mx.google.com with ESMTPS id 5sm833348eyh.6.2009.08.11.07.42.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 11 Aug 2009 07:42:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1249995838.1589.3.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125565>
 
-Matthew Lear venit, vidit, dixit 11.08.2009 16:24:
-> Michael J Gruber wrote:
->> Matthew Lear venit, vidit, dixit 11.08.2009 14:17:
->>> Hi Michael - thanks for your reply.
->>> Michael J Gruber wrote:
->>>> Matthew Lear venit, vidit, dixit 11.08.2009 12:10:
->>>>> Hi all,
->>>>>
->>>>> Apologies for perhaps a silly question, but I'd very much appreciate a
->>>>> little bit of assistance.
->>>>>
->>>>> I've set up a git repository on a machine accessible from the internet
->>>>> with the intention to share code with another developer. We clone the
->>>>> repository, commit changes then push back as you'd expect. The server
->>>>> runs gitweb for repository browsing. Clients are running git v1.6.0.6.
->>>>>
->>>>> When I created the initial repository I also created two additional
->>>>> branches - 'upstream' and 'custom'. The former is to act as a 'vendor
->>>>> branch' and the latter contains code specific to the custom platform
->>>>> that we're working on. The master branch contains merges from the
->>>>> upstream branch and also changes that we've made. The custom branch
->>>>> contains merges from master with custom platform specific changes.
->>>>>
->>>>> I've committed changes and on both upstream and custom branches as work
->>>>> progressed, merged them where appropriate, added tags etc and pushed
->>>>> everything to the remote repository. No problem. I can view the
->>>>> branches, tags etc in gitweb and everything looks fine.
->>>>>
->>>>> However, I can clone a new repository just fine but I'm unable to
->>>>> checkout the upstream or custom branches. After cloning, only the master
->>>>> branch is available, ie:
->>>>>
->>>>>> git checkout upstream
->>>>> error: pathspec 'upstream' did not match any file(s) known to git.
->>>>>
->>>>>> git branch -a
->>>>> * master
->>>>>   origin/HEAD
->>>>>   origin/master
->>>>>
->>>>> .git/config:
->>>>>
->>>>> [core]
->>>>>         repositoryformatversion = 0
->>>>>         filemode = true
->>>>>         bare = false
->>>>>         logallrefupdates = true
->>>>> [remote "origin"]
->>>>>         url = https://mysite/git/project.git
->>>>>         fetch = +refs/heads/*:refs/remotes/origin/*
->>>>> [branch "master"]
->>>>>         remote = origin
->>>>>         merge = refs/heads/master
->>>>>
->>>>> But the initial local repository where I work (ie created the branches,
->>>>> committed changes, tag, push etc) seems to be fine, ie
->>>>>
->>>>>> git checkout upstream
->>>>> Switched to branch "upstream"
->>>>>
->>>>>> git branch -a
->>>>>   custom
->>>>> * master
->>>>>   upstream
->>>>>
->>>>> .git/config:
->>>>>
->>>>> [core]
->>>>>         repositoryformatversion = 0
->>>>>         filemode = true
->>>>>         bare = false
->>>>>         logallrefupdates = true
->>>>> [remote "origin"]
->>>>>         url = https://mysite/git/project.git
->>>>>         fetch = +refs/heads/*:refs/remotes/origin/*
->>>>>
->>>>>
->>>>> Developers need to be able to clone the repository and then switch to
->>>>> the appropriate branch in order to work. However it seems that after a
->>>>> clone, only the master branch is available.
->>>>>
->>>>> Why is this?
->>>>>
->>>>> Any help would be much appreciated indeed.
->>>> If I understand you correctly you have 3 repos: the "initial" one on
->>>> which everything is as expected, the "server" one and the "new clone"
->>>> which is missing branches.
->>> Yes, that's correct.
->>>
->>>> Now: How's the server one doing, i.e. what does "git ls-remote
->>>> https://mysite/git/project.git" say? I suspect that one either does not
->>>> have the branches (you haven't told us how you pushed) or in the wrong
->>>> place (remotes/).
->>>> git ls-remote https://mysite/git/project.git
->>> 065f5f13d5f8e786729db1623cc53767c963e959        HEAD
->>> 065f5f13d5f8e786729db1623cc53767c963e959        refs/heads/master
->>>
->>> Hmm. So it seems that the branches are not actually on the server
->>> repository. So how come I can see them with gitweb..?
->>>
->>> I've been pushing from the 'initial' repository with git push --all and
->>> git push --tags.
->>>
->>> However, when I try a git push from the initial repository I get the
->>> following:
->>>
->>>> git push --all
->>> Fetching remote heads...
->>>   refs/
->>>   refs/heads/
->>>   refs/tags/
->>> 'refs/heads/custom': up-to-date
->>> 'refs/heads/master': up-to-date
->>> 'refs/heads/upstream': up-to-date
->>>
->>> -- Matt
->>
->> Does the situation improve if, on the server, you run git
->> update-server-info? Do you have a post-update hook there?
->>
->> Michael
+The 11/08/09, Paul Bolle wrote:
+> merge only requires one <remote>, so "<remote>..." should be used in the
+> synopsis (and not "<remote> <remote>...").
 > 
-> I ran git update-server-info on the server machine. I read about this
-> and thought I had made the necessary change to add it as a post commit
-> hook. I guess not (so will double check). However, something is still
-> not quite right upon cloning:
-> 
->> git clone https://mysite/git/project.git
-> Initialized empty Git repository in /home/matt/git-repos/project/.git/
-> Checking out files: 100% (26747/26747), done.
-> 
->> git branch -a
-> * master
->   origin/HEAD
->   origin/custom
->   origin/master
->   origin/upstream
 
-We're making progress, that's good ;)
-Re. the hook: Make sure it's executable and the extension .sample is
-removed.
+<...>
 
-(gitweb and http access are two different things, which is a common
-source of confusion)
+>  'git merge' [-n] [--stat] [--no-commit] [--squash] [-s <strategy>]...
+> -	[-m <msg>] <remote> <remote>...
+> +	[-m <msg>] <remote>...
+>  'git merge' <msg> HEAD <remote>...
 
-> 
->> git checkout upstream
-> error: pathspec 'upstream' did not match any file(s) known to git.
-> 
-> So it seems that the cloned repository is now aware of the branches
-> (improvement) but I'm still unable to switch to a branch.
-> 
-> This is probably now a case of me reading the manual but I'd appreciate
-> your thoughts nonetheless.
+Shoudn't be 
 
-Well, there is no branch names upstream. There's only one named
-origin/upstream, and it's a remote branch. Meaning: checking it out will
-produce a detached head, which may or may not be what you want. If you
-want to create a branch to work on upstream, do something like
+   [-m <msg>] <remote> [<remote>...]
 
-git checkout -b myupstream origin/upstream
+or
 
-(git does something like git checkout -b master origin/master
-automatically when cloning, which I think is a common source of confusion)
+   [-m <msg>] <remote>[...]
 
-> Thanks for your continued feedback,
-> --  Matt
+instead?
 
-Cheers,
-Michael
+-- 
+Nicolas Sebrecht
