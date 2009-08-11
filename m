@@ -1,73 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: RFC for 1.7: Do not checkout -b master origin/master on clone
-Date: Tue, 11 Aug 2009 17:17:36 +0200
-Message-ID: <4A818B90.9050206@drmicha.warpmail.net>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign 
+	vcs
+Date: Tue, 11 Aug 2009 17:31:50 +0200
+Message-ID: <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
+	 <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 17:18:03 2009
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 17:32:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mat6v-0002N6-Qp
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 17:18:02 +0200
+	id 1MatKS-0000RQ-1E
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 17:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218AbZHKPRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 11:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755215AbZHKPRw
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 11:17:52 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47105 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753208AbZHKPRv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 11:17:51 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DEF9A13605
-	for <git@vger.kernel.org>; Tue, 11 Aug 2009 11:17:50 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 11 Aug 2009 11:17:50 -0400
-X-Sasl-enc: 6vrfO/pyv69EWayVvAHB1Z6sb0tyAVZ4SEQxbToDSJvK 1250003870
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7BB2A5F9A
-	for <git@vger.kernel.org>; Tue, 11 Aug 2009 11:17:50 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3pre) Gecko/20090811 Lightning/1.0pre Shredder/3.0b4pre
+	id S1751393AbZHKPbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 11:31:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751124AbZHKPbu
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 11:31:50 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:57272 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750847AbZHKPbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 11:31:50 -0400
+Received: by fxm28 with SMTP id 28so1600144fxm.17
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 08:31:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ZobHx2FTRL26U4KYkk28FzG3rNWlfQpYDEuW1S86fk4=;
+        b=cWXYPUNfAcmHG/PdFyx5WlV2IlTaCpIYqZPtv5bTKgjkHQisrKSQcOXbyaNyUBJbS8
+         Hy/pvm5HxdQv2n3tWEp2wyqL1Od6urYXCWBs7It156fbUhHsHQ4bPl05vmqR/24gt8Y5
+         of5Q4nkEHtXsOLTR96ybPDyydTAVgJjZ+gXKQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rW8PoM4QXdZ1jvLd3CZOaBZs4LNBKkDq/8uQWv0kzs647OQa0MIIWHKvg+OB5kw0bJ
+         6wf3OH1adN7FneJe/rRWaY9GtM98WEUpmBDluphqFO4B4p1XviJQxmIKf1oPsb+nHFEQ
+         zAnth42oCnRiRhGqrysJ9XECSvItsJpi+WM5s=
+Received: by 10.223.121.136 with SMTP id h8mr766474far.26.1250004710498; Tue, 
+	11 Aug 2009 08:31:50 -0700 (PDT)
+In-Reply-To: <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125573>
 
-One common source of confusion for newcomers is the fact that master is
-given such a special treatment in git. While it is certainly okay and
-helpful to set up a default branch in a new repository (git init) it is
-not at all clear why it should be treated specially in any other
-situation, such as:
+On Mon, Aug 10, 2009 at 03:15, Junio C Hamano<gitster@pobox.com> wrote:
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+>
+>> If this is set, the url is not required, and the transport always uses
+>> a helper named "git-remote-<value>".
+>>
+>> It is a separate configuration option in order to allow a sensible
+>> configuration for foreign systems which either have no meaningful urls
+>> for repositories or which require urls that do not specify the system
+>> used by the repository at that location. However, this only affects
+>> how the name of the helper is determined, not anything about the
+>> interaction with the helper, and the contruction is such that, if the
+>> foreign scm does happen to use a co-named url method, a url with that
+>> method may be used directly.
+>
+> Personally, I do not like this.
+>
+> Why isn't it enough to define the canonical remote name git takes as
+> "<name of the helper>:<whatever string the helper understands>"?
 
-- Why is master the only local branch which git clone sets up (git
-checkout -b master origin/master)?
+May I ask what will happen to these supported URL notations:
 
-- Why does git svn set up a local branch with an svn upstream which is
-determined by latest svn commit at the time of the first git svn fetch?
 
-This behaviour not only is hard to justify; in fact it gives users a
-completely wrong impression: by pretending that master is special, but
-also by hiding core concepts (distinguishing local/remote branches,
-detached heads) from the user at a point where that very hiding leads to
-confusion.
+       o   [user@]host.xz:/path/to/repo.git/
 
-Under the hood, it is of course HEAD which is given special treatment
-(and which in the majority of repos points to master), and git clone
-sets up a local branch according to HEAD (and does some other guess work
-when cloning bare repos), which means that git clone shows the same
-"random" behaviour which git svn clone does: Which local branch is set
-up by default depends on the current value of HEAD/most recent commit at
-the time of the cloning operation.
+       o   [user@]host.xz:~user/path/to/repo.git/
 
-So, I suggest that starting with git 1.7:
+       o   [user@]host.xz:path/to/repo.git
 
-- git clone does not set up any local branches at all
-- git svn fetch does not set up any local branches at all
+this will bite you, if you have an ssh host alias named "<your
+favorite helper name>".
 
-Ducking under my desk...
-Michael
+Bert
