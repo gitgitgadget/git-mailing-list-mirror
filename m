@@ -1,66 +1,160 @@
-From: Kevin Green <Kevin.T.Green@morganstanley.com>
-Subject: Re: rename/copy detection not working for git-log?
-Date: Tue, 11 Aug 2009 09:57:36 -0400
-Message-ID: <20090811135736.GL6327@morganstanley.com>
-References: <20090811132144.GJ6327@morganstanley.com> <807hxasbz4.fsf@tiny.isode.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Bruce Stephens <bruce.stephens@isode.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 16:07:39 2009
+From: Robin Rosenberg <robin.rosenberg@gmail.com>
+Subject: [JGIT PATCH] Improve error handling for writing FETCH_HEAD
+Date: Tue, 11 Aug 2009 07:48:06 +0200
+Message-ID: <1249969686-11232-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Tue Aug 11 16:23:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mas0g-0001so-Hw
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:07:31 +0200
+	id 1MasGU-0001V1-GY
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 16:23:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753026AbZHKOHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 10:07:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbZHKOHU
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:07:20 -0400
-Received: from pimtaint01.ms.com ([199.89.103.68]:44723 "EHLO
-	pimtaint01.ms.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752619AbZHKOHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 10:07:20 -0400
-X-Greylist: delayed 583 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Aug 2009 10:07:19 EDT
-Received: from pimtaint01 (localhost.ms.com [127.0.0.1])
-	by pimtaint01.ms.com (output Postfix) with ESMTP id 0CC862943CD;
-	Tue, 11 Aug 2009 09:57:37 -0400 (EDT)
-Received: from ny0031as02 (unknown [170.74.93.53])
-	by pimtaint01.ms.com (internal Postfix) with ESMTP id E0F305B0033;
-	Tue, 11 Aug 2009 09:57:36 -0400 (EDT)
-Received: from np315c1n4 (localhost [127.0.0.1])
-	by ny0031as02 (msa-out Postfix) with ESMTP id DDECAE983F5;
-	Tue, 11 Aug 2009 09:57:36 -0400 (EDT)
-Received: from menevado.ms.com (unknown [144.203.222.190])
-	(Authenticated sender: smtp/menevado)
-	by ny0031as02 (msa-in Postfix) with ESMTPA id B9CA0E24038;
-	Tue, 11 Aug 2009 09:57:36 -0400 (EDT)
-Received: by menevado.ms.com (Postfix, from userid 49008)
-	id 7CFD4530210; Tue, 11 Aug 2009 09:57:36 -0400 (EDT)
-Mail-Followup-To: Bruce Stephens <bruce.stephens@isode.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <807hxasbz4.fsf@tiny.isode.net>
-User-Agent: Mutt/1.5.6i
-X-Anti-Virus: Kaspersky Anti-Virus for MailServers 5.5.35/RELEASE, bases: 11082009 #2366921, status: clean
+	id S1754688AbZHKOXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 10:23:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbZHKOXh
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 10:23:37 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:53590 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752998AbZHKOXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 10:23:36 -0400
+Received: by ewy10 with SMTP id 10so3813723ewy.37
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 07:23:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=HfmFeb/2Ala9CmMbDbZnG1aBV91isdvlpRg0Ffklox8=;
+        b=RJ7ndEG44CGpYrJPJ+FYlDXLngM8OOsOXwT7uAuJN9iK3A5SwfrkC4xPDY7B2ZaXfW
+         lLyEA+5AARBOhidsU9hzZdVD2GqmPxluL/DV/iV+4lXaqy7zGBzOZ2KokELzfKCvpvti
+         KZojRb4NKAV789EMIYyvk3dJhbBJEpzVR0aws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nKc7lZeZ+v5wn8wDrk/Dc/Lt/B8GAMHW56tmNrcbif81qxW2kP/OSff/DH36WQ9uRv
+         yNA4dhrr+zjskjgcNmvZTe+ta/NSadjU6vdYcMrG+jXs+RsMOMmT60OJ+coe568adVjP
+         vccmN9cM5mF1+glLdPbJIEqy1hq6YfROgBvco=
+Received: by 10.211.178.8 with SMTP id f8mr379262ebp.75.1249969691557;
+        Mon, 10 Aug 2009 22:48:11 -0700 (PDT)
+Received: from localhost.localdomain (h59n1fls34o811.telia.com [213.67.102.59])
+        by mx.google.com with ESMTPS id 10sm1924884eyd.47.2009.08.10.22.48.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 10 Aug 2009 22:48:11 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.2.199.g7340d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125562>
 
-On 08/11/09 09:42:55, Bruce Stephens wrote:
-> Kevin Green <Kevin.T.Green@morganstanley.com> writes:
-> 
-> [...]
-> 
-> > What am I missing?
-> 
-> I'd guess --follow
+PrintWriter hides error handling from us and we want it. We
+also want \n as line terminator so Writer is just as simple. Try-
+finally blocks added for cleanup on failure.
 
-Ah, yep...  didn't see that earlier.  Exactly what I need, thanks.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ .../spearce/jgit/transport/FetchHeadRecord.java    |   25 +++++++++---------
+ .../org/spearce/jgit/transport/FetchProcess.java   |   27 ++++++++++---------
+ 2 files changed, 27 insertions(+), 25 deletions(-)
 
-
---Kevin
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
+index d957028..62ec38a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchHeadRecord.java
+@@ -41,7 +41,8 @@
+ import static org.spearce.jgit.lib.Constants.R_REMOTES;
+ import static org.spearce.jgit.lib.Constants.R_TAGS;
+ 
+-import java.io.PrintWriter;
++import java.io.IOException;
++import java.io.Writer;
+ 
+ import org.spearce.jgit.lib.ObjectId;
+ 
+@@ -54,7 +55,7 @@
+ 
+ 	URIish sourceURI;
+ 
+-	void write(final PrintWriter pw) {
++	void write(final Writer pw) throws IOException {
+ 		final String type;
+ 		final String name;
+ 		if (sourceName.startsWith(R_HEADS)) {
+@@ -71,16 +72,16 @@ void write(final PrintWriter pw) {
+ 			name = sourceName;
+ 		}
+ 
+-		pw.print(newValue.name());
+-		pw.print('\t');
++		pw.write(newValue.name());
++		pw.write('\t');
+ 		if (notForMerge)
+-			pw.print("not-for-merge");
+-		pw.print('\t');
+-		pw.print(type);
+-		pw.print(" '");
+-		pw.print(name);
+-		pw.print("' of ");
+-		pw.print(sourceURI);
+-		pw.println();
++			pw.write("not-for-merge");
++		pw.write('\t');
++		pw.write(type);
++		pw.write(" '");
++		pw.write(name);
++		pw.write("' of ");
++		pw.write(sourceURI.toString());
++		pw.write("\n");
+ 	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+index 08d7d65..c899c8c 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/transport/FetchProcess.java
+@@ -41,7 +41,7 @@
+ import java.io.File;
+ import java.io.IOException;
+ import java.io.OutputStreamWriter;
+-import java.io.PrintWriter;
++import java.io.Writer;
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Collections;
+@@ -264,20 +264,21 @@ private void removeFetchHeadRecord(final ObjectId want) {
+ 	private void updateFETCH_HEAD(final FetchResult result) throws IOException {
+ 		final LockFile lock = new LockFile(new File(transport.local
+ 				.getDirectory(), "FETCH_HEAD"));
+-		if (lock.lock()) {
+-			final PrintWriter pw = new PrintWriter(new OutputStreamWriter(lock
+-					.getOutputStream())) {
+-				@Override
+-				public void println() {
+-					print('\n');
++		try {
++			if (lock.lock()) {
++				final Writer w = new OutputStreamWriter(lock.getOutputStream());
++				try {
++					for (final FetchHeadRecord h : fetchHeadUpdates) {
++						h.write(w);
++						result.add(h);
++					}
++				} finally {
++					w.close();
+ 				}
+-			};
+-			for (final FetchHeadRecord h : fetchHeadUpdates) {
+-				h.write(pw);
+-				result.add(h);
++				lock.commit();
+ 			}
+-			pw.close();
+-			lock.commit();
++		} finally {
++			lock.unlock();
+ 		}
+ 	}
+ 
+-- 
+1.6.3.2.199.g7340d
