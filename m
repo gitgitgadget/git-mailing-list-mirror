@@ -1,85 +1,86 @@
-From: Emmanuel Trillaud <etrillaud@gmail.com>
-Subject: Re: How do gmail users try out patches from this list?
-Date: Tue, 11 Aug 2009 23:24:00 +0200
-Message-ID: <20090811232400.24824426@eleanor>
-References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
-	<20090811224717.785dcd27@eleanor>
-	<fabb9a1e0908111355m1a15d81cs7f33e1bbc5e1701b@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git gc expanding packed data?
+Date: Tue, 11 Aug 2009 17:33:51 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908111718490.10633@xanadu.home>
+References: <3ace41890908041325v24ed9e2eh95ecc148305f7775@mail.gmail.com>
+ <alpine.LFD.2.00.0908042203380.16073@xanadu.home>
+ <3ace41890908110317k6e6ada07jc39ea446f9fa246e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 23:29:15 2009
+To: Hin-Tak Leung <hintak.leung@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 23:34:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MayuA-0004Xw-Dw
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:29:14 +0200
+	id 1MayzE-0006cZ-HZ
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754060AbZHKV3F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 17:29:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbZHKV3F
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:29:05 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:45527 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753556AbZHKV3E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 17:29:04 -0400
-Received: by ewy10 with SMTP id 10so4119796ewy.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:29:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=c2nX3TYAvcVcXw88P1ZxzAMqnmgKCPakSTDP9RyFCRU=;
-        b=i7ubkJsY985mwduOUMfOnOKQz7ZNQLEjn8WRlTHGt4SHEC7n8ZHaFGFrvmk+pln70K
-         Bqyc23oPRwJpIQPD4veFwW1KGrn7kSXvSS30Il/LCYg5NSA+MKtJic3hDg0XMgjLlTS1
-         2/LKvePJZbIZq7mvc+Q3TNfEo4X7pblzibIxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=v26dbKHG58FRYGmbl3U5Bh9Sq5oEE1XyfEHaJJsohSWEyS5zkdwQ3r9o5uMNLTaL19
-         3ySO2kJv15llq+AwFE0+qZ4Ccz9FreiGxt9vMFiczfr1L5UURs9WZKRg0+ZErMUbPJ8O
-         GtfjIrpTlTcOGAAtq3mlYFbSlfb6Kj/0GxvrY=
-Received: by 10.211.195.15 with SMTP id x15mr1511148ebp.9.1250026143948;
-        Tue, 11 Aug 2009 14:29:03 -0700 (PDT)
-Received: from eleanor (cxr69-1-87-88-216-137.dsl.club-internet.fr [87.88.216.137])
-        by mx.google.com with ESMTPS id 5sm956168eyh.36.2009.08.11.14.29.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 11 Aug 2009 14:29:03 -0700 (PDT)
-In-Reply-To: <fabb9a1e0908111355m1a15d81cs7f33e1bbc5e1701b@mail.gmail.com>
-X-Mailer: Claws Mail 3.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
+	id S1754773AbZHKVeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 17:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754117AbZHKVeQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:34:16 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:50023 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752673AbZHKVeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 17:34:15 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KO800J2PEKF0YD0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 11 Aug 2009 17:33:51 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <3ace41890908110317k6e6ada07jc39ea446f9fa246e@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125603>
 
-Huuu! Sorry!
-I read your mail too fast.
-If you manage to save the interresting mails localy in the mailbox
-format (claws mail and thunderbird can do that), you can
-then use 'git am' to apply the patches (an example:
-http://www.kernel.org/pub/software/scm/git/docs/everyday.html#Integrato=
-r).
+On Tue, 11 Aug 2009, Hin-Tak Leung wrote:
 
-Best regards
+> On Wed, Aug 5, 2009 at 11:39 PM, Nicolas Pitre<nico@cam.org> wrote:
+> > Anyway... To solve your problem, you simply need to run 'git gc' with
+> > the --prune=now argument to disable that grace period and get rid of
+> > those unreferenced objects right away (safe only if no other git
+> > activities are taking place at the same time which should be easy to
+> > ensure on a workstation).  The resulting .git/objects directory size
+> > will shrink to about 441 MB.  If the gcc.gnu.org git server was doing
+> > its job properly, the size of the clone transfer would also be
+> > significantly smaller, meaning around 414 MB instead of the current 600+
+> > MB.
+> >
+> > And BTW, using 'git gc --aggressive' with a later git version (or
+> > 'git repack -a -f -d --window=250 --depth=250') gives me a .git/objects
+> > directory size of 310 MB, meaning that the actual repository with all
+> > the trunk history is _smaller_ than the actual source checkout.  If that
+> > repository was properly repacked on the server, the clone data transfer
+> > would be 283 MB.  This is less than half the current clone transfer
+> > size.
+> >
+> >
+> > Nicolas
+> >
+> 
+> 'git gc --prune=now' does work, but 'git gc --prune=now --aggressive'
+> (before) and 'git gc --aggressive' (after) both create very large
+> (>2GB; I stopped it) packs from the ~400MB-600MB packed objects. I
+> noted that you specifically wrote 'with a later git version' -
+> presumably there is a some sort of a known and fixed issue there? Just
+> curious.
 
-Emmanuel Trillaud
+>From git v1.6.3 the --aggressive switch makes for 'git repack' to be 
+called with --window=250 --depth=250, meaning the equivalent of:
 
-Le Tue, 11 Aug 2009 13:55:38 -0700,
-Sverre Rabbelier <srabbelier@gmail.com> a =C3=A9crit :
+	git repack -a -d -f --window=250 --depth=250
 
-> Heya,
->=20
-> On Tue, Aug 11, 2009 at 13:47, Emmanuel Trillaud<etrillaud@gmail.com>
-> wrote:
-> > To quote Documentation/SubmittingPatches:
->=20
-> Not relevant, these instructions are for the other way around; that
-> is, sending your patches _to_ the ML, rather than getting patches
-> _from_ the ML.
->=20
+Do you still get a huge pack with the above?
+
+> I guess --aggressive doesn't always save space...
+
+If so that is (and was) a bug.
+
+
+Nicolas
