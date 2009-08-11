@@ -1,88 +1,84 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: RFC for 1.7: Do not checkout -b master origin/master on clone
-Date: Tue, 11 Aug 2009 23:06:02 +0200
-Message-ID: <adf1fd3d0908111406w1ccae22fp3f26ecb89c67fa5e@mail.gmail.com>
-References: <4A818B90.9050206@drmicha.warpmail.net>
+From: skillzero@gmail.com
+Subject: Re: [RFC PATCH v3 7/8] Support sparse checkout in unpack_trees() and 
+	read-tree
+Date: Tue, 11 Aug 2009 14:18:55 -0700
+Message-ID: <2729632a0908111418m57e03d8as9c122cbb52efc21a@mail.gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-2-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-3-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-4-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-5-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-6-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-7-git-send-email-pclouds@gmail.com>
+	 <1250005446-12047-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Aug 11 23:06:16 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 23:19:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MayXu-00049C-V0
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:06:15 +0200
+	id 1MaykR-0000nM-Fd
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:19:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356AbZHKVGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 17:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754191AbZHKVGE
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:06:04 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:53610 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753983AbZHKVGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 17:06:02 -0400
-Received: by ewy10 with SMTP id 10so4106140ewy.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:06:03 -0700 (PDT)
-Received: by 10.216.21.65 with SMTP id q43mr1404861weq.43.1250024762693; Tue, 
-	11 Aug 2009 14:06:02 -0700 (PDT)
-In-Reply-To: <4A818B90.9050206@drmicha.warpmail.net>
+	id S1754841AbZHKVS5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 17:18:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbZHKVS4
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:18:56 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:54540 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754779AbZHKVSy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 17:18:54 -0400
+Received: by qyk34 with SMTP id 34so3498622qyk.33
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2nWdXC7PWgbV4GSYiSx95q2+VYi5CZehNpn0HAwKlF0=;
+        b=w5Rujw9eJZ4tk6enh6L5SBoLK7lQ75z0QiRv4yQ/u6K9ZOqS0B/91V+XC0CfWdCqEB
+         3p8qrBtG72ZKsCOOsVLpOKxLnDqjVOU6UUeAtrVJ3xgQ4I0Zwhk+RN2X1omW1y0ll0ZF
+         /uLW1OV9v13vpIN+0tvOrNQMwAFR/aIaWENbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=K5aiRVI7zAfX7A+paou4hc1UUmQpA0IjwvC+e6RmEVQ5ySEGslOtAoA5czfxV72kQy
+         lpYz9PSjUWxb9mjiS8DuaV3Fct+c8Ma2J0nmcWAs9LchLS5jyDmetaqu33OntVZat24h
+         WiVXjG4xeYhdlLZT9CqmLOWQk8L4gClcViy2Q=
+Received: by 10.224.45.76 with SMTP id d12mr4466816qaf.131.1250025535635; Tue, 
+	11 Aug 2009 14:18:55 -0700 (PDT)
+In-Reply-To: <1250005446-12047-8-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125600>
 
-2009/8/11 Michael J Gruber <git@drmicha.warpmail.net>:
-> One common source of confusion for newcomers is the fact that master is
-> given such a special treatment in git. While it is certainly okay and
-> helpful to set up a default branch in a new repository (git init) it is
-> not at all clear why it should be treated specially in any other
-> situation, such as:
->
-> - Why is master the only local branch which git clone sets up (git
-> checkout -b master origin/master)?
+2009/8/11 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
+:
+> [1] .git/info/sparse has the same syntax as .git/info/exclude. Files
+> that match the patterns will be set as CE_VALID.
 
-Because master is the default branch in the remote repository?
+Does this mean it will only support excluding paths you don't want
+rather than letting you only include paths you do want?
 
-[...]
+I'm currently using your other patch series that lets you include or
+exclude paths (via config variable) and I find that I mostly use the
+include side of it with only a few excluded paths. This is because I
+typically want to include only a small subset of the repository so
+using excludes would require a pretty large list and any time somebody
+adds new files, I'd have to update the exclude list.
 
-> This behaviour not only is hard to justify; in fact it gives users a
-> completely wrong impression: by pretending that master is special,
-
-It is not hard to justify (the git clone behavior). master is not
-special, it is just the default branch, but you can change it changing
-the HEAD symlink.
-
-> but
-> also by hiding core concepts (distinguishing local/remote branches,
-> detached heads) from the user at a point where that very hiding leads to
-> confusion.
->
-> Under the hood, it is of course HEAD which is given special treatment
-> (and which in the majority of repos points to master), and git clone
-> sets up a local branch according to HEAD (and does some other guess work
-> when cloning bare repos), which means that git clone shows the same
-> "random" behaviour which git svn clone does: Which local branch is set
-> up by default depends on the current value of HEAD/most recent commit at
-> the time of the cloning operation.
-
-It's not random. And please don't mix the "git clone" and "git svn" case.
-
-> So, I suggest that starting with git 1.7:
->
-> - git clone does not set up any local branches at all
-
-I think you should first think if this is going to really help
-newcomers. I think this would be worst.
-
-Instead of "why only 'master'?" the question will be "why I don't get
-any files in the workdir?"
-
-"git clone checks out the default branch, and this is 'master' by
-default" is not that hard.
-
-HTH,
-Santi
+I appreciate the flexibility of the script to control what is included
+or excluded, but like some other comments here, I like the simplicity
+of having built-in support for including/excluding paths without
+having to write a script to do it. Some of my projects run on Windows
+so scripting is more difficult there.
