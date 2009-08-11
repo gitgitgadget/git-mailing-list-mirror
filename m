@@ -1,86 +1,73 @@
-From: Avery Pennarun <apenwarr@gmail.com>
+From: tom fogal <tfogal@alumni.unh.edu>
 Subject: Re: sharing git work while downstream from svn?
-Date: Tue, 11 Aug 2009 23:03:47 +0000
-Message-ID: <32541b130908111603v1e3f6c42peac792caf7097e0d@mail.gmail.com>
-References: <auto-000020209577@sci.utah.edu>
+Date: Tue, 11 Aug 2009 17:14:38 -0600
+Message-ID: <auto-000020209671@sci.utah.edu>
+References: <auto-000020209577@sci.utah.edu>  <32541b130908111603v1e3f6c42peac792caf7097e0d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: tfogal@sci.utah.edu
-X-From: git-owner@vger.kernel.org Wed Aug 12 01:04:21 2009
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 01:12:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb0O9-0003wU-Rb
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:04:18 +0200
+	id 1Mb0WG-0006MP-5I
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:12:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755542AbZHKXEI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 19:04:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbZHKXEH
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:04:07 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:38114 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754124AbZHKXEH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 19:04:07 -0400
-Received: by yxe5 with SMTP id 5so5173750yxe.33
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 16:04:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=u5P1rHE+3qNDB1L7PI6nfXt+jYfiqa6x8MUsv72wUxM=;
-        b=NJNVOhc9E7aKREsn5EfqzYP2obotQfGoXO1WGV6DDrfKGjhzhi+ltEZTQTwpG4JriF
-         4R7g9J5mbmEgnTVnRq41sFxhzFYMEL2QBCFFxcwK37oEQ5MyU5DB41Ui7nuMEXMCbd4W
-         uU3aak2dTwJSZY7LYRXQuW58rkRVP4LoqPFnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=UD0PvNbT/y73ODYshRM0DYZfLGgipxnqqDyTcDdcwBmqbbEWv0bGZhpmcKXeUMKfLB
-         9yIOtap+1P/PbQW1uvUTnzhpYehSVSER7effh8o4vLIIhEN7ln2II+wwzgRSvaMLTO6Y
-         6bj7UbO8e3ST51KkGOHgCuJYbryuMoCplV9Wc=
-Received: by 10.150.219.18 with SMTP id r18mr5082481ybg.224.1250031847068; 
-	Tue, 11 Aug 2009 16:04:07 -0700 (PDT)
-In-Reply-To: <auto-000020209577@sci.utah.edu>
+	id S1755277AbZHKXMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 19:12:31 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754383AbZHKXMb
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:12:31 -0400
+Received: from mail.sci.utah.edu ([155.98.58.79]:42396 "EHLO sci.utah.edu"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754292AbZHKXMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 19:12:30 -0400
+Received: from dummy.name; Tue, 11 Aug 2009 17:12:31 -0600
+In-Reply-To: Your message of "Tue, 11 Aug 2009 23:03:47 -0000."
+             <32541b130908111603v1e3f6c42peac792caf7097e0d@mail.gmail.com> 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125617>
 
-On Tue, Aug 11, 2009 at 10:55 PM, tom fogal<tfogal@alumni.unh.edu> wrot=
-e:
-> This gets to be a mess when trunk changes: I'll rebase + potentially
-> fix some conflicts. =A0Other developers with some of the experimental
-> patches will svn update, and get similar conflicts. =A0These might di=
-ffer
-> in subtle ways, and now exchanging patches gets more difficult.
+Avery Pennarun <apenwarr@gmail.com> writes:
+> On Tue, Aug 11, 2009 at 10:55 PM, tom fogal<tfogal@alumni.unh.edu> wr=
+ote:
+> > This gets to be a mess when trunk changes: I'll rebase + potentiall=
+y
+> > fix some conflicts. =A0Other developers with some of the experiment=
+al
+> > patches will svn update, and get similar conflicts. =A0These might =
+differ
+> > in subtle ways, and now exchanging patches gets more difficult.
+>=20
+> Instead, do all your work in a branch *other* than the git-svn main
+> branch.  When you're ready to merge your stuff into svn, do:
+[snip]
+> This basically results in a *single* commit getting sent to svn,
+> rather than the batch of all the git commits you've been working
+> on.  Most svn users don't care about this, because they lose all that
+> granularity whenever they merge a branch anyhow.
 
-We use git-svn at Versabanq, and our process is very simple: never use
-rebase, period.
+=2E.. but I, as a git user forced to live in an svn world, *do* value a=
+ll
+of that history.  When I find a bug a month later, I want git-bisect
+to be useful.  Further, when I'm reviewing sets of changes in a search
+for some particular change, I want to be able to skip over large sets
+of patches simply by looking at the first line of a commit log.  If I
+squash all that history down, I have to wade into the patch itself.
 
-Instead, do all your work in a branch *other* than the git-svn main
-branch.  When you're ready to merge your stuff into svn, do:
-
-git checkout git-svn
-git svn rebase
-git checkout myworkingbranch
-git merge git-svn
-   # and resolve any conflicts
-git checkout git-svn
-git merge --no-ff myworkingbranch   # the --no-ff is very important her=
-e!
-git svn dcommit
-
-This basically results in a *single* commit getting sent to svn,
-rather than the batch of all the git commits you've been working on.
-Most svn users don't care about this, because they lose all that
-granularity whenever they merge a branch anyhow.  Meanwhile, all your
-git users never have to worry about rebasing *anything* and can use
-the normal git merge/pull stuff.
-
-Have fun,
-
-Avery
+-tom
