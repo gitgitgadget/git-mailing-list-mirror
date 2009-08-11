@@ -1,75 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v2 1/4] Prevent diff machinery from examining 
- assume-unchanged entries on worktree
-Date: Tue, 11 Aug 2009 08:45:21 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908110844160.4638@intel-tinevez-2-302>
-References: <1249917562-5931-1-git-send-email-pclouds@gmail.com>  <1249917562-5931-2-git-send-email-pclouds@gmail.com> <alpine.DEB.1.00.0908101800480.8324@intel-tinevez-2-302> <fcaeb9bf0908101834n7cc7cfaakbf2d92fe8f32e9b1@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git stash: Give friendlier error when there is nothing to apply
+Date: Tue, 11 Aug 2009 14:09:02 +0200
+Message-ID: <200908111409.04506.trast@student.ethz.ch>
+References: <4a81559c.05ae660a.591b.010b@mx.google.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1715881235-1249973122=:4638"
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 14:16:23 2009
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Ori Avtalion <ori@avtalion.name>
+X-From: git-owner@vger.kernel.org Tue Aug 11 14:16:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaqGx-0000RC-Rg
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 14:16:12 +0200
+	id 1MaqGu-0000RC-64
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 14:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291AbZHKMME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 08:12:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752488AbZHKMMD
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:12:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35053 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751410AbZHKMMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 08:12:01 -0400
-Received: (qmail invoked by alias); 11 Aug 2009 06:45:21 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp051) with SMTP; 11 Aug 2009 08:45:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+WqMg6FK6WJFf8S4tToTXqRoOcVeeNpxhp3Fnr1o
-	12QYWxX5Ed8okP
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <fcaeb9bf0908101834n7cc7cfaakbf2d92fe8f32e9b1@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1753449AbZHKMJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 08:09:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753329AbZHKMJk
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:09:40 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:8701 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753126AbZHKMJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 08:09:39 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
+ 2009 14:09:40 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
+ 2009 14:09:17 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <4a81559c.05ae660a.591b.010b@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125529>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-1715881235-1249973122=:4638
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Tue, 11 Aug 2009, Nguyen Thai Ngoc Duy wrote:
-
-> >> +test_expect_success 'diff-index does not examine assume-unchanged entries' '
-> >> +     git diff-index HEAD^ -- one | grep -q 5626abf0f72e58d7a153368ba57db4c673c0e171
-> >> +'
-> >> +
-> >> +# TODO ced_uptodate()
-> >
-> > What is this about?
+Ori Avtalion wrote:
+>  apply_stash () {
+> +	have_stash || die 'Nothing to apply'
+> +
+>  	git update-index -q --refresh &&
+>  	git diff-files --quiet --ignore-submodules ||
+>  		die 'Cannot apply to a dirty working tree, please stage your changes'
 > 
-> It tests "if (ce_uptodate(ce) || (ce->ce_flags & CE_VALID))" and I was 
-> pretty sure it hit ce_uptodate() first, so the second expression was not 
-> tested.
 
-Ah.  I was distracted by the "d" before the underscore.
+This needs a guard against the case where the user says
 
-ce_uptodate(ce) checks the time stamp amongst other things, right?  How 
-about using test-chmtime to force an mtime mismatch?
+  git stash apply $some_sha1
 
-Ciao,
-Dscho
+but his refs/stash is empty.  This could be the case, e.g., after
+mistakenly blowing away the reflog with 'git stash clear' and then
+going on a recovery hunt through the unreferenced commits.
 
---8323329-1715881235-1249973122=:4638--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
