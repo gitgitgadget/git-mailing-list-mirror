@@ -1,84 +1,105 @@
-From: skillzero@gmail.com
-Subject: Re: [RFC PATCH v3 7/8] Support sparse checkout in unpack_trees() and 
-	read-tree
-Date: Tue, 11 Aug 2009 14:18:55 -0700
-Message-ID: <2729632a0908111418m57e03d8as9c122cbb52efc21a@mail.gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-2-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-3-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-4-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-5-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-6-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-7-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-8-git-send-email-pclouds@gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: block-sha1: improve code on large-register-set machines
+Date: Tue, 11 Aug 2009 16:20:57 -0500
+Message-ID: <fLYKSyures_wcvAvAV9-MgKQlhk959HJpx-pKz7T1n-Mel7f2RBkMw@cipher.nrlssc.navy.mil>
+References: <alpine.LFD.2.01.0908101637440.3417@localhost.localdomain> <alpine.LFD.2.00.0908102246210.10633@xanadu.home> <alpine.LFD.2.01.0908110758160.3417@localhost.localdomain> <alpine.LFD.2.00.0908111254290.10633@xanadu.home> <alpine.LFD.2.00.0908111517390.10633@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 23:19:14 2009
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 11 23:22:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaykR-0000nM-Fd
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:19:11 +0200
+	id 1MaynA-0001uZ-To
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754841AbZHKVS5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 17:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbZHKVS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:18:56 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:54540 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754779AbZHKVSy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 17:18:54 -0400
-Received: by qyk34 with SMTP id 34so3498622qyk.33
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2nWdXC7PWgbV4GSYiSx95q2+VYi5CZehNpn0HAwKlF0=;
-        b=w5Rujw9eJZ4tk6enh6L5SBoLK7lQ75z0QiRv4yQ/u6K9ZOqS0B/91V+XC0CfWdCqEB
-         3p8qrBtG72ZKsCOOsVLpOKxLnDqjVOU6UUeAtrVJ3xgQ4I0Zwhk+RN2X1omW1y0ll0ZF
-         /uLW1OV9v13vpIN+0tvOrNQMwAFR/aIaWENbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=K5aiRVI7zAfX7A+paou4hc1UUmQpA0IjwvC+e6RmEVQ5ySEGslOtAoA5czfxV72kQy
-         lpYz9PSjUWxb9mjiS8DuaV3Fct+c8Ma2J0nmcWAs9LchLS5jyDmetaqu33OntVZat24h
-         WiVXjG4xeYhdlLZT9CqmLOWQk8L4gClcViy2Q=
-Received: by 10.224.45.76 with SMTP id d12mr4466816qaf.131.1250025535635; Tue, 
-	11 Aug 2009 14:18:55 -0700 (PDT)
-In-Reply-To: <1250005446-12047-8-git-send-email-pclouds@gmail.com>
+	id S1755223AbZHKVVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 17:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755092AbZHKVVv
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:21:51 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38721 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755075AbZHKVVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 17:21:51 -0400
+Received: by mail.nrlssc.navy.mil id n7BLKxr3001243; Tue, 11 Aug 2009 16:20:59 -0500
+In-Reply-To: <alpine.LFD.2.00.0908111517390.10633@xanadu.home>
+X-OriginalArrivalTime: 11 Aug 2009 21:20:58.0048 (UTC) FILETIME=[9E532C00:01CA1AC9]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125601>
 
-2009/8/11 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> [1] .git/info/sparse has the same syntax as .git/info/exclude. Files
-> that match the patterns will be set as CE_VALID.
+Nicolas Pitre wrote:
+> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
+> 
+>> On Tue, 11 Aug 2009, Linus Torvalds wrote:
+>>
+>>> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
+>>>> #define SHA_SRC(t) \
+>>>>   ({ unsigned char *__d = (unsigned char *)&data[t]; \
+>>>>      (__d[0] << 24) | (__d[1] << 16) | (__d[2] << 8) | (__d[3] << 0); })
+>>>>
+>>>> And this provides the exact same performance as the ntohl() based 
+>>>> version (4.980s) except that this now cope with unaligned buffers too.
+>>> The actual object SHA1 calculations are likely not aligned (we do that 
+>>> object header thing), and if you can't do the htonl() any better way I 
+>>> guess the byte-based thing is the way to go..
+> 
+> OK, even better: 4.400s.
+> 
+> This is with this instead of the above:
+> 
+> #define SHA_SRC(t) \
+>    ({   unsigned char *__d = (unsigned char *)data; \
+>         (__d[(t)*4 + 0] << 24) | (__d[(t)*4 + 1] << 16) | \
+>         (__d[(t)*4 + 2] <<  8) | (__d[(t)*4 + 3] <<  0); })
+> 
+> The previous version would allocate a new register for __d and then 
+> index it with an offset of 0, 1, 2 or 3.  This version always uses the 
+> register containing the data pointer with absolute offsets.  The binary 
+> is a bit smaller too.
 
-Does this mean it will only support excluding paths you don't want
-rather than letting you only include paths you do want?
+In that case, why not change the interface of blk_SHA1Block() so that its
+second argument is const unsigned char* and get rid of __d and the { } ?
 
-I'm currently using your other patch series that lets you include or
-exclude paths (via config variable) and I find that I mostly use the
-include side of it with only a few excluded paths. This is because I
-typically want to include only a small subset of the repository so
-using excludes would require a pretty large list and any time somebody
-adds new files, I'd have to update the exclude list.
+Then it will look like this:
 
-I appreciate the flexibility of the script to control what is included
-or excluded, but like some other comments here, I like the simplicity
-of having built-in support for including/excluding paths without
-having to write a script to do it. Some of my projects run on Windows
-so scripting is more difficult there.
+   static void blk_SHA1Block(blk_SHA_CTX *ctx, const unsigned char *data);
+
+   ...
+
+   #define SHA_SRC(t) \
+       ( (data[(t)*4 + 0] << 24) | (data[(t)*4 + 1] << 16) | \
+         (data[(t)*4 + 2] <<  8) | (data[(t)*4 + 3] <<  0) )
+
+
+Plus, we need something like the following to handle storing the hash to
+an unaligned buffer (warning copy/pasted):
+
+@@ -73,8 +74,12 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *c
+ 
+        /* Output hash
+         */
+-       for (i = 0; i < 5; i++)
+-               ((unsigned int *)hashout)[i] = htonl(ctx->H[i]);
++       for (i = 0; i < 5; i++) {
++               *hashout++ = (unsigned char) (ctx->H[i] >> 24);
++               *hashout++ = (unsigned char) (ctx->H[i] >> 16);
++               *hashout++ = (unsigned char) (ctx->H[i] >> 8);
++               *hashout++ = (unsigned char) (ctx->H[i] >> 0);
++       }
+ }
+ 
+ #if defined(__i386__) || defined(__x86_64__)
+
+
+With these two changes plus a few other minor tweaks, the block-sha1 code compiles
+and passes the test suite on sparc (solaris 7) and mips (irix 6.5).
+
+-brandon
