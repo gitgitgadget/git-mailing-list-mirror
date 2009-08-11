@@ -1,86 +1,115 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: block-sha1: improve code on large-register-set machines
-Date: Tue, 11 Aug 2009 17:36:58 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908111735010.10633@xanadu.home>
-References: <alpine.LFD.2.01.0908101637440.3417@localhost.localdomain>
- <alpine.LFD.2.00.0908102246210.10633@xanadu.home>
- <alpine.LFD.2.01.0908110758160.3417@localhost.localdomain>
- <alpine.LFD.2.00.0908111254290.10633@xanadu.home>
- <alpine.LFD.2.00.0908111517390.10633@xanadu.home>
- <fLYKSyures_wcvAvAV9-MgKQlhk959HJpx-pKz7T1n-Mel7f2RBkMw@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v3 7/8] Support sparse checkout in unpack_trees() and  read-tree
+Date: Tue, 11 Aug 2009 14:38:04 -0700 (PDT)
+Message-ID: <m3ab26owub.fsf@localhost.localdomain>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-2-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-3-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-4-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-5-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-6-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-7-git-send-email-pclouds@gmail.com>
+	<1250005446-12047-8-git-send-email-pclouds@gmail.com>
+	<2729632a0908111418m57e03d8as9c122cbb52efc21a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?utf-8?b?YyBEdXk=?= 
+	<pclouds@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Aug 11 23:37:33 2009
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Tue Aug 11 23:38:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Maz2C-0007m4-Rd
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:37:33 +0200
+	id 1Maz2w-0007yN-4K
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 23:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515AbZHKVhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 17:37:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZHKVhX
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:37:23 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:42597 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752673AbZHKVhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 17:37:22 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KO800JVMEPMMIK1@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 11 Aug 2009 17:36:58 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <fLYKSyures_wcvAvAV9-MgKQlhk959HJpx-pKz7T1n-Mel7f2RBkMw@cipher.nrlssc.navy.mil>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754880AbZHKViI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 17:38:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754807AbZHKViH
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 17:38:07 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:64877 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753915AbZHKViG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 17:38:06 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so992734fga.17
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 14:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=hz0lXGKcMAgFgirnqj4qJzOxFr1XnxBuHZyZ8dTM6e8=;
+        b=pzHipt5Dodt7tr6Iay5pHxFbv9d7YWKFcDiMEn9LrdCEnhCgvWymx7hS6uaQjTiy4W
+         N2n9TAebMMaN1D4maa39G7fT4Vrh6J+ZV4hWCH8LtTI/ji6lMXEwwF/BkEvv/voWtdgy
+         IrYzDAY6HZ3TLhhR7WfPr6MOcEO3d5eXJY1bU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=KBk1m9pbwejeJL+vJXCWD1CT1xCM+yxr4qPZzo9eRYOjbjfDznB9wBNflyeczsisdC
+         pB25pdFAYboR5ZrOUjhTbjsT0cKVYvUUdMQN1EX6gSUGdBKw6ov56EgX+v5XvGDy3e3H
+         gNkZFVnV7BuMX/Li+skkO4fME1EJ5hlx1gE4g=
+Received: by 10.86.94.7 with SMTP id r7mr4318072fgb.11.1250026686173;
+        Tue, 11 Aug 2009 14:38:06 -0700 (PDT)
+Received: from localhost.localdomain (abva90.neoplus.adsl.tpnet.pl [83.8.198.90])
+        by mx.google.com with ESMTPS id 12sm14775992fgg.11.2009.08.11.14.38.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 11 Aug 2009 14:38:04 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7BLc5u4001066;
+	Tue, 11 Aug 2009 23:38:05 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7BLc4ml001063;
+	Tue, 11 Aug 2009 23:38:04 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <2729632a0908111418m57e03d8as9c122cbb52efc21a@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125605>
 
-On Tue, 11 Aug 2009, Brandon Casey wrote:
+skillzero@gmail.com writes:
+> 2009/8/11 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.co=
+m>:
 
-> Nicolas Pitre wrote:
-> > On Tue, 11 Aug 2009, Nicolas Pitre wrote:
-> > 
-> >> On Tue, 11 Aug 2009, Linus Torvalds wrote:
-> >>
-> >>> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
-> >>>> #define SHA_SRC(t) \
-> >>>>   ({ unsigned char *__d = (unsigned char *)&data[t]; \
-> >>>>      (__d[0] << 24) | (__d[1] << 16) | (__d[2] << 8) | (__d[3] << 0); })
-> >>>>
-> >>>> And this provides the exact same performance as the ntohl() based 
-> >>>> version (4.980s) except that this now cope with unaligned buffers too.
-> >>> The actual object SHA1 calculations are likely not aligned (we do that 
-> >>> object header thing), and if you can't do the htonl() any better way I 
-> >>> guess the byte-based thing is the way to go..
-> > 
-> > OK, even better: 4.400s.
-> > 
-> > This is with this instead of the above:
-> > 
-> > #define SHA_SRC(t) \
-> >    ({   unsigned char *__d = (unsigned char *)data; \
-> >         (__d[(t)*4 + 0] << 24) | (__d[(t)*4 + 1] << 16) | \
-> >         (__d[(t)*4 + 2] <<  8) | (__d[(t)*4 + 3] <<  0); })
-> > 
-> > The previous version would allocate a new register for __d and then 
-> > index it with an offset of 0, 1, 2 or 3.  This version always uses the 
-> > register containing the data pointer with absolute offsets.  The binary 
-> > is a bit smaller too.
-> 
-> In that case, why not change the interface of blk_SHA1Block() so that its
-> second argument is const unsigned char* and get rid of __d and the { } ?
+> > [1] .git/info/sparse has the same syntax as .git/info/exclude. File=
+s
+> > that match the patterns will be set as CE_VALID.
+>=20
+> Does this mean it will only support excluding paths you don't want
+> rather than letting you only include paths you do want?
 
-Because not all architectures care to access the data bytewise.  Please 
-see the original SHA_SRC definition.
+Errr... what I read is that paths set by .git/info/sparse would be
+excluded from checkout (marked as assume-unchanged / CE_VALID).
 
+But if it is the same mechanism as gitignore, then you can use !=20
+prefix to set files (patterns) to include, e.g.
 
-Nicolas
+  !Documentation/
+  *
+
+(I think rules are processed top-down, first matching wins).
+=20
+> I'm currently using your other patch series that lets you include or
+> exclude paths (via config variable) and I find that I mostly use the
+> include side of it with only a few excluded paths. This is because I
+> typically want to include only a small subset of the repository so
+> using excludes would require a pretty large list and any time somebod=
+y
+> adds new files, I'd have to update the exclude list.
+
+Not true, see above.
+
+--=20
+Jakub Narebski
+
+Git User's Survey 2009
+http://tinyurl.com/GitSurvey2009
