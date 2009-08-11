@@ -1,72 +1,140 @@
-From: Robin Rosenberg <robin.rosenberg@gmail.com>
-Subject: Re: [EGIT] Push to GitHub caused corruption
-Date: Tue, 11 Aug 2009 08:10:45 +0200
-Message-ID: <200908110810.45369.robin.rosenberg@gmail.com>
-References: <3ae83b000908101446q2d4f1101we4bbd7023f78b03@mail.gmail.com>
+From: Hin-Tak Leung <hintak.leung@gmail.com>
+Subject: Re: git gc expanding packed data?
+Date: Tue, 11 Aug 2009 11:17:14 +0100
+Message-ID: <3ace41890908110317k6e6ada07jc39ea446f9fa246e@mail.gmail.com>
+References: <3ace41890908041325v24ed9e2eh95ecc148305f7775@mail.gmail.com>
+	 <alpine.LFD.2.00.0908042203380.16073@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: John Bito <jwbito@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 14:41:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 11 14:46:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaqfC-0002q8-QJ
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 14:41:15 +0200
+	id 1Maqk9-0004ns-9R
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 14:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbZHKMkv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 08:40:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751543AbZHKMkv
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:40:51 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:39979 "EHLO
+	id S1754221AbZHKMmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 08:42:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753369AbZHKMmT
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:42:19 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:56185 "EHLO
 	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751443AbZHKMku convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 08:40:50 -0400
-Received: by ewy10 with SMTP id 10so3736296ewy.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 05:40:50 -0700 (PDT)
+	with ESMTP id S1754243AbZHKMmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 08:42:15 -0400
+Received: by ewy10 with SMTP id 10so3737240ewy.37
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 05:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=IWrzUnnNRMcQe5HK1t3cAkinL1+9lHXneBV/DOuHJt0=;
-        b=f8NgHDkEJ6kQNyTEyMy+t5DREZjluJXMyRHbFjn9n9WT6qk4jz+NEoX3tK+0rM4VQ7
-         wc0Oz3Q4A5SOgqJJDCNAa8sPSKjgJoLIuZtL4HKlowJjXQQeNMf67WW6Lks9VDirdpev
-         u4o6UY/9jaGhkcqQbVH9yg1mRdLeh3KaMmWmk=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=f7YMXGrDjH9z5oBJqyTn+bONemlf77yBmBgTL5qm8rA=;
+        b=DAWmKvymbF2d2Qh5lZlMBqTHLHYzJY8MehgoKCoEyo4L/5uEdHMEYHMRX862Nm0kN/
+         eHoAisy1vAr4gtSMrNtibNPz6/68hZo/WfadASIMXPQAbyYxRbUOwq69GER1slnf0y34
+         o0wemXYVQe3h2tvzEjHcvYqLPddI00XXb19O8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=m7Eke34EIrdgWsvlfcGrTHypxKT9TlAberAo4+1jFY8EZIEuUVKhCdxzoEQNf96dSz
-         IN8LtIHZVWD8O8jjDeiNNNteTBHnYZ60hWoxTWskwqf0qCvhj8vbsgpv7JjtStdOa3PI
-         95P3VCFVv4pmLA0u5jXcgCbuE/XbF4l9lxvok=
-Received: by 10.210.110.5 with SMTP id i5mr6016770ebc.3.1249971047927;
-        Mon, 10 Aug 2009 23:10:47 -0700 (PDT)
-Received: from sleipner.localnet (h59n1fls34o811.telia.com [213.67.102.59])
-        by mx.google.com with ESMTPS id 28sm13232849eye.44.2009.08.10.23.10.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Aug 2009 23:10:47 -0700 (PDT)
-User-Agent: KMail/1.12.0 (Linux/2.6.28-11-generic; KDE/4.3.0; i686; ; )
-In-Reply-To: <3ae83b000908101446q2d4f1101we4bbd7023f78b03@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=I2n3PEMmD3B/Dn8lFizoIKuaEgpLm9B13RL3lBayLJ1zTSJmjDrWJPQvoAlGxNVsef
+         4fTdEFCaLmJW6yQEj2B4xE8GcZliRhvccThimYR3JWtjb7ozSNsgRkp8NBsfk9TzaKDO
+         9XOjqrAmkns/o4v0PjAXs2ffrYMULKcihNcrM=
+Received: by 10.216.10.149 with SMTP id 21mr1232721wev.56.1249985834967; Tue, 
+	11 Aug 2009 03:17:14 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.0908042203380.16073@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125541>
 
-m=E5ndag 10 augusti 2009 23:46:34 skrev John Bito <jwbito@gmail.com>:
-> Using the 'release' build of EGit (0.4.9.200906240051) I pushed a
-> commit to GitHub.  After that, using git to pull, I get 'bad tree
-> object' resulting in 'remote: aborting due to possible repository
-> corruption on the remote side'.  I had a similar problem back in Apri=
-l
-> (using integration builds of 0.4.0).  I'm willing to investigate if
-> there's interest in finding the root of the problem.
+On Wed, Aug 5, 2009 at 11:39 PM, Nicolas Pitre<nico@cam.org> wrote:
+> On Tue, 4 Aug 2009, Hin-Tak Leung wrote:
+>
+>> I cloned gcc's git about a week ago to work on some problems I have
+>> with gcc on minor platforms, just plain 'git clone
+>> git://gcc.gnu.org/git/gcc.git gcc' .and ran gcc fetch about daily, and
+>> 'git rebase origin' from time to time. I don't have local changes,
+>> just following and monitoring what's going on in gcc. So after a week,
+>> I thought I'd do a git gc . Then it goes very bizarre.
+>>
+>> Before I start 'git gc', .The whole of .git was about 700MB and
+>> git/objects/pack was a bit under 600MB, with a few other directories
+>> under .git/objects at 10's of K's and a few 30000-40000K's, and the
+>> checkout was, well, the size of gcc source code. But after I started
+>> git gc, the message stays in the 'counting objects' at about 900,000
+>> for a long time, while a lot of directories under .git/objects/ gets a
+>> bit large, and .git blows up to at least 7GB with a lot of small files
+>> under .git/objects/*/, before seeing as I will run out of disk space,
+>> I kill the whole lot and ran git clone again, since I don't have any
+>> local change and there is nothing to lose.
+>>
+>> I am running git version 1.6.2.5 (fedora 11). Is there any reason why
+>> 'git gc' does that?
+>
+> There is probably a reason, although a bad one for sure.
+>
+> Well... OK.
+>
+> It appears that the git installation serving clone requests for
+> git://gcc.gnu.org/git/gcc.git generates lots of unreferenced objects. I
+> just cloned it and the pack I was sent contains 1383356 objects (can be
+> determined with 'git show-index < .git/objects/pack/*.idx | wc -l').
+> However, there are only 978501 actually referenced objects in that
+> cloned repository ( 'git rev-list --all --objects | wc -l').  That makes
+> for 404855 useless objects in the cloned repository.
+>
+> Now git has a safety mechanism to _not_ delete unreferenced objects
+> right away when running 'git gc'.  By default unreferenced objects are
+> kept around for a period of 2 weeks.  This is to make it easy for you to
+> recover accidentally deleted branches or commits, or to avoid a race
+> where a just-created object in the process of being but not yet
+> referenced could be deleted by a 'git gc' process running in parallel.
+>
+> So to give that grace period to packed but unreferenced objects, the
+> repack process pushes those unreferenced objects out of the pack into
+> their loose form so they can be aged and eventually pruned.  Objects
+> becoming unreferenced are usually not that many though.  Having 404855
+> unreferenced objects is quite a lot, and being sent those objects in the
+> first place via a clone is stupid and a complete waste of network
+> bandwidth.
+>
+> Anyone has an idea of the git version running on gcc.gnu.org?  It is
+> certainly buggy and needs fixing.
+>
+> Anyway... To solve your problem, you simply need to run 'git gc' with
+> the --prune=now argument to disable that grace period and get rid of
+> those unreferenced objects right away (safe only if no other git
+> activities are taking place at the same time which should be easy to
+> ensure on a workstation).  The resulting .git/objects directory size
+> will shrink to about 441 MB.  If the gcc.gnu.org git server was doing
+> its job properly, the size of the clone transfer would also be
+> significantly smaller, meaning around 414 MB instead of the current 600+
+> MB.
+>
+> And BTW, using 'git gc --aggressive' with a later git version (or
+> 'git repack -a -f -d --window=250 --depth=250') gives me a .git/objects
+> directory size of 310 MB, meaning that the actual repository with all
+> the trunk history is _smaller_ than the actual source checkout.  If that
+> repository was properly repacked on the server, the clone data transfer
+> would be 283 MB.  This is less than half the current clone transfer
+> size.
+>
+>
+> Nicolas
+>
 
-=46ixing problems related to repository integrity is definitely interes=
-ting. One
-can live all kinds of problem, as long as they don't destroy anything.=20
+'git gc --prune=now' does work, but 'git gc --prune=now --aggressive'
+(before) and 'git gc --aggressive' (after) both create very large
+(>2GB; I stopped it) packs from the ~400MB-600MB packed objects. I
+noted that you specifically wrote 'with a later git version' -
+presumably there is a some sort of a known and fixed issue there? Just
+curious.
 
--- robin
+I guess --aggressive doesn't always save space...
+
+Hin-Tak
