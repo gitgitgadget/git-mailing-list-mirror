@@ -1,67 +1,179 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v2 4/4] read-tree: add --no-sparse to turn off sparse
-  hook
-Date: Mon, 10 Aug 2009 22:13:03 -0700
-Message-ID: <7vhbwforvk.fsf@alter.siamese.dyndns.org>
-References: <1249917562-5931-1-git-send-email-pclouds@gmail.com>
- <1249917562-5931-2-git-send-email-pclouds@gmail.com>
- <1249917562-5931-3-git-send-email-pclouds@gmail.com>
- <1249917562-5931-4-git-send-email-pclouds@gmail.com>
- <1249917562-5931-5-git-send-email-pclouds@gmail.com>
- <alpine.DEB.1.00.0908101842530.8324@intel-tinevez-2-302>
- <fcaeb9bf0908101838k37751fclac5c572eb042138e@mail.gmail.com>
+From: Geoffrey Irving <irving@naml.us>
+Subject: Re: bug with .git file and aliases
+Date: Mon, 10 Aug 2009 23:37:54 -0400
+Message-ID: <7f9d599f0908102037s51f0380te56463706f794c8a@mail.gmail.com>
+References: <7f9d599f0907200654q2e068e6aq3051c122f6596053@mail.gmail.com> 
+	<20090720152117.GB5347@coredump.intra.peff.net> <7f9d599f0908101322i46384247m303e28955f88bbb@mail.gmail.com> 
+	<alpine.DEB.1.00.0908110101110.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 14:15:41 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Lars Hjemli <hjemli@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 11 14:15:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MaqGS-0000RC-M6
+	id 1MaqGT-0000RC-Dv
 	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 14:15:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752776AbZHKMGe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 08:06:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbZHKMGc
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:06:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753118AbZHKMG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 08:06:28 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D095B6FF1;
-	Tue, 11 Aug 2009 01:13:08 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 235A36FF0; Tue, 11 Aug
- 2009 01:13:04 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A8A3BD00-8635-11DE-AFC1-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753176AbZHKMGh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 08:06:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbZHKMGh
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 08:06:37 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:46067 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753078AbZHKMGf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 08:06:35 -0400
+Received: by vws2 with SMTP id 2so3300464vws.4
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 05:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=CwY9GJ9fInzcYNQPA/YYQTx85qcfDnoKLfwt5epk1VA=;
+        b=OmTdk0jEsrulq2JgFpjYpUGvbNqU0/X9jHvS2bvzj494Q1aK7+1EB1QKVqd8NxLzBz
+         bsWHbSpLCtiww+3WKzevJcKiv90gsKvpxGiHBk7Xpvr0AiHLNptkuJrZ217frha4ymVl
+         7UKPBVI+HHCRSav0TzDTCTzmlr4aBOYUo9rF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=bFES6MaRgUX3coWEgWzOmCQ9ozt7wlY5ZbRhCIEVsyBdXObdIRcVSfBfZClO55u8Pq
+         9Q+464WUfISaOn9DpVPHfi4tp8d+XvbsCb8riWWi7yYPFVc0BgLYWPyX/xGYG2K/8lrH
+         1bWTg/T9MfNPF5DppKetO4cjy0Q4IQ2wuR4as=
+Received: by 10.220.94.84 with SMTP id y20mr5858428vcm.112.1249961906023; Mon, 
+	10 Aug 2009 20:38:26 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908110101110.8306@pacific.mpi-cbg.de>
+X-Google-Sender-Auth: 79f0de6622a5c648
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125526>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-
->> Hmm. =C2=A0I understand that the assumption is that memset(&opts, 0,
->> sizeof(opts)); should give you a sensible default, but I cannot avoi=
-d
->> noticing that "no_sparse_hook =3D 0" is a double negation, something=
- to be
->> avoided...
+On Mon, Aug 10, 2009 at 7:05 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 >
-> skip_sparse_hook then? :-)
+> On Mon, 10 Aug 2009, Geoffrey Irving wrote:
+>
+>> On Mon, Jul 20, 2009 at 11:21 AM, Jeff King<peff@peff.net> wrote:
+>> > On Mon, Jul 20, 2009 at 09:54:12AM -0400, Geoffrey Irving wrote:
+>> >
+>> >> git 1.6.3.3 has a bug related to .git file support and aliases.
+>> >> Specifically, if you make an alias for status and call it from a
+>> >> subdirectory, git status chdirs into the true .git dir but then
+>> >> chdir's back to the wrong place in order to run the lstats for st=
+atus.
+>> >> =A0The result is that git status thinks all files have disappeare=
+d.
+>> >
+>> > Yeah, this is a known problem. The problem is that the 'git' wrapp=
+er
+>> > sets up the environment only partially when running aliases, and t=
+hen
+>> > the resulting command ends up confused about where the worktree is=
+=2E I
+>> > really don't remember the specifics, but you can probably find som=
+e
+>> > discussion in the list archives. =A0Fixing it, IIRC, required some
+>> > refactoring of the setup code (which I had hoped to get to at some
+>> > point, but I am way behind on my git todo list).
+>>
+>> The attached patch fixes the bug for me. =A0I'll leave it to others =
+to
+>> determine whether this is a good way to fix the problem.
+>
+> Note that you made it particularly hard to comment on your patch by n=
+ot
+> granting us the wish stated in Documentation/SubmittingPatches, namel=
+y to
+> inline your patch.
+>
+> I'll just forego inlining it myself, as I am way past my bed-time and
+> cannot be bothered.
 
-Why not making the hook to be skipped by default, and pass an explicit
-option to trigger the hook?
+Oops.  Here's the inlined patch with offset fixed, for others:
 
-I like Dscho's other suggestion to use patterns like .gitignore instead=
- of
-using hook scripts that needs to be ported across platforms, by the way=
+=46rom ec47aa09e5bc8d9a8c07cca9f8ef17a9898819c1 Mon Sep 17 00:00:00 200=
+1
+=46rom: Geoffrey Irving <irving@naml.us>
+Date: Mon, 10 Aug 2009 15:59:21 -0400
+Subject: [PATCH] setup.c: fix work tree setup for .git-files and aliase=
+s
+
+When .git-files and aliases are used together, the setup machinery
+gets confused and ends up with the wrong work_tree.  Specifically,
+git_work_tree_cfg is set to the correct value first, but set_work_tree
+resets git_work_tree_cfg to the current directory, which (at least in
+this case) is incorrect.
+
+set_work_tree now detects this case by checking to see if
+git_work_tree_cfg is already set.  If so, it leaves git_work_tree_cfg
+unchanged and instead uses the current directory to compute and return
+the correct prefix (where we are relative to the work tree).
+
+Signed-off-by: Geoffrey Irving <irving@naml.us>
+---
+ setup.c |   15 +++++++++++++--
+ 1 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index e3781b6..97f7eb1 100644
+--- a/setup.c
++++ b/setup.c
+@@ -198,13 +198,24 @@ int is_inside_work_tree(void)
+ static const char *set_work_tree(const char *dir)
+ {
+ 	char buffer[PATH_MAX + 1];
+
+ 	if (!getcwd(buffer, sizeof(buffer)))
+ 		die ("Could not get the current working directory");
+-	git_work_tree_cfg =3D xstrdup(buffer);
+ 	inside_work_tree =3D 1;
+
+-	return NULL;
++	if (!git_work_tree_cfg) {
++		git_work_tree_cfg =3D xstrdup(buffer);
++		return NULL;
++	} else {
++		size_t offset =3D strlen(git_work_tree_cfg);
++		if (memcmp(git_work_tree_cfg, buffer, offset)
++			|| (buffer[offset] && buffer[offset] !=3D '/'))
++			die ("fatal: not inside work tree (should not happen)");
++		if (!buffer[offset] || !buffer[offset+1])
++			return NULL;
++		return xstrdup(strcat(buffer + offset + 1, "/"));
++	}
+ }
+
+ void setup_work_tree(void)
+--=20
+1.6.3.3
+
+> However, I think that it is necessary to comment on your patch.
+>
+> There is a few style issues, such as declaring offset outside of the
+> block that is the only user, and there is the issue that you go out o=
+f
+> your way to append a slash if you're resetting the work tree, but not=
+ when
+> not resetting it.
+>
+> But the bigger issue is that you now broke overriding the work tree v=
+ia
+> the command line.
+>
+> The proper fix, of course, is to avoid calling the function with the =
+wrong
+> path to begin with.
+
+I'm happy that the correct fix is obvious, and apologize for missing it=
 =2E
+
+Geoffrey
