@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCH 3/6] Move setup of curl remote helper from transport.c to
- transport-helper.c
-Date: Tue, 11 Aug 2009 12:10:23 +0200
-Message-ID: <1249985426-13726-4-git-send-email-johan@herland.net>
+Subject: [RFC/PATCH 4/6] Add is_git_command_or_alias() for checking
+ availability of a given git command
+Date: Tue, 11 Aug 2009 12:10:24 +0200
+Message-ID: <1249985426-13726-5-git-send-email-johan@herland.net>
 References: <alpine.LNX.2.00.0908101205120.27553@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,26 +16,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mar9B-0008GJ-1h
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 15:12:13 +0200
+	id 1Mar98-0008GJ-0j
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 15:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbZHKNLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 09:11:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbZHKNLW
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 09:11:22 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:33911 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752498AbZHKNLD (ORCPT
+	id S1753061AbZHKNLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 09:11:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752116AbZHKNLI
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 09:11:08 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:41143 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752931AbZHKNLD (ORCPT
 	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 09:11:03 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KO7006YTIYCRBA0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 11 Aug 2009 12:11:00 +0200 (MEST)
+ with ESMTP id <0KO7001ZRIYE8O70@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 11 Aug 2009 12:11:02 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KO7008QYIY6Z330@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 11 Aug 2009 12:11:00 +0200 (MEST)
+ git@vger.kernel.org; Tue, 11 Aug 2009 12:11:02 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.8.11.95426
 X-Mailer: git-send-email 1.6.4.rc3.138.ga6b98.dirty
@@ -44,149 +44,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125553>
 
-Since the curl transport is now launched by the transport-helper mechanism,
-it makes sense to move the remaining curl-related code (i.e.
-curl_transport_push()) from transport.c into transport-helper.c.
+The transport-helper mechanism requires us to gracefully handle the case
+where a git command is not available for some reason.
 
-The patch also consolidates the two transport_helper_init() call sites
-("foreign" helper and curl helper).
+This patch introduces a simple function for querying the availability of a
+git command, without attempting to execute said command.
+
+The new function is very similar to the static is_git_command() function in
+builtin-help.c, except that this function also accepts a matching alias.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- transport-helper.c |   39 +++++++++++++++++++++++++++++++++++++++
- transport.c        |   48 ++++++------------------------------------------
- 2 files changed, 45 insertions(+), 42 deletions(-)
+ help.c |   21 +++++++++++++++++++++
+ help.h |    2 ++
+ 2 files changed, 23 insertions(+), 0 deletions(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index a901630..d3ce984 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -249,6 +249,34 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
- 	return ret;
+diff --git a/help.c b/help.c
+index 994561d..a616277 100644
+--- a/help.c
++++ b/help.c
+@@ -296,6 +296,27 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
+ 	old->names = NULL;
  }
  
-+#ifndef NO_CURL
-+static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
++int is_git_command_or_alias(const char *cmd)
 +{
-+	const char **argv;
-+	int argc;
++	struct cmdnames main_cmds, other_cmds;
 +
-+	if (flags & TRANSPORT_PUSH_MIRROR)
-+		return error("http transport does not support mirror mode");
++	memset(&main_cmds, 0, sizeof(main_cmds));
++	memset(&other_cmds, 0, sizeof(other_cmds));
++	memset(&aliases, 0, sizeof(aliases));
 +
-+	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
-+	argv[0] = "http-push";
-+	argc = 1;
-+	if (flags & TRANSPORT_PUSH_ALL)
-+		argv[argc++] = "--all";
-+	if (flags & TRANSPORT_PUSH_FORCE)
-+		argv[argc++] = "--force";
-+	if (flags & TRANSPORT_PUSH_DRY_RUN)
-+		argv[argc++] = "--dry-run";
-+	if (flags & TRANSPORT_PUSH_VERBOSE)
-+		argv[argc++] = "--verbose";
-+	argv[argc++] = transport->url;
-+	while (refspec_nr--)
-+		argv[argc++] = *refspec++;
-+	argv[argc] = NULL;
-+	return !!run_command_v_opt(argv, RUN_GIT_CMD);
++	git_config(git_unknown_cmd_config, NULL);
++
++	load_command_list("git-", &main_cmds, &other_cmds);
++
++	add_cmd_list(&main_cmds, &aliases);
++	add_cmd_list(&main_cmds, &other_cmds);
++	qsort(main_cmds.names, main_cmds.cnt,
++	      sizeof(main_cmds.names), cmdname_compare);
++	uniq(&main_cmds);
++
++	return is_in_cmdlist(&main_cmds, cmd);
 +}
-+#endif
 +
- int transport_helper_init(struct transport *transport)
+ const char *help_unknown_cmd(const char *cmd)
  {
- 	struct helper_data *data = xcalloc(sizeof(*data), 1);
-@@ -269,5 +297,16 @@ int transport_helper_init(struct transport *transport)
- 	transport->get_refs_list = get_refs_list;
- 	transport->fetch = fetch;
- 	transport->disconnect = disconnect_helper;
+ 	int i, n, best_similarity = 0;
+diff --git a/help.h b/help.h
+index 56bc154..6c43452 100644
+--- a/help.h
++++ b/help.h
+@@ -26,4 +26,6 @@ int is_in_cmdlist(struct cmdnames *c, const char *s);
+ void list_commands(const char *title, struct cmdnames *main_cmds,
+ 		   struct cmdnames *other_cmds);
+ 
++int is_git_command_or_alias(const char *cmd);
 +
-+	if (!strcmp(data->name, "http")
-+	 || !strcmp(data->name, "https")
-+	 || !strcmp(data->name, "ftp")) {
-+#ifdef NO_CURL
-+		error("git was compiled without libcurl support.");
-+#else
-+		transport->push = curl_transport_push;
-+#endif
-+	}
-+
- 	return 0;
- }
-diff --git a/transport.c b/transport.c
-index 26d9999..81a28bc 100644
---- a/transport.c
-+++ b/transport.c
-@@ -349,35 +349,6 @@ static int rsync_transport_push(struct transport *transport,
- 	return result;
- }
- 
--#ifndef NO_CURL
--static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
--{
--	const char **argv;
--	int argc;
--
--	if (flags & TRANSPORT_PUSH_MIRROR)
--		return error("http transport does not support mirror mode");
--
--	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
--	argv[0] = "http-push";
--	argc = 1;
--	if (flags & TRANSPORT_PUSH_ALL)
--		argv[argc++] = "--all";
--	if (flags & TRANSPORT_PUSH_FORCE)
--		argv[argc++] = "--force";
--	if (flags & TRANSPORT_PUSH_DRY_RUN)
--		argv[argc++] = "--dry-run";
--	if (flags & TRANSPORT_PUSH_VERBOSE)
--		argv[argc++] = "--verbose";
--	argv[argc++] = transport->url;
--	while (refspec_nr--)
--		argv[argc++] = *refspec++;
--	argv[argc] = NULL;
--	return !!run_command_v_opt(argv, RUN_GIT_CMD);
--}
--
--#endif
--
- struct bundle_transport_data {
- 	int fd;
- 	struct bundle_header header;
-@@ -815,26 +786,19 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		url = remote->url[0];
- 	ret->url = url;
- 
--	if (remote && remote->foreign_vcs) {
--		transport_helper_init(ret);
--		return ret;
--	}
-+	if (remote && remote->foreign_vcs)
-+		url = NULL;
- 
- 	if (url && !prefixcmp(url, "rsync:")) {
- 		ret->get_refs_list = get_refs_via_rsync;
- 		ret->fetch = fetch_objs_via_rsync;
- 		ret->push = rsync_transport_push;
- 
--	} else if (url
--	        && (!prefixcmp(url, "http://")
--	         || !prefixcmp(url, "https://")
--	         || !prefixcmp(url, "ftp://"))) {
-+	} else if (!url
-+	        || !prefixcmp(url, "http://")
-+	        || !prefixcmp(url, "https://")
-+	        || !prefixcmp(url, "ftp://")) {
- 		transport_helper_init(ret);
--#ifdef NO_CURL
--		error("git was compiled without libcurl support.");
--#else
--		ret->push = curl_transport_push;
--#endif
- 
- 	} else if (url && is_local(url) && is_file(url)) {
- 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+ #endif /* HELP_H */
 -- 
 1.6.4.rc3.138.ga6b98.dirty
