@@ -1,87 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
- vcs
-Date: Mon, 10 Aug 2009 22:12:20 -0700
-Message-ID: <7vmy67orwr.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
- <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.0908092153520.27553@iabervon.org>
- <200908101032.12835.johan@herland.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Fix typos in git-remote.txt and git-symbolic-ref.txt
+Date: Tue, 11 Aug 2009 09:09:32 +0200
+Message-ID: <200908110909.33904.trast@student.ethz.ch>
+References: <20090811005207.GE24183@headley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Aug 11 07:29:06 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: =?utf-8?q?=C5=A0t=C4=9Bp=C3=A1n?= =?utf-8?q?_N=C4=9Bmec?= 
+	<stepan.nemec@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 13:50:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Majuv-0006x7-5B
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 07:29:01 +0200
+	id 1MapsN-0006tQ-Hy
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 13:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905AbZHKF1Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 01:27:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbZHKF1P
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 01:27:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42527 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZHKF0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 01:26:17 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 74A5C25C5D;
-	Tue, 11 Aug 2009 01:12:38 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 60D2F25C5C; Tue, 11 Aug 2009
- 01:12:27 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 96857E06-8635-11DE-A7D6-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1750822AbZHKLuj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 07:50:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbZHKLuj
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 07:50:39 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:13241 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750773AbZHKLui convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 07:50:38 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
+ 2009 09:09:48 +0200
+Received: from thomas.localnet (129.132.208.187) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
+ 2009 09:09:49 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <20090811005207.GE24183@headley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125514>
 
-Johan Herland <johan@herland.net> writes:
+Thanks for the updated version!
 
-> On Monday 10 August 2009, Daniel Barkalow wrote:
-> ...
->> The only way I've been able to come up with to support this at all
->> usefully is to have a bunch of helper-specific options that specify what
->> the helper needs to know about the locations you consider to be part of
->> the project and an option that tells git that this remote uses the p4
->> helper. I'm not sure what makes sense for other helpers, but the case I
->> actually use needs something like what's in this patch.
->
-> I'm somewhat agnostic on this issue. At the moment, I follow the P4 cues,
-> and use a config like this:
->
->     [remote "foo"]
->         vcs = cvs
->         cvsRoot = ":pserver:user@cvs.server.example.com/var/cvs/cvsroot"
->         cvsModule = "bar"
->         ...
->
-> But I could just as well use a config like this instead:
->
->     [remote "foo"]
->         url = "cvs::pserver:user@cvs.server.example.com/var/cvs/cvsroot#bar"
->         ...
->
-> Either is fine with me, although I suspect users might find the
-> current/first alternative easier to parse.
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec wrote:
+>=20
+> I did look at some of the other documentation files (and now also gre=
+pped
+> the whole directory for `--' and `\--' occurences), but wasn't able t=
+o see
+> any rule or consistence in the usage. Whether it is an indication of
+> real inconsistence or just another example of my ignorance I do not k=
+now
+> (not now, at least).
 
-Ah, ok, that is a much better (rather, easier to understand for _me_)
-example to illustrate what Daniel meant, and I can well imagine P4
-counterpart of cvsRoot may resemble an URL even less than your cvsRoot
-example does.
+Well, as I said I'm not sure what asciidoc versions, if any, needed
+the backslash inside backtick quoting.  However, there is precedent in
 
-If the foreign system uses a single string as "the string to identify
-location", like the latter (which is a good example, even though I do not
-think a CVS folks write a reference to a module like you wrote), then I
-think it makes sense to use that form as remote.$name.url.  But if naming
-a location with a single simple string is an alien notion to the foreign
-system, I agree with Daniel that we do not gain much by trying to shoehorn
-them into a single remote.$name.url configuration.
+commit e1ccf53a60657930ae7892387736c8b6a91ec610
+Author: Yasushi SHOJI <yashi@atmark-techno.com>
+Date:   Mon Sep 12 02:29:10 2005 +0900
+
+    [PATCH] Escape asciidoc's built-in em-dash replacement
+
+    AsciiDoc replace '--' with em-dash (&#8212) by default. em-dash
+    looks a lot like a single long dash and it's very confusing when
+    we are talking about command options.
+
+    Section 21.2.8 'Replacements' of AsciiDoc's User Guide says that a
+    backslash in front of double dash prevent the replacement.  This
+    patch does just that.
+
+    Signed-off-by: Yasushi SHOJI <yashi@atmark-techno.com>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+So until we know for certain that they're not needed, I'd rather not
+actively remove them.  Admittedly, there are lots of instances of `--
+in the docs too, so making sure which way is "right" and then
+replacing _all_ of them would probably be a nice cleanup.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
