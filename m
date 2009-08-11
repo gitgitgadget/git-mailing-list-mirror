@@ -1,60 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a
- foreign vcs
-Date: Tue, 11 Aug 2009 19:02:33 -0400
-Message-ID: <20090811230233.GA25642@coredump.intra.peff.net>
-References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
- <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
- <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
- <alpine.DEB.1.00.0908111817490.4638@intel-tinevez-2-302>
- <20090811214849.GA3868@sigill.intra.peff.net>
- <20090812075914.6117@nanako3.lavabit.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: sharing git work while downstream from svn?
+Date: Tue, 11 Aug 2009 23:03:47 +0000
+Message-ID: <32541b130908111603v1e3f6c42peac792caf7097e0d@mail.gmail.com>
+References: <auto-000020209577@sci.utah.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 01:02:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tfogal@sci.utah.edu
+X-From: git-owner@vger.kernel.org Wed Aug 12 01:04:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb0Mb-0003Pl-Vl
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:02:42 +0200
+	id 1Mb0O9-0003wU-Rb
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401AbZHKXCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 19:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754327AbZHKXCc
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:02:32 -0400
-Received: from peff.net ([208.65.91.99]:57861 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754124AbZHKXCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 19:02:32 -0400
-Received: (qmail 7138 invoked by uid 107); 11 Aug 2009 23:02:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 11 Aug 2009 19:02:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Aug 2009 19:02:33 -0400
-Content-Disposition: inline
-In-Reply-To: <20090812075914.6117@nanako3.lavabit.com>
+	id S1755542AbZHKXEI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 19:04:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbZHKXEH
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:04:07 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:38114 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754124AbZHKXEH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 19:04:07 -0400
+Received: by yxe5 with SMTP id 5so5173750yxe.33
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 16:04:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=u5P1rHE+3qNDB1L7PI6nfXt+jYfiqa6x8MUsv72wUxM=;
+        b=NJNVOhc9E7aKREsn5EfqzYP2obotQfGoXO1WGV6DDrfKGjhzhi+ltEZTQTwpG4JriF
+         4R7g9J5mbmEgnTVnRq41sFxhzFYMEL2QBCFFxcwK37oEQ5MyU5DB41Ui7nuMEXMCbd4W
+         uU3aak2dTwJSZY7LYRXQuW58rkRVP4LoqPFnQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UD0PvNbT/y73ODYshRM0DYZfLGgipxnqqDyTcDdcwBmqbbEWv0bGZhpmcKXeUMKfLB
+         9yIOtap+1P/PbQW1uvUTnzhpYehSVSER7effh8o4vLIIhEN7ln2II+wwzgRSvaMLTO6Y
+         6bj7UbO8e3ST51KkGOHgCuJYbryuMoCplV9Wc=
+Received: by 10.150.219.18 with SMTP id r18mr5082481ybg.224.1250031847068; 
+	Tue, 11 Aug 2009 16:04:07 -0700 (PDT)
+In-Reply-To: <auto-000020209577@sci.utah.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125615>
 
-On Wed, Aug 12, 2009 at 07:59:14AM +0900, Nanako Shiraishi wrote:
+On Tue, Aug 11, 2009 at 10:55 PM, tom fogal<tfogal@alumni.unh.edu> wrot=
+e:
+> This gets to be a mess when trunk changes: I'll rebase + potentially
+> fix some conflicts. =A0Other developers with some of the experimental
+> patches will svn update, and get similar conflicts. =A0These might di=
+ffer
+> in subtle ways, and now exchanging patches gets more difficult.
 
-> Then how about using a prefix that has been invalid, "vcs::$string",
-> for example?
+We use git-svn at Versabanq, and our process is very simple: never use
+rebase, period.
 
-I have no problem with that, and I think it makes it even more visually
-obvious what is going. For example:
+Instead, do all your work in a branch *other* than the git-svn main
+branch.  When you're ready to merge your stuff into svn, do:
 
-  svn::http://server/path/to/repo
+git checkout git-svn
+git svn rebase
+git checkout myworkingbranch
+git merge git-svn
+   # and resolve any conflicts
+git checkout git-svn
+git merge --no-ff myworkingbranch   # the --no-ff is very important her=
+e!
+git svn dcommit
 
-makes the "svn" prefix jump out a bit more.
+This basically results in a *single* commit getting sent to svn,
+rather than the batch of all the git commits you've been working on.
+Most svn users don't care about this, because they lose all that
+granularity whenever they merge a branch anyhow.  Meanwhile, all your
+git users never have to worry about rebasing *anything* and can use
+the normal git merge/pull stuff.
 
--Peff
+Have fun,
+
+Avery
