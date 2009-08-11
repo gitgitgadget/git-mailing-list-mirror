@@ -1,112 +1,104 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: block-sha1: improve code on large-register-set machines
-Date: Tue, 11 Aug 2009 16:14:19 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908111602020.28882@localhost.localdomain>
-References: <alpine.LFD.2.01.0908101637440.3417@localhost.localdomain> <alpine.LFD.2.00.0908102246210.10633@xanadu.home> <alpine.LFD.2.01.0908110810410.3417@localhost.localdomain> <alpine.LFD.2.00.0908111437160.10633@xanadu.home>
- <alpine.LFD.2.01.0908111550470.28882@localhost.localdomain>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: sharing git work while downstream from svn?
+Date: Tue, 11 Aug 2009 23:17:24 +0000
+Message-ID: <32541b130908111617m12fa4b97vddfa9793dff31f29@mail.gmail.com>
+References: <auto-000020209577@sci.utah.edu> <32541b130908111603v1e3f6c42peac792caf7097e0d@mail.gmail.com> 
+	<auto-000020209671@sci.utah.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 01:14:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tom fogal <tfogal@alumni.unh.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 12 01:18:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb0YF-0006tF-3o
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:14:43 +0200
+	id 1Mb0bV-0007yP-FR
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 01:18:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546AbZHKXOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 19:14:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754375AbZHKXOe
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:14:34 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:39611 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753430AbZHKXOd (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 19:14:33 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7BNEJPS024489
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 11 Aug 2009 16:14:20 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7BNEJuL003512;
-	Tue, 11 Aug 2009 16:14:19 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0908111550470.28882@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1755591AbZHKXRo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 19:17:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755547AbZHKXRo
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 19:17:44 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:44871 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755557AbZHKXRn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 19:17:43 -0400
+Received: by yxe5 with SMTP id 5so5182378yxe.33
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 16:17:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HEnNmwbhDWZM4q2ZKhyMSHFcKn/qGJVrPdVMQaR0USM=;
+        b=P93QJiJ1VoK2fr90wTOfFp/x1N7GqiU6nQmVC0J4CHYhjBhN0SHB2CYm6r3Qmn0L+R
+         ftBWD0b85Vq1k7BGBJdjYKDn+7dSI4SX/lBPQa3V5Ksl6HVVtOkh6UisjsCzqxzBAHZK
+         D/e48sWQ40DoWJDx6C16VgBtFu2W034sYRlx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vbgJbVyLXzhDmludQVivY3Y6zjpOScKh4ntyh32hsAXKcorqcUWuAVvO5j/LBXJ51+
+         DkBYsdQHgVXoxGcnzKmcsO02PxoGE9nprWHDzT0pb8EqdWSDFMV9WudEu/xP0+mdzllp
+         wrJMyGkFsuOICGPW9I63/D3o67mDRrcZSjtz0=
+Received: by 10.151.78.19 with SMTP id f19mr6333559ybl.182.1250032664090; Tue, 
+	11 Aug 2009 16:17:44 -0700 (PDT)
+In-Reply-To: <auto-000020209671@sci.utah.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125620>
 
+On Tue, Aug 11, 2009 at 11:14 PM, tom fogal<tfogal@alumni.unh.edu> wrot=
+e:
+> Avery Pennarun <apenwarr@gmail.com> writes:
+>> On Tue, Aug 11, 2009 at 10:55 PM, tom fogal<tfogal@alumni.unh.edu> w=
+rote:
+>> > This gets to be a mess when trunk changes: I'll rebase + potential=
+ly
+>> > fix some conflicts. =A0Other developers with some of the experimen=
+tal
+>> > patches will svn update, and get similar conflicts. =A0These might=
+ differ
+>> > in subtle ways, and now exchanging patches gets more difficult.
+>>
+>> Instead, do all your work in a branch *other* than the git-svn main
+>> branch. =A0When you're ready to merge your stuff into svn, do:
+> [snip]
+>> This basically results in a *single* commit getting sent to svn,
+>> rather than the batch of all the git commits you've been working
+>> on. =A0Most svn users don't care about this, because they lose all t=
+hat
+>> granularity whenever they merge a branch anyhow.
+>
+> ... but I, as a git user forced to live in an svn world, *do* value a=
+ll
+> of that history. =A0When I find a bug a month later, I want git-bisec=
+t
+> to be useful. =A0Further, when I'm reviewing sets of changes in a sea=
+rch
+> for some particular change, I want to be able to skip over large sets
+> of patches simply by looking at the first line of a commit log. =A0If=
+ I
+> squash all that history down, I have to wade into the patch itself.
 
+That's the great thing!  Your git history never gets lost with this
+technique, since you *never* rewind any branches.  The detailed
+history just never makes it into svn, which has no way of representing
+it anyhow.
 
-On Tue, 11 Aug 2009, Linus Torvalds wrote:
+As a bonus, the fact that your git history becomes more and more
+detailed vs. the svn history slowly makes your case for switching
+everybody else to git that much stronger :)
 
-> 
-> 
-> On Tue, 11 Aug 2009, Nicolas Pitre wrote:
-> > 
-> > Well... gcc is really strange in this case (and similar other ones) with 
-> > ARM compilation.  A good indicator of the quality of the code is the 
-> > size of the stack frame.  When using the "+m" then gcc creates a 816 
-> > byte stack frame, the generated binary grows by approx 3000 bytes, and 
-> > performances is almost halved (7.600s).  Looking at the assembly result 
-> > I just can't figure out all the crazy moves taking place.  Even the 
-> > version with no barrier what so ever produces better assembly with a 
-> > stack frame of 560 bytes.
-> 
-> Ok, that's just crazy. That function has a required stack size of exactly 
-> 64 bytes, and anything more than that is just spilling. And if you end up 
-> with a stack frame of 560 bytes, that means that gcc is doing some _crazy_ 
-> spilling.
+Have fun,
 
-Btw, what I think happens is:
+Avery
 
- - gcc turns all those array accesses into pseudo's 
-
-   So now the 'array[16]' is seen as just another 16 variables rather than 
-   an array.
-
- - gcc then turns it into SSA, where each assignment basically creates a 
-   new variable. So the 16 array variables (and 5 regular variables) are 
-   now expanded to 80 SSA asignments (one array assignment per SHA1 round) 
-   plus an additional 2 assignments to the "regular" variables per round 
-   (B and E are changed each round). So in SSA form, you actually end up 
-   having 240 pseudo's associated with the actual variables. Plus all 
-   the temporaries of course.
-
- - the thing then goes crazy and tries to generate great code from that 
-   internal SSA model. And since there are never more than ~25 things 
-   _live_ at any particular point, it works fine with lots of registers, 
-   but on small-register machines gcc just goes crazy and has to spill. 
-   And it doesn't spill 'array[x]' entries - it spills the _pseudo's_ it 
-   has created - hundreds of them.
-
- - End result: if the spill code doesn't share slots, it's going to create 
-   a totally unholy mess of crap.
-
-That's what the whole 'volatile unsigned int *' game tried to avoid. But 
-it really sounds like it's not working too well for you. And the _big_ 
-memory barrier ends up helping just because with that in place, you end up 
-being almost entirely unable to schedule _anything_ between the different 
-SHA rounds, so you end up with only six or seven variables "live" in 
-between those barriers, and the stupid register allocator/spill logic 
-doesn't break down too badly.
-
-The thing is, if you do full memory barriers, then you're probably better 
-off making both the loads and the stores be "volatile". That should have 
-similar effects.
-
-The downside with that is that it really limits the loads. So (like the 
-full memory barrier) it's a big hammer approach. But it probably generates 
-better code for you, because it avoids the mental breakdown of gcc 
-spilling its pseudo's.
-
-			Linus
+P.S. Shameless plug: I wrote the chapter about git-svn in O'Reilly's
+"Version Control With Git," in which I described this technique in
+more detail.  (I *don't* make any money on commissions on that book,
+as I'm not the primary author.)
