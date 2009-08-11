@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCH 6/6] Add testcase to verify handling of missing remote
- helper programs
-Date: Tue, 11 Aug 2009 12:10:26 +0200
-Message-ID: <1249985426-13726-7-git-send-email-johan@herland.net>
+Subject: [RFC/PATCH 0/6] Graceful handling of missing remote helpers
+Date: Tue, 11 Aug 2009 12:10:20 +0200
+Message-ID: <1249985426-13726-1-git-send-email-johan@herland.net>
 References: <alpine.LNX.2.00.0908101205120.27553@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -11,31 +10,31 @@ Cc: Johan Herland <johan@herland.net>, barkalow@iabervon.org,
 	gitster@pobox.com, benji@silverinsanity.com,
 	Johannes.Schindelin@gmx.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 15:12:31 2009
+X-From: git-owner@vger.kernel.org Tue Aug 11 15:12:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mar98-0008GJ-Pe
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 15:12:11 +0200
+	id 1Mar95-0008GJ-NR
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 15:12:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753055AbZHKNLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 09:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751886AbZHKNLH
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 09:11:07 -0400
+	id S1752944AbZHKNLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 09:11:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751670AbZHKNLC
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 09:11:02 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:40825 "EHLO
 	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752116AbZHKNLE (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 09:11:04 -0400
+	by vger.kernel.org with ESMTP id S1752035AbZHKNLB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 09:11:01 -0400
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KO700LETIYHLEC0@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 11 Aug 2009 12:11:05 +0200 (MEST)
+ with ESMTP id <0KO700LDVIY8LEC0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 11 Aug 2009 12:10:56 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KO7008QYIY6Z330@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 11 Aug 2009 12:11:05 +0200 (MEST)
+ git@vger.kernel.org; Tue, 11 Aug 2009 12:10:56 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.8.11.95426
 X-Mailer: git-send-email 1.6.4.rc3.138.ga6b98.dirty
@@ -44,75 +43,72 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125551>
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- t/t5590-remote-helper-missing.sh |   56 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
+On Mon, 10 Aug 2009, Daniel Barkalow wrote:
+> > > In order to support this, there just needs to be a call to check whether
+> > > "remote-<something>" is an available git command (without running it or
+> > > giving an error), and the helper code should be used if it is. This is
+> > > actually required so that people with workstations whose domain is
+> > > .kernel.org and who have cloned "master:/home/linus/something.git" don't
+> > > start getting "remote-master isn't a git command" errors (that is,
+> > > misinterpreting ssh-format location hostnames as helper names. Johan,
+> > > perhaps you could write that for your CVS helper?
+> >
+> > Sorry, not following you here. Write exactly what?
+> >
+> > - The code in the transport layer for checking if "remote-<something>"
+> >   is an available git command?
+>
+> That's what I was thinking.
+
+Ok, I've spent way too much time on this, so if this doesn't cut it, I leave it
+up to someone else to pick up the pieces.
+
+The following patch series implements what I understand to be the current
+consensus (or at least a good compromise) in this thread:
+
+- There are two ways to indicate that a remote helper should be used:
+  1. remote.foo.vcs = <something>
+  2. remote.foo.url starts with "<something>:"
+  If both are present, remote.foo.vcs is preferred.
+
+- Teach transport_helper_init() to check if "remote-<something>" is an
+  available git command. If so, use it. If not, gracefully abort the
+  transport-helper setup, and fall back to the "native" transport code.
+
+- Skip the transport-helper code is the remote is obviously "native" (i.e.
+  URL starts with "git:"/"file:"/"ssh:"/"rsync:")
+
+AFAICS this should make Daniel happy because his P4 setup will still work, and
+it should also make Dscho happy, since he can tell people to
+  "git clone cvs::pserver:anonymous@cool.haxx.se:/cvsroot/curl#curl"
+(of course, this depends on the CVS helper supporting remote.foo.url, which it
+will, in a future iteration)
+
+The non-trivial part of the series is in patch #5.
+
+Implementing the rsync handling as another remote helper program is left as an
+exercise for the reader...
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (6):
+  Minor unrelated fixes
+  transport_get(): Don't SEGFAULT on missing url
+  Move setup of curl remote helper from transport.c to transport-helper.c
+  Add is_git_command_or_alias() for checking availability of a given git command
+  Let transport_helper_init() decide if a remote helper program can be used
+  Add testcase to verify handling of missing remote helper programs
+
+ help.c                           |   23 ++++++++++++-
+ help.h                           |    2 +
+ t/t5590-remote-helper-missing.sh |   56 +++++++++++++++++++++++++++++++
+ transport-helper.c               |   67 +++++++++++++++++++++++++++++++++++--
+ transport.c                      |   56 ++++++-------------------------
+ 5 files changed, 154 insertions(+), 50 deletions(-)
  create mode 100755 t/t5590-remote-helper-missing.sh
-
-diff --git a/t/t5590-remote-helper-missing.sh b/t/t5590-remote-helper-missing.sh
-new file mode 100755
-index 0000000..3bc2bc2
---- /dev/null
-+++ b/t/t5590-remote-helper-missing.sh
-@@ -0,0 +1,56 @@
-+#!/bin/sh
-+
-+test_description='test graceful failure when missing remote helper program'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup repository' '
-+	echo content >file &&
-+	git add file &&
-+	git commit -m one &&
-+	git config remote.missing.vcs foo &&
-+	git remote add missing2 foo:/nonexisting/path
-+'
-+
-+test_expect_success 'fetch changes from "missing" remote' '
-+	cat <<EOF >expect &&
-+warning: Could not find remote helper command "git remote-foo". Assuming native remote.
-+EOF
-+	! git fetch missing >actual 2>&1 &&
-+	head -n1 actual >actual.first &&
-+	test_cmp expect actual.first
-+'
-+
-+test_expect_success 'fetch changes from "missing2" remote' '
-+	cat <<EOF >expect &&
-+warning: Could not find remote helper command "git remote-foo". Assuming native remote.
-+EOF
-+	! git fetch missing2 >actual 2>&1 &&
-+	head -n1 actual >actual.first &&
-+	test_cmp expect actual.first
-+'
-+
-+test_expect_success 'push changes to "missing" remote' '
-+	echo "more content" >>file &&
-+	git add file &&
-+	git commit -m two &&
-+	cat <<EOF >expect &&
-+warning: Could not find remote helper command "git remote-foo". Assuming native remote.
-+EOF
-+	! git push --all missing >actual 2>&1 &&
-+	head -n1 actual >actual.first &&
-+	test_cmp expect actual.first
-+'
-+
-+test_expect_success 'push changes to "missing2" remote' '
-+	echo "even more content" >>file &&
-+	git add file &&
-+	git commit -m three &&
-+	cat <<EOF >expect &&
-+warning: Could not find remote helper command "git remote-foo". Assuming native remote.
-+EOF
-+	! git push --all missing2 >actual 2>&1 &&
-+	head -n1 actual >actual.first &&
-+	test_cmp expect actual.first
-+'
-+
-+test_done
--- 
-1.6.4.rc3.138.ga6b98.dirty
