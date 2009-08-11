@@ -1,120 +1,80 @@
-From: Matthew Lear <matt@bubblegen.co.uk>
-Subject: Unable to checkout a branch after cloning
-Date: Tue, 11 Aug 2009 11:10:26 +0100
-Message-ID: <4A814392.4080803@bubblegen.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Ori Avtalion <ori@avtalion.name>
+Subject: [PATCH] git stash: Give friendlier error when there is nothing to
+	apply
+Date: Tue, 11 Aug 2009 14:12:13 +0300
+Message-ID: <4a81559c.05ae660a.591b.010b@mx.google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 11 13:55:54 2009
+X-From: git-owner@vger.kernel.org Tue Aug 11 13:56:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MapxE-0000cc-RZ
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 13:55:49 +0200
+	id 1MapxN-0000cc-4E
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 13:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbZHKLxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 07:53:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbZHKLxG
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 07:53:06 -0400
-Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:29039 "EHLO
-	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751092AbZHKLxF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 07:53:05 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApoEADrigErUnw4U/2dsb2JhbADRQ4QZBQ
-Received: from pih-relay08.plus.net ([212.159.14.20])
-  by relay.ptn-ipout01.plus.net with ESMTP; 11 Aug 2009 11:18:54 +0100
-Received: from [80.229.236.194] (helo=[192.136.1.12])
-	 by pih-relay08.plus.net with esmtp (Exim) id 1MaoJH-0003xY-9u
-	for git@vger.kernel.org; Tue, 11 Aug 2009 11:10:27 +0100
-User-Agent: Thunderbird 2.0.0.22 (X11/20090626)
-X-Plusnet-Relay: 13693960936ca0499fb18918b18e1140
+	id S1751415AbZHKLy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 07:54:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbZHKLy1
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 07:54:27 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:35752 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbZHKLy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 07:54:26 -0400
+Received: by bwz19 with SMTP id 19so3115009bwz.37
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 04:54:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:sender:from:to
+         :date:subject;
+        bh=n0o9FYN3G1JLUU3c2NrYKia8XxT8kROij3OEgjKWdAc=;
+        b=LeBxEs9huJsMR1cO7v5G9/jnBE4uf0P4MeAkWlNsbdwKKMXnC4ZpxQQ5F71vTCHjOU
+         nRaIkoysx94l1kFwPdXLAIk8DLxhASgZMwFuxPvIEXPY6imWwDVc/AHq+Fyzb6/FCEw2
+         pUR6ltCf8yakX/dtQ+3cZRXXf6OBqT04tGTxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:sender:from:to:date:subject;
+        b=CKoxzDZ2fIaNUEYFcfDAkqDnTfq2vXx4pqTWkAhSoI2IG7xdDsE0o0nxDuG0rbZQrG
+         KyZB0WXxHmFXdOmTIeXAJGy/DEuIX+eXOsDnWSG5v/Eem2GsiHISYfP2TPd38dGJGehr
+         LjPJBpGraHZ9j3K3jJWKtmiw30+lKlWC2vpKs=
+Received: by 10.103.5.2 with SMTP id h2mr2388883mui.132.1249990045622;
+        Tue, 11 Aug 2009 04:27:25 -0700 (PDT)
+Received: from ?127.0.1.1? (bzq-82-81-59-125.red.bezeqint.net [82.81.59.125])
+        by mx.google.com with ESMTPS id w5sm25086947mue.4.2009.08.11.04.27.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 11 Aug 2009 04:27:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125517>
 
-Hi all,
+The old message was scary and included a 'fatal' error from rev-parse:
+     fatal: Needed a single revision
+     : no valid stashed state found
 
-Apologies for perhaps a silly question, but I'd very much appreciate a
-little bit of assistance.
+The new message is identical to the one given by 'git stash branch', and
+given *before* the check for a dirty working tree.
 
-I've set up a git repository on a machine accessible from the internet
-with the intention to share code with another developer. We clone the
-repository, commit changes then push back as you'd expect. The server
-runs gitweb for repository browsing. Clients are running git v1.6.0.6.
+Previously, the command prompted the user to clean a dirty working tree
+when there is nothing to apply.
 
-When I created the initial repository I also created two additional
-branches - 'upstream' and 'custom'. The former is to act as a 'vendor
-branch' and the latter contains code specific to the custom platform
-that we're working on. The master branch contains merges from the
-upstream branch and also changes that we've made. The custom branch
-contains merges from master with custom platform specific changes.
+Signed-off-by: Ori Avtalion <ori@avtalion.name>
+---
+ git-stash.sh |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I've committed changes and on both upstream and custom branches as work
-progressed, merged them where appropriate, added tags etc and pushed
-everything to the remote repository. No problem. I can view the
-branches, tags etc in gitweb and everything looks fine.
-
-However, I can clone a new repository just fine but I'm unable to
-checkout the upstream or custom branches. After cloning, only the master
-branch is available, ie:
-
-> git checkout upstream
-error: pathspec 'upstream' did not match any file(s) known to git.
-
-> git branch -a
-* master
-  origin/HEAD
-  origin/master
-
-.git/config:
-
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        url = https://mysite/git/project.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-
-But the initial local repository where I work (ie created the branches,
-committed changes, tag, push etc) seems to be fine, ie
-
-> git checkout upstream
-Switched to branch "upstream"
-
-> git branch -a
-  custom
-* master
-  upstream
-
-.git/config:
-
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-[remote "origin"]
-        url = https://mysite/git/project.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-
-
-Developers need to be able to clone the repository and then switch to
-the appropriate branch in order to work. However it seems that after a
-clone, only the master branch is available.
-
-Why is this?
-
-Any help would be much appreciated indeed.
-
-Many thanks,
---  Matt
+diff --git a/git-stash.sh b/git-stash.sh
+index 03e589f..aa84144 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -162,6 +162,8 @@ show_stash () {
+ }
+ 
+ apply_stash () {
++	have_stash || die 'Nothing to apply'
++
+ 	git update-index -q --refresh &&
+ 	git diff-files --quiet --ignore-submodules ||
+ 		die 'Cannot apply to a dirty working tree, please stage your changes'
+-- 
+1.6.4.73.gc144.dirty
