@@ -1,120 +1,150 @@
-From: Mark A Rada <marada@uwaterloo.ca>
-Subject: Re: [PATCH] git-instaweb: detect difference between mod_cgi and mod_cgid for apache2
-Date: Mon, 10 Aug 2009 21:23:30 -0400
-Message-ID: <7B93F2E3-D6F9-4A5D-BAE1-F630F09E9909@mailservices.uwaterloo.ca>
-References: <8366E0BD-3A64-4DDD-B12C-2FD48C357FFB@mailservices.uwaterloo.ca>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [msysGit] Using VC build git
+Date: Tue, 11 Aug 2009 09:26:21 +0800
+Message-ID: <1976ea660908101826q26faa37ao7920d5cf9d4f53fd@mail.gmail.com>
+References: <1976ea660908100656u57407131h83761329468607a8@mail.gmail.com>
+	 <alpine.DEB.1.00.0908101606220.8324@intel-tinevez-2-302>
+	 <alpine.DEB.1.00.0908101609170.8324@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark A Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Tue Aug 11 03:23:47 2009
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 11 03:26:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mag5a-0007IC-I7
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 03:23:47 +0200
+	id 1Mag8F-0007xn-8p
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 03:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753675AbZHKBXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Aug 2009 21:23:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbZHKBXf
-	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 21:23:35 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:40992 "EHLO
-	psyche.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752439AbZHKBXe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Aug 2009 21:23:34 -0400
-Received: from [192.168.1.102] (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
-	(authenticated bits=0)
-	by psyche.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7B1NUUZ010240
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 10 Aug 2009 21:23:34 -0400
-In-Reply-To: <8366E0BD-3A64-4DDD-B12C-2FD48C357FFB@mailservices.uwaterloo.ca>
-X-Mailer: Apple Mail (2.936)
-X-UUID: c0c2aedf-cfd8-4213-a231-d027c7d678d1
+	id S1753375AbZHKB0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Aug 2009 21:26:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753054AbZHKB0V
+	(ORCPT <rfc822;git-outgoing>); Mon, 10 Aug 2009 21:26:21 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:48311 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752619AbZHKB0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Aug 2009 21:26:20 -0400
+Received: by qyk34 with SMTP id 34so2996956qyk.33
+        for <git@vger.kernel.org>; Mon, 10 Aug 2009 18:26:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bg8Xk/duwiq2fPJFW3O1c5e0iQXtkBsQ/RoKi251/no=;
+        b=GGtVSTi5D38wtPl3fJLFZGmHTe+FInWeuHXkKICis1x19kxctK7WCHGhNeMB8Amy8G
+         tcrivOxfNFXA9iCzKVovnxvI0aldmOVe4jK+0uhCFVbjeaqwVORbPoJr6FZl0QwSSfXv
+         AqY3jehuaB7SG47CpGg+0jfZRqwKLrx2VYOUA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=I9IkZitMY/g865WN/2VA4dH4VIiKbW4XyrOeCQsnQhGhGqFmd4rB/8XqGqdu//5gri
+         bfvxqu2W2iWEuPyirQH6Q8h2sTq4IlgwJqyeg6FI+w2QZZipksESg0hfCFAxU0USH36J
+         o4xl1VMhdbYFlHlk/u0i4PWjQVgZ2qpxSQshw=
+Received: by 10.224.37.76 with SMTP id w12mr3833995qad.66.1249953981181; Mon, 
+	10 Aug 2009 18:26:21 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908101609170.8324@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125507>
 
-If you haven't already, ignore this patch, I'm pretty sure it won't  
-work for cases where mod_cgid
-is built in. I think it should be including the ScriptSock directive  
-when built in as well, but I don't
-have a setup to test that on, and the apache documentation isn't very  
-specific.
+Thank you take care my patch.
+I can fix all problems.
 
-I'll try again later, sorry for the spam.
+This patch is base on v1.6.4 release.  My working branch is vc_build
+at git://repo.or.cz/tgit.git.
+
+That is actually prototype to approve VC can build git.
+The code style is not big problem. I will fix it.
+
+VC build will reuse many msysgit works because msysgit really do many
+work at windows porting.
+
+I think the below is most important problem.
+
+1.  Where are vcbuild directory put, is it okay under contrib ?
+2.  How to handle external library, such as zlib? Can use submodule?
 
 
---
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
-
-
-On 10-Aug-09, at 1:19 AM, Mark A Rada wrote:
-
-> I'm not sure if this should have been two patches or just one.
+2009/8/10, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
 >
-> First I changed the check of whether mod_cgi is built in or not from  
-> matching against
-> 'mod_cgi.c' to 'mod_cgi' because I made the assumption that mod_cgid  
-> would be called
-> 'mod_cgid.c' (I haven't actually checked this, but it sounds  
-> reasonable). Then, the
-> second change handles the two cases when no cgi module is built in,  
-> which I  did try
-> (for mod_cgid that is).
+> On Mon, 10 Aug 2009, Johannes Schindelin wrote:
 >
-> Also, should the socket needed for mod_cgid be put in $GIT_DIR or  
-> somewhere else?
+>> Please, we have _high_ standards in git.git, and I really do not want to
+>> have to take anything to Junio that does not fulfill that standard.
+>
+> To elaborate:  if I see something like this in the --stat:
+>
+>  contrib/vcbuild/include/zlib.h        | 1357
+> +++++++++++++++++++++++++++++++++
+>  contrib/vcbuild/lib/zlib.lib          |  Bin 0 -> 104148 bytes
+>
+> ... I know already that there is no way this can make it into git.git.
+> There just is not.
+>
+> Also, if the first commit says nothing else than "Rebase to v1.6.4", it
+> is pretty obvious to me that I will not sign off on that (and I just guess
+> that is the very reason you did not sign off on that, either).
+>
+> Further, putting anything into contrib/ that really belongs into contrib/
+> is not cutting it, either.
+>
+> And I am pretty astonished that mingw.[ch] is touched, as VC is definitely
+> not MinGW32.
+>
+> Changing 1000+ lines of libgit.vcproj in almost every commit is also
+> something I really do not look upon favorably.
+>
+> Finally, if _no single_ commit message says _anything_ about the reasons
+> why you had to change code outside of vcbuild/, I am only puzzled.
+>
+> Now, I want to give you a pretty clear idea what has to be done if this is
+> going into 4msysgit.git, ever, because you obviously spent a lot of time
+> on it, and other people want it, too:
+>
+> - changing "open" to "_open" in mingw.c is a no-no-no.  If you need to use
+>   "_open" in VC, then define "open" in the compile flags for mingw.c, but
+>   leave code that is not written for VC alone.
+>
+> - introducing trailing whitespace is usually a sign of not caring enough
+>   about clean and neat code.  So just don't do it.
+>
+> - making link() fail on MinGW32 just to be able to compile it with VC is
+>   outright rude against all people who use a free and open compiler
+>   instead of a closed one.
+>
+> - changing an "_snprintf" to "_vsnprintf" in vcbuild/porting.c without
+>   anything else is a clear and loud sign that the code before was broken,
+>   and that you fix a faulty patch in a later patch.  This is not how we do
+>   things in git.git.  We fix the proper patch before the patch series is
+>   accepted into mainline.
+>
+> - violating the coding style -- even if it is in your VC-specific part --
+>   is not an option.  You need to fix the coding style.
+>
+> - violating the coding style in files that are not VC-specific is not an
+>   option at all.  You really need to fix it.
+>
+> - changing the default editor from "vi" to "notepad2" will break almost
+>   every existing Git user's setup.  That is just inexcusable.
+>
+> Note: these comments are _just for the last_ of your 5 patches.
+>
+> Just a brief comment on the 4th patch, because I really do not want to
+> spend more time on this round of patches: spelling the opendir() function
+> as "open dir" function in the commit message is misleading, to say the
+> least, and moving code that was added in a previous patch in the same
+> patch series just shows that it was a mistake to begin with.  Besides,
+> don't move anything into mingw.c if MinGW32 does not need it.
+>
+> Hth,
+> Dscho
 >
 >
-> tl;dr I only actually tried 1/4 cases, everything else looks  
-> reasonable
 >
->
-> --
-> Mark A Rada (ferrous26)
-> marada@uwaterloo.ca
->
->
-> --->8---
-> Some people have mod_cgid in place of mod_cgi, this will check which  
-> one
-> the user has available to them first, and then act accordingly.
->
-> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
-> ---
-> git-instaweb.sh |   10 ++++++++--
-> 1 files changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/git-instaweb.sh b/git-instaweb.sh
-> index 5f5cac7..fdac0d0 100755
-> --- a/git-instaweb.sh
-> +++ b/git-instaweb.sh
-> @@ -297,8 +297,14 @@ EOF
-> 		# plain-old CGI
-> 		resolve_full_httpd
-> 		list_mods=$(echo "$full_httpd" | sed "s/-f$/-l/")
-> -		$list_mods | grep 'mod_cgi\.c' >/dev/null 2>&1 || \
-> -		echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
-> +		$list_mods | grep 'mod_cgi' >/dev/null 2>&1 || \
-> +		if test -f "$module_path/mod_cgi.so"
-> +		then
-> +			echo "LoadModule cgi_module $module_path/mod_cgi.so" >> "$conf"
-> +		else
-> +			echo "LoadModule cgi_module $module_path/mod_cgid.so" >> "$conf"
-> +			echo "ScriptSock $GIT_DIR/gitweb.sock" >> "$conf"
-> +		fi
-> 		cat >> "$conf" <<EOF
-> AddHandler cgi-script .cgi
-> <Location /gitweb.cgi>
-> -- 
-> 1.6.4
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
