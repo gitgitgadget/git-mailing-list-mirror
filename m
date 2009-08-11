@@ -1,77 +1,97 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: How do gmail users try out patches from this list?
-Date: Wed, 12 Aug 2009 00:14:08 +0200
-Message-ID: <20090811221408.GC12956@vidovic>
-References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
+From: John Bito <jwbito@gmail.com>
+Subject: Re: [EGIT] Push to GitHub caused corruption
+Date: Tue, 11 Aug 2009 15:52:29 -0700
+Message-ID: <3ae83b000908111552o53189a44h45fc44f124850483@mail.gmail.com>
+References: <3ae83b000908101446q2d4f1101we4bbd7023f78b03@mail.gmail.com>
+	 <200908110810.45369.robin.rosenberg@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Wed Aug 12 00:14:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 00:52:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mazbr-0003tJ-8U
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 00:14:23 +0200
+	id 1Mb0Cu-0000G9-BD
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 00:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755486AbZHKWON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 18:14:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755328AbZHKWON
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 18:14:13 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:34352 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753260AbZHKWOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 18:14:12 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so1140159eyd.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 15:14:13 -0700 (PDT)
+	id S1754290AbZHKWw3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 18:52:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754135AbZHKWw3
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 18:52:29 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:53482 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754124AbZHKWw2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 18:52:28 -0400
+Received: by gxk9 with SMTP id 9so5584120gxk.13
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 15:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=diHubsTK2z1KtjGwbLMZsZEAhvQacTeBjQ2+iubfIrE=;
-        b=oL7tbO01FV8yWyjSZH6obZobzXZRtkucr5uUtPfec1sslxCgoA7dUH0X4HQm51nxC6
-         zMmZ8SvyxI30CL4FuITrUU4LeH+ufaW5S8l/fxOEOK3cVeT72CpOqzaCWJpn6qMTUb9O
-         APrjVOKPTODqLvIzT7uJgBuxPf2Y1/tMZcAW0=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=nhAy22IPrsEvY8JRzb49paf0XSfl7FEwPgvj/uhZIlU=;
+        b=Ss+Gsxv3RB7aaL0WYa+Fxok54/qECsj2QNkKOW4/tsThMapmk+8NgUBEGPoK/YRpaI
+         tinsjpKslqEkewmawWZUiTMH8pKcYCZrBnfo6I5K74FkCXhwjv34tZFJv/bqKo4u4upj
+         6t8QaM7EI3uUuhA7v891A+RhERwqfMOfsQ0yI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=gYqTRuBeI6Ua+mswESjJl55LGiRusNGR5/QVaL8Vo2PnMrfhtkbQ8qCWcsnZAoDqdC
-         cdYx4Vj67RW/Iyk6gdIGxvcU3ZZxydCBm8Wy88oQNgdGAzsmpxdxtB/Mp38nV12loyLk
-         nE6UeIMBVsVQjR6F7jAwL6cpJm1lawbV5GVV4=
-Received: by 10.210.102.12 with SMTP id z12mr7109875ebb.5.1250028853074;
-        Tue, 11 Aug 2009 15:14:13 -0700 (PDT)
-Received: from @ (91-164-138-47.rev.libertysurf.net [91.164.138.47])
-        by mx.google.com with ESMTPS id 28sm1066591eyg.42.2009.08.11.15.14.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 11 Aug 2009 15:14:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=UiWbW/b8PpKZATPSod2p92IqLrp/eZfVDt5Z/vqqj+6dzKZlJQfKMRM6/FxcBa4GXd
+         nqW25v7or/4g2MaiiKwWlxfpAV8FF7GH+b6UslcsLjBSrVKAJlWVwiEDPkt32hxH1qAn
+         OOie68BUzCtTuq5ArLMYDV8LUvVifQlL9XqIU=
+Received: by 10.90.217.13 with SMTP id p13mr232671agg.108.1250031149104; Tue, 
+	11 Aug 2009 15:52:29 -0700 (PDT)
+In-Reply-To: <200908110810.45369.robin.rosenberg@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125610>
 
-The 11/08/09, skillzero@gmail.com wrote:
+Running git fsck -full on the repo that I pushed from is clean.
+Here's the git fsck -full from GitHub
+       <mojombo>       git fsck --full
+       <mojombo>       broken link from tree
+f4f9ecd1875938baa42467dfd6a8134d75fe5de4 to tree
+57548924f1eca854dc8db00844f95d3de2c82957
+       <mojombo>       broken link from tree
+f4f9ecd1875938baa42467dfd6a8134d75fe5de4 to tree
+3d1f74522c3e7c3c03390fae376446fda6eed306
+       <mojombo>       missing tree 3d1f74522c3e7c3c03390fae376446fda6e=
+ed306
+       <mojombo>       missing tree 57548924f1eca854dc8db00844f95d3de2c=
+82957
+       <mojombo>       dangling commit ab6ce47159c1eaff0e4bae1929167926=
+7de9f669
 
-> Sorry if this is dumb question, but I didn't see any good info in my searches.
-> 
-> How do gmail users normally apply patches that come through the list?
+The repo on GitHub is back where it was before the push.  I have a
+copy of the corrupt one from GitHub (358MB tar.gz).  If there's
+something I can do that would help to improve JGit/EGit, please let me
+know.
 
-It doesn't rely on your address mail provider but on your local email
-workflow/MUA.
+Thanks,
+John
 
-> Do you just manually copy and paste the email to patch files and use
-> git apply? Do you use a tool to export to mbox files and use git am?
-
-Yes, that's what most users do. As I use local maildirs instead of
-mailboxes, I copy the patches (from mutt) into a dedicated maildir (one
-per project) and directly 'git am' the e-mails.
-
-
--- 
-Nicolas Sebrecht
+On Mon, Aug 10, 2009 at 23:10, Robin Rosenberg<robin.rosenberg@gmail.co=
+m> wrote:
+> m=E5ndag 10 augusti 2009 23:46:34 skrev John Bito <jwbito@gmail.com>:
+>> Using the 'release' build of EGit (0.4.9.200906240051) I pushed a
+>> commit to GitHub. =A0After that, using git to pull, I get 'bad tree
+>> object' resulting in 'remote: aborting due to possible repository
+>> corruption on the remote side'. =A0I had a similar problem back in A=
+pril
+>> (using integration builds of 0.4.0). =A0I'm willing to investigate i=
+f
+>> there's interest in finding the root of the problem.
+>
+> Fixing problems related to repository integrity is definitely interes=
+ting. One
+> can live all kinds of problem, as long as they don't destroy anything=
+=2E
+>
+> -- robin
+>
+>
