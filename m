@@ -1,100 +1,186 @@
-From: tarmigan <tarmigan+lists@gmail.com>
-Subject: unpack a single object
-Date: Tue, 11 Aug 2009 13:15:52 -0700
-Message-ID: <905315640908111315j459b81f2jc414f2a09c6b830e@mail.gmail.com>
+From: Dan Zwell <dzwell@zwell.net>
+Subject: Re: [PATCH] Limit git-gui to display a maximum number of files
+Date: Tue, 11 Aug 2009 13:23:52 -0500
+Message-ID: <4A81B738.7090507@zwell.net>
+References: <4A4A77A6.1020905@lawrence.edu> <20090810153859.GT1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 22:16:25 2009
+Cc: Git Mailing List <git@vger.kernel.org>, raa.lkml@gmail.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 11 22:24:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Maxlg-0008PP-Kx
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 22:16:25 +0200
+	id 1MaxtR-0003L2-F1
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 22:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369AbZHKUQP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 16:16:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752435AbZHKUQO
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 16:16:14 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:3288 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425AbZHKUQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 16:16:13 -0400
-Received: by an-out-0708.google.com with SMTP id d40so4282309and.1
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 13:16:14 -0700 (PDT)
+	id S1752538AbZHKUYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 16:24:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752514AbZHKUYI
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 16:24:08 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:58571 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751720AbZHKUYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 16:24:07 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so974418wah.21
+        for <git@vger.kernel.org>; Tue, 11 Aug 2009 13:24:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=Hzed3Awj0qK4DVMbwoAcFkjvnH3okhhwSC0Ulkw0SiQ=;
-        b=op4G3nis/9HhngqC5ZZrO31fsnvN5/whiUffgdFscDZhcHl/HojnNuqwCOqhBM5qHI
-         LY0AH88O394u1FzZI8wcqqMBrwJAv+6xHPkSuKaajnzAixk8h2EdwrNvnBxIjERDTzR7
-         I5zLmtc7tEiqCsi+q2cAvEONYoexmaDfhYWNI=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=kta5oHwdS2PwPwVFETO7YaMZjIKstt7lyO6ovsf+YsI=;
+        b=k7GhUgxlYK5N5EF38n52PxAqWQ0xkW3Q18LIAnaFArKg11gO3lY/lo+MIZvr2SS7j9
+         BPsW+aNT2VkFkXYW7TPaT7Mr/r4mmKazPPKSRLk6tnOY4QzfuJPMdjp+dOoHnP+24IOK
+         pmKsqIAUqaUGaiLgegwhWqkh4oziL9FVyyLMw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        b=oC7hsB0Gy4SghVmj+j2ZEPAl/IMSiPv1rKUUpZQ0I0Xy1NobDV/SCiHc59cd5Ycgtm
-         adTmcRx2I+Uaye++NdulbapjS6jEOhC4Briqgqqmn6gqu5WlQXyowuVi4gIq1G5nQn+R
-         wXW+/ZdKZNz+6cyMKdvnKaEjwr/AhrBHT//k0=
-Received: by 10.100.8.17 with SMTP id 17mr5948320anh.158.1250021774159; Tue, 
-	11 Aug 2009 13:16:14 -0700 (PDT)
-X-Google-Sender-Auth: cf8da1fe5c9b7f38
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=UVR+uj82L8zaxErMV2axMavTn327CFu8+aVQpvU2Rds5I17yCJD6Pm5NPLKmfj0ffA
+         tlPuFM5LFxLe320gWNIvJr0av7KAk+Y121/3zlc1KW4BZO/0fvOyM91rKNYG4JN5HOTR
+         W5XrKMTV1ybPqYM3w2FX1nnu+KF4aJX8GgmTo=
+Received: by 10.114.191.2 with SMTP id o2mr8692543waf.125.1250022248511;
+        Tue, 11 Aug 2009 13:24:08 -0700 (PDT)
+Received: from ?192.168.1.105? (c-76-21-120-57.hsd1.ca.comcast.net [76.21.120.57])
+        by mx.google.com with ESMTPS id m28sm11215737waf.2.2009.08.11.13.24.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 11 Aug 2009 13:24:07 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22 (X11/20090719)
+In-Reply-To: <20090810153859.GT1033@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125589>
 
-Hi,
+When there is a large number of new or modified files,
+"display_all_files" takes a long time, and git-gui appears to
+hang. This change limits the number of files that are displayed.
+This limit can be set as gui.maxfilesdisplayed, and is
+5000 by default.
 
-At work we use SVN.  To deal with this I mirror the svn repo with
-git-svn and have a cron job that runs git svn rebase every hour, and
-then I rebase from that git repo.
+A warning is shown when the list of files is truncated.
 
-Unfortunately, on the computer that runs the cron job, /home ran out
-of space.  After making more space and deleting the
-svn/trunk/.rev_map, my 'git svn rebase' dies with a
-> git svn rebase
-Rebuilding .git/svn/trunk/.rev_map.4279b43a-dd95-8640-b069-b0d2992e4ff2 ...
-error: Could not read 3d4c2b0225e7605a7e2a38ffc44dcb888589f4ce
-fatal: Failed to traverse parents of commit
-31c4379db99f05d0942e7c204b38f7b587fb4d3b
-rev-list --pretty=raw --no-color --reverse refs/remotes/trunk --:
-command returned error: 128
+Signed-off-by: Dan Zwell <dzwell@zwell.net>
+---
+By the way, is the right way to deal with strings to be
+translated? See the end of the patch.
 
-So I look for corruption with
-> git fsck --full --strict
-broken link from  commit 31c4379db99f05d0942e7c204b38f7b587fb4d3b
-              to  commit 3d4c2b0225e7605a7e2a38ffc44dcb888589f4ce
-dangling blob a6027cd01178f19243342c0f6ccaef8fb798dcf4
-                <snipped more dangling blobs>
-dangling blob 4348d7ebd189208716b44bcf4198c1f29d18e6c3
-missing commit 3d4c2b0225e7605a7e2a38ffc44dcb888589f4ce  ******
-dangling blob 22757bac2e3433cccd9d7e32fa79d90031e14353
-dangling blob 1276575eca02976ff677b61a6873562db7db31d7
-dangling blob f98343007ac9d2f33a81fe25f4d446b045c3167a
-dangling blob d29043a6e2b87cd0be1f3fb39f0c88283b79409b
-dangling blob f7d08b39830709c044279d17d3d85cbe813998bb
-dangling blob 64f14b305164f65c788dc9970deb7dfc79ac7446
+ git-gui.sh     |   18 +++++++++++++++++-
+ po/git-gui.pot |    5 +++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
 
-Thankfully, I have copies of the repo and this object (3d4c2b) in
-other location and that passes git-fsck.  Strangely, it is a commit
-object from about 18 month ago and should have been in a pack for a
-long time, so maybe running out of disk space was not the cause.
+diff --git a/git-gui.sh b/git-gui.sh
+index 3c0ce26..a4dde9e 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -745,6 +745,8 @@ set default_config(gui.newbranchtemplate) {}
+ set default_config(gui.spellingdictionary) {}
+ set default_config(gui.fontui) [font configure font_ui]
+ set default_config(gui.fontdiff) [font configure font_diff]
++# TODO: this option should be added to the git-config documentation
++set default_config(gui.maxfilesdisplayed) 5000
+ set font_descs {
+ 	{fontui   font_ui   {mc "Main Font"}}
+ 	{fontdiff font_diff {mc "Diff/Console Font"}}
+@@ -1698,10 +1700,12 @@ proc display_all_files_helper {w path icon_name m} {
+ 	$w insert end "[escape_path $path]\n"
+ }
+ 
++set files_warning 0
+ proc display_all_files {} {
+ 	global ui_index ui_workdir
+ 	global file_states file_lists
+ 	global last_clicked
++	global files_warning
+ 
+ 	$ui_index conf -state normal
+ 	$ui_workdir conf -state normal
+@@ -1713,7 +1717,19 @@ proc display_all_files {} {
+ 	set file_lists($ui_index) [list]
+ 	set file_lists($ui_workdir) [list]
+ 
+-	foreach path [lsort [array names file_states]] {
++	set to_display [lsort [array names file_states]]
++	set display_limit [get_config gui.maxfilesdisplayed]
++	if {[llength $to_display] > $display_limit} {
++		if {!$files_warning} {
++			# do not repeatedly warn:
++			set files_warning 1
++			set warning "Displaying only $display_limit of "
++			append warning "[llength $to_display] files."
++			info_popup [mc $warning]
++		}
++		set to_display [lrange $to_display 0 [expr {$display_limit-1}]]
++	}
++	foreach path $to_display {
+ 		set s $file_states($path)
+ 		set m [lindex $s 0]
+ 		set icon_name [lindex $s 1]
+diff --git a/po/git-gui.pot b/po/git-gui.pot
+index 53b7d36..fb60472 100644
+--- a/po/git-gui.pot
++++ b/po/git-gui.pot
+@@ -90,6 +90,11 @@ msgstr ""
+ msgid "Ready."
+ msgstr ""
+ 
++#: git-gui.sh:1725
++#, tcl-format
++msgid "Displaying only %s of %s files."
++msgstr ""
++
+ #: git-gui.sh:1819
+ msgid "Unmodified"
+ msgstr ""
+-- 
+1.6.4
 
-I would rather not copy the whole good repo back to the one that ran
-out of space because it's multiple gigs.  My plan is to just explode
-the bad pack on of the corrupted repo, explode good pack and then,
-copy the corrupted object back.  So my question is how do I tell which
-pack contains that object?  (I would rather not explode all the packs
-because of the repo size.)  Is there a way to extract a single object
-from a pack without exploding the whole pack?
 
-git is version 1.6.4 on CentOS 5.3
+Shawn O. Pearce wrote:
 
-Thanks,
-Tarmigan
+> Dan Zwell <dzwell@gmail.com> wrote:
+>   
+>> When there is a large number of new or modified files,
+>> "display_all_files" takes a long time, and git-gui appears to
+>> hang. Limit the display to 5000 files, by default. This number
+>> is configurable as gui.maxfilesdisplayed.
+>>
+>> Show a warning if the list of files is truncated.
+>>     
+>
+>   
+>> @@ -1713,7 +1717,18 @@ proc display_all_files {} {
+>> 	set file_lists($ui_index) [list]
+>> 	set file_lists($ui_workdir) [list]
+>>
+>> -	foreach path [lsort [array names file_states]] {
+>> +	set to_display [lsort [array names file_states]]
+>> +	set display_limit $default_config(gui.maxfilesdisplayed)
+>>     
+>
+> This should use [get_config gui.maxfilesdisplayed] so that the
+> user can actually set this property in a configuration file and
+> have git-gui honor it.  Reading from $default_config means you are
+> only looking at the hardcoded value you set in git-gui.sh.
+>
+>   
+>> +	if {[llength $to_display] > $display_limit} {
+>> +		if {![info exists files_warning] || !$files_warning} {
+>>     
+>
+> Wouldn't it be easier to just set files_warning to 0 at the start
+> of the script, so that you don't need to do this info exists test?
+>
+>   
+>> +			set warning "Displaying only $display_limit of "
+>> +			append warning "[llength $to_display] files."
+>> +			info_popup [mc $warning]
+>>     
+>
+> This needs to be in the translated strings.
+>
+>   
