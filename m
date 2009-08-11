@@ -1,143 +1,120 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: blame -M vs. log -p|grep -c ^+ weirdness
-Date: Tue, 11 Aug 2009 12:16:00 +0200
-Message-ID: <200908111216.05131.trast@student.ethz.ch>
+From: Matthew Lear <matt@bubblegen.co.uk>
+Subject: Unable to checkout a branch after cloning
+Date: Tue, 11 Aug 2009 11:10:26 +0100
+Message-ID: <4A814392.4080803@bubblegen.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="nextPart1712671.aeLyNy9cRk";
-	protocol="application/pgp-signature"; micalg=pgp-sha1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: =?utf-8?q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 11 13:51:09 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 11 13:55:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mapsh-00075p-PJ
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 13:51:08 +0200
+	id 1MapxE-0000cc-RZ
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 13:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750845AbZHKLuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 07:50:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750823AbZHKLuy
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 07:50:54 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:45848 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750814AbZHKLux (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 07:50:53 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
- 2009 12:16:40 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 11 Aug
- 2009 12:16:19 +0200
-User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+	id S1750973AbZHKLxH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 07:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbZHKLxG
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 07:53:06 -0400
+Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:29039 "EHLO
+	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751092AbZHKLxF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 07:53:05 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApoEADrigErUnw4U/2dsb2JhbADRQ4QZBQ
+Received: from pih-relay08.plus.net ([212.159.14.20])
+  by relay.ptn-ipout01.plus.net with ESMTP; 11 Aug 2009 11:18:54 +0100
+Received: from [80.229.236.194] (helo=[192.136.1.12])
+	 by pih-relay08.plus.net with esmtp (Exim) id 1MaoJH-0003xY-9u
+	for git@vger.kernel.org; Tue, 11 Aug 2009 11:10:27 +0100
+User-Agent: Thunderbird 2.0.0.22 (X11/20090626)
+X-Plusnet-Relay: 13693960936ca0499fb18918b18e1140
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125516>
 
---nextPart1712671.aeLyNy9cRk
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Hi all,
 
-Hi all
+Apologies for perhaps a silly question, but I'd very much appreciate a
+little bit of assistance.
 
-I think I'm fundamentally misunderstanding something about the blame
-code...  The other day I wanted to see how much our local fork of
-DOMjudge diverged from their upstream.  You can grab the entire
-history at
+I've set up a git repository on a machine accessible from the internet
+with the intention to share code with another developer. We clone the
+repository, commit changes then push back as you'd expect. The server
+runs gitweb for repository browsing. Clients are running git v1.6.0.6.
 
-  git://csa.inf.ethz.ch/domjudge-public.git
+When I created the initial repository I also created two additional
+branches - 'upstream' and 'custom'. The former is to act as a 'vendor
+branch' and the latter contains code specific to the custom platform
+that we're working on. The master branch contains merges from the
+upstream branch and also changes that we've made. The custom branch
+contains merges from master with custom platform specific changes.
 
-if you want to try the commands I ran.
+I've committed changes and on both upstream and custom branches as work
+progressed, merged them where appropriate, added tags etc and pushed
+everything to the remote repository. No problem. I can view the
+branches, tags etc in gitweb and everything looks fine.
 
-As a first statistic I looked at how many lines are blamed to our
-local team (Christoph, Florian and me) by running
+However, I can clone a new repository just fine but I'm unable to
+checkout the upstream or custom branches. After cloning, only the master
+branch is available, ie:
 
-  git ls-files | while read f; do git blame -M -- "$f"; done |
-  perl -pe 's/^\^?[a-f0-9]* (?:[^(]* )?\(([^2]*?) *20.*/$1/' |
-  sort | uniq -c | sort -n
+> git checkout upstream
+error: pathspec 'upstream' did not match any file(s) known to git.
 
-This shows that over 8000 lines are attributed to the three of us:
+> git branch -a
+* master
+  origin/HEAD
+  origin/master
 
-      1 domjudge                                                           =
-       =20
-      2 rob                                                                =
-       =20
-    113 Stijn van Drongelen                                                =
-       =20
-    126 Jeroen Schot                                                       =
-       =20
-    149 neus                                                               =
-       =20
-    866 Peter van de Werken                                                =
-       =20
-   1245 Thomas Rast                                                        =
-       =20
-   1752 Christoph Krautz                                                   =
-       =20
-   5350 Florian Jug                                                        =
-       =20
-  10293 Thijs Kinkhorst                                                    =
-       =20
-  20397 Jaap Eldering  =20
+.git/config:
 
-However, sanity checking this against the diffs of the single commits
-shows quite a different number:
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://mysite/git/project.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
 
-  git log --no-merges -p upstream/2.2.. | grep '^+' | grep -v -c '^+++'
+But the initial local repository where I work (ie created the branches,
+committed changes, tag, push etc) seems to be fine, ie
 
-gives only 4943 '+' lines, and you can easily verify with
+> git checkout upstream
+Switched to branch "upstream"
 
-  git shortlog -sn upstream/2.2..
+> git branch -a
+  custom
+* master
+  upstream
 
-that indeed all commits in that range are ours.  So why does the blame
-think more lines are ours than we even added *in total*?
+.git/config:
 
-Bj=C3=B6rn Steinbrink suggested on IRC that I use -M5 -C5 -C5 -C5, which
-indeed reduces it to
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://mysite/git/project.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
 
-      1 domjudge                                                           =
-       =20
-      2 rob                                                                =
-       =20
-    115 Stijn van Drongelen                                                =
-       =20
-    116 Jeroen Schot                                                       =
-       =20
-    149 neus                                                               =
-       =20
-    390 Florian Jug                                                        =
-       =20
-    930 Peter van de Werken                                                =
-       =20
-   1209 Thomas Rast                                                        =
-       =20
-   1612 Christoph Krautz                                                   =
-       =20
-  11750 Thijs Kinkhorst                                                    =
-       =20
-  24020 Jaap Eldering
 
-Note especially the huge drop in Florian's numbers.  What's going on
-here?
+Developers need to be able to clone the repository and then switch to
+the appropriate branch in order to work. However it seems that after a
+clone, only the master branch is available.
 
-=2D-=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Why is this?
 
---nextPart1712671.aeLyNy9cRk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
+Any help would be much appreciated indeed.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.9 (GNU/Linux)
-
-iEYEABECAAYFAkqBROUACgkQqUud07tmzP1yXACdEjyfmBjLFexDTwDk/z01k9ir
-5xIAn13Hv3setT6KyEM7Hmd+S6WCuIud
-=PZHD
------END PGP SIGNATURE-----
-
---nextPart1712671.aeLyNy9cRk--
+Many thanks,
+--  Matt
