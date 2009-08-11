@@ -1,138 +1,91 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [RFC PATCH v3 6/8] unpack-trees.c: generalize verify_* functions
-Date: Tue, 11 Aug 2009 22:44:04 +0700
-Message-ID: <1250005446-12047-7-git-send-email-pclouds@gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
- <1250005446-12047-2-git-send-email-pclouds@gmail.com>
- <1250005446-12047-3-git-send-email-pclouds@gmail.com>
- <1250005446-12047-4-git-send-email-pclouds@gmail.com>
- <1250005446-12047-5-git-send-email-pclouds@gmail.com>
- <1250005446-12047-6-git-send-email-pclouds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
+  vcs
+Date: Tue, 11 Aug 2009 18:20:54 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908111817490.4638@intel-tinevez-2-302>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>  <7v1vnk79lt.fsf@alter.siamese.dyndns.org> <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 11 17:45:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 11 18:21:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MatXG-0007BD-Tv
-	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 17:45:15 +0200
+	id 1Mau5z-0006Sx-NA
+	for gcvg-git-2@gmane.org; Tue, 11 Aug 2009 18:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615AbZHKPou convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 11:44:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753590AbZHKPot
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 11:44:49 -0400
-Received: from rv-out-0506.google.com ([209.85.198.235]:29186 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814AbZHKPos (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 11:44:48 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so1344620rvb.1
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 08:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=M5v45+tP+k77ijZJYlSN7mxOoGDzFbIETI28Mei4MzU=;
-        b=w7efJ3+xcghMR1coWZFntVRf9/E874LQpg/KMm9BrdtB5kLXDVIo1138R2Dd5Zz3k5
-         4sFl8tABGvS/NmwBA113pZuzT2qyYt1v6lC/XDGVVbKiVqGrAT2ZcHcxh9LG4W7ivC7h
-         i57gSEF+Mp0cN4tsfdhv6pU4i/aMGTM0Uwbeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=PVa0Z/ZHzhgP+GMeGRcndoJ88+581zq7mGLi0ufGGZqIBvtsRVHmw6FXY7Ibt3RXSs
-         m0U8H9Hghx38iTNeGE23FvvNam6hx8KspLrdqI5NpTU2jM41xRGu4Y4bvRw3V22HKYxq
-         zv9geFkUAELMlM09blYdJEAgzIfyCSj78kAD8=
-Received: by 10.141.41.18 with SMTP id t18mr2257613rvj.264.1250005489984;
-        Tue, 11 Aug 2009 08:44:49 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.239.0])
-        by mx.google.com with ESMTPS id g14sm32826309rvb.30.2009.08.11.08.44.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 Aug 2009 08:44:49 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 11 Aug 2009 22:44:44 +0700
-X-Mailer: git-send-email 1.6.3.GIT
-In-Reply-To: <1250005446-12047-6-git-send-email-pclouds@gmail.com>
+	id S1752696AbZHKQU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 12:20:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbZHKQU4
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 12:20:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40288 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751787AbZHKQU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 12:20:56 -0400
+Received: (qmail invoked by alias); 11 Aug 2009 16:20:56 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp026) with SMTP; 11 Aug 2009 18:20:56 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/S2q4qZ7PS5vq5pZmnLQ9UbE/Hs8SHZhvUaAgNvy
+	OltHJDATcmSYu4
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125584>
 
+Hi,
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- unpack-trees.c |   23 ++++++++++++++++++-----
- 1 files changed, 18 insertions(+), 5 deletions(-)
+On Tue, 11 Aug 2009, Bert Wesarg wrote:
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 720f7a1..02ea236 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -445,8 +445,9 @@ static int same(struct cache_entry *a, struct cache=
-_entry *b)
-  * When a CE gets turned into an unmerged entry, we
-  * want it to be up-to-date
-  */
--static int verify_uptodate(struct cache_entry *ce,
--		struct unpack_trees_options *o)
-+static int verify_uptodate_1(struct cache_entry *ce,
-+				   struct unpack_trees_options *o,
-+				   const char *error_msg)
- {
- 	struct stat st;
-=20
-@@ -471,7 +472,13 @@ static int verify_uptodate(struct cache_entry *ce,
- 	if (errno =3D=3D ENOENT)
- 		return 0;
- 	return o->gently ? -1 :
--		error(ERRORMSG(o, not_uptodate_file), ce->name);
-+		error(error_msg, ce->name);
-+}
-+
-+static int verify_uptodate(struct cache_entry *ce,
-+			   struct unpack_trees_options *o)
-+{
-+	return verify_uptodate_1(ce, o, ERRORMSG(o, not_uptodate_file));
- }
-=20
- static void invalidate_ce_path(struct cache_entry *ce, struct unpack_t=
-rees_options *o)
-@@ -579,8 +586,9 @@ static int icase_exists(struct unpack_trees_options=
- *o, struct cache_entry *dst,
-  * We do not want to remove or overwrite a working tree file that
-  * is not tracked, unless it is ignored.
-  */
--static int verify_absent(struct cache_entry *ce, const char *action,
--			 struct unpack_trees_options *o)
-+static int verify_absent_1(struct cache_entry *ce, const char *action,
-+				 struct unpack_trees_options *o,
-+				 const char *error_msg)
- {
- 	struct stat st;
-=20
-@@ -660,6 +668,11 @@ static int verify_absent(struct cache_entry *ce, c=
-onst char *action,
- 	}
- 	return 0;
- }
-+static int verify_absent(struct cache_entry *ce, const char *action,
-+			 struct unpack_trees_options *o)
-+{
-+	return verify_absent_1(ce, action, o, ERRORMSG(o, would_lose_untracke=
-d));
-+}
-=20
- static int merged_entry(struct cache_entry *merge, struct cache_entry =
-*old,
- 		struct unpack_trees_options *o)
---=20
-1.6.3.GIT
+> On Mon, Aug 10, 2009 at 03:15, Junio C Hamano<gitster@pobox.com> wrote:
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> >
+> >> If this is set, the url is not required, and the transport always uses
+> >> a helper named "git-remote-<value>".
+> >>
+> >> It is a separate configuration option in order to allow a sensible
+> >> configuration for foreign systems which either have no meaningful urls
+> >> for repositories or which require urls that do not specify the system
+> >> used by the repository at that location. However, this only affects
+> >> how the name of the helper is determined, not anything about the
+> >> interaction with the helper, and the contruction is such that, if the
+> >> foreign scm does happen to use a co-named url method, a url with that
+> >> method may be used directly.
+> >
+> > Personally, I do not like this.
+> >
+> > Why isn't it enough to define the canonical remote name git takes as
+> > "<name of the helper>:<whatever string the helper understands>"?
+> 
+> May I ask what will happen to these supported URL notations:
+> 
+> 
+>        o   [user@]host.xz:/path/to/repo.git/
+> 
+>        o   [user@]host.xz:~user/path/to/repo.git/
+> 
+>        o   [user@]host.xz:path/to/repo.git
+> 
+> this will bite you, if you have an ssh host alias named "<your
+> favorite helper name>".
+
+That is a valid concern.  I'd suggest to disallow @ and . in the protocol 
+name (maybe even everything non-alnum).  For shortcuts that really read 
+like "svn", I think it is not too much asked for to require adjusting the 
+URL (by prefixing ssh:// and adjusting the path).
+
+If there is really anybody who uses Git via ssh to access a server called 
+"svn", we could just as well have a little fun with them, don't you agree?
+
+Ciao,
+Dscho
