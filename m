@@ -1,69 +1,61 @@
-From: "Adam W. Hawks" <awhawks@writeme.com>
-Subject: [JGIT PATCH 1/1] Fix for Repository.stripWorkDir when using partial
- paths
-Date: Tue, 11 Aug 2009 20:48:39 -0400
-Message-ID: <4A821167.6030107@writeme.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Throw IllegalStateException if DirCacheEntry has
+ not been fully initialized.
+Date: Wed, 12 Aug 2009 03:04:25 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908120303240.8306@pacific.mpi-cbg.de>
+References: <1250038581-31241-1-git-send-email-grek@tuffmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 12 02:59:58 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Grzegorz Kossakowski <grek@google.com>
+To: Grzegorz Kossakowski <grek@tuffmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 03:04:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb2C5-0002P9-RI
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 02:59:58 +0200
+	id 1Mb2Fx-0003W3-C8
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 03:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020AbZHLA7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 20:59:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751634AbZHLA7s
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 20:59:48 -0400
-Received: from outbound1-2.us4.outblaze.com ([208.36.123.130]:48149 "EHLO
-	outbound1-2.us4.outblaze.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751490AbZHLA7s (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Aug 2009 20:59:48 -0400
-X-Greylist: delayed 663 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Aug 2009 20:59:48 EDT
-Received: from smtp1.us4.outblaze.com (73.11.168.192.in-addr.arpa [192.168.11.73])
-	by outbound1-2.us4.outblaze.com (Postfix) with SMTP id 89A6B5C0FA9F
-	for <git@vger.kernel.org>; Wed, 12 Aug 2009 00:48:46 +0000 (GMT)
-Received: (qmail 24049 invoked from network); 12 Aug 2009 00:48:46 -0000
-Received: from unknown (HELO ?192.168.0.4?) (awhawks:writeme.com@mail.com@24.74.41.120)
-  by ws1-9.us4.outblaze.com with SMTP; 12 Aug 2009 00:48:45 -0000
-User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
+	id S1753360AbZHLBDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 21:03:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbZHLBDs
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 21:03:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34976 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751490AbZHLBDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 21:03:47 -0400
+Received: (qmail invoked by alias); 12 Aug 2009 01:03:47 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 12 Aug 2009 03:03:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GW34rrmsGlwaSZCZ+XiLRQK5l8+T4UGBEqUO+Ct
+	NjuUaM1ten+DKx
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1250038581-31241-1-git-send-email-grek@tuffmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125636>
 
+Hi,
 
->From ef993e633cdcb1dddda5e71db1b62306df7ce83f Mon Sep 17 00:00:00 2001
-Date: Tue, 11 Aug 2009 20:02:56 -0400
+On Tue, 11 Aug 2009, Grzegorz Kossakowski wrote:
 
-When you call stripWorkDir with a relative path
-you can get a string out of bounds error.
+> From: Grzegorz Kossakowski <grek@google.com>
+> 
+> When mode's object type of entry equals to Constants.OBJ_BAD it's a sign
+> of bad (uninitialized) state of an entry and not of problems with merging.
+> 
+> Signed-off-by: Grzegorz Kossakowski <grek@google.com>
+> ---
+>  .../org/spearce/jgit/dircache/DirCacheTree.java    |    3 ++-
 
-This change fixes that problem by using the absolute paths
-of the file instead of its relative name.
+That's great, but next time, please prefix your mail subjects with [JGIT 
+PATCH] so that people who don't speak Java know that this is not for them.
 
-Signed-off-by: Adam W. Hawks <awhawks@writeme.com>
----
- .../src/org/spearce/jgit/lib/Repository.java       |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index 468cf4c..a68817b 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -1036,7 +1036,7 @@ public static boolean isValidRefName(final String refName) {
- 	 * @return normalized repository relative path
- 	 */
- 	public static String stripWorkDir(File wd, File f) {
--		String relName = f.getPath().substring(wd.getPath().length() + 1);
-+		String relName = f.getAbsolutePath().substring(wd.getPath().length() + 1);
- 		relName = relName.replace(File.separatorChar, '/');
- 		return relName;
- 	}
--- 
-1.6.0.2
+Thanks!
+Dscho
