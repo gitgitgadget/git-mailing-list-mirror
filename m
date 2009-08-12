@@ -1,104 +1,116 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Wed, 12 Aug 2009 17:01:33 +0700
-Message-ID: <fcaeb9bf0908120301q17812b5cw5e19def7887d31db@mail.gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> 
-	<1250005446-12047-2-git-send-email-pclouds@gmail.com> <1250005446-12047-3-git-send-email-pclouds@gmail.com> 
-	<1250005446-12047-4-git-send-email-pclouds@gmail.com> <1250005446-12047-5-git-send-email-pclouds@gmail.com> 
-	<1250005446-12047-6-git-send-email-pclouds@gmail.com> <1250005446-12047-7-git-send-email-pclouds@gmail.com> 
-	<1250005446-12047-8-git-send-email-pclouds@gmail.com> <1250005446-12047-9-git-send-email-pclouds@gmail.com> 
-	<7v3a7xa6e5.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Re: [TRIVIAL] Documentation: merge: one <remote> is required
+Date: Wed, 12 Aug 2009 03:19:30 -0700 (PDT)
+Message-ID: <m31vnhpc5v.fsf@localhost.localdomain>
+References: <1249995838.1589.3.camel@localhost.localdomain>
+	<20090811144253.GA12956@vidovic>
+	<1250002681.2707.2.camel@localhost.localdomain>
+	<7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Bolle <pebolle@tiscali.nl>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 12:02:15 2009
+X-From: git-owner@vger.kernel.org Wed Aug 12 12:19:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbAes-0006Ja-S7
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 12:02:15 +0200
+	id 1MbAvn-0003Ue-Hz
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 12:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932382AbZHLKCF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2009 06:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755095AbZHLKCE
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 06:02:04 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:23356 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754987AbZHLKCD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2009 06:02:03 -0400
-Received: by an-out-0708.google.com with SMTP id d40so4645019and.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 03:02:04 -0700 (PDT)
+	id S932430AbZHLKTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 06:19:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbZHLKTc
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 06:19:32 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:59569 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932418AbZHLKTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 06:19:31 -0400
+Received: by fxm28 with SMTP id 28so2028585fxm.17
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 03:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ymL3nPUpnN0/ZyWvDfUdFV7t5iV15oLZOiP+lFebGok=;
-        b=izLEU/+CYWQQIYv3jdktNnZdfpRfKUO2ynLvOcjdyB2NiG8ZqvVrKAhbpucTeZVATy
-         rDAma/RJvRjFnlFqlfjBLrTRON5CKMzh3JvmoC1QHsudoYbcbOmJZ0U5YGoSGDNcnC6P
-         tdmYsfk2LFxfA3Dq0tfGwP9+Hzyxs9UPg3xBc=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ipMVgtSVhF2eZTqGGXAV3J5H1pKbUHxQlYF6cPVKiqQ=;
+        b=IIwP7BDCGPjsHbXy7rTU+x2/uJYY71qCWB4UwFg0olwAOy7GObXJgF8ey7aK9mpQN4
+         G8SLDhTgrRZ8YuFzwjzvrU0Ec+qaNY6AWGucOWPSHieqfTZZUdg3ZJ4DiGy+lKE+VZBH
+         E4xHbeuwLyHU2NGXSN77Zn+cLMxcJBbDH1LXU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=uX+M/SDGoX5YHk/BgWNDd1AGHDXjyCHfG6Jr/gFH14+si17IaMxdOO06UqAH4uImov
-         tOmLt4hXNqkHjIOp6tc3bNoiOYCP1hV2QsNjR/CL2W+O1tNUittBwnFT46vYAZk0XuJ9
-         VmP10AoLF0sOemgbXD7KsbiRSuNMSXk8MxgrA=
-Received: by 10.101.166.37 with SMTP id t37mr61841ano.138.1250071313124; Wed, 
-	12 Aug 2009 03:01:53 -0700 (PDT)
-In-Reply-To: <7v3a7xa6e5.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=QlD6E0Nqaqo6Dg15KnKhRUYeGxAYjwKhmHx9UloFQtnq+rtUdBebMEYADVaBhajFk2
+         TytLs1YIsVTaOVgbozuztS0HciEmMHswuON8RuwF/6qxlaOOHtg1Fj5kkgziv+QerPgG
+         smYqC6w2CbevQGMCozTS1DJh3JEHIvYYBWbgE=
+Received: by 10.103.160.3 with SMTP id m3mr2798979muo.3.1250072371290;
+        Wed, 12 Aug 2009 03:19:31 -0700 (PDT)
+Received: from localhost.localdomain (abvv142.neoplus.adsl.tpnet.pl [83.8.219.142])
+        by mx.google.com with ESMTPS id 25sm28869542mul.23.2009.08.12.03.19.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 12 Aug 2009 03:19:30 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7CAJSUD010842;
+	Wed, 12 Aug 2009 12:19:28 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7CAJP1m010838;
+	Wed, 12 Aug 2009 12:19:25 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125692>
 
-2009/8/12 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> @@ -594,6 +596,8 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_BOOLEAN('m', "m=
-erge", &opts.merge, "merge"),
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_STRING(0, "conf=
-lict", &conflict_style, "style",
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0"conflict style (merge or diff3)"),
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_SET_INT(0, "sparse",=
- &opts.apply_sparse,
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 "apply sparse checkout filter", 1),
->
-> Shouldn't this be BOOLEAN not INT, i.e. "--[no-]sparse"? =C2=A0That w=
-ay, you
-> could enable it by simply the presense of $GIT_DIR/info/sparse.
+Junio C Hamano <gitster@pobox.com> writes:
+> Paul Bolle <pebolle@tiscali.nl> writes:
+> 
+>>> Shoudn't be 
+>>> 
+>>>    [-m <msg>] <remote> [<remote>...]
+>>
+>> No, since "<remote>..." means one or more instances of the "<remote>"
+>> option.  
+> 
+> Does it really?
+> 
+> After you brought up this "one or more", I re-read the docs your patches
+> touched, thinking that the author might have meant 'zero or more of A'
+> with these '<A>...'  notation.
+> 
+> And I realized that they made perfect sense.
+> 
+> In general, you can write:
+> 
+> 	<command> ...
+> 
+> and read this as "The <command> can be followed by nothing or something
+> (zero or more) of unspecified kind".  If <command> takes only one type of
+> zero or more things, you can _clarify the ellipses_ by prefixing them with
+> what kind of "stuff" you are talking about:
+> 
+> 	<command> <remote>...
+> 
+> and read this as "The <command> can be followed by nothing or something
+> (zero or more) of <remote>s".
 
-This patch was written carelessly. I wanted to have something to test.
-If you agree on option name "--sparse" then yes BOOLEAN is better.
+I would have thought that it makes more sense to have
 
-> It could also require core.sparseworktree configuration set to true i=
-f we
-> are really paranoid, but without the actual sparse specification file
-> flipping that configuration to true would not be useful anyway, so in
-> practice, giving --sparse-work-tree option to these Porcelain command=
-s
-> would be no-op, but --no-sparse-work-tree option would be useful to
-> ignore $GIT_DIR/info/sparse and populate the work tree fully.
->
-> Or am I missing something?
+  <something>...
 
-Sounds good (and --sparse-work-tree is apparently better than
---sparse). So let's enable it by default, add --no-sparse-work-tree to
-disable it and wait until some one complains, then we'll add
-core.sparseworktree. I think core.sparseworktree can also be used to
-specify what spec file to be used instead of the default
-=2Egit/info/sparse, if users like to switch among some well-defined spe=
-c
-files.
---=20
-Duy
+for one or more, and
+
+  [<something>... ]
+
+for zero or more (optional one or more).
+
+Documentation/DocumentationLanguage, anyone? ;-))))
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
