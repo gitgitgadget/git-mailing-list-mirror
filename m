@@ -1,81 +1,102 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: [TRIVIAL] Documentation: merge: one <remote> is
- required
-Date: Tue, 11 Aug 2009 19:48:12 -0700
-Message-ID: <7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
-References: <1249995838.1589.3.camel@localhost.localdomain>
- <20090811144253.GA12956@vidovic>
- <1250002681.2707.2.camel@localhost.localdomain>
+Subject: Re: [RFC PATCH v3 3/8] Read .gitignore from index if it is
+ assume-unchanged
+Date: Tue, 11 Aug 2009 19:51:53 -0700
+Message-ID: <7vocqlbv7a.fsf@alter.siamese.dyndns.org>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
+ <1250005446-12047-2-git-send-email-pclouds@gmail.com>
+ <1250005446-12047-3-git-send-email-pclouds@gmail.com>
+ <1250005446-12047-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Paul Bolle <pebolle@tiscali.nl>
-X-From: git-owner@vger.kernel.org Wed Aug 12 04:48:29 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 04:52:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb3t6-00051v-7u
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 04:48:28 +0200
+	id 1Mb3wg-0005zM-LP
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 04:52:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755740AbZHLCsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 22:48:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755663AbZHLCsT
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 22:48:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57915 "EHLO
+	id S1755750AbZHLCwA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Aug 2009 22:52:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755747AbZHLCwA
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 22:52:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52641 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755541AbZHLCsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 22:48:18 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DD2FB2681A;
-	Tue, 11 Aug 2009 22:48:17 -0400 (EDT)
+	with ESMTP id S1755720AbZHLCv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 22:51:59 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BAE337A6F;
+	Tue, 11 Aug 2009 22:52:00 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 782E126819; Tue, 11 Aug 2009
- 22:48:13 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0802F7A65; Tue, 11 Aug
+ 2009 22:51:56 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 96D53BCA-86EA-11DE-982B-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 1BAE58CC-86EB-11DE-89E9-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125647>
 
-Paul Bolle <pebolle@tiscali.nl> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
->> Shoudn't be 
->> 
->>    [-m <msg>] <remote> [<remote>...]
->
-> No, since "<remote>..." means one or more instances of the "<remote>"
-> option.  
+> diff --git a/Documentation/technical/api-directory-listing.txt b/Docu=
+mentation/technical/api-directory-listing.txt
+> index 5bbd18f..7d0e282 100644
+> --- a/Documentation/technical/api-directory-listing.txt
+> +++ b/Documentation/technical/api-directory-listing.txt
+> @@ -58,6 +58,9 @@ The result of the enumeration is left in these fiel=
+ds::
+>  Calling sequence
+>  ----------------
+> =20
+> +* Ensure the_index is populated as it may have CE_VALID entries that
+> +  affect directory listing.
+> +
 
-Does it really?
+When you want to enumerate all paths in the work tree, instead of not j=
+ust
+the untracked ones, it used to be possible to first run read_directory(=
+)
+before calling read_cache().  You are now forbidding this.
 
-After you brought up this "one or more", I re-read the docs your patches
-touched, thinking that the author might have meant 'zero or more of A'
-with these '<A>...'  notation.
+I do not think it is hard to resurrect the feature if it is necessary (=
+add
+an option to dir_struct and teach dir_add_name() not to ignore paths th=
+e
+index knows about), and I do not think none of the existing code relies=
+ on
+it anymore (I think "git add" used to), but there may be some codepath =
+I
+forgot about, which is a concern.
 
-And I realized that they made perfect sense.
+> diff --git a/builtin-clean.c b/builtin-clean.c
+> index 2d8c735..d917472 100644
+> --- a/builtin-clean.c
+> +++ b/builtin-clean.c
+> @@ -71,8 +71,11 @@ int cmd_clean(int argc, const char **argv, const c=
+har *prefix)
+> =20
+>  	dir.flags |=3D DIR_SHOW_OTHER_DIRECTORIES;
+> =20
+> -	if (!ignored)
+> +	if (!ignored) {
+> +		if (read_cache() < 0)
+> +			die("index file corrupt");
+>  		setup_standard_excludes(&dir);
+> +	}
+> =20
+>  	pathspec =3D get_pathspec(prefix, argv);
+>  	read_cache();
 
-In general, you can write:
-
-	<command> ...
-
-and read this as "The <command> can be followed by nothing or something
-(zero or more) of unspecified kind".  If <command> takes only one type of
-zero or more things, you can _clarify the ellipses_ by prefixing them with
-what kind of "stuff" you are talking about:
-
-	<command> <remote>...
-
-and read this as "The <command> can be followed by nothing or something
-(zero or more) of <remote>s".
-
-On the other hand, you can also say (note that the ellipses stand on their
-own and are not associated with <remote>):
-
-	<command> <remote> ...
-
-and read this as "It takes one <remote> followed by nothing or something
-(zero or more) of unspecified kind".
+Wouldn't it be much cleaner to move the existing read_cache() up, like =
+you
+did for ls-files, instead of conditionally reading the index at a rando=
+m
+place in the program sequence depending on the combinations of options?
