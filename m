@@ -1,72 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git index: how does it work?
-Date: Wed, 12 Aug 2009 13:31:24 -0700
-Message-ID: <7vab24ydsz.fsf@alter.siamese.dyndns.org>
-References: <loom.20090805T160528-69@post.gmane.org>
- <7v7hxi9m4k.fsf@alter.siamese.dyndns.org>
- <436D5ED1-2F0E-4227-AC4A-3A5FD16B2DCF@cuttshome.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH] Rename RevTag.getName() to RevTag.getTagName()
+Date: Wed, 12 Aug 2009 22:37:36 +0200
+Message-ID: <200908122237.37148.robin.rosenberg.lists@dewire.com>
+References: <1250105956-17795-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Shaun Cutts <shaun@cuttshome.net>
-X-From: git-owner@vger.kernel.org Wed Aug 12 22:31:48 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 22:37:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbKTz-0000GP-Ej
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 22:31:39 +0200
+	id 1MbKZw-00035H-Ib
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 22:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754424AbZHLUb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 16:31:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754057AbZHLUb2
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 16:31:28 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38918 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754058AbZHLUb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 16:31:27 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 17CCF270C9;
-	Wed, 12 Aug 2009 16:31:29 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 08522270C6; Wed, 12 Aug 2009
- 16:31:25 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1D58B5CA-877F-11DE-A1B2-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1754707AbZHLUhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 16:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbZHLUhi
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 16:37:38 -0400
+Received: from mail.dewire.com ([83.140.172.130]:27361 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753191AbZHLUhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 16:37:38 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 56BF01434E84;
+	Wed, 12 Aug 2009 22:37:38 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id IxcUhGy8r0jD; Wed, 12 Aug 2009 22:37:37 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id CFE861434E81;
+	Wed, 12 Aug 2009 22:37:37 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1250105956-17795-1-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125743>
 
-Shaun Cutts <shaun@cuttshome.net> writes:
+onsdag 12 augusti 2009 21:39:16 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> The method getName() conflicts semantically with the method name()
+> we have inherited from our base class, ObjectId.  It is a rather
+> unfortunate turn of events that for performance reasons we wind up
+> subclassing what should be a property of this class, but since we
+> do that we need to pay attention to the methods declared on our
+> base class.
+> 
+> We want to use getName() to be a mirror of name() on AnyObjectId,
+> as it has a more JavaBeans style feel to the accessing of that
+> particular value.  So, rename getTagName() so it doesn't wind up
+> conflicting with the SHA-1 hex formatted string.
 
-> Are renames being tracked by the index, and is there a more basic
-> interface than "status" to query about them?
+> @@ -204,7 +204,7 @@ public final RevObject getObject() {
+>  	 * @return name of the tag, according to the tag header.
+>  	 */
+>  	public final String getName() {
+> -		return name;
+> +		return tagName;
+>  	}
+>  
+>  	final void disposeBody() {
 
-No.  Index, nor git in general, never records renames.  git records
-contents, not content changes.  The index records a state, so does the
-tree object pointed at by the HEAD commit.
+You forgot the rename of the method here, and all uses of it.
 
-When you ask for "status", git will notice that you have lost a file, and
-added a new one, between these two states, by comparing them.  The
-contents of these lost files and added files are then compared, and ones
-with similar contents are paired up.
-
-That way, you do not have to use "git mv A B" to "rename" A to B.  You can
-just as well "mv A B; git rm A; git add B", and get the same outcome,
-exactly because git does not record renames.
-
-Instead, we track them by deducing that you renamed from the result.
-
-The tree-vs-index comparison "git status" does to figure all this out is
-"git diff-index -M --cached HEAD".
-
-As it should be obvious from the above description,
-
-	git diff-index -M --cached HEAD -- A
-
-is *NOT* the way for you to ask about "possible renames of A".  You need
-to run the diff for the whole tree without path limitation so that you can
-pair deletions and creations up in order to deduce renames.
+-- robin
