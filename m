@@ -1,77 +1,76 @@
-From: Hin-Tak Leung <hintak.leung@gmail.com>
-Subject: Re: git gc expanding packed data?
-Date: Wed, 12 Aug 2009 15:45:16 +0100
-Message-ID: <3ace41890908120745y305b2a59hd453b7e146e4a774@mail.gmail.com>
-References: <3ace41890908041325v24ed9e2eh95ecc148305f7775@mail.gmail.com>
-	 <alpine.LFD.2.00.0908042203380.16073@xanadu.home>
-	 <3ace41890908110317k6e6ada07jc39ea446f9fa246e@mail.gmail.com>
-	 <alpine.LFD.2.00.0908111718490.10633@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH JGIT 4/5] Repository: Make listener collections members final
+Date: Wed, 12 Aug 2009 11:06:47 -0400
+Message-ID: <1250089607-22476-1-git-send-email-fonseca@diku.dk>
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 16:45:30 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 17:07:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbF4z-0000Af-Tg
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 16:45:30 +0200
+	id 1MbFPv-0002zZ-RQ
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 17:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbZHLOpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 10:45:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbZHLOpR
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 10:45:17 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:58332 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752744AbZHLOpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 10:45:16 -0400
-Received: by ewy10 with SMTP id 10so60898ewy.37
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 07:45:16 -0700 (PDT)
+	id S1753496AbZHLPGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 11:06:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753469AbZHLPGu
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 11:06:50 -0400
+Received: from mail-gx0-f213.google.com ([209.85.217.213]:52845 "EHLO
+	mail-gx0-f213.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753450AbZHLPGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 11:06:49 -0400
+Received: by gxk9 with SMTP id 9so106130gxk.13
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 08:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3vRtAYmE8hyJMVhTmxYbOghO84T6dysvaInHKc03lhU=;
-        b=J+J7+CoIX/oJDEX0eN/IOv0hxySVA8v2XTqy2TuS635PAH724D/oDm/kmmaBnDJupy
-         a5U8DpNn8lKBBKgg0XSC8klqRzZve851nEMRgffa6ZLBA1Ee/hTWLGwD07e0RFWsiu+X
-         T/AJLfLXuShsdMClP9vWyG2oOxmm2rMFacUqk=
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=b4zxcgC0mRzvhH1wk+VsgibaRDL2cIxR+KJ8Gx2MhDI=;
+        b=UT7D4lI4f8WWhLsrHMH5bcfTcklbqrODknYUCgyq+43kGpaV75jwZe8wctOde/nuwJ
+         1mt+WvnVp6zdSbWbPJ/cY5n2tSgWG5+8SAmlOL/4AO4uMd3N8QP+AvFVq6VVw9eFX1Oc
+         jw22i36ZQplYcj65i6+NWLjyJ2vn4rz1f6UVU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SIXPNTbII3jxbPbUGBRI+Ed5+pHTK66KFTOQkJQlewuUXi8HPDw/OW9yma5HqwXuEh
-         bjpCDtB7PxfqLwWmPshPVgDUw6w/KjPqmnsd6jWKfmN8yIqqz2QaKfoDoZ4qlq/rC6M7
-         Vqv4aJpqkyrUMj71pDIuHi3g7Lbhtp0VfzLvE=
-Received: by 10.216.89.141 with SMTP id c13mr28150wef.66.1250088316445; Wed, 
-	12 Aug 2009 07:45:16 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0908111718490.10633@xanadu.home>
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        b=sofCb/OgeL3Od08o70OzNL5TEI+0acAih3imk5sVsoS16FPZvAlFtZ2btxbzzKieqB
+         Xo/lngdvYPDiBNy6W1u1KHDGgYSuW18lxYLLn6ry4gBDYL88LR+TdsyZypPGQsKKT5bC
+         iWvoZCGQneQdaWMkK/h3gK9WWNA3+yACij1uw=
+Received: by 10.91.156.15 with SMTP id i15mr142222ago.0.1250089610318;
+        Wed, 12 Aug 2009 08:06:50 -0700 (PDT)
+Received: from localhost.localdomain (bas1-montreal42-1178045554.dsl.bell.ca [70.55.140.114])
+        by mx.google.com with ESMTPS id 38sm11243aga.39.2009.08.12.08.06.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 12 Aug 2009 08:06:49 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.rc3.195.g2b05f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125705>
 
-On Tue, Aug 11, 2009 at 10:33 PM, Nicolas Pitre<nico@cam.org> wrote:
-<snipped>
+Silences warnings related with using synchronized() on these members.
 
-> From git v1.6.3 the --aggressive switch makes for 'git repack' to be
-> called with --window=250 --depth=250, meaning the equivalent of:
->
->        git repack -a -d -f --window=250 --depth=250
->
-> Do you still get a huge pack with the above?
->
->> I guess --aggressive doesn't always save space...
->
-> If so that is (and was) a bug.
+Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+---
+ .../src/org/spearce/jgit/lib/Repository.java       |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I tried 'git repack -a -d -f --window=250 --depth=250' with 1.6.2.5
-(fc11.x86_64) and it took half a day, swallowed up all the memory -
-3GB virtual & 1.3GB resident - and finally the kernel oom killer
-killed it at a last message of (601460/957910). Left no temp files.
-Would git 1.6.3 use less memory? :-(
-
-Hin-Tak
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+index 468cf4c..d6be9bf 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
+@@ -100,8 +100,8 @@
+ 
+ 	private GitIndex index;
+ 
+-	private List<RepositoryListener> listeners = new Vector<RepositoryListener>(); // thread safe
+-	static private List<RepositoryListener> allListeners = new Vector<RepositoryListener>(); // thread safe
++	private final List<RepositoryListener> listeners = new Vector<RepositoryListener>(); // thread safe
++	static private final List<RepositoryListener> allListeners = new Vector<RepositoryListener>(); // thread safe
+ 
+ 	/**
+ 	 * Construct a representation of a Git repository.
+-- 
+1.6.4.rc3.195.g2b05f
