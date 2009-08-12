@@ -1,75 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Tue, 11 Aug 2009 23:33:06 -0700
-Message-ID: <7v3a7xa6e5.fsf@alter.siamese.dyndns.org>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
- <1250005446-12047-2-git-send-email-pclouds@gmail.com>
- <1250005446-12047-3-git-send-email-pclouds@gmail.com>
- <1250005446-12047-4-git-send-email-pclouds@gmail.com>
- <1250005446-12047-5-git-send-email-pclouds@gmail.com>
- <1250005446-12047-6-git-send-email-pclouds@gmail.com>
- <1250005446-12047-7-git-send-email-pclouds@gmail.com>
- <1250005446-12047-8-git-send-email-pclouds@gmail.com>
- <1250005446-12047-9-git-send-email-pclouds@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Implementing $Date$ substitution - problem with git status
+Date: Wed, 12 Aug 2009 07:54:44 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908120751500.30907@ds9.cixit.se>
+References: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se> <200908092252.58363.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 08:33:24 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git List <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 08:55:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb7Om-00053g-0x
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 08:33:24 +0200
+	id 1Mb7jh-00034D-PI
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 08:55:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751415AbZHLGdO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2009 02:33:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751056AbZHLGdO
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 02:33:14 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37339 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZHLGdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 02:33:13 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B7EDE748C;
-	Wed, 12 Aug 2009 02:33:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A26D748A; Wed, 12 Aug
- 2009 02:33:08 -0400 (EDT)
-In-Reply-To: <1250005446-12047-9-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Tue\, 11 Aug
- 2009 22\:44\:06 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 026706D8-870A-11DE-87ED-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752618AbZHLGyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 02:54:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZHLGyu
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 02:54:50 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:55070 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752498AbZHLGyu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 02:54:50 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7C6sijT031124
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 12 Aug 2009 08:54:44 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7C6sisv031120;
+	Wed, 12 Aug 2009 08:54:44 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <200908092252.58363.j6t@kdbg.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 12 Aug 2009 08:54:45 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125672>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Johannes Sixt:
 
-> @@ -594,6 +596,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
->  		OPT_BOOLEAN('m', "merge", &opts.merge, "merge"),
->  		OPT_STRING(0, "conflict", &conflict_style, "style",
->  			   "conflict style (merge or diff3)"),
-> +		OPT_SET_INT(0, "sparse", &opts.apply_sparse,
-> +			    "apply sparse checkout filter", 1),
+>> Doing "git reset --hard" or "git checkout master filename" does not 
+>> help, the file is still believed to be modified by git.
 
-Shouldn't this be BOOLEAN not INT, i.e. "--[no-]sparse"?  That way, you
-could enable it by simply the presense of $GIT_DIR/info/sparse.
+> Now, that's an entirely different problem, and I think that there is a 
+> bug. I have observed this as well with my own clean filter sometimes, but 
+> not always. I haven't found a recipe that reliably exhibits the problem.
 
-It could also require core.sparseworktree configuration set to true if =
-we
-are really paranoid, but without the actual sparse specification file
-flipping that configuration to true would not be useful anyway, so in
-practice, giving --sparse-work-tree option to these Porcelain commands
-would be no-op, but --no-sparse-work-tree option would be useful to
-ignore $GIT_DIR/info/sparse and populate the work tree fully.
+After som examination, it seems to be caused by the way I imported the CVS 
+history: I kept all the $ keywords expanded in history (so that if I check 
+out an old version from Git, it looks like it did in CVS). This means that 
+still in the latest revision of several files, I have "$Id$" lines checked 
+in in CVS format.
 
-Or am I missing something?
+However, as I have set the "ident" attribute, Git wants to expand it itself 
+and check in files with "$Id$". When I do a reset, it seems it records the 
+entry as clean against a version stored with just "$Id$", but the record in 
+history has an expanded "$Id$", and the entry is thus never deemed clean.
+
+I can probably work around this by removing the "$Id$" attributes, or by 
+removing the "ident" rule.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
