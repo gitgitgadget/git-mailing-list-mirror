@@ -1,112 +1,166 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign vcs
-Date: Wed, 12 Aug 2009 02:33:08 -0700 (PDT)
-Message-ID: <m363ctpedr.fsf@localhost.localdomain>
-References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
-	<7v1vnk79lt.fsf@alter.siamese.dyndns.org>
-	<36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
-	<alpine.DEB.1.00.0908111817490.4638@intel-tinevez-2-302>
-	<20090811214849.GA3868@sigill.intra.peff.net>
-	<alpine.DEB.1.00.0908120128120.8306@pacific.mpi-cbg.de>
-	<20090812074521.GD15152@coredump.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] svn: Add && to t9107-git-svn-migrarte.sh
+Date: Wed, 12 Aug 2009 02:49:40 -0700
+Message-ID: <20090812094940.GA22273@dcvr.yhbt.net>
+References: <20090810083234.GA8698@dcvr.yhbt.net> <1250046867-13655-1-git-send-email-adambrewster@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 12 11:33:49 2009
+Cc: git@vger.kernel.org
+To: Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 11:49:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbADM-0007Dm-QM
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 11:33:49 +0200
+	id 1MbASu-0000Mh-HA
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 11:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755308AbZHLJdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 05:33:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755291AbZHLJdL
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 05:33:11 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:11774 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755300AbZHLJdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 05:33:09 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so1059005fga.17
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 02:33:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=sCAsaomfrP5QVcHTF+InPhm9VS5sPqNsKrJlpwdxG6w=;
-        b=MXsleTmKWzD3f91SexsHcEQpdVobP4FthxsgtG0SoZqVl8gCFuFYekeH8rnIHMw/Pn
-         k9y3qbuuDMBW6lxfbusj+Ey8baAh8ZpWn2r0rqgCVx+uPav6BeQ5mnOgivZpB1ZcLE5S
-         itMe9IQYviu4Ww1UIb5RgeiLqOdQWBI7jieag=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=X4Dc523XoefVPLPwF6+C6CY7n1noanQxyX0VIR22UTxiYQph4ENOXkudiwP24d1qMx
-         aXitvhLPHlFvtb0AWzvrWuCEW4I2KiL+galwEHTkcvH8Dh/qK/Pj4DnaMhwKsxm+vhDj
-         GdO+1OSFLKjEYNh+w+tJUIEpD4C7xDRNxnhqU=
-Received: by 10.86.231.5 with SMTP id d5mr259209fgh.53.1250069589052;
-        Wed, 12 Aug 2009 02:33:09 -0700 (PDT)
-Received: from localhost.localdomain (abvv142.neoplus.adsl.tpnet.pl [83.8.219.142])
-        by mx.google.com with ESMTPS id e11sm16480288fga.16.2009.08.12.02.33.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 Aug 2009 02:33:08 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7C9W88i010248;
-	Wed, 12 Aug 2009 11:32:19 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7C9VT6e010230;
-	Wed, 12 Aug 2009 11:31:29 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20090812074521.GD15152@coredump.intra.peff.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932351AbZHLJtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 05:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932324AbZHLJtm
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 05:49:42 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43973 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932296AbZHLJtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 05:49:41 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 4E3251F509;
+	Wed, 12 Aug 2009 09:49:41 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1250046867-13655-1-git-send-email-adambrewster@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125688>
 
-Jeff King <peff@peff.net> writes:
+Adam Brewster <adambrewster@gmail.com> wrote:
+> Eric,
+> 
+> Any thoughts on the other patch?
+> 
+> Am I close or is there a better way to go about this?
+> 
+> I didn't really know what to do with .git/svn/*.  The easy answer is
+> 
+>   mkdir -p $GIT_DIR/svn/refs/remotes &&
+>   mv $GIT_DIR/svn/* $GIT_DIR/svn/refs/remotes
 
->   1. Is there some other syntax that _doesn't_ have this breakage
->      but that similarly helps the "vast majority of Git users".
+That should be acceptable.  I don't think it's worth the trouble to
+force the majority of existing repos to move over to the new layout
+(in case the user wants to switch between multiple versions of git).
 
-Well, proposed possible syntax was:
+> From the comments in the Migration module, it seems like that's frowned
+> upon, so I came up with looking for .rev_map (or .rev_db) in both
+> locations (.git/svn/git-svn and .git/svn/refs/remotes/svn) and letting
+> it stay in whichever location it already exists.  (The next email has a
+> slightly improved version of the patch.)
+> 
+> This solution is particularly inelegant in it's handling of
+> unhandled.log, but as far as I know that file is unused.
 
-1. <vcs>:<repository location>
+I'd still rather avoid creating unhandled.log in two places and
+having an unused set of directories.
 
-   e.g.:
+I think the following change on top of yours would make most
+sense:
 
-     svn:http://svn.example.com/project
+diff --git a/git-svn.perl b/git-svn.perl
+index cafd7fe..1117f28 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3325,8 +3325,18 @@ sub _new {
+ 	}
+ 	$_[1] = $repo_id;
+ 	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
++
++	# Older repos imported by us used $GIT_DIR/svn/foo instead of
++	# $GIT_DIR/svn/refs/remotes/foo when tracking refs/remotes/foo
++	if ($ref_id =~ m{^refs/remotes/(.*)}) {
++		my $old_dir = "$ENV{GIT_DIR}/svn/$1";
++		if (-d $old_dir && ! -d $dir) {
++			$dir = $old_dir;
++		}
++	}
++
+ 	$_[3] = $path = '' unless (defined $path);
+-	mkpath(["$ENV{GIT_DIR}/svn/$ref_id"]);
++	mkpath([$dir]);
+ 	bless {
+ 		ref_id => $ref_id, dir => $dir, index => "$dir/index",
+ 	        path => $path, config => "$ENV{GIT_DIR}/svn/config",
+@@ -3355,16 +3365,7 @@ sub rev_db_path {
+ sub map_path {
+ 	my ($self, $uuid) = @_;
+ 	$uuid ||= $self->ra_uuid;
+-	my $map_path = "$self->{map_root}.$uuid";
+-	return $map_path if ( -f $map_path );
+-
+-	my $db_path = $map_path;
+-	$db_path =~ s/\.rev_map/.rev_db/;
+-	return $map_path if ( -f $db_path );
+-
+-	return $1 if ($map_path =~ m(refs/remotes/(.*)) && -f $1);
+-	return $1 if ($db_path =~ m(refs/remotes/(.*)) && -f $1);
+-	return $map_path;
++	"$self->{map_root}.$uuid";
+ }
+ 
+ sub uri_encode {
+----
 
-   but
+The map_path() changes you originally made didn't work, either, since
+the -f $1 never took GIT_DIR or GIT_DIR/svn into account.
 
-     host:path/to/repo
+> There's also the problem of what to do if someone has a ref called
+> ref/remotes/refs/remotes/..., but that seems unlikely enough to not
+> cause concern.
 
-2. <vcs>::<repository location>
+I concur.  There's always cases where things will be ambiguous
+and cases where a user is just asking for trouble :)
 
-   e.g.
+I think the below is a good enough test case to for compatibility
+against existing repos.  Let me know what you think, thanks!
 
-     svn::http://svn.example.com/project
-
-3. <vcs>+<repository location>
-
-   e.g.
-
-     svn+http://svn.example.com/project
-
-   but
-
-     http+svn://svn.example.com/project
-     svn+path/to/repo
-
+diff --git a/t/t9144-git-svn-old-rev_map.sh b/t/t9144-git-svn-old-rev_map.sh
+new file mode 100755
+index 0000000..7600a35
+--- /dev/null
++++ b/t/t9144-git-svn-old-rev_map.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
++#
++# Copyright (c) 2009 Eric Wong
++
++test_description='git svn old rev_map preservd'
++. ./lib-git-svn.sh
++
++test_expect_success 'setup test repository with old layout' '
++	mkdir i &&
++	(cd i && > a) &&
++	svn_cmd import -m- i "$svnrepo" &&
++	git svn init "$svnrepo" &&
++	git svn fetch &&
++	test -d .git/svn/refs/remotes/git-svn/ &&
++	! test -e .git/svn/git-svn/ &&
++	mv .git/svn/refs/remotes/git-svn .git/svn/ &&
++	rm -r .git/svn/refs
++'
++
++test_expect_success 'old layout continues to work' '
++	svn_cmd import -m- i "$svnrepo/b" &&
++	git svn rebase &&
++	echo a >> b/a &&
++	git add b/a &&
++	git commit -m- -a &&
++	git svn dcommit &&
++	! test -d .git/svn/refs/ &&
++	test -e .git/svn/git-svn/
++'
++
++test_done
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Eric Wong
