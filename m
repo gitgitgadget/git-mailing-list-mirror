@@ -1,94 +1,55 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git index: how does it work?
-Date: Wed, 12 Aug 2009 21:39:43 +0200
-Message-ID: <20090812193943.GA3718@atjola.homenet>
-References: <loom.20090805T160528-69@post.gmane.org>
- <7v7hxi9m4k.fsf@alter.siamese.dyndns.org>
- <436D5ED1-2F0E-4227-AC4A-3A5FD16B2DCF@cuttshome.net>
- <fabb9a1e0908121047jf7e6cf1n757cde626c79830c@mail.gmail.com>
- <410DBF0B-80A2-4235-B566-B622CA976DA0@cuttshome.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Shaun Cutts <shaun@cuttshome.net>
-X-From: git-owner@vger.kernel.org Wed Aug 12 21:40:05 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH (RESEND) 0/4] Fix race condition on loading pack files
+Date: Wed, 12 Aug 2009 12:45:19 -0700
+Message-ID: <1250106323-19408-1-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 21:45:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbJg2-0007UH-NR
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:40:03 +0200
+	id 1MbJlP-0001Yh-NN
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491AbZHLTjs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2009 15:39:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752892AbZHLTjs
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:39:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47185 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752571AbZHLTjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 15:39:47 -0400
-Received: (qmail invoked by alias); 12 Aug 2009 19:39:47 -0000
-Received: from i59F5472B.versanet.de (EHLO atjola.homenet) [89.245.71.43]
-  by mail.gmx.net (mp065) with SMTP; 12 Aug 2009 21:39:47 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX18l64kDfholDxWBWTPdyIbkLqW+UMBTWHOTi2ESoM
-	bMv3yZRhsg1Ck7
-Content-Disposition: inline
-In-Reply-To: <410DBF0B-80A2-4235-B566-B622CA976DA0@cuttshome.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1752833AbZHLTpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 15:45:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZHLTpX
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:45:23 -0400
+Received: from george.spearce.org ([209.20.77.23]:52206 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752083AbZHLTpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 15:45:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 510803816F; Wed, 12 Aug 2009 19:45:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id DC5EF3816F;
+	Wed, 12 Aug 2009 19:45:23 +0000 (UTC)
+X-Mailer: git-send-email 1.6.4.225.gb589e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125729>
 
-[Please don't top-post, fixed that for you...]
+I had sent this series while you were on vacation, so I assume it
+just got lost in the shuffle and am resending.
 
-On 2009.08.12 20:45:48 +0200, Shaun Cutts wrote:
-> On Aug 12, 2009, at 7:47 PM, Sverre Rabbelier wrote:
-> >Heya,
-> >
-> >On Wed, Aug 12, 2009 at 04:52, Shaun Cutts<shaun@cuttshome.net> wrot=
-e:
-> >>Are renames being tracked by the index, and is there a more
-> >>basic interface
-> >>than "status" to query about them?
-> >
-> >Nope, git never explicitly tracks renames. Try this:
-> >$ mv foo bar
-> >$ git rm --cached foo
-> >$ git add bar
-> >$ git status
-> >
-> >It'll tell you that you renamed foo to bar, even if you never
-> >executed 'git mv'.
-> >
-> >This is because git does rename _detection_, that is, it'll notice
-> >that you have another file with (almost) the same contents, so it
-> >assumes you did a rename.
->
-> Aha ---
->=20
-> that explains it, then.
->=20
-> Is there a lower-level interface to rename detection than via
-> "status"? And... um... hmmm.... how does it work? The hash codes
-> don't help for "almost" the same. Is there an approximate string
-> matching algorithm built in somewhere?
+This series tries to fix a "racy git" problem when reading pack
+files in a repository; its possible that the directory is modified,
+read and modified again in the same filesystem timestamp, resulting
+in the reader not noticing the second modification.  This may cause
+a reader to lose access to objects on disk.
 
-Roughly, it works like this:
-The files are split into small chunks, those are hashed, and if there
-are chunks with the same hash in both files, those chunks are treated a=
-s
-being common to both files. The more the files have in common, the
-higher the similarity score. See estimate_similarity() for details.
+Shawn O. Pearce (4):
+  Avoid unnecessary stat when scanning packs in the objects directory
+  Make ObjectDirectory last modified time atomically updated with list
+  Don't create new pack lists if the directory hasn't changed
+  Fix racy condition when a repository is repacked
 
-As the splitting also happens at newlines this has some interesting
-effects, for example, you can completely reorder the lines in a file
-after renaming it, and git will still detect it as a rename.
-
-Bj=F6rn
+ .../src/org/spearce/jgit/lib/ObjectDirectory.java  |  235 ++++++++++++-------
+ 1 files changed, 148 insertions(+), 87 deletions(-)
