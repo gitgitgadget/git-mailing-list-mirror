@@ -1,95 +1,80 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Problems with filters and git status - reproduction steps
-Date: Wed, 12 Aug 2009 09:36:22 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0908120856110.30907@ds9.cixit.se>
-References: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se> <200908092252.58363.j6t@kdbg.org> <alpine.DEB.2.00.0908120751500.30907@ds9.cixit.se>
+From: Mike Ralphson <mike.ralphson@gmail.com>
+Subject: Re: How do gmail users try out patches from this list?
+Date: Wed, 12 Aug 2009 09:43:37 +0100
+Message-ID: <e2b179460908120143j5b0eb964s666dd0d59c850db3@mail.gmail.com>
+References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
+	 <20090811221408.GC12956@vidovic>
+	 <200908111917.19267.wjl@icecavern.net>
+	 <4A827BF3.8080208@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Git List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 10:36:59 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Wesley J. Landaker" <wjl@icecavern.net>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Aug 12 10:43:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb9KM-0000dZ-W3
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 10:36:59 +0200
+	id 1Mb9Qz-0003nN-20
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 10:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753552AbZHLIga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 04:36:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbZHLIga
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 04:36:30 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:42194 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753094AbZHLIg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 04:36:29 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7C8aM4W014958
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 12 Aug 2009 10:36:22 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7C8aM8V014953;
-	Wed, 12 Aug 2009 10:36:22 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.2.00.0908120751500.30907@ds9.cixit.se>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 12 Aug 2009 10:36:22 +0200 (CEST)
+	id S1753669AbZHLInj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 04:43:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752749AbZHLIni
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 04:43:38 -0400
+Received: from mail-fx0-f228.google.com ([209.85.220.228]:53405 "EHLO
+	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816AbZHLIni (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 04:43:38 -0400
+Received: by fxm28 with SMTP id 28so1989625fxm.17
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 01:43:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DLFN7Is1XOW1tcZY0DjoBKLK49GFaZPZA3CqvkV1P7E=;
+        b=r78HOjl+9iCuYTAAnm32ycYUE5iFI8jrYCrP3Tw80WU3pEWrDGJ9EOSDIkSrX6CZg/
+         DIxzZ1fm+Hlw6k1pUYI9w6Ogra4O9IqGD+4t36+rFO/8JBY9vBfp/gZqbvU2vR+OJlBG
+         3vTSaguLzJNkAAk4kMwnKSNTfQ8HykbmQ6h4o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=diKUAedLs2hPp72l4U0GmgUZguzIMhNTomU2QgHAgv70jxCiMN/k2PB60gv3w5tmu+
+         5qkw3ExeYesUYqZVqUuLTBWOIj/2PL9tMFX4DRlGbZczeFqCxjjgn/zRwQWXh7sFKrcY
+         asLkHyzbzxDVPzzGwPpP6ebpBAuJ2XTIxPzlo=
+Received: by 10.223.109.200 with SMTP id k8mr410587fap.42.1250066617804; Wed, 
+	12 Aug 2009 01:43:37 -0700 (PDT)
+In-Reply-To: <4A827BF3.8080208@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125683>
 
-Peter Krefting:
+2009/8/11  <skillzero@gmail.com>:
+> Sorry if this is dumb question, but I didn't see any good info in my searches.
+>
+> How do gmail users normally apply patches that come through the list?
+> Do you just manually copy and paste the email to patch files and use
+> git apply? Do you use a tool to export to mbox files and use git am?
+>
+> I've been just doing it manually via copy and paste, but it's kinda tedious.
 
-> However, as I have set the "ident" attribute, Git wants to expand it itself 
-> and check in files with "$Id$". When I do a reset, it seems it records the 
-> entry as clean against a version stored with just "$Id$", but the record in 
-> history has an expanded "$Id$", and the entry is thus never deemed clean.
+Yep, show original, copy and paste and git apply. Personally I would
+prefer to fetch changes using, oh, I don't know, some kind of dvcs
+tool... 8-) It means I don't tend to build and test many patch series
+until they get merged.
 
-Actually, that is not the case. It seems to be the filter that causes the 
-problems, all by itself. I cannot seem to reproduce this *reliably*. I tried 
-setting up a minimal repository and a reproduction recipe, but I get 
-different behaviour when I perform the steps manually, and when I run it 
-from a shell script.
+It's a pity there's a patchwork server for many kernel.org projects,
+but not for the git mailing list 8-(
 
-Here is the reproduction recipe:
+http://patchwork.kernel.org/
 
-#!/bin/bash
-# Reproduction recipe for $Date$ dirty issue
+http://patchwork.kernel.org/help/pwclient/
 
-ORIGINREPO=git://git.debian.org/users/peterk/gitfilterproblem.git
-DESTINATIONREPO=gitfilterproblem-testrepo
-
-# Set up repository
-echo -- Cloning
-git clone ${ORIGINREPO} ${DESTINATIONREPO}
-cd ${DESTINATIONREPO}
-
-# Status should be clean
-echo -- After cloning, status should be clean
-git status
-
-# Set up filter
-echo -- Set up filter, status should be clean
-./reposetup.sh 
-git status
-
-# Create tracking branch
-echo -- Create tracking branch for changed file, status should be clean
-git branch --track changed-text-files origin/changed-text-files 
-git status
-
-# Merge the branch
-echo -- Merge the changes from the branch, now status gets unclean
-git merge changed-text-files
-echo
-git status
-git diff
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+http://gitster.livejournal.com/18696.html
