@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 01/13] sequencer: add "do_fast_forward()" to perform a fast
-	forward
-Date: Wed, 12 Aug 2009 07:15:39 +0200
-Message-ID: <20090812051552.18155.20095.chriscool@tuxfamily.org>
+Subject: [PATCH 07/13] pick: rename "pick()" to "pick_commit()"
+Date: Wed, 12 Aug 2009 07:15:45 +0200
+Message-ID: <20090812051552.18155.44080.chriscool@tuxfamily.org>
 References: <20090812051116.18155.70541.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -15,70 +14,89 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb6Nz-0003mw-HC
+	id 1Mb6O0-0003mw-9Y
 	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 07:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbZHLF2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 01:28:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZHLF2G
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 01:28:06 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47715 "EHLO smtp3-g21.free.fr"
+	id S1752510AbZHLF2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 01:28:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750817AbZHLF2M
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 01:28:12 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47770 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750817AbZHLF2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 01:28:04 -0400
+	id S1752242AbZHLF2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 01:28:09 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1CFFE8180EE;
-	Wed, 12 Aug 2009 07:27:55 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 9B747818100;
+	Wed, 12 Aug 2009 07:27:58 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 2085B8180B5;
-	Wed, 12 Aug 2009 07:27:53 +0200 (CEST)
-X-git-sha1: 760cf75aea066f1175f07c866079c565e2e1a888 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 5C4C88180AC;
+	Wed, 12 Aug 2009 07:27:55 +0200 (CEST)
+X-git-sha1: 4f7fba959166ba37904260d483729994013edf85 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090812051116.18155.70541.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125659>
 
-From: Stephan Beyer <s-beyer@gmx.net>
 
-This code is taken from the sequencer GSoC project:
-
-    git://repo.or.cz/git/sbeyer.git
-
-    (commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
-
-but the messages have been changed to be the same as those
-displayed by git-rebase--interactive.sh.
-
-Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-sequencer--helper.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+ builtin-revert.c |    2 +-
+ pick.c           |    8 ++++----
+ pick.h           |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
-index be030bc..0cd7e98 100644
---- a/builtin-sequencer--helper.c
-+++ b/builtin-sequencer--helper.c
-@@ -171,6 +171,15 @@ static struct commit *get_commit(const char *arg)
- 	return lookup_commit_reference(sha1);
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 6dd29a3..4797ac5 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -206,7 +206,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 					git_commit_encoding, encoding)))
+ 		commit->buffer = reencoded_message;
+ 
+-	failed = pick(commit, mainline, flags, &msgbuf);
++	failed = pick_commit(commit, mainline, flags, &msgbuf);
+ 	if (failed < 0) {
+ 		exit(1);
+ 	} else if (failed > 0) {
+diff --git a/pick.c b/pick.c
+index 6fea39c..13bf793 100644
+--- a/pick.c
++++ b/pick.c
+@@ -60,16 +60,16 @@ static struct tree *empty_tree(void)
  }
  
-+static int do_fast_forward(const unsigned char *sha)
-+{
-+	if (reset_almost_hard(sha))
-+		return error("Cannot fast forward to %s", sha1_to_hex(sha));
-+	if (verbosity > 1)
-+		printf("Fast forward to %s\n", sha1_to_hex(sha));
-+	return 0;
-+}
-+
- static int set_verbosity(int verbose)
+ /*
+- * Pick changes introduced by pick_commit into current working tree
+- * and index.
++ * Pick changes introduced by "commit" argument into current working
++ * tree and index.
+  *
+  * Return 0 on success.
+  * Return negative value on error before picking,
+  * and a positive value after picking,
+  * and return 1 if and only if a conflict occurs but no other error.
+  */
+-int pick(struct commit *pick_commit, int mainline, int flags,
+-						struct strbuf *msg)
++int pick_commit(struct commit *pick_commit, int mainline, int flags,
++		struct strbuf *msg)
  {
- 	char tmp[] = "0";
+ 	unsigned char head[20];
+ 	struct commit *base, *next, *parent;
+diff --git a/pick.h b/pick.h
+index 7eb0d3a..7a74ad8 100644
+--- a/pick.h
++++ b/pick.h
+@@ -8,6 +8,6 @@
+ #define PICK_ADD_NOTE  2 /* add note about original commit (unless conflict) */
+ /* We don't need a PICK_QUIET. This is done by
+  *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
+-extern int pick(struct commit *pick_commit, int mainline, int flags, struct strbuf *msg);
++extern int pick_commit(struct commit *commit, int mainline, int flags, struct strbuf *msg);
+ 
+ #endif
 -- 
 1.6.4.271.ge010d
