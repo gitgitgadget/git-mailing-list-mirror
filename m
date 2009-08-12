@@ -1,194 +1,146 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH (RESEND) 4/4] Fix racy condition when a repository is repacked
-Date: Wed, 12 Aug 2009 12:45:23 -0700
-Message-ID: <1250106323-19408-5-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH (RESEND) 1/4] Avoid unnecessary stat when scanning packs in the objects directory
+Date: Wed, 12 Aug 2009 12:45:20 -0700
+Message-ID: <1250106323-19408-2-git-send-email-spearce@spearce.org>
 References: <1250106323-19408-1-git-send-email-spearce@spearce.org>
- <1250106323-19408-2-git-send-email-spearce@spearce.org>
- <1250106323-19408-3-git-send-email-spearce@spearce.org>
- <1250106323-19408-4-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 21:45:40 2009
+X-From: git-owner@vger.kernel.org Wed Aug 12 21:46:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbJlR-0001Yh-Um
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:45:38 +0200
+	id 1MbJlv-0001os-Bp
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbZHLTp3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 15:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752916AbZHLTp2
+	id S1753628AbZHLTpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 15:45:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753220AbZHLTp2
 	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:45:28 -0400
-Received: from george.spearce.org ([209.20.77.23]:52218 "EHLO
+Received: from george.spearce.org ([209.20.77.23]:52210 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752892AbZHLTpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 15:45:25 -0400
+	with ESMTP id S1752446AbZHLTpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 15:45:23 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id E8D6F381FE; Wed, 12 Aug 2009 19:45:26 +0000 (UTC)
+	id D7C9138215; Wed, 12 Aug 2009 19:45:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 1E4D9381FD;
-	Wed, 12 Aug 2009 19:45:25 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 2B10A381FD;
+	Wed, 12 Aug 2009 19:45:24 +0000 (UTC)
 X-Mailer: git-send-email 1.6.4.225.gb589e
-In-Reply-To: <1250106323-19408-4-git-send-email-spearce@spearce.org>
+In-Reply-To: <1250106323-19408-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125733>
 
-If the filesystem clock granularity is sufficiently large enough it
-is possible for a repacking program such as `git repack` to change
-the same directory more than once within the same modification time.
-
-If JGit were to scan the directory between changes in the same
-clock step it will never see the later edits, because the directory
-modification time has not changed.
-
-Instead we now keep track of the last time we read the directory.
-If an object cannot be found on disk and the pack directory's last
-modified time is less than 2 minutes since the last time we read
-the directory's contents, we scan it again looking for changes.
-
-Worst case scenario, JGit will list the pack directory once for
-each requested missing object, until the directory has aged at
-least 2 minutes.  Most repositories modify this directory only a
-few times a week, so this is not an undue burden on the host.
+We only care that the pack name exists in the directory at this stage
+of processing.  Performing a isFile() test against the pack file name
+is likely to be slower than checking an in-memory HashSet, since the
+OS call has to actually check the inode to determine whether or not
+the name is a file, or some other node type.  Since we already have
+forced the OS to give us a complete listing of the paths, its just
+faster to consult that existing list.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .../src/org/spearce/jgit/lib/ObjectDirectory.java  |   60 +++++++++++++++++---
- 1 files changed, 52 insertions(+), 8 deletions(-)
+ .../src/org/spearce/jgit/lib/ObjectDirectory.java  |   49 +++++++++++--------
+ 1 files changed, 28 insertions(+), 21 deletions(-)
 
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-index 0bb3c01..859824d 100644
+index 7cc459c..4419f9c 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-@@ -66,7 +66,7 @@
-  * {@link PackFile}s.
-  */
- public class ObjectDirectory extends ObjectDatabase {
--	private static final PackList NO_PACKS = new PackList(-1, new PackFile[0]);
-+	private static final PackList NO_PACKS = new PackList(-1, -1, new PackFile[0]);
+@@ -41,14 +41,16 @@
+ import java.io.File;
+ import java.io.FileNotFoundException;
+ import java.io.FileReader;
+-import java.io.FilenameFilter;
+ import java.io.IOException;
+ import java.util.ArrayList;
+ import java.util.Arrays;
+ import java.util.Collection;
++import java.util.Collections;
+ import java.util.HashMap;
++import java.util.HashSet;
+ import java.util.List;
+ import java.util.Map;
++import java.util.Set;
+ import java.util.concurrent.atomic.AtomicReference;
  
- 	private final File objects;
+ import org.spearce.jgit.errors.PackMismatchException;
+@@ -339,11 +341,23 @@ private static boolean inList(final PackFile[] list, final PackFile pack) {
  
-@@ -273,7 +273,7 @@ private void insertPack(final PackFile pf) {
- 			final PackFile[] newList = new PackFile[1 + oldList.length];
- 			newList[0] = pf;
- 			System.arraycopy(oldList, 0, newList, 1, oldList.length);
--			n = new PackList(o.lastModified, newList);
-+			n = new PackList(o.lastRead, o.lastModified, newList);
- 		} while (!packList.compareAndSet(o, n));
- 	}
- 
-@@ -290,7 +290,7 @@ private void removePack(final PackFile deadPack) {
- 			final PackFile[] newList = new PackFile[oldList.length - 1];
- 			System.arraycopy(oldList, 0, newList, 0, j);
- 			System.arraycopy(oldList, j + 1, newList, j, newList.length - j);
--			n = new PackList(o.lastModified, newList);
-+			n = new PackList(o.lastRead, o.lastModified, newList);
- 		} while (!packList.compareAndSet(o, n));
- 		deadPack.close();
- 	}
-@@ -324,6 +324,7 @@ private PackList scanPacks(final PackList original) {
- 
- 	private PackList scanPacksImpl(final PackList old) {
+ 	private PackFile[] scanPacksImpl(final PackFile[] old) {
  		final Map<String, PackFile> forReuse = reuseMap(old);
-+		final long lastRead = System.currentTimeMillis();
- 		final long lastModified = packDirectory.lastModified();
- 		final Set<String> names = listPackDirectory();
- 		final List<PackFile> list = new ArrayList<PackFile>(names.size() >> 2);
-@@ -362,18 +363,18 @@ private PackList scanPacksImpl(final PackList old) {
- 		// return the same collection.
- 		//
- 		if (!foundNew && lastModified == old.lastModified && forReuse.isEmpty())
--			return old;
-+			return old.updateLastRead(lastRead);
- 
- 		for (final PackFile p : forReuse.values()) {
- 			p.close();
- 		}
- 
- 		if (list.isEmpty())
--			return new PackList(lastModified, NO_PACKS.packs);
-+			return new PackList(lastRead, lastModified, NO_PACKS.packs);
- 
- 		final PackFile[] r = list.toArray(new PackFile[list.size()]);
- 		Arrays.sort(r, PackFile.SORT);
--		return new PackList(lastModified, r);
-+		return new PackList(lastRead, lastModified, r);
- 	}
- 
- 	private static Map<String, PackFile> reuseMap(final PackList old) {
-@@ -449,19 +450,62 @@ private ObjectDatabase openAlternate(final String location)
- 	}
- 
- 	private static final class PackList {
-+		/** Last wall-clock time the directory was read. */
-+		volatile long lastRead;
-+
- 		/** Last modification time of {@link ObjectDirectory#packDirectory}. */
- 		final long lastModified;
- 
- 		/** All known packs, sorted by {@link PackFile#SORT}. */
- 		final PackFile[] packs;
- 
--		PackList(final long lastModified, final PackFile[] packs) {
-+		private boolean cannotBeRacilyClean;
-+
-+		PackList(final long lastRead, final long lastModified,
-+				final PackFile[] packs) {
-+			this.lastRead = lastRead;
- 			this.lastModified = lastModified;
- 			this.packs = packs;
-+			this.cannotBeRacilyClean = notRacyClean(lastRead);
-+		}
-+
-+		private boolean notRacyClean(final long read) {
-+			return read - lastModified > 2 * 60 * 1000L;
-+		}
-+
-+		PackList updateLastRead(final long now) {
-+			if (notRacyClean(now))
-+				cannotBeRacilyClean = true;
-+			lastRead = now;
-+			return this;
- 		}
- 
- 		boolean tryAgain(final long currLastModified) {
--			return lastModified < currLastModified;
-+			// Any difference indicates the directory was modified.
+-		final String[] idxList = listPackIdx();
+-		final List<PackFile> list = new ArrayList<PackFile>(idxList.length);
+-		for (final String indexName : idxList) {
++		final Set<String> names = listPackDirectory();
++		final List<PackFile> list = new ArrayList<PackFile>(names.size() >> 2);
++		for (final String indexName : names) {
++			// Must match "pack-[0-9a-f]{40}.idx" to be an index.
 +			//
-+			if (lastModified != currLastModified)
-+				return true;
++			if (indexName.length() != 49 || !indexName.endsWith(".idx"))
++				continue;
 +
-+			// We have already determined the last read was far enough
-+			// after the last modification that any new modifications
-+			// are certain to change the last modified time.
-+			//
-+			if (cannotBeRacilyClean)
-+				return false;
-+
-+			if (notRacyClean(lastRead)) {
-+				// Our last read should have marked cannotBeRacilyClean,
-+				// but this thread may not have seen the change. The read
-+				// of the volatile field lastRead should have fixed that.
+ 			final String base = indexName.substring(0, indexName.length() - 4);
+ 			final String packName = base + ".pack";
++			if (!names.contains(packName)) {
++				// Sometimes C Git's HTTP fetch transport leaves a
++				// .idx file behind and does not download the .pack.
++				// We have to skip over such useless indexes.
 +				//
-+				return false;
++				continue;
 +			}
-+
-+			// We last read this directory too close to its last observed
-+			// modification time. We may have missed a modification. Scan
-+			// the directory again, to ensure we still see the same state.
-+			//
-+			return true;
+ 
+ 			final PackFile oldPack = forReuse.remove(packName);
+ 			if (oldPack != null) {
+@@ -352,14 +366,6 @@ private static boolean inList(final PackFile[] list, final PackFile pack) {
+ 			}
+ 
+ 			final File packFile = new File(packDirectory, packName);
+-			if (!packFile.isFile()) {
+-				// Sometimes C Git's HTTP fetch transport leaves a
+-				// .idx file behind and does not download the .pack.
+-				// We have to skip over such useless indexes.
+-				//
+-				continue;
+-			}
+-
+ 			final File idxFile = new File(packDirectory, indexName);
+ 			list.add(new PackFile(idxFile, packFile));
  		}
+@@ -401,16 +407,17 @@ private static boolean inList(final PackFile[] list, final PackFile pack) {
+ 		return forReuse;
  	}
- }
+ 
+-	private String[] listPackIdx() {
++	private Set<String> listPackDirectory() {
+ 		packDirectoryLastModified = packDirectory.lastModified();
+-		final String[] idxList = packDirectory.list(new FilenameFilter() {
+-			public boolean accept(final File baseDir, final String n) {
+-				// Must match "pack-[0-9a-f]{40}.idx" to be an index.
+-				return n.length() == 49 && n.endsWith(".idx")
+-						&& n.startsWith("pack-");
+-			}
+-		});
+-		return idxList != null ? idxList : new String[0];
++		final String[] nameList = packDirectory.list();
++		if (nameList == null)
++			return Collections.emptySet();
++		final Set<String> nameSet = new HashSet<String>(nameList.length << 1);
++		for (final String name : nameList) {
++			if (name.startsWith("pack-"))
++				nameSet.add(name);
++		}
++		return nameSet;
+ 	}
+ 
+ 	@Override
 -- 
 1.6.4.225.gb589e
