@@ -1,80 +1,49 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Re: [TRIVIAL] Documentation: merge: one <remote> is required
-Date: Wed, 12 Aug 2009 03:19:30 -0700 (PDT)
-Message-ID: <m31vnhpc5v.fsf@localhost.localdomain>
+From: Paul Bolle <pebolle@tiscali.nl>
+Subject: Re: [PATCH] Re: [TRIVIAL] Documentation: merge: one <remote> is
+ required
+Date: Wed, 12 Aug 2009 12:56:18 +0200
+Message-ID: <1250074578.7545.2.camel@localhost.localdomain>
 References: <1249995838.1589.3.camel@localhost.localdomain>
-	<20090811144253.GA12956@vidovic>
-	<1250002681.2707.2.camel@localhost.localdomain>
-	<7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
+	 <20090811144253.GA12956@vidovic>
+	 <1250002681.2707.2.camel@localhost.localdomain>
+	 <7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Bolle <pebolle@tiscali.nl>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 12:19:58 2009
+X-From: git-owner@vger.kernel.org Wed Aug 12 12:56:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbAvn-0003Ue-Hz
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 12:19:44 +0200
+	id 1MbBVj-0001vq-GP
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 12:56:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932430AbZHLKTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 06:19:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932428AbZHLKTc
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 06:19:32 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:59569 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932418AbZHLKTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 06:19:31 -0400
-Received: by fxm28 with SMTP id 28so2028585fxm.17
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 03:19:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ipMVgtSVhF2eZTqGGXAV3J5H1pKbUHxQlYF6cPVKiqQ=;
-        b=IIwP7BDCGPjsHbXy7rTU+x2/uJYY71qCWB4UwFg0olwAOy7GObXJgF8ey7aK9mpQN4
-         G8SLDhTgrRZ8YuFzwjzvrU0Ec+qaNY6AWGucOWPSHieqfTZZUdg3ZJ4DiGy+lKE+VZBH
-         E4xHbeuwLyHU2NGXSN77Zn+cLMxcJBbDH1LXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=QlD6E0Nqaqo6Dg15KnKhRUYeGxAYjwKhmHx9UloFQtnq+rtUdBebMEYADVaBhajFk2
-         TytLs1YIsVTaOVgbozuztS0HciEmMHswuON8RuwF/6qxlaOOHtg1Fj5kkgziv+QerPgG
-         smYqC6w2CbevQGMCozTS1DJh3JEHIvYYBWbgE=
-Received: by 10.103.160.3 with SMTP id m3mr2798979muo.3.1250072371290;
-        Wed, 12 Aug 2009 03:19:31 -0700 (PDT)
-Received: from localhost.localdomain (abvv142.neoplus.adsl.tpnet.pl [83.8.219.142])
-        by mx.google.com with ESMTPS id 25sm28869542mul.23.2009.08.12.03.19.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 Aug 2009 03:19:30 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7CAJSUD010842;
-	Wed, 12 Aug 2009 12:19:28 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7CAJP1m010838;
-	Wed, 12 Aug 2009 12:19:25 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+	id S932569AbZHLK4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 06:56:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932556AbZHLK4V
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 06:56:21 -0400
+Received: from smtp-out3.tiscali.nl ([195.241.79.178]:52832 "EHLO
+	smtp-out3.tiscali.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932552AbZHLK4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 06:56:20 -0400
+Received: from [212.123.169.34] (helo=[192.168.1.61])
+	by smtp-out3.tiscali.nl with esmtp (Exim)
+	(envelope-from <pebolle@tiscali.nl>)
+	id 1MbBVE-000816-Pk; Wed, 12 Aug 2009 12:56:20 +0200
 In-Reply-To: <7vy6ppbvdf.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+X-Mailer: Evolution 2.27.5 (2.27.5-3.kb.1.fc12) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125693>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, 2009-08-11 at 19:48 -0700, Junio C Hamano wrote: 
 > Paul Bolle <pebolle@tiscali.nl> writes:
-> 
->>> Shoudn't be 
->>> 
->>>    [-m <msg>] <remote> [<remote>...]
->>
->> No, since "<remote>..." means one or more instances of the "<remote>"
->> option.  
+> > No, since "<remote>..." means one or more instances of the "<remote>"
+> > option.  
 > 
 > Does it really?
 > 
@@ -97,20 +66,45 @@ Junio C Hamano <gitster@pobox.com> writes:
 > 
 > and read this as "The <command> can be followed by nothing or something
 > (zero or more) of <remote>s".
+> 
+> On the other hand, you can also say (note that the ellipses stand on their
+> own and are not associated with <remote>):
+> 
+> 	<command> <remote> ...
+> 
+> and read this as "It takes one <remote> followed by nothing or something
+> (zero or more) of unspecified kind".
 
-I would have thought that it makes more sense to have
+It is (now) clear to me that in these two documents the author(s) meant
+"zero or more". Still, I find the "one or more" meaning more obvious.
+The (GNU) manpages of "cp", "mv", "rm", and "ls" use the "one or more"
+meaning. (Note that the explanation quoted above can easily be rewritten
+with for "one or more" meaning and still make sense.) 
 
-  <something>...
+Anyway, I now see that "zero or more" is used quite a lot in git's
+manpages. But, that meaning doesn't fit so well with the
+"[<command>...]" syntax that is also used a lot in these manpages. (I
+find "optionally one or more of <command>" more obvious as otherwise
+"<command>..." and "[<command>...]" are basically identical.)
 
-for one or more, and
+Confusingly, as far as I can see, the manpages of the following commands
+seem to use the "one or more" meaning:
+    git merge-base
+    git mv
+    git name-rev
+    git rm
+    git send-email
+    git tag -d
+    git tag -v
+    git verify-tag
 
-  [<something>... ]
+("git mv" uses both meanings in its synopsis. The two "git tag"
+invocations seem to do nothing with zero arguments and do not return an
+error.)
 
-for zero or more (optional one or more).
+If the above commands really use the "one or more" meaning, that would
+mean both versions are used in the documentation. I'd say it would be
+better to stick to one meaning throughout the manpages.
 
-Documentation/DocumentationLanguage, anyone? ;-))))
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Paul Bolle
