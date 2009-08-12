@@ -1,77 +1,57 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: How do gmail users try out patches from this list?
-Date: Wed, 12 Aug 2009 20:43:18 +0700
-Message-ID: <fcaeb9bf0908120643yf6f24a3h4bf14df42777aae0@mail.gmail.com>
-References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com>
-	 <20090811221408.GC12956@vidovic>
-	 <200908111917.19267.wjl@icecavern.net>
-	 <4A827BF3.8080208@drmicha.warpmail.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH] Provide a more JavaBeans-style 'getName' accessor
+	for the id Signed-off-by: Alex Blewitt <alex.blewitt@gmail.com>
+Date: Wed, 12 Aug 2009 07:20:49 -0700
+Message-ID: <20090812142049.GA1033@spearce.org>
+References: <1241909854-11498-1-git-send-email-alex.blewitt@gmail.com> <20090810155207.GW1033@spearce.org> <E861EAC5-150C-4CF8-AD0F-EBF15CEAE114@gmail.com> <20090810205907.GY1033@spearce.org> <8ACC6C83-75FD-477C-9083-96CA426FC069@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Wesley J. Landaker" <wjl@icecavern.net>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, skillzero@gmail.com,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Aug 12 15:43:36 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "robin.rosenberg@dewire.com" <robin.rosenberg@dewire.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Alex Blewitt <alex.blewitt@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 16:20:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbE6z-00081Y-QZ
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 15:43:30 +0200
+	id 1MbEhG-0003W3-FY
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 16:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbZHLNnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 09:43:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbZHLNnT
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 09:43:19 -0400
-Received: from an-out-0708.google.com ([209.85.132.250]:61386 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751116AbZHLNnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 09:43:19 -0400
-Received: by an-out-0708.google.com with SMTP id d40so14467and.1
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 06:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UE6RZzS3/Olee4gA+SkAZ6Lp0xyYKjmUZrz6TOBXtfw=;
-        b=M8FvYIh8zxU8ZEMTj1VwGSmM4AZv8q9gIBFHiipfP7fV7/oFWagSIjxecEofUUWBwL
-         3stR8uFplQ6kgRTQsa+kqekH9p7XWCGfAX9vPb6k0Vu+NE8k00EoWck4ScBhrIk3WofK
-         ermw7GVNu6aAG9Ks1q2P8qrpITEU1wop2CFy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PdvI9mLoJcPkMne/xbGepB/5YSypa1JHgD3d8YVgdHdAeON4lzVExI3UjoFaZlkNaI
-         Qbm4souXM8E2j/cbmO4nFXoXpsDR9wGuLI+y4HiLwvBBSQcKfMXCEuTVKu2GVRZV1Gz3
-         aokmLNkE1MKCa/l4HFGE4IGMt39zh6+RKFCDc=
-Received: by 10.101.113.16 with SMTP id q16mr126312anm.47.1250084598700; Wed, 
-	12 Aug 2009 06:43:18 -0700 (PDT)
-In-Reply-To: <4A827BF3.8080208@drmicha.warpmail.net>
+	id S1752836AbZHLOUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 10:20:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbZHLOUs
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 10:20:48 -0400
+Received: from george.spearce.org ([209.20.77.23]:33104 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbZHLOUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 10:20:48 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 4D013381FD; Wed, 12 Aug 2009 14:20:49 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <8ACC6C83-75FD-477C-9083-96CA426FC069@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125699>
 
-On 8/12/09, Michael J Gruber <git@drmicha.warpmail.net> wrote:
->  I guess for them (webmail users) it would be better if we attached
->  patches, but we don't do that here. In any case, our list is mirrored on
->  gmane, and you can use the interface there. For example, you get the
->  first message in this thread using the gmane id or the message id like this:
+Alex Blewitt <alex.blewitt@gmail.com> wrote:
+> On 10 Aug 2009, at 21:59, "Shawn O." <spearce@spearce.org> wrote:
+>>
+>>>> ./org/spearce/jgit/revwalk/RevTag.java:206: getName() in
+>>>> org.spearce.jgit.revwalk.RevTag cannot override getName() in
+>>>> org.spearce.jgit.lib.AnyObjectId; overridden method is final
+>>
+>> I can't apply this patch because getName() on RevTag is already
+>> defined with a different meaning.  :-(
 >
->  http://article.gmane.org/gmane.comp.version-control.git/125591
->  http://mid.gmane.org/2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com
->
->  If you add /raw to those URLs you get the original message so that you
->  can happily wget/curl/browse and save away.
+> That sounds dangerous. We now have a .name() and a .getName() with  
+> different semantics. Can we not change the RevTag method name to  
+> something else so that we dont have an inconsistency?
 
-even better http://download.gmane.org/gmane.comp.version-control.git/N/M
-[1] (where N and M is the gmane message ID range) gives you mbox
-format of a series of consecutive messages.
+Good point.  We didn't think that RevTag.getName method through
+very well.  Rename it to getTagName() ?
 
-[1] http://gmane.org/export.php
 -- 
-Duy
+Shawn.
