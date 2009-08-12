@@ -1,70 +1,112 @@
-From: skillzero@gmail.com
-Subject: Re: [RFC PATCH v3 7/8] Support sparse checkout in unpack_trees() and 
-	read-tree
-Date: Tue, 11 Aug 2009 21:59:17 -0700
-Message-ID: <2729632a0908112159y13a088a1w5580cf042a40bec8@mail.gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-4-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-5-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-6-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-7-git-send-email-pclouds@gmail.com>
-	 <1250005446-12047-8-git-send-email-pclouds@gmail.com>
-	 <2729632a0908111418m57e03d8as9c122cbb52efc21a@mail.gmail.com>
-	 <m3ab26owub.fsf@localhost.localdomain>
-	 <2729632a0908111503i7f035c1aw4e84151eab821006@mail.gmail.com>
-	 <fcaeb9bf0908111830n50bd4733h5033c6f13a45999@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 02/13] sequencer: add "--fast-forward" option to "git
+	sequencer--helper"
+Date: Wed, 12 Aug 2009 07:15:40 +0200
+Message-ID: <20090812051552.18155.85832.chriscool@tuxfamily.org>
+References: <20090812051116.18155.70541.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 06:59:48 2009
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 07:28:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb5wB-0004la-6H
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 06:59:47 +0200
+	id 1Mb6Ny-0003mw-15
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 07:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752188AbZHLE7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 00:59:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752124AbZHLE7R
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 00:59:17 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:15206 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751996AbZHLE7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 00:59:16 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1602520qwh.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 21:59:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GZmKZSIwNd0ZsVcBWBzLGgXwH41G0myi9i357buX3PM=;
-        b=cPn+cXDWn2+bnb0aJ+HXUkewpzdItSKGD6LkT897MW0jjMgn75In6RDZYhI6kqAXcd
-         TduGIfF5RjorD/bFxzBhS/q4keW7zJPF9h0GvIgOhQnOnQzfnucqzszX4NBWcc/4z3ab
-         zUWlWIzdOy7aBArsoqhdHkIfatERIMQ4X6+lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ETxjW7GOeYEekzB7FtVskvK19TBkNylAI5ksKgnSoZC4HCVbe9LmzWm9WEgsqzFlnQ
-         0Vvlk0l5tVTIbO7aVuuBUAM7ER7dyrO/7V3s0TF3B04HX5d3MMMtH/zSiMBL9PZ8YzXw
-         3Jp+4ZLAHMv0DtpWWfnC3TLXUm8SqIPhjL+zQ=
-Received: by 10.224.19.207 with SMTP id c15mr4604538qab.69.1250053157575; Tue, 
-	11 Aug 2009 21:59:17 -0700 (PDT)
-In-Reply-To: <fcaeb9bf0908111830n50bd4733h5033c6f13a45999@mail.gmail.com>
+	id S1751910AbZHLF2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 01:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751509AbZHLF2F
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 01:28:05 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47722 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751108AbZHLF2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 01:28:04 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id B0B508180E6;
+	Wed, 12 Aug 2009 07:27:56 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 73646818093;
+	Wed, 12 Aug 2009 07:27:53 +0200 (CEST)
+X-git-sha1: ead14f6439d42e086f9ccc2296760ded87263cae 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20090812051116.18155.70541.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125656>
 
-On Tue, Aug 11, 2009 at 6:30 PM, Nguyen Thai Ngoc Duy<pclouds@gmail.com> wrote:
+This new option uses the "do_fast_forward()" function to perform
+a fast forward.
 
-> I think it's as easy as writing exclude patterns once you figure out '*'.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-sequencer--helper.c |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
 
-That solves it for me. Thanks.
+diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
+index 0cd7e98..bd72f65 100644
+--- a/builtin-sequencer--helper.c
++++ b/builtin-sequencer--helper.c
+@@ -19,6 +19,7 @@ static unsigned char head_sha1[20];
+ static const char * const git_sequencer_helper_usage[] = {
+ 	"git sequencer--helper --make-patch <commit>",
+ 	"git sequencer--helper --reset-hard <commit> <reflog-msg> <verbosity>",
++	"git sequencer--helper --fast-forward <commit> <reflog-msg> <verbosity>",
+ 	NULL
+ };
+ 
+@@ -218,11 +219,14 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	char *patch_commit = NULL;
+ 	char *reset_commit = NULL;
++	char *ff_commit = NULL;
+ 	struct option options[] = {
+ 		OPT_STRING(0, "make-patch", &patch_commit, "commit",
+ 			   "create a patch from commit"),
+ 		OPT_STRING(0, "reset-hard", &reset_commit, "commit",
+ 			   "reset to commit"),
++		OPT_STRING(0, "fast-forward", &ff_commit, "commit",
++			   "fast forward to commit"),
+ 		OPT_END()
+ 	};
+ 
+@@ -239,15 +243,16 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
+-	if (reset_commit) {
++	if (ff_commit || reset_commit) {
+ 		unsigned char sha1[20];
++		char *commit = ff_commit ? ff_commit : reset_commit;
+ 
+ 		if (argc != 2)
+ 			usage_with_options(git_sequencer_helper_usage,
+ 					   options);
+ 
+-		if (get_sha1(reset_commit, sha1)) {
+-			error("Could not find '%s'", reset_commit);
++		if (get_sha1(commit, sha1)) {
++			error("Could not find '%s'", commit);
+ 			return 1;
+ 		}
+ 
+@@ -258,7 +263,10 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ 			return 1;
+ 		}
+ 
+-		return reset_almost_hard(sha1);
++		if (ff_commit)
++			return do_fast_forward(sha1);
++		else
++			return reset_almost_hard(sha1);
+ 	}
+ 
+ 	usage_with_options(git_sequencer_helper_usage, options);
+-- 
+1.6.4.271.ge010d
