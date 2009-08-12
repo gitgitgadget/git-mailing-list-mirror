@@ -1,120 +1,63 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: [PATCH/RFC] Add diff tests for trailing-space and now newline
-Date: Tue, 11 Aug 2009 19:47:29 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908111942020.15481@GWPortableVCS>
-References: <alpine.DEB.1.00.0908052239180.8306@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 12 02:48:05 2009
+From: Grzegorz Kossakowski <grek@tuffmail.com>
+Subject: [PATCH 1/2] Throw IllegalStateException if DirCacheEntry has not been fully initialized.
+Date: Tue, 11 Aug 2009 17:56:20 -0700
+Message-ID: <1250038581-31241-1-git-send-email-grek@tuffmail.com>
+Cc: Grzegorz Kossakowski <grek@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 12 02:57:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb20a-0007r6-C0
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 02:48:04 +0200
+	id 1Mb29J-0001ln-1A
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 02:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754808AbZHLArv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 20:47:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754652AbZHLArv
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 20:47:51 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:48603 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1754495AbZHLAru (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 20:47:50 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1Mb20K-0007Ox-UZ; Tue, 11 Aug 2009 19:47:49 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <alpine.DEB.1.00.0908052239180.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751753AbZHLA4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 20:56:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbZHLA4m
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 20:56:42 -0400
+Received: from smtp-out.google.com ([216.239.45.13]:60438 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490AbZHLA4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 20:56:42 -0400
+Received: from spaceape12.eur.corp.google.com (spaceape12.eur.corp.google.com [172.28.16.146])
+	by smtp-out.google.com with ESMTP id n7C0uglK031440
+	for <git@vger.kernel.org>; Tue, 11 Aug 2009 17:56:42 -0700
+Received: from localhost (glacegreek.mtv.corp.google.com [172.18.102.106])
+	by spaceape12.eur.corp.google.com with ESMTP id n7C0ucxP032382;
+	Tue, 11 Aug 2009 17:56:39 -0700
+Received: by localhost (Postfix, from userid 97043)
+	id 7B3247AAD3; Tue, 11 Aug 2009 17:56:38 -0700 (PDT)
+X-Mailer: git-send-email 1.6.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125633>
 
-  - Test each diff whitespace ignore option on trailing-space at eof
+From: Grzegorz Kossakowski <grek@google.com>
 
-Signed-off-by: Thell Fowler <git@tbfowler.name>
+When mode's object type of entry equals to Constants.OBJ_BAD it's a sign
+of bad (uninitialized) state of an entry and not of problems with merging.
+
+Signed-off-by: Grzegorz Kossakowski <grek@google.com>
 ---
+ .../org/spearce/jgit/dircache/DirCacheTree.java    |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Johannes Schindelin (Johannes.Schindelin@gmx.de) wrote on Aug 5, 2009:
->On Tue, 4 Aug 2009, Thell Fowler wrote:
->
->> mkdir test_ws_eof
->> cd test_ws_eof
->> git init
->> echo -n "Test" > test.txt
->> git add .
->> git commit -m'test'
->> git symbolic-ref HEAD refs/heads/with_space
->> rm .git/index
->> git clean -f
->> echo -n "Test ">test.txt
->> git add .
->> git commit -m'test'
->> # Ignoring all whitespace there shouldn't be a diff.
->> git diff -w master -- test.txt
->> # Ignoring space at eol there shouldn't be a diff
->> git diff --ignore-space-at-eol master -- test.txt
->> # Ignoring with -b might have a case for a diff showing.
->> git diff -b master -- test.txt
->
->If you turn that into a patch to, say, t/t4015-diff-whitespace.sh (adding 
->a test_expect_failure for a known bug), it is much easier to convince 
->developers to work on the issue.
-
-Is this more along the right line?
-
-Thell
-
-
- t/t4015-diff-whitespace.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 6d13da3..fddbf20 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -395,4 +395,27 @@ test_expect_success 'combined diff with autocrlf conversion' '
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
+index 9d5af70..79e95cb 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
+@@ -377,7 +377,8 @@ private int computeSize(final DirCacheEntry[] cache, int cIdx,
  
- '
+ 			final FileMode mode = e.getFileMode();
+ 			if (mode.getObjectType() == Constants.OBJ_BAD)
+-				throw new UnmergedPathException(e);
++				throw new IllegalStateException("Entry \"" + e.getPathString()
++						+ "\" has incorrect mode set up.");
  
-+test_expect_failure 'diff -w on trailing-space with no newline' '
-+
-+	git reset --hard &&
-+	printf "foo " >x &&
-+	git commit -m "trailing-space @ eof test" x &&
-+	printf "foo" >x &&
-+	git commit -m "trailing-space @ eof test" x &&
-+	test_must_pass git diff -w HEAD^ -- x | grep "foo "
-+
-+'
-+
-+test_expect_failure 'diff -b on trailing-space with no newline' '
-+
-+	test_must_pass git diff -b HEAD^ -- x | grep "foo "
-+
-+'
-+
-+test_expect_failure 'diff --ignore-space-at-eol on trailing-space with no newline' '
-+
-+	test_must_pass git diff -ignore-space-at-eol HEAD^ -- x | grep "foo "
-+
-+'
-+
- test_done
+ 			size += mode.copyToLength();
+ 			size += ep.length - pathOffset;
 -- 
-1.6.4.240.g4cd31
+1.6.3.3
