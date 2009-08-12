@@ -1,109 +1,88 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 3/3] block-sha1: support for architectures with memory
- alignment restrictions
-Date: Wed, 12 Aug 2009 15:47:55 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908121546480.10633@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [ANNOUNCE] Scumd
+Date: Wed, 12 Aug 2009 13:26:41 -0700 (PDT)
+Message-ID: <m3ws58ok1r.fsf@localhost.localdomain>
+References: <4A8309D9.8070008@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 21:48:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Gaffney <mr.gaffo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 22:27:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbJo8-0002os-LA
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:48:25 +0200
+	id 1MbKPP-0005iC-6J
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 22:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753936AbZHLTsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 15:48:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbZHLTsP
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:48:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:26257 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753835AbZHLTsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 15:48:14 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOA00FEX4BV4X10@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 12 Aug 2009 15:47:55 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754684AbZHLU0n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 16:26:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754429AbZHLU0n
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 16:26:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:32045 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754424AbZHLU0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 16:26:42 -0400
+Received: by fg-out-1718.google.com with SMTP id e12so867625fga.17
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 13:26:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=/Uv83A3dkbaY0Ovz+BGmBAJW4lAd+6W9xlojw0kel5E=;
+        b=GPvy4YHkZ88Sv3Bm/Ba4Bb3UuZZ3K6fJlVF+F5l5Km0VHN6toRxjHheplM9GdQj8Vv
+         RVYhl1RWLBwlwE4h2UXA/9zIfwJxI/vj/uRfarCFxYoNUq69A9Xi1CdOf5EEuKaPZzWF
+         roFt87/I8NiZqruXAUM3vi7bcLsUxae3oB25c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=aXSNHDslnlDVhkYUel1GWyYZG1xLCdoTmv459AwD4v22GDOIoz71EMkq1xgNiOhqg+
+         DcovXVp+i4w7UJPS4DnZL/rQd3k358knn9phkTkkNsZgA7w+SGDkqFLs3PEmbWySfm2q
+         KKfD4im4eApJhrAiYzExC9h8im19gfjts63rc=
+Received: by 10.87.11.8 with SMTP id o8mr276918fgi.23.1250108802576;
+        Wed, 12 Aug 2009 13:26:42 -0700 (PDT)
+Received: from localhost.localdomain (abvv142.neoplus.adsl.tpnet.pl [83.8.219.142])
+        by mx.google.com with ESMTPS id 12sm3639868fgg.11.2009.08.12.13.26.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 12 Aug 2009 13:26:41 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7CKQfLx019458;
+	Wed, 12 Aug 2009 22:26:41 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7CKQeJY019455;
+	Wed, 12 Aug 2009 22:26:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4A8309D9.8070008@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125738>
 
+Michael Gaffney <mr.gaffo@gmail.com> writes:
 
-This is needed on architectures with poor or non-existent unaligned memory
-support and/or no fast byte swap instruction (such as ARM) by using byte
-accesses to memory and shifting the result together.
+>     This is an initial announcement of SCuMD, a pure java git sshd
+> daemon. The source is at git://github.com/gaffo/scumd. The impetus
+> behind SCuMD is to provide a highly configurable git daemon which can
+> authenticate and authorize off of flat files, databases, LDAP, web
+> services, or any other resource you can think of. SCuMD's other goal
+> is to remove the need to serve off of normal sshd which some find to
+> be a security risk on the open Internet. Currently SCuMD supports LDAP
+> as the authentication module but coding other modules is quite simple.
+>
+>     I would welcome any feedback including a better name. SCuMD stands
+> for SCM Daemon.
 
-This also makes the code portable, therefore the byte access methods are
-the defaults.  Any architecture that properly supports unaligned word
-accesses in hardware simply has to enable the alternative methods.
+Could you add information about this tool to Git Wiki:
+http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
+perhaps below entry for gitosis?
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- block-sha1/sha1.c |   32 ++++++++++++++++++++++++++++++--
- 1 files changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 67c9bd0..d3121f7 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -60,6 +60,34 @@
-   #define setW(x, val) (W(x) = (val))
- #endif
- 
-+/*
-+ * Performance might be improved if the CPU architecture is OK with
-+ * unaligned 32-bit loads and a fast ntohl() is available.
-+ * Otherwise fall back to byte loads and shifts which is portable,
-+ * and is faster on architectures with memory alignment issues.
-+ */
-+
-+#if defined(__i386__) || defined(__x86_64__)
-+
-+#define get_be32(p)	ntohl(*(unsigned int *)(p))
-+#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
-+
-+#else
-+
-+#define get_be32(p)	( \
-+	(*((unsigned char *)(p) + 0) << 24) | \
-+	(*((unsigned char *)(p) + 1) << 16) | \
-+	(*((unsigned char *)(p) + 2) <<  8) | \
-+	(*((unsigned char *)(p) + 3) <<  0) )
-+#define put_be32(p, v)	do { \
-+	unsigned int __v = (v); \
-+	*((unsigned char *)(p) + 0) = __v >> 24; \
-+	*((unsigned char *)(p) + 1) = __v >> 16; \
-+	*((unsigned char *)(p) + 2) = __v >>  8; \
-+	*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
-+
-+#endif
-+
- /* This "rolls" over the 512-bit array */
- #define W(x) (array[(x)&15])
- 
-@@ -67,7 +95,7 @@
-  * Where do we get the source from? The first 16 iterations get it from
-  * the input data, the next mix it from the 512-bit array.
-  */
--#define SHA_SRC(t) htonl(data[t])
-+#define SHA_SRC(t) get_be32(data + t)
- #define SHA_MIX(t) SHA_ROL(W(t+13) ^ W(t+8) ^ W(t+2) ^ W(t), 1)
- 
- #define SHA_ROUND(t, input, fn, constant, A, B, C, D, E) do { \
-@@ -245,5 +273,5 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
- 
- 	/* Output hash */
- 	for (i = 0; i < 5; i++)
--		((unsigned int *)hashout)[i] = htonl(ctx->H[i]);
-+		put_be32(hashout + i*4, ctx->H[i]);
- }
+TIA
 -- 
-1.6.4.189.g282fa
+Jakub Narebski
+
+Git User's Survey 2009
+http://tinyurl.com/GitSurvey2009
