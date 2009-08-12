@@ -1,79 +1,68 @@
-From: Shaun Cutts <shaun@cuttshome.net>
-Subject: Re: git index: how does it work?
-Date: Wed, 12 Aug 2009 20:45:48 +0200
-Message-ID: <410DBF0B-80A2-4235-B566-B622CA976DA0@cuttshome.net>
-References: <loom.20090805T160528-69@post.gmane.org> <7v7hxi9m4k.fsf@alter.siamese.dyndns.org>  <436D5ED1-2F0E-4227-AC4A-3A5FD16B2DCF@cuttshome.net> <fabb9a1e0908121047jf7e6cf1n757cde626c79830c@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [EGIT PATCH] Provide a more JavaBeans-style 'getName' accessor for the id Signed-off-by: Alex Blewitt <alex.blewitt@gmail.com>
+Date: Wed, 12 Aug 2009 21:09:29 +0200
+Message-ID: <200908122109.29560.robin.rosenberg.lists@dewire.com>
+References: <1241909854-11498-1-git-send-email-alex.blewitt@gmail.com> <8ACC6C83-75FD-477C-9083-96CA426FC069@gmail.com> <20090812142049.GA1033@spearce.org>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 20:46:12 2009
+Cc: Alex Blewitt <alex.blewitt@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 12 21:09:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbIpu-0008MU-Id
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 20:46:11 +0200
+	id 1MbJCf-0001qe-Nn
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754774AbZHLSp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 14:45:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbZHLSp7
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 14:45:59 -0400
-Received: from mail3.sea5.speakeasy.net ([69.17.117.5]:51084 "EHLO
-	mail3.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751991AbZHLSp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 14:45:58 -0400
-Received: (qmail 3709 invoked from network); 12 Aug 2009 18:45:59 -0000
-Received: from apn-95-40-196-84.dynamic.gprs.plus.pl (shaunc@[95.40.196.84])
-          (envelope-sender <shaun@cuttshome.net>)
-          by mail3.sea5.speakeasy.net (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 12 Aug 2009 18:45:57 -0000
-In-Reply-To: <fabb9a1e0908121047jf7e6cf1n757cde626c79830c@mail.gmail.com>
-X-Mailer: Apple Mail (2.935.3)
+	id S1753553AbZHLTJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 15:09:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753540AbZHLTJb
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:09:31 -0400
+Received: from mail.dewire.com ([83.140.172.130]:26132 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753429AbZHLTJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 15:09:30 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id CDAA71434E83;
+	Wed, 12 Aug 2009 21:09:30 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lmWzCb4Fyy93; Wed, 12 Aug 2009 21:09:30 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 1F4B51434E81;
+	Wed, 12 Aug 2009 21:09:30 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <20090812142049.GA1033@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125726>
 
-Aha ---
+onsdag 12 augusti 2009 16:20:49 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> Alex Blewitt <alex.blewitt@gmail.com> wrote:
+> > On 10 Aug 2009, at 21:59, "Shawn O." <spearce@spearce.org> wrote:
+> >>
+> >>>> ./org/spearce/jgit/revwalk/RevTag.java:206: getName() in
+> >>>> org.spearce.jgit.revwalk.RevTag cannot override getName() in
+> >>>> org.spearce.jgit.lib.AnyObjectId; overridden method is final
+> >>
+> >> I can't apply this patch because getName() on RevTag is already
+> >> defined with a different meaning.  :-(
+> >
+> > That sounds dangerous. We now have a .name() and a .getName() with  
+> > different semantics. Can we not change the RevTag method name to  
+> > something else so that we dont have an inconsistency?
+> 
+> Good point.  We didn't think that RevTag.getName method through
+> very well.  Rename it to getTagName() ?
 
-that explains it, then.
+Ok with me.
 
-Is there a lower-level interface to rename detection than via  
-"status"? And... um... hmmm.... how does it work? The hash codes don't  
-help for "almost" the same. Is there an approximate string matching  
-algorithm built in somewhere?
-
-Thanks,
-
--- Shaun
-
-On Aug 12, 2009, at 7:47 PM, Sverre Rabbelier wrote:
-
-> Heya,
->
-> On Wed, Aug 12, 2009 at 04:52, Shaun Cutts<shaun@cuttshome.net> wrote:
->> Are renames being tracked by the index, and is there a more basic  
->> interface
->> than "status" to query about them?
->
-> Nope, git never explicitly tracks renames. Try this:
-> $ mv foo bar
-> $ git rm --cached foo
-> $ git add bar
-> $ git status
->
-> It'll tell you that you renamed foo to bar, even if you never  
-> executed 'git mv'.
->
-> This is because git does rename _detection_, that is, it'll notice
-> that you have another file with (almost) the same contents, so it
-> assumes you did a rename.
->
-> -- 
-> Cheers,
->
-> Sverre Rabbelier
->
+-- robin
