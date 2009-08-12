@@ -1,139 +1,55 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH v2] Rename RevTag.getName() to RevTag.getTagName()
-Date: Wed, 12 Aug 2009 13:51:08 -0700
-Message-ID: <20090812205108.GI1033@spearce.org>
-References: <1250105956-17795-1-git-send-email-spearce@spearce.org> <200908122237.37148.robin.rosenberg.lists@dewire.com>
+From: Jeff Enderwick <jeff.enderwick@gmail.com>
+Subject: situation codes (e.g. #16) in unpack-trees.c
+Date: Wed, 12 Aug 2009 14:05:06 -0700
+Message-ID: <bb6059c00908121405t4f34c50eo532b928fa6d6f89c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 22:51:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 12 23:05:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbKn0-0001IM-7C
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 22:51:18 +0200
+	id 1MbL0Z-0001Zu-Lu
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 23:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755088AbZHLUvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 16:51:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755081AbZHLUvI
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 16:51:08 -0400
-Received: from george.spearce.org ([209.20.77.23]:49350 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754904AbZHLUvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 16:51:07 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 41727381FD; Wed, 12 Aug 2009 20:51:08 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <200908122237.37148.robin.rosenberg.lists@dewire.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1750929AbZHLVFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 17:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750890AbZHLVFH
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 17:05:07 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:60893 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855AbZHLVFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 17:05:06 -0400
+Received: by vws2 with SMTP id 2so289615vws.4
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 14:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=h8iTDbn4SHAShcCdee4+tMuQshjzPjq/UFARGAAP9vc=;
+        b=Zi9u0Q3ejrMRajbRZXud4wTGDXX7SfcLexi8YhbefHfJjMitq4SUG0FKZC/zGi4b+y
+         ExoLgeZhOAnRC7p0NDYoTlcdmammqWo9m19LxlKIj3z/XHlAbEifywVR6tj3OqSfr7lf
+         kMX9ItEB/MODe/scK8qW8/XRBS7stpyHj8zaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=ThaqjSCLMqS4Ie5rsMI5REiyW1xS804FWeDzbaJ5w6+ddPBkBJO3l4Faoxa3CAZ9MK
+         QR1RSHsgOoT9RCj3LqAtOA3xFdKHE+DGj0oaatKv25UBXgFf7l28sHWnnXbVq//OUFb1
+         iTrkfnofw7rlqHCG0wGcrT+uhv+j5NXhESoZM=
+Received: by 10.220.71.197 with SMTP id i5mr563344vcj.30.1250111106385; Wed, 
+	12 Aug 2009 14:05:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125747>
 
-The method getName() conflicts semantically with the method name()
-we have inherited from our base class, ObjectId.  It is a rather
-unfortunate turn of events that for performance reasons we wind up
-subclassing what should be a property of this class, but since we
-do that we need to pay attention to the methods declared on our
-base class.
+Newbie here. I'm trying to grok git's merge algorithms. Where are
+those '#' codes written up (e.g. #16, #5ALT, etc)?
+Is there a write-up anywhere on the merge logic?
 
-We want to use getName() to be a mirror of name() on AnyObjectId,
-as it has a more JavaBeans style feel to the accessing of that
-particular value.  So, rename getTagName() so it doesn't wind up
-conflicting with the SHA-1 hex formatted string.
-
-Noticed-by: Alex Blewitt <alex.blewitt@gmail.com>
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
- > You forgot the rename of the method here, and all uses of it.
-
- Quite right.  #@*!! Eclipse.  I thought I refactored that method,
- but I guess it didn't actually do the work, and I failed to read
- the diff closely enough to notice.  *sigh* That's what I get for
- trying to quickly bang out a "simple" change.
-
- .../org/spearce/jgit/revwalk/RevTagParseTest.java  |    8 ++++----
- .../src/org/spearce/jgit/revwalk/RevTag.java       |   10 +++++-----
- 2 files changed, 9 insertions(+), 9 deletions(-)
-
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevTagParseTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevTagParseTest.java
-index 66bc901..9f91154 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevTagParseTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/revwalk/RevTagParseTest.java
-@@ -75,7 +75,7 @@ private void testOneType(final int typeCode) throws Exception {
- 
- 		c = new RevTag(id("9473095c4cb2f12aefe1db8a355fe3fafba42f67"));
- 		assertNull(c.getObject());
--		assertNull(c.getName());
-+		assertNull(c.getTagName());
- 
- 		c.parseCanonical(rw, b.toString().getBytes("UTF-8"));
- 		assertNotNull(c.getObject());
-@@ -117,15 +117,15 @@ public void testParseAllFields() throws Exception {
- 
- 		c = new RevTag(id("9473095c4cb2f12aefe1db8a355fe3fafba42f67"));
- 		assertNull(c.getObject());
--		assertNull(c.getName());
-+		assertNull(c.getTagName());
- 
- 		c.parseCanonical(rw, body.toString().getBytes("UTF-8"));
- 		assertNotNull(c.getObject());
- 		assertEquals(treeId, c.getObject().getId());
- 		assertSame(rw.lookupTree(treeId), c.getObject());
- 
--		assertNotNull(c.getName());
--		assertEquals(name, c.getName());
-+		assertNotNull(c.getTagName());
-+		assertEquals(name, c.getTagName());
- 		assertEquals("", c.getFullMessage());
- 
- 		final PersonIdent cTagger = c.getTaggerIdent();
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevTag.java b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevTag.java
-index 2fab266..204e9b1 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevTag.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/revwalk/RevTag.java
-@@ -56,7 +56,7 @@
- 
- 	private byte[] buffer;
- 
--	private String name;
-+	private String tagName;
- 
- 	/**
- 	 * Create a new tag reference.
-@@ -96,7 +96,7 @@ void parseCanonical(final RevWalk walk, final byte[] rawTag)
- 
- 		int p = pos.value += 4; // "tag "
- 		final int nameEnd = RawParseUtils.nextLF(rawTag, p) - 1;
--		name = RawParseUtils.decode(Constants.CHARSET, rawTag, p, nameEnd);
-+		tagName = RawParseUtils.decode(Constants.CHARSET, rawTag, p, nameEnd);
- 
- 		if (walk.isRetainBody())
- 			buffer = rawTag;
-@@ -186,7 +186,7 @@ public final String getShortMessage() {
- 	 * @return parsed tag.
- 	 */
- 	public Tag asTag(final RevWalk walk) {
--		return new Tag(walk.db, this, name, buffer);
-+		return new Tag(walk.db, this, tagName, buffer);
- 	}
- 
- 	/**
-@@ -203,8 +203,8 @@ public final RevObject getObject() {
- 	 * 
- 	 * @return name of the tag, according to the tag header.
- 	 */
--	public final String getName() {
--		return name;
-+	public final String getTagName() {
-+		return tagName;
- 	}
- 
- 	final void disposeBody() {
--- 
-1.6.4.225.gb589e
+TIA,
+Jeff
