@@ -1,386 +1,87 @@
-From: Adam Brewster <adambrewster@gmail.com>
-Subject: [PATCH] svn: allow branches outside of refs/remotes
-Date: Tue, 11 Aug 2009 23:14:27 -0400
-Message-ID: <1250046867-13655-2-git-send-email-adambrewster@gmail.com>
-References: <20090810083234.GA8698@dcvr.yhbt.net>
- <1250046867-13655-1-git-send-email-adambrewster@gmail.com>
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Adam Brewster <adambrewster@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 12 05:15:14 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a foreign
+ vcs
+Date: Tue, 11 Aug 2009 20:26:58 -0700
+Message-ID: <7vljlpaf0d.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
+ <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
+ <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
+ <alpine.DEB.1.00.0908111817490.4638@intel-tinevez-2-302>
+ <20090811214849.GA3868@sigill.intra.peff.net>
+ <20090812075914.6117@nanako3.lavabit.com>
+ <20090811230233.GA25642@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0908120212500.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Nanako Shiraishi <nanako3@lavabit.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 12 05:27:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb4Iy-0003Pg-BM
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 05:15:13 +0200
+	id 1Mb4Uu-0006wR-W5
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 05:27:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755801AbZHLDPD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Aug 2009 23:15:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755799AbZHLDPD
-	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 23:15:03 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:20815 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755782AbZHLDPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Aug 2009 23:15:00 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1589071qwh.37
-        for <git@vger.kernel.org>; Tue, 11 Aug 2009 20:15:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=ojmGQM+JazyFyERrE9bef+YVhkGpKxxGbetXuf/6F1s=;
-        b=r3VOGmf/JxUnd0TT594yTFb4VUCsciH02iCrFZe0u6inJhK0W61CXeLsPrKhXCfv8k
-         WEak6XA/OX3vvEjacK+/uNLjEMpfn3V0tQWHAOt8Ku/KBcP7QSN4wxgnnfj46aGxEGKA
-         PHeeHEMDJi6UFE4dD/+I6XADGAd3nHE9sDChw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mkgA/jdxXKFrxMMMccnCLAX5T1ZJU+nDXLQwgDTnI+sfFBSYW0qynKOA9SqksaD4t/
-         Pctg2h8NDz8tzwRgcDxHagld2/rkExfoGb5N1uwe9X2hvMN9aXhxz2CHnmfB6gep2omC
-         Xgj5V7yimBzgPOh/30Y1nlSh47nNqNo1iUYVw=
-Received: by 10.224.70.129 with SMTP id d1mr367136qaj.284.1250046899613;
-        Tue, 11 Aug 2009 20:14:59 -0700 (PDT)
-Received: from MBE.internal (c-24-61-131-49.hsd1.nh.comcast.net [24.61.131.49])
-        by mx.google.com with ESMTPS id 5sm275026qwh.21.2009.08.11.20.14.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 Aug 2009 20:14:58 -0700 (PDT)
-Received: by MBE.internal (Postfix, from userid 1000)
-	id DFF3A1044B6; Tue, 11 Aug 2009 23:14:27 -0400 (EDT)
-X-Mailer: git-send-email 1.6.0.6
-In-Reply-To: <1250046867-13655-1-git-send-email-adambrewster@gmail.com>
+	id S1755808AbZHLD1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Aug 2009 23:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755682AbZHLD1L
+	(ORCPT <rfc822;git-outgoing>); Tue, 11 Aug 2009 23:27:11 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44954 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755799AbZHLD1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Aug 2009 23:27:10 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E97D7C63;
+	Tue, 11 Aug 2009 23:27:10 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 456FD7C5F; Tue, 11 Aug
+ 2009 23:27:00 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0908120212500.8306@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Wed\, 12 Aug 2009 02\:14\:12 +0200
+ \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 052644F2-86F0-11DE-8D01-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125652>
 
-It may be convenient for some users to store svn remote tracking
-branches outside of the refs/remotes/ heirarchy.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-To accomplish this feat, this patch includes the entire path to
-the ref in $r->{'refname'} in &read_all_remotes and tries to change
-references to this entry so the new value makes sense.
+>> I have no problem with that, and I think it makes it even more visually
+>> obvious what is going. For example:
+>> 
+>>   svn::http://server/path/to/repo
+>> 
+>> makes the "svn" prefix jump out a bit more.
+>
+> ... and http:://repo.or.cz/r/git.git ?  Thanks.  But no, thanks.
 
-Signed-off-by: Adam Brewster <adambrewster@gmail.com>
----
- git-svn.perl                     |   82 +++++++++++++++++++++----------------
- t/lib-git-svn.sh                 |    2 +-
- t/t9104-git-svn-follow-parent.sh |   10 ++--
- t/t9107-git-svn-migrate.sh       |   14 +++----
- t/t9143-git-svn-gc.sh            |   10 ++--
- 5 files changed, 63 insertions(+), 55 deletions(-)
+Huh?
 
-diff --git a/git-svn.perl b/git-svn.perl
-index b0bfb74..cafd7fe 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -909,7 +909,7 @@ sub cmd_multi_init {
- 	}
- 	do_git_init_db();
- 	if (defined $_trunk) {
--		my $trunk_ref = $_prefix . 'trunk';
-+		my $trunk_ref = 'refs/remotes/' . $_prefix . 'trunk';
- 		# try both old-style and new-style lookups:
- 		my $gs_trunk = eval { Git::SVN->new($trunk_ref) };
- 		unless ($gs_trunk) {
-@@ -1643,23 +1643,23 @@ sub resolve_local_globs {
- 	return unless defined $glob_spec;
- 	my $ref = $glob_spec->{ref};
- 	my $path = $glob_spec->{path};
--	foreach (command(qw#for-each-ref --format=%(refname) refs/remotes#)) {
--		next unless m#^refs/remotes/$ref->{regex}$#;
-+	foreach (command(qw#for-each-ref --format=%(refname) refs/#)) {
-+		next unless m#^$ref->{regex}$#;
- 		my $p = $1;
- 		my $pathname = desanitize_refname($path->full_path($p));
- 		my $refname = desanitize_refname($ref->full_path($p));
- 		if (my $existing = $fetch->{$pathname}) {
- 			if ($existing ne $refname) {
- 				die "Refspec conflict:\n",
--				    "existing: refs/remotes/$existing\n",
--				    " globbed: refs/remotes/$refname\n";
-+				    "existing: $existing\n",
-+				    " globbed: $refname\n";
- 			}
--			my $u = (::cmt_metadata("refs/remotes/$refname"))[0];
-+			my $u = (::cmt_metadata("$refname"))[0];
- 			$u =~ s!^\Q$url\E(/|$)!! or die
--			  "refs/remotes/$refname: '$url' not found in '$u'\n";
-+			  "$refname: '$url' not found in '$u'\n";
- 			if ($pathname ne $u) {
- 				warn "W: Refspec glob conflict ",
--				     "(ref: refs/remotes/$refname):\n",
-+				     "(ref: $refname):\n",
- 				     "expected path: $pathname\n",
- 				     "    real path: $u\n",
- 				     "Continuing ahead with $u\n";
-@@ -1737,33 +1737,34 @@ sub read_all_remotes {
- 	my $use_svm_props = eval { command_oneline(qw/config --bool
- 	    svn.useSvmProps/) };
- 	$use_svm_props = $use_svm_props eq 'true' if $use_svm_props;
-+	my $svn_refspec = qr{\s*/?(.*?)\s*:\s*(.+?)\s*};
- 	foreach (grep { s/^svn-remote\.// } command(qw/config -l/)) {
--		if (m!^(.+)\.fetch=\s*(.*)\s*:\s*(.+)\s*$!) {
--			my ($remote, $local_ref, $_remote_ref) = ($1, $2, $3);
--			die("svn-remote.$remote: remote ref '$_remote_ref' "
--			    . "must start with 'refs/remotes/'\n")
--				unless $_remote_ref =~ m{^refs/remotes/(.+)};
--			my $remote_ref = $1;
--			$local_ref =~ s{^/}{};
-+		if (m!^(.+)\.fetch=$svn_refspec$!) {
-+			my ($remote, $local_ref, $remote_ref) = ($1, $2, $3);
-+			die("svn-remote.$remote: remote ref '$remote_ref' "
-+			    . "must start with 'refs/'\n")
-+				unless $remote_ref =~ m{^refs/};
- 			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
- 			$r->{$remote}->{svm} = {} if $use_svm_props;
- 		} elsif (m!^(.+)\.usesvmprops=\s*(.*)\s*$!) {
- 			$r->{$1}->{svm} = {};
- 		} elsif (m!^(.+)\.url=\s*(.*)\s*$!) {
- 			$r->{$1}->{url} = $2;
--		} elsif (m!^(.+)\.(branches|tags)=
--		           (.*):refs/remotes/(.+)\s*$/!x) {
--			my ($p, $g) = ($3, $4);
-+		} elsif (m!^(.+)\.(branches|tags)=$svn_refspec$!) {
-+			my ($remote, $t, $local_ref, $remote_ref) = ($1, $2, $3, $4);
-+			die("svn-remote.$remote: remote ref '$remote_ref' ($t) "
-+			    . "must start with 'refs/'\n")
-+				unless $remote_ref =~ m{^refs/};
- 			my $rs = {
--			    t => $2,
--			    remote => $1,
--			    path => Git::SVN::GlobSpec->new($p),
--			    ref => Git::SVN::GlobSpec->new($g) };
-+			    t => $t,
-+			    remote => $remote,
-+			    path => Git::SVN::GlobSpec->new($local_ref),
-+			    ref => Git::SVN::GlobSpec->new($remote_ref) };
- 			if (length($rs->{ref}->{right}) != 0) {
- 				die "The '*' glob character must be the last ",
--				    "character of '$g'\n";
-+				    "character of '$remote_ref'\n";
- 			}
--			push @{ $r->{$1}->{$2} }, $rs;
-+			push @{ $r->{$remote}->{$t} }, $rs;
- 		}
- 	}
- 
-@@ -1871,9 +1872,9 @@ sub init_remote_config {
- 		}
- 	}
- 	my ($xrepo_id, $xpath) = find_ref($self->refname);
--	if (defined $xpath) {
-+	if (!$no_write && defined $xpath) {
- 		die "svn-remote.$xrepo_id.fetch already set to track ",
--		    "$xpath:refs/remotes/", $self->refname, "\n";
-+		    "$xpath:", $self->refname, "\n";
- 	}
- 	unless ($no_write) {
- 		command_noisy('config',
-@@ -1948,7 +1949,7 @@ sub find_ref {
- 	my ($ref_id) = @_;
- 	foreach (command(qw/config -l/)) {
- 		next unless m!^svn-remote\.(.+)\.fetch=
--		              \s*(.*)\s*:\s*refs/remotes/(.+)\s*$!x;
-+		              \s*/?(.*?)\s*:\s*(.+?)\s*$!x;
- 		my ($repo_id, $path, $ref) = ($1, $2, $3);
- 		if ($ref eq $ref_id) {
- 			$path = '' if ($path =~ m#^\./?#);
-@@ -1965,16 +1966,16 @@ sub new {
- 		if (!defined $repo_id) {
- 			die "Could not find a \"svn-remote.*.fetch\" key ",
- 			    "in the repository configuration matching: ",
--			    "refs/remotes/$ref_id\n";
-+			    "$ref_id\n";
- 		}
- 	}
- 	my $self = _new($class, $repo_id, $ref_id, $path);
- 	if (!defined $self->{path} || !length $self->{path}) {
- 		my $fetch = command_oneline('config', '--get',
- 		                            "svn-remote.$repo_id.fetch",
--		                            ":refs/remotes/$ref_id\$") or
-+		                            ":$ref_id\$") or
- 		     die "Failed to read \"svn-remote.$repo_id.fetch\" ",
--		         "\":refs/remotes/$ref_id\$\" in config\n";
-+		         "\":$ref_id\$\" in config\n";
- 		($self->{path}, undef) = split(/\s*:\s*/, $fetch);
- 	}
- 	$self->{url} = command_oneline('config', '--get',
-@@ -1985,7 +1986,7 @@ sub new {
- }
- 
- sub refname {
--	my ($refname) = "refs/remotes/$_[0]->{ref_id}" ;
-+	my ($refname) = $_[0]->{ref_id} ;
- 
- 	# It cannot end with a slash /, we'll throw up on this because
- 	# SVN can't have directories with a slash in their name, either:
-@@ -3320,12 +3321,12 @@ sub _new {
- 	}
- 	unless (defined $ref_id && length $ref_id) {
- 		$_prefix = '' unless defined($_prefix);
--		$_[2] = $ref_id = $_prefix . $Git::SVN::default_ref_id;
-+		$_[2] = $ref_id = 'refs/remotes/' . $_prefix . $Git::SVN::default_ref_id;
- 	}
- 	$_[1] = $repo_id;
- 	my $dir = "$ENV{GIT_DIR}/svn/$ref_id";
- 	$_[3] = $path = '' unless (defined $path);
--	mkpath(["$ENV{GIT_DIR}/svn"]);
-+	mkpath(["$ENV{GIT_DIR}/svn/$ref_id"]);
- 	bless {
- 		ref_id => $ref_id, dir => $dir, index => "$dir/index",
- 	        path => $path, config => "$ENV{GIT_DIR}/svn/config",
-@@ -3354,7 +3355,16 @@ sub rev_db_path {
- sub map_path {
- 	my ($self, $uuid) = @_;
- 	$uuid ||= $self->ra_uuid;
--	"$self->{map_root}.$uuid";
-+	my $map_path = "$self->{map_root}.$uuid";
-+	return $map_path if ( -f $map_path );
-+
-+	my $db_path = $map_path;
-+	$db_path =~ s/\.rev_map/.rev_db/;
-+	return $map_path if ( -f $db_path );
-+
-+	return $1 if ($map_path =~ m(refs/remotes/(.*)) && -f $1);
-+	return $1 if ($db_path =~ m(refs/remotes/(.*)) && -f $1);
-+	return $map_path;
- }
- 
- sub uri_encode {
-@@ -5498,7 +5508,7 @@ sub minimize_connections {
- 			my $pfx = "svn-remote.$x->{old_repo_id}";
- 
- 			my $old_fetch = quotemeta("$x->{old_path}:".
--			                          "refs/remotes/$x->{ref_id}");
-+			                          "$x->{ref_id}");
- 			command_noisy(qw/config --unset/,
- 			              "$pfx.fetch", '^'. $old_fetch . '$');
- 			delete $r->{$x->{old_repo_id}}->
-@@ -5567,7 +5577,7 @@ sub new {
- 	my ($class, $glob) = @_;
- 	my $re = $glob;
- 	$re =~ s!/+$!!g; # no need for trailing slashes
--	$re =~ m!^([^*]*)(\*(?:/\*)*)([^*]*)$!;
-+	$re =~ m!^([^*]*)(\*(?:/\*)*)(.*)$!;
- 	my $temp = $re;
- 	my ($left, $right) = ($1, $3);
- 	$re = $2;
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 5654962..fd8631f 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -14,7 +14,7 @@ if ! test_have_prereq PERL; then
- fi
- 
- GIT_DIR=$PWD/.git
--GIT_SVN_DIR=$GIT_DIR/svn/git-svn
-+GIT_SVN_DIR=$GIT_DIR/svn/refs/remotes/git-svn
- SVN_TREE=$GIT_SVN_DIR/svn-tree
- 
- svn >/dev/null 2>&1
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 78610b6..bbfd7f4 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -172,11 +172,11 @@ test_expect_success "follow-parent is atomic" '
- 	git update-ref refs/remotes/flunk@18 refs/remotes/stunk~2 &&
- 	git update-ref -d refs/remotes/stunk &&
- 	git config --unset svn-remote.svn.fetch stunk &&
--	mkdir -p "$GIT_DIR"/svn/flunk@18 &&
--	rev_map=$(cd "$GIT_DIR"/svn/stunk && ls .rev_map*) &&
--	dd if="$GIT_DIR"/svn/stunk/$rev_map \
--	   of="$GIT_DIR"/svn/flunk@18/$rev_map bs=24 count=1 &&
--	rm -rf "$GIT_DIR"/svn/stunk &&
-+	mkdir -p "$GIT_DIR"/svn/refs/remotes/flunk@18 &&
-+	rev_map=$(cd "$GIT_DIR"/svn/refs/remotes/stunk && ls .rev_map*) &&
-+	dd if="$GIT_DIR"/svn/refs/remotes/stunk/$rev_map \
-+	   of="$GIT_DIR"/svn/refs/remotes/flunk@18/$rev_map bs=24 count=1 &&
-+	rm -rf "$GIT_DIR"/svn/refs/remotes/stunk &&
- 	git svn init --minimize-url -i flunk "$svnrepo"/flunk &&
- 	git svn fetch -i flunk &&
- 	git svn init --minimize-url -i stunk "$svnrepo"/stunk &&
-diff --git a/t/t9107-git-svn-migrate.sh b/t/t9107-git-svn-migrate.sh
-index c0098d9..901b8e0 100755
---- a/t/t9107-git-svn-migrate.sh
-+++ b/t/t9107-git-svn-migrate.sh
-@@ -16,9 +16,7 @@ test_expect_success 'setup old-looking metadata' '
- 		cd .. &&
- 	git svn init "$svnrepo" &&
- 	git svn fetch &&
--	mv "$GIT_DIR"/svn/* "$GIT_DIR"/ &&
--	mv "$GIT_DIR"/svn/.metadata "$GIT_DIR"/ &&
--	rmdir "$GIT_DIR"/svn &&
-+	rm -rf "$GIT_DIR"/svn &&
- 	git update-ref refs/heads/git-svn-HEAD refs/${remotes_git_svn} &&
- 	git update-ref refs/heads/svn-HEAD refs/${remotes_git_svn} &&
- 	git update-ref -d refs/${remotes_git_svn} refs/${remotes_git_svn}
-@@ -87,7 +85,7 @@ test_expect_success 'migrate --minimize on old inited layout' '
- 	rm -rf "$GIT_DIR"/svn &&
- 	for i in `cat fetch.out`; do
- 		path=`expr $i : "\([^:]*\):.*$"`
--		ref=`expr $i : "[^:]*:refs/remotes/\(.*\)$"`
-+		ref=`expr $i : "[^:]*:\(refs/remotes/.*\)$"`
- 		if test -z "$ref"; then continue; fi
- 		if test -n "$path"; then path="/$path"; fi
- 		( mkdir -p "$GIT_DIR"/svn/$ref/info/ &&
-@@ -107,16 +105,16 @@ test_expect_success 'migrate --minimize on old inited layout' '
- 
- test_expect_success  ".rev_db auto-converted to .rev_map.UUID" '
- 	git svn fetch -i trunk &&
--	test -z "$(ls "$GIT_DIR"/svn/trunk/.rev_db.* 2>/dev/null)" &&
--	expect="$(ls "$GIT_DIR"/svn/trunk/.rev_map.*)" &&
-+	test -z "$(ls "$GIT_DIR"/svn/refs/remotes/trunk/.rev_db.* 2>/dev/null)" &&
-+	expect="$(ls "$GIT_DIR"/svn/refs/remotes/trunk/.rev_map.*)" &&
- 	test -n "$expect" &&
- 	rev_db="$(echo $expect | sed -e "s,_map,_db,")" &&
- 	convert_to_rev_db "$expect" "$rev_db" &&
- 	rm -f "$expect" &&
- 	test -f "$rev_db" &&
- 	git svn fetch -i trunk &&
--	test -z "$(ls "$GIT_DIR"/svn/trunk/.rev_db.* 2>/dev/null)" &&
--	test ! -e "$GIT_DIR"/svn/trunk/.rev_db &&
-+	test -z "$(ls "$GIT_DIR"/svn/refs/remotes/trunk/.rev_db.* 2>/dev/null)" &&
-+	test ! -e "$GIT_DIR"/svn/refs/remotes/trunk/.rev_db &&
- 	test -f "$expect"
- 	'
- 
-diff --git a/t/t9143-git-svn-gc.sh b/t/t9143-git-svn-gc.sh
-index f2ba2d1..99f69c6 100755
---- a/t/t9143-git-svn-gc.sh
-+++ b/t/t9143-git-svn-gc.sh
-@@ -28,26 +28,26 @@ test_expect_success 'Setup repo' 'git svn init "$svnrepo"'
- test_expect_success 'Fetch repo' 'git svn fetch'
- 
- test_expect_success 'make backup copy of unhandled.log' '
--	 cp .git/svn/git-svn/unhandled.log tmp
-+	 cp .git/svn/refs/remotes/git-svn/unhandled.log tmp
- 	'
- 
--test_expect_success 'create leftover index' '> .git/svn/git-svn/index'
-+test_expect_success 'create leftover index' '> .git/svn/refs/remotes/git-svn/index'
- 
- test_expect_success 'git svn gc runs' 'git svn gc'
- 
--test_expect_success 'git svn index removed' '! test -f .git/svn/git-svn/index'
-+test_expect_success 'git svn index removed' '! test -f .git/svn/refs/remotes/git-svn/index'
- 
- if perl -MCompress::Zlib -e 0 2>/dev/null
- then
- 	test_expect_success 'git svn gc produces a valid gzip file' '
--		 gunzip .git/svn/git-svn/unhandled.log.gz
-+		 gunzip .git/svn/refs/remotes/git-svn/unhandled.log.gz
- 		'
- else
- 	say "Perl Compress::Zlib unavailable, skipping gunzip test"
- fi
- 
- test_expect_success 'git svn gc does not change unhandled.log files' '
--	 test_cmp .git/svn/git-svn/unhandled.log tmp/unhandled.log
-+	 test_cmp .git/svn/refs/remotes/git-svn/unhandled.log tmp/unhandled.log
- 	'
- 
- test_done
--- 
-1.6.0.6
+If you meant a "canonical format that always spells out the name of the
+helper, and then whatever string the chosen helper uses to identify the
+repository", that would be spelled as:
+
+	libcurl::http://repo.or.cz/r/git.git/
+
+and will be handled by a single helper, git-remote-libcurl, that is
+essentially what Linus and Daniel ejected from the builtin.
+
+And in fact, that would be vastly more sensible than "we have one helper
+that uses libcurl, but we hide the implementation detail and call the
+helper with three names git-remote-{http,https,ftp}, so you would spell
+the repository http://repo.or.cz/r/git.git/", which is what we have queued
+in 'next/pu'.
+
+And of course the use of "canonical format" for transports that git
+traditionally has known about is only for consistency; we would want to
+give shortcut for them.  Obviously we would want "http://<anything>" to be
+a short-hand for "curl::http://<anything>".
