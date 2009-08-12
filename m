@@ -1,86 +1,93 @@
-From: Alex Blewitt <alex.blewitt@gmail.com>
-Subject: Re: [EGIT PATCH] Provide a more JavaBeans-style 'getName' accessor for the id Signed-off-by: Alex Blewitt <alex.blewitt@gmail.com>
-Date: Tue, 11 Aug 2009 13:53:38 +0100
-Message-ID: <8ACC6C83-75FD-477C-9083-96CA426FC069@gmail.com>
-References: <1241909854-11498-1-git-send-email-alex.blewitt@gmail.com> <20090810155207.GW1033@spearce.org> <E861EAC5-150C-4CF8-AD0F-EBF15CEAE114@gmail.com> <20090810205907.GY1033@spearce.org>
-Mime-Version: 1.0 (iPhone Mail 7A400)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "robin.rosenberg@dewire.com" <robin.rosenberg@dewire.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Aug 12 09:41:36 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/8] Add a config option for remotes to specify a
+ foreign vcs
+Date: Wed, 12 Aug 2009 03:45:21 -0400
+Message-ID: <20090812074521.GD15152@coredump.intra.peff.net>
+References: <alpine.LNX.2.00.0908091526060.27553@iabervon.org>
+ <7v1vnk79lt.fsf@alter.siamese.dyndns.org>
+ <36ca99e90908110831g2ad52a5ar4a755723a6682f77@mail.gmail.com>
+ <alpine.DEB.1.00.0908111817490.4638@intel-tinevez-2-302>
+ <20090811214849.GA3868@sigill.intra.peff.net>
+ <alpine.DEB.1.00.0908120128120.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
+	Brian Gernhardt <benji@silverinsanity.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 12 09:45:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb8Rz-0001cf-Fc
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 09:40:47 +0200
+	id 1Mb8WZ-00040w-Dy
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 09:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753875AbZHLHki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 03:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZHLHki
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 03:40:38 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:32349 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751799AbZHLHkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 03:40:37 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so1189412eyd.37
-        for <git@vger.kernel.org>; Wed, 12 Aug 2009 00:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:cc:x-mailer;
-        bh=lLNOVtPAB73UXOq2DjjoqzH1wvi42Dk7VYrE/Z8FlnI=;
-        b=kznDLcjnKt65A5IfjfT4NHL1bDCBLZrC3HJHRh6PKsDcB3Ig64x40uGhN3rJlc4Ddg
-         zGYt4J8/RFo0sf9EiHSWjz/CHEwYcgUZotAKiN+5BWRYy1U0quFNm5rTfuXcbooPlsgh
-         Uks3V5K7kyy0xaEP0tAUSss8jB/fKr/d8dduk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:cc:x-mailer;
-        b=OgvdpC5ZlsG59Lu7jeXQd/zGf46kxPDy6tJRS5FF5JGJIUt0/IwuwCKRcAgCmJoqZx
-         2xNUg52D2I9qsl64eGnTdaWv+ty9WuqZ05Ltqh4TGi9g50xirxuACLYwWoowYEJrvWfb
-         RGB86bHzSC3c+SFI51zpiPwdP3j3oqKJKdOik=
-Received: by 10.210.68.17 with SMTP id q17mr2103849eba.6.1250062838138;
-        Wed, 12 Aug 2009 00:40:38 -0700 (PDT)
-Received: from ?10.0.0.220? (gateway.bandlem.com [217.155.97.59])
-        by mx.google.com with ESMTPS id 24sm1985917eyx.23.2009.08.12.00.40.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 Aug 2009 00:40:36 -0700 (PDT)
-In-Reply-To: <20090810205907.GY1033@spearce.org>
-X-Mailer: iPhone Mail (7A400)
+	id S1753951AbZHLHpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 03:45:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZHLHpV
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 03:45:21 -0400
+Received: from peff.net ([208.65.91.99]:53412 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751799AbZHLHpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 03:45:21 -0400
+Received: (qmail 9674 invoked by uid 107); 12 Aug 2009 07:45:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 12 Aug 2009 03:45:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Aug 2009 03:45:21 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0908120128120.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125678>
 
-On 10 Aug 2009, at 21:59, "Shawn O." <spearce@spearce.org> wrote:
+On Wed, Aug 12, 2009 at 01:53:38AM +0200, Johannes Schindelin wrote:
 
-> Alex Blewitt <alex.blewitt@gmail.com> wrote:
->> That patch was originally mailed on the 11th May. Has it taken  
->> until now
->> to notice the problem, or was the other method added in the last  
->> month or
->> so? If I'm to blame, I apologise but didn't note any compile time  
->> issues
->> at the time.
->
-> Arrgh, you are right, I lost this patch in my inbox, and in the
-> interm we applied new features to RevTag which added getName there. .
->
->>> ./org/spearce/jgit/revwalk/RevTag.java:206: getName() in
->>> org.spearce.jgit.revwalk.RevTag cannot override getName() in
->>> org.spearce.jgit.lib.AnyObjectId; overridden method is final
->
-> I can't apply this patch because getName() on RevTag is already
-> defined with a different meaning.  :-(
+> > It is not actually that unreasonable. I have remotes which point to:
+> > 
+> >   vcs:git/foo.git
+> 
+> That is still not "svn".
 
-That sounds dangerous. We now have a .name() and a .getName() with  
-different semantics. Can we not change the RevTag method name to  
-something else so that we dont have an inconsistency?
->
+No, but you snipped the part where I explain how that leads me to
+believe "svn" is plausible. Remember that you and I are just a
+representative sample of a much larger userbase.
 
-Alex 
+There is also a related question: should the the meaning of the URL rely
+purely on _syntax_, or must we understand the _semantics_ of the
+individual tokens? That is, given $X:$Y, does that syntactically mean
+that $X _must_ be a remote helper, or must I understand what helpers git
+knows about to know what it is?
+
+I tend to think purely syntactic systems are more robust and easier to
+understand. The downside is that it's less DWIM, which can often mean
+more typing.
+
+> If _I_ were to judge whether to make it convenient for computer-savvy 
+> people like you who would have _no_ problem diagnosing the problem (_if_ 
+> they have the problem, having edited .ssh/config themselves!), who would 
+> curse briefly, and then go on fixing the problem, or in the alternative 
+> make it convenient for people who do not know their way around .ssh/config 
+> as well as you (and who happen to make up the _vast_ majority of Git users 
+> by now [*1*]), and who would really prefer to have an easy way to clone 
+> "foreign" repositories, I have _no_ problem deciding which way to go.
+> 
+> So I'm a bastard.  Big news.  But I'm a pragmatic one.
+
+You didn't quote the part of my email about how ssh:// sucks. It is not
+just about having my config break, figuring it out, and fixing it. You
+are losing a useful construct that I might be using on the command line.
+
+That being said, I am not 100% opposed to the proposal. I just think it
+is worth considering this breakage as a downside, and considering
+
+  1. Is there some other syntax that _doesn't_ have this breakage
+     but that similarly helps the "vast majority of Git users".
+
+  2. Should such a breakage follow a deprecation schedule, and if so,
+     what schedule?
+
+-Peff
