@@ -1,81 +1,109 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [JGIT PATCH 1/1] Fix for Repository.stripWorkDir when using partial paths
-Date: Wed, 12 Aug 2009 21:47:52 +0200
-Message-ID: <200908122147.52530.robin.rosenberg.lists@dewire.com>
-References: <4A821167.6030107@writeme.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 3/3] block-sha1: support for architectures with memory
+ alignment restrictions
+Date: Wed, 12 Aug 2009 15:47:55 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908121546480.10633@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Adam W. Hawks" <awhawks@writeme.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 21:48:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 21:48:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbJnn-0002fV-7w
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:48:03 +0200
+	id 1MbJo8-0002os-LA
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 21:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753868AbZHLTrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 15:47:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbZHLTrx
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:47:53 -0400
-Received: from mail.dewire.com ([83.140.172.130]:26709 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753831AbZHLTrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 15:47:53 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id F0A0C1434E8A;
-	Wed, 12 Aug 2009 21:47:53 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 42R1V9Mxhnvn; Wed, 12 Aug 2009 21:47:53 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 6E6D580267A;
-	Wed, 12 Aug 2009 21:47:53 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <4A821167.6030107@writeme.com>
-Content-Disposition: inline
+	id S1753936AbZHLTsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 15:48:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753871AbZHLTsP
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 15:48:15 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:26257 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753835AbZHLTsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 15:48:14 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOA00FEX4BV4X10@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 12 Aug 2009 15:47:55 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125737>
 
-onsdag 12 augusti 2009 02:48:39 skrev "Adam W. Hawks" <awhawks@writeme.com>:
-> 
-> From ef993e633cdcb1dddda5e71db1b62306df7ce83f Mon Sep 17 00:00:00 2001
-> Date: Tue, 11 Aug 2009 20:02:56 -0400
-> 
-> When you call stripWorkDir with a relative path
-> you can get a string out of bounds error.
-> 
-> This change fixes that problem by using the absolute paths
-> of the file instead of its relative name.
-> 
-> Signed-off-by: Adam W. Hawks <awhawks@writeme.com>
-> ---
->  .../src/org/spearce/jgit/lib/Repository.java       |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> index 468cf4c..a68817b 100644
-> --- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> +++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-> @@ -1036,7 +1036,7 @@ public static boolean isValidRefName(final String refName) {
->  	 * @return normalized repository relative path
->  	 */
->  	public static String stripWorkDir(File wd, File f) {
-> -		String relName = f.getPath().substring(wd.getPath().length() + 1);
-> +		String relName = f.getAbsolutePath().substring(wd.getPath().length() + 1);
->  		relName = relName.replace(File.separatorChar, '/');
->  		return relName;
->  	}
 
-Why not convert both paths? A trickier issue is that getAbsolutePath is very slow when
-the path is not absolute. I don't think we will always need to normalize in order to
-fix this. A few unit tests to show the cases solved would help.
+This is needed on architectures with poor or non-existent unaligned memory
+support and/or no fast byte swap instruction (such as ARM) by using byte
+accesses to memory and shifting the result together.
 
--- robin
+This also makes the code portable, therefore the byte access methods are
+the defaults.  Any architecture that properly supports unaligned word
+accesses in hardware simply has to enable the alternative methods.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ block-sha1/sha1.c |   32 ++++++++++++++++++++++++++++++--
+ 1 files changed, 30 insertions(+), 2 deletions(-)
+
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index 67c9bd0..d3121f7 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -60,6 +60,34 @@
+   #define setW(x, val) (W(x) = (val))
+ #endif
+ 
++/*
++ * Performance might be improved if the CPU architecture is OK with
++ * unaligned 32-bit loads and a fast ntohl() is available.
++ * Otherwise fall back to byte loads and shifts which is portable,
++ * and is faster on architectures with memory alignment issues.
++ */
++
++#if defined(__i386__) || defined(__x86_64__)
++
++#define get_be32(p)	ntohl(*(unsigned int *)(p))
++#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
++
++#else
++
++#define get_be32(p)	( \
++	(*((unsigned char *)(p) + 0) << 24) | \
++	(*((unsigned char *)(p) + 1) << 16) | \
++	(*((unsigned char *)(p) + 2) <<  8) | \
++	(*((unsigned char *)(p) + 3) <<  0) )
++#define put_be32(p, v)	do { \
++	unsigned int __v = (v); \
++	*((unsigned char *)(p) + 0) = __v >> 24; \
++	*((unsigned char *)(p) + 1) = __v >> 16; \
++	*((unsigned char *)(p) + 2) = __v >>  8; \
++	*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
++
++#endif
++
+ /* This "rolls" over the 512-bit array */
+ #define W(x) (array[(x)&15])
+ 
+@@ -67,7 +95,7 @@
+  * Where do we get the source from? The first 16 iterations get it from
+  * the input data, the next mix it from the 512-bit array.
+  */
+-#define SHA_SRC(t) htonl(data[t])
++#define SHA_SRC(t) get_be32(data + t)
+ #define SHA_MIX(t) SHA_ROL(W(t+13) ^ W(t+8) ^ W(t+2) ^ W(t), 1)
+ 
+ #define SHA_ROUND(t, input, fn, constant, A, B, C, D, E) do { \
+@@ -245,5 +273,5 @@ void blk_SHA1_Final(unsigned char hashout[20], blk_SHA_CTX *ctx)
+ 
+ 	/* Output hash */
+ 	for (i = 0; i < 5; i++)
+-		((unsigned int *)hashout)[i] = htonl(ctx->H[i]);
++		put_be32(hashout + i*4, ctx->H[i]);
+ }
+-- 
+1.6.4.189.g282fa
