@@ -1,89 +1,74 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git gc expanding packed data?
-Date: Wed, 12 Aug 2009 11:35:24 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908121118420.10633@xanadu.home>
-References: <3ace41890908041325v24ed9e2eh95ecc148305f7775@mail.gmail.com>
- <alpine.LFD.2.00.0908042203380.16073@xanadu.home>
- <3ace41890908110317k6e6ada07jc39ea446f9fa246e@mail.gmail.com>
- <alpine.LFD.2.00.0908111718490.10633@xanadu.home>
- <3ace41890908120745y305b2a59hd453b7e146e4a774@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-gui: Update russian translation
+Date: Wed, 12 Aug 2009 08:40:17 -0700
+Message-ID: <20090812154016.GG1033@spearce.org>
+References: <4A4A77A6.1020905@lawrence.edu> <20090810153859.GT1033@spearce.org> <4A81B738.7090507@zwell.net> <20090811202927.GZ1033@spearce.org> <4A81BD58.8070300@zwell.net> <20090812144345.GC1033@spearce.org> <20090812152409.GA5407@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 17:35:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan Zwell <dzwell@zwell.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 12 17:40:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbFre-0000RU-2d
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 17:35:46 +0200
+	id 1MbFwF-0002cO-Ah
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 17:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634AbZHLPfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 11:35:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753622AbZHLPfg
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 11:35:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:15823 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753615AbZHLPff (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 11:35:35 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KO9001SQSN045T0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 12 Aug 2009 11:35:25 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <3ace41890908120745y305b2a59hd453b7e146e4a774@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753183AbZHLPkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 11:40:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753012AbZHLPkR
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 11:40:17 -0400
+Received: from george.spearce.org ([209.20.77.23]:56641 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938AbZHLPkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 11:40:16 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 3107C381FD; Wed, 12 Aug 2009 15:40:17 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090812152409.GA5407@blimp.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125713>
 
-On Wed, 12 Aug 2009, Hin-Tak Leung wrote:
-
-> On Tue, Aug 11, 2009 at 10:33 PM, Nicolas Pitre<nico@cam.org> wrote:
-> <snipped>
+Alex Riesen <raa.lkml@gmail.com> wrote:
+> Shawn O. Pearce, Wed, Aug 12, 2009 16:43:45 +0200:
+> > Dan Zwell <dzwell@zwell.net> wrote:
+> > > When there is a large number of new or modified files,
+> > > "display_all_files" takes a long time, and git-gui appears to
+> > > hang. This change limits the number of files that are displayed.
+> > > This limit can be set as gui.maxfilesdisplayed, and is
+> > > 5000 by default.
+> > >
+> > > A warning is shown when the list of files is truncated.
+> > 
+> > Thanks, applied.
 > 
-> > From git v1.6.3 the --aggressive switch makes for 'git repack' to be
-> > called with --window=250 --depth=250, meaning the equivalent of:
-> >
-> >        git repack -a -d -f --window=250 --depth=250
-> >
-> > Do you still get a huge pack with the above?
-> >
-> >> I guess --aggressive doesn't always save space...
-> >
-> > If so that is (and was) a bug.
+> But now, when I really think about the change, it looks useless.
+> What has the _number_ of files has to do with the files you actually
+> have to handle? As the sorting of the file list cannot be changed (and
+> it wouldn't be a big help anyway), you have no chance to get to your
+> file if it happens to be past the limit!
 > 
-> I tried 'git repack -a -d -f --window=250 --depth=250' with 1.6.2.5
-> (fc11.x86_64) and it took half a day, swallowed up all the memory -
-> 3GB virtual & 1.3GB resident - and finally the kernel oom killer
-> killed it at a last message of (601460/957910). Left no temp files.
-> Would git 1.6.3 use less memory? :-(
+> Wouldn't a pathname/glob filter in the command-line (or file/path
+> selection dialog) to limit the scope be more appropriate and useful?
+> And have the file list reading to happen in background, as gitk does?
 
-Probably not.  However you should try:
+Good point.  I suspect the problem wasn't so much with Tcl doing the
+list processing as it was with Tk actually creating the underlying
+icons and stuff for each file name.  But with the list clipped,
+you are right, you are basically SOL.  You can't do much beyond
+dropping back to the CLI and using the CLI tools.
 
-	git config pack.deltaCacheSize 1
+IMHO, if we aren't going to handle 20k file names, we should at least
+punt and tell the user we aren't going to handle 20k file names,
+rather than just play Outlook wannabe and lockup the entire UI until
+the user gets bored and kill -9's us.  So this patch is better than
+nothing, it at least lets the user know we have given up on them.
 
-That limits the delta cache size to one byte (effectively disabling it) 
-instead of the default of 0 which means unlimited.  With that I'm able 
-to repack that repository using the above git repack command on an 
-x86-64 system with 4GB of RAM and using 4 threads (this is a quad core).  
-Resident memory usage grows to nearly 3.3GB though.
-
-If your machine is SMP and you don't have sufficient RAM then you can 
-reduce the number of threads to only one:
-
-	git config pack.threads 1
-
-Additionally, you can further limit memory usage with the 
---window-memory argument to 'git repack'.  For example, using 
---window-memory=128M should keep a reasonable upper bound on the delta 
-search memory usage although this can result in less optimal delta match 
-if the repo contains lots of large files (and I think this is the case 
-for the gcc repo).
-
-
-Nicolas
+-- 
+Shawn.
