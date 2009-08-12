@@ -1,94 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fatal: bad revision 'HEAD'
-Date: Wed, 12 Aug 2009 03:58:33 -0400
-Message-ID: <20090812075833.GF15152@coredump.intra.peff.net>
-References: <06DCECD0-45F0-4695-86D4-7C54EFE4E640@gmail.com>
- <20090810011803.GA435@coredump.intra.peff.net>
- <09EE2E57-626B-4686-A6DD-3B8DF1BC3FE2@gmail.com>
- <20090811015615.GA8383@coredump.intra.peff.net>
- <C44788EB-02BA-4D69-8091-9E97827223A0@gmail.com>
- <20090812032740.GA26089@coredump.intra.peff.net>
- <7v7hx98otz.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How do gmail users try out patches from this list?
+Date: Wed, 12 Aug 2009 10:23:15 +0200
+Message-ID: <4A827BF3.8080208@drmicha.warpmail.net>
+References: <2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com> <20090811221408.GC12956@vidovic> <200908111917.19267.wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Joel Mahoney <joelmahoney@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, skillzero@gmail.com,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 09:58:46 2009
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Wed Aug 12 10:23:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb8jL-00009b-Qg
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 09:58:44 +0200
+	id 1Mb97Z-0003tE-Eq
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 10:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932129AbZHLH6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 03:58:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754238AbZHLH6d
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 03:58:33 -0400
-Received: from peff.net ([208.65.91.99]:52674 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751799AbZHLH6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 03:58:33 -0400
-Received: (qmail 9754 invoked by uid 107); 12 Aug 2009 07:58:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 12 Aug 2009 03:58:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Aug 2009 03:58:33 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7hx98otz.fsf@alter.siamese.dyndns.org>
+	id S1754404AbZHLIXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 04:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754322AbZHLIXc
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 04:23:32 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:33113 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751684AbZHLIXb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2009 04:23:31 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0519F15B63;
+	Wed, 12 Aug 2009 04:23:31 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 12 Aug 2009 04:23:31 -0400
+X-Sasl-enc: J/JdyRaP7g2hcNfvk2O2Cv/VlT1uLH5t5+7OB3ABiwB7 1250065410
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 182086445;
+	Wed, 12 Aug 2009 04:23:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3pre) Gecko/20090811 Lightning/1.0pre Shredder/3.0b4pre
+In-Reply-To: <200908111917.19267.wjl@icecavern.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125681>
 
-On Wed, Aug 12, 2009 at 12:37:44AM -0700, Junio C Hamano wrote:
-
-> But just like we twisted the definition of merge to mean "merging
-> something into nothing yields that something", we could twist the
-> definition of rebase to mean "rebasing nothing on top of something result
-> in that something".  It sort of makes sense in a twisted way.
-
-I dunno. It doesn't seem all that twisted to me.
-
-But like many of the "branch to be born" and "initial commit" edge cases
-we have dealt with, it is not so much about somebody intentionally
-triggering this as it is about doing something sane when some script
-_does_ trigger it. And I think the sane thing is obvious and easy to do
-here, so why not?
-
->  * Is "rev-parse -q --verify" a safe test to guarantee that HEAD is
->    unborn?  Shouldn't we be checking with "symbolic-ref" or something?
-
-I'm not sure. The test in git-checkout, for example, seems to basically
-just be looking up HEAD as a commit. If it doesn't work, then the branch
-is to-be-born (see switch_branches in builtin-checkout.c).
-
-Which is more or less what's happening here (except we don't check that
-the type is a commit).
-
-With symbolic-ref, I guess we could find out what the ref is, and check
-to see if _that_ exists. But I can't think of a situation where that
-would be meaningfully different than just resolving HEAD. Obviously
-detached HEADs come to mind, but wouldn't you then by definition not be
-a branch-to-be-born, which is what this rev-parse test would tell you?
-
->  * In such an "unborn branch" case, by definition, a non-empty index won't
->    be based on whatever we are pulling down from the remote.  So how about
->    doing something like the following instead?
+Wesley J. Landaker venit, vidit, dixit 12.08.2009 03:17:
+> On Tuesday 11 August 2009 16:14:08 Nicolas Sebrecht wrote:
+>> The 11/08/09, skillzero@gmail.com wrote:
+>>> Sorry if this is dumb question, but I didn't see any good info in my
+>>> searches.
+>>>
+>>> How do gmail users normally apply patches that come through the list?
+>>
+>> It doesn't rely on your address mail provider but on your local email
+>> workflow/MUA.
 > 
-> 	if on unborn branch
-> 	then
-> 		if test -f "$GIT_DIR/index"
->                 then
-> 			die "refusing to update; you have a non-empty index"
-> 		fi
-> 	else
-> 		... existing tests against HEAD ...
-> 	fi
+> I'm not in this situation, but my guess is that a lot of people use gmail 
+> primarily through the web interface (e.g. because of corporate firewalls or 
+> some other reason). Maybe someone in that situation should make an new "git 
+> imap-am" command? Kind of the reverse to imap-send. Just a thought. =)
 
-Yeah, I think that is a better idea. Do you want to tweak the patch, or
-should I re-submit?
+Well, if they can't do imap (because of a firewall) git can't do imap...
 
--Peff
+I guess for them (webmail users) it would be better if we attached
+patches, but we don't do that here. In any case, our list is mirrored on
+gmane, and you can use the interface there. For example, you get the
+first message in this thread using the gmane id or the message id like this:
+
+http://article.gmane.org/gmane.comp.version-control.git/125591
+http://mid.gmane.org/2729632a0908111343v73fa475fqb6353dcf2f718101@mail.gmail.com
+
+If you add /raw to those URLs you get the original message so that you
+can happily wget/curl/browse and save away.
+
+Michael
