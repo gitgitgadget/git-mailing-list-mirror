@@ -1,252 +1,80 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFCv3 2/4] Add Python support library for CVS remote helper
-Date: Wed, 12 Aug 2009 11:08:28 +0200
-Message-ID: <200908121108.28714.johan@herland.net>
-References: <1250036031-32272-1-git-send-email-johan@herland.net>
- <1250036031-32272-3-git-send-email-johan@herland.net>
- <20090812021017.GB62301@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Problems with filters and git status - reproduction steps
+Date: Wed, 12 Aug 2009 10:25:37 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908121020390.30907@ds9.cixit.se>
+References: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se> <200908092252.58363.j6t@kdbg.org> <alpine.DEB.2.00.0908120751500.30907@ds9.cixit.se> <alpine.DEB.2.00.0908120856110.30907@ds9.cixit.se>
+ <4A828368.5010206@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, barkalow@iabervon.org, gitster@pobox.com,
-	Johannes.Schindelin@gmx.de
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 12 11:08:45 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Sixt <j6t@kdbg.org>, Git List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Aug 12 11:25:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mb9p5-0004Ue-VJ
-	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 11:08:44 +0200
+	id 1MbA5i-0003gO-Bg
+	for gcvg-git-2@gmane.org; Wed, 12 Aug 2009 11:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932221AbZHLJIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 05:08:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbZHLJIc
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 05:08:32 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:60519 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932181AbZHLJIb (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2009 05:08:31 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KO900D5EAQ68E80@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 12 Aug 2009 11:08:30 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KO900C7HAQ5UNA0@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 12 Aug 2009 11:08:30 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.12.85419
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <20090812021017.GB62301@gmail.com>
+	id S1754327AbZHLJZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 05:25:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753308AbZHLJZo
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 05:25:44 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:47240 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752546AbZHLJZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 05:25:43 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7C9PcIu025253
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 12 Aug 2009 11:25:38 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7C9PbXG025245;
+	Wed, 12 Aug 2009 11:25:38 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <4A828368.5010206@drmicha.warpmail.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 12 Aug 2009 11:25:38 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125686>
 
-First, thank you very much for the review. It is very helpful, and I really 
-appreciate it.
+Michael J Gruber:
 
-On Wednesday 12 August 2009, David Aguilar wrote:
-> On Wed, Aug 12, 2009 at 02:13:49AM +0200, Johan Herland wrote:
-> > This patch introduces a Python package called "git_remote_cvs"
-> > containing the building blocks of the CVS remote helper. The CVS remote
-> > helper itself is NOT part of this patch.
->
-> Interesting...
->
-> > diff --git a/git_remote_cvs/changeset.py b/git_remote_cvs/changeset.py
-> > new file mode 100644
-> > index 0000000..27c4129
-> > --- /dev/null
-> > +++ b/git_remote_cvs/changeset.py
-> > @@ -0,0 +1,114 @@
-> > +#!/usr/bin/env python
-> > +
-> > +"""Functionality for collecting individual CVS revisions into
-> > "changesets" +
-> > +A changeset is a collection of CvsRev objects that belong together in
-> > the same +"commit". This is a somewhat artificial construct on top of
-> > CVS, which only +stores changes at the per-file level. Normally, CVS
-> > users create several CVS +revisions simultaneously by applying the "cvs
-> > commit" command to several files +with related changes. This module
-> > tries to reconstruct this notion of related +revisions.
-> > +"""
-> > +
-> > +from util import *
->
-> Importing * is frowned upon in Python.
->
-> It's much easier to see where things are coming from if you
-> 'import util' and use the namespaced util.foo() way of accessing
-> the functions.
+> I get "Changed but not updated" already here!
 
-I'd rather do "from util import X Y Z", as the util stuff is used all over 
-the place.
+With git 1.5.6.5, I do get that. With git 1.6.4, I seem to only get it after 
+the last step.
 
-> Furthermore, you're going to want to use absolute imports.
-> Anyone can create 'util.py' and blindly importing 'util' is
-> asking for trouble.
->
-> Instead use:
-> from git_remote_cvs import util
+I have 1.5.6.5 on the server with the master repo, and am running 1.6.4 on 
+the client (although when I ran the recipe through a shell script, I got the 
+unclean status earlier, which made me think it ran an earlier version I have 
+installed in another directory).
 
-I thought the python import rules specified that the current package was 
-consulted first, and therefore the 'util' package would always come from the 
-current package. However, I must confess that I don't know these rules very 
-well, so I'll take your word for it and use absolute imports instead.
+> Do you really want the date in the checked-in version of the file?
 
-> > +class Changeset (object):
-> > +	"""Encapsulate a single changeset/commit"""
->
-> I think it reads better as Changeset(object)
-> (drop the spaces before the parens).
->
-> That applies to the rest of this patch as well.
+Yes. This way, the checked out copy that makes my web server can do its job 
+without requiring any of the filters being installed. And the files in 
+history are marked as necessary.
 
-Ok. Will change.
+> I would assume otherwise. Then your clean filter should really be the 
+> smudge filter, and you would need a clean filter to go with it (remove the 
+> date and restore the keyword).
 
-> This also had me wondering about the following:
-> 	git uses tabs for indentation
->
-> BUT, the python convention is to use 4-space indents ala PEP-8
-> http://www.python.org/dev/peps/pep-0008/
+The problem with that approach is that the "smudge" filter does not have 
+access to the file name, and so can not look up the last change date of the 
+file it is re-writing. And I want the last time the file was *changed*, not 
+the time it was checked out.
 
-Interesting. I have (obviously) never looked at PEP 8... :)
-
-> It might be appealing to when-in-Rome (Rome being Python) here
-> and do things the python way when we code in Python.
->
-> Consistency with pep8 is good if we expect to get python hackers
-> to contribute to git_remote_cvs.
-
-I see your point, but I believe that since git_remote_cvs is not an 
-independent project (but very much coupled to git), its allegiance is with 
-Git, and it should therefore follow the Git coding style. In other words, I 
-claim exception (2) in PEP 8
-
-> > +
-> > +	__slots__ = ('revs', 'date', 'author', 'message')
->
-> __slots__ is pretty esoteric in Python-land.
->
-> But, if your justification is to minimize memory usage, then
-> yes, this is a good thing to do.
-
-Yes, I only use __slots__ for classes that potentially have a large number 
-of instances.
-
-> > +	def __init__ (self, date, author, message):
-> > +		self.revs    = {}      # dict: path -> CvsRev object
-> > +		self.date    = date    # CvsDate object
-> > +		self.author  = author
-> > +		self.message = message # Lines of commit message
->
-> pep8 and other parts of the git codebase recommend against
-> lining up the equals signs like that.  Ya, sorry for the nits
-> being that they're purely stylistic.
-
-I can't find a good rationale for this rule in PEP8 (other than Guido's 
-personal style), and I personally find the above much more readable 
-(otherwise I wouldn't go through the trouble of lining them all up...). Can 
-I claim exception (1) (readability)?
-
-> > +		if len(msg) > 25: msg = msg[:22] + "..." # Max 25 chars long
-> > +		return "<Changeset @(%s) by %s (%s) updating %i files>" % (
-> > +			self.date, self.author, msg, len(self.revs))
->
-> Similar to the git coding style, this might be better written:
->
-> ...
-> if len(msg) > 25:
->     msg = msg[:22] + '...' # Max 25 chars long
-> ...
->
-> (aka avoid single-line ifs)
->
-> There's a few other instances of this in the patch as well.
-
-Ok. Will try to eliminate single-line ifs.
-
-> > diff --git a/git_remote_cvs/cvs.py b/git_remote_cvs/cvs.py
-> > new file mode 100644
-> > index 0000000..cc2e13f
-> > --- /dev/null
-> > +++ b/git_remote_cvs/cvs.py
-> > @@ -0,0 +1,884 @@
-> > [...]
-> > +
-> > +	def enumerate (self):
-> > +		"""Return a list of integer components in this CVS number"""
-> > +		return list(self.l)
->
-> enumerate has special meaning in Python.
->
-> items = (1, 2, 3, 4)
-> for idx, item in enumerate(items):
->     print idx, item
->
->
-> I'm not sure if this would cause confusion...
-
-Good point, I should probably rename this method.
-
-> > [...]
-> > +		else: # revision number
-> > +			assert self.l[-1] > 0
->
-> asserts go away when running with PYTHONOPTIMIZE.
->
-> If this is really an error then we should we raise an exception
-> instead?
-
-I use asserts to verify pre/post-conditions and other invariants. I believe 
-that if this assert fails, it is indicative of something horribly wrong with 
-the code itself. However, I now see that one can also trigger this case with 
-bad input (e.g. CvsNum("1.2.3.0").parent()). I will keep the assert here, 
-but will also add some input verification to the CvsNum class.
-
-> > +	@classmethod
-> > +	def test (cls):
-> > +		assert cls("1.2.4") == cls("1.2.0.4")
->
-> Hmm.. Does it make more sense to use the unittest module?
->
-> e.g. self.assertEqual(foo, bar)
-
-Probably. I'm not familiar with 'unittest', but will take a look.
-
-> > diff --git a/git_remote_cvs/cvs_revision_map.py
-> > b/git_remote_cvs/cvs_revision_map.py new file mode 100644
-> > index 0000000..7d7810f
-> > --- /dev/null
-> > +++ b/git_remote_cvs/cvs_revision_map.py
-> > @@ -0,0 +1,362 @@
-> > +#!/usr/bin/env python
-> > +
-> > +"""Functionality for mapping CVS revisions to associated
-> > metainformation""" +
-> > +from util import *
-> > +from cvs  import CvsNum, CvsDate
-> > +from git  import GitFICommit, GitFastImport, GitObjectFetcher
->
-> We definitely need absolute imports here.
->
-> 'import git' could find the git-python project's git module.
-
-Ok. Will fix.
-
-> Nonetheless, interesting stuff.
-
-Thanks for the review!
-
-
-Have fun! :)
-
-...Johan
+Also, I imported my entire CVS history with keywords expanded to allow for 
+this (and "checked out" the Git-generated tree over my CVS check-out to not 
+have Git update all the time-stamps).
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+\\// Peter - http://www.softwolves.pp.se/
