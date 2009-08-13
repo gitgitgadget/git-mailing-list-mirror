@@ -1,96 +1,60 @@
 From: "Luke-Jr" <luke@dashjr.org>
-Subject: Re: [PATCH 1/5] port --ignore-unmatch to "git add"
-Date: Thu, 13 Aug 2009 15:40:47 -0500
-Message-ID: <200908131540.49701.luke@dashjr.org>
-References: <200908121726.52121.luke-jr@utopios.org> <1250133624-2272-1-git-send-email-luke-jr+git@utopios.org> <7vy6pna4lu.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/5] fix "git add --ignore-errors" to ignore pathspec errors
+Date: Thu, 13 Aug 2009 15:42:23 -0500
+Message-ID: <200908131542.23971.luke@dashjr.org>
+References: <200908121726.52121.luke-jr@utopios.org> <1250133624-2272-2-git-send-email-luke-jr+git@utopios.org> <7vr5vfa4ha.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: Text/Plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: Luke Dashjr <luke-jr+git@utopios.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:49:26 2009
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:49:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbhEj-0001hW-UK
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:49:26 +0200
+	id 1MbhEk-0001hW-OE
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbZHMUtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 16:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754912AbZHMUtB
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:49:01 -0400
-Received: from unused ([66.216.20.21]:47940 "EHLO zinan.dashjr.org"
+	id S1756209AbZHMUtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 16:49:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754976AbZHMUtG
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:49:06 -0400
+Received: from unused ([66.216.20.21]:47942 "EHLO zinan.dashjr.org"
 	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1753249AbZHMUtA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 16:49:00 -0400
-X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Aug 2009 16:49:00 EDT
+	id S1756200AbZHMUtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 16:49:04 -0400
 Received: from tsuruki.localnet (ip70-187-26-118.om.om.cox.net [70.187.26.118])
 	(Authenticated sender: luke-jr)
-	by zinan.dashjr.org (Postfix) with ESMTPSA id EFB31B9DB46;
-	Thu, 13 Aug 2009 20:40:53 +0000 (UTC)
+	by zinan.dashjr.org (Postfix) with ESMTPSA id 5D656B9DB47;
+	Thu, 13 Aug 2009 20:42:26 +0000 (UTC)
 User-Agent: KMail/1.12.0 (Linux/2.6.27-gentoo-r7; KDE/4.3.0; x86_64; ; )
-In-Reply-To: <7vy6pna4lu.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vr5vfa4ha.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125872>
 
-On Thursday 13 August 2009 02:36:13 pm Junio C Hamano wrote:
+On Thursday 13 August 2009 02:38:57 pm Junio C Hamano wrote:
 > Luke Dashjr <luke-jr+git@utopios.org> writes:
-> > "git rm" has a --ignore-unmatch option that is also applicable to "git
-> > add" and may be useful for persons wanting to ignore unmatched arguments,
-> > but not all errors.
+> > Unmatched files are errors, and should be ignored with the rest of them.
 >
-> Chould you refresh my memory a bit?
+> Why is this a "fix"?
 >
-> In what circumstance is "rm --ignore-unmatch" useful to begin with?
-> A similar question for "add --ignore-unmatch".
+> I would understand if it were "Make --ignore-errors imply --ignore-unmatch
+> unconditionally".  But then I do not think I would necessarily agree it is
+> a good change.
+>
+> The user may know that some files in the work tree are unreadable and
+> cannot be indexed (hence he gives --ignore-errors) but he still may want
+> to catch a typo on the command line.
+>
+> I do not think it is wise to make --ignore-errors imply --ignore-unmatch
+> unconditionally like this patch does without any escape hatch.
 
-Not sure on its purpose for "rm", but for "add"...
-Avoiding a race condition in automation. In particular, if the file is deleted 
-between the time the argument list is built until git scans for matches.
-
-> Now the obligatory design level question is behind us, let's take a brief
-> look at the codde.
->
-> > +static int ignore_unmatch = 0;
->
-> Drop " = 0" and let the language initialize this to zero.
-
-Does C define a default initialisation of zero? My understanding was that 
-uninitialised variables are always undefined until explicitly assigned a 
-value.
-
-> >  static void fill_pathspec_matches(const char **pathspec, char *seen, int
-> > specs) {
-> > @@ -63,7 +64,7 @@ static void prune_directory(struct dir_struct *dir,
-> > const char **pathspec, int p fill_pathspec_matches(pathspec, seen,
-> > specs);
-> >
-> >  	for (i = 0; i < specs; i++) {
-> > -		if (!seen[i] && pathspec[i][0] && !file_exists(pathspec[i]))
-> > +		if (!seen[i] && pathspec[i][0] && !file_exists(pathspec[i]) &&
-> > !ignore_unmatch) die("pathspec '%s' did not match any files",
-> >  					pathspec[i]);
-> >  	}
-> > @@ -108,7 +109,7 @@ static void refresh(int verbose, const char
-> > **pathspec) refresh_index(&the_index, verbose ? REFRESH_SAY_CHANGED :
-> > REFRESH_QUIET, pathspec, seen);
-> >  	for (i = 0; i < specs; i++) {
-> > -		if (!seen[i])
-> > +		if (!seen[i] && !ignore_unmatch)
-> >  			die("pathspec '%s' did not match any files", pathspec[i]);
-> >  	}
-> >          free(seen);
->
-> What's the point of these two loops if under ignore_unmatch everything
-> becomes no-op?
->
-> That is, wouldn't it be much more clear if you wrote like this?
-
-I'm not overly familiar with the git codebase, but wouldn't a null 'seen' 
-variable break the refresh_index call? The loops themselves can be avoided, I 
-suppose. I'll submit a new patch to optimise the changes (and rebase)...
+Are unmatched files not errors? Perhaps the old flag should be renamed to
+--ignore-read-errors and a new --ignore-errors that implies both added. Or 
+maybe just a documentation change to preserve compatibility with anything that 
+might assume that...
