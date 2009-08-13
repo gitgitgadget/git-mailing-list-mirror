@@ -1,54 +1,139 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/4] fast-import: define a new option command
-Date: Thu, 13 Aug 2009 10:52:11 -0700
-Message-ID: <20090813175211.GQ1033@spearce.org>
-References: <20090813150446.GM1033@spearce.org> <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com> <20090813152419.GN1033@spearce.org> <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com> <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302> <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com> <20090813172508.GO1033@spearce.org> <fabb9a1e0908131028t438509d2m180293ca95daad74@mail.gmail.com> <20090813174119.GP1033@spearce.org> <fabb9a1e0908131044g583f126dm6a3818b4b295eaf5@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 19:52:20 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH v3 3/3] fast-import: test the new option command
+Date: Thu, 13 Aug 2009 12:02:36 -0700
+Message-ID: <1250190156-4752-4-git-send-email-srabbelier@gmail.com>
+References: <1250190156-4752-1-git-send-email-srabbelier@gmail.com>
+ <1250190156-4752-2-git-send-email-srabbelier@gmail.com>
+ <1250190156-4752-3-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:03:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbeTL-00031g-O9
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:52:20 +0200
+	id 1MbfZt-0007Q3-52
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 21:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbZHMRwL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 13:52:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbZHMRwK
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:52:10 -0400
-Received: from george.spearce.org ([209.20.77.23]:59358 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbZHMRwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 13:52:10 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id AF96E381FD; Thu, 13 Aug 2009 17:52:11 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e0908131044g583f126dm6a3818b4b295eaf5@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755379AbZHMTDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 15:03:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755373AbZHMTC7
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 15:02:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.225]:36825 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755354AbZHMTC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 15:02:57 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so305427rvb.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 12:02:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Img2k8pnAPuztUsn+jy6Wi/gU3etmUtmZwzRRqMbv40=;
+        b=mx/KYvYkwK93kljNs4dmhJNEpdNTBKrJCd4m06jfyfEIu5PYG9VdsxCuZ5wdoXwvsc
+         LnPaUd5htfiaUBV2OpOOS6bjlqGA6EMfFH77m6WcRVgMrotc56DvOYsP3Qnim507QaXr
+         imcNOupMEiiUA/q2GFQuHXi38sPXw50QQ9ZvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=MksW3jQk3jzYx1g6MGJeTRxpRLnb8iMuiMcXvvRTpJl9bwwkr7R9KM9hHb1uu3Olhj
+         uNJGtsEzZ6x9bHe1pBqlhXEuVMeke/t/0A0bM6HtNRZka6oa9NgGmNvNTdBl0/FbripS
+         IAcyaCmMxn2okmAqbcqbYWI5ZjHPv1pXe7UCA=
+Received: by 10.140.125.3 with SMTP id x3mr630826rvc.281.1250190178777;
+        Thu, 13 Aug 2009 12:02:58 -0700 (PDT)
+Received: from localhost.localdomain ([216.239.45.19])
+        by mx.google.com with ESMTPS id f42sm3575374rvb.35.2009.08.13.12.02.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 13 Aug 2009 12:02:57 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
+In-Reply-To: <1250190156-4752-3-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125850>
 
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Thu, Aug 13, 2009 at 10:41, Shawn O. Pearce<spearce@spearce.org> wrote:
-> > Uh, no, if we have "option import-marks=..." and we can't find the
-> > file "..." and we have no --import-marks command line flag that
-> > would have overridden it, we need to abort with an error.
-> 
-> Ah, then how about in option_import_marks() we only store the name of
-> the file, like in option_export_marks, and at the end, when we reach
-> the first non-option command (and we've parsed argv), we read the
-> file. That way it's only read once, and it deals with the above
-> scenario.
+Test three options (quiet and import/export-marks) and verify that the
+commandline options override these.
 
-That's better.  :-)
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
+	Added some tests to verify that the marks file is handled
+	properly as suggested by Dscho and Shawn.
+
+ t/t9300-fast-import.sh |   58 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 58 insertions(+), 0 deletions(-)
+
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 821be7c..62369e5 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1088,4 +1088,62 @@ INPUT_END
+ test_expect_success 'P: fail on blob mark in gitlink' '
+     test_must_fail git fast-import <input'
+ 
++###
++### series Q (options)
++###
++
++cat >input << EOF
++option quiet
++blob
++data 3
++hi
++
++EOF
++
++touch empty
++
++test_expect_success 'Q: quiet option results in no stats being output' '
++    cat input | git fast-import 2> output &&
++    test_cmp empty output
++'
++
++cat >input << EOF
++option export-marks=git.marks
++blob
++mark :1
++data 3
++hi
++
++EOF
++
++test_expect_success \
++    'Q: export-marks option results in a marks file being created' \
++    'cat input | git fast-import &&
++    grep :1 git.marks'
++
++test_expect_success \
++    'Q: export-marks options can be overriden by commandline options' \
++    'cat input | git fast-import --export-marks=other.marks &&
++    grep :1 other.marks'
++
++cat >input << EOF
++option import-marks=marks.out
++option export-marks=marks.new
++EOF
++
++test_expect_success \
++    'Q: import to output marks works without any content' \
++    'cat input | git fast-import &&
++    test_cmp marks.out marks.new'
++
++cat >input <<EOF
++option import-marks=nonexistant.marks
++option export-marks=marks.new
++EOF
++
++test_expect_success \
++    'Q: import marks uses the commandline marks file when the stream specifies one' \
++    'cat input | git fast-import --import-marks=marks.out &&
++    test_cmp marks.out marks.new'
++
+ test_done
 -- 
-Shawn.
+1.6.4.122.g6ffd7
