@@ -1,8 +1,8 @@
 From: "Nick Edelen" <sirnot@gmail.com>
-Subject: [PATCH 1/6 (v3)] revision caching documentation: man page and
- technical docs
-Date: Thu, 13 Aug 2009 12:24:29 +0200
-Message-ID: <op.uyli63v2tdk399@sirnot.belkin>
+Subject: [PATCH 6/6 (v3)] support for path name caching of blobs/trees in
+ rev-cache
+Date: Thu, 13 Aug 2009 12:24:50 +0200
+Message-ID: <op.uyli7oeltdk399@sirnot.belkin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
@@ -11,814 +11,799 @@ To: "Junio C Hamano" <gitster@pobox.com>,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	"Sam Vilain" <sam@vilain.net>,
 	"Michael J Gruber" <git@drmic
-X-From: git-owner@vger.kernel.org Thu Aug 13 12:24:49 2009
+X-From: git-owner@vger.kernel.org Thu Aug 13 12:25:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbXUF-0001Ud-6Z
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 12:24:48 +0200
+	id 1MbXUZ-0001cQ-BG
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 12:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751894AbZHMKYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 06:24:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751823AbZHMKYf
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 06:24:35 -0400
+	id S1752107AbZHMKYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 06:24:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752001AbZHMKYy
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 06:24:54 -0400
 Received: from ey-out-2122.google.com ([74.125.78.24]:25695 "EHLO
 	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751060AbZHMKYd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 06:24:33 -0400
+	with ESMTP id S1751985AbZHMKYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 06:24:53 -0400
 Received: by ey-out-2122.google.com with SMTP id 22so119269eye.37
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 03:24:33 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 03:24:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:to:subject:from
          :content-type:mime-version:content-transfer-encoding:message-id
          :user-agent;
-        bh=Ru3Oz7zRMwaXs5JPMCGKN7Cry4hpVXkymCp4fRzMiRk=;
-        b=Lqlf6O0bKT9Rt9S2JXV55zGojnsWlG48neS0tqQeFUdmfbH0Tl21uwP5piOIEZBjvU
-         cSmOb74Cav6+qccstUiNAK53RltEZI+7wB21UcK4Z2t6y8f9WGhhnkSSa1ibPQNUa2kS
-         C27LKRQrX5hfc/zAHtfCfyp5TC96mjSUj4P0c=
+        bh=SsliOOlc/elGYSXWI2Hi3Cuy0Wxe+2k7c7LoJdZfoN0=;
+        b=HbkOXuYIQiAHDc5lNLB4hBAOcjZPz9Gl3W9SSY2DMnuzEidFLA9FWMEBJAy1I3B8B9
+         nF/pjlDkG9Qmj9bgVoK9ywy5mxi0vYn4ofzZZ2Qo6u8RRId6XivECKN3evcjknBPbdRI
+         7FypmgP0T+bdxudTRrMFDjekxJEwSQsMOtstc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:to:subject:from:content-type:mime-version
          :content-transfer-encoding:message-id:user-agent;
-        b=FZgm/Slp2g3qsyULmI23dceK8p/owuIeU0yIMvfyDnuoPl7rjNQufQUk8jUm/atZ1K
-         wbbpkU3Z2HBsYfQ12q4TspIhr5hcOmqVbXMLCEvuzisyRd0ZL5V5AmdXcI1veLbSoe8x
-         IZuqpQX53244M8SB5UQ/xJwyATpnNt1q5sTuc=
-Received: by 10.210.82.13 with SMTP id f13mr1396587ebb.95.1250159073548;
-        Thu, 13 Aug 2009 03:24:33 -0700 (PDT)
+        b=POpYa/2xjTF37wVgKFSsmYmJKgWQgXWzYOpAl1LaPjPORl1vIcpeRR7wm6ePyy0HMv
+         DUx+0GC24YjIkstYICE5RWyyei9Hof2hWkFj60Tj5LiV5LYeW5MF0cAtBcgG2Yt2MgB6
+         wAt2tfOHnJTDMDyEqw5vh8IV35D5w8REL/3W4=
+Received: by 10.210.35.16 with SMTP id i16mr1445019ebi.35.1250159093686;
+        Thu, 13 Aug 2009 03:24:53 -0700 (PDT)
 Received: from sirnot.belkin (client-86-0-116-245.nrth.adsl.virgin.net [86.0.116.245])
-        by mx.google.com with ESMTPS id 24sm2276467eyx.53.2009.08.13.03.24.30
+        by mx.google.com with ESMTPS id 24sm2276467eyx.53.2009.08.13.03.24.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 03:24:33 -0700 (PDT)
+        Thu, 13 Aug 2009 03:24:53 -0700 (PDT)
 User-Agent: Opera Mail/9.63 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125795>
 
-Before any code is introduced the full documentation is put forth.  This 
-provides a man page for the porcelain, and a technical doc in technical/.  The 
-latter describes the API, and discusses rev-cache's design, file format and 
-mechanics.
+An update to caching mechanism, allowing path names to be cached for blob and 
+tree objects.  A list of names appearing in each cache slice is appended to the 
+end of the slice, which is referenced by variable-sized indexes per entry.  
+This allows pack-objects to more intelligently schedule unpacked/poorly packed 
+object, and enables proper duplication of rev-list's behaivor.
+
+The mechanism for this involves adding a 'name' field to blob and tree objects, 
+mainly to facilitate reuse of caches during maintenence (like the 'unique' 
+field).
 
 Signed-off-by: Nick Edelen <sirnot@gmail.com>
 
 ---
- Documentation/git-rev-cache.txt       |  144 ++++++++
- Documentation/technical/rev-cache.txt |  594 +++++++++++++++++++++++++++++++++
- 2 files changed, 738 insertions(+), 0 deletions(-)
+ builtin-rev-cache.c       |    3 +-
+ rev-cache.c               |  307 +++++++++++++++++++++++++++++++++++++--------
+ rev-cache.h               |   13 ++-
+ revision.h                |    6 +-
+ t/t6015-rev-cache-list.sh |    4 +-
+ tree.h                    |    1 +
+ 6 files changed, 274 insertions(+), 60 deletions(-)
 
-diff --git a/Documentation/git-rev-cache.txt b/Documentation/git-rev-cache.txt
-new file mode 100644
-index 0000000..3479499
---- /dev/null
-+++ b/Documentation/git-rev-cache.txt
-@@ -0,0 +1,144 @@
-+git-rev-cache(1)
-+================
-+
-+NAME
-+----
-+git-rev-cache - Add, walk and maintain revision cache slices
-+
-+SYNOPSIS
-+--------
-+'git-rev-cache' COMMAND [options] [<commit>...]
-+
-+DESCRIPTION
-+-----------
-+The revision cache ('rev-cache') provides a mechanism for significantly
-+speeding up revision traversals.  It does this by creating an efficient
-+database (cache) of commits, their related objects and topological relations.
-+Independant of packs and the object store, this database is composed of
-+rev-cache "slices" -- each a different file storing a given segment of commit
-+history.  To map commits to their respective slices, a single index file is
-+kept for the rev-cache.
-+
-+'git-rev-cache' provides a front-end for the rev-cache mechanism, intended for
-+updating and maintaining rev-cache slices in the current repository.  New cache
-+slice files can be 'add'ed, to keep the cache up-to-date; individual slices can
-+be traversed; smaller slices can be 'fuse'd into a larger slice; and the
-+rev-cache index can be regenerated.
-+
-+COMMANDS
-+--------
-+
-+add
-+~~~
-+Add revisions to the cache by creating a new cache slice.  Reads a revision
-+list from the command line, formatted as: `START START ... \--not END END ...`
-+
-+Options:
-+
-+\--all::
-+	Include all refs in the new cache slice, like the \--all option in
-+	'rev-list'.
-+
-+\--fresh::
-+	Exclude everything already in the revision cache, analogous to
-+	\--incremental in 'pack-objects'.
-+
-+\--stdin::
-+	Read newline-seperated revisions from the standard input.  Use \--not
-+	to exclude commits, as on the command line.
-+
-+\--legs::
-+	Ensure newly-generated cache slice has no partial ends.  This means that
-+	no commit has partially cached parents, in that all its parents are
-+	cached or none of them are.
-++
-+\--legs will cause 'rev-cache' to expand potential slice end-points (creating
-+"legs") until this condition is met, simplifying the cache slice structure.
-+'rev-cache' itself does not care if a slice has legs or not, but the condition
-+may reduce the required complexity of other applications that might use the
-+revision cache.
-+
-+\--no-objects::
-+	Non-commit objects are normally included along with the commit with
-+	which they were introduced.  This is obviously very benificial, but can
-+	take longer in cache slice generation.  Using this option will disable
-+	non-commit object caching.
-++
-+\--no-objects is mainly intended for debugging or development purposes, but may
-+find use in special situations (e.g. common traversal of only commits).
-+
-+walk
-+~~~~
-+Analogous to a slice-oriented 'rev-list', 'walk' will traverse a region in a
-+particular cache slice.  Interesting and uninteresting (delimited, as with
-+'rev-list', with \--not) are specified on the command line, and output is the
-+same as vanilla 'rev-list'.
-+
-+Options:
-+
-+\--objects::
-+	Like 'rev-list', 'walk' will normally only list commits.  Use this
-+	option to list non-commit objects as well, if they are present in the
-+	cache slice.
-+
-+fuse
-+~~~~
-+Merge several cache slices into a single large slice, like 'repack' for
-+'rev-cache'.  On each invocation of 'add' a new file ("slice") is added to the
-+revision cache directory, and after several additions the directory may become
-+populated with many, relatively small slices.  Numerous smaller slices will
-+yield poorer performance than a one or two large ones, because of the overhead
-+of loading new slices into memory.
-+
-+Running 'fuse' every once in a while will solve this problem by coalescing all
-+the cache slices into one larger slice.  For very large projects, using
-+\--ignore-size is advisable to prevent overly large cache slices.  Setting git
-+'config' option 'gc.revcache' to 1 will enable cache slice fusion upon garbage
-+collection.
-+
-+Note that 'fuse' uses the internal revision walker, so the options used in
-+fusion override those of the cache slices upon which it operates.  For example,
-+if some slices were generated with \--no-objects, yet 'fuse' was performed with
-+non-commit objects, the resulting slice would still contain objects but would
-+take longer to generate.
-+
-+Options:
-+
-+\--all::
-+	Normally fuse will only include everything that's already in the
-+	revision cache.  \--add tells it to start walking from the branch
-+	heads, effectively an `add --all --fresh; fuse` (pseudo-command).
-+
-+\--no-objects::
-+	As in 'add', this option disables inclusion of non-commit objects.  If
-+	some cache slices do contain such objects, the information will be lost.
-+
-+\--ignore-size[=N]::
-+	Do not merge cache slices of size >=N (be aware that slices must be
-+	mapped to memory).  N can have a suffix of "k" or "m", denoting N as
-+	kilobytes and megabytes, respectively.  If N is not provided 'fuse'
-+	will default to a size of ~25MB.
-+
-+index
-+~~~~~
-+Regenerate the revision cache index.  If the rev-cache index file associating
-+objects with cache slices gets corrupted, lost, or otherwise becomes unusable,
-+'index' will quickly regenerate the file.  It's most likely that this won't be
-+needed in every day use, as it is targeted towards debugging and development.
-+
-+alt
-+~~~
-+Create a cache slice pointer to another slice, identified by its full path:
-+`fuse path/to/other/slice`
-+
-+This command is useful if you have several repositories sharing a common
-+history.  Although space requirements for rev-cache are slim anyway, you can in
-+this situation reduce it further by using slice pointers, pointing to relavant
-+slices in other repositories.  Note that only one level of redirection is
-+allowed, and the slice pointer will break if the original slice is removed.
-+'fuse' will not touch slice pointers.
-+
-+DISCUSSION
-+----------
-+For an explanation of the API and its inner workings, see
-+link:technical/rev-cache.txt[technical info on rev-cache].
-diff --git a/Documentation/technical/rev-cache.txt b/Documentation/technical/rev-cache.txt
-new file mode 100644
-index 0000000..a9e4c42
---- /dev/null
-+++ b/Documentation/technical/rev-cache.txt
-@@ -0,0 +1,594 @@
-+rev-cache
-+=========
-+
-+The revision cache API ('rev-cache') provides a method for efficiently storing
-+and accessing commit branch sections.  Such branch slices are defined by a
-+series of start/top (interesting) and end/bottom (uninteresting) commits.  Each
-+slice contains information on commits in topological order.  Recorded with each
-+commit is:
-+
-+* All intra-slice topological relations, encoded into path "channels" (see
-+  'Mechanics' for full explanation).
-+* Object meta-data: type, SHA-1, size, date (for commits).
-+* Objects introduced by that commit, not present in the its cached parents.
-+
-+In addition to the API, basic structures are exported for the possibility of
-+direct access.
-+
-+The API
-+-------
-+You can find the function prototypes in `revision.h`.
-+
-+Data Structures
-+~~~~~~~~~~~~~~~
-+The `rev_cache_info` struct holds all the options and flags for the API.
-+
-+----
-+struct rev_cache_info {
-+	/* generation flags */
-+	unsigned objects : 1, 
-+		legs : 1, 
-+		make_index : 1, 
-+		fuse_me : 1;
-+	
-+	/* index inclusion */
-+	unsigned overwrite_all : 1;
-+	
-+	/* traversal flags */
-+	unsigned add_to_pending : 1;
-+	
-+	/* fuse options */
-+	unsigned int ignore_size;
-+	
-+	/* reserved */
-+	struct rev_cache_slice_map *maps, 
-+		*last_map;
-+};
-+----
-+
-+The fields:
-+
-+`objects`::
-+	Add non-commit objects to slice.
-+
-+`legs`::
-+	Ensure end/bottom commits have no children.
-+
-+`make_index`::
-+	Integrate newly-made slice into index.
-+
-+`fuse_me`::
-+	This is specified if a fuse is occuring, and slices are to be reused.
-+	This option requires `maps` and `last_maps` to be initialized.
-+
-+`overwrite_all`::
-+	When a cache slice is added to the index, sometimes overlap occures
-+	between it and other slices.  Normally, original index entries are kept
-+	unless the new entry represents a start commit (older entries are more
-+	likely to lead to greater in-slice traversals).  This options overrides
-+	that, and updates all entries of the new slice.
-+
-+`add_to_pending`::
-+	Append unique non-commit objects to the `pending` object list in the
-+	passed `rev_info` instance.
-+
-+`add_names`::
-+	Include non-commit object names in the pending object entries if
-+	`add_to_pending` is set.
-+
-+`ignore_size`::
-+	If non-zero, ignore slices with size greater or equal to this during
-+fusion.
-+
-+`maps`/`last_map`::
-+	An array of slice mappings, indexed by their id in the slice index
-+	header, to be re-used with `fuse_me`.  `last_map` points to the last
-+	mapping used, and should be initialized to 0.
-+
-+Functions
-+~~~~~~~~~
-+
-+init_rev_cache
-+^^^^^^^^^^^^^^
-+----
-+void init_rev_cache_info(
-+	struct rev_cache_info *rci OUT
-+)
-+----
-+
-+Initialize `rci` to default options.
-+
-+make_cache_slice
-+^^^^^^^^^^^^^^^^
-+----
-+int make_cache_slice(
-+	struct rev_cache_info *rci IN,
-+	struct rev_info *revs IN,
-+	struct commit_list **starts IN/OUT,
-+	struct commit_list **ends IN/OUT,
-+	unsigned char *cache_sha1 OUT
-+)
-+----
-+
-+Create a cache slice based on either `revs` (if non-NULL) *or* the `starts` and
-+`ends` lists.  The actual list of start and end commits of the slice may be
-+different from the parameters, based on what defines the branch segment, and
-+this actual list is passed back through `starts` and `ends`.
-+
-+The cache slice is identified via a SHA-1 generated from the actual start/end
-+commit lists.  `cache_sha1`, if non-NULL, can recieve the cache slice name.
-+`rci` is used to specify generation options, but can be NULL if you want
-+`make_cache_slice` to fall back on defaults.  Returns 0 on success, non-zero on
-+failure.
-+
-+make_cache_index
-+^^^^^^^^^^^^^^^^
-+----
-+int make_cache_index(
-+	struct rev_cache_info *rci IN, 
-+	unsigned char *cache_sha1 IN, 
-+	int fd IN, 
-+	unsigned int size IN
-+)
-+----
-+
-+Add a slice to the rev-cache index.  `cache_sha1` is the identity hash of the
-+cache slice; `fd` is a file descriptor of the cache slice opened with
-+read/write privileges (the slice is not actually modified); `size` is the size
-+of the cache slice.  Although there are currently no options for index
-+updating, `rci` is a placeholder in case of future options.  Note that this
-+function is normally called by `make_cache_slice`.  Returns 0 on success,
-+non-zero on failure.
-+
-+open_cache_slice
-+^^^^^^^^^^^^^^^^
-+----
-+int open_cache_slice(
-+	unsigned char *sha1 IN, 
-+	int flags IN
-+)
-+----
-+
-+Returns a file descriptor to a cache slice described by `sha1` hash, using
-+`flags` as the access mode.  This will follow cache slice pointers to one level
-+of indirection.
-+
-+get_cache_slice
-+^^^^^^^^^^^^^^^
-+----
-+unsigned char *get_cache_slice(
-+	struct commit *commit IN
-+)
-+----
-+
-+Given a commit object `get_cache_slice` will search the revision cache index
-+and return, if found, the cache slice SHA-1.
-+
-+traverse_cache_slice
-+^^^^^^^^^^^^^^^^^^^^
-+----
-+int traverse_cache_slice(
-+	struct rev_info *revs IN/OUT, 
-+	unsigned char *cache_sha1 IN, 
-+	struct commit *commit IN, 
-+	unsigned long *date_so_far IN/OUT, 
-+	int *slop_so_far IN/OUT, 
-+	struct commit_list ***queue OUT, 
-+	struct commit_list **work IN/OUT
-+)
-+----
-+
-+Traverse a specified cache slice.  An explanation of the each field:
-+
-+`revs`::
-+	The revision walk instance.  `traverse_cache_slice` uses this for
-+	general options (e.g. which objects are included) and slice traversal
-+	options (in the `rev_cache_info` field).  If the `add_to_pending`
-+	option is specified, non-commit objects are appended to the `pending`
-+	object list field.
-+
-+`cache_sha1`::
-+	SHA-1 identifying the cache slice to use.  This can be taken directly
-+	from `get_cache_slice`.
-+
-+`commit`::
-+	The current commit object in the revision walk, i.e. the commit which
-+	inspired this slice traversal.  Although theoretically redundant in
-+	view of the `work` list, this simplifies interaction with normal
-+	revision walks, which pop commits from `work` before analyzing them.
-+
-+`date_so_far`::
-+	The date of the oldest encountered interesting commit.  Passing NULL
-+	will let `traverse_cache_slice` use defaults.
-+
-+`slop_so_far`::
-+	The `slop` value, a la revision.c.  This is a counter used to determine
-+	when to stop traversing, based on how many extra uninteresting commits
-+	should be encountered.  NULL will enable defaults, as above.
-+
-+`queue`::
-+	Refers to a pointer to the head of a FIFO commit list, recieving the
-+	commits we've seen and added.
-+
-+`work`::
-+	A date-ordered list of commits that have yet to be processed (i.e. seen
-+	but not added).  Commits from here present in the slice are removed
-+	(and, obviously, used as starting places for traversal), and any end
-+	commits encountered are inserted.
-+
-+starts_from_slices
-+^^^^^^^^^^^^^^^^^^
-+----
-+void starts_from_slices(
-+	struct rev_info *revs OUT, 
-+	unsigned int flags IN, 
-+	unsigned char *which IN, 
-+	int n IN
-+)
-+----
-+
-+Will mark start-commits in certain rev-cache slices with `flag`, and added them
-+to the pending list of `revs`.  If `n` is zero, `starts_from_slices` will use
-+all slices.  Otherwise `which` will specify an *unseperated* list of cache
-+SHA-1s to use (20 bytes each), and `n` will contain the number of slices (i.e.
-+20 * `n` = size of `which`).
-+
-+fuse_cache_slices
-+^^^^^^^^^^^^^^^^^
-+----
-+int fuse_cache_slices(
-+	struct rev_cache_info *rci IN, 
-+	struct rev_info *revs IN
-+)
-+----
-+
-+Generate a slice based on `revs`, replacing all encountered slices with one
-+(larger) slice.  The `ignore_size` field in `rci`, if non-zero, will dictate
-+which cache slice sizes to ignore in both traversal and replacement.
-+
-+regenerate_cache_index
-+^^^^^^^^^^^^^^^^^^^^^^
-+----
-+int regenerate_cache_index(
-+	struct rev_cache_info *rci IN
-+)
-+----
-+
-+Remake the revision cache index, including all the slices.  Currently no
-+options in `rci` exist for index (re)generation, but some may develop in the
-+future.
-+
-+Example Usage
-+-------------
-+
-+A few examples to demonstrate usage:
-+
-+.Creating a slice
-+----
-+/* pretend you're a porcelain for rev-cache reading from the command line */
-+struct rev_info revs;
-+struct rev_cache_info rci;
-+
-+init_revisions(&revs, 0);
-+init_rci(&rci);
-+
-+flags = 0;
-+for (i = 1; i < argc; i++) {
-+        if (!strcmp(argv[i], "--not"))
-+                flags ^= UNINTERESTING;
-+        else if(!strcmp(argv[i], "--fresh"))
-+                starts_from_slices(&revs, UNINTERESTING, 0, 0);
-+        else
-+                handle_revision_arg(argv[i], &revs, flags, 1);
-+}
-+
-+/* we want to explicitly set certain options */
-+rci.objects = 0;
-+
-+if (!make_cache_slice(&rci, &revs, 0, 0, cache_sha1))
-+        printf("made slice!  it's called %s\n", sha1_to_hex(cache_sha1));
-+----
-+
-+.Traversing a slice
-+----
-+/* let's say you're walking the tree with a 'work' list of current heads and a
-+ * FILO output list 'out' */
-+out = 0;
-+outp = &out;
-+
-+while (work) {
-+        struct commit *commit = pop_commit(&work);
-+        struct object *object = &commit->object;
-+        unsigned char *cache_sha1;
-+        
-+        if (cache_sha1 = get_cache_slice(object->sha1)) {
-+                /* note that this will instatiate any topo-relations 
-+                 * as it goes */
-+                if (traverse_cache_slice(&revs, cache_sha1,
-+                        commit, 0, 0, /* use defaults */
-+                        &outp, &work) < 0)
-+                        die("I'm overreacting to a non-fatal cache error");
-+        } else {
-+                struct commit_list *parents = commit->parents;
-+                
-+                while (parents) {
-+                        struct commit *p = parents->item;
-+                        struct object *po = &p->object;
-+                        
-+                        parents = parents->next;
-+                        if (po->flags & UNINTERESTING)
-+                                continue;
-+                        
-+                        if (object->flags & UNINTERESTING)
-+                                po->flags |= UNINTERESTING;
-+                        else if (po->flags & SEEN)
-+                                continue;
-+                        
-+                        if (!po->parsed)
-+                                parse_commit(p);
-+                        insert_by_date(p, &work);
-+                }
-+                
-+                if (object->flags & (SEEN | UNINTERESTING) == 0)
-+                        outp = &commit_list_insert(commit, outp)->next;
-+                object->flags |= SEEN;
-+        }
-+}
-+----
-+
-+Some Internals
-+--------------
-+For more advanced usage, the slice and index file(s) may be accessed directly.
-+Relavant structures are availabe in `rev-cache.h`.
-+
-+File Formats
-+~~~~~~~~~~~~
-+
-+Cache Slices
-+^^^^^^^^^^^^
-+A slice has a basic fixed-size header, followed by a certain number of object
-+entries, then a NULL-seperated list of object names.  Commits are sorted in
-+topo-order, and each commit entry is followed by the objects added in that
-+commit.
-+
-+----
-+         -- +--------------------------------+
-+header      | object number, etc...          |
-+         -- +--------------------------------+
-+commit      | commit info                    |
-+entry       | path data                      |
-+            +--------------------------------+
-+            | tree/blob info                 |
-+            +--------------------------------+
-+            | tree/blob info                 |
-+            +--------------------------------+
-+            | ...                            |
-+         -- +--------------------------------+
-+commit      | commit info                    |
-+entry       | path data                      |
-+            +--------------------------------+
-+            | tree/blob info                 |
-+            +--------------------------------+
-+            | ...                            |
-+         -- +--------------------------------+
-+...         ...                               
-+         -- +--------------------------------+
-+name list   | \0some_file_name\0             |
-+(note       +--------------------------------+
-+preceeding  | another_file\0                 |
-+null)       ...                              |
-+            +--------------------------------+
-+----
-+
-+Here is the header:
-+
-+----
-+struct rc_cache_slice_header {
-+	char signature[8]; /* REVCACHE */
-+	unsigned char version;
-+	uint32_t ofs_objects;
-+	
-+	uint32_t object_nr;
-+	uint16_t path_nr;
-+	uint32_t size;
-+	
+diff --git a/builtin-rev-cache.c b/builtin-rev-cache.c
+index 2db4a10..042cf08 100644
+--- a/builtin-rev-cache.c
++++ b/builtin-rev-cache.c
+@@ -177,13 +177,14 @@ static int handle_walk(int argc, const char *argv[])
+ 	fprintf(stderr, "pending:\n");
+ 	for (i = 0; i < revs.pending.nr; i++) {
+ 		struct object *obj = revs.pending.objects[i].item;
++		const char *name = revs.pending.objects[i].name;
+ 		
+ 		/* unfortunately, despite our careful generation, object duplication *is* a possibility...
+ 		 * (eg. same object introduced into two different branches) */
+ 		if (obj->flags & SEEN)
+ 			continue;
+ 		
+-		printf("%s\n", sha1_to_hex(revs.pending.objects[i].item->sha1));
++		printf("%s %s\n", sha1_to_hex(revs.pending.objects[i].item->sha1), name);
+ 		obj->flags |= SEEN;
+ 	}
+ 	
+diff --git a/rev-cache.c b/rev-cache.c
+index fae8544..f98b247 100644
+--- a/rev-cache.c
++++ b/rev-cache.c
+@@ -17,6 +17,14 @@ struct bad_slice {
+ 	struct bad_slice *next;
+ };
+ 
++struct name_list {
 +	unsigned char sha1[20];
++	unsigned int len;
++	struct name_list *next;
 +	
-+	uint32_t names_size;
++	char buf[FLEX_ARRAY];
 +};
-+----
 +
-+Explanations:
+ struct cache_slice_pointer {
+ 	char signature[8]; /* REVCOPTR */
+ 	char version;
+@@ -29,10 +37,13 @@ static uint32_t fanout[0xff + 2];
+ static unsigned char *idx_map;
+ static int idx_size;
+ static struct rc_index_header idx_head;
+-static char no_idx, add_to_pending;
+-static struct bad_slice *bad_slices;
++static char no_idx, add_to_pending, add_names;
+ static unsigned char *idx_caches;
+ 
++static struct bad_slice *bad_slices;
++static struct name_list *name_lists, *cur_name_list;
 +
-+`signature`::
-+	The identifying signature of cache slice file.  Always "REVCACHE".
-+`version`::
-+	The version number, currently 1.
-+`ofs_objects`::
-+	The byte offset at which the commit/object listing starts.  Always
-+	present at the 10th byte, regardless of file version.
-+`object_nr`::
-+	The total number of objects (commit + non-commit objects) present in
-+	the slice.
-+`path_nr`::
-+	The total number of paths/channels used in encoding the topological
-+	data.  Note that paths are reused (see 'Mechanics'), so there will
-+	never be more than a few hundred paths (if that) used.
-+`size`::
-+	The size of the slice *excluding* the name list.  In other words, the
-+	size of the portion mapped to memory.
-+`sha1`::
-+	The cache slice SHA-1.
-+`names_size`::
-+	The size of the name list.  `size` + `names_size` = size of slice
-+
-+Revision Cache Index
-+^^^^^^^^^^^^^^^^^^^^
-+The index is a single file that associates SHA-1s with cache slices and file
-+positions.  It is somewhat similar to pack-file indexes, containing a fanout
-+table and a list of index entries sorted by hash.
-+
-+----
-+         -- +--------------------------------+
-+header      | object #, cache #, etc.        |
-+         -- +--------------------------------+
-+sha1s of    | SHA-1                          |
-+slices      | ...                            |
-+         -- +--------------------------------+
-+fanout      | fanout[0x00]                   |
-+table       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+            | fanout[0xff]                   |
-+         -- +--------------------------------+
-+index       | SHA-1 of object                |
-+entries     | index of cache slice SHA-1     |
-+            | position in cache slice        |
-+            +--------------------------------+
-+            |                                |
-+            ...                               
-+            +--------------------------------+
-+----
-+
-+The header:
-+
-+----
-+struct rc_index_header {
-+	char signature[8]; /* REVINDEX */
-+	unsigned char version;
-+	uint32_t ofs_objects;
++static struct strbuf *g_name_buffer;
+ static struct strbuf *g_buffer;
+ 
+ #define PATH_WIDTH	RC_PATH_WIDTH
+@@ -46,6 +57,7 @@ static struct strbuf *g_buffer;
+ 
+ #define ACTUAL_OBJECT_ENTRY_SIZE(e)		RC_ACTUAL_OBJECT_ENTRY_SIZE(e)
+ #define ENTRY_SIZE_OFFSET(e)			RC_ENTRY_SIZE_OFFSET(e)
++#define ENTRY_NAME_OFFSET(e)			RC_ENTRY_NAME_OFFSET(e)
+ 
+ #define SLOP			5
+ 
+@@ -115,6 +127,12 @@ static void cleanup_cache_slices(void)
+ 		idx_map = 0;
+ 	}
+ 	
++	while (name_lists) {
++		struct name_list *nl = name_lists->next;
++		free(name_lists);
++		name_lists = nl;
++	}
 +	
-+	uint32_t object_nr;
-+	unsigned char cache_nr;
+ }
+ 
+ static int init_index(void)
+@@ -237,7 +255,7 @@ static void handle_noncommit(struct rev_info *revs, struct commit *commit, struc
+ 	struct blob *blob;
+ 	struct tree *tree;
+ 	struct object *obj;
+-	unsigned long size;
++	unsigned long size, name_index;
+ 	
+ 	size = decode_size((unsigned char *)entry + ENTRY_SIZE_OFFSET(entry), entry->size_size);
+ 	switch (entry->type) {
+@@ -270,9 +288,22 @@ static void handle_noncommit(struct rev_info *revs, struct commit *commit, struc
+ 		return;
+ 	}
+ 	
++	if (add_names && cur_name_list) {
++		name_index = decode_size((unsigned char *)entry + ENTRY_NAME_OFFSET(entry), entry->name_size);
++		
++		if (name_index >= cur_name_list->len)
++			name_index = 0;
++	} else name_index = 0;
 +	
-+	uint32_t max_date;
+ 	obj->flags |= FACE_VALUE;
+-	if (add_to_pending)
+-		add_pending_object(revs, obj, "");
++	if (add_to_pending) {
++		char *name = "";
++		
++		if (name_index)
++			name = cur_name_list->buf + name_index;
++		
++		add_pending_object(revs, obj, name);
++	}
+ }
+ 
+ static int setup_traversal(struct rc_slice_header *head, unsigned char *map, struct commit *commit, struct commit_list **work, 
+@@ -622,15 +653,44 @@ end:
+ 	return retval;
+ }
+ 
+-static int get_cache_slice_header(unsigned char *cache_sha1, unsigned char *map, int len, struct rc_slice_header *head)
++static struct name_list *get_cache_slice_name_list(struct rc_slice_header *head, int fd)
++{
++	struct name_list *nl = name_lists;
++	
++	while (nl) {
++		if (!hashcmp(nl->sha1, head->sha1))
++			break;
++		nl = nl->next;
++	}
++	
++	if (nl)
++		return nl;
++	
++	nl = xcalloc(1, sizeof(struct name_list) + head->name_size);
++	nl->len = head->name_size;
++	hashcpy(nl->sha1, head->sha1);
++	
++	lseek(fd, head->size, SEEK_SET);
++	read_in_full(fd, nl->buf, head->name_size);
++	
++	nl->next = name_lists;
++	name_lists = nl;
++	
++	return nl;
++}
++
++static int get_cache_slice_header(int fd, unsigned char *cache_sha1, int len, struct rc_slice_header *head)
+ {
+ 	int t;
+ 	
+-	memcpy(head, map, sizeof(struct rc_slice_header));
++	if (xread(fd, head, sizeof(struct rc_slice_header)) != sizeof(struct rc_slice_header))
++		return -1;
++	
+ 	head->ofs_objects = ntohl(head->ofs_objects);
+ 	head->object_nr = ntohl(head->object_nr);
+ 	head->size = ntohl(head->size);
+ 	head->path_nr = ntohs(head->path_nr);
++	head->name_size = ntohl(head->name_size);
+ 	
+ 	if (memcmp(head->signature, "REVCACHE", 8))
+ 		return -1;
+@@ -639,10 +699,10 @@ static int get_cache_slice_header(unsigned char *cache_sha1, unsigned char *map,
+ 	if (hashcmp(head->sha1, cache_sha1))
+ 		return -3;
+ 	t = sizeof(struct rc_slice_header);
+-	if (t != head->ofs_objects || t >= len)
++	if (t != head->ofs_objects)
+ 		return -4;
+-	
+-	head->size = len;
++	if (head->size + head->name_size != len)
++		return -5;
+ 	
+ 	return 0;
+ }
+@@ -694,7 +754,7 @@ int traverse_cache_slice(struct rev_info *revs,
+ 	unsigned long *date_so_far, int *slop_so_far, 
+ 	struct commit_list ***queue, struct commit_list **work)
+ {
+-	int fd = -1, retval = -3;
++	int fd = -1, t, retval;
+ 	struct stat fi;
+ 	struct rc_slice_header head;
+ 	struct rev_cache_info *rci;
+@@ -710,26 +770,31 @@ int traverse_cache_slice(struct rev_info *revs,
+ 	/* load options */
+ 	rci = &revs->rev_cache_info;
+ 	add_to_pending = rci->add_to_pending;
++	add_names = rci->add_names;
+ 	
+ 	memset(&head, 0, sizeof(struct rc_slice_header));
++#	define ERROR(x)		do { retval = (x); goto end; } while (0);
+ 	
+ 	fd = open_cache_slice(cache_sha1, O_RDONLY);
+ 	if (fd == -1)
+-		goto end;
++		ERROR(-1);
+ 	if (fstat(fd, &fi) || fi.st_size < sizeof(struct rc_slice_header))
+-		goto end;
++		ERROR(-2);
+ 	
+-	map = xmmap(0, fi.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++	if ((t = get_cache_slice_header(fd, cache_sha1, fi.st_size, &head)) < 0)
++		ERROR(-t);
++	if (add_names)
++		cur_name_list = get_cache_slice_name_list(&head, fd);
++	
++	map = xmmap(0, head.size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	if (map == MAP_FAILED)
+-		goto end;
+-	if (get_cache_slice_header(cache_sha1, map, fi.st_size, &head))
+-		goto end;
++		ERROR(-3);
+ 	
+ 	retval = traverse_cache_slice_1(&head, map, revs, commit, date_so_far, slop_so_far, queue, work);
+ 	
+ end:
+ 	if (map != MAP_FAILED)
+-		munmap(map, fi.st_size);
++		munmap(map, head.size);
+ 	if (fd != -1)
+ 		close(fd);
+ 	
+@@ -737,6 +802,7 @@ end:
+ 	if (retval)
+ 		mark_bad_slice(cache_sha1);
+ 	
++#	undef ERROR
+ 	return retval;
+ }
+ 
+@@ -1021,23 +1087,110 @@ static unsigned long decode_size(unsigned char *str, int len)
+ 	return size;
+ }
+ 
++
++#define NL_HASH_TABLE_SIZE		(0xffff + 1)
++#define NL_HASH_NUMBER			(NL_HASH_TABLE_SIZE >> 3)
++
++struct name_list_hash {
++	int ind;
++	struct name_list_hash *next;
 +};
-+----
 +
-+Explanations:
++static struct name_list_hash **nl_hash_table;
++static unsigned char *nl_hashes;
 +
-+`signature`::
-+	Always "REVINDEX".
-+`version`::
-+	Version number, currently 1.
-+`ofs_objects`::
-+	Offset at which the entry objects begin.  This is more obviously useful
-+	in the index because the list of slice SHA-1s is variably-sized.
-+`object_nr`::
-+	Number of index entry objects present.
-+`cache_nr`::
-+	Number of cache slices to which the index maps, and hence the number of
-+slice SHA-1s listed.
-+`max_date`::
-+	The oldest commit represented in the index.  This is used to help speed
-+up lookup times by knowing what range of commits we definitely don't have
-+cached.  Normal usage of 'rev-cache' would leave no "holes" in its coverage of
-+commit history -- once a commit is cached, everything reachable from it should
-+be cached as well.  Most of the time refs are added to rev-cache simultaneous
-+as well.  This means that in most situations almost everything <= `max_date`
-+will be cached.
++/* FNV-1a hash */
++static unsigned int hash_name(const char *name)
++{
++	unsigned int hash = 2166136261ul;
++	const char *p = name;
++	
++	while (*p) {
++		hash ^= *p++;
++		hash *= 16777619ul;
++	}
++	
++	return hash & 0xffff;
++}
 +
-+Mechanics
-+~~~~~~~~~
++static int name_in_list(const char *name)
++{
++	unsigned int h = hash_name(name);
++	struct name_list_hash *entry = nl_hash_table[h];
++	
++	while (entry && strcmp(g_name_buffer->buf + entry->ind, name))
++		entry = entry->next;
++	
++	if (entry)
++		return entry->ind;
++	
++	/* add name to buffer and create hash reference */
++	entry = xcalloc(1, sizeof(struct name_list_hash));
++	entry->ind = g_name_buffer->len;
++	strbuf_add(g_name_buffer, name, strlen(name) + 1);
++	
++	entry->next = nl_hash_table[h];
++	nl_hash_table[h] = entry;
++	
++	nl_hashes[h / 8] |= h % 8;
++	
++	return entry->ind;
++}
 +
-+The most important part of rev-cache is its method of encoding topological
-+relations.  To ensure fluid traversal and reconstruction, commits are related
-+through high-level "streams"/"channels" rather than individual
-+interconnections.  Intuitively, rev-cache stores history the way gitk shows it:
-+commits strung up on lines, which interconnect at merges and branches.
++static void init_name_list_hash(void)
++{
++	nl_hash_table = xcalloc(NL_HASH_TABLE_SIZE, sizeof(struct name_list_hash));
++	nl_hashes = xcalloc(NL_HASH_NUMBER, 1);
++}
 +
-+Each commit is associated to a given channel/path via a 'path id', and
-+variable-length fields govern which paths (if any) are closed or opened at that
-+object.  This means that topo-data can be preserved in only a few bytes extra
-+per object entry.  Other information stored per entry is the sha-1 hash, type,
-+date, size, name, and status in cache slice.  Here is format of an object
-+entry, both on-disk and in-memory:
++static void cleanup_name_list_hash(void)
++{
++	int i;
++	
++	for (i = 0; i < NL_HASH_NUMBER; i++) {
++		int j, ind = nl_hashes[i];
++		
++		if (!ind)
++			continue;
++		
++		for (j = 0; j < 8; j++) {
++			struct name_list_hash **entryp;
++			
++			if (!(ind & 1 << j))
++				continue;
++			
++			entryp = &nl_hash_table[i * 8 + j];
++			while (*entryp) {
++				struct name_list_hash *t = (*entryp)->next;
++				
++				free(*entryp);
++				*entryp = t;
++			}
++		}
++	} /* code overhang! */
++	
++	free(nl_hashes);
++	free(nl_hash_table);
++}
 +
-+----
-+struct object_entry {
-+        unsigned type : 3;
-+        unsigned is_end : 1;
-+        unsigned is_start : 1;
-+        unsigned uninteresting : 1;
-+        unsigned include : 1;
-+        unsigned flags : 1;
-+        unsigned char sha1[20];
-+        
-+        unsigned char merge_nr;
-+        unsigned char split_nr;
-+        unsigned size_size : 3;
-+        unsigned name_size : 3;
-+        
-+        uint32_t date;
-+        uint16_t path;
-+        
-+        /* merge paths */
-+        /* split paths */
-+        /* size */
-+        /* name index */
-+};
-+----
+ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *entryp, 
+-	struct strbuf *merge_str, struct strbuf *split_str)
++	struct strbuf *merge_str, struct strbuf *split_str, char *name, unsigned long size)
+ {
+ 	struct rc_object_entry entry;
+-	unsigned char size_str[7];
+-	unsigned long size;
++	unsigned char size_str[7], name_str[7];
+ 	enum object_type type;
+ 	void *data;
+ 	
+ 	if (entryp)
+ 		sha1 = entryp->sha1;
+ 	
+-	/* retrieve size data */
+-	data = read_sha1_file(sha1, &type, &size);
+-	
+-	if (data)
+-		free(data);
++	if (!size) {
++		/* retrieve size data */
++		data = read_sha1_file(sha1, &type, &size);
++		
++		if (data)
++			free(data);
++	}
+ 	
+ 	/* initialize! */
+ 	if (!entryp) {
+@@ -1055,6 +1208,9 @@ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *
+ 	
+ 	entryp->size_size = encode_size(size, size_str);
+ 	
++	if (name)
++		entryp->name_size = encode_size(name_in_list(name), name_str);
++	
+ 	/* write the muvabitch */
+ 	strbuf_add(g_buffer, entryp, sizeof(entry));
+ 	
+@@ -1064,6 +1220,9 @@ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *
+ 		strbuf_add(g_buffer, split_str->buf, split_str->len);
+ 	
+ 	strbuf_add(g_buffer, size_str, entryp->size_size);
++	
++	if (name)
++		strbuf_add(g_buffer, name_str, entryp->name_size);
+ }
+ 
+ /* returns non-zero to continue parsing, 0 to skip */
+@@ -1108,6 +1267,9 @@ continue_loop:
+ static int dump_tree_callback(const unsigned char *sha1, const char *path, unsigned int mode)
+ {
+ 	strbuf_add(g_buffer, sha1, 20);
++	strbuf_add(g_buffer, (char *)&g_name_buffer->len, sizeof(size_t));
++	
++	strbuf_add(g_name_buffer, path, strlen(path) + 1);
+ 	
+ 	return 1;
+ }
+@@ -1121,6 +1283,9 @@ static void tree_addremove(struct diff_options *options,
+ 		return;
+ 	
+ 	strbuf_add(g_buffer, sha1, 20);
++	strbuf_add(g_buffer, (char *)&g_name_buffer->len, sizeof(size_t));
++	
++	strbuf_add(g_name_buffer, concatpath, strlen(concatpath) + 1);
+ }
+ 
+ static void tree_change(struct diff_options *options,
+@@ -1133,12 +1298,15 @@ static void tree_change(struct diff_options *options,
+ 		return;
+ 	
+ 	strbuf_add(g_buffer, new_sha1, 20);
++	strbuf_add(g_buffer, (char *)&g_name_buffer->len, sizeof(size_t));
++	
++	strbuf_add(g_name_buffer, concatpath, strlen(concatpath) + 1);
+ }
+ 
+ static int add_unique_objects(struct commit *commit)
+ {
+ 	struct commit_list *list;
+-	struct strbuf os, ost, *orig_buf;
++	struct strbuf os, ost, names, *orig_name_buf, *orig_buf;
+ 	struct diff_options opts;
+ 	int i, j, next;
+ 	char is_first = 1;
+@@ -1146,13 +1314,17 @@ static int add_unique_objects(struct commit *commit)
+ 	/* ...no, calculate unique objects */
+ 	strbuf_init(&os, 0);
+ 	strbuf_init(&ost, 0);
++	strbuf_init(&names, 0);
+ 	orig_buf = g_buffer;
++	orig_name_buf = g_name_buffer;
++	g_name_buffer = &names;
+ 	
+ 	diff_setup(&opts);
+ 	DIFF_OPT_SET(&opts, RECURSIVE);
+ 	DIFF_OPT_SET(&opts, TREE_IN_RECURSIVE);
+ 	opts.change = tree_change;
+ 	opts.add_remove = tree_addremove;
++#	define ENTRY_SIZE (20 + sizeof(size_t))
+ 	
+ 	/* this is only called for non-ends (ie. all parents interesting) */
+ 	for (list = commit->parents; list; list = list->next) {
+@@ -1163,20 +1335,20 @@ static int add_unique_objects(struct commit *commit)
+ 		
+ 		strbuf_setlen(g_buffer, 0);
+ 		diff_tree_sha1(list->item->tree->object.sha1, commit->tree->object.sha1, "", &opts);
+-		qsort(g_buffer->buf, g_buffer->len / 20, 20, (int (*)(const void *, const void *))hashcmp);
++		qsort(g_buffer->buf, g_buffer->len / ENTRY_SIZE, ENTRY_SIZE, (int (*)(const void *, const void *))hashcmp);
+ 		
+ 		/* take intersection */
+ 		if (!is_first) {
+-			for (next = i = j = 0; i < os.len; i += 20) {
++			for (next = i = j = 0; i < os.len; i += ENTRY_SIZE) {
+ 				while (j < ost.len && hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)) < 0)
+-					j += 20;
++					j += ENTRY_SIZE;
+ 				
+ 				if (j >= ost.len || hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)))
+ 					continue;
+ 				
+ 				if (next != i)
+-					memcpy(os.buf + next, os.buf + i, 20);
+-				next += 20;
++					memcpy(os.buf + next, os.buf + i, ENTRY_SIZE);
++				next += ENTRY_SIZE;
+ 			}
+ 			
+ 			if (next != i)
+@@ -1193,25 +1365,32 @@ static int add_unique_objects(struct commit *commit)
+ 	
+ 	/* the ordering of non-commit objects dosn't really matter, so we're not gonna bother */
+ 	g_buffer = orig_buf;
+-	for (i = 0; i < os.len; i += 20)
+-		add_object_entry((unsigned char *)(os.buf + i), 0, 0, 0);
++	g_name_buffer = orig_name_buf;
++	for (i = 0; i < os.len; i += ENTRY_SIZE)
++		add_object_entry((unsigned char *)(os.buf + i), 0, 0, 0, names.buf + *(size_t *)(os.buf + i + 20), 0);
+ 	
+ 	/* last but not least, the main tree */
+-	add_object_entry(commit->tree->object.sha1, 0, 0, 0);
++	add_object_entry(commit->tree->object.sha1, 0, 0, 0, 0, 0);
++	
++	strbuf_release(&ost);
++	strbuf_release(&os);
++	strbuf_release(&names);
+ 	
+-	return i / 20 + 1;
++	return i / ENTRY_SIZE + 1;
++#	undef ENTRY_SIZE
+ }
+ 
+ static int add_objects_verbatim_1(struct rev_cache_slice_map *mapping, int *index)
+ {
+-	unsigned char *map = mapping->map;
+ 	int i = *index, object_nr = 0;
++	unsigned char *map = mapping->map;
+ 	struct rc_object_entry *entry = OE_CAST(map + *index);
++	unsigned long size;
+ 	
+ 	i += ACTUAL_OBJECT_ENTRY_SIZE(entry);
+ 	while (i < mapping->size) {
+-		int pos = i;
+-		
++		char *name;
++		int name_index, pos = i;
+ 		entry = OE_CAST(map + i);
+ 		i += ACTUAL_OBJECT_ENTRY_SIZE(entry);
+ 		
+@@ -1220,7 +1399,15 @@ static int add_objects_verbatim_1(struct rev_cache_slice_map *mapping, int *inde
+ 			return object_nr;
+ 		}
+ 		
+-		strbuf_add(g_buffer, map + pos, i - pos);
++		name_index = decode_size((unsigned char *)entry + ENTRY_NAME_OFFSET(entry), entry->name_size);
++		if (name_index && name_index < mapping->name_size)
++			name = mapping->names + name_index;
++		else
++			name = 0;
++		
++		size = decode_size((unsigned char *)entry + ENTRY_SIZE_OFFSET(entry), entry->size_size);
++		
++		add_object_entry(0, entry, 0, 0, name, size);
+ 		object_nr++;
+ 	}
+ 	
+@@ -1305,6 +1492,7 @@ void init_rev_cache_info(struct rev_cache_info *rci)
+ 	rci->overwrite_all = 0;
+ 	
+ 	rci->add_to_pending = 1;
++	rci->add_names = 1;
+ 	
+ 	rci->ignore_size = 0;
+ }
+@@ -1329,9 +1517,9 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 	struct rc_slice_header head;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+-	struct strbuf merge_paths, split_paths;
++	struct strbuf merge_paths, split_paths, namelist;
+ 	int object_nr, total_sz, fd;
+-	char file[PATH_MAX], *newfile;
++	char file[PATH_MAX], null, *newfile;
+ 	struct rev_cache_info *trci;
+ 	git_SHA_CTX ctx;
+ 	
+@@ -1346,7 +1534,13 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 	strbuf_init(&endlist, 0);
+ 	strbuf_init(&merge_paths, 0);
+ 	strbuf_init(&split_paths, 0);
++	strbuf_init(&namelist, 0);
+ 	g_buffer = &buffer;
++	g_name_buffer = &namelist;
++	
++	null = 0;
++	strbuf_add(&namelist, &null, 1);
++	init_name_list_hash();
+ 	
+ 	if (!revs) {
+ 		revs = &therevs;
+@@ -1414,7 +1608,7 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 		
+ 		commit->indegree = 0;
+ 		
+-		add_object_entry(0, &object, &merge_paths, &split_paths);
++		add_object_entry(0, &object, &merge_paths, &split_paths, 0, 0);
+ 		object_nr++;
+ 		
+ 		if (rci->objects && !object.is_end) {
+@@ -1440,10 +1634,16 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 		total_sz += buffer.len;
+ 	}
+ 	
++	/* write path name lookup list */
++	head.name_size = htonl(namelist.len);
++	write_in_full(fd, namelist.buf, namelist.len);
++	
+ 	/* go ahead a free some stuff... */
+ 	strbuf_release(&buffer);
+ 	strbuf_release(&merge_paths);
+ 	strbuf_release(&split_paths);
++	strbuf_release(&namelist);
++	cleanup_name_list_hash();
+ 	if (path_sz)
+ 		free(paths);
+ 	while (path_track_alloc)
+@@ -1897,6 +2097,7 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
+ 	for (i = idx_head.cache_nr - 1; i >= 0; i--) {
+ 		struct rev_cache_slice_map *map = rci->maps + i;
+ 		struct stat fi;
++		struct rc_slice_header head;
+ 		int fd;
+ 		
+ 		if (!map->size)
+@@ -1909,13 +2110,20 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
+ 			continue;
+ 		if (fi.st_size < sizeof(struct rc_slice_header))
+ 			continue;
++		if (get_cache_slice_header(fd, idx_caches + i * 20, fi.st_size, &head))
++			continue;
+ 		
+-		map->map = xmmap(0, fi.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++		map->map = xmmap(0, head.size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 		if (map->map == MAP_FAILED)
+ 			continue;
+ 		
++		lseek(fd, head.size, SEEK_SET);
++		map->names = xcalloc(head.name_size, 1);
++		read_in_full(fd, map->names, head.name_size);
++		
+ 		close(fd);
+-		map->size = fi.st_size;
++		map->size = head.size;
++		map->name_size = head.name_size;
+ 	}
+ 	
+ 	rci->make_index = 0;
+@@ -1932,6 +2140,7 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
+ 		if (!map->size)
+ 			continue;
+ 		
++		free(map->names);
+ 		munmap(map->map, map->size);
+ 	}
+ 	free(rci->maps);
+@@ -1953,7 +2162,6 @@ static int verify_cache_slice(const char *slice_path, unsigned char *sha1)
+ {
+ 	struct rc_slice_header head;
+ 	int fd, len, retval = -1;
+-	unsigned char *map = MAP_FAILED;
+ 	struct stat fi;
+ 	
+ 	len = strlen(slice_path);
+@@ -1968,17 +2176,12 @@ static int verify_cache_slice(const char *slice_path, unsigned char *sha1)
+ 	if (fstat(fd, &fi) || fi.st_size < sizeof(head))
+ 		goto end;
+ 	
+-	map = xmmap(0, sizeof(head), PROT_READ, MAP_PRIVATE, fd, 0);
+-	if (map == MAP_FAILED)
+-		goto end;
+-	if (get_cache_slice_header(sha1, map, fi.st_size, &head))
++	if (get_cache_slice_header(fd, sha1, fi.st_size, &head))
+ 		goto end;
+ 	
+ 	retval = 0;
+ 	
+ end:
+-	if (map != MAP_FAILED)
+-		munmap(map, sizeof(head));
+ 	if (fd > 0)
+ 		close(fd);
+ 	
+diff --git a/rev-cache.h b/rev-cache.h
+index f0b7d57..0254db7 100644
+--- a/rev-cache.h
++++ b/rev-cache.h
+@@ -13,9 +13,10 @@
+ 
+ #define RC_OE_CAST(p)	((struct rc_object_entry *)(p))
+ #define RC_IE_CAST(p)	((struct rc_index_entry *)(p))
+-
+-#define RC_ACTUAL_OBJECT_ENTRY_SIZE(e)		(RC_OE_SIZE + RC_PATH_SIZE((e)->merge_nr + (e)->split_nr) + (e)->size_size)
+-#define RC_ENTRY_SIZE_OFFSET(e)			(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->size_size)
 +
-+An explanation of each field:
-+
-+`type`::
-+	Object type
-+`is_end`::
-+	The commit has some parents outside the cache slice (all if slice has
-+	legs)
-+`is_start`::
-+	The commit has no children in cache slice
-+`uninteresting`::
-+	Run-time flag, used in traversal
-+`include`::
-+	Run-time flag, used in traversal (initialization)
-+`flags`::
-+	Currently unused, extra bit
-+`sha1`::
-+	Object SHA-1 hash
-+
-+`merge_nr`::
-+	The number of paths the current channel diverges into; the current path
-+	ends upon any merge.
-+`split_nr`::
-+	The number of paths this commit ends; used on both merging and
-+	branching.
-+`size_size`::
-+	Number of bytes the object size takes up.
-+`name_size`::
-+	Number of bytes the name index takes up.
-+
-+`date`::
-+	The date of the commit.
-+`path`::
-+	The path ID of the channel with which this commit is associated.
-+
-+merge paths::
-+	The path IDs (16-bit) that are to be created.  Overflow is not a
-+	problem as path IDs are reused, leaving even complicated projects to
-+	consume no more than a few hundred IDs.
-+split paths::
-+	The path IDs (16-bit) that are to be ended.
-+size::
-+	The size split into the minimum number of bytes.  That is, 1-8 bytes
-+	representing the size, least-significant byte first.
-+name index::
-+	An offset for the null-seperated, object name list at the end of the
-+	cache slice.  Also split into the minimum number of bytes.
-+
-+Each path ID refers to an index in a 'path array', which stores the current
-+status (eg. active, interestingness) of each channel.
-+
-+Due to topo-relations and boundary tracking, all of a commit's parents must be
-+encountered before the path is reallocated.  This is achieved by using a
-+counter system per merge: starting at the parent number, the counter is
-+decremented as each parent is encountered (dictated by 'split paths'); at 0 the
-+path is cleared.
-+
-+Boundary tracking is necessary because non-commits are stored relative to the
-+commit in which they were introduced.  If a series of commits is not included
-+in the output, the last interesting commit must be parsed manually to ensure
-+all objects are accounted for.
-+
-+To prevent list-objects from recursing into trees that we've already taken care
-+of, the flag `FACE_VALUE` is introduced.  An object with this flag is not
-+explored (= "taken at face value"), significantly reducing I/O and processing
-+time.
++#define RC_ACTUAL_OBJECT_ENTRY_SIZE(e)		(RC_OE_SIZE + RC_PATH_SIZE((e)->merge_nr + (e)->split_nr) + (e)->size_size + (e)->name_size)
++#define RC_ENTRY_SIZE_OFFSET(e)			(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->name_size - (e)->size_size)
++#define RC_ENTRY_NAME_OFFSET(e)			(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->name_size)
+ 
+ /* single index maps objects to cache files */
+ struct rc_index_header {
+@@ -48,6 +49,8 @@ struct rc_slice_header {
+ 	uint32_t size;
+ 	
+ 	unsigned char sha1[20];
++	
++	uint32_t name_size;
+ };
+ 
+ struct rc_object_entry {
+@@ -62,7 +65,8 @@ struct rc_object_entry {
+ 	unsigned char merge_nr; /* : 7 */
+ 	unsigned char split_nr; /* : 7 */
+ 	unsigned size_size : 3;
+-	unsigned padding : 5;
++	unsigned name_size : 3;
++	unsigned padding : 2;
+ 	
+ 	uint32_t date;
+ 	uint16_t path;
+@@ -70,6 +74,7 @@ struct rc_object_entry {
+ 	/* merge paths */
+ 	/* split paths */
+ 	/* size */
++	/* name id */
+ };
+ 
+ 
+diff --git a/revision.h b/revision.h
+index ec83aa0..a802c9b 100644
+--- a/revision.h
++++ b/revision.h
+@@ -23,6 +23,9 @@ struct rev_cache_slice_map {
+ 	unsigned char *map;
+ 	int size;
+ 	int last_index;
++	
++	char *names;
++	int name_size;
+ };
+ 
+ struct rev_cache_info {
+@@ -36,7 +39,8 @@ struct rev_cache_info {
+ 	unsigned overwrite_all : 1;
+ 	
+ 	/* traversal flags */
+-	unsigned add_to_pending : 1;
++	unsigned add_to_pending : 1, 
++		add_names : 1;
+ 	
+ 	/* fuse options */
+ 	unsigned int ignore_size;
+diff --git a/t/t6015-rev-cache-list.sh b/t/t6015-rev-cache-list.sh
+index fa6df21..ff36881 100755
+--- a/t/t6015-rev-cache-list.sh
++++ b/t/t6015-rev-cache-list.sh
+@@ -4,8 +4,8 @@ test_description='git rev-cache tests'
+ . ./test-lib.sh
+ 
+ test_cmp_sorted() {
+-	grep -io "[a-f0-9]*" $1 | sort >.tmpfile1 && 
+-	grep -io "[a-f0-9]*" $2 | sort >.tmpfile2 && 
++	sort $1 >.tmpfile1 && 
++	sort $2 >.tmpfile2 && 
+ 	test_cmp .tmpfile1 .tmpfile2
+ }
+ 
+diff --git a/tree.h b/tree.h
+index 2ff01a4..6eb0cd0 100644
+--- a/tree.h
++++ b/tree.h
+@@ -9,6 +9,7 @@ struct tree {
+ 	struct object object;
+ 	void *buffer;
+ 	unsigned long size;
++	char *name;
+ };
+ 
+ struct tree *lookup_tree(const unsigned char *sha1);
 -- 
-tg: (24e14b8..) t/revcache/docs (depends on: t/revcache/integration)
+tg: (bc19f4a..) t/revcache/names (depends on: t/revcache/docs)
