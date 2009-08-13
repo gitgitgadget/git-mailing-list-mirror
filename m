@@ -1,68 +1,136 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: git-blame missing output format documentation
-Date: Thu, 13 Aug 2009 15:18:11 +0300
-Message-ID: <4A840483.9090402@avtalion.name>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v5 0/6] {checkout,reset,stash} --patch
+Date: Thu, 13 Aug 2009 14:29:38 +0200
+Message-ID: <cover.1250164190.git.trast@student.ethz.ch>
+References: <200908101136.34660.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 14:18:24 2009
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 14:30:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbZGA-0005y5-SI
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:18:23 +0200
+	id 1MbZRn-0002is-IF
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751389AbZHMMSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 08:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbZHMMSM
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:18:12 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:65226 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750973AbZHMMSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 08:18:12 -0400
-Received: by bwz22 with SMTP id 22so543721bwz.18
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 05:18:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=YYBRsJAmfSDhTPZDgxoIM0gUa5yze10wf88CrfJ8WOc=;
-        b=g75jnX/h37MnCrbpSeDP8AfE/U0gbhp/ZhFGVfyjGnuyDdyq6HNewz5r9QK5ynpG5C
-         As0UU7SqRV+l58UsqcdqF0VgyUlkPfOnAJ5cps812aDAM7o3vLidrRfyWCVtjhHCm6kH
-         RNxkU9OGiv5hVMOp3GQnluoRCGwUzqdOeaaJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=qvzyZihm2O4QXLzjI9a6dMDSq1Pt4i0j3+BFk832J/gDeCDvd7u0FlMvdXmW+4uuzh
-         NMSkiN8Q8PACz27QpFoTMS5XvjYsjF/nQrPsndxCupbKg9RZ7dBQdbSAIAi82rj+lMhU
-         E+QLnSUubPWx9ZXQctPTycIGFn1xXX4acUx4A=
-Received: by 10.103.50.32 with SMTP id c32mr349791muk.1.1250165891857;
-        Thu, 13 Aug 2009 05:18:11 -0700 (PDT)
-Received: from ?192.168.1.55? (bzq-79-179-35-131.red.bezeqint.net [79.179.35.131])
-        by mx.google.com with ESMTPS id t10sm934573muh.30.2009.08.13.05.18.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 05:18:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1.3pre) Gecko/20090811 Shredder/3.0b4pre
+	id S1753756AbZHMMaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 08:30:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbZHMMaK
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:30:10 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:54458 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751498AbZHMMaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 08:30:10 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 13 Aug
+ 2009 14:30:09 +0200
+Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 13 Aug
+ 2009 14:30:00 +0200
+X-Mailer: git-send-email 1.6.4.262.gbda8
+In-Reply-To: <200908101136.34660.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125809>
 
-Hi,
+Junio C Hamano wrote:
+> * tr/reset-checkout-patch (Tue Jul 28 23:20:12 2009 +0200) 8 commits
+[...]
+> Progress?
 
-"git blame" prefixes boundary commit tree-ish's with ^.
-This doesn't seem to be documented in the git-blame manpage.
+Slow, as always.  There are three groups of changes:
 
-Is it a convention used elsewhere, that it can go unmentioned?
+1. This iteration goes the "complicated" way to mitigate Jeff's concern:
 
-Also, the manpage doesn't describe the format of the regualr, 
-non-porcelain, output.
-Doesn't it deserve its own section?
+Jeff King wrote:
+> Shouldn't the diff [in checkout -p] be reversed? That is, I think
+> what users would like to see is "bring this hunk over from the index
+> to the working tree". But we have the opposite (a hunk that is in
+> the working tree that we would like to undo).
 
-The only non-obvious parts to me  are the the boundary commit notation, 
-mentioned above, and the filename in the second column.
+That is, the rules are now as follows:
+
+add -p			forward application
+reset -p [HEAD]		exact opposite of add -p: reverse application
+reset -p other		forward application to index (**)
+checkout -p		"opposite of editing": reverse application
+checkout -p HEAD	"opposite of editing and staging": reverse application
+checkout -p other	forward application to WT and index (**)
+stash -p		"stash these edits": reverse application to WT, "forward to stash"
+
+Those marked (**) are the only ones that changed semantics compared to
+v4.  However, I adjusted the messages to look different:
+
+add -p			Stage this hunk?
+reset -p [HEAD]		Reset this hunk? (**)
+reset -p other		Apply this hunk to index? (**)
+checkout -p		Discard this hunk from worktree? (**)
+checkout -p HEAD	Discard this hunk from index and worktree? (**)
+checkout -p other	Apply this hunk to index and worktree? (**)
+stash -p		Stash this hunk?
+
+Again, (**) are the changed ones from v4.  The help message also shows
+the "to/from ..." extra in the help for y/n.
+
+I think this should now make 'reset -p' and 'checkout -p' fairly
+intuitive, while at the same time making the '... other' forms easier
+to wrap one's head around.  Of course, as stated earlier in the
+thread, the downside with this approach is that the direction suddenly
+changes when you give it an 'other'.
+
+These changes affect all 'Implement foo --patch' patches, and the
+git-apply--interactive refactoring.
+
+
+2. git checkout -p HEAD fixed
+
+Nicolas Sebrecht wrote:
+> 
+>   % git checkout -p HEAD
+> 
+> and
+> 
+>   % git checkout -p HEAD -- file
+> 
+> behave differently here in my test above.
+
+This sadly was a rather trivial thinko on my part in the C glue for
+'checkout -p', which I fixed.  I also changed the tests to cover
+various ways of limiting paths.
+
+
+3. Tests rewritten
+
+I added a new 2/6 refactors the many occurences of
+
+	test "$(cat file)" = expected_worktree &&
+	test "$(git show :file)" = expected_index
+
+to a few library functions, and rewritten all three tests to use them.
+Due to the bug discussed in (2.) above, the tests also cover pathspecs
+for all new commands.  Due to my own concern because this was broken
+at some point during development, all commands also check if relative
+paths inside a directory work.
+
+
+3/6 (which was 2/5) and 7/6 (was 6/5) are unchanged, and apart from
+the fix for (2.) which was a one-liner, so is all the C code.  7/6 is,
+as before, based on a merge with js/stash-dwim.
+
+
+Thomas Rast (7):
+  git-apply--interactive: Refactor patch mode code
+  Add a small patch-mode testing library
+  builtin-add: refactor the meat of interactive_add()
+  Implement 'git reset --patch'
+  Implement 'git checkout --patch'
+  Implement 'git stash save --patch'
+  DWIM 'git stash save -p' for 'git stash -p'
