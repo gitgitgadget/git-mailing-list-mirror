@@ -1,64 +1,54 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v2 0/3] fast-import: add a new option command
-Date: Thu, 13 Aug 2009 09:53:44 -0700
-Message-ID: <1250182427-17841-1-git-send-email-srabbelier@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 19:01:58 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix typo in filter-branch example
+Date: Thu, 13 Aug 2009 19:04:15 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908131903280.7429@intel-tinevez-2-302>
+References: <4a843cdf.1608c00a.504c.0eed@mx.google.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Ori Avtalion <ori@avtalion.name>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:04:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbdga-0006OQ-Rm
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:01:57 +0200
+	id 1MbdjK-0007Tj-IC
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:04:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbZHMRBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 13:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752291AbZHMRBs
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:01:48 -0400
-Received: from rv-out-0506.google.com ([209.85.198.239]:30541 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752228AbZHMRBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 13:01:47 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so287012rvb.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 10:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer;
-        bh=I/9kE2QN/5JNs5FltQd98/UTf65pw1dKCMO7quaiNDI=;
-        b=JrqKfTHXZAtI8fyu8sjbLofgXjitqPZYMD8LTmO+QN/rpcN7WK5O4XbMNX6JQwYQKM
-         l5I/X3N8rm9At7Vwf39HEpOWjW9lz7zCVjBTKm/e6+HtZi3YGsinuBzSzfZRR0ijNM8N
-         9dBpySiwzvHi7XQjfRQX3ciDL2QbVbkZp7dic=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=heP75iPHnCWhXHkTNoG5vSZ3d/HdTcK5FGeQxebahW/XswpVx2la1NFjj4UYZoLCwp
-         HjTguOgoJofMAMgBlU84nO0IP9d/poZ91CYqI4sELdb2Ahq45FiZCTZ2JWlX7Pu/DoAX
-         KfenNV/tmm1VfE3dm+kq/qi5pLrfhUCdOJoPQ=
-Received: by 10.140.144.20 with SMTP id r20mr574967rvd.274.1250182440462;
-        Thu, 13 Aug 2009 09:54:00 -0700 (PDT)
-Received: from localhost.localdomain ([216.239.45.19])
-        by mx.google.com with ESMTPS id c20sm2423242rvf.31.2009.08.13.09.53.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 09:53:59 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
+	id S1755100AbZHMREV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 13:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755096AbZHMREU
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:04:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39355 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755078AbZHMRER (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 13:04:17 -0400
+Received: (qmail invoked by alias); 13 Aug 2009 17:04:18 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp033) with SMTP; 13 Aug 2009 19:04:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jPdZQGfpjbWm3WBhadBcCO447F6/zD0RoONyUYh
+	cl5t0JczFQYwaB
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4a843cdf.1608c00a.504c.0eed@mx.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.74
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125838>
 
-v2 addresses concerns by Shawn and Dscho.
+Hi,
 
-Sverre Rabbelier (3):
-      fast-import: put option parsing code in seperate functions
-      fast-import: add option command
-      fast-import: test the new option command
+On Thu, 13 Aug 2009, Ori Avtalion wrote:
 
- Documentation/git-fast-import.txt |   23 +++++
- fast-import.c                     |  167 ++++++++++++++++++++++++++-----------
- t/t9300-fast-import.sh            |   38 +++++++++
- 3 files changed, 180 insertions(+), 48 deletions(-)
+> ---
+
+This is not a typo. '&' is sed's way to specify the matched string.  Where 
+does it occur anyway (the commit message makes a fabulous place to put 
+such information)?
+
+Ciao,
+Dscho
