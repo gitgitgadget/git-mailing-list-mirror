@@ -1,70 +1,139 @@
-From: Ori Avtalion <ori@avtalion.name>
-Subject: Re: [PATCH] Fix typo in filter-branch example
-Date: Thu, 13 Aug 2009 20:15:22 +0300
-Message-ID: <4A844A2A.6080305@avtalion.name>
-References: <4a843cdf.1608c00a.504c.0eed@mx.google.com> <alpine.DEB.1.00.0908131903280.7429@intel-tinevez-2-302>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] block-sha1: more good unaligned memory access candidates
+Date: Thu, 13 Aug 2009 13:23:58 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908131304520.10633@xanadu.home>
+References: <alpine.LFD.2.00.0908130017080.10633@xanadu.home>
+ <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 13 19:15:32 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:24:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbdtj-0003eN-Hx
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:15:32 +0200
+	id 1Mbe29-0007KC-HF
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:24:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755149AbZHMRPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 13:15:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752291AbZHMRPV
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:15:21 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:50916 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751287AbZHMRPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 13:15:21 -0400
-Received: by bwz22 with SMTP id 22so715553bwz.18
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 10:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=jHS2Z4qV0kDCzcoa2qWGQ9YjxtYnQ83Ad7VqZ96LUKo=;
-        b=b9AwD7yGxhaAYlBg0Ltif2+cVpKl8rc4SHWRMUtWv0z9B6Ugm8ivWis3lWr66yq4xF
-         fjrNdoj77CTerNsGC/x0oNrrz8KaVjgwb04ZAd3zi8Whv4v1QziKZQO6ZhiiC8qDbb9V
-         GDu+01CtBHExTdAsE2n7z0W4vcfBDj1QXGZ7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=u/1YrNT2zRUDl1C37cjaqCMWyo5vFhyomQ8JLsJ5W8QqH70US98eLiAFYUaQAXEgce
-         pVuUbYE1XFsEyEMSH2bThMrETzinxK5xDSbCNdkaPwOg1Hga/FkickxK+ipN1XKuSpUJ
-         f7hMAxOb2ybUwrDxKkInr4IU0O3d9jibMLLq0=
-Received: by 10.103.171.20 with SMTP id y20mr393775muo.100.1250183720520;
-        Thu, 13 Aug 2009 10:15:20 -0700 (PDT)
-Received: from ?192.168.1.55? (bzq-79-179-35-131.red.bezeqint.net [79.179.35.131])
-        by mx.google.com with ESMTPS id g1sm2523471muf.46.2009.08.13.10.15.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 10:15:20 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1.3pre) Gecko/20090811 Shredder/3.0b4pre
-In-Reply-To: <alpine.DEB.1.00.0908131903280.7429@intel-tinevez-2-302>
+	id S1755109AbZHMRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 13:24:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbZHMRYE
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:24:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:9150 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754463AbZHMRYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 13:24:03 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOB00GKVRTCQW11@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 13 Aug 2009 13:12:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125842>
 
-On 08/13/2009 08:04 PM, Johannes Schindelin wrote:
->
-> This is not a typo. '&' is sed's way to specify the matched string.  Where
-> does it occur anyway (the commit message makes a fabulous place to put
-> such information)?
+On Thu, 13 Aug 2009, Linus Torvalds wrote:
 
-Whoops! My mistake!
+> 
+> 
+> On Thu, 13 Aug 2009, Nicolas Pitre wrote:
+> >
+> > In addition to X86, PowerPC and S390 are capable of unaligned memory 
+> > accesses.
+> > 
+> > Signed-off-by: Nicolas Pitre <nico@cam.org>
+> 
+> Ack on all your patches (1-3 + this). Looks fine to me.
+> 
+> I do wonder if we should try to do basically "per-architecture hack 
+> header-files", and then have for each architecture a small trivial 
+> 'hack-x86.h' kind of thing that just does
+> 
+> 	/* x86 hacks */
+> 	#define get_be32(p)	ntohl(*(unsigned int *)(p))
+> 	#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
+> 	#define setW(x, val)	(*(volatile unsigned int *)&W(x) = (val))
+> 
+> 	#define SHA_ASM(op, x, n) ({ unsigned int __res; __asm__(op " %1,%0":"=r" (__res):"i" (n), "0" (x)); __res; })
+> 	#define SHA_ROL(x,n)   SHA_ASM("rol", x, n)
+> 	#define SHA_ROR(x,n)   SHA_ASM("ror", x, n)
+> 
+> and then we'd have each architecture separated out. Add a few 
+> "generic helpers":
+> 
+>  - be32-generic.h:
+> 
+> 	#define get_be32(p)    ( \
+> 		(*((unsigned char *)(p) + 0) << 24) | \
+> 		(*((unsigned char *)(p) + 1) << 16) | \
+> 		(*((unsigned char *)(p) + 2) <<  8) | \
+> 		(*((unsigned char *)(p) + 3) <<  0) )
+> 
+> 	#define put_be32(p, v) do { \
+> 		unsigned int __v = (v); \
+> 		*((unsigned char *)(p) + 0) = __v >> 24; \
+> 		*((unsigned char *)(p) + 1) = __v >> 16; \
+> 		*((unsigned char *)(p) + 2) = __v >>  8; \
+> 		*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
+> 
+>  - rotate-generic.h:
+> 
+> 	#define SHA_ROT(X,l,r)  (((X) << (l)) | ((X) >> (r)))
+> 	#define SHA_ROL(X,n)    SHA_ROT(X,n,32-(n))
+> 	#define SHA_ROR(X,n)    SHA_ROT(X,32-(n),n)
+> 
+> that architectures could use when they want to use some particular
+> portable version.  Then, add a final "hack-generic.h" with the fallback
+> cases that just does
+> 
+> 	#include "be32-generic.h"
+> 	#include "rotate-generic.h"
+> 	#define setW(x,val) (W(x) = (val))
+> 
+> and you'd have all the hacks separated out and fairly easily used by
+> different architectures.. (ie the ARM version would just look like
+> 
+>  - hack-arm.h:
+> 
+> 	#include "be32-generic.h"  
+> 	#include "rotate-generic.h"
+> 	#define setW(x, val) do { W(x) = (val); __asm__("":::"memory"); } while (0)
+> 
+> and you'd be all done.
+> 
+> Hmm? I don't know if this kind of generalization is strictly needed, so 
+> I'm just throwing it out as an idea.
 
-I think I accidentally removed it when I tried the example, and then 
-added it in a wrong position when that didn't work :)
+Well... first I don't think there are much else we can do with that 
+code, i.e. there is probably not so many more hacks to add if any.  With 
+my last patch I consider this ready for general consumption.
 
-Sorry for the false alarm!
+And given that the only user is this very sha1 implementation then there 
+is not much value in abstracting them in header files.
+
+And the point of patch 2/3 was to move hack variants for the same 
+purpose together making it easier to document and understand (and 
+possibly modify) them.  Your suggestion would go in the opposite 
+direction entirely.
+
+As it is now, I was about to suggest:
+
+	git mv block-sha1/sha1.[ch] .
+	rmdir block-sha1
+	rm -r mozilla-sha1
+	rm -r arm
+	rm -r ppc 
+
+and remove support for openssl's SHA1 usage, making this implementation 
+unconditional.  After all it is faster, or so close to be faster than 
+the alternatives, that we should probably cut on the extra dependency 
+and simplify portability issues at the same time.
+
+
+Nicolas
