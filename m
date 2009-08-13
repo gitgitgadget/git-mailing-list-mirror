@@ -1,66 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/4] fast-import: add option command
-Date: Thu, 13 Aug 2009 07:45:39 -0700
-Message-ID: <20090813144539.GL1033@spearce.org>
-References: <1250140186-12363-1-git-send-email-srabbelier@gmail.com> <1250140186-12363-2-git-send-email-srabbelier@gmail.com> <1250140186-12363-3-git-send-email-srabbelier@gmail.com> <1250140186-12363-4-git-send-email-srabbelier@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] fast-import: define a new option command
+Date: Thu, 13 Aug 2009 16:56:21 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908131652190.7429@intel-tinevez-2-302>
+References: <1250140186-12363-1-git-send-email-srabbelier@gmail.com> <1250140186-12363-2-git-send-email-srabbelier@gmail.com> <1250140186-12363-3-git-send-email-srabbelier@gmail.com> <20090813144327.GK1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 16:45:52 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 16:56:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbbYt-0005jW-Dk
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 16:45:51 +0200
+	id 1MbbjG-0002qt-Ak
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 16:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbZHMOpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 10:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752907AbZHMOpi
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 10:45:38 -0400
-Received: from george.spearce.org ([209.20.77.23]:42671 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175AbZHMOph (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 10:45:37 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 0DE86381FD; Thu, 13 Aug 2009 14:45:39 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1250140186-12363-4-git-send-email-srabbelier@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753943AbZHMO4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 10:56:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753732AbZHMO4Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 10:56:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52212 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752990AbZHMO4Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 10:56:24 -0400
+Received: (qmail invoked by alias); 13 Aug 2009 14:56:23 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp017) with SMTP; 13 Aug 2009 16:56:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7j7ILonO7MwaMBTCN6q11+uPQEj/AVMgXP8HS7w
+	/xjeEiBERnVoB1
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090813144327.GK1033@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125825>
 
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> This allows the frontend to specify any of the supported options as
-> long as no non-option command has been given. This way the
-> user does not have to include any frontend-specific options, but
-> instead she can rely on the frontend to tell fast-import what it
-> needs.
-> ---
+Hi,
 
-Missing Signed-off-by.
- 
-> @@ -2460,6 +2465,16 @@ static void parse_one_option(const char *option)
->      }
->  }
->  
-> +static void parse_option(void)
-> +{
-> +    char* option = command_buf.buf + 7;
+On Thu, 13 Aug 2009, Shawn O. Pearce wrote:
 
-Git style is "char *option", isn't it?
+> Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>
+> > +Note that options specified by the frontend override any options the
+> > +user may specify to git fast-import itself.
+> 
+> Hmmph.  Do we really want that?  I would think the command line options 
+> should override the stream, such that we can then do something like:
+> 
+>   hg fast-export >foo
+>   git fast-import --export-marks=mymarks <foo
+> 
+> even though 'option export-marks=bar' appears in foo.
 
-> +
-> +	if (seen_non_option_command)
-> +		die("Got option command '%s' after non-option command", option);
+I guess the reason is that this is harder to implement.  The problem is 
+that you _have_ to parse the command line options first.  So you need to 
+record with every option you set that it has been set by the command line, 
+and must not be overridden by the in-stream options.
 
-Indentation is messed up here.  1 tab per level, please.
+OTOH,
 
--- 
-Shawn.
+	hg fast-export |
+	sed '1,/^blob/s/^option export-marks=.*$//' > foo
+
+is relatively easy.
+
+Ciao,
+Dscho
