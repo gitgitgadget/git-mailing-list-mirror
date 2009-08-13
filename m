@@ -1,76 +1,79 @@
-From: Bernie Innocenti <bernie@codewiz.org>
-Subject: Re: GCC Git mirror no longer updating
-Date: Thu, 13 Aug 2009 02:28:19 +0200
-Organization: Sugar Labs - http://www.sugarlabs.org/
-Message-ID: <1250123299.8074.1593.camel@giskard>
-References: <4A8198E2.5020205@redhat.com>
-	 <1250008005.8074.362.camel@giskard>	 <20090811163049.GA4578@redhat.com>
-	 <1250010535.8074.366.camel@giskard>	 <20090811173006.GB4578@redhat.com>
-	 <1250017013.8074.376.camel@giskard>	 <20090811191642.GA5806@redhat.com>
-	 <4aca3dc20908111333i49195ec5h9b91ab5f6445f701@mail.gmail.com>
-	 <4A822440.40207@redhat.com> <1250074569.8074.671.camel@giskard>
-	 <4A82C786.5060602@redhat.com>
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: Re: [PATCH] svn: Add && to t9107-git-svn-migrarte.sh
+Date: Wed, 12 Aug 2009 20:35:12 -0400
+Message-ID: <c376da900908121735w7ee3c581pd1281efc83a2075d@mail.gmail.com>
+References: <20090810083234.GA8698@dcvr.yhbt.net>
+	 <1250046867-13655-1-git-send-email-adambrewster@gmail.com>
+	 <20090812094940.GA22273@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Berlin <dberlin@dberlin.org>,
-	"Frank Ch. Eigler" <fche@redhat.com>, overseers@gcc.gnu.org,
-	git@vger.kernel.org
-To: Jason Merrill <jason@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 02:35:16 2009
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Aug 13 02:35:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbOHj-0006gS-Nu
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 02:35:16 +0200
+	id 1MbOHw-0006mr-68
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 02:35:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751124AbZHMAfE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2009 20:35:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbZHMAfE
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 20:35:04 -0400
-Received: from trinity.develer.com ([89.97.188.34]:36751 "EHLO
-	trinity.develer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750866AbZHMAfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Aug 2009 20:35:03 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Aug 2009 20:35:02 EDT
-Received: (qmail 17804 invoked from network); 13 Aug 2009 00:28:21 -0000
-Received: from static-217-133-10-139.clienti.tiscali.it (HELO ?192.168.1.100?) (bernie@217.133.10.139)
-  by trinity.develer.com with ESMTPA; 13 Aug 2009 00:28:21 -0000
-In-Reply-To: <4A82C786.5060602@redhat.com>
-X-Mailer: Evolution 2.27.2 (2.27.2-1.fc12) 
+	id S1751206AbZHMAfO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Aug 2009 20:35:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750774AbZHMAfN
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 20:35:13 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:64915 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbZHMAfM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2009 20:35:12 -0400
+Received: by ewy10 with SMTP id 10so424189ewy.37
+        for <git@vger.kernel.org>; Wed, 12 Aug 2009 17:35:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gmUmzhCfi046ouyIJDXrrx9PcvdpVceT4pSdW5XVcl8=;
+        b=Dkp8UrgH3hKNiGsXMcS/Jl6A3xZNR2nSlqdr087Kzt4CB5xdc0a4FfU603K8r09Iya
+         m7AGFzRjlu4kmDPxVqkgbB2p+34ULiHlwGwmVMgW7/O97XsB/07p8sZmezvg7/Hc6gOR
+         CBHEyoTZ9VjQLe1Q7aXue+kxSfWIWUQqVCHLg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=x7YSNZoh0d4uZE5lhDCLdbUOAUe1quYYma9UtKOQeAxojUwhBKkqN3KUsV2bONgtjw
+         rs+QeDlYtDVxlLI1fh9NvAPOlsiMrrhA25gjm9grfw5A5BiOwBOQ8aNDO2Rdt5z0gZEN
+         LLhSlpEaXKaYNAvE/lXmElB+qmRvWLK8Rnxaw=
+Received: by 10.216.86.139 with SMTP id w11mr103744wee.10.1250123712476; Wed, 
+	12 Aug 2009 17:35:12 -0700 (PDT)
+In-Reply-To: <20090812094940.GA22273@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125761>
 
-El Wed, 12-08-2009 a las 09:45 -0400, Jason Merrill escribi=F3:
-> On 08/12/2009 06:56 AM, Bernie Innocenti wrote:
-> > The git repository format should support concurrent access, but per=
-haps
-> > it only applies to git-receive-pack, not fancy operations such as
-> > repacking.
->=20
-> The git repository format, yes, but maybe not the stuff in .git/svn. =
- It=20
-> seems like a temporary index file was referring to an object that got=
-=20
-> garbage collected away.  Or maybe the index file was left over from t=
-he=20
-> initial import, and not there due to a collision; there don't seem to=
- be=20
-> index files there normally.
+Eric,
 
-git-svn might be keeping extra information in files that the other git
-tools don't know about.  This would explain why some objects looked
-like orphans and were thus culled.  [cc'ing the git list to catch the
-attention of the git-svn maintainer(s)].
+Thanks the help in getting this right.
 
-Ah, and I just fixed a problem I have introduced myself while fiddling
-to recover the repository: HEAD should point at "refs/remotes/trunk",
-otherwise new commits won't show up in gitweb.
+> I think the following change on top of yours would make most
+> sense:
+>
 
---=20
-   // Bernie Innocenti - http://codewiz.org/
- \X/  Sugar Labs       - http://sugarlabs.org/
+Looks good to me.
+
+> The map_path() changes you originally made didn't work, either, since
+> the -f $1 never took GIT_DIR or GIT_DIR/svn into account.
+>
+
+It was ugly, too.
+
+> I think the below is a good enough test case to for compatibility
+> against existing repos. =A0Let me know what you think, thanks!
+>
+
+Looks about right.
+
+Thanks,
+Adam
