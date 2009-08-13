@@ -1,87 +1,72 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git cherry to find equivalent commit IDs?
-Date: Thu, 13 Aug 2009 21:37:18 +0000
-Message-ID: <32541b130908131437g7cb14a1eh6cd2e31a57f105d5@mail.gmail.com>
-References: <2729632a0908131413w1a2efca8t31ac8cc43e1d6888@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] fast-import: define a new option command
+Date: Thu, 13 Aug 2009 23:51:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908132350190.8306@pacific.mpi-cbg.de>
+References: <20090813150446.GM1033@spearce.org> <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com> <20090813152419.GN1033@spearce.org> <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com> <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302>
+ <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com> <20090813172508.GO1033@spearce.org> <fabb9a1e0908131028t438509d2m180293ca95daad74@mail.gmail.com> <20090813174119.GP1033@spearce.org> <fabb9a1e0908131044g583f126dm6a3818b4b295eaf5@mail.gmail.com>
+ <20090813175211.GQ1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Thu Aug 13 23:37:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 23:51:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbhzX-0004Kq-VQ
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 23:37:48 +0200
+	id 1MbiCg-0001ul-V1
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 23:51:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754561AbZHMVhj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2009 17:37:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753365AbZHMVhi
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 17:37:38 -0400
-Received: from mail-yw0-f193.google.com ([209.85.211.193]:49642 "EHLO
-	mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444AbZHMVhi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2009 17:37:38 -0400
-Received: by ywh31 with SMTP id 31so1424936ywh.4
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 14:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8RiKHytpVjqbNgHAjRDtTsv0q59nyzIJQ7lPRd7irpU=;
-        b=ZhljrbX6zzHhvriZ4isPTVEWbbBdZoUT84Eu/UK36CFPF9vkc6N87Rjl++TejJdJ0n
-         tX5umlmK1RsyZ9Qhqj9MXH7NfelSghYMaYra+rZVlgKm8XUBDkeaN4U6hUtDJqjiFSAT
-         JiGGLCWCdlKa4xck8D1PBMiGbiES1d3Qt6HIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BUtskx2V0SR+/hQrDyaXXMYb18wVnvmcOvqcw55JYUjYoWkZEdm0OL9gksW0cKYjYS
-         mDt/xRslek/XSTCNlpuIPlOT4rjP+McJ3D/Agw387GvVRnOlHaRTvGAlbKTwUgCIWU22
-         HDsFopj2xmNsbnybSDkEHR7PJKZbgz9x9fefI=
-Received: by 10.150.113.18 with SMTP id l18mr1821882ybc.155.1250199458141; 
-	Thu, 13 Aug 2009 14:37:38 -0700 (PDT)
-In-Reply-To: <2729632a0908131413w1a2efca8t31ac8cc43e1d6888@mail.gmail.com>
+	id S1753246AbZHMVvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 17:51:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbZHMVvO
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 17:51:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57779 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752123AbZHMVvN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 17:51:13 -0400
+Received: (qmail invoked by alias); 13 Aug 2009 21:51:14 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 13 Aug 2009 23:51:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX182fXJSWYY2dc4OGQwhWzmKlI7WD1yH6FjF4NGhQp
+	Mw9amHBV/1XTss
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090813175211.GQ1033@spearce.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125880>
 
-On Thu, Aug 13, 2009 at 9:13 PM, <skillzero@gmail.com> wrote:
-> For example, commit 3642151 on branch A was a cherry pick of a commit
-> 460050c on master:
->
-> $ git branch -a --contains 3642151
-> =A0A
->
-> $ git branch -a --contains 460050c
-> * master
->
-> $ git cherry -v master 3642151
-> - 3642151435ce5737debc1213de46dd556475bfad1 fixed bug
->
-> I assume that means an equivalent change to 3642151 is already in
-> master (which it is, as commit 460050c). But I want to find out the
-> commit ID on master that's equivalent to 3642151 (i.e. something that
-> tells me it's 460050c).
+Hi,
 
-git show 3642151 | git patch-id
+On Thu, 13 Aug 2009, Shawn O. Pearce wrote:
 
-You should get a line with two hashes; the first is the patchid (call
-it PATCHID_FROM_ABOVE)
+> Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> > On Thu, Aug 13, 2009 at 10:41, Shawn O. Pearce<spearce@spearce.org> wrote:
+> > > Uh, no, if we have "option import-marks=..." and we can't find the
+> > > file "..." and we have no --import-marks command line flag that
+> > > would have overridden it, we need to abort with an error.
+> > 
+> > Ah, then how about in option_import_marks() we only store the name of
+> > the file, like in option_export_marks, and at the end, when we reach
+> > the first non-option command (and we've parsed argv), we read the
+> > file. That way it's only read once, and it deals with the above
+> > scenario.
+> 
+> That's better.  :-)
 
-git log -p | git patch-id | grep PATCHID_FROM_ABOVE
+Sorry if I spoil the party, but maybe if things get so complicated, it may 
+be a sign that the original version (stream overrides command line, since 
+it knows better) is to be preferred?  After all, if hg fast-export says 
+that the marks should be imported from a certain file, it may be for a 
+_very good_ reason...
 
-This should give you a list of all commits that correspond to that patc=
-hid.
-
-Note that if there were conflicts when applying the patch, the patchid
-probably changed.
-
-Have fun,
-
-Avery
+Ciao,
+Dscho
