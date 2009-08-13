@@ -1,72 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] fast-import: define a new option command
-Date: Thu, 13 Aug 2009 23:51:55 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908132350190.8306@pacific.mpi-cbg.de>
-References: <20090813150446.GM1033@spearce.org> <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com> <20090813152419.GN1033@spearce.org> <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com> <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302>
- <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com> <20090813172508.GO1033@spearce.org> <fabb9a1e0908131028t438509d2m180293ca95daad74@mail.gmail.com> <20090813174119.GP1033@spearce.org> <fabb9a1e0908131044g583f126dm6a3818b4b295eaf5@mail.gmail.com>
- <20090813175211.GQ1033@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: GCC Git mirror no longer updating
+Date: Thu, 13 Aug 2009 14:51:31 -0700
+Message-ID: <20090813215130.GB7950@dcvr.yhbt.net>
+References: <20090811173006.GB4578@redhat.com> <1250017013.8074.376.camel@giskard> <20090811191642.GA5806@redhat.com> <4aca3dc20908111333i49195ec5h9b91ab5f6445f701@mail.gmail.com> <4A822440.40207@redhat.com> <1250074569.8074.671.camel@giskard> <4A82C786.5060602@redhat.com> <1250123299.8074.1593.camel@giskard> <20090813033738.GA7950@dcvr.yhbt.net> <4aca3dc20908130743g28a32229s194e9caa7a44fa2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 23:51:23 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bernie Innocenti <bernie@codewiz.org>,
+	Jason Merrill <jason@redhat.com>,
+	Daniel Berlin <dberlin@dberlin.org>,
+	"Frank Ch. Eigler" <fche@redhat.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 23:51:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbiCg-0001ul-V1
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 23:51:23 +0200
+	id 1MbiD4-00026O-VP
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 23:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbZHMVvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 17:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbZHMVvO
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 17:51:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57779 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752123AbZHMVvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 17:51:13 -0400
-Received: (qmail invoked by alias); 13 Aug 2009 21:51:14 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp059) with SMTP; 13 Aug 2009 23:51:14 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182fXJSWYY2dc4OGQwhWzmKlI7WD1yH6FjF4NGhQp
-	Mw9amHBV/1XTss
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <20090813175211.GQ1033@spearce.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1753491AbZHMVvc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2009 17:51:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbZHMVvc
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 17:51:32 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40327 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753029AbZHMVvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 17:51:31 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B941F509;
+	Thu, 13 Aug 2009 21:51:32 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4aca3dc20908130743g28a32229s194e9caa7a44fa2@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125881>
 
-Hi,
+Daniel Berlin <dberlin@dberlin.org> wrote:
+> On Wed, Aug 12, 2009 at 11:37 PM, Eric Wong<normalperson@yhbt.net> wr=
+ote:
+> > Bernie Innocenti <bernie@codewiz.org> wrote:
+> >> El Wed, 12-08-2009 a las 09:45 -0400, Jason Merrill escribi=F3:
+> >> > On 08/12/2009 06:56 AM, Bernie Innocenti wrote:
+> >> > > The git repository format should support concurrent access, bu=
+t perhaps
+> >> > > it only applies to git-receive-pack, not fancy operations such=
+ as
+> >> > > repacking.
+> >> >
+> >> > The git repository format, yes, but maybe not the stuff in .git/=
+svn. =A0It
+> >> > seems like a temporary index file was referring to an object tha=
+t got
+> >> > garbage collected away. =A0Or maybe the index file was left over=
+ from the
+> >> > initial import, and not there due to a collision; there don't se=
+em to be
+> >> > index files there normally.
+> >>
+> >> git-svn might be keeping extra information in files that the other=
+ git
+> >> tools don't know about. =A0This would explain why some objects loo=
+ked
+> >> like orphans and were thus culled. =A0[cc'ing the git list to catc=
+h the
+> >> attention of the git-svn maintainer(s)].
+> >
+> > Hi,
+> >
+> > As far as I can remember, no version of git svn has ever relied on
+> > orphanable objects.
+> >
+> > Of course there are unavoidable race conditions that happen while g=
+it
+> > svn is running.
+> >  =A0It is never safe to run repack concurrently while git
+> > svn is running (I wouldn't repack/gc simultaneously with _any_ writ=
+e
+> > activity on the repo).
+>=20
+> Sounds like you guys need a write lock then for certain operations.
+> How do you square this with the auto-repacking the repository does (b=
+y
+> default i thought it runs git gc every so often).
+> We have no control over people pushing branches back at the repo, it
+> may be happening when git-svn is running
 
-On Thu, 13 Aug 2009, Shawn O. Pearce wrote:
+Actually, I think the prune operation in git gc is the only potentially
+unsafe part (and not repack).  Double-checking with pruning during gc,
+it seems to only expire things older than two weeks by default (when
+used with gc).
 
-> Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> > On Thu, Aug 13, 2009 at 10:41, Shawn O. Pearce<spearce@spearce.org> wrote:
-> > > Uh, no, if we have "option import-marks=..." and we can't find the
-> > > file "..." and we have no --import-marks command line flag that
-> > > would have overridden it, we need to abort with an error.
-> > 
-> > Ah, then how about in option_import_marks() we only store the name of
-> > the file, like in option_export_marks, and at the end, when we reach
-> > the first non-option command (and we've parsed argv), we read the
-> > file. That way it's only read once, and it deals with the above
-> > scenario.
-> 
-> That's better.  :-)
+So I think git svn is safe in the face of repack/gc after all.
+Manually running git prune without the --expire argument isn't safe,
+but we don't recommend that anyways.
 
-Sorry if I spoil the party, but maybe if things get so complicated, it may 
-be a sign that the original version (stream overrides command line, since 
-it knows better) is to be preferred?  After all, if hg fast-export says 
-that the marks should be imported from a certain file, it may be for a 
-_very good_ reason...
+> Where does it say anything about this in the docs so that people know=
+ this?
 
-Ciao,
-Dscho
+Junio: can you confirm my observations above?  I think everything is
+safe by default as-is.  Thanks
+
+> >=A0 git svn itself can/will run "git gc" in-between
+> > revisions if needed. =A0You can safely repack manually whenever git=
+ svn is
+> > not running.
+
+--=20
+Eric Wong
