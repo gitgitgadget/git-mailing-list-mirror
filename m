@@ -1,93 +1,72 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC/PATCH 2/6] transport_get(): Don't SEGFAULT on missing url
-Date: Thu, 13 Aug 2009 01:39:10 +0200
-Message-ID: <200908130139.10876.johan@herland.net>
-References: <alpine.LNX.2.00.0908101205120.27553@iabervon.org>
- <1249985426-13726-3-git-send-email-johan@herland.net>
- <7vab24wtzo.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFCv3 2/4] Add Python support library for CVS remote helper
+Date: Thu, 13 Aug 2009 02:00:30 +0200
+Message-ID: <4A83579E.70302@alum.mit.edu>
+References: <1250036031-32272-1-git-send-email-johan@herland.net> <1250036031-32272-3-git-send-email-johan@herland.net> <20090812021017.GB62301@gmail.com> <200908121108.28714.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, barkalow@iabervon.org,
-	benji@silverinsanity.com, Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 01:39:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	barkalow@iabervon.org, gitster@pobox.com,
+	Johannes.Schindelin@gmx.de
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Aug 13 02:01:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbNPp-0003Wz-1A
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 01:39:33 +0200
+	id 1MbNkv-0003Ir-O0
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 02:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbZHLXjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Aug 2009 19:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZHLXjO
-	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 19:39:14 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:55053 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750934AbZHLXjO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Aug 2009 19:39:14 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOA00404F1DET30@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 13 Aug 2009 01:39:13 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOA00BHVF1BF1A0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 13 Aug 2009 01:39:13 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.12.232716
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <7vab24wtzo.fsf@alter.siamese.dyndns.org>
+	id S1750847AbZHMAAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Aug 2009 20:00:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbZHMAAq
+	(ORCPT <rfc822;git-outgoing>); Wed, 12 Aug 2009 20:00:46 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:52718 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbZHMAAp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Aug 2009 20:00:45 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.129] (p4FC1FAB6.dip.t-dialin.net [79.193.250.182])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n7D00VhA022215
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 13 Aug 2009 02:00:32 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.22) Gecko/20090608 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
+In-Reply-To: <200908121108.28714.johan@herland.net>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125758>
 
-On Thursday 13 August 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > Signed-off-by: Johan Herland <johan@herland.net>
->
-> How does url end up to be NULL?  At the beginning of transport_get(), you
-> do this:
->
-> 	ret->remote = remote;
-> 	if (!url && remote && remote->url)
-> 		url = remote->url[0];
-> 	ret->url = url;
-> 	if (remote && remote->foreign_vcs) {
-> 		transport_helper_init(ret);
-> 		return ret;
-> 	}
->
-> and the case where remote.$name.vcs is defined, we do not need
-> remote.$name.url.
->
-> When (!url && remote && remote->url), is remote->url[0] allowed to be
-> NULL?  I am guessing it would be a bug in whoever prepared the remote,
-> and if that is indeed the case, the patch shifts the symptoms without
-> fixing the cause.
->
-> When (remote && remote->foreign_vcs) does not hold, iow, if no remote is
-> defined or the remote is defined but lacks remote.$name.url, you will go
-> to the last else clause in the function that sets up a git_transport_data
-> for the native transport, but it has ret->url == NULL.
->
-> Whom does that transport talk with?  Is such a transport of any use, or
-> does it cause a segfault downstream in the call chain?
->
-> In other words, I am wondering if this patch should just diagnose the
-> case as an error, instead of pretending all is well.
+Johan Herland wrote:
+> On Wednesday 12 August 2009, David Aguilar wrote:
+>> On Wed, Aug 12, 2009 at 02:13:49AM +0200, Johan Herland wrote:
+>>> +	def __init__ (self, date, author, message):
+>>> +		self.revs    = {}      # dict: path -> CvsRev object
+>>> +		self.date    = date    # CvsDate object
+>>> +		self.author  = author
+>>> +		self.message = message # Lines of commit message
+>> pep8 and other parts of the git codebase recommend against
+>> lining up the equals signs like that.  Ya, sorry for the nits
+>> being that they're purely stylistic.
+> 
+> I can't find a good rationale for this rule in PEP8 (other than Guido's 
+> personal style), and I personally find the above much more readable 
+> (otherwise I wouldn't go through the trouble of lining them all up...). Can 
+> I claim exception (1) (readability)?
 
-You are right. Instead of pushing the segfault downstream, we should verify 
-that the url is non-NULL before returning it as part of ret (modulo the 
-foreign case, of course).
+I think you are missing the point.  It may be true that the rules in
+PEP8 were *originally* written according to the unjustified whims of the
+BDFL, but now that they are established the reason for following them is
+not that Guido likes them but rather to be consistent with the bulk of
+other Python code on the planet.
 
+With respect to the rule to use 4-space indents, there are serious
+practical problems with using tabs *in addition to* the consistency
+argument.
 
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Michael
