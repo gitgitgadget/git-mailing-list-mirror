@@ -1,77 +1,59 @@
-From: Chris Marshall <christopher.marshall@merchantlink.com>
-Subject: merging individual files
-Date: Thu, 13 Aug 2009 20:16:52 +0000 (UTC)
-Message-ID: <loom.20090813T192334-7@post.gmane.org>
+From: Abderrahim Kitouni <a.kitouni@gmail.com>
+Subject: Re: rebase-with-history -- a technique for rebasing without trashing 
+	your repo history
+Date: Thu, 13 Aug 2009 21:31:04 +0100
+Message-ID: <3d6b0edb0908131331l5a3177d1t3d1e1858fc139b2e@mail.gmail.com>
+References: <4A840B0F.9060003@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:24:20 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: Bazaar <bazaar@lists.canonical.com>,
+	mercurial mailing list <mercurial@selenic.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: mercurial-bounces@selenic.com Thu Aug 13 22:31:10 2009
+Return-path: <mercurial-bounces@selenic.com>
+Envelope-to: gcvmd-mercurial@gmane.org
+Received: from waste.org ([173.11.57.241] helo=mail.waste.org)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbgqH-00081p-It
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:24:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932214AbZHMUUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 16:20:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755755AbZHMUUI
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:20:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:41921 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755680AbZHMUUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 16:20:07 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1MbgmI-0005gc-LL
-	for git@vger.kernel.org; Thu, 13 Aug 2009 20:20:02 +0000
-Received: from 206.253.186.24 ([206.253.186.24])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 20:20:02 +0000
-Received: from christopher.marshall by 206.253.186.24 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 20:20:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 206.253.186.24 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.11) Gecko/2009060215 Firefox/3.0.11)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125868>
+	id 1Mbgx4-0002eN-0g
+	for gcvmd-mercurial@gmane.org; Thu, 13 Aug 2009 22:31:10 +0200
+Received: from waste.org (waste.org [173.11.57.241])
+	by mail.waste.org (Postfix) with ESMTP id 138A65C810F;
+	Thu, 13 Aug 2009 15:31:09 -0500 (CDT)
+Received: from qw-out-2122.google.com (qw-out-2122.google.com [74.125.92.26])
+	by waste.org (8.13.8/8.13.8/Debian-3) with ESMTP id n7DKV4kr015511
+	for <mercurial@selenic.com>; Thu, 13 Aug 2009 15:31:05 -0500
+Received: by qw-out-2122.google.com with SMTP id 5so322443qwi.11
+	for <mercurial@selenic.com>; Thu, 13 Aug 2009 13:31:04 -0700 (PDT)
+Received: by 10.229.37.74 with SMTP id w10mr1170547qcd.73.1250195464196; Thu, 
+	13 Aug 2009 13:31:04 -0700 (PDT)
+In-Reply-To: <4A840B0F.9060003@alum.mit.edu>
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: <mercurial.selenic.com>
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125869>
 
-Suppose that merging branch dev1 into master would result in three files, f1,
-f2, and f3 being changed, and that I only want to merge the changes for f1 and
-f2 and not the changes for f3 currently.  Later on, I want to accept the f3
-changes.  Suppose further that the changes to f1, f2, and f3 occurred in a
-single commit to branch dev1.
+2009/8/13 Michael Haggerty <mhagger@alum.mit.edu>:
+> I've been thinking a lot about the problems of tracking upstream changes
+> while developing a feature branch.
+Isn't this the purpose of pbranch [1] (and I beleive bzr's loom[2] and
+git's topgit[3])?
 
-What is the simplest way to use git to achieve that effect?
+Peace,
+Abderrahim
 
-More generally, I need a way to accept the changes for one or two files while
-rejecting the changes for a potentially large number of files, then later on 
-accepting the changes for the large number of files.
-
-I work at a company where perforce is currently used for all development and am
-trying to work out the git equivalents to all of the perforce flows we use. 
-This workflow is the only one that I am stumped on.
-
-One solution that occurs to me is to create a temporary branch off of the (most
-recent) common ancestor of master and br1, let's say br2, checkout the files
-from br1 that I want to merge into master and commit those to br2, then merge
-br2 into master:
-
-git checkout common_ancestor_commit
-git checkout -b br2
-git checkout br1 f1 f2
-git commit
-git checkout master
-git merge br2
-git branch -d br2
-
-This strikes me as not too bad of a procedure, as long as there is a graceful
-way of determining the most recent common ancestor of br1 and master.  What's
-the simplest way of doing that?
+[1] http://arrenbrecht.ch/mercurial/pbranch/
+[2] https://launchpad.net/bzr-loom
+[3]http://repo.or.cz/w/topgit.git
