@@ -1,93 +1,69 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: rebase-with-history -- a technique for rebasing without trashing
-	your repo history
-Date: Thu, 13 Aug 2009 14:46:07 +0200
-Message-ID: <4A840B0F.9060003@alum.mit.edu>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] gitk: Update Swedish translation (278t0f0u).
+Date: Thu, 13 Aug 2009 13:47:42 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908131344440.18241@ds9.cixit.se>
+References: <alpine.DEB.2.00.0907100811180.17673@ds9.cixit.se> <19075.65114.64967.831062@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-To: Bazaar <bazaar@lists.canonical.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	mercurial mailing list <mercurial@selenic.com>
-X-From: bazaar-bounces@lists.canonical.com Thu Aug 13 14:46:25 2009
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 14:47:57 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbZhJ-00016Q-3v
-	for gcvbg-bazaar-ng@m.gmane.org; Thu, 13 Aug 2009 14:46:25 +0200
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.60)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1MbZhA-0004y6-Tx; Thu, 13 Aug 2009 13:46:16 +0100
-Received: from einhorn.in-berlin.de ([192.109.42.8])
-	by chlorine.canonical.com with esmtp (Exim 4.60)
-	(envelope-from <mhagger@alum.mit.edu>) id 1MbZh5-0004wp-I7
-	for bazaar@lists.canonical.com; Thu, 13 Aug 2009 13:46:11 +0100
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.129] (p4FC1FAB6.dip.t-dialin.net [79.193.250.182])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id
-	n7DCk9hL028299
+	id 1MbZin-0001oc-1Z
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:47:57 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754402AbZHMMrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 08:47:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754352AbZHMMrr
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:47:47 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:38909 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753806AbZHMMrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 08:47:46 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7DClhIp012193
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 13 Aug 2009 14:46:10 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US;
-	rv:1.8.1.22) Gecko/20090608 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-X-Topics: everythingelse
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125819>
+	Thu, 13 Aug 2009 14:47:43 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7DClgk2012190;
+	Thu, 13 Aug 2009 14:47:43 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <19075.65114.64967.831062@cargo.ozlabs.ibm.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 13 Aug 2009 14:47:43 +0200 (CEST)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125820>
 
-Sorry to cross-post, but I think this might be interesting to all three
-projects...
+Paul Mackerras:
 
-I've been thinking a lot about the problems of tracking upstream changes
-while developing a feature branch.  As I think everybody knows, both
-rebasing and merging have serious disadvantages for this use case.
-Rebasing discards history and makes it difficult to share
-work-in-progress with others, whereas merging makes it difficult to
-prepare a clean patch series that is suitable for submission upstream.
+> Yes, but your mailer managed to munge the whitespace.  It came through
+> as format=flowed and charset=ISO-8859-15 again.  Please resend.
 
-I've written some articles describing another possibility, which
-combines the advantages of both methods.  The key idea is to retain
-rebase history correctly, on a patch-by-patch level.  The resulting DAG
-retains enough history to prevent problems with merge conflicts
-downstream, while also allowing the patch series to be kept tidy.
+It looked good in Alpine's postponed folder until I actually sent it... This 
+time, I just basically piped the format-patch output to postfix. Hopefully 
+that works better.
 
-(Please note that this technique only works for the typical "tracking
-upstream" type of rebase; it doesn't help with rebases whose goals are
-changing the order of commits, moving only part of a branch, rewriting
-commits, etc.)
+I get an error if I try to run msgfmt:
 
-For more information, please see the full articles:
+$ LC_ALL=C msgfmt -o /dev/null --check --statistics sv.po
+sv.po:1090: 'msgstr' is not a valid Tcl format string, unlike 'msgid'. 
+Reason: In the directive number 1, the character 'a' is not a valid 
+conversion specifier.
+msgfmt: found 1 fatal error
+280 translated messages.
 
-* A truce in the merge vs. rebase war? [1]
-* Upstream rebase Just Works=E2=84=A2 if history is retained [2]
-* Rebase with history -- implementation ideas [3]
+This is for the message "Maximum graph width (% of pane)" which 
+(incorrectly?) is marked as tcl-format.
 
-I'd appreciate feedback!
-
-Michael
-
-[1]
-http://softwareswirl.blogspot.com/2009/04/truce-in-merge-vs-rebase-war.ht=
-ml
-[2]
-http://softwareswirl.blogspot.com/2009/08/upstream-rebase-just-works-if-h=
-istory.html
-[3]
-http://softwareswirl.blogspot.com/2009/08/rebase-with-history-implementat=
-ion.html
+-- 
+\\// Peter - http://www.softwolves.pp.se/
