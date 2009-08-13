@@ -1,85 +1,53 @@
-From: "Bryan O'Sullivan" <bos@serpentine.com>
-Subject: Re: rebase-with-history -- a technique for rebasing without trashing 
-	your repo history
-Date: Thu, 13 Aug 2009 10:39:21 -0700
-Message-ID: <c290c4f20908131039s576b5cdycbefa9d2fed99b49@mail.gmail.com>
-References: <4A840B0F.9060003@alum.mit.edu>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/4] fast-import: define a new option command
+Date: Thu, 13 Aug 2009 10:41:19 -0700
+Message-ID: <20090813174119.GP1033@spearce.org>
+References: <20090813144327.GK1033@spearce.org> <alpine.DEB.1.00.0908131652190.7429@intel-tinevez-2-302> <20090813150446.GM1033@spearce.org> <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com> <20090813152419.GN1033@spearce.org> <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com> <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302> <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com> <20090813172508.GO1033@spearce.org> <fabb9a1e0908131028t438509d2m180293ca95daad74@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============1964450162=="
-Cc: Bazaar <bazaar@lists.canonical.com>,
-	mercurial mailing list <mercurial@selenic.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: mercurial-bounces@selenic.com Thu Aug 13 19:39:36 2009
-Return-path: <mercurial-bounces@selenic.com>
-Envelope-to: gcvmd-mercurial@gmane.org
-Received: from waste.org ([173.11.57.241] helo=mail.waste.org)
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:41:28 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbeH1-0005sf-WD
-	for gcvmd-mercurial@gmane.org; Thu, 13 Aug 2009 19:39:36 +0200
-Received: from waste.org (waste.org [173.11.57.241])
-	by mail.waste.org (Postfix) with ESMTP id AFCC85C81D5;
-	Thu, 13 Aug 2009 12:39:32 -0500 (CDT)
-Received: from mail-pz0-f190.google.com (mail-pz0-f190.google.com
-	[209.85.222.190])
-	by waste.org (8.13.8/8.13.8/Debian-3) with ESMTP id n7DHdRpH020884
-	for <mercurial@selenic.com>; Thu, 13 Aug 2009 12:39:28 -0500
-Received: by pzk28 with SMTP id 28so679998pzk.11
-	for <mercurial@selenic.com>; Thu, 13 Aug 2009 10:39:21 -0700 (PDT)
-Received: by 10.114.112.3 with SMTP id k3mr1131431wac.110.1250185161450; Thu, 
-	13 Aug 2009 10:39:21 -0700 (PDT)
-In-Reply-To: <4A840B0F.9060003@alum.mit.edu>
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: <mercurial.selenic.com>
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Mime-version: 1.0
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125846>
-
---===============1964450162==
-Content-Type: multipart/alternative; boundary=00163645928a73ac0d0471096a20
-
---00163645928a73ac0d0471096a20
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On Thu, Aug 13, 2009 at 5:46 AM, Michael Haggerty <mhagger@alum.mit.edu>wrote:
-
-> Sorry to cross-post, but I think this might be interesting to all three
-> projects...
->
-
-Please do not cross post, no matter how interesting you think the topic
-might be.
-
---00163645928a73ac0d0471096a20
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-<div class=3D"gmail_quote">On Thu, Aug 13, 2009 at 5:46 AM, Michael Haggert=
-y <span dir=3D"ltr">&lt;<a href=3D"mailto:mhagger@alum.mit.edu">mhagger@alu=
-m.mit.edu</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=
-=3D"border-left: 1px solid rgb(204, 204, 204); margin: 0pt 0pt 0pt 0.8ex; p=
-adding-left: 1ex;">
-Sorry to cross-post, but I think this might be interesting to all three<br>
-projects...<br>
-</blockquote><div><br>Please do not cross post, no matter how interesting y=
-ou think the topic might be. <br></div></div>
-
---00163645928a73ac0d0471096a20--
-
---===============1964450162==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+	id 1MbeIp-0006YH-DI
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:41:27 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752429AbZHMRlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 13:41:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752317AbZHMRlS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:41:18 -0400
+Received: from george.spearce.org ([209.20.77.23]:42144 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752153AbZHMRlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 13:41:18 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B1670381FD; Thu, 13 Aug 2009 17:41:19 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <fabb9a1e0908131028t438509d2m180293ca95daad74@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125847>
+
+Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Thu, Aug 13, 2009 at 10:25, Shawn O. Pearce<spearce@spearce.org> wrote:
+> > I want this to work, even though /not/found does not exist, but
+> > my.marks does. ?So that does complicate things...
+> 
+> Should we pass an option to parse_marks to make it ignore a
+> non-existing file, and set that option when parsing the stream
+> commands?
+
+Uh, no, if we have "option import-marks=..." and we can't find the
+file "..." and we have no --import-marks command line flag that
+would have overridden it, we need to abort with an error.
+
+-- 
+Shawn.
