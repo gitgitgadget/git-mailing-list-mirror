@@ -1,139 +1,59 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] block-sha1: more good unaligned memory access candidates
-Date: Thu, 13 Aug 2009 13:23:58 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908131304520.10633@xanadu.home>
-References: <alpine.LFD.2.00.0908130017080.10633@xanadu.home>
- <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/4] fast-import: define a new option command
+Date: Thu, 13 Aug 2009 10:25:08 -0700
+Message-ID: <20090813172508.GO1033@spearce.org>
+References: <1250140186-12363-2-git-send-email-srabbelier@gmail.com> <1250140186-12363-3-git-send-email-srabbelier@gmail.com> <20090813144327.GK1033@spearce.org> <alpine.DEB.1.00.0908131652190.7429@intel-tinevez-2-302> <20090813150446.GM1033@spearce.org> <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com> <20090813152419.GN1033@spearce.org> <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com> <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302> <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 19:24:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 19:25:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbe29-0007KC-HF
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:24:14 +0200
+	id 1Mbe3B-0007lk-B8
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 19:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109AbZHMRYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 13:24:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754473AbZHMRYE
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:24:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:9150 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754463AbZHMRYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 13:24:03 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOB00GKVRTCQW11@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 13 Aug 2009 13:12:49 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755163AbZHMRZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 13:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755161AbZHMRZH
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 13:25:07 -0400
+Received: from george.spearce.org ([209.20.77.23]:50495 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752533AbZHMRZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 13:25:07 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 1F6A3381FD; Thu, 13 Aug 2009 17:25:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125843>
 
-On Thu, 13 Aug 2009, Linus Torvalds wrote:
+Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> On Thu, Aug 13, 2009 at 10:07, Johannes
+> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> > ... and will import the marks twice?
+> 
+> Ah, you're right :(. What's the best way to do this? Should we dump
+> any previous marks when importing new ones?
 
-> 
-> 
-> On Thu, 13 Aug 2009, Nicolas Pitre wrote:
-> >
-> > In addition to X86, PowerPC and S390 are capable of unaligned memory 
-> > accesses.
-> > 
-> > Signed-off-by: Nicolas Pitre <nico@cam.org>
-> 
-> Ack on all your patches (1-3 + this). Looks fine to me.
-> 
-> I do wonder if we should try to do basically "per-architecture hack 
-> header-files", and then have for each architecture a small trivial 
-> 'hack-x86.h' kind of thing that just does
-> 
-> 	/* x86 hacks */
-> 	#define get_be32(p)	ntohl(*(unsigned int *)(p))
-> 	#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
-> 	#define setW(x, val)	(*(volatile unsigned int *)&W(x) = (val))
-> 
-> 	#define SHA_ASM(op, x, n) ({ unsigned int __res; __asm__(op " %1,%0":"=r" (__res):"i" (n), "0" (x)); __res; })
-> 	#define SHA_ROL(x,n)   SHA_ASM("rol", x, n)
-> 	#define SHA_ROR(x,n)   SHA_ASM("ror", x, n)
-> 
-> and then we'd have each architecture separated out. Add a few 
-> "generic helpers":
-> 
->  - be32-generic.h:
-> 
-> 	#define get_be32(p)    ( \
-> 		(*((unsigned char *)(p) + 0) << 24) | \
-> 		(*((unsigned char *)(p) + 1) << 16) | \
-> 		(*((unsigned char *)(p) + 2) <<  8) | \
-> 		(*((unsigned char *)(p) + 3) <<  0) )
-> 
-> 	#define put_be32(p, v) do { \
-> 		unsigned int __v = (v); \
-> 		*((unsigned char *)(p) + 0) = __v >> 24; \
-> 		*((unsigned char *)(p) + 1) = __v >> 16; \
-> 		*((unsigned char *)(p) + 2) = __v >>  8; \
-> 		*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
-> 
->  - rotate-generic.h:
-> 
-> 	#define SHA_ROT(X,l,r)  (((X) << (l)) | ((X) >> (r)))
-> 	#define SHA_ROL(X,n)    SHA_ROT(X,n,32-(n))
-> 	#define SHA_ROR(X,n)    SHA_ROT(X,32-(n),n)
-> 
-> that architectures could use when they want to use some particular
-> portable version.  Then, add a final "hack-generic.h" with the fallback
-> cases that just does
-> 
-> 	#include "be32-generic.h"
-> 	#include "rotate-generic.h"
-> 	#define setW(x,val) (W(x) = (val))
-> 
-> and you'd have all the hacks separated out and fairly easily used by
-> different architectures.. (ie the ARM version would just look like
-> 
->  - hack-arm.h:
-> 
-> 	#include "be32-generic.h"  
-> 	#include "rotate-generic.h"
-> 	#define setW(x, val) do { W(x) = (val); __asm__("":::"memory"); } while (0)
-> 
-> and you'd be all done.
-> 
-> Hmm? I don't know if this kind of generalization is strictly needed, so 
-> I'm just throwing it out as an idea.
+Uh, well, yes.  We shouldn't define :5 if it was in the file that
+appeared in the stream, but isn't in the file on the command line.
 
-Well... first I don't think there are much else we can do with that 
-code, i.e. there is probably not so many more hacks to add if any.  With 
-my last patch I consider this ready for general consumption.
+Worse, what happens if we do this:
 
-And given that the only user is this very sha1 implementation then there 
-is not much value in abstracting them in header files.
+  echo "option import-marks=/not/found" \
+  | git fast-import --import-marks=my.marks
 
-And the point of patch 2/3 was to move hack variants for the same 
-purpose together making it easier to document and understand (and 
-possibly modify) them.  Your suggestion would go in the opposite 
-direction entirely.
+I want this to work, even though /not/found does not exist, but
+my.marks does.  So that does complicate things...
 
-As it is now, I was about to suggest:
-
-	git mv block-sha1/sha1.[ch] .
-	rmdir block-sha1
-	rm -r mozilla-sha1
-	rm -r arm
-	rm -r ppc 
-
-and remove support for openssl's SHA1 usage, making this implementation 
-unconditional.  After all it is faster, or so close to be faster than 
-the alternatives, that we should probably cut on the extra dependency 
-and simplify portability issues at the same time.
-
-
-Nicolas
+-- 
+Shawn.
