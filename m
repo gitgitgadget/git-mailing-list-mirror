@@ -1,72 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password 
-	scrambling.
-Date: Thu, 13 Aug 2009 13:04:58 -0700
-Message-ID: <fabb9a1e0908131304m53ab2a68p9faade35969add5@mail.gmail.com>
-References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com> 
-	<20090410093434.6117@nanako3.lavabit.com> <7vhc0udiac.fsf@gitster.siamese.dyndns.org> 
-	<alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302> <4da546dc0908131219q149844abi453d8429847af1cf@mail.gmail.com>
+From: Zbyszek Szmek <zbyszek@in.waw.pl>
+Subject: [PATCH] Use "gitk: /path/to/repo" as gitk window title.
+Date: Thu, 13 Aug 2009 21:58:30 +0200
+Message-ID: <20090813195830.GL24561@in.waw.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:11:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: zbyszek@in.waw.pl
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:11:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbge6-0002cO-6F
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:11:34 +0200
+	id 1MbgeG-0002cO-4n
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756037AbZHMUFg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2009 16:05:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756019AbZHMUFW
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:05:22 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:54515 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754309AbZHMUFS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2009 16:05:18 -0400
-Received: by ewy10 with SMTP id 10so1054872ewy.37
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 13:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eIPm4tLqc23bmdBMcAM0AqkvccGNp8FV1WrUeemm8jM=;
-        b=d1QepWb6O4vzyVNj2vNHOMwcM4wYRJtgvEicMZ/B2kViEIUY8004OL9LCEoBVT9wlt
-         2IvNIgCYJeKnXKIe0pWDAB20xNR1BpCoSd9/2jmicP9gKUy9gKiviSldO21X9DAm6KZg
-         nnTsAA4tN9UG+O31vnMhQGuzm9Bm31N/BM9fY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vtGHFmSQkh97XYPu29IN0H51mrxS9sg1UhKYNXr+pMZoKNg3pa9ys8KRQ9QVilaykV
-         TmZDbpNUPtJJ6jvBJ7vFje+HN9gG64fIWZCnV7SRxJ1Zcsf4IG3pYEhQQYLLElytqLAR
-         8qBajQwYqmTWixItFvzgjWgzZb9fStgDVVdtU=
-Received: by 10.216.85.203 with SMTP id u53mr237603wee.86.1250193918106; Thu, 
-	13 Aug 2009 13:05:18 -0700 (PDT)
-In-Reply-To: <4da546dc0908131219q149844abi453d8429847af1cf@mail.gmail.com>
+	id S932216AbZHMUIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 16:08:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbZHMUIJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:08:09 -0400
+Received: from cwm83.internetdsl.tpnet.pl ([83.19.120.83]:3827 "EHLO
+	szyszka.in.waw.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932172AbZHMUIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 16:08:07 -0400
+X-Greylist: delayed 565 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Aug 2009 16:08:07 EDT
+Received: from zbyszek by szyszka.in.waw.pl with local (Exim 4.69)
+	(envelope-from <zbyszek@in.waw.pl>)
+	id 1MbgRS-0006lJ-E1; Thu, 13 Aug 2009 21:58:30 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125865>
 
-Heya,
+In case of non-bare repos, the .git suffix in the path is skipped.
 
-2009/8/13 Dirk H=F6rner <dirker@gmail.com>:
-> sorry for the long delay, but I finally sat down, hacked two testcase=
-s
-> and amended the patch after rebasing to the most recent HEAD. Find it
-> attached to this mail.
+Previously, when run in a subdirectory, gitk would show the name
+of this subdirectory as the title, which was misleading.
+---
+ gitk-git/gitk |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
 
-I think we'd rather find it inlined, as per SubmittingPatches ;).
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 4604c83..e656e81 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -16,6 +16,14 @@ proc gitdir {} {
+     }
+ }
+ 
++proc reponame {} {
++    set n [file normalize [gitdir]]
++    if {[string match "*/.git" $n]} {
++	set n [string range $n 0 end-5]
++    }
++    return $n
++}
++
+ # A simple scheduler for compute-intensive stuff.
+ # The aim is to make sure that event handlers for GUI actions can
+ # run at least every 50-100 ms.  Unfortunately fileevent handlers are
+@@ -11156,6 +11164,8 @@ set nullfile "/dev/null"
+ set have_tk85 [expr {[package vcompare $tk_version "8.5"] >= 0}]
+ set git_version [join [lrange [split [lindex [exec git version] end] .] 0 2] .]
+ 
++set appname "gitk"
++
+ set runq {}
+ set history {}
+ set historyindex 0
+@@ -11220,7 +11230,7 @@ catch {
+ }
+ # wait for the window to become visible
+ tkwait visibility .
+-wm title . "[file tail $argv0]: [file tail [pwd]]"
++wm title . "$appname: [reponame]"
+ update
+ readrefs
+ 
+-- 
+1.6.3.3
