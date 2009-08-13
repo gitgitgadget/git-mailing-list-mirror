@@ -1,330 +1,175 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v3 2/3] fast-import: add option command
-Date: Thu, 13 Aug 2009 12:02:35 -0700
-Message-ID: <1250190156-4752-3-git-send-email-srabbelier@gmail.com>
-References: <1250190156-4752-1-git-send-email-srabbelier@gmail.com>
- <1250190156-4752-2-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 21:03:10 2009
+From: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
+Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password 
+	scrambling.
+Date: Thu, 13 Aug 2009 21:19:57 +0200
+Message-ID: <4da546dc0908131219q149844abi453d8429847af1cf@mail.gmail.com>
+References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com> 
+	<20090410093434.6117@nanako3.lavabit.com> <7vhc0udiac.fsf@gitster.siamese.dyndns.org> 
+	<alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary=0015174be27065354304710ad3c4
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:20:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbfZs-0007Q3-Dr
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 21:03:08 +0200
+	id 1Mbfqh-0006D1-E8
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 21:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377AbZHMTC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 15:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755373AbZHMTC5
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 15:02:57 -0400
-Received: from rv-out-0506.google.com ([209.85.198.225]:36825 "EHLO
-	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755370AbZHMTCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 15:02:55 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so305427rvb.1
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 12:02:56 -0700 (PDT)
+	id S1754680AbZHMTUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 15:20:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754639AbZHMTUT
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 15:20:19 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:45516 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754662AbZHMTUR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 15:20:17 -0400
+Received: by ewy10 with SMTP id 10so1025281ewy.37
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 12:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=fw4kFNNbO2huQ6mXkHMf0VWeNZ0o1cgakvBcBJ5rlVY=;
-        b=HV943RkjXeUE04myuz/Svtm2v7czVJjEoJ6L8+VAtPZT1Il5arBVmiwMYeGm0wcbry
-         HCN/17Lli2XJ1hI8930KJPSu8bNABaQnHG3AWT3eznRe373N/w8MgDenk8kE8Nv55lm2
-         WiQ6hUZkVG6yF1etaju2ybqOC8P2pIt0RW0xM=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=4zUBROrxvetnWtKJzOCvm8xy+1V98DWV00VfBZPG6Q8=;
+        b=iNg1MuCIbfX7oIjhZJkxStJLg2bmQK15IgHgLF6ZhtqEZ3mku2155wtOMo7z7dg0uq
+         40WqHlxveqKvlC6Q/oR5y2TPtiq8LujMOUoDCV5nPfpE4QZXh8QgOy+H1nqwBv6c2YY4
+         nE7104XGYybBeXVnmVxWgHiSKs2eWjMBh6vuI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=DSZo7u1wLYrKvPTeplUk2OXdHLlOmX/k4eVzfWFG4Uee8gmGm89vroy1j3ArcETIv7
-         DJmkpU/tuTEg57OFnoOyUI1qUhgkxQ16wft5Sb+njkSSsH48s0MEGzbWLEvOWrmtFhWG
-         F+ouqcP0bMUTpEhR7x6M3WzLvgsjvlffyHgpI=
-Received: by 10.140.144.6 with SMTP id r6mr634125rvd.137.1250190176694;
-        Thu, 13 Aug 2009 12:02:56 -0700 (PDT)
-Received: from localhost.localdomain ([216.239.45.19])
-        by mx.google.com with ESMTPS id f42sm3575374rvb.35.2009.08.13.12.02.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 12:02:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
-In-Reply-To: <1250190156-4752-2-git-send-email-srabbelier@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=OsxjGvIE+S+US4c/z8uI6daV3sy56cCZag7JwlT6qm+pBpe6bU6Nsl5eh/ikZfqJ06
+         80WPS8Aaj05CCdQAZtIUfHewlcoEZ5ECeLWPJuZtcOuxduRawvSocdaBmnLniKIx17WR
+         7vsAmzyqBEJis75VPlGNc8t2BR9w4Zyl+89jM=
+Received: by 10.210.12.13 with SMTP id 13mr4431948ebl.12.1250191217079; Thu, 
+	13 Aug 2009 12:20:17 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125854>
 
-This allows the frontend to specify any of the supported options as
-long as no non-option command has been given. This way the
-user does not have to include any frontend-specific options, but
-instead she can rely on the frontend to tell fast-import what it
-needs.
+--0015174be27065354304710ad3c4
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-Also factor out parsing of argv and have it execute when we reach the
-first non-option command, or after all commands have been read and
-no non-option command has been encountered.
+Hi all,
 
-Lastly do not read the marks file till after all options have been
-parsed, instead of when receiving the option.
+sorry for the long delay, but I finally sat down, hacked two testcases
+and amended the patch after rebasing to the most recent HEAD. Find it
+attached to this mail.
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
+Ciao,
+Dirk
 
-	Now we delay reading the marks file till option parsing is done.
+On Thu, Aug 13, 2009 at 6:43 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi,
+>
+> On Sat, 11 Apr 2009, Junio C Hamano wrote:
+>
+> > Nanako Shiraishi <nanako3@lavabit.com> writes:
+> >
+> > > Quoting Dirk H=F6rner:
+> > >
+> > >> Instead of a cleartext password, the CVS pserver expects a scrambled=
+ one
+> > >> in the authentication request. With this patch it is possible to imp=
+ort
+> > >> CVS repositories only accessible via pserver and user/password.
+> > >>
+> > >> Signed-off-by: Dirk Hoerner <dirker@gmail.com>
+> > >
+> > > Junio, may I ask what happened to this patch?
+> >
+> > I do not use cvs emulation myself, nor pserver access, and I actually h=
+ave
+> > been waiting for people who do use pserver access to report breakages a=
+nd
+> > people pointing this patch out.
+>
+> I really think it would be good if this patch was amended with a simple
+> and quick test. Using the stdin/stdout server method, it should not be
+> hard.
+>
+> Ciao,
+> Dscho
 
- Documentation/git-fast-import.txt |   23 +++++++
- fast-import.c                     |  130 +++++++++++++++++++++++++------------
- 2 files changed, 111 insertions(+), 42 deletions(-)
+--0015174be27065354304710ad3c4
+Content-Type: application/octet-stream; 
+	name="0001-git-cvsimport-add-support-for-cvs-pserver-password-s.patch"
+Content-Disposition: attachment; 
+	filename="0001-git-cvsimport-add-support-for-cvs-pserver-password-s.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_fybvjtt40
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index c2f483a..ed8bd0d 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -303,6 +303,11 @@ and control the current import process.  More detailed discussion
- 	standard output.  This command is optional and is not needed
- 	to perform an import.
- 
-+`option`::
-+    Specify any of the options listed under OPTIONS to change
-+    fast-import's behavior to suit the frontend's needs. This command
-+    is optional and is not needed to perform an import.
-+
- `commit`
- ~~~~~~~~
- Create or update a branch with a new commit, recording one logical
-@@ -813,6 +818,24 @@ Placing a `progress` command immediately after a `checkpoint` will
- inform the reader when the `checkpoint` has been completed and it
- can safely access the refs that fast-import updated.
- 
-+`option`
-+~~~~~~~~
-+Processes the specified option so that git fast-import behaves in a
-+way that suits the frontend's needs.
-+Note that options specified by the frontend are overridden by any
-+options the user may specify to git fast-import itself.
-+
-+....
-+    'option' SP <option> LF
-+....
-+
-+The `<option>` part of the command may contain any of the options
-+listed in the OPTIONS section, without the leading '--' and is
-+treated in the same way.
-+
-+Option commands must be the first commands on the input, to give an
-+option command after any non-option command is an error.
-+
- Crash Reports
- -------------
- If fast-import is supplied invalid input it will terminate with a
-diff --git a/fast-import.c b/fast-import.c
-index b904f20..dff2937 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -292,6 +292,8 @@ static unsigned long branch_load_count;
- static int failure;
- static FILE *pack_edges;
- static unsigned int show_stats = 1;
-+static int global_argc;
-+static const char **global_argv;
- 
- /* Memory pools */
- static size_t mem_pool_alloc = 2*1024*1024 - sizeof(struct mem_pool);
-@@ -315,6 +317,7 @@ static struct object_entry_pool *blocks;
- static struct object_entry *object_table[1 << 16];
- static struct mark_set *marks;
- static const char *mark_file;
-+static const char *input_file;
- 
- /* Our last blob */
- static struct last_object last_blob = { STRBUF_INIT, 0, 0, 0 };
-@@ -348,6 +351,9 @@ static struct recent_command *rc_free;
- static unsigned int cmd_save = 100;
- static uintmax_t next_mark;
- static struct strbuf new_data = STRBUF_INIT;
-+static int seen_non_option_command;
-+
-+static void parse_argv(void);
- 
- static void write_branch_report(FILE *rpt, struct branch *b)
- {
-@@ -1643,6 +1649,42 @@ static void dump_marks(void)
- 	}
- }
- 
-+static void read_marks(void)
-+{
-+	char line[512];
-+	FILE *f = fopen(input_file, "r");
-+	if (!f)
-+		die_errno("cannot read '%s'", input_file);
-+	while (fgets(line, sizeof(line), f)) {
-+		uintmax_t mark;
-+		char *end;
-+		unsigned char sha1[20];
-+		struct object_entry *e;
-+
-+		end = strchr(line, '\n');
-+		if (line[0] != ':' || !end)
-+			die("corrupt mark line: %s", line);
-+		*end = 0;
-+		mark = strtoumax(line + 1, &end, 10);
-+		if (!mark || end == line + 1
-+			|| *end != ' ' || get_sha1(end + 1, sha1))
-+			die("corrupt mark line: %s", line);
-+		e = find_object(sha1);
-+		if (!e) {
-+			enum object_type type = sha1_object_info(sha1, NULL);
-+			if (type < 0)
-+				die("object not found: %s", sha1_to_hex(sha1));
-+			e = insert_object(sha1);
-+			e->type = type;
-+			e->pack_id = MAX_PACK_ID;
-+			e->offset = 1; /* just not zero! */
-+		}
-+		insert_mark(mark, e);
-+	}
-+	fclose(f);
-+}
-+
-+
- static int read_next_command(void)
- {
- 	static int stdin_eof = 0;
-@@ -1663,6 +1705,11 @@ static int read_next_command(void)
- 			if (stdin_eof)
- 				return EOF;
- 
-+			if (!seen_non_option_command
-+				&& prefixcmp(command_buf.buf, "option ")) {
-+				parse_argv();
-+			}
-+
- 			rc = rc_free;
- 			if (rc)
- 				rc_free = rc->next;
-@@ -2338,39 +2385,9 @@ static void parse_progress(void)
- 	skip_optional_lf();
- }
- 
--static void option_import_marks(const char *input_file)
-+static void option_import_marks(const char *marks)
- {
--	char line[512];
--	FILE *f = fopen(input_file, "r");
--	if (!f)
--		die_errno("cannot read '%s'", input_file);
--	while (fgets(line, sizeof(line), f)) {
--		uintmax_t mark;
--		char *end;
--		unsigned char sha1[20];
--		struct object_entry *e;
--
--		end = strchr(line, '\n');
--		if (line[0] != ':' || !end)
--			die("corrupt mark line: %s", line);
--		*end = 0;
--		mark = strtoumax(line + 1, &end, 10);
--		if (!mark || end == line + 1
--			|| *end != ' ' || get_sha1(end + 1, sha1))
--			die("corrupt mark line: %s", line);
--		e = find_object(sha1);
--		if (!e) {
--			enum object_type type = sha1_object_info(sha1, NULL);
--			if (type < 0)
--				die("object not found: %s", sha1_to_hex(sha1));
--			e = insert_object(sha1);
--			e->type = type;
--			e->pack_id = MAX_PACK_ID;
--			e->offset = 1; /* just not zero! */
--		}
--		insert_mark(mark, e);
--	}
--	fclose(f);
-+	input_file = xstrdup(marks);
- }
- 
- static void option_date_format(const char *fmt)
-@@ -2443,6 +2460,16 @@ static void parse_one_option(const char *option)
- 	}
- }
- 
-+static void parse_option(void)
-+{
-+	char* option = command_buf.buf + 7;
-+
-+	if (seen_non_option_command)
-+		die("Got option command '%s' after non-option command", option);
-+
-+	parse_one_option(option);
-+}
-+
- static int git_pack_config(const char *k, const char *v, void *cb)
- {
- 	if (!strcmp(k, "pack.depth")) {
-@@ -2467,6 +2494,26 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- static const char fast_import_usage[] =
- "git fast-import [--date-format=f] [--max-pack-size=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
- 
-+static void parse_argv(void)
-+{
-+	unsigned int i;
-+
-+	for (i = 1; i < global_argc; i++) {
-+		const char *a = global_argv[i];
-+
-+		if (*a != '-' || !strcmp(a, "--"))
-+			break;
-+
-+		parse_one_option(a + 2);
-+	}
-+	if (i != global_argc)
-+		usage(fast_import_usage);
-+
-+	seen_non_option_command = 1;
-+	if (input_file)
-+		read_marks();
-+}
-+
- int main(int argc, const char **argv)
- {
- 	unsigned int i;
-@@ -2485,16 +2532,8 @@ int main(int argc, const char **argv)
- 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
- 	marks = pool_calloc(1, sizeof(struct mark_set));
- 
--	for (i = 1; i < argc; i++) {
--		const char *a = argv[i];
--
--		if (*a != '-' || !strcmp(a, "--"))
--			break;
--
--		parse_one_option(a + 2);
--	}
--	if (i != argc)
--		usage(fast_import_usage);
-+	global_argc = argc;
-+	global_argv = argv;
- 
- 	rc_free = pool_alloc(cmd_save * sizeof(*rc_free));
- 	for (i = 0; i < (cmd_save - 1); i++)
-@@ -2517,9 +2556,16 @@ int main(int argc, const char **argv)
- 			parse_checkpoint();
- 		else if (!prefixcmp(command_buf.buf, "progress "))
- 			parse_progress();
-+		else if (!prefixcmp(command_buf.buf, "option "))
-+			parse_option();
- 		else
- 			die("Unsupported command: %s", command_buf.buf);
- 	}
-+
-+	// argv hasn't been parsed yet, do so
-+	if (!seen_non_option_command)
-+		parse_argv();
-+
- 	end_packfile();
- 
- 	dump_branches();
--- 
-1.6.4.122.g6ffd7
+RnJvbSAyZjNkZWVhNDBkZWYwNDI4NmYwNDgzYmQzM2E1NzU2YWMyMzM4MzhhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBEaXJrIEhvZXJuZXIgPGRpcmtlckBnbWFpbC5jb20+CkRhdGU6
+IEZyaSwgMjggTm92IDIwMDggMTk6MTE6MzggKzAyMDAKU3ViamVjdDogW1BBVENIXSBnaXQtY3Zz
+aW1wb3J0OiBhZGQgc3VwcG9ydCBmb3IgY3ZzIHBzZXJ2ZXIgcGFzc3dvcmQgc2NyYW1ibGluZy4K
+Ckluc3RlYWQgb2YgYSBjbGVhcnRleHQgcGFzc3dvcmQsIHRoZSBDVlMgcHNlcnZlciBleHBlY3Rz
+IGEgc2NyYW1ibGVkIG9uZQppbiB0aGUgYXV0aGVudGljYXRpb24gcmVxdWVzdC4gV2l0aCB0aGlz
+IHBhdGNoIGl0IGlzIHBvc3NpYmxlIHRvIGltcG9ydApDVlMgcmVwb3NpdG9yaWVzIG9ubHkgYWNj
+ZXNzaWJsZSB2aWEgcHNlcnZlciBhbmQgdXNlci9wYXNzd29yZC4KClNpZ25lZC1vZmYtYnk6IERp
+cmsgSG9lcm5lciA8ZGlya2VyQGdtYWlsLmNvbT4KLS0tCiBnaXQtY3ZzaW1wb3J0LnBlcmwgICB8
+ICAgMzkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystCiB0L3Q5NjAwLWN2
+c2ltcG9ydC5zaCB8ICAgNDEgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysKIDIgZmlsZXMgY2hhbmdlZCwgNzkgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRp
+ZmYgLS1naXQgYS9naXQtY3ZzaW1wb3J0LnBlcmwgYi9naXQtY3ZzaW1wb3J0LnBlcmwKaW5kZXgg
+ZTQzOTIwMi4uNTkzODMyZCAxMDA3NTUKLS0tIGEvZ2l0LWN2c2ltcG9ydC5wZXJsCisrKyBiL2dp
+dC1jdnNpbXBvcnQucGVybApAQCAtMjUyLDcgKzI1Miw4IEBAIHN1YiBjb25uIHsKIAkJCQl9CiAJ
+CQl9OwogCQl9Ci0JCSRwYXNzPSJBIiB1bmxlc3MgJHBhc3M7CisKKwkJJHBhc3MgPSAkc2VsZi0+
+X3NjcmFtYmxlKCRwYXNzKTsKIAogCQlteSAoJHMsICRyZXApOwogCQlpZiAoJHByb3h5aG9zdCkg
+ewpAQCAtNDg0LDYgKzQ4NSw0MiBAQCBzdWIgX2ZldGNoZmlsZSB7CiAJcmV0dXJuICRyZXM7CiB9
+CiAKK3N1YiBfc2NyYW1ibGUgeworCW15ICgkc2VsZiwgJHBhc3MpID0gQF87CisJbXkgJHNjcmFt
+YmxlZCA9ICJBIjsKKworCXJldHVybiAkc2NyYW1ibGVkIHVubGVzcyAkcGFzczsKKworCW15ICRw
+YXNzX2xlbiA9IGxlbmd0aCgkcGFzcyk7CisJbXkgQHBhc3NfYXJyID0gc3BsaXQoIiIsICRwYXNz
+KTsKKwlteSAkaTsKKworCSMgZnJvbSBjdnMvc3JjL3NjcmFtYmxlLmMKKwlteSBAc2hpZnRzID0g
+KAorCQkgIDAsICAxLCAgMiwgIDMsICA0LCAgNSwgIDYsICA3LCAgOCwgIDksIDEwLCAxMSwgMTIs
+IDEzLCAxNCwgMTUsCisJCSAxNiwgMTcsIDE4LCAxOSwgMjAsIDIxLCAyMiwgMjMsIDI0LCAyNSwg
+MjYsIDI3LCAyOCwgMjksIDMwLCAzMSwKKwkJMTE0LDEyMCwgNTMsIDc5LCA5NiwxMDksIDcyLDEw
+OCwgNzAsIDY0LCA3NiwgNjcsMTE2LCA3NCwgNjgsIDg3LAorCQkxMTEsIDUyLCA3NSwxMTksIDQ5
+LCAzNCwgODIsIDgxLCA5NSwgNjUsMTEyLCA4NiwxMTgsMTEwLDEyMiwxMDUsCisJCSA0MSwgNTcs
+IDgzLCA0MywgNDYsMTAyLCA0MCwgODksIDM4LDEwMywgNDUsIDUwLCA0MiwxMjMsIDkxLCAzNSwK
+KwkJMTI1LCA1NSwgNTQsIDY2LDEyNCwxMjYsIDU5LCA0NywgOTIsIDcxLDExNSwgNzgsIDg4LDEw
+NywxMDYsIDU2LAorCQkgMzYsMTIxLDExNywxMDQsMTAxLDEwMCwgNjksIDczLCA5OSwgNjMsIDk0
+LCA5MywgMzksIDM3LCA2MSwgNDgsCisJCSA1OCwxMTMsIDMyLCA5MCwgNDQsIDk4LCA2MCwgNTEs
+IDMzLCA5NywgNjIsIDc3LCA4NCwgODAsIDg1LDIyMywKKwkJMjI1LDIxNiwxODcsMTY2LDIyOSwx
+ODksMjIyLDE4OCwxNDEsMjQ5LDE0OCwyMDAsMTg0LDEzNiwyNDgsMTkwLAorCQkxOTksMTcwLDE4
+MSwyMDQsMTM4LDIzMiwyMTgsMTgzLDI1NSwyMzQsMjIwLDI0NywyMTMsMjAzLDIyNiwxOTMsCisJ
+CTE3NCwxNzIsMjI4LDI1MiwyMTcsMjAxLDEzMSwyMzAsMTk3LDIxMSwxNDUsMjM4LDE2MSwxNzks
+MTYwLDIxMiwKKwkJMjA3LDIyMSwyNTQsMTczLDIwMiwxNDYsMjI0LDE1MSwxNDAsMTk2LDIwNSwx
+MzAsMTM1LDEzMywxNDMsMjQ2LAorCQkxOTIsMTU5LDI0NCwyMzksMTg1LDE2OCwyMTUsMTQ0LDEz
+OSwxNjUsMTgwLDE1NywxNDcsMTg2LDIxNCwxNzYsCisJCTIyNywyMzEsMjE5LDE2OSwxNzUsMTU2
+LDIwNiwxOTgsMTI5LDE2NCwxNTAsMjEwLDE1NCwxNzcsMTM0LDEyNywKKwkJMTgyLDEyOCwxNTgs
+MjA4LDE2MiwxMzIsMTY3LDIwOSwxNDksMjQxLDE1MywyNTEsMjM3LDIzNiwxNzEsMTk1LAorCQky
+NDMsMjMzLDI1MywyNDAsMTk0LDI1MCwxOTEsMTU1LDE0MiwxMzcsMjQ1LDIzNSwxNjMsMjQyLDE3
+OCwxNTIKKwkpOworCisJZm9yICgkaSA9IDA7ICRpIDwgJHBhc3NfbGVuOyAkaSsrKSB7CisJCSRz
+Y3JhbWJsZWQgLj0gcGFjaygiQyIsICRzaGlmdHNbb3JkKCRwYXNzX2FyclskaV0pXSk7CisJfQor
+CisJcmV0dXJuICRzY3JhbWJsZWQ7Cit9CiAKIHBhY2thZ2UgbWFpbjsKIApkaWZmIC0tZ2l0IGEv
+dC90OTYwMC1jdnNpbXBvcnQuc2ggYi90L3Q5NjAwLWN2c2ltcG9ydC5zaAppbmRleCAzNjMzNDVm
+Li41N2MwZWFjIDEwMDc1NQotLS0gYS90L3Q5NjAwLWN2c2ltcG9ydC5zaAorKysgYi90L3Q5NjAw
+LWN2c2ltcG9ydC5zaApAQCAtMTI4LDQgKzEyOCw0NSBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdp
+bXBvcnQgZnJvbSBhIENWUyB3b3JraW5nIHRyZWUnICcKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyAn
+dGVzdCBlbnRpcmUgSEVBRCcgJ3Rlc3RfY21wX2JyYW5jaF90cmVlIG1hc3RlcicKIAoraWYgISB0
+eXBlIG5jID4vZGV2L251bGwgMj4mMQordGhlbgorCXNheSAnc2tpcHBpbmcgY3ZzaW1wb3J0IHBz
+ZXJ2ZXIgdGVzdCwgbmMgbm90IGZvdW5kJworCXRlc3RfZG9uZQorCWV4aXQKK2ZpCisKK2NhdCA8
+PCBFT0YgPmV4cGVjdGVkCitCRUdJTiBBVVRIIFJFUVVFU1QKKy9jdnMKK21lCitBeXVoZWRFSWM/
+Xl0nJT0wOnEgWixiPDMhYT4KK0VORCBBVVRIIFJFUVVFU1QKK0VPRgorCit0ZXN0X2V4cGVjdF9z
+dWNjZXNzICdjb25uZWN0IHRvIHBzZXJ2ZXIgd2l0aCBwYXNzd29yZCcgJworCisJZWNobyAiSSBI
+QVRFIFlPVSIgfCBuYyAtbCAyNDAxID5hY3R1YWwgJgorCXRlc3RfbXVzdF9mYWlsIGdpdCBjdnNp
+bXBvcnQgLWQgXAorCQk6cHNlcnZlcjptZTphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekBsb2Nh
+bGhvc3Q6L2N2cyBmb28gXAorCQk+L2Rldi9udWxsIDI+JjEgJiYKKwl0ZXN0X2NtcCBleHBlY3Rl
+ZCBhY3R1YWwKKycKKworY2F0IDw8IEVPRiA+ZXhwZWN0ZWQKK0JFR0lOIEFVVEggUkVRVUVTVAor
+L2N2cworYW5vbnltb3VzCitBCitFTkQgQVVUSCBSRVFVRVNUCitFT0YKKwordGVzdF9leHBlY3Rf
+c3VjY2VzcyAnY29ubmVjdCB0byBwc2VydmVyIHdpdGhvdXQgcGFzc3dvcmQnICcKKworCWVjaG8g
+IkkgSEFURSBZT1UiIHwgbmMgLWwgMjQwMSA+YWN0dWFsICYKKwl0ZXN0X211c3RfZmFpbCBnaXQg
+Y3ZzaW1wb3J0IC1kIFwKKwkJOnBzZXJ2ZXI6YW5vbnltb3VzQGxvY2FsaG9zdDovY3ZzIGZvbyBc
+CisJCT4vZGV2L251bGwgMj4mMSAmJgorCXRlc3RfY21wIGV4cGVjdGVkIGFjdHVhbAorJworCiB0
+ZXN0X2RvbmUKLS0gCjEuNi40Cgo=
+--0015174be27065354304710ad3c4--
