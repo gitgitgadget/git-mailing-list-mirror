@@ -1,96 +1,77 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Implementing $Date$ substitution - solution using pre-commit
-Date: Thu, 13 Aug 2009 07:47:25 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0908130742470.18241@ds9.cixit.se>
-References: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
+Date: Thu, 13 Aug 2009 14:20:56 +0700
+Message-ID: <fcaeb9bf0908130020meaed129j5d6a4f04a6878bd0@mail.gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> 
+	<1250005446-12047-2-git-send-email-pclouds@gmail.com> <1250005446-12047-3-git-send-email-pclouds@gmail.com> 
+	<1250005446-12047-4-git-send-email-pclouds@gmail.com> <1250005446-12047-5-git-send-email-pclouds@gmail.com> 
+	<1250005446-12047-6-git-send-email-pclouds@gmail.com> <1250005446-12047-7-git-send-email-pclouds@gmail.com> 
+	<1250005446-12047-8-git-send-email-pclouds@gmail.com> <1250005446-12047-9-git-send-email-pclouds@gmail.com> 
+	<7v3a7xa6e5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 13 08:47:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 09:21:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbU66-0002SI-Mj
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 08:47:39 +0200
+	id 1MbUcr-0005Hy-1l
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 09:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110AbZHMGr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 02:47:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbZHMGr0
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 02:47:26 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:43376 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752686AbZHMGr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 02:47:26 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7D6lQQv020411
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 13 Aug 2009 08:47:26 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7D6lPhL020407;
-	Thu, 13 Aug 2009 08:47:25 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <alpine.DEB.2.00.0908092127420.17141@perkele.intern.softwolves.pp.se>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 13 Aug 2009 08:47:26 +0200 (CEST)
+	id S1753277AbZHMHVQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 03:21:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753122AbZHMHVQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 03:21:16 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:50023 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752491AbZHMHVP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 03:21:15 -0400
+Received: by yxe5 with SMTP id 5so753172yxe.33
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 00:21:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=42nRWbhEdIOnKiVaQO5hTFPVuj7xe/vF7MtPjfJCdwY=;
+        b=TvvLggjfQyp+Rr6UKkIYeGLsh3xon4l346Zq+aRI7aoghA5Nq4rPs43D1j5Mn541YO
+         Z84TNstJ2+5z6VRVTemiUqG/rswOFGO9aOzi8jbER5phnV2xTQLaQqIQtZJMMc0go2TD
+         vNAGtKsGnM9E/C9SdzciewORzEcFQmTITYmkQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=pPGQfh6v2qE+n1fCKUD7S6VdkLAViBBJnfbFGs9ah+OxssKCGY1sHjKx1ZHQGYuxQw
+         Q0BC7i6Wstpcmi3liuttMoXpOZMSKPoB0GUA+glaDiIa17wP6Fg9XMuJSbrTpghVSxIJ
+         rHEMgyymoEkyVEdsSek0CFQPwIf0VI13Szj5w=
+Received: by 10.100.174.2 with SMTP id w2mr717368ane.114.1250148076205; Thu, 
+	13 Aug 2009 00:21:16 -0700 (PDT)
+In-Reply-To: <7v3a7xa6e5.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125788>
 
-Hi!
+2009/8/12 Junio C Hamano <gitster@pobox.com>:
+> It could also require core.sparseworktree configuration set to true if we
+> are really paranoid, but without the actual sparse specification file
+> flipping that configuration to true would not be useful anyway, so in
+> practice, giving --sparse-work-tree option to these Porcelain commands
+> would be no-op, but --no-sparse-work-tree option would be useful to
+> ignore $GIT_DIR/info/sparse and populate the work tree fully.
 
-So, my filter-based approach at doing RCS-like $Date$ expansion didn't work 
-out. Since I wanted to have the Date expand on check-in, not on check-out, 
-and be expanded in history, I had made it into a "clean" filter. But due to 
-how Git internally checks if files are clean, that did not work properly.
+Only part "ignore $GIT_DIR/info/sparse" is correct.
+"--no-sparse-work-tree" would not clear CE_VALID from all entries in
+index (which is good, if you are using CE_VALID for another purpose).
 
-The solution to this was instead to make the Date expansion into a 
-pre-commit hook. Using .gitattributes, I set "datereplace=true" on all the 
-files I want to have "$Date$" expand in, and then install the following 
-file as .git/hooks/pre-commit:
-
-===8< pre-commit >8===
-#!/bin/bash -e
-
-# Find base commit
-if git-rev-parse --verify HEAD >/dev/null 2>&1
-then
- 	against=HEAD
-else
- 	# Initial commit: diff against an empty tree object
- 	against=4b825dc642cb6eb9a060e54bf8d69288fbee4904
-fi
-
-# Set up Date substitution
-export NOW=$(date +"%Y-%m-%d %H:%M:%S")
-for file in $(git diff-index --cached --diff-filter=AM --name-only $against); do
-   if git check-attr datereplace -- "$file" | grep 'datereplace: true' > /dev/null; then
-     perl -w -i.bak -e 'my $now = $ENV{"NOW"};
-$now =~ s/[^-:0-9 ]//g;
-while (<>)
-{
-  if (/\$Date:?[^\$]*\$/)
-  {
-    s/\$Date:?[^\$]*\$/\$Date: ${now} \$/;
-  }
-  print
-}' "$file"
-     git update-index --add "$file"
-   fi
-done
-
-exit 0
-===8< pre-commit >8===
-
-This has the added bonus over a filter that it all files committed at the 
-same time will have the same date stamp, whereas the filter would expand on 
-the time "git add" is executed.
-
+To quit sparse checkout, you must create an empty
+$GIT_DIR/info/sparse, then do "git checkout" or "git read-tree -m -u
+HEAD" so that the tree is full populated, then you can remove
+$GIT_DIR/info/sparse. Quite unintuitive..
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Duy
