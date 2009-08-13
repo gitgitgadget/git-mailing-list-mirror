@@ -1,74 +1,47 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [BUG] Submodules problem with subdirectories and pushing
-Date: Thu, 13 Aug 2009 13:19:33 +0200
-Message-ID: <20090813111933.GZ14475@mail-vs.djpig.de>
-References: <20090813103231.GY14475@mail-vs.djpig.de>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH] gitk: Update Swedish translation (278t0f0u).
+Date: Thu, 13 Aug 2009 21:51:54 +1000
+Message-ID: <19075.65114.64967.831062@cargo.ozlabs.ibm.com>
+References: <alpine.DEB.2.00.0907100811180.17673@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 13:20:07 2009
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Aug 13 13:55:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbYLm-00077l-RT
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 13:20:07 +0200
+	id 1MbYtv-00029A-T8
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 13:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbZHMLTm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 07:19:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbZHMLTm
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 07:19:42 -0400
-Received: from pauli.djpig.de ([78.46.38.139]:51716 "EHLO pauli.djpig.de"
+	id S1752204AbZHMLzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 07:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbZHMLzI
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 07:55:08 -0400
+Received: from bilbo.ozlabs.org ([203.10.76.25]:47103 "EHLO bilbo.ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752399AbZHMLTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 07:19:41 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by pauli.djpig.de (Postfix) with ESMTP id 69BDC9007F
-	for <git@vger.kernel.org>; Thu, 13 Aug 2009 13:19:42 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at pauli.djpig.de
-Received: from pauli.djpig.de ([127.0.0.1])
-	by localhost (pauli.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id OZjKEOHOiLnm for <git@vger.kernel.org>;
-	Thu, 13 Aug 2009 13:19:33 +0200 (CEST)
-Received: from mail-vs.djpig.de (mail-vs.djpig.de [78.47.136.189])
-	by pauli.djpig.de (Postfix) with ESMTP id DB4309007D
-	for <git@vger.kernel.org>; Thu, 13 Aug 2009 13:19:33 +0200 (CEST)
-Received: from djpig by mail-vs.djpig.de with local (Exim 4.69)
-	(envelope-from <djpig@mail-vs.djpig.de>)
-	id 1MbYLF-00038o-Ou
-	for git@vger.kernel.org; Thu, 13 Aug 2009 13:19:33 +0200
-Content-Disposition: inline
-In-Reply-To: <20090813103231.GY14475@mail-vs.djpig.de>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751208AbZHMLzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 07:55:08 -0400
+Received: by bilbo.ozlabs.org (Postfix, from userid 1003)
+	id 0A733B6F2B; Thu, 13 Aug 2009 21:55:08 +1000 (EST)
+In-Reply-To: <alpine.DEB.2.00.0907100811180.17673@ds9.cixit.se>
+X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125803>
 
-On Thu, Aug 13, 2009 at 12:32:31PM +0200, Frank Lichtenheld wrote:
-> Hi.
-> 
-> I have a git repository where I include several submodules. This seemed to
-> work fine until the server I push to got (finally) updated from 1.5.something
-> to 1.6.4. Now I get an error if I try to push.
-> 
-> The issue is easily reproducible with a minimal repository for me:
-> 
-> Creating an empty repository on server:
-> 
-> flichtenheld@git-test:~$ git version
-> git version 1.6.4    <---- Directly compiled from git
-> flichtenheld@git-test:~$ mkdir test.git
-> flichtenheld@git-test:~$ cd test.git/
-> flichtenheld@git-test:~/test.git$ git init --bare
-> Initialized empty Git repository in /home/flichtenheld/test.git/
+Peter Krefting writes:
 
-Here is a "git config receive.fsckObjects true" missing. I have
-this in my default config, and without it the error will not be
-triggered.
+> Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+> ---
+> This patch is against git://git.kernel.org/pub/scm/gitk/gitk.git - is that 
+> the correct upstream to work from?
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Yes, but your mailer managed to munge the whitespace.  It came through
+as format=flowed and charset=ISO-8859-15 again.  Please resend.
+
+Paul.
