@@ -1,76 +1,68 @@
 From: Ori Avtalion <ori@avtalion.name>
-Subject: Re: [PATCH] Change mentions of "git programs" to "git commands"
-Date: Thu, 13 Aug 2009 15:02:28 +0300
-Message-ID: <4A8400D4.9010600@avtalion.name>
-References: <4a7c3971.170d660a.3caa.20b3@mx.google.com>	<20090811125813.6117@nanako3.lavabit.com>	<4A815AAC.2030601@avtalion.name> <20090812075946.6117@nanako3.lavabit.com> <4A81FECE.5040806@avtalion.name>
+Subject: git-blame missing output format documentation
+Date: Thu, 13 Aug 2009 15:18:11 +0300
+Message-ID: <4A840483.9090402@avtalion.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 14:03:08 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 13 14:18:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbZ1Q-0005Dj-5w
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:03:08 +0200
+	id 1MbZGA-0005y5-SI
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:18:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754181AbZHMMCe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 08:02:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754121AbZHMMCe
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:02:34 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:60395 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753967AbZHMMCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 08:02:33 -0400
-Received: by fxm28 with SMTP id 28so539845fxm.17
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 05:02:33 -0700 (PDT)
+	id S1751389AbZHMMSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 08:18:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbZHMMSM
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:18:12 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:65226 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750973AbZHMMSM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 08:18:12 -0400
+Received: by bwz22 with SMTP id 22so543721bwz.18
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 05:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=at2eP3XZPOXY5Pu/vKvfoaTZ30koDvrBaaaurQgZ7i8=;
-        b=wtmI4IzbWGQqEy3EUUJQo+3eJ/JvdN+2WYAH9Woeycz6syIVhMry5PkagwAQ14QJYK
-         /z9S+RdHphEXRUJyqbhYevpUGb+ABFnBJJmvUxhQpS4HMYntJeY1I2e0dgZlP1Ct7Vo7
-         CyiGNOCv6+hzR/6o5asvrBYT8RW+PAyubJwuw=
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=YYBRsJAmfSDhTPZDgxoIM0gUa5yze10wf88CrfJ8WOc=;
+        b=g75jnX/h37MnCrbpSeDP8AfE/U0gbhp/ZhFGVfyjGnuyDdyq6HNewz5r9QK5ynpG5C
+         As0UU7SqRV+l58UsqcdqF0VgyUlkPfOnAJ5cps812aDAM7o3vLidrRfyWCVtjhHCm6kH
+         RNxkU9OGiv5hVMOp3GQnluoRCGwUzqdOeaaJU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=e6m/wObjI+Tb6eC9Y01sO1BltQnbhx1KoqpUT3QHXK+1dpqEiHDZCLvLLYmdqcJpTS
-         RzcVex2PDx5GoK3ytfVylTv4MrCNj6otalDPGFAeAyAZ2KbUDEU8i2mN9r7lsnumdmd7
-         GqZ2RexsVSywML5OdRUx6QdSDgaRvUrlLWXTY=
-Received: by 10.103.125.38 with SMTP id c38mr338044mun.119.1250164953728;
-        Thu, 13 Aug 2009 05:02:33 -0700 (PDT)
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=qvzyZihm2O4QXLzjI9a6dMDSq1Pt4i0j3+BFk832J/gDeCDvd7u0FlMvdXmW+4uuzh
+         NMSkiN8Q8PACz27QpFoTMS5XvjYsjF/nQrPsndxCupbKg9RZ7dBQdbSAIAi82rj+lMhU
+         E+QLnSUubPWx9ZXQctPTycIGFn1xXX4acUx4A=
+Received: by 10.103.50.32 with SMTP id c32mr349791muk.1.1250165891857;
+        Thu, 13 Aug 2009 05:18:11 -0700 (PDT)
 Received: from ?192.168.1.55? (bzq-79-179-35-131.red.bezeqint.net [79.179.35.131])
-        by mx.google.com with ESMTPS id 23sm1058480mun.43.2009.08.13.05.02.30
+        by mx.google.com with ESMTPS id t10sm934573muh.30.2009.08.13.05.18.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 Aug 2009 05:02:31 -0700 (PDT)
+        Thu, 13 Aug 2009 05:18:11 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1.3pre) Gecko/20090811 Shredder/3.0b4pre
-In-Reply-To: <4A81FECE.5040806@avtalion.name>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125808>
 
-On 08/12/2009 02:29 AM, Ori Avtalion wrote:
->>> -git-mailsplit - Simple UNIX mbox splitter program
->>> +git-mailsplit - Simple UNIX mbox splitter
->>>
->>> SYNOPSIS
->>> --------
->>
->
-> It's another case where a command is called a "program" when, to the
-> user, it's simply a command such as "git mailsplit". Having the word
-> "command" in a command description is redundant, so I just dropped the
-> word.
->
-> And here's another command with a similar description that I missed before:
-> "git-merge-one-file - The standard helper *program* to use with
-> git-merge-index"
+Hi,
 
-Should I create a new patch for these two? Or is the change not welcome?
+"git blame" prefixes boundary commit tree-ish's with ^.
+This doesn't seem to be documented in the git-blame manpage.
+
+Is it a convention used elsewhere, that it can go unmentioned?
+
+Also, the manpage doesn't describe the format of the regualr, 
+non-porcelain, output.
+Doesn't it deserve its own section?
+
+The only non-obvious parts to me  are the the boundary commit notation, 
+mentioned above, and the filename in the second column.
