@@ -1,79 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password
- scrambling.
-Date: Thu, 13 Aug 2009 18:43:55 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302>
-References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com> <20090410093434.6117@nanako3.lavabit.com> <7vhc0udiac.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] block-sha1: more good unaligned memory access
+ candidates
+Date: Thu, 13 Aug 2009 09:45:54 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
+References: <alpine.LFD.2.00.0908130017080.10633@xanadu.home>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-671064305-1250181835=:7429"
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	=?ISO-8859-15?Q?Dirk_H=F6rner?= <dirker@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 18:44:07 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 18:46:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbdPK-0006va-ER
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 18:44:06 +0200
+	id 1MbdRZ-0007sO-VN
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 18:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812AbZHMQn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 12:43:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbZHMQn6
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 12:43:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54336 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751545AbZHMQn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 12:43:57 -0400
-Received: (qmail invoked by alias); 13 Aug 2009 16:43:57 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp032) with SMTP; 13 Aug 2009 18:43:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+uEZBj0O6ulTKiCz21WkjTyg6fyYM466/yQqdfYu
-	6vmCae8UIhX0zw
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7vhc0udiac.fsf@gitster.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1754160AbZHMQqS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 12:46:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbZHMQqS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 12:46:18 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:54140 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753359AbZHMQqR (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2009 12:46:17 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7DGjtLa004023
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 13 Aug 2009 09:45:56 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7DGjsw4007592;
+	Thu, 13 Aug 2009 09:45:55 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.00.0908130017080.10633@xanadu.home>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-5.463 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125833>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-671064305-1250181835=:7429
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
 
-Hi,
-
-On Sat, 11 Apr 2009, Junio C Hamano wrote:
-
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
+On Thu, 13 Aug 2009, Nicolas Pitre wrote:
+>
+> In addition to X86, PowerPC and S390 are capable of unaligned memory 
+> accesses.
 > 
-> > Quoting Dirk Hörner:
-> >
-> >> Instead of a cleartext password, the CVS pserver expects a scrambled one
-> >> in the authentication request. With this patch it is possible to import
-> >> CVS repositories only accessible via pserver and user/password.
-> >> 
-> >> Signed-off-by: Dirk Hoerner <dirker@gmail.com>
-> >
-> > Junio, may I ask what happened to this patch?
-> 
-> I do not use cvs emulation myself, nor pserver access, and I actually have
-> been waiting for people who do use pserver access to report breakages and
-> people pointing this patch out.
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
 
-I really think it would be good if this patch was amended with a simple 
-and quick test. Using the stdin/stdout server method, it should not be 
-hard.
+Ack on all your patches (1-3 + this). Looks fine to me.
 
-Ciao,
-Dscho
+I do wonder if we should try to do basically "per-architecture hack 
+header-files", and then have for each architecture a small trivial 
+'hack-x86.h' kind of thing that just does
 
---8323329-671064305-1250181835=:7429--
+	/* x86 hacks */
+	#define get_be32(p)	ntohl(*(unsigned int *)(p))
+	#define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
+	#define setW(x, val)	(*(volatile unsigned int *)&W(x) = (val))
+
+	#define SHA_ASM(op, x, n) ({ unsigned int __res; __asm__(op " %1,%0":"=r" (__res):"i" (n), "0" (x)); __res; })
+	#define SHA_ROL(x,n)   SHA_ASM("rol", x, n)
+	#define SHA_ROR(x,n)   SHA_ASM("ror", x, n)
+
+and then we'd have each architecture separated out. Add a few 
+"generic helpers":
+
+ - be32-generic.h:
+
+	#define get_be32(p)    ( \
+		(*((unsigned char *)(p) + 0) << 24) | \
+		(*((unsigned char *)(p) + 1) << 16) | \
+		(*((unsigned char *)(p) + 2) <<  8) | \
+		(*((unsigned char *)(p) + 3) <<  0) )
+
+	#define put_be32(p, v) do { \
+		unsigned int __v = (v); \
+		*((unsigned char *)(p) + 0) = __v >> 24; \
+		*((unsigned char *)(p) + 1) = __v >> 16; \
+		*((unsigned char *)(p) + 2) = __v >>  8; \
+		*((unsigned char *)(p) + 3) = __v >>  0; } while (0)
+
+ - rotate-generic.h:
+
+	#define SHA_ROT(X,l,r)  (((X) << (l)) | ((X) >> (r)))
+	#define SHA_ROL(X,n)    SHA_ROT(X,n,32-(n))
+	#define SHA_ROR(X,n)    SHA_ROT(X,32-(n),n)
+
+that architectures could use when they want to use some particular
+portable version.  Then, add a final "hack-generic.h" with the fallback
+cases that just does
+
+	#include "be32-generic.h"
+	#include "rotate-generic.h"
+	#define setW(x,val) (W(x) = (val))
+
+and you'd have all the hacks separated out and fairly easily used by
+different architectures.. (ie the ARM version would just look like
+
+ - hack-arm.h:
+
+	#include "be32-generic.h"  
+	#include "rotate-generic.h"
+	#define setW(x, val) do { W(x) = (val); __asm__("":::"memory"); } while (0)
+
+and you'd be all done.
+
+Hmm? I don't know if this kind of generalization is strictly needed, so 
+I'm just throwing it out as an idea.
+
+		Linus
