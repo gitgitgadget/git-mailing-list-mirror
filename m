@@ -1,175 +1,80 @@
-From: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
-Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password 
-	scrambling.
-Date: Thu, 13 Aug 2009 21:19:57 +0200
-Message-ID: <4da546dc0908131219q149844abi453d8429847af1cf@mail.gmail.com>
-References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com> 
-	<20090410093434.6117@nanako3.lavabit.com> <7vhc0udiac.fsf@gitster.siamese.dyndns.org> 
-	<alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] fast-import: define a new option command
+Date: Thu, 13 Aug 2009 12:26:06 -0700
+Message-ID: <7vzla3bjn5.fsf@alter.siamese.dyndns.org>
+References: <1250140186-12363-2-git-send-email-srabbelier@gmail.com>
+ <1250140186-12363-3-git-send-email-srabbelier@gmail.com>
+ <20090813144327.GK1033@spearce.org>
+ <alpine.DEB.1.00.0908131652190.7429@intel-tinevez-2-302>
+ <20090813150446.GM1033@spearce.org>
+ <fabb9a1e0908130812s297ccfc6vd6b746daf1dcc69a@mail.gmail.com>
+ <20090813152419.GN1033@spearce.org>
+ <fabb9a1e0908130926qdc6cdf1ka7f2442421ce12ce@mail.gmail.com>
+ <alpine.DEB.1.00.0908131907080.7429@intel-tinevez-2-302>
+ <fabb9a1e0908131009j51c54cacp3f837f9b8525061@mail.gmail.com>
+ <20090813172508.GO1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0015174be27065354304710ad3c4
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 13 21:20:35 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Aug 13 21:26:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbfqh-0006D1-E8
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 21:20:32 +0200
+	id 1MbfwP-0000Mw-Sa
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 21:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754680AbZHMTUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 15:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754639AbZHMTUT
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 15:20:19 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:45516 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662AbZHMTUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 15:20:17 -0400
-Received: by ewy10 with SMTP id 10so1025281ewy.37
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 12:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=4zUBROrxvetnWtKJzOCvm8xy+1V98DWV00VfBZPG6Q8=;
-        b=iNg1MuCIbfX7oIjhZJkxStJLg2bmQK15IgHgLF6ZhtqEZ3mku2155wtOMo7z7dg0uq
-         40WqHlxveqKvlC6Q/oR5y2TPtiq8LujMOUoDCV5nPfpE4QZXh8QgOy+H1nqwBv6c2YY4
-         nE7104XGYybBeXVnmVxWgHiSKs2eWjMBh6vuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=OsxjGvIE+S+US4c/z8uI6daV3sy56cCZag7JwlT6qm+pBpe6bU6Nsl5eh/ikZfqJ06
-         80WPS8Aaj05CCdQAZtIUfHewlcoEZ5ECeLWPJuZtcOuxduRawvSocdaBmnLniKIx17WR
-         7vsAmzyqBEJis75VPlGNc8t2BR9w4Zyl+89jM=
-Received: by 10.210.12.13 with SMTP id 13mr4431948ebl.12.1250191217079; Thu, 
-	13 Aug 2009 12:20:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302>
+	id S1754668AbZHMT0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 15:26:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754646AbZHMT0Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 15:26:16 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753125AbZHMT0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 15:26:15 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F13C9936;
+	Thu, 13 Aug 2009 15:26:14 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 61F799932; Thu, 13 Aug
+ 2009 15:26:08 -0400 (EDT)
+In-Reply-To: <20090813172508.GO1033@spearce.org> (Shawn O. Pearce's message
+ of "Thu\, 13 Aug 2009 10\:25\:08 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A6CC54C-883F-11DE-A5F7-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125855>
 
---0015174be27065354304710ad3c4
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Hi all,
-
-sorry for the long delay, but I finally sat down, hacked two testcases
-and amended the patch after rebasing to the most recent HEAD. Find it
-attached to this mail.
-
-Ciao,
-Dirk
-
-On Thu, Aug 13, 2009 at 6:43 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+> Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>> On Thu, Aug 13, 2009 at 10:07, Johannes
+>> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+>> > ... and will import the marks twice?
+>> 
+>> Ah, you're right :(. What's the best way to do this? Should we dump
+>> any previous marks when importing new ones?
 >
-> Hi,
+> Uh, well, yes.  We shouldn't define :5 if it was in the file that
+> appeared in the stream, but isn't in the file on the command line.
 >
-> On Sat, 11 Apr 2009, Junio C Hamano wrote:
+> Worse, what happens if we do this:
 >
-> > Nanako Shiraishi <nanako3@lavabit.com> writes:
-> >
-> > > Quoting Dirk H=F6rner:
-> > >
-> > >> Instead of a cleartext password, the CVS pserver expects a scrambled=
- one
-> > >> in the authentication request. With this patch it is possible to imp=
-ort
-> > >> CVS repositories only accessible via pserver and user/password.
-> > >>
-> > >> Signed-off-by: Dirk Hoerner <dirker@gmail.com>
-> > >
-> > > Junio, may I ask what happened to this patch?
-> >
-> > I do not use cvs emulation myself, nor pserver access, and I actually h=
-ave
-> > been waiting for people who do use pserver access to report breakages a=
-nd
-> > people pointing this patch out.
+>   echo "option import-marks=/not/found" \
+>   | git fast-import --import-marks=my.marks
 >
-> I really think it would be good if this patch was amended with a simple
-> and quick test. Using the stdin/stdout server method, it should not be
-> hard.
->
-> Ciao,
-> Dscho
+> I want this to work, even though /not/found does not exist, but
+> my.marks does.  So that does complicate things...
 
---0015174be27065354304710ad3c4
-Content-Type: application/octet-stream; 
-	name="0001-git-cvsimport-add-support-for-cvs-pserver-password-s.patch"
-Content-Disposition: attachment; 
-	filename="0001-git-cvsimport-add-support-for-cvs-pserver-password-s.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_fybvjtt40
-
-RnJvbSAyZjNkZWVhNDBkZWYwNDI4NmYwNDgzYmQzM2E1NzU2YWMyMzM4MzhhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEaXJrIEhvZXJuZXIgPGRpcmtlckBnbWFpbC5jb20+CkRhdGU6
-IEZyaSwgMjggTm92IDIwMDggMTk6MTE6MzggKzAyMDAKU3ViamVjdDogW1BBVENIXSBnaXQtY3Zz
-aW1wb3J0OiBhZGQgc3VwcG9ydCBmb3IgY3ZzIHBzZXJ2ZXIgcGFzc3dvcmQgc2NyYW1ibGluZy4K
-Ckluc3RlYWQgb2YgYSBjbGVhcnRleHQgcGFzc3dvcmQsIHRoZSBDVlMgcHNlcnZlciBleHBlY3Rz
-IGEgc2NyYW1ibGVkIG9uZQppbiB0aGUgYXV0aGVudGljYXRpb24gcmVxdWVzdC4gV2l0aCB0aGlz
-IHBhdGNoIGl0IGlzIHBvc3NpYmxlIHRvIGltcG9ydApDVlMgcmVwb3NpdG9yaWVzIG9ubHkgYWNj
-ZXNzaWJsZSB2aWEgcHNlcnZlciBhbmQgdXNlci9wYXNzd29yZC4KClNpZ25lZC1vZmYtYnk6IERp
-cmsgSG9lcm5lciA8ZGlya2VyQGdtYWlsLmNvbT4KLS0tCiBnaXQtY3ZzaW1wb3J0LnBlcmwgICB8
-ICAgMzkgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystCiB0L3Q5NjAwLWN2
-c2ltcG9ydC5zaCB8ICAgNDEgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysKIDIgZmlsZXMgY2hhbmdlZCwgNzkgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRp
-ZmYgLS1naXQgYS9naXQtY3ZzaW1wb3J0LnBlcmwgYi9naXQtY3ZzaW1wb3J0LnBlcmwKaW5kZXgg
-ZTQzOTIwMi4uNTkzODMyZCAxMDA3NTUKLS0tIGEvZ2l0LWN2c2ltcG9ydC5wZXJsCisrKyBiL2dp
-dC1jdnNpbXBvcnQucGVybApAQCAtMjUyLDcgKzI1Miw4IEBAIHN1YiBjb25uIHsKIAkJCQl9CiAJ
-CQl9OwogCQl9Ci0JCSRwYXNzPSJBIiB1bmxlc3MgJHBhc3M7CisKKwkJJHBhc3MgPSAkc2VsZi0+
-X3NjcmFtYmxlKCRwYXNzKTsKIAogCQlteSAoJHMsICRyZXApOwogCQlpZiAoJHByb3h5aG9zdCkg
-ewpAQCAtNDg0LDYgKzQ4NSw0MiBAQCBzdWIgX2ZldGNoZmlsZSB7CiAJcmV0dXJuICRyZXM7CiB9
-CiAKK3N1YiBfc2NyYW1ibGUgeworCW15ICgkc2VsZiwgJHBhc3MpID0gQF87CisJbXkgJHNjcmFt
-YmxlZCA9ICJBIjsKKworCXJldHVybiAkc2NyYW1ibGVkIHVubGVzcyAkcGFzczsKKworCW15ICRw
-YXNzX2xlbiA9IGxlbmd0aCgkcGFzcyk7CisJbXkgQHBhc3NfYXJyID0gc3BsaXQoIiIsICRwYXNz
-KTsKKwlteSAkaTsKKworCSMgZnJvbSBjdnMvc3JjL3NjcmFtYmxlLmMKKwlteSBAc2hpZnRzID0g
-KAorCQkgIDAsICAxLCAgMiwgIDMsICA0LCAgNSwgIDYsICA3LCAgOCwgIDksIDEwLCAxMSwgMTIs
-IDEzLCAxNCwgMTUsCisJCSAxNiwgMTcsIDE4LCAxOSwgMjAsIDIxLCAyMiwgMjMsIDI0LCAyNSwg
-MjYsIDI3LCAyOCwgMjksIDMwLCAzMSwKKwkJMTE0LDEyMCwgNTMsIDc5LCA5NiwxMDksIDcyLDEw
-OCwgNzAsIDY0LCA3NiwgNjcsMTE2LCA3NCwgNjgsIDg3LAorCQkxMTEsIDUyLCA3NSwxMTksIDQ5
-LCAzNCwgODIsIDgxLCA5NSwgNjUsMTEyLCA4NiwxMTgsMTEwLDEyMiwxMDUsCisJCSA0MSwgNTcs
-IDgzLCA0MywgNDYsMTAyLCA0MCwgODksIDM4LDEwMywgNDUsIDUwLCA0MiwxMjMsIDkxLCAzNSwK
-KwkJMTI1LCA1NSwgNTQsIDY2LDEyNCwxMjYsIDU5LCA0NywgOTIsIDcxLDExNSwgNzgsIDg4LDEw
-NywxMDYsIDU2LAorCQkgMzYsMTIxLDExNywxMDQsMTAxLDEwMCwgNjksIDczLCA5OSwgNjMsIDk0
-LCA5MywgMzksIDM3LCA2MSwgNDgsCisJCSA1OCwxMTMsIDMyLCA5MCwgNDQsIDk4LCA2MCwgNTEs
-IDMzLCA5NywgNjIsIDc3LCA4NCwgODAsIDg1LDIyMywKKwkJMjI1LDIxNiwxODcsMTY2LDIyOSwx
-ODksMjIyLDE4OCwxNDEsMjQ5LDE0OCwyMDAsMTg0LDEzNiwyNDgsMTkwLAorCQkxOTksMTcwLDE4
-MSwyMDQsMTM4LDIzMiwyMTgsMTgzLDI1NSwyMzQsMjIwLDI0NywyMTMsMjAzLDIyNiwxOTMsCisJ
-CTE3NCwxNzIsMjI4LDI1MiwyMTcsMjAxLDEzMSwyMzAsMTk3LDIxMSwxNDUsMjM4LDE2MSwxNzks
-MTYwLDIxMiwKKwkJMjA3LDIyMSwyNTQsMTczLDIwMiwxNDYsMjI0LDE1MSwxNDAsMTk2LDIwNSwx
-MzAsMTM1LDEzMywxNDMsMjQ2LAorCQkxOTIsMTU5LDI0NCwyMzksMTg1LDE2OCwyMTUsMTQ0LDEz
-OSwxNjUsMTgwLDE1NywxNDcsMTg2LDIxNCwxNzYsCisJCTIyNywyMzEsMjE5LDE2OSwxNzUsMTU2
-LDIwNiwxOTgsMTI5LDE2NCwxNTAsMjEwLDE1NCwxNzcsMTM0LDEyNywKKwkJMTgyLDEyOCwxNTgs
-MjA4LDE2MiwxMzIsMTY3LDIwOSwxNDksMjQxLDE1MywyNTEsMjM3LDIzNiwxNzEsMTk1LAorCQky
-NDMsMjMzLDI1MywyNDAsMTk0LDI1MCwxOTEsMTU1LDE0MiwxMzcsMjQ1LDIzNSwxNjMsMjQyLDE3
-OCwxNTIKKwkpOworCisJZm9yICgkaSA9IDA7ICRpIDwgJHBhc3NfbGVuOyAkaSsrKSB7CisJCSRz
-Y3JhbWJsZWQgLj0gcGFjaygiQyIsICRzaGlmdHNbb3JkKCRwYXNzX2FyclskaV0pXSk7CisJfQor
-CisJcmV0dXJuICRzY3JhbWJsZWQ7Cit9CiAKIHBhY2thZ2UgbWFpbjsKIApkaWZmIC0tZ2l0IGEv
-dC90OTYwMC1jdnNpbXBvcnQuc2ggYi90L3Q5NjAwLWN2c2ltcG9ydC5zaAppbmRleCAzNjMzNDVm
-Li41N2MwZWFjIDEwMDc1NQotLS0gYS90L3Q5NjAwLWN2c2ltcG9ydC5zaAorKysgYi90L3Q5NjAw
-LWN2c2ltcG9ydC5zaApAQCAtMTI4LDQgKzEyOCw0NSBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdp
-bXBvcnQgZnJvbSBhIENWUyB3b3JraW5nIHRyZWUnICcKIAogdGVzdF9leHBlY3Rfc3VjY2VzcyAn
-dGVzdCBlbnRpcmUgSEVBRCcgJ3Rlc3RfY21wX2JyYW5jaF90cmVlIG1hc3RlcicKIAoraWYgISB0
-eXBlIG5jID4vZGV2L251bGwgMj4mMQordGhlbgorCXNheSAnc2tpcHBpbmcgY3ZzaW1wb3J0IHBz
-ZXJ2ZXIgdGVzdCwgbmMgbm90IGZvdW5kJworCXRlc3RfZG9uZQorCWV4aXQKK2ZpCisKK2NhdCA8
-PCBFT0YgPmV4cGVjdGVkCitCRUdJTiBBVVRIIFJFUVVFU1QKKy9jdnMKK21lCitBeXVoZWRFSWM/
-Xl0nJT0wOnEgWixiPDMhYT4KK0VORCBBVVRIIFJFUVVFU1QKK0VPRgorCit0ZXN0X2V4cGVjdF9z
-dWNjZXNzICdjb25uZWN0IHRvIHBzZXJ2ZXIgd2l0aCBwYXNzd29yZCcgJworCisJZWNobyAiSSBI
-QVRFIFlPVSIgfCBuYyAtbCAyNDAxID5hY3R1YWwgJgorCXRlc3RfbXVzdF9mYWlsIGdpdCBjdnNp
-bXBvcnQgLWQgXAorCQk6cHNlcnZlcjptZTphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ekBsb2Nh
-bGhvc3Q6L2N2cyBmb28gXAorCQk+L2Rldi9udWxsIDI+JjEgJiYKKwl0ZXN0X2NtcCBleHBlY3Rl
-ZCBhY3R1YWwKKycKKworY2F0IDw8IEVPRiA+ZXhwZWN0ZWQKK0JFR0lOIEFVVEggUkVRVUVTVAor
-L2N2cworYW5vbnltb3VzCitBCitFTkQgQVVUSCBSRVFVRVNUCitFT0YKKwordGVzdF9leHBlY3Rf
-c3VjY2VzcyAnY29ubmVjdCB0byBwc2VydmVyIHdpdGhvdXQgcGFzc3dvcmQnICcKKworCWVjaG8g
-IkkgSEFURSBZT1UiIHwgbmMgLWwgMjQwMSA+YWN0dWFsICYKKwl0ZXN0X211c3RfZmFpbCBnaXQg
-Y3ZzaW1wb3J0IC1kIFwKKwkJOnBzZXJ2ZXI6YW5vbnltb3VzQGxvY2FsaG9zdDovY3ZzIGZvbyBc
-CisJCT4vZGV2L251bGwgMj4mMSAmJgorCXRlc3RfY21wIGV4cGVjdGVkIGFjdHVhbAorJworCiB0
-ZXN0X2RvbmUKLS0gCjEuNi40Cgo=
---0015174be27065354304710ad3c4--
+How about making the option parser get and keep the _name_ of the file
+until option parsing session (i.e. read the stream until initial run of
+"option" command runs out and then parse the command line to override),
+and then finally open the file and read it?
