@@ -1,83 +1,73 @@
-From: Zbyszek Szmek <zbyszek@in.waw.pl>
-Subject: [PATCH] Use "gitk: /path/to/repo" as gitk window title.
-Date: Thu, 13 Aug 2009 21:58:30 +0200
-Message-ID: <20090813195830.GL24561@in.waw.pl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] block-sha1: more good unaligned memory access candidates
+Date: Thu, 13 Aug 2009 16:13:16 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908131603240.10633@xanadu.home>
+References: <alpine.LFD.2.00.0908130017080.10633@xanadu.home>
+ <alpine.LFD.2.01.0908130934400.28882@localhost.localdomain>
+ <alpine.LFD.2.00.0908131304520.10633@xanadu.home>
+ <7v63crbja2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: zbyszek@in.waw.pl
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 13 22:11:45 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 13 22:24:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbgeG-0002cO-4n
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:11:44 +0200
+	id 1Mbgq6-00081p-0Z
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 22:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216AbZHMUIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 16:08:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932199AbZHMUIJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:08:09 -0400
-Received: from cwm83.internetdsl.tpnet.pl ([83.19.120.83]:3827 "EHLO
-	szyszka.in.waw.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932172AbZHMUIH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 16:08:07 -0400
-X-Greylist: delayed 565 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Aug 2009 16:08:07 EDT
-Received: from zbyszek by szyszka.in.waw.pl with local (Exim 4.69)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1MbgRS-0006lJ-E1; Thu, 13 Aug 2009 21:58:30 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756153AbZHMUN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 16:13:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755893AbZHMUN2
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 16:13:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:54687 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756171AbZHMUNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 16:13:23 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOC00DA4064GIO0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 13 Aug 2009 16:13:16 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v63crbja2.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125866>
 
-In case of non-bare repos, the .git suffix in the path is skipped.
+On Thu, 13 Aug 2009, Junio C Hamano wrote:
 
-Previously, when run in a subdirectory, gitk would show the name
-of this subdirectory as the title, which was misleading.
----
- gitk-git/gitk |   12 +++++++++++-
- 1 files changed, 11 insertions(+), 1 deletions(-)
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > As it is now, I was about to suggest:
+> >
+> > 	git mv block-sha1/sha1.[ch] .
+> > 	rmdir block-sha1
+> > 	rm -r mozilla-sha1
+> > 	rm -r arm
+> > 	rm -r ppc 
+> >
+> > and remove support for openssl's SHA1 usage, making this implementation 
+> > unconditional.  After all it is faster, or so close to be faster than 
+> > the alternatives, that we should probably cut on the extra dependency 
+> > and simplify portability issues at the same time.
+> 
+> Wow.  Is it now faster than the arm/ and ppc/ hand-tweaked assembly?
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 4604c83..e656e81 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -16,6 +16,14 @@ proc gitdir {} {
-     }
- }
- 
-+proc reponame {} {
-+    set n [file normalize [gitdir]]
-+    if {[string match "*/.git" $n]} {
-+	set n [string range $n 0 end-5]
-+    }
-+    return $n
-+}
-+
- # A simple scheduler for compute-intensive stuff.
- # The aim is to make sure that event handlers for GUI actions can
- # run at least every 50-100 ms.  Unfortunately fileevent handlers are
-@@ -11156,6 +11164,8 @@ set nullfile "/dev/null"
- set have_tk85 [expr {[package vcompare $tk_version "8.5"] >= 0}]
- set git_version [join [lrange [split [lindex [exec git version] end] .] 0 2] .]
- 
-+set appname "gitk"
-+
- set runq {}
- set history {}
- set historyindex 0
-@@ -11220,7 +11230,7 @@ catch {
- }
- # wait for the window to become visible
- tkwait visibility .
--wm title . "[file tail $argv0]: [file tail [pwd]]"
-+wm title . "$appname: [reponame]"
- update
- readrefs
- 
--- 
-1.6.3.3
+It is indeed faster than the ARM assembly version by far, and faster 
+than all the alternative implementations too, but with a 7x increase in 
+compiled code size.  In the context of Git I think this is a good 
+compromize.  Making the assembly version faster than the C version could 
+be possible, but that would require quite some work and I don't expect 
+the gain to be significant, certainly not worth the trouble.
+
+Furthermore the C version can be used to generate ARM Thumb code while 
+the asm version cannot without yet more work.
+
+
+Nicolas
