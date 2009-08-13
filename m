@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5 3/6] builtin-add: refactor the meat of interactive_add()
-Date: Thu, 13 Aug 2009 14:29:41 +0200
-Message-ID: <fc79a0af2e3687373d4a7fdd9bf35b9a79b37cf9.1250164190.git.trast@student.ethz.ch>
+Subject: [PATCH v5 1/6] git-apply--interactive: Refactor patch mode code
+Date: Thu, 13 Aug 2009 14:29:39 +0200
+Message-ID: <d7c4f69f13bf6939e37f2cd43752943108a7071d.1250164190.git.trast@student.ethz.ch>
 References: <200908101136.34660.trast@student.ethz.ch> <cover.1250164190.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -11,22 +11,22 @@ Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
 	Pierre Habouzit <madcoder@debian.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 14:30:49 2009
+X-From: git-owner@vger.kernel.org Thu Aug 13 14:30:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbZSC-0002tc-Gm
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:30:49 +0200
+	id 1MbZS8-0002tc-Pw
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:30:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbZHMMaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 08:30:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbZHMMaO
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:30:14 -0400
+	id S1754388AbZHMMaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 08:30:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754345AbZHMMaS
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:30:18 -0400
 Received: from gwse.ethz.ch ([129.132.178.237]:54458 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753055AbZHMMaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Aug 2009 08:30:12 -0400
+	id S1751823AbZHMMaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Aug 2009 08:30:11 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 13 Aug
  2009 14:30:09 +0200
@@ -39,98 +39,175 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125813>
 
-This moves the call setup for 'git add--interactive' to a separate
-function, as other users will call it without running
-validate_pathspec() first.
+This makes some aspects of the 'git add -p' loop configurable (within
+the code), so that we can later reuse git-add--interactive for other
+similar tools.
+
+Most fields are fairly straightforward, but APPLY gets a subroutine
+(instead of just a string a la 'apply --cached') so that we can handle
+'checkout -p', which will need to atomically apply the patch twice
+(index and worktree).
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- builtin-add.c |   43 +++++++++++++++++++++++++++++--------------
- commit.h      |    2 ++
- 2 files changed, 31 insertions(+), 14 deletions(-)
+ git-add--interactive.perl |   82 ++++++++++++++++++++++++++++++---------------
+ 1 files changed, 55 insertions(+), 27 deletions(-)
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 581a2a1..c422a62 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -131,27 +131,27 @@ static void refresh(int verbose, const char **pathspec)
- 	return pathspec;
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index df9f231..3606103 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -73,6 +73,22 @@
+ # command line options
+ my $patch_mode;
+ 
++sub apply_patch;
++
++my %patch_modes = (
++	'stage' => {
++		DIFF => 'diff-files -p',
++		APPLY => sub { apply_patch 'apply --cached', @_; },
++		APPLY_CHECK => 'apply --cached',
++		VERB => 'Stage',
++		TARGET => '',
++		PARTICIPLE => 'staging',
++		FILTER => 'file-only',
++	},
++);
++
++my %patch_mode_flavour = %{$patch_modes{stage}};
++
+ sub run_cmd_pipe {
+ 	if ($^O eq 'MSWin32' || $^O eq 'msys') {
+ 		my @invalid = grep {m/[":*]/} @_;
+@@ -613,12 +629,21 @@
+ 	print "\n";
  }
  
--int interactive_add(int argc, const char **argv, const char *prefix)
-+int run_add_interactive(const char *revision, const char *patch_mode,
-+			const char **pathspec)
- {
--	int status, ac;
-+	int status, ac, pc = 0;
- 	const char **args;
--	const char **pathspec = NULL;
- 
--	if (argc) {
--		pathspec = validate_pathspec(argc, argv, prefix);
--		if (!pathspec)
--			return -1;
--	}
-+	if (pathspec)
-+		while (pathspec[pc])
-+			pc++;
- 
--	args = xcalloc(sizeof(const char *), (argc + 4));
-+	args = xcalloc(sizeof(const char *), (pc + 5));
- 	ac = 0;
- 	args[ac++] = "add--interactive";
--	if (patch_interactive)
--		args[ac++] = "--patch";
-+	if (patch_mode)
-+		args[ac++] = patch_mode;
-+	if (revision)
-+		args[ac++] = revision;
- 	args[ac++] = "--";
--	if (argc) {
--		memcpy(&(args[ac]), pathspec, sizeof(const char *) * argc);
--		ac += argc;
-+	if (pc) {
-+		memcpy(&(args[ac]), pathspec, sizeof(const char *) * pc);
-+		ac += pc;
- 	}
- 	args[ac] = NULL;
- 
-@@ -160,6 +160,21 @@ int interactive_add(int argc, const char **argv, const char *prefix)
- 	return status;
- }
- 
-+int interactive_add(int argc, const char **argv, const char *prefix)
-+{
-+	const char **pathspec = NULL;
-+
-+	if (argc) {
-+		pathspec = validate_pathspec(argc, argv, prefix);
-+		if (!pathspec)
-+			return -1;
-+	}
-+
-+	return run_add_interactive(NULL,
-+				   patch_interactive ? "--patch" : NULL,
-+				   pathspec);
++sub run_git_apply {
++	my $cmd = shift;
++	my $fh;
++	open $fh, '| git ' . $cmd;
++	print $fh @_;
++	return close $fh;
 +}
 +
- static int edit_patch(int argc, const char **argv, const char *prefix)
- {
- 	char *file = xstrdup(git_path("ADD_EDIT.patch"));
-diff --git a/commit.h b/commit.h
-index ba9f638..339f1f6 100644
---- a/commit.h
-+++ b/commit.h
-@@ -137,6 +137,8 @@ struct commit_graft {
- int in_merge_bases(struct commit *, struct commit **, int);
+ sub parse_diff {
+ 	my ($path) = @_;
+-	my @diff = run_cmd_pipe(qw(git diff-files -p --), $path);
++	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
++	my @diff = run_cmd_pipe("git", @diff_cmd, "--", $path);
+ 	my @colored = ();
+ 	if ($diff_use_color) {
+-		@colored = run_cmd_pipe(qw(git diff-files -p --color --), $path);
++		@colored = run_cmd_pipe("git", @diff_cmd, qw(--color --), $path);
+ 	}
+ 	my (@hunk) = { TEXT => [], DISPLAY => [], TYPE => 'header' };
  
- extern int interactive_add(int argc, const char **argv, const char *prefix);
-+extern int run_add_interactive(const char *revision, const char *patch_mode,
-+			       const char **pathspec);
+@@ -877,6 +902,7 @@
+ 		or die "failed to open hunk edit file for writing: " . $!;
+ 	print $fh "# Manual hunk edit mode -- see bottom for a quick guide\n";
+ 	print $fh @$oldtext;
++	my $participle = $patch_mode_flavour{PARTICIPLE};
+ 	print $fh <<EOF;
+ # ---
+ # To remove '-' lines, make them ' ' lines (context).
+@@ -884,7 +910,7 @@
+ # Lines starting with # will be removed.
+ #
+ # If the patch applies cleanly, the edited hunk will immediately be
+-# marked for staging. If it does not apply cleanly, you will be given
++# marked for $participle. If it does not apply cleanly, you will be given
+ # an opportunity to edit again. If all lines of the hunk are removed,
+ # then the edit is aborted and the hunk is left unchanged.
+ EOF
+@@ -918,11 +944,8 @@
  
- static inline int single_parent(struct commit *commit)
- {
+ sub diff_applies {
+ 	my $fh;
+-	open $fh, '| git apply --recount --cached --check';
+-	for my $h (@_) {
+-		print $fh @{$h->{TEXT}};
+-	}
+-	return close $fh;
++	return run_git_apply($patch_mode_flavour{APPLY_CHECK} . ' --recount --check',
++			     map { @{$_->{TEXT}} } @_);
+ }
+ 
+ sub _restore_terminal_and_die {
+@@ -988,12 +1011,14 @@
+ }
+ 
+ sub help_patch_cmd {
+-	print colored $help_color, <<\EOF ;
+-y - stage this hunk
+-n - do not stage this hunk
+-q - quit, do not stage this hunk nor any of the remaining ones
+-a - stage this and all the remaining hunks in the file
+-d - do not stage this hunk nor any of the remaining hunks in the file
++	my $verb = lc $patch_mode_flavour{VERB};
++	my $target = $patch_mode_flavour{TARGET};
++	print colored $help_color, <<EOF ;
++y - $verb this hunk$target
++n - do not $verb this hunk$target
++q - quit, do not $verb this hunk nor any of the remaining ones
++a - $verb this and all the remaining hunks in the file
++d - do not $verb this hunk nor any of the remaining hunks in the file
+ g - select a hunk to go to
+ / - search for a hunk matching the given regex
+ j - leave this hunk undecided, see next undecided hunk
+@@ -1006,8 +1031,17 @@
+ EOF
+ }
+ 
++sub apply_patch {
++	my $cmd = shift;
++	my $ret = run_git_apply $cmd . ' --recount', @_;
++	if (!$ret) {
++		print STDERR @_;
++	}
++	return $ret;
++}
++
+ sub patch_update_cmd {
+-	my @all_mods = list_modified('file-only');
++	my @all_mods = list_modified($patch_mode_flavour{FILTER});
+ 	my @mods = grep { !($_->{BINARY}) } @all_mods;
+ 	my @them;
+ 
+@@ -1138,8 +1172,9 @@
+ 		for (@{$hunk[$ix]{DISPLAY}}) {
+ 			print;
+ 		}
+-		print colored $prompt_color, 'Stage ',
+-		  ($hunk[$ix]{TYPE} eq 'mode' ? 'mode change' : 'this hunk'),
++		print colored $prompt_color, $patch_mode_flavour{VERB},
++		  ($hunk[$ix]{TYPE} eq 'mode' ? ' mode change' : ' this hunk'),
++		  $patch_mode_flavour{TARGET},
+ 		  " [y,n,q,a,d,/$other,?]? ";
+ 		my $line = prompt_single_character;
+ 		if ($line) {
+@@ -1313,16 +1348,9 @@
+ 
+ 	if (@result) {
+ 		my $fh;
+-
+-		open $fh, '| git apply --cached --recount';
+-		for (@{$head->{TEXT}}, @result) {
+-			print $fh $_;
+-		}
+-		if (!close $fh) {
+-			for (@{$head->{TEXT}}, @result) {
+-				print STDERR $_;
+-			}
+-		}
++		my @patch = (@{$head->{TEXT}}, @result);
++		my $apply_routine = $patch_mode_flavour{APPLY};
++		&$apply_routine(@patch);
+ 		refresh();
+ 	}
+ 
 -- 
 1.6.4.262.gbda8
