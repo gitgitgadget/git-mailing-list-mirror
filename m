@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5 2/6] Add a small patch-mode testing library
-Date: Thu, 13 Aug 2009 14:29:40 +0200
-Message-ID: <5bbd70c769ada6bf75a899e77a65d12ac5730bdc.1250164190.git.trast@student.ethz.ch>
+Subject: [PATCH v5 3/6] builtin-add: refactor the meat of interactive_add()
+Date: Thu, 13 Aug 2009 14:29:41 +0200
+Message-ID: <fc79a0af2e3687373d4a7fdd9bf35b9a79b37cf9.1250164190.git.trast@student.ethz.ch>
 References: <200908101136.34660.trast@student.ethz.ch> <cover.1250164190.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -11,21 +11,21 @@ Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
 	Pierre Habouzit <madcoder@debian.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 13 14:30:48 2009
+X-From: git-owner@vger.kernel.org Thu Aug 13 14:30:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbZS7-0002tc-Ec
-	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:30:43 +0200
+	id 1MbZSC-0002tc-Gm
+	for gcvg-git-2@gmane.org; Thu, 13 Aug 2009 14:30:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbZHMMaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Aug 2009 08:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbZHMMaQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:30:16 -0400
+	id S1754377AbZHMMaP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Aug 2009 08:30:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754372AbZHMMaO
+	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 08:30:14 -0400
 Received: from gwse.ethz.ch ([129.132.178.237]:54458 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751629AbZHMMaM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753055AbZHMMaM (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 13 Aug 2009 08:30:12 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Thu, 13 Aug
@@ -39,61 +39,98 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125812>
 
-The tests for {reset,commit,stash} -p will frequently have to set both
-worktree and index states to known values, and verify that the outcome
-(again both worktree and index) are what was expected.
-
-Add a small helper library that lets us do these tasks more easily.
+This moves the call setup for 'git add--interactive' to a separate
+function, as other users will call it without running
+validate_pathspec() first.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- t/lib-patch-mode.sh |   36 ++++++++++++++++++++++++++++++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
- create mode 100755 t/lib-patch-mode.sh
+ builtin-add.c |   43 +++++++++++++++++++++++++++++--------------
+ commit.h      |    2 ++
+ 2 files changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/t/lib-patch-mode.sh b/t/lib-patch-mode.sh
-new file mode 100755
-index 0000000..afb4b66
---- /dev/null
-+++ b/t/lib-patch-mode.sh
-@@ -0,0 +1,36 @@
-+. ./test-lib.sh
+diff --git a/builtin-add.c b/builtin-add.c
+index 581a2a1..c422a62 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -131,27 +131,27 @@ static void refresh(int verbose, const char **pathspec)
+ 	return pathspec;
+ }
+ 
+-int interactive_add(int argc, const char **argv, const char *prefix)
++int run_add_interactive(const char *revision, const char *patch_mode,
++			const char **pathspec)
+ {
+-	int status, ac;
++	int status, ac, pc = 0;
+ 	const char **args;
+-	const char **pathspec = NULL;
+ 
+-	if (argc) {
+-		pathspec = validate_pathspec(argc, argv, prefix);
+-		if (!pathspec)
+-			return -1;
+-	}
++	if (pathspec)
++		while (pathspec[pc])
++			pc++;
+ 
+-	args = xcalloc(sizeof(const char *), (argc + 4));
++	args = xcalloc(sizeof(const char *), (pc + 5));
+ 	ac = 0;
+ 	args[ac++] = "add--interactive";
+-	if (patch_interactive)
+-		args[ac++] = "--patch";
++	if (patch_mode)
++		args[ac++] = patch_mode;
++	if (revision)
++		args[ac++] = revision;
+ 	args[ac++] = "--";
+-	if (argc) {
+-		memcpy(&(args[ac]), pathspec, sizeof(const char *) * argc);
+-		ac += argc;
++	if (pc) {
++		memcpy(&(args[ac]), pathspec, sizeof(const char *) * pc);
++		ac += pc;
+ 	}
+ 	args[ac] = NULL;
+ 
+@@ -160,6 +160,21 @@ int interactive_add(int argc, const char **argv, const char *prefix)
+ 	return status;
+ }
+ 
++int interactive_add(int argc, const char **argv, const char *prefix)
++{
++	const char **pathspec = NULL;
 +
-+set_state () {
-+	echo "$3" > "$1" &&
-+	git add "$1" &&
-+	echo "$2" > "$1"
++	if (argc) {
++		pathspec = validate_pathspec(argc, argv, prefix);
++		if (!pathspec)
++			return -1;
++	}
++
++	return run_add_interactive(NULL,
++				   patch_interactive ? "--patch" : NULL,
++				   pathspec);
 +}
 +
-+save_state () {
-+	noslash="$(echo "$1" | tr / _)" &&
-+	cat "$1" > _worktree_"$noslash" &&
-+	git show :"$1" > _index_"$noslash"
-+}
-+
-+set_and_save_state () {
-+	set_state "$@" &&
-+	save_state "$1"
-+}
-+
-+verify_state () {
-+	test "$(cat "$1")" = "$2" &&
-+	test "$(git show :"$1")" = "$3"
-+}
-+
-+verify_saved_state () {
-+	noslash="$(echo "$1" | tr / _)" &&
-+	verify_state "$1" "$(cat _worktree_"$noslash")" "$(cat _index_"$noslash")"
-+}
-+
-+save_head () {
-+	git rev-parse HEAD > _head
-+}
-+
-+verify_saved_head () {
-+	test "$(cat _head)" = "$(git rev-parse HEAD)"
-+}
+ static int edit_patch(int argc, const char **argv, const char *prefix)
+ {
+ 	char *file = xstrdup(git_path("ADD_EDIT.patch"));
+diff --git a/commit.h b/commit.h
+index ba9f638..339f1f6 100644
+--- a/commit.h
++++ b/commit.h
+@@ -137,6 +137,8 @@ struct commit_graft {
+ int in_merge_bases(struct commit *, struct commit **, int);
+ 
+ extern int interactive_add(int argc, const char **argv, const char *prefix);
++extern int run_add_interactive(const char *revision, const char *patch_mode,
++			       const char **pathspec);
+ 
+ static inline int single_parent(struct commit *commit)
+ {
 -- 
 1.6.4.262.gbda8
