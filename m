@@ -1,65 +1,62 @@
-From: =?iso-8859-1?Q?PICCA_Fr=E9d=E9ric-Emmanuel?= 
-	<frederic-emmanuel.picca@synchrotron-soleil.fr>
-Subject: =?iso-8859-1?Q?RE=A0=3A_trailling_whitespace_with_git_am_=3F?=
-Date: Fri, 14 Aug 2009 23:50:18 +0200
-Message-ID: <606CC410B038E34CB97646A32D0EC0BF0181FAC3@venusbis.synchrotron-soleil.fr>
-References: <81b0412b0908141443vc54c009o9ec39b3f617311dd@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: RE : trailling whitespace with git am ?
+Date: Sat, 15 Aug 2009 00:16:58 +0200
+Message-ID: <81b0412b0908141516t757d2cb1tc6d0ff3805691418@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 23:50:39 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?PICCA_Fr=C3=A9d=C3=A9ric=2DEmmanuel?= 
+	<frederic-emmanuel.picca@synchrotron-soleil.fr>
+X-From: git-owner@vger.kernel.org Sat Aug 15 00:17:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mc4fW-000852-1n
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 23:50:38 +0200
+	id 1Mc559-0001an-CR
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 00:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753419AbZHNVu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 17:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbZHNVu3
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 17:50:29 -0400
-Received: from raclette.synchrotron-soleil.fr ([195.221.0.6]:50711 "EHLO
-	raclette.synchrotron-soleil.fr" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753249AbZHNVu3 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 17:50:29 -0400
-Received: from localhost (unknown [127.0.0.1])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id EB1B978331;
-	Fri, 14 Aug 2009 21:50:29 +0000 (UTC)
-X-Virus-Scanned: amavisd-new at synchrotron-soleil.fr
-Received: from raclette.synchrotron-soleil.fr ([127.0.0.1])
-	by localhost (raclette.synchrotron-soleil.fr [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id UBl6NKLaBnHy; Fri, 14 Aug 2009 23:50:24 +0200 (CEST)
-Received: from venusbis.synchrotron-soleil.fr (venusbis.synchrotron-soleil.fr [195.221.0.152])
-	by raclette.synchrotron-soleil.fr (Postfix) with ESMTP id 5817978333;
-	Fri, 14 Aug 2009 23:50:24 +0200 (CEST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: trailling whitespace with git am ?
-Thread-Index: AcodKDQiPGAPx64fSGOCI5VE2qfhZAAACphB
+	id S1756734AbZHNWQ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 18:16:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756665AbZHNWQ7
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 18:16:59 -0400
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:55945 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755383AbZHNWQ6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 18:16:58 -0400
+Received: by fxm11 with SMTP id 11so1414911fxm.39
+        for <git@vger.kernel.org>; Fri, 14 Aug 2009 15:16:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=e+f/vPbW7cSukra5XXBj4gVpgK6kNivgnFekvh2+yvk=;
+        b=esY29Whxf/B6yKLqjyO5sbh7zpoWbvVjAfgX+QVqIA+4/+bTj9PNvolYjEgQi3CJ+m
+         c+1rraEWlTlwVA5IYPhN4C+X7siuOSG6XP0GeUbVkn2fNPNGorDP80mhHAcG+iyakTb4
+         IBdLI+ILNH5hfkcqY/4Zkmh9qc0AI+d92HHHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=l1bWj8tf5yrK+z8zZyEu6dk5AB0G/WzQeeKwQT3j17O5uEfewQ3kpa/qVKw9RYlopV
+         opVvh02nL16Zf/2SB/lgI2bIOwI1bUrCnZi6Y0i2GqeVADUhwa8KKGNjsINxd3Ys1d7b
+         tc0+CSeBPovOJ6oAr79Eh8wZvDG0OpTPeCA+A=
+Received: by 10.204.114.143 with SMTP id e15mr61028bkq.204.1250288218684; Fri, 
+	14 Aug 2009 15:16:58 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125962>
 
-> > so /s /t and /r are the same things for git ?
+On Fri, Aug 14, 2009 at 23:50, PICCA
+=46r=C3=A9d=C3=A9ric-Emmanuel<frederic-emmanuel.picca@synchrotron-solei=
+l.fr>
+wrote:
+> Maybe git apply should warn the user a different way if their is that=
+ sort of
+> dos/unix imcompatibilities.
 
-> almost. For git-apply's whitespace fixing code. Why?
-
-Because for the user the message trailling whitespace was not clear
-In fact the problem was a dos/unix format not a trailling space.
-
-but whitespace=fix solve this problem. I was surprise first because I was looking for
-remaining space at the end of lines of the patch not this CR+LF things.
-
-Maybe git apply should warn the user a different way if their is that sort of dos/unix imcompatibilities.
-
-thanks
-
-Frederic
+As it all is history (in the new code) already, there is nothing to tal=
+k about.
+Git-am in "next" branch just accepts such a patch without a warning.
