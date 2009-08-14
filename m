@@ -1,83 +1,91 @@
-From: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
-Subject: Re: [PATCH] git-cvsimport: add support for cvs pserver password 
-	scrambling.
-Date: Fri, 14 Aug 2009 08:17:17 +0200
-Message-ID: <4da546dc0908132317t656f503ah5adc6e0cd09f0288@mail.gmail.com>
-References: <5794AED2-43FF-4441-8292-0C9BFB3139A2@gmail.com> 
-	<20090410093434.6117@nanako3.lavabit.com> <7vhc0udiac.fsf@gitster.siamese.dyndns.org> 
-	<alpine.DEB.1.00.0908131837110.7429@intel-tinevez-2-302> <4da546dc0908131219q149844abi453d8429847af1cf@mail.gmail.com> 
-	<fabb9a1e0908131304m53ab2a68p9faade35969add5@mail.gmail.com>
+From: Karl Wiberg <kha@virtutech.com>
+Subject: Re: [PATCH] Work around performance bug in
+	subprocess.Popen.communicate()
+Date: Fri, 14 Aug 2009 08:21:49 +0200
+Message-ID: <20090814062149.GA23179@lux.e.vtech>
+References: <20090731093632.7018.24435.stgit@october.e.vtech> <b0943d9e0907310427r7e59aa5fi5e5ff5e3f3c03819@mail.gmail.com> <20090804085125.GB27452@lux.e.vtech> <b0943d9e0908131518i3ac18331leb4c0c76313b0780@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 08:17:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: mandolaerik@gmail.com, git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 08:22:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbq6p-0005GD-LC
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:17:52 +0200
+	id 1MbqAt-0006Uh-5d
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378AbZHNGRi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 02:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756365AbZHNGRi
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:17:38 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:61322 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756285AbZHNGRh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 02:17:37 -0400
-Received: by ewy10 with SMTP id 10so1290924ewy.37
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 23:17:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f/2pacyfWeywxPkViCwFsuHstrBPa6WpO6JnwRN/pEo=;
-        b=DE6+lFVZM2JrW2nbViooCdP9U1Md2gg4VsuIETpm0iz+F+zSQjRNc+xjEIZ850yx9b
-         qocL4EYl56sRlcko3Dlj67uYMyYOiDDux9Y53RqJq1GO+LAJHxwIGhjLg/jQBpkCg5RW
-         I9c1/J2C6PvadGXdSlmjSSJYjmJUMRIPulBLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=fJ2zaZyQXZJxfAdptuqb0lZQrj7AoFmq4lclQOXGDIP45Boz1XBHIy+7tWQxYYHtfl
-         u31Y3+CGuoenWeDX5r8LzDNgh+JBpZDZadY9gH+uHzm1pxlSS0dQE6DtuRL+rI2HzP3/
-         iZszO1ETm/foWxyYKwQaTVklLU7AUhhWuDI7s=
-Received: by 10.210.27.4 with SMTP id a4mr392687eba.37.1250230657133; Thu, 13 
-	Aug 2009 23:17:37 -0700 (PDT)
-In-Reply-To: <fabb9a1e0908131304m53ab2a68p9faade35969add5@mail.gmail.com>
+	id S1754520AbZHNGVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 02:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbZHNGVy
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:21:54 -0400
+Received: from [62.20.90.206] ([62.20.90.206]:25563 "EHLO lux.e.vtech"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752613AbZHNGVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 02:21:53 -0400
+Received: from lux.e.vtech (lux.e.vtech [127.0.0.1])
+	by lux.e.vtech (8.14.2/8.14.2) with ESMTP id n7E6LnR7023447;
+	Fri, 14 Aug 2009 08:21:49 +0200
+Received: (from kha@localhost)
+	by lux.e.vtech (8.14.2/8.14.2/Submit) id n7E6LnlR023445;
+	Fri, 14 Aug 2009 08:21:49 +0200
+X-Authentication-Warning: lux.e.vtech: kha set sender to kha@virtutech.com using -f
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0908131518i3ac18331leb4c0c76313b0780@mail.gmail.com>
+X-Manual-Spam-Check: kha@virtutech.com, clean
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125900>
 
-Hi Sverre,
+On 2009-08-13 23:18:59 +0100, Catalin Marinas wrote:
 
-thanks for the heads up, I will resend it in a minute.
+> 2009/8/4 Karl Wiberg <kha@virtutech.com>:
+>
+> > On 2009-07-31 12:27:53 +0100, Catalin Marinas wrote:
+> >
+> > > But can this not lead to a deadlock if the __indata is big? The
+> > > stdout of the created process is only processed once the whole
+> > > __indata is written. I thought communicate() was created to
+> > > avoid this issue.
+> >
+> > I don't think there's a problem. write() isn't supposed to have a
+> > limit on the amount of data it will accept in one call, as far as
+> > I'm aware. Plus, it works just fine with Erik's test case---which
+> > in my case was about 7 MB. If it can handle 7 MB, I doubt there's
+> > a limit we'll hit anytime soon.
+>
+> write() itself doesn't have a limit, it's mainly what the
+> application receiving the data can handle. In the Git case, I think
+> it takes all the input as it isn't a filtering tool (things may be
+> different with tools like sed etc.).
+>
+> > Oh, and we still call communicate()---we just don't pass it any
+> > additional bytes to write to stdin.
+>
+> Yes, but if write() is blocked, communicate() won't be called.
 
-Ciao,
-Dirk
+Ah, so that's what you were worrying about. Yeah, if the process we're
+writing to was going to block us (== not read input) for long periods
+of time, we'd have to handle that case. And if it was going to decide
+to stop reading input half-way through and give us a sigpipe, we'd
+have to handle that. But ...
 
-2009/8/13 Sverre Rabbelier <srabbelier@gmail.com>:
-> Heya,
->
-> 2009/8/13 Dirk H=F6rner <dirker@gmail.com>:
->> sorry for the long delay, but I finally sat down, hacked two testcas=
-es
->> and amended the patch after rebasing to the most recent HEAD. Find i=
-t
->> attached to this mail.
->
-> I think we'd rather find it inlined, as per SubmittingPatches ;).
->
-> --
-> Cheers,
->
-> Sverre Rabbelier
->
+> Since we are only using Git, I'll merge this patch
+
+Exactly. We really don't expect git to do any of those things to us.
+We know it reads all available input before producing the output.
+(Well, almost always. I have patches in my experimental branch that
+use git cat-file --batch and git diff-tree --stdin, where there can be
+many rounds of talking back and forth, but when driving those I'm
+being very careful to not deadlock.)
+
+> (and maybe add a comment).
+
+Sure.
+
+-- 
+Karl Wiberg, Virtutech
