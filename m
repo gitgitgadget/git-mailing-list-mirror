@@ -1,118 +1,66 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: rebase-with-history -- a technique for rebasing without trashing 
-	your repo history
-Date: Fri, 14 Aug 2009 08:47:02 +0530
-Message-ID: <2e24e5b90908132017i1c6be9abt9b08219acc1cb600@mail.gmail.com>
-References: <4A840B0F.9060003@alum.mit.edu>
-	 <20090813161256.GA8292@atjola.homenet> <4A849634.1020609@alum.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 14 05:17:37 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [RFC PATCH 0/2] add a --delete option to git push
+Date: Thu, 13 Aug 2009 22:05:47 -0700
+Message-ID: <1250226349-20397-1-git-send-email-srabbelier@gmail.com>
+To: "Jakub Narebski" <jnareb@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"Git List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 14 07:06:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbnIL-0001U6-L4
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 05:17:34 +0200
+	id 1MbozX-000376-O7
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 07:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755592AbZHNDRE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Aug 2009 23:17:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbZHNDRD
-	(ORCPT <rfc822;git-outgoing>); Thu, 13 Aug 2009 23:17:03 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:55046 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754110AbZHNDRC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Aug 2009 23:17:02 -0400
-Received: by yxe5 with SMTP id 5so1580316yxe.33
-        for <git@vger.kernel.org>; Thu, 13 Aug 2009 20:17:03 -0700 (PDT)
+	id S1752846AbZHNFGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 01:06:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752613AbZHNFGG
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 01:06:06 -0400
+Received: from rv-out-0506.google.com ([209.85.198.224]:60669 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750752AbZHNFGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 01:06:04 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so381388rvb.1
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 22:06:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sS5T0/D+fUiKzlxG6BDsARfK4vpQcPBRD56O3KQR8fQ=;
-        b=ujbLbll/OUBjBz0eo3fSmuhYz+vrO02PqphEPVl38oV9DY/8pxmSiXdjN75ypSHW4H
-         iLqWxz4uCoyYCWSg/b6l0ZW52FwklyXwhisCGhbNdPxfARA30x6GTVtcgOiN4vOiVaSc
-         97ILKQ4r5VvioxhWgvMRl52s+0NumjEtcbR20=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=9oUK0OdIHD/OVlx6nkpC4yTV/urXf3QNN5cESQrtzL8=;
+        b=tl83aAN5JIVAYuxKWx4vYkmLPEGAg1Vkj4tHSCvmVT4wmJBbf0oDc65Osic2liPlV0
+         vl10XBLDC8Hvo/xU5TKyd5sCk9SdZzK5VQs/vQR6ccFN+k6TSkyooqzAlinkCyyN25w9
+         3Y9w7dGtrUUrc4CtrwrLqtvjE3FyA4UM7NDd0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xqczyKfAx0BK4WkntBc3SbAbjovcOUsLA2McF0wwf5UZPjv58Oa9fciY97L9QLPz/6
-         gjYZLfCIx6kVN/jLx+XuVsJ67dmVxU2ve4Kyuf2SAvu09p0I4Q/YBBICuAvZ+4OunYNx
-         uIdG+f23CrscI31U/ZPLZ3N+VL2U3z+9iC5gw=
-Received: by 10.231.14.204 with SMTP id h12mr201046iba.41.1250219822741; Thu, 
-	13 Aug 2009 20:17:02 -0700 (PDT)
-In-Reply-To: <4A849634.1020609@alum.mit.edu>
+        h=from:to:subject:date:message-id:x-mailer;
+        b=Ikva7z1A/N1TCA43se8XR3AmlFFJyxnFjzvsEqIkrV0+Nnj1mChPFsybgPFF/dmh5N
+         jF/Gcb51dypzalXJoky8LRxDKlTTBkXRwche7Jz5jdfhm+8LXzJWfm7CQjstSyoPbVXb
+         F1VaPoYF5FgHVOBWXEalGJ/BL7HdPLo8ytvzg=
+Received: by 10.140.201.17 with SMTP id y17mr908995rvf.84.1250226366037;
+        Thu, 13 Aug 2009 22:06:06 -0700 (PDT)
+Received: from localhost.localdomain ([173.8.183.73])
+        by mx.google.com with ESMTPS id g14sm5737547rvb.40.2009.08.13.22.06.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 13 Aug 2009 22:06:05 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125894>
 
-Hi,
+This is in reply to a brief conversation I had with jnareb on #git
+about the blogpost "5 things git could learn from hg", or something
+like that (can't find it right now).
 
-I'm one of those wannabe experts who thinks he knows enough about git
-to teach people in his workplace but obviously pales in this group,
-but with that caveat, let me say:
+Comments most welcome.
 
-2009/8/14 Michael Haggerty <mhagger@alum.mit.edu>:
+Sverre Rabbelier (2):
+      add a --delete option to git push
+      test that git push --delete deletes the remote ref
 
-> Now that you mention it, there are some other uses of rebase whose
-> history could be recorded correctly, or at least better, in the DAG. =
-=A0I
-> am not ready to advocate any of these changes, but I think they are
-
-I see you've made your own caveat :-)
-
-> worth discussing.
-
-[snip]
-
-> A---B1---B2----C
-> =A0\ =A0 =A0 =A0 =A0 \ =A0 =A0\
-> =A0---------B12---C'
-
-> A---B12---C
-> =A0\ =A0 =A0 \ =A0 \
-> =A0B1---B2---C'
-
-[snip]
-
-> A---C
-> =A0\ =A0 \
-> =A0B---C'
-
-[etc etc... many such snipped]
-
-To me, the ability to *forget* the mistakes I made (for whatever
-definition of "mistake" you wish) as long as it's private to my repo,
-is one of the main attractions of git.  I'm one of those guys who
-saves early, and saves often, when editing files.  This translates to
-commit early, commit often, in the git world.
-
-I see no earthly reason why I would ever *want* those commits
-preserved, so I hope that, if this sort of thing ever gets into the
-code, it is definitely *not* the default :-)  It is not sufficient for
-me that the GUI knows how to suppress their display, it is necessary
-that they *disappear completely*.
-
-And that reminds me.  You often hear people on #git ask how to get rid
-of some files (maybe containing passwords etc) that inadvertently got
-into the repo, and the answer, a lot of the time, is filter-branch,
-because the "bad" commit is pretty old.  I suspect that for every
-person who asks that question on the list because he already pushed,
-there are 4 who discovered such an error much earlier, (when the file
-went into only a couple of commits at the top maybe), did a rebase -i
-with "edit" or whatever, and got rid of the evidence, err I mean
-password :-)  If this sort of thing were to be the default, they'd
-have to use a filter-branch even for such simple cases.
-
-=46inally, speaking as someone who teaches git, this adds enormous
-complexity to the basic concepts.  Complexity is good when the
-benefits are obvious, but to me they are not obvious [see *my* caveat
-at the top before you react to this statement]
+ Documentation/git-push.txt |    8 +++++++-
+ builtin-push.c             |   10 +++++++++-
+ t/t5516-fetch-push.sh      |    6 ++++++
+ 3 files changed, 22 insertions(+), 2 deletions(-)
