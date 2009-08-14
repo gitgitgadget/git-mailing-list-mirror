@@ -1,94 +1,93 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: merging individual files
-Date: Fri, 14 Aug 2009 17:28:24 +0200
-Message-ID: <4A858298.4020702@drmicha.warpmail.net>
-References: <loom.20090813T192334-7@post.gmane.org> <4A851887.5010701@drmicha.warpmail.net> <loom.20090814T135614-375@post.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH v3 2/3] fast-import: add option command
+Date: Fri, 14 Aug 2009 08:37:07 -0700
+Message-ID: <20090814153707.GT1033@spearce.org>
+References: <1250190156-4752-1-git-send-email-srabbelier@gmail.com> <1250190156-4752-2-git-send-email-srabbelier@gmail.com> <1250190156-4752-3-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Chris Marshall <christopher.marshall@merchantlink.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 17:28:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 17:37:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbyi0-0007no-4r
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 17:28:48 +0200
+	id 1MbyqE-0003L0-RM
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 17:37:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754791AbZHNP2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 11:28:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932559AbZHNP2i
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 11:28:38 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36811 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754039AbZHNP2i (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 11:28:38 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7093351BBA;
-	Fri, 14 Aug 2009 11:28:38 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 14 Aug 2009 11:28:38 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ZiyiRU251IX0GACgXP6pl4PUZqE=; b=mau99A02baF/xVPXqlYkaeWCrgvQLfQ1h8ald6FBlIHgb06wHTjtHwUGSxPUjHIu/yCYUxAnYmyvSAVYj5KY468VLruMVE5g6/gJVCXEjYSgT+3wFtFIn1dtOQhccaLANrKgA1IVC0RVrYFOao04GPYniyoE7niYRNULus8BxRc=
-X-Sasl-enc: KRigVjmtuZ+e3B2568606N7QImK2F9ulydCMltcM7faH 1250263718
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C7ADC31DD1;
-	Fri, 14 Aug 2009 11:28:37 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3pre) Gecko/20090814 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <loom.20090814T135614-375@post.gmane.org>
+	id S932335AbZHNPhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 11:37:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932238AbZHNPhI
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 11:37:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:51243 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753676AbZHNPhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 11:37:07 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id E26D2381FD; Fri, 14 Aug 2009 15:37:07 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1250190156-4752-3-git-send-email-srabbelier@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125932>
 
-Chris Marshall venit, vidit, dixit 14.08.2009 16:31:
-> Michael J Gruber <git <at> drmicha.warpmail.net> writes:
->>> This strikes me as not too bad of a procedure, as long as there is a 
-> graceful
->>> way of determining the most recent common ancestor of br1 and master.  
-> What's
->>> the simplest way of doing that?
->>>
->>
->> That would be simply git merge-base master br1.
->>
->> BUT: The main problem here is that git is not file based, but
->> revision/commit/tree based. In the above, you're basically losing all
->> the history common_ancestor_commit..br1 which produced br1's version of
->> f1 and f2, in the sense that a git log master will not show that part of
->> the history at all.
-> 
-> Well put, I agree.  One of the main arguments I am going to use to try to 
-> convince my fellows to switch from perforce to git is the usefulness of git 
-> blame.  I would be defeating that with my procedure.
-> 
->>
->> If it makes sense to change f1 and f2 without changing f3 that probably
->> means that the pertinent commit should have been split. Is it an option
->> for you to rewrite br1's history? That would be the most gittish solution.
-> 
-> Yes, I like the idea of rewriting br1's history.
-> 
-> So, given that f1, f2, ..., fn were changed together in one commit X on br1, I 
-> want to break f1 and f2 out of X and put them into X', then leave the rest of 
-> the f3,...,fn changes in Y'.
-> 
-> Let's say X was the last commit on br1.  
-> 
-> What would the commands to do that look like?
-> 
+Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> +`option`
+> +~~~~~~~~
+> +Processes the specified option so that git fast-import behaves in a
+> +way that suits the frontend's needs.
+> +Note that options specified by the frontend are overridden by any
+> +options the user may specify to git fast-import itself.
 
-If you're on br1, I would:
+Wha?  This disagrees with the code.
 
-git rebase -i X^
-# change "pick" to "edit" in front of X in the list you get
-git checkout X^ -- f3 f4 f5
-git commit --amend
-git checkout X -- f3 f4 f5
-git commit
+> +static void read_marks(void)
+> +{
+> +	char line[512];
+> +	FILE *f = fopen(input_file, "r");
+...
+> +static void option_import_marks(const char *marks)
+>  {
+> -	char line[512];
+> -	FILE *f = fopen(input_file, "r");
 
-For the 2nd commit, using the -c option may be beneficial.
+This is a nasty refactoring, I would prefer to see it done in its
+own commit, "move option_import_marks so it can be called during
+command processing".
 
-Cheers,
-Michael
+> @@ -2517,9 +2556,16 @@ int main(int argc, const char **argv)
+>  			parse_checkpoint();
+>  		else if (!prefixcmp(command_buf.buf, "progress "))
+>  			parse_progress();
+> +		else if (!prefixcmp(command_buf.buf, "option "))
+> +			parse_option();
+>  		else
+>  			die("Unsupported command: %s", command_buf.buf);
+>  	}
+> +
+> +	// argv hasn't been parsed yet, do so
+> +	if (!seen_non_option_command)
+> +		parse_argv();
+
+This is too late.  Options like --date-format or --max-pack-size or
+--depth or --active-branches all influence the command processing
+above.  Parsing these at the end means they have no affect on the
+import, which is wrong.
+
+Oh, and --active-branches or --max-pack-size or --depth are really
+good examples of things that maybe you do want to override on the
+command line.  They have impact only on memory usage of the running
+import process, and the local disk usage.  Maybe the frontend has
+given too many active branches for your physical memory, and you
+want a lower threshold.
+
+So yea, I really do think its a good idea for command line options
+to override stream options, despite what Dscho may think.  :-)
+
+-- 
+Shawn.
