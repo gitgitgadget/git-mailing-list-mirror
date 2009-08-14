@@ -1,81 +1,98 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v3 2/3] fast-import: add option command
-Date: Fri, 14 Aug 2009 10:43:21 -0700
-Message-ID: <fabb9a1e0908141043l35d2070bxdadae96a7dd8a232@mail.gmail.com>
-References: <1250190156-4752-1-git-send-email-srabbelier@gmail.com> 
-	<1250190156-4752-2-git-send-email-srabbelier@gmail.com> <1250190156-4752-3-git-send-email-srabbelier@gmail.com> 
-	<20090814153707.GT1033@spearce.org> <fabb9a1e0908140937h32a2eac7ka88f76aa417fd631@mail.gmail.com> 
-	<20090814173929.GU1033@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-config: Parse config files leniently
+Date: Fri, 14 Aug 2009 12:52:13 -0700
+Message-ID: <7veirejhqq.fsf@alter.siamese.dyndns.org>
+References: <A5CDBB91-E889-4849-953A-2C1DB4A04513@gmail.com>
+ <a812f567b4541ce55e9c60037a047488a0893c36.1250262273.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Aug 14 19:43:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Reitter <david.reitter@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Aug 14 21:52:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mc0of-00083a-S5
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 19:43:50 +0200
+	id 1Mc2pF-0001Dj-M4
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 21:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932710AbZHNRnl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 13:43:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932342AbZHNRnl
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 13:43:41 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:61665 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932301AbZHNRnk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 13:43:40 -0400
-Received: by ewy10 with SMTP id 10so1673271ewy.37
-        for <git@vger.kernel.org>; Fri, 14 Aug 2009 10:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5QqQqw2tZqPuPMbK26E8jS6dK+cMGWB+wAgoUZiOMn4=;
-        b=P6gKtcnOIlzfBGAwWQDDr+4msSw8LoI9ZlWoztOfZYUX1eltGYBkL7B8ywfOhtnBkw
-         RBHAL/FzQAWmvIwIZr/sjiXg9tghBZqNSKY6/85DZhlEquKFtvtgZQ8snQ5ESpTi+RDB
-         fTxisS8vYOSFPzeDA5Jeot7BoejTsOryK1Onc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CMyNQ6RK3QTTz2fDk8oxqHvVQvsegiQc+I5NkVI/92T0O1/X9fbSDCcUO7TGgXvGZ3
-         CDOrouyNC6M6li25QgEtur0RMGBzxnGDqA6XY3jy2SvOCR+xGyyw9ey7B/q8jncAoGmz
-         jpXhtJmDeKWZbA122tAcUnoI9vbhDMdHgMRT8=
-Received: by 10.216.70.205 with SMTP id p55mr471160wed.55.1250271821090; Fri, 
-	14 Aug 2009 10:43:41 -0700 (PDT)
-In-Reply-To: <20090814173929.GU1033@spearce.org>
+	id S1757045AbZHNTwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 15:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756999AbZHNTwY
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 15:52:24 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53558 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756116AbZHNTwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 15:52:23 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65C52ADAC;
+	Fri, 14 Aug 2009 15:52:22 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 83DC4ADAB; Fri, 14 Aug
+ 2009 15:52:14 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FB743E28-890B-11DE-8578-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125940>
 
-Heya,
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-On Fri, Aug 14, 2009 at 10:39, Shawn O. Pearce<spearce@spearce.org> wro=
-te:
-> Sorry, lack of caffeine. =A0Rereading the docs makes sense.
-
-Perfectly acceptable, I totally though the 'break' in a 'switch'
-statement would break out of the outer for loop the other day.
-
->> > So yea, I really do think its a good idea for command line options
->> > to override stream options, despite what Dscho may think. ?:-)
->>
->> Which is what the current version does, yes?
+> Currently, git config dies as soon as there is a parsing error. This is
+> especially unfortunate in case a user tries to correct config mistakes
+> using git config -e.
 >
-> Yes. =A0:-)
+> Instead, issue a warning only and treat the rest of the line as a
+> comment (ignore it). This benefits not only git config -e users.
 
-Ok, I think perhaps we can wait 'nother day to see if anyone notices
-anything (possibly after more caffeine) and then ask Junio to apply?
+... a broken sentence in the middle?  I would have expected the "not only"
+followed by "but also"; the question is "but also what?"
 
---=20
-Cheers,
+Hopefully the benefit is not that it now allows all the other commands to
+cause unspecified types of damage to the repository by following iffy
+settings obtained from a broken configuration file.
 
-Sverre Rabbelier
+> Reported-by: David Reitter <david.reitter@gmail.com>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+
+> Test had to be adjusted as well.
+
+The change to the test demonstrates the issue rather well.  The check()
+shell function does not check the exit value from "git config --get", but
+in a real script that cares to check and stop on error, this change will
+now let the script go on, leaving the breakage unnoticed.  I suspect
+command implemented in C, that call git_config(), will also have the same
+issue, and I cannot convince myself this is a good change in general,
+outside the scope of helping "git config -e".
+
+But I may be being overly cautious.
+
+By the way, why did you have to change s/echo/printf/?  Can't you give two
+lines in a single argument without "\n" escape?
+
+> diff --git a/t/t1303-wacky-config.sh b/t/t1303-wacky-config.sh
+> index 080117c..be850c5 100755
+> --- a/t/t1303-wacky-config.sh
+> +++ b/t/t1303-wacky-config.sh
+> @@ -9,7 +9,7 @@ setup() {
+>  }
+>  
+>  check() {
+> -	echo "$2" >expected
+> +	printf "$2\n" >expected
+>  	git config --get "$1" >actual 2>&1
+>  	test_cmp actual expected
+>  }
+> @@ -44,7 +44,7 @@ LONG_VALUE=$(printf "x%01021dx a" 7)
+>  test_expect_success 'do not crash on special long config line' '
+>  	setup &&
+>  	git config section.key "$LONG_VALUE" &&
+> -	check section.key "fatal: bad config file line 2 in .git/config"
+> +	check section.key "warning: bad config file line 2 in .git/config\nwarning: bad config file line 2 in .git/config"
+>  '
+>  
+>  test_done
