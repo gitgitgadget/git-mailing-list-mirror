@@ -1,93 +1,101 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [RFC PATCH 1/2] add a --delete option to git push
-Date: Thu, 13 Aug 2009 23:53:50 -0700
-Message-ID: <7vab22ubr5.fsf@alter.siamese.dyndns.org>
+Date: Fri, 14 Aug 2009 02:55:43 -0400
+Message-ID: <20090814065543.GA7113@coredump.intra.peff.net>
 References: <1250226349-20397-1-git-send-email-srabbelier@gmail.com>
  <1250226349-20397-2-git-send-email-srabbelier@gmail.com>
+ <20090814052153.GA2881@coredump.intra.peff.net>
+ <fabb9a1e0908132324td6869aydc752f67b95546f1@mail.gmail.com>
+ <20090814063359.GA6898@coredump.intra.peff.net>
+ <fabb9a1e0908132340n10da3e38kfab07ab2cff18c82@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Git List" <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 08:54:09 2009
+X-From: git-owner@vger.kernel.org Fri Aug 14 08:55:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mbqfv-00089z-SQ
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:54:08 +0200
+	id 1Mbqhc-0000Em-0e
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729AbZHNGx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 02:53:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754718AbZHNGx6
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:53:58 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46616 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754717AbZHNGx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 02:53:58 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F262E91B8;
-	Fri, 14 Aug 2009 02:53:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E607191B7; Fri, 14 Aug
- 2009 02:53:51 -0400 (EDT)
-In-Reply-To: <1250226349-20397-2-git-send-email-srabbelier@gmail.com> (Sverre
- Rabbelier's message of "Thu\, 13 Aug 2009 22\:05\:48 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E04BD0C-889F-11DE-8EB9-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754773AbZHNGzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 02:55:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754761AbZHNGzo
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:55:44 -0400
+Received: from peff.net ([208.65.91.99]:54853 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754754AbZHNGzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 02:55:43 -0400
+Received: (qmail 15366 invoked by uid 107); 14 Aug 2009 06:55:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 14 Aug 2009 02:55:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Aug 2009 02:55:43 -0400
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0908132340n10da3e38kfab07ab2cff18c82@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125906>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+On Thu, Aug 13, 2009 at 11:40:44PM -0700, Sverre Rabbelier wrote:
 
->     Currently `git push --delete master:master` results in a somewhat
->     cryptic error message. ...
+> > On the other hand, "--delete <ref>" introduces its own syntactic
+> > problems.  [...]
+> 
+> It does indeed, and I don't think that's the way to go.
 
-What does "git push --delete name:destination" say?
-What does "git push --delete :destination" say?
+Hmm. Actually, looking at the code, we _already_ have a funny
+two-element syntax:
 
->     ... It seems unlikely however, that those new
->     to git would use the 'old:new' notation,...
+  git push origin tag v1.6.1
 
-I doubt that assumption is warranted.  I've seen new people on this list
-who want to be as specific as possible before they get familiar with the
-tool (I guess it is in the same spirit that they like to spell out long
-option names instead of short ones).
+which, AFAICT, is totally useless, as you can just push v1.6.1 directly.
+I assume it's historical. I still think it's probably not a good idea to
+introduce a similar "delete foo".
 
-And I happen to think it is a good discipline, when learning a new tool,
-to understand the underlying generic model before advancing to lazy and
-useful short-hand.  That's how I teach in my upcoming book.
+> > Perhaps saying that "--delete=<ref>" is equivalent to ":<ref>" would be
+> > a reasonable way of adding just the syntactic sugar. [...]
+> 
+> That would work too I guess, although it would be technically more difficult.
 
-Your "old:new" demonstrates a fuzzy understanding of the underlying
-concept.  They are not <old> nor <new>.  They are <object name> and
-<destination>; with this object, update that destination.  And you can
-abbreviate when they are textually spelled the same.  I.e. "git push
-origin master" is equivalent to "git push origin master:master" because
-both sides are spelled 'm a s t e r' the same way.
+Really? I was thinking something as simple as:
 
-Having said all that.
+diff --git a/builtin-push.c b/builtin-push.c
+index 67f6d96..aa3784c 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -44,6 +44,12 @@ static void set_refspecs(const char **refs, int nr)
+ 			strcat(tag, refs[i]);
+ 			ref = tag;
+ 		}
++		if (!prefixcmp("--delete=", ref)) {
++			struct strbuf deleted = STRBUF_INIT;
++			strbuf_addstr(&deleted, ":");
++			strbuf_addstr(&deleted, skip_prefix(ref, "--delete="));
++			ref = strbuf_detach(&deleted, NULL);
++		}
+ 		add_refspec(ref);
+ 	}
+ }
 
-I tend to agree with Jeff that it would probably make sense to limit this
-new feature to colonless form and error out if you see a refspec with a
-colon and --delete at the same time.  Also --delete should imply not
-looking at configured refspecs at all.  After all, this is incompatible
-with the way git expresses push with refspecs, and trying to mix these two
-would lead to confusion.
+which is even shorter than your patch, not needing a separate option
+parser.
 
-I do not mean that this new feature is useless nor stupid.  Being able to
-say "git push --delete branch1 branch2" matches _a_ mental model (perhaps
-Hg inspired one) _very_ naturally.  There are branches on the other side,
-and there is a special operation called 'delete' that you can inflict on
-them.
+That being said, currently parseopt will complain about that, even after
+the "remote" field; we would need to pass it
+PARSE_OPT_STOP_AT_NON_OPTION.
 
-But it is a different mental model of how git natively does "push".  In
-git model, you give list of instructions <which branch to update with what
-commit>, and as a special case "what commit" could be "empty" to signal
-deletion, and "push" carries out the instructions.
+> I don't think it's that confusing either, but it's hard to stumble
+> upon, yes? When you're looking at the man page for git push it is
+> easier to deduct that '--delete' is what you need, than ':master'.
 
-These are both valid models.  They just do not mix, so let's avoid
-confusion by not allowing both at the same time.
+I think you mean "deduce", but yes, I think we have seen people complain
+about the syntax in the past. I'm not against fixing it; I just want to
+make sure what we introduce doesn't make any new confusion.
+
+-Peff
