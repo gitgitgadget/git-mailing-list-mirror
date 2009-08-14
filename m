@@ -1,87 +1,130 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v5 0/6] Re: {checkout,reset,stash} --patch
-Date: Fri, 14 Aug 2009 22:57:53 +0200
-Message-ID: <20090814205753.GD12950@vidovic>
-References: <200908101136.34660.trast@student.ethz.ch> <cover.1250164190.git.trast@student.ethz.ch>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: rebase-with-history -- a technique for rebasing without trashing
+ your repo history
+Date: Fri, 14 Aug 2009 23:21:01 +0200
+Message-ID: <4A85D53D.9050805@alum.mit.edu>
+References: <4A840B0F.9060003@alum.mit.edu> <20090813161256.GA8292@atjola.homenet> <4A849634.1020609@alum.mit.edu> <20090813233027.GA19833@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 14 22:58:11 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 14 23:21:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mc3qk-0002sc-TN
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 22:58:11 +0200
+	id 1Mc4D6-0004Bx-FJ
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 23:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754054AbZHNU6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 16:58:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753158AbZHNU6B
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 16:58:01 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:57327 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242AbZHNU6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 16:58:00 -0400
-Received: by ewy10 with SMTP id 10so1781296ewy.37
-        for <git@vger.kernel.org>; Fri, 14 Aug 2009 13:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=OO3ADi+SzftFTrV9eHO+Uvt2h6incGXEPq4Wr7otFEg=;
-        b=gGNFbZbiWaDWtlx+IEqo4IHS3g+Mxind4W28YYQXI5gvI/TPFyOQ1vpyP81ft7Ibt3
-         Hn7QOTFKyG0KiAX2Wqr0u/kvRa4QDxfIcQCzutrrDjbF7QTUBziRwZdMm83VBt7cgPz9
-         AWPia4dzze351aSHqgYLERoo1klKL0Jdm/ar0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=f4q66VTegwk6LcX3/rAWx0RLCIHpJvU9R8mubknQoRJW9siYMcFlZK//10l0XysbvH
-         2S6LP/jABjKQyEiVH/cguyl0MCZs4b8tUACSq251613GUoMlKXujtbX6xlF8DxcoHr/t
-         YOZW5Rvh/YV6wTgCFr6lRmVt55tK7a/Z/VuHY=
-Received: by 10.211.162.12 with SMTP id p12mr3692221ebo.75.1250283480438;
-        Fri, 14 Aug 2009 13:58:00 -0700 (PDT)
-Received: from @ (88-122-115-214.rev.libertysurf.net [88.122.115.214])
-        by mx.google.com with ESMTPS id 28sm3101477eye.44.2009.08.14.13.57.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 Aug 2009 13:57:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <cover.1250164190.git.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755532AbZHNVVH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 17:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZHNVVG
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 17:21:06 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:40618 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753441AbZHNVVG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 17:21:06 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.129] (p4FC1EC2D.dip.t-dialin.net [79.193.236.45])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id n7ELL3ji011161
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 14 Aug 2009 23:21:04 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.22) Gecko/20090608 Thunderbird/2.0.0.22 Mnenhy/0.7.6.666
+In-Reply-To: <20090813233027.GA19833@atjola.homenet>
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125956>
 
-The 13/08/09, Thomas Rast wrote:
-> Junio C Hamano wrote:
+Bj=F6rn Steinbrink wrote:
+> On 2009.08.14 00:39:48 +0200, Michael Haggerty wrote:
+>> Bj=F6rn Steinbrink wrote:
+>>> On 2009.08.13 14:46:07 +0200, Michael Haggerty wrote:
+>>> And even for just continously forward porting a series of commits, =
+a
+>>> common case might be that upstream applied some patches, but not al=
+l.
+>>> Can you deal with that?
 
-> > * tr/reset-checkout-patch (Tue Jul 28 23:20:12 2009 +0200) 8 commits
+[A discussion of various unsatisfactory approaches omitted...]
+
+> But that's obviously total crap.
+
+So I think we agree that it is not possible to retain history for a cas=
+e
+like this (which is essentially a general cherry-pick).
+
 > [...]
-> > Progress?
-> 
-> Slow, as always.  There are three groups of changes:
+> Doing a plain "git rebase subsystem topic" would of course also try t=
+o
+> rebase the "o" commits, so that problematic. Instead, you do:
+>=20
+> git rebase --onto subsystem O topic
+>=20
+> That turns O..topic (the * commits) into patches, and applies them on
+> top of O'. So the "o" commits aren't to be rebased.
+>=20
+> And that's exactly what your rebase-with-history would do as well. Ju=
+st
+> that O is naturally a common ancestor of subsystem and topic, and so
+> just using "git rebase-w-h subsystem topic" would be enough. Conflict=
+s
+> etc. should be 100% the same.
+>=20
+> If you know that your upstream is going to rebase/rewrite history, yo=
+u
+> can tag (or otherwise mark) the current branching point of your branc=
+h,
+> so you can easily specify it for the --onto rebase. IOW: This is
+> primarily a social problem (tell your downstream that you rebase this=
+ or
+> that branch), but having built-in support to store the branching poin=
+t
+> for rebasing _might_ be worth a thought.
 
-<...>
+Recording branch points manually, coordinating merges via email -- OMG
+you are giving me flashbacks of CVS ;-)
 
-> Thomas Rast (7):
->   git-apply--interactive: Refactor patch mode code
->   Add a small patch-mode testing library
->   builtin-add: refactor the meat of interactive_add()
->   Implement 'git reset --patch'
->   Implement 'git checkout --patch'
->   Implement 'git stash save --patch'
->   DWIM 'git stash save -p' for 'git stash -p'
+*Of course* you can get around all of these problems if you put the
+burden of bookkeeping on the user.  The whole point of
+rebase-with-history is to have the VCS handle it automatically!
 
-Tested-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+>> and merging in a topic branch makes it more difficult to create an
+>> easily-reviewable patch series.  rebase-with-history has neither of
+>> these problems.
+>=20
+> Sure, merging is a no-go if you submit patches by email (or other,
+> similar means). But you compared that to an "enhanced" rebase approac=
+h,
+> instead of comparing your rebase approach to the currently available
+> one.
 
--- 
-Nicolas Sebrecht
+In [1] I compared rebase-with-history with both of the
+currently-available options (rebase and merge).  Rebase and merge can
+each deal with some of the issues that come up, but each one falls flat
+on others.  I believe that rebase-with-history has the advantages of bo=
+th.
+
+The example in [2] was taken straight from the git-rebase man page [3];
+I did not want to claim that current practice would use merging in this
+situation, but rather just to show that rebase-with-history removes the
+pain from this well-known example.
+
+I think we are mostly in agreement.  Rebase-with-history is obviously
+not an earth-shattering revolution in DVCS technology, but my hope is
+that it could unobtrusively assist with a few minor pain points.
+
+Michael
+
+[1]
+http://softwareswirl.blogspot.com/2009/04/truce-in-merge-vs-rebase-war.=
+html
+[2]
+http://softwareswirl.blogspot.com/2009/08/upstream-rebase-just-works-if=
+-history.html
+[3] http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html
