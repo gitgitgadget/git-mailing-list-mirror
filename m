@@ -1,60 +1,65 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: rebase-with-history -- a technique for rebasing without trashing your repo history
-Date: Sat, 15 Aug 2009 06:40:01 +0900
-Message-ID: <20090815064001.6117@nanako3.lavabit.com>
-References: <4A840B0F.9060003@alum.mit.edu>
-	<20090813161256.GA8292@atjola.homenet> <4A849634.1020609@alum.mit.edu>
-	<20090813233027.GA19833@atjola.homenet>
-	<4A85D53D.9050805@alum.mit.edu>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: trailling whitespace with git am ?
+Date: Fri, 14 Aug 2009 23:43:02 +0200
+Message-ID: <81b0412b0908141443vc54c009o9ec39b3f617311dd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Bjrn Steinbrink <B.Steinbrink@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Aug 14 23:41:06 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?Q?PICCA_Fr=C3=A9d=C3=A9ric=2DEmmanuel?= 
+	<frederic-emmanuel.picca@synchrotron-soleil.fr>
+X-From: git-owner@vger.kernel.org Fri Aug 14 23:43:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mc4WC-000466-C4
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 23:41:00 +0200
+	id 1Mc4YI-00050o-9p
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 23:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756726AbZHNVke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 17:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756619AbZHNVke
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 17:40:34 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:32859 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756202AbZHNVkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 17:40:33 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id 126D011B8FC;
-	Fri, 14 Aug 2009 16:40:35 -0500 (CDT)
-Received: from 3486.lavabit.com (195.116.69.252)
-	by lavabit.com with ESMTP id 0FXT3DSDA0LT; Fri, 14 Aug 2009 16:40:35 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=JBCqxo/V80Oz8JAqaQNJ1yzMqFziyVozyz/pES7puqaiFbxxgMX0Fn1R+p7e5tCzI6nNfzKdQpkw79qlEqokaQ4GQAa1bZZYHvGoaXCGUTyPvnzpoEx0amiJv04SRaDePqrQHrA+leGrtReJ7fXRkXdW7BuusNH+N6kWwSxwwHY=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <4A85D53D.9050805@alum.mit.edu>
+	id S1751922AbZHNVnE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 17:43:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbZHNVnE
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 17:43:04 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:43338 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbZHNVnC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 17:43:02 -0400
+Received: by bwz22 with SMTP id 22so1371676bwz.18
+        for <git@vger.kernel.org>; Fri, 14 Aug 2009 14:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=5klxKEvA+wtLVoTDvUtOkXCni2nbRbrF7g4Lff2b3uo=;
+        b=CGnxhMFvJEZ7lkNEJsjj2bNy0/Ia9vDa4zqjsMkc7IiaRD1wv8ys/0SFstVrAOK0qn
+         uy+qHPFCt704LAlnbQp6/W6K3jLfUuTcsZM+b96IwNhi9wrt9Fp6OkPMiHSRcgBFMgCK
+         Ynk/80KgZoYjwpQKHHn7suX+RX96R7MdHLSZw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=AEoMwnQbn7T1w14ZOXPHdqGKYE6BFbrnOk3w283ILBkwpj6vRs6TK6gIvQrYN6NNHO
+         d7m1t6kmCG7SFAQ0WcUeMBkHnpiqdrAoZJpHf288KIigjK1vY4tel6UzooQKrYbkRiHS
+         PsS7oCNqbziPE98oK4t5kTjmpnzEQuEse2Bg4=
+Received: by 10.204.160.70 with SMTP id m6mr1358785bkx.212.1250286182863; Fri, 
+	14 Aug 2009 14:43:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125960>
 
-Quoting Michael Haggerty <mhagger@alum.mit.edu>
+On Fri, Aug 14, 2009 at 22:50, PICCA
+=46r=C3=A9d=C3=A9ric-Emmanuel<frederic-emmanuel.picca@synchrotron-solei=
+l.fr>
+wrote:
+>>=C2=A0> git am --whitespace=3Dfix was sufficient to apply the patch
+>
+>> Depending on your situation it can be an overkill: it'll remove _all=
+_ trailing
+>> white space. Not just \r (CR).
+>
+> so /s /t and /r are the same things for git ?
+>
 
-> In [1] I compared rebase-with-history with both of the
-> currently-available options (rebase and merge).  Rebase and merge can
-> each deal with some of the issues that come up, but each one falls flat
-> on others.  I believe that rebase-with-history has the advantages of both.
-> ....  Rebase-with-history is obviously
-> not an earth-shattering revolution in DVCS technology, but my hope is
-> that it could unobtrusively assist with a few minor pain points.
-
-The saddest part is that your [1] works only in a case a user can easily handle manually, and doesn't help cases more complex than the most trivial ones, such as reordering and squashing commits, where the user may benefit if an automated support from VCS were available.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+almost. For git-apply's whitespace fixing code. Why?
