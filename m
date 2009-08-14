@@ -1,70 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix "unpack-objects --strict"
-Date: Thu, 13 Aug 2009 23:32:59 -0700
-Message-ID: <7vocqiucpw.fsf@alter.siamese.dyndns.org>
-References: <20090813103231.GY14475@mail-vs.djpig.de>
- <20090813111933.GZ14475@mail-vs.djpig.de>
- <7vd46zbjae.fsf@alter.siamese.dyndns.org>
- <20090814060307.GA31721@auto.tuwien.ac.at>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 1/2] add a --delete option to git push
+Date: Fri, 14 Aug 2009 02:33:59 -0400
+Message-ID: <20090814063359.GA6898@coredump.intra.peff.net>
+References: <1250226349-20397-1-git-send-email-srabbelier@gmail.com>
+ <1250226349-20397-2-git-send-email-srabbelier@gmail.com>
+ <20090814052153.GA2881@coredump.intra.peff.net>
+ <fabb9a1e0908132324td6869aydc752f67b95546f1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Fri Aug 14 08:33:55 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 08:34:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbqMH-0001wJ-Q3
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:33:50 +0200
+	id 1MbqMy-0002Aw-6e
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZHNGdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 02:33:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752586AbZHNGdF
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:33:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33977 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbZHNGdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 02:33:04 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AB5190DD;
-	Fri, 14 Aug 2009 02:33:04 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7521390DB; Fri, 14 Aug
- 2009 02:33:00 -0400 (EDT)
-In-Reply-To: <20090814060307.GA31721@auto.tuwien.ac.at> (Martin Koegler's
- message of "Fri\, 14 Aug 2009 08\:03\:07 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 521D8C72-889C-11DE-8586-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753785AbZHNGd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 02:33:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753511AbZHNGd7
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:33:59 -0400
+Received: from peff.net ([208.65.91.99]:44902 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753217AbZHNGd7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 02:33:59 -0400
+Received: (qmail 15165 invoked by uid 107); 14 Aug 2009 06:34:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 14 Aug 2009 02:34:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Aug 2009 02:33:59 -0400
+Content-Disposition: inline
+In-Reply-To: <fabb9a1e0908132324td6869aydc752f67b95546f1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125903>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> writes:
+On Thu, Aug 13, 2009 at 11:24:05PM -0700, Sverre Rabbelier wrote:
 
-> To introduce a object with one of its linked objects missing, left it
-> out of the pack and push it into the repository. unpack-objects will
-> unpack all objects and fail updating the ref (but leave all objects in
-> the repository). As second step, simply send a ref update request,
-> which should succed, as the object is present in the repository.
+> > It seems like it would be simple enough to just check whether the
+> > refspec contains a colon; if so, silently leave it alone. That could
+> > also protect configured refspecs, as mentioned above, but I wouldn't
+> > rule out somebody have a single-name refspec in their config (in fact, I
+> > think "remote.$X.push = HEAD" is reasonable -- should that delete the
+> > HEAD on "git push --delete"?).
+> 
+> I don't think we should touch any configured refspecs, think about how
+> often one would use that vs. the inconvenience of doing so
+> unintentionally.
 
-Your "ref update request" exploit does not work because your understanding
-of how we decide to allow updating a ref is flawed.
+I think you are right. My previous message was sort of thinking out
+loud, but I think on the whole, the annoyance caused by accidental
+deletion is not worth it. :)
 
-We do not blindly update a ref to a commit only because we happen to have
-that commit.  We require that commit to reach existing tips of refs
-without break.  The logic is in quickfetch() in builtin-fetch.c.
+> > So maybe it would make more sense for it to be "--delete <ref>" and
+> > impact only a single ref. The simple case of "git push --delete foo"
+> > would remain unchanged.
+> 
+> I thought about that, but I decided that it was both intuitive and
+> convenient to be able to delete multiple refs this way.
+> [...]
+> I do, it's easy to make mistakes when it's more powerful, and I think
+> less intuitive. I think we want this to be as intuitive as possible.
 
-This stronger validation is necessary to deal with any failed transfer by
-http walkers, so it is nothing unusual nor new.  They walk from the latest
-commits that exist on the other side, and their object transfer can be
-interrupted before they transfer enough older commits to make the history
-connected with what we already had.  In such a case we obviously do not
-update any ref.  And when we re-run the same request, we do not say "Ah,
-we have the tip in the object database, so we will update the ref to it".
+I guess I find what you are doing _more_ complex, because you are really
+introducing a whole new mode to push, which is "I am deleting some
+stuff". As opposed to some syntactic sugar to replace the confusing
+":ref" syntax, which is what I thought the goal was.
 
-That is why I said requiring connectivity is a good idea, but keeping them
-in core is a misguided waste of memory.
+On the other hand, "--delete <ref>" introduces its own syntactic
+problems. Is it an option, in which case you end up doing:
+
+  git push --delete master origin
+
+which is a bit backwards from the usual syntax. Or is it part of the
+refspec list, in which case:
+
+  1. We have just disallowed a refspec called "--delete" (though to be
+     fair, you have to be a little insane to use that anyway, and you
+     can always call it refs/heads/--delete)).
+
+  2. Now we don't simply have a list, one refspec per element, which
+     makes things syntactically a little more complex.
+
+Perhaps saying that "--delete=<ref>" is equivalent to ":<ref>" would be
+a reasonable way of adding just the syntactic sugar. I.e.:
+
+  git push origin --delete=master
+
+Of course, maybe the goal of a "delete mode" is useful to people. I
+can't think of a time when I would have used it, but then I also tend to
+think ":<ref>" is elegant and obvious. ;)
+
+I dunno. I don't feel too strongly about it; mainly I was just surprised
+because I would have done it the other way. :)
+
+-Peff
