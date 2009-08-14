@@ -1,63 +1,66 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] port --ignore-unmatch to "git add"
-Date: Fri, 14 Aug 2009 12:52:33 -0700
-Message-ID: <7vws56i35q.fsf@alter.siamese.dyndns.org>
-References: <200908121726.52121.luke-jr@utopios.org>
- <1250133624-2272-1-git-send-email-luke-jr+git@utopios.org>
- <7vy6pna4lu.fsf@alter.siamese.dyndns.org>
- <200908132306.37947.trast@student.ethz.ch>
+Subject: Re: [PATCH] git stash: Give friendlier errors when there is nothing
+ to apply
+Date: Fri, 14 Aug 2009 12:52:28 -0700
+Message-ID: <7v3a7ujhqb.fsf@alter.siamese.dyndns.org>
+References: <200908111409.04506.trast@student.ethz.ch>
+ <4a81787d.0e0f660a.5238.4c8b@mx.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Luke Dashjr <luke-jr+git@utopios.org>, <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Aug 14 21:52:59 2009
+Cc: git@vger.kernel.org, Ori Avtalion <ori@avtalion.name>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 21:53:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mc2pe-0001OA-1g
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 21:52:58 +0200
+	id 1Mc2pd-0001OA-AX
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 21:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757091AbZHNTwi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 15:52:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbZHNTwi
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 15:52:38 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57444 "EHLO
+	id S1757085AbZHNTwd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 15:52:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757081AbZHNTwd
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 15:52:33 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53649 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757087AbZHNTwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 15:52:38 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 43F12294D4;
-	Fri, 14 Aug 2009 15:52:39 -0400 (EDT)
+	with ESMTP id S1757075AbZHNTwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 15:52:31 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52DDCADAE;
+	Fri, 14 Aug 2009 15:52:33 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D77D3294D0; Fri, 14 Aug 2009
- 15:52:34 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FC59ADAD; Fri, 14 Aug
+ 2009 15:52:29 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 057E084A-890C-11DE-8955-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 01F6A5A6-890C-11DE-8E3B-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125943>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Ori Avtalion <ori@avtalion.name> writes:
 
-> Junio C Hamano wrote:
->> 
->> Chould you refresh my memory a bit?
->> 
->> In what circumstance is "rm --ignore-unmatch" useful to begin with?
+> The change makes sure a stash (given or default) exists before
+> checking if the working tree is dirty.
 >
-> Not sure about add --ignore-unmatch myself, but there's even an
-> example of rm --ignore-unmatch in man git-filter-branch, along the
-> lines of
+> If the default stash is requested, the old message was scary and
+> included a 'fatal' error from rev-parse:
+>      fatal: Needed a single revision
+>      : no valid stashed state found
 >
->   git filter-branch --index-filter '
->     rm --ignore-unmach some_file_that_shouldnt_be_in_history
->   ' -- --all
+> It is replaced with a friendlier 'Nothing to apply' error, similar to
+> 'git stash branch'.
+>
+> If a specific stash is specified, the 'Needed a single revision' errors
+> from rev-parse are suppressed.
+>
+> Signed-off-by: Ori Avtalion <ori@avtalion.name>
+> Acked-by: Thomas Rast <trast@student.ethz.ch>
 
-Ah, that makes sense.  I am not sure about "add --ignore-unmatch" myself
-either, and an example similar to the above filter-branch would not apply
-very easily (i.e. "add a file that should have been in history" would not
-need --ignore-unmatch).
+I do not see anything that might break existing usage of the command.
+Comments?
+
+A tangent; we might want an analogue to "shortlog -s -n" but based on
+"blame".
