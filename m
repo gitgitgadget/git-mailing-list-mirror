@@ -1,91 +1,144 @@
-From: Karl Wiberg <kha@virtutech.com>
-Subject: Re: [PATCH] Work around performance bug in
-	subprocess.Popen.communicate()
-Date: Fri, 14 Aug 2009 08:21:49 +0200
-Message-ID: <20090814062149.GA23179@lux.e.vtech>
-References: <20090731093632.7018.24435.stgit@october.e.vtech> <b0943d9e0907310427r7e59aa5fi5e5ff5e3f3c03819@mail.gmail.com> <20090804085125.GB27452@lux.e.vtech> <b0943d9e0908131518i3ac18331leb4c0c76313b0780@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH 1/2] add a --delete option to git push
+Date: Thu, 13 Aug 2009 23:24:05 -0700
+Message-ID: <fabb9a1e0908132324td6869aydc752f67b95546f1@mail.gmail.com>
+References: <1250226349-20397-1-git-send-email-srabbelier@gmail.com> 
+	<1250226349-20397-2-git-send-email-srabbelier@gmail.com> <20090814052153.GA2881@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mandolaerik@gmail.com, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 08:22:09 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 14 08:24:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbqAt-0006Uh-5d
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:22:03 +0200
+	id 1MbqDK-0007MH-RW
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:24:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754520AbZHNGVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 02:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbZHNGVy
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:21:54 -0400
-Received: from [62.20.90.206] ([62.20.90.206]:25563 "EHLO lux.e.vtech"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752613AbZHNGVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 02:21:53 -0400
-Received: from lux.e.vtech (lux.e.vtech [127.0.0.1])
-	by lux.e.vtech (8.14.2/8.14.2) with ESMTP id n7E6LnR7023447;
-	Fri, 14 Aug 2009 08:21:49 +0200
-Received: (from kha@localhost)
-	by lux.e.vtech (8.14.2/8.14.2/Submit) id n7E6LnlR023445;
-	Fri, 14 Aug 2009 08:21:49 +0200
-X-Authentication-Warning: lux.e.vtech: kha set sender to kha@virtutech.com using -f
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0908131518i3ac18331leb4c0c76313b0780@mail.gmail.com>
-X-Manual-Spam-Check: kha@virtutech.com, clean
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756053AbZHNGY0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 02:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756031AbZHNGY0
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:24:26 -0400
+Received: from mail-ew0-f214.google.com ([209.85.219.214]:45261 "EHLO
+	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755577AbZHNGYZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 02:24:25 -0400
+Received: by ewy10 with SMTP id 10so1293050ewy.37
+        for <git@vger.kernel.org>; Thu, 13 Aug 2009 23:24:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=woZdeNIY1Ch86p93AjHW94DFOpbCBXatpD1CHdskOP8=;
+        b=BaFzB1nteYpBIi6zHnnSazQ2d1ZAjaLV5eJKF5RwQ0o0B8YT7JB97yN1BXfUwDEM9f
+         X9CVepFi+eJVuj0aBNmwGCr4FgjmfSXmyxDQYhfG4KYp7+51KcUeQHIb+xJUoOEzKtcq
+         Y3NVAI9D7Uj5FYotRrRgjBvuBsyfxi44sQJLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=L1sPVyrBel1Bq7Uq/vyDboAh0Z2VsGCxoIEI+0EDlAGf9deQbHCYnrNAVhKUKZV8EB
+         12UJCiWdV0MRt3I7uFq+ELGCg3vZTf8WfjfZm+QAhQfqphaOX0xLUX/UkbP7uP8orPTa
+         ohSuv/ANI1NHkB2AxPi+Lv+z0J/R9jL6XpEQ4=
+Received: by 10.216.70.205 with SMTP id p55mr341810wed.55.1250231065161; Thu, 
+	13 Aug 2009 23:24:25 -0700 (PDT)
+In-Reply-To: <20090814052153.GA2881@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125901>
 
-On 2009-08-13 23:18:59 +0100, Catalin Marinas wrote:
+Heya,
 
-> 2009/8/4 Karl Wiberg <kha@virtutech.com>:
+On Thu, Aug 13, 2009 at 22:21, Jeff King<peff@peff.net> wrote:
+> On Thu, Aug 13, 2009 at 10:05:48PM -0700, Sverre Rabbelier wrote:
+> From reading your patch, it looks like it just touches the command-li=
+ne.
+> I think that's the right thing to do, but I think it makes sense to
+> think half a second to make sure.
+
+Indeed, the reason I sent out this RFC was to gather more opinions :).
+
+> And with the way you have it, "git push --delete" will silently ignor=
+e
+> the --delete and push configured refspecs. Probably it should say
+> "--delete is useless without refspecs on the command line".
+
+This makes sense, I will fix that.
+
+>> =A0 =A0 Currently `git push --delete master:master` results in a som=
+ewhat
+>> =A0 =A0 cryptic error message. It seems unlikely however, that those=
+ new
+>> =A0 =A0 to git would use the 'old:new' notation, so I haven't bother=
+ed
+>> =A0 =A0 guarding against it and settled for documenting it.
 >
-> > On 2009-07-31 12:27:53 +0100, Catalin Marinas wrote:
-> >
-> > > But can this not lead to a deadlock if the __indata is big? The
-> > > stdout of the created process is only processed once the whole
-> > > __indata is written. I thought communicate() was created to
-> > > avoid this issue.
-> >
-> > I don't think there's a problem. write() isn't supposed to have a
-> > limit on the amount of data it will accept in one call, as far as
-> > I'm aware. Plus, it works just fine with Erik's test case---which
-> > in my case was about 7 MB. If it can handle 7 MB, I doubt there's
-> > a limit we'll hit anytime soon.
+> It seems like it would be simple enough to just check whether the
+> refspec contains a colon; if so, silently leave it alone. That could
+> also protect configured refspecs, as mentioned above, but I wouldn't
+> rule out somebody have a single-name refspec in their config (in fact=
+, I
+> think "remote.$X.push =3D HEAD" is reasonable -- should that delete t=
+he
+> HEAD on "git push --delete"?).
+
+I don't think we should touch any configured refspecs, think about how
+often one would use that vs. the inconvenience of doing so
+unintentionally.
+
+>> +--delete::
+>> + =A0 =A0Delete the specified refs. Prefixes all refs with ':' to te=
+ll the
+>> + =A0 =A0push machinery to delete the specified ref. As such, the re=
+fs
+>> + =A0 =A0that are to be deleted should not contain a ':' specifier.
+>> +
 >
-> write() itself doesn't have a limit, it's mainly what the
-> application receiving the data can handle. In the Git case, I think
-> it takes all the input as it isn't a filtering tool (things may be
-> different with tools like sed etc.).
+> This impacts _all_ refspecs. Remember that we can have multiple refsp=
+ecs
+> on the command-line. So I can "move" a ref remotely with:
+
+Correct, hence the plural 'refs'.
+
+> =A0git push :old-name old-name:new-name
 >
-> > Oh, and we still call communicate()---we just don't pass it any
-> > additional bytes to write to stdin.
+> but I can't do:
 >
-> Yes, but if write() is blocked, communicate() won't be called.
+> =A0git push --delete old-name old-name:new-name
 
-Ah, so that's what you were worrying about. Yeah, if the process we're
-writing to was going to block us (== not read input) for long periods
-of time, we'd have to handle that case. And if it was going to decide
-to stop reading input half-way through and give us a sigpipe, we'd
-have to handle that. But ...
+I don't think that's the use case for this option, it is mostly for
+new users who do not know about the colon notation; now you do raise a
+valid point that we might want to add a 'git push --rename old new' at
+some point, but I think that's beyond the scope of this patch.
 
-> Since we are only using Git, I'll merge this patch
 
-Exactly. We really don't expect git to do any of those things to us.
-We know it reads all available input before producing the output.
-(Well, almost always. I have patches in my experimental branch that
-use git cat-file --batch and git diff-tree --stdin, where there can be
-many rounds of talking back and forth, but when driving those I'm
-being very careful to not deadlock.)
+> So maybe it would make more sense for it to be "--delete <ref>" and
+> impact only a single ref. The simple case of "git push --delete foo"
+> would remain unchanged.
 
-> (and maybe add a comment).
+I thought about that, but I decided that it was both intuitive and
+convenient to be able to delete multiple refs this way.
 
-Sure.
+> The counter-argument is that "--delete" does not necessarily need to =
+be
+> as powerful as the ":ref" syntax, but I don't see the downside in mak=
+ing
+> it so.
 
--- 
-Karl Wiberg, Virtutech
+I do, it's easy to make mistakes when it's more powerful, and I think
+less intuitive. I think we want this to be as intuitive as possible.
+
+I'm not very opinionated over any of this, if you have strong feelings
+yourself please let me know and I'll change the patch.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
