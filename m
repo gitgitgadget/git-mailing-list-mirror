@@ -1,101 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 1/2] add a --delete option to git push
-Date: Fri, 14 Aug 2009 01:21:53 -0400
-Message-ID: <20090814052153.GA2881@coredump.intra.peff.net>
-References: <1250226349-20397-1-git-send-email-srabbelier@gmail.com>
- <1250226349-20397-2-git-send-email-srabbelier@gmail.com>
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: Re: [PATCH] Fix "unpack-objects --strict"
+Date: Fri, 14 Aug 2009 08:03:07 +0200
+Message-ID: <20090814060307.GA31721@auto.tuwien.ac.at>
+References: <20090813103231.GY14475@mail-vs.djpig.de> <20090813111933.GZ14475@mail-vs.djpig.de> <7vd46zbjae.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 07:22:05 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 08:03:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbpEq-0006xO-LL
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 07:22:05 +0200
+	id 1Mbpsk-0000i8-3t
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 08:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753685AbZHNFVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 01:21:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbZHNFVy
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 01:21:54 -0400
-Received: from peff.net ([208.65.91.99]:44800 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752925AbZHNFVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 01:21:53 -0400
-Received: (qmail 14810 invoked by uid 107); 14 Aug 2009 05:21:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 14 Aug 2009 01:21:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Aug 2009 01:21:53 -0400
+	id S1755989AbZHNGDJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Aug 2009 02:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755987AbZHNGDJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 02:03:09 -0400
+Received: from odin.auto.tuwien.ac.at ([128.130.60.3]:58213 "EHLO
+	mail.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755959AbZHNGDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Aug 2009 02:03:08 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id B0E0810C1C3F;
+	Fri, 14 Aug 2009 08:03:07 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at odin.auto.tuwien.ac.at
+Received: from mail.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (odin.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ZtkmZ75xyFTf; Fri, 14 Aug 2009 08:03:07 +0200 (CEST)
+Received: from thor.localdomain (thor.auto.tuwien.ac.at [128.130.60.15])
+	by mail.auto.tuwien.ac.at (Postfix) with ESMTP id 9FA9C1000DC5;
+	Fri, 14 Aug 2009 08:03:07 +0200 (CEST)
+Received: by thor.localdomain (Postfix, from userid 3001)
+	id 9A7D86800645; Fri, 14 Aug 2009 08:03:07 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1250226349-20397-2-git-send-email-srabbelier@gmail.com>
+In-Reply-To: <7vd46zbjae.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125898>
 
-On Thu, Aug 13, 2009 at 10:05:48PM -0700, Sverre Rabbelier wrote:
+On Thu, Aug 13, 2009 at 12:33:45PM -0700, Junio C Hamano wrote:
+> diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+> index 557148a..109b7c8 100644
+> --- a/builtin-unpack-objects.c
+> +++ b/builtin-unpack-objects.c
 
-> Those new to git have a hard time learning how to delete a remote
-> ref. This makes it easier for them to find out how by providing a
-> flag to git push.
+What about this check:
+> @@ -184,7 +184,7 @@ static int check_object(struct object *obj, int t=
+ype, void *data)
+>       if (!obj)
+>  		return 0;
 
-Should this also impact refs read from the config? E.g., if I do "git
-push --delete" will it try to impact matching refs (which is almost
-certainly a mistake), or refs I have in my remote.$X.push (which is
-probably also a mistake)?
+This is neccessary to skip already written objects (eg. blobs,
+obj_list[i].obj =3D=3D NULL). The return code is not important in this
+case.
 
->From reading your patch, it looks like it just touches the command-line.
-I think that's the right thing to do, but I think it makes sense to
-think half a second to make sure.
+I'm not sure, if fsck_walk can call check_object with obj =3D=3D NULL
+under some (rare) conditions. If yes, the return code should be
+changed to 1.
 
-And with the way you have it, "git push --delete" will silently ignore
-the --delete and push configured refspecs. Probably it should say
-"--delete is useless without refspecs on the command line".
+> We probably should write everything as they become unpackable (i.e. a=
+s
+> their delta bases becomes available) while keeping track of object na=
+mes
+> (but not data) of structured objects that we received, and running on=
+ly
+> one level of reachability check on them at the end.  That would certa=
+inly
+> reduce the memory consumption and may simplify the complexity of the =
+code
+> at the same time.
 
->     Currently `git push --delete master:master` results in a somewhat
->     cryptic error message. It seems unlikely however, that those new
->     to git would use the 'old:new' notation, so I haven't bothered
->     guarding against it and settled for documenting it.
+This would defeat the whole idea of the this check: If the
+precondition (fsck returns OK for a repository) is met, unpack-objects
+(and index-pack) with --strict should gurantee, that this is still
+true after receiving the objects (even if somebody intentionally tries
+to corrupt the repository).
 
-It seems like it would be simple enough to just check whether the
-refspec contains a colon; if so, silently leave it alone. That could
-also protect configured refspecs, as mentioned above, but I wouldn't
-rule out somebody have a single-name refspec in their config (in fact, I
-think "remote.$X.push = HEAD" is reasonable -- should that delete the
-HEAD on "git push --delete"?).
+As we assume, that all objects (and all their ancestors) already
+present in the repository are OK, we only have to check new objects
+and verify, that linked objects in the repository are of the correct
+type.
 
-> +--delete::
-> +    Delete the specified refs. Prefixes all refs with ':' to tell the
-> +    push machinery to delete the specified ref. As such, the refs
-> +    that are to be deleted should not contain a ':' specifier.
-> +
+As soon as we start to write objects without all linked objects
+already present in the repository, the repository can get inconsistant.
 
-This impacts _all_ refspecs. Remember that we can have multiple refspecs
-on the command-line. So I can "move" a ref remotely with:
+Lets assume, unpack-objects/receive-pack is changed according to your p=
+roposal:
+* writeout all objects, as received
+* checking reachability of new objects
+* update refs, if everything is OK
 
-  git push :old-name old-name:new-name
+Then a corruption HOWTO would be:
 
-but I can't do:
+To introduce a object with one of its linked objects missing, left it
+out of the pack and push it into the repository. unpack-objects will
+unpack all objects and fail updating the ref (but leave all objects in
+the repository). As second step, simply send a ref update request,
+which should succed, as the object is present in the repository.
 
-  git push --delete old-name old-name:new-name
+A variant: set the SHA1 of the missing object to the SHA1 of a object
+of another type. In the second step, you can sent this object to
+unpack-objects, which will unpack it, as it does not know, that the
+object is already referenced in the repository.
 
-Ignoring colon-less refspecs would make that work, but would not allow
-the similar:
+Deleting objects in the case of an error is also not an option, as a
+parallel push operation could have already used the object.
 
-  # branch has already been renamed to new-name locally
-  git push --delete old-name new-name
-
-So maybe it would make more sense for it to be "--delete <ref>" and
-impact only a single ref. The simple case of "git push --delete foo"
-would remain unchanged.
-
-The counter-argument is that "--delete" does not necessarily need to be
-as powerful as the ":ref" syntax, but I don't see the downside in making
-it so.
-
--Peff
+mfg Martin K=F6ger
