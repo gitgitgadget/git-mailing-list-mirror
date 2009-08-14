@@ -1,77 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 1/2] add a --delete option to git push
-Date: Fri, 14 Aug 2009 00:51:17 -0700
-Message-ID: <7v7hx6suiy.fsf@alter.siamese.dyndns.org>
-References: <1250226349-20397-1-git-send-email-srabbelier@gmail.com>
- <1250226349-20397-2-git-send-email-srabbelier@gmail.com>
- <7vab22ubr5.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: merging individual files
+Date: Fri, 14 Aug 2009 09:55:51 +0200
+Message-ID: <4A851887.5010701@drmicha.warpmail.net>
+References: <loom.20090813T192334-7@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>,
-	"Git List" <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 14 09:51:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Chris Marshall <christopher.marshall@merchantlink.com>
+X-From: git-owner@vger.kernel.org Fri Aug 14 09:56:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MbrZa-0005aI-SL
-	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 09:51:39 +0200
+	id 1Mbre5-0007WF-Qi
+	for gcvg-git-2@gmane.org; Fri, 14 Aug 2009 09:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756399AbZHNHv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Aug 2009 03:51:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756404AbZHNHvZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 03:51:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49954 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754743AbZHNHvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Aug 2009 03:51:25 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B0FA28FE1;
-	Fri, 14 Aug 2009 03:51:26 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C386F28FDF; Fri, 14 Aug 2009
- 03:51:18 -0400 (EDT)
-In-Reply-To: <7vab22ubr5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu\, 13 Aug 2009 23\:53\:50 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 44C03790-88A7-11DE-98D0-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1756483AbZHNH4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Aug 2009 03:56:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756474AbZHNH4J
+	(ORCPT <rfc822;git-outgoing>); Fri, 14 Aug 2009 03:56:09 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36916 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756470AbZHNH4I (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Aug 2009 03:56:08 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 53DC84CF8C;
+	Fri, 14 Aug 2009 03:56:07 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 14 Aug 2009 03:56:07 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=dSij+qK8bnrGcPKT33xr8CMnkwc=; b=U24qgsBaQPKBB+tByLl7V0N9MYbpHZ6dcja7dECVzas+z5Gs38vuFAjims32KD4UmP97QR4mhQdYCiV/FmVeATwD1bzTT4xN+adW/Tnj2BBu5qUxoNVZ/nPXO06VxOJiMbzf7ahHWHZ4/WWnSvOKE7Z7u0KyK9vRy6JsnkFvOws=
+X-Sasl-enc: datCxLRzanixOwU357K5podWsOgSE+x75z6xwI1w2Xbi 1250236565
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A019E2B8B5;
+	Fri, 14 Aug 2009 03:56:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3pre) Gecko/20090811 Lightning/1.0pre Shredder/3.0b4pre
+In-Reply-To: <loom.20090813T192334-7@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125917>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Chris Marshall venit, vidit, dixit 13.08.2009 22:16:
+> Suppose that merging branch dev1 into master would result in three files, f1,
+> f2, and f3 being changed, and that I only want to merge the changes for f1 and
+> f2 and not the changes for f3 currently.  Later on, I want to accept the f3
+> changes.  Suppose further that the changes to f1, f2, and f3 occurred in a
+> single commit to branch dev1.
+> 
+> What is the simplest way to use git to achieve that effect?
+> 
+> More generally, I need a way to accept the changes for one or two files while
+> rejecting the changes for a potentially large number of files, then later on 
+> accepting the changes for the large number of files.
+> 
+> I work at a company where perforce is currently used for all development and am
+> trying to work out the git equivalents to all of the perforce flows we use. 
+> This workflow is the only one that I am stumped on.
+> 
+> One solution that occurs to me is to create a temporary branch off of the (most
+> recent) common ancestor of master and br1, let's say br2, checkout the files
+> from br1 that I want to merge into master and commit those to br2, then merge
+> br2 into master:
+> 
+> git checkout common_ancestor_commit
+> git checkout -b br2
+> git checkout br1 f1 f2
+> git commit
+> git checkout master
+> git merge br2
+> git branch -d br2
+> 
+> This strikes me as not too bad of a procedure, as long as there is a graceful
+> way of determining the most recent common ancestor of br1 and master.  What's
+> the simplest way of doing that?
+> 
 
-> I do not mean that this new feature is useless nor stupid.  Being able to
-> say "git push --delete branch1 branch2" matches _a_ mental model (perhaps
-> Hg inspired one) _very_ naturally.  There are branches on the other side,
-> and there is a special operation called 'delete' that you can inflict on
-> them.
->
-> But it is a different mental model of how git natively does "push".
-> ...
-> These are both valid models.  They just do not mix, so let's avoid
-> confusion by not allowing both at the same time.
+That would be simply git merge-base master br1.
 
-One more thing.  I suspect that adding --delete and nothing else probably
-makes things worse than not doing anything.
+BUT: The main problem here is that git is not file based, but
+revision/commit/tree based. In the above, you're basically losing all
+the history common_ancestor_commit..br1 which produced br1's version of
+f1 and f2, in the sense that a git log master will not show that part of
+the history at all.
 
-In a mental model where "push there --delete $branch" is natural, there
-are branches on the other side, and when you run 'push' command, you name
-the special operation, 'delete', that you would want to inflict on them.
+If it makes sense to change f1 and f2 without changing f3 that probably
+means that the pertinent commit should have been split. Is it an option
+for you to rewrite br1's history? That would be the most gittish solution.
 
-In such a world, there probably are other (perhaps not so special)
-operations you can inflict on the branches on the other side as well.
-They are probably called something like:
+Alternatively, you could
+git checkout master
+git merge --no-commit br1
+git checkout --ours f3
+git commit # add a note about f3 in the commit message
 
-	push there --create $branch $commit
-	push there --update $branch $commit
+That way at least you have the full history on master. Note that this
+will tell git that br1 is merged in, that is you can't use merge later
+on to pull in the changes to f3.
+Then, when you want to get that change to f3, you can br1's version of
+f3 using git checkout br1 -- f3 and committing that to master. But you
+should really rewrite br1 ;)
 
-If you give them only --delete without completing the vocabulary by giving
-these operations as well, you would force people to mix "git native" world
-model (i.e. there is no "mode" nor "opration"; there is only "list of
-instructions, each of which encodes the equivalent of 'mode'") with this
-Hg-inspired world model.
+Michael
