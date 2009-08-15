@@ -1,107 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
-Date: Sat, 15 Aug 2009 00:57:06 -0700
-Message-ID: <7v4os9v7al.fsf@alter.siamese.dyndns.org>
-References: <200908101136.34660.trast@student.ethz.ch>
- <cover.1250164190.git.trast@student.ethz.ch>
- <20090815065125.GA23068@coredump.intra.peff.net>
+Subject: Re: jc/shortstatus
+Date: Sat, 15 Aug 2009 01:18:28 -0700
+Message-ID: <7v8whltrqj.fsf@alter.siamese.dyndns.org>
+References: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
+ <20090815070904.GA23389@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 15 10:00:22 2009
+X-From: git-owner@vger.kernel.org Sat Aug 15 10:22:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McEBZ-0005ia-Sj
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:00:22 +0200
+	id 1McEX7-0004Zj-3L
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:22:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbZHOH5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 03:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752208AbZHOH5V
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 03:57:21 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39046 "EHLO
+	id S1753420AbZHOISd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 04:18:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbZHOISd
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 04:18:33 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37938 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751653AbZHOH5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 03:57:21 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CC3C92A869;
-	Sat, 15 Aug 2009 03:57:21 -0400 (EDT)
+	with ESMTP id S1751742AbZHOISb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 04:18:31 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 68EE5B0A2;
+	Sat, 15 Aug 2009 04:18:32 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 333712A867; Sat, 15 Aug 2009
- 03:57:07 -0400 (EDT)
-In-Reply-To: <20090815065125.GA23068@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 15 Aug 2009 02\:51\:26 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C4EECB0A1; Sat, 15 Aug
+ 2009 04:18:29 -0400 (EDT)
+In-Reply-To: <20090815070904.GA23389@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 15 Aug 2009 03\:09\:04 -0400")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 431E2526-8971-11DE-B7B9-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 38764EFC-8974-11DE-A0F9-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125984>
 
 Jeff King <peff@peff.net> writes:
 
->> reset -p [HEAD]		Reset this hunk? (**)
->> reset -p other		Apply this hunk to index? (**)
+> For the "git stat" portion still in pu, I have a few comments/questions:
 >
-> This doesn't make sense to me.
+>   1. Is "stat" a good name? I worry a little that it is _too_ similar to
+>      "status", and that will cause confusion while they both exist. So
+>      something like "git overview" would cause less confusion, and even
+>      though it sucks to type, it will eventually replace "status" (and
+>      in the meantime people can make aliases or whatever).
 
-Not to me, either.
+It is handy to have both available while asking others help debugging the
+version in 'pu', and that is the only reason for the separate command.  It
+could have been named 'git frotz' for all I care ;-)
 
-Let's say you have modified $path and ran "git add $path" earlier.
+I do not intend to make it another "git merge-recur"; I would actually
+want to have it replace "status" before the series goes to 'next'.
 
-"reset -p -- $path" and "reset -p HEAD -- $path" both show what your index
-has relative to the commit you are resetting your index to and offer to
-"Unstage" [*1*].  This is consistent and feels natural.
+I hopefully will have some time to start doing that over the weekend; the
+first step would be to rename the branch to jc/1.7.0-status and get rid of
+cmd_status() from builtin-commit.c.
 
-"reset -p HEAD^ -- $path" however shows the same forward diff (i.e. how
-your index is different compared to the commit HEAD^ you are resetting
-to), but offers to "Apply".
+A few points I haven't managed to think about, decide, nor test, are:
 
-When a user is resetting to the current HEAD (with or without an explicit
-HEAD parameter), it is likely that the user did "git add" earlier and is
-trying to reverse the effect of that.  And showing a forward diff makes
-sense.  But when a user is resetting to a different commit, it may make
-sense to show a reverse diff, saying "Here is a hunk you _could_ choose to
-use to bring the current index to a different state, do you want to apply
-it to do so?"  Perhaps you meant to show a reverse diff and use the word
-"Apply".
+ - What should its exit code be?  Should it be consistent with the
+   traditional "git status" at least when no paths are given, signallying
+   failure when nothing is staged for committing, so that ancient out of
+   tree scripts people may have written would not break too badly when we
+   make the switch?
 
-However, that would break down rather badly when HEAD did not change $path
-since HEAD^.  Logically what the "reset -p" would do to $path is the same,
-but the patch shown and the operation offered to the user are opposite.
+ - What should its default mode of output be?  Do people prefer "svn st"
+   style short-format output, or should we stay verbose and explanatory?
 
-You could compare HEAD and the commit you are resetting the index to and
-see if the path in question is different between the two commits, and
-switch the direction---if there is no change, you show forward diff and
-offer to "Remove this change out of the index", if there is a change, you
-show reverse diff and offer to "Apply this change to the index".  But if
-the difference between HEAD and the commit you are resetting to does not
-overlap with the change you staged to the index earlier from your work
-tree, it is unclear such heuristics would yield a natural feel.
+ - Is it handling corner cases correctly?  e.g. Does it operate correctly
+   when run from a subdirectory?  How should it handle submodules?  Before
+   the initial commit?  Use of colors?
 
-So I actually think you may be better off if you consistently showed a
-forward diff (i.e. what patch would have been applied to the commit in
-question to bring the index into its current shape), and always offer
-"Remove this change out of the index?"
+>   2. Does it really belong in builtin-commit.c anymore? It seems like
+>      historical accident that "status" is so closely tied to commit. The
+>      whole point of the new command is to _not_ be tied; I think of the
+>      new command more as an extension of 'diff'. Admittedly, users don't
+>      care where the source is located, but it helps the developers
+>      understand the relationships between code.
 
-The same comment applies to "checkout -p HEAD" vs "checkout -p HEAD^".
-I think the latter shouldn't show a reverse diff and offer "Apply?";
-instead both should consitently show a forward diff (i.e. what patch would
-have been applied to the commit to bring your work tree into its current
-shape), and offer "Remove this change out of the index and the work tree?".
+It would make sense to create a separate builtin-status.c.  I haven't
+looked at the dependencies yet, but it shouldn't be too bad.  We'll see.
 
-[Footnote]
+>   3. Can you squash in the gitignore patch below? :)
 
-*1* I actually have a slight problem with the use of word "Unstage" in
-this context; "to stage", at least to me, means "adding _from the work
-tree_ to the index", not just "modifying the index" from a random source.
-The command is resetting the index in this case from a tree-ish and there
-is no work tree involved, and the word "stage/unstage" feels out of place.
+Yes but hopefully it won't be necessary ;-)
