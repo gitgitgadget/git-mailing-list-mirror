@@ -1,97 +1,89 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [BUG, PATCH] git add -p: demonstrate failure when staging both mode and hunk
-Date: Sat, 15 Aug 2009 16:26:49 +0400
-Message-ID: <1250339209-27962-1-git-send-email-kirr@mns.spb.ru>
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>,
-	Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Aug 15 14:51:00 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] add -p: do not attempt to coalesce mode changes
+Date: Sat, 15 Aug 2009 15:56:39 +0200
+Message-ID: <770693df8f416615f57423141fb59f3d6eccc915.1250344341.git.trast@student.ethz.ch>
+References: <1250339209-27962-1-git-send-email-kirr@mns.spb.ru>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
+To: <gitster@pobox.com>, Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Sat Aug 15 15:57:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McIin-0007Ff-OO
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 14:50:58 +0200
+	id 1McJkn-0003Pp-0s
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 15:57:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754055AbZHOMrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 08:47:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbZHOMrD
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 08:47:03 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:50117 "EHLO mail.mnsspb.ru"
+	id S1754490AbZHON4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 09:56:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbZHON4z
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 09:56:55 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:36650 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751303AbZHOMrD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 08:47:03 -0400
-X-Greylist: delayed 1021 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2009 08:47:02 EDT
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1McIOO-0002OZ-0E; Sat, 15 Aug 2009 16:29:54 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1McILg-0007HZ-Jm; Sat, 15 Aug 2009 16:27:04 +0400
-X-Mailer: git-send-email 1.6.4.134.gb2139
+	id S1751597AbZHON4z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 09:56:55 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
+ 2009 15:56:53 +0200
+Received: from localhost.localdomain (77.56.221.170) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
+ 2009 15:56:53 +0200
+X-Mailer: git-send-email 1.6.4.288.gc754a.dirty
+In-Reply-To: <1250339209-27962-1-git-send-email-kirr@mns.spb.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126003>
 
-When trying to stage changes to file which has also pending `chmod +x`,
-`git add -p` produces lots of 'Use of uninitialized value ...' warnings
-and fails to do the job:
+In 0392513 (add-interactive: refactor mode hunk handling, 2009-04-16),
+we merged the interaction loops for mode changes and hunk staging.
+This was fine at the time, because 0beee4c (git-add--interactive:
+remove hunk coalescing, 2008-07-02) removed hunk coalescing.
 
-    $ echo content >> file
-    $ chmod +x file
-    $ git add -p
-    diff --git a/file b/file
-    index e69de29..d95f3ad
-    --- a/file
-    +++ b/file
-    old mode 100644
-    new mode 100755
-    Stage mode change [y,n,q,a,d,/,j,J,g,?]? y
-    @@ -0,0 +1 @@
-    +content
-    Stage this hunk [y,n,q,a,d,/,K,g,e,?]? y
-    Use of uninitialized value $o_ofs in addition (+) at /home/kirr/local/git/libexec/git-core/git-add--interactive line 776.
-    Use of uninitialized value $ofs in numeric le (<=) at /home/kirr/local/git/libexec/git-core/git-add--interactive line 806.
-    Use of uninitialized value $o0_ofs in concatenation (.) or string at /home/kirr/local/git/libexec/git-core/git-add--interactive line 830.
-    Use of uninitialized value $n0_ofs in concatenation (.) or string at /home/kirr/local/git/libexec/git-core/git-add--interactive line 830.
-    Use of uninitialized value $o_ofs in addition (+) at /home/kirr/local/git/libexec/git-core/git-add--interactive line 776.
-    fatal: corrupt patch at line 5
-    diff --git a/file b/file
-    index e69de29..d95f3ad
-    --- a/file
-    +++ b/file
-    @@ -,0 + @@
-    +content
+However, in 7a26e65 (Revert "git-add--interactive: remove hunk
+coalescing", 2009-05-16), we resurrected it.  Since then, the code
+would attempt in vain to merge mode changes with diff hunks,
+corrupting both in the process.
 
-Cc: Jeff King <peff@peff.net>
-Cc: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+We add a check to the coalescing loop to ensure it only looks at diff
+hunks, thus skipping mode changes.
+
+Noticed-by: Kirill Smelkov <kirr@mns.spb.ru>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- t/t3701-add-interactive.sh |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+ git-add--interactive.perl  |    4 ++++
+ t/t3701-add-interactive.sh |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index df9f231..06f7060 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -841,6 +841,10 @@
+ 	my ($last_o_ctx, $last_was_dirty);
+ 
+ 	for (grep { $_->{USE} } @in) {
++		if ($_->{TYPE} ne 'hunk') {
++			push @out, $_;
++			next;
++		}
+ 		my $text = $_->{TEXT};
+ 		my ($o_ofs) = parse_hunk_header($text->[0]);
+ 		if (defined $last_o_ctx &&
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index fd2a55a..d5e9351 100755
+index d5e9351..62fd65e 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -163,6 +163,17 @@ test_expect_success FILEMODE 'stage mode but not hunk' '
- 	git diff          file | grep "+content"
+@@ -164,7 +164,7 @@ test_expect_success FILEMODE 'stage mode but not hunk' '
  '
  
-+
-+test_expect_failure FILEMODE 'stage mode and hunk' '
-+	git reset --hard &&
-+	echo content >>file &&
-+	chmod +x file &&
-+	printf "y\\ny\\n" | git add -p &&
-+	git diff --cached file | grep "new mode" &&
-+	git diff --cached file | grep "+content" &&
-+	test -z "$(git diff file)"
-+'
-+
- # end of tests disabled when filemode is not usable
  
- test_expect_success 'setup again' '
+-test_expect_failure FILEMODE 'stage mode and hunk' '
++test_expect_success FILEMODE 'stage mode and hunk' '
+ 	git reset --hard &&
+ 	echo content >>file &&
+ 	chmod +x file &&
 -- 
-1.6.4.134.gb2139
+1.6.4.288.gc754a.dirty
