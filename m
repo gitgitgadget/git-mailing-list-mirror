@@ -1,106 +1,93 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] Makefile: Add NEEDS_CRYPTO_WITH_SSL
-Date: Sat, 15 Aug 2009 12:46:53 -0400
-Message-ID: <1250354813-81349-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 15 18:54:49 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Using VC build git (new patch)
+Date: Sat, 15 Aug 2009 18:57:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908151851280.8306@pacific.mpi-cbg.de>
+References: <1976ea660908150921n516178dbs2ce024ed729e2e02@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 18:57:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McMWi-0001j3-N9
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 18:54:45 +0200
+	id 1McMZF-0002kC-1u
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 18:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932279AbZHOQyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 12:54:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932247AbZHOQyf
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 12:54:35 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:55819 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932268AbZHOQyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 12:54:33 -0400
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2009 12:54:33 EDT
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id C41CE1FFC03E; Sat, 15 Aug 2009 16:47:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (cpe-74-67-86-217.stny.res.rr.com [74.67.86.217])
-	by silverinsanity.com (Postfix) with ESMTPA id 55B321FFC001;
-	Sat, 15 Aug 2009 16:47:02 +0000 (UTC)
-X-Mailer: git-send-email 1.6.4.244.ge5cd0
+	id S932073AbZHOQ5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 12:57:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932079AbZHOQ5M
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 12:57:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44946 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932072AbZHOQ5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 12:57:11 -0400
+Received: (qmail invoked by alias); 15 Aug 2009 16:57:11 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 15 Aug 2009 18:57:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1876BUBMnc7pEPUsgLNzXg2CUZ54OPLmesaeAvLpP
+	PHgNGfAlYCJHo9
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1976ea660908150921n516178dbs2ce024ed729e2e02@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126012>
 
-The Makefile comment for NEEDS_SSL_WITH_CRYPTO says to define it "if
-you need -lcrypto with -lssl (Darwin)."  However, what it actually
-does is add -lssl when you use -lcrypto and not the other way around.
-However, libcrypto contains a majority of the ERR_* functions from
-OpenSSL (at least on OS X) so we need it both ways.
+Hi,
 
-So, add NEEDS_CRYPTO_WITH_SSL which adds -lcrypto to the OpenSSL link
-flags and clarify the difference between it and NEEDS_SSL_WITH_CRYPTO.
----
+On Sun, 16 Aug 2009, Frank Li wrote:
 
- After adding BLK_SHA1 to my config.mak, git-imap-send started giving me link
- errors:
+> New patch.
 
-  Undefined symbols:
-    "_ERR_get_error", referenced from:
-        _ssl_socket_perror in imap-send.o
-    "_ERR_error_string", referenced from:
-        _ssl_socket_perror in imap-send.o
+A single monster patch?
 
- Some investigation led me to the fact that BLK_SHA1 removes LIB_4_CRYPTO from
- EXTLIBS.  That let me find the missing functions in libcrypto.  At first I
- considered making NEEDS_SSL_WITH_CRYPTO add -lcrypto to the SSL build flags
- but decided to go this route in case there are platforms that need it one way
- around and not the other.
+Hmm.
 
- I've enabled this build option by default on Darwin but nowhere else.  If you
- can't build git-imap-send (with SSL) after enabling BLK_SHA1, your platform
- may need this flag as well.
+Please understand that I will not review that unless it is split up into 
+nice little and reviewable chunks.
 
- Makefile |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+This diffstat does not let me expect well-defined changes, either, sorry:
 
-diff --git a/Makefile b/Makefile
-index f94fe05..bc745fb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -99,7 +99,9 @@ all::
- # on non-x86 architectures (e.g. PowerPC), while the OpenSSL version (default
- # choice) has very fast version optimized for i586.
- #
--# Define NEEDS_SSL_WITH_CRYPTO if you need -lcrypto with -lssl (Darwin).
-+# Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
-+#
-+# Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
- #
- # Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
- #
-@@ -714,6 +716,7 @@ ifeq ($(uname_S),SCO_SV)
- 	TAR = gtar
- endif
- ifeq ($(uname_S),Darwin)
-+	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
-@@ -1023,6 +1026,9 @@ ifndef NO_OPENSSL
- 	else
- 		OPENSSL_LINK =
- 	endif
-+	ifdef NEEDS_CRYPTO_WITH_SSL
-+		OPENSSL_LINK += -lcrypto
-+	endif
- else
- 	BASIC_CFLAGS += -DNO_OPENSSL
- 	MOZILLA_SHA1 = 1
--- 
-1.6.4.244.ge5cd0
+ builtin-fast-export.c               |    1 +
+ compat/fnmatch/fnmatch.c            |    2 +
+ compat/mingw.c                      |   68 ++-
+ compat/mingw.h                      |   21 +-
+ compat/regex/regex.c                |    8 +-
+ compat/snprintf.c                   |    7 +-
+ compat/vcbuild/.gitignore           |    3 +
+ compat/vcbuild/ReadMe               |   13 +
+ compat/vcbuild/git/git.vcproj       |  197 +++++
+ compat/vcbuild/include/dirent.h     |  127 ++++
+ compat/vcbuild/include/unistd.h     |  174 +++++
+ compat/vcbuild/libgit/libgit.vcproj | 1347 +++++++++++++++++++++++++++++++++++
+ compat/vcbuild/porting.c            |   13 +
+ compat/vcbuild/sys/time.h           |   21 +
+ compat/winansi.c                    |    8 +
+ git-compat-util.h                   |    2 +-
+ help.c                              |    5 +-
+ pager.c                             |    4 +-
+ run-command.c                       |   11 +-
+ run-command.h                       |    2 +-
+ setup.c                             |    2 +-
+ 21 files changed, 2011 insertions(+), 25 deletions(-)
+
+It still modifies mingw.c and mingw.h, even if it has been strongly 
+suggested to leave those alone.
+
+It touches all kinds of files that appear to be completely unrelated to 
+Microsoft Visual C++.
+
+Remember: breaking things for existing users (and changing something that 
+works for them quite well readily risks that) is not an option.
+
+And the commit message does not even explain half of it...
+
+Ciao,
+Dscho
