@@ -1,92 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: jc/shortstatus
-Date: Sat, 15 Aug 2009 01:18:28 -0700
-Message-ID: <7v8whltrqj.fsf@alter.siamese.dyndns.org>
-References: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
- <20090815070904.GA23389@coredump.intra.peff.net>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: [PATCH] git submodule summary: add --files option
+Date: Sat, 15 Aug 2009 10:40:42 +0200
+Message-ID: <8c5c35580908150140q1d209664ic5e3816609365e24@mail.gmail.com>
+References: <4A846A62.7010306@web.de> <7v8whmjhqh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 15 10:22:38 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 10:40:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McEX7-0004Zj-3L
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:22:37 +0200
+	id 1McEoo-00026p-FA
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753420AbZHOISd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 04:18:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbZHOISd
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 04:18:33 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37938 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751742AbZHOISb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 04:18:31 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 68EE5B0A2;
-	Sat, 15 Aug 2009 04:18:32 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C4EECB0A1; Sat, 15 Aug
- 2009 04:18:29 -0400 (EDT)
-In-Reply-To: <20090815070904.GA23389@coredump.intra.peff.net> (Jeff King's
- message of "Sat\, 15 Aug 2009 03\:09\:04 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 38764EFC-8974-11DE-A0F9-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750777AbZHOIkn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Aug 2009 04:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750767AbZHOIkn
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 04:40:43 -0400
+Received: from mail-gx0-f205.google.com ([209.85.217.205]:43240 "EHLO
+	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750760AbZHOIkm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2009 04:40:42 -0400
+Received: by gxk1 with SMTP id 1so2711258gxk.17
+        for <git@vger.kernel.org>; Sat, 15 Aug 2009 01:40:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+3jBKuZ11Dann5R73X+y6kZ8SvCS29oQJkFGCBy5loY=;
+        b=B0Facq8g8+jRMP1T19xNGGt0MrHf8NMDzaKUdWiq2+noEdvaVW6c5Pt/JCrpAs2StH
+         RexCvUfKg+AM1FWEg5doVRxt5OBJjLoKQPsY7iKrqLA8lxGb9+E7kbmRO0hbbL5m8g0A
+         oUvcauJIAKU6edpoiG1oQwYpPTPfvl27EH1ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b/FqZYlR0eTWisVfUcIeVS2OAuP67cUf103UFD+DJ6ryyDn1PGf/h58Jw1S/e1NO5m
+         q46CdBm/j6YcyJpsIkvYKjgDv0rgJHPjhZ+r438P8zvtRmeL1nddxJwq2yu4EDQUKxFF
+         o0XVaR0ND0QgJAEbbznuFsQ2DG1g1abvPdxPo=
+Received: by 10.151.92.9 with SMTP id u9mr3364284ybl.158.1250325643013; Sat, 
+	15 Aug 2009 01:40:43 -0700 (PDT)
+In-Reply-To: <7v8whmjhqh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125985>
 
-Jeff King <peff@peff.net> writes:
-
-> For the "git stat" portion still in pu, I have a few comments/questions:
+On Fri, Aug 14, 2009 at 21:52, Junio C Hamano<gitster@pobox.com> wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 >
->   1. Is "stat" a good name? I worry a little that it is _too_ similar to
->      "status", and that will cause confusion while they both exist. So
->      something like "git overview" would cause less confusion, and even
->      though it sucks to type, it will eventually replace "status" (and
->      in the meantime people can make aliases or whatever).
+>> git submodule summary is providing similar functionality for submodu=
+les as
+>> git diff-index does for a git project (including the meaning of --ca=
+ched).
+>> But the analogon to git diff-files is missing, so add a --files opti=
+on to
+>> summarize the differences between the index of the super project and=
+ the
+>> last commit checked out in the working tree of the submodule.
+>>
+>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>
+> Makes sense to me. =C2=A0Comments?
 
-It is handy to have both available while asking others help debugging the
-version in 'pu', and that is the only reason for the separate command.  It
-could have been named 'git frotz' for all I care ;-)
+Acked-by: Lars Hjemli <hjemli@gmail.com> with a tiny fixup:
 
-I do not intend to make it another "git merge-recur"; I would actually
-want to have it replace "status" before the series goes to 'next'.
-
-I hopefully will have some time to start doing that over the weekend; the
-first step would be to rename the branch to jc/1.7.0-status and get rid of
-cmd_status() from builtin-commit.c.
-
-A few points I haven't managed to think about, decide, nor test, are:
-
- - What should its exit code be?  Should it be consistent with the
-   traditional "git status" at least when no paths are given, signallying
-   failure when nothing is staged for committing, so that ancient out of
-   tree scripts people may have written would not break too badly when we
-   make the switch?
-
- - What should its default mode of output be?  Do people prefer "svn st"
-   style short-format output, or should we stay verbose and explanatory?
-
- - Is it handling corner cases correctly?  e.g. Does it operate correctly
-   when run from a subdirectory?  How should it handle submodules?  Before
-   the initial commit?  Use of colors?
-
->   2. Does it really belong in builtin-commit.c anymore? It seems like
->      historical accident that "status" is so closely tied to commit. The
->      whole point of the new command is to _not_ be tied; I think of the
->      new command more as an extension of 'diff'. Admittedly, users don't
->      care where the source is located, but it helps the developers
->      understand the relationships between code.
-
-It would make sense to create a separate builtin-status.c.  I haven't
-looked at the dependencies yet, but it shouldn't be too bad.  We'll see.
-
->   3. Can you squash in the gitignore patch below? :)
-
-Yes but hopefully it won't be necessary ;-)
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -129,7 +129,7 @@ summary::
+        in the submodule between the given super project commit and the
+        index or working tree (switched by --cached) are shown. If the =
+option
+        --files is given, show the series of commits in the submodule b=
+etween
+-       the index of super project the and the working tree of the subm=
+odule
++       the index of the super project and the working tree of the subm=
+odule
+        (this option doesn't allow to use the --cached option or to pro=
+vide an
+        explicit commit).
