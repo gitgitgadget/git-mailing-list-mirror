@@ -1,253 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/6] git stat: the beginning
-Date: Sat, 15 Aug 2009 03:06:40 -0700
-Message-ID: <1250330803-22171-4-git-send-email-gitster@pobox.com>
-References: <1250330803-22171-1-git-send-email-gitster@pobox.com>
- <1250330803-22171-2-git-send-email-gitster@pobox.com>
- <1250330803-22171-3-git-send-email-gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 15 12:07:17 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
+Date: Sat, 15 Aug 2009 12:14:58 +0200
+Message-ID: <200908151215.00713.trast@student.ethz.ch>
+References: <200908101136.34660.trast@student.ethz.ch> <20090815065125.GA23068@coredump.intra.peff.net> <7v4os9v7al.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 12:16:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McGAN-00053t-22
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 12:07:15 +0200
+	id 1McGJH-0008NV-Ke
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 12:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbZHOKG4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 06:06:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbZHOKGz
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 06:06:55 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36347 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785AbZHOKGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 06:06:54 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A60412ABCC;
-	Sat, 15 Aug 2009 06:06:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 943792ABCB; Sat, 15 Aug 2009
- 06:06:53 -0400 (EDT)
-X-Mailer: git-send-email 1.6.4.224.g3be84
-In-Reply-To: <1250330803-22171-3-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 5CB08490-8983-11DE-8102-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1751782AbZHOKPg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 06:15:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751185AbZHOKPg
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 06:15:36 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:14131 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751157AbZHOKPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 06:15:36 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
+ 2009 12:15:35 +0200
+Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
+ 2009 12:15:14 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <7v4os9v7al.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125996>
 
-Tentatively add "git stat" as a new command.  This does not munge the
-index with paths parameters before showing the status like "git status"
-does.  In later rounds, we will take path parameters as pathspec to limit
-the output.
+Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> >> reset -p [HEAD]		Reset this hunk? (**)
+> >> reset -p other		Apply this hunk to index? (**)
+> >
+> > This doesn't make sense to me.
+> 
+> Not to me, either.
+> 
+> Let's say you have modified $path and ran "git add $path" earlier.
+> 
+> "reset -p -- $path" and "reset -p HEAD -- $path" both show what your index
+> has relative to the commit you are resetting your index to and offer to
+> "Unstage" [*1*].  This is consistent and feels natural.
+> 
+> "reset -p HEAD^ -- $path" however shows the same forward diff (i.e. how
+> your index is different compared to the commit HEAD^ you are resetting
+> to), but offers to "Apply".
+[...]
+> Perhaps you meant to show a reverse diff and use the word
+> "Apply".
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Indeed.
 
-* The change since the version cooking in 'pu' is that the long format
-  honors the color (both "status" colors and "diff" colors).
+> However, that would break down rather badly when HEAD did not change $path
+> since HEAD^.  Logically what the "reset -p" would do to $path is the same,
+> but the patch shown and the operation offered to the user are opposite.
+> 
+> You could compare HEAD and the commit you are resetting the index to and
+> see if the path in question is different between the two commits, and
+> switch the direction---if there is no change, you show forward diff and
+> offer to "Remove this change out of the index", if there is a change, you
+> show reverse diff and offer to "Apply this change to the index".  But if
+> the difference between HEAD and the commit you are resetting to does not
+> overlap with the change you staged to the index earlier from your work
+> tree, it is unclear such heuristics would yield a natural feel.
+> 
+> So I actually think you may be better off if you consistently showed a
+> forward diff (i.e. what patch would have been applied to the commit in
+> question to bring the index into its current shape), and always offer
+> "Remove this change out of the index?"
 
- Makefile         |    1 +
- builtin-commit.c |   64 +++++++++++++++++++++++++++++++++++++++++++++--------
- builtin.h        |    1 +
- git.c            |    1 +
- wt-status.c      |   23 +++++++++++-------
- wt-status.h      |    1 +
- 6 files changed, 72 insertions(+), 19 deletions(-)
+HEAD^ is not special.  What do we do if the user resets to something
+that is logically further progressed in time, perhaps another branch?
+I just have a much better mental model of it as "apply <something> to
+index" than if it said: here's some diff between whatever commit you
+gave me, and your index; but I'm going to apply it reverse!
 
-diff --git a/Makefile b/Makefile
-index daf4296..39dd334 100644
---- a/Makefile
-+++ b/Makefile
-@@ -378,6 +378,7 @@ BUILT_INS += git-init$X
- BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
-+BUILT_INS += git-stat$X
- BUILT_INS += git-show$X
- BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 200ffda..0ef7c8f 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -24,6 +24,7 @@
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
-+#include "quote.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	"git commit [options] [--] <filepattern>...",
-@@ -35,6 +36,11 @@ static const char * const builtin_status_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_stat_usage[] = {
-+	"git stat [options]",
-+	NULL
-+};
-+
- static unsigned char head_sha1[20], merge_head_sha1[20];
- static char *use_message_buffer;
- static const char commit_editmsg[] = "COMMIT_EDITMSG";
-@@ -691,6 +697,21 @@ static const char *find_author_by_nickname(const char *name)
- 	die("No existing author found with '%s'", name);
- }
- 
-+
-+static void handle_untracked_files_arg(struct wt_status *s)
-+{
-+	if (!untracked_files_arg)
-+		; /* default already initialized */
-+	else if (!strcmp(untracked_files_arg, "no"))
-+		s->show_untracked_files = SHOW_NO_UNTRACKED_FILES;
-+	else if (!strcmp(untracked_files_arg, "normal"))
-+		s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-+	else if (!strcmp(untracked_files_arg, "all"))
-+		s->show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
-+	else
-+		die("Invalid untracked files mode '%s'", untracked_files_arg);
-+}
-+
- static int parse_and_validate_options(int argc, const char *argv[],
- 				      const char * const usage[],
- 				      const char *prefix,
-@@ -794,16 +815,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	else
- 		die("Invalid cleanup mode %s", cleanup_arg);
- 
--	if (!untracked_files_arg)
--		; /* default already initialized */
--	else if (!strcmp(untracked_files_arg, "no"))
--		s->show_untracked_files = SHOW_NO_UNTRACKED_FILES;
--	else if (!strcmp(untracked_files_arg, "normal"))
--		s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
--	else if (!strcmp(untracked_files_arg, "all"))
--		s->show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
--	else
--		die("Invalid untracked files mode '%s'", untracked_files_arg);
-+	handle_untracked_files_arg(s);
- 
- 	if (all && argc > 0)
- 		die("Paths with -a does not make sense.");
-@@ -886,6 +898,38 @@ static int git_status_config(const char *k, const char *v, void *cb)
- 	return git_diff_ui_config(k, v, NULL);
- }
- 
-+int cmd_stat(int argc, const char **argv, const char *prefix)
-+{
-+	struct wt_status s;
-+	unsigned char sha1[20];
-+	static struct option builtin_stat_options[] = {
-+		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
-+		  "mode",
-+		  "show untracked files, optional modes: all, normal, no. (Default: all)",
-+		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-+		OPT_END(),
-+	};
-+
-+	wt_status_prepare(&s);
-+	git_config(git_status_config, &s);
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_stat_options,
-+			     builtin_stat_usage, 0);
-+	handle_untracked_files_arg(&s);
-+
-+	read_cache();
-+	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
-+	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	wt_status_collect(&s);
-+
-+	if (s.use_color == -1)
-+		s.use_color = git_use_color_default;
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+	wt_status_print_body(&s);
-+	return 0;
-+}
-+
- int cmd_status(int argc, const char **argv, const char *prefix)
- {
- 	struct wt_status s;
-diff --git a/builtin.h b/builtin.h
-index 20427d2..eeaf0b6 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -95,6 +95,7 @@ extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_stat(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 807d875..de7fcf6 100644
---- a/git.c
-+++ b/git.c
-@@ -350,6 +350,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "shortlog", cmd_shortlog, USE_PAGER },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
-+		{ "stat", cmd_stat, RUN_SETUP | NEED_WORK_TREE },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
-diff --git a/wt-status.c b/wt-status.c
-index 63598ce..c887a90 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -531,6 +531,19 @@ static void wt_status_print_tracking(struct wt_status *s)
- 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
- }
- 
-+void wt_status_print_body(struct wt_status *s)
-+{
-+	wt_status_print_unmerged(s);
-+	wt_status_print_updated(s);
-+	wt_status_print_changed(s);
-+	if (s->submodule_summary)
-+		wt_status_print_submodule_summary(s);
-+	if (s->show_untracked_files)
-+		wt_status_print_untracked(s);
-+	else if (s->commitable)
-+		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
-+}
-+
- void wt_status_print(struct wt_status *s)
- {
- 	unsigned char sha1[20];
-@@ -561,15 +574,7 @@ void wt_status_print(struct wt_status *s)
- 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
- 	}
- 
--	wt_status_print_unmerged(s);
--	wt_status_print_updated(s);
--	wt_status_print_changed(s);
--	if (s->submodule_summary)
--		wt_status_print_submodule_summary(s);
--	if (s->show_untracked_files)
--		wt_status_print_untracked(s);
--	else if (s->commitable)
--		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
-+	wt_status_print_body(s);
- 
- 	if (s->verbose)
- 		wt_status_print_verbose(s);
-diff --git a/wt-status.h b/wt-status.h
-index a0e7517..ab52ce1 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -54,5 +54,6 @@ struct wt_status {
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
-+void wt_status_print_body(struct wt_status *s);
- 
- #endif /* STATUS_H */
+(v4 actually did it this way and I found it a bit confusing...)
+
+> The same comment applies to "checkout -p HEAD" vs "checkout -p HEAD^".
+> I think the latter shouldn't show a reverse diff and offer "Apply?";
+> instead both should consitently show a forward diff (i.e. what patch would
+> have been applied to the commit to bring your work tree into its current
+> shape), and offer "Remove this change out of the index and the work tree?".
+
+Again (and unlike in the reset case, I can actually see myself doing
+this at times) the user could pass in a commit that is logically
+newer than HEAD.
+
+> *1* I actually have a slight problem with the use of word "Unstage" in
+> this context; "to stage", at least to me, means "adding _from the work
+> tree_ to the index", not just "modifying the index" from a random source.
+> The command is resetting the index in this case from a tree-ish and there
+> is no work tree involved, and the word "stage/unstage" feels out of place.
+
+It's not using "unstage" any more if the commit is not HEAD.  If it
+is, then we're doing the opposite of 'add -p', so doesn't the term
+apply then?
+
 -- 
-1.6.4.224.g3be84
+Thomas Rast
+trast@{inf,student}.ethz.ch
