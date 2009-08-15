@@ -1,63 +1,76 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH] git-log: allow --decorate[=short|full]
-Date: Sat, 15 Aug 2009 12:26:20 +0200
-Message-ID: <8c5c35580908150326i661a3203kdd82023bb694734d@mail.gmail.com>
-References: <8c5c35580908150250y62b1042cmf6071016bac98a48@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] git submodule summary: add --files option
+Date: Sat, 15 Aug 2009 13:40:55 +0200
+Message-ID: <4A869EC7.7080701@web.de>
+References: <4A846A62.7010306@web.de> <7v8whmjhqh.fsf@alter.siamese.dyndns.org> <8c5c35580908150140q1d209664ic5e3816609365e24@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 12:31:31 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 13:43:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McGXp-0004fh-LU
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 12:31:30 +0200
+	id 1McHfr-0001VR-FM
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 13:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752946AbZHOKbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 06:31:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752532AbZHOKbV
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 06:31:21 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:36608 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752096AbZHOKbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 06:31:20 -0400
-Received: by yxe5 with SMTP id 5so2524744yxe.33
-        for <git@vger.kernel.org>; Sat, 15 Aug 2009 03:31:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=u7sOLk2qVWf8MP549VUQMOH0Ue56PWnU+DT9p0HPms8=;
-        b=fezYQWgmrljvh8nzDwsvl0HBUs7uGEU3eOVx6kbSDaUxpN5pmy1Y9AQwxeovoeUlBn
-         mVWHq2DmRzexG2wWUFbX+zJXpbO/tluty1jTWOaqy6Z0wmGIj/KPP7yco4WrshGkHt2R
-         zrvGO0FxlTlyEZqdeK8qwgaKTuqTtH5TcooC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vlxvqYP67NkOkHLHAAWxDMXbcnP5v4XatyFMqWbpD/AWvhQ847MdVlY+vnrfYaDGTE
-         qRUyLI6qaofpJl/YhcaduncLLCO5Pv1kr3E/YTtrRHDnwaa1hO+/xbhGhdq9tLYpAyNS
-         uhEwM//9FwZKFgPDyHamFgFIf++7j5p5eXXsM=
-Received: by 10.150.175.8 with SMTP id x8mr3379448ybe.40.1250331980989; Sat, 
-	15 Aug 2009 03:26:20 -0700 (PDT)
-In-Reply-To: <8c5c35580908150250y62b1042cmf6071016bac98a48@mail.gmail.com>
+	id S1752676AbZHOLnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 07:43:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751360AbZHOLnk
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 07:43:40 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:46252 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbZHOLnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 07:43:39 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 67406112EA04D;
+	Sat, 15 Aug 2009 13:41:08 +0200 (CEST)
+Received: from [80.128.100.54] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1McHdE-0002gW-00; Sat, 15 Aug 2009 13:41:08 +0200
+User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
+In-Reply-To: <8c5c35580908150140q1d209664ic5e3816609365e24@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+ah5kTesj74Mgjq2vV6HjJXAKim1UJQZXy3z60
+	LdlNrRbco3wSwGxO0A7VFrIZ7yQShPlTc/5mpO/5R/oOdqWIp8
+	fm6Hz+/QVfb+P0Nal1nw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125998>
 
-On Sat, Aug 15, 2009 at 11:50, Lars Hjemli<hjemli@gmail.com> wrote:
-> This extension to --decorate makes it possible to generate decorations
-> similar to pre-1.6.4 git, which is nice when the output from git-log
-> is used by external tools.
+Lars Hjemli schrieb:
+> On Fri, Aug 14, 2009 at 21:52, Junio C Hamano<gitster@pobox.com> wrote:
+>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>
+>>> git submodule summary is providing similar functionality for submodules as
+>>> git diff-index does for a git project (including the meaning of --cached).
+>>> But the analogon to git diff-files is missing, so add a --files option to
+>>> summarize the differences between the index of the super project and the
+>>> last commit checked out in the working tree of the submodule.
+>>>
+>>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>> Makes sense to me.  Comments?
+> 
+> Acked-by: Lars Hjemli <hjemli@gmail.com> with a tiny fixup:
+> 
+> --- a/Documentation/git-submodule.txt
+> +++ b/Documentation/git-submodule.txt
+> @@ -129,7 +129,7 @@ summary::
+>         in the submodule between the given super project commit and the
+>         index or working tree (switched by --cached) are shown. If the option
+>         --files is given, show the series of commits in the submodule between
+> -       the index of super project the and the working tree of the submodule
+> +       the index of the super project and the working tree of the submodule
+>         (this option doesn't allow to use the --cached option or to provide an
+>         explicit commit).
 
-BTW: the patch was made on top of current master (b2139dbd) - if
-accepted, it might be considered for maint.
+Yup, sentence this makes much more sense now ... :-)
 
---
-larsh
+Shall i send an updated patch?
+
+
+Jens
