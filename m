@@ -1,87 +1,80 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Simplify '--prett=xyz' options
-Date: Sat, 15 Aug 2009 17:05:39 -0400
-Message-ID: <32541b130908151405j661cde8fh9783e91cebf1e398@mail.gmail.com>
-References: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain> 
-	<200908152119.56606.trast@student.ethz.ch> <alpine.LFD.2.01.0908151236250.3162@localhost.localdomain> 
-	<7viqgoestz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0908151324380.3162@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jc/shortstatus
+Date: Sat, 15 Aug 2009 14:23:23 -0700
+Message-ID: <7v7hx4bwl0.fsf@alter.siamese.dyndns.org>
+References: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
+ <20090815070904.GA23389@coredump.intra.peff.net>
+ <7v8whltrqj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 15 23:06:09 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Aug 15 23:23:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McQS0-0002Qm-BC
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 23:06:08 +0200
+	id 1McQiw-0007XA-AC
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 23:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752457AbZHOVF6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Aug 2009 17:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752452AbZHOVF6
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 17:05:58 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:60581 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309AbZHOVF6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2009 17:05:58 -0400
-Received: by yxe5 with SMTP id 5so2743824yxe.33
-        for <git@vger.kernel.org>; Sat, 15 Aug 2009 14:05:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=u1EcjJW3gCGloUdbsL3RSU/qIKx66+uBQyjCRem9st4=;
-        b=q/49sLXLdLR6hL59RC+XcrlaQlP/seeZXtNlpdq/zxZrusWWW7WpC9kZBfW0BHiFqr
-         32LfrkAGQ1eXjPVKLe3+xf+1+uBkv9Jd1BfareHGYL3FpoDzH9ccsroTza9vUqNuLziq
-         zyneRxHw75gZm7PJb3wvdhCeXi6s7c0RTHR2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=V+WnH9eSaRCcHHA8Qn2qJ9qckm22vcAgIV5WYiqn3Vg6Q5deuCELDoH6VG+vk50Uvl
-         4wzeU4ddjuUHiA9F56dITDQmGJu78Bt8NbrspuheLfNlC37h8c50a1K2F6D7z3Axr2zM
-         XCO9thtLDCKdiAfHd9OFQjt7PoCikh8Js6IC0=
-Received: by 10.150.43.14 with SMTP id q14mr3820404ybq.241.1250370359083; Sat, 
-	15 Aug 2009 14:05:59 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.01.0908151324380.3162@localhost.localdomain>
+	id S1751013AbZHOVX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 17:23:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbZHOVX3
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 17:23:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62003 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750709AbZHOVX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 17:23:28 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5BCAB2A6AF;
+	Sat, 15 Aug 2009 17:23:28 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 46A162A6AD; Sat, 15 Aug 2009
+ 17:23:24 -0400 (EDT)
+In-Reply-To: <7v8whltrqj.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat\, 15 Aug 2009 01\:18\:28 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DFD23B08-89E1-11DE-8AA7-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126030>
 
-On Sat, Aug 15, 2009 at 4:36 PM, Linus
-Torvalds<torvalds@linux-foundation.org> wrote:
-> On Sat, 15 Aug 2009, Junio C Hamano wrote:
->> If you try that without --stat, i.e.
->>
->> =A0 =A0 $ git log -4 --pretty=3Dformat:%s | cat -e
->> =A0 =A0 $ git log -4 --pretty=3Dtformat:%s | cat -e
->>
->> I suspect you may then find that --pretty=3Dformat (not --pretty=3Dt=
-format) is
->> broken.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> A few points I haven't managed to think about, decide, nor test, are:
 >
-> I disagree. The real brokenness is that we don't have any way to say =
-"I
-> want no newline at all after the format", and then having this mixup =
-with
-> the whole "terminator" thing - sometimes it's "between commits" (whic=
-h is
-> _correct_ any time you have stat info or something), and sometimes it=
-'s
-> "after header" (which is almost always incorrect).
+>  - What should its exit code be?  Should it be consistent with the
+>    traditional "git status" at least when no paths are given, signallying
+>    failure when nothing is staged for committing, so that ancient out of
+>    tree scripts people may have written would not break too badly when we
+>    make the switch?
+>
+>  - What should its default mode of output be?  Do people prefer "svn st"
+>    style short-format output, or should we stay verbose and explanatory?
+>
+>  - Is it handling corner cases correctly?  e.g. Does it operate correctly
+>    when run from a subdirectory?  How should it handle submodules?  Before
+>    the initial commit?  Use of colors?
 
-I'm guessing that "after header" was just an implementation error.  It
-was presumably intended to be "after commit", so that the only
-difference between format and tformat is the presence or absence of
-the very last terminator.
+Just a quick status update, lest others waste too much time staring at the
+series I posted last night.
 
-Maybe the correct fix is just to make tformat not broken?
+ - Leading and trailing comments (e.g. "On branch foo", "Initial commit",
+   "# No changes", ...) were missing.
+ - Did not honor -v to show "diff --cached".
+ - Subdirectory behaviour (status.relativepath configuration) was broken.
 
-Avery
+I have a version that fixes the above, and exits 0 when there is no error
+(i.e. does not exit non-zero on clean index).  There are existing tests
+that expect "git status" erroring out on clean index and there are some
+that depends on "git status paths..." to show preview of a partial commit,
+which needed to be replaced with "git commit --dry-run", but as far as I
+can tell, I've took care of them all.
+
+I am still feeling uneasy about the exit status change (the test scripts
+are sources of how people who script around git take their inspirations
+after all), but I'll send the result out for a review later without
+changing that back to "exit failure when there is nothing to commit".
