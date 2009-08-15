@@ -1,71 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Simplify '--prett=xyz' options
-Date: Sat, 15 Aug 2009 13:16:08 -0700
-Message-ID: <7viqgoestz.fsf@alter.siamese.dyndns.org>
+Date: Sat, 15 Aug 2009 22:22:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908152220060.8306@pacific.mpi-cbg.de>
 References: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain>
- <200908152119.56606.trast@student.ethz.ch>
- <alpine.LFD.2.01.0908151236250.3162@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 15 22:16:25 2009
+X-From: git-owner@vger.kernel.org Sat Aug 15 22:22:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McPfr-00045N-Go
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 22:16:24 +0200
+	id 1McPlL-0006Aa-FI
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 22:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751014AbZHOUQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 16:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750806AbZHOUQP
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 16:16:15 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42718 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750726AbZHOUQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 16:16:15 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F262D2A377;
-	Sat, 15 Aug 2009 16:16:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A29C22A372; Sat, 15 Aug 2009
- 16:16:10 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.01.0908151236250.3162@localhost.localdomain>
- (Linus Torvalds's message of "Sat\, 15 Aug 2009 12\:50\:49 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BBC2646-89D8-11DE-9D58-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1752061AbZHOUVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 16:21:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbZHOUVw
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 16:21:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37585 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750726AbZHOUVv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 16:21:51 -0400
+Received: (qmail invoked by alias); 15 Aug 2009 20:21:51 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp042) with SMTP; 15 Aug 2009 22:21:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+vZzUJioGvM6w6DcEKs3J5mAMj2O4lQBOT1lbbIO
+	xAum8wZJgT02/y
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126025>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hi,
 
-> On Sat, 15 Aug 2009, Thomas Rast wrote:
->
->> Granted, it makes it equivalent to --pretty=tformat:foo, but isn't
->> tformat the better choice in many cases?
->
-> Not really. Look at what happens with
->
-> 	git log --stat --pretty=format:%s
->
-> and then try tformat instead. 'tformat' is broken, as is our current 
-> --format=%s.
->
-> In other words, all of that crud is totally illogical, and our "short 
-> versions" (--oneline and --format=) were done entirely incorrectly (well, 
-> --oneline probably has the _right_ semantics, and --pretty=oneline is just 
-> wrong, but whatever).
+On Sat, 15 Aug 2009, Linus Torvalds wrote:
 
-If you try that without --stat, i.e.
+> 
+> I keep on thinking that I can write
+> 
+> 	git log --format:'%aN: %s'
 
-    $ git log -4 --pretty=format:%s | cat -e
-    $ git log -4 --pretty=tformat:%s | cat -e
+You mean as opposed to "--format=%aN:\ %s" (which works)?
 
-I suspect you may then find that --pretty=format (not --pretty=tformat) is
-broken.
+> Now I just need a patch to make me athletic and handsome.
+
+I thought that already happened?  /me remembers seeing a youtube video 
+with you in speedos.
+
+
+> diff --git a/revision.c b/revision.c
+> index 9f5dac5..181593f 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1192,6 +1192,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>  	} else if (!strcmp(arg, "--children")) {
+>  		revs->children.name = "children";
+>  		revs->limited = 1;
+> +	} else if (!strncmp(arg, "--", 2) && try_get_commit_format(arg+2, revs)) {
+
+prefixcmp?
+
+Ciao,
+Dscho
