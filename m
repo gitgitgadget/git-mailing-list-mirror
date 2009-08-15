@@ -1,74 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Simplify '--prett=xyz' options
-Date: Sat, 15 Aug 2009 22:22:36 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908152220060.8306@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Sat, 15 Aug 2009 13:23:41 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908151315400.3162@localhost.localdomain>
+References: <4A85F270.20703@draigBrady.com>  <3e8340490908151302y33a97d50t38ad0a8a788f1cee@mail.gmail.com> <43d8ce650908151312o6a43416el27965c4b0ab8d83d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Aug 15 22:22:04 2009
+Cc: Bryan Donlan <bdonlan@gmail.com>,
+	=?ISO-8859-15?Q?P=E1draig_Brady?= <P@draigbrady.com>,
+	Bug-coreutils@gnu.org, Git Mailing List <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 22:24:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McPlL-0006Aa-FI
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 22:22:03 +0200
+	id 1McPnZ-0006oc-K1
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 22:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061AbZHOUVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 16:21:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750743AbZHOUVw
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 16:21:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37585 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750726AbZHOUVv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 16:21:51 -0400
-Received: (qmail invoked by alias); 15 Aug 2009 20:21:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp042) with SMTP; 15 Aug 2009 22:21:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+vZzUJioGvM6w6DcEKs3J5mAMj2O4lQBOT1lbbIO
-	xAum8wZJgT02/y
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1752106AbZHOUYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 16:24:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbZHOUYJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 16:24:09 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:58771 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752100AbZHOUYI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2009 16:24:08 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7FKNfg1008311
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 15 Aug 2009 13:23:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7FKNfrl007909;
+	Sat, 15 Aug 2009 13:23:41 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <43d8ce650908151312o6a43416el27965c4b0ab8d83d@mail.gmail.com>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126026>
 
-Hi,
 
-On Sat, 15 Aug 2009, Linus Torvalds wrote:
 
+On Sat, 15 Aug 2009, John Tapsell wrote:
+
+> 2009/8/15 Bryan Donlan <bdonlan@gmail.com>:
+> > coreutils is licensed under GPLv3, and git under GPLv2 (only), so
+> > you'd need permission from all contributors to the implementation in
+> > order to relicense under GPLv3. A quick grep of the history suggests
+> > these contributors to be:
 > 
-> I keep on thinking that I can write
-> 
-> 	git log --format:'%aN: %s'
+> X11 also requires a fast SHA1 implementation.  It uses this to check
+> if two pixmaps are the same.  So it would be really nice to relicense
+> under a liberal enough license that xorg can use it.
 
-You mean as opposed to "--format=%aN:\ %s" (which works)?
+I'm personally ok with retaining the mozilla-sha1 license.
 
-> Now I just need a patch to make me athletic and handsome.
+There's not really anything _remaining_ of the mozilla code, but hey, I 
+started from it. In retrospect I probably should have started from the PPC 
+asm code that already did the blocking sanely - but that's a "20/20 
+hindsight" kind of thing.
 
-I thought that already happened?  /me remembers seeing a youtube video 
-with you in speedos.
+Plus hey, the mozilla code being a horrid pile of crud was why I was so 
+convinced that I could improve on things. So that's a kind of source for 
+it, even if it's more about the motivational side than any actual 
+remaining code ;)
 
+That said, I don't know if the MPL is ok for X11. I've not looked at 
+compatibility issues with MPL. For git, we could just ignore the MPL, 
+since the GPLv2 was acceptable regardless of it.
 
-> diff --git a/revision.c b/revision.c
-> index 9f5dac5..181593f 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1192,6 +1192,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  	} else if (!strcmp(arg, "--children")) {
->  		revs->children.name = "children";
->  		revs->limited = 1;
-> +	} else if (!strncmp(arg, "--", 2) && try_get_commit_format(arg+2, revs)) {
-
-prefixcmp?
-
-Ciao,
-Dscho
+			Linus
