@@ -1,8 +1,8 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5.1 5/6] Implement 'git checkout --patch'
-Date: Sat, 15 Aug 2009 13:48:30 +0200
-Message-ID: <fca8ddb4f49a85a9e524712adef069fd7d9ea32f.1250336810.git.trast@student.ethz.ch>
-References: <b75f4adebf7f417b8c46746202933e8f7ff80331.1250164190.git.trast@student.ethz.ch>
+Subject: [PATCH v5.1 4/6] Implement 'git reset --patch'
+Date: Sat, 15 Aug 2009 13:48:31 +0200
+Message-ID: <00b886234218b93a324166058144e21bacce202d.1250335949.git.trast@student.ethz.ch>
+References: <f3b8fdbcf451fe28786ed221d02717e28423e6dd.1250164190.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
@@ -11,304 +11,272 @@ Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
 	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
 	Pierre Habouzit <madcoder@debian.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 13:49:08 2009
+X-From: git-owner@vger.kernel.org Sat Aug 15 13:49:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McHkx-0003I8-CS
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 13:49:08 +0200
+	id 1McHky-0003I8-Is
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 13:49:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753927AbZHOLsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 07:48:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753920AbZHOLsz
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 07:48:55 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:54564 "EHLO gwse.ethz.ch"
+	id S1753970AbZHOLs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 07:48:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbZHOLs7
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 07:48:59 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:31943 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753787AbZHOLsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 07:48:54 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
- 2009 13:48:53 +0200
+	id S1753794AbZHOLsz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 07:48:55 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
+ 2009 13:48:54 +0200
 Received: from localhost.localdomain (129.132.211.129) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
- 2009 13:48:51 +0200
+ 2009 13:48:54 +0200
 X-Mailer: git-send-email 1.6.4.287.g3e02d
-In-Reply-To: <b75f4adebf7f417b8c46746202933e8f7ff80331.1250164190.git.trast@student.ethz.ch>
+In-Reply-To: <f3b8fdbcf451fe28786ed221d02717e28423e6dd.1250164190.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126000>
 
-This introduces a --patch mode for git-checkout.  In the index usage
+This introduces a --patch mode for git-reset.  The basic case is
 
-  git checkout --patch -- [files...]
+  git reset --patch -- [files...]
 
-it lets the user discard edits from the <files> at the granularity of
-hunks (by selecting hunks from 'git diff' and then reverse applying
-them to the worktree).
+which acts as the opposite of 'git add --patch -- [files...]': it
+offers hunks for *un*staging.  Advanced usage is
 
-We also accept a revision argument.  In the case
+  git reset --patch <revision> -- [files...]
 
-  git checkout --patch HEAD -- [files...]
-
-we offer hunks from the difference between HEAD and the worktree, and
-reverse applies them to both index and worktree, allowing you to
-discard staged changes completely.  In the non-HEAD usage
-
-  git checkout --patch <revision> -- [files...]
-
-it offers hunks from the difference between the worktree and
-<revision>.  The chosen hunks are then applied to both index and
-worktree.
-
-The application to worktree and index is done "atomically" in the
-sense that we first check if the patch applies to the index (it should
-always apply to the worktree).  If it does not, we give the user a
-choice to either abort or apply to the worktree anyway.
+which offers hunks from the diff between the index and <revision> for
+forward application to the index.  (That is, the basic case is just
+<revision> = HEAD.)
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-I found another mismatch of the -R flags during double checking, as
-follows:
+Jeff noticed the prompt and patch direction weren't matching:
 
-  diff --git c/git-add--interactive.perl i/git-add--interactive.perl
-  index 2363a77..21746d5 100755
-  --- c/git-add--interactive.perl
-  +++ i/git-add--interactive.perl
-  @@ -117,7 +117,7 @@
-   	'checkout_head' => {
-   		DIFF => 'diff-index -p',
-   		APPLY => sub { apply_patch_for_checkout_commit '-R', @_ },
-  -		APPLY_CHECK => 'apply',
-  +		APPLY_CHECK => 'apply -R',
-   		VERB => 'Discard',
-   		TARGET => ' from index and worktree',
-   		PARTICIPLE => 'discarding',
+  http://article.gmane.org/gmane.comp.version-control.git/125981
+
+This flips the direction of the patch in the 'git reset -p other'
+case, as I really wanted it that way around.
 
 
- Documentation/git-checkout.txt |   13 +++++-
- builtin-checkout.c             |   19 +++++++
- git-add--interactive.perl      |   61 +++++++++++++++++++++++
- t/t2015-checkout-patch.sh      |  107 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 199 insertions(+), 1 deletions(-)
- create mode 100755 t/t2015-checkout-patch.sh
+ Documentation/git-reset.txt |   15 ++++++++-
+ builtin-reset.c             |   19 ++++++++++++
+ git-add--interactive.perl   |   57 +++++++++++++++++++++++++++++++++--
+ t/t7105-reset-patch.sh      |   69 +++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 154 insertions(+), 6 deletions(-)
+ create mode 100755 t/t7105-reset-patch.sh
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index ad4b31e..26a5447 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -11,6 +11,7 @@ SYNOPSIS
- 'git checkout' [-q] [-f] [-m] [<branch>]
- 'git checkout' [-q] [-f] [-m] [-b <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
-+'git checkout' --patch [<tree-ish>] [--] [<paths>...]
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index abb25d1..469cf6d 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git reset' [--mixed | --soft | --hard | --merge] [-q] [<commit>]
+ 'git reset' [-q] [<commit>] [--] <paths>...
++'git reset' --patch [<commit>] [--] [<paths>...]
  
  DESCRIPTION
  -----------
-@@ -25,7 +26,7 @@ use the --track or --no-track options, which will be passed to `git
- branch`.  As a convenience, --track without `-b` implies branch
- creation; see the description of --track below.
+@@ -23,8 +24,9 @@ the undo in the history.
+ If you want to undo a commit other than the latest on a branch,
+ linkgit:git-revert[1] is your friend.
  
--When <paths> are given, this command does *not* switch
-+When <paths> or --patch are given, this command does *not* switch
- branches.  It updates the named paths in the working tree from
- the index file, or from a named <tree-ish> (most often a commit).  In
- this case, the `-b` and `--track` options are meaningless and giving
-@@ -113,6 +114,16 @@ the conflicted merge in the specified paths.
- 	"merge" (default) and "diff3" (in addition to what is shown by
- 	"merge" style, shows the original contents).
+-The second form with 'paths' is used to revert selected paths in
+-the index from a given commit, without moving HEAD.
++The second and third forms with 'paths' and/or --patch are used to
++revert selected paths in the index from a given commit, without moving
++HEAD.
+ 
+ 
+ OPTIONS
+@@ -50,6 +52,15 @@ OPTIONS
+ 	and updates the files that are different between the named commit
+ 	and the current commit in the working tree.
  
 +-p::
 +--patch::
-+	Interactively select hunks in the difference between the
-+	<tree-ish> (or the index, if unspecified) and the working
-+	tree.  The chosen hunks are then applied in reverse to the
-+	working tree (and if a <tree-ish> was specified, the index).
++	Interactively select hunks in the difference between the index
++	and <commit> (defaults to HEAD).  The chosen hunks are applied
++	in reverse to the index.
 ++
-+This means that you can use `git checkout -p` to selectively discard
-+edits from your current working tree.
++This means that `git reset -p` is the opposite of `git add -p` (see
++linkgit:git-add[1]).
 +
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 8a9a474..8b942ba 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -572,6 +572,13 @@ static int git_checkout_config(const char *var, const char *value, void *cb)
- 	return git_xmerge_config(var, value, cb);
+ -q::
+ 	Be quiet, only report errors.
+ 
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 5fa1789..246a127 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -142,6 +142,17 @@ static void update_index_from_diff(struct diff_queue_struct *q,
+ 	}
  }
  
-+static int interactive_checkout(const char *revision, const char **pathspec,
-+				struct checkout_opts *opts)
++static int interactive_reset(const char *revision, const char **argv,
++			     const char *prefix)
 +{
-+	return run_add_interactive(revision, "--patch=checkout", pathspec);
++	const char **pathspec = NULL;
++
++	if (*argv)
++		pathspec = get_pathspec(prefix, argv);
++
++	return run_add_interactive(revision, "--patch=reset", pathspec);
 +}
 +
-+
- int cmd_checkout(int argc, const char **argv, const char *prefix)
+ static int read_from_tree(const char *prefix, const char **argv,
+ 		unsigned char *tree_sha1, int refresh_flags)
  {
- 	struct checkout_opts opts;
-@@ -580,6 +587,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	struct branch_info new;
- 	struct tree *source_tree = NULL;
- 	char *conflict_style = NULL;
+@@ -183,6 +194,7 @@ static void prepend_reflog_action(const char *action, char *buf, size_t size)
+ int cmd_reset(int argc, const char **argv, const char *prefix)
+ {
+ 	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
 +	int patch_mode = 0;
- 	struct option options[] = {
- 		OPT__QUIET(&opts.quiet),
- 		OPT_STRING('b', NULL, &opts.new_branch, "new branch", "branch"),
-@@ -594,6 +602,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN('m', "merge", &opts.merge, "merge"),
- 		OPT_STRING(0, "conflict", &conflict_style, "style",
- 			   "conflict style (merge or diff3)"),
+ 	const char *rev = "HEAD";
+ 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
+ 				*old_orig = NULL, sha1_old_orig[20];
+@@ -198,6 +210,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				"reset HEAD, index and working tree", MERGE),
+ 		OPT_BOOLEAN('q', NULL, &quiet,
+ 				"disable showing new HEAD in hard reset and progress message"),
 +		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
- 		OPT_END(),
+ 		OPT_END()
  	};
- 	int has_dash_dash;
-@@ -608,6 +617,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options, checkout_usage,
- 			     PARSE_OPT_KEEP_DASHDASH);
  
-+	if (patch_mode && (opts.track > 0 || opts.new_branch
-+			   || opts.new_branch_log || opts.merge || opts.force))
-+		die ("--patch is incompatible with all other options");
-+
- 	/* --track without -b should DWIM */
- 	if (0 < opts.track && !opts.new_branch) {
- 		const char *argv0 = argv[0];
-@@ -714,6 +727,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		if (!pathspec)
- 			die("invalid path specification");
+@@ -251,6 +264,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		die("Could not parse object '%s'.", rev);
+ 	hashcpy(sha1, commit->object.sha1);
  
-+		if (patch_mode)
-+			return interactive_checkout(new.name, pathspec, &opts);
++	if (patch_mode) {
++		if (reset_type != NONE)
++			die("--patch is incompatible with --{hard,mixed,soft}");
++		return interactive_reset(rev, argv + i, prefix);
++	}
 +
- 		/* Checkout paths */
- 		if (opts.new_branch) {
- 			if (argc == 1) {
-@@ -729,6 +745,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		return checkout_paths(source_tree, pathspec, &opts);
- 	}
- 
-+	if (patch_mode)
-+		return interactive_checkout(new.name, NULL, &opts);
-+
- 	if (opts.new_branch) {
- 		struct strbuf buf = STRBUF_INIT;
- 		if (strbuf_check_branch_ref(&buf, opts.new_branch))
+ 	/* git reset tree [--] paths... can be used to
+ 	 * load chosen paths from the tree into the index without
+ 	 * affecting the working tree nor HEAD. */
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index d14f48c..21746d5 100755
+index 3606103..d14f48c 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -75,6 +75,7 @@
- my $patch_mode_revision;
+@@ -72,6 +72,7 @@
+ 
+ # command line options
+ my $patch_mode;
++my $patch_mode_revision;
  
  sub apply_patch;
-+sub apply_patch_for_checkout_commit;
  
- my %patch_modes = (
- 	'stage' => {
-@@ -104,6 +105,33 @@
- 		PARTICIPLE => 'applying',
- 		FILTER => 'index-only',
+@@ -85,6 +86,24 @@
+ 		PARTICIPLE => 'staging',
+ 		FILTER => 'file-only',
  	},
-+	'checkout_index' => {
-+		DIFF => 'diff-files -p',
-+		APPLY => sub { apply_patch 'apply -R', @_; },
-+		APPLY_CHECK => 'apply -R',
-+		VERB => 'Discard',
-+		TARGET => ' from worktree',
-+		PARTICIPLE => 'discarding',
-+		FILTER => 'file-only',
++	'reset_head' => {
++		DIFF => 'diff-index -p --cached',
++		APPLY => sub { apply_patch 'apply -R --cached', @_; },
++		APPLY_CHECK => 'apply -R --cached',
++		VERB => 'Unstage',
++		TARGET => '',
++		PARTICIPLE => 'unstaging',
++		FILTER => 'index-only',
 +	},
-+	'checkout_head' => {
-+		DIFF => 'diff-index -p',
-+		APPLY => sub { apply_patch_for_checkout_commit '-R', @_ },
-+		APPLY_CHECK => 'apply -R',
-+		VERB => 'Discard',
-+		TARGET => ' from index and worktree',
-+		PARTICIPLE => 'discarding',
-+		FILTER => undef,
-+	},
-+	'checkout_nothead' => {
-+		DIFF => 'diff-index -R -p',
-+		APPLY => sub { apply_patch_for_checkout_commit '', @_ },
-+		APPLY_CHECK => 'apply',
++	'reset_nothead' => {
++		DIFF => 'diff-index -R -p --cached',
++		APPLY => sub { apply_patch 'apply --cached', @_; },
++		APPLY_CHECK => 'apply --cached',
 +		VERB => 'Apply',
-+		TARGET => ' to index and worktree',
++		TARGET => ' to index',
 +		PARTICIPLE => 'applying',
-+		FILTER => undef,
++		FILTER => 'index-only',
 +	},
  );
  
  my %patch_mode_flavour = %{$patch_modes{stage}};
-@@ -1069,6 +1097,29 @@
- 	return $ret;
- }
+@@ -206,7 +225,14 @@
+ 		return if (!@tracked);
+ 	}
  
-+sub apply_patch_for_checkout_commit {
-+	my $reverse = shift;
-+	my $applies_index = run_git_apply 'apply '.$reverse.' --cached --recount --check', @_;
-+	my $applies_worktree = run_git_apply 'apply '.$reverse.' --recount --check', @_;
-+
-+	if ($applies_worktree && $applies_index) {
-+		run_git_apply 'apply '.$reverse.' --cached --recount', @_;
-+		run_git_apply 'apply '.$reverse.' --recount', @_;
-+		return 1;
-+	} elsif (!$applies_index) {
-+		print colored $error_color, "The selected hunks do not apply to the index!\n";
-+		if (prompt_yesno "Apply them to the worktree anyway? ") {
-+			return run_git_apply 'apply '.$reverse.' --recount', @_;
-+		} else {
-+			print colored $error_color, "Nothing was applied.\n";
-+			return 0;
-+		}
+-	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
++	my $reference;
++	if (defined $patch_mode_revision and $patch_mode_revision ne 'HEAD') {
++		$reference = $patch_mode_revision;
++	} elsif (is_initial_commit()) {
++		$reference = get_empty_tree();
 +	} else {
-+		print STDERR @_;
-+		return 0;
++		$reference = 'HEAD';
 +	}
-+}
-+
- sub patch_update_cmd {
- 	my @all_mods = list_modified($patch_mode_flavour{FILTER});
- 	my @mods = grep { !($_->{BINARY}) } @all_mods;
-@@ -1432,6 +1483,16 @@
- 						       'reset_head' : 'reset_nothead');
- 					$arg = shift @ARGV or die "missing --";
- 				}
-+			} elsif ($1 eq 'checkout') {
+ 	for (run_cmd_pipe(qw(git diff-index --cached
+ 			     --numstat --summary), $reference,
+ 			     '--', @tracked)) {
+@@ -640,6 +666,9 @@
+ sub parse_diff {
+ 	my ($path) = @_;
+ 	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
++	if (defined $patch_mode_revision) {
++		push @diff_cmd, $patch_mode_revision;
++	}
+ 	my @diff = run_cmd_pipe("git", @diff_cmd, "--", $path);
+ 	my @colored = ();
+ 	if ($diff_use_color) {
+@@ -1391,11 +1420,31 @@
+ sub process_args {
+ 	return unless @ARGV;
+ 	my $arg = shift @ARGV;
+-	if ($arg eq "--patch") {
+-		$patch_mode = 1;
+-		$arg = shift @ARGV or die "missing --";
++	if ($arg =~ /--patch(?:=(.*))?/) {
++		if (defined $1) {
++			if ($1 eq 'reset') {
++				$patch_mode = 'reset_head';
++				$patch_mode_revision = 'HEAD';
 +				$arg = shift @ARGV or die "missing --";
-+				if ($arg eq '--') {
-+					$patch_mode = 'checkout_index';
-+				} else {
++				if ($arg ne '--') {
 +					$patch_mode_revision = $arg;
 +					$patch_mode = ($arg eq 'HEAD' ?
-+						       'checkout_head' : 'checkout_nothead');
++						       'reset_head' : 'reset_nothead');
 +					$arg = shift @ARGV or die "missing --";
 +				}
- 			} elsif ($1 eq 'stage') {
- 				$patch_mode = 'stage';
- 				$arg = shift @ARGV or die "missing --";
-diff --git a/t/t2015-checkout-patch.sh b/t/t2015-checkout-patch.sh
++			} elsif ($1 eq 'stage') {
++				$patch_mode = 'stage';
++				$arg = shift @ARGV or die "missing --";
++			} else {
++				die "unknown --patch mode: $1";
++			}
++		} else {
++			$patch_mode = 'stage';
++			$arg = shift @ARGV or die "missing --";
++		}
+ 		die "invalid argument $arg, expecting --"
+ 		    unless $arg eq "--";
++		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
+ 	}
+ 	elsif ($arg ne "--") {
+ 		die "invalid argument $arg, expecting --";
+diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
 new file mode 100755
-index 0000000..4d1c2e9
+index 0000000..c1f4fc3
 --- /dev/null
-+++ b/t/t2015-checkout-patch.sh
-@@ -0,0 +1,107 @@
++++ b/t/t7105-reset-patch.sh
+@@ -0,0 +1,69 @@
 +#!/bin/sh
 +
-+test_description='git checkout --patch'
-+
++test_description='git reset --patch'
 +. ./lib-patch-mode.sh
 +
 +test_expect_success 'setup' '
 +	mkdir dir &&
 +	echo parent > dir/foo &&
 +	echo dummy > bar &&
-+	git add bar dir/foo &&
++	git add dir &&
 +	git commit -m initial &&
 +	test_tick &&
 +	test_commit second dir/foo head &&
@@ -316,54 +284,25 @@ index 0000000..4d1c2e9
 +	save_head
 +'
 +
-+# note: bar sorts before dir/foo, so the first 'n' is always to skip 'bar'
++# note: bar sorts before foo, so the first 'n' is always to skip 'bar'
 +
 +test_expect_success 'saying "n" does nothing' '
-+	set_and_save_state dir/foo work head &&
-+	(echo n; echo n) | git checkout -p &&
-+	verify_saved_state bar &&
-+	verify_saved_state dir/foo
++	set_and_save_state dir/foo work work
++	(echo n; echo n) | git reset -p &&
++	verify_saved_state dir/foo &&
++	verify_saved_state bar
 +'
 +
-+test_expect_success 'git checkout -p' '
-+	(echo n; echo y) | git checkout -p &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
++test_expect_success 'git reset -p' '
++	(echo n; echo y) | git reset -p &&
++	verify_state dir/foo work head &&
++	verify_saved_state bar
 +'
 +
-+test_expect_success 'git checkout -p with staged changes' '
-+	set_state dir/foo work index
-+	(echo n; echo y) | git checkout -p &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo index index
-+'
-+
-+test_expect_success 'git checkout -p HEAD with NO staged changes: abort' '
-+	set_and_save_state dir/foo work head &&
-+	(echo n; echo y; echo n) | git checkout -p HEAD &&
-+	verify_saved_state bar &&
-+	verify_saved_state dir/foo
-+'
-+
-+test_expect_success 'git checkout -p HEAD with NO staged changes: apply' '
-+	(echo n; echo y; echo y) | git checkout -p HEAD &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
-+'
-+
-+test_expect_success 'git checkout -p HEAD with change already staged' '
-+	set_state dir/foo index index
-+	# the third n is to get out in case it mistakenly does not apply
-+	(echo n; echo y; echo n) | git checkout -p HEAD &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
-+'
-+
-+test_expect_success 'git checkout -p HEAD^' '
-+	# the third n is to get out in case it mistakenly does not apply
-+	(echo n; echo y; echo n) | git checkout -p HEAD^ &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo parent parent
++test_expect_success 'git reset -p HEAD^' '
++	(echo n; echo y) | git reset -p HEAD^ &&
++	verify_state dir/foo work parent &&
++	verify_saved_state bar
 +'
 +
 +# The idea in the rest is that bar sorts first, so we always say 'y'
@@ -371,38 +310,30 @@ index 0000000..4d1c2e9
 +# dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
 +# the failure case (and thus get out of the loop).
 +
-+test_expect_success 'path limiting works: dir' '
-+	set_state dir/foo work head &&
-+	(echo y; echo n) | git checkout -p dir &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
++test_expect_success 'git reset -p dir' '
++	set_state dir/foo work work
++	(echo y; echo n) | git reset -p dir &&
++	verify_state dir/foo work head &&
++	verify_saved_state bar
 +'
 +
-+test_expect_success 'path limiting works: -- dir' '
-+	set_state dir/foo work head &&
-+	(echo y; echo n) | git checkout -p -- dir &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
++test_expect_success 'git reset -p -- foo (inside dir)' '
++	set_state dir/foo work work
++	(echo y; echo n) | (cd dir && git reset -p -- foo) &&
++	verify_state dir/foo work head &&
++	verify_saved_state bar
 +'
 +
-+test_expect_success 'path limiting works: HEAD^ -- dir' '
-+	# the third n is to get out in case it mistakenly does not apply
-+	(echo y; echo n; echo n) | git checkout -p HEAD^ -- dir &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo parent parent
-+'
-+
-+test_expect_success 'path limiting works: foo inside dir' '
-+	set_state dir/foo work head &&
-+	# the third n is to get out in case it mistakenly does not apply
-+	(echo y; echo n; echo n) | (cd dir && git checkout -p foo) &&
-+	verify_saved_state bar &&
-+	verify_state dir/foo head head
++test_expect_success 'git reset -p HEAD^ -- dir' '
++	(echo y; echo n) | git reset -p HEAD^ -- dir &&
++	verify_state dir/foo work parent &&
++	verify_saved_state bar
 +'
 +
 +test_expect_success 'none of this moved HEAD' '
 +	verify_saved_head
 +'
++
 +
 +test_done
 -- 
