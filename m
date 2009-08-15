@@ -1,251 +1,124 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/9] git stat: the beginning
-Date: Sat, 15 Aug 2009 15:39:51 -0700
-Message-ID: <1250375997-10657-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 6/9] git stat: pathspec limits, unlike traditional "git
+ status"
+Date: Sat, 15 Aug 2009 15:39:54 -0700
+Message-ID: <1250375997-10657-7-git-send-email-gitster@pobox.com>
 References: <1250375997-10657-1-git-send-email-gitster@pobox.com>
  <1250375997-10657-2-git-send-email-gitster@pobox.com>
  <1250375997-10657-3-git-send-email-gitster@pobox.com>
+ <1250375997-10657-4-git-send-email-gitster@pobox.com>
+ <1250375997-10657-5-git-send-email-gitster@pobox.com>
+ <1250375997-10657-6-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Aug 16 00:40:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McRva-0003is-TI
-	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 00:40:47 +0200
+	id 1McRvd-0003is-AK
+	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 00:40:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752692AbZHOWkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 18:40:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbZHOWkI
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 18:40:08 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48778 "EHLO
+	id S1752739AbZHOWkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 18:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbZHOWkO
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 18:40:14 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53186 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752496AbZHOWkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 18:40:06 -0400
-Received: from localhost.localdomain (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 993502AA86
-	for <git@vger.kernel.org>; Sat, 15 Aug 2009 18:40:07 -0400 (EDT)
+	with ESMTP id S1752658AbZHOWkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 18:40:11 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 02F8EC4FC
+	for <git@vger.kernel.org>; Sat, 15 Aug 2009 18:40:13 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C673F2AA85 for
- <git@vger.kernel.org>; Sat, 15 Aug 2009 18:40:06 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 83E57C4FB for
+ <git@vger.kernel.org>; Sat, 15 Aug 2009 18:40:12 -0400 (EDT)
 X-Mailer: git-send-email 1.6.4.227.g1d720
-In-Reply-To: <1250375997-10657-3-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 953024CE-89EC-11DE-BF91-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
+In-Reply-To: <1250375997-10657-6-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 98689784-89EC-11DE-8879-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126039>
 
-Tentatively add "git stat" as a new command.  This does not munge the
-index with paths parameters before showing the status like "git status"
-does.  In later rounds, we will take path parameters as pathspec to limit
-the output.
+The "git stat" command is not "preview of commit with the same arguments";
+the path parameters are not paths to be added to the pristine index (aka
+"--only" option), but are taken as pathspecs to limit the output.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
- * Unchanged since the last round.
+ * Fix-up to 3/9; will be squashed in the final round.
 
- Makefile         |    1 +
- builtin-commit.c |   64 +++++++++++++++++++++++++++++++++++++++++++++--------
- builtin.h        |    1 +
- git.c            |    1 +
- wt-status.c      |   23 +++++++++++-------
+ builtin-commit.c |    3 +++
+ wt-status.c      |    6 ++++++
  wt-status.h      |    1 +
- 6 files changed, 72 insertions(+), 19 deletions(-)
+ 3 files changed, 10 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index daf4296..39dd334 100644
---- a/Makefile
-+++ b/Makefile
-@@ -378,6 +378,7 @@ BUILT_INS += git-init$X
- BUILT_INS += git-merge-subtree$X
- BUILT_INS += git-peek-remote$X
- BUILT_INS += git-repo-config$X
-+BUILT_INS += git-stat$X
- BUILT_INS += git-show$X
- BUILT_INS += git-stage$X
- BUILT_INS += git-status$X
 diff --git a/builtin-commit.c b/builtin-commit.c
-index 200ffda..0ef7c8f 100644
+index 8db0365..5e23ef1 100644
 --- a/builtin-commit.c
 +++ b/builtin-commit.c
-@@ -24,6 +24,7 @@
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
-+#include "quote.h"
+@@ -922,6 +922,9 @@ int cmd_stat(int argc, const char **argv, const char *prefix)
+ 			     builtin_stat_usage, 0);
+ 	handle_untracked_files_arg(&s);
  
- static const char * const builtin_commit_usage[] = {
- 	"git commit [options] [--] <filepattern>...",
-@@ -35,6 +36,11 @@ static const char * const builtin_status_usage[] = {
- 	NULL
- };
- 
-+static const char * const builtin_stat_usage[] = {
-+	"git stat [options]",
-+	NULL
-+};
++	if (*argv)
++		s.pathspec = get_pathspec(prefix, argv);
 +
- static unsigned char head_sha1[20], merge_head_sha1[20];
- static char *use_message_buffer;
- static const char commit_editmsg[] = "COMMIT_EDITMSG";
-@@ -691,6 +697,21 @@ static const char *find_author_by_nickname(const char *name)
- 	die("No existing author found with '%s'", name);
- }
- 
-+
-+static void handle_untracked_files_arg(struct wt_status *s)
-+{
-+	if (!untracked_files_arg)
-+		; /* default already initialized */
-+	else if (!strcmp(untracked_files_arg, "no"))
-+		s->show_untracked_files = SHOW_NO_UNTRACKED_FILES;
-+	else if (!strcmp(untracked_files_arg, "normal"))
-+		s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-+	else if (!strcmp(untracked_files_arg, "all"))
-+		s->show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
-+	else
-+		die("Invalid untracked files mode '%s'", untracked_files_arg);
-+}
-+
- static int parse_and_validate_options(int argc, const char *argv[],
- 				      const char * const usage[],
- 				      const char *prefix,
-@@ -794,16 +815,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 	else
- 		die("Invalid cleanup mode %s", cleanup_arg);
- 
--	if (!untracked_files_arg)
--		; /* default already initialized */
--	else if (!strcmp(untracked_files_arg, "no"))
--		s->show_untracked_files = SHOW_NO_UNTRACKED_FILES;
--	else if (!strcmp(untracked_files_arg, "normal"))
--		s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
--	else if (!strcmp(untracked_files_arg, "all"))
--		s->show_untracked_files = SHOW_ALL_UNTRACKED_FILES;
--	else
--		die("Invalid untracked files mode '%s'", untracked_files_arg);
-+	handle_untracked_files_arg(s);
- 
- 	if (all && argc > 0)
- 		die("Paths with -a does not make sense.");
-@@ -886,6 +898,38 @@ static int git_status_config(const char *k, const char *v, void *cb)
- 	return git_diff_ui_config(k, v, NULL);
- }
- 
-+int cmd_stat(int argc, const char **argv, const char *prefix)
-+{
-+	struct wt_status s;
-+	unsigned char sha1[20];
-+	static struct option builtin_stat_options[] = {
-+		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
-+		  "mode",
-+		  "show untracked files, optional modes: all, normal, no. (Default: all)",
-+		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
-+		OPT_END(),
-+	};
-+
-+	wt_status_prepare(&s);
-+	git_config(git_status_config, &s);
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_stat_options,
-+			     builtin_stat_usage, 0);
-+	handle_untracked_files_arg(&s);
-+
-+	read_cache();
-+	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
-+	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
-+	wt_status_collect(&s);
-+
-+	if (s.use_color == -1)
-+		s.use_color = git_use_color_default;
-+	if (diff_use_color_default == -1)
-+		diff_use_color_default = git_use_color_default;
-+	wt_status_print_body(&s);
-+	return 0;
-+}
-+
- int cmd_status(int argc, const char **argv, const char *prefix)
- {
- 	struct wt_status s;
-diff --git a/builtin.h b/builtin.h
-index 20427d2..eeaf0b6 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -95,6 +95,7 @@ extern int cmd_send_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_stat(int argc, const char **argv, const char *prefix);
- extern int cmd_status(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 807d875..de7fcf6 100644
---- a/git.c
-+++ b/git.c
-@@ -350,6 +350,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "shortlog", cmd_shortlog, USE_PAGER },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
-+		{ "stat", cmd_stat, RUN_SETUP | NEED_WORK_TREE },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ 	read_cache();
+ 	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
+ 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
 diff --git a/wt-status.c b/wt-status.c
-index 63598ce..c887a90 100644
+index c55be53..249227c 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -531,6 +531,19 @@ static void wt_status_print_tracking(struct wt_status *s)
- 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+@@ -269,6 +269,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = wt_status_collect_changed_cb;
+ 	rev.diffopt.format_callback_data = s;
++	rev.prune_data = s->pathspec;
+ 	run_diff_files(&rev, 0);
  }
  
-+void wt_status_print_body(struct wt_status *s)
-+{
-+	wt_status_print_unmerged(s);
-+	wt_status_print_updated(s);
-+	wt_status_print_changed(s);
-+	if (s->submodule_summary)
-+		wt_status_print_submodule_summary(s);
-+	if (s->show_untracked_files)
-+		wt_status_print_untracked(s);
-+	else if (s->commitable)
-+		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
-+}
-+
- void wt_status_print(struct wt_status *s)
- {
- 	unsigned char sha1[20];
-@@ -561,15 +574,7 @@ void wt_status_print(struct wt_status *s)
- 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+@@ -285,6 +286,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	rev.diffopt.detect_rename = 1;
+ 	rev.diffopt.rename_limit = 200;
+ 	rev.diffopt.break_opt = 0;
++	rev.prune_data = s->pathspec;
+ 	run_diff_index(&rev, 1);
+ }
+ 
+@@ -297,6 +299,8 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+ 		struct wt_status_change_data *d;
+ 		struct cache_entry *ce = active_cache[i];
+ 
++		if (!ce_path_match(ce, s->pathspec))
++			continue;
+ 		it = string_list_insert(ce->name, &s->change);
+ 		d = it->util;
+ 		if (!d) {
+@@ -330,6 +334,8 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 		struct dir_entry *ent = dir.entries[i];
+ 		if (!cache_name_is_other(ent->name, ent->len))
+ 			continue;
++		if (!match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
++			continue;
+ 		s->workdir_untracked = 1;
+ 		string_list_insert(ent->name, &s->untracked);
  	}
- 
--	wt_status_print_unmerged(s);
--	wt_status_print_updated(s);
--	wt_status_print_changed(s);
--	if (s->submodule_summary)
--		wt_status_print_submodule_summary(s);
--	if (s->show_untracked_files)
--		wt_status_print_untracked(s);
--	else if (s->commitable)
--		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked files)\n");
-+	wt_status_print_body(s);
- 
- 	if (s->verbose)
- 		wt_status_print_verbose(s);
 diff --git a/wt-status.h b/wt-status.h
-index a0e7517..ab52ce1 100644
+index a0e7517..09fd9f1 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -54,5 +54,6 @@ struct wt_status {
- void wt_status_prepare(struct wt_status *s);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
-+void wt_status_print_body(struct wt_status *s);
- 
- #endif /* STATUS_H */
+@@ -31,6 +31,7 @@ struct wt_status {
+ 	int is_initial;
+ 	char *branch;
+ 	const char *reference;
++	const char **pathspec;
+ 	int verbose;
+ 	int amend;
+ 	int nowarn;
 -- 
 1.6.4.224.g3be84
