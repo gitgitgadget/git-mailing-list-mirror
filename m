@@ -1,340 +1,128 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v5.1 4/6] Implement 'git reset --patch'
-Date: Sat, 15 Aug 2009 13:48:31 +0200
-Message-ID: <00b886234218b93a324166058144e21bacce202d.1250335949.git.trast@student.ethz.ch>
-References: <f3b8fdbcf451fe28786ed221d02717e28423e6dd.1250164190.git.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-log: allow --decorate[=short|full]
+Date: Sat, 15 Aug 2009 08:28:12 -0400
+Message-ID: <20090815122812.GB30630@coredump.intra.peff.net>
+References: <8c5c35580908150250y62b1042cmf6071016bac98a48@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 13:49:09 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 14:30:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McHky-0003I8-Is
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 13:49:09 +0200
+	id 1McIOk-0000f1-7p
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 14:30:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753970AbZHOLs7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 07:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753957AbZHOLs7
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 07:48:59 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:31943 "EHLO gwse.ethz.ch"
+	id S1754045AbZHOM2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 08:28:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754029AbZHOM2O
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 08:28:14 -0400
+Received: from peff.net ([208.65.91.99]:49026 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753794AbZHOLsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 07:48:55 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
- 2009 13:48:54 +0200
-Received: from localhost.localdomain (129.132.211.129) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Sat, 15 Aug
- 2009 13:48:54 +0200
-X-Mailer: git-send-email 1.6.4.287.g3e02d
-In-Reply-To: <f3b8fdbcf451fe28786ed221d02717e28423e6dd.1250164190.git.trast@student.ethz.ch>
+	id S1750743AbZHOM2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 08:28:14 -0400
+Received: (qmail 19918 invoked by uid 107); 15 Aug 2009 12:28:17 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 15 Aug 2009 08:28:17 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Aug 2009 08:28:12 -0400
+Content-Disposition: inline
+In-Reply-To: <8c5c35580908150250y62b1042cmf6071016bac98a48@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126001>
 
-This introduces a --patch mode for git-reset.  The basic case is
+On Sat, Aug 15, 2009 at 11:50:25AM +0200, Lars Hjemli wrote:
 
-  git reset --patch -- [files...]
+> This extension to --decorate makes it possible to generate decorations
+> similar to pre-1.6.4 git, which is nice when the output from git-log
+> is used by external tools.
 
-which acts as the opposite of 'git add --patch -- [files...]': it
-offers hunks for *un*staging.  Advanced usage is
+This commit message really lacks context.  When I read it, I thought to
+myself "what happened to decorations in 1.6.4?" It really needs to say:
 
-  git reset --patch <revision> -- [files...]
+  - exactly what changed
+  - why did it change
+  - why the change has drawbacks
 
-which offers hunks from the diff between the index and <revision> for
-forward application to the index.  (That is, the basic case is just
-<revision> = HEAD.)
+After reading the patch and digging through the history, I think you
+want something more like:
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+-- >8 --
+Commit de435ac0 changed the behavior of --decorate from printing the
+full ref (e.g., "refs/heads/master") to a shorter, more human-readable
+version (e.g., just "master"). While this is nice for human readers,
+external tools using the output from "git log" may prefer the full
+version.
 
-Jeff noticed the prompt and patch direction weren't matching:
+This patch introduces an extension to --decorate to allow the caller to
+specify either the short or the full versions.
+-- 8< --
 
-  http://article.gmane.org/gmane.comp.version-control.git/125981
+As for the patch, it mostly looks good, but a few comments:
 
-This flips the direction of the patch in the 'git reset -p other'
-case, as I really wanted it that way around.
+> +		} else if (!strncmp(arg, "--decorate=", 11)) {
+> +			if (!strcmp(arg + 11, "full"))
+> +				rev->show_decorations = DECORATE_FULL_REFS;
+> +			else if (!strcmp(arg + 11, "short"))
+> +				rev->show_decorations = DECORATE_SHORT_REFS;
+> +			else
+> +				die("invalid --decorate option: %s", arg + 11);
 
+To avoid the magic 11's, we have a few helpers:
 
- Documentation/git-reset.txt |   15 ++++++++-
- builtin-reset.c             |   19 ++++++++++++
- git-add--interactive.perl   |   57 +++++++++++++++++++++++++++++++++--
- t/t7105-reset-patch.sh      |   69 +++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 154 insertions(+), 6 deletions(-)
- create mode 100755 t/t7105-reset-patch.sh
+  if (!prefixcmp(arg, "--decorate=")) {
+          const char *v = skip_prefix(arg, "--decorate=");
+          ...
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index abb25d1..469cf6d 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git reset' [--mixed | --soft | --hard | --merge] [-q] [<commit>]
- 'git reset' [-q] [<commit>] [--] <paths>...
-+'git reset' --patch [<commit>] [--] [<paths>...]
- 
- DESCRIPTION
- -----------
-@@ -23,8 +24,9 @@ the undo in the history.
- If you want to undo a commit other than the latest on a branch,
- linkgit:git-revert[1] is your friend.
- 
--The second form with 'paths' is used to revert selected paths in
--the index from a given commit, without moving HEAD.
-+The second and third forms with 'paths' and/or --patch are used to
-+revert selected paths in the index from a given commit, without moving
-+HEAD.
- 
- 
- OPTIONS
-@@ -50,6 +52,15 @@ OPTIONS
- 	and updates the files that are different between the named commit
- 	and the current commit in the working tree.
- 
-+-p::
-+--patch::
-+	Interactively select hunks in the difference between the index
-+	and <commit> (defaults to HEAD).  The chosen hunks are applied
-+	in reverse to the index.
-++
-+This means that `git reset -p` is the opposite of `git add -p` (see
-+linkgit:git-add[1]).
-+
- -q::
- 	Be quiet, only report errors.
- 
-diff --git a/builtin-reset.c b/builtin-reset.c
-index 5fa1789..246a127 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -142,6 +142,17 @@ static void update_index_from_diff(struct diff_queue_struct *q,
- 	}
- }
- 
-+static int interactive_reset(const char *revision, const char **argv,
-+			     const char *prefix)
-+{
-+	const char **pathspec = NULL;
-+
-+	if (*argv)
-+		pathspec = get_pathspec(prefix, argv);
-+
-+	return run_add_interactive(revision, "--patch=reset", pathspec);
-+}
-+
- static int read_from_tree(const char *prefix, const char **argv,
- 		unsigned char *tree_sha1, int refresh_flags)
- {
-@@ -183,6 +194,7 @@ static void prepend_reflog_action(const char *action, char *buf, size_t size)
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int i = 0, reset_type = NONE, update_ref_status = 0, quiet = 0;
-+	int patch_mode = 0;
- 	const char *rev = "HEAD";
- 	unsigned char sha1[20], *orig = NULL, sha1_orig[20],
- 				*old_orig = NULL, sha1_old_orig[20];
-@@ -198,6 +210,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				"reset HEAD, index and working tree", MERGE),
- 		OPT_BOOLEAN('q', NULL, &quiet,
- 				"disable showing new HEAD in hard reset and progress message"),
-+		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
- 		OPT_END()
- 	};
- 
-@@ -251,6 +264,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		die("Could not parse object '%s'.", rev);
- 	hashcpy(sha1, commit->object.sha1);
- 
-+	if (patch_mode) {
-+		if (reset_type != NONE)
-+			die("--patch is incompatible with --{hard,mixed,soft}");
-+		return interactive_reset(rev, argv + i, prefix);
-+	}
-+
- 	/* git reset tree [--] paths... can be used to
- 	 * load chosen paths from the tree into the index without
- 	 * affecting the working tree nor HEAD. */
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 3606103..d14f48c 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -72,6 +72,7 @@
- 
- # command line options
- my $patch_mode;
-+my $patch_mode_revision;
- 
- sub apply_patch;
- 
-@@ -85,6 +86,24 @@
- 		PARTICIPLE => 'staging',
- 		FILTER => 'file-only',
- 	},
-+	'reset_head' => {
-+		DIFF => 'diff-index -p --cached',
-+		APPLY => sub { apply_patch 'apply -R --cached', @_; },
-+		APPLY_CHECK => 'apply -R --cached',
-+		VERB => 'Unstage',
-+		TARGET => '',
-+		PARTICIPLE => 'unstaging',
-+		FILTER => 'index-only',
-+	},
-+	'reset_nothead' => {
-+		DIFF => 'diff-index -R -p --cached',
-+		APPLY => sub { apply_patch 'apply --cached', @_; },
-+		APPLY_CHECK => 'apply --cached',
-+		VERB => 'Apply',
-+		TARGET => ' to index',
-+		PARTICIPLE => 'applying',
-+		FILTER => 'index-only',
-+	},
- );
- 
- my %patch_mode_flavour = %{$patch_modes{stage}};
-@@ -206,7 +225,14 @@
- 		return if (!@tracked);
- 	}
- 
--	my $reference = is_initial_commit() ? get_empty_tree() : 'HEAD';
-+	my $reference;
-+	if (defined $patch_mode_revision and $patch_mode_revision ne 'HEAD') {
-+		$reference = $patch_mode_revision;
-+	} elsif (is_initial_commit()) {
-+		$reference = get_empty_tree();
-+	} else {
-+		$reference = 'HEAD';
-+	}
- 	for (run_cmd_pipe(qw(git diff-index --cached
- 			     --numstat --summary), $reference,
- 			     '--', @tracked)) {
-@@ -640,6 +666,9 @@
- sub parse_diff {
- 	my ($path) = @_;
- 	my @diff_cmd = split(" ", $patch_mode_flavour{DIFF});
-+	if (defined $patch_mode_revision) {
-+		push @diff_cmd, $patch_mode_revision;
-+	}
- 	my @diff = run_cmd_pipe("git", @diff_cmd, "--", $path);
- 	my @colored = ();
- 	if ($diff_use_color) {
-@@ -1391,11 +1420,31 @@
- sub process_args {
- 	return unless @ARGV;
- 	my $arg = shift @ARGV;
--	if ($arg eq "--patch") {
--		$patch_mode = 1;
--		$arg = shift @ARGV or die "missing --";
-+	if ($arg =~ /--patch(?:=(.*))?/) {
-+		if (defined $1) {
-+			if ($1 eq 'reset') {
-+				$patch_mode = 'reset_head';
-+				$patch_mode_revision = 'HEAD';
-+				$arg = shift @ARGV or die "missing --";
-+				if ($arg ne '--') {
-+					$patch_mode_revision = $arg;
-+					$patch_mode = ($arg eq 'HEAD' ?
-+						       'reset_head' : 'reset_nothead');
-+					$arg = shift @ARGV or die "missing --";
-+				}
-+			} elsif ($1 eq 'stage') {
-+				$patch_mode = 'stage';
-+				$arg = shift @ARGV or die "missing --";
-+			} else {
-+				die "unknown --patch mode: $1";
-+			}
-+		} else {
-+			$patch_mode = 'stage';
-+			$arg = shift @ARGV or die "missing --";
-+		}
- 		die "invalid argument $arg, expecting --"
- 		    unless $arg eq "--";
-+		%patch_mode_flavour = %{$patch_modes{$patch_mode}};
- 	}
- 	elsif ($arg ne "--") {
- 		die "invalid argument $arg, expecting --";
-diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
-new file mode 100755
-index 0000000..c1f4fc3
---- /dev/null
-+++ b/t/t7105-reset-patch.sh
-@@ -0,0 +1,69 @@
-+#!/bin/sh
-+
-+test_description='git reset --patch'
-+. ./lib-patch-mode.sh
-+
-+test_expect_success 'setup' '
-+	mkdir dir &&
-+	echo parent > dir/foo &&
-+	echo dummy > bar &&
-+	git add dir &&
-+	git commit -m initial &&
-+	test_tick &&
-+	test_commit second dir/foo head &&
-+	set_and_save_state bar bar_work bar_index &&
-+	save_head
-+'
-+
-+# note: bar sorts before foo, so the first 'n' is always to skip 'bar'
-+
-+test_expect_success 'saying "n" does nothing' '
-+	set_and_save_state dir/foo work work
-+	(echo n; echo n) | git reset -p &&
-+	verify_saved_state dir/foo &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success 'git reset -p' '
-+	(echo n; echo y) | git reset -p &&
-+	verify_state dir/foo work head &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success 'git reset -p HEAD^' '
-+	(echo n; echo y) | git reset -p HEAD^ &&
-+	verify_state dir/foo work parent &&
-+	verify_saved_state bar
-+'
-+
-+# The idea in the rest is that bar sorts first, so we always say 'y'
-+# first and if the path limiter fails it'll apply to bar instead of
-+# dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
-+# the failure case (and thus get out of the loop).
-+
-+test_expect_success 'git reset -p dir' '
-+	set_state dir/foo work work
-+	(echo y; echo n) | git reset -p dir &&
-+	verify_state dir/foo work head &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success 'git reset -p -- foo (inside dir)' '
-+	set_state dir/foo work work
-+	(echo y; echo n) | (cd dir && git reset -p -- foo) &&
-+	verify_state dir/foo work head &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success 'git reset -p HEAD^ -- dir' '
-+	(echo y; echo n) | git reset -p HEAD^ -- dir &&
-+	verify_state dir/foo work parent &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success 'none of this moved HEAD' '
-+	verify_saved_head
-+'
-+
-+
-+test_done
--- 
-1.6.4.287.g3e02d
+though arguably that is just as bad because you have to repeat the
+"--decorate=".
+
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -15,6 +15,10 @@
+>  #define SYMMETRIC_LEFT	(1u<<8)
+>  #define ALL_REV_FLAGS	((1u<<9)-1)
+> 
+> +
+> +#define DECORATE_SHORT_REFS	1
+> +#define DECORATE_FULL_REFS	2
+> +
+
+Style nit: extra blank line?
+
+> @@ -56,7 +60,7 @@ struct rev_info {
+>  			rewrite_parents:1,
+>  			print_parents:1,
+>  			show_source:1,
+> -			show_decorations:1,
+> +			show_decorations:2,
+>  			reverse:1,
+>  			reverse_output_stage:1,
+>  			cherry_pick:1,
+
+Should we perhaps just turn show_decorations into its own variable? It
+just seems like a trap for future maintainers to want to add more
+DECORATE_* flags but not realize they have to keep bumping up the size
+of the bitfield.
+
+And rev_info is not a struct that we are particularly trying to optimize
+the memory on.
+
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 8b33321..8e3694e 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -207,6 +207,7 @@ log --root --cc --patch-with-stat --summary master
+>  log -SF master
+>  log -SF -p master
+>  log --decorate --all
+> +log --decorate=full --all
+
+Yay, tests.
+
+-Peff
