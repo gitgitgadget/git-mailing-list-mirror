@@ -1,111 +1,93 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
-Date: Sat, 15 Aug 2009 02:51:26 -0400
-Message-ID: <20090815065125.GA23068@coredump.intra.peff.net>
-References: <200908101136.34660.trast@student.ethz.ch>
- <cover.1250164190.git.trast@student.ethz.ch>
+Subject: jc/shortstatus (was: What's cooking in git.git (Aug 2009, #02;
+ Wed, 12))
+Date: Sat, 15 Aug 2009 03:09:04 -0400
+Message-ID: <20090815070904.GA23389@coredump.intra.peff.net>
+References: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Aug 15 08:54:34 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 15 09:09:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McD9t-0007u7-8W
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 08:54:33 +0200
+	id 1McDO9-0003wc-5D
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 09:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725AbZHOGv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 02:51:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbZHOGv3
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 02:51:29 -0400
-Received: from peff.net ([208.65.91.99]:35052 "EHLO peff.net"
+	id S1752357AbZHOHJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 03:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbZHOHJH
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 03:09:07 -0400
+Received: from peff.net ([208.65.91.99]:34242 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751345AbZHOGv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 02:51:28 -0400
-Received: (qmail 17836 invoked by uid 107); 15 Aug 2009 06:51:31 -0000
+	id S1751958AbZHOHJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 03:09:06 -0400
+Received: (qmail 17904 invoked by uid 107); 15 Aug 2009 07:09:09 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 15 Aug 2009 02:51:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Aug 2009 02:51:26 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 15 Aug 2009 03:09:09 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Aug 2009 03:09:04 -0400
 Content-Disposition: inline
-In-Reply-To: <cover.1250164190.git.trast@student.ethz.ch>
+In-Reply-To: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125982>
 
-On Thu, Aug 13, 2009 at 02:29:38PM +0200, Thomas Rast wrote:
+On Wed, Aug 12, 2009 at 07:14:53PM -0700, Junio C Hamano wrote:
 
-> Those marked (**) are the only ones that changed semantics compared to
-> v4.  However, I adjusted the messages to look different:
+> * jc/shortstatus (Tue Aug 4 23:55:22 2009 -0700) 12 commits
+>  - git stat -s: short status output
+>  - git stat: pathspec limits, unlike traditional "git status"
+>  - git stat: the beginning
+>  + wt-status: collect untracked files in a separate "collect" phase
+>  + Make git_status_config() file scope static to builtin-commit.c
+>  + wt-status: move wt_status_colors[] into wt_status structure
+>  + wt-status: move many global settings to wt_status structure
+>  + commit: --dry-run
+>  + status: show worktree status of conflicted paths separately
+>  + wt-status.c: rework the way changes to the index and work tree are
+>    summarized
+>  + diff-index: keep the original index intact
+>  + diff-index: report unmerged new entries
+> 
+> Slowly progressing.  I've addressed issues pointed out by Jeff in his
+> review, and hopefully the whole thing would be ready to go.
 
-Thanks for following up on this. This is something I've wanted for a
-while, and now my procrastination is paying off. ;)
+I briefly looked over what's in next, and the fixes you made look good
+to me. I've been running with this series for a little while, and I was
+very pleased when "git status" showed me a more detailed description of
+some unmerged paths the other day. :)
 
-> add -p			Stage this hunk?
+For the "git stat" portion still in pu, I have a few comments/questions:
 
-Makes sense.
+  1. Is "stat" a good name? I worry a little that it is _too_ similar to
+     "status", and that will cause confusion while they both exist. So
+     something like "git overview" would cause less confusion, and even
+     though it sucks to type, it will eventually replace "status" (and
+     in the meantime people can make aliases or whatever).
 
-> reset -p [HEAD]		Reset this hunk? (**)
+  2. Does it really belong in builtin-commit.c anymore? It seems like
+     historical accident that "status" is so closely tied to commit. The
+     whole point of the new command is to _not_ be tied; I think of the
+     new command more as an extension of 'diff'. Admittedly, users don't
+     care where the source is located, but it helps the developers
+     understand the relationships between code.
 
-Actually, it says "Unstage this hunk", but I like that even better.
+  3. Can you squash in the gitignore patch below? :)
 
-> reset -p other		Apply this hunk to index? (**)
-
-This doesn't make sense to me. For example:
-
-  $ git show HEAD^:file
-  content
-  $ git show :file
-  content
-  with some changes
-  $ git reset -p HEAD^
-  diff --git a/file b/file
-  index d95f3ad..60a1a4e 100644
-  --- a/file
-  +++ b/file
-  @@ -1 +1,2 @@
-   content
-  +with some changes
-  Apply this hunk to index [y,n,q,a,d,/,e,?]?
-
-The hunk is _already_ in the index. You are really asking to remove it
-from the index. So shouldn't it say something like "Unstage this hunk"
-or "Remove this hunk from the index"?
-
-Or did you intend to reverse the diff, as with "checkout -p" below?
-
-> checkout -p		Discard this hunk from worktree? (**)
-
-Good, that addresses my earlier confusion.
-
-> checkout -p HEAD	Discard this hunk from index and worktree? (**)
-
-Good. I like how it clarifies what is being touched.
-
-> checkout -p other	Apply this hunk to index and worktree? (**)
-
-I really expected this to just be the same as the "HEAD" case. That is,
-with "git checkout -p HEAD", you are saying "I'm not interested in these
-bits, discard to return back to HEAD". So if I do "git checkout -p
-HEAD^", that is conceptually the same thing, except going back further
-in time.
-
-But I guess you are thinking of it as "pull these changes out of
-'other'", in which case showing the reverse diff makes sense.
-
-I think this may be a situation where the user has one of two mental
-models in issuing the command, and we don't necessarily know which. So I
-guess what you have is fine, but I wanted to register my surprise.
-
-> stash -p		Stash this hunk?
-
-Getting greedy, is there a reason not to have "stash apply -p" as well?
-
--Peff
+---
+diff --git a/.gitignore b/.gitignore
+index c446290..14e0f51 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -128,6 +128,7 @@ git-show-index
+ git-show-ref
+ git-stage
+ git-stash
++git-stat
+ git-status
+ git-stripspace
+ git-submodule
