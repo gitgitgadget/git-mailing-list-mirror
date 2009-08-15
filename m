@@ -1,87 +1,98 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH] git submodule summary: add --files option
-Date: Sat, 15 Aug 2009 10:40:42 +0200
-Message-ID: <8c5c35580908150140q1d209664ic5e3816609365e24@mail.gmail.com>
-References: <4A846A62.7010306@web.de> <7v8whmjhqh.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: jc/shortstatus
+Date: Sat, 15 Aug 2009 04:45:53 -0400
+Message-ID: <20090815084552.GA29136@coredump.intra.peff.net>
+References: <7vtz0co3xe.fsf@alter.siamese.dyndns.org>
+ <20090815070904.GA23389@coredump.intra.peff.net>
+ <7v8whltrqj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 10:40:56 2009
+X-From: git-owner@vger.kernel.org Sat Aug 15 10:46:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McEoo-00026p-FA
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:40:54 +0200
+	id 1McEu1-00042c-3w
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 10:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750777AbZHOIkn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Aug 2009 04:40:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750767AbZHOIkn
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 04:40:43 -0400
-Received: from mail-gx0-f205.google.com ([209.85.217.205]:43240 "EHLO
-	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750760AbZHOIkm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2009 04:40:42 -0400
-Received: by gxk1 with SMTP id 1so2711258gxk.17
-        for <git@vger.kernel.org>; Sat, 15 Aug 2009 01:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+3jBKuZ11Dann5R73X+y6kZ8SvCS29oQJkFGCBy5loY=;
-        b=B0Facq8g8+jRMP1T19xNGGt0MrHf8NMDzaKUdWiq2+noEdvaVW6c5Pt/JCrpAs2StH
-         RexCvUfKg+AM1FWEg5doVRxt5OBJjLoKQPsY7iKrqLA8lxGb9+E7kbmRO0hbbL5m8g0A
-         oUvcauJIAKU6edpoiG1oQwYpPTPfvl27EH1ww=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=b/FqZYlR0eTWisVfUcIeVS2OAuP67cUf103UFD+DJ6ryyDn1PGf/h58Jw1S/e1NO5m
-         q46CdBm/j6YcyJpsIkvYKjgDv0rgJHPjhZ+r438P8zvtRmeL1nddxJwq2yu4EDQUKxFF
-         o0XVaR0ND0QgJAEbbznuFsQ2DG1g1abvPdxPo=
-Received: by 10.151.92.9 with SMTP id u9mr3364284ybl.158.1250325643013; Sat, 
-	15 Aug 2009 01:40:43 -0700 (PDT)
-In-Reply-To: <7v8whmjhqh.fsf@alter.siamese.dyndns.org>
+	id S1750823AbZHOIpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 04:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750798AbZHOIpy
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 04:45:54 -0400
+Received: from peff.net ([208.65.91.99]:40903 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750767AbZHOIpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 04:45:54 -0400
+Received: (qmail 18350 invoked by uid 107); 15 Aug 2009 08:45:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 15 Aug 2009 04:45:57 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 15 Aug 2009 04:45:53 -0400
+Content-Disposition: inline
+In-Reply-To: <7v8whltrqj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/125986>
 
-On Fri, Aug 14, 2009 at 21:52, Junio C Hamano<gitster@pobox.com> wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->
->> git submodule summary is providing similar functionality for submodu=
-les as
->> git diff-index does for a git project (including the meaning of --ca=
-ched).
->> But the analogon to git diff-files is missing, so add a --files opti=
-on to
->> summarize the differences between the index of the super project and=
- the
->> last commit checked out in the working tree of the submodule.
->>
->> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
->
-> Makes sense to me. =C2=A0Comments?
+On Sat, Aug 15, 2009 at 01:18:28AM -0700, Junio C Hamano wrote:
 
-Acked-by: Lars Hjemli <hjemli@gmail.com> with a tiny fixup:
+> It is handy to have both available while asking others help debugging the
+> version in 'pu', and that is the only reason for the separate command.  It
+> could have been named 'git frotz' for all I care ;-)
+> 
+> I do not intend to make it another "git merge-recur"; I would actually
+> want to have it replace "status" before the series goes to 'next'.
 
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -129,7 +129,7 @@ summary::
-        in the submodule between the given super project commit and the
-        index or working tree (switched by --cached) are shown. If the =
-option
-        --files is given, show the series of commits in the submodule b=
-etween
--       the index of super project the and the working tree of the subm=
-odule
-+       the index of the super project and the working tree of the subm=
-odule
-        (this option doesn't allow to use the --cached option or to pro=
-vide an
-        explicit commit).
+Ah, OK. I thought we were going to live through 1.6.5 with the dual
+commands. But if it is going to be "status", I don't care at all what it
+is called in the interim. :)
+
+>  - What should its exit code be?  Should it be consistent with the
+>    traditional "git status" at least when no paths are given, signallying
+>    failure when nothing is staged for committing, so that ancient out of
+>    tree scripts people may have written would not break too badly when we
+>    make the switch?
+
+If I were designing it from scratch, I would say the exit code should be
+the opposite. That is, it is really about doing several diffs, and if
+there are no changes, then we should, like diff, exit zero.
+
+If you want to know whether there is something to commit, you wouldn't
+to use this tool. If you just want to know if there is something in the
+index to commit, you would use diff-index. If you want to see if
+some set of commit parameters would make a commit, you would use "commit
+--dry-run".
+
+So really there is only the historical argument. I am inclined not to
+worry about it. We are already breaking compatibility in other ways
+(like how command line parameters are treated), so you are really only
+helping people whose scripts use a subset of the current "git status"
+functionality. And since this is the time for breaking, I think it's
+best to make all of the changes we want, and not have another
+half-breakage later.
+
+>  - What should its default mode of output be?  Do people prefer "svn st"
+>    style short-format output, or should we stay verbose and explanatory?
+
+Personally I prefer the long format, but maybe just because I'm used to
+it. I suspect others want the short format. This really should be a
+porcelain command[1], so I don't see a problem with a
+status.outputformat config option.
+
+[1] One can, after all, call diff-index, diff-files, and "ls-files -o"
+to get the same information from plumbing. If we really want to provide
+plumbing that pulls them all together (e.g., because it is more
+efficient or more convenient to do it all in one command), then I think
+we should provide "git status --porcelain".
+
+>  - Is it handling corner cases correctly?  e.g. Does it operate correctly
+>    when run from a subdirectory?  How should it handle submodules?  Before
+>    the initial commit?  Use of colors?
+
+I'll try out a few things, but I think largely we will need to put it in
+"next" to shake out any bugs.
+
+-Peff
