@@ -1,285 +1,198 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH] git-log: allow --decorate[=short|full]
-Date: Sat, 15 Aug 2009 16:23:12 +0200
-Message-ID: <8c5c35580908150723h6e4c8fcay43b708969a86ae27@mail.gmail.com>
-References: <8c5c35580908150250y62b1042cmf6071016bac98a48@mail.gmail.com>
-	 <20090815122812.GB30630@coredump.intra.peff.net>
+From: Roger Leigh <rleigh@codelibre.net>
+Subject: Integration of git release workflow with automake "make dist"
+Date: Sat, 15 Aug 2009 15:21:18 +0100
+Message-ID: <20090815142117.GE22565@codelibre.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 15 16:23:24 2009
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="Wb5NtZlyOqqy58h0"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 15 16:29:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McKAD-0004RE-Uf
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 16:23:22 +0200
+	id 1McKGW-00074X-Pd
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 16:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632AbZHOOXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 10:23:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754624AbZHOOXN
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 10:23:13 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:36761 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754573AbZHOOXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 10:23:12 -0400
-Received: by yxe5 with SMTP id 5so2596562yxe.33
-        for <git@vger.kernel.org>; Sat, 15 Aug 2009 07:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=F9UFmZK/eOd5NE1lgYL1IMOHjLS05dbFG3YW4j29CWQ=;
-        b=rB6ThBD5N74nJZxXQWCuJKl7SgbG6XrZgcIibbLukOYPwqvOUWHz4SnN7agSQgEzQv
-         +rMPciRvwT4G8gxfAdI/8Sm6pQ7a0K8g+PHCMz/CoE9P3ajuAFopmGZ7t4nYy5piRQKM
-         e8qvLrrIOk9Mkx/Immjh9zfePBumu9WZSQK3A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FG3NK22fbaq7KGd2ORgNxtYRAUZtRJXCCueKPk+YgMjrpirGwtckXGWrrUMJIgk/09
-         nYJyJTOp/jJzwiKLSCNDc+Yv+vOXI/XND5lNPxGMcgj66JJI9X9wNPfi38Num318pW2y
-         76TSpFoz3pKY4E/zqvxtrY+Z3u/GdMz+fydSQ=
-Received: by 10.150.89.41 with SMTP id m41mr3550318ybb.277.1250346192883; Sat, 
-	15 Aug 2009 07:23:12 -0700 (PDT)
-In-Reply-To: <20090815122812.GB30630@coredump.intra.peff.net>
+	id S1754524AbZHOO3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 10:29:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754253AbZHOO3o
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 10:29:44 -0400
+Received: from nagini.codelibre.net ([80.68.93.164]:45888 "EHLO
+	nagini.codelibre.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920AbZHOO3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 10:29:43 -0400
+X-Greylist: delayed 501 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2009 10:29:43 EDT
+Received: by nagini.codelibre.net (Postfix, from userid 107)
+	id 317A4182E0; Sat, 15 Aug 2009 15:21:21 +0100 (BST)
+Received: from hardknott (unknown [78.149.60.209])
+	by nagini.codelibre.net (Postfix) with ESMTPSA id 781A318278
+	for <git@vger.kernel.org>; Sat, 15 Aug 2009 15:21:19 +0100 (BST)
+Received: by hardknott (Postfix, from userid 1000)
+	id 525A22FC; Sat, 15 Aug 2009 15:21:18 +0100 (BST)
+Content-Disposition: inline
+X-GPG-Key: 0x25BFB848
+X-Debian: testing/unstable
+X-OS-Uptime: 09:53:46 up 15:10,  2 users,  load average: 0.14, 0.09, 0.07
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Bogosity: Ham, tests=bogofilter, spamicity=0.000000, version=1.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126007>
 
-Commit de435ac0 changed the behavior of --decorate from printing the
-full ref (e.g., "refs/heads/master") to a shorter, more human-readable
-version (e.g., just "master"). While this is nice for human readers,
-external tools using the output from "git log" may prefer the full
-version.
 
-This patch introduces an extension to --decorate to allow the caller to
-specify either the short or the full versions.
+--Wb5NtZlyOqqy58h0
+Content-Type: multipart/mixed; boundary="TD8GDToEDw0WLGOL"
+Content-Disposition: inline
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
 
-Thanks for the review. I've adapted the patch to your comments, and
-modified the documentation of '--decorate' to be more specific.
+--TD8GDToEDw0WLGOL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- Documentation/git-log.txt                          |    8 ++++++--
- builtin-log.c                                      |   13 +++++++++++--
- log-tree.c                                         |    7 ++++---
- log-tree.h                                         |    2 +-
- pretty.c                                           |    2 +-
- revision.c                                         |    2 +-
- revision.h                                         |    5 ++++-
- t/t4013-diff-various.sh                            |    1 +
- ...corate_--all => diff.log_--decorate=full_--all} |    8 ++++----
- 9 files changed, 33 insertions(+), 15 deletions(-)
- copy t/t4013/{diff.log_--decorate_--all =>
-diff.log_--decorate=full_--all} (72%)
+[I'm not subscribed to the list, so I'd appreciate a CC on reply, thanks!]
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 34cf4e5..3d79de1 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -37,8 +37,12 @@ include::diff-options.txt[]
- 	and <until>, see "SPECIFYING REVISIONS" section in
- 	linkgit:git-rev-parse[1].
+Hi folks,
 
----decorate::
--	Print out the ref names of any commits that are shown.
-+--decorate[=short|full]::
-+	Print out the ref names of any commits that are shown. If 'short' is
-+	specified, the ref name prefixes 'refs/heads/', 'refs/tags/' and
-+	'refs/remotes/' will not be printed. If 'full' is specified, the
-+	full ref name (including prefix) will be printed. The default option
-+	is 'short'.
+After initially bringing up the idea behind this initial implementation
+on the automake mailing list, I want to get some criticism and comments
+=66rom automake users who use git (or git experts in general in case my
+use of the git plumbing is not correct!).
 
- --source::
- 	Print out the ref name given on the command line by which each
-diff --git a/builtin-log.c b/builtin-log.c
-index 3817bf1..1ed4c76 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -61,8 +61,15 @@ static void cmd_log_init(int argc, const char
-**argv, const char *prefix,
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
- 		if (!strcmp(arg, "--decorate")) {
--			load_ref_decorations();
--			rev->show_decorations = 1;
-+			rev->show_decorations = DECORATE_SHORT_REFS;
-+		} else if (!prefixcmp(arg, "--decorate=")) {
-+			const char *v = skip_prefix(arg, "--decorate=");
-+			if (!strcmp(v, "full"))
-+				rev->show_decorations = DECORATE_FULL_REFS;
-+			else if (!strcmp(v, "short"))
-+				rev->show_decorations = DECORATE_SHORT_REFS;
-+			else
-+				die("invalid --decorate option: %s", arg);
- 		} else if (!strcmp(arg, "--source")) {
- 			rev->show_source = 1;
- 		} else if (!strcmp(arg, "-h")) {
-@@ -70,6 +77,8 @@ static void cmd_log_init(int argc, const char
-**argv, const char *prefix,
- 		} else
- 			die("unrecognized argument: %s", arg);
- 	}
-+	if (rev->show_decorations)
-+		load_ref_decorations(rev->show_decorations);
- }
+The initial discussion is here:
+http://thread.gmane.org/gmane.comp.sysutils.automake.general/10936
 
- /*
-diff --git a/log-tree.c b/log-tree.c
-index 6f73c17..70223eb 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -25,7 +25,8 @@ static int add_ref_decoration(const char *refname,
-const unsigned char *sha1, in
- 	struct object *obj = parse_object(sha1);
- 	if (!obj)
- 		return 0;
--	refname = prettify_refname(refname);
-+	if (!cb_data || *(int *)cb_data & DECORATE_SHORT_REFS)
-+		refname = prettify_refname(refname);
- 	add_name_decoration("", refname, obj);
- 	while (obj->type == OBJ_TAG) {
- 		obj = ((struct tag *)obj)->tagged;
-@@ -36,12 +37,12 @@ static int add_ref_decoration(const char *refname,
-const unsigned char *sha1, in
- 	return 0;
- }
+And the current implementation is attached.
 
--void load_ref_decorations(void)
-+void load_ref_decorations(int flags)
- {
- 	static int loaded;
- 	if (!loaded) {
- 		loaded = 1;
--		for_each_ref(add_ref_decoration, NULL);
-+		for_each_ref(add_ref_decoration, &flags);
- 	}
- }
 
-diff --git a/log-tree.h b/log-tree.h
-index 20b5caf..3f7b400 100644
---- a/log-tree.h
-+++ b/log-tree.h
-@@ -17,7 +17,7 @@ void log_write_email_headers(struct rev_info *opt,
-struct commit *commit,
- 			     const char **subject_p,
- 			     const char **extra_headers_p,
- 			     int *need_8bit_cte_p);
--void load_ref_decorations(void);
-+void load_ref_decorations(int flags);
+Automake has a "dist" target to generate a "release" in the form of a
+compressed tarfile or zip file.  This file contains files not normally
+kept under version control in the developer's repo (generated autotools
+scripts, other generated files such as changelogs etc.) as well as
+possibly excluding other bits in the repo not needed by end users.
+However, this isn't kept under version control, and it would be
+helpful it it was.
 
- #define FORMAT_PATCH_NAME_MAX 64
- void get_patch_filename(struct commit *commit, int nr, const char *suffix,
-diff --git a/pretty.c b/pretty.c
-index e5328da..daa721b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -571,7 +571,7 @@ static void format_decoration(struct strbuf *sb,
-const struct commit *commit)
- 	struct name_decoration *d;
- 	const char *prefix = " (";
+The above thread contains most of the rationale behind doing this, so
+I won't repeat it all here.
 
--	load_ref_decorations();
-+	load_ref_decorations(DECORATE_SHORT_REFS);
- 	d = lookup_decoration(&name_decoration, &commit->object);
- 	while (d) {
- 		strbuf_addstr(sb, prefix);
-diff --git a/revision.c b/revision.c
-index 9f5dac5..ce24ad9 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1052,7 +1052,7 @@ static int handle_revision_opt(struct rev_info
-*revs, int argc, const char **arg
- 		revs->simplify_by_decoration = 1;
- 		revs->limited = 1;
- 		revs->prune = 1;
--		load_ref_decorations();
-+		load_ref_decorations(DECORATE_SHORT_REFS);
- 	} else if (!strcmp(arg, "--date-order")) {
- 		revs->lifo = 0;
- 		revs->topo_order = 1;
-diff --git a/revision.h b/revision.h
-index fb74492..9a644ee 100644
---- a/revision.h
-+++ b/revision.h
-@@ -15,6 +15,9 @@
- #define SYMMETRIC_LEFT	(1u<<8)
- #define ALL_REV_FLAGS	((1u<<9)-1)
+The attached make fragment implements a "dist-git" target.  Instead
+of releasing by creating a tarball, it injects the same tree onto a
+specified git branch and (optionally) signs both the release and
+distribution branches.  Branch and tag names and messages are
+configurable.  Note this is just an initial proof of concept;
+anything can be changed!
 
-+#define DECORATE_SHORT_REFS	1
-+#define DECORATE_FULL_REFS	2
-+
- struct rev_info;
- struct log_info;
+I'd like to make this as generally usable for as many people as
+possible, so it would be great to hear how you are managing releases
+with automake and git, and if this would be useful for you, and if
+there's anything that could be added or changed to better accommodate
+you.
 
-@@ -56,7 +59,6 @@ struct rev_info {
- 			rewrite_parents:1,
- 			print_parents:1,
- 			show_source:1,
--			show_decorations:1,
- 			reverse:1,
- 			reverse_output_stage:1,
- 			cherry_pick:1,
-@@ -96,6 +98,7 @@ struct rev_info {
- 	const char	*subject_prefix;
- 	int		no_inline;
- 	int		show_log_size;
-+	int		show_decorations;
 
- 	/* Filter by commit log message */
- 	struct grep_opt	grep_filter;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 8b33321..8e3694e 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -207,6 +207,7 @@ log --root --cc --patch-with-stat --summary master
- log -SF master
- log -SF -p master
- log --decorate --all
-+log --decorate=full --all
+Many thanks,
+Roger
 
- rev-list --parents HEAD
- rev-list --children HEAD
-diff --git a/t/t4013/diff.log_--decorate_--all
-b/t/t4013/diff.log_--decorate=full_--all
-similarity index 72%
-copy from t/t4013/diff.log_--decorate_--all
-copy to t/t4013/diff.log_--decorate=full_--all
-index 954210e..903d9d9 100644
---- a/t/t4013/diff.log_--decorate_--all
-+++ b/t/t4013/diff.log_--decorate=full_--all
-@@ -1,12 +1,12 @@
--$ git log --decorate --all
--commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (master)
-+$ git log --decorate=full --all
-+commit 59d314ad6f356dd08601a4cd5e530381da3e3c64 (refs/heads/master)
- Merge: 9a6d494 c7a2ab9
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:04:00 2006 +0000
+--=20
+  .''`.  Roger Leigh
+ : :' :  Debian GNU/Linux             http://people.debian.org/~rleigh/
+ `. `'   Printing on GNU/Linux?       http://gutenprint.sourceforge.net/
+   `-    GPG Public Key: 0x25BFB848   Please GPG sign your mail.
 
-     Merge branch 'side'
+--TD8GDToEDw0WLGOL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="automake-dist-git.mk"
 
--commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (side)
-+commit c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a (refs/heads/side)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:03:00 2006 +0000
+ENABLE_DIST_GIT=false
 
-@@ -26,7 +26,7 @@ Date:   Mon Jun 26 00:01:00 2006 +0000
+GIT_RELEASE_BRANCH=HEAD
+GIT_RELEASE_TAG=true
+GIT_RELEASE_TAG_SIGN=true
+GIT_RELEASE_TAG_NAME=release/$(PACKAGE)-$(VERSION)
+GIT_RELEASE_TAG_MESSAGE="Release of $(PACKAGE)-$(VERSION)"
 
-     This is the second commit.
+GIT_DIST_BRANCH=distribution
+GIT_DIST_COMMIT_MESSAGE="Distribution of $(PACKAGE) version $(VERSION)"
+GIT_DIST_TAG=true
+GIT_DIST_TAG_SIGN=true
+GIT_DIST_TAG_NAME=distribution/$(PACKAGE)-$(VERSION)
+GIT_DIST_TAG_MESSAGE="Distribution of $(PACKAGE)-$(VERSION)"
 
--commit 444ac553ac7612cc88969031b02b3767fb8a353a (initial)
-+commit 444ac553ac7612cc88969031b02b3767fb8a353a (refs/heads/initial)
- Author: A U Thor <author@example.com>
- Date:   Mon Jun 26 00:00:00 2006 +0000
+dist-git: distdir
+	if [ "$(ENABLE_DIST_GIT)" != "true" ]; then \
+	    echo "$@: ENABLE_DIST_GIT not true; not distributing"; \
+	  exit 0; \
+	fi; \
+	cd "$(abs_top_srcdir)"; \
+	if [ ! -d .git ]; then \
+	    echo "$@: Not a git repository" 1>&2; \
+	    exit 1; \
+	fi; \
+	if [ "$(GIT_RELEASE_TAG)" = "true" ]; then \
+          if git show-ref --tags -q $(GIT_RELEASE_TAG_NAME); then \
+	    echo "git release tag $(GIT_RELEASE_TAG_NAME) already exists; not distributing" 1>&2; \
+	    exit 1; \
+	  fi; \
+	fi; \
+	if [ "$(GIT_DIST_TAG)" = "true" ]; then \
+          if git show-ref --tags -q $(GIT_DIST_TAG_NAME); then \
+	    echo "git distribution tag $(GIT_DIST_TAG_NAME) already exists; not distributing" 1>&2; \
+	    exit 1; \
+	  fi; \
+	fi; \
+	echo "$@: distributing $(PACKAGE)-$(VERSION) on git branch $(GIT_DIST_BRANCH)"; \
+	DISTDIR_INDEX="$(abs_top_builddir)/$(distdir).git.idx"; \
+	DISTDIR_TREE="$(abs_top_builddir)/$(distdir)"; \
+	rm -f "$$DISTDIR_INDEX"; \
+	GIT_INDEX_FILE="$$DISTDIR_INDEX" GIT_WORK_TREE="$$DISTDIR_TREE" git add -A || exit 1; \
+	GIT_INDEX_FILE="$$DISTDIR_INDEX" TREE="$$(git write-tree)"; \
+	rm -f "$$DISTDIR_INDEX"; \
+	[ -n "$$TREE" ] || exit 1; \
+	RELEASE_HEAD="$$(git show-ref -s $(GIT_RELEASE_BRANCH))"; \
+	COMMIT_OPTS="-p $$RELEASE_HEAD"; \
+	DIST_PARENT="$$(git show-ref --heads -s refs/heads/$(GIT_DIST_BRANCH))"; \
+	if [ -n "$$DIST_PARENT" ]; then \
+	  COMMIT_OPTS="$$COMMIT_OPTS -p $$DIST_PARENT"; \
+	fi; \
+	COMMIT="$$(echo $(GIT_DIST_COMMIT_MESSAGE) | git commit-tree "$$TREE" $$COMMIT_OPTS)"; \
+	[ -n "$$COMMIT" ] || exit 1; \
+	git update-ref "refs/heads/$(GIT_DIST_BRANCH)" "$$COMMIT" "$$DIST_PARENT" || exit 1;\
+	echo "$@: tree=$$TREE"; \
+	echo "$@: commit=$$COMMIT"; \
+	if [ "$(GIT_RELEASE_TAG)" = "true" ]; then \
+	  RELEASE_TAG_OPTS=""; \
+	  if [ "$(GIT_RELEASE_TAG_SIGN)" = "true" ]; then \
+	    RELEASE_TAG_OPTS="$$TAG_OPTS -s"; \
+	  fi; \
+	  git tag -m $(GIT_RELEASE_TAG_MESSAGE) $$RELEASE_TAG_OPTS "$(GIT_RELEASE_TAG_NAME)" "$$COMMIT" || exit 1; \
+	    echo "$@: release tagged as $(GIT_RELEASE_TAG_NAME)"; \
+	fi; \
+	if [ "$(GIT_DIST_TAG)" = "true" ]; then \
+	  DIST_TAG_OPTS=""; \
+	  if [ "$(GIT_DIST_TAG_SIGN)" = "true" ]; then \
+	    DIST_TAG_OPTS="$$TAG_OPTS -s"; \
+	  fi; \
+	  git tag -m $(GIT_DIST_TAG_MESSAGE) $$DIST_TAG_OPTS "$(GIT_DIST_TAG_NAME)" "$$COMMIT" || exit 1; \
+	    echo "$@: distribution tagged as $(GIT_DIST_TAG_NAME)"; \
+	fi;
+	$(am__remove_distdir)
 
--- 
-1.6.4.135.g4e5b
+--TD8GDToEDw0WLGOL--
+
+--Wb5NtZlyOqqy58h0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEAREDAAYFAkqGxF0ACgkQVcFcaSW/uEgj/QCfaGyVmTyyiJ8rmI+iZ2p9VqJ7
+fe0AoNuy05LBd6xgMo2hcK4I2fjeFKCm
+=8aj1
+-----END PGP SIGNATURE-----
+
+--Wb5NtZlyOqqy58h0--
