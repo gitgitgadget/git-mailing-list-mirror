@@ -1,109 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Linus' sha1 is much faster!
-Date: Sat, 15 Aug 2009 13:54:23 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908151336530.3162@localhost.localdomain>
-References: <4A85F270.20703@draigBrady.com>
-	<3e8340490908151302y33a97d50t38ad0a8a788f1cee@mail.gmail.com>
-	<43d8ce650908151312o6a43416el27965c4b0ab8d83d@mail.gmail.com>
-	<alpine.LFD.2.01.0908151315400.3162@localhost.localdomain>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Simplify '--prett=xyz' options
+Date: Sat, 15 Aug 2009 17:05:39 -0400
+Message-ID: <32541b130908151405j661cde8fh9783e91cebf1e398@mail.gmail.com>
+References: <alpine.LFD.2.01.0908151156510.3162@localhost.localdomain> 
+	<200908152119.56606.trast@student.ethz.ch> <alpine.LFD.2.01.0908151236250.3162@localhost.localdomain> 
+	<7viqgoestz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.01.0908151324380.3162@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paul Kocher <paul@paulkocher.com>, Bryan Donlan <bdonlan@gmail.com>,
-	Bug-coreutils@gnu.org, Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	=?ISO-8859-15?Q?P=E1draig_Brady?= <P@draigbrady.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
 	Git Mailing List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org Sat Aug 15 22:55:12 2009
-Return-path: <bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org>
-Envelope-to: gcgcb-bug-coreutils-616@gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Aug 15 23:06:09 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McQHN-0007gQ-Ri
-	for gcgcb-bug-coreutils-616@gmane.org; Sat, 15 Aug 2009 22:55:10 +0200
-Received: from localhost ([127.0.0.1]:39166 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1McQHM-0004Sd-Q0
-	for gcgcb-bug-coreutils-616@gmane.org; Sat, 15 Aug 2009 16:55:08 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1McQHK-0004SX-RK
-	for bug-coreutils@gnu.org; Sat, 15 Aug 2009 16:55:06 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1McQHE-0004SI-VP
-	for Bug-coreutils@gnu.org; Sat, 15 Aug 2009 16:55:06 -0400
-Received: from [199.232.76.173] (port=48622 helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1McQHE-0004SF-MF
-	for Bug-coreutils@gnu.org; Sat, 15 Aug 2009 16:55:00 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:33924)
-	by monty-python.gnu.org with esmtps
-	(TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32) (Exim 4.60)
-	(envelope-from <torvalds@linux-foundation.org>) id 1McQHD-0005gW-Uj
-	for Bug-coreutils@gnu.org; Sat, 15 Aug 2009 16:55:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org
-	[140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with
-	ESMTP id n7FKsOE8010163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 15 Aug 2009 13:54:25 -0700
-Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org
-	(8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id
-	n7FKsNI7028371; Sat, 15 Aug 2009 13:54:23 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0908151315400.3162@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-X-detected-operating-system: by monty-python.gnu.org: GNU/Linux 2.6 (newer, 3)
-X-BeenThere: bug-coreutils@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "GNU Core Utilities: bug reports and discussion"
-	<bug-coreutils.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
-	<mailto:bug-coreutils-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/bug-coreutils>
-List-Post: <mailto:bug-coreutils@gnu.org>
-List-Help: <mailto:bug-coreutils-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
-	<mailto:bug-coreutils-request@gnu.org?subject=subscribe>
-Sender: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
-Errors-To: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126028>
+	id 1McQS0-0002Qm-BC
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 23:06:08 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752457AbZHOVF6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 Aug 2009 17:05:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752452AbZHOVF6
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 17:05:58 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:60581 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752309AbZHOVF6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Aug 2009 17:05:58 -0400
+Received: by yxe5 with SMTP id 5so2743824yxe.33
+        for <git@vger.kernel.org>; Sat, 15 Aug 2009 14:05:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=u1EcjJW3gCGloUdbsL3RSU/qIKx66+uBQyjCRem9st4=;
+        b=q/49sLXLdLR6hL59RC+XcrlaQlP/seeZXtNlpdq/zxZrusWWW7WpC9kZBfW0BHiFqr
+         32LfrkAGQ1eXjPVKLe3+xf+1+uBkv9Jd1BfareHGYL3FpoDzH9ccsroTza9vUqNuLziq
+         zyneRxHw75gZm7PJb3wvdhCeXi6s7c0RTHR2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=V+WnH9eSaRCcHHA8Qn2qJ9qckm22vcAgIV5WYiqn3Vg6Q5deuCELDoH6VG+vk50Uvl
+         4wzeU4ddjuUHiA9F56dITDQmGJu78Bt8NbrspuheLfNlC37h8c50a1K2F6D7z3Axr2zM
+         XCO9thtLDCKdiAfHd9OFQjt7PoCikh8Js6IC0=
+Received: by 10.150.43.14 with SMTP id q14mr3820404ybq.241.1250370359083; Sat, 
+	15 Aug 2009 14:05:59 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.01.0908151324380.3162@localhost.localdomain>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126029>
 
+On Sat, Aug 15, 2009 at 4:36 PM, Linus
+Torvalds<torvalds@linux-foundation.org> wrote:
+> On Sat, 15 Aug 2009, Junio C Hamano wrote:
+>> If you try that without --stat, i.e.
+>>
+>> =A0 =A0 $ git log -4 --pretty=3Dformat:%s | cat -e
+>> =A0 =A0 $ git log -4 --pretty=3Dtformat:%s | cat -e
+>>
+>> I suspect you may then find that --pretty=3Dformat (not --pretty=3Dt=
+format) is
+>> broken.
+>
+> I disagree. The real brokenness is that we don't have any way to say =
+"I
+> want no newline at all after the format", and then having this mixup =
+with
+> the whole "terminator" thing - sometimes it's "between commits" (whic=
+h is
+> _correct_ any time you have stat info or something), and sometimes it=
+'s
+> "after header" (which is almost always incorrect).
 
+I'm guessing that "after header" was just an implementation error.  It
+was presumably intended to be "after commit", so that the only
+difference between format and tformat is the presence or absence of
+the very last terminator.
 
-On Sat, 15 Aug 2009, Linus Torvalds wrote:
-> 
-> That said, I don't know if the MPL is ok for X11. I've not looked at 
-> compatibility issues with MPL. For git, we could just ignore the MPL, 
-> since the GPLv2 was acceptable regardless of it.
+Maybe the correct fix is just to make tformat not broken?
 
-If MPL isn't ok for X11, then we'd need to make sure that even the 
-silliest Mozilla crud has been rewritten. There really isn't much, but 
-hey, the _history_ is based on the mozilla code, and who knows - the 
-'blk_SHA_CTX' struct has things like the fields in the same order as the 
-Mozilla equivalent, for all those historical reasons.
-
-(Heh. Looking at that, I probably should move the 'size' field first, 
-since that would have different alignment rules, and the struct would be 
-more tightly packed that way, and initialize better).
-
-Afaik, none of the actual code remains (the mozilla SHA1 thing did the 
-wrong thing for performance even for just the final bytes, and did those a 
-byte at a time etc, so I rewrote even the trivial SHA1_Final parts).
-
-Of course, maybe the Mozilla people would be interested in taking my 
-faster version, and say that the new-BSD license is ok, and make everybody 
-happy. The only listed author for the Mozilla SHA1 is Paul Kocher. I added 
-him to the Cc.
-
-Paul, for your information, we're talking about a faster rewritten "mostly 
-portable" SHA1 routines that you can find at
-
-	http://git.kernel.org/?p=git/git.git;a=tree;f=block-sha1;hb=pu
-
-(follow the "blob" pointers to see sha1.c and sha1.h). I don't know if 
-you're active with Mozilla/Firefox or whether you even care, but you seem 
-to be the logical choice of person to ask.
-
-			Linus
+Avery
