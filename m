@@ -1,115 +1,121 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Using VC build git (new patch)
-Date: Sat, 15 Aug 2009 19:29:36 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908151908300.8306@pacific.mpi-cbg.de>
-References: <1976ea660908150921n516178dbs2ce024ed729e2e02@mail.gmail.com> <alpine.DEB.1.00.0908151851280.8306@pacific.mpi-cbg.de>
+From: Mike Smullin <mike@smullindesign.com>
+Subject: git-svn bug report: %20 in http:// should translate to a space '
+ ' automatically
+Date: Sat, 15 Aug 2009 11:48:10 -0600
+Message-ID: <4A86F4DA.5090605@smullindesign.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 15 19:29:03 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Aug 15 19:56:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McN3s-0005qv-U0
-	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 19:29:01 +0200
+	id 1McNU7-000630-Bp
+	for gcvg-git-2@gmane.org; Sat, 15 Aug 2009 19:56:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755452AbZHOR2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Aug 2009 13:28:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754518AbZHOR2w
-	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 13:28:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45936 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753569AbZHOR2v (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Aug 2009 13:28:51 -0400
-Received: (qmail invoked by alias); 15 Aug 2009 17:28:51 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp011) with SMTP; 15 Aug 2009 19:28:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19wMfE9jgZwSY1k5PtnKWkP2MYaTJRjDnijMJseML
-	mc62P03tMwQ6Mt
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0908151851280.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.53
+	id S1751323AbZHORz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Aug 2009 13:55:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZHORz4
+	(ORCPT <rfc822;git-outgoing>); Sat, 15 Aug 2009 13:55:56 -0400
+Received: from ns1.smullindesign.com ([74.208.46.157]:58961 "EHLO
+	smullindesign.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751164AbZHORzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Aug 2009 13:55:55 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 15 Aug 2009 13:55:55 EDT
+Received: (qmail 10525 invoked from network); 15 Aug 2009 11:46:41 -0600
+Received-SPF: none (no valid SPF record)
+Received: from 206-251-44-142.directcom.com (HELO ?10.1.10.50?) (206.251.44.142)
+  by ns2.smullindesign.com with SMTP; 15 Aug 2009 11:46:41 -0600
+User-Agent: Thunderbird 2.0.0.22 (X11/20090719)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126014>
 
-Hi,
+Hello,
 
-On Sat, 15 Aug 2009, Johannes Schindelin wrote:
+This one took me over an hour to figure out with the help of doener in 
+#git on irc.freenode.net:
 
-> A single monster patch?
-> 
-> Hmm.
-> 
-> Please understand that I will not review that unless it is split up into 
-> nice little and reviewable chunks.
+(10:11:15) jeanrussou: i am using git-svn clone to checkout individual 
+directories from an svn repo as separate .git repos on my local hdd. 
+some of the git-svn clone attempts get all of svn repo history, this one 
+gets only the last commit. an svn log of the same path returns a history 
+of at least 5 commits. i only have the most recent one in my git log 
+after git svn clone. any idea why?
+...
+(10:18:37) charon: jeanrussou: git-svn only tracks svn rename/copy 
+operations that are "visible" to it, i.e., happen entirely within the 
+paths cloned
+(10:18:53) charon: jeanrussou: try 'svn log -v' to see if the directory 
+was moved
+(10:18:54) jeanrussou: charon: yes, i did move the path. is there a 
+workaround? can i tell git-svn the original path before the move, or 
+something?
+(10:23:46) doener: jeanrussou: so what's the situation you have? Cloning 
+repo/foo and repo/foo/bar was repo/goo in the past?
+(10:23:56) doener: jeanrussou: or cloning repo/foo which was repo/bar in 
+the past?
+(10:24:59) jeanrussou: in the beginning there was 
+http://repo/projects/Client%20Name/Project, then over time it became 
+http://repo/projects/archive/Client%20Name/Project. i am now attempting 
+git-svn clone on the latter url
+(10:25:28) jeanrussou: there were no changes to the project after it 
+went into archive
+(10:25:36) jeanrussou: i believe this is why it appears to only be 
+grabbing the last commit (which was the move)
+(10:25:49) doener: jeanrussou: if that was a direct rename from one to 
+the other, git-svn should be able to follow that
+... (trying -T, also svn+ssh://) ... finally the cause is found ...
+(11:27:49) jeanrussou: i wrap it in double-quotes and replace %20 with a 
+space ' ' and it works
+(11:31:40) jeanrussou: oh if i just replace %20 with a space the http:// 
+url works too
+(11:31:48) doener: *lol*
+(11:31:57) jeanrussou: dangit
+(11:32:20) jeanrussou: thanks doener
+(11:32:23) jeanrussou: u rock
+(11:32:25) doener: you're welcome
+(11:33:10) doener: too bad that the bug reports I found didn't have the 
+space issue, would likely have saved some time ;-)
+(11:33:38) jeanrussou: ya we should make one
+(11:34:01) jeanrussou: that would be cool if git-svn could unescape the 
+url encodings for http:// paths
+(11:34:17) doener: well, the path could contain a literal %20
+(11:34:46) doener: not very common, but I guess the "give me the plain 
+path, please" approach of git-svn is ok
+(11:35:39) jeanrussou: ya i could see that with svn+ssh:// and file:// 
+but with http:// its going over WebDAV and i'd have to read the RFCs but 
+it might even be an HTTP thing about accessing URLs that % is not valid 
+in URLs
+(11:36:37) doener: yeah, those need to be escaped as %25 (IIRC). And 
+it's kinda weird that the one without -T works
+(11:36:49) jeanrussou: o ya definitely. that too
+(11:36:56) doener: so yeah, a bug report might be the right thing
+(11:36:57) jeanrussou: thats what threw me off. i thought the url was 
+working because of that
+(11:37:14) jeanrussou: okay cool lets see if i can find the git bug tracker
 
-Well, I try to improve.
+Hope this helps! :)
 
-So I had a look at your patch.  The changes fall naturally into one of the 
-following categories:
+--
+Respectfully,
 
-	- decl-after-statement fixes
+Mike Smullin
+Senior Web Systems Director
+Smullin Design and Development, LLC
 
-	- missing #include "git-compat-util.h"
+http://www.smullindesign.com
+http://www.linkedin.com/in/mikesmullin
 
-	- converting a K&R style function definition to modern C
+2112 E. Frontier St.
+Eagle Mountain, Utah 84005
+United States
 
-	- #undef's only needed for Microsoft Visual C++
-
-	- the addition of O_BINARY in the file modes
-
-	- disabling link() (why?)
-
-	- double-#define'ing stat (which puzzles me greatly)
-
-	- dummy #define'ing of a few compiler attributes
-
-	- adding _MSVC to a conditional to avoid  #define'ing
-	  SNPRINTF_SIZE_CORR yourself
-
-	- #define'ing several symbols without leading underscore to the
-	  MS-specific version with a leading underscore
-
-	- implementing strcasecmp() in a misnamed file
-
-	- "fixing" the return value of winansi_vfprintf for Microsoft 
-	  Visual C++ (I think this fix is wrong)
-
-	- correctly adding a Visual C++-specific conditional to 
-	  git-compat-util.h, pager.c, run-command.c, run-command.h, 
-	  setup.c and help.c, although the latter five could use some 
-	  refactoring into git-compat-util.h
-
-	  Maybe there is also room to change the MinGW-conditional into a
-	  NO_TRUSTABLE_FILEMODE one
-
-	- adding several headers missing from Visual C++'s installation
-
-	- adding _huge_ .vcproj files (can they not be smaller?)
-
-As you can see, there is a pretty natural way to split that huge patch 
-into chunks that most people on these lists can review easily, and that 
-would actually be a pleasure to look at.
-
-Even better, there are a few fixes (the first three, if you ask me), which 
-are not even Windows-specific.
-
-Further, I would like to suggest adding a header file compat/msvc.h which 
-contains all the #undef's and #define's necessary only for Visual C++, and 
-which can be #include'd from git-compat-util.h, to better separate your 
-work from the other platforms (who do not want those changes).  That 
-should avoid those unwanted changes to mingw.c and mingw.h.  You just have
-to make sure that msvc.h is #include'd before mingw.h.
-
-With these comments, I look forward to your next iteration.
-
-Ciao,
-Dscho
+toll-free: +1 800-819-7431
+mobile: +1 801-652-5849
+skype: smullindesign
