@@ -1,111 +1,214 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Sun, 16 Aug 2009 10:14:49 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> <200908142223.07994.jnareb@gmail.com> <7veird4yyi.fsf@alter.siamese.dyndns.org> <200908160137.30384.jnareb@gmail.com>
+Subject: Re: Using VC build git (new patch)
+Date: Sun, 16 Aug 2009 10:38:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908161018370.8306@pacific.mpi-cbg.de>
+References: <1976ea660908150921n516178dbs2ce024ed729e2e02@mail.gmail.com>  <alpine.DEB.1.00.0908151851280.8306@pacific.mpi-cbg.de>  <alpine.DEB.1.00.0908151908300.8306@pacific.mpi-cbg.de> <1976ea660908152107s8b8f3e5l3c2f043fb3e4d62@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 16 10:14:27 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1362442541-1250411897=:8306"
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+To: Frank Li <lznuaa@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sun Aug 16 10:38:16 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f162.google.com ([209.85.210.162])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mcask-0003ad-Ey
-	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 10:14:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750878AbZHPIOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2009 04:14:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750795AbZHPIOH
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 04:14:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56804 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750722AbZHPIOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2009 04:14:04 -0400
-Received: (qmail invoked by alias); 16 Aug 2009 08:14:03 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp016) with SMTP; 16 Aug 2009 10:14:03 +0200
+	id 1McbFU-0001Me-Th
+	for gcvm-msysgit@m.gmane.org; Sun, 16 Aug 2009 10:37:57 +0200
+Received: by yxe34 with SMTP id 34so3372472yxe.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 16 Aug 2009 01:37:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:received:x-authenticated:x-provags-id:date:from:x-x-sender
+         :to:cc:subject:in-reply-to:message-id:references:user-agent
+         :mime-version:content-type:x-y-gmx-trusted:x-fuhafi:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=GixhQOsw0bcyPaCWUUTqL6hRCyFr29eWtex+qWYXOko=;
+        b=69reL8SEQZX/oOZKGybx4IN7QW0Lgub4iFI3k0N4lOx2Tcxe8/GEXn7Mdn17nxUZl/
+         rD52OkPLMT7Vrg3XgHTUrXkoQjpYdUGpeDU5igPw9aGmuN5ccMdGYSbtm27rN9MyK0XB
+         l77Jn0Sfn9mAVOz+Ri710UX/cZc8/WvstOB7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=D/rHHaZEtU3sLLFj00BQzXG32sMBmyd/zMjK1T19/n0mG30CPJ8POmww4kJhW7GC/j
+         LH6E/bbU+VxTICvKE7OHRDQ5+maer6SMPiuszGC5eXn0hc0xWcmq+wVXm+3Ovr+P344n
+         U03ojYOpV9v5GGE0zy5Q1KKgJXOO3+hKdchpo=
+Received: by 10.150.143.19 with SMTP id q19mr839400ybd.2.1250411865659;
+        Sun, 16 Aug 2009 01:37:45 -0700 (PDT)
+Received: by 10.177.154.18 with SMTP id g18gr6320yqo.0;
+	Sun, 16 Aug 2009 01:37:33 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.103.64.37 with SMTP id r37mr118619muk.13.1250411852095; Sun, 16 Aug 2009 01:37:32 -0700 (PDT)
+Received: by 10.103.64.37 with SMTP id r37mr118618muk.13.1250411852071; Sun, 16 Aug 2009 01:37:32 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 16si450172bwz.4.2009.08.16.01.37.31; Sun, 16 Aug 2009 01:37:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 16 Aug 2009 08:37:31 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp006) with SMTP; 16 Aug 2009 10:37:31 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/2f+0jZtb2LxRnig/q3dWJmPzF6D2UAOQ9wRxKUj
-	yRf8Q3N1674N9D
+X-Provags-ID: V01U2FsdGVkX1+Ex+ZO5rmE4+NM/3H2G1reWSN+c3/aGwPjfDczP9 3HkF7piCxaYUIL
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200908160137.30384.jnareb@gmail.com>
+In-Reply-To: <1976ea660908152107s8b8f3e5l3c2f043fb3e4d62@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
-Sender: git-owner@vger.kernel.org
+X-FuHaFi: 0.5
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126051>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126052>
+
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1362442541-1250411897=:8306
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Sun, 16 Aug 2009, Jakub Narebski wrote:
+[please quote only those parts that you actually reply to.]
 
-> On Sat, 15 Aug 2009, Junio C Hamano wrote:
-> > Jakub Narebski <jnareb@gmail.com> writes:
-> > 
-> >>>> Hmmm... this looks like either argument for introducing --full 
-> >>>> option to git-checkout (ignore CE_VALID bit, checkout everything, 
-> >>>> and clean CE_VALID (?))...
-> >>>>
-> >>>>  ...or for going with _separate_ bit for partial checkout, like in 
-> >>>>  the very first version of this series, which otherwise functions 
-> >>>>  like CE_VALID, or is just used to mark that CE_VALID was set using 
-> >>>>  sparse.
-> > 
-> > How would a separate bit help?  Just like you need to clear CE_VALID 
-> > bit to revert the index into a normal (or "non sparse") state somehow, 
-> > you would need to have a way to clear that separate bit anyway.
-> > 
-> > A separate bit would help only if you want to handle assume-unchanged 
-> > and sparse checkout independently. But my impression was that the 
-> > recent lstat reduction effort addressed the issue assume-unchanged 
-> > were invented to work around in the first place.
+On Sun, 16 Aug 2009, Frank Li wrote:
+
+> 2009/8/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>
+> >        - the addition of O_BINARY in the file modes
+>
+> Yes, default is text mode if no O_BINARY, _read _write will do union 
+> code and cr\cf convert.
+
+As Git _never_ wants to open files in text mode, this is a change that can 
+come _separately_ from your VC patches.  It could even be considered a bug 
+fix (MinGW's current GCC implies O_BINARY, but previous ones may not, and 
+it is wrong of us to rely on this magic).
+
+> >        - disabling link() (why?)
+>
+> VC report stack error. I also don't know why. I have not deep debug this 
+> problem.
+
+You should.  What with Visual Studio's superior debugging capabilities, it 
+should not be a problem.  Right?
+
+> >        - double-#define'ing stat (which puzzles me greatly)
+>
+> old define is
+>           #define stat    stati64
+>           #define stati64 msys_stati64.
+
+Not exactly.
+
+	#define stat _stati64
+	[...]
+	#define _stati64(x,y) mingw_lstat(x,y)
+
+And even VC should handle that just fine.
+
+> stat is used for both struct and function name.
+> In C code:
+>       struct stat a;
+> stat -> stati64 -> msys_stati64,  so compiler report struct
+> msys_stati64 have not defined.
+
+It is a real pity that you did not inline your patch, and that I could not 
+quote it as a consequence, because now we could discuss code properly:
+
+The original code was done on purpose as it is, to use the _stati64 struct 
+(which allows long pointers, as Microsoft decided off_t was not good 
+enough to represent 64 bit offsets).  I could imagine that your patch 
+breaks that for Visual C++.
+
+> >        - adding _huge_ .vcproj files (can they not be smaller?)
+>
+> It is created by VS2008.  I think it is difficult to make smaller.
+
+Is there not some magic to make a compact export version?
+
+But maybe it is not that bad?  I have 72 (out of 1730) files in my 
+repository that are larger, gitk being the king.
+
+FWIW I would have loved it if _you_ defended the size of the file, instead 
+of having to do it myself.
+
+> > Further, I would like to suggest adding a header file compat/msvc.h 
+> > which contains all the #undef's and #define's necessary only for 
+> > Visual C++, and which can be #include'd from git-compat-util.h, to 
+> > better separate your work from the other platforms (who do not want 
+> > those changes).  That should avoid those unwanted changes to mingw.c 
+> > and mingw.h.  You just have to make sure that msvc.h is #include'd 
+> > before mingw.h.
 > 
-> Well, if we assume that we don't need (don't want) to handle 
-> assume-unchanged and sparse checkout independently, then of course the 
-> idea of having separate or additional bit for sparse doesn't make sense.
+> VC build will reuse msysgit work.
 
-For the shallow/graft issue, we had a similar discussion.  Back then, I 
-was convinced that shallow commits and grafted commits were something 
-fundamentally different, and my recent patch to pack-objects shows that: 
-shallow commits do not have the real parents in the current repository, 
-and that makes them different from other grafted commits.
+That is no question.  We made it easy for you.
 
-Now, if you want to say that assume-unchanged and sparse are two 
-fundamentally different things, I would be interested in some equally 
-convincing argument as for the shallow/graft issue.
+> I will reduce change to mingw.c and mingw.h
+> But there are some problem at mingw.c and mingw.h
+> 
+> 1. stat defination.  Because both struct and function use the same name stat.
 
-There is a fundamental difference, I grant you that: the working directory 
-does not contain the "sparse'd away" files while the same is not true for 
-assume-unchanged files.
+That needs to be resolved somehow, and you would get _much_ more help if 
+you had split your patch series properly and this was _one_ patch.
 
-But does that matter?  The corresponding files are still in the index and 
-the repository.
+> 2. open need binary mode.
 
-IOW under what circumstances would you want to be able to discern between 
-assume-unchanged and "sparse'd away" files in the working directory?
+As I said, this can be a separate change.  In my original reply I 
+_implied_ that it is okay, and in this reply I elaborated on that (namely 
+that it might be considered a bug fix).
 
-I could _imagine_ that you'd want a tool that allows you to change the 
-focus of the sparse checkout together with the working directory.  
-Example: you have a sparse checkout of Documentation/ and now you want to 
-have t/, too.  Just changing .git/info/sparse will not be enough.
+> 3. mingw.c use C99 style to break build at VC.
 
-The question is if the tool to change the "sparseness" [*1*] should not 
-change .git/info/sparse itself; if it does not, it would be good to be 
-able to discern between the "assume-unchanged" and "sparse'd away" files.
+The same applies here as to O_BINARY.
 
-Although it might be enough to traverse the index and check the presence 
-of the assume-unchanged files in the working directory to determine which 
-files are sparse, and which ones are merely assume-unchanged.
+> 4. mingw.c use special DIR structure, So I need add open_dir in mingw.c.
+
+No, you do not need to add that to mingw.c.  MinGW does not need it.  So 
+it has no place in mingw.c.
+
+> If I don't change mingw.c, I need copy it to new file totally.
+
+NOOOO!!!
+
+You #include it after making sure that you have #undef'ed and #define'd 
+whatever needs to, and in a separate file -- which is only referenced in 
+the .vcproj -- you can implement whatever Visual C++ misses.
+
+> > With these comments, I look forward to your next iteration.
+> >
+> > Ciao,
+> > Dscho
+
+Please, please, PLEASE, do not quote things that you are not addressing.  
+And please, please, PLEASE adher to Documentation/SubmittingPatches.
+
+Actually, the only thing SubmittingPatches does is spell out how to make 
+things easier for reviewers, should you not know how to do so.
+
+Remember: the more time it takes me to cull the quoted parts of your mail, 
+the more time it takes me to have a look at your patches, the more time it 
+takes me to refer to your patch and make suggestions, the more am I 
+inclined to spend my time elsewhere, doing something that is much more 
+enjoyable.
 
 Ciao,
 Dscho
 
-Footnote [*1*]: I think we need some nice and clear nomenclature here.  
-Any English wizards with a good taste of naming things?
+--8323328-1362442541-1250411897=:8306--
