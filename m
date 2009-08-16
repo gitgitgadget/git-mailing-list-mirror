@@ -1,116 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: How to stop sharing objects between repositories
-Date: Sun, 16 Aug 2009 09:57:03 -0400
-Message-ID: <20090816135703.GA31638@coredump.intra.peff.net>
-References: <alpine.DEB.2.00.0908151756150.29215@nhtr.ovalna.fjrygre.arg>
- <alpine.DEB.1.00.0908161042210.8306@pacific.mpi-cbg.de>
- <20090816122842.GA942@sigill.intra.peff.net>
- <alpine.DEB.1.00.0908161429590.8306@pacific.mpi-cbg.de>
+From: Thomas Schlichter <thomas.schlichter@web.de>
+Subject: git http-push and MKCOL error (22/409)
+Date: Sun, 16 Aug 2009 15:57:26 +0200
+Message-ID: <200908161557.26962.thomas.schlichter@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Jon Jensen <jon@endpoint.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 16 15:57:29 2009
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Sean Davis <sdavis2@mail.nih.gov>, git@vger.kernel.org
+To: Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 16 15:57:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McgEi-00056t-T7
-	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 15:57:29 +0200
+	id 1McgEy-0005Bq-RS
+	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 15:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752628AbZHPN5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2009 09:57:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751737AbZHPN5D
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 09:57:03 -0400
-Received: from peff.net ([208.65.91.99]:35985 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752187AbZHPN5C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2009 09:57:02 -0400
-Received: (qmail 24986 invoked by uid 107); 16 Aug 2009 13:57:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 16 Aug 2009 09:57:06 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Aug 2009 09:57:03 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0908161429590.8306@pacific.mpi-cbg.de>
+	id S1752659AbZHPN52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2009 09:57:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752652AbZHPN52
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 09:57:28 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:46604 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751737AbZHPN51 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2009 09:57:27 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 1ED87113227B4;
+	Sun, 16 Aug 2009 15:57:28 +0200 (CEST)
+Received: from [92.207.103.184] (helo=netbook.localnet)
+	by smtp07.web.de with asmtp (TLSv1:AES256-SHA:256)
+	(WEB.DE 4.110 #314)
+	id 1McgEh-0003zp-00; Sun, 16 Aug 2009 15:57:27 +0200
+User-Agent: KMail/1.12.0 (Linux/2.6.28-14-generic; KDE/4.3.0; i686; ; )
+X-Sender: thomas.schlichter@web.de
+X-Provags-ID: V01U2FsdGVkX1+lMZ6nlZNEQU0zbkntp0dUMejCp01wnIzYPMzI
+	H/T3dkLaewht7Rhk1Cj5fghh27OrIwSFMvlwprMkwWs8hRAEdO
+	m2zJd7rIChkWt9Iqs4YQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126061>
 
-On Sun, Aug 16, 2009 at 02:30:15PM +0200, Johannes Schindelin wrote:
+Hello,
 
-> > I think it is the opposite; packing _without_ "-l" will create a pack
-> > with objects from the alternate; using "-l" suppresses them. Running
-> > "git repack -a" should do the trick, I believe (and you need the "-a" to
-> > ensure that objects already packed in the repo are re-packed).
-> 
-> Hmm.  I really would like a documentation patch, then.
+I was using git version 1.6.4 and a remote WebDAV repository. But 
+unfortunately, git-http-push always returns following error:
 
-To what? From git-repack(1):
+schlicht@netbook:~/dummy$ git push
+Fetching remote heads...
+  refs
+  refs/heads
+  refs/tags
+  refs/heads
+  refs/tags
+updating 'refs/heads/master'
+  from 980385b1032efc0db665dff3ad54068f762af9aa
+  to   98fd7fb8f32843c1bb40bd195a2f1cd6cab0751d
+    sending 1 objects
+MKCOL 98fd7fb8f32843c1bb40bd195a2f1cd6cab0751d failed, aborting (22/409)
+Updating remote server info
+error: failed to push some refs to 
+'https://webdav.smartdrive.web.de/dummy.git'
 
-  -l
-     Pass the --local option to git-pack-objects. See git-pack-objects(1).
+Current "master" and "next" trees also have this problem. But as git version 
+1.6.4 does not have this problem, I was able to bisect it down to commit:
 
->From git-pack-objects(1):
+   5424bc557fc6414660830b470dd45774b8f5f281
+   http*: add helper methods for fetching objects (loose)
 
-  --local
-      This flag is similar to --incremental; instead of ignoring all
-      packed objects, it only ignores objects that are packed and/or not
-      in the local object store (i.e. borrowed from an alternate).
+I can always reproduce this problem, so I am willing to test patches to fix 
+this regression.
 
-So I think the documentation is correct, but for the original poster, it
-suffers from two problems:
-
-  1. The impact of "-l" in this case is a bit subtle and confusing.
-     I.e., it is not an obvious "use this flag to break the dependency
-     on an alternate", but rather "don't use this flag so that you won't
-     ignore non-local objects when packing". In fact, you don't need to
-     know about it at all
-
-  2. He has to know that "git repack" is the right place to look in the
-     first place (_and_ he has to figure out that "-l" is what he cares
-     about and follow the docs to git-pack-objects to find out what it
-     does).
-
-So I think the best thing is a "by the way, here is how you break this
-dependency" closer to where the concept of alternates is defined. I
-guess the best part would be under the "-s" flag of git-clone, since
-that is presumably how such a situation was created (unless the user is
-savvy enough to edit .git/objects/info/alternates themselves, in which
-case I think we have to assume they know what they are doing).
-
-So maybe something like this would be enough:
-
--- >8 --
-Subject: [PATCH] docs: mention how to break alternates dependency
-
-A user who has created a repository dependency by using "git
-clone -s" does not necessarily know where to look to find
-out how to break that dependency. Let's mention it right
-under "-s", where they are most likely to find it.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-clone.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index b14de6c..87fa687 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -72,6 +72,11 @@ These objects may be removed by normal git operations (such as 'git-commit')
- which automatically call `git gc --auto`. (See linkgit:git-gc[1].)
- If these objects are removed and were referenced by the cloned repository,
- then the cloned repository will become corrupt.
-++
-+To break the dependency of the cloned repository to the source
-+repository, run `git repack -a` in the cloned repository, which will
-+create a new pack in that repository with all referenced objects,
-+including those in the source repository.
- 
- 
- 
--- 
-1.6.4.257.gb8ef
+Kind regards,
+Thomas Schlichter
