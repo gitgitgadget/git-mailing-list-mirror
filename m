@@ -1,99 +1,297 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: How to stop sharing objects between repositories
-Date: Sun, 16 Aug 2009 12:16:22 -0700
-Message-ID: <7vmy5z603d.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.2.00.0908151756150.29215@nhtr.ovalna.fjrygre.arg>
- <alpine.DEB.1.00.0908161042210.8306@pacific.mpi-cbg.de>
- <20090816122842.GA942@sigill.intra.peff.net>
- <alpine.DEB.1.00.0908161429590.8306@pacific.mpi-cbg.de>
- <20090816135703.GA31638@coredump.intra.peff.net>
+From: Giuseppe Scrivano <gscrivano@gnu.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Sun, 16 Aug 2009 21:25:11 +0200
+Message-ID: <87eirbef3c.fsf@master.homenet>
+References: <4A85F270.20703@draigBrady.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jon Jensen <jon@endpoint.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 16 21:16:40 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, Bug-coreutils@gnu.org,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigBrady.com>
+X-From: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org Sun Aug 16 21:27:04 2009
+Return-path: <bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org>
+Envelope-to: gcgcb-bug-coreutils-616@gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MclDb-0002yw-Nn
-	for gcvg-git-2@lo.gmane.org; Sun, 16 Aug 2009 21:16:40 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbZHPTQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2009 15:16:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753642AbZHPTQb
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 15:16:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64172 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836AbZHPTQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2009 15:16:30 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 47F2CD3B5;
-	Sun, 16 Aug 2009 15:16:31 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 548E2D3B4; Sun, 16 Aug
- 2009 15:16:25 -0400 (EDT)
-In-Reply-To: <20090816135703.GA31638@coredump.intra.peff.net> (Jeff King's
- message of "Sun\, 16 Aug 2009 09\:57\:03 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4E1C281E-8A99-11DE-9A4D-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126067>
+	id 1MclNf-00067i-PB
+	for gcgcb-bug-coreutils-616@gmane.org; Sun, 16 Aug 2009 21:27:04 +0200
+Received: from localhost ([127.0.0.1]:36401 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1MclNf-0004uk-3T
+	for gcgcb-bug-coreutils-616@gmane.org; Sun, 16 Aug 2009 15:27:03 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1MclNc-0004sz-1B
+	for bug-coreutils@gnu.org; Sun, 16 Aug 2009 15:27:00 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1MclNW-0004qm-I3
+	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 15:26:59 -0400
+Received: from [199.232.76.173] (port=39624 helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1MclNW-0004qi-D2
+	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 15:26:54 -0400
+Received: from jack.mail.tiscali.it ([213.205.33.53]:55592)
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <gscrivano@gnu.org>)
+	id 1MclNS-0002Gc-OS; Sun, 16 Aug 2009 15:26:51 -0400
+Received: from master.homenet (84.223.200.129) by jack.mail.tiscali.it
+	(8.0.022) id 499F036C05B6A5E6; Sun, 16 Aug 2009 21:26:37 +0200
+Received: from gscrivano by master.homenet with local (Exim 4.69)
+	(envelope-from <gscrivano@gnu.org>)
+	id 1MclLr-0007mw-Sz; Sun, 16 Aug 2009 21:25:12 +0200
+In-Reply-To: <4A85F270.20703@draigBrady.com> (=?utf-8?Q?=22P=C3=A1draig?=
+	Brady"'s message of "Sat, 15 Aug 2009 00:25:36 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+X-detected-operating-system: by monty-python.gnu.org: GNU/Linux 2.6,
+	seldom 2.4 (older, 4)
+X-BeenThere: bug-coreutils@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "GNU Core Utilities: bug reports and discussion"
+	<bug-coreutils.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
+	<mailto:bug-coreutils-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/bug-coreutils>
+List-Post: <mailto:bug-coreutils@gnu.org>
+List-Help: <mailto:bug-coreutils-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
+	<mailto:bug-coreutils-request@gnu.org?subject=subscribe>
+Sender: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
+Errors-To: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126068>
 
-Jeff King <peff@peff.net> writes:
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> Subject: [PATCH] docs: mention how to break alternates dependency
->
-> A user who has created a repository dependency by using "git
-> clone -s" does not necessarily know where to look to find
-> out how to break that dependency. Let's mention it right
-> under "-s", where they are most likely to find it.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Documentation/git-clone.txt |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index b14de6c..87fa687 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -72,6 +72,11 @@ These objects may be removed by normal git operations (such as 'git-commit')
->  which automatically call `git gc --auto`. (See linkgit:git-gc[1].)
->  If these objects are removed and were referenced by the cloned repository,
->  then the cloned repository will become corrupt.
-> ++
-> +To break the dependency of the cloned repository to the source
-> +repository, run `git repack -a` in the cloned repository, which will
-> +create a new pack in that repository with all referenced objects,
-> +including those in the source repository.
+Hi P=C3=A1draig,
 
-After reading this, two points come to my mind.  They may or may not be
-issues.
+I tried to reproduce your results but I wasn't able to do it.  The
+biggest difference on a 300MB file I noticed was approximately 15% using
+on both implementations -O2, and 5% using -O3.
+My GCC version is "gcc (Debian 4.3.3-14) 4.3.3" and the CPU is: Intel(R)
+Pentium(R) D CPU 3.20GHz.
 
- (1) Such a user does not necessarily know a casual "git repack -a" breaks
-     the dependency, defeating the -s option s/he deliberately used in
-     order to save disk space in the first place.  Perhaps we can reword
-     this further to kill two penguins with a single stone?
+I also spent some time trying to improve the gnulib SHA1 implementation
+and it seems a lookup table can improve things a bit.
 
-	Note that the pack resulting from running `git repack -a` in the
-	repository cloned with the `-s` option will include objects that
-	are borrowed from the source repository.  It essentially breaks
-	the dependency created by cloning with the `-s` option by copying
-	the objects from the source repository.  To keep borrowing from
-	the source repository to save disk space, do not use `repack -a`.
+Can you please try the patch that I have attached and tell me which
+performance difference (if any) you get?
 
-     We should suggest an alternative immediately after this sentence,
-     e.g. "Instead, use `repack -l`" or something, but somebody should
-     check if it is a valid/viable alternative.
+Thanks,
+Giuseppe
 
- (2) IIRC, "git gc --auto" runs "repack -A".  What is its effect with
-     respect to this dependency between object stores?  I suspect it would
-     also break the dependency, but if so, is it a good thing?  Perhaps
-     should we change it to use a version that keeps the dependency
-     instead?
+
+
+--=-=-=
+Content-Type: text/x-diff
+Content-Disposition: inline;
+ filename=0001-SHA1-use-a-lookup-table-for-faster-hashing.patch
+
+>From b975a5e0849eaa46e5cf410c5bf6e2308f044d61 Mon Sep 17 00:00:00 2001
+From: Giuseppe Scrivano <gscrivano@gnu.org>
+Date: Sun, 16 Aug 2009 20:53:54 +0200
+Subject: [PATCH] SHA1: use a lookup table for faster hashing
+
+* lib/sha1.c (struct sha1_pre): New member.
+* lib/sha1.c (sha1_process_block): Use the lookup table to quickly find
+indices to use in the current round.
+---
+ lib/sha1.c |  160 ++++++++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 92 insertions(+), 68 deletions(-)
+
+diff --git a/lib/sha1.c b/lib/sha1.c
+index 9c6c7ae..ec18ba7 100644
+--- a/lib/sha1.c
++++ b/lib/sha1.c
+@@ -283,6 +283,32 @@ sha1_process_bytes (const void *buffer, size_t len, struct sha1_ctx *ctx)
+ #define F3(B,C,D) ( ( B & C ) | ( D & ( B | C ) ) )
+ #define F4(B,C,D) (B ^ C ^ D)
+ 
++struct lookup_t
++{
++  unsigned char l1 : 4;
++  unsigned char l2 : 4;
++  unsigned char l3 : 4;
++  unsigned char l4 : 4;
++};
++
++const static struct lookup_t
++sha1_pre[16] = {{(0 - 3) & 0x0f, (0 - 8) & 0x0f, (0 - 14) & 0x0f},
++                {(1 - 3) & 0x0f, (1 - 8) & 0x0f, (1 - 14) & 0x0f},
++                {(2 - 3) & 0x0f, (2 - 8) & 0x0f, (2 - 14) & 0x0f},
++                {(3 - 3) & 0x0f, (3 - 8) & 0x0f, (3 - 14) & 0x0f},
++                {(4 - 3) & 0x0f, (4 - 8) & 0x0f, (4 - 14) & 0x0f},
++                {(5 - 3) & 0x0f, (5 - 8) & 0x0f, (5 - 14) & 0x0f},
++                {(6 - 3) & 0x0f, (6 - 8) & 0x0f, (6 - 14) & 0x0f},
++                {(7 - 3) & 0x0f, (7 - 8) & 0x0f, (7 - 14) & 0x0f},
++                {(8 - 3) & 0x0f, (8 - 8) & 0x0f, (8 - 14) & 0x0f},
++                {(9 - 3) & 0x0f, (9 - 8) & 0x0f, (9 - 14) & 0x0f},
++                {(10 - 3) & 0x0f, (10 - 8) & 0x0f, (10 - 14) & 0x0f},
++                {(11 - 3) & 0x0f, (11 - 8) & 0x0f, (11 - 14) & 0x0f},
++                {(12 - 3) & 0x0f, (12 - 8) & 0x0f, (12 - 14) & 0x0f},
++                {(13 - 3) & 0x0f, (13 - 8) & 0x0f, (13 - 14) & 0x0f},
++                {(14 - 3) & 0x0f, (14 - 8) & 0x0f, (14 - 14) & 0x0f},
++                {(15 - 3) & 0x0f, (15 - 8) & 0x0f, (15 - 14) & 0x0f}};
++
+ /* Process LEN bytes of BUFFER, accumulating context into CTX.
+    It is assumed that LEN % 64 == 0.
+    Most of this code comes from GnuPG's cipher/sha1.c.  */
+@@ -309,9 +335,8 @@ sha1_process_block (const void *buffer, size_t len, struct sha1_ctx *ctx)
+ 
+ #define rol(x, n) (((x) << (n)) | ((uint32_t) (x) >> (32 - (n))))
+ 
+-#define M(I) ( tm =   x[I&0x0f] ^ x[(I-14)&0x0f] \
+-		    ^ x[(I-8)&0x0f] ^ x[(I-3)&0x0f] \
+-	       , (x[I&0x0f] = rol(tm, 1)) )
++#define M(I) (x[I] = rol (x[sha1_pre[I].l1] ^ x[sha1_pre[I].l2] \
++                          ^ x[sha1_pre[I].l3] ^ x[I], 1))
+ 
+ #define R(A,B,C,D,E,F,K,M)  do { E += rol( A, 5 )     \
+ 				      + F( B, C, D )  \
+@@ -322,7 +347,6 @@ sha1_process_block (const void *buffer, size_t len, struct sha1_ctx *ctx)
+ 
+   while (words < endp)
+     {
+-      uint32_t tm;
+       int t;
+       for (t = 0; t < 16; t++)
+ 	{
+@@ -346,70 +370,70 @@ sha1_process_block (const void *buffer, size_t len, struct sha1_ctx *ctx)
+       R( c, d, e, a, b, F1, K1, x[13] );
+       R( b, c, d, e, a, F1, K1, x[14] );
+       R( a, b, c, d, e, F1, K1, x[15] );
+-      R( e, a, b, c, d, F1, K1, M(16) );
+-      R( d, e, a, b, c, F1, K1, M(17) );
+-      R( c, d, e, a, b, F1, K1, M(18) );
+-      R( b, c, d, e, a, F1, K1, M(19) );
+-      R( a, b, c, d, e, F2, K2, M(20) );
+-      R( e, a, b, c, d, F2, K2, M(21) );
+-      R( d, e, a, b, c, F2, K2, M(22) );
+-      R( c, d, e, a, b, F2, K2, M(23) );
+-      R( b, c, d, e, a, F2, K2, M(24) );
+-      R( a, b, c, d, e, F2, K2, M(25) );
+-      R( e, a, b, c, d, F2, K2, M(26) );
+-      R( d, e, a, b, c, F2, K2, M(27) );
+-      R( c, d, e, a, b, F2, K2, M(28) );
+-      R( b, c, d, e, a, F2, K2, M(29) );
+-      R( a, b, c, d, e, F2, K2, M(30) );
+-      R( e, a, b, c, d, F2, K2, M(31) );
+-      R( d, e, a, b, c, F2, K2, M(32) );
+-      R( c, d, e, a, b, F2, K2, M(33) );
+-      R( b, c, d, e, a, F2, K2, M(34) );
+-      R( a, b, c, d, e, F2, K2, M(35) );
+-      R( e, a, b, c, d, F2, K2, M(36) );
+-      R( d, e, a, b, c, F2, K2, M(37) );
+-      R( c, d, e, a, b, F2, K2, M(38) );
+-      R( b, c, d, e, a, F2, K2, M(39) );
+-      R( a, b, c, d, e, F3, K3, M(40) );
+-      R( e, a, b, c, d, F3, K3, M(41) );
+-      R( d, e, a, b, c, F3, K3, M(42) );
+-      R( c, d, e, a, b, F3, K3, M(43) );
+-      R( b, c, d, e, a, F3, K3, M(44) );
+-      R( a, b, c, d, e, F3, K3, M(45) );
+-      R( e, a, b, c, d, F3, K3, M(46) );
+-      R( d, e, a, b, c, F3, K3, M(47) );
+-      R( c, d, e, a, b, F3, K3, M(48) );
+-      R( b, c, d, e, a, F3, K3, M(49) );
+-      R( a, b, c, d, e, F3, K3, M(50) );
+-      R( e, a, b, c, d, F3, K3, M(51) );
+-      R( d, e, a, b, c, F3, K3, M(52) );
+-      R( c, d, e, a, b, F3, K3, M(53) );
+-      R( b, c, d, e, a, F3, K3, M(54) );
+-      R( a, b, c, d, e, F3, K3, M(55) );
+-      R( e, a, b, c, d, F3, K3, M(56) );
+-      R( d, e, a, b, c, F3, K3, M(57) );
+-      R( c, d, e, a, b, F3, K3, M(58) );
+-      R( b, c, d, e, a, F3, K3, M(59) );
+-      R( a, b, c, d, e, F4, K4, M(60) );
+-      R( e, a, b, c, d, F4, K4, M(61) );
+-      R( d, e, a, b, c, F4, K4, M(62) );
+-      R( c, d, e, a, b, F4, K4, M(63) );
+-      R( b, c, d, e, a, F4, K4, M(64) );
+-      R( a, b, c, d, e, F4, K4, M(65) );
+-      R( e, a, b, c, d, F4, K4, M(66) );
+-      R( d, e, a, b, c, F4, K4, M(67) );
+-      R( c, d, e, a, b, F4, K4, M(68) );
+-      R( b, c, d, e, a, F4, K4, M(69) );
+-      R( a, b, c, d, e, F4, K4, M(70) );
+-      R( e, a, b, c, d, F4, K4, M(71) );
+-      R( d, e, a, b, c, F4, K4, M(72) );
+-      R( c, d, e, a, b, F4, K4, M(73) );
+-      R( b, c, d, e, a, F4, K4, M(74) );
+-      R( a, b, c, d, e, F4, K4, M(75) );
+-      R( e, a, b, c, d, F4, K4, M(76) );
+-      R( d, e, a, b, c, F4, K4, M(77) );
+-      R( c, d, e, a, b, F4, K4, M(78) );
+-      R( b, c, d, e, a, F4, K4, M(79) );
++      R( e, a, b, c, d, F1, K1, M( 0) );
++      R( d, e, a, b, c, F1, K1, M( 1) );
++      R( c, d, e, a, b, F1, K1, M( 2) );
++      R( b, c, d, e, a, F1, K1, M( 3) );
++      R( a, b, c, d, e, F2, K2, M( 4) );
++      R( e, a, b, c, d, F2, K2, M( 5) );
++      R( d, e, a, b, c, F2, K2, M( 6) );
++      R( c, d, e, a, b, F2, K2, M( 7) );
++      R( b, c, d, e, a, F2, K2, M( 8) );
++      R( a, b, c, d, e, F2, K2, M( 9) );
++      R( e, a, b, c, d, F2, K2, M(10) );
++      R( d, e, a, b, c, F2, K2, M(11) );
++      R( c, d, e, a, b, F2, K2, M(12) );
++      R( b, c, d, e, a, F2, K2, M(13) );
++      R( a, b, c, d, e, F2, K2, M(14) );
++      R( e, a, b, c, d, F2, K2, M(15) );
++      R( d, e, a, b, c, F2, K2, M( 0) );
++      R( c, d, e, a, b, F2, K2, M( 1) );
++      R( b, c, d, e, a, F2, K2, M( 2) );
++      R( a, b, c, d, e, F2, K2, M( 3) );
++      R( e, a, b, c, d, F2, K2, M( 4) );
++      R( d, e, a, b, c, F2, K2, M( 5) );
++      R( c, d, e, a, b, F2, K2, M( 6) );
++      R( b, c, d, e, a, F2, K2, M( 7) );
++      R( a, b, c, d, e, F3, K3, M( 8) );
++      R( e, a, b, c, d, F3, K3, M( 9) );
++      R( d, e, a, b, c, F3, K3, M(10) );
++      R( c, d, e, a, b, F3, K3, M(11) );
++      R( b, c, d, e, a, F3, K3, M(12) );
++      R( a, b, c, d, e, F3, K3, M(13) );
++      R( e, a, b, c, d, F3, K3, M(14) );
++      R( d, e, a, b, c, F3, K3, M(15) );
++      R( c, d, e, a, b, F3, K3, M( 0) );
++      R( b, c, d, e, a, F3, K3, M( 1) );
++      R( a, b, c, d, e, F3, K3, M( 2) );
++      R( e, a, b, c, d, F3, K3, M( 3) );
++      R( d, e, a, b, c, F3, K3, M( 4) );
++      R( c, d, e, a, b, F3, K3, M( 5) );
++      R( b, c, d, e, a, F3, K3, M( 6) );
++      R( a, b, c, d, e, F3, K3, M( 7) );
++      R( e, a, b, c, d, F3, K3, M( 8) );
++      R( d, e, a, b, c, F3, K3, M( 9) );
++      R( c, d, e, a, b, F3, K3, M(10) );
++      R( b, c, d, e, a, F3, K3, M(11) );
++      R( a, b, c, d, e, F4, K4, M(12) );
++      R( e, a, b, c, d, F4, K4, M(13) );
++      R( d, e, a, b, c, F4, K4, M(14) );
++      R( c, d, e, a, b, F4, K4, M(15) );
++      R( b, c, d, e, a, F4, K4, M( 0) );
++      R( a, b, c, d, e, F4, K4, M( 1) );
++      R( e, a, b, c, d, F4, K4, M( 2) );
++      R( d, e, a, b, c, F4, K4, M( 3) );
++      R( c, d, e, a, b, F4, K4, M( 4) );
++      R( b, c, d, e, a, F4, K4, M( 5) );
++      R( a, b, c, d, e, F4, K4, M( 6) );
++      R( e, a, b, c, d, F4, K4, M( 7) );
++      R( d, e, a, b, c, F4, K4, M( 8) );
++      R( c, d, e, a, b, F4, K4, M( 9) );
++      R( b, c, d, e, a, F4, K4, M(10) );
++      R( a, b, c, d, e, F4, K4, M(11) );
++      R( e, a, b, c, d, F4, K4, M(12) );
++      R( d, e, a, b, c, F4, K4, M(13) );
++      R( c, d, e, a, b, F4, K4, M(14) );
++      R( b, c, d, e, a, F4, K4, M(15) );
+ 
+       a = ctx->A += a;
+       b = ctx->B += b;
+-- 
+1.6.3.3
+
+
+--=-=-=--
