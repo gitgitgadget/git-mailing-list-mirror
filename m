@@ -1,73 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: GitHub linking, was Re: bbchop & Wikipedia's Bayesian search theory
- page
-Date: Sun, 16 Aug 2009 19:18:48 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908161915040.8306@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0908161907580.8306@pacific.mpi-cbg.de>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: git-svn bug report: %20 in http:// should translate to a space
+ ' ' automatically
+Date: Sun, 16 Aug 2009 20:13:31 +0200 (CEST)
+Message-ID: <alpine.DEB.2.00.0908162012190.13789@yvahk2.pbagnpgbe.fr>
+References: <4A86F4DA.5090605@smullindesign.com> <20090815181637.GC19833@atjola.homenet> <alpine.LSU.2.00.0908152336240.449@hermes-2.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
-	Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 16 19:18:20 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1084551540-439575890-1250446411=:13789"
+Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Mike Smullin <mike@smullindesign.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Sun Aug 16 20:30:40 2009
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McjN3-0006Pr-5L
-	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 19:18:17 +0200
+	id 1MckV5-0005JX-7W
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Aug 2009 20:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094AbZHPRSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2009 13:18:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754089AbZHPRSD
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 13:18:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50880 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753054AbZHPRSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2009 13:18:01 -0400
-Received: (qmail invoked by alias); 16 Aug 2009 17:18:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp071) with SMTP; 16 Aug 2009 19:18:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/1knJIMT/1ThzzSvaaZvyibZ2583WCPy4FhVK5Dc
-	/TyQ/xQS4Kf690
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0908161907580.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754202AbZHPSaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2009 14:30:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751258AbZHPSa3
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 14:30:29 -0400
+Received: from kluster1.contactor.se ([91.191.140.11]:43794 "EHLO
+	kluster1.contactor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795AbZHPSa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2009 14:30:29 -0400
+X-Greylist: delayed 1011 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 Aug 2009 14:30:28 EDT
+Received: from linux2.contactor.se (linux2.contactor.se [91.191.140.14])
+	by kluster1.contactor.se (8.13.8/8.13.8/Debian-3) with ESMTP id n7GIDV94012369;
+	Sun, 16 Aug 2009 20:13:31 +0200
+X-X-Sender: dast@linux2.contactor.se
+In-Reply-To: <alpine.LSU.2.00.0908152336240.449@hermes-2.csi.cam.ac.uk>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126066>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Sun, 16 Aug 2009, Johannes Schindelin wrote:
+---1084551540-439575890-1250446411=:13789
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-> I tried to find some documentation for Bayesian search theory, but it 
-> seems those ridiculous Wikipedia admins struck once again, in their 
-> mission to reduce the world's intellect to their own.
+On Sat, 15 Aug 2009, Tony Finch wrote:
 
-Ah, never mind, it seems that they did not delete _this_ page (it would 
-have been the third I looked for this week which got deleted and made 
-extra hard to find a copy of).
+> On Sat, 15 Aug 2009, Björn Steinbrink wrote:
+>>
+>> 3) git svn clone -Tgoo "http://host/repo/path with spaces/foo/bar"
+>>
+>> Works.
+>
+> Spaces are not permitted in URLs so this should be treated as a syntax 
+> error.
 
-The problem, really, is that the link on the bbchop GitHub site is wrong:
+libcurl OTOH doesn't verify the passed in data to be strict URLs but will 
+instead do its best to work with whatever is passed to it...
 
-	http://github.com/Ealdwulf/bbchop/tree/master
+-- 
 
-The issue is that the link incorrectly includes the closing parenthesis.  
-It should link to
-
-	http://en.wikipedia.org/wiki/Bayesian_search_theory
-
-not
-
-	http://en.wikipedia.org/wiki/Bayesian_search_theory)
-
-Scott, is it possible to fix that?  Or is the README not magically made 
-from the README in the repository (which does not contain HTML markup)?
-
-Ciao,
-Dscho
+  / daniel.haxx.se
+---1084551540-439575890-1250446411=:13789--
