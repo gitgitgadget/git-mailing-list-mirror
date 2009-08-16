@@ -1,189 +1,131 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: Using VC build git (new patch)
-Date: Sun, 16 Aug 2009 12:07:57 +0800
-Message-ID: <1976ea660908152107s8b8f3e5l3c2f043fb3e4d62@mail.gmail.com>
-References: <1976ea660908150921n516178dbs2ce024ed729e2e02@mail.gmail.com>
-	 <alpine.DEB.1.00.0908151851280.8306@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.00.0908151908300.8306@pacific.mpi-cbg.de>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] unpack-trees.c: simplify check_updates() code path when o->update is false
+Date: Sun, 16 Aug 2009 12:05:30 +0700
+Message-ID: <1250399130-31793-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Aug 16 06:08:13 2009
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 16 07:05:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McX2S-0003yQ-EP
-	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 06:08:12 +0200
+	id 1McXwC-00077w-MB
+	for gcvg-git-2@gmane.org; Sun, 16 Aug 2009 07:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750779AbZHPEH5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Aug 2009 00:07:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750722AbZHPEH5
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 00:07:57 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:63400 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750695AbZHPEH4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Aug 2009 00:07:56 -0400
-Received: by qyk34 with SMTP id 34so1742081qyk.33
-        for <git@vger.kernel.org>; Sat, 15 Aug 2009 21:07:57 -0700 (PDT)
+	id S1751518AbZHPFFj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Aug 2009 01:05:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbZHPFFj
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 01:05:39 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:1726 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751111AbZHPFFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Aug 2009 01:05:38 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so407262wah.21
+        for <git@vger.kernel.org>; Sat, 15 Aug 2009 22:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=hVIhXpekK7GISIdLn3WhYPd81ZzHltyfooMDoxQdwoI=;
-        b=HC+B2ObgRLGz3+5jGsWq+qdVJuuDPEFBjDjTYdLcgwcrbvBoJ5GxLLi62r258x6X2A
-         wDn84EVTRCxn/7DrZ8ZyeD8ds3mIvSwQyfJpTo+Ne0QhifTqA1tdmHkgKbtQxAq4woiy
-         OIV9ZHQz42nia9nbr/vdh1flBS/0LBBEIJcnM=
+        bh=zXfi57G/E0OqZ6yzi3lImlBV8qSjMMTfB124/hmkGhI=;
+        b=rUAcAg5DUB1UtS74i7APVomphqHJIq2ESzo+TiIUfcvCwBox/W77vp8MlVFiEuKYNw
+         DUup+suSpPvsB9fPNc3rvvV/X2o0A7rREkvo7TjXxrd06vZI/KQ6JSX3KDGoU/kgEshB
+         D7T9rlW5rQQ+8mfp7CmpgsDFp36eYPALR0DPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vaHpI2ZWoEE6Rpol2j82vKCiD5f/oInBWs4puINGMDgiE7xzTjdMg5STK6OaaivQ/R
-         n+5C9E87acU716iKkBWyNnwrBdYL1m6+zOGfby7VvBGDQ/hFt4kzxRxCyvY3HaWIpNiI
-         yidNm/MWd2tUoLHnWxmNwX5wlRMoyB/jAnXdU=
-Received: by 10.224.30.195 with SMTP id v3mr3405599qac.359.1250395677222; Sat, 
-	15 Aug 2009 21:07:57 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908151908300.8306@pacific.mpi-cbg.de>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=AnuvP4VCVhqE7BPdhZl22KvdUEA9eXhTHn7X6TRTayfBkruMn6xQ3V+BCRApBz1mJ3
+         iVdLxl4uTwjqtkGUo/xWWLdbK6ATAT823HHeEJW5qpu3wwfg4IojcB6Faq2U6TkoYvdR
+         /vxhAL54p6Cd5jYO8+YSxbgXEYCd2kAEVE0cE=
+Received: by 10.114.169.10 with SMTP id r10mr3449475wae.140.1250399139305;
+        Sat, 15 Aug 2009 22:05:39 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.201.30])
+        by mx.google.com with ESMTPS id k41sm13684717rvb.10.2009.08.15.22.05.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 15 Aug 2009 22:05:37 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 16 Aug 2009 12:05:33 +0700
+X-Mailer: git-send-email 1.6.3.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126050>
 
-2009/8/16 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> Hi,
->
-> On Sat, 15 Aug 2009, Johannes Schindelin wrote:
->
->> A single monster patch?
->>
->> Hmm.
->>
->> Please understand that I will not review that unless it is split up =
-into
->> nice little and reviewable chunks.
->
-> Well, I try to improve.
->
-> So I had a look at your patch. =A0The changes fall naturally into one=
- of the
-> following categories:
->
-> =A0 =A0 =A0 =A0- decl-after-statement fixes
->
-> =A0 =A0 =A0 =A0- missing #include "git-compat-util.h"
->
-> =A0 =A0 =A0 =A0- converting a K&R style function definition to modern=
- C
->
-> =A0 =A0 =A0 =A0- #undef's only needed for Microsoft Visual C++
-          #undef ERROR is necessary.
-          #undef in mingw.h is only for clean some warning.
->
-> =A0 =A0 =A0 =A0- the addition of O_BINARY in the file modes
-         Yes, default is text mode if no O_BINARY, _read _write will
-do union code and cr\cf convert.
+check_updates() is heavily branched by o->update, which makes it quite
+difficult to follow. This patch rips "o->update =3D=3D 0" code path out=
+ and
+put it on top.
 
->
-> =A0 =A0 =A0 =A0- disabling link() (why?)
-         VC report stack error. I also don't know why.
-         I have not deep debug this problem.
->
-> =A0 =A0 =A0 =A0- double-#define'ing stat (which puzzles me greatly)
-          old define is
-          #define stat    stati64
-          #define stati64 msys_stati64.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ unpack-trees.c |   23 +++++++++++++----------
+ 1 files changed, 13 insertions(+), 10 deletions(-)
 
-          stat is used for both struct and function name.
-         In C code:
-              struct stat a;
-         stat -> stati64 -> msys_stati64,  so compiler report struct
-msys_stati64 have not defined.
-
->
-> =A0 =A0 =A0 =A0- dummy #define'ing of a few compiler attributes
->
-> =A0 =A0 =A0 =A0- adding _MSVC to a conditional to avoid =A0#define'in=
-g
-> =A0 =A0 =A0 =A0 =A0SNPRINTF_SIZE_CORR yourself
->
-> =A0 =A0 =A0 =A0- #define'ing several symbols without leading undersco=
-re to the
-> =A0 =A0 =A0 =A0 =A0MS-specific version with a leading underscore
->
-> =A0 =A0 =A0 =A0- implementing strcasecmp() in a misnamed file
->
-> =A0 =A0 =A0 =A0- "fixing" the return value of winansi_vfprintf for Mi=
-crosoft
-> =A0 =A0 =A0 =A0 =A0Visual C++ (I think this fix is wrong)
->
-> =A0 =A0 =A0 =A0- correctly adding a Visual C++-specific conditional t=
-o
-> =A0 =A0 =A0 =A0 =A0git-compat-util.h, pager.c, run-command.c, run-com=
-mand.h,
-> =A0 =A0 =A0 =A0 =A0setup.c and help.c, although the latter five could=
- use some
-> =A0 =A0 =A0 =A0 =A0refactoring into git-compat-util.h
-           Do you means add
-           #ifdef _MSC_VER
-           #include git-compat-util.h
-           #endif
->
-> =A0 =A0 =A0 =A0 =A0Maybe there is also room to change the MinGW-condi=
-tional into a
-> =A0 =A0 =A0 =A0 =A0NO_TRUSTABLE_FILEMODE one
->
-> =A0 =A0 =A0 =A0- adding several headers missing from Visual C++'s ins=
-tallation
->
-> =A0 =A0 =A0 =A0- adding _huge_ .vcproj files (can they not be smaller=
-?)
-           It is created by VS2008.  I think it is difficult to make sm=
-aller.
->
-> As you can see, there is a pretty natural way to split that huge patc=
-h
-> into chunks that most people on these lists can review easily, and th=
-at
-> would actually be a pleasure to look at.
->
-> Even better, there are a few fixes (the first three, if you ask me), =
-which
-> are not even Windows-specific.
->
-> Further, I would like to suggest adding a header file compat/msvc.h w=
-hich
-> contains all the #undef's and #define's necessary only for Visual C++=
-, and
-> which can be #include'd from git-compat-util.h, to better separate yo=
-ur
-> work from the other platforms (who do not want those changes). =A0Tha=
-t
-> should avoid those unwanted changes to mingw.c and mingw.h. =A0You ju=
-st have
-> to make sure that msvc.h is #include'd before mingw.h.
-
-VC build will reuse msysgit work.
-I will reduce change to mingw.c and mingw.h
-But there are some problem at mingw.c and mingw.h
-
-1. stat defination.  Because both struct and function use the same name=
- stat.
-2. open need binary mode.
-3. mingw.c use C99 style to break build at VC.
-4. mingw.c use special DIR structure, So I need add open_dir in mingw.c=
-=2E
-
-If I don't change mingw.c, I need copy it to new file totally.
->
-> With these comments, I look forward to your next iteration.
->
-> Ciao,
-> Dscho
->
->
->
->
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 720f7a1..3ee9919 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -75,7 +75,15 @@ static int check_updates(struct unpack_trees_options=
+ *o)
+ 	int i;
+ 	int errs =3D 0;
+=20
+-	if (o->update && o->verbose_update) {
++	if (!o->update) {
++		remove_marked_cache_entries(&o->result);
++		remove_scheduled_dirs();
++		for (i =3D 0; i < index->cache_nr; i++)
++			index->cache[i]->ce_flags &=3D ~CE_UPDATE;
++		return 0;
++	}
++
++	if (o->verbose_update) {
+ 		for (total =3D cnt =3D 0; cnt < index->cache_nr; cnt++) {
+ 			struct cache_entry *ce =3D index->cache[cnt];
+ 			if (ce->ce_flags & (CE_UPDATE | CE_REMOVE))
+@@ -87,15 +95,13 @@ static int check_updates(struct unpack_trees_option=
+s *o)
+ 		cnt =3D 0;
+ 	}
+=20
+-	if (o->update)
+-		git_attr_set_direction(GIT_ATTR_CHECKOUT, &o->result);
++	git_attr_set_direction(GIT_ATTR_CHECKOUT, &o->result);
+ 	for (i =3D 0; i < index->cache_nr; i++) {
+ 		struct cache_entry *ce =3D index->cache[i];
+=20
+ 		if (ce->ce_flags & CE_REMOVE) {
+ 			display_progress(progress, ++cnt);
+-			if (o->update)
+-				unlink_entry(ce);
++			unlink_entry(ce);
+ 		}
+ 	}
+ 	remove_marked_cache_entries(&o->result);
+@@ -107,14 +113,11 @@ static int check_updates(struct unpack_trees_opti=
+ons *o)
+ 		if (ce->ce_flags & CE_UPDATE) {
+ 			display_progress(progress, ++cnt);
+ 			ce->ce_flags &=3D ~CE_UPDATE;
+-			if (o->update) {
+-				errs |=3D checkout_entry(ce, &state, NULL);
+-			}
++			errs |=3D checkout_entry(ce, &state, NULL);
+ 		}
+ 	}
+ 	stop_progress(&progress);
+-	if (o->update)
+-		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
++	git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
+ 	return errs !=3D 0;
+ }
+=20
+--=20
+1.6.3.GIT
