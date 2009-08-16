@@ -1,111 +1,90 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Linus' sha1 is much faster!
-Date: Sun, 16 Aug 2009 15:47:08 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908161539300.3162@localhost.localdomain>
-References: <4A85F270.20703@draigBrady.com> <87eirbef3c.fsf@master.homenet>
-	<alpine.LFD.2.01.0908161306340.3162@localhost.localdomain>
-	<87ab1ze76y.fsf@master.homenet>
+From: Frank Li <lznuaa@gmail.com>
+Subject: quick question about __stdcall at run-command.c mingw.c
+Date: Mon, 17 Aug 2009 07:19:22 +0800
+Message-ID: <1976ea660908161619x5182762sade051f24fef13db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Bug-coreutils@gnu.org, =?ISO-8859-15?Q?P=E1draig_Brady?= <P@draigBrady.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Giuseppe Scrivano <gscrivano@gnu.org>
-X-From: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org Mon Aug 17 00:48:02 2009
-Return-path: <bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org>
-Envelope-to: gcgcb-bug-coreutils-616@gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Aug 17 01:19:52 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yw0-f140.google.com ([209.85.211.140])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McoWA-0005N6-JZ
-	for gcgcb-bug-coreutils-616@gmane.org; Mon, 17 Aug 2009 00:48:02 +0200
-Received: from localhost ([127.0.0.1]:40476 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1McoWA-0002H4-1q
-	for gcgcb-bug-coreutils-616@gmane.org; Sun, 16 Aug 2009 18:48:02 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1McoW7-0002GG-KI
-	for bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:59 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1McoW2-00028Z-DF
-	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:58 -0400
-Received: from [199.232.76.173] (port=54768 helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1McoW2-00028K-9p
-	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57627)
-	by monty-python.gnu.org with esmtps
-	(TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32) (Exim 4.60)
-	(envelope-from <torvalds@linux-foundation.org>)
-	id 1McoVw-0001ky-WA; Sun, 16 Aug 2009 18:47:49 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org
-	[140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with
-	ESMTP id n7GMl97G006408
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 16 Aug 2009 15:47:10 -0700
-Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org
-	(8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id
-	n7GMl8cV014577; Sun, 16 Aug 2009 15:47:08 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <87ab1ze76y.fsf@master.homenet>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
-X-MIME-Autoconverted: from 8bit to quoted-printable by
-	smtp1.linux-foundation.org id n7GMl97G006408
-X-detected-operating-system: by monty-python.gnu.org: GNU/Linux 2.6 (newer, 3)
-X-BeenThere: bug-coreutils@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: "GNU Core Utilities: bug reports and discussion"
-	<bug-coreutils.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
-	<mailto:bug-coreutils-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/bug-coreutils>
-List-Post: <mailto:bug-coreutils@gnu.org>
-List-Help: <mailto:bug-coreutils-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
-	<mailto:bug-coreutils-request@gnu.org?subject=subscribe>
-Sender: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
-Errors-To: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126092>
+	id 1Mcp0u-0005Mj-KL
+	for gcvm-msysgit@m.gmane.org; Mon, 17 Aug 2009 01:19:48 +0200
+Received: by ywh4 with SMTP id 4so4426632ywh.22
+        for <gcvm-msysgit@m.gmane.org>; Sun, 16 Aug 2009 16:19:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:dkim-signature:domainkey-signature:mime-version:received
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        bh=rPubwfACWHOSu0/2WOKZvE/6cUwY0xPvHdfyQlxVQ3Q=;
+        b=x3evr9w8uw+nKYV/IxjIW2Bm6byPjoBj3gN2HA6osU3GNR93Ebr8Todm4Q4C6oAYZV
+         p6lUTZMGDNajusQfiiBlHewGhPtZujzFtlXQ5Si5fbMdL88t10xKF7wQVwRUH5nGnyKM
+         HHHknf5HzTi7d9Ev5q/dsaNAY3bwh2bOHB68g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=VQerPKnVevbz5DISc7fzsRh0T3gAJdV45svTcscAQ1ueQGlIBi4XWQWm0Rq2rcA5jC
+         Ble520VSH/y4UX0GAFLVie9fxXPo2J6wiP6GfyC9dgAjRbQvRx7b7s19fsuxf4UgQhmF
+         h2oUQbgl1G+coCIKOXHMfOihfu9IPeUUrACj4=
+Received: by 10.101.131.13 with SMTP id i13mr920784ann.14.1250464776305;
+        Sun, 16 Aug 2009 16:19:36 -0700 (PDT)
+Received: by 10.176.54.11 with SMTP id c11gr6323yqa.0;
+	Sun, 16 Aug 2009 16:19:25 -0700 (PDT)
+X-Sender: lznuaa@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.224.29.80 with SMTP id p16mr635870qac.16.1250464764420; Sun, 16 Aug 2009 16:19:24 -0700 (PDT)
+Received: by 10.224.29.80 with SMTP id p16mr635869qac.16.1250464764395; Sun, 16 Aug 2009 16:19:24 -0700 (PDT)
+Received: from qw-out-1920.google.com (qw-out-1920.google.com [74.125.92.145]) by gmr-mx.google.com with ESMTP id 18si395551qyk.9.2009.08.16.16.19.23; Sun, 16 Aug 2009 16:19:23 -0700 (PDT)
+Received-SPF: pass (google.com: domain of lznuaa@gmail.com designates 74.125.92.145 as permitted sender) client-ip=74.125.92.145;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of lznuaa@gmail.com designates 74.125.92.145 as permitted sender) smtp.mail=lznuaa@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by qw-out-1920.google.com with SMTP id 5so897884qwf.0 for <msysgit@googlegroups.com>; Sun, 16 Aug 2009 16:19:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:date:message-id:subject :from:to:content-type:content-transfer-encoding; bh=wF3qycRLEs9nexvQ/nEORh0qsB0+DApadwZasmSa/kc=; b=cCuSUPTTEs6bTm2zMFSqFhV4X+VpNH1ahuW29TMMg1kvPSolFIc8OtJNLRxgl5ub10 HD/rAdwuvZToBfSYKzT2ZNcRFKr0psvOtW/20X4zM+r8+WMsYBZGG3yjUa7KczoapeS5 i8QpNz36RIhdPx0FO/qYRRSK5nPZtHhpZ/078=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:date:message-id:subject:from:to:content-type :content-transfer-encoding; b=IgBGwx6jGxA+Mpgh0zCIdYzhzitRvuufFV5/V4XGvYunICHQBkZmQ/2jYr++hcwzdh azwdbf8DNb+5ojzn2CeWMFUKdEH2vUsNk+3MFJrSP2rhfMWJ/ZWUZMjHzGcC//7/gsoX 7QiYHa21DQprzpNezBCmDj8tMrFixI/ruAFDU=
+Received: by 10.224.101.79 with SMTP id b15mr3874923qao.66.1250464763006; Sun,  16 Aug 2009 16:19:23 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+Precedence: bulk
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126094>
 
 
+I am tring to clear VC build patch.
 
-On Mon, 17 Aug 2009, Giuseppe Scrivano wrote:
->=20
-> Thanks for the hint.  I tried gcc-4.4 and it produces slower code than
-> 4.3 on the gnulib SHA1 implementation and my patch makes it even more!
+I found __stdcall position break MSVC build.
 
-Check out the asm, see if you can see why. One of the most common problem=
-s=20
-with P4's is literally that you end up loading from the same stack slot=20
-that you just stored to (gcc can do some really crazy spills), and that=20
-causes a store buffer hazard replay.
+static __stdcall unsigned run_thread(void *data)
 
-My personal opinion is that Netburst is useless for trying to optimize C=20
-code for. It's just too random.
+MSVC require __stdcall should be between return type and function name.
+like
+static unsigned __stdcall run_thread(void *data)
 
-> I noticed that on my machine your implementation is ~30-40% faster usin=
-g
-> SHA_ROT for rol/ror instructions than inline assembly, at least with th=
-e
-> test-case P=C3=A1draig wrote.  Am I the only one reporting it?
+I think msys gcc should support MSVC format.
 
-I bet it's the same thing. Small perturbations of the source causing smal=
-l=20
-changes to register allocation and thus spilling, and then Netburst goes=20
-crazy one way or another. It's interestign trying to fix it, and very=20
-frustrating.
+Should I directly change to MSVC format or add _MSC_VER marcro like
 
-My workstation is a Nehalem (but Core 2 will have pretty much the same=20
-behavior), and it doesn't have the crazy netburst behavior. Shorter and=20
-simpler code generally performs better (which is _not_ true on Netburst).=
-=20
-
-On my machine, for example, forcing gcc to do those rotates on registers=20
-is the difference between ~381MB/s and 415MB/s. And that's mainly because=
-=20
-it makes gcc keep A-E in registers, rather than trying to cache the=20
-array[] references.
-
-			Linus
+#if defined(__MINGW32__)
+static __stdcall unsigned run_thread(void *data)
+#elif defined(_MSC_VER) /*MSVC must put __stdcall between return value
+and function*/
+static unsigned __stdcall run_thread(void *data)
+#endif
