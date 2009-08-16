@@ -1,69 +1,111 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: [PATCH 0/6 (v2)] Suggested for PU: revision caching system to 
-	significantly speed up packing/walking
-Date: Mon, 17 Aug 2009 00:47:28 +0200
-Message-ID: <c77435a80908161547x4d2a9087qf439d1c30cc4fa99@mail.gmail.com>
-References: <op.uyb1uryftdk399@sirnot.private>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Sun, 16 Aug 2009 15:47:08 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908161539300.3162@localhost.localdomain>
+References: <4A85F270.20703@draigBrady.com> <87eirbef3c.fsf@master.homenet>
+	<alpine.LFD.2.01.0908161306340.3162@localhost.localdomain>
+	<87ab1ze76y.fsf@master.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail
-X-From: git-owner@vger.kernel.org Mon Aug 17 00:47:39 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Bug-coreutils@gnu.org, =?ISO-8859-15?Q?P=E1draig_Brady?= <P@draigBrady.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Giuseppe Scrivano <gscrivano@gnu.org>
+X-From: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org Mon Aug 17 00:48:02 2009
+Return-path: <bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org>
+Envelope-to: gcgcb-bug-coreutils-616@gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McoVl-0005Gf-Am
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 00:47:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754753AbZHPWr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Aug 2009 18:47:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754128AbZHPWr2
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 18:47:28 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:13153 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752212AbZHPWr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Aug 2009 18:47:27 -0400
-Received: by ey-out-2122.google.com with SMTP id 22so591643eye.37
-        for <git@vger.kernel.org>; Sun, 16 Aug 2009 15:47:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=vuGnq8EJTzVyYpj9FYKgbEmS2q8QAzrlO4AliYG5N8o=;
-        b=ubn/wIBWcdh6hAGg3+mvPUqTjPr3zJL+2IW235n/mrDCztaiWRYs/3jBjNKP35VkJC
-         AkViofG6vLEhWrJGjlnXtbQHP/jisGkCX6oAtGu39AquZX7HalzGy4G30PPNMLQkxS2R
-         Kr+avQJu+vzTBAUbgDZgjFqxB6hYCVctEU6t0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=RTJ2EZ59em2y5RtcLQhDlCaXHss1Jx5FF2B5buCXLI9gm9uFoj0s/OAiKOOSIs8Jv5
-         RyfhEEsM7o+04sdsKFG2jYtk6PGyQGLiUE5z7+mTMDBbK8n30f6NIbYdZyt/jQfAANTX
-         CHpZnVyKf3b5moKBXUHnBPAUbUnTdDKOCoNnI=
-Received: by 10.216.0.79 with SMTP id 57mr914903wea.48.1250462848315; Sun, 16 
-	Aug 2009 15:47:28 -0700 (PDT)
-In-Reply-To: <op.uyb1uryftdk399@sirnot.private>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126091>
+	id 1McoWA-0005N6-JZ
+	for gcgcb-bug-coreutils-616@gmane.org; Mon, 17 Aug 2009 00:48:02 +0200
+Received: from localhost ([127.0.0.1]:40476 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1McoWA-0002H4-1q
+	for gcgcb-bug-coreutils-616@gmane.org; Sun, 16 Aug 2009 18:48:02 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1McoW7-0002GG-KI
+	for bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:59 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1McoW2-00028Z-DF
+	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:58 -0400
+Received: from [199.232.76.173] (port=54768 helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1McoW2-00028K-9p
+	for Bug-coreutils@gnu.org; Sun, 16 Aug 2009 18:47:54 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:57627)
+	by monty-python.gnu.org with esmtps
+	(TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32) (Exim 4.60)
+	(envelope-from <torvalds@linux-foundation.org>)
+	id 1McoVw-0001ky-WA; Sun, 16 Aug 2009 18:47:49 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org
+	[140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with
+	ESMTP id n7GMl97G006408
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 16 Aug 2009 15:47:10 -0700
+Received: from localhost (localhost [127.0.0.1]) by imap1.linux-foundation.org
+	(8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id
+	n7GMl8cV014577; Sun, 16 Aug 2009 15:47:08 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <87ab1ze76y.fsf@master.homenet>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+X-MIME-Autoconverted: from 8bit to quoted-printable by
+	smtp1.linux-foundation.org id n7GMl97G006408
+X-detected-operating-system: by monty-python.gnu.org: GNU/Linux 2.6 (newer, 3)
+X-BeenThere: bug-coreutils@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: "GNU Core Utilities: bug reports and discussion"
+	<bug-coreutils.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
+	<mailto:bug-coreutils-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/bug-coreutils>
+List-Post: <mailto:bug-coreutils@gnu.org>
+List-Help: <mailto:bug-coreutils-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-coreutils>,
+	<mailto:bug-coreutils-request@gnu.org?subject=subscribe>
+Sender: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
+Errors-To: bug-coreutils-bounces+gcgcb-bug-coreutils-616=gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126092>
 
-Well crap, in my infinite wisdom I replied with the final updated
-patchset to the wrong version :-/  I don't want to clog up the list
-with my stupid mistakes, but if you need me to I can resend them to
-v3.
 
-But yeah, I've uploaded an updated version.  This patchset:
- - fixes whitespace errors
- - adds _ondisk versions of structures to ensure portability
- - cleans up definitions/fix a typo
 
-Hope it works out for you all.  Sorry about the mismatched reply.
+On Mon, 17 Aug 2009, Giuseppe Scrivano wrote:
+>=20
+> Thanks for the hint.  I tried gcc-4.4 and it produces slower code than
+> 4.3 on the gnulib SHA1 implementation and my patch makes it even more!
 
- - Nick
+Check out the asm, see if you can see why. One of the most common problem=
+s=20
+with P4's is literally that you end up loading from the same stack slot=20
+that you just stored to (gcc can do some really crazy spills), and that=20
+causes a store buffer hazard replay.
+
+My personal opinion is that Netburst is useless for trying to optimize C=20
+code for. It's just too random.
+
+> I noticed that on my machine your implementation is ~30-40% faster usin=
+g
+> SHA_ROT for rol/ror instructions than inline assembly, at least with th=
+e
+> test-case P=C3=A1draig wrote.  Am I the only one reporting it?
+
+I bet it's the same thing. Small perturbations of the source causing smal=
+l=20
+changes to register allocation and thus spilling, and then Netburst goes=20
+crazy one way or another. It's interestign trying to fix it, and very=20
+frustrating.
+
+My workstation is a Nehalem (but Core 2 will have pretty much the same=20
+behavior), and it doesn't have the crazy netburst behavior. Shorter and=20
+simpler code generally performs better (which is _not_ true on Netburst).=
+=20
+
+On my machine, for example, forcing gcc to do those rotates on registers=20
+is the difference between ~381MB/s and 415MB/s. And that's mainly because=
+=20
+it makes gcc keep A-E in registers, rather than trying to cache the=20
+array[] references.
+
+			Linus
