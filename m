@@ -1,66 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2 (v2)] reset: make the output more user-friendly.
-Date: Mon, 17 Aug 2009 12:50:08 -0700
-Message-ID: <7vr5vate33.fsf@alter.siamese.dyndns.org>
-References: <7vvdl0kau4.fsf@alter.siamese.dyndns.org>
- <1249676676-5051-1-git-send-email-Matthieu.Moy@imag.fr>
- <1249676676-5051-2-git-send-email-Matthieu.Moy@imag.fr>
- <7viqgztj76.fsf@alter.siamese.dyndns.org> <vpq7hxeu4un.fsf@bauges.imag.fr>
- <vpqljlipcs6.fsf@bauges.imag.fr>
+From: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Subject: Re: CMake, was Re: [PATCH 09/11] Add MSVC porting header files.
+Date: Mon, 17 Aug 2009 21:51:48 +0200
+Message-ID: <3af572ac0908171251y355a1e2bjf2d10192bc3eca2e@mail.gmail.com>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
+	 <alpine.DEB.1.00.0908171902300.4991@intel-tinevez-2-302>
+	 <3af572ac0908171231n30864c85ud67454a03ca08fbe@mail.gmail.com>
+	 <alpine.DEB.1.00.0908172147240.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 17 21:50:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 17 21:51:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md8Dn-00030G-5J
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 21:50:23 +0200
+	id 1Md8FJ-0003da-9r
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 21:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbZHQTuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 15:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbZHQTuN
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 15:50:13 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38805 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754328AbZHQTuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 15:50:12 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 005A7E1FB;
-	Mon, 17 Aug 2009 15:50:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FD9EE1F3; Mon, 17 Aug
- 2009 15:50:09 -0400 (EDT)
-In-Reply-To: <vpqljlipcs6.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Mon\, 17 Aug 2009 19\:31\:53 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D8CD656-8B67-11DE-A9A1-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755158AbZHQTvt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 15:51:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753482AbZHQTvt
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 15:51:49 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:62331 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752995AbZHQTvs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 15:51:48 -0400
+Received: by bwz22 with SMTP id 22so2521651bwz.18
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 12:51:49 -0700 (PDT)
+Received: by 10.223.143.79 with SMTP id t15mr930080fau.13.1250538708832; Mon, 
+	17 Aug 2009 12:51:48 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908172147240.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126265>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Mon, Aug 17, 2009 at 9:48 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->>>
->>>>  cat > expect << EOF
->>>> -file2: locally modified
->>>> +Unstaged changes after reset:
->>>> +M	file2
->>>
->>> It simply feels backwards when plumbing output says something in human
->>> language (e.g. "needs update") while Porcelain output spits out a cryptic
->>> M or U.  If the goal is human-readability and user-friendliness,
->>
->> The goal here is just consistency.
->>
->> And I do consider 'git diff --name-status' as porcelain.
+> On Mon, 17 Aug 2009, Pau Garcia i Quiles wrote:
+>
+>> What about having a CMake build system, which would work on every
+>> platform (including cross-compiling), and would produce an appropria=
+te
+>> config.h and makefiles/vcproj/Eclipse projects/XCode projects/whatev=
+er
+>> is fit for each platform? If it's OK to include such a build system
+>> upstream, I'm volunteering to implement it.
+>
+> And reap in another dependency?
+>
+> First Python, then CMake, what tomorrow? =A0Is it the month of adding
+> dependencies?
 
-Ok.
+I'd say it's the month of getting problems solved.
+
+CMake would make git a lot easier to build on Windows, particularly
+with Visual C++. Replace autotools with CMake and suddenly you need to
+maintain a single build system for every platform and compiler git
+supports/will support. That's a sound advantage to me.
+
+--=20
+Pau Garcia i Quiles
+http://www.elpauer.org
+(Due to my workload, I may need 10 days to answer)
