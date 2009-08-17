@@ -1,71 +1,86 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Using VC build git (split patch)
-Date: Mon, 17 Aug 2009 17:25:18 +0200
-Message-ID: <40aa078e0908170825i5d1148ffobc41f59df259983@mail.gmail.com>
-References: <1976ea660908170613ibb9a0fdr7ba630671a6b735f@mail.gmail.com>
-	 <40aa078e0908170619r3d325e0csee466446df474302@mail.gmail.com>
-	 <1976ea660908170814q30c316aek20d44e67bba4a3ab@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
+Date: Mon, 17 Aug 2009 08:41:35 -0700
+Message-ID: <7vtz06xxao.fsf@alter.siamese.dyndns.org>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
+ <200908142223.07994.jnareb@gmail.com>
+ <7veird4yyi.fsf@alter.siamese.dyndns.org>
+ <200908160137.30384.jnareb@gmail.com>
+ <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 17:25:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 17 17:42:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md45R-00083l-8O
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 17:25:29 +0200
+	id 1Md4LM-0000CW-S4
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 17:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755033AbZHQPZT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 11:25:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754862AbZHQPZT
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 11:25:19 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:53730 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754686AbZHQPZS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 11:25:18 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1009348qwh.37
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 08:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tnIwuCGtZkt1UKF4AIopLo/qf82Kq1o0DtU/ruScazw=;
-        b=ZiYomYfteFzzwOu7mc0Ev3sWgVabVJl16xAYd6OZQzxvyjhO7f+VbXUWcq/Xi+ZLNZ
-         og8bIUL9KwSqv7s+kPd3z55XZ6ucIEJHLYqiAY6KpyqQ+vlF7y/wcPNO46jctP545xxQ
-         0FyXgMUPlA3hlkMm/WVBeGy3pVQtavReF1DDY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mkc115MoUcYmY811P4+6TFMlSbuM9No+hrJqousoFXuiGcYBE7+OMwh4yKOysQwzJ7
-         8W2Mlb6v71sdMB51HAs6QW093Ru+rWBQjIg1cn8GGG5NFtgvNQ56fmMmGrji5KVpVQLM
-         vc49xw0gYA+jTPa55dAgP7lGYrj9vsZmaIabU=
-Received: by 10.224.52.170 with SMTP id i42mr4300346qag.285.1250522719020; 
-	Mon, 17 Aug 2009 08:25:19 -0700 (PDT)
-In-Reply-To: <1976ea660908170814q30c316aek20d44e67bba4a3ab@mail.gmail.com>
+	id S1756002AbZHQPlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 11:41:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755890AbZHQPlq
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 11:41:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33783 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755582AbZHQPlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 11:41:44 -0400
+Received: from localhost.localdomain (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 79D572CD0E;
+	Mon, 17 Aug 2009 11:41:45 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 975032CD0C; Mon, 17 Aug 2009
+ 11:41:37 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Mon\, 17 Aug 2009 11\:08\:27 +0200
+ \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 77F9825C-8B44-11DE-8C93-AEF1826986A2-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126195>
 
-On Mon, Aug 17, 2009 at 5:14 PM, Frank Li<lznuaa@gmail.com> wrote:
->> Then use send-email, which IS supported in msysgit.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> The scenario is this: the repository contains a file that users are 
+> supposed to change, but not commit to (only the super-intelligent inventor 
+> of this scenario is allowed to).  As this repository is originally a 
+> subversion one, there is no problem: people just do not switch branches.
 >
-> gmail require ssl. =A0ssl.pm miss when I use send-email in msysgit. I
-> have submit bug at msysgit
+> But this guy uses git-svn, so he does switch branches, and to avoid 
+> committing the file by mistake, he marked it assume-unchanged.  Only that 
+> a branch switch overwrites the local changes.
 
-Have a look at http://code.google.com/p/msysgit/wiki/UsingSendEmail to
-find out how to use send-email from Windows.
+If it is a problem that a branch switch overwrites the local changes in
+assume-unchanged file, perhaps that is what this person needs to change?
 
+Let's step back a bit and think.
 
+Local changes in git do not belong to any particular branch.  They belong
+to the work tree and the index.  Hence you (1) can switch from branch A to
+branch B iff the branches do not have difference in the path with local
+changes, and (2) have to stash save, switch branches and then stash pop if
+you have local changes to paths that are different between branches you
+are switching between.
 
---=20
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+How should assume-unchanged play with this philosophy?
+
+I'd say that assume-unchanged is a promise you make git that you won't
+change these paths, and in return to the promise git will give you faster
+response by not running lstat on them.  Having changes in such paths is
+your problem and you deserve these chanegs to be lost.  At least, that is
+the interpretation according to the original assume-unchanged semantics.
+
+If some paths should not be committed, I'd say it should be handled by a
+pre commit hook, and not assume-unchanged.
+
+Is checking with "diff --cached" on the paths and either erroring out (or
+better yet resetting the problematic paths in the index) an option?
