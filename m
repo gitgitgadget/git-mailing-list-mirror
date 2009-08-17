@@ -1,102 +1,74 @@
-From: Pau Garcia i Quiles <pgquiles@elpauer.org>
-Subject: Re: [PATCH 10/11] Add MSVC Project file
-Date: Mon, 17 Aug 2009 22:59:25 +0200
-Message-ID: <3af572ac0908171359o33f6ca70n599bdc27be74784a@mail.gmail.com>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
-	 <4A899495.8050902@gnu.org>
-	 <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
-	 <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172255140.8306@pacific.mpi-cbg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of
+ function
+Date: Mon, 17 Aug 2009 23:00:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908172258580.8306@pacific.mpi-cbg.de>
+References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com> <1250524872-5148-2-git-send-email-lznuaa@gmail.com> <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302> <7v1vnauto6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
-	Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 17 22:59:38 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 23:00:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md9Il-0008V7-RM
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 22:59:36 +0200
+	id 1Md9JS-0000PR-ND
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 23:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758046AbZHQU70 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 16:59:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758026AbZHQU70
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 16:59:26 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:42757 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758015AbZHQU7Z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 16:59:25 -0400
-Received: by bwz22 with SMTP id 22so2555823bwz.18
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 13:59:25 -0700 (PDT)
-Received: by 10.223.144.67 with SMTP id y3mr979278fau.20.1250542765370; Mon, 
-	17 Aug 2009 13:59:25 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908172255140.8306@pacific.mpi-cbg.de>
+	id S1758079AbZHQVAH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 17:00:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758074AbZHQVAH
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 17:00:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55990 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758072AbZHQVAG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 17:00:06 -0400
+Received: (qmail invoked by alias); 17 Aug 2009 21:00:06 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp042) with SMTP; 17 Aug 2009 23:00:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX193y2giLXt3oxW+GGKDr3ogEKY+8KtKXTiTYRPrD/
+	9GgW1vrNZJWAie
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7v1vnauto6.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.66
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126281>
 
-On Mon, Aug 17, 2009 at 10:56 PM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 17 Aug 2009, Pau Garcia i Quiles wrote:
->
->> On Mon, Aug 17, 2009 at 9:53 PM, Johannes
->> Schindelin<Johannes.Schindelin@gmx.de> wrote:
->>
->> > Of course, we could have a script that verifies that the .vcproj f=
-iles
->> > contain reference the appropriate files (which it would know about=
- by
->> > being called from the Makefile and being passed the file names), m=
-aybe
->> > even be able to edit the .vcproj file if it is missing some. =A0Sh=
-ould
->> > not be too hard in Perl.
->>
->> You'll need to special-case for Visual C++ 2010, which is different
->> and incompatible with previous versions.
->
-> Ah, my beloved Microsoft time tax!
+Hi,
 
-Sorry, but I make a living developing cross-platform software and
-porting stuff among any funny combination of Linux, Windows, gcc,
-mingw, Intel C++ and Visual C++ you can think of. CMake makes my life
-easier (possible!). Given that the patches we are talking about happen
-to add support for Visual C++, I'd say it stepped in at the right
-moment.
+On Mon, 17 Aug 2009, Junio C Hamano wrote:
 
->> Hence my suggestion for CMake: appropriate project files would be
->> generated for the tool the user chooses, be it VC++ 2005, VC++2010, =
-gcc,
->> Borland C++ or anything else.
->
-> The problem is that this will bitrot even more, as nobody will use it=
- for
-> gcc, Borland C++, XCode, Eclipse or anything else, except for Microso=
-ft
-> Visual C++.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > How about this instead?
+> >
+> > 	Avoid declaration after instruction
+> 
+> It's called declaration-after-statement.
 
-How do you know? Also, please note I'm not talking about *adding* a
-CMake build system, I'm talking about *replacing* the existing
-autotools build system with a CMake build system, even if they coexist
-for some time.
+Of course.  Thank you.
 
-What would be the point of having two build-systems, one (autotools)
-useless for Visual C++, the other one (CMake) apt for every platform ?
+> I always compile with "-Wall -Wdeclaration-after-statement -Werror" 
+> (among other things; if you are interested, see "Make" script in 'todo' 
+> branch for details) but this being in compat/mingw.c, obviously it is 
+> outside of my coverage.
 
---=20
-Pau Garcia i Quiles
-http://www.elpauer.org
-(Due to my workload, I may need 10 days to answer)
+I have this in my own tree since long ago, back when you sent a mail whose 
+reference I did not record, unfortunately.
+
+Of course, msysGit was not there yet to allow me to compile my tree (and 
+more importantly, pass the test suite), so I did not realize the 
+violations in compat/.
+
+Hence my intention to set the compiler flags just after merging the early 
+commits of Frank's work.
+
+Ciao,
+Dscho
