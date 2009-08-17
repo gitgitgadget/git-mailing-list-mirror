@@ -1,72 +1,94 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 05/11] Remove va_copy at MSVC because there are
- va_copy.
-Date: Mon, 17 Aug 2009 21:46:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908172144460.8306@pacific.mpi-cbg.de>
-References: <1250525040-5868-1-git-send-email-lznuaa@gmail.com>  <4A898B27.3040507@gnu.org> <40aa078e0908171002j4b610fe4j34a4e7d3081a9efa@mail.gmail.com>
+Subject: CMake, was Re: [PATCH 09/11] Add MSVC porting header files.
+Date: Mon, 17 Aug 2009 21:48:46 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908172147240.8306@pacific.mpi-cbg.de>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>  <1250525103-5184-2-git-send-email-lznuaa@gmail.com>  <1250525103-5184-3-git-send-email-lznuaa@gmail.com>  <1250525103-5184-4-git-send-email-lznuaa@gmail.com>  <alpine.DEB.1.00.0908171902300.4991@intel-tinevez-2-302> <3af572ac0908171231n30864c85ud67454a03ca08fbe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1836697137-1250538375=:8306"
-Cc: Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 21:45:37 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org, msysgit@googlegroups.com
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Aug 17 21:48:08 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f162.google.com ([209.85.210.162])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md89A-00014m-Al
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 21:45:36 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751738AbZHQTp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 15:45:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbZHQTp0
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 15:45:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750872AbZHQTpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 15:45:25 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 19:45:26 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp031) with SMTP; 17 Aug 2009 21:45:26 +0200
+	id 1Md8Bb-00022c-B9
+	for gcvm-msysgit@m.gmane.org; Mon, 17 Aug 2009 21:48:07 +0200
+Received: by yxe34 with SMTP id 34so5177852yxe.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 17 Aug 2009 12:48:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:received:x-authenticated:x-provags-id:date:from:x-x-sender
+         :to:cc:subject:in-reply-to:message-id:references:user-agent
+         :mime-version:content-type:x-y-gmx-trusted:x-fuhafi:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=pR8WPKvnY7luO/WRnyRKQHLYNCFQE3u/SgXyISCCxGw=;
+        b=HRU4iO13DXsSkK24w2gCcVjDQ5OHVzTKMLYPJzJLQHTThNCV+gXuNw57YSJ13/I2fA
+         c9EHgP7ehPnitdWIV+l8X3CKTF2cILVmPh+45yNHjE2E+SujprYJJxe5tnidbfKl6tEA
+         0pKHWvFFXDdN8ujfW0AQAYHWZq2i15Jmj0TmY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=1MkpgEJewV1vFBP9fmRPEWb1XhXU22ZzXvNEfXYrjahUx3tJiLy55oS42o83HKQ8YF
+         PXEEl3KUfflFb4jIU09T1UMlgPEUWQO9T3eEitxUEQkHPfPMJgDSXkyF6EvBHCge0gp4
+         cgEnyZD7EqnFH9pNK06u4Hl1G2ooe3u7ile3A=
+Received: by 10.150.129.23 with SMTP id b23mr1248066ybd.10.1250538481011;
+        Mon, 17 Aug 2009 12:48:01 -0700 (PDT)
+Received: by 10.177.102.22 with SMTP id e22gr6379yqm.0;
+	Mon, 17 Aug 2009 12:47:59 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.204.32.134 with SMTP id c6mr209269bkd.13.1250538478798; Mon, 17 Aug 2009 12:47:58 -0700 (PDT)
+Received: by 10.204.32.134 with SMTP id c6mr209268bkd.13.1250538478779; Mon, 17 Aug 2009 12:47:58 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 13si693028fxm.4.2009.08.17.12.47.58; Mon, 17 Aug 2009 12:47:58 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 17 Aug 2009 19:47:58 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp065) with SMTP; 17 Aug 2009 21:47:58 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Rk5I8rRsRC/5Ci+FP89vmHLMec0HXpRzG3ZsVaY
-	kvJoFJlXJpMlaI
+X-Provags-ID: V01U2FsdGVkX1+5wYQYJSe5VTeqspBZJi3IibIuHKSt1Gxr7yxtfE XMEahEr3m3lII8
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <40aa078e0908171002j4b610fe4j34a4e7d3081a9efa@mail.gmail.com>
+In-Reply-To: <3af572ac0908171231n30864c85ud67454a03ca08fbe@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
-Sender: git-owner@vger.kernel.org
+X-FuHaFi: 0.66
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126261>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126262>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1836697137-1250538375=:8306
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Mon, 17 Aug 2009, Erik Faye-Lund wrote:
+On Mon, 17 Aug 2009, Pau Garcia i Quiles wrote:
 
-> On Mon, Aug 17, 2009 at 6:53 PM, Paolo Bonzini<bonzini@gnu.org> wrote:
-> > #ifndef va_copy
-> > #define va_copy(dst, src)       ((dst) = (src))
-> > #endif
-> 
-> Are you sure va_copy is always a preprocessor symbol? How about
-> 
-> #ifdef _MSC_VER
-> #define va_copy(dst, src)       ((dst) = (src))
-> #endif
+> What about having a CMake build system, which would work on every
+> platform (including cross-compiling), and would produce an appropriate
+> config.h and makefiles/vcproj/Eclipse projects/XCode projects/whatever
+> is fit for each platform? If it's OK to include such a build system
+> upstream, I'm volunteering to implement it.
 
-Why not #define it in compat/msvc.h?  Or introduce a 
-DEFINE_VA_COPY_TRIVIALLY symbol or some such?
+And reap in another dependency?
+
+First Python, then CMake, what tomorrow?  Is it the month of adding 
+dependencies?
 
 Ciao,
 Dscho
---8323328-1836697137-1250538375=:8306--
