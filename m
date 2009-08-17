@@ -1,94 +1,62 @@
-From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-Subject: Re: bbchop & Wikipedia's Bayesian search theory page
-Date: Mon, 17 Aug 2009 15:46:26 +0100
-Message-ID: <efe2b6d70908170746o36fca4bfy9db81a3a25878e4f@mail.gmail.com>
-References: <alpine.DEB.1.00.0908161907580.8306@pacific.mpi-cbg.de>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: Using VC build git (split patch)
+Date: Mon, 17 Aug 2009 23:14:48 +0800
+Message-ID: <1976ea660908170814q30c316aek20d44e67bba4a3ab@mail.gmail.com>
+References: <1976ea660908170613ibb9a0fdr7ba630671a6b735f@mail.gmail.com>
+	 <40aa078e0908170619r3d325e0csee466446df474302@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 17 16:46:59 2009
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 17:16:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md3U9-0006qM-Gl
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 16:46:57 +0200
+	id 1Md3vG-0001SC-MB
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 17:14:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbZHQOqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 10:46:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZHQOqs
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 10:46:48 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:56340 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292AbZHQOqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 10:46:47 -0400
-Received: by ewy10 with SMTP id 10so2998501ewy.37
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 07:46:47 -0700 (PDT)
+	id S1755427AbZHQPOs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 11:14:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754862AbZHQPOs
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 11:14:48 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:61266 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754374AbZHQPOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 11:14:47 -0400
+Received: by qyk34 with SMTP id 34so2205976qyk.33
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 08:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=LNUxGAGqaN1r/BLhS2dAEPUgefnPfCxKO0MqS1iWFOE=;
-        b=jY0gqoPk3vgLU374yFllLKr4GP5/aU2bliAcyQj3hWREZo1wa5sTrZ778XN7w2ZVit
-         ETZ1+/p92DFYKFRKFiHExJ7alDxzjsQrNAXYMA1/7I2pI92E40Uu8tNgieH2g8gSPcyC
-         YpuKHdv8cJBLhIFNpcCF2eM7wY4v9bzXQhTi8=
+        bh=CYm90WRN/pjpaGYXsi7tcQf75t3zgC+ovIn3CA2SHxg=;
+        b=bi6/+cM0w/uPxCtgwJr01kVv8bR1CDXTPuPnDUoDXXFKSa3qwSNbc5pM7zWGEV/Tb/
+         esqq2fKRLcQ5Z1RssVaZY6jZ1NnXusn8sUqTEz0zTtxjoWfM8c4iSZZjUdhPXonl2BFd
+         HH4frv+AaLtG+FdqA9t/OosOp9s0pTpiKhXDw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=fljhDENsPYfnM+Np1fTSK/MgPvv10yDExkrvCBB5sQOuIGb4KgZmFclJpcbLeicIJi
-         v6e3D9GD14Nko7Pfe5TUAIBMg3zQapnvVJPgWxs09EPC6Z2zmpTi3YjCGFiiVMdiXPcx
-         oP/opbpS8uhCcCiSVKyihhCKX3qc6pJY79ipQ=
-Received: by 10.216.15.84 with SMTP id e62mr1003044wee.207.1250520406162; Mon, 
-	17 Aug 2009 07:46:46 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908161907580.8306@pacific.mpi-cbg.de>
+        b=eIOvIkoY7uPbl+hBc+GJScEurYSUeuA5QhxgmcG8xHl2wTl4ttuGJtyv1OSgqnpHf6
+         0p7z3LSGLdgGGCZCfLtEWa09dVNuUEbymBQmi3lLDznq6nTJZeupwTHR3tDX8iCjko5R
+         OqfRJY0txwmK3cPXwdzGmxp96a2kJ7qlnHpFM=
+Received: by 10.224.101.79 with SMTP id b15mr4327128qao.66.1250522088868; Mon, 
+	17 Aug 2009 08:14:48 -0700 (PDT)
+In-Reply-To: <40aa078e0908170619r3d325e0csee466446df474302@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126191>
 
-On Sun, Aug 16, 2009 at 6:13 PM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> I tried to find some documentation for Bayesian search theory, but it
-> seems those ridiculous Wikipedia admins struck once again, in their
-> mission to reduce the world's intellect to their own.
+> Then use send-email, which IS supported in msysgit.
 
-It looks like it is still there to me:
-http://en.wikipedia.org/wiki/Bayesian_search_theory
+gmail require ssl.  ssl.pm miss when I use send-email in msysgit. I
+have submit bug at msysgit
 
-It looks like github has included a ')' on the end when html-ifying
-the link inthe README, making it into a dead link. I'll fix that.
-
-The wikipedia article is still not amazing,though. Unfortunately most
-of the online descriptions
-of Bayesian Search Theory, such as:
-http://www.sarinz.com/index.cfm/3,112,261/landsearchmethodsreview.pdf
-seem to go heavily into the minutia of search-and-rescue, which while
-interesting, is not
-relevant to git.
-
-However, although I got the idea of bbchop from search theory, it is
-not necessary to know much
-of search theory in order to understand bbchop. The basic algorithm is
-very simple:
-
-At each step, test the commit for which the expected gain of information (about
-the location of the bug) is greatest.
-
-That is basically all I got from search theory so far - the
-calculation of the probability of the
-bug existing in each location is standard bayesian probability theory,
-which maybe you already
-know. If not, a very readable reference is:
-http://www.inference.phy.cam.ac.uk/mackay/itila/book.html (free on-line book).
-
-So all the code does is compute N entropies and pick the best. Most of the
-complexity is introduced by:
- - calculating the N entropies without calculating N^2 probabilities
- - calculations over a DAG.
-
-Ealdwulf
+best regards
+Frank Li
