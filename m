@@ -1,113 +1,97 @@
-From: =?UTF-8?B?UMOhZHJhaWcgQnJhZHk=?= <P@draigBrady.com>
-Subject: Re: Linus' sha1 is much faster!
-Date: Mon, 17 Aug 2009 02:53:17 +0100
-Message-ID: <4A88B80D.40804@draigBrady.com>
-References: <4A85F270.20703@draigBrady.com> <87eirbef3c.fsf@master.homenet>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 1/2] git_remote_cvs: Honor DESTDIR in the Makefile
+Date: Mon, 17 Aug 2009 03:58:30 +0200
+Message-ID: <200908170358.30347.johan@herland.net>
+References: <7v7hx35ym1.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0908162251360.8306@pacific.mpi-cbg.de>
+ <20090816210300.GB23522@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bug-coreutils@gnu.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Giuseppe Scrivano <gscrivano@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 17 03:57:20 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org, barkalow@iabervon.org,
+	mhagger@alum.mit.edu
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 03:58:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McrTK-0005tb-Ch
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 03:57:18 +0200
+	id 1McrUd-0006LW-K4
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 03:58:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756512AbZHQB5K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Aug 2009 21:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756471AbZHQB5J
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 21:57:09 -0400
-Received: from mail121.emailantidote.com ([80.169.59.121]:64372 "EHLO
-	SC-MTA-02.mxsweep.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753612AbZHQB5I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Aug 2009 21:57:08 -0400
-Received: from tombstone.lincor.com ([84.203.137.218]) by SC-MTA-02.mxsweep.com with Microsoft SMTPSVC(7.0.6001.18000);
-	 Mon, 17 Aug 2009 02:57:05 +0100
-Received: from [192.168.2.25] (crom.labs.lincor.com [192.168.2.25])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by tombstone.lincor.com (Postfix) with ESMTP id 08F156158122;
-	Mon, 17 Aug 2009 02:57:02 +0100 (IST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071008)
-In-Reply-To: <87eirbef3c.fsf@master.homenet>
-X-Enigmail-Version: 0.95.0
-X-OriginalArrivalTime: 17 Aug 2009 01:57:05.0279 (UTC) FILETIME=[053AC0F0:01CA1EDE]
-x-MXSweep-CtasdSpam: Unknown
-x-MXSweep-CtasdVirus: Unknown
-x-Ctasd-RefID: str=0001.0A090201.4A88B8F3.002E,ss=1,fgs=0
-x-MXSweep-KeywordsCount: 0
-x-MXSweep-MetaScanResult: Clean
-x-MXSweep-MetaScanThreat: 
-x-MXSweep-VirusScanned: 17/08/2009 01:57:06
-x-MXPurifier-SpamScore: 0
-x-MXPurifier-VirusScore: 0
-x-MXSweep-Threat: Clean
-X-MXUniqueID: eaff0b1f-a1d4-49a9-b27d-da6b45fdb625
+	id S1756547AbZHQB6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Aug 2009 21:58:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756479AbZHQB6b
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Aug 2009 21:58:31 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:49960 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756470AbZHQB6b (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Aug 2009 21:58:31 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOI00LML05J1G90@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 03:58:31 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOI004VY05IYN90@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 03:58:31 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.17.14822
+User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
+In-reply-to: <20090816210300.GB23522@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126107>
 
-Giuseppe Scrivano wrote:
-> Hi P=C3=A1draig,
->=20
-> I tried to reproduce your results but I wasn't able to do it.  The
-> biggest difference on a 300MB file I noticed was approximately 15% us=
-ing
-> on both implementations -O2, and 5% using -O3.
-> My GCC version is "gcc (Debian 4.3.3-14) 4.3.3" and the CPU is: Intel=
-(R)
-> Pentium(R) D CPU 3.20GHz.
->=20
-> I also spent some time trying to improve the gnulib SHA1 implementati=
-on
-> and it seems a lookup table can improve things a bit.
->=20
-> Can you please try the patch that I have attached and tell me which
-> performance difference (if any) you get?
+On Sunday 16 August 2009, David Aguilar wrote:
+> I'll see if we rework this so that we end up passing "" to
+> --root instead of /.  I'm going to be gone for a few hours so
+> probably won't be able to try it out until tonight.
 
-Thanks for looking at this Giuseppe
-and sorry for not mentioning my GCC and CPU.
+Thanks a lot for your work! I will send an updated series shortly which will 
+include v2 of your DESTDIR/Makefile fixes, and also the fixes you suggested 
+earlier (including _lots_ of PEP8 fixes).
 
-Note the binaries below is compiled with
-$(rpm -q --qf=3D"%{OPTFLAGS}\n" coreutils)
-for consistency, which on my F11 machines is:
+> Another thing to consider --
+>
+> Debian once submitted a bug against another Python app asking
+> that we not place modules in site-packages unless we
+> plan on having other applications importing those modules.
+>
+> The more appropriate place for them if we don't plan on that is
+> $(prefix)/share/git-core/git_remote_cvs or something like that.
+>
+> I guess that's another thing to think about.
 
-  -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=3D2 -fexceptions
-  -fstack-protector --param=3Dssp-buffer-size=3D4 -m32 -march=3Di586
-  -mtune=3Dgeneric -fasynchronous-unwind-tables -D_GNU_SOURCE=3D1
+Yes, Debian raises a valid point. I haven't thought much about making the 
+git_remote_cvs package into something that would be useful for other 
+applications. (I just assumed that the Python convention was to install it 
+into site-packages regardless...) For now, I'll concentrate on git-remote-
+cvs, and leave it to others to figure out if anything in the git_remote_cvs 
+package is useful for other programs.
 
-Testing on 2 machines I have here:
+Note that there's a small chicken-and-egg problem here as well: If Debian 
+refuses us to install into site-packages, it will be harder for other Python 
+programs to discover (and import) the git_remote_cvs package.
 
-$ rpm -q gcc
-gcc-4.4.1-2.fc11.i586
-$ grep "model name" /proc/cpuinfo | head -n1 | tr -s '[:blank:]' ' '
-model name : Intel(R) Pentium(R) M processor 1.70GHz
-$ truncate -s300MB sha1.test
-$ time sha1sum sha1.test
-real    0m3.540s
-$ time linus-sha1 sha1.test
-real    0m2.319s (-34%)
-$ time  giuseppe-sha1sum sha1.test
-real    0m3.513s (-.8%)
+BTW, when we're on the subject of packaging: There are some variables in 
+git_remote_cvs/setup.py where I'm not sure what the correct value should be:
 
-$ rpm -q gcc
-gcc-4.4.1-2.fc11.i586
-$ grep "model name" /proc/cpuinfo | head -n1 | tr -s '[:blank:]' ' '
-model name : Intel(R) Core(TM) i7 CPU 920 @ 2.67GHz
-$ truncate -s300MB sha1.test
-$ time sha1sum sha1.test
-real    0m1.857s
-$ time linus-sha1 sha1.test
-real    0m1.102s (-40%)
-$ time giuseppe-sha1sum sha1.test
-real    0m1.932s (+ 4%)
+- version - should this follow Git's version number, or is it independent?
+- author (and author_email + url) - For now, I'm referring to the Git 
+community. Should this be more specific/
 
-cheers,
-P=C3=A1draig.
+Feedback welcome.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
