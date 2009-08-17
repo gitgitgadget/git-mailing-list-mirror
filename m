@@ -1,167 +1,133 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Mon, 17 Aug 2009 23:45:30 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908172339040.8306@pacific.mpi-cbg.de>
+Date: Tue, 18 Aug 2009 00:02:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
 References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> <200908142223.07994.jnareb@gmail.com> <7veird4yyi.fsf@alter.siamese.dyndns.org> <200908160137.30384.jnareb@gmail.com> <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302> <7vtz06xxao.fsf@alter.siamese.dyndns.org> <7vvdkmwfqs.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302> <7vtz06xxao.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0908171817570.4991@intel-tinevez-2-302> <7vws52uvxq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-1188527963-1250545530=:8306"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 23:44:50 2009
+X-From: git-owner@vger.kernel.org Tue Aug 18 00:02:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdA0Y-0003gr-06
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 23:44:50 +0200
+	id 1MdAHU-00028E-34
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 00:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793AbZHQVom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 17:44:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbZHQVom
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 17:44:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54027 "HELO mail.gmx.net"
+	id S1758182AbZHQWCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 18:02:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbZHQWCJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 18:02:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50404 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751293AbZHQVol (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 17:44:41 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 21:44:41 -0000
+	id S1752798AbZHQWCI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 18:02:08 -0400
+Received: (qmail invoked by alias); 17 Aug 2009 22:02:07 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp070) with SMTP; 17 Aug 2009 23:44:41 +0200
+  by mail.gmx.net (mp006) with SMTP; 18 Aug 2009 00:02:07 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19SGb1UfFJSRfY3cfeaysI7zBKN2iZAHv9/PP1DfS
-	dxIzi5IBFhGMPm
+X-Provags-ID: V01U2FsdGVkX18Tow5ZCl4TR+nV60giglhtsMBWOwGYQ1wvabb+sg
+	p5cGH7OOR0R4sd
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vvdkmwfqs.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vws52uvxq.fsf@alter.siamese.dyndns.org>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126296>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1188527963-1250545530=:8306
-Content-Type: TEXT/PLAIN; charset=VISCII
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126297>
 
 Hi,
 
 On Mon, 17 Aug 2009, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Local changes in git do not belong to any particular branch.  They 
-> > belong to the work tree and the index.  Hence you (1) can switch from 
-> > branch A to branch B iff the branches do not have difference in the 
-> > path with local changes, and (2) have to stash save, switch branches 
-> > and then stash pop if you have local changes to paths that are 
-> > different between branches you are switching between.
+> > However, my illustration of the scenario was only to one end, namely 
+> > to convince all of you that assume-changed != sparse.
 > >
-> > How should assume-unchanged play with this philosophy?
-> >
-> > I'd say that assume-unchanged is a promise you make git that you won't 
-> > change these paths, and in return to the promise git will give you 
-> > faster response by not running lstat on them.  Having changes in such 
-> > paths is your problem and you deserve these chanegs to be lost.  At 
-> > least, that is the interpretation according to the original 
-> > assume-unchanged semantics.
+> > And maybe to the end to explain that sparse checkout could help this 
+> > guy.
 > 
-> Having said that, we could (re)define assume-unchanged to mean "I may or
-> may not have changes to these paths, but I do not mean to commit them, so
-> do not show them as modified when I ask you for diff.  But the changes are
-> precious nevertheless"
+> How?  If sparse is _not to check it out_, then that is not what the 
+> person is doing either.  It feels to me that you are suggesting an 
+> inappropriate hack to replace another inappropriate hack, suggesting to 
+> use a hacksaw because an earlier attempt to use a hammer did not quite 
+> work to drive the screw in.
 
-I am hesitant.  The feature was introduced because of some report that Git 
-was too slow.  While the speed has increased dramatically (the report was 
-for Windows), we cannot work miracles: the file system layer is just not 
-cooperative.
+Not exactly.
 
-So I could imagine that redefining the meaning of assume-unchanged results 
-in a substantially longer runtime again, which some people (yours truly) 
-might interpret as regression.
+What does "sparse checkout" mean, really?  It means that Git should only 
+check out a part of the tracked files, and not even so much as look 
+outside.  It means to me that everything outside of that focus is clearly 
+to be handled as all the other untracked data.
 
-> I think the writeout codepath pays attention to assume-unchanged bit 
-> already for that reason (CE_MATCH_IGNORE_VALID is all about this issue).
+And here comes the problem: if something is treated untracked because it 
+was outside of the sparse checkout, then I want it to be treated as 
+untracked _even if_ I happened to broaden the checkout by editing 
+.git/info/sparse.  The file did not just magically become subject to 
+overwriting just because I edited .git/info/sparse (which could be a 
+simple mistake).  So the index _needs_ to know that the sparse'd-out 
+attribute is something completely different from the assume-unchanged 
+attribute, even if Git should _handle_ the files with those attributes 
+pretty similar _most_ of the time.
 
-If I were that reporter, I would not be happy, I guess.  Basically, when 
-new files come in and I marked all the files as "assume unchanged; I know 
-what I'm doing!" Git would tell me "no you're an idiot, dummy, I know 
-better, and I will check all over again!".
+> I never said assume-unchanged _is_ sparse.  You cannot mark an index 
+> entry that does not exist, obviously you need more (either the earlier 
+> "hook that tells what should/shouldn't exist", or "the pattern").
 
-> So with that, how should assume-unchanged play with the "local changes 
-> belong to the index and the work tree"?
-> 
->  - When adding to the index, the changes should be ignored;
-> 
->  - When checking out of the index?  I.e. the user tells "git checkout
->    path" when path is marked as assume-unchanged.  Such an explicit
->    request should probably lose the local changes in the work tree.
-> 
->  - When checking out of a commit?  The same deal.
-> 
->  - When switching branches?
-> 
->    - If the branches do not touch assume-unchanged paths, we should keep
->      changes _and_ assume-unchanged bit.  I do not know if that is what
->      the current code does.
-> 
->    - If the branches do touch assume-unchanged paths, what should happen?
->      We shouldn't blindly overwrite the local changes, so at least we
->      should change the code to error out if we do not already do so.  But
->      then what?  How does the user deal with this?  Perhaps...
-> 
->      - Drop assume-unchanged temporarily;
->      - Stash save;
->      - Switch;
->      - Stash pop;
->      - Add assume-unchanged again.
-> 
->      ???
+Right.
 
-In my book all this is overly complicated.  If I tell Git to assume a file 
-is unchanged, it is not Git's business to question me.
+> But I think the work-tree semantics you need to _implement_ sparse 
+> matches what you would want from assume-unchanged.  Not the original, 
+> draconian one that updates the work tree by saying "you promised me you 
+> wouldn't change them", but the updated one that tells git to pretend 
+> that the local change is not there but still keep the local 
+> modification, including deletion.  The work-tree "local changes" sparse 
+> makes is a small subset of possible local changes assume-unchanged would 
+> need to support.  It only deletes work tree files.
 
-> Is such an updated (or "corrected") assume-unchanged any different from a
-> sparse checkout?  After all, paths that are not to be checked out in a
-> sparse checkout are "pretend that the lack of these paths are illusion--they
-> are logically there.  I do not intend to commit their removal, and I do not
-> want to lose the sparseness across branch switch".
-> 
-> There is one nit about this.  If a path is outside the checkout area,
-> should it unconditionally stay outside the checkout area when you switch
-> branches?  I may be interested in not checking out Documentation/
-> subdirectory and that may hold true for all _my_ branches, and it is a
-> sane thing not to complain "Oops, you actually removed Makefile in
-> Documentation/ in your work tree in reality, and you are switching to
-> another branch that has a different Makefile --- it is a delete-modify
-> conflict you need to resolve, and we won't let you switch branches" in
-> such a case.
-> 
-> But is that generally true in all "sparse checkout" settings?
-> 
-> It is unfortunate that this message raises more questions than it answers,
-> but I think a sparse checkout will have to answer them, whether it uses a
-> bit separate from assume-unchanged or it reuses the assume-unchanged bit.
+As I tried to convince you already, it is not wise to mix up the two 
+meanings.  They _are_ different: in one case, we _have_ a file, and we 
+even _expect_ the file to actually have the same contents as what is 
+recorded in the index.  In the other case, we do _not_ have a file, so we 
+do _not_ even expect the file to have the same contents.
 
-I think you will come around and agree that the original, very simple 
-therefore powerful, concept of "assume-unchanged" should be, well, 
-unchanged, and not be bent to half-fit the original intention and half-fit 
-the sparse intention.
+In fact, in the latter case (the sparse case) we do not want to look for 
+the file; not for the reason that we expect the contents to be the same 
+anyway, but because we expect it not even to be there!
 
-Rather, I agree with Nguy­n that the no-checkout bit (which is definitely 
-free to behave differently from assume-unchanged) is needed.
+So while the _technical_ side is pretty much the same (most of the time, I 
+illustrated a corner case, it it is very easy to think of other corner 
+cases that might even be inadvertent, all the more reason to protect the 
+user) -- don't look for the file -- the _semantics_ are _very_ different.
 
-Maybe I contradict myself here with what I said after the third iteration 
-of the sparse checkout series, but that only proves that I am able to 
-learn.
+And you see that they are different when all of a sudden you cannot take 
+the _absence_ of the file as the indicator for "assume-unchanged" and 
+"sparse".
+
+In fact, with the semantics implied by the label 'assume-unchanged', it 
+could well be argued that making the file _absent_ (for the sparse 
+checkout) is a dirty trick.  This is not what "assume that the file is 
+unchanged" implies at all.
+
+So let's just keep the semantics utterly simple and stupid, and have an
+
+- assumed-unchanged bit, which assumes that a file is there, but that the 
+  contents need not to be checked for performance reasons, and
+
+- a no-checkout bit, which assumes that the user never checked out that 
+  file (if it exists, it comes from somewhere else, and needs to be 
+  protected like untracked files that would be overwritten by a branch 
+  switch).
+
+I hope this explanation was clear.
 
 Ciao,
 Dscho
-
---8323328-1188527963-1250545530=:8306--
