@@ -1,88 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 01/11] Fix build failure at VC because function declare
- use old style at regex.c
-Date: Mon, 17 Aug 2009 18:26:37 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908171822130.4991@intel-tinevez-2-302>
-References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: [RFCv4 6/5] Fix the Makefile-generated path to the git_remote_cvs
+ package in git-remote-cvs
+Date: Mon, 17 Aug 2009 18:27:34 +0200
+Message-ID: <200908171827.34370.johan@herland.net>
+References: <1250480161-21933-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, kusmabite@gmail.com, msysgit@googlegroups.com
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 18:26:47 2009
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes.Schindelin@gmx.de, barkalow@iabervon.org,
+	davvid@gmail.com, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 17 18:27:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md52k-0000TO-IT
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 18:26:47 +0200
+	id 1Md53g-0000vh-5a
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 18:27:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186AbZHQQ0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 12:26:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753745AbZHQQ0i
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 12:26:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44545 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751051AbZHQQ0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 12:26:38 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 16:26:38 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp064) with SMTP; 17 Aug 2009 18:26:38 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+AZDE/NYqAKCccjI8P5JTE6niQeYHRaRLjIfNsN+
-	xjaHpqeTAfR/iu
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1755425AbZHQQ1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 12:27:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754862AbZHQQ1g
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 12:27:36 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:45618 "EHLO
+	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751051AbZHQQ1f (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 12:27:35 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOJ00KUR4DZRDB0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 18:27:35 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOJ00FQY4DY3U70@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 18:27:35 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.17.161516
+User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
+In-reply-to: <1250480161-21933-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126219>
 
-Hi,
+Junio discovered that the installed git-remote-cvs executable is unable
+to find the installed git_remote_cvs Python package. This is due to the
+'instlibdir' target of git_remote_cvs/Makefile being invoked with
+insufficient arguments (prefix and DESTDIR). This patch fixes that.
 
-reading "X-Mailer: git-send-email 1.6.4.msysgit.0" gave me a buzz... well 
-done, Erik!
+Signed-off-by: Johan Herland <johan@herland.net>
+---
 
-On Tue, 18 Aug 2009, Frank Li wrote:
+Sorry for the inconvenience.
 
-> regerror declare function argument type after function define.
-> 
-> Signed-off-by: Frank Li <lznuaa@gmail.com>
+...Johan
 
-How about
 
-	Avoid a K&R style function definition in regex.c
+ Makefile                |    2 +-
+ git_remote_cvs/Makefile |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-	Microsoft Visual C++ does not understand K&R notation; use C89 
-	style instead.
+diff --git a/Makefile b/Makefile
+index b2af678..b9a7f25 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1479,7 +1479,7 @@ endif # NO_PERL
+ ifndef NO_PYTHON
+ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_cvs -s --no-print-directory instlibdir` && \
++	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_cvs -s --no-print-directory prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' instlibdir` && \
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
+ 	    -e '}' \
+diff --git a/git_remote_cvs/Makefile b/git_remote_cvs/Makefile
+index 061c247..0d9eb31 100644
+--- a/git_remote_cvs/Makefile
++++ b/git_remote_cvs/Makefile
+@@ -28,7 +28,7 @@ install: $(pysetupfile)
+ 	$(PYTHON_PATH) $(pysetupfile) install --prefix $(DESTDIR_SQ)$(prefix)
+ 
+ instlibdir: $(pysetupfile)
+-	@echo "$(prefix)/$(PYLIBDIR)"
++	@echo "$(DESTDIR_SQ)$(prefix)/$(PYLIBDIR)"
+ 
+ clean:
+ 	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) clean -a
+-- 
+1.6.4.313.g38b9.dirty
 
-?
 
-> diff --git a/compat/regex/regex.c b/compat/regex/regex.c
-> index 5ea0075..5728de1 100644
-> --- a/compat/regex/regex.c
-> +++ b/compat/regex/regex.c
-> @@ -4852,11 +4852,7 @@ regexec (preg, string, nmatch, pmatch, eflags)
->     from either regcomp or regexec.   We don't use PREG here.  */
->  
->  size_t
-> -regerror (errcode, preg, errbuf, errbuf_size)
-> -    int errcode;
-> -    const regex_t *preg;
-> -    char *errbuf;
-> -    size_t errbuf_size;
-> +regerror (int errcode, const regex_t * preg, char * errbuf,size_t errbuf_size)
-
-A cursory look over regex.c gives me the impression that
-
-- it tries to stick to maximally 80 characters per line,
-- there is no space after a * indicating a pointer,
-- there are spaces after all commas,
-- there are a lot more functions with K&R style function definitions than 
-  just regerror().
-
-Ciao,
-Dscho
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
