@@ -1,79 +1,77 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 10/11] Add MSVC Project file
-Date: Mon, 17 Aug 2009 19:40:44 +0200
-Message-ID: <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
-	 <4A899495.8050902@gnu.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: RFC for 1.7: Do not checkout -b master origin/master on clone
+Date: Mon, 17 Aug 2009 19:45:05 +0200
+Message-ID: <vpqhbw6pc66.fsf@bauges.imag.fr>
+References: <4A818B90.9050206@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, Johannes.Schindelin@gmx.de
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:40:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Aug 17 19:49:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md6CU-00025P-1D
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:40:54 +0200
+	id 1Md6Ko-0005WX-9e
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932539AbZHQRkp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 13:40:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbZHQRkp
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:40:45 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:52933 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932428AbZHQRko convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 13:40:44 -0400
-Received: by qyk34 with SMTP id 34so2285970qyk.33
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 10:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=C6Vk7wBTXweP50QsM3V3jDVJmUvi2NprwqVeMdfbmWo=;
-        b=RofpubcQj1WgyAI/x5Zj/FkAt9g7danxgcqncxUU1YCfxuBP01n3jL79oKRIJdLMdF
-         ykZ0aMYV8fhqRLlB4FmUGPFncGtvKXs7SfUttFOTNfkTm7QdDtz3D+MtMDJ4+f2INNwQ
-         xeFaq/MCYXt4ZFAND+rvB24rvduRWXFSi01JA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AxR7KgoejZrmGTu+XXL+lS2G29qwW0PpH26kBFsDODlprgVrrs+KZd2BtkbhjtcjYQ
-         iQUb9ksDlFeYjVkiE/N2D/UOnR57QTCpL0a3ccAhkwhX/YaDcDLha5k9G6O+9VkAhZG4
-         ihvrlocuhEQjOypGsoM3UoeghvKVkR1AcZ1b0=
-Received: by 10.224.100.132 with SMTP id y4mr4472896qan.279.1250530844795; 
-	Mon, 17 Aug 2009 10:40:44 -0700 (PDT)
-In-Reply-To: <4A899495.8050902@gnu.org>
+	id S1757733AbZHQRtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 13:49:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbZHQRtU
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:49:20 -0400
+Received: from imag.imag.fr ([129.88.30.1]:54580 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753638AbZHQRtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 13:49:19 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7HHj55D019054
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 17 Aug 2009 19:45:06 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Md6GX-00039H-If; Mon, 17 Aug 2009 19:45:05 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Md6GX-0004XL-HN; Mon, 17 Aug 2009 19:45:05 +0200
+In-Reply-To: <4A818B90.9050206@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue\, 11 Aug 2009 17\:17\:36 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 17 Aug 2009 19:45:08 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126246>
 
-On Mon, Aug 17, 2009 at 7:34 PM, Paolo Bonzini<bonzini@gnu.org> wrote:
-> Also, a cleaner XML without verbosities like
->
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 <Tool
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 Name=3D=
-"VCMIDLTool"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 />
->
-> would make the patch easier to review.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-=2E..but will it make it more annoying to maintain in the long run? It
-might be painful to work with a mixture of hand-written and
-msdev-written XML. Of course, if we get some scripts in place to
-generate the vcproj-files this might not be a problem...
+> - git clone does not set up any local branches at all
+> - git svn fetch does not set up any local branches at all
 
+If you don't set up a local branch, it means either
 
---=20
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+- You start with a detached HEAD, or
+- You start with no working tree at all.
+
+In both cases, you introduce more trouble for the beginner, just more
+notions to learn before being able to do the very first step.
+
+And you also break a good property of Git: in Git, you can use the
+"one repo per branch" or the "multiple branches in a repository" the
+way you want.
+
+Personnally, I rarely have more than one branch for me (but I
+appreciate very much having one branch per developer). And this way, I
+can just forget that Git has multiple branches in a repo. When I want
+to work on a project, I clone it, I hack, I commit, and then I
+send the result (git push, git svn dcommit, git send-email, depending
+on the project). In this workflow, I almost never have to use "git
+branch", "git checkout", "git merge", it works, and Git does the right
+thing for me.
+
+-- 
+Matthieu
