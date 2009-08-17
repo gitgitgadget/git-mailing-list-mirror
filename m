@@ -1,67 +1,68 @@
-From: Joe D'Abbraccio <dajoe13@gmail.com>
-Subject: How-to checkin git hook
-Date: Mon, 17 Aug 2009 16:15:25 -0400
-Message-ID: <4A89BA5D.1000608@gmail.com>
+From: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Subject: Re: [PATCH 10/11] Add MSVC Project file
+Date: Mon, 17 Aug 2009 22:17:42 +0200
+Message-ID: <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
+	 <4A899495.8050902@gnu.org>
+	 <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
+	 <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 17 22:15:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
+	git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 17 22:18:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md8cD-0005L9-4J
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 22:15:37 +0200
+	id 1Md8es-0006bl-3v
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 22:18:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751624AbZHQUP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 16:15:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750932AbZHQUP2
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 16:15:28 -0400
-Received: from wf-out-1314.google.com ([209.85.200.168]:4661 "EHLO
-	wf-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbZHQUP2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 16:15:28 -0400
-Received: by wf-out-1314.google.com with SMTP id 26so859985wfd.4
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 13:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=5ahCKhBxL3dvKw6cjvCi09tYhQiU69sApMW/bsZyk8k=;
-        b=VxgzSS0MhklCXF8OTG15cRNh1mcEEAG/iIOYpZHvpaszkGFzdcg6FPzviZWZlZdlCX
-         Z9xFO95d3M1rvHvGXtmGLozLXeIdVcoc7NEtfWm3gy6RIYXb2VLX+mISt1wgDV3/XH1n
-         h4paUkakEv5EhwSGPAKnQ12PTV5MODACGTIPA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=fBRNnWDwhYeHZFF6djlT86DFNZaijXaddx/YFINOgsr6IMG/WjSREMKy3unCsYoAzp
-         5KIAzTRnvdyEhbZuK/yQXfIozo9l666y/rVo11zWRHRB06Ja4EnPHUZh7e6R0+UDFNve
-         n8D8dLERbeT+6qVZOSEqYEaV3mv4ApkiAQrgw=
-Received: by 10.143.131.3 with SMTP id i3mr750067wfn.19.1250540129672;
-        Mon, 17 Aug 2009 13:15:29 -0700 (PDT)
-Received: from ?192.168.1.153? (CPE0004e29484b9-CM00111ae69cb4.cpe.net.cable.rogers.com [174.112.146.49])
-        by mx.google.com with ESMTPS id 30sm14248617wff.9.2009.08.17.13.15.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 17 Aug 2009 13:15:29 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
+	id S1757692AbZHQURm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 16:17:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753271AbZHQURm
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 16:17:42 -0400
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:63703 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbZHQURl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 16:17:41 -0400
+Received: by fxm11 with SMTP id 11so2507080fxm.39
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 13:17:42 -0700 (PDT)
+Received: by 10.223.145.21 with SMTP id b21mr896982fav.102.1250540262129; Mon, 
+	17 Aug 2009 13:17:42 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126271>
 
-I have not been able to find out how to commit and push a hook to my git 
-server archive for everyone's benefit. The githooks man page does not 
-describe this and I have not turned up any fruitful google searches on 
-the topic.
+On Mon, Aug 17, 2009 at 9:53 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
 
-I am trying to add a post-checkout hook. I also noticed that the 
-post-checkout sample does not exist when I init a new archive. Is this a 
-bug?  I am running git version 1.6.0.2.
+> Of course, we could have a script that verifies that the .vcproj file=
+s
+> contain reference the appropriate files (which it would know about by
+> being called from the Makefile and being passed the file names), mayb=
+e
+> even be able to edit the .vcproj file if it is missing some. =A0Shoul=
+d not
+> be too hard in Perl.
 
+You'll need to special-case for Visual C++ 2010, which is different
+and incompatible with previous versions. Hence my suggestion for
+CMake: appropriate project files would be generated for the tool the
+user chooses, be it VC++ 2005, VC++2010, gcc, Borland C++ or anything
+else.
 
-Regards,
-Joe
+--=20
+Pau Garcia i Quiles
+http://www.elpauer.org
+(Due to my workload, I may need 10 days to answer)
