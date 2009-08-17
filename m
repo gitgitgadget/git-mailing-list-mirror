@@ -1,133 +1,115 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Tue, 18 Aug 2009 00:02:55 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> <200908142223.07994.jnareb@gmail.com> <7veird4yyi.fsf@alter.siamese.dyndns.org> <200908160137.30384.jnareb@gmail.com> <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302> <7vtz06xxao.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0908171817570.4991@intel-tinevez-2-302> <7vws52uvxq.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 10/11] Add MSVC Project file
+Date: Tue, 18 Aug 2009 00:10:33 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908180005250.8306@pacific.mpi-cbg.de>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>  <1250525103-5184-4-git-send-email-lznuaa@gmail.com>  <1250525103-5184-5-git-send-email-lznuaa@gmail.com>  <4A899495.8050902@gnu.org>  <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
+  <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>  <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>  <3f4fd2640908171343s6e2796a8le0455e02fd8386d9@mail.gmail.com>  <3af572ac0908171354i6dd231etb576859ab8941214@mail.gmail.com> 
+ <alpine.DEB.1.00.0908172304200.8306@pacific.mpi-cbg.de> <3af572ac0908171423ye08efa8m6666ddb922d5ee92@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 00:02:20 2009
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
+	git@vger.kernel.org, msysgit@googlegroups.com
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 00:10:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdAHU-00028E-34
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 00:02:20 +0200
+	id 1MdAOo-0005pI-EM
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 00:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758182AbZHQWCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 18:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753746AbZHQWCJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 18:02:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50404 "HELO mail.gmx.net"
+	id S1758136AbZHQWJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 18:09:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757830AbZHQWJp
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 18:09:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41513 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752798AbZHQWCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 18:02:08 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 22:02:07 -0000
+	id S1751632AbZHQWJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 18:09:44 -0400
+Received: (qmail invoked by alias); 17 Aug 2009 22:09:44 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp006) with SMTP; 18 Aug 2009 00:02:07 +0200
+  by mail.gmx.net (mp013) with SMTP; 18 Aug 2009 00:09:44 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Tow5ZCl4TR+nV60giglhtsMBWOwGYQ1wvabb+sg
-	p5cGH7OOR0R4sd
+X-Provags-ID: V01U2FsdGVkX1+Juy8JJz2Jp3yrkLT4K+bgYvdm9zayPCc+3ES5t1
+	qLyjj5PZIqqHei
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vws52uvxq.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <3af572ac0908171423ye08efa8m6666ddb922d5ee92@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+X-FuHaFi: 0.54
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126298>
 
 Hi,
 
-On Mon, 17 Aug 2009, Junio C Hamano wrote:
+On Mon, 17 Aug 2009, Pau Garcia i Quiles wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Mon, Aug 17, 2009 at 11:05 PM, Johannes
+> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+>
+> > You are putting an undue burden on the already overloaded maintainer.
 > 
-> > However, my illustration of the scenario was only to one end, namely 
-> > to convince all of you that assume-changed != sparse.
-> >
-> > And maybe to the end to explain that sparse checkout could help this 
-> > guy.
+> Sorry, but I'm a bit lost now. What maintainer are we talking about now? 
+> Junio?
+
+I was talking about me, as maintainer of msysGit.
+
+> As I would be providing a turn-key CMake build system, the only burden I 
+> would be putting on the maintainer would be learning CMake.
 > 
-> How?  If sparse is _not to check it out_, then that is not what the 
-> person is doing either.  It feels to me that you are suggesting an 
-> inappropriate hack to replace another inappropriate hack, suggesting to 
-> use a hacksaw because an earlier attempt to use a hammer did not quite 
-> work to drive the screw in.
+> Given that I'm providing a comprehensive (100+ slides) CMake tutorial
+> ( http://www.elpauer.org/stuff/learning_cmake.pdf ) , which I use in
+> my CMake workshops, I think I'm making that burden a bit lighter.
+> 
+> If the next git conference is somewhere in Europe, I could also fly
+> there and we'd have a CMake tutorial, if people would feel more
+> comfortable that way.
 
-Not exactly.
+This is exactly what I mean by burden.  Why do I have to learn a new 
+system, and suffer the hassle of integrating it into the current build 
+system, which works quite well thankyouverymuch?
 
-What does "sparse checkout" mean, really?  It means that Git should only 
-check out a part of the tracked files, and not even so much as look 
-outside.  It means to me that everything outside of that focus is clearly 
-to be handled as all the other untracked data.
+Never run a changing system.
 
-And here comes the problem: if something is treated untracked because it 
-was outside of the sparse checkout, then I want it to be treated as 
-untracked _even if_ I happened to broaden the checkout by editing 
-.git/info/sparse.  The file did not just magically become subject to 
-overwriting just because I edited .git/info/sparse (which could be a 
-simple mistake).  So the index _needs_ to know that the sparse'd-out 
-attribute is something completely different from the assume-unchanged 
-attribute, even if Git should _handle_ the files with those attributes 
-pretty similar _most_ of the time.
+> > Well, let's see if you can provide a /src/cmake/release.sh that 
+> > compiles CMake from scratch, and _then_ I'll look into CMake again.
+> 
+> Again, I'm a bit lost. What '/src/cmake/release.sh' are we talking about 
+> now? Would that be part of CMake or git ?
 
-> I never said assume-unchanged _is_ sparse.  You cannot mark an index 
-> entry that does not exist, obviously you need more (either the earlier 
-> "hook that tells what should/shouldn't exist", or "the pattern").
+Maybe this:
 
-Right.
+http://article.gmane.org/gmane.comp.version-control.git/126286
 
-> But I think the work-tree semantics you need to _implement_ sparse 
-> matches what you would want from assume-unchanged.  Not the original, 
-> draconian one that updates the work tree by saying "you promised me you 
-> wouldn't change them", but the updated one that tells git to pretend 
-> that the local change is not there but still keep the local 
-> modification, including deletion.  The work-tree "local changes" sparse 
-> makes is a small subset of possible local changes assume-unchanged would 
-> need to support.  It only deletes work tree files.
+and this:
 
-As I tried to convince you already, it is not wise to mix up the two 
-meanings.  They _are_ different: in one case, we _have_ a file, and we 
-even _expect_ the file to actually have the same contents as what is 
-recorded in the index.  In the other case, we do _not_ have a file, so we 
-do _not_ even expect the file to have the same contents.
+http://repo.or.cz/w/msysgit.git?a=blob;f=src/curl/release.sh;h=d7516cbf6e92af4de138ce405d88561fbe1e92a8;hb=968336eddac1874c56cd934d10783566af5a3e26
 
-In fact, in the latter case (the sparse case) we do not want to look for 
-the file; not for the reason that we expect the contents to be the same 
-anyway, but because we expect it not even to be there!
+helps.
 
-So while the _technical_ side is pretty much the same (most of the time, I 
-illustrated a corner case, it it is very easy to think of other corner 
-cases that might even be inadvertent, all the more reason to protect the 
-user) -- don't look for the file -- the _semantics_ are _very_ different.
+To quote myself (as you appear to have missed that):
 
-And you see that they are different when all of a sudden you cannot take 
-the _absence_ of the file as the indicator for "assume-unchanged" and 
-"sparse".
+	Having said that, a CMake-based system _in addition_ to what is 
+	tried-and-tested to be able to support all those different kinds of 
+	Microsoft Visual Studio (took me 3 attempts to write that without a 
+	Freudian) would be welcome, _if_ you succeed in making it compile out
+	of the box on msysGit.
 
-In fact, with the semantics implied by the label 'assume-unchanged', it 
-could well be argued that making the file _absent_ (for the sparse 
-checkout) is a dirty trick.  This is not what "assume that the file is 
-unchanged" implies at all.
+	By out-of-the-box I mean: you send a patch that adds 
+	/src/cmake/release.sh, I apply the patch (after briefly scanning 
+	that it	does not install a backdoor on a machine that is not even
+	mine, and therefore will never see even a single of my passwords
+	typed in), run it, it compiles installs and commits cmake and cmake
+	works.
 
-So let's just keep the semantics utterly simple and stupid, and have an
-
-- assumed-unchanged bit, which assumes that a file is there, but that the 
-  contents need not to be checked for performance reasons, and
-
-- a no-checkout bit, which assumes that the user never checked out that 
-  file (if it exists, it comes from somewhere else, and needs to be 
-  protected like untracked files that would be overwritten by a branch 
-  switch).
-
-I hope this explanation was clear.
+Short form: if you make it easy for me, I will look at it again, if you 
+make it hard on me, you will just have done to me what you now try 
+to avoid yourself: wasted time.
 
 Ciao,
 Dscho
