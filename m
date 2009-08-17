@@ -1,89 +1,87 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "make quick-install-man" broke recently
-Date: Mon, 17 Aug 2009 09:34:23 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908170932390.3162@localhost.localdomain>
-References: <86my5z8cjd.fsf@blue.stonehenge.com> <7vy6pj449g.fsf@alter.siamese.dyndns.org> <86iqgn8brv.fsf@blue.stonehenge.com> <7vd46v3tp1.fsf@alter.siamese.dyndns.org> <8c9a060908162258ua50e34ah53c1ada9dbcd4aa0@mail.gmail.com>
- <7vhbw72ap3.fsf@alter.siamese.dyndns.org>
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: [PATCH 02/11] Fix declare variable at mid of function
+Date: Mon, 17 Aug 2009 17:34:45 +0100
+Message-ID: <3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com>
+References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
+	 <1250524872-5148-2-git-send-email-lznuaa@gmail.com>
+	 <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jacob Helwig <jacob.helwig@gmail.com>,
-	Kjetil Barvik <barvik@broadpark.no>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 18:34:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Aug 17 18:34:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md5AN-0004k0-6u
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 18:34:39 +0200
+	id 1Md5Ac-0004tq-LV
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 18:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756599AbZHQQea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 12:34:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756443AbZHQQea
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 12:34:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50762 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755793AbZHQQe3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 12:34:29 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7HGYPjm023902
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Aug 2009 09:34:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7HGYNoZ008655;
-	Mon, 17 Aug 2009 09:34:23 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7vhbw72ap3.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756966AbZHQQep convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 12:34:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756627AbZHQQep
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 12:34:45 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:37439 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756566AbZHQQep convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 12:34:45 -0400
+Received: by vws2 with SMTP id 2so2554028vws.4
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 09:34:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9zM6KfhYXuRvzF1cPUkjWL+YI80CIvcXszIJqQDLYsI=;
+        b=hsSgkq+oeBZPTq+P2hxrC6Rk+GsX/OlZtmfxqMvZoVgPA1Vg+Ry6DXxBqYeNwVbhou
+         1+ifYXB8bOey9HsENqy4w12Q18I3ZLsO7+bDQp8G1bmzeeH6mUsqDJqiqwq6/5rVQ7SR
+         oQMLIB4yRF5SIPqQT3oLNaubnZBz/3icmG1Ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nHZth4kPC7ndxBSjPTTaZiLYkqgsxJ7zmdIbdpBIBBhyNi8QWe4Q2ppJzAUf/52srE
+         RjlAv6qsQi6krVqmd1O3cytxzSVpkx9WJmXWGWy7mm2xGosFA8AFaUKGyPe4t2Vfc087
+         VGxAXxtWpdlvi01sSnMe1mSrBRyIQH+6Xq/Bg=
+Received: by 10.220.127.196 with SMTP id h4mr4994991vcs.32.1250526885831; Mon, 
+	17 Aug 2009 09:34:45 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126223>
 
-
-
-On Sun, 16 Aug 2009, Junio C Hamano wrote:
+2009/8/17 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Hi,
 >
-> -/* "careful lstat()" */
-> -extern int check_path(const char *path, int len, struct stat *st);
-> -
->  #define REFRESH_REALLY		0x0001	/* ignore_valid */
->  #define REFRESH_UNMERGED	0x0002	/* allow unmerged */
->  #define REFRESH_QUIET		0x0004	/* be quiet about it */
-> diff --git a/entry.c b/entry.c
-> index f276cf3..6813f8a 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -179,9 +179,18 @@ static int write_entry(struct cache_entry *ce, char *path, const struct checkout
->   * This is like 'lstat()', except it refuses to follow symlinks
->   * in the path.
->   */
-> -int check_path(const char *path, int len, struct stat *st)
-> +static int check_path(const char *path, int len, struct stat *st,
-> +		      const struct checkout *co)
->  {
-> -	if (has_symlink_leading_path(path, len)) {
-> +	if (co->base_dir_len) {
-> +		const char *slash = path + len;
-> +		while (path < slash && *slash != '/')
-> +			slash--;
-> +		if (!has_dirs_only_path(path, slash-path, co->base_dir_len)) {
-> +			errno = ENOENT;
-> +			return -1;
-> +		}
-> +	} else if (has_symlink_leading_path(path, len)) {
+> On Tue, 18 Aug 2009, Frank Li wrote:
+>
+>> Some compiler such as MSVC can't support declear variable at mid of =
+funtion at c file.
+>
+> Please wrap your commit messages after 76 characters.
+>
+>>
+>> Signed-off-by: Frank Li <lznuaa@gmail.com>
+>> ---
+>
+> How about this instead?
+>
+> =A0 =A0 =A0 =A0Avoid declaration after instruction
+>
+> =A0 =A0 =A0 =A0Microsoft Visual C++ does not understand this C99 styl=
+e.
+>
+> ?
+>
+> The patch itself is good.
 
-Grr. Now 'check_path()' is no longer something generically useful.
+Shouldn't GCC be changed to use -std=3Dc89 as well to pick up errors fo=
+r
+compilers that don't support c99 (like the Microsoft Visual C++ C
+compiler)?
 
-Could you perhaps instead only change 'checkout_entry()' to do this hack, 
-and leave 'check_path()' as a generic replacement for "lstat()" that 
-doesn't follow symlinks?
-
-		Linus
+- Reece
