@@ -1,67 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git clone http://git.savannah.gnu.org/cgit/xboard.git
- segfaults
-Date: Mon, 17 Aug 2009 16:17:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908171616340.4991@intel-tinevez-2-302>
-References: <20090817135651.GA4570@harikalardiyari>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Mon, 17 Aug 2009 10:20:22 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908171008070.6044@xanadu.home>
+References: <20090817072315.4314.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ali Polatel <polatel@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 16:18:00 2009
+Content-Transfer-Encoding: 7BIT
+Cc: bdonlan@gmail.com, johnflux@gmail.com, P@draigBrady.com,
+	art.08.09@gmail.com, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 16:21:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md325-0004GE-FG
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 16:17:57 +0200
+	id 1Md34m-000663-Mv
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 16:20:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754046AbZHQOR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 10:17:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZHQOR2
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 10:17:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34262 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752666AbZHQOR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 10:17:27 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 14:17:27 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp011) with SMTP; 17 Aug 2009 16:17:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+DoTwMAv6DyRHGDPKJPLFgpKeaarKBBtp+y0UehO
-	ybTIDhdGcFV1Xj
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090817135651.GA4570@harikalardiyari>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1754194AbZHQOU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 10:20:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbZHQOU2
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 10:20:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11426 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754144AbZHQOU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 10:20:27 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOI003OUYHYVEF0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 10:20:22 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090817072315.4314.qmail@science.horizon.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126184>
 
-Hi,
+On Mon, 17 Aug 2009, George Spelvin wrote:
 
-On Mon, 17 Aug 2009, Ali Polatel wrote:
+> If it helps anyone resolve license issues, here's a from-FIPS-180-2
+> implementation that's placed in the public domain.  That should be
+> compatible with any license.
+> 
+> It uses Linus's and Artur's performance ideas, and some of Linus' macro
+> ideas (in the rotate implementation), but tries to be textually different.
+> Is there anything recognizable that anyone cares to clam copyright to?
+> 
+> It's not quite 100% finished, as I haven't benchmarked it against Linus's
+> code yet, but it's functionally correct.
+> 
+> It's also clean with -W -Wall -Wextra.
+> 
+> TODO: Check if an initial copy to w[] is faster on i386 (less register
+> pressure).
+> 
+> /*
+>  * Secure Hash Algorith SHA-1, as published in FIPS PUB 180-2.
+>  *
+>  * This implementation is in the public domain.  Copyright abandoned.
+>  * You may do anything you like with it, including evil things.
+>  *
+>  * This is a rewrite from scratch, based on Linus Torvalds' "block-sha1"
+>  * from the git mailing list (August, 2009).  Additional optimization
+>  * ideas cribbed from
+>  * - Artur Skawina (x86, particularly P4, and much benchmarking)
+>  * - Nicilas Pitre (ARM)
 
-> Here's what gdb has to say about it:
->
-> [...]
+Please be careful to spell my name correctly.
 
-Here's what valgrind has to say about it (with a current 'next' + 
-patches):
 
-==25434== Invalid read of size 8
-==25434==    at 0x407433: process_object_response (http-walker.c:91)
-==25434==    by 0x405713: finish_active_slot (http.c:657)
-==25434==    by 0x40448F: process_curl_messages (http.c:119)
-==25434==    by 0x40546A: step_active_slots (http.c:571)
-==25434==    by 0x4080E8: fetch_object (http-walker.c:476)
-==25434==    by 0x408316: fetch (http-walker.c:526)
-==25434==    by 0x42876C: loop (walker.c:176)
-==25434==    by 0x428C65: walker_fetch (walker.c:287)
-==25434==    by 0x40401F: main (remote-curl.c:111)
-
-Ciao,
-Dscho
+Nicolas
