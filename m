@@ -1,80 +1,145 @@
-From: skillzero@gmail.com
-Subject: sparse support in pu
-Date: Sun, 16 Aug 2009 23:09:33 -0700
-Message-ID: <2729632a0908162309ma6e7d41kc3bafe4575120630@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to stop sharing objects between repositories
+Date: Mon, 17 Aug 2009 02:19:17 -0400
+Message-ID: <20090817061916.GA27530@coredump.intra.peff.net>
+References: <alpine.DEB.2.00.0908151756150.29215@nhtr.ovalna.fjrygre.arg>
+ <alpine.DEB.1.00.0908161042210.8306@pacific.mpi-cbg.de>
+ <20090816122842.GA942@sigill.intra.peff.net>
+ <alpine.DEB.1.00.0908161429590.8306@pacific.mpi-cbg.de>
+ <20090816135703.GA31638@coredump.intra.peff.net>
+ <7vmy5z603d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 17 08:09:43 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jon Jensen <jon@endpoint.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 08:19:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1McvPZ-0000l4-Q0
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 08:09:42 +0200
+	id 1McvYz-0004OD-MA
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 08:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756813AbZHQGJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 02:09:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752460AbZHQGJd
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 02:09:33 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:23742 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751951AbZHQGJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 02:09:32 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so932682qwh.37
-        for <git@vger.kernel.org>; Sun, 16 Aug 2009 23:09:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=bChwjpq+t+/VS0HRKqKkYZBzqkBKd6wkpoXbrlttAWI=;
-        b=YiPSFz66330//CU9n2ug6OicKvUqKG/hpnlFpPJvXmJcBOAsNl0UwoFAKAZg4/L4+/
-         DCI45OeW/fxvD0mQ2jPBz31b/LjFQgKSyvQL+SmUt4ZVRaIM3IZn9BNRD3JrxtlEvn/C
-         JMvTv5BPTwpoSCUvDlzKXuusKkHUwZIW3VHsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=vsZh2FnH4MrDAgaf8cQ4ov5I/d3o5mvuMiBg/ePliSCDE9TmtLmYkaeRV4rKGSc/XM
-         fCVOhJZPol3xQ2wHnLvcu+hHLNjtUptN1qvkk16hQTet0Fx4ywQiOk0gj1Dv+NEf4+ji
-         UzclMTOSAfmjOgYzXBI/LB/FkfYVg2YQDPEyo=
-Received: by 10.224.117.8 with SMTP id o8mr3965346qaq.227.1250489373986; Sun, 
-	16 Aug 2009 23:09:33 -0700 (PDT)
+	id S1756820AbZHQGTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 02:19:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756816AbZHQGTR
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 02:19:17 -0400
+Received: from peff.net ([208.65.91.99]:53177 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756815AbZHQGTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 02:19:17 -0400
+Received: (qmail 28668 invoked by uid 107); 17 Aug 2009 06:19:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 17 Aug 2009 02:19:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Aug 2009 02:19:17 -0400
+Content-Disposition: inline
+In-Reply-To: <7vmy5z603d.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126125>
 
-I had a couple comments and questions about the sparse stuff recently
-merged into pu. First, I think it's an awesome feature. It's a nice
-solution to my problems (1.5 GB tree where most people only need a
-small subset, but with a lot of shared pieces).
+On Sun, Aug 16, 2009 at 12:16:22PM -0700, Junio C Hamano wrote:
 
-1. Have people decided whether it should be on by default if you have
-a .git/info/sparse file? I'd definitely like it to be on by default.
-When I first tried it, I didn't realize I had to use --sparse to git
-checkout to get it to use the sparse rules. The same goes for a merge
-I did that happened to have a file in the excluded area (it included
-it because I didn't use --sparse to git merge).
+> After reading this, two points come to my mind.  They may or may not be
+> issues.
+> 
+>  (1) Such a user does not necessarily know a casual "git repack -a" breaks
+>      the dependency, defeating the -s option s/he deliberately used in
+>      order to save disk space in the first place.  Perhaps we can reword
+>      this further to kill two penguins with a single stone?
+> 
+> 	Note that the pack resulting from running `git repack -a` in the
+> 	repository cloned with the `-s` option will include objects that
+> 	are borrowed from the source repository.  It essentially breaks
+> 	the dependency created by cloning with the `-s` option by copying
+> 	the objects from the source repository.  To keep borrowing from
+> 	the source repository to save disk space, do not use `repack -a`.
 
-2. Is it not hooked up to git reset yet? I did a git checkout --sparse
-and things look liked I expected then I did a git reset --hard
-origin/master and it started checking out all the stuff previously
-excluded via .git/info/sparse. I tried --sparse, but it didn't know
-about that option.
+Good point, but I don't think this wording is quite right. You can also
+cause such an inefficiency by simply running "git repack", if the source
+has loose objects. In other words:
 
-3. One thing that was confusing is that I needed a trailing slash on
-directories in .git/info/sparse to get them excluded. This seems
-different than .gitignore, which works for me without the trailing
-slash.
+  1. "git repack -a" is sufficient to break dependency, as it copies
+     both packed and loose objects
 
-BTW...How to people normally try out stuff in pu? Do you just replace
-your normal git stuff with the pu build? That's what I did because I
-wasn't sure if I did /test/git if the other tools git invokes would
-use the release version of git or the ones relative to itself (i.e.
-the ones in /test/ for me). It seems like the only way to really test
-stuff is to use it for your real work, but I also don't want to
-corrupt our production repositories by using an experimental version
-of git.
+  2. "git repack" _may_ break the dependency, if there are no packs, as
+     it copies only loose objects. It _may_ introduce inefficiency, but
+     only if there are loose objects.
+
+  3. "git repack -l" always keeps the dependency and current efficiency.
+
+     As an aside, making this list makes me realize there is no easy
+     "keep the dependency and increase efficiency". In other words, pack
+     everything that is not available otherwise, and then prune the
+     remaining packs.
+
+Modified patch is below.
+
+>      We should suggest an alternative immediately after this sentence,
+>      e.g. "Instead, use `repack -l`" or something, but somebody should
+>      check if it is a valid/viable alternative.
+
+It does work. From a user's perspective, I think "-l" would probably be
+a more sane default. But I think it is off for historical reasons, and
+these days we try to steer users towards "git gc", anyway, which does
+use "-l" by default.
+
+-- >8 --
+Subject: [PATCH] docs: describe impact of repack on "clone -s"
+
+The effects of repacking on a repository with alternates are
+a bit subtle. The two main things users will want are:
+
+  1. Not to waste disk space by accidentally copying objects
+     which could be shared.
+
+  2. Copying all objects explicitly to break the dependency
+     on the source repo.
+
+This patch describes both under the "clone -s"
+documentation. It makes sense to put it there rather than in
+git-repack.txt for both cases. For (1), we are warning the
+user who is using "clone -s" about what _not_ to do, so we
+need to get their attention when reading about "clone -s".
+For (2), we are telling them how git-repack can be used to
+accomplish a task, but until they know that git-repack is
+the right tool, they have no reason to look at the repack
+documentation.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+
+The extra deleted lines in the patch below are just cleaning up some
+excess whitespace.
+
+ Documentation/git-clone.txt |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index b14de6c..b25944f 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -72,8 +72,16 @@ These objects may be removed by normal git operations (such as 'git-commit')
+ which automatically call `git gc --auto`. (See linkgit:git-gc[1].)
+ If these objects are removed and were referenced by the cloned repository,
+ then the cloned repository will become corrupt.
+-
+-
+++
++Note that running `git repack` without the `-l` option in a repository
++cloned with `-s` will copy objects from the source repository into a
++pack in the cloned repository, removing the disk space savings of `clone
++-s`. It is safe, however, to run `git gc`, which uses the `-l` option by
++default.
+++
++If you want to break the dependency of a repository cloned with `-s` on
++its source repository, you can simply run `git repack -a` to copy all
++objects from the source repository into a pack in the cloned repository.
+ 
+ --reference <repository>::
+ 	If the reference repository is on the local machine
+-- 
+1.6.4.283.gec993
