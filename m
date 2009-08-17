@@ -1,81 +1,87 @@
-From: Pau Garcia i Quiles <pgquiles@elpauer.org>
-Subject: Re: [PATCH 10/11] Add MSVC Project file
-Date: Tue, 18 Aug 2009 01:00:28 +0200
-Message-ID: <3af572ac0908171600s7aa7b21ftf95fde92246bf75f@mail.gmail.com>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
-	 <4A899495.8050902@gnu.org>
-	 <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
-	 <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172255140.8306@pacific.mpi-cbg.de>
-	 <3af572ac0908171359o33f6ca70n599bdc27be74784a@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172306080.8306@pacific.mpi-cbg.de>
-	 <4A89D909.9050700@gmail.com>
+From: skillzero@gmail.com
+Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
+Date: Mon, 17 Aug 2009 16:02:13 -0700
+Message-ID: <2729632a0908171602m3c05c97bx9ce31e8960df9198@mail.gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
+	 <200908142223.07994.jnareb@gmail.com>
+	 <7veird4yyi.fsf@alter.siamese.dyndns.org>
+	 <200908160137.30384.jnareb@gmail.com>
+	 <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
+	 <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302>
+	 <7vtz06xxao.fsf@alter.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0908171817570.4991@intel-tinevez-2-302>
+	 <7vws52uvxq.fsf@alter.siamese.dyndns.org>
+	 <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: "Johan 't Hart" <johanthart@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 01:01:10 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 18 01:02:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdBCP-000630-Cf
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 01:01:09 +0200
+	id 1MdBDe-0006VS-6V
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 01:02:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758189AbZHQXA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 19:00:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754396AbZHQXA2
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 19:00:28 -0400
-Received: from mail-bw0-f222.google.com ([209.85.218.222]:44749 "EHLO
-	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752480AbZHQXA1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 19:00:27 -0400
-Received: by bwz22 with SMTP id 22so2603588bwz.18
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 16:00:28 -0700 (PDT)
-Received: by 10.223.127.195 with SMTP id h3mr981400fas.57.1250550028233; Mon, 
-	17 Aug 2009 16:00:28 -0700 (PDT)
-In-Reply-To: <4A89D909.9050700@gmail.com>
+	id S1758252AbZHQXCP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 19:02:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbZHQXCO
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 19:02:14 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:53792 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752705AbZHQXCO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 19:02:14 -0400
+Received: by qyk34 with SMTP id 34so2436127qyk.33
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 16:02:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BMCA6JxnQ3I//zzJHYJ80R/2G90st9cLQa4yn7tKEgM=;
+        b=v08i3cbLeEkN0HwOLYs7GxiKyCCO43ZSLVKtWbiLqPm0klQXfhDU9K/sf1dOYho9nP
+         ih80M7j36SXLrhAXedpP1sGuba0gLMbi3zC1Es4htR6r+/1wgWt6XCNaC48sqRyiVSJ+
+         8N0lK8IkEn/q+v00qAHe5MTqAGsOEjCr4IkNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=I668vrkWNCRp0OLGzXXZxh2YziIcfq3fPs+3t1Q32VFTyymkyCG10lWuBm4ApX7Gfc
+         RDkdYybkDWofIw7b+yE9udvrdeWYkVwVA6jcdGvJ4cL2HxOWTXPzTSNCLLXm8JxPoxho
+         rx4BjKNN/ukRG2NICoP+j5RoEh14BJ+N/UIj4=
+Received: by 10.224.50.137 with SMTP id z9mr4857007qaf.83.1250550133706; Mon, 
+	17 Aug 2009 16:02:13 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126313>
 
-On Tue, Aug 18, 2009 at 12:26 AM, Johan 't Hart<johanthart@gmail.com> wrote:
-> Johannes Schindelin schreef:
->
->> Having said that, a CMake-based system _in addition_ to what is
->> tried-and-tested to be able to support all those different kinds of
->> Microsoft Visual Studio (took me 3 attempts to write that without a
->> Freudian) would be welcome, _if_ you succeed in making it compile out of the
->> box on msysGit.
->
-> That would require (I think) that CMake is build by the msysgit gcc tools
-> available in msysgit, since CMake can't be build by VS right? Pau do you
-> think that is possible?
+On Mon, Aug 17, 2009 at 3:02 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
 
-CMake can certainly be built by VC++ but you need CMake to do that,
-VC++-CMake cannot be bootstrapped.
+> And here comes the problem: if something is treated untracked because=
+ it
+> was outside of the sparse checkout, then I want it to be treated as
+> untracked _even if_ I happened to broaden the checkout by editing
+> .git/info/sparse. =C2=A0The file did not just magically become subjec=
+t to
+> overwriting just because I edited .git/info/sparse (which could be a
+> simple mistake).
 
-Would it be OK to download a binary version of CMake instead of / in
-addition to the source? (I'm not familiar with the 'release.sh' stuff
-yet)
+Maybe I'm misunderstanding what you're saying, but why would you want
+a file that's become part of the checkout by editing .git/info/sparse
+to still be treated as untracked?
 
-> It would be fun. Download the msysgit netinstaller, set it up, install it,
-> and after that, CMake is bootstrapped, and the visual studio .vcproj files
-> are generated and everyone (VS developers and msys developers) are ready to
-> go!
-
-That'd be right, if I have understood what the netinstaller does (I've
-never used it yet).
-
--- 
-Pau Garcia i Quiles
-http://www.elpauer.org
-(Due to my workload, I may need 10 days to answer)
+If I have a file on that's excluded via .git/info/sparse then I edit
+=2Egit/info/sparse to include it and switch to a branch that doesn't
+have that file, I'd expect that file to be deleted from the working
+copy if the content matches what's in the repository. If it's modified
+then I'd expect the branch switch to fail (like it would without a
+sparse checkout).
