@@ -1,80 +1,75 @@
-From: Giuseppe Scrivano <gscrivano@gnu.org>
-Subject: Re: Linus' sha1 is much faster!
-Date: Mon, 17 Aug 2009 19:32:31 +0200
-Message-ID: <871vnae47k.fsf@master.homenet>
-References: <4A85F270.20703@draigBrady.com> <87eirbef3c.fsf@master.homenet>
-	<4A88B80D.40804@draigBrady.com> <8763cmemsa.fsf@master.homenet>
-	<f488382f0908170844h649126efxb27f87d7b319961b@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 10/11] Add MSVC Project file
+Date: Mon, 17 Aug 2009 19:34:13 +0200
+Message-ID: <4A899495.8050902@gnu.org>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com> <1250525103-5184-2-git-send-email-lznuaa@gmail.com> <1250525103-5184-3-git-send-email-lznuaa@gmail.com> <1250525103-5184-4-git-send-email-lznuaa@gmail.com> <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigbrady.com>,
-	Bug-coreutils@gnu.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:34:17 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Johannes.Schindelin@gmx.de
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 19:34:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md664-0007gx-1W
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:34:16 +0200
+	id 1Md66J-0007pA-7w
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932281AbZHQReF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 13:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757728AbZHQReF
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:34:05 -0400
-Received: from jack.mail.tiscali.it ([213.205.33.53]:51622 "EHLO
-	jack.mail.tiscali.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757700AbZHQReE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 13:34:04 -0400
-Received: from master.homenet (84.222.168.55) by jack.mail.tiscali.it (8.0.022)
-        id 499F036C05BAB6D6; Mon, 17 Aug 2009 19:33:54 +0200
-Received: from gscrivano by master.homenet with local (Exim 4.69)
-	(envelope-from <gscrivano@gnu.org>)
-	id 1Md64O-0002vj-6T; Mon, 17 Aug 2009 19:32:32 +0200
-In-Reply-To: <f488382f0908170844h649126efxb27f87d7b319961b@mail.gmail.com>
-	(Steven Noonan's message of "Mon, 17 Aug 2009 08:44:30 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
+	id S1757762AbZHQReR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 13:34:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757666AbZHQReR
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:34:17 -0400
+Received: from mail-gx0-f205.google.com ([209.85.217.205]:33949 "EHLO
+	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754281AbZHQReQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 13:34:16 -0400
+Received: by gxk1 with SMTP id 1so4224916gxk.17
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 10:34:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Izr1hNSUoEQon3PwvQJUlXh5+83DT/jXUtrwJq6t5g4=;
+        b=SWi6ixGnJPQwyRc8xrmUM75PBLpxmhmAwojJhVB9OU2RFY7M6K85bWiQDcCXcHq18V
+         eF3+izErJQPpuJBCxXYwz9yBThYbdaZ9MoEutuUbJZO2wHiynLTHvGsRHDyVMG6m9kpH
+         HsvFf3cNMnmLw1lWMb4bQZemv2IWNhCoPdsy0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=FSy6ecbCjvDRxCxe2sYlc0HFUW4lN2UrVN6iV5ZScqt3dRXMAbuDx+1L9sxT0tGpBH
+         f2Y/vR7WxVceIn0HmjQQ1dlmrf/EXY+Jp3jKT5ViWeQv3mAw6owAjgmUFFuYWwIs0KXg
+         1zaYTjAZb+Wh2PpVqdTTAtepAf2tFrhspQvuY=
+Received: by 10.91.95.5 with SMTP id x5mr2982260agl.28.1250530457758;
+        Mon, 17 Aug 2009 10:34:17 -0700 (PDT)
+Received: from yakj.usersys.redhat.com ([72.14.241.7])
+        by mx.google.com with ESMTPS id 5sm6829839agc.47.2009.08.17.10.34.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Aug 2009 10:34:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Lightning/1.0pre Thunderbird/3.0b3
+In-Reply-To: <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126244>
 
-Hi,
+I don't know if this is in any way feasible (does not seem to hard 
+actually), but I think these files should be automatically generated.
 
-These are the results I reported (median of 5 plus an additional not
-considered first run) on the Steve Reid's SHA1 implementation using the
-same flags to the compiler that I used for previous tests.
+Otherwise, bitrot is going to happen in zero time.
 
-GCC 4.3.3:  real	0m2.627s
-GCC 4.4.1:  real	0m3.742s
+Also, a cleaner XML without verbosities like
 
-In both cases it showed to be slower than other implementations I have
-already tried.
++			<Tool
++				Name="VCMIDLTool"
++			/>
 
-Additional note: as for gnulib SHA1, GCC 4.4.1 produced slower code than
-GCC 4.3.3.
+would make the patch easier to review.
 
-Cheers,
-Giuseppe
+I agree with dscho on the non-builtins.
 
-
-
-Steven Noonan <steven@uplinklabs.net> writes:
-
->
-> Interesting. I compared Linus' implementation to the public domain one
-> by Steve Reid[1], which is used in OpenLDAP and a few other projects.
-> Anyone with some experience testing these kinds of things in a
-> statistically sound manner want to try it out? In my tests, I got
-> this:
->
-> (average of 5 runs)
-> Linus' sha1: 283MB/s
-> Steve Reid's sha1: 305MB/s
->
-> - Steven
->
-> [1] http://gpl.nas-central.org/SYNOLOGY/x07-series/514_UNTARED/source/openldap-2.3.11/libraries/liblutil/sha1.c
+Paolo
