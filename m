@@ -1,77 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: RFC for 1.7: Do not checkout -b master origin/master on clone
-Date: Mon, 17 Aug 2009 19:45:05 +0200
-Message-ID: <vpqhbw6pc66.fsf@bauges.imag.fr>
-References: <4A818B90.9050206@drmicha.warpmail.net>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 10/11] Add MSVC Project file
+Date: Mon, 17 Aug 2009 20:16:59 +0200
+Message-ID: <4A899E9B.7080803@gnu.org>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>	 <4A899495.8050902@gnu.org> <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:49:38 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com, Johannes.Schindelin@gmx.de
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 20:17:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md6Ko-0005WX-9e
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:49:30 +0200
+	id 1Md6lf-0008En-AG
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 20:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757733AbZHQRtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 13:49:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757675AbZHQRtU
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:49:20 -0400
-Received: from imag.imag.fr ([129.88.30.1]:54580 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753638AbZHQRtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 13:49:19 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7HHj55D019054
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 17 Aug 2009 19:45:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Md6GX-00039H-If; Mon, 17 Aug 2009 19:45:05 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Md6GX-0004XL-HN; Mon, 17 Aug 2009 19:45:05 +0200
-In-Reply-To: <4A818B90.9050206@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue\, 11 Aug 2009 17\:17\:36 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 17 Aug 2009 19:45:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753652AbZHQSRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 14:17:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZHQSRD
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 14:17:03 -0400
+Received: from mail-fx0-f215.google.com ([209.85.220.215]:55479 "EHLO
+	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbZHQSRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 14:17:03 -0400
+Received: by fxm11 with SMTP id 11so2444593fxm.39
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 11:17:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=9/gDlFkXIz7DZjl4n1MwwFwV9/kWew3EUfiD3m4xjZY=;
+        b=QVkO6w1uHIJ639T6ttDARZDlp6IB7mXTXizfJSuejXECNadXy+nRzcTwPvPJGV+XRv
+         6t29rwXm7JM7ZLRDfaDBBB5nV6Vb4GhuY25BfG3eGyaXD02vi1QMANzI1AOAZqaGiKAc
+         QU4qwul/RJP3LIyqp5WnBj5kD7wX3lgzCBKKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=WGZGY+/7xc+BfKtQsd8qALhCMmKVOvzXKSnKsSkmRYMJIUzx2IsRKtDMtx5j+1SP8d
+         EwJZ39RkI8zBuR+HNwmnuiW3Hv191G6rEIvyB/CvwG10h0yVbvimh2vs2Ef0i/6WfNVX
+         0QaDBW4c3ngY/0YwVuBO6kzesSw/LXt9zuac0=
+Received: by 10.204.34.73 with SMTP id k9mr2925704bkd.45.1250533023388;
+        Mon, 17 Aug 2009 11:17:03 -0700 (PDT)
+Received: from yakj.usersys.redhat.com ([85.93.118.17])
+        by mx.google.com with ESMTPS id 35sm5280121fkt.50.2009.08.17.11.17.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Aug 2009 11:17:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Lightning/1.0pre Thunderbird/3.0b3
+In-Reply-To: <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126247>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 08/17/2009 07:40 PM, Erik Faye-Lund wrote:
+> On Mon, Aug 17, 2009 at 7:34 PM, Paolo Bonzini<bonzini@gnu.org>  wrote:
+>> Also, a cleaner XML without verbosities like
+>>
+>> +<Tool
+>> +                               Name="VCMIDLTool"
+>> +                       />
+>>
+>> would make the patch easier to review.
+>
+> ...but will it make it more annoying to maintain in the long run? It
+> might be painful to work with a mixture of hand-written and
+> msdev-written XML. Of course, if we get some scripts in place to
+> generate the vcproj-files this might not be a problem...
 
-> - git clone does not set up any local branches at all
-> - git svn fetch does not set up any local branches at all
+Yes, my remark applied only if the generation was scripted.  Otherwise, 
+it would be an annoyance in addition to being subject to bitrot.
 
-If you don't set up a local branch, it means either
-
-- You start with a detached HEAD, or
-- You start with no working tree at all.
-
-In both cases, you introduce more trouble for the beginner, just more
-notions to learn before being able to do the very first step.
-
-And you also break a good property of Git: in Git, you can use the
-"one repo per branch" or the "multiple branches in a repository" the
-way you want.
-
-Personnally, I rarely have more than one branch for me (but I
-appreciate very much having one branch per developer). And this way, I
-can just forget that Git has multiple branches in a repo. When I want
-to work on a project, I clone it, I hack, I commit, and then I
-send the result (git push, git svn dcommit, git send-email, depending
-on the project). In this workflow, I almost never have to use "git
-branch", "git checkout", "git merge", it works, and Git does the right
-thing for me.
-
--- 
-Matthieu
+Paolo
