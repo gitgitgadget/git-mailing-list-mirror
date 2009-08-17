@@ -1,81 +1,77 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: sparse support in pu
-Date: Mon, 17 Aug 2009 19:13:59 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908171912250.4991@intel-tinevez-2-302>
-References: <2729632a0908162309ma6e7d41kc3bafe4575120630@mail.gmail.com> <fcaeb9bf0908170117v67e9f8b1ga56edcda14821e91@mail.gmail.com> <2729632a0908170149o425544dcw52aeb6ac6ee1437d@mail.gmail.com> <fcaeb9bf0908170321o43fa4a6bv95dd78ff7889686f@mail.gmail.com>
- <4A8932BB.7030002@viscovery.net> <fcaeb9bf0908170441o30005085nb0d4e08f333b6146@mail.gmail.com> <alpine.DEB.1.00.0908171425410.4991@intel-tinevez-2-302> <eaa105840908170552m3eaf0f92j523ddad98dd67a3@mail.gmail.com> <alpine.DEB.1.00.0908171522510.4991@intel-tinevez-2-302>
- <7v7hx2xw6p.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 11/11] Add gitignore and ReadMe file for MSVC Build
+Date: Mon, 17 Aug 2009 19:16:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908171915130.4991@intel-tinevez-2-302>
+References: <1250525340-412-1-git-send-email-lznuaa@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Peter Harris <git@peter.is-a-geek.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, skillzero@gmail.com,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:14:11 2009
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 19:16:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md5mc-0007CM-29
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:14:10 +0200
+	id 1Md5om-0008Eu-OQ
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754476AbZHQROB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 13:14:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754367AbZHQROA
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:14:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39443 "HELO mail.gmx.net"
+	id S932251AbZHQRQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 13:16:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbZHQRQM
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:16:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55538 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752546AbZHQROA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 13:14:00 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 17:14:00 -0000
+	id S1754433AbZHQRQM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 13:16:12 -0400
+Received: (qmail invoked by alias); 17 Aug 2009 17:16:11 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp033) with SMTP; 17 Aug 2009 19:14:00 +0200
+  by mail.gmx.net (mp067) with SMTP; 17 Aug 2009 19:16:11 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19hAGZ3l3thnNffEERGpls3O0sHpbFSN/AV9gqGxj
-	kF/vOBLRTqIKuz
+X-Provags-ID: V01U2FsdGVkX1+51Ap/Ngy5XNP0LswQKZN75Sn1dIt9Idllem++9i
+	SLaOnzGOmzl5DK
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <7v7hx2xw6p.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1250525340-412-1-git-send-email-lznuaa@gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126239>
 
 Hi,
 
-On Mon, 17 Aug 2009, Junio C Hamano wrote:
+On Tue, 18 Aug 2009, Frank Li wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> Add ReadMe to user how to build git with MSVC.
+> Add gitignore to filter out files created file by MSVC.
 > 
-> >> That's funny. I have a git tree that would benefit from sparse checkout. 
-> >> I know which path I _don't_ want. Specifying all the paths I want would 
-> >> be a rather longer (and more error-prone) list. I suspect it would be 
-> >> best to support both.
-> >
-> > Yes, I agree, but the common case is for people to know what they are 
-> > working on, right?
-> 
-> I either may be working on Documentation/ (I know I do not care about 
-> everthing else so I can afford to list Makefile and Documentation/ in 
-> the "interesting" list), or I either may be working on code (I do not 
-> know how many code directories there are, and do not care to list them, 
-> but I know I do not need Documentation/ and contrib/).  You need both 
-> ways.
-> 
-> And with .gitignore syntax you can have both.
+> Signed-off-by: Frank Li <lznuaa@gmail.com>
 
-I was fully aware of this.  It was the only reason I proposed the 
-.gitignore syntax.
+Please use the plural form "files" where appropriate.
 
-My point was that the direction should be dictated by convenience to those 
-who need the feature most.
+> diff --git a/compat/vcbuild/ReadMe b/compat/vcbuild/ReadMe
+> new file mode 100644
+> index 0000000..47c089e
+> --- /dev/null
+> +++ b/compat/vcbuild/ReadMe
+> @@ -0,0 +1,13 @@
+> +The Steps of Build Git with VS2008
+> +
+> +1. Create VC Build Environment.
+> +
+> +   git clone git://repo.or.cz/gitbuild.git
+> +
+> +   gitbuild include VS solution file and library such as zlib.
 
-And maybe by asking yourself the question "what would I understand by 
-'sparse files'?"
+How, if you do not have Git?
+
+> +2. Get Submodule
+> +  
+> +   git submodule update
+
+This is missing '--init'.
 
 Ciao,
 Dscho
