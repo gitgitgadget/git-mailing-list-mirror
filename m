@@ -1,99 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: sparse support in pu
-Date: Mon, 17 Aug 2009 11:57:08 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908171153070.4991@intel-tinevez-2-302>
-References: <2729632a0908162309ma6e7d41kc3bafe4575120630@mail.gmail.com>  <fcaeb9bf0908170117v67e9f8b1ga56edcda14821e91@mail.gmail.com> <2729632a0908170149o425544dcw52aeb6ac6ee1437d@mail.gmail.com> <alpine.DEB.1.00.0908171113420.4991@intel-tinevez-2-302>
- <4A89282A.3020907@viscovery.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/6] "git commit --dry-run" updates
+Date: Mon, 17 Aug 2009 12:01:41 +0200
+Message-ID: <200908171201.43343.trast@student.ethz.ch>
+References: <1250330803-22171-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: skillzero@gmail.com, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Aug 17 11:57:24 2009
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 12:02:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mcyxv-0000At-FJ
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 11:57:23 +0200
+	id 1Mcz2b-0002Ix-5t
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 12:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757343AbZHQJ5K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 05:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757296AbZHQJ5J
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 05:57:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34441 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756890AbZHQJ5I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 05:57:08 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 09:57:08 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp061) with SMTP; 17 Aug 2009 11:57:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18T1gEs46YTUokmwM3dUBFko5PS/wK1w3CDWxNpZB
-	MO4BCxPZirAkwz
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <4A89282A.3020907@viscovery.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1757290AbZHQKCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 06:02:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756895AbZHQKCD
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 06:02:03 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:26747 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750842AbZHQKCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 06:02:02 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 17 Aug
+ 2009 12:02:04 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 17 Aug
+ 2009 12:02:02 +0200
+User-Agent: KMail/1.12.1 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <1250330803-22171-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126151>
 
-Hi,
+Junio C Hamano wrote:
+> The third and the fourth ones tentatively introduce "git stat".  The
+> former is an incomplete implementation that ignores the pathspec, and the
+> latter adds pathspec limiting to it.  In the final form before it goes to
+> 'next', these two should probably be squashed.
 
-On Mon, 17 Aug 2009, Johannes Sixt wrote:
+If it's not too much work, it would be nice to somehow detect if -u
+can have any influence at all.  For example,
 
-> Johannes Schindelin schrieb:
-> > On Mon, 17 Aug 2009, skillzero@gmail.com wrote:
-> >> On Mon, Aug 17, 2009 at 1:17 AM, Nguyen Thai Ngoc Duy<pclouds@gmail.com> wrote:
-> >>> On Mon, Aug 17, 2009 at 1:09 PM, <skillzero@gmail.com> wrote:
-> >>>> 1. Have people decided whether it should be on by default if you have 
-> >>>>    a .git/info/sparse file? I'd definitely like it to be on by 
-> >>>>    default.  When I first tried it, I didn't realize I had to use 
-> >>>>    --sparse to git checkout to get it to use the sparse rules. The 
-> >>>>    same goes for a merge I did that happened to have a file in the 
-> >>>>    excluded area (it included it because I didn't use --sparse to git 
-> >>>>    merge).
-> >>> I tend to make it enabled by default too. I have made it stricter to 
-> >>> trigger reading sparse in unpack_trees() -- only do it when 
-> >>> unpack_opts.update is TRUE. This should make it safer to be enabled by 
-> >>> default.
-> >> Other than it being new and not-widely-tested code, is there any 
-> >> additional risk to having it enabled by default if there are no sparse 
-> >> patterns defined?
-> > 
-> > I think that in and of itself is reason enough to turn off the feature 
-> > when .git/info/sparse is not present.
-> 
-> I might have missed something: Would there be any observable difference
-> between whether .git/info/sparse is absent and whether it is empty?
+  $ git status bar
+  # Not currently on any branch.
+  nothing to commit (use -u to show untracked files)
 
-There _should_ not be an _observable_ difference.
+is a bit misleading if 'bar' is tracked because adding a -u won't make
+any difference.
 
-> If not, what do you mean by "turn the feature off"?
-
-There is a global variable which triggers the code path that looks through 
-the sparse patterns.  I'd like this variable to be "off" by default.
-
-> >> It would be nice if .git/info/sparse is there by default (like 
-> >> .git/info/exclude) with some commented out instructions (also like 
-> >> .git/info/exclude).
-> > 
-> > I'm not a fan of this idea.
-> 
-> For any particular reason?
-
-First, it is an experimental feature.  I'd hate it if people who do not 
-want to use the sparse feature are affected.
-
-Second, even if the sparse pattern list is empty, an additional call to 
-the function that matches files against the pattern would take additional 
-runtime.
-
-If I had time, I could think of a third reason.
-
-Ciao,
-Dscho
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
