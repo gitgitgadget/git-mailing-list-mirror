@@ -1,87 +1,78 @@
-From: skillzero@gmail.com
-Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
-Date: Mon, 17 Aug 2009 16:02:13 -0700
-Message-ID: <2729632a0908171602m3c05c97bx9ce31e8960df9198@mail.gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com>
-	 <200908142223.07994.jnareb@gmail.com>
-	 <7veird4yyi.fsf@alter.siamese.dyndns.org>
-	 <200908160137.30384.jnareb@gmail.com>
-	 <alpine.DEB.1.00.0908161002460.8306@pacific.mpi-cbg.de>
-	 <alpine.DEB.1.00.0908171101090.4991@intel-tinevez-2-302>
-	 <7vtz06xxao.fsf@alter.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0908171817570.4991@intel-tinevez-2-302>
-	 <7vws52uvxq.fsf@alter.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
+From: Karthik R <karthikr@fastmail.fm>
+Subject: [PATCH][resend] git-svn: Respect GIT_SSH setting
+Date: Mon, 17 Aug 2009 18:02:29 -0500
+Message-ID: <4A89E185.2010307@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 18 01:02:29 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 18 01:03:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdBDe-0006VS-6V
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 01:02:26 +0200
+	id 1MdBEQ-0006hw-VD
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 01:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758252AbZHQXCP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 19:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbZHQXCO
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 19:02:14 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:53792 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752705AbZHQXCO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 19:02:14 -0400
-Received: by qyk34 with SMTP id 34so2436127qyk.33
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 16:02:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BMCA6JxnQ3I//zzJHYJ80R/2G90st9cLQa4yn7tKEgM=;
-        b=v08i3cbLeEkN0HwOLYs7GxiKyCCO43ZSLVKtWbiLqPm0klQXfhDU9K/sf1dOYho9nP
-         ih80M7j36SXLrhAXedpP1sGuba0gLMbi3zC1Es4htR6r+/1wgWt6XCNaC48sqRyiVSJ+
-         8N0lK8IkEn/q+v00qAHe5MTqAGsOEjCr4IkNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=I668vrkWNCRp0OLGzXXZxh2YziIcfq3fPs+3t1Q32VFTyymkyCG10lWuBm4ApX7Gfc
-         RDkdYybkDWofIw7b+yE9udvrdeWYkVwVA6jcdGvJ4cL2HxOWTXPzTSNCLLXm8JxPoxho
-         rx4BjKNN/ukRG2NICoP+j5RoEh14BJ+N/UIj4=
-Received: by 10.224.50.137 with SMTP id z9mr4857007qaf.83.1250550133706; Mon, 
-	17 Aug 2009 16:02:13 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908172347220.8306@pacific.mpi-cbg.de>
+	id S1758362AbZHQXCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 19:02:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758359AbZHQXCa
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 19:02:30 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54465 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758357AbZHQXC3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 19:02:29 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A789D56F6F
+	for <git@vger.kernel.org>; Mon, 17 Aug 2009 19:02:30 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 17 Aug 2009 19:02:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=/aepyyIVvULYzbSX20n/am8Fddw=; b=VNXdgw+idMn15BWppZ5L7P6Oej4a7V8M+ReNg/pgnGq2vK3yPwE2zMZgjJeZDIsG3592kkXoiAbgQ7HYuZDGoLuzT2O3KZInI7WLchMiUXW3q2gcv09nFkhUppSByHe2jDa58T+wU9Hab49B/Ze2IUVQt1ZdbqNE3hCMMKbcsZQ=
+X-Sasl-enc: uXoEC14ImbHWmrztoQwi7vWdLhnD4CfEMn0MiAs1jqVG 1250550150
+Received: from [0.0.0.0] (99-156-81-160.lightspeed.austtx.sbcglobal.net [99.156.81.160])
+	by www.fastmail.fm (Postfix) with ESMTPSA id 17975B5F0
+	for <git@vger.kernel.org>; Mon, 17 Aug 2009 19:02:29 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126314>
 
-On Mon, Aug 17, 2009 at 3:02 PM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
+Setting GIT_SSH when using "git svn clone svn+ssh://..." does not
+override the default ssh; SVN_SSH needed to be set instead. Fixed
+this.
 
-> And here comes the problem: if something is treated untracked because=
- it
-> was outside of the sparse checkout, then I want it to be treated as
-> untracked _even if_ I happened to broaden the checkout by editing
-> .git/info/sparse. =C2=A0The file did not just magically become subjec=
-t to
-> overwriting just because I edited .git/info/sparse (which could be a
-> simple mistake).
+Also, on Windows, SVN_SSH needs to be set with \ escaped
+  e.g., "C:\\PuTTY\\plink.exe"
 
-Maybe I'm misunderstanding what you're saying, but why would you want
-a file that's become part of the checkout by editing .git/info/sparse
-to still be treated as untracked?
+See http://code.google.com/p/msysgit/issues/detail?id=305
 
-If I have a file on that's excluded via .git/info/sparse then I edit
-=2Egit/info/sparse to include it and switch to a branch that doesn't
-have that file, I'd expect that file to be deleted from the working
-copy if the content matches what's in the repository. If it's modified
-then I'd expect the branch switch to fail (like it would without a
-sparse checkout).
+Signed-off-by: Karthik R <karthikr@fastmail.fm>
+---
+
+Originally sent as [PATCH] GIT_SSH does not override ssh in git-svn
+
+ git-svn.perl |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index b0bfb74..9bc1e71 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -21,6 +21,13 @@ $Git::SVN::default_ref_id = $ENV{GIT_SVN_ID} || 
+'git-svn';
+ $Git::SVN::Ra::_log_window_size = 100;
+ $Git::SVN::_minimize_url = 'unset';
+ 
++# If GIT_SSH is set, also set SVN_SSH...
++$ENV{SVN_SSH} = $ENV{GIT_SSH} if defined $ENV{GIT_SSH};
++# ... and escape \s in shell-variable on Windows
++if ($^O eq 'MSWin32' || $^O eq 'msys') {
++       $ENV{SVN_SSH} =~ s/\\/\\\\/g if defined $ENV{SVN_SSH};
++}
++
+ $Git::SVN::Log::TZ = $ENV{TZ};
+ $ENV{TZ} = 'UTC';
+ $| = 1; # unbuffer STDOUT
+-- 1.5.4.3
