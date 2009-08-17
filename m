@@ -1,80 +1,131 @@
-From: Pau Garcia i Quiles <pgquiles@elpauer.org>
-Subject: Re: CMake, was Re: [PATCH 09/11] Add MSVC porting header files.
-Date: Mon, 17 Aug 2009 23:29:59 +0200
-Message-ID: <3af572ac0908171429k62db72c1jd43ae814be569e4a@mail.gmail.com>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
-	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
-	 <alpine.DEB.1.00.0908171902300.4991@intel-tinevez-2-302>
-	 <3af572ac0908171231n30864c85ud67454a03ca08fbe@mail.gmail.com>
-	 <alpine.DEB.1.00.0908172147240.8306@pacific.mpi-cbg.de>
-	 <3af572ac0908171251y355a1e2bjf2d10192bc3eca2e@mail.gmail.com>
-	 <3f4fd2640908171420j2a359e99ga3d6fc3109547af6@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2009 partial summary, part 2 - from
+ first 10
+Date: Mon, 17 Aug 2009 23:39:06 +0200
+Message-ID: <200908172339.08767.jnareb@gmail.com>
+References: <200908171224.44686.jnareb@gmail.com> <200908171244.21693.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 23:30:11 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johan Herland <johan@herland.net>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Aug 17 23:32:18 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yw0-f140.google.com ([209.85.211.140])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md9mM-0004mq-BS
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 23:30:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758103AbZHQV37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 17:29:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758084AbZHQV37
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 17:29:59 -0400
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:38207 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755655AbZHQV37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 17:29:59 -0400
-Received: by fxm11 with SMTP id 11so19016fxm.39
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 14:30:00 -0700 (PDT)
-Received: by 10.223.145.7 with SMTP id b7mr970778fav.29.1250544599928; Mon, 17 
-	Aug 2009 14:29:59 -0700 (PDT)
-In-Reply-To: <3f4fd2640908171420j2a359e99ga3d6fc3109547af6@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id 1Md9oP-0005Oz-1j
+	for gcvm-msysgit@m.gmane.org; Mon, 17 Aug 2009 23:32:17 +0200
+Received: by mail-yw0-f140.google.com with SMTP id 4so5219939ywh.22
+        for <gcvm-msysgit@m.gmane.org>; Mon, 17 Aug 2009 14:32:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:dkim-signature:domainkey-signature:received:received:from
+         :to:subject:date:user-agent:cc:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:content-disposition
+         :message-id:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=HSfctTHX6NW0so8XlBftm4MJJaPL2DDRwHY8NiBdXyo=;
+        b=a/0DSzj7r3RONwaedfnY7ntKFf1zBBkgR3eQBh2k077joF4ggauuG+PfxGFDVQcF0N
+         hfbMQNLlZRs0h6hRM+AHsPobm743WE0zH7nnZbXEwkNR9ZY0CeRo6RCiJpwQo/0FbAwS
+         wP256KpihnG+0X1aVV9N5pcAFNjPrT/VJM7Zs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:from:to:subject:date:user-agent
+         :cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=i++/JjK5M52oWZeJTdFFmG2oVqqV2WzScalaZHV7+L1RU78pCXCFbb1dIkCCg5tr3N
+         pmh7iO2Na5bRLOPImUvrIqGVASG34nb4hnnk7n96tnGcahkI/PPFV7mFQD/aLW7fIScm
+         xYSv8e918oZjPeIHYbijAvtrp+LBGduBo+FWg=
+Received: by 10.150.160.10 with SMTP id i10mr1283389ybe.11.1250544731380;
+        Mon, 17 Aug 2009 14:32:11 -0700 (PDT)
+Received: by 10.176.46.2 with SMTP id t2gr6407yqt.0;
+	Mon, 17 Aug 2009 14:32:09 -0700 (PDT)
+X-Sender: jnareb@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.204.39.198 with SMTP id h6mr207658bke.23.1250544727519; Mon, 17 Aug 2009 14:32:07 -0700 (PDT)
+Received: by 10.204.39.198 with SMTP id h6mr207657bke.23.1250544727499; Mon, 17 Aug 2009 14:32:07 -0700 (PDT)
+Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.159]) by gmr-mx.google.com with ESMTP id 16si669439bwz.4.2009.08.17.14.32.06; Mon, 17 Aug 2009 14:32:06 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jnareb@gmail.com designates 72.14.220.159 as permitted sender) client-ip=72.14.220.159;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of jnareb@gmail.com designates 72.14.220.159 as permitted sender) smtp.mail=jnareb@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by fg-out-1718.google.com with SMTP id e12so738219fga.0 for <msysgit@googlegroups.com>; Mon, 17 Aug 2009 14:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:from:to:subject:date :user-agent:cc:references:in-reply-to:mime-version:content-type :content-transfer-encoding:content-disposition:message-id; bh=ciJa1spRxUkenm2N5slO2B7dQs46Otl5zwfmD1FbBJ0=; b=u4E/7glkwUdNf4jHfuiaU/+cG7HYn16DcA3q4ABf65WDpLb3TIJwVkOUqkJHGuLNwQ MozMK3faUlZMJwGGfoPn/SXH5ew1Ni76zAtCUmccQHB5K2LMy6MENjXF7JGg9+qpZcy4 gSok3EHbiUbcr8XwHf9toy6/d+NoxFfyNFKM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=from:to:subject:date:user-agent:cc:references:in-reply-to :mime-version:content-type:content-transfer-encoding :content-disposition:message-id; b=dU0p74F/+JM2mAhoaU/+KCIM7Ye4MP79M4kt9IhuMj8DSlhX+etndrDtkv913diRVT jn7jZw+N1jNChtudGUYHRKzJq1XirlW+wcqODHXdC3A6HTyuc8+pxabRo5qGOznjXq3T IhXCXxvMbOx2yQ4TTtYz0EyGm2/s3cHUHP6SA=
+Received: by 10.86.247.18 with SMTP id u18mr2699447fgh.43.1250544726171; Mon, 17 Aug 2009 14:32:06 -0700 (PDT)
+Received: from ?192.168.1.13? (abvz12.neoplus.adsl.tpnet.pl [83.8.223.12]) by mx.google.com with ESMTPS id 3sm3805278fge.25.2009.08.17.14.32.04 (version=TLSv1/SSLv3 cipher=RC4-MD5); Mon, 17 Aug 2009 14:32:04 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200908171244.21693.johan@herland.net>
+Content-Disposition: inline
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126290>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126291>
 
-On Mon, Aug 17, 2009 at 11:20 PM, Reece Dunn<msclrhd@googlemail.com> wrote:
 
-> Realistically, you'd need CMake for Windows/msvc and autotools for
-> POSIX systems. I know that CMake is supported on POSIX, but not
-> everyone has access to it. Poppler, for example, has this dual build
-> system to support Windows as well as other systems (that, and it has
-> KDE4 bindings, so CMake is pretty much a given).
+On Mon, 17 Aug 2009, Johan Herland wrote:
+> On Monday 17 August 2009, Jakub Narebski wrote:
 
-It's not exactly like that. It would be more accurate to say "if you
-have POSIX, CMake will work; if you don't have POSIX, it may or may
-not work".
+> > 9) On which operating system(s) do you use Git?
+> >    (Choice - Multiple answers)
+> >
+> > On Unix-based operating system you can get the name of operation
+> > system by running 'uname'.
+> 
+> I find it interesting to compare the answers to this question against 
+> previous years' surveys:
+> 
+> =============================================================
+> Operating system            | 2009 [%] | 2008 [%] | 2007 [%]
+> -------------------------------------------------------------
+> Linux                       |      88% |      86% |      90%
+> MacOS X (Darwin)            |      44% |      47% |      15%
+> MS Windows/Cygwin           |       9% |      10% |      >3%?
+> MS Windows/msysGit (MINGW)  |      21% |      16% |      >0%?
+> ............................|..........|..........|..........
+> MS Windows (any)            |      27% |     <26%?|       9%
 
-I'd say 99% of git users run git on a platform which supports enough
-POSIX to build CMake.
+Whet might be also interesting is to have (also) bare numbers of
+responses.  Percentage alone wouldn't tell full story.  If you have
+(for example) 1000 Linux users, and there gets released native MacOS X
+binary installer, and here comes 500 MacOS X users, the percentage
+would decrease, because there are now more users, some of which are
+not Linux users.
 
-Please note if you are cross-compiling git, you need CMake (hence
-POSIX) on the platform you are cross-compiling on (the "host
-platform"), not on the platform you are cross-compiling for (the
-"target platform").
+=================================================
+Operating system            | 2009 | 2008 | 2007#
+-------------------------------------------------
+Linux                       | 2623 | 2434 |  582
+MacOS X (Darwin)            | 1304 | 1330 |   94
+MS Windows/Cygwin           |  279 |  297 |   22
+MS Windows/msysGit (MINGW)  |  625 |  452 |    1
+............................|......|......|......
+MS Windows (any)            |  820 |  749?|   58*
+----------------------------+------+------+------
+Answers                     | 2991 | 2842 |  645       
+=================================================
 
-> For CMake to work, it would need to support building all of git
-> (including the man, html and pdf documents from the asciidoc sources),
-> the localisation support and the optional packages (OpenSSL, CURL). I
-> know that KDE uses CMake, so this should all be possible.
-
-All possible. Plus using CMake would make easier to build installers
-(NSIS, WiX, .deb, .rpm, etc), submit the results of the tests to a
-dashboard ( http://my.cdash.org/ ), and more.
+Footnotes:
+[#] First download on current msysGit page is from Aug 2007
+[*] Including unspecified version of Git for MS Windows.
+[?] "Other, please specify" not included.  It also doesn't
+    take into account overlap (one might use both msysGit and Cygwin
+    version, e.g. on different computers)
 
 -- 
-Pau Garcia i Quiles
-http://www.elpauer.org
-(Due to my workload, I may need 10 days to answer)
+Jakub Narebski
+
+Git User's Survey 2009: http://tinyurl.com/GitSurvey2009
