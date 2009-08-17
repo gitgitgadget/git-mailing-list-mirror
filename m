@@ -1,101 +1,175 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: sparse support in pu
-Date: Mon, 17 Aug 2009 10:30:29 -0400
-Message-ID: <eaa105840908170730w248d966an5714365a40d039b9@mail.gmail.com>
-References: <2729632a0908162309ma6e7d41kc3bafe4575120630@mail.gmail.com>
-	 <fcaeb9bf0908170117v67e9f8b1ga56edcda14821e91@mail.gmail.com>
-	 <2729632a0908170149o425544dcw52aeb6ac6ee1437d@mail.gmail.com>
-	 <fcaeb9bf0908170321o43fa4a6bv95dd78ff7889686f@mail.gmail.com>
-	 <4A8932BB.7030002@viscovery.net>
-	 <fcaeb9bf0908170441o30005085nb0d4e08f333b6146@mail.gmail.com>
-	 <alpine.DEB.1.00.0908171425410.4991@intel-tinevez-2-302>
-	 <eaa105840908170552m3eaf0f92j523ddad98dd67a3@mail.gmail.com>
-	 <alpine.DEB.1.00.0908171522510.4991@intel-tinevez-2-302>
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: git clone http://git.savannah.gnu.org/cgit/xboard.git segfaults
+Date: Mon, 17 Aug 2009 16:40:45 +0200
+Message-ID: <8c5c35580908170740j388befferef61113460fe1e74@mail.gmail.com>
+References: <20090817135651.GA4570@harikalardiyari>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, skillzero@gmail.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Aug 17 16:30:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ali Polatel <polatel@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 16:41:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md3EM-0003gM-DU
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 16:30:38 +0200
+	id 1Md3OI-0002Qo-0t
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 16:40:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754706AbZHQOa3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 10:30:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754664AbZHQOa3
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 10:30:29 -0400
-Received: from mail-ew0-f214.google.com ([209.85.219.214]:33401 "EHLO
-	mail-ew0-f214.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754663AbZHQOa2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 10:30:28 -0400
-Received: by ewy10 with SMTP id 10so2985700ewy.37
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 07:30:29 -0700 (PDT)
+	id S1755142AbZHQOkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 10:40:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754868AbZHQOkp
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 10:40:45 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:64640 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754862AbZHQOko (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 10:40:44 -0400
+Received: by yxe5 with SMTP id 5so3634189yxe.33
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 07:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=vTVqG8xf1HSviukoxht0cv2ZJmGgvryoBp4RQBevOIU=;
-        b=xyw04fAPk2iV+jSfKW1BjvqMMSi5xYOcNJH0KgIdn5cWEHGSNGEz7irqfXRu0nLyPq
-         jGgQg+88wN8c6XnYuGFA1tj1BN0E6qY36xK8wyhiOF0V0W/SzofewhoPquyNwGFY8VZe
-         yzg+XWkF7x3ycp8Wt52z2/DTDyzeJzOrBQ37w=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iDYsTMJ2crubIYwn18cFbv56nifFiq/vZoF7uoj5q2A=;
+        b=wFAGr18l4779i8KZIDs+0KC6sE74bLFyThZAWpFZYi+u8UY8w8Gj6HaBNf4YYkMCAl
+         aYXBxRXX0V41FEpZMrz7lJsQWRDC8KSWSSg9vpI/rhX4IVV9CkWa1V5fh4GDQlTA6Wyz
+         lQNBYLlGQUNYZPheWdVBJo8vdKpsfAb5OsWJc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=YLvR0sOF+aFbSaHX7ch8U/57XBU0/AeduiF9AFjkNAfU+RPSxtuqGP9u3xQgLD9hP/
-         btA/S3bYuBmRc9sCJvrPfBtNr3OIPzTjV9BWFyr8Lfye8t1zakwLBXiS4wcVXKrovrMl
-         LJ7X2uyAQr1LY1H6OR0p5N5iyHe53COYbFtas=
-Received: by 10.210.127.13 with SMTP id z13mr2813962ebc.1.1250519429161; Mon, 
-	17 Aug 2009 07:30:29 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908171522510.4991@intel-tinevez-2-302>
-X-Google-Sender-Auth: e140aa0341f60b70
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Kj0YgzHdGxeXLYPs1YDbAe+2+nZ/mbOiMe8qawjRZO5tZDsrBbNKjuJlzPyt57VVan
+         N4KUwWPOjER0PF7a3EOm/woCL7b2gH2L2n2trmipPMT1eHsz92BY/a2U66tBuDX2JUUi
+         8mmvkxFeZxaDGdbvV6wprdPLWgToXiuDXKaVM=
+Received: by 10.150.2.2 with SMTP id 2mr5676752ybb.16.1250520045623; Mon, 17 
+	Aug 2009 07:40:45 -0700 (PDT)
+In-Reply-To: <20090817135651.GA4570@harikalardiyari>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126188>
 
-On Mon, Aug 17, 2009 at 9:23 AM, Johannes Schindelin wrote:
-> On Mon, 17 Aug 2009, Peter Harris wrote:
->> On Mon, Aug 17, 2009 at 8:29 AM, Johannes Schindelin wrote:
->> > If I want to have a sparse checkout, I know which files I _want_.
->>
->> That's funny. I have a git tree that would benefit from sparse check=
-out.
->> I know which path I _don't_ want. Specifying all the paths I want wo=
-uld
->> be a rather longer (and more error-prone) list. I suspect it would b=
-e
->> best to support both.
+On Mon, Aug 17, 2009 at 15:56, Ali Polatel<polatel@gmail.com> wrote:
+> $subject.
+> git version 1.6.4
 >
-> Yes, I agree, but the common case is for people to know what they are
-> working on, right?
-
-I would presume so, but anecdotal "evidence" points the other way. I
-don't have a statistically significant number of samples. Maybe it
-should have been asked in the Git User's Survey? ;-)
-
->> Does sparse use the same parser as .gitignore? (I guess not, if it
->> handles trailing slashes differently?) If so, it would be trivial to
->> turn "exclude path" into "exclude all but path" (or vice-versa) with=
-:
->>
->> *
->> !path
+> Here's what gdb has to say about it:
 >
-> That was the idea behind my suggestion to allow .gitignore syntax. =A0=
-And
-> indeed, that is what happened.
+> 2456 alip@harikalardiyari> gdb --args git clone http://git.savannah.gnu.org/cgit/xboard.git
+>...
+> Getting pack 06483273097cbac210f10a4bd43324ae660053e6
+>  which contains 74e24bdc2ec3f275da63ca1396a773e7043cb9e9
+>
+> Program received signal SIGSEGV, Segmentation fault.
 
-Excellent. In that case, I don't care which way around the default is.
+This is the http clone interface generated by cgit, and a quick test
+gives me an identical segfault, while `git clone
+http://git.sv.gnu.org/r/xboard.git` succeeds. I can only guess, but
+maybe this has something to do with caching in cgit:
 
-Thanks,
- Peter Harris
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/info/packs
+P pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.pack
+P pack-06483273097cbac210f10a4bd43324ae660053e6.pack
+P pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.pack
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.pack
+>pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.pack
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.idx
+>pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.idx
+
+$ git verify-pack -v pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.pack
+[snip]
+non delta: 115 objects
+chain length = 1: 64 objects
+chain length = 2: 57 objects
+chain length = 3: 16 objects
+chain length = 4: 10 objects
+chain length = 5: 7 objects
+chain length = 6: 1 object
+pack-720d634dfc5e7511332c1e6851f7c5c5f88e7af2.pack: ok
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-06483273097cbac210f10a4bd43324ae660053e6.pack
+>pack-06483273097cbac210f10a4bd43324ae660053e6.pack
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-06483273097cbac210f10a4bd43324ae660053e6.idx
+>pack-06483273097cbac210f10a4bd43324ae660053e6.idx
+
+$ git verify-pack -v pack-06483273097cbac210f10a4bd43324ae660053e6.pack
+[snip]
+74e24bdc2ec3f275da63ca1396a773e7043cb9e9 blob   921 286 12694
+[snip]
+non delta: 233 objects
+chain length = 1: 86 objects
+chain length = 2: 74 objects
+chain length = 3: 47 objects
+chain length = 4: 8 objects
+chain length = 5: 5 objects
+chain length = 6: 1 object
+pack-06483273097cbac210f10a4bd43324ae660053e6.pack: ok
+
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.pack
+>pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.pack
+
+$ curl http://git.savannah.gnu.org/cgit/xboard.git/objects/pack/pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.idx
+>pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.idx
+
+$ git verify-pack -v pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.pack
+[snip]
+non delta: 1139 objects
+chain length = 1: 454 objects
+chain length = 2: 349 objects
+chain length = 3: 301 objects
+chain length = 4: 235 objects
+chain length = 5: 179 objects
+chain length = 6: 96 objects
+chain length = 7: 52 objects
+chain length = 8: 37 objects
+chain length = 9: 21 objects
+chain length = 10: 6 objects
+chain length = 11: 5 objects
+chain length = 12: 1 object
+chain length = 13: 2 objects
+chain length = 14: 1 object
+chain length = 15: 2 objects
+chain length = 16: 1 object
+chain length = 17: 1 object
+chain length = 18: 2 objects
+chain length = 19: 1 object
+chain length = 20: 1 object
+chain length = 21: 1 object
+chain length = 22: 1 object
+chain length = 23: 2 objects
+chain length = 24: 2 objects
+chain length = 25: 1 object
+chain length = 26: 1 object
+chain length = 27: 1 object
+chain length = 28: 1 object
+chain length = 29: 1 object
+chain length = 30: 1 object
+chain length = 31: 1 object
+chain length = 32: 1 object
+chain length = 33: 2 objects
+chain length = 34: 3 objects
+chain length = 35: 2 objects
+chain length = 36: 1 object
+chain length = 37: 1 object
+chain length = 38: 1 object
+chain length = 39: 2 objects
+chain length = 40: 3 objects
+chain length = 41: 1 object
+chain length = 42: 2 objects
+chain length = 43: 1 object
+chain length = 44: 1 object
+chain length = 45: 2 objects
+chain length = 46: 1 object
+pack-a0a25c7cc57128b5317e0b5e7b8de7a59afe9af6.pack: ok
+
+Hmm, the packs looks ok so maybe the problem is related to our usage
+of libcurl after all...
+
+--
+larsh
