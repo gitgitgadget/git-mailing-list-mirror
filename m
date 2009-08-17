@@ -1,72 +1,105 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 05/11] Remove va_copy at MSVC because there are va_copy.
-Date: Mon, 17 Aug 2009 19:02:18 +0200
-Message-ID: <40aa078e0908171002j4b610fe4j34a4e7d3081a9efa@mail.gmail.com>
-References: <1250525040-5868-1-git-send-email-lznuaa@gmail.com>
-	 <4A898B27.3040507@gnu.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Mon, 17 Aug 2009 13:06:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908171228570.6044@xanadu.home>
+References: <20090817072315.4314.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, Johannes.Schindelin@gmx.de
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Aug 17 19:02:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: bdonlan@gmail.com, johnflux@gmail.com, P@draigBrady.com,
+	art.08.09@gmail.com, git@vger.kernel.org,
+	torvalds@linux-foundation.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 19:07:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md5bG-0002FX-Vi
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:02:27 +0200
+	id 1Md5fw-0004RI-CB
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 19:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757618AbZHQRCS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 13:02:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757608AbZHQRCS
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:02:18 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:59892 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757516AbZHQRCR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 13:02:17 -0400
-Received: by qyk34 with SMTP id 34so2265671qyk.33
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 10:02:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RDaMYWVW3XA6697LKDkF0/S95CP4pbhbgV/6TaqVM00=;
-        b=X9dAhT82AYNfZMwFrFr2BcJSjBgiMXNpCn6Wod8ROrZx8zdLWgQ+A0dMArscu2sqZJ
-         /pVEEDeG5PfLDnJQqqffYyC/Ie4Mch9lsJ+v7wN/3RCQKLaIuthk+KIjvEiun5J2tuye
-         ad04VkCLbIN+s8gnPPVOqaXO986ZjGI+W3p1I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WUPdoqoY77/2cH6CH3YHzqOAalaP4ytfZfSlJZdYrUxHqTeE+JrdkHOsh+baVaeryr
-         3lza3OPeyF0PGYNNO33/BxA3NOMQ3X+0Fy5uqW776KOZEK0F5jw4Jlq1MS/5ZRZ8vxI8
-         Yp/Zl/qWLF4DQDFY9v2GmgOZIn8uRka3TjgJI=
-Received: by 10.224.117.12 with SMTP id o12mr4440172qaq.57.1250528538535; Mon, 
-	17 Aug 2009 10:02:18 -0700 (PDT)
-In-Reply-To: <4A898B27.3040507@gnu.org>
+	id S1757492AbZHQRGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 13:06:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756905AbZHQRGu
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 13:06:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36102 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755677AbZHQRGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 13:06:50 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOJ00B7E5OMCQJ0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 17 Aug 2009 12:55:35 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090817072315.4314.qmail@science.horizon.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126234>
 
-On Mon, Aug 17, 2009 at 6:53 PM, Paolo Bonzini<bonzini@gnu.org> wrote:
-> #ifndef va_copy
-> #define va_copy(dst, src) =A0 =A0 =A0 ((dst) =3D (src))
-> #endif
+On Mon, 17 Aug 2009, George Spelvin wrote:
 
-Are you sure va_copy is always a preprocessor symbol? How about
+> If it helps anyone resolve license issues, here's a from-FIPS-180-2
+> implementation that's placed in the public domain.  That should be
+> compatible with any license.
+> 
+> It uses Linus's and Artur's performance ideas, and some of Linus' macro
+> ideas (in the rotate implementation), but tries to be textually different.
+> Is there anything recognizable that anyone cares to clam copyright to?
 
-#ifdef _MSC_VER
-#define va_copy(dst, src)       ((dst) =3D (src))
-#endif
+I don't think this trick of making source code textually different from 
+another work while still intimately mimicking the same structure entitles 
+you to any copyright (or non copyright) claims over that other work.  I 
+certainly wouldn't bet any dime for this standing up in court.  
+Otherwise anyone could grab any copyrighted source code and perform a 
+bunch of search-and-replace ops on it, and maybe some code reordering 
+for good measure, to be able to claim own copyright on it. It is 
+probably much safer to simply ask the people involved to agree with your 
+relicensing.  And so far I don't see anyone with a stake in this 
+fiercely wanting to stick to a particular license.
 
-instead? It'd make me sleep slightly better at night, at least ;)
+> It's not quite 100% finished, as I haven't benchmarked it against Linus's
+> code yet, but it's functionally correct.
+> 
+> It's also clean with -W -Wall -Wextra.
 
---=20
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+Not if you try with the unaligned put_be32() as the destination pointer 
+is marked const.
+
+As to the actual result on ARM... Well, the assembly _looks_ much worse 
+than Linus' version.  It uses a stack frame of 152 bytes instead of 64 
+bytes.  The resulting binary is also 6868 bytes large compared to 6180 
+bytes.  Surprisingly, the performance is not that bad (the reason for 
+the underlined "looks" above) albeit still a bit worse, like 5% slower.  
+I was expecting much worse than that.
+
+One possible reason for the bad assembly is probably due to the fact 
+that gcc is not smart enough to propagate constant address offsets 
+across different pointer types.  For example, my first version of 
+get_be32() was a macro that did this:
+
+#define SHA_SRC(t) \
+  ({ unsigned char *__d = (unsigned char *)&data[t]; \
+     (__d[0] << 24) | (__d[1] << 16) | (__d[2] << 8) | (__d[3] << 0); })
+
+With such a construct, gcc would always allocate a register to hold __d 
+and then dereference that with an offset from 0 to 3.  Whereas:
+
+#define SHA_SRC(t) \
+   ({   unsigned char *__d = (unsigned char *)data; \
+        (__d[(t)*4 + 0] << 24) | (__d[(t)*4 + 1] << 16) | \
+        (__d[(t)*4 + 2] <<  8) | (__d[(t)*4 + 3] <<  0); })
+
+does produce optimal assembly as only the register holding the data 
+pointer is dereferenced with the absolute byte offset.  I suspect your 
+usage of inline functions has the same effect as the first SHA_SRC 
+definition above.
+
+Also, wrt skipping the last 3 write back to the 16 word array...  For 
+all the (limited) attempts I've made so far to do that, it always ended 
+up making things worse.  I've yet to investigate why though.
+
+
+Nicolas
