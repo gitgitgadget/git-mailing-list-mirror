@@ -1,83 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git User's Survey 2009 partial summary, part 2 - from first 10
-Date: Mon, 17 Aug 2009 12:44:21 +0200
-Message-ID: <200908171244.21693.johan@herland.net>
-References: <200908171224.44686.jnareb@gmail.com>
+From: Giuseppe Scrivano <gscrivano@gnu.org>
+Subject: Re: Linus' sha1 is much faster!
+Date: Mon, 17 Aug 2009 12:51:17 +0200
+Message-ID: <8763cmemsa.fsf@master.homenet>
+References: <4A85F270.20703@draigBrady.com> <87eirbef3c.fsf@master.homenet>
+	<4A88B80D.40804@draigBrady.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>, msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 17 12:44:32 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bug-coreutils@gnu.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?P=C3=A1draig?= Brady <P@draigBrady.com>
+X-From: git-owner@vger.kernel.org Mon Aug 17 12:53:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MczhY-0004Fo-5W
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 12:44:32 +0200
+	id 1Mczpj-0007rS-3e
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 12:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757595AbZHQKoY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 06:44:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757528AbZHQKoX
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 06:44:23 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:41516 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751754AbZHQKoW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 06:44:22 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOI00EETOHYJDA0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 17 Aug 2009 12:44:22 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOI003SMOHYJ550@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 17 Aug 2009 12:44:22 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.17.103040
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <200908171224.44686.jnareb@gmail.com>
+	id S1757498AbZHQKwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 06:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756890AbZHQKwu
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 06:52:50 -0400
+Received: from averell.mail.tiscali.it ([213.205.33.55]:55995 "EHLO
+	averell.mail.tiscali.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751754AbZHQKwu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 06:52:50 -0400
+Received: from master.homenet (84.222.168.55) by averell.mail.tiscali.it (8.0.022)
+        id 49CBA137048362B8; Mon, 17 Aug 2009 12:52:40 +0200
+Received: from gscrivano by master.homenet with local (Exim 4.69)
+	(envelope-from <gscrivano@gnu.org>)
+	id 1Mczo6-0006Pt-0V; Mon, 17 Aug 2009 12:51:18 +0200
+In-Reply-To: <4A88B80D.40804@draigBrady.com> (=?utf-8?Q?=22P=C3=A1draig?=
+ Brady"'s message of
+	"Mon, 17 Aug 2009 02:53:17 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126157>
 
-On Monday 17 August 2009, Jakub Narebski wrote:
-> 9) On which operating system(s) do you use Git?
->    (Choice - Multiple answers)
->
-> On Unix-based operating system you can get the name of operation
-> system by running 'uname'.
+P=C3=A1draig Brady <P@draigBrady.com> writes:
 
-I find it interesting to compare the answers to this question against 
-previous years' surveys:
+>   -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=3D2 -fexceptions
+>   -fstack-protector --param=3Dssp-buffer-size=3D4 -m32 -march=3Di586
+>   -mtune=3Dgeneric -fasynchronous-unwind-tables -D_GNU_SOURCE=3D1
 
-=============================================================
-Operating system            | 2009 [%] | 2008 [%] | 2007 [%]
--------------------------------------------------------------
-Linux                       |      88% |      86% |      90%
-MacOS X (Darwin)            |      44% |      47% |      15%
-MS Windows/Cygwin           |       9% |      10% |      >3%?
-MS Windows/msysGit (MINGW)  |      21% |      16% |      >0%?
-............................|..........|..........|..........
-MS Windows (any)            |      27% |     <26%?|       9%
-
-Although several of these numbers are probably inaccurate, and
-assuming that the responses on this question is representative,
-we see a stabilizing trend in Git's user base, at least when
-looking at Linux vs. MacOS. Windows seems to be growing steadily,
-and it's good to see that the msysGit portion is outgrowing the
-Cygwin portion.
-
-Thanks to Dscho and all the others that make msysGit better
-every day!
+thanks.  I did again all tests on my machine using these same options.
+I repeated each test 6 times and I took the median without consider the
+first result.  Except the first run that it is not considered, I didn't
+report a big variance on results of the same test.
 
 
-Have fun! :)
+gcc 4.3.3
 
-...Johan
+gnulib sha1:            real	0m2.543s
+gnulib sha1 lookup:     real	0m1.906s (-25%)
+linus's sha1:           real	0m2.468s (-3%)
+linus's sha1 no asm:    real	0m2.289s (-9%)
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+
+gcc 4.4.1
+
+gnulib sha1:            real	0m3.386s
+gnulib sha1 lookup:     real	0m3.110s (-8%)
+linus's sha1:           real	0m1.701s (-49%)
+linus's sha1 no asm:    real	0m1.284s (-62%)
+
+
+I don't see such big differences in asm generated by gcc 4.4.1 and gcc
+4.3.3 to explain this performance difference, what I noticed immediatel=
+y
+is that in the gcc-4.4 generated asm there are more "lea" instructions
+(+30%), but I doubt this is the reason of these poor results.  Anyway, =
+I
+haven't yet looked much in details.
+
+Cheers,
+Giuseppe
