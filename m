@@ -1,78 +1,89 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 10/11] Add MSVC Project file
-Date: Mon, 17 Aug 2009 20:16:59 +0200
-Message-ID: <4A899E9B.7080803@gnu.org>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>	 <4A899495.8050902@gnu.org> <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: Re: Using VC build git (split patch)
+Date: Mon, 17 Aug 2009 20:22:19 +0200
+Message-ID: <4A899FDB.8080308@gmail.com>
+References: <1976ea660908170613ibb9a0fdr7ba630671a6b735f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, Johannes.Schindelin@gmx.de
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 17 20:17:20 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Frank Li <lznuaa@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Aug 17 20:21:42 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f162.google.com ([209.85.210.162])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md6lf-0008En-AG
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 20:17:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753652AbZHQSRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 14:17:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752886AbZHQSRD
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 14:17:03 -0400
-Received: from mail-fx0-f215.google.com ([209.85.220.215]:55479 "EHLO
-	mail-fx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbZHQSRD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 14:17:03 -0400
-Received: by fxm11 with SMTP id 11so2444593fxm.39
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 11:17:03 -0700 (PDT)
+	id 1Md6ps-0001au-I7
+	for gcvm-msysgit@m.gmane.org; Mon, 17 Aug 2009 20:21:36 +0200
+Received: by yxe34 with SMTP id 34so5108679yxe.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 17 Aug 2009 11:21:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=9/gDlFkXIz7DZjl4n1MwwFwV9/kWew3EUfiD3m4xjZY=;
-        b=QVkO6w1uHIJ639T6ttDARZDlp6IB7mXTXizfJSuejXECNadXy+nRzcTwPvPJGV+XRv
-         6t29rwXm7JM7ZLRDfaDBBB5nV6Vb4GhuY25BfG3eGyaXD02vi1QMANzI1AOAZqaGiKAc
-         QU4qwul/RJP3LIyqp5WnBj5kD7wX3lgzCBKKo=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:received:received:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        bh=BmMgUaV91O1gJLMqWcpGzp3ZtbPk74eEJMcGmaf2PMA=;
+        b=pvrxIdJh6OudsuBaiWzU6lAL00AhFNTGDaW2OT7sZHKt68dimxsmM8FdULzR5KQM4V
+         2CyHH6El4aG2ywgrq/XB3zAEyZsG4znfkXIc38R9Mmd7SOTlF42ajqGUjXlL3ys9i3pS
+         0TJYtWkgXjp6ot8GUtLMxIzYkwj5VYxtClqTA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=WGZGY+/7xc+BfKtQsd8qALhCMmKVOvzXKSnKsSkmRYMJIUzx2IsRKtDMtx5j+1SP8d
-         EwJZ39RkI8zBuR+HNwmnuiW3Hv191G6rEIvyB/CvwG10h0yVbvimh2vs2Ef0i/6WfNVX
-         0QaDBW4c3ngY/0YwVuBO6kzesSw/LXt9zuac0=
-Received: by 10.204.34.73 with SMTP id k9mr2925704bkd.45.1250533023388;
-        Mon, 17 Aug 2009 11:17:03 -0700 (PDT)
-Received: from yakj.usersys.redhat.com ([85.93.118.17])
-        by mx.google.com with ESMTPS id 35sm5280121fkt.50.2009.08.17.11.17.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 17 Aug 2009 11:17:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Lightning/1.0pre Thunderbird/3.0b3
-In-Reply-To: <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding
+         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
+         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=yidCnU0JY2waB4PDx48mzd359raDpSiSKXu4iu3c/U5AtQjvM1ccR8hzFSB4U7ykiT
+         G1cBymew0QxJbmH6ilp2BpsUvOBUUbacQnnTSz9m0O0jo2cOOLYkujHa6xCX1CkMFN0e
+         BXlOvem0pC44yUQS9wQN93mKgTJzN/3PVl6j8=
+Received: by 10.150.59.12 with SMTP id h12mr1224965yba.6.1250533289891;
+        Mon, 17 Aug 2009 11:21:29 -0700 (PDT)
+Received: by 10.176.94.14 with SMTP id r14gr6372yqb.0;
+	Mon, 17 Aug 2009 11:21:24 -0700 (PDT)
+X-Sender: marius@storm-olsen.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.210.35.16 with SMTP id i16mr12323ebi.8.1250533282576; Mon, 17 Aug 2009 11:21:22 -0700 (PDT)
+Received: by 10.210.35.16 with SMTP id i16mr12322ebi.8.1250533282557; Mon, 17 Aug 2009 11:21:22 -0700 (PDT)
+Received: from mail-ew0-f215.google.com (mail-ew0-f215.google.com [209.85.219.215]) by gmr-mx.google.com with ESMTP id 15si1108614ewy.0.2009.08.17.11.21.22; Mon, 17 Aug 2009 11:21:22 -0700 (PDT)
+Received-SPF: neutral (google.com: 209.85.219.215 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) client-ip=209.85.219.215;
+Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 209.85.219.215 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) smtp.mail=marius@storm-olsen.com
+Received: by ewy11 with SMTP id 11so3347676ewy.35 for <msysgit@googlegroups.com>; Mon, 17 Aug 2009 11:21:22 -0700 (PDT)
+Received: by 10.210.118.14 with SMTP id q14mr7371686ebc.31.1250533281919; Mon, 17 Aug 2009 11:21:21 -0700 (PDT)
+Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206]) by mx.google.com with ESMTPS id 28sm766425eyg.12.2009.08.17.11.21.19 (version=SSLv3 cipher=RC4-MD5); Mon, 17 Aug 2009 11:21:20 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <1976ea660908170613ibb9a0fdr7ba630671a6b735f@mail.gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126247>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126248>
 
-On 08/17/2009 07:40 PM, Erik Faye-Lund wrote:
-> On Mon, Aug 17, 2009 at 7:34 PM, Paolo Bonzini<bonzini@gnu.org>  wrote:
->> Also, a cleaner XML without verbosities like
->>
->> +<Tool
->> +                               Name="VCMIDLTool"
->> +                       />
->>
->> would make the patch easier to review.
->
-> ...but will it make it more annoying to maintain in the long run? It
-> might be painful to work with a mixture of hand-written and
-> msdev-written XML. Of course, if we get some scripts in place to
-> generate the vcproj-files this might not be a problem...
 
-Yes, my remark applied only if the generation was scripted.  Otherwise, 
-it would be an annoyance in addition to being subject to bitrot.
+Frank Li said the following on 17.08.2009 15:13:
+ > Thanks Dscho for reviewing my patch patient.
+ > I split my patch and read SumbittingPatchs.
+ >
+ > I try to use git format-patch -M --stdout origin/master | git
+ > imap-send to send patch directly according to guide.
+ > But imap-send has not ported to msysgit.
 
-Paolo
+Hi Frank,
+
+Could you please also update your repo at repo.or.cz, then it'll be 
+easier if anyone wants to help you in the process of streamlining the 
+patch series?
+
+--
+.marius
