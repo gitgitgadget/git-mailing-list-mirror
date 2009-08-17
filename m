@@ -1,79 +1,98 @@
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] filter-branch: add an example how to add ACKs to a range of
- commits
-Date: Mon, 17 Aug 2009 22:38:46 +0200 (CEST)
-Message-ID: <34cc046b42b5a67bb1c926709bcd1163d1d2faf6.1250541493u.git.johannes.schindelin@gmx.de>
-References: <cover.1250541493u.git.johannes.schindelin@gmx.de>
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: [PATCH 10/11] Add MSVC Project file
+Date: Mon, 17 Aug 2009 21:43:24 +0100
+Message-ID: <3f4fd2640908171343s6e2796a8le0455e02fd8386d9@mail.gmail.com>
+References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
+	 <1250525103-5184-5-git-send-email-lznuaa@gmail.com>
+	 <4A899495.8050902@gnu.org>
+	 <40aa078e0908171040g5718a809o88b093fe5a4a0e28@mail.gmail.com>
+	 <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
+	 <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Aug 17 22:38:26 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Paolo Bonzini <bonzini@gnu.org>, Frank Li <lznuaa@gmail.com>,
+	git@vger.kernel.org, msysgit@googlegroups.com
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Mon Aug 17 22:43:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Md8yH-0006pp-VE
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 22:38:26 +0200
+	id 1Md93H-00019B-P4
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Aug 2009 22:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758027AbZHQUh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 16:37:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758025AbZHQUh6
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 16:37:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35193 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757982AbZHQUh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 16:37:57 -0400
-Received: (qmail invoked by alias); 17 Aug 2009 20:37:58 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp030) with SMTP; 17 Aug 2009 22:37:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX180x/pWPZA0F4Hm+4mp+l9ejtX+6/rOTliubE7iuP
-	gANOJwMQUN/hmz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <cover.1250541493u.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1754084AbZHQUnY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 16:43:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752217AbZHQUnY
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 16:43:24 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:51382 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751196AbZHQUnX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 16:43:23 -0400
+Received: by vws2 with SMTP id 2so2696864vws.4
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 13:43:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IM7kOLZMUKXDUD7Et0TN+edaah/qphJQASenAHx/Ge8=;
+        b=xwB+IsQdIJ48FhsLNCF5gk8VjLGQaFAM8/6La47MMj1KzmE82ituCXw9RVY7D6Y1aw
+         FiFfpiPdvsC6HclxsZuCH2IBLe/MAe6qJJu4W7G/I8eC8ElbBZQYYKlUTPKF/v21h7ZF
+         cgZUZSqXF7fgjK7gTJppFunmJGQTVJmzobbWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=KqBILpbhUNGZAxHhc9va2DukUuvRSOhSv3tPRAEhMxOccZ4U7w3l6N3mpqmGJtqBqP
+         ytcAxqVnZ9ghpJy34lpjtCCGOyUHEo0tsil+7Pv01QTiiCv74/WiMBzWwxv2tpuscVu/
+         vyodVMyF7kBDbUMjEEzxILtZCknadaG3cxEkQ=
+Received: by 10.220.127.196 with SMTP id h4mr5444529vcs.32.1250541804389; Mon, 
+	17 Aug 2009 13:43:24 -0700 (PDT)
+In-Reply-To: <3af572ac0908171317s3ef1506fpb3df11916f8a6ee9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126275>
 
-When you have to add certain lines like ACKs (or for that matter,
-Signed-off-by:s) to a range of commits starting with HEAD, you might
-be tempted to use 'git rebase -i -10', but that is a waste of your
-time.
+2009/8/17 Pau Garcia i Quiles <pgquiles@elpauer.org>:
+> On Mon, Aug 17, 2009 at 9:53 PM, Johannes
+> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+>
+>> Of course, we could have a script that verifies that the .vcproj fil=
+es
+>> contain reference the appropriate files (which it would know about b=
+y
+>> being called from the Makefile and being passed the file names), may=
+be
+>> even be able to edit the .vcproj file if it is missing some. =A0Shou=
+ld not
+>> be too hard in Perl.
+>
+> You'll need to special-case for Visual C++ 2010, which is different
+> and incompatible with previous versions. Hence my suggestion for
+> CMake: appropriate project files would be generated for the tool the
+> user chooses, be it VC++ 2005, VC++2010, gcc, Borland C++ or anything
+> else.
 
-It is better to use 'git filter-branch' with an appropriate message
-filter, and this commit adds an example how to do so to
-filter-branch's man page.
+The problem is that you'd still need the Visual Studio projects (one
+each for 6, 7 (2002), 7.1 (2003), 8 (2005), 9 (2008) and 10 (2010) --
+yes, there'll need to be one for each version of Visual Studio) as
+people who use Visual Studio tend to primarily use the IDE. CMake
+(which Windows users will need to download & install from somewhere)
+will sit outside this -- unless you mean making the project files be
+the "Makefile project" type and simply use it to invoke CMake and host
+the source files to ease access to them from the IDE?
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-filter-branch.txt |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+Also, not every posix system will have CMake installed (e.g. Linux
+=46rom Scratch systems) and that's not including "exotic" systems like
+Solaris and the *BSDs.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index ab527b5..32ea856 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -305,6 +305,16 @@ range in addition to the new branch name.  The new branch name will
- point to the top-most revision that a 'git-rev-list' of this range
- will print.
- 
-+If you need to add 'Acked-by' lines to, say, the last 10 commits (none
-+of which is a merge), use this command:
-+
-+--------------------------------------------------------
-+git filter-branch --msg-filter '
-+	cat &&
-+	echo "Acked-by: Bugs Bunny <bunny@bugzilla.org>"
-+' HEAD~10..HEAD
-+--------------------------------------------------------
-+
- *NOTE* the changes introduced by the commits, and which are not reverted
- by subsequent commits, will still be in the rewritten branch. If you want
- to throw out _changes_ together with the commits, you should use the
--- 
-1.6.4.313.g3d9e3
+- Reece
