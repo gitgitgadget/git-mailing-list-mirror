@@ -1,102 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH][resend] git-svn: Respect GIT_SSH setting
-Date: Tue, 18 Aug 2009 12:25:09 -0700
-Message-ID: <7vk510diwa.fsf@alter.siamese.dyndns.org>
-References: <4A89E185.2010307@fastmail.fm>
- <7vzl9ykovh.fsf@alter.siamese.dyndns.org> <4A89EC07.2010402@fastmail.fm>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] make sure byte swapping is optimal for git
+Date: Tue, 18 Aug 2009 15:26:55 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908181523430.6044@xanadu.home>
+References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
+ <4A8AA511.1060205@gmail.com>
+ <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com>
+ <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0908181147510.6044@xanadu.home>
+ <alpine.LFD.2.00.0908181240400.6044@xanadu.home>
+ <7v1vn9f4mz.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0908181357330.6044@xanadu.home>
+ <7vk511dk11.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0908181516510.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Karthik R <karthikr@fastmail.fm>
-X-From: git-owner@vger.kernel.org Tue Aug 18 21:25:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Artur Skawina <art.08.09@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	msysGit <msysgit@googlegroups.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 21:27:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdUJM-0008EJ-S5
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:25:37 +0200
+	id 1MdUKt-0000WO-BS
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbZHRTZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 15:25:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751323AbZHRTZ1
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:25:27 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54363 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbZHRTZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 15:25:26 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 88A0EF974;
-	Tue, 18 Aug 2009 15:25:26 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DB1F8F971; Tue, 18 Aug
- 2009 15:25:20 -0400 (EDT)
-In-Reply-To: <4A89EC07.2010402@fastmail.fm> (Karthik R.'s message of "Mon\,
- 17 Aug 2009 18\:47\:19 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E1FA8F46-8C2C-11DE-A4BD-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751518AbZHRT1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 15:27:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751461AbZHRT07
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:26:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:41451 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751430AbZHRT07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 15:26:59 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOL003PF6U7M910@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 18 Aug 2009 15:15:43 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LFD.2.00.0908181516510.6044@xanadu.home>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126441>
 
-Karthik R <karthikr@fastmail.fm> writes:
+We rely on ntohl() and htonl() to perform byte swapping in many places.
+However, some platforms have libraries providing really poor
+implementations of those which might cause significant performance
+issues, especially with the block-sha1 code.
 
->> Two questions.
->>
->>  - What if a user has SVN_SSH exported _and_ wants to use a different one
->>    from the one s/he uses for git?  Naturally such a user would set both
->>    environment variables and differently, but this seems to override the
->>    value in SVN_SSH;
->>   
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-> Do you mean user wants to use a different one with "git svn
-> ... svn+ssh://" (than the one with "git clone ssh://") ?
+On Tue, 18 Aug 2009, Nicolas Pitre wrote:
 
-Yes.
+> Well, I gave in and added a comment to the patch anyway, with more 
+> improvements in the case of constant values.  Patch follows.
 
-> In this case
-> - defining SVN_SSH, but not GIT_SSH will still work (with this patch,
-> GIT_SSH overrides)
-
-Which means if you need to use GIT_SSH to specify one and SVN_SSH to
-specify another, you have trouble.  IOW, you cannot use anything but
-whatever the default is for native git access over ssh:// protocol.
-
-> - but SVN_SSH needs to have \\s.
->
-> So unless the user already knew of this quirk, we'll only see
-> unescaped \s - so it *does* make sense to escape the \s (if the user
-> knew, then too many escaped \s still work).
->
->>  - Can a user have SVN_SSH exported, on MSWin32 or msys, and use svn
->>    outside git?  If so, what does the value of SVN_SSH look like?  Does it
->>    typically have necessary doubling of backslashes already?
->>   
-> With subversion for Windows, these \\s are not needed (but doesn't
-> cause any break). The doubling is something to do with the bash (in
-> msys) I think.
->
-
-Ok, so does that mean the logic should look more like the one you quoted
-below without saying yes/no/anything?  The points are:
-
- (1) do not muck with SVN_SSH if already given by the user.
-
- (2) when and only when we reuse value from GIT_SSH for SVN_SSH, double
-     the backslashes.
-
->> What I am getting at is, if the patch should look something like this
->> instead:
->>
->> 	if (! exists $ENV{SVN_SSH}) {
->> 		if (exists $ENV{GIT_SSH}) {
->> 			$ENV{SVN_SSH} = $ENV{GIT_SSH};
->> 			if ($^O eq 'MSWin32' || $^O eq 'msys') {
->>                                $ENV{SVN_SSH} =~ s/\\/\\\\/g;
->> 			}
->> 		}
->> 	}
->>
->>   
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index 464cb25..d31f2e3 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -4,8 +4,8 @@
+  * and to avoid unnecessary copies into the context array.
+  */
+ 
+-#include <string.h>
+-#include <arpa/inet.h>
++/* this is only to get definitions for memcpy(), ntohl() and htonl() */
++#include "../git-compat-util.h"
+ 
+ #include "sha1.h"
+ 
+diff --git a/compat/bswap.h b/compat/bswap.h
+new file mode 100644
+index 0000000..7246a12
+--- /dev/null
++++ b/compat/bswap.h
+@@ -0,0 +1,36 @@
++/*
++ * Let's make sure we always have a sane definition for ntohl()/htonl().
++ * Some libraries define those as a function call, just to perform byte
++ * shifting, bringing significant overhead to what should be a simple
++ * operation.
++ */
++
++/*
++ * Default version that the compiler ought to optimize properly with
++ * constant values.
++ */
++static inline unsigned int default_swab32(unsigned int val)
++{
++	return (((val & 0xff000000) >> 24) |
++		((val & 0x00ff0000) >>  8) |
++		((val & 0x0000ff00) <<  8) |
++		((val & 0x000000ff) << 24));
++}
++
++#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
++
++#define bswap32(x) ({ \
++	unsigned int __res; \
++	if (__builtin_constant_p(x)) { \
++		__res = default_swab32(x); \
++	} else { \
++		__asm__("bswap %0" : "=r" (__res) : "0" (x)); \
++	} \
++	__res; })
++
++#undef ntohl
++#undef htonl
++#define ntohl(x) bswap32(x)
++#define htonl(x) bswap32(x)
++
++#endif
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9f941e4..000859e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -176,6 +176,8 @@ extern char *gitbasename(char *);
+ #endif
+ #endif
+ 
++#include "compat/bswap.h"
++
+ /* General helper functions */
+ extern void usage(const char *err) NORETURN;
+ extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
