@@ -1,155 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 16:11:10 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git find (was: [RFC PATCH v3 8/8] --sparse for porcelains)
+Date: Tue, 18 Aug 2009 21:35:05 +0700
+Message-ID: <fcaeb9bf0908180735s583bfdcajc354723c9faa48@mail.gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> 
+	<2729632a0908171734p16d6ee7dm5f62848f7625ffbc@mail.gmail.com> 
+	<fcaeb9bf0908171843x6ab0763dqff7e8aea0443c374@mail.gmail.com> 
+	<200908180825.55289.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
-	bonzini@gnu.org, kusmabite@googlemail.com
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 16:11:26 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: skillzero@gmail.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 16:35:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdPPJ-0007si-Gl
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 16:11:25 +0200
+	id 1MdPmo-0001cu-5O
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 16:35:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759168AbZHROLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 10:11:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758866AbZHROLN
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 10:11:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52368 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759127AbZHROLK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 10:11:10 -0400
-Received: (qmail invoked by alias); 18 Aug 2009 14:11:10 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp024) with SMTP; 18 Aug 2009 16:11:10 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+hEOFB9bahVAIbs5DIYNe3zwsgIh7kNwHovXJzGg
-	X6skHpn+V0hGDf
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1250600335-8642-1-git-send-email-mstormo@gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.44
+	id S1757451AbZHROfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 10:35:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754605AbZHROfY
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 10:35:24 -0400
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:52402 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754595AbZHROfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 10:35:24 -0400
+Received: by ywh3 with SMTP id 3so5204696ywh.22
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 07:35:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UnU4CcnHpTulAT+WTZVpZCjDbNdulUH4W3ECJKAa/BE=;
+        b=qraPzxjvWLAwysRyGfagUDTVNNLuALuwoWAGux/XLoRb/gwTddb7p7UzzUSY6awH+/
+         T61JLwVvTtQRkxlwTGPgC9XZzDZ8PKgmK8w60GZmIKuH31s8iDIdbHi9ZQDnpvqe+fCN
+         tQFMPty/VC2S6Yowou3UQabdMSti//c9m9A5c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=uWeTBmfyRgID4GeTcAhS/4KxJq1DFsO6zEO0T0f01lKxNuwuMzOPlvHMZYXOnOe0Ec
+         m6Yd2V4aJiQQYgNmpfbXGtPaM7UsZ4KvTn0ghpPR8PHoQg5/xcrKDLvW3dWN0yGfWdCY
+         DRMt13bZRu+D1XS32DnThUc7mJ0gfXo6Nlglg=
+Received: by 10.101.44.1 with SMTP id w1mr5574554anj.113.1250606125152; Tue, 
+	18 Aug 2009 07:35:25 -0700 (PDT)
+In-Reply-To: <200908180825.55289.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126400>
 
-Hi,
+On Tue, Aug 18, 2009 at 1:25 PM, Jakub Narebski<jnareb@gmail.com> wrote:
+> Well, I also think that it would be nice and useful to have "git find"
+> in addition to current "git grep".
 
-On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
+Can you make a draft on how you want "git find" to be? Except the
+"-exec" part, Git allows us to search using various commands
+(ls-files, rev-list, log). I don't think a single "git find" can cover
+them all. I was thinking about putting more find-options to search
+commands we already have. ls-files would support -exec, for example.
 
->  So, instead of rely on these vcproj files which *will* go stale, we can 
->  simply use the same Makefile system which everyone else is using. :) 
->  After all, we're just compiling with a different compiler. The end 
->  result will still rely on the *msysGit environment* to function, so we 
->  already require it. Thus, GNU Make is present, and we can use it.
-
-We can also use sed or perl to generate/modify the .vcproj files, or run 
-CMake (once Pau got it to build), and package the stuff using zip (once I 
-got that to build).
-
-> diff --git a/Makefile b/Makefile
-> index daf4296..2e14976 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -214,9 +214,13 @@ uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
->  
->  CFLAGS = -g -O2 -Wall
->  LDFLAGS =
-> +ARFLAGS = rcs\ # whitespace intentional
->  ALL_CFLAGS = $(CFLAGS)
->  ALL_LDFLAGS = $(LDFLAGS)
->  STRIP ?= strip
-> +COMPFLAG = -c
-> +COBJFLAG = -o\ # whitespace intended
-> +LOBJFLAG = -o\ # whitespace intended
-
-These probably want to go into the Microsoft Visual C++ specific section.
-
-> @@ -874,6 +878,58 @@ ifneq (,$(findstring CYGWIN,$(uname_S)))
->  	COMPAT_OBJS += compat/cygwin.o
->  	UNRELIABLE_FSTAT = UnfortunatelyYes
->  endif
-> +ifneq (,$(findstring Microsoft Visual Studio, $(INCLUDE)))
-> +	pathsep = ;
-> +	MOZILLA_SHA1 = 1
-> +	NO_PREAD = YesPlease
-> +	NO_OPENSSL = YesPlease
-> +	NO_LIBGEN_H = YesPlease
-> +	NO_SYMLINK_HEAD = YesPlease
-> +	NO_IPV6 = YesPlease
-> +	NO_SETENV = YesPlease
-> +	NO_UNSETENV = YesPlease
-> +	NO_STRCASESTR = YesPlease
-> +	NO_STRLCPY = YesPlease
-> +	NO_MEMMEM = YesPlease
-> +	NEEDS_LIBICONV = YesPlease
-> +	OLD_ICONV = YesPlease
-> +	NO_C99_FORMAT = YesPlease
-> +	NO_STRTOUMAX = YesPlease
-> +	NO_MKDTEMP = YesPlease
-> +	NO_MKSTEMPS = YesPlease
-> +	SNPRINTF_RETURNS_BOGUS = YesPlease
-> +	NO_SVN_TESTS = YesPlease
-> +	NO_PERL_MAKEMAKER = YesPlease
-> +	RUNTIME_PREFIX = YesPlease
-> +	NO_POSIX_ONLY_PROGRAMS = YesPlease
-> +	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-> +	NO_NSEC = YesPlease
-> +	USE_WIN32_MMAP = YesPlease
-> +	UNRELIABLE_FSTAT = UnfortunatelyYes
-> +	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
-> +	NO_REGEX = YesPlease
-> +
-> +	NO_CURL = YesPlease
-> +	NO_PTHREADS = YesPlease
-> +        
-> +	CC = cl 
-> +	COBJFLAG = -Fo
-> +	LOBJFLAG = -OUT:
-> +	CFLAGS =
-> +	BASIC_CFLAGS += -nologo -MT -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32 -D_CONSOLE
-> +	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch -Icompat/regex -Icompat/fnmatch
-> +	COMPAT_OBJS += compat/mingw.o compat/msvc.o compat/fnmatch/fnmatch.o compat/winansi.o
-> +	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
-> +
-> +	LINK = link
-> +	BASIC_LDFLAGS += -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib ../zlib/projects/vc9/Win32_LIB_Release/zlib.lib
-> +	NO_CFLAGS_TO_LINKER = YesPlease
-> +	EXTLIBS = 
-> +	AR = lib
-> +	ARFLAGS = -OUT:
-> +
-> +	X = .exe
-> +else
->  ifneq (,$(findstring MINGW,$(uname_S)))
->  	pathsep = ;
->  	NO_PREAD = YesPlease
-
-This means that gcc is never used when Visual C++ is available?  Hmm.
-
-> diff --git a/compat/msvc.h b/compat/msvc.h
-> index 6071565..a9d5f7f 100644
-> --- a/compat/msvc.h
-> +++ b/compat/msvc.h
-> @@ -10,50 +10,120 @@
->  
->  /*Configuration*/
->  
-> +#ifndef NO_PREAD
->  #define NO_PREAD
-> +#endif
-
-Why?  You now have the stuff in two places.  If you want to keep them in 
-compat/msvc.h to be able to generate .vcproj files, I'd rather not have 
-them duplicated in the Makefile.
-
-Ciao,
-Dscho
+A few things that I'd love to have supported:
+ - --depth for ls-files (probably all pathspec-as-argument commands)
+ - logical combination of search criteria
+ - unified blob locator. git-show understands SHA-1:/path/to/blob
+syntax. What if git-log can output using similar syntax, then feed
+them to git-grep in order to grep through (across commits)?
+-- 
+Duy
