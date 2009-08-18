@@ -1,86 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: git find (was: [RFC PATCH v3 8/8] --sparse for porcelains)
-Date: Tue, 18 Aug 2009 08:25:53 +0200
-Message-ID: <200908180825.55289.jnareb@gmail.com>
-References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> <2729632a0908171734p16d6ee7dm5f62848f7625ffbc@mail.gmail.com> <fcaeb9bf0908171843x6ab0763dqff7e8aea0443c374@mail.gmail.com>
+From: Tomasz Kontusz <roverorna@gmail.com>
+Subject: Re: Continue git clone after interruption
+Date: Tue, 18 Aug 2009 08:58:55 +0200
+Message-ID: <1250578735.2885.40.camel@cf-48>
+References: <1250509342.2885.13.camel@cf-48>
+	 <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>
+	 <vpqskfphe2k.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: skillzero@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 08:19:06 2009
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 08:59:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdI2D-0004WT-4X
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 08:19:05 +0200
+	id 1MdIfO-00082L-MQ
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 08:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568AbZHRGS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 02:18:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbZHRGS5
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 02:18:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:31391 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751226AbZHRGS4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 02:18:56 -0400
-Received: by fg-out-1718.google.com with SMTP id e12so515394fga.17
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 23:18:57 -0700 (PDT)
+	id S1752551AbZHRG67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 02:58:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752343AbZHRG67
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 02:58:59 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:49827 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752499AbZHRG66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 02:58:58 -0400
+Received: by bwz22 with SMTP id 22so2738980bwz.18
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 23:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=a8HuGb3m4LqU1Rwspk84szuDdy6S8nWww7Q2ZZU2d9Y=;
-        b=bbpWWm7X4FwVK4PwP8HvgZJLayfUAmcwBY5rAPg5bvIgnrC6FmxhWC1LVFMFNOnH2j
-         JoloQGPsxqTrIruJm6YA8YAsmVlMMKBM/I+q9/3T2MIrcJge1lsDHezXrgRifNvvX+CN
-         34Y+5DQVFPcC9La3/iCI/HD58rGOL38o8SlPU=
+        h=domainkey-signature:received:received:subject:from:to:in-reply-to
+         :references:content-type:date:message-id:mime-version:x-mailer
+         :content-transfer-encoding;
+        bh=Ahtih41pKbQFoqg0d3hq84glIaQdY+04fThnqdKYy6M=;
+        b=cJ18D1z54rwd6SogV3eRHNF+hHWIsceu4hjprcRYhfwpLEHwB3ugBfpUMcPFCB7nYy
+         9V2ysKMsMa/jwxqzFDLai3zGD0UK3pDLoKW4itQn5Vlf73trroRsmu6/rR8gFR+NYiV3
+         w3X1Y4fbJAKgvv/nTqoShlFLVX1R0k8oxPKb0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KE6/UBhyyvjpNTiTX3JAjzRx3VwPmeP8rrqM0XgSQoNUSuTDdw3adUQVcD8Id0mySZ
-         YTFY46k+g0y7K2TOkrtlMmVEUPTMbWvWrZvP4Bd0q5xHE8mErz5t4LAPz0yPC0zEKqsw
-         OwEo5aEBR3uv0OKxFXxY3JsftKHK2NMDwm06s=
-Received: by 10.86.12.35 with SMTP id 35mr2963626fgl.20.1250576336980;
-        Mon, 17 Aug 2009 23:18:56 -0700 (PDT)
-Received: from ?192.168.1.13? (abvz12.neoplus.adsl.tpnet.pl [83.8.223.12])
-        by mx.google.com with ESMTPS id d4sm6419939fga.0.2009.08.17.23.18.55
+        h=subject:from:to:in-reply-to:references:content-type:date:message-id
+         :mime-version:x-mailer:content-transfer-encoding;
+        b=ps84/ZIIs8DgG9tMx6p0lHSehSGcgy5M0yI/NxbD9rc8EPqwTY9WqOFDrs/wSoR5J+
+         1GH5PQGVkSmP4nWpHD3iezGKRhcoe/Dv30xq7cSVEIohBfGoqpjhLNzyxJpbL0wyMJ7H
+         Td1DeSerqtfzr/JKqDsCip2rxm+vsLhTbP6bE=
+Received: by 10.103.37.25 with SMTP id p25mr1711288muj.42.1250578738931;
+        Mon, 17 Aug 2009 23:58:58 -0700 (PDT)
+Received: from ?192.168.11.117? (pub-177-87.czarnet.pl [77.252.177.87])
+        by mx.google.com with ESMTPS id n7sm22710750mue.28.2009.08.17.23.58.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 17 Aug 2009 23:18:55 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <fcaeb9bf0908171843x6ab0763dqff7e8aea0443c374@mail.gmail.com>
-Content-Disposition: inline
+        Mon, 17 Aug 2009 23:58:58 -0700 (PDT)
+In-Reply-To: <vpqskfphe2k.fsf@bauges.imag.fr>
+X-Mailer: Evolution 2.26.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126353>
 
-On Tue, Aug 18, 2009, Nguyen Thai Ngoc Duy wrote:
-> On Tue, Aug 18, 2009 at 7:34 AM, <skillzero@gmail.com> wrote:
-
-> > I would like it to git grep to not search paths outside the sparse
-> > area (although --no-sparse would be nice for git grep in case you did
-> > want to search everything). The main reason I want sparse checkouts is
-> > for performance reasons. For example, git grep can take 10 minutes on
-> > my full repository so excluding paths outside the sparse area would
-> > reduce that to a few seconds.
+Dnia 2009-08-18, wto o godzinie 07:43 +0200, Matthieu Moy pisze:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> That's a porcelain question that I'd leave it for now. FWIW you can do
-> something like this:
+> > Hi,
+> >
+> > On Mon, 17 Aug 2009, Tomasz Kontusz wrote:
+> >
+> >> is anybody working on making it possible to continue git clone after 
+> >> interruption? It would be quite useful for people with bad internet 
+> >> connection (I was downloading a big repo lately, and it was a bit 
+> >> frustrating to start it over every time git stopped at ~90%).
+> >
+> > Unfortunately, we did not have enough GSoC slots for the project to allow 
+> > restartable clones.
+> >
+> > There were discussions about how to implement this on the list,
+> > though.
 > 
-> git ls-files -v|grep '^H'|cut -c 2-|xargs git grep
+> And a paragraph on the wiki:
 > 
-> /me misses "cleartool find"
+> http://git.or.cz/gitwiki/SoC2009Ideas#RestartableClone
 
-Well, I also think that it would be nice and useful to have "git find"
-in addition to current "git grep".
+Ok, so it looks like it's not implementable without some kind of cache
+server-side, so the server would know what the pack it was sending
+looked like.
+But here's my idea: make server send objects in different order (the
+newest commit + whatever it points to first, then next one,then
+another...). Then it would be possible to look at what we got, tell
+server we have nothing, and want [the newest commit that was not
+complete]. I know the reason why it is sorted the way it is, but I think
+that the way data is stored after clone is clients problem, so the
+client should reorganize packs the way it wants.
 
--- 
-Jakub Narebski
-Poland
+Tomasz K.
