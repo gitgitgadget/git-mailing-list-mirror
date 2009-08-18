@@ -1,100 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [RFC PATCH] stash: accept options also when subcommand 'save' is omitted
-Date: Tue, 18 Aug 2009 14:46:07 +0200
-Message-ID: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 14:49:27 2009
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
+Date: Tue, 18 Aug 2009 14:56:49 +0200
+Message-ID: <4A8AA511.1060205@gmail.com>
+References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 14:57:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdO7x-0004AK-9r
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 14:49:25 +0200
+	id 1MdOFL-0007Vy-2e
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 14:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758862AbZHRMtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 08:49:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758848AbZHRMtQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 08:49:16 -0400
-Received: from imag.imag.fr ([129.88.30.1]:63785 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758810AbZHRMtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 08:49:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7IClmcp015511
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 14:47:48 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdO4t-0007lw-6I; Tue, 18 Aug 2009 14:46:15 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdO4t-0008BS-53; Tue, 18 Aug 2009 14:46:15 +0200
-X-Mailer: git-send-email 1.6.4.173.g0591
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 18 Aug 2009 14:47:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1758748AbZHRM4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 08:56:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758531AbZHRM4y
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 08:56:54 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:51660 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754398AbZHRM4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 08:56:53 -0400
+Received: by bwz22 with SMTP id 22so2993361bwz.18
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 05:56:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=JbVebiyzFR6rxQxLTQD0CQHH5ZfvebMmA75j9v4UDXg=;
+        b=otVTH7NM9j4kwQlDjseFiuUbi+i+NFvZMNYWeu0wc1jRCgith4M6K+5ZtSPsUJ1wvr
+         FEBP5FmhJmtiFjGRUorGFb6p645+FqOx23UHpnGD1byjqa0mu1GphgIKU7T9jTpA7CQg
+         zXANY7RfHKrQhlH8LLZ6aGn73iBA36eGi7DRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=F0WXhOZsD25DqXZK2ZgHpmFiCfTm3FvdObCHf6/BNkmcBdD5MZo1DTZKz/PDY7TP5W
+         UHG+wkRS+eoIQbcFvjAnoYLLMSuwgnna9XJJ1aNCOmmzOXnthrRs3mWBSPs1BQ4CNmzy
+         HcSnXj5iLFj+b9DGYVjhw++DA4MgJS3lJF27g=
+Received: by 10.103.84.28 with SMTP id m28mr1883340mul.113.1250600212086;
+        Tue, 18 Aug 2009 05:56:52 -0700 (PDT)
+Received: from ?172.19.43.221? (ip-89-174-126-56.multimo.pl [89.174.126.56])
+        by mx.google.com with ESMTPS id s10sm24616734mue.8.2009.08.18.05.56.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 18 Aug 2009 05:56:51 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.22pre (X11/20090422)
+In-Reply-To: <4A8A8661.5060908@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126389>
 
-This allows in particular 'git stash --keep-index' which is shorter than
-'git stash save --keep-index', and not ambiguous.
+Sebastian Schuberth wrote:
+> As ntohl()/htonl() are function calls (that internally do shifts), I
+> doubt they're faster than the shift macros, though I haven't measured
+> it. However, I do not suggest to go for the macros on Windows/Intel, but
+> to apply the following patch on top of your patch:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Does this sound right?
+> On Windows/Intel, ntohl()/htonl() are function calls that do shifts to
+> swap the
+> byte order. Using the native bswap instruction boths gets rid of the
+> shifts and
+> the function call overhead to gain some performance.
 
-I'm so used to 'git stash' (without saying 'save') that I keep typing
-'git stash --keep-index', and get a usage string as an error message.
+Umm, nothing like this should be needed on linux; the compiler/glibc
+will choose bswap itself. (see endian.h and bits/byteswap.h).
+I did try using __builtin_bswap32 directly and the result was a few
+(3 or 4, iirc) differently scheduled instructions, that's all, no
+performance difference.
 
- Documentation/git-stash.txt |    2 +-
- git-stash.sh                |    8 +++++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+>   * Performance might be improved if the CPU architecture is OK with
+> - * unaligned 32-bit loads and a fast ntohl() is available.
+> + * unaligned 32-bit loads and a fast ntohl() is available. On Intel,
+> + * use the bswap built-in to get rid of the function call overhead.
+>   * Otherwise fall back to byte loads and shifts which is portable,
+>   * and is faster on architectures with memory alignment issues.
+>   */
+> 
+> -#if defined(__i386__) || defined(__x86_64__) || \
+> -    defined(__ppc__) || defined(__ppc64__) || \
+> -    defined(__powerpc__) || defined(__powerpc64__) || \
+> -    defined(__s390__) || defined(__s390x__)
+> +#if defined(__i386__) || defined(__x86_64__)
+>
+> +#define get_be32(p)    __builtin_bswap32(*(unsigned int *)(p))
+> +#define put_be32(p, v)    do { *(unsigned int *)(p) = __builtin_bswap32(v); } while (0)
+> +
+> +#elif defined(__ppc__) || defined(__ppc64__) || \
+> +      defined(__powerpc__) || defined(__powerpc64__) || \
+> +      defined(__s390__) || defined(__s390x__)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 2f5ca7b..6f251e7 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save [--keep-index] [-q|--quiet] [<message>]]
-+'git stash' [save] [--keep-index] [-q|--quiet] [<message>]
- 'git stash' clear
- 'git stash' create
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index 03e589f..2599410 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -7,7 +7,7 @@ USAGE="list [<options>]
-    or: $dashless drop [-q|--quiet] [<stash>]
-    or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-    or: $dashless branch <branchname> [<stash>]
--   or: $dashless [save [--keep-index] [-q|--quiet] [<message>]]
-+   or: $dashless [save] [--keep-index] [-q|--quiet] [<message>]
-    or: $dashless clear"
- 
- SUBDIRECTORY_OK=Yes
-@@ -302,6 +302,12 @@ apply_to_branch () {
- 	drop_stash $stash
- }
- 
-+case "$1" in
-+    -*)
-+	set "save" "$@"
-+	;;
-+esac
-+
- # Main command set
- case "$1" in
- list)
--- 
-1.6.4.173.g0591
+I'd limit it to windows and any other ia32 platform that doesn't pick the
+bswaps itself; as is, it just adds an unnecessary hidden gcc dependency.
+
+Hmm, it's actually a gcc-4.3+ dependency, so it won't even build w/ gcc 4.2;
+something like this would be required: "(__GNUC__>=4 && __GNUC_MINOR__>=3)" .
+
+artur
