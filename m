@@ -1,159 +1,98 @@
-From: Johan Herland <johan@herland.net>
-Subject: [RFCv4 7/5] More fixes to the git-remote-cvs installation procedure
-Date: Tue, 18 Aug 2009 02:41:00 +0200
-Message-ID: <200908180241.00544.johan@herland.net>
-References: <1250480161-21933-1-git-send-email-johan@herland.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
+Date: Tue, 18 Aug 2009 02:49:46 +0200
+Message-ID: <200908180249.48404.jnareb@gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> <alpine.DEB.1.00.0908180111340.8306@pacific.mpi-cbg.de> <200908180217.35963.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	barkalow@iabervon.org, davvid@gmail.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 18 02:41:13 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: skillzero@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 18 02:43:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdClE-0006Sm-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 02:41:12 +0200
+	id 1MdCmx-0006ss-9g
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 02:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756028AbZHRAlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 20:41:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755987AbZHRAlD
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 20:41:03 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:55340 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750897AbZHRAlD (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Aug 2009 20:41:03 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOJ00MLYR8EIG00@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 18 Aug 2009 02:41:02 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOJ00AK5R8C0F10@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 18 Aug 2009 02:41:02 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.18.2719
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <1250480161-21933-1-git-send-email-johan@herland.net>
+	id S1751595AbZHRAmw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Aug 2009 20:42:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750979AbZHRAmv
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 20:42:51 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:33359 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750774AbZHRAmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 20:42:51 -0400
+Received: by bwz22 with SMTP id 22so2635118bwz.18
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 17:42:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=O4g+Xtw8fFyJ55IMb78hHuoxPZK/JoTL/gJW910+Nb4=;
+        b=M4lIJ/UGK8Wu14I1bN9tU+JMGe9IMZ01rmjk2GKgbrXmK1Yhx1D0SMcDKuKQ9trtDf
+         eWeadQvv1mXE7BpJMp5aDF7zdniLQFo5KEDmX5E1qKDlnkCSAPTxfOoaRVUYlctWVElh
+         z8jGN5jLqE9DKvqbEvlsNFk4AjRvAwWc0X41I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=XWH9XC8baEyEGB/4sPvI7/zyqcFlKtbaXeqAFp/l5xFLMeKQzJktYnoM5DCjh8FFC0
+         1QFr2+6zRTF7VcV1H7gn9OzwTfTzX4Dz0Qgcuc0vxMoZlilW4vq9SHeKhu7DpBJfaiyX
+         XiwdbkK+d+OV2rn30GbVTIGmEnb/4WwGnJ0nc=
+Received: by 10.103.81.14 with SMTP id i14mr1568969mul.85.1250556171669;
+        Mon, 17 Aug 2009 17:42:51 -0700 (PDT)
+Received: from ?192.168.1.13? (abvz12.neoplus.adsl.tpnet.pl [83.8.223.12])
+        by mx.google.com with ESMTPS id 23sm21707776mum.35.2009.08.17.17.42.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Aug 2009 17:42:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200908180217.35963.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126332>
 
-- Makefile: Make sure git-remote-cvs is rebuilt when 'prefix' changes
-  (by adding a dependency on GIT-CFLAGS). This prevents a regular 'make'
-  followed by a 'make prefix=/somewhere/else install' from installing a
-  non-working git-remote-cvs.
+Jakub Narebski wrote:
+> Johannes Schindelin wrote:
+>=20
+> > The thing is: we need a way to determine quickly and without any=20
+> > ambiguity whether a file is tracked, assumed unchanged, or sparse'd=
+-out=20
+> > (which Nguy=E1=BB=85n calls no-checkout).
+>=20
+> Let's reiterate: "assume-unchanged" is about telling git that it shou=
+ld
+> assume for performance reasons that state of file in working director=
+y
+> is the same as state of file in the index.  But, from what was said i=
+n
+> this thread, there are situations where git for correctness reasons
+> ignores performance hack.
+>=20
+> "no-checkout" bit is about telling git that the file is not present
+> in working directory, and it has to use version from the index.  Then
+> there is a question if there is file in working area (e.g. from apply=
+ing
+> patch) which corresponds to a "no-checkout" file in index (correspond=
+s
+> because of rename detection).
 
-- Makefile: When mangling git-remote-cvs to add the git_remote_cvs install
-  location to the Python search path, _replace_ the initial 'current dir'
-  entry in sys.path (instead of merely prepending the install location).
-  Hence, if the git_remote_cvs package is not installed at the correct
-  location (and also not present in any of Python's default package dirs),
-  then git-remote-cvs will fail loudly instead of silently falling back on
-  the git_remote_cvs subdir in git.git.
+Also there is a question if one might want to use them together.  I thi=
+nk
+it is not inconceivable ;-)  One might want for example to limit checko=
+ut
+to some subdirectory, but within that directory one might want to use=20
+assume-unchanged bit, because filesystem performance sucks (FAT, NFS).
+Now couple that with changing in sparse patterns...
 
-- Allow for the git_remote_cvs install path to be overridden by the
-  $GITPYTHONLIB environment variable.
-
-- t/test-lib.sh: Set $GITPYTHONLIB (unless $GIT_TEST_INSTALLED is enabled)
-  so that we test the currently built version of git_remote_cvs  (the one
-  that is built in git_remote_cvs/build/lib) instead of a previously
-  installed version.
-
-- Another minor check and a line length fix.
-
-Found-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Johan Herland <johan@herland.net>
----
-
-On Monday 17 August 2009, Junio C Hamano wrote:
-> With your Makefile patch the test still failed.  It turns out that I had
-> a broken version from the previous round installed in my PATH, and the
-> test failed until I removed the faulty ones manually from the installed
-> location.  This is not good.
->
-> While running tests, we really should import from the build directory,
-> preferrably ignoring the installed directory but at least giving
-> precedence to the build directory over the installed directory, to avoid
-> problems like this.
-
-Agreed. This patch puts the build directory first in Python's search path
-when running the testsuite (unless $GIT_TEST_INSTALLED is enabled). The
-install directory is ignored (unless the install dir happens to be in
-Python's default search path, in which case the build dir will still have
-precedence).
-
-> In my case, it was a "bad installed version masking the version we are
-> testing", but a more problematic would be the other way around.  If you
-> have a good version installed, and if somebody breaks it in the updated
-> source, "make test" won't catch the breakage and then you "make install"
-> a broken version without noticing.
-
-Yes. This is also taken care of in this patch ('make test' sets
-$GITPYTHONLIB, which forces git-remote-cvs to look for its package
-in the build dir instead of the install dir).
-
-This patch (and the previous 6/5) will be folded into the next iteration
-of the jh/cvs-helper patch series.
-
-
-...Johan
-
- Makefile      |   11 +++++++++--
- t/test-lib.sh |    9 +++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index b9a7f25..1d7bf80 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1477,13 +1477,20 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)) git-instaweb: % : unimplemented.sh
- endif # NO_PERL
- 
- ifndef NO_PYTHON
-+$(patsubst %.py,%,$(SCRIPT_PYTHON)): GIT-CFLAGS
- $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : %.py
- 	$(QUIET_GEN)$(RM) $@ $@+ && \
--	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_cvs -s --no-print-directory prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' instlibdir` && \
-+	INSTLIBDIR=`MAKEFLAGS= $(MAKE) -C git_remote_cvs -s \
-+		--no-print-directory prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' \
-+		instlibdir` && \
- 	sed -e '1{' \
- 	    -e '	s|#!.*python|#!$(PYTHON_PATH_SQ)|' \
- 	    -e '}' \
--	    -e 's|^import sys.*|&; sys.path.insert(0, "@@INSTLIBDIR@@")|' \
-+	    -e 's|^import sys.*|&; \\\
-+	           import os; \\\
-+	           sys.path[0] = os.environ.has_key("GITPYTHONLIB") and \\\
-+	                         os.environ["GITPYTHONLIB"] or \\\
-+	                         "@@INSTLIBDIR@@"|' \
- 	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
- 	    $@.py >$@+ && \
- 	chmod +x $@+ && \
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 01ea386..a7fbfef 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -638,6 +638,15 @@ test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
- 
-+if test -z "$GIT_TEST_INSTALLED"
-+then
-+	GITPYTHONLIB="$(pwd)/../git_remote_cvs/build/lib"
-+	export GITPYTHONLIB
-+	test -d ../git_remote_cvs/build || {
-+		error "You haven't built git_remote_cvs yet, have you?"
-+	}
-+fi
-+
- if ! test -x ../test-chmtime; then
- 	echo >&2 'You need to build test-chmtime:'
- 	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
--- 
-1.6.4.304.g1365c.dirty
+--=20
+Jakub Narebski
+Poland
