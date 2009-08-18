@@ -1,121 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/3] stash: accept options also when subcommand 'save' is omitted
-Date: Tue, 18 Aug 2009 23:38:42 +0200
-Message-ID: <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
- <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:39:59 2009
+From: Adam Simpkins <simpkins@facebook.com>
+Subject: [PATCH] graph API: use a new color when starting a brand new column
+Date: Tue, 18 Aug 2009 14:41:12 -0700
+Message-ID: <20090818214112.GM8147@facebook.com>
+Reply-To: Adam Simpkins <simpkins@facebook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Cc: Allan Caffee <allan.caffee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:41:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWPK-0002NI-LW
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:39:55 +0200
+	id 1MdWQq-0002uH-FY
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196AbZHRVjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:39:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbZHRVjp
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:39:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37562 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751143AbZHRVjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:39:44 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7ILatwV021026
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 23:36:55 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdWP5-0005Ll-Kb; Tue, 18 Aug 2009 23:39:39 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdWP5-0002mJ-JM; Tue, 18 Aug 2009 23:39:39 +0200
-X-Mailer: git-send-email 1.6.4.rc2.31.g2d7d7
-In-Reply-To: <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Aug 2009 23:36:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7ILatwV021026
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1251236215.71167@7G2SxrKFwKl1oi3Fs2FcfQ
+	id S1750966AbZHRVlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbZHRVlU
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:41:20 -0400
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:41033 "EHLO
+	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750872AbZHRVlT (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 17:41:19 -0400
+X-Greylist: delayed 1374 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Aug 2009 17:41:19 EDT
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.17] (may be forged))
+	by pp02.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n7ILf73N010881
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Tue, 18 Aug 2009 14:41:07 -0700
+Received: from simpkins (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.1.393.1; Tue, 18 Aug
+ 2009 14:41:17 -0700
+Received: from simpkins by simpkins with local (Exim 4.69)	(envelope-from
+ <simpkins@facebook.com>)	id 1MdWQf-0007TC-Ea; Tue, 18 Aug 2009 14:41:17 -0700
+Mail-Followup-To: git@vger.kernel.org,
+	Allan Caffee <allan.caffee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-08-18_15:2009-08-11,2009-08-18,2009-08-18 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0907200000 definitions=main-0908180164
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126464>
 
-This allows in particular 'git stash -k which is shorter than
-'git stash save -k', and not ambiguous.
+Use a new color for commits that don't have any previously printed
+children.  The following command demonstrates the changes:
 
-Testcase taken from Johannes Schindelin <johannes.schindelin@gmx.de>.
+  git log --graph --pretty=tformat:'%h %s%n' -7 481c7a6 18b0793
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Now the two independent lines of development are displayed with
+different colors, instead of both using the same color.
+
+Signed-off-by: Adam Simpkins <simpkins@facebook.com>
 ---
- Documentation/git-stash.txt |    2 +-
- git-stash.sh                |    8 +++++++-
- t/t3903-stash.sh            |    8 ++++++++
- 3 files changed, 16 insertions(+), 2 deletions(-)
+ graph.c |   14 +++++++++++---
+ 1 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 1b5392a..7e515ce 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save [--patch] [--[no-]keep-index|-k] [-q|--quiet] [<message>]]
-+'git stash' [save] [--patch] [--[no-]keep-index|-k] [-q|--quiet] [<message>]
- 'git stash' clear
- 'git stash' create
+diff --git a/graph.c b/graph.c
+index e466770..f3226ec 100644
+--- a/graph.c
++++ b/graph.c
+@@ -225,7 +225,12 @@ struct git_graph *graph_init(struct rev_info *opt)
+ 	graph->num_columns = 0;
+ 	graph->num_new_columns = 0;
+ 	graph->mapping_size = 0;
+-	graph->default_column_color = 0;
++	/*
++	 * Start the column color at the maximum value, since we'll
++	 * always increment it for the first commit we output.
++	 * This way we start at 0 for the first commit.
++	 */
++	graph->default_column_color = COLUMN_COLORS_MAX - 1;
  
-diff --git a/git-stash.sh b/git-stash.sh
-index 856a2d5..bb36bc7 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -7,7 +7,7 @@ USAGE="list [<options>]
-    or: $dashless drop [-q|--quiet] [<stash>]
-    or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-    or: $dashless branch <branchname> [<stash>]
--   or: $dashless [save [-k|--keep-index] [-q|--quiet] [<message>]]
-+   or: $dashless [save] [-k|--keep-index] [-q|--quiet] [<message>]
-    or: $dashless clear"
- 
- SUBDIRECTORY_OK=Yes
-@@ -354,6 +354,12 @@ apply_to_branch () {
- 	drop_stash $stash
- }
- 
-+case "$1" in
-+    -*)
-+	set "save" "$@"
-+	;;
-+esac
-+
- # Main command set
- case "$1" in
- list)
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 7a3fb67..0e831e0 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -200,4 +200,12 @@ test_expect_success 'drop -q is quiet' '
- 	test ! -s output.out
- '
- 
-+test_expect_success 'stash -k' '
-+       echo bar3 > file &&
-+       echo bar4 > file2 &&
-+       git add file2 &&
-+       git stash -k &&
-+       test bar,bar4 = $(cat file),$(cat file2)
-+'
-+
- test_done
+ 	/*
+ 	 * Allocate a reasonably large default number of columns
+@@ -499,11 +504,14 @@ static void graph_update_columns(struct git_graph *graph)
+ 			     parent;
+ 			     parent = next_interesting_parent(graph, parent)) {
+ 				/*
+-				 * If this is a merge increment the current
++				 * If this is a merge, or the start of a new
++				 * childless column, increment the current
+ 				 * color.
+ 				 */
+-				if (graph->num_parents > 1)
++				if (graph->num_parents > 1 ||
++				    !is_commit_in_columns) {
+ 					graph_increment_column_color(graph);
++				}
+ 				graph_insert_into_new_columns(graph,
+ 							      parent->item,
+ 							      &mapping_idx);
 -- 
-1.6.4.rc2.31.g2d7d7
+1.6.4.314.g5667f
