@@ -1,74 +1,142 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
-Date: Tue, 18 Aug 2009 14:56:56 -0500
-Message-ID: <XJM0H8pTiCJpryS-arPltHCHwsm0djqVixaH1NwBqT2pci2MA9karw@cipher.nrlssc.navy.mil>
-References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com> <4A8AA511.1060205@gmail.com> <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com> <7v4os5gs0p.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0908181147510.6044@xanadu.home> <alpine.LFD.2.00.0908181240400.6044@xanadu.home> <7v1vn9f4mz.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0908181357330.6044@xanadu.home> <7vk511dk11.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Continue git clone after interruption
+Date: Tue, 18 Aug 2009 16:01:52 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908181537360.6044@xanadu.home>
+References: <1250509342.2885.13.camel@cf-48>
+ <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>
+ <vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48>
+ <alpine.LFD.2.00.0908181246470.6044@xanadu.home>
+ <m3fxbpneqe.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@cam.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Artur Skawina <art.08.09@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	msysGit <msysgit@googlegroups.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 21:59:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 22:02:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdUq9-0007x1-8U
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:59:29 +0200
+	id 1MdUsg-0000hg-9r
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 22:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbZHRT7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 15:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750900AbZHRT7U
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:59:20 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48608 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886AbZHRT7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 15:59:19 -0400
-Received: by mail.nrlssc.navy.mil id n7IJuvSW021966; Tue, 18 Aug 2009 14:56:57 -0500
-In-Reply-To: <7vk511dk11.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 18 Aug 2009 19:56:56.0813 (UTC) FILETIME=[0A6801D0:01CA203E]
+	id S1751199AbZHRUB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 16:01:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbZHRUB5
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 16:01:57 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:8534 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbZHRUB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 16:01:57 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOL005MA8GHBI30@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 18 Aug 2009 15:50:41 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <m3fxbpneqe.fsf@localhost.localdomain>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126446>
 
-Junio C Hamano wrote:
+On Tue, 18 Aug 2009, Jakub Narebski wrote:
 
-> Another issue, especially with your "openssl sha1 removal" patch, is if we
-> can assume gcc everywhere.  As far as I can tell, block-sha1/sha1.c will
-> be the first unconditional use of inline asm or statement expression on
-> i386/amd64.  Are folks on Solaris and other platforms Ok with this?
+> Nicolas Pitre <nico@cam.org> writes:
+> 
+> > On Tue, 18 Aug 2009, Tomasz Kontusz wrote:
+> > 
+> > > Ok, so it looks like it's not implementable without some kind of cache
+> > > server-side, so the server would know what the pack it was sending
+> > > looked like.
+> > > But here's my idea: make server send objects in different order (the
+> > > newest commit + whatever it points to first, then next one,then
+> > > another...). Then it would be possible to look at what we got, tell
+> > > server we have nothing, and want [the newest commit that was not
+> > > complete]. I know the reason why it is sorted the way it is, but I think
+> > > that the way data is stored after clone is clients problem, so the
+> > > client should reorganize packs the way it wants.
+> > 
+> > That won't buy you much.  You should realize that a pack is made of:
+> > 
+> > 1) Commit objects.  Yes they're all put together at the front of the pack,
+> >    but they roughly are the equivalent of:
+> > 
+> > 	git log --pretty=raw | gzip | wc -c
+> > 
+> >    For the Linux repo as of now that is around 32 MB.
+> 
+> For my clone of Git repository this gives 3.8 MB
+>  
+> > 2) Tree and blob objects.  Those are the bulk of the content for the top 
+> >    commit.  The top commit is usually not delta compressed because we 
+> >    want fast access to the top commit, and that is used as the base for 
+> >    further delta compression for older commits.  So the very first 
+> >    commit is whole at the front of the pack right after the commit 
+> >    objects.  you can estimate the size of this data with:
+> > 
+> > 	git archive --format=tar HEAD | gzip | wc -c
+> > 
+> >    On the same Linux repo this is currently 75 MB.
+> 
+> On the same Git repository this gives 2.5 MB
 
-The SUNWspro compiler doesn't set __i386__.  Instead it sets __i386, and
-I think __x86_64 and __amd64 where appropriate.  So, compilation with
-the SUNWspro compiler on x86 is currently unaffected by these changes and
-falls back to the generic routines.
+Interesting to see that the commit history is larger than the latest 
+source tree.  Probably that would be the same with the Linux kernel as 
+well if all versions since the beginning with adequate commit logs were 
+included in the repo.
 
-It seems that v5.10 of the compiler can grok both the __asm__ statements
-and the ({...}) naked block notation and passes all of the tests when the
-block_sha1 code is modified to add defined(__i386) to each of the macro
-statements.
+> > 3) Delta objects.  Those are making the rest of the pack, plus a couple 
+> >    tree/blob objects that were not found in the top commit and are 
+> >    different enough from any object in that top commit not to be 
+> >    represented as deltas.  Still, the majority of objects for all the 
+> >    remaining commits are delta objects.
+> 
+> You forgot that delta chains are bound by pack.depth limit, which
+> defaults to 50.  You would have then additional full objects.
 
-The 5.8 version cannot grok the naked block, and requires spelling __asm__
-as __asm for inline assembly.  Even then it appears that there is a bug in
-the assembly that is produced (a google search told me so), so the assembly
-code does not successfully compile.
+Sure, but that's probably not significant.  the delta chain depth is 
+limited, but not the width.  A given base object can have unlimited 
+delta "children", and so on at each depth level.
 
-I haven't had much time to think about how or whether to address this.
+> The single packfile for this (just gc'ed) Git repository is 37 MB.
+> Much more than 3.8 MB + 2.5 MB = 6.3 MB.
 
-Adding something like the following would get ugly real quick:
+What I'm saying is that most of that 37 MB - 6.3 MB = 31 MB is likely to 
+be occupied by deltas.
 
-   (defined(__i386) && defined(__SUNPRO_C) && (__SUNPRO_C >= 0x5100))
+> [cut]
+> 
+> There is another way which we can go to implement resumable clone.
+> Let's git first try to clone whole repository (single pack; BTW what
+> happens if this pack is larger than file size limit for given
+> filesystem?).
 
-For now, the code compiles fine using the SUNWspro compiler on x86 even if
-it is suboptimal compared to gcc.  It is still an improvement over the
-mozilla code.
+We currently fail.  Seems that no one ever had a problem with that so 
+far. We'd have to split the pack stream into multiple packs on the 
+receiving end.  But frankly, if you have a repository large enough to 
+bust your filesystem's file size limit then maybe you should seriously 
+reconsider your choice of development environment.
 
--brandon
+> If it fails, client ask first for first half of of
+> repository (half as in bisect, but it is server that has to calculate
+> it).  If it downloads, it will ask server for the rest of repository.
+> If it fails, it would reduce size in half again, and ask about 1/4 of
+> repository in packfile first.
+
+Problem people with slow links have won't be helped at all with this.  
+What if the network connection gets broken only after 49% of the 
+transfer and that took 3 hours to download?  You'll attempt a 25% size 
+transfer which would take 1.5 hour despite the fact that you already 
+spent that much time downloading that first 1/4 of the repository 
+already.  And yet what if you're unlucky and now the network craps on 
+you after 23% of that second attempt?
+
+I think it is better to "prime" the repository with the content of the 
+top commit in the most straight forward manner using git-archive which 
+has the potential to be fully restartable at any point with little 
+complexity on the server side.
+
+
+Nicolas
