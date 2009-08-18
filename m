@@ -1,87 +1,70 @@
-From: Karthik R <karthikr@fastmail.fm>
-Subject: [PATCH][resend 3] git-svn: Use GIT_SSH setting if SVN_SSH is not
- set
-Date: Tue, 18 Aug 2009 18:54:40 -0500
-Message-ID: <4A8B3F40.10803@fastmail.fm>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] stash: reject stash name starting with a dash.
+Date: Tue, 18 Aug 2009 19:54:46 -0400
+Message-ID: <20090818235446.GA11153@sigill.intra.peff.net>
+References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
+ <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
+ <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
+ <1250631523-10524-4-git-send-email-Matthieu.Moy@imag.fr>
+ <20090818233535.GB6304@sigill.intra.peff.net>
+ <7vocqc3cuz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 19 01:54:52 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 01:54:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdYVv-0002uY-Bd
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 01:54:51 +0200
+	id 1MdYVw-0002uY-3s
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 01:54:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752001AbZHRXyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 19:54:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbZHRXym
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 19:54:42 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42141 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751082AbZHRXym (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 19:54:42 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 4297B515D0;
-	Tue, 18 Aug 2009 19:54:43 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 18 Aug 2009 19:54:43 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:content-type:content-transfer-encoding; s=smtpout; bh=OX21eUE9htqTlOxBh23gTVtGujY=; b=ts2NQpwuKumXscFmMHnSURuM6uxtc1/6Wd90cS6NXdk1D5Yimc9iW3teMT2+x80MGTTo3fQmKMYdnTQo/MBzkvw13MaBCE4308OI06ujaPpelyggttknr1umZ+PtLCTjvvHk+kBdrfIzMmS4HjR6srTICAYGJL6naDx8Ar0Kbag=
-X-Sasl-enc: pYxd2YkSnZT/yffAwSyBJpenm20iv9V7EYpSnJhixZfV 1250639682
-Received: from [0.0.0.0] (99-156-81-160.lightspeed.austtx.sbcglobal.net [99.156.81.160])
-	by www.fastmail.fm (Postfix) with ESMTPSA id 91C514F558;
-	Tue, 18 Aug 2009 19:54:42 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
+	id S1752233AbZHRXyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 19:54:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752199AbZHRXyr
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 19:54:47 -0400
+Received: from peff.net ([208.65.91.99]:43420 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751392AbZHRXyq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 19:54:46 -0400
+Received: (qmail 16582 invoked by uid 107); 18 Aug 2009 23:54:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 18 Aug 2009 19:54:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Aug 2009 19:54:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vocqc3cuz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126487>
 
-If SVN_SSH is defined, it will be used. Else value in
-GIT_SSH is copied to SVN_SSH & then, only on Windows,
-the \s are escaped.
+On Tue, Aug 18, 2009 at 04:45:40PM -0700, Junio C Hamano wrote:
 
-On Windows, the shell-variables must be set as follows
-    GIT_SSH="C:\Program Files\PuTTY\plink.exe"
-    SVN_SSH="C:\\Program Files\\PuTTY\\plink.exe"
+> > Should this actually be "git stash save --invalid-option", since it is
+> > really testing the actual save option parsing, and not the behavior to
+> > automatically push options to "git stash save"?
+> 
+> It would be ideal if
+> 
+> 	git stash save --invalid-option
+> 
+> failed, while
+> 
+> 	git stash --invalid-option should be trapped
+> 
+> and/or
+> 
+> 	git stash "--invalid-option should be trapped"
+> 
+> are accepted as valid quickie ways to name a WIP stash before attending to
+> an unrelated emergency.
 
-See http://code.google.com/p/msysgit/issues/detail?id=305
+I thought that was the exact DWIM that was rejected previously so that
+you don't accidentally make commits with "git stash llist" or "git stash
+--almost-a-valid-optio".
 
-Signed-off-by: Karthik Rajagopalan <karthikr@fastmail.fm>
----
-Signed off this time.
-
-Previous life of patch:
-[PATCH] GIT_SSH does not override ssh in git-svn
-[PATCH][resend] git-svn: Respect GIT_SSH setting
-
- git-svn.perl |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index b0bfb74..ef86d10 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -21,6 +21,15 @@ $Git::SVN::default_ref_id = $ENV{GIT_SVN_ID} ||
-'git-svn';
- $Git::SVN::Ra::_log_window_size = 100;
- $Git::SVN::_minimize_url = 'unset';
- 
-+if (! exists $ENV{SVN_SSH}) {
-+    if (exists $ENV{GIT_SSH}) {
-+        $ENV{SVN_SSH} = $ENV{GIT_SSH};
-+        if ($^O eq 'msys') {
-+            $ENV{SVN_SSH} =~ s/\\/\\\\/g;
-+        }
-+    }
-+}
-+
- $Git::SVN::Log::TZ = $ENV{TZ};
- $ENV{TZ} = 'UTC';
- $| = 1; # unbuffer STDOUT
--- 
-1.5.4.3
+-Peff
