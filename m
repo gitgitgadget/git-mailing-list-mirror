@@ -1,82 +1,102 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 23:35:24 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908182334460.8306@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>  <1250600335-8642-1-git-send-email-mstormo@gmail.com>  <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302> <3af572ac0908181007q7622091eqc78861e00c3a9e45@mail.gmail.com>
+From: Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: Null deref in recursive merge in df73af5f667a479764d2b2195cb0cb60b0b89e3d
+Date: Tue, 18 Aug 2009 23:35:17 +0200
+Message-ID: <4c8ef70908181435o1f9c6d0dncd84eb57b070b105@mail.gmail.com>
+References: <D5F958F92101F74D8A5683C2FE14F4200F23102F@post.corp.w3data.com>
+	 <C695A6A4.61CD9%jbenjore@whitepages.com>
+	 <7vtz0uk5z3.fsf@alter.siamese.dyndns.org>
+	 <7viqhaipg0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-629157908-1250631325=:8306"
-Cc: Marius Storm-Olsen <mstormo@gmail.com>, msysgit@googlegroups.com,
-	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org,
-	kusmabite@googlemail.com
-To: Pau Garcia i Quiles <pgquiles@elpauer.org>
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:34:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin <johannes.schindelin@gmx.de> Alex Riesen" 
+	<raa.lkml@gmail.com>, Git <git@vger.kernel.org>,
+	Josh ben Jore <jbenjore@whitepages.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:35:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWKI-0000Pf-64
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:34:42 +0200
+	id 1MdWL6-0000il-DY
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751286AbZHRVef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:34:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbZHRVef
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:34:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43747 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751275AbZHRVee (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:34:34 -0400
-Received: (qmail invoked by alias); 18 Aug 2009 21:34:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp068) with SMTP; 18 Aug 2009 23:34:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX194L8kH0YB4X46COTGTbTrBPu47/MOENIDG5gMeb1
-	N4dV1z8/HuGto4
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <3af572ac0908181007q7622091eqc78861e00c3a9e45@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751204AbZHRVfT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 17:35:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbZHRVfS
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:35:18 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:47162 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbZHRVfR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 17:35:17 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so942471fga.17
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 14:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YeP55OX++bDRKe5FQCC0hCczGt26Dtn9eKpxQohQuXg=;
+        b=AfwBhs1KUVVyi4i1CfW8M8XHyoO5r29Ehw8pwclzBishYA3t0tjIxdSHmMr8zEMyE0
+         ++PG0YztIs6VyJ9fMGUKqkkdNjMcX2zNtz6TmmiRx0md6BRMXBwiKsPOXlXP8L8RkYsm
+         7BCQ5OhFZWZ12zDs7r0GlUaCJlplQDCeZPTYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oUBuQIF+DhHmldUl1no8Ev1ggOTVjb2GWs3gbQ8XGy1U635aACZOpdoCCp43iNB0oo
+         svxHdQEPXNTZPdtE5d0Yi7yQkwQOjuXfjcqTonFPBtVYuJIXSFnXCFNzAliujPwmhSpt
+         LVdDWjAx3uhN64ZOrb5B1uFp53h7vg2mr2PeY=
+Received: by 10.239.179.99 with SMTP id c35mr496121hbg.161.1250631317746; Tue, 
+	18 Aug 2009 14:35:17 -0700 (PDT)
+In-Reply-To: <7viqhaipg0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126460>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-629157908-1250631325=:8306
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
-
-Hi,
-
-On Tue, 18 Aug 2009, Pau Garcia i Quiles wrote:
-
-> On Tue, Aug 18, 2009 at 4:11 PM, Johannes
-> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+On Thu, Jul 30, 2009 at 9:45 AM, Junio C Hamano<gitster@pobox.com> wrot=
+e:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> > On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
-> >
-> >>  So, instead of rely on these vcproj files which *will* go stale, we 
-> >> can  simply use the same Makefile system which everyone else is 
-> >> using. :)  After all, we're just compiling with a different compiler. 
-> >> The end  result will still rely on the *msysGit environment* to 
-> >> function, so we  already require it. Thus, GNU Make is present, and 
-> >> we can use it.
-> >
-> > We can also use sed or perl to generate/modify the .vcproj files, or 
-> > run CMake (once Pau got it to build), and package the stuff using zip 
-> > (once I got that to build).
-> 
-> Re: package the stuff using ZIP, it's trivial to do with CPack (part of 
-> the CMake chain). Just tell me what you want to get and I'll implement 
-> it.
+>> The codepath saw that one branch renamed dev-ubuntu/ stuff to dev/ a=
+t that
+>> "unmerged" path, while the other branch added something else to the =
+same
+>> path, and decided to add that at an alternative path, and the intent=
+ of
+>> that is so that it can safely resolve the "renamed" side to its fina=
+l
+>> destination. =A0The added update_file() call is about finishing that
+>> conflict resolution the code forgets to do.
+>
+> By the way, (I am CC'ing Fredrik, the author of the merge-recursive.p=
+y,
+> the original implementation, even though I haven't seen him around he=
+re
+> for a long time. Two "thieves" are also CC'ed), I think the way recur=
+sive
+> strategy tries to handle rename/add and rename/rename conflicts by co=
+ming
+> up with a temporary pathname is fundamentally wrong.
 
-Well, I tried to tell you already what I want.  A simple and unsupervised 
-script that downloads, compiles, installs and commits CMake.
+It was a long time ago I looked at the merge stuff (or any git code in
+fact) so I
+may have forgotten some things. However, as far as I can see your analy=
+sis is
+correct and the temporary pathname stuff can be avoided when the confli=
+cts
+only involve files (and no directories). As you wrote, for D/F
+conflicts one need
+the temporary pathnames in order to build a tree which is used in the v=
+irtual
+ancestor.
 
-Ciao,
-Dscho
+[Nice analysis of when temporary pathnames are needed and when they are=
+ not
+needed snipped.]
 
---8323328-629157908-1250631325=:8306--
+- Fredrik
+
+PS. I am sorry for the late reply.
