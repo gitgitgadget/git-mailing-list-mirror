@@ -1,64 +1,79 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH 04/11] Add _MSC_VER predefine macro to make same behaviors 
-	with __MINGW32__ Enable MSVC build. MSVC have the save behaviors with 
-	msysgit.
-Date: Tue, 18 Aug 2009 09:29:39 +0800
-Message-ID: <1976ea660908171829se49abf0j5b7d45a74e4c67a7@mail.gmail.com>
-References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
-	 <1250524872-5148-2-git-send-email-lznuaa@gmail.com>
-	 <1250524872-5148-3-git-send-email-lznuaa@gmail.com>
-	 <1250524872-5148-4-git-send-email-lznuaa@gmail.com>
-	 <alpine.DEB.1.00.0908171835590.4991@intel-tinevez-2-302>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC PATCH v3 8/8] --sparse for porcelains
+Date: Tue, 18 Aug 2009 08:43:37 +0700
+Message-ID: <fcaeb9bf0908171843x6ab0763dqff7e8aea0443c374@mail.gmail.com>
+References: <1250005446-12047-1-git-send-email-pclouds@gmail.com> 
+	<2729632a0908171602m3c05c97bx9ce31e8960df9198@mail.gmail.com> 
+	<alpine.DEB.1.00.0908180111340.8306@pacific.mpi-cbg.de> <200908180217.35963.jnareb@gmail.com> 
+	<2729632a0908171734p16d6ee7dm5f62848f7625ffbc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 18 03:29:51 2009
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Tue Aug 18 03:44:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdDWG-0001hu-Tr
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 03:29:49 +0200
+	id 1MdDk5-00057S-K1
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 03:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758559AbZHRB3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Aug 2009 21:29:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758533AbZHRB3k
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 21:29:40 -0400
-Received: from mail-qy0-f196.google.com ([209.85.221.196]:41361 "EHLO
-	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753104AbZHRB3j (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Aug 2009 21:29:39 -0400
-Received: by qyk34 with SMTP id 34so2489353qyk.33
-        for <git@vger.kernel.org>; Mon, 17 Aug 2009 18:29:40 -0700 (PDT)
+	id S1758572AbZHRBn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Aug 2009 21:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758566AbZHRBn5
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Aug 2009 21:43:57 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:63510 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758531AbZHRBn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Aug 2009 21:43:56 -0400
+Received: by an-out-0708.google.com with SMTP id d40so3157868and.1
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 18:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=Ta4Oygv4bJh3tKUfFqvYeW2rZpJef7Zw358ZePD1OWE=;
-        b=BWBj73UVGd8t/Vg8D7l0+V/6BApzfP4DEw7OBwZA9ypl33I2+pl7QEU2wSNb5fG1By
-         JfNn/Gy5hn4dyOVKXbWb7DiJLnCqcuEkRO6F169b9Jzw5EeZztSw+rmdMY+Co7JUgQ2e
-         0BTC1M5Urudsd0YlZmvylfPPVdSHda/msq3zQ=
+        bh=j6xqQGqVwJb1Ux6wL6d3mzNIULQNHq4xt8ozU6H2ZBE=;
+        b=FZrztwOZFfL+fWXQM9r7vdpJYwGLaq4vsvKTG92dEJVR/ES6tmuOSXDPpNGLBN3a73
+         DBhoFzDmuXQCdpfvAooecXne8JFJl+ZTfVql/YfoWOLvwSVSXJJAzeUvzQqGFt69vU7+
+         Qf01MnkxdM9MBSpQozJ74DejdQW2SUSkGwIJU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=m3FCx5JSv619D/QsAL5NiUC9VrGb3cdw+BCM3CZoEcVmER/iM7fZa4V1UxHgm246Uw
-         imb57QVsn9x+1iEwN8l+Sg9BP6ahsD0siVTvBDD5u/yGnp+PtEAqqyew4dejxU9yLrxH
-         NXzNxffLnJRKQ85mp5LePcVJhHFbZnMOx126Y=
-Received: by 10.224.42.131 with SMTP id s3mr4900136qae.111.1250558980038; Mon, 
-	17 Aug 2009 18:29:40 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908171835590.4991@intel-tinevez-2-302>
+        b=JhAjyFhwSC0WJgsp3G++3g40HiaoSs8qgVzDYSzRjj3u9s/Erk2KpHeYz9+4dtoIbI
+         7DsnGQijexbAkyzJYsX9lLPYuAqE0sd6G81btbGVMlAYeacv7A4NhiuXssBveRgtYGcM
+         eL8PGQE1grgsFHbbtAVlDpPLk+4FoFZ1/u3k8=
+Received: by 10.101.62.13 with SMTP id p13mr4426549ank.25.1250559837131; Mon, 
+	17 Aug 2009 18:43:57 -0700 (PDT)
+In-Reply-To: <2729632a0908171734p16d6ee7dm5f62848f7625ffbc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126337>
 
+On Tue, Aug 18, 2009 at 7:34 AM, <skillzero@gmail.com> wrote:
+> On Mon, Aug 17, 2009 at 5:17 PM, Jakub Narebski<jnareb@gmail.com> wrote:
 >
-> 	Test whether WIN32 is defined rather than __MINGW32__
+>> There is e.g. question if "git grep" should search "no-checkout" files;
+>> in the "assume-unchanged" case it should, I think, search index version.
+>
+> I would like it to git grep to not search paths outside the sparse
+> area (although --no-sparse would be nice for git grep in case you did
+> want to search everything). The main reason I want sparse checkouts is
+> for performance reasons. For example, git grep can take 10 minutes on
+> my full repository so excluding paths outside the sparse area would
+> reduce that to a few seconds.
 
-I think WIN32 is better, how about 64bit build case?
-In 64bit environment, VC define WIN64 not WIN32.
+That's a porcelain question that I'd leave it for now. FWIW you can do
+something like this:
+
+git ls-files -v|grep '^H'|cut -c 2-|xargs git grep
+
+/me misses "cleartool find"
+-- 
+Duy
