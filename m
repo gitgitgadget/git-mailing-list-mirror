@@ -1,150 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Continue git clone after interruption
-Date: Tue, 18 Aug 2009 17:32:35 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908181711350.6044@xanadu.home>
-References: <1250509342.2885.13.camel@cf-48>
- <m3fxbpneqe.fsf@localhost.localdomain>
- <alpine.LFD.2.00.0908181537360.6044@xanadu.home>
- <200908182302.10619.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
+Date: Tue, 18 Aug 2009 23:35:24 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908182334460.8306@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>  <1250600335-8642-1-git-send-email-mstormo@gmail.com>  <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302> <3af572ac0908181007q7622091eqc78861e00c3a9e45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:32:46 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-629157908-1250631325=:8306"
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org,
+	kusmabite@googlemail.com
+To: Pau Garcia i Quiles <pgquiles@elpauer.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:34:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWIQ-00087l-7a
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:32:46 +0200
+	id 1MdWKI-0000Pf-64
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:34:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751017AbZHRVck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:32:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbZHRVck
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:32:40 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35093 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751004AbZHRVcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:32:39 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOL003SYCNNM9F0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 18 Aug 2009 17:21:23 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200908182302.10619.jnareb@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751286AbZHRVef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:34:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbZHRVef
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:34:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43747 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751275AbZHRVee (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 17:34:34 -0400
+Received: (qmail invoked by alias); 18 Aug 2009 21:34:34 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp068) with SMTP; 18 Aug 2009 23:34:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX194L8kH0YB4X46COTGTbTrBPu47/MOENIDG5gMeb1
+	N4dV1z8/HuGto4
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <3af572ac0908181007q7622091eqc78861e00c3a9e45@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126459>
 
-On Tue, 18 Aug 2009, Jakub Narebski wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> You can probably get number and size taken by delta and non-delta (base)
-> objects in the packfile somehow.  Neither "git verify-pack -v <packfile>"
-> nor contrib/stats/packinfo.pl did help me arrive at this data.
+--8323328-629157908-1250631325=:8306
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Documentation for verify-pack says:
+Hi,
 
-|When specifying the -v option the format used is:
-|
-|        SHA1 type size size-in-pack-file offset-in-packfile
-|
-|for objects that are not deltified in the pack, and
-|
-|        SHA1 type size size-in-packfile offset-in-packfile depth base-SHA1
-|
-|for objects that are deltified.
+On Tue, 18 Aug 2009, Pau Garcia i Quiles wrote:
 
-So a simple script should be able to give you the answer.
-
-> >> (BTW what happens if this pack is larger than file size limit for 
-> >> given filesystem?).
-> > 
-> > We currently fail.  Seems that no one ever had a problem with that so 
-> > far. We'd have to split the pack stream into multiple packs on the 
-> > receiving end.  But frankly, if you have a repository large enough to 
-> > bust your filesystem's file size limit then maybe you should seriously 
-> > reconsider your choice of development environment.
+> On Tue, Aug 18, 2009 at 4:11 PM, Johannes
+> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+>
+> > On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
+> >
+> >>  So, instead of rely on these vcproj files which *will* go stale, we 
+> >> can  simply use the same Makefile system which everyone else is 
+> >> using. :)  After all, we're just compiling with a different compiler. 
+> >> The end  result will still rely on the *msysGit environment* to 
+> >> function, so we  already require it. Thus, GNU Make is present, and 
+> >> we can use it.
+> >
+> > We can also use sed or perl to generate/modify the .vcproj files, or 
+> > run CMake (once Pau got it to build), and package the stuff using zip 
+> > (once I got that to build).
 > 
-> Do we fail gracefully (with an error message), or does git crash then?
+> Re: package the stuff using ZIP, it's trivial to do with CPack (part of 
+> the CMake chain). Just tell me what you want to get and I'll implement 
+> it.
 
-If the filesystem is imposing the limit, it will likely return an error 
-on the write() call and we'll die().  If the machine has a too small 
-off_t for the received pack then we also die("pack too large for current 
-definition of off_t").
+Well, I tried to tell you already what I want.  A simple and unsupervised 
+script that downloads, compiles, installs and commits CMake.
 
-> If I remember correctly FAT28^W FAT32 has maximum file size of 2 GB.
-> FAT is often used on SSD, on USB drive.  Although if you have  2 GB
-> packfile, you are doing something wrong, or UGFWIINI (Using Git For
-> What It Is Not Intended).
+Ciao,
+Dscho
 
-Hopefully you're not performing a 'git clone' off of a FAT filesystem.  
-For physical transport you may repack with the appropriate switches.
-
-> >> If it fails, client ask first for first half of of
-> >> repository (half as in bisect, but it is server that has to calculate
-> >> it).  If it downloads, it will ask server for the rest of repository.
-> >> If it fails, it would reduce size in half again, and ask about 1/4 of
-> >> repository in packfile first.
-> > 
-> > Problem people with slow links have won't be helped at all with this.  
-> > What if the network connection gets broken only after 49% of the 
-> > transfer and that took 3 hours to download?  You'll attempt a 25% size 
-> > transfer which would take 1.5 hour despite the fact that you already 
-> > spent that much time downloading that first 1/4 of the repository 
-> > already.  And yet what if you're unlucky and now the network craps on 
-> > you after 23% of that second attempt?
-> 
-> A modification then.
-> 
-> First try ordinary clone.  If it fails because network is unreliable,
-> check how much we did download, and ask server for packfile of slightly
-> smaller size; this means that we are asking server for approximate pack
-> size limit, not for bisect-like partitioning revision list.
-
-If the download didn't reach past the critical point (75 MB in my linux 
-repo example) then you cannot validate the received data and you've 
-wasted that much bandwidth.
-
-> > I think it is better to "prime" the repository with the content of the 
-> > top commit in the most straight forward manner using git-archive which 
-> > has the potential to be fully restartable at any point with little 
-> > complexity on the server side.
-> 
-> But didn't it make fully restartable 2.5 MB part out of 37 MB packfile?
-
-The front of the pack is the critical point.  If you get enough to 
-create the top commit then further transfers can be done incrementally 
-with only the deltas between each commits.
-
-> A question about pack protocol negotiation.  If clients presents some
-> objects as "have", server can and does assume that client has all 
-> prerequisites for such objects, e.g. for tree objects that it has
-> all objects for files and directories inside tree; for commit it means
-> all ancestors and all objects in snapshot (have top tree, and its 
-> prerequisites).  Do I understand this correctly?
-
-That works only for commits.
-
-> If we have partial packfile which crashed during downloading, can we
-> extract from it some full objects (including blobs)?  Can we pass
-> tree and blob objects as "have" to server, and is it taken into account?
-
-No.
-
-> Perhaps instead of separate step of resumable-downloading of top commit
-> objects (in snapshot), we can pass to server what we did download in
-> full?
-
-See above.
-
-> BTW. because of compression it might be more difficult to resume 
-> archive creation in the middle, I think...
-
-Why so?  the tar+gzip format is streamable.
-
-
-Nicolas
+--8323328-629157908-1250631325=:8306--
