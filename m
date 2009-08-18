@@ -1,94 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/11] Add MSVC porting header files.
-Date: Tue, 18 Aug 2009 03:42:26 -0700
-Message-ID: <7v4os5jtd9.fsf@alter.siamese.dyndns.org>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>
- <1250525103-5184-2-git-send-email-lznuaa@gmail.com>
- <1250525103-5184-3-git-send-email-lznuaa@gmail.com>
- <1250525103-5184-4-git-send-email-lznuaa@gmail.com>
- <alpine.DEB.1.00.0908171902300.4991@intel-tinevez-2-302>
- <1976ea660908171915v62fb6c40j17f750cac9836433@mail.gmail.com>
- <alpine.DEB.1.00.0908181140460.4680@intel-tinevez-2-302>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
+Date: Tue, 18 Aug 2009 12:45:53 +0200
+Message-ID: <4A8A8661.5060908@gmail.com>
+References: <4A8A552D.6020407@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Frank Li <lznuaa@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 18 12:42:43 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Aug 18 12:46:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdM9J-00084L-KY
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 12:42:42 +0200
+	id 1MdMCx-0000qE-9K
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 12:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbZHRKmc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 06:42:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751666AbZHRKmc
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 06:42:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64839 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206AbZHRKmc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 06:42:32 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B1DC6F649;
-	Tue, 18 Aug 2009 06:42:32 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0975F648; Tue, 18 Aug
- 2009 06:42:27 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0908181140460.4680@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Tue\, 18 Aug 2009 11\:47\:46 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D5B0794C-8BE3-11DE-A470-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758056AbZHRKqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 06:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752086AbZHRKqE
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 06:46:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:39573 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750934AbZHRKqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 06:46:02 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so833780fga.17
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 03:46:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=Y9IPGKC+nqk88jNw/+qS+b2Nq6osh402oN8I+TNZlVI=;
+        b=CHmX4AEZ5efRRGKxuNAbAGuNzzOIDZV43kbKv6xW5XxY8sfj/47VWFMW19eRGq7A2o
+         xf88rTtOqSjiXyzqmoeCI2dVe6EjUpJPoZTY/Hx0FW+vrq6piGQ2VvtCx6EzYa4Mya12
+         C5vLj11UNAXkOzc9OPr52BnevEyuYXm9S41cE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=sVtcB34CoJBwO7lrDVuhs1NwHZ09OEw28vLNiaJuR0yd9xBiElWLaHH6IvcAJThXpg
+         QUuFixDJmLFUKq6LIlGaEQtdaONygbdz4JWtju979lQrq+luQRve6FQWzkVyhVZHnq8o
+         gfpC5qXuYWJ8d3h2dIGezHoKn4V9GteKL/Qmc=
+Received: by 10.86.228.16 with SMTP id a16mr3155928fgh.49.1250592362927;
+        Tue, 18 Aug 2009 03:46:02 -0700 (PDT)
+Received: from ?192.168.1.19? (91-67-62-226-dynip.superkabel.de [91.67.62.226])
+        by mx.google.com with ESMTPS id l19sm10521190fgb.2.2009.08.18.03.46.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 18 Aug 2009 03:46:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+In-Reply-To: <4A8A552D.6020407@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126372>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> This is a minimal fix to compile block-sha1 on Windows. I did not do any
+> benchmarks whether the implementation of ntohl() is actually faster than
+> bytewise access and shifts.
 
-> Hi,
->
-> On Tue, 18 Aug 2009, Frank Li wrote:
->
->> >> Add unix head file, dirent.h, unistd.h =C2=A0and time.h
->> >
->> > These are copied from somewhere. =C2=A0From where? =C2=A0What is t=
-he license?
->>=20
->> It comes from msys,  which used to build msysgit.
->
-> I know.  After reading the patch.  But it would be better if everybod=
-y=20
-> knew after reading the commit message...  _Especially_ in this=20
-> increasingly lawsuit-defined business, it is very nice to see early t=
-hat=20
-> the files you are including here are in the public domain, and come f=
-rom=20
-> MSys.
+As ntohl()/htonl() are function calls (that internally do shifts), I 
+doubt they're faster than the shift macros, though I haven't measured 
+it. However, I do not suggest to go for the macros on Windows/Intel, but 
+to apply the following patch on top of your patch:
 
-And there was this line in the snarfed file:
+ From 34402f0e5691ca46cd63c930eef8fc9cadf80493 Mon Sep 17 00:00:00 2001
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Date: Tue, 18 Aug 2009 12:33:35 +0200
+Subject: [PATCH] block-sha1: On Intel, use bswap built-in in favor of 
+ntohl()/htonl()
 
-    * No warranty is given; refer to the file DISCLAIMER within the pac=
-kage.
+On Windows/Intel, ntohl()/htonl() are function calls that do shifts to 
+swap the
+byte order. Using the native bswap instruction boths gets rid of the 
+shifts and
+the function call overhead to gain some performance.
 
-but there no DISCLAIMER file (perhaps a separate patch added it, but I
-somehow doubt it).
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+  block-sha1/sha1.c |   15 ++++++++++-----
+  1 files changed, 10 insertions(+), 5 deletions(-)
 
-> As I said earlier, there are common flags, but as I also said, it is=20
-> probably better to keep the #define's in a header file for better=20
-> visibility and editability, albeit in logically clustered blocks (i.e=
-=2E all=20
-> the NO_* and other #define's that affect what source code is=20
-> compiled, all default paths in another cluster, #define's to bow befo=
-re=20
-> Microsoft's C runtime's decision to deprecate the C99 standard functi=
-on=20
-> names, etc)
+diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
+index f2830c0..07f2937 100644
+--- a/block-sha1/sha1.c
++++ b/block-sha1/sha1.c
+@@ -66,15 +66,20 @@
 
-=2E.. and that can live in a separate header file to reduce clutter and
-shield people who do not need to look at MSC related code, no?
+  /*
+   * Performance might be improved if the CPU architecture is OK with
+- * unaligned 32-bit loads and a fast ntohl() is available.
++ * unaligned 32-bit loads and a fast ntohl() is available. On Intel,
++ * use the bswap built-in to get rid of the function call overhead.
+   * Otherwise fall back to byte loads and shifts which is portable,
+   * and is faster on architectures with memory alignment issues.
+   */
+
+-#if defined(__i386__) || defined(__x86_64__) || \
+-    defined(__ppc__) || defined(__ppc64__) || \
+-    defined(__powerpc__) || defined(__powerpc64__) || \
+-    defined(__s390__) || defined(__s390x__)
++#if defined(__i386__) || defined(__x86_64__)
++
++#define get_be32(p)	__builtin_bswap32(*(unsigned int *)(p))
++#define put_be32(p, v)	do { *(unsigned int *)(p) = 
+__builtin_bswap32(v); } while (0)
++
++#elif defined(__ppc__) || defined(__ppc64__) || \
++      defined(__powerpc__) || defined(__powerpc64__) || \
++      defined(__s390__) || defined(__s390x__)
+
+  #define get_be32(p)	ntohl(*(unsigned int *)(p))
+  #define put_be32(p, v)	do { *(unsigned int *)(p) = htonl(v); } while (0)
+-- 
+1.6.4.169.g64d5.dirty
