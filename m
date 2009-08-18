@@ -1,96 +1,89 @@
-From: Andy Polyakov <appro@fy.chalmers.se>
-Subject: Re: x86 SHA1: Faster than OpenSSL
-Date: Tue, 18 Aug 2009 23:50:14 +0200
-Message-ID: <4A8B2216.6080607@fy.chalmers.se>
-References: <20090803034741.23415.qmail@science.horizon.com> <alpine.LFD.2.01.0908031924230.3270@localhost.localdomain> <alpine.LFD.2.01.0908031938280.3270@localhost.localdomain>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [RFC PATCH] stash: accept options also when subcommand 'save' is omitted
+Date: Tue, 18 Aug 2009 23:52:15 +0200
+Message-ID: <vpqtz0423jk.fsf@bauges.imag.fr>
+References: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr>
+	<vpqws51l1hb.fsf@bauges.imag.fr>
+	<20090818174509.GA27518@coredump.intra.peff.net>
+	<alpine.DEB.1.00.0908182337200.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:50:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:52:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWZU-00066c-FR
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:50:24 +0200
+	id 1MdWbb-0006tJ-KU
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbZHRVuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbZHRVuN
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:50:13 -0400
-Received: from atum.ita.chalmers.se ([129.16.4.148]:64290 "EHLO
-	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750849AbZHRVuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:50:12 -0400
-Received: from fyserv1.fy.chalmers.se (fyserv1.fy.chalmers.se [129.16.110.66])
-	by atum.ita.chalmers.se (Postfix) with ESMTP id E0A818328;
-	Tue, 18 Aug 2009 23:50:13 +0200 (CEST)
-Received: from [127.0.0.1] (stty [129.16.50.165])
-	by fyserv1.fy.chalmers.se (8.8.8/8.8.8) with ESMTP id XAA08039;
-	Tue, 18 Aug 2009 23:48:44 +0200 (MEST)
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-In-Reply-To: <alpine.LFD.2.01.0908031938280.3270@localhost.localdomain>
-X-Enigmail-Version: 0.95.5
+	id S1751125AbZHRVw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:52:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751104AbZHRVw1
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:52:27 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50635 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751054AbZHRVw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 17:52:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7ILnVHu024793
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Aug 2009 23:49:31 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MdWbH-0005XD-9I; Tue, 18 Aug 2009 23:52:15 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MdWbH-0002ou-7y; Tue, 18 Aug 2009 23:52:15 +0200
+In-Reply-To: <alpine.DEB.1.00.0908182337200.8306@pacific.mpi-cbg.de> (Johannes Schindelin's message of "Tue\, 18 Aug 2009 23\:42\:58 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Aug 2009 23:49:31 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n7ILnVHu024793
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1251236972.56996@9/WA8FxAauT8go1hGNPDUQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126469>
 
-> On Mon, 3 Aug 2009, Linus Torvalds wrote:
->> The thing that I'd prefer is simply
->>
->> 	git fsck --full
->>
->> on the Linux kernel archive. For me (with a fast machine), it takes about 
->> 4m30s with the OpenSSL SHA1, and takes 6m40s with the Mozilla SHA1 (ie 
->> using a NO_OPENSSL=1 build).
->>
->> So that's an example of a load that is actually very sensitive to SHA1 
->> performance (more so than _most_ git loads, I suspect), and at the same 
->> time is a real git load rather than some SHA1-only microbenchmark.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I couldn't agree more that real-life benchmarks are of greater value
-than specific algorithm micro-benchmark. And given the provided
-profiling data one can argue that +17% (or my +12%) improvement on
-micro-benchmark aren't really worth bothering about. But it's kind of
-sport [at least for me], so don't judge too harshly:-)
+> But it is sloppy, in that it blindly accepts options that might be valid
+> for several subcommands, not just "save".
 
->> It also 
->> shows very clearly why we default to the OpenSSL version over the Mozilla 
->> one.
+I wouldn't call that sloppy. 'save' is the default command, if you
+don't provide any command, then 'save' will be used.
 
-As George implicitly mentioned most OpenSSL assembler modules are
-available under more permissive license and if there is interest I'm
-ready to assist...
+So, "git stash -p" means "git stash save -p" regardless of the fact
+that there exists somewhere else a "git stash list -p". Actually, in
+the current form of pu, it is already the case since
 
-> "perf report --sort comm,dso,symbol" profiling shows the following for 
-> 'git fsck --full' on the kernel repo, using the Mozilla SHA1:
-> 
->     47.69%               git  /home/torvalds/git/git     [.] moz_SHA1_Update
->     22.98%               git  /lib64/libz.so.1.2.3       [.] inflate_fast
->      7.32%               git  /lib64/libc-2.10.1.so      [.] __GI_memcpy
->      4.66%               git  /lib64/libz.so.1.2.3       [.] inflate
->      3.76%               git  /lib64/libz.so.1.2.3       [.] adler32
->      2.86%               git  /lib64/libz.so.1.2.3       [.] inflate_table
->      2.41%               git  /home/torvalds/git/git     [.] lookup_object
->      1.31%               git  /lib64/libc-2.10.1.so      [.] _int_malloc
->      0.84%               git  /home/torvalds/git/git     [.] patch_delta
->      0.78%               git  [kernel]                   [k] hpet_next_event
-> 
-> so yeah, SHA1 performance matters. Judging by the OpenSSL numbers, the 
-> OpenSSL SHA1 implementation must be about twice as fast as the C version 
-> we use.
+f300fab (Thomas Rast, DWIM 'git stash save -p' for 'git stash -p')
 
-And given /lib64 path this is 64-bit C compiler-generated code compared
-to 32-bit assembler? Either way in this context I have extra comment
-addressing previous subscriber, Mark Lodato, who effectively wondered
-how would 64-bit assembler compare to 32-bit one. First of all there
-*is* even 64-bit assembler version. But as SHA1 is essentially 32-bit
-algorithm, 64-bit implementation is only nominally faster, +20% at most.
-Faster thanks to larger register bank facilitating more efficient
-instruction scheduling.
+which came right after your patch.
 
-Cheers. A.
+> So please register my objection.
+
+I will if you register my objection to yours ;-).
+
+Jokes aside, if you insist in rejecting 'git stash -p', then my patch
+can be slightly modified to say something like
+
++case "$1" in
++    -k|--keep-index|--patch)
++       set "save" "$@"
++       ;;
++esac
+
+instead, which also allows multiple arguments (unlike your initial
+proposal), and can control more precisely the list of options for
+which 'save' is a default.
+
+--
+Matthieu
