@@ -1,94 +1,138 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 14:42:59 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908181420330.7195@iabervon.org>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com> <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302> <4A8AEAF5.6070205@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Continue git clone after interruption
+Date: Tue, 18 Aug 2009 11:45:44 -0700 (PDT)
+Message-ID: <m3fxbpneqe.fsf@localhost.localdomain>
+References: <1250509342.2885.13.camel@cf-48>
+	<alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>
+	<vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48>
+	<alpine.LFD.2.00.0908181246470.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
-	bonzini@gnu.org, kusmabite@googlemail.com
-To: Marius Storm-Olsen <marius@storm-olsen.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 20:43:10 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 20:45:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdTeH-00075u-9p
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 20:43:09 +0200
+	id 1MdTgw-0008Gu-Jo
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 20:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbZHRSm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 14:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbZHRSm7
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 14:42:59 -0400
-Received: from iabervon.org ([66.92.72.58]:40989 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888AbZHRSm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 14:42:58 -0400
-Received: (qmail 29303 invoked by uid 1000); 18 Aug 2009 18:42:59 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Aug 2009 18:42:59 -0000
-In-Reply-To: <4A8AEAF5.6070205@gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1751109AbZHRSpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 14:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbZHRSpq
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 14:45:46 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:30350 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbZHRSpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 14:45:45 -0400
+Received: by ey-out-2122.google.com with SMTP id 22so818111eye.37
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 11:45:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Qh7BJF2hLqwXs5y+il0wT62NIkFkkA7vXHWxWQTOj/c=;
+        b=QZ3eFxNYnYZuvUjtZdw8dXqt2DkyshROKIoTIeB7fiySwIbyWFSWSu2FHJ+UQmhE2l
+         70XU++ItFaZ8TcT5g+rZBPLcf1ZP1bgFFme926tkGhdhk0COVYs6TcsPHW8uoq5wIhS7
+         p8AjXkGaLBVapdMc6MI+tXxlAiZZ4THegBjcg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=BVXBxu6CSJUCM6ZaKqaDQTFALn7U7/hPPvBTY8mx6hk9llLXeX2TmAEkcOl+g9uu17
+         VCJEmOT+uz9xq/lHVSsj2izsqxCSjy0NgyJJpsAUmnx/ZMVmhj/NgN2JYuWscjol4x6D
+         gwYhSBKPzbjfSr5jgXHeFdf8HlpAwkyF1d6SI=
+Received: by 10.210.138.19 with SMTP id l19mr8638330ebd.74.1250621145698;
+        Tue, 18 Aug 2009 11:45:45 -0700 (PDT)
+Received: from localhost.localdomain (abvz12.neoplus.adsl.tpnet.pl [83.8.223.12])
+        by mx.google.com with ESMTPS id 28sm721587eye.15.2009.08.18.11.45.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 18 Aug 2009 11:45:44 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7IIjI8A027573;
+	Tue, 18 Aug 2009 20:45:23 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7IIiwFb027568;
+	Tue, 18 Aug 2009 20:44:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <alpine.LFD.2.00.0908181246470.6044@xanadu.home>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126437>
 
-On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> Johannes Schindelin said the following on 18.08.2009 16:11:
-> > On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
-> > > So, instead of rely on these vcproj files which *will* go stale, we
-> > > can simply use the same Makefile system which everyone else is
-> > > using. :) After all, we're just compiling with a different
-> > > compiler. The end result will still rely on the *msysGit
-> > > environment* to function, so we already require it. Thus, GNU Make
-> > > is present, and we can use it.
-> > 
-> > We can also use sed or perl to generate/modify the .vcproj files, or
-> > run CMake (once Pau got it to build), and package the stuff using zip
-> > (once I got that to build).
+> On Tue, 18 Aug 2009, Tomasz Kontusz wrote:
 > 
-> Really? That would be some script being able to parse the Makefile, and create
-> something reasonable as a vcproj script :) Keeping all the options in sync,
-> conditional files/libs, all the various end executables (a separate .vcproj
-> for each of them, and a solution file (.sln)to tie them all together into a ..
-> "solution", a complete product blah blah blah) etc.
+> > Ok, so it looks like it's not implementable without some kind of cache
+> > server-side, so the server would know what the pack it was sending
+> > looked like.
+> > But here's my idea: make server send objects in different order (the
+> > newest commit + whatever it points to first, then next one,then
+> > another...). Then it would be possible to look at what we got, tell
+> > server we have nothing, and want [the newest commit that was not
+> > complete]. I know the reason why it is sorted the way it is, but I think
+> > that the way data is stored after clone is clients problem, so the
+> > client should reorganize packs the way it wants.
+> 
+> That won't buy you much.  You should realize that a pack is made of:
+> 
+> 1) Commit objects.  Yes they're all put together at the front of the pack,
+>    but they roughly are the equivalent of:
+> 
+> 	git log --pretty=raw | gzip | wc -c
+> 
+>    For the Linux repo as of now that is around 32 MB.
 
-I think it wouldn't be impossible to split the Makefile into an 
-easy-to-parse part and an irrelevant-to-vcproj part. Certainly you don't 
-need GNU Make to read a file:
+For my clone of Git repository this gives 3.8 MB
+ 
+> 2) Tree and blob objects.  Those are the bulk of the content for the top 
+>    commit.  The top commit is usually not delta compressed because we 
+>    want fast access to the top commit, and that is used as the base for 
+>    further delta compression for older commits.  So the very first 
+>    commit is whole at the front of the pack right after the commit 
+>    objects.  you can estimate the size of this data with:
+> 
+> 	git archive --format=tar HEAD | gzip | wc -c
+> 
+>    On the same Linux repo this is currently 75 MB.
 
-SCRIPT_SH += git-am.sh
-SCRIPT_SH += git-bisect.sh
+On the same Git repository this gives 2.5 MB
 
-SCRIPT_PERL += git-add--interactive.perl
+> 
+> 3) Delta objects.  Those are making the rest of the pack, plus a couple 
+>    tree/blob objects that were not found in the top commit and are 
+>    different enough from any object in that top commit not to be 
+>    represented as deltas.  Still, the majority of objects for all the 
+>    remaining commits are delta objects.
 
-PROGRAM_NAMES += git-fast-import
+You forgot that delta chains are bound by pack.depth limit, which
+defaults to 50.  You would have then additional full objects.
 
-BUILTINS_IN_OBJS += add
+The single packfile for this (just gc'ed) Git repository is 37 MB.
+Much more than 3.8 MB + 2.5 MB = 6.3 MB.
 
-(etc)
+[cut]
 
-That is, we can probably describe the project sufficiently with a lot of
+There is another way which we can go to implement resumable clone.
+Let's git first try to clone whole repository (single pack; BTW what
+happens if this pack is larger than file size limit for given
+filesystem?).  If it fails, client ask first for first half of of
+repository (half as in bisect, but it is server that has to calculate
+it).  If it downloads, it will ask server for the rest of repository.
+If it fails, it would reduce size in half again, and ask about 1/4 of
+repository in packfile first.
 
-VAR += value
+The only extension required is for server to support additional
+capability, which enable for client to ask for appropriate 1/2^n part
+of repository (approximately), or 1/2^n between have and want.
 
-lines, using only constant values and variables we specify, and then the 
-Makefile declares them empty and does an
-
-include UserServicableParts
-
-and puts together the variables it needs. And things that aren't GNU Make 
-could also process this file without enormous difficulty, since it's 
-essentially a .ini file or java resource file with a stray + on each line. 
-Of course, people interested in the vcproj thing would have to update 
-whatever makes VC do the right thing when new *rules* are introduced, but 
-that's a lot less common than new *files* being introduced, and also more 
-obvious (in the sense that the included file is setting variables that the 
-builder doesn't know what to do with).
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
