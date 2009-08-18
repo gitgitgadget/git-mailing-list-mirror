@@ -1,138 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Continue git clone after interruption
-Date: Tue, 18 Aug 2009 11:45:44 -0700 (PDT)
-Message-ID: <m3fxbpneqe.fsf@localhost.localdomain>
-References: <1250509342.2885.13.camel@cf-48>
-	<alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>
-	<vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48>
-	<alpine.LFD.2.00.0908181246470.6044@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
+Date: Tue, 18 Aug 2009 12:00:42 -0700
+Message-ID: <7vk511dk11.fsf@alter.siamese.dyndns.org>
+References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
+ <4A8AA511.1060205@gmail.com>
+ <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com>
+ <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0908181147510.6044@xanadu.home>
+ <alpine.LFD.2.00.0908181240400.6044@xanadu.home>
+ <7v1vn9f4mz.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0908181357330.6044@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+Cc: Sebastian Schuberth <sschuberth@gmail.com>,
+	Artur Skawina <art.08.09@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	msysGit <msysgit@googlegroups.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Aug 18 20:45:56 2009
+X-From: git-owner@vger.kernel.org Tue Aug 18 21:01:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdTgw-0008Gu-Jo
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 20:45:55 +0200
+	id 1MdTvY-0005ud-Eg
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751109AbZHRSpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 14:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751078AbZHRSpq
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 14:45:46 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:30350 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbZHRSpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 14:45:45 -0400
-Received: by ey-out-2122.google.com with SMTP id 22so818111eye.37
-        for <git@vger.kernel.org>; Tue, 18 Aug 2009 11:45:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=Qh7BJF2hLqwXs5y+il0wT62NIkFkkA7vXHWxWQTOj/c=;
-        b=QZ3eFxNYnYZuvUjtZdw8dXqt2DkyshROKIoTIeB7fiySwIbyWFSWSu2FHJ+UQmhE2l
-         70XU++ItFaZ8TcT5g+rZBPLcf1ZP1bgFFme926tkGhdhk0COVYs6TcsPHW8uoq5wIhS7
-         p8AjXkGaLBVapdMc6MI+tXxlAiZZ4THegBjcg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=BVXBxu6CSJUCM6ZaKqaDQTFALn7U7/hPPvBTY8mx6hk9llLXeX2TmAEkcOl+g9uu17
-         VCJEmOT+uz9xq/lHVSsj2izsqxCSjy0NgyJJpsAUmnx/ZMVmhj/NgN2JYuWscjol4x6D
-         gwYhSBKPzbjfSr5jgXHeFdf8HlpAwkyF1d6SI=
-Received: by 10.210.138.19 with SMTP id l19mr8638330ebd.74.1250621145698;
-        Tue, 18 Aug 2009 11:45:45 -0700 (PDT)
-Received: from localhost.localdomain (abvz12.neoplus.adsl.tpnet.pl [83.8.223.12])
-        by mx.google.com with ESMTPS id 28sm721587eye.15.2009.08.18.11.45.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 18 Aug 2009 11:45:44 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7IIjI8A027573;
-	Tue, 18 Aug 2009 20:45:23 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7IIiwFb027568;
-	Tue, 18 Aug 2009 20:44:58 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LFD.2.00.0908181246470.6044@xanadu.home>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751206AbZHRTAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 15:00:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751018AbZHRTAv
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:00:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35400 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750743AbZHRTAv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 15:00:51 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 699C1F77A;
+	Tue, 18 Aug 2009 15:00:52 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52C4DF776; Tue, 18 Aug
+ 2009 15:00:44 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0908181357330.6044@xanadu.home> (Nicolas
+ Pitre's message of "Tue\, 18 Aug 2009 14\:01\:57 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 73549B8E-8C29-11DE-91CF-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126438>
 
 Nicolas Pitre <nico@cam.org> writes:
 
-> On Tue, 18 Aug 2009, Tomasz Kontusz wrote:
-> 
-> > Ok, so it looks like it's not implementable without some kind of cache
-> > server-side, so the server would know what the pack it was sending
-> > looked like.
-> > But here's my idea: make server send objects in different order (the
-> > newest commit + whatever it points to first, then next one,then
-> > another...). Then it would be possible to look at what we got, tell
-> > server we have nothing, and want [the newest commit that was not
-> > complete]. I know the reason why it is sorted the way it is, but I think
-> > that the way data is stored after clone is clients problem, so the
-> > client should reorganize packs the way it wants.
-> 
-> That won't buy you much.  You should realize that a pack is made of:
-> 
-> 1) Commit objects.  Yes they're all put together at the front of the pack,
->    but they roughly are the equivalent of:
-> 
-> 	git log --pretty=raw | gzip | wc -c
-> 
->    For the Linux repo as of now that is around 32 MB.
+> On Tue, 18 Aug 2009, Junio C Hamano wrote:
+>
+>> For git's own use, I would be much happier with this change.
+>> 
+>> But given that there are some people wanting to snarf block-sha1/*.[ch]
+>> out to use them standalone, I have a slight hesitation against introducing
+>> the dependency to git-compat-util.h, making it unclear to them that all
+>> this file wants from outside are ntohl, htonl and memcpy.
+>
+> Should we really care to keep our code suboptimal just to make it 
+> readily reusable by other projects?  That seems a bit backward to me.
 
-For my clone of Git repository this gives 3.8 MB
- 
-> 2) Tree and blob objects.  Those are the bulk of the content for the top 
->    commit.  The top commit is usually not delta compressed because we 
->    want fast access to the top commit, and that is used as the base for 
->    further delta compression for older commits.  So the very first 
->    commit is whole at the front of the pack right after the commit 
->    objects.  you can estimate the size of this data with:
-> 
-> 	git archive --format=tar HEAD | gzip | wc -c
-> 
->    On the same Linux repo this is currently 75 MB.
+You are right; and I should give a bit more credit to their intelligence.
+The source (block-sha1/sha1.c) is short enough that they can figure this
+out for themselves even without any additional comments.
 
-On the same Git repository this gives 2.5 MB
-
-> 
-> 3) Delta objects.  Those are making the rest of the pack, plus a couple 
->    tree/blob objects that were not found in the top commit and are 
->    different enough from any object in that top commit not to be 
->    represented as deltas.  Still, the majority of objects for all the 
->    remaining commits are delta objects.
-
-You forgot that delta chains are bound by pack.depth limit, which
-defaults to 50.  You would have then additional full objects.
-
-The single packfile for this (just gc'ed) Git repository is 37 MB.
-Much more than 3.8 MB + 2.5 MB = 6.3 MB.
-
-[cut]
-
-There is another way which we can go to implement resumable clone.
-Let's git first try to clone whole repository (single pack; BTW what
-happens if this pack is larger than file size limit for given
-filesystem?).  If it fails, client ask first for first half of of
-repository (half as in bisect, but it is server that has to calculate
-it).  If it downloads, it will ask server for the rest of repository.
-If it fails, it would reduce size in half again, and ask about 1/4 of
-repository in packfile first.
-
-The only extension required is for server to support additional
-capability, which enable for client to ask for appropriate 1/2^n part
-of repository (approximately), or 1/2^n between have and want.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Another issue, especially with your "openssl sha1 removal" patch, is if we
+can assume gcc everywhere.  As far as I can tell, block-sha1/sha1.c will
+be the first unconditional use of inline asm or statement expression on
+i386/amd64.  Are folks on Solaris and other platforms Ok with this?
