@@ -1,100 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [RFC PATCH] stash: accept options also when subcommand 'save' is omitted
-Date: Tue, 18 Aug 2009 15:01:52 +0200
-Message-ID: <vpqws51l1hb.fsf@bauges.imag.fr>
-References: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
+Date: Tue, 18 Aug 2009 15:09:47 +0200
+Message-ID: <40aa078e0908180609h13968c56m4e0d0fd4dfa07669@mail.gmail.com>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
+	 <1250600335-8642-1-git-send-email-mstormo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 18 15:04:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 15:10:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdOMJ-0002QR-E3
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 15:04:15 +0200
+	id 1MdORr-0004tz-4Z
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 15:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757212AbZHRNEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 09:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754191AbZHRNEG
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 09:04:06 -0400
-Received: from imag.imag.fr ([129.88.30.1]:34386 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752543AbZHRNEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 09:04:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7ID1w5M022783
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 15:01:58 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdOK0-0007zo-VS; Tue, 18 Aug 2009 15:01:52 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdOK0-0000Tc-UA; Tue, 18 Aug 2009 15:01:52 +0200
-In-Reply-To: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Tue\, 18 Aug 2009 14\:46\:07 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 18 Aug 2009 15:01:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751167AbZHRNJr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 09:09:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751162AbZHRNJr
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 09:09:47 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:4671 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750865AbZHRNJq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 09:09:46 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so1217533qwh.37
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 06:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EDf5TL4Cp20N/eCHC0Geq7npsixQPfAgOTGcxsLwVCw=;
+        b=NkZiOA1882DWdrmPmYUz0y8DzSuwVyQHGLsp0LxQhU5Q4sbTPCvKKlNXKGDW4gqUWM
+         j9BbevxPJkrUTYrIuZwPrdWIciFqeBZWt8L2gSjtUOdjRPo7nUJwj6k+Cya/QQwrgMDX
+         k2q/44mwxmOjuGkrflXq/P3KxxlOEzm4k2VTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jKuXkKOKk9pZcrFqUERhiqem5XtyBo1/+wZAcKDkWORd/zhkA462fx70YFgZgP0Nim
+         y5IMFuPpTBfK0G77NX9+MH/7xR7ySA6X4fsg4X9otRgi6Jvt7pMZRRF+C/FXZz8ENxLS
+         KashY28zj6StrLsBgP6Gpx6tSiAHq63aJ2yh0=
+Received: by 10.224.16.131 with SMTP id o3mr5383823qaa.18.1250600987308; Tue, 
+	18 Aug 2009 06:09:47 -0700 (PDT)
+In-Reply-To: <1250600335-8642-1-git-send-email-mstormo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126396>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+On Tue, Aug 18, 2009 at 2:58 PM, Marius Storm-Olsen<mstormo@gmail.com> =
+wrote:
+> @@ -1331,14 +1396,14 @@ strip: $(PROGRAMS) git$X
+> =A0git.o: git.c common-cmds.h GIT-CFLAGS
+> =A0 =A0 =A0 =A0$(QUIET_CC)$(CC) -DGIT_VERSION=3D'"$(GIT_VERSION)"' \
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'-DGIT_HTML_PATH=3D"$(htmldir_SQ)"' \
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 $(ALL_CFLAGS) -c $(filter %.c,$^)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 $(ALL_CFLAGS) $(COMPFLAG) $(COBJFLAG)gi=
+t.o $(filter %.c,$^)
+>
+> =A0git$X: git.o $(BUILTIN_OBJS) $(GITLIBS)
+> - =A0 =A0 =A0 $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ git.o \
+> + =A0 =A0 =A0 $(QUIET_LINK)$(LINK) $(LINKER_CFLAGS) $(LOBJFLAG)$@ git=
+=2Eo \
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
+<snip>
+> =A0ifdef NO_EXPAT
+> =A0http-walker.o: http-walker.c http.h GIT-CFLAGS
+> - =A0 =A0 =A0 $(QUIET_CC)$(CC) -o $*.o -c $(ALL_CFLAGS) -DNO_EXPAT $<
+> + =A0 =A0 =A0 $(QUIET_CC)$(CC) $(COBJFLAG)$*.o $(COMPFLAG) $(ALL_CFLA=
+GS) -DNO_EXPAT $<
+> =A0endif
 
-> This allows in particular 'git stash --keep-index' which is shorter than
-> 'git stash save --keep-index', and not ambiguous.
+Perhaps this is the right time to change the make-system to using the
+somewhat standard $(COMPLIE.c), $(OUTPUT_OPTION) etc macros?
 
-Hmm, googling a bit, I just noticed that there's already something in
-pu:
-ea41cfc4f (Make 'git stash -k' a short form for 'git stash save --keep-index')
-which also does the trick, while adding a -k alias for --keep-index.
-
-Not sure which hack is best between my
-
-> +case "$1" in
-> +    -*)
-> +	set "save" "$@"
-> +	;;
-> +esac
-> +
-
-And the proposed
-
- *)
--	if test $# -eq 0
--	then
--		save_stash &&
-+	case $#,"$1" in
-+	0,|1,-k|1,--keep-index)
-+		save_stash "$@" &&
- 		say '(To restore them type "git stash apply")'
--	else
-+		;;
-+	*)
- 		usage
--	fi
-+	esac
- 	;;
- esac
-
-Mine has at least two advantages:
-
-* It won't require changing the code again when new options are added
-  to 'git stash save'.
-
-* It works with 'git stash -k -q' for example, while the other
-  proposal checks that $# == 1, which won't work if there are more
-  than one option.
-
-But I may have missed its drawbacks ;-)
-
---
-Matthieu
+--=20
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
