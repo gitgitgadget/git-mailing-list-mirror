@@ -1,89 +1,119 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
-Date: Tue, 18 Aug 2009 08:40:24 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908180836440.3162@localhost.localdomain>
-References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com> <4A8AA511.1060205@gmail.com> <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com> <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: Git User's Survey 2009 partial summary, part 2 - from first 10
+Date: Tue, 18 Aug 2009 17:54:52 +0200
+Message-ID: <20090818155452.GA12938@vidovic>
+References: <200908171224.44686.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Artur Skawina <art.08.09@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	msysGit <msysgit@googlegroups.com>, Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 17:41:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 17:55:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdQo6-0005Q9-BH
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 17:41:06 +0200
+	id 1MdR1l-0003Ec-Ub
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 17:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759197AbZHRPk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 11:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755625AbZHRPk4
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 11:40:56 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:50066 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754757AbZHRPk4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 11:40:56 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7IFeRwO005203
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 08:40:28 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7IFeOjR020904;
-	Tue, 18 Aug 2009 08:40:25 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-5.463 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1759283AbZHRPzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 11:55:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759237AbZHRPzA
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 11:55:00 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:46129 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755013AbZHRPy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 11:54:59 -0400
+Received: by ewy3 with SMTP id 3so1709520ewy.18
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 08:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Y7d4T9b9sMWMQn172+dcUrNfMrs+TBdkZ3tiRFhCPcw=;
+        b=aWkdH2NapjiKhGIrUubBIMHZOFWtuL/SN3Ym5R3n4s2tyZ1xqzsesDFp3vOCPX9Avv
+         uPUJ5bAlrxHlPU5HwhotYBvEPMkWorWDxWz34Vtsg1S/uCBUTbCPcxzlDUYbGItOrEy/
+         JtgIww89lu0vn74wau2qqPqsfkL2iqb4J0yJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=RfexhVR+tAya2lS8pK8zsYLI5zPx13/RS7hnCTzLU5CrsK238H7VrAoY9EK1BwqBc/
+         DaJ7fJteV728llvSzf2YeZoZaaddEnW9UGR5XhShD6lhSjJvH5oDnQwNuo6h7whSXbE2
+         0HYZ//6hH6QphlLllNEsVmlyV/zqtMKxcTe1Q=
+Received: by 10.210.29.9 with SMTP id c9mr4378523ebc.87.1250610899374;
+        Tue, 18 Aug 2009 08:54:59 -0700 (PDT)
+Received: from @ (83-154-172-251.rev.libertysurf.net [83.154.172.251])
+        by mx.google.com with ESMTPS id 24sm240653eyx.33.2009.08.18.08.54.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 18 Aug 2009 08:54:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <200908171224.44686.jnareb@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126403>
 
+The 17/08/09, Jakub Narebski wrote:
 
+> Git User's Survey 2009 partial summary, part 2 - git difficulty,
+> proficiency, uses, install, OS, editors.
 
-On Tue, 18 Aug 2009, Junio C Hamano wrote:
+Thanks for these partial summaries.
 
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
+> 3) Have you found Git easy to learn?
+> 4) Have you found Git easy to use?
+>    (Choice - Single answer)
 > 
-> > On Tue, Aug 18, 2009 at 14:56, Artur Skawina<art.08.09@gmail.com> wrote:
-> > ...
-> >> I'd limit it to windows and any other ia32 platform that doesn't pick the
-> >> bswaps itself; as is, it just adds an unnecessary hidden gcc dependency.
-> >>
-> >> Hmm, it's actually a gcc-4.3+ dependency, so it won't even build w/ gcc 4.2;
-> >> something like this would be required: "(__GNUC__>=4 && __GNUC_MINOR__>=3)" .
-> >
-> > So, as you say the code makes no difference under Linux, would you be
-> > OK with just testing for GCC 4.3+, and not for Windows? That would get
-> > rid of the "hidden" GCC dependency and not make the preprocessor
-> > checks overly complex. Moreover, limiting my patch to any "platform
-> > that doesn't pick the bswaps itself" could possibly require
-> > maintenance on compiler / CRT updates.
+> ================================================
+> Answer            | to learn [%] |   to use [%]
+> ------------------------------------------------
+> Very easy         |          4%  |          9%
+> Easy              |         20%  |         36%
+> Reasonably easy   |         55%  |         45%
+> Hard              |         19%  |          8%
+> Very hard         |          2%  |          1%
+> ------------------------------------------------
+> Total respondents |        2942  |        2959
+> ================================================
+
+<...>
+
+> What's interesting is comparing (percentage) results for questions
+> 3. and 4.; how hard is git to learn versus how hard is to use.  It
+> seems like Git is reasonably easy to learn, and reasonably easy to
+> easy to use.  So it looks like Git just have somewhat steep learning
+> curve, and the difficulty to learn pays in being more powerful to
+> use.
+
+I believe it would be interesting to know who (from the question 6.)
+think what later. We may expect that people of the grade 4 and 5 ("can
+offer advice" and "know it very well") underestimate the difficulty to
+learn Git.
+
+Also (and as you said), this "Git's users" survey won't have answers
+from unsatisfied users who left Git. We can't rate the number of users
+who left Git because they found it too much hard to learn.
+
+> 6) Rate your own proficiency with Git:
+>    (Choice - Single answer)
 > 
-> I would say that should be fine, but I'd let Linus and Nico to overrule me
-> on this if they have any input.
+> You can think of it as 1-5 numerical grade of your proficiency in Git.
+> 
+> ================================================
+> Proficiency               | resp [%] | resp [n]
+> ------------------------------------------------
+> 1. novice                 |       4% |      114
+> 2. casual, needs advice   |      17% |      520
+> 3. everyday use           |      38% |     1138
+> 4. can offer advice       |      34% |     1020
+> 5. know it very well      |       6% |      192
+> --------------------------+---------------------
+> Total respondents         |                2984
+> Skipped this question     |                 105
+> ================================================
 
-I'd suggest not using a gcc builtin, since if you're using gcc you might 
-as well just use inline asm that has been around forever (unlike the 
-builtin).
-
-Just do:
-
-	#if defined(__GNUC__)
-	#define htonl(x) ({ unsigned int __res; \
-		__asm__("bswap %0":"=r" (__res):"0" (x)); \
-		__res; })
-	#define ntohl(x) htonl(x)
-	#endif
-
-or similar in the x86 section that does the rol/ror thing.
-
-			Linus
+-- 
+Nicolas Sebrecht
