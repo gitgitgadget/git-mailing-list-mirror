@@ -1,43 +1,66 @@
-From: tom fogal <tfogal@alumni.unh.edu>
-Subject: Re: [PATCH 04/11] Add _MSC_VER predefine macro to make same behaviors with __MINGW32__ Enable MSVC build. MSVC have the save behaviors with msysgit.
-Date: Mon, 17 Aug 2009 23:06:16 -0600
-Message-ID: <auto-000020259481@sci.utah.edu>
-References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com> <1250524872-5148-2-git-send-email-lznuaa@gmail.com> <1250524872-5148-3-git-send-email-lznuaa@gmail.com> <1250524872-5148-4-git-send-email-lznuaa@gmail.com> <alpine.DEB.1.00.0908171835590.4991@intel-tinevez-2-302>  <1976ea660908171829se49abf0j5b7d45a74e4c67a7@mail.gmail.com>
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 07:04:21 2009
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [PATCH 05/11] Remove va_copy at MSVC because there are va_copy.
+Date: Tue, 18 Aug 2009 13:06:23 +0800
+Message-ID: <1976ea660908172206hc75c1e6i117806338be5ccea@mail.gmail.com>
+References: <1250525040-5868-1-git-send-email-lznuaa@gmail.com>
+	 <4A898B27.3040507@gnu.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Johannes.Schindelin@gmx.de
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 07:06:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdGrr-0002Gm-9m
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 07:04:19 +0200
+	id 1MdGtz-0002hU-IJ
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 07:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317AbZHRFEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 01:04:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750908AbZHRFEJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 01:04:09 -0400
-Received: from mail.sci.utah.edu ([155.98.58.79]:45618 "EHLO sci.utah.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750751AbZHRFEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 01:04:08 -0400
-Received: from dummy.name; Mon, 17 Aug 2009 23:04:09 -0600
-In-Reply-To: Your message of "Tue, 18 Aug 2009 09:29:39 +0800."
-             <1976ea660908171829se49abf0j5b7d45a74e4c67a7@mail.gmail.com> 
+	id S1751436AbZHRFGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 01:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbZHRFGX
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 01:06:23 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:54462 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750965AbZHRFGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 01:06:22 -0400
+Received: by qyk34 with SMTP id 34so2559019qyk.33
+        for <git@vger.kernel.org>; Mon, 17 Aug 2009 22:06:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lXUmIXnkYg1Xu2TtRh74bKVFaKCjAr4dYiUFee6WGwI=;
+        b=Rxfa7hNyujABRh+bILbz6grKC9MVeFddX5vQqTnYLQC3St2YW2XM2M+YcD++sEj0sR
+         msb4JlFQT7fNZqx4inh/fZ96gulfkcSmVAG/C2+dOonKXnFNinq1MIYLM//k8uSm+V7A
+         nAjm74o8M/B/0pJApJ7nMCfox6Jw33gouh3ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SMEDuwLy5LbxfmLcPXdN4ekMim1HZYs9CN/990F3ZwpVl36vTNruXQF1ekJ0TMA726
+         p7k8uAKcooKiGQ96jUztbinJKjaYPoToSxDh8ChgXVoqAwNopKwoLhrAUMqv2ssavcZx
+         7VajZuUtz28BQCf4HP5lLUbgL8zWJVaDXh5n4=
+Received: by 10.224.102.212 with SMTP id h20mr5018671qao.40.1250571983918; 
+	Mon, 17 Aug 2009 22:06:23 -0700 (PDT)
+In-Reply-To: <4A898B27.3040507@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126346>
 
-Frank Li <lznuaa@gmail.com> writes:
-> >
-> > 	Test whether WIN32 is defined rather than __MINGW32__
-> 
-> I think WIN32 is better, how about 64bit build case?
-> In 64bit environment, VC define WIN64 not WIN32.
+>
+> #ifndef va_copy
+> #define va_copy(dst, src)	((dst) = (src))
+> #endif
+>
+> if it works on MSVC?
+>
+> Paolo
+>
 
-Actually, "_WIN32" is always defined using `cl', even in 64bit mode.
-64bit compilation additionally defines "_WIN64", FWIW.
-
--tom
+I test it, it works.
