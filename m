@@ -1,83 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
-Date: Tue, 18 Aug 2009 09:08:38 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0908180906441.3162@localhost.localdomain>
-References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com> <4A8AA511.1060205@gmail.com> <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com> <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.01.0908180836440.3162@localhost.localdomain>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of 
+	function
+Date: Wed, 19 Aug 2009 00:11:48 +0800
+Message-ID: <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com>
+References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
+	 <1250524872-5148-2-git-send-email-lznuaa@gmail.com>
+	 <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>
+	 <3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com>
+	 <alpine.DEB.1.00.0908172134150.8306@pacific.mpi-cbg.de>
+	 <4A8A3ADE.9010703@gmail.com>
+	 <alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sebastian Schuberth <sschuberth@gmail.com>,
-	Artur Skawina <art.08.09@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	msysGit <msysgit@googlegroups.com>, Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 18:09:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <mstormo@gmail.com>,
+	Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 18 18:11:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdRFv-000113-8B
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:09:51 +0200
+	id 1MdRHw-0001zd-Gc
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758717AbZHRQJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 12:09:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758576AbZHRQJO
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:09:14 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57329 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752861AbZHRQJM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 12:09:12 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7IG8c4b007545
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 09:08:39 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7IG8cjC005318;
-	Tue, 18 Aug 2009 09:08:38 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <alpine.LFD.2.01.0908180836440.3162@localhost.localdomain>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-5.463 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758620AbZHRQLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 12:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758576AbZHRQLr
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:11:47 -0400
+Received: from mail-qy0-f196.google.com ([209.85.221.196]:42364 "EHLO
+	mail-qy0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752233AbZHRQLr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 12:11:47 -0400
+Received: by qyk34 with SMTP id 34so2799210qyk.33
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 09:11:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lAzVkzDgkavkYTNlg00AkQ6eDqUC4nvrxgj5zsBOfCc=;
+        b=Bxst06FrT8ecJEwrxu7UrTWNSnU1T/6lGw/l8yND+vunWpL/S93y70H3fElPhKalcB
+         Lzgl01bIvi0Y0Wyv/gOtGlOm7P69I2APumxc5LhLlAcM2LZsR5FYzOJCojASpFi7cnOH
+         yBEyMD0F5W731Cj7AsRbGtwlFpvqQRG12qeaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PCtQz6hWweVOeHZcyFIrr96MklsOS6twiZ0ryJzefSHuBAZ/gYKBOsD+4sDJeAEwcE
+         a+bAaPs2ap315zA3MenBHtdGNkPnUqn9yVDw0JYtauNbQ9E7ViW/yxxYgSt9e/9qGnSN
+         57S+1WInw6Od3/QGPYyH83Zq5jok24KpbrRBk=
+Received: by 10.224.4.21 with SMTP id 21mr5629824qap.155.1250611908333; Tue, 
+	18 Aug 2009 09:11:48 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126407>
 
+> Okay, I will wait for Frank's updates (just fetched tgit.git and it still
+> contains the old branch), merge the early part and add the compiler flags.
+>
+Today, I just update 5 patch according review feedback.
+Do I need send it again?
 
+I have push my change to tgit
+git://repo.or.cz/tgit.git
+branch vcpatch2
 
-On Tue, 18 Aug 2009, Linus Torvalds wrote:
-> 
-> I'd suggest not using a gcc builtin, since if you're using gcc you might 
-> as well just use inline asm that has been around forever (unlike the 
-> builtin).
-
-That seems to be what glibc does too.
-
-Here's a patch.
-
-		Linus
----
- block-sha1/sha1.c |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index 464cb25..e6e7170 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -22,6 +22,11 @@
- #define SHA_ROL(x,n)	SHA_ASM("rol", x, n)
- #define SHA_ROR(x,n)	SHA_ASM("ror", x, n)
- 
-+#undef htonl
-+#undef ntohl
-+#define htonl(x) ({ unsigned int __res; __asm__("bswap %0":"=r" (__res):"0" (x)); __res; })
-+#define ntohl(x) htonl(x)
-+
- #else
- 
- #define SHA_ROT(X,l,r)	(((X) << (l)) | ((X) >> (r)))
+How do I know if patch has been applied main line?
