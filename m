@@ -1,86 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 23:57:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908182355070.8306@pacific.mpi-cbg.de>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com> <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302> <4A8AEAF5.6070205@gmail.com> <alpine.LNX.2.00.0908181420330.7195@iabervon.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC
+ toolchain
+Date: Wed, 19 Aug 2009 00:02:34 +0200
+Message-ID: <40aa078e0908181502v32cbd223xcde1cd363dc76345@mail.gmail.com>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com> <7vtz05dq0p.fsf@alter.siamese.dyndns.org> <4A8AE7C5.7050600@gmail.com> <4A8AED8B.9080604@gmail.com> <alpine.DEB.1.00.0908182349220.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
-	msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
-	bonzini@gnu.org, kusmabite@googlemail.com
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:56:41 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@storm-olsen.com>, "Johan 't Hart" <johanthart@gmail.com>,  Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com, git@vger.kernel.org,  lznuaa@gmail.com, bonzini@gnu.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Aug 19 00:02:47 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f158.google.com ([209.85.221.158])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWfY-0008AI-Hm
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:56:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750858AbZHRV4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbZHRV4c
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:56:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47560 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750717AbZHRV4b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:56:31 -0400
-Received: (qmail invoked by alias); 18 Aug 2009 21:56:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp033) with SMTP; 18 Aug 2009 23:56:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/Syk03rwzS5puanbI0UEnLCTQrTsKP+0Fui8eQzz
-	umdvjdKRVLvZiC
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0908181420330.7195@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
-Sender: git-owner@vger.kernel.org
+	id 1MdWlR-0001u6-SE
+	for gcvm-msysgit@m.gmane.org; Wed, 19 Aug 2009 00:02:46 +0200
+Received: by mail-qy0-f158.google.com with SMTP id 30so5342190qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Tue, 18 Aug 2009 15:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:authentication-results
+         :received:dkim-signature:domainkey-signature:mime-version:received
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=+kj/xcsHWr77l2CwedAPFmViOD14ZFk5XZZBwpsJnA4=;
+        b=bTNCLjqrhIagXYN4n7KOGadN+6nd9SGNoi3zsJKFfEnqL27Do1IRiDv+YESHBcureV
+         SXviMoDJ/S9O3uMmfKb+ydC3njliurlh7ARy4koY4Gh7aueYzabZ9qHM9ChUvRMc6izT
+         ZAE+eQ4KHIz02DKL1h5pZVRjAZ9+h/vPBBAMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        b=r91SYBZQrxPnePwEtiZkoooGbFApgwH2gEvo4+HgkGN18hFI0m6H8t38P59IQ7JQDd
+         9RcWueusPedRgJYhdY/kWn1DUoVih6nceKyVupCDkrPVtwVjh4rbOrHVYsXx1j32jpPr
+         o6YMifJ/llf/ZGgvSAJcDL56/UYfqnJEkKV+w=
+Received: by 10.220.83.100 with SMTP id e36mr208102vcl.19.1250632960147;
+        Tue, 18 Aug 2009 15:02:40 -0700 (PDT)
+Received: by 10.230.109.224 with SMTP id k32gr6527vbp.0;
+	Tue, 18 Aug 2009 15:02:36 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.220.17.101 with SMTP id r37mr1053796vca.17.1250632955622; Tue, 18 Aug 2009 15:02:35 -0700 (PDT)
+Received: by 10.220.17.101 with SMTP id r37mr1053795vca.17.1250632955592; Tue, 18 Aug 2009 15:02:35 -0700 (PDT)
+Received: from mail-yx0-f188.google.com (mail-yx0-f188.google.com [209.85.210.188]) by gmr-mx.google.com with ESMTP id 18si450606yxe.0.2009.08.18.15.02.34; Tue, 18 Aug 2009 15:02:34 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.210.188 as permitted sender) client-ip=209.85.210.188;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.210.188 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by mail-yx0-f188.google.com with SMTP id 26so5164717yxe.4 for <msysgit@googlegroups.com>; Tue, 18 Aug 2009 15:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=XCDjyFZJlPD7VxEiCzZpciGC0AeFoO7eawlXadFJc6I=; b=tSZb3PzB2NIzImRUxN1NPgxVhSN/NuqkhWBXUhqKDYkOS65d/Y7gVrfGqleL11UJ+Y wuXVOV7XiaCxbR/7yoDcX1S4xo3AY3Xv7J/mSy6lvRQIlhSM+RAecj+TK9SxLiprm/A/ G868XG52xi8//EU6lMLC+RFlyRTz/vhJseDVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=kerr1QW4Y2RGff5aLoHp+MHhprXfbmrRMU5jrb6PrvrOz2tRPAJeKhAnaPqUp2/F/x QjA00uFNEYXDSI8u836qn8+GHWMRJB3LI9QKeG3/EoqywXEy0MhW0W6p+C1SMtjxeLEJ 3UnvrZXEeQrXQ3PJPn1wyKjCczk0Qu0A1HbFs=
+Received: by 10.90.226.13 with SMTP id y13mr4206835agg.107.1250632954181; Tue,  18 Aug 2009 15:02:34 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908182349220.8306@pacific.mpi-cbg.de>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126471>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126472>
 
-Hi,
 
-On Tue, 18 Aug 2009, Daniel Barkalow wrote:
+On Tue, Aug 18, 2009 at 11:53 PM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> debuggin, and Visual Studio's feature to move to the next/previous compile
+> error.
 
-> On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
-> 
-> > Johannes Schindelin said the following on 18.08.2009 16:11:
-> > > On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
-> > > > So, instead of rely on these vcproj files which *will* go stale, 
-> > > > we can simply use the same Makefile system which everyone else is 
-> > > > using. :) After all, we're just compiling with a different 
-> > > > compiler. The end result will still rely on the *msysGit 
-> > > > environment* to function, so we already require it. Thus, GNU Make 
-> > > > is present, and we can use it.
-> > > 
-> > > We can also use sed or perl to generate/modify the .vcproj files, or 
-> > > run CMake (once Pau got it to build), and package the stuff using 
-> > > zip (once I got that to build).
-> > 
-> > Really? That would be some script being able to parse the Makefile, 
-> > and create something reasonable as a vcproj script :) Keeping all the 
-> > options in sync, conditional files/libs, all the various end 
-> > executables (a separate .vcproj for each of them, and a solution file 
-> > (.sln)to tie them all together into a .. "solution", a complete 
-> > product blah blah blah) etc.
-> 
-> I think it wouldn't be impossible to split the Makefile into an 
-> easy-to-parse part and an irrelevant-to-vcproj part.
+Nope, you're still able to skip through the erros (with F4) as ususal.
+I've been using a sed-script to translate gcc-style errors to
+msvc-style errors for makefile projects before with great success. In
+this case, the errors are already in msvc-style, so that part should
+really not be any issue.
 
-What?  That is pretty fragile.
-
-It would be _much_ better to just add another Makefile target that outputs 
-the files needed for the targets.
-
-We do not need to keep the Makefile as-is!  If the change is not 
-intrusive, I am sure our friendly maintainer will not see a problem 
-either.
-
-No need for fragile parsing at all.
-
-Ciao,
-Dscho
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
