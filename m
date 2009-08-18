@@ -1,81 +1,150 @@
-From: "Adam Simpkins" <adam@adamsimpkins.net>
-Subject: RE: interaction between --graph and --simplify-by-decoration
-Date: Tue, 18 Aug 2009 13:55:54 -0700 (PDT)
-Message-ID: <1250628954.114121983@192.168.1.201>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Continue git clone after interruption
+Date: Tue, 18 Aug 2009 17:32:35 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908181711350.6044@xanadu.home>
+References: <1250509342.2885.13.camel@cf-48>
+ <m3fxbpneqe.fsf@localhost.localdomain>
+ <alpine.LFD.2.00.0908181537360.6044@xanadu.home>
+ <200908182302.10619.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "=?UTF-8?Q?Santi=20B=C3=A9jar?=" <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:06:45 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:32:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdVt8-0005zF-M0
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:06:39 +0200
+	id 1MdWIQ-00087l-7a
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:32:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbZHRVGa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 17:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbZHRVGa
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:06:30 -0400
-Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:59908 "EHLO
-	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446AbZHRVG3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 17:06:29 -0400
-X-Greylist: delayed 636 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Aug 2009 17:06:29 EDT
-Received: from relay3.r3.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay3.r3.iad.emailsrvr.com (SMTP Server) with ESMTP id 473E044C0AA;
-	Tue, 18 Aug 2009 16:55:54 -0400 (EDT)
-Received: from dynamic7.wm-web.iad.mlsrvr.com (dynamic7.wm-web.iad.mlsrvr.com [192.168.2.148])
-	by relay3.r3.iad.emailsrvr.com (SMTP Server) with ESMTP id 3B2EC44C02C;
-	Tue, 18 Aug 2009 16:55:54 -0400 (EDT)
-Received: from adamsimpkins.net (localhost [127.0.0.1])
-	by dynamic7.wm-web.iad.mlsrvr.com (Postfix) with ESMTP id 1CC2B153806A;
-	Tue, 18 Aug 2009 16:55:54 -0400 (EDT)
-Received: by apps.rackspace.com
-    (Authenticated sender: simpkins@adamsimpkins.net, from: adam@adamsimpkins.net) 
-    with HTTP; Tue, 18 Aug 2009 13:55:54 -0700 (PDT)
-Importance: Normal
-X-Priority: 3 (Normal)
-X-Type: plain
-X-Mailer: webmail7.0
+	id S1751017AbZHRVck (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:32:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750943AbZHRVck
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:32:40 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35093 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751004AbZHRVcj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 17:32:39 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOL003SYCNNM9F0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 18 Aug 2009 17:21:23 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200908182302.10619.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126458>
 
-On Friday, July 31, 2009 4:11am, "Santi B=C3=A9jar" <santi@agolina.net>=
- said:
-> Hello,
->=20
->   I've found that in some cases the --graph and
-> --simplify-by-decoration don't work well together. If you do this in
-> the git.git repository:
+On Tue, 18 Aug 2009, Jakub Narebski wrote:
 
-Thanks for reporting the problem, I apologize for taking so long to
-investigate and respond.
+> You can probably get number and size taken by delta and non-delta (base)
+> objects in the packfile somehow.  Neither "git verify-pack -v <packfile>"
+> nor contrib/stats/packinfo.pl did help me arrive at this data.
+
+Documentation for verify-pack says:
+
+|When specifying the -v option the format used is:
+|
+|        SHA1 type size size-in-pack-file offset-in-packfile
+|
+|for objects that are not deltified in the pack, and
+|
+|        SHA1 type size size-in-packfile offset-in-packfile depth base-SHA1
+|
+|for objects that are deltified.
+
+So a simple script should be able to give you the answer.
+
+> >> (BTW what happens if this pack is larger than file size limit for 
+> >> given filesystem?).
+> > 
+> > We currently fail.  Seems that no one ever had a problem with that so 
+> > far. We'd have to split the pack stream into multiple packs on the 
+> > receiving end.  But frankly, if you have a repository large enough to 
+> > bust your filesystem's file size limit then maybe you should seriously 
+> > reconsider your choice of development environment.
+> 
+> Do we fail gracefully (with an error message), or does git crash then?
+
+If the filesystem is imposing the limit, it will likely return an error 
+on the write() call and we'll die().  If the machine has a too small 
+off_t for the received pack then we also die("pack too large for current 
+definition of off_t").
+
+> If I remember correctly FAT28^W FAT32 has maximum file size of 2 GB.
+> FAT is often used on SSD, on USB drive.  Although if you have  2 GB
+> packfile, you are doing something wrong, or UGFWIINI (Using Git For
+> What It Is Not Intended).
+
+Hopefully you're not performing a 'git clone' off of a FAT filesystem.  
+For physical transport you may repack with the appropriate switches.
+
+> >> If it fails, client ask first for first half of of
+> >> repository (half as in bisect, but it is server that has to calculate
+> >> it).  If it downloads, it will ask server for the rest of repository.
+> >> If it fails, it would reduce size in half again, and ask about 1/4 of
+> >> repository in packfile first.
+> > 
+> > Problem people with slow links have won't be helped at all with this.  
+> > What if the network connection gets broken only after 49% of the 
+> > transfer and that took 3 hours to download?  You'll attempt a 25% size 
+> > transfer which would take 1.5 hour despite the fact that you already 
+> > spent that much time downloading that first 1/4 of the repository 
+> > already.  And yet what if you're unlucky and now the network craps on 
+> > you after 23% of that second attempt?
+> 
+> A modification then.
+> 
+> First try ordinary clone.  If it fails because network is unreliable,
+> check how much we did download, and ask server for packfile of slightly
+> smaller size; this means that we are asking server for approximate pack
+> size limit, not for bisect-like partitioning revision list.
+
+If the download didn't reach past the critical point (75 MB in my linux 
+repo example) then you cannot validate the received data and you've 
+wasted that much bandwidth.
+
+> > I think it is better to "prime" the repository with the content of the 
+> > top commit in the most straight forward manner using git-archive which 
+> > has the potential to be fully restartable at any point with little 
+> > complexity on the server side.
+> 
+> But didn't it make fully restartable 2.5 MB part out of 37 MB packfile?
+
+The front of the pack is the critical point.  If you get enough to 
+create the top commit then further transfers can be done incrementally 
+with only the deltas between each commits.
+
+> A question about pack protocol negotiation.  If clients presents some
+> objects as "have", server can and does assume that client has all 
+> prerequisites for such objects, e.g. for tree objects that it has
+> all objects for files and directories inside tree; for commit it means
+> all ancestors and all objects in snapshot (have top tree, and its 
+> prerequisites).  Do I understand this correctly?
+
+That works only for commits.
+
+> If we have partial packfile which crashed during downloading, can we
+> extract from it some full objects (including blobs)?  Can we pass
+> tree and blob objects as "have" to server, and is it taken into account?
+
+No.
+
+> Perhaps instead of separate step of resumable-downloading of top commit
+> objects (in snapshot), we can pass to server what we did download in
+> full?
+
+See above.
+
+> BTW. because of compression it might be more difficult to resume 
+> archive creation in the middle, I think...
+
+Why so?  the tar+gzip format is streamable.
 
 
-> * | | f29ac4f (tag: v1.6.3-rc2) GIT 1.6.3-rc2
->  / /
-> | | *   66996ec Sync with 1.6.2.4
-
-> you can see that f29ac4f looks like it does not have any parents whil=
-e
-> the correct parent is 66996ec which seems to have no children. But if
-> you omit the --oneline you can see that there are a lot of "root"-lik=
-e
-> commits (f01f109, a48f5d7, f29ac4f,...).
-
-Yes, there's a bug in graph_is_interesting().  When processing
-f29ac4f, the graph code thinks that 66996ec isn't interesting and
-won't get displayed in the output, so it doesn't prepare the graph
-lines to show lines to 66996ec.
-
-I'll submit a patch shortly.
-
---
-Adam Simpkins
-adam@adamsimpkins.net
+Nicolas
