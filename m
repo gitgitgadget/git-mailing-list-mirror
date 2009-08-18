@@ -1,147 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/3] stash: reject stash name starting with a dash.
-Date: Tue, 18 Aug 2009 23:38:43 +0200
-Message-ID: <1250631523-10524-4-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
- <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:42:25 2009
+From: Andy Polyakov <appro@fy.chalmers.se>
+Subject: Re: x86 SHA1: Faster than OpenSSL
+Date: Tue, 18 Aug 2009 23:50:14 +0200
+Message-ID: <4A8B2216.6080607@fy.chalmers.se>
+References: <20090803034741.23415.qmail@science.horizon.com> <alpine.LFD.2.01.0908031924230.3270@localhost.localdomain> <alpine.LFD.2.01.0908031938280.3270@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:50:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWRj-0003Go-IL
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:42:24 +0200
+	id 1MdWZU-00066c-FR
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751202AbZHRVmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:42:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751191AbZHRVmQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:42:16 -0400
-Received: from imag.imag.fr ([129.88.30.1]:63048 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751052AbZHRVmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:42:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7ILdfe7007653
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 23:39:41 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdWP6-0005Lo-SG; Tue, 18 Aug 2009 23:39:40 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdWP6-0002mM-R0; Tue, 18 Aug 2009 23:39:40 +0200
-X-Mailer: git-send-email 1.6.4.rc2.31.g2d7d7
-In-Reply-To: <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 18 Aug 2009 23:39:41 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751042AbZHRVuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbZHRVuN
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:50:13 -0400
+Received: from atum.ita.chalmers.se ([129.16.4.148]:64290 "EHLO
+	atum.ita.chalmers.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbZHRVuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 17:50:12 -0400
+Received: from fyserv1.fy.chalmers.se (fyserv1.fy.chalmers.se [129.16.110.66])
+	by atum.ita.chalmers.se (Postfix) with ESMTP id E0A818328;
+	Tue, 18 Aug 2009 23:50:13 +0200 (CEST)
+Received: from [127.0.0.1] (stty [129.16.50.165])
+	by fyserv1.fy.chalmers.se (8.8.8/8.8.8) with ESMTP id XAA08039;
+	Tue, 18 Aug 2009 23:48:44 +0200 (MEST)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
+In-Reply-To: <alpine.LFD.2.01.0908031938280.3270@localhost.localdomain>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126468>
 
-This avoids typos like 'git stash save --invalid-option', particularly
-nasty since one can omit the 'save' subcommand. The syntax
-'git stash save -- "-name starting with dash" still allows such stash name.
+> On Mon, 3 Aug 2009, Linus Torvalds wrote:
+>> The thing that I'd prefer is simply
+>>
+>> 	git fsck --full
+>>
+>> on the Linux kernel archive. For me (with a fast machine), it takes about 
+>> 4m30s with the OpenSSL SHA1, and takes 6m40s with the Mozilla SHA1 (ie 
+>> using a NO_OPENSSL=1 build).
+>>
+>> So that's an example of a load that is actually very sensitive to SHA1 
+>> performance (more so than _most_ git loads, I suspect), and at the same 
+>> time is a real git load rather than some SHA1-only microbenchmark.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Jeff King <peff@peff.net> writes:
+I couldn't agree more that real-life benchmarks are of greater value
+than specific algorithm micro-benchmark. And given the provided
+profiling data one can argue that +17% (or my +12%) improvement on
+micro-benchmark aren't really worth bothering about. But it's kind of
+sport [at least for me], so don't judge too harshly:-)
 
->> But I may have missed its drawbacks ;-)
->
-> The only I can think of is that bogus input will provoke 'save'. So
-> something like:
->
->   git stash --apply
->
-> will invoke "git stash save --apply", which doesn't even complain. It
-> just tries to make a stash with message --apply. Now of course this
-> input is obviously bogus, but probably the right thing to do is
-> complain.
->
-> OTOH, I think it is the fault of "git stash save --apply" for not doing
-> the complaining, so your patch really isn't making it worse. Probably it
-> should barf on anything unrecognized starting with a '-', and allow '--'
-> to separate the message from the rest of the options (in the rare case
-> that you want a message starting with '-').
->
-> -Peff
+>> It also 
+>> shows very clearly why we default to the OpenSSL version over the Mozilla 
+>> one.
 
-So, here it is!
+As George implicitly mentioned most OpenSSL assembler modules are
+available under more permissive license and if there is interest I'm
+ready to assist...
 
- Documentation/git-stash.txt |    2 +-
- git-stash.sh                |   10 +++++++++-
- t/t3903-stash.sh            |   10 ++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+> "perf report --sort comm,dso,symbol" profiling shows the following for 
+> 'git fsck --full' on the kernel repo, using the Mozilla SHA1:
+> 
+>     47.69%               git  /home/torvalds/git/git     [.] moz_SHA1_Update
+>     22.98%               git  /lib64/libz.so.1.2.3       [.] inflate_fast
+>      7.32%               git  /lib64/libc-2.10.1.so      [.] __GI_memcpy
+>      4.66%               git  /lib64/libz.so.1.2.3       [.] inflate
+>      3.76%               git  /lib64/libz.so.1.2.3       [.] adler32
+>      2.86%               git  /lib64/libz.so.1.2.3       [.] inflate_table
+>      2.41%               git  /home/torvalds/git/git     [.] lookup_object
+>      1.31%               git  /lib64/libc-2.10.1.so      [.] _int_malloc
+>      0.84%               git  /home/torvalds/git/git     [.] patch_delta
+>      0.78%               git  [kernel]                   [k] hpet_next_event
+> 
+> so yeah, SHA1 performance matters. Judging by the OpenSSL numbers, the 
+> OpenSSL SHA1 implementation must be about twice as fast as the C version 
+> we use.
 
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 7e515ce..ded62e0 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 'git stash' drop [-q|--quiet] [<stash>]
- 'git stash' ( pop | apply ) [--index] [-q|--quiet] [<stash>]
- 'git stash' branch <branchname> [<stash>]
--'git stash' [save] [--patch] [--[no-]keep-index|-k] [-q|--quiet] [<message>]
-+'git stash' [save] [--patch] [--[no-]keep-index|-k] [-q|--quiet] [--] [<message>]
- 'git stash' clear
- 'git stash' create
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index bb36bc7..642e265 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -7,7 +7,7 @@ USAGE="list [<options>]
-    or: $dashless drop [-q|--quiet] [<stash>]
-    or: $dashless ( pop | apply ) [--index] [-q|--quiet] [<stash>]
-    or: $dashless branch <branchname> [<stash>]
--   or: $dashless [save] [-k|--keep-index] [-q|--quiet] [<message>]
-+   or: $dashless [save] [-k|--keep-index] [-q|--quiet] [--] [<message>]
-    or: $dashless clear"
- 
- SUBDIRECTORY_OK=Yes
-@@ -145,6 +145,14 @@ save_stash () {
- 		-q|--quiet)
- 			GIT_QUIET=t
- 			;;
-+		--)
-+			shift
-+			break
-+			;;
-+		-*)
-+			echo "error: unknown option for 'stash save': $1"
-+			usage
-+			;;
- 		*)
- 			break
- 			;;
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 0e831e0..87e5a14 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -208,4 +208,14 @@ test_expect_success 'stash -k' '
-        test bar,bar4 = $(cat file),$(cat file2)
- '
- 
-+test_expect_success 'stash --invalid-option' '
-+       echo bar5 > file &&
-+       echo bar6 > file2 &&
-+       git add file2 &&
-+       ! git stash --invalid-option &&
-+       test bar5,bar6 = $(cat file),$(cat file2) &&
-+       git stash -- -message-starting-with-dash &&
-+       test bar,bar2 = $(cat file),$(cat file2)
-+'
-+
- test_done
--- 
-1.6.4.rc2.31.g2d7d7
+And given /lib64 path this is 64-bit C compiler-generated code compared
+to 32-bit assembler? Either way in this context I have extra comment
+addressing previous subscriber, Mark Lodato, who effectively wondered
+how would 64-bit assembler compare to 32-bit one. First of all there
+*is* even 64-bit assembler version. But as SHA1 is essentially 32-bit
+algorithm, 64-bit implementation is only nominally faster, +20% at most.
+Faster thanks to larger register bank facilitating more efficient
+instruction scheduling.
+
+Cheers. A.
