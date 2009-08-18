@@ -1,98 +1,87 @@
-From: Adam Simpkins <simpkins@facebook.com>
-Subject: [PATCH] graph API: fix bug in graph_is_interesting()
-Date: Tue, 18 Aug 2009 14:18:12 -0700
-Message-ID: <20090818211812.GL8147@facebook.com>
-References: <1250628954.114121983@192.168.1.201>
-Reply-To: Adam Simpkins <simpkins@facebook.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
+Date: Wed, 19 Aug 2009 00:48:33 +0200
+Message-ID: <40aa078e0908181548t5df05b1ct8013b99ea703ebba@mail.gmail.com>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
+	 <1250600335-8642-1-git-send-email-mstormo@gmail.com>
+	 <7vtz05dq0p.fsf@alter.siamese.dyndns.org> <4A8AE7C5.7050600@gmail.com>
+	 <4A8AED8B.9080604@gmail.com>
+	 <alpine.DEB.1.00.0908182349220.8306@pacific.mpi-cbg.de>
+	 <40aa078e0908181502v32cbd223xcde1cd363dc76345@mail.gmail.com>
+	 <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Aug 19 00:45:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
+	"Johan 't Hart" <johanthart@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 19 00:48:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdXR1-000848-C3
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 00:45:43 +0200
+	id 1MdXTv-0000WS-9f
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 00:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886AbZHRWp3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 18:45:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750803AbZHRWp3
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 18:45:29 -0400
-Received: from mailout-snc1.facebook.com ([69.63.179.25]:53322 "EHLO
-	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750802AbZHRWp2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 18:45:28 -0400
-Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.16] (may be forged))
-	by pp02.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n7ILI1aE023853
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
-	Tue, 18 Aug 2009 14:18:01 -0700
-Received: from simpkins (192.168.18.252) by mail.TheFacebook.com
- (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.1.393.1; Tue, 18 Aug
- 2009 14:18:12 -0700
-Received: from simpkins by simpkins with local (Exim 4.69)	(envelope-from
- <simpkins@facebook.com>)	id 1MdW4K-00076m-6S; Tue, 18 Aug 2009 14:18:12 -0700
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <1250628954.114121983@192.168.1.201>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-08-18_15:2009-08-11,2009-08-18,2009-08-18 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0907200000 definitions=main-0908180160
+	id S1751142AbZHRWsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 18:48:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbZHRWsd
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 18:48:33 -0400
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:58338 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750787AbZHRWsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 18:48:32 -0400
+Received: by ywh3 with SMTP id 3so5681661ywh.22
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 15:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yrC9vF9YE207bcrKsPpZJao4p0c1DxcxgLu+ikDZLv8=;
+        b=ZjdeKt7fCWrP33M0CsNoOEazkwJIVmkIUTonzWgz5pERIFyEajxiLDb8tU9Pl1owJN
+         Mbf1aNCUg0sZzJ20CBZohAc3GntKA5f7tk0Fr1+o+uC+hRFOx6LTmURkWfSUNEb/erly
+         zR4giFsqP155QFL57crkAxYh6PbtGjef31JX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=m0NpCnm1DqUC6qnyfINb9PE1bBP4Kkg6z+wsXZqAyRZ1PU3W7mAgivbuXcJDvAddOJ
+         dKtqsj7/BvdVAnJU4Mk0aj3f1x13Ub7QGYyPBKninEm9iFT/VVY8gDhtNrDez1w8bGhS
+         FfYElrfjdQlC9i+FCWMC/q9IXJpPreEhMmx/0=
+Received: by 10.91.122.11 with SMTP id z11mr69044agm.111.1250635713598; Tue, 
+	18 Aug 2009 15:48:33 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126479>
 
-Updated graph_is_interesting() to use simplify_commit() to determine if
-a commit is interesting, just like get_revision() does.  Previously, it
-would sometimes incorrectly treat an interesting commit as
-uninteresting.  This resulted in incorrect lines in the graph output.
+On Wed, Aug 19, 2009 at 12:38 AM, Johannes
+Schindelin<Johannes.Schindelin@gmx.de> wrote:
+>> Nope, you're still able to skip through the erros (with F4) as ususal.
+>> I've been using a sed-script to translate gcc-style errors to msvc-style
+>> errors for makefile projects before with great success. In this case,
+>> the errors are already in msvc-style, so that part should really not be
+>> any issue.
+>
+> At this point you are just piling work-around on work-around.
 
-This problem was reported by Santi B=E9jar.  The following command
-would exhibit the problem before, but now works correctly:
+At what point? This works out of the box for makefile projects that
+use msvc for compilation. Sure, for my gcc-setup, yeah. But how is
+that being a stack of work-arounds relevant in this context?
 
-  git log --graph --simplify-by-decoration --oneline v1.6.3.3
+I'm not arguing either way here - I'm perfectly happy to stick with MinGW.
 
-Previously git graph did not display the output for this command
-correctly between f29ac4f and 66996ec, among other places.
+I'm just saying that one of the problems you pointed out is not really
+a problem. The rest of them sounds like very much like real problems
+to me - not particularly big issues, you're the one who just said that
+perfect is the enemy of the good, no? ;)
 
-Signed-off-by: Adam Simpkins <simpkins@facebook.com>
----
-
-Note that simplify_commit() may modify the revision list.  Calling it
-in graph_is_interesting() can modify the revision list earlier than it
-otherwise would be (in get_revision()).  I don't think this should
-cause any problems, but figured I'd point it out in case anyone more
-familiar with the code thinks otherwise.
-
-
- graph.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/graph.c b/graph.c
-index e466770..ea21e91 100644
---- a/graph.c
-+++ b/graph.c
-@@ -286,9 +286,10 @@ static int graph_is_interesting(struct git_graph *=
-graph, struct commit *commit)
- 	}
-=20
- 	/*
--	 * Uninteresting and pruned commits won't be printed
-+	 * Otherwise, use simplify_commit() to see if this commit is
-+	 * interesting
- 	 */
--	return (commit->object.flags & (UNINTERESTING | TREESAME)) ? 0 : 1;
-+	return simplify_commit(graph->revs, commit) =3D=3D commit_show;
- }
-=20
- static struct commit_list *next_interesting_parent(struct git_graph *g=
-raph,
---=20
-1.6.4.314.ge5db
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
