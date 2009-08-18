@@ -1,69 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 0/3] short syntaxes for 'git stash'
-Date: Tue, 18 Aug 2009 23:38:40 +0200
-Message-ID: <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 18 23:42:12 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC PATCH] stash: accept options also when subcommand 'save'
+ is omitted
+Date: Tue, 18 Aug 2009 23:42:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908182337200.8306@pacific.mpi-cbg.de>
+References: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr> <vpqws51l1hb.fsf@bauges.imag.fr> <20090818174509.GA27518@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 18 23:42:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdWRY-0003C1-4P
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:42:12 +0200
+	id 1MdWRi-0003Go-RH
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 23:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750919AbZHRVmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 17:42:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750891AbZHRVmD
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:42:03 -0400
-Received: from imag.imag.fr ([129.88.30.1]:62987 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751125AbZHRVmC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 17:42:02 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7ILdMrt007622
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 23:39:22 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdWOo-0005Ld-7H; Tue, 18 Aug 2009 23:39:22 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdWOo-0002mB-5n; Tue, 18 Aug 2009 23:39:22 +0200
-X-Mailer: git-send-email 1.6.4.rc2.31.g2d7d7
-In-Reply-To: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 18 Aug 2009 23:39:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751045AbZHRVmJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 17:42:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbZHRVmI
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 17:42:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33170 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750902AbZHRVmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 17:42:07 -0400
+Received: (qmail invoked by alias); 18 Aug 2009 21:42:08 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 18 Aug 2009 23:42:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX191prpizyl1PgzQq2cG5k4KpExvGX4hFlvAVNOOz0
+	RBGvWGBDeMjlUs
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <20090818174509.GA27518@coredump.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126466>
 
-This small patch serie is based on the following commit in pu:
+Hi,
 
-dda1f2a Implement 'git stash save --patch'
+On Tue, 18 Aug 2009, Jeff King wrote:
 
-It is meant to replace two commits already there:
+> On Tue, Aug 18, 2009 at 03:01:52PM +0200, Matthieu Moy wrote:
+> 
+> > Hmm, googling a bit, I just noticed that there's already something in
+> > pu:
+> > ea41cfc4f (Make 'git stash -k' a short form for 'git stash save --keep-index')
+> > which also does the trick, while adding a -k alias for --keep-index.
+> >
+> > [...]
+> > 
+> > Mine has at least two advantages:
+> > 
+> > * It won't require changing the code again when new options are added
+> >   to 'git stash save'.
+> > 
+> > * It works with 'git stash -k -q' for example, while the other
+> >   proposal checks that $# == 1, which won't work if there are more
+> >   than one option.
+> 
+> I think yours is nicer, especially as we have just added the
+> '-p|--patch' option, as well. With what is there now, you can do "git
+> stash -p", but not "git stash -p -k".
 
-ea41cfc Make 'git stash -k' a short form for 'git stash save --keep-index'
-f300fab DWIM 'git stash save -p' for 'git stash -p'
+But it is sloppy, in that it blindly accepts options that might be valid 
+for several subcommands, not just "save".
 
-The first (git stash -k) has the drawback of forcing one to use one
-and only one option when the 'save' command is ommited. My approach is
-mostly based on the simple hack:
+That was the reason I did not implement it this way.
 
-+case "$1" in
-+    -*)
-+       set "save" "$@"
-+       ;;
-+esac
-+
+But we do not have such ambiguous options yet.
 
-and accepts an arbitrary number of options.
+Or do we?  Look at what "list" accepts!
 
-The second (DWIM git stash save -p) becomes unnecessary afterwards.
+So please register my objection.
+
+Ciao,
+Dscho
