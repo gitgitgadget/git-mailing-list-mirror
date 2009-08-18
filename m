@@ -1,86 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 09/11] Add MSVC porting header files.
-Date: Tue, 18 Aug 2009 11:47:46 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908181140460.4680@intel-tinevez-2-302>
-References: <1250525103-5184-1-git-send-email-lznuaa@gmail.com>  <1250525103-5184-2-git-send-email-lznuaa@gmail.com>  <1250525103-5184-3-git-send-email-lznuaa@gmail.com>  <1250525103-5184-4-git-send-email-lznuaa@gmail.com>  <alpine.DEB.1.00.0908171902300.4991@intel-tinevez-2-302>
- <1976ea660908171915v62fb6c40j17f750cac9836433@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-2118587953-1250588866=:4680"
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 11:47:56 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] filter-branch: make the usage string fit on 80 chars terminals.
+Date: Tue, 18 Aug 2009 11:51:00 +0200
+Message-ID: <1250589060-17808-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Aug 18 11:51:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdLII-0002Rl-Oy
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 11:47:55 +0200
+	id 1MdLLj-0003bV-JO
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 11:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754711AbZHRJrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 05:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbZHRJrr
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 05:47:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33219 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753244AbZHRJrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 05:47:46 -0400
-Received: (qmail invoked by alias); 18 Aug 2009 09:47:46 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp043) with SMTP; 18 Aug 2009 11:47:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19UQshcCQFUAmG5l0HckAPSTJxR+US2/90N6RG9Pn
-	9ARKF/c84DR79w
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <1976ea660908171915v62fb6c40j17f750cac9836433@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.55
+	id S1753149AbZHRJvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 05:51:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751994AbZHRJvT
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 05:51:19 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:45586 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751176AbZHRJvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 05:51:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7I9mJC2009135
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 18 Aug 2009 11:48:19 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MdLLJ-0005nf-Od; Tue, 18 Aug 2009 11:51:01 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MdLLJ-0004dn-Ml; Tue, 18 Aug 2009 11:51:01 +0200
+X-Mailer: git-send-email 1.6.4.171.g24636.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 18 Aug 2009 11:48:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n7I9mJC2009135
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1251193700.24387@RsEpUW6gvnp0Y4oXkCmXsg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126366>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+It used to be a single, huge line, badly wrapped by xterm.
 
---8323329-2118587953-1250588866=:4680
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ git-filter-branch.sh |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-Hi,
-
-On Tue, 18 Aug 2009, Frank Li wrote:
-
-> >> Add unix head file, dirent.h, unistd.h  and time.h
-> >
-> > These are copied from somewhere.  From where?  What is the license?
-> 
-> It comes from msys,  which used to build msysgit.
-
-I know.  After reading the patch.  But it would be better if everybody 
-knew after reading the commit message...  _Especially_ in this 
-increasingly lawsuit-defined business, it is very nice to see early that 
-the files you are including here are in the public domain, and come from 
-MSys.
-
-> I really want to in .vcproj.  but the same context needs to copy
-> DEBUG\RELEASE 32\64bit, libgit.vcproj and git.vcproj. 8 place needs
-> copy.  To avoid copy in vcproj file, I move it hear.
-
-As I said earlier, there are common flags, but as I also said, it is 
-probably better to keep the #define's in a header file for better 
-visibility and editability, albeit in logically clustered blocks (i.e. all 
-the NO_* and other #define's that affect what source code is 
-compiled, all default paths in another cluster, #define's to bow before 
-Microsoft's C runtime's decision to deprecate the C99 standard function 
-names, etc)
-
-BTW it is funny that your typos seem to be influenced by the _sound_ of 
-the word ("hear" instead of "here"), rather than just simple transposed 
-letters... most of my typos are the same ;-)
-
-Ciao,
-Dscho
-
---8323329-2118587953-1250588866=:4680--
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 37e044d..a480d6f 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -97,12 +97,12 @@ set_ident () {
+ 	echo "case \"\$GIT_${uid}_NAME\" in \"\") GIT_${uid}_NAME=\"\${GIT_${uid}_EMAIL%%@*}\" && export GIT_${uid}_NAME;; esac"
+ }
+ 
+-USAGE="[--env-filter <command>] [--tree-filter <command>] \
+-[--index-filter <command>] [--parent-filter <command>] \
+-[--msg-filter <command>] [--commit-filter <command>] \
+-[--tag-name-filter <command>] [--subdirectory-filter <directory>] \
+-[--original <namespace>] [-d <directory>] [-f | --force] \
+-[<rev-list options>...]"
++USAGE="[--env-filter <command>] [--tree-filter <command>]
++            [--index-filter <command>] [--parent-filter <command>]
++            [--msg-filter <command>] [--commit-filter <command>]
++            [--tag-name-filter <command>] [--subdirectory-filter <directory>]
++            [--original <namespace>] [-d <directory>] [-f | --force]
++            [<rev-list options>...]"
+ 
+ OPTIONS_SPEC=
+ . git-sh-setup
+-- 
+1.6.4.171.g24636.dirty
