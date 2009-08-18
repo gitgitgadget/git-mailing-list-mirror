@@ -1,82 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
-Date: Tue, 18 Aug 2009 13:30:34 -0700
-Message-ID: <7v7hx0c1at.fsf@alter.siamese.dyndns.org>
-References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
- <4A8AA511.1060205@gmail.com>
- <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com>
- <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0908181147510.6044@xanadu.home>
- <alpine.LFD.2.00.0908181240400.6044@xanadu.home>
- <bdca99240908180959h69f37671k4d526fbf4814e8d1@mail.gmail.com>
- <7vpratdpc8.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0908181411320.6044@xanadu.home>
- <7vprasc1vu.fsf@alter.siamese.dyndns.org>
+From: Karthik R <karthikr@fastmail.fm>
+Subject: [PATCH][resend 2] git-svn: Use GIT_SSH setting if SVN_SSH is not
+ set
+Date: Tue, 18 Aug 2009 15:31:36 -0500
+Message-ID: <4A8B0FA8.7040500@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	Artur Skawina <art.08.09@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	msysGit <msysgit@googlegroups.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 22:30:58 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 18 22:31:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdVKY-0006Fl-PU
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 22:30:55 +0200
+	id 1MdVLH-0006g3-Ih
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 22:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826AbZHRUar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 16:30:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751739AbZHRUaq
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 16:30:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61827 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751461AbZHRUaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 16:30:46 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C8C6FF02;
-	Tue, 18 Aug 2009 16:30:47 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F88DFF01; Tue, 18 Aug
- 2009 16:30:36 -0400 (EDT)
-In-Reply-To: <7vprasc1vu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 18 Aug 2009 13\:17\:57 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 030CB52A-8C36-11DE-956F-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751797AbZHRUba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 16:31:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751743AbZHRUba
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 16:31:30 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46732 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751739AbZHRUb3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 16:31:29 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E9FE954489
+	for <git@vger.kernel.org>; Tue, 18 Aug 2009 16:31:29 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 18 Aug 2009 16:31:29 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:content-type:content-transfer-encoding; s=smtpout; bh=PihDLc8cbo3CqLQBUTs67vUxhFw=; b=hK4th0yLXzIdqFsd57eWSliH36QTYJ+gx+5MWe0OuOmy+AAlw994kT2fdx0eoQ2MPLs3KRXBl7Mim/uFTgEauv4QMlsUKTuVPAVAp1g4SsKhZgjiN74hGmYWpN0KWfIj1EX659hqbvo/j4M9nouVZN/Ps+sbjmO+SHXnptiniwo=
+X-Sasl-enc: UQg1sjR574Mvjel9yd81AwI/ux7iVUvoGxxQR8NDSQrg 1250627489
+Received: from [192.168.10.12] (99-156-81-160.lightspeed.austtx.sbcglobal.net [99.156.81.160])
+	by www.fastmail.fm (Postfix) with ESMTPSA id 8CE30FB39
+	for <git@vger.kernel.org>; Tue, 18 Aug 2009 16:31:29 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126454>
 
-Junio C Hamano <gitster@pobox.com> writes:
+If SVN_SSH is defined, it will be used; else value in
+GIT_SSH is copied to SVN_SSH & then, only on Windows,
+the \s are escaped.
 
-> Nicolas Pitre <nico@cam.org> writes:
->
->> On Tue, 18 Aug 2009, Junio C Hamano wrote:
->>
->>> To reduce confusion, you may want to rename compat/bswap.h to something
->>> like compat/ntohl-htonl-fix.h ;-)
->>
->> Bah.  If you wish, you can edit the patch directly for this, unless you 
->> really prefer me to repost.  Maybe we might want to add a 8-byte 
->> versions of those as well eventually, which is why I chose a more 
->> generic name.
->
-> Ok, here is what I came up with after many squashing...
+On Windows, the shell-variables must be set as follows
+    GIT_SSH="C:\Program Files\PuTTY\plink.exe"
+    SVN_SSH="C:\\Program Files\\PuTTY\\plink.exe"
 
-Meh, our mails crossed.  I'll chuck this one and use your
+See http://code.google.com/p/msysgit/issues/detail?id=305
+---
+Trying again following Dscho's comment (removed MSWin32) & using
+logic from Junio (don't muck with user's SVN_SSH; else use GIT_SSH
+to seed SVN_SSH & adjust the \s on Windows)
 
-    [PATCH] make sure byte swapping is optimal for git
+Previous life of patch:
+[PATCH] GIT_SSH does not override ssh in git-svn
+[PATCH][resend] git-svn: Respect GIT_SSH setting
 
-patch.  Do you want default_swab32 be mmoved inside the
+ git-svn.perl |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-    #if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
-
-block?
+diff --git a/git-svn.perl b/git-svn.perl
+index b0bfb74..ef86d10 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -21,6 +21,15 @@ $Git::SVN::default_ref_id = $ENV{GIT_SVN_ID} || 
+'git-svn';
+ $Git::SVN::Ra::_log_window_size = 100;
+ $Git::SVN::_minimize_url = 'unset';
+ 
++if (! exists $ENV{SVN_SSH}) {
++    if (exists $ENV{GIT_SSH}) {
++        $ENV{SVN_SSH} = $ENV{GIT_SSH};
++        if ($^O eq 'msys') {
++            $ENV{SVN_SSH} =~ s/\\/\\\\/g;
++        }
++    }
++}
++
+ $Git::SVN::Log::TZ = $ENV{TZ};
+ $ENV{TZ} = 'UTC';
+ $| = 1; # unbuffer STDOUT
+-- 
+1.5.4.3
