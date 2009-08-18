@@ -1,87 +1,88 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Wed, 19 Aug 2009 00:48:33 +0200
-Message-ID: <40aa078e0908181548t5df05b1ct8013b99ea703ebba@mail.gmail.com>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
-	 <1250600335-8642-1-git-send-email-mstormo@gmail.com>
-	 <7vtz05dq0p.fsf@alter.siamese.dyndns.org> <4A8AE7C5.7050600@gmail.com>
-	 <4A8AED8B.9080604@gmail.com>
-	 <alpine.DEB.1.00.0908182349220.8306@pacific.mpi-cbg.de>
-	 <40aa078e0908181502v32cbd223xcde1cd363dc76345@mail.gmail.com>
-	 <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] stash: accept options also when subcommand 'save'
+ is omitted
+Date: Tue, 18 Aug 2009 19:06:32 -0400
+Message-ID: <20090818230632.GA4436@sigill.intra.peff.net>
+References: <1250599567-31428-1-git-send-email-Matthieu.Moy@imag.fr>
+ <vpqws51l1hb.fsf@bauges.imag.fr>
+ <20090818174509.GA27518@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0908182337200.8306@pacific.mpi-cbg.de>
+ <20090818223028.GB31176@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0908190041200.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
-	"Johan 't Hart" <johanthart@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,
-	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 19 00:48:44 2009
+X-From: git-owner@vger.kernel.org Wed Aug 19 01:06:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdXTv-0000WS-9f
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 00:48:43 +0200
+	id 1MdXlJ-0005t7-5l
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 01:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751142AbZHRWsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 18:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbZHRWsd
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 18:48:33 -0400
-Received: from mail-yw0-f173.google.com ([209.85.211.173]:58338 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbZHRWsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 18:48:32 -0400
-Received: by ywh3 with SMTP id 3so5681661ywh.22
-        for <git@vger.kernel.org>; Tue, 18 Aug 2009 15:48:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yrC9vF9YE207bcrKsPpZJao4p0c1DxcxgLu+ikDZLv8=;
-        b=ZjdeKt7fCWrP33M0CsNoOEazkwJIVmkIUTonzWgz5pERIFyEajxiLDb8tU9Pl1owJN
-         Mbf1aNCUg0sZzJ20CBZohAc3GntKA5f7tk0Fr1+o+uC+hRFOx6LTmURkWfSUNEb/erly
-         zR4giFsqP155QFL57crkAxYh6PbtGjef31JX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=m0NpCnm1DqUC6qnyfINb9PE1bBP4Kkg6z+wsXZqAyRZ1PU3W7mAgivbuXcJDvAddOJ
-         dKtqsj7/BvdVAnJU4Mk0aj3f1x13Ub7QGYyPBKninEm9iFT/VVY8gDhtNrDez1w8bGhS
-         FfYElrfjdQlC9i+FCWMC/q9IXJpPreEhMmx/0=
-Received: by 10.91.122.11 with SMTP id z11mr69044agm.111.1250635713598; Tue, 
-	18 Aug 2009 15:48:33 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de>
+	id S1751907AbZHRXGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 19:06:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbZHRXGd
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 19:06:33 -0400
+Received: from peff.net ([208.65.91.99]:40903 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750961AbZHRXGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 19:06:32 -0400
+Received: (qmail 15263 invoked by uid 107); 18 Aug 2009 23:06:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 18 Aug 2009 19:06:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Aug 2009 19:06:32 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0908190041200.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126480>
 
-On Wed, Aug 19, 2009 at 12:38 AM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
->> Nope, you're still able to skip through the erros (with F4) as ususal.
->> I've been using a sed-script to translate gcc-style errors to msvc-style
->> errors for makefile projects before with great success. In this case,
->> the errors are already in msvc-style, so that part should really not be
->> any issue.
->
-> At this point you are just piling work-around on work-around.
+On Wed, Aug 19, 2009 at 12:46:27AM +0200, Johannes Schindelin wrote:
 
-At what point? This works out of the box for makefile projects that
-use msvc for compilation. Sure, for my gcc-setup, yeah. But how is
-that being a stack of work-arounds relevant in this context?
+> So if I say "git stash -q" by mistake, but wanted to say "git stash drop 
+> -q", then I am borked?
+> 
+> Bah!  I say: bah!
 
-I'm not arguing either way here - I'm perfectly happy to stick with MinGW.
+Yep, though it is only one of many borkings that currently exist. Try:
 
-I'm just saying that one of the problems you pointed out is not really
-a problem. The rest of them sounds like very much like real problems
-to me - not particularly big issues, you're the one who just said that
-perfect is the enemy of the good, no? ;)
+  # oops, what was the name of that option?
+  git stash save --index
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+  # does apply take --patch, too?
+  git stash apply --patch
+
+Still, other parts of the option parsing being awful aren't an excuse to
+mess this one up. So I see your point.
+
+> You're basically reintroducing at least part of the DWIMery that was 
+> reverted in 9488e875 and I have the distinct feeling that some people in 
+> this thread do not think hard enough about what would adher to the 
+> principle of least surprise even in the future (or even for people 
+> introducing other stash save options).
+
+I don't think it is quite as bad as that, as arbitrary crap will not get
+passed through, only crap that looks like options. Which is perhaps a
+step up, but it is debatable how much.
+
+I think Matthieu's proposal to be strict about matching the options, but
+to take multiple options is probably the best bet for now. As it is now,
+accepting "git stash -k" or "git stash -p" but not "git stash -k -p" is
+pretty counterintuitive. But with explicit matching it should be no less
+safe than it is now.
+
+> Well, you just go ahead and push through your patch, and I do what I 
+> promised on my blog.
+
+I don't know why you need to be so confrontational. I don't even have a
+patch to "push through". I just said "I don't see the problem", and I'm
+glad you brought up the previous stash behavior, because I had forgotten
+the pain it caused. And that is why discussing on a public forum is
+nice; it lets people contribute things that others might have missed.
+
+-Peff
