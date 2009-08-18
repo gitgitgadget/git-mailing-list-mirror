@@ -1,116 +1,86 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of  function
-Date: Tue, 18 Aug 2009 18:52:25 +0200
-Message-ID: <vpqr5v93vzq.fsf@bauges.imag.fr>
-References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>
-	<1250524872-5148-2-git-send-email-lznuaa@gmail.com>
-	<alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>
-	<3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com>
-	<alpine.DEB.1.00.0908172134150.8306@pacific.mpi-cbg.de>
-	<4A8A3ADE.9010703@gmail.com>
-	<alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302>
-	<1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
+Date: Tue, 18 Aug 2009 18:59:18 +0200
+Message-ID: <bdca99240908180959h69f37671k4d526fbf4814e8d1@mail.gmail.com>
+References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
+	 <4A8AA511.1060205@gmail.com>
+	 <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com>
+	 <7v4os5gs0p.fsf@alter.siamese.dyndns.org>
+	 <alpine.LFD.2.00.0908181147510.6044@xanadu.home>
+	 <alpine.LFD.2.00.0908181240400.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 18:56:36 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Artur Skawina <art.08.09@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	msysGit <msysgit@googlegroups.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 18:59:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdRz6-0003hJ-OL
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:56:33 +0200
+	id 1MdS2F-00058S-0o
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932755AbZHRQwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 12:52:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932717AbZHRQwq
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:52:46 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51891 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932535AbZHRQwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 12:52:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n7IGp1im024221
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 18 Aug 2009 18:51:01 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MdRv7-0002b5-AB; Tue, 18 Aug 2009 18:52:25 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MdRv7-0004y2-8r; Tue, 18 Aug 2009 18:52:25 +0200
-In-Reply-To: <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com> (Frank Li's message of "Wed\, 19 Aug 2009 00\:11\:48 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 18 Aug 2009 18:51:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7IGp1im024221
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1251219062.21183@QOylrAEUtUB63nAmmr7pyg
+	id S1759069AbZHRQ7T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Aug 2009 12:59:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754287AbZHRQ7T
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:59:19 -0400
+Received: from mail-bw0-f222.google.com ([209.85.218.222]:36438 "EHLO
+	mail-bw0-f222.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751087AbZHRQ7S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 12:59:18 -0400
+Received: by bwz22 with SMTP id 22so3150779bwz.18
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 09:59:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EnUdQSReA+XUPZm5q2LI3U1jQazsGLbwzjMiaC2163k=;
+        b=h57bGvGhpHAUgPtGcjPhIP3LftxKx9V7OLrk2KWVF6XM9e1lEkhJwKudpKUUzWlqRL
+         QCzftSgsKQFW9jOQeIPHZwHMBprwu4Z1cE8mhTRxts9yubv6t7UsCgp2Ysaelb2Ulgu/
+         PuznoFda2qmbFrU16B/vvpQGuV4XbGmNbtTUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YVZlG+BqELzM9gAqrCTu5rBHW2PMmbtsXFNs+pSL4zz9FM24bpZZ5vz4tpnZ3gXMmU
+         gK/LDLUSqRLYVtQyp7hhEsAtez2aMxqfCk/yy0H5YJKngBNoLmXQvXOYlTSjmeXNL3ro
+         VIMC8qe11jri0eoVrFqGyUXHHk/vJ99RRkw1E=
+Received: by 10.204.7.156 with SMTP id d28mr3955884bkd.140.1250614758646; Tue, 
+	18 Aug 2009 09:59:18 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.0908181240400.6044@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126420>
 
-Frank Li <lznuaa@gmail.com> writes:
+On Tue, Aug 18, 2009 at 18:43, Nicolas Pitre<nico@cam.org> wrote:
 
->> Okay, I will wait for Frank's updates (just fetched tgit.git and it still
->> contains the old branch), merge the early part and add the compiler flags.
->>
-> Today, I just update 5 patch according review feedback.
-> Do I need send it again?
+>> Well... =C2=A0Given that git already uses ntohl/htonl quite extensiv=
+ely in
+>> its core already, I'd suggest making this more globally available
+>> instead.
+>
+> What about something like this?
 
-Yes, this is the use here. Preferably edit the message to replace
-[PATCH] with [PATCH v2] or so.
+I like the idea of making bswap available more globally, but I'm not
+sure if it's worth to introduce a new file for only that purpose.
+Isn't there already a central header for such things?
 
-> How do I know if patch has been applied main line?
+Moreover, including compat/bswap.h would only give you ntohl()/htonl()
+on one platform. For consistency, I'd expect to get those for any
+platform if I include compat/bswap.h, but maybe I'm not aware of some
+Git source code rules.
 
-Answering the question with another: shouldn't we add a section like
-this to SubmittingPatches ?
+=46inally, there's a typo in your comment saying "sinple" instead of "s=
+imple".
 
->From 3ee45ab5992fd084c130460f07454061ce3cf057 Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Tue, 18 Aug 2009 18:48:47 +0200
-Subject: [PATCH] SubmittingPatches: draft section to know patches status
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/SubmittingPatches |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 76fc84d..c686f86 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -280,6 +280,20 @@ people play with it without having to pick up and apply the patch to
- their trees themselves.
- 
- ------------------------------------------------
-+Know the status of your patch after submission
-+
-+* You can use Git itself to find out when your patch is merged in
-+  master. 'git pull --rebase' will automatically skip already-applied
-+  patches, and will let you know. This works only if you rebase on top
-+  of the branch in which your patch has been merged (i.e. it will not
-+  tell you if your patch is merged in pu if you rebase on top of
-+  master).
-+
-+* Read the git mailing list, the maintainer regularly posts messages
-+  entitled "What's cooking in git.git" and "What's in git.git" giving
-+  the status of various proposed changes.
-+
-+------------------------------------------------
- MUA specific hints
- 
- Some of patches I receive or pick up from the list share common
--- 
-1.6.4.313.g38b9
-
-
-
--- 
-Matthieu
+--=20
+Sebastian Schuberth
