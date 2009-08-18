@@ -1,9 +1,8 @@
 From: "Nick Edelen" <sirnot@gmail.com>
-Subject: Re: [PATCH 5/6 (v4)] full integration of rev-cache into git,
- completed test suite
-Date: Tue, 18 Aug 2009 13:51:56 +0200
-Message-ID: <op.uyuwkuoxtdk399@sirnot.private>
-References: <op.uys3quhbtdk399@sirnot.private>
+Subject: Re: [PATCH 6/6 (v4)] support for path name caching in rev-cache
+Date: Tue, 18 Aug 2009 13:51:58 +0200
+Message-ID: <op.uyuwkwjotdk399@sirnot.private>
+References: <op.uys3qwlmtdk399@sirnot.private>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
@@ -12,1008 +11,825 @@ To: "Nick Edelen" <sirnot@gmail.com>,
 	"Nicolas Pitre" <nico@cam.org>,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	"Sam Vilain" <sam@vilain.n
-X-From: git-owner@vger.kernel.org Tue Aug 18 13:52:27 2009
+X-From: git-owner@vger.kernel.org Tue Aug 18 13:52:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdNEo-0007DA-PT
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 13:52:27 +0200
+	id 1MdNEn-0007DA-WE
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 13:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758677AbZHRLwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 07:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758662AbZHRLwR
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 07:52:17 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:62766 "EHLO
+	id S1758624AbZHRLwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 07:52:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758662AbZHRLwN
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 07:52:13 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:57865 "EHLO
 	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758620AbZHRLv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 07:51:59 -0400
-Received: by mail-ew0-f207.google.com with SMTP id 3so1509339ewy.18
-        for <git@vger.kernel.org>; Tue, 18 Aug 2009 04:52:00 -0700 (PDT)
+	with ESMTP id S1758624AbZHRLwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 07:52:01 -0400
+Received: by mail-ew0-f207.google.com with SMTP id 3so1509359ewy.18
+        for <git@vger.kernel.org>; Tue, 18 Aug 2009 04:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:to:subject:from
          :content-type:mime-version:references:content-transfer-encoding
          :message-id:in-reply-to:user-agent;
-        bh=ONAEVGgEU2X4LydLlm5Twn51nK1Vo8rTkKtNvbAJS20=;
-        b=E3AUfCt9edu8kK8PkccJpYpM6LXWe3LdpndZxKKqTSpE/xUnRJ1oIiD9i7qgdEbT3M
-         jYkF8cInpIfBmkOui01o9Y+xCoCzlZSyu9fIsT1CJbM8NAbpyd2Mc0Fv1SmBFcV9XXco
-         SZ6zOUDzp4HjSByiqe+wJFlWHfeV2wb7LK8C8=
+        bh=1Gw3ON/L8vIqokchERIRQ/lBaDKKTrtSKb8FcuAPX/E=;
+        b=vXIzpI2PSh5/bSx+BGKfcYehexn3HPGVLNzsQG1fa+Hu65VFmpeuMnzrGXaYN51ejw
+         QmJoupXC3BDtFCYPYT1rbyibC8B2ccjnNuIda1dPNgFwqtuKY44XKKzvpXASAGYG6WiN
+         mQt7uCcyeIYDlEZ3OdCD7GvDIS+0X3O0D73CY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:to:subject:from:content-type:mime-version:references
          :content-transfer-encoding:message-id:in-reply-to:user-agent;
-        b=b/gyrVEn0UzIpBaOx2Q47O00eXA5dQUUZqgqZVqpw0PclAu+SxQuxDLx4PoelNOFCX
-         Au462P3xn6V67mnCuj+bI05PDa53s3QErR3G+6z9J0Q+NkKOEozhTYewPvPi+PE0IfEL
-         vEEtKk7cHq2s+zjbBYeJEaJu4k24i1wC4u8X8=
-Received: by 10.216.88.195 with SMTP id a45mr1230799wef.63.1250596320577;
-        Tue, 18 Aug 2009 04:52:00 -0700 (PDT)
+        b=vabqXWFBugcv1XTEWYXupVa0bZaPCl/p9AZhVv6s9kbw4w6MJxP66p42y8qTLuLy+C
+         dgaKaYp1+W2awFN/i1HAbw6dmlAwKsw8+gyxBOxujkIESFe7sriTC5HiKqoXbmVnQHYu
+         oQtY7WjuLBN8oBzc6PMbe04XBRz1+V5um/XpA=
+Received: by 10.216.85.133 with SMTP id u5mr1199266wee.91.1250596322317;
+        Tue, 18 Aug 2009 04:52:02 -0700 (PDT)
 Received: from sirnot.private (dhcp-077-251-020-197.chello.nl [77.251.20.197])
-        by mx.google.com with ESMTPS id m5sm18764413gve.18.2009.08.18.04.51.58
+        by mx.google.com with ESMTPS id m5sm18764413gve.18.2009.08.18.04.52.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 18 Aug 2009 04:52:00 -0700 (PDT)
-In-Reply-To: <op.uys3quhbtdk399@sirnot.private>
+        Tue, 18 Aug 2009 04:52:01 -0700 (PDT)
+In-Reply-To: <op.uys3qwlmtdk399@sirnot.private>
 User-Agent: Opera Mail/9.63 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126381>
 
-This last patch provides a working integration of rev-cache into the revision
-walker, along with some touch-ups:
- - integration into revision walker and list-objects
- - tweak of object generation to take advantage of the 'unique' field
- - more fluid handling of damaged cache slices
- - numerous tests for both features from the previous patch, and the
-integration's integrity
-
-'Integration' is rather broad -- a more detailed description follows for each
-aspect:
- - rev-cache
-the traversal mechanism is updated to handle many of the non-prune options
-rev-list does (date limiting, slop-handling, etc.), and is adjusted to allow
-for non-fatal cache-traversal failures.
-
- - revision walker
-both limited and unlimited traversal attempt to use the cache when possible,
-smoothly falling back if it's not.
-
- - list-objects
-object listing does not recurse into cached trees, and has been adjusted to
-guarantee commit-tag-tree-blob ordering.
+An update to caching mechanism, allowing path names to be cached for blob and
+tree objects.  A list of names appearing in each cache slice is appended to the
+end of the slice, which is referenced by variable-sized indexes per entry.
+This allows pack-objects to more intelligently schedule unpacked/poorly packed
+object, and enables proper duplication of rev-list's behaivor.
 
 Signed-off-by: Nick Edelen <sirnot@gmail.com>
 
 ---
- builtin-rev-cache.c       |   40 ++++++++
- list-objects.c            |   49 ++++++++--
- rev-cache.c               |  228 +++++++++++++++++++++++++++++++++++++++-----
- revision.c                |   88 ++++++++++++++---
- t/t6015-rev-cache-list.sh |  153 +++++++++++++++++++++++++++++--
- 5 files changed, 502 insertions(+), 56 deletions(-)
+ builtin-rev-cache.c       |    3 +-
+ rev-cache.c               |  314 +++++++++++++++++++++++++++++++++++++--------
+ rev-cache.h               |   16 ++-
+ revision.h                |    6 +-
+ t/t6015-rev-cache-list.sh |    6 +-
+ 5 files changed, 283 insertions(+), 62 deletions(-)
 
 diff --git a/builtin-rev-cache.c b/builtin-rev-cache.c
-index b894c54..8f41123 100644
+index 8f41123..4c1766d 100644
 --- a/builtin-rev-cache.c
 +++ b/builtin-rev-cache.c
-@@ -4,6 +4,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "rev-cache.h"
-+#include "list-objects.h"
+@@ -177,13 +177,14 @@ static int handle_walk(int argc, const char *argv[])
+ 	fprintf(stderr, "pending:\n");
+ 	for (i = 0; i < revs.pending.nr; i++) {
+ 		struct object *obj = revs.pending.objects[i].item;
++		const char *name = revs.pending.objects[i].name;
  
- unsigned long default_ignore_size = 50 * 1024 * 1024; /* 50mb */
- 
-@@ -78,6 +79,43 @@ static int handle_add(int argc, const char *argv[]) /* args beyond this command
- 	return 0;
- }
- 
-+static void show_commit(struct commit *commit, void *data)
-+{
-+	printf("%s\n", sha1_to_hex(commit->object.sha1));
-+}
-+
-+static void show_object(struct object *obj, const struct name_path *path, const char *last)
-+{
-+	printf("%s\n", sha1_to_hex(obj->sha1));
-+}
-+
-+static int test_rev_list(int argc, const char *argv[])
-+{
-+	struct rev_info revs;
-+	unsigned int flags = 0;
-+	int i;
-+
-+	init_revisions(&revs, 0);
-+
-+	for (i = 0; i < argc; i++) {
-+		if (!strcmp(argv[i], "--not"))
-+			flags ^= UNINTERESTING;
-+		else if (!strcmp(argv[i], "--objects"))
-+			revs.tree_objects = revs.blob_objects = 1;
-+		else
-+			handle_revision_arg(argv[i], &revs, flags, 1);
-+	}
-+
-+	setup_revisions(0, 0, &revs, 0);
-+	revs.topo_order = 1;
-+	revs.lifo = 1;
-+	prepare_revision_walk(&revs);
-+
-+	traverse_commit_list(&revs, show_commit, show_object, 0);
-+
-+	return 0;
-+}
-+
- static int handle_walk(int argc, const char *argv[])
- {
- 	struct commit *commit;
-@@ -271,6 +309,8 @@ int cmd_rev_cache(int argc, const char *argv[], const char *prefix)
- 		r = handle_walk(argc, argv);
- 	else if (!strcmp(arg, "index"))
- 		r = handle_index(argc, argv);
-+	else if (!strcmp(arg, "test"))
-+		r = test_rev_list(argc, argv);
- 	else if (!strcmp(arg, "alt"))
- 		r = handle_alt(argc, argv);
- 	else
-diff --git a/list-objects.c b/list-objects.c
-index 8953548..821a290 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -74,22 +74,33 @@ static void process_tree(struct rev_info *revs,
- 		die("bad tree object");
- 	if (obj->flags & (UNINTERESTING | SEEN))
- 		return;
--	if (parse_tree(tree) < 0)
--		die("bad tree object %s", sha1_to_hex(obj->sha1));
-+
- 	obj->flags |= SEEN;
- 	show(obj, path, name);
-+	if (obj->flags & FACE_VALUE)
-+		return;
-+
-+	/* traverse_commit_list is only used for enumeration purposes,
-+	 * ie. nothing relies on trees being parsed in this routine */
-+	if (parse_tree(tree) < 0)
-+		die("bad tree object %s", sha1_to_hex(obj->sha1));
-+
- 	me.up = path;
- 	me.elem = name;
- 	me.elem_len = strlen(name);
--
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 
- 	while (tree_entry(&desc, &entry)) {
--		if (S_ISDIR(entry.mode))
-+		if (S_ISDIR(entry.mode)) {
-+			struct tree *subtree = lookup_tree(entry.sha1);
-+			if (!subtree)
-+				continue;
-+
-+			subtree->object.flags &= ~FACE_VALUE;
- 			process_tree(revs,
--				     lookup_tree(entry.sha1),
-+				     subtree,
- 				     show, &me, entry.path);
--		else if (S_ISGITLINK(entry.mode))
-+		} else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(revs, entry.sha1,
- 					show, &me, entry.path);
- 		else
-@@ -136,6 +147,7 @@ void mark_edges_uninteresting(struct commit_list *list,
- 
- static void add_pending_tree(struct rev_info *revs, struct tree *tree)
- {
-+	tree->object.flags &= ~FACE_VALUE;
- 	add_pending_object(revs, &tree->object, "");
- }
- 
-@@ -146,17 +158,27 @@ void traverse_commit_list(struct rev_info *revs,
- {
- 	int i;
- 	struct commit *commit;
-+	enum object_type what = OBJ_TAG;
-+	char face_value = 0;
- 
- 	while ((commit = get_revision(revs)) != NULL) {
--		add_pending_tree(revs, commit->tree);
-+		if (!(commit->object.flags & FACE_VALUE))
-+			add_pending_tree(revs, commit->tree);
-+		else
-+			face_value = 1;
- 		show_commit(commit, data);
- 	}
-+
-+loop_objects:
- 	for (i = 0; i < revs->pending.nr; i++) {
- 		struct object_array_entry *pending = revs->pending.objects + i;
- 		struct object *obj = pending->item;
- 		const char *name = pending->name;
- 		if (obj->flags & (UNINTERESTING | SEEN))
+ 		/* unfortunately, despite our careful generation, object duplication *is* a possibility...
+ 		 * (eg. same object introduced into two different branches) */
+ 		if (obj->flags & SEEN)
  			continue;
-+		if (obj->type != what && face_value)
-+			continue;
-+
- 		if (obj->type == OBJ_TAG) {
- 			obj->flags |= SEEN;
- 			show_object(obj, NULL, name);
-@@ -175,6 +197,19 @@ void traverse_commit_list(struct rev_info *revs,
- 		die("unknown pending object %s (%s)",
- 		    sha1_to_hex(obj->sha1), name);
+ 
+-		printf("%s\n", sha1_to_hex(revs.pending.objects[i].item->sha1));
++		printf("%s %s\n", sha1_to_hex(revs.pending.objects[i].item->sha1), name);
+ 		obj->flags |= SEEN;
  	}
-+	if (face_value) {
-+		switch (what) {
-+		case OBJ_TAG :
-+			what = OBJ_TREE;
-+			goto loop_objects;
-+		case OBJ_TREE :
-+			what = OBJ_BLOB;
-+			goto loop_objects;
-+		default :
-+			break;
-+		}
-+	}
-+
- 	if (revs->pending.nr) {
- 		free(revs->pending.objects);
- 		revs->pending.nr = 0;
+ 
 diff --git a/rev-cache.c b/rev-cache.c
-index 8ca97d3..04a9b02 100644
+index 04a9b02..8801794 100644
 --- a/rev-cache.c
 +++ b/rev-cache.c
-@@ -11,6 +11,12 @@
- #include "run-command.h"
- #include "string-list.h"
+@@ -17,6 +17,14 @@ struct bad_slice {
+ 	struct bad_slice *next;
+ };
  
-+
-+struct bad_slice {
++struct name_list {
 +	unsigned char sha1[20];
-+	struct bad_slice *next;
++	unsigned int len;
++	struct name_list *next;
++
++	char buf[FLEX_ARRAY];
 +};
 +
  struct cache_slice_pointer {
  	char signature[8]; /* REVCOPTR */
  	char version;
-@@ -23,8 +29,9 @@ static uint32_t fanout[0xff + 2];
+@@ -29,10 +37,13 @@ static uint32_t fanout[0xff + 2];
  static unsigned char *idx_map;
  static int idx_size;
  static struct rc_index_header idx_head;
-+static char no_idx, add_to_pending;
-+static struct bad_slice *bad_slices;
+-static char no_idx, add_to_pending;
+-static struct bad_slice *bad_slices;
++static char no_idx, add_to_pending, add_names;
  static unsigned char *idx_caches;
--static char no_idx;
  
++static struct bad_slice *bad_slices;
++static struct name_list *name_lists, *cur_name_list;
++
++static struct strbuf *acc_name_buffer;
  static struct strbuf *acc_buffer;
  
-@@ -121,6 +128,30 @@ struct rc_object_entry_ondisk *to_disked_rc_object_entry(struct rc_object_entry
- 	return dst;
+ #define SLOP			5
+@@ -79,7 +90,7 @@ struct rc_object_entry *from_disked_rc_object_entry(struct rc_object_entry_ondis
+ 	if (!dst)
+ 		dst = &entry[cur++ & 0x3];
+ 
+-	dst->type = src->flags >> 5;
++	dst->type = src->flags >> 5 & 0x03;
+ 	dst->is_end = !!(src->flags & 0x10);
+ 	dst->is_start = !!(src->flags & 0x08);
+ 	dst->uninteresting = !!(src->flags & 0x04);
+@@ -90,8 +101,9 @@ struct rc_object_entry *from_disked_rc_object_entry(struct rc_object_entry_ondis
+ 	dst->merge_nr = src->merge_nr;
+ 	dst->split_nr = src->split_nr;
+ 
+-	dst->size_size = src->sizes >> 5;
+-	dst->padding = src->sizes & 0x1f;
++	dst->size_size = src->sizes >> 5 & 0x03;
++	dst->name_size = src->sizes >> 2 & 0x03;
++	dst->padding = src->sizes & 0x02;
+ 
+ 	dst->date = ntohl(src->date);
+ 	dst->path = ntohs(src->path);
+@@ -120,6 +132,7 @@ struct rc_object_entry_ondisk *to_disked_rc_object_entry(struct rc_object_entry
+ 	dst->split_nr = src->split_nr;
+ 
+ 	dst->sizes  = (unsigned char)src->size_size << 5;
++	dst->sizes |= (unsigned char)src->name_size << 2;
+ 	dst->sizes |= (unsigned char)src->padding;
+ 
+ 	dst->date = htonl(src->date);
+@@ -192,6 +205,12 @@ static void cleanup_cache_slices(void)
+ 		idx_map = 0;
+ 	}
+ 
++	while (name_lists) {
++		struct name_list *nl = name_lists->next;
++		free(name_lists);
++		name_lists = nl;
++	}
++
  }
  
-+static void mark_bad_slice(unsigned char *sha1)
+ static int init_index(void)
+@@ -324,7 +343,7 @@ static void handle_noncommit(struct rev_info *revs, struct commit *commit, unsig
+ 	struct blob *blob;
+ 	struct tree *tree;
+ 	struct object *obj;
+-	unsigned long size;
++	unsigned long size, name_index;
+ 
+ 	size = decode_size(ptr + RC_ENTRY_SIZE_OFFSET(entry), entry->size_size);
+ 	switch (entry->type) {
+@@ -357,9 +376,22 @@ static void handle_noncommit(struct rev_info *revs, struct commit *commit, unsig
+ 		return;
+ 	}
+ 
++	if (add_names && cur_name_list) {
++		name_index = decode_size(ptr + RC_ENTRY_NAME_OFFSET(entry), entry->name_size);
++
++		if (name_index >= cur_name_list->len)
++			name_index = 0;
++	} else name_index = 0;
++
+ 	obj->flags |= FACE_VALUE;
+-	if (add_to_pending)
+-		add_pending_object(revs, obj, "");
++	if (add_to_pending) {
++		char *name = "";
++
++		if (name_index)
++			name = cur_name_list->buf + name_index;
++
++		add_pending_object(revs, obj, name);
++	}
+ }
+ 
+ static int setup_traversal(struct rc_slice_header *head, unsigned char *map, struct commit *commit, struct commit_list **work,
+@@ -714,15 +746,44 @@ end:
+ 	return retval;
+ }
+ 
+-static int get_cache_slice_header(unsigned char *cache_sha1, unsigned char *map, int len, struct rc_slice_header *head)
++static struct name_list *get_cache_slice_name_list(struct rc_slice_header *head, int fd)
 +{
-+	struct bad_slice *bad;
++	struct name_list *nl = name_lists;
 +
-+	bad = xcalloc(sizeof(struct bad_slice), 1);
-+	hashcpy(bad->sha1, sha1);
-+
-+	bad->next = bad_slices;
-+	bad_slices = bad;
-+}
-+
-+static int is_bad_slice(unsigned char *sha1)
-+{
-+	struct bad_slice *bad = bad_slices;
-+
-+	while (bad) {
-+		if (!hashcmp(bad->sha1, sha1))
-+			return 1;
-+		bad = bad->next;
++	while (nl) {
++		if (!hashcmp(nl->sha1, head->sha1))
++			break;
++		nl = nl->next;
 +	}
 +
-+	return 0;
++	if (nl)
++		return nl;
++
++	nl = xcalloc(1, sizeof(struct name_list) + head->name_size);
++	nl->len = head->name_size;
++	hashcpy(nl->sha1, head->sha1);
++
++	lseek(fd, head->size, SEEK_SET);
++	read_in_full(fd, nl->buf, head->name_size);
++
++	nl->next = name_lists;
++	name_lists = nl;
++
++	return nl;
 +}
 +
- static int get_index_head(unsigned char *map, int len, struct rc_index_header *head, uint32_t *fanout, unsigned char **caches)
++static int get_cache_slice_header(int fd, unsigned char *cache_sha1, int len, struct rc_slice_header *head)
  {
- 	struct rc_index_header whead;
-@@ -246,6 +277,7 @@ static struct rc_index_entry *search_index(unsigned char *sha1)
- unsigned char *get_cache_slice(struct commit *commit)
- {
- 	struct rc_index_entry *ie;
-+	unsigned char *sha1;
+ 	int t;
  
- 	if (!idx_map) {
- 		if (no_idx)
-@@ -257,8 +289,13 @@ unsigned char *get_cache_slice(struct commit *commit)
- 		return 0;
- 
- 	ie = search_index(commit->object.sha1);
--	if (ie && ie->cache_index < idx_head.cache_nr)
--		return idx_caches + ie->cache_index * 20;
-+	if (ie && ie->cache_index < idx_head.cache_nr) {
-+		sha1 = idx_caches + ie->cache_index * 20;
+-	memcpy(head, map, sizeof(struct rc_slice_header));
++	if (xread(fd, head, sizeof(struct rc_slice_header)) != sizeof(struct rc_slice_header))
++		return -1;
 +
-+		if (is_bad_slice(sha1))
-+			return 0;
-+		return sha1;
-+	}
+ 	head->ofs_objects = ntohl(head->ofs_objects);
+ 	head->object_nr = ntohl(head->object_nr);
+ 	head->size = ntohl(head->size);
+ 	head->path_nr = ntohs(head->path_nr);
++	head->name_size = ntohl(head->name_size);
+ 
+ 	if (memcmp(head->signature, "REVCACHE", 8))
+ 		return -1;
+@@ -731,10 +792,10 @@ static int get_cache_slice_header(unsigned char *cache_sha1, unsigned char *map,
+ 	if (hashcmp(head->sha1, cache_sha1))
+ 		return -3;
+ 	t = sizeof(struct rc_slice_header);
+-	if (t != head->ofs_objects || t >= len)
++	if (t != head->ofs_objects)
+ 		return -4;
+-
+-	head->size = len;
++	if (head->size + head->name_size != len)
++		return -5;
  
  	return 0;
  }
-@@ -268,6 +305,20 @@ unsigned char *get_cache_slice(struct commit *commit)
- 
- static unsigned long decode_size(unsigned char *str, int len);
- 
-+/* on failure */
-+static void restore_commit(struct commit *commit)
-+{
-+	commit->object.flags &= ~(ADDED | SEEN | FACE_VALUE);
-+
-+	if (!commit->object.parsed) {
-+		while (pop_commit(&commit->parents))
-+			;
-+
-+		parse_commit(commit);
-+	}
-+
-+}
-+
- static void handle_noncommit(struct rev_info *revs, struct commit *commit, unsigned char *ptr, struct rc_object_entry *entry)
- {
- 	struct blob *blob;
-@@ -307,23 +358,27 @@ static void handle_noncommit(struct rev_info *revs, struct commit *commit, unsig
- 	}
- 
- 	obj->flags |= FACE_VALUE;
--	add_pending_object(revs, obj, "");
-+	if (add_to_pending)
-+		add_pending_object(revs, obj, "");
- }
- 
--static int setup_traversal(struct rc_slice_header *head, unsigned char *map, struct commit *commit, struct commit_list **work)
-+static int setup_traversal(struct rc_slice_header *head, unsigned char *map, struct commit *commit, struct commit_list **work,
-+	struct commit_list **unwork, int *ipath_nr, int *upath_nr, char *ioutside)
- {
- 	struct rc_index_entry *iep;
- 	struct rc_object_entry *oep;
- 	struct commit_list *prev, *wp, **wpp;
- 	int retval;
- 
--	iep = search_index(commit->object.sha1), 0;
-+	iep = search_index(commit->object.sha1);
- 	oep = RC_OBTAIN_OBJECT_ENTRY(map + iep->pos);
-+	if (commit->object.flags & UNINTERESTING) {
-+		++*upath_nr;
-+		oep->uninteresting = 1;
-+	} else
-+		++*ipath_nr;
- 
--	/* the .uniniteresting bit isn't strictly necessary, as we check the object during traversal as well,
--	 * but we might as well initialize it while we're at it */
- 	oep->include = 1;
--	oep->uninteresting = !!(commit->object.flags & UNINTERESTING);
- 	to_disked_rc_object_entry(oep, (struct rc_object_entry_ondisk *)(map + iep->pos));
- 	retval = iep->pos;
- 
-@@ -338,6 +393,10 @@ static int setup_traversal(struct rc_slice_header *head, unsigned char *map, str
- 		/* is this in our cache slice? */
- 		iep = search_index(obj->sha1);
- 		if (!iep || hashcmp(idx_caches + iep->cache_index * 20, head->sha1)) {
-+			/* there are interesing objects outside the slice */
-+			if (!(obj->flags & UNINTERESTING))
-+				*ioutside = 1;
-+
- 			prev = wp;
- 			wp = wp->next;
- 			wpp = &wp;
-@@ -354,11 +413,20 @@ static int setup_traversal(struct rc_slice_header *head, unsigned char *map, str
- 		oep->uninteresting = !!(obj->flags & UNINTERESTING);
- 		to_disked_rc_object_entry(oep, (struct rc_object_entry_ondisk *)(map + iep->pos));
- 
-+		/* count even if not in slice so we can stop enumerating if possible */
-+		if (obj->flags & UNINTERESTING)
-+			++*upath_nr;
-+		else
-+			++*ipath_nr;
-+
- 		/* remove from work list */
- 		co = pop_commit(wpp);
- 		wp = *wpp;
- 		if (prev)
- 			prev->next = wp;
-+
-+		/* ...and store in temp list so we can restore work on failure */
-+		commit_list_insert(co, unwork);
- 	}
- 
- 	return retval;
-@@ -375,13 +443,18 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
+@@ -786,7 +847,7 @@ int traverse_cache_slice(struct rev_info *revs,
  	unsigned long *date_so_far, int *slop_so_far,
  	struct commit_list ***queue, struct commit_list **work)
  {
--	struct commit_list *insert_cache = 0;
-+	struct commit_list *insert_cache = 0, *myq = 0, **myqp = &myq, *mywork = 0, **myworkp = &mywork, *unwork = 0;
- 	struct commit **last_objects, *co;
--	int i, total_path_nr = head->path_nr, retval = -1;
--	char consume_children = 0;
-+	unsigned long date = date_so_far ? *date_so_far : ~0ul;
-+	int i, ipath_nr = 0, upath_nr = 0, orig_obj_nr = 0,
-+		total_path_nr = head->path_nr, retval = -1, slop = slop_so_far ? *slop_so_far : SLOP;
-+	char consume_children = 0, ioutside = 0;
- 	unsigned char *paths;
- 
--	i = setup_traversal(head, map, commit, work);
-+	/* take note in case we need to regress */
-+	orig_obj_nr = revs->pending.nr;
-+
-+	i = setup_traversal(head, map, commit, work, &unwork, &ipath_nr, &upath_nr, &ioutside);
- 	if (i < 0)
- 		return -1;
- 
-@@ -429,6 +502,7 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 
- 		if ((paths[path] & IPATH) && (paths[path] & UPATH)) {
- 			paths[path] = UPATH;
-+			ipath_nr--;
- 
- 			/* mark edge */
- 			if (last_objects[path]) {
-@@ -439,6 +513,7 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 				last_objects[path]->object.flags &= ~FACE_VALUE;
- 				last_objects[path] = 0;
- 			}
-+			obj->flags |= BOUNDARY;
- 		}
- 
- 		/* now we gotta re-assess the whole interesting thing... */
-@@ -462,8 +537,10 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 						last_objects[p]->object.flags &= ~FACE_VALUE;
- 						last_objects[p] = 0;
- 					}
--				} else if (last_objects[p] && !last_objects[p]->object.parsed)
-+					obj->flags |= BOUNDARY;
-+				} else if (last_objects[p] && !last_objects[p]->object.parsed) {
- 					commit_list_insert(co, &last_objects[p]->parents);
-+				}
- 
- 				/* can't close a merge path until all are parents have been encountered */
- 				if (GET_COUNT(paths[p])) {
-@@ -473,14 +550,33 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 						continue;
- 				}
- 
-+				if (paths[p] & IPATH)
-+					ipath_nr--;
-+				else
-+					upath_nr--;
-+
- 				paths[p] = 0;
- 				last_objects[p] = 0;
- 			}
- 		}
- 
- 		/* make topo relations */
--		if (last_objects[path] && !last_objects[path]->object.parsed)
-+		if (last_objects[path] && !last_objects[path]->object.parsed) {
- 			commit_list_insert(co, &last_objects[path]->parents);
-+		}
-+
-+		/* we've been here already */
-+		if (obj->flags & ADDED) {
-+			if (entry->uninteresting && !(obj->flags & UNINTERESTING)) {
-+				obj->flags |= UNINTERESTING;
-+				mark_parents_uninteresting(co);
-+				upath_nr--;
-+			} else if (!entry->uninteresting)
-+				ipath_nr--;
-+
-+			paths[path] = 0;
-+			continue;
-+		}
- 
- 		/* initialize commit */
- 		if (!entry->is_end) {
-@@ -493,24 +589,51 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 
- 		if (entry->uninteresting)
- 			obj->flags |= UNINTERESTING;
-+		else if (co->date < date)
-+			date = co->date;
- 
- 		/* we need to know what the edges are */
- 		last_objects[path] = co;
- 
- 		/* add to list */
--		if (!(obj->flags & UNINTERESTING) || revs->show_all) {
--			if (entry->is_end)
--				insert_by_date_cached(co, work, insert_cache, &insert_cache);
--			else
--				*queue = &commit_list_insert(co, *queue)->next;
-+		if (slop && !(revs->min_age != -1 && co->date > revs->min_age)) {
-+
-+			if (!(obj->flags & UNINTERESTING) || revs->show_all) {
-+				if (entry->is_end)
-+					myworkp = &commit_list_insert(co, myworkp)->next;
-+				else
-+					myqp = &commit_list_insert(co, myqp)->next;
-+
-+				/* add children to list as well */
-+				if (obj->flags & UNINTERESTING)
-+					consume_children = 0;
-+				else
-+					consume_children = 1;
-+			}
- 
--			/* add children to list as well */
--			if (obj->flags & UNINTERESTING)
--				consume_children = 0;
--			else
--				consume_children = 1;
- 		}
- 
-+		/* should we continue? */
-+		if (!slop) {
-+			if (!upath_nr) {
-+				break;
-+			} else if (ioutside || revs->show_all) {
-+				/* pass it back to rev-list
-+				 * we purposely ignore everything outside this cache, so we don't needlessly traverse the whole
-+				 * thing on uninteresting, but that does mean that we may need to bounce back
-+				 * and forth a few times with rev-list */
-+				myworkp = &commit_list_insert(co, myworkp)->next;
-+
-+				paths[path] = 0;
-+				upath_nr--;
-+			} else {
-+				break;
-+			}
-+		} else if (!ipath_nr && co->date <= date)
-+			slop--;
-+		else
-+			slop = SLOP;
-+
- 		/* open parents */
- 		if (entry->merge_nr) {
- 			int j, off = index + sizeof(struct rc_object_entry_ondisk);
-@@ -525,6 +648,11 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 				if (paths[p] & flag)
- 					continue;
- 
-+				if (flag == IPATH)
-+					ipath_nr++;
-+				else
-+					upath_nr++;
-+
- 				paths[p] |= flag;
- 			}
- 
-@@ -534,12 +662,55 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 
- 	}
- 
-+	if (date_so_far)
-+		*date_so_far = date;
-+	if (slop_so_far)
-+		*slop_so_far = slop;
- 	retval = 0;
- 
-+	/* success: attach to given lists */
-+	if (myqp != &myq) {
-+		**queue = myq;
-+		*queue = myqp;
-+	}
-+
-+	while ((co = pop_commit(&mywork)) != 0) {
-+		insert_by_date_cached(co, work, insert_cache, &insert_cache);
-+	}
-+
-+	/* free backup */
-+	while (pop_commit(&unwork))
-+		;
-+
- end:
- 	free(paths);
- 	free(last_objects);
- 
-+	/* failure: restore work to previous condition
-+	 * (cache corruption should *not* be fatal) */
-+	if (retval) {
-+		while ((co = pop_commit(&unwork)) != 0) {
-+			restore_commit(co);
-+			co->object.flags |= SEEN;
-+			insert_by_date(co, work);
-+		}
-+
-+		/* free lists */
-+		while ((co = pop_commit(&myq)) != 0)
-+			restore_commit(co);
-+
-+		while ((co = pop_commit(&mywork)) != 0)
-+			restore_commit(co);
-+
-+		/* truncate object array */
-+		for (i = orig_obj_nr; i < revs->pending.nr; i++) {
-+			struct object *obj = revs->pending.objects[i].item;
-+
-+			obj->flags &= ~FACE_VALUE;
-+		}
-+		revs->pending.nr = orig_obj_nr;
-+	}
-+
- 	return retval;
- }
- 
-@@ -630,6 +801,7 @@ int traverse_cache_slice(struct rev_info *revs,
- 
+-	int fd = -1, retval = -3;
++	int fd = -1, t, retval;
+ 	struct stat fi;
+ 	struct rc_slice_header head;
+ 	struct rev_cache_info *rci;
+@@ -802,26 +863,31 @@ int traverse_cache_slice(struct rev_info *revs,
  	/* load options */
  	rci = &revs->rev_cache_info;
-+	add_to_pending = rci->add_to_pending;
+ 	add_to_pending = rci->add_to_pending;
++	add_names = rci->add_names;
  
  	memset(&head, 0, sizeof(struct rc_slice_header));
++#	define ERROR(x)		do { retval = (x); goto end; } while (0);
  
-@@ -653,6 +825,10 @@ end:
+ 	fd = open_cache_slice(cache_sha1, O_RDONLY);
+ 	if (fd == -1)
+-		goto end;
++		ERROR(-1);
+ 	if (fstat(fd, &fi) || fi.st_size < sizeof(struct rc_slice_header))
+-		goto end;
++		ERROR(-2);
++
++	if ((t = get_cache_slice_header(fd, cache_sha1, fi.st_size, &head)) < 0)
++		ERROR(-t);
++	if (add_names)
++		cur_name_list = get_cache_slice_name_list(&head, fd);
+ 
+-	map = xmmap(0, fi.st_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
++	map = xmmap(0, head.size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
+ 	if (map == MAP_FAILED)
+-		goto end;
+-	if (get_cache_slice_header(cache_sha1, map, fi.st_size, &head))
+-		goto end;
++		ERROR(-3);
+ 
+ 	retval = traverse_cache_slice_1(&head, map, revs, commit, date_so_far, slop_so_far, queue, work);
+ 
+ end:
+ 	if (map != MAP_FAILED)
+-		munmap(map, fi.st_size);
++		munmap(map, head.size);
  	if (fd != -1)
  		close(fd);
  
-+	/* remember this! */
-+	if (retval)
-+		mark_bad_slice(cache_sha1);
-+
+@@ -829,6 +895,7 @@ end:
+ 	if (retval)
+ 		mark_bad_slice(cache_sha1);
+ 
++#	undef ERROR
  	return retval;
  }
  
-diff --git a/revision.c b/revision.c
-index 485bf72..4640536 100644
---- a/revision.c
-+++ b/revision.c
-@@ -12,6 +12,7 @@
- #include "patch-ids.h"
- #include "decorate.h"
- #include "log-tree.h"
-+#include "rev-cache.h"
+@@ -1113,23 +1180,110 @@ static unsigned long decode_size(unsigned char *str, int len)
+ 	return size;
+ }
  
- volatile show_early_output_fn_t show_early_output;
- 
-@@ -638,6 +639,8 @@ static int limit_list(struct rev_info *revs)
- 	struct commit_list *list = revs->commits;
- 	struct commit_list *newlist = NULL;
- 	struct commit_list **p = &newlist;
-+	unsigned char *cache_sha1;
-+	char used_cache;
- 
- 	while (list) {
- 		struct commit_list *entry = list;
-@@ -650,24 +653,39 @@ static int limit_list(struct rev_info *revs)
- 
- 		if (revs->max_age != -1 && (commit->date < revs->max_age))
- 			obj->flags |= UNINTERESTING;
--		if (add_parents_to_list(revs, commit, &list, NULL) < 0)
--			return -1;
--		if (obj->flags & UNINTERESTING) {
--			mark_parents_uninteresting(commit);
--			if (revs->show_all)
--				p = &commit_list_insert(commit, p)->next;
--			slop = still_interesting(list, date, slop);
--			if (slop)
 +
-+		/* rev-cache to the rescue!!! */
-+		used_cache = 0;
-+		if (!revs->dont_cache_me && !(obj->flags & ADDED)) {
-+			cache_sha1 = get_cache_slice(commit);
-+			if (cache_sha1) {
-+				if (traverse_cache_slice(revs, cache_sha1, commit, &date, &slop, &p, &list) < 0)
-+					used_cache = 0;
-+				else
-+					used_cache = 1;
++#define NL_HASH_TABLE_SIZE		(0xffff + 1)
++#define NL_HASH_NUMBER			(NL_HASH_TABLE_SIZE >> 3)
++
++struct name_list_hash {
++	int ind;
++	struct name_list_hash *next;
++};
++
++static struct name_list_hash **nl_hash_table;
++static unsigned char *nl_hashes;
++
++/* FNV-1a hash */
++static unsigned int hash_name(const char *name)
++{
++	unsigned int hash = 2166136261ul;
++	const char *p = name;
++
++	while (*p) {
++		hash ^= *p++;
++		hash *= 16777619ul;
++	}
++
++	return hash & 0xffff;
++}
++
++static int name_in_list(const char *name)
++{
++	unsigned int h = hash_name(name);
++	struct name_list_hash *entry = nl_hash_table[h];
++
++	while (entry && strcmp(acc_name_buffer->buf + entry->ind, name))
++		entry = entry->next;
++
++	if (entry)
++		return entry->ind;
++
++	/* add name to buffer and create hash reference */
++	entry = xcalloc(1, sizeof(struct name_list_hash));
++	entry->ind = acc_name_buffer->len;
++	strbuf_add(acc_name_buffer, name, strlen(name) + 1);
++
++	entry->next = nl_hash_table[h];
++	nl_hash_table[h] = entry;
++
++	nl_hashes[h / 8] |= h % 8;
++
++	return entry->ind;
++}
++
++static void init_name_list_hash(void)
++{
++	nl_hash_table = xcalloc(NL_HASH_TABLE_SIZE, sizeof(struct name_list_hash));
++	nl_hashes = xcalloc(NL_HASH_NUMBER, 1);
++}
++
++static void cleanup_name_list_hash(void)
++{
++	int i;
++
++	for (i = 0; i < NL_HASH_NUMBER; i++) {
++		int j, ind = nl_hashes[i];
++
++		if (!ind)
++			continue;
++
++		for (j = 0; j < 8; j++) {
++			struct name_list_hash **entryp;
++
++			if (!(ind & 1 << j))
++				continue;
++
++			entryp = &nl_hash_table[i * 8 + j];
++			while (*entryp) {
++				struct name_list_hash *t = (*entryp)->next;
++
++				free(*entryp);
++				*entryp = t;
 +			}
 +		}
++	} /* code overhang! */
 +
-+		if (!used_cache) {
-+			if (add_parents_to_list(revs, commit, &list, NULL) < 0)
-+				return -1;
-+			if (obj->flags & UNINTERESTING) {
-+				mark_parents_uninteresting(commit); /* ME: why? */
-+				if (revs->show_all)
-+					p = &commit_list_insert(commit, p)->next;
-+				slop = still_interesting(list, date, slop);
-+				if (slop > 0)
-+					continue;
-+				/* If showing all, add the whole pending list to the end */
-+				if (revs->show_all)
-+					*p = list;
-+				break;
-+			}
-+			if (revs->min_age != -1 && (commit->date > revs->min_age))
- 				continue;
--			/* If showing all, add the whole pending list to the end */
--			if (revs->show_all)
--				*p = list;
--			break;
-+			date = commit->date;
-+			p = &commit_list_insert(commit, p)->next;
- 		}
--		if (revs->min_age != -1 && (commit->date > revs->min_age))
--			continue;
--		date = commit->date;
--		p = &commit_list_insert(commit, p)->next;
- 
- 		show = show_early_output;
- 		if (!show)
-@@ -813,6 +831,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 		revs->diffopt.prefix = prefix;
- 		revs->diffopt.prefix_length = strlen(prefix);
- 	}
++	free(nl_hashes);
++	free(nl_hash_table);
++}
 +
-+	init_rev_cache_info(&revs->rev_cache_info);
- }
- 
- static void add_pending_commit_list(struct rev_info *revs,
-@@ -1372,6 +1392,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 	if (revs->reflog_info && revs->graph)
- 		die("cannot combine --walk-reflogs with --graph");
- 
-+	/* limits on caching
-+	 * todo: implement this functionality */
-+	if (revs->prune || revs->diff)
-+		revs->dont_cache_me = 1;
-+
- 	return left;
- }
- 
-@@ -1654,6 +1679,8 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *entryp,
+-	struct strbuf *merge_str, struct strbuf *split_str)
++	struct strbuf *merge_str, struct strbuf *split_str, char *name, unsigned long size)
  {
- 	if (!opt->grep_filter.pattern_list)
- 		return 1;
-+	if (!commit->object.parsed)
-+		parse_commit(commit);
- 	return grep_buffer(&opt->grep_filter,
- 			   NULL, /* we say nothing, not even filename */
- 			   commit->buffer, strlen(commit->buffer));
-@@ -1706,6 +1733,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 	do {
- 		struct commit_list *entry = revs->commits;
- 		struct commit *commit = entry->item;
-+		struct object *obj = &commit->object;
+ 	struct rc_object_entry entry;
+-	unsigned char size_str[7];
+-	unsigned long size;
++	unsigned char size_str[7], name_str[7];
+ 	enum object_type type;
+ 	void *data;
  
- 		revs->commits = entry->next;
- 		free(entry);
-@@ -1722,11 +1750,39 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 			if (revs->max_age != -1 &&
- 			    (commit->date < revs->max_age))
- 				continue;
+ 	if (entryp)
+ 		sha1 = entryp->sha1;
+ 
+-	/* retrieve size data */
+-	data = read_sha1_file(sha1, &type, &size);
++	if (!size) {
++		/* retrieve size data */
++		data = read_sha1_file(sha1, &type, &size);
+ 
+-	if (data)
+-		free(data);
++		if (data)
++			free(data);
++	}
+ 
+ 	/* initialize! */
+ 	if (!entryp) {
+@@ -1147,6 +1301,9 @@ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *
+ 
+ 	entryp->size_size = encode_size(size, size_str);
+ 
++	if (name)
++		entryp->name_size = encode_size(name_in_list(name), name_str);
 +
-+			if (!revs->dont_cache_me) {
-+				struct commit_list *queue = 0, **queuep = &queue;
-+				unsigned char *cache_sha1;
+ 	/* write the muvabitch */
+ 	strbuf_add(acc_buffer, to_disked_rc_object_entry(entryp, 0), sizeof(struct rc_object_entry_ondisk));
+ 
+@@ -1156,6 +1313,9 @@ static void add_object_entry(const unsigned char *sha1, struct rc_object_entry *
+ 		strbuf_add(acc_buffer, split_str->buf, split_str->len);
+ 
+ 	strbuf_add(acc_buffer, size_str, entryp->size_size);
 +
-+				if (obj->flags & ADDED)
-+					goto skip_parenting;
++	if (name)
++		strbuf_add(acc_buffer, name_str, entryp->name_size);
+ }
+ 
+ /* returns non-zero to continue parsing, 0 to skip */
+@@ -1200,6 +1360,9 @@ continue_loop:
+ static int dump_tree_callback(const unsigned char *sha1, const char *path, unsigned int mode)
+ {
+ 	strbuf_add(acc_buffer, sha1, 20);
++	strbuf_add(acc_buffer, (char *)&acc_name_buffer->len, sizeof(size_t));
 +
-+				cache_sha1 = get_cache_slice(commit);
-+				if (cache_sha1) {
-+					if (!traverse_cache_slice(revs, cache_sha1, commit, 0, 0, &queuep, &revs->commits)) {
-+						struct commit_list *work = revs->commits;
++	strbuf_add(acc_name_buffer, path, strlen(path) + 1);
+ 
+ 	return 1;
+ }
+@@ -1213,6 +1376,9 @@ static void tree_addremove(struct diff_options *options,
+ 		return;
+ 
+ 	strbuf_add(acc_buffer, sha1, 20);
++	strbuf_add(acc_buffer, (char *)&acc_name_buffer->len, sizeof(size_t));
 +
-+						/* attach queue to end of ->commits */
-+						while (work && work->next)
-+							work = work->next;
++	strbuf_add(acc_name_buffer, concatpath, strlen(concatpath) + 1);
+ }
+ 
+ static void tree_change(struct diff_options *options,
+@@ -1225,12 +1391,15 @@ static void tree_change(struct diff_options *options,
+ 		return;
+ 
+ 	strbuf_add(acc_buffer, new_sha1, 20);
++	strbuf_add(acc_buffer, (char *)&acc_name_buffer->len, sizeof(size_t));
 +
-+						if (work)
-+							work->next = queue;
-+						else
-+							revs->commits = queue;
++	strbuf_add(acc_name_buffer, concatpath, strlen(concatpath) + 1);
+ }
+ 
+ static int add_unique_objects(struct commit *commit)
+ {
+ 	struct commit_list *list;
+-	struct strbuf os, ost, *orig_buf;
++	struct strbuf os, ost, names, *orig_name_buf, *orig_buf;
+ 	struct diff_options opts;
+ 	int i, j, next;
+ 	char is_first = 1;
+@@ -1238,13 +1407,17 @@ static int add_unique_objects(struct commit *commit)
+ 	/* ...no, calculate unique objects */
+ 	strbuf_init(&os, 0);
+ 	strbuf_init(&ost, 0);
++	strbuf_init(&names, 0);
+ 	orig_buf = acc_buffer;
++	orig_name_buf = acc_name_buffer;
++	acc_name_buffer = &names;
+ 
+ 	diff_setup(&opts);
+ 	DIFF_OPT_SET(&opts, RECURSIVE);
+ 	DIFF_OPT_SET(&opts, TREE_IN_RECURSIVE);
+ 	opts.change = tree_change;
+ 	opts.add_remove = tree_addremove;
++#	define ENTRY_SIZE (20 + sizeof(size_t))
+ 
+ 	/* this is only called for non-ends (ie. all parents interesting) */
+ 	for (list = commit->parents; list; list = list->next) {
+@@ -1255,20 +1428,20 @@ static int add_unique_objects(struct commit *commit)
+ 
+ 		strbuf_setlen(acc_buffer, 0);
+ 		diff_tree_sha1(list->item->tree->object.sha1, commit->tree->object.sha1, "", &opts);
+-		qsort(acc_buffer->buf, acc_buffer->len / 20, 20, (int (*)(const void *, const void *))hashcmp);
++		qsort(acc_buffer->buf, acc_buffer->len / ENTRY_SIZE, ENTRY_SIZE, (int (*)(const void *, const void *))hashcmp);
+ 
+ 		/* take intersection */
+ 		if (!is_first) {
+-			for (next = i = j = 0; i < os.len; i += 20) {
++			for (next = i = j = 0; i < os.len; i += ENTRY_SIZE) {
+ 				while (j < ost.len && hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)) < 0)
+-					j += 20;
++					j += ENTRY_SIZE;
+ 
+ 				if (j >= ost.len || hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)))
+ 					continue;
+ 
+ 				if (next != i)
+-					memcpy(os.buf + next, os.buf + i, 20);
+-				next += 20;
++					memcpy(os.buf + next, os.buf + i, ENTRY_SIZE);
++				next += ENTRY_SIZE;
+ 			}
+ 
+ 			if (next != i)
+@@ -1285,26 +1458,34 @@ static int add_unique_objects(struct commit *commit)
+ 
+ 	/* the ordering of non-commit objects dosn't really matter, so we're not gonna bother */
+ 	acc_buffer = orig_buf;
+-	for (i = 0; i < os.len; i += 20)
+-		add_object_entry((unsigned char *)(os.buf + i), 0, 0, 0);
++	acc_name_buffer = orig_name_buf;
++	for (i = 0; i < os.len; i += ENTRY_SIZE)
++		add_object_entry((unsigned char *)(os.buf + i), 0, 0, 0, names.buf + *(size_t *)(os.buf + i + 20), 0);
+ 
+ 	/* last but not least, the main tree */
+-	add_object_entry(commit->tree->object.sha1, 0, 0, 0);
++	add_object_entry(commit->tree->object.sha1, 0, 0, 0, 0, 0);
 +
-+						goto skip_parenting;
-+					}
-+				}
-+			}
-+
- 			if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0)
- 				die("Failed to traverse parents of commit %s",
- 				    sha1_to_hex(commit->object.sha1));
++	strbuf_release(&ost);
++	strbuf_release(&os);
++	strbuf_release(&names);
+ 
+-	return i / 20 + 1;
++	return i / ENTRY_SIZE + 1;
++#	undef ENTRY_SIZE
+ }
+ 
+ static int add_objects_verbatim_1(struct rev_cache_slice_map *mapping, int *index)
+ {
+-	unsigned char *map = mapping->map;
+ 	int i = *index, object_nr = 0;
++	unsigned char *map = mapping->map;
+ 	struct rc_object_entry *entry = RC_OBTAIN_OBJECT_ENTRY(map + i);
++	unsigned long size;
+ 
+ 	i += RC_ACTUAL_OBJECT_ENTRY_SIZE(entry);
+ 	while (i < mapping->size) {
+-		int pos = i;
++		char *name;
++		int name_index, pos = i;
+ 
+-		entry = RC_OBTAIN_OBJECT_ENTRY(map + i;
++		entry = RC_OBTAIN_OBJECT_ENTRY(map + i);
+ 		i += RC_ACTUAL_OBJECT_ENTRY_SIZE(entry);
+ 
+ 		if (entry->type == OBJ_COMMIT) {
+@@ -1312,7 +1493,15 @@ static int add_objects_verbatim_1(struct rev_cache_slice_map *mapping, int *inde
+ 			return object_nr;
  		}
  
-+skip_parenting:
- 		switch (simplify_commit(revs, commit)) {
- 		case commit_ignore:
+-		strbuf_add(acc_buffer, map + pos, i - pos);
++		name_index = decode_size(map + pos + RC_ENTRY_NAME_OFFSET(entry), entry->name_size);
++		if (name_index && name_index < mapping->name_size)
++			name = mapping->names + name_index;
++		else
++			name = 0;
++
++		size = decode_size(map + pos + RC_ENTRY_SIZE_OFFSET(entry), entry->size_size);
++
++		add_object_entry(0, entry, 0, 0, name, size);
+ 		object_nr++;
+ 	}
+ 
+@@ -1397,6 +1586,7 @@ void init_rev_cache_info(struct rev_cache_info *rci)
+ 	rci->overwrite_all = 0;
+ 
+ 	rci->add_to_pending = 1;
++	rci->add_names = 1;
+ 
+ 	rci->ignore_size = 0;
+ }
+@@ -1421,9 +1611,9 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 	struct rc_slice_header head;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+-	struct strbuf merge_paths, split_paths;
++	struct strbuf merge_paths, split_paths, namelist;
+ 	int object_nr, total_sz, fd;
+-	char file[PATH_MAX], *newfile;
++	char file[PATH_MAX], null, *newfile;
+ 	struct rev_cache_info *trci;
+ 	git_SHA_CTX ctx;
+ 
+@@ -1438,7 +1628,13 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 	strbuf_init(&endlist, 0);
+ 	strbuf_init(&merge_paths, 0);
+ 	strbuf_init(&split_paths, 0);
++	strbuf_init(&namelist, 0);
+ 	acc_buffer = &buffer;
++	acc_name_buffer = &namelist;
++
++	null = 0;
++	strbuf_add(&namelist, &null, 1);
++	init_name_list_hash();
+ 
+ 	if (!revs) {
+ 		revs = &therevs;
+@@ -1469,6 +1665,7 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 	trci = &revs->rev_cache_info;
+ 	init_rev_cache_info(trci);
+ 	trci->add_to_pending = 0;
++	trci->add_names = 0;
+ 
+ 	setup_revisions(0, 0, revs, 0);
+ 	if (prepare_revision_walk(revs))
+@@ -1506,7 +1703,7 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 
+ 		commit->indegree = 0;
+ 
+-		add_object_entry(0, &object, &merge_paths, &split_paths);
++		add_object_entry(0, &object, &merge_paths, &split_paths, 0, 0);
+ 		object_nr++;
+ 
+ 		if (rci->objects && !object.is_end) {
+@@ -1532,10 +1729,16 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 		total_sz += buffer.len;
+ 	}
+ 
++	/* write path name lookup list */
++	head.name_size = htonl(namelist.len);
++	write_in_full(fd, namelist.buf, namelist.len);
++
+ 	/* go ahead a free some stuff... */
+ 	strbuf_release(&buffer);
+ 	strbuf_release(&merge_paths);
+ 	strbuf_release(&split_paths);
++	strbuf_release(&namelist);
++	cleanup_name_list_hash();
+ 	if (path_sz)
+ 		free(paths);
+ 	while (path_track_alloc)
+@@ -1993,6 +2196,7 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
+ 	for (i = idx_head.cache_nr - 1; i >= 0; i--) {
+ 		struct rev_cache_slice_map *map = rci->maps + i;
+ 		struct stat fi;
++		struct rc_slice_header head;
+ 		int fd;
+ 
+ 		if (!map->size)
+@@ -2005,13 +2209,20 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
  			continue;
+ 		if (fi.st_size < sizeof(struct rc_slice_header))
+ 			continue;
++		if (get_cache_slice_header(fd, idx_caches + i * 20, fi.st_size, &head))
++			continue;
+ 
+-		map->map = xmmap(0, fi.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
++		map->map = xmmap(0, head.size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 		if (map->map == MAP_FAILED)
+ 			continue;
+ 
++		lseek(fd, head.size, SEEK_SET);
++		map->names = xcalloc(head.name_size, 1);
++		read_in_full(fd, map->names, head.name_size);
++
+ 		close(fd);
+-		map->size = fi.st_size;
++		map->size = head.size;
++		map->name_size = head.name_size;
+ 	}
+ 
+ 	rci->make_index = 0;
+@@ -2028,6 +2239,7 @@ int fuse_cache_slices(struct rev_cache_info *rci, struct rev_info *revs)
+ 		if (!map->size)
+ 			continue;
+ 
++		free(map->names);
+ 		munmap(map->map, map->size);
+ 	}
+ 	free(rci->maps);
+@@ -2049,7 +2261,6 @@ static int verify_cache_slice(const char *slice_path, unsigned char *sha1)
+ {
+ 	struct rc_slice_header head;
+ 	int fd, len, retval = -1;
+-	unsigned char *map = MAP_FAILED;
+ 	struct stat fi;
+ 
+ 	len = strlen(slice_path);
+@@ -2064,17 +2275,12 @@ static int verify_cache_slice(const char *slice_path, unsigned char *sha1)
+ 	if (fstat(fd, &fi) || fi.st_size < sizeof(head))
+ 		goto end;
+ 
+-	map = xmmap(0, sizeof(head), PROT_READ, MAP_PRIVATE, fd, 0);
+-	if (map == MAP_FAILED)
+-		goto end;
+-	if (get_cache_slice_header(sha1, map, fi.st_size, &head))
++	if (get_cache_slice_header(fd, sha1, fi.st_size, &head))
+ 		goto end;
+ 
+ 	retval = 0;
+ 
+ end:
+-	if (map != MAP_FAILED)
+-		munmap(map, sizeof(head));
+ 	if (fd > 0)
+ 		close(fd);
+ 
+diff --git a/rev-cache.h b/rev-cache.h
+index 14437d8..c88ceae 100644
+--- a/rev-cache.h
++++ b/rev-cache.h
+@@ -10,8 +10,14 @@
+ #define RC_OBTAIN_OBJECT_ENTRY(p)			from_disked_rc_object_entry((struct rc_object_entry_ondisk *)(p), 0)
+ #define RC_OBTAIN_INDEX_ENTRY(p)			from_disked_rc_index_entry((struct rc_index_entry_ondisk *)(p), 0)
+ 
+-#define RC_ACTUAL_OBJECT_ENTRY_SIZE(e)		(sizeof(struct rc_object_entry_ondisk) + RC_PATH_SIZE((e)->merge_nr + (e)->split_nr) + (e)->size_size)
+-#define RC_ENTRY_SIZE_OFFSET(e)				(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->size_size)
++#define RC_ACTUAL_OBJECT_ENTRY_SIZE(e)	(\
++	sizeof(struct rc_object_entry_ondisk) + \
++	RC_PATH_SIZE((e)->merge_nr + (e)->split_nr) + \
++	(e)->size_size + \
++	(e)->name_size\
++)
++#define RC_ENTRY_SIZE_OFFSET(e)			(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->name_size - (e)->size_size)
++#define RC_ENTRY_NAME_OFFSET(e)			(RC_ACTUAL_OBJECT_ENTRY_SIZE(e) - (e)->name_size)
+ 
+ /* single index maps objects to cache files */
+ struct rc_index_header {
+@@ -50,6 +56,8 @@ struct rc_slice_header {
+ 	uint32_t size;
+ 
+ 	unsigned char sha1[20];
++
++	uint32_t name_size;
+ };
+ 
+ struct rc_object_entry_ondisk {
+@@ -76,7 +84,8 @@ struct rc_object_entry {
+ 	unsigned char merge_nr; /* : 7 */
+ 	unsigned char split_nr; /* : 7 */
+ 	unsigned size_size : 3;
+-	unsigned padding : 5;
++	unsigned name_size : 3;
++	unsigned padding : 2;
+ 
+ 	uint32_t date;
+ 	uint16_t path;
+@@ -84,6 +93,7 @@ struct rc_object_entry {
+ 	/* merge paths */
+ 	/* split paths */
+ 	/* size */
++	/* name id */
+ };
+ 
+ struct rc_index_entry *from_disked_rc_index_entry(struct rc_index_entry_ondisk *src, struct rc_index_entry *dst);
+diff --git a/revision.h b/revision.h
+index c3ec1b3..b2d5834 100644
+--- a/revision.h
++++ b/revision.h
+@@ -23,6 +23,9 @@ struct rev_cache_slice_map {
+ 	unsigned char *map;
+ 	int size;
+ 	int last_index;
++
++	char *names;
++	int name_size;
+ };
+ 
+ struct rev_cache_info {
+@@ -36,7 +39,8 @@ struct rev_cache_info {
+ 	unsigned overwrite_all : 1;
+ 
+ 	/* traversal flags */
+-	unsigned add_to_pending : 1;
++	unsigned add_to_pending : 1,
++		add_names : 1;
+ 
+ 	/* fuse options */
+ 	unsigned int ignore_size;
 diff --git a/t/t6015-rev-cache-list.sh b/t/t6015-rev-cache-list.sh
-index dc0fc07..065f214 100755
+index 065f214..e603f85 100755
 --- a/t/t6015-rev-cache-list.sh
 +++ b/t/t6015-rev-cache-list.sh
-@@ -38,6 +38,7 @@ test_expect_success 'init repo' '
- 	git add . &&
- 	git commit -m "omg" &&
+@@ -4,8 +4,8 @@ test_description='git rev-cache tests'
+ . ./test-lib.sh
  
-+	sleep 2 &&
- 	git branch b4 &&
- 	git checkout b4 &&
- 	echo shazam >file8 &&
-@@ -46,7 +47,7 @@ test_expect_success 'init repo' '
- 	git merge -m "merge b2" b2 &&
+ test_cmp_sorted() {
+-	grep -io "[a-f0-9]*" $1 | sort >.tmpfile1 &&
+-	grep -io "[a-f0-9]*" $2 | sort >.tmpfile2 &&
++	sort $1 >.tmpfile1 &&
++	sort $2 >.tmpfile2 &&
+ 	test_cmp .tmpfile1 .tmpfile2
+ }
  
- 	echo bam >smoke/pipe &&
--	git add .
-+	git add . &&
- 	git commit -m "bam" &&
- 
- 	git checkout master &&
-@@ -71,18 +72,26 @@ test_expect_success 'init repo' '
- 	git add . &&
- 	git commit -m "lol" &&
- 
-+	sleep 2 &&
+@@ -75,7 +75,7 @@ test_expect_success 'init repo' '
+ 	sleep 2 &&
  	git checkout master &&
  	git merge -m "triple merge" b1 b11 &&
--	git rm -r d1 &&
-+	git rm -r d1 && 
-+	sleep 2 &&
+-	git rm -r d1 && 
++	git rm -r d1 &&
+ 	sleep 2 &&
  	git commit -a -m "oh noes"
  '
- 
--git-rev-list HEAD --not HEAD~3 >proper_commit_list_limited
--git-rev-list HEAD >proper_commit_list
--git-rev-list HEAD --objects >proper_object_list
-+max_date=`git-rev-list --timestamp HEAD~1 --max-count=1 | grep -e "^[0-9]*" -o`
-+min_date=`git-rev-list --timestamp b4 --max-count=1 | grep -e "^[0-9]*" -o`
-+
-+git-rev-list --topo-order HEAD --not HEAD~3 >proper_commit_list_limited
-+git-rev-list --topo-order HEAD --not HEAD~2 >proper_commit_list_limited2
-+git-rev-list --topo-order HEAD >proper_commit_list
-+git-rev-list --objects HEAD >proper_object_list
-+git-rev-list HEAD --max-age=$min_date --min-age=$max_date >proper_list_date_limited
-+
-+cache_sha1=`git-rev-cache add HEAD 2>output.err`
- 
- test_expect_success 'make cache slice' '
--	git-rev-cache add HEAD 2>output.err &&
- 	grep "final return value: 0" output.err
- '
- 
-@@ -102,11 +111,141 @@ test_expect_success 'test rev-caches walker directly (unlimited)' '
- 	test_cmp_sorted list proper_commit_list
- '
- 
-+test_expect_success 'test rev-list traversal (limited)' '
-+	git-rev-list HEAD --not HEAD~3 >list &&
-+	test_cmp list proper_commit_list_limited
-+'
-+
-+test_expect_success 'test rev-list traversal (unlimited)' '
-+	git-rev-list HEAD >list &&
-+	test_cmp list proper_commit_list
-+'
-+
- #do the same for objects
- test_expect_success 'test rev-caches walker with objects' '
- 	git-rev-cache walk --objects HEAD >list &&
- 	test_cmp_sorted list proper_object_list
- '
- 
--test_done
-+test_expect_success 'test rev-list with objects (topo order)' '
-+	git-rev-list --topo-order --objects HEAD >list &&
-+	test_cmp_sorted list proper_object_list
-+'
-+
-+test_expect_success 'test rev-list with objects (no order)' '
-+	git-rev-list --objects HEAD >list &&
-+	test_cmp_sorted list proper_object_list
-+'
-+
-+#verify age limiting
-+test_expect_success 'test rev-list date limiting (topo order)' '
-+	git-rev-list --topo-order --max-age=$min_date --min-age=$max_date HEAD >list &&
-+	test_cmp_sorted list proper_list_date_limited
-+'
-+
-+test_expect_success 'test rev-list date limiting (no order)' '
-+	git-rev-list --max-age=$min_date --min-age=$max_date HEAD >list &&
-+	test_cmp_sorted list proper_list_date_limited
-+'
-+
-+#check partial cache slice
-+test_expect_success 'saving old cache and generating partial slice' '
-+	cp ".git/rev-cache/$cache_sha1" .git/rev-cache/.old &&
-+	rm ".git/rev-cache/$cache_sha1" .git/rev-cache/index &&
-+
-+	git-rev-cache add HEAD~2 2>output.err &&
-+	grep "final return value: 0" output.err
-+'
-+
-+test_expect_success 'rev-list with wholly interesting partial slice' '
-+	git-rev-list --topo-order HEAD >list &&
-+	test_cmp list proper_commit_list
-+'
-+
-+test_expect_success 'rev-list with partly uninteresting partial slice' '
-+	git-rev-list --topo-order HEAD --not HEAD~3 >list &&
-+	test_cmp list proper_commit_list_limited
-+'
-+
-+test_expect_success 'rev-list with wholly uninteresting partial slice' '
-+	git-rev-list --topo-order HEAD --not HEAD~2 >list &&
-+	test_cmp list proper_commit_list_limited2
-+'
-+
-+#try out index generation and fuse (note that --all == HEAD in this case)
-+#probably should make a test for that too...
-+test_expect_success 'test (non-)fusion of one slice' '
-+	git-rev-cache fuse >output.err &&
-+	grep "nothing to fuse" output.err
-+'
- 
-+test_expect_success 'make fresh slice' '
-+	git-rev-cache add --all --fresh 2>output.err &&
-+	grep "final return value: 0" output.err
-+'
-+
-+test_expect_success 'check dual slices' '
-+	git-rev-list --topo-order HEAD~2 HEAD >list &&
-+	test_cmp list proper_commit_list
-+'
-+
-+test_expect_success 'regenerate index' '
-+	rm .git/rev-cache/index &&
-+	git-rev-cache index 2>output.err &&
-+	grep "final return value: 0" output.err
-+'
-+
-+test_expect_success 'fuse slices' '
-+	test -e .git/rev-cache/.old &&
-+	git-rev-cache fuse 2>output.err &&
-+	grep "final return value: 0" output.err &&
-+	test_cmp .git/rev-cache/$cache_sha1 .git/rev-cache/.old
-+'
-+
-+#make sure we can smoothly handle corrupted caches
-+test_expect_success 'corrupt slice' '
-+	echo bla >.git/rev-cache/$cache_sha1
-+'
-+
-+test_expect_success 'test rev-list traversal (limited) (corrupt slice)' '
-+	git-rev-list --topo-order HEAD --not HEAD~3 >list &&
-+	test_cmp list proper_commit_list_limited
-+'
-+
-+test_expect_success 'test rev-list traversal (unlimited) (corrupt slice)' '
-+	git-rev-list HEAD >list &&
-+	test_cmp_sorted list proper_commit_list
-+'
-+
-+test_expect_success 'corrupt index' '
-+	echo blu >.git/rev-cache/index
-+'
-+
-+test_expect_success 'test rev-list traversal (limited) (corrupt index)' '
-+	git-rev-list --topo-order HEAD --not HEAD~3 >list &&
-+	test_cmp list proper_commit_list_limited
-+'
-+
-+test_expect_success 'test rev-list traversal (unlimited) (corrupt index)' '
-+	git-rev-list HEAD >list &&
-+	test_cmp_sorted list proper_commit_list
-+'
-+
-+#test --ignore-size in fuse
-+rm .git/rev-cache/*
-+cache_sha1=`git-rev-cache add HEAD~2 2>output.err`
-+
-+test_expect_success 'make fragmented slices' '
-+	git-rev-cache add HEAD~1 --not HEAD~2 2>>output.err &&
-+	git-rev-cache add HEAD --fresh 2>>output.err &&
-+	test `grep "final return value: 0" output.err | wc -l` -eq 3
-+'
-+
-+cache_size=`wc -c .git/rev-cache/$cache_sha1 | grep -o "[0-9]*"`
-+test_expect_success 'test --ignore-size function in fuse' '
-+	git-rev-cache fuse --ignore-size=$cache_size 2>output.err &&
-+	grep "final return value: 0" output.err &&
-+	test -e .git/rev-cache/$cache_sha1
-+'
-+
-+test_done
 -- 
-tg: (936d7dc..) t/revcache/integration (depends on: t/revcache/misc)
+tg: (635e0b5..) t/revcache/names (depends on: t/revcache/docs)
