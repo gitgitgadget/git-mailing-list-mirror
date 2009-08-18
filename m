@@ -1,66 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 09:51:18 -0700
-Message-ID: <7vtz05dq0p.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>
- <1250600335-8642-1-git-send-email-mstormo@gmail.com>
+Date: Tue, 18 Aug 2009 12:51:46 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0908181226160.7195@iabervon.org>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
 	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org,
 	kusmabite@googlemail.com
 To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 18:51:39 2009
+X-From: git-owner@vger.kernel.org Tue Aug 18 18:52:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdRuL-0001X8-8G
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:51:37 +0200
+	id 1MdRv2-0001qf-R0
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 18:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759397AbZHRQv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 12:51:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759390AbZHRQv3
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:51:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46563 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759388AbZHRQv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 12:51:28 -0400
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A9D9FDF5;
-	Tue, 18 Aug 2009 12:51:30 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23998FDF1; Tue, 18 Aug
- 2009 12:51:20 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 60B3F158-8C17-11DE-8FFB-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752916AbZHRQvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 12:51:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759399AbZHRQvq
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 12:51:46 -0400
+Received: from iabervon.org ([66.92.72.58]:34845 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759345AbZHRQvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 12:51:45 -0400
+Received: (qmail 16932 invoked by uid 1000); 18 Aug 2009 16:51:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Aug 2009 16:51:46 -0000
+In-Reply-To: <1250600335-8642-1-git-send-email-mstormo@gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126418>
 
-Marius Storm-Olsen <mstormo@gmail.com> writes:
+On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
 
-Marius Storm-Olsen <mstormo@gmail.com> writes:
-
+> From: Marius Storm-Olsen <mstormo@gmail.com>
+> 
+> By using GNU Make we can also compile with the MSVC toolchain.
+> This is a rudementary patch, only meant as an RFC for now!!
+> 
+> !! DO NOT COMMIT THIS UPSTREAM !!
+> ---
+>  So, instead of rely on these vcproj files which *will* go stale, we can
+>  simply use the same Makefile system which everyone else is using. :)
+>  After all, we're just compiling with a different compiler. The end result
+>  will still rely on the *msysGit environment* to function, so we already
+>  require it. Thus, GNU Make is present, and we can use it.
+> 
+>  This implementation is a quick hack to make it compile (hence the RFC
+>  subject), so please don't even consider basing anything ontop of it ;)
+> 
+>  But, do point out all the do's and don'ts, and I'll try to polish it up
+>  to something which we can add to Frank's series..
+>  
+> 
+>  Makefile      |   97 +++++++++++++++++++++++++++++++++++++++++++++++---------
+>  compat/msvc.h |   77 +++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 158 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index daf4296..2e14976 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -214,9 +214,13 @@ uname_V := $(shell sh -c 'uname -v 2>/dev/null || echo not')
+>  
+>  CFLAGS = -g -O2 -Wall
+>  LDFLAGS =
 > +ARFLAGS = rcs\ # whitespace intentional
+>  ALL_CFLAGS = $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
 > +COMPFLAG = -c
 > +COBJFLAG = -o\ # whitespace intended
 > +LOBJFLAG = -o\ # whitespace intended
-> ...
-> +ifneq (,$(findstring Microsoft Visual Studio, $(INCLUDE)))
-> +	CC = cl 
-> +	COBJFLAG = -Fo
-> +	LOBJFLAG = -OUT:
-> +	CFLAGS =
->  git.o: git.c common-cmds.h GIT-CFLAGS
-> ...
-> -		$(ALL_CFLAGS) -c $(filter %.c,$^)
-> +		$(ALL_CFLAGS) $(COMPFLAG) $(COBJFLAG)git.o $(filter %.c,$^)
 
-Since use of make implies use of shell, this makes me wonder if it would
-make sense to go one step further by giving msvc users a thin shell
-wrapper mcvc-cc that turns bog-standard cc command line into whatever cl
-uses.
+I think it's nicer to write the significant whitespace with non-whitespace 
+text using something like:
+
+empty=
+space=$(empty) $(empty)
+
+(...)
+
+ARFLAGS = rcs$(space)
+
+COBJFLAG = -o$(space)
+
+On the other hand, I think it would be clearer to put the "rcs" in the 
+default version of $(AR), and have a $(AROBJFLAG) set to nothing there, 
+since the "rcs" isn't actually at all like the "-OUT:" with respect to 
+what it's doing there.
+
+Possibly also to have two variables for the output of the toolchain 
+wrapper, one that is before the name of the file and one that's attached 
+to the name of the file.
+
+	-Daniel
+*This .sig left intentionally blank*
