@@ -1,7 +1,7 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] block-sha1: guard gcc extensions with __GNUC__
-Date: Tue, 18 Aug 2009 15:37:22 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908181534130.6044@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] block-sha1: Windows declares ntohl() in winsock2.h
+Date: Tue, 18 Aug 2009 12:40:43 -0700
+Message-ID: <7vfxbodi6c.fsf@alter.siamese.dyndns.org>
 References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
  <4A8AA511.1060205@gmail.com>
  <bdca99240908180617n75dfd0b5nfe069aba6e74b722@mail.gmail.com>
@@ -11,84 +11,54 @@ References: <4A8A552D.6020407@viscovery.net> <4A8A8661.5060908@gmail.com>
  <7v1vn9f4mz.fsf@alter.siamese.dyndns.org>
  <alpine.LFD.2.00.0908181357330.6044@xanadu.home>
  <7vk511dk11.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0908181516510.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: Sebastian Schuberth <sschuberth@gmail.com>,
 	Artur Skawina <art.08.09@gmail.com>,
 	Johannes Sixt <j.sixt@viscovery.net>,
 	msysGit <msysgit@googlegroups.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 18 21:37:54 2009
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 18 21:41:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdUVF-0005H8-KL
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:37:54 +0200
+	id 1MdUYG-0006WC-Tg
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 21:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbZHRThp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 15:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbZHRThp
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:37:45 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:57288 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbZHRTho (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 15:37:44 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOL000IS7BM3880@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 18 Aug 2009 15:26:11 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <alpine.LFD.2.00.0908181516510.6044@xanadu.home>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751139AbZHRTkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 15:40:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751007AbZHRTkw
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 15:40:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36064 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888AbZHRTkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 15:40:52 -0400
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B3785FAAC;
+	Tue, 18 Aug 2009 15:40:53 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93360FAA5; Tue, 18 Aug
+ 2009 15:40:44 -0400 (EDT)
+In-Reply-To: <7vk511dk11.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue\, 18 Aug 2009 12\:00\:42 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A9ED9B4-8C2F-11DE-997A-EAC21EFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126443>
 
-With this, the code should now be portable to any C compiler.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+> Another issue, especially with your "openssl sha1 removal" patch, is if we
+> can assume gcc everywhere.  As far as I can tell, block-sha1/sha1.c will
+> be the first unconditional use of inline asm or statement expression on
+> i386/amd64.  Are folks on Solaris and other platforms Ok with this?
 
-On Tue, 18 Aug 2009, Nicolas Pitre wrote:
-
-> On Tue, 18 Aug 2009, Junio C Hamano wrote:
-> 
-> > Another issue, especially with your "openssl sha1 removal" patch, is if we
-> > can assume gcc everywhere.  As far as I can tell, block-sha1/sha1.c will
-> > be the first unconditional use of inline asm or statement expression on
-> > i386/amd64.  Are folks on Solaris and other platforms Ok with this?
-> 
-> I guess we can guard the first with ifdef(__GNUC__) which should help 
-> people with MSVC.  That should take care of x86 at least.
-
-Here it is.
-
-diff --git a/block-sha1/sha1.c b/block-sha1/sha1.c
-index d31f2e3..92d9121 100644
---- a/block-sha1/sha1.c
-+++ b/block-sha1/sha1.c
-@@ -9,7 +9,7 @@
- 
- #include "sha1.h"
- 
--#if defined(__i386__) || defined(__x86_64__)
-+#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
- 
- /*
-  * Force usage of rol or ror by selecting the one with the smaller constant.
-@@ -54,7 +54,7 @@
- 
- #if defined(__i386__) || defined(__x86_64__)
-   #define setW(x, val) (*(volatile unsigned int *)&W(x) = (val))
--#elif defined(__arm__)
-+#elif defined(__GNUC__) && defined(__arm__)
-   #define setW(x, val) do { W(x) = (val); __asm__("":::"memory"); } while (0)
- #else
-   #define setW(x, val) (W(x) = (val))
+Ahhh, your bswap.h is a no-op unless you use gcc, so my worry was
+unfounded.
