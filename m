@@ -1,112 +1,126 @@
-From: Marius Storm-Olsen <marius@storm-olsen.com>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
-Date: Tue, 18 Aug 2009 19:55:01 +0200
-Message-ID: <4A8AEAF5.6070205@gmail.com>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com> <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Continue git clone after interruption
+Date: Tue, 18 Aug 2009 13:56:16 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908181246470.6044@xanadu.home>
+References: <1250509342.2885.13.camel@cf-48>
+ <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>
+ <vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
-	bonzini@gnu.org, kusmabite@googlemail.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 18 19:54:15 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git <git@vger.kernel.org>
+To: Tomasz Kontusz <roverorna@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 18 19:56:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdSsu-0002EN-DN
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 19:54:12 +0200
+	id 1MdSv7-0003Fa-92
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Aug 2009 19:56:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758786AbZHRRyD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 13:54:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755133AbZHRRyC
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 13:54:02 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:43317 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754270AbZHRRyB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 13:54:01 -0400
-Received: by ewy3 with SMTP id 3so1798730ewy.18
-        for <git@vger.kernel.org>; Tue, 18 Aug 2009 10:54:01 -0700 (PDT)
-Received: by 10.210.133.17 with SMTP id g17mr4910259ebd.9.1250618041531;
-        Tue, 18 Aug 2009 10:54:01 -0700 (PDT)
-Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206])
-        by mx.google.com with ESMTPS id 5sm577500eyh.36.2009.08.18.10.54.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 18 Aug 2009 10:54:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302>
+	id S1758538AbZHRR4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 13:56:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbZHRR4V
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 13:56:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:51730 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750928AbZHRR4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 13:56:20 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOL009W82N4K4C0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 18 Aug 2009 13:45:05 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1250578735.2885.40.camel@cf-48>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126431>
 
-Johannes Schindelin said the following on 18.08.2009 16:11:
-> On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
->> So, instead of rely on these vcproj files which *will* go stale, we
->> can simply use the same Makefile system which everyone else is
->> using. :) After all, we're just compiling with a different
->> compiler. The end result will still rely on the *msysGit
->> environment* to function, so we already require it. Thus, GNU Make
->> is present, and we can use it.
-> 
-> We can also use sed or perl to generate/modify the .vcproj files, or
-> run CMake (once Pau got it to build), and package the stuff using zip
-> (once I got that to build).
+On Tue, 18 Aug 2009, Tomasz Kontusz wrote:
 
-Really? That would be some script being able to parse the Makefile, and 
-create something reasonable as a vcproj script :) Keeping all the 
-options in sync, conditional files/libs, all the various end executables 
-(a separate .vcproj for each of them, and a solution file (.sln)to tie 
-them all together into a .. "solution", a complete product blah blah 
-blah) etc.
+> Ok, so it looks like it's not implementable without some kind of cache
+> server-side, so the server would know what the pack it was sending
+> looked like.
+> But here's my idea: make server send objects in different order (the
+> newest commit + whatever it points to first, then next one,then
+> another...). Then it would be possible to look at what we got, tell
+> server we have nothing, and want [the newest commit that was not
+> complete]. I know the reason why it is sorted the way it is, but I think
+> that the way data is stored after clone is clients problem, so the
+> client should reorganize packs the way it wants.
 
-Just using the (GNU) Makefile as the 'default' way of compiling with 
-MSVC seems to be the most reasonable to me. Then we could just have a 
-contrib/vc/msvc2008.vcproj which someone can update when they feel like 
-it. The default way should be hard to get out-of-sync, IMO.
+That won't buy you much.  You should realize that a pack is made of:
+
+1) Commit objects.  Yes they're all put together at the front of the pack,
+   but they roughly are the equivalent of:
+
+	git log --pretty=raw | gzip | wc -c
+
+   For the Linux repo as of now that is around 32 MB.
+
+2) Tree andblob objects.  Those are the bulk of the content for the top 
+   commit.  The top commit is usually not delta compressed because we 
+   want fast access to the top commit, and that is used as the base for 
+   further delta compression for older commits.  So the very first 
+   commit is whole at the front of the pack right after the commit 
+   objects.  you can estimate the size of this data with:
+
+	git archive --format=tar HEAD | gzip | wc -c
+
+   On the same Linux repo this is currently 75 MB.
+
+3) Delta objects.  Those are making the rest of the pack, plus a couple 
+   tree/blob objects that were not found in the top commit and are 
+   different enough from any object in that top commit not to be 
+   represented as deltas.  Still, the majority of objects for all the 
+   remaining commits are delta objects.
+
+So... if we reorder objects, all that we can do is to spread commit 
+objects around so that the objects referenced by one commit are all seen 
+before another commit object is included.  That would cut on that 
+initial 32 MB.
+
+However you still have to get that 75 MB in order to at least be able to 
+look at _one_ commit.  So you've only reduced your critical download 
+size from 107 MB to 75 MB.  This is some improvement, of course, but not 
+worth the bother IMHO.  If we're to have restartable clone, it has to 
+work for any size.
+
+And that's where the real problem is.  I don't think having servers to 
+cache pack results for every fetch requests is sensible as that would be 
+an immediate DoS attack vector.
+
+And because the object order in a pack is not defined by the protocol, 
+we cannot expect the server to necessarily always provide the same 
+object order either.  For example, it is already undefined in which 
+order you'll receive objects as threaded delta search is non 
+deterministic and two identical fetch requests may end up with slightly 
+different packing.  Or load balancing may redirect your fetch requests 
+to different git servers which might have different versions of zlib, or 
+even git itself, affecting the object packing order and/or size.
+
+Now... What _could_ be done, though, is some extension to the 
+git-archive command.  One thing that is well and strictly defined in git 
+is the file path sort order.  So given a commit SHA1, you should always 
+get the same files in the same order from git-archive.  For an initial 
+clone, git could attempt fetching the top commit using the remote 
+git-archive service and locally reconstruct that top commit that way.  
+if the transfer is interrupted in the middle, then the remote 
+git-archive could be told how to resume the transfer by telling it how 
+many files and how many bytes in the current file to skip.  This way the 
+server doesn't need to perform any sort of caching and remains 
+stateless.
+
+You then end up with a pretty shallow repository.  The clone process 
+could then fall back to the traditional native git transfer protocol to 
+deepen the history of that shallow repository.  And then that special 
+packing sort order to distribute commit objects would make sense since 
+each commit would then have a fairly small set of new objects, and most 
+of them would be deltas anyway, making the data size per commit really 
+small and any interrupted transfer much less of an issue.
 
 
->> diff --git a/Makefile b/Makefile
->> +ifneq (,$(findstring Microsoft Visual Studio, $(INCLUDE)))
-...
->> +else
->>  ifneq (,$(findstring MINGW,$(uname_S)))
->>  	pathsep = ;
->>  	NO_PREAD = YesPlease
-> 
-> This means that gcc is never used when Visual C++ is available?  Hmm.
-
-Yes it does :)
-First, "This implementation is a quick hack to make it compile", so it 
-was all about just making it compile, not being 100% correct. There are 
-still some warnings and options which shouldn't be passed on to cl, so 
-it's by no means complete. Second, having MSVC include paths in INCLUDE 
-when you're compiling with MinGW would be plain wrong. I could use LIB 
-instead, which would be even wronger ;)
-I was actually going to replace it with a USE_MSVC variable check 
-instead though, so you'd rather do 'make USE_MSVC=1'
-
-
->> diff --git a/compat/msvc.h b/compat/msvc.h
->> index 6071565..a9d5f7f 100644
->> --- a/compat/msvc.h
->> +++ b/compat/msvc.h
->> @@ -10,50 +10,120 @@
->>  
->>  /*Configuration*/
->>  
->> +#ifndef NO_PREAD
->>  #define NO_PREAD
->> +#endif
-> 
-> Why?  You now have the stuff in two places.  If you want to keep them in 
-> compat/msvc.h to be able to generate .vcproj files, I'd rather not have 
-> them duplicated in the Makefile.
-
-The changes to the msvc.h where added just keep Frank's vcproj project 
-working. I would have just nuked all that stuff in the msvc.h since the 
-Makefile would just provide it for me anyways..
-
---
-.marius
+Nicolas
