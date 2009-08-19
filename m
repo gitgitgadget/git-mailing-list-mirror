@@ -1,86 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] stash: reject stash name starting with a dash.
-Date: Tue, 18 Aug 2009 16:55:28 -0700
-Message-ID: <7vfxbo3cen.fsf@alter.siamese.dyndns.org>
-References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
- <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-4-git-send-email-Matthieu.Moy@imag.fr>
- <20090818233535.GB6304@sigill.intra.peff.net>
- <7vocqc3cuz.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: [RFC/PATCH 0/6] Git submodule: 'foreach' enhancements and nested
+ submodule handling
+Date: Wed, 19 Aug 2009 03:45:18 +0200
+Message-ID: <1250646324-961-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 19 01:55:54 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
+	mlevedahl@gmail.com, hjemli@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 19 03:45:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdYWt-0003Dh-CP
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 01:55:51 +0200
+	id 1MdaFS-0006td-0k
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 03:45:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbZHRXzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Aug 2009 19:55:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751231AbZHRXzg
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 19:55:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54601 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900AbZHRXzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Aug 2009 19:55:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD4F1F448;
-	Tue, 18 Aug 2009 19:55:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E/Tpj/LfD9g5VOEjty49zthHgwY=; b=mUq0/p
-	BqAAn8CSDd8KtVaGzHUDEkBnDhwo63iLuhNKHAnVk0/ArdExFHsbb0RelrfrKY7T
-	ExC8i6O1/aYAjgrPkSP6MLJUZH1gTPoopJm3Jq41AqJZ3rckRtVV4b9zUvDD88em
-	xhBh5lStFjx6QcPQKq9vLYXRidQt/x9fWKzmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LkzlzAT8ViN+DLvDdVhTLvZ59mCshtLz
-	qEIuoarX0sdihyFv80Ntgce5fAplLca3FbA6w7Bk/SzpK6C3WG6OsnjL3/lzH0No
-	mdM3Y7LQ1vdelN2oBHYcjmB8BO+IttjZL2uKgXvJjQSddSjOocXRJG49CmcgEqLC
-	QwC4cq+Mrys=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A09DDF447;
-	Tue, 18 Aug 2009 19:55:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C6D70F446; Tue, 18 Aug
- 2009 19:55:29 -0400 (EDT)
-In-Reply-To: <7vocqc3cuz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 18 Aug 2009 16\:45\:40 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9EC00366-8C52-11DE-90CF-0D381FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751323AbZHSBpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 21:45:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbZHSBpo
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 21:45:44 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:33143 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750943AbZHSBpn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Aug 2009 21:45:43 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOL00483OW6N560@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 19 Aug 2009 03:45:42 +0200 (MEST)
+Received: from localhost.localdomain ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOL00EC4OW53WE0@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 19 Aug 2009 03:45:42 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.19.13316
+X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126489>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> It would be ideal if
->
-> 	git stash save --invalid-option
->
-> failed, while
->
-> 	git stash --invalid-option should be trapped
->
-> and/or
->
-> 	git stash "--invalid-option should be trapped"
->
-> are accepted as valid quickie ways to name a WIP stash before attending to
-> an unrelated emergency.
+This patch series attempts to expand 'git submodule' command in two
+regards:
 
-Meh, let me take it back.  I somehow was living in 13 months ago for a
-short while when I wrote the above.
+1. Clean up, selftest, and enhance the 'git submodule foreach' command.
+2. Provide better handling for nested submodules where the user want to
+   operate on _all_ submodules simultenously.
 
-9488e87 (git-stash: require "save" to be explicit and update
-documentation, 2007-07-01) made the latter two invalid.
+The first 3 patches in the series are fairly trivial and straightforward.
+The last 3 patches are slightly more RFC in nature, although their
+implementation is still fairly straighforward.
+
+Patch 3/6 is a resend of a patch that I sent stand-alone on 2009-08-16.
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (6):
+  git submodule: Cleanup usage string and add option parsing to cmd_foreach()
+  Add selftest for 'git submodule foreach'
+  git submodule foreach: Provide access to submodule name, as '$name'
+  git submodule foreach: Add --recursive to recurse into nested submodules
+  git submodule update: Introduce --recursive to update nested submodules
+  git submodule status: Add --recursive to recurse into nested submodules
+
+ Documentation/git-submodule.txt |   23 ++++-
+ git-submodule.sh                |   79 ++++++++++++--
+ t/t7407-submodule-foreach.sh    |  223 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 313 insertions(+), 12 deletions(-)
+ create mode 100755 t/t7407-submodule-foreach.sh
