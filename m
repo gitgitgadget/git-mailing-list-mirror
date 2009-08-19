@@ -1,89 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: question concerning branches
-Date: Wed, 19 Aug 2009 11:35:20 -0700
-Message-ID: <7vr5v7vehj.fsf@alter.siamese.dyndns.org>
-References: <4a8c373f@wupperonline.de>
+From: ib@wupperonline.de (Ingo Brueckl)
+Subject: question concerning branches
+Date: Wed, 19 Aug 2009 20:31:00 +0200
+Message-ID: <4a8c4425@wupperonline.de>
+References: <32541b130908191107v2ab6752awb43f521f805b5f1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: ib@wupperonline.de (Ingo Brueckl)
-X-From: git-owner@vger.kernel.org Wed Aug 19 20:36:48 2009
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 20:50:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdq1b-0002kQ-TA
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 20:36:44 +0200
+	id 1MdqF6-0000DG-GB
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 20:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752913AbZHSSfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 14:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752875AbZHSSf3
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 14:35:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55294 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752202AbZHSSf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 14:35:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C90510973;
-	Wed, 19 Aug 2009 14:35:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Qud8CZ2f1kcGq0fW7bF2MEtFs/4=; b=iHKzS5
-	2MeMpt0GNgIN0Q/TsqN3b/66h1reqQ4mlX3Id3E8JX4EsOJfz2Q5jDp7/nENuW+3
-	z5g3wILcmsCrlUnRJTFZJ8cswpu8VXWllpyYw+BCp1bbxaxoQ3K9JBO9M23wHB60
-	g/syL9CDniZfO85FYoMjT/3d3k1hzzec/qD1E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xyLok0dQQVYvotgsvDoGsKr2BEdiynLh
-	8fRLZ/VOhkEyht3OFGDZWPyJo14j6UUhOoqKLSVMN5qU5wIp3WGEw6N7S3g1ODny
-	4asKkTU8eqhpbifOEACqK9CdNsJxrxw0apZ6YU+NUV5BnG8Iv7/BtPRjP15fq/+w
-	DcbKmPUa3DM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 29DD610971;
-	Wed, 19 Aug 2009 14:35:27 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 885881096E; Wed, 19 Aug
- 2009 14:35:22 -0400 (EDT)
-In-Reply-To: <4a8c373f@wupperonline.de> (Ingo Brueckl's message of "Wed\, 19
- Aug 2009 19\:33\:00 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 109A957C-8CEF-11DE-A25C-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753073AbZHSSu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 14:50:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753001AbZHSSuY
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 14:50:24 -0400
+Received: from smtp.tal.de ([81.92.1.5]:59764 "EHLO smtp.tal.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753008AbZHSSuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 14:50:20 -0400
+Received: from ib (muedsl-82-207-218-062.citykom.de [82.207.218.62])
+	by smtp.tal.de (Postfix) with SMTP id 4EC4EAC18DD;
+	Wed, 19 Aug 2009 20:50:20 +0200 (CEST)
+X-Mailer: blueMail 1.4 (SlipDoor 2.2)
+In-Reply-To: <32541b130908191107v2ab6752awb43f521f805b5f1a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126572>
 
-ib@wupperonline.de (Ingo Brueckl) writes:
+Avery Pennarun <apenwarr@gmail.com> writes:
 
-> I'm a git novice and have a comprehension question concerning branches.
->
-> Within a git repository, I do:
->
->   git branch test
->   git checkout test
->   # edit foo.bar
->   git checkout master
->
-> I'd expect that master is in the exactly same unchanged state it was at
-> branching time, but what a surprise, foo.bar is modified here, too!
+> You seem to have forgotten the "git commit" step before switching back
+> to master.
 
-No.  Local modification that are not committed do not belong to any
-branch.  Rather it belongs to your work tree and the index, and follow you
-when you switch branches.
+No, I passed over the commit in my example. I know that after the commit the
+things are as they ought to be, but what if I can't do a commit because I am
+in the middle of coding and have to have a break?
 
-This is one of the most useful features.  For example, it is an essential
-part of supporting the workflow described here:
+> You have a modified file in your repository; what did you *want* to happen
+> when you switched branches?
 
-    http://gitster.livejournal.com/25892.html
+I want an unchanged file in master if I switch there (because I worked in a
+different branch) and a changed version in the test branch.
 
-On the other hand, there are cases that you do not want to see your local
-changes to foo.bar appear when you switch back to master, and the most
-obvious case is "I started working on something, and I used a separate
-branch 'test' because the change will be involved.  I am in the middle of
-the work, the changes so far I made to foo.bar is far from ready, but I
-have to handle emergency fix on the master branch".  For that kind of
-situation, you can use "git stash", like:
+Why is the *master* different depending on whether my work in test in still
+going on or committed?!
 
-    http://gitster.livejournal.com/29577.html
+Actually, I cannot image how branches are practicable if I always have to
+have in mind possibly still uncommitted work. Shouldn't it be git's work
+to ensure that master will remain it was when branching?
+
+Without git I'd make a copy for testing new features. With git, it seems that
+I have to do the same (a clone). This is what I don't understand.
+
+> (Many people find the current behaviour very convenient.)
+
+I find it highly confusing. I understood a branch as something I can do in
+whatever I want without affecting master. But now a learn that everything I
+do in the branch will happen in master, too, until I commit. Strange. Very
+strange.
+
+> You might also want to look at the "git stash" command.
+
+Yes, but isn't it annoying to leave the test branch always either with stash
+or commit in order to have an unchanged master?!
+
+Ingo
