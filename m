@@ -1,107 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Simple commit mechanism for non-technical users
-Date: Wed, 19 Aug 2009 01:10:03 -0700 (PDT)
-Message-ID: <m37hx0ns13.fsf@localhost.localdomain>
-References: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: ls-files -t broken? Or do I just not understand it?
+Date: Wed, 19 Aug 2009 10:24:23 +0200
+Message-ID: <20090819082423.GA18860@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: D Sundstrom <sunds@peapod.net>
-X-From: git-owner@vger.kernel.org Wed Aug 19 10:10:17 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 10:24:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdgFM-0003FM-Mr
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:10:17 +0200
+	id 1MdgTF-00006t-6E
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbZHSIKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 04:10:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbZHSIKG
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:10:06 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:51500 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751693AbZHSIKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 04:10:04 -0400
-Received: by fxm28 with SMTP id 28so3915213fxm.17
-        for <git@vger.kernel.org>; Wed, 19 Aug 2009 01:10:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=nwr8rjitSCw8z19za/81DxRAiXjWqHqndzPMxfOZll4=;
-        b=KpO1ohDGYzPWEW8KBTXZWRQsiYI6AFLxotoKm2EtIAJF/l3V51BL8Mu3t1FlKPTp/X
-         C6lrykCBkQ3gV6p9eYHjKMCyw+tf+KrLRB6zyy7j/alEBf6K2ivhVlfCTLFd8CMQW3Vd
-         GdwbbhmJYRni4d1l2Xj7SyxYttPv8Gh/N+Jw0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=bXQufCmgnIEA5jJC7btjrOxZzTaCGj28fegpifj2BMGsCSY6WZDjHfokNKFOeRygeo
-         GxEY0in/rdo7CGNohK8R2uSs2vP+JtFoGtBNxIP2IcfxDZJtovGyhpE3Ezsm+mIfWftM
-         2dGk8KLno8dpDONNaFEwyNY6dz99HEccCAuKU=
-Received: by 10.86.227.27 with SMTP id z27mr3892430fgg.66.1250669404534;
-        Wed, 19 Aug 2009 01:10:04 -0700 (PDT)
-Received: from localhost.localdomain (abvk137.neoplus.adsl.tpnet.pl [83.8.208.137])
-        by mx.google.com with ESMTPS id d6sm6432729fga.9.2009.08.19.01.10.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 19 Aug 2009 01:10:03 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7J8A16H004725;
-	Wed, 19 Aug 2009 10:10:01 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7J8A0hi004719;
-	Wed, 19 Aug 2009 10:10:00 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751892AbZHSIY2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2009 04:24:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZHSIY2
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:24:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43437 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751795AbZHSIY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 04:24:27 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 08:24:27 -0000
+Received: from i59F55728.versanet.de (EHLO atjola.homenet) [89.245.87.40]
+  by mail.gmx.net (mp015) with SMTP; 19 Aug 2009 10:24:27 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19Ms71sFq5Mr5WwNIOifNetx4Alv4Vwzh1x7FaCD9
+	CFYpHrP0DkzH2s
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126516>
 
-D Sundstrom <sunds@peapod.net> writes:
+Hi,
 
-> I use git to manage all project artifacts, including documentation,
-> proposals, presentations, and so on.
-> 
-> However, I have a hard time convincing non-technical staff to learn
-> enough about git or to take the time to go through the effort of
-> committing changes to a repository.  So the steady stream of email
-> attachments with "Acme Specification v3" or "final final spemco
-> proprosal" continues.
-> 
-> I'd hoped there was a simple web interface that would allow a user to
-> upload and commit a file to a repository, but I've had no luck finding
-> one.  (I've used cgit for browsing, but it is read-only).
+ls-files -t seems to always show status H, even if the file was modifie=
+d
+or deleted, and thus gets shown by -m and -d respectively.
 
-Some of git web interfaces or git hosting software offer editing via
-web interface.  Neither gitweb nor cgit offers this; it is available
-AFAIK in GitHub (but it is not open source, and server version GitHub:FI
-isn't cheap).
+doener@atjola:git (master) $ git status
+# On branch master
+nothing to commit (working directory clean)
+doener@atjola:git (master) $ rm git.c
+doener@atjola:git (master) $ echo 123 > Makefile
+doener@atjola:git (master) $ git ls-files -m
+Makefile
+git.c
+doener@atjola:git (master) $ git ls-files -d
+git.c
+doener@atjola:git (master) $ git ls-files -t Makefile git.c
+H Makefile
+H git.c
+doener@atjola:git (master) $ git add -u Makefile git.c
+doener@atjola:git (master) $ git ls-files -m
+doener@atjola:git (master) $ git ls-files -d
+doener@atjola:git (master) $ git ls-files -t Makefile git.c
+H Makefile
+doener@atjola:git (master) $=20
 
-You can use some wiki (there are some wikis with git backend,
-e.g. ikiwiki, see http://git.or.cz/gitwiki/InterfacesFrontendsAndTools)
-or CMS like Drupal instead.  Note that wikis usually work in 
-lock-edit-unlock mode (no merging changes), and have per page (per file)
-versioning.
 
+I would have expected the first "ls-files -t" to say:
+C Makefile
+K git.c
 
-Alternate solution would be to use one of GUIs for Git, like
-e.g. git-gui or QGit, or filemanager integration / shell extension
-like (for MS Windows) TortoiseGit or Git Extensions.
+Is that a bug, or am I just misunderstanding what -t is supposed to do?
 
-> Is anyone aware of a simple way I can have my non-technical users
-> manage their documents against a git repository?  Ideally this would
-> involve no installation of software on their machine (unless it were
-> compelling, for example, the Finder plugin for SVN on the mac was a
-> great tool for these users; or at least those on a mac...)
-
-What operating system?  What do you use currently?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Bj=F6rn
