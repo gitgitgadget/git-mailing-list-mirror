@@ -1,128 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: ls-files -t broken? Or do I just not understand it?
-Date: Wed, 19 Aug 2009 16:18:10 +0700
-Message-ID: <fcaeb9bf0908190218x487dd7f4y355e411a8cb1f254@mail.gmail.com>
-References: <20090819082423.GA18860@atjola.homenet> <vpqljlguqtn.fsf@bauges.imag.fr> 
-	<fcaeb9bf0908190204h31bc839ai39972a251040d449@mail.gmail.com> 
-	<20090819091445.GB18860@atjola.homenet>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
+Date: Wed, 19 Aug 2009 11:40:20 +0200
+Message-ID: <200908191140.22235.trast@student.ethz.ch>
+References: <200908101136.34660.trast@student.ethz.ch> <200908151204.36709.trast@student.ethz.ch> <20090818164826.GA27377@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 19 11:18:40 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 19 11:41:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdhJY-0004x3-3n
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:18:40 +0200
+	id 1MdhfU-0000cE-3C
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:41:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751132AbZHSJSc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2009 05:18:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbZHSJSc
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:18:32 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:61842 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969AbZHSJSb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2009 05:18:31 -0400
-Received: by yxe5 with SMTP id 5so5256482yxe.33
-        for <git@vger.kernel.org>; Wed, 19 Aug 2009 02:18:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WVwcsG+Yx5pqb75Gas5qBUHxOQ2fNTICpo/bfzQWQOc=;
-        b=LdCeQ0lBnBkkhtjwtYokLLKeONQTzAYcF59MO5Zj/pchI5uvztDulrGTQROg9fXh1H
-         n/bgmQMeV6XB4wuCE7YdjAHC56lzHbPNxcjwwq3bfT/4pAgab5u2YElVbcKNBt6o5uv6
-         Y4SHOIYMIyp8VhryHjOlqcomxPAvVtcwj3RQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ohHhB3TlNRRwZoeb30J+RbnBiavKKrL9fgjNZdCuqGRo5yuS9w279H6YG3bgX1Cb2H
-         Ybvhdw8Df+ZREaVmEWWWxbFsLLxVAD4T2hBslPmI30lbY6PmXvv9XB999zvgMvCJJ0ZO
-         XYRgSn5/fPlMWxqrfCZVYF/b2IC/Z3UWrc+H8=
-Received: by 10.101.88.14 with SMTP id q14mr6716983anl.38.1250673511629; Wed, 
-	19 Aug 2009 02:18:31 -0700 (PDT)
-In-Reply-To: <20090819091445.GB18860@atjola.homenet>
+	id S1751493AbZHSJlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 05:41:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbZHSJlE
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:41:04 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:15654 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751492AbZHSJlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 05:41:03 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 19 Aug
+ 2009 11:41:02 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 19 Aug
+ 2009 11:40:41 +0200
+User-Agent: KMail/1.12.1 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <20090818164826.GA27377@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126525>
 
-2009/8/19 Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>:
-> On 2009.08.19 16:04:20 +0700, Nguyen Thai Ngoc Duy wrote:
->> On Wed, Aug 19, 2009 at 3:54 PM, Matthieu Moy<Matthieu.Moy@imag.fr> =
-wrote:
->> > Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
->> >
->> >> Hi,
->> >>
->> >> ls-files -t seems to always show status H, even if the file was m=
-odified
->> >> or deleted, and thus gets shown by -m and -d respectively.
->> >
->> > That's not exactly "always", but I don't know whether it's the des=
-ired
->> > behavior:
->> >
->> > /tmp/git$ git st
->> > # On branch master
->> > # Changed but not updated:
->> > # =C2=A0 (use "git add/rm <file>..." to update what will be commit=
-ted)
->> > # =C2=A0 (use "git checkout -- <file>..." to discard changes in wo=
-rking directory)
->> > #
->> > # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 modified
->> > # =C2=A0 =C2=A0 =C2=A0 deleted: =C2=A0 =C2=A0removed
->> > #
->> > no changes added to commit (use "git add" and/or "git commit -a")
->> > /tmp/git$ git ls-files -t
->> > H modified
->> > H removed
->> > H unmodified
->> > /tmp/git$ git ls-files -t -m
->> > C modified
->> > C removed
->> > /tmp/git$ git ls-files -t -d
->> > R removed
->> > $ git ls-files -t -d -m
->> > C modified
->> > R removed
->> > C removed
->> >
->> > So, you get the C and R flags only when you request explicitely -m=
- and
->> > -d.
->>
->> Let's see how it goes without "-t":
->>
->> pclouds@dektop /tmp/i $ git ls-files
->> modified
->> removed
->> unmodified
->> pclouds@dektop /tmp/i $ git ls-files -m
->> modified
->> removed
->> pclouds@dektop /tmp/i $ git ls-files -d
->> removed
->> pclouds@dektop /tmp/i $ git ls-files -d -m
->> modified
->> removed
->> removed
->>
->> I'd say it's expected behavior.
->
-> OK, so -t without _more_ than one of -c, -d, -m, -o, -u, -k simply
-> doesn't make much sense, right?
+Jeff King wrote:
+> 
+> I took a look at this today.
 
-It shows you whether it's a normal entry (marked as "H") or unmerged
-entry ("M") as far as I can tell. Junio may give more detail
-explanation about this command.
---=20
-Duy
+Heh, now *my* procrastination is paying off :-)
+
+> Hmm. I was about to write "so we need some clever way of integrating the
+> interactive hunk selection with a 3-way merge". But I just had a
+> thought: we should do it in the reverse order. We do the three-way merge
+> into a temporary index, and then ask the user to apply the result of
+> _that_ tree into the working tree. Or maybe I am missing something else
+> obvious and you can enlighten me.
+
+I think that is the correct way to go about it from the user's POV.
+He would be confused if the patch applied to WT/index were different
+(because of a later merge) from the hunks he chose in the -p loop.
+
+However, there's the issue of merge conflicts.  Some options I can
+think of are
+
+1) refuse to work in the face of merge problems
+
+2) stash requires a clean WT, so we can move the user's index out of
+   the way and use temporary index + WT to let the user resolve the
+   conflicts
+
+3) require both clean WT and index so we can simply use the repo to
+   resolve
+
+(The first one isn't quite as restrictive as it sounds; the user can
+always apply on top of a clean HEAD, fix conflicts and re-stash, thus
+doing a "stash rebase".)
+
+
+>   1. For --index mode, it actually invokes add--interactive twice. It
+>      would be nice to do both passes at the same time, but I don't think
+>      it is possible with the current add--interactive infrastructure.
+
+Note that the 'git stash -p' in next always stashes the index whole,
+so the "easy" way might simply be to also unstash the index whole (if
+requested).
+
+The changes will usually still be available in the worktree
+application, because the 3-way merge is between base and HEAD on one
+side and base and worktree-stash on the other side.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
