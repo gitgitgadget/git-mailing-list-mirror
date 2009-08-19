@@ -1,81 +1,72 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Continue git clone after interruption
-Date: Wed, 19 Aug 2009 15:25:22 +0700
-Message-ID: <fcaeb9bf0908190125u3e1bcaaap27e72a5784f4f9db@mail.gmail.com>
-References: <1250509342.2885.13.camel@cf-48> <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302> 
-	<vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48> 
-	<alpine.LFD.2.00.0908181246470.6044@xanadu.home> <m3fxbpneqe.fsf@localhost.localdomain> 
-	<alpine.LFD.2.00.0908181537360.6044@xanadu.home> <alpine.DEB.1.00.0908190022090.8306@pacific.mpi-cbg.de> 
-	<alpine.LFD.2.00.0908181936130.6044@xanadu.home> <alpine.DEB.1.00.0908190921360.5594@intel-tinevez-2-302>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
+Date: Wed, 19 Aug 2009 10:29:14 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908190951020.5594@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de>  <1250600335-8642-1-git-send-email-mstormo@gmail.com>  <7vtz05dq0p.fsf@alter.siamese.dyndns.org> <4A8AE7C5.7050600@gmail.com>  <4A8AED8B.9080604@gmail.com>  <alpine.DEB.1.00.0908182349220.8306@pacific.mpi-cbg.de>
+  <40aa078e0908181502v32cbd223xcde1cd363dc76345@mail.gmail.com>  <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de> <40aa078e0908181548t5df05b1ct8013b99ea703ebba@mail.gmail.com> <alpine.DEB.1.00.0908190910270.5594@intel-tinevez-2-302>
+ <4A8BA9EC.9000006@storm-olsen.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
-	Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 19 10:26:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Johan 't Hart <johanthart@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org
+To: Marius Storm-Olsen <marius@storm-olsen.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 10:29:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdgUX-0000kJ-Tw
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:25:58 +0200
+	id 1MdgXs-00027w-5o
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbZHSIZn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2009 04:25:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbZHSIZn
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:25:43 -0400
-Received: from an-out-0708.google.com ([209.85.132.245]:15601 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751795AbZHSIZl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2009 04:25:41 -0400
-Received: by an-out-0708.google.com with SMTP id d40so3801844and.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2009 01:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qqLtnbaq9Cr/AirW6+Gff+97nOtMhInJq26nj41lmz4=;
-        b=EMhzePXVvLuvf52cg3gpJf9CD55goWiOmohtQN2gU6yyv8B9bOU2AzLwslHXPSy+D/
-         w7fJRXf4hheqPp+euS8O19iffDoD28Exak5/G783KDycjnQ7WqZ9B2COG1nSkLH5439U
-         VxRzAQg1+vv0vXfGH2WA/Ss2DM/IiIhsBA7QQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=RCIOEDQJ0GQQTPyoAxwFPbxVCTj3OyQ+9itFr3F8MWhbmMc1zgE0uROJfFY5eR2rBr
-         zVoI/CDv8rDJLGQ1RzwoJPuKbtCZoxhuTScyV0WJNMpxJDoSRpFssneneJ26XR0REEE7
-         9iuxtObF9ydx2THkK4AWNDU5RojPKXDE0Uqsc=
-Received: by 10.100.53.9 with SMTP id b9mr6673436ana.33.1250670342090; Wed, 19 
-	Aug 2009 01:25:42 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908190921360.5594@intel-tinevez-2-302>
+	id S1750853AbZHSI3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 04:29:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750800AbZHSI3Q
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:29:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48153 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750770AbZHSI3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 04:29:15 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 08:29:15 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp041) with SMTP; 19 Aug 2009 10:29:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/AaEletvnAPFUTFB5qutauUDhJ1sBeUJuZdMMdFR
+	WNMNA/0S3Jl3Wr
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4A8BA9EC.9000006@storm-olsen.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126519>
 
-On Wed, Aug 19, 2009 at 2:35 PM, Johannes
-Schindelin<Johannes.Schindelin@gmx.de> wrote:
-> But here comes an idea: together with Nguy=E8=A6=81's sparse series, =
-it is
+Hi,
 
-=46WIW, you can write "Nguyen" instead. It might save you one copy/past=
-e
-(I take it you don't have a Vietnamese IM ;-)
+On Wed, 19 Aug 2009, Marius Storm-Olsen wrote:
 
-> conceivable that we support a shallow & narrow clone via the upload-p=
-ack
-> protocol (also making mithro happy). =C2=A0The problem with narrow cl=
-ones was
-> not the pack generation side, that is done by a rev-list that can be
-> limited to certain paths. =C2=A0The problem was that we end up with m=
-issing
-> tree objects. =C2=A0However, if we can make a sparse checkout, we can=
- avoid
-> the problem.
+> The full IDE support is secondary, first because you *can* use the IDE 
+> already, and second because it'll be harder to whip something up which 
+> guarantees that the vcproj support stays in-sync at all times and won't 
+> lag behind.
 
-But then git-fsck, git-archive... will die?
---=20
-Duy
+I think the point of Frank's patches is to make Visual Studio users 
+comfortable with Git.  You cannot ask those to use a build process or an 
+IDE they are not used to.
+
+> Of course, if someone has a huge itch to restructure the current 
+> Makefile; factoring out the files into a file which can simply be 
+> included in the current Makefile, and easily parsed by a script, or 
+> included by CMake, then that can be done in parallel and possible added 
+> to git mainline before the MSVC support patches from Frank.
+
+I still think it would be possible to use a combination of a 
+Makefile rule and GNU make features to spit out a list of targets and 
+their dependet .h and .c files.
+
+Ciao,
+Dscho
