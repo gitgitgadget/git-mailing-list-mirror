@@ -1,93 +1,83 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
-Date: Wed, 19 Aug 2009 11:40:20 +0200
-Message-ID: <200908191140.22235.trast@student.ethz.ch>
-References: <200908101136.34660.trast@student.ethz.ch> <200908151204.36709.trast@student.ethz.ch> <20090818164826.GA27377@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Continue git clone after interruption
+Date: Wed, 19 Aug 2009 11:52:10 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908191150330.5594@intel-tinevez-2-302>
+References: <1250509342.2885.13.camel@cf-48> <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302>  <vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48>  <alpine.LFD.2.00.0908181246470.6044@xanadu.home> <m3fxbpneqe.fsf@localhost.localdomain>
+  <alpine.LFD.2.00.0908181537360.6044@xanadu.home> <alpine.DEB.1.00.0908190022090.8306@pacific.mpi-cbg.de>  <alpine.LFD.2.00.0908181936130.6044@xanadu.home> <alpine.DEB.1.00.0908190921360.5594@intel-tinevez-2-302>
+ <fcaeb9bf0908190125u3e1bcaaap27e72a5784f4f9db@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 19 11:41:20 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1131557436-1250675531=:5594"
+Cc: Nicolas Pitre <nico@cam.org>, Jakub Narebski <jnareb@gmail.com>,
+	Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 11:52:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdhfU-0000cE-3C
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:41:20 +0200
+	id 1Mdhq9-0004oK-5e
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493AbZHSJlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 05:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751483AbZHSJlE
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:41:04 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:15654 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751492AbZHSJlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 05:41:03 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 19 Aug
- 2009 11:41:02 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 19 Aug
- 2009 11:40:41 +0200
-User-Agent: KMail/1.12.1 (Linux/2.6.27.25-0.1-default; KDE/4.3.0; x86_64; ; )
-In-Reply-To: <20090818164826.GA27377@coredump.intra.peff.net>
+	id S1751529AbZHSJwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 05:52:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751499AbZHSJwM
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:52:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45579 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751492AbZHSJwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 05:52:11 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 09:52:11 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp031) with SMTP; 19 Aug 2009 11:52:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/EzItH5vfEyNwS+Pyy5ekPqUU445QOfFBMF44HcI
+	UFTryYHU2x5i09
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <fcaeb9bf0908190125u3e1bcaaap27e72a5784f4f9db@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126526>
 
-Jeff King wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1131557436-1250675531=:5594
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Wed, 19 Aug 2009, Nguyen Thai Ngoc Duy wrote:
+
+> On Wed, Aug 19, 2009 at 2:35 PM, Johannes
+> Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> > But here comes an idea: together with Nguy要's sparse series, it is
 > 
-> I took a look at this today.
+> FWIW, you can write "Nguyen" instead. It might save you one copy/paste 
+> (I take it you don't have a Vietnamese IM ;-)
 
-Heh, now *my* procrastination is paying off :-)
+FWIW I originally wrote Nguyễn (not that Chinese(?) character)... I look 
+it up everytime I want to write your name by searching my address book for 
+"pclouds". ;-)
 
-> Hmm. I was about to write "so we need some clever way of integrating the
-> interactive hunk selection with a 3-way merge". But I just had a
-> thought: we should do it in the reverse order. We do the three-way merge
-> into a temporary index, and then ask the user to apply the result of
-> _that_ tree into the working tree. Or maybe I am missing something else
-> obvious and you can enlighten me.
+> > conceivable that we support a shallow & narrow clone via the 
+> > upload-pack protocol (also making mithro happy).  The problem with 
+> > narrow clones was not the pack generation side, that is done by a 
+> > rev-list that can be limited to certain paths.  The problem was that 
+> > we end up with missing tree objects.  However, if we can make a sparse 
+> > checkout, we can avoid the problem.
+> 
+> But then git-fsck, git-archive... will die?
 
-I think that is the correct way to go about it from the user's POV.
-He would be confused if the patch applied to WT/index were different
-(because of a later merge) from the hunks he chose in the -p loop.
+Oh, but they should be made aware of the narrow clone, just like for 
+shallow clones.
 
-However, there's the issue of merge conflicts.  Some options I can
-think of are
+Ciao,
+Dscho
 
-1) refuse to work in the face of merge problems
-
-2) stash requires a clean WT, so we can move the user's index out of
-   the way and use temporary index + WT to let the user resolve the
-   conflicts
-
-3) require both clean WT and index so we can simply use the repo to
-   resolve
-
-(The first one isn't quite as restrictive as it sounds; the user can
-always apply on top of a clean HEAD, fix conflicts and re-stash, thus
-doing a "stash rebase".)
-
-
->   1. For --index mode, it actually invokes add--interactive twice. It
->      would be nice to do both passes at the same time, but I don't think
->      it is possible with the current add--interactive infrastructure.
-
-Note that the 'git stash -p' in next always stashes the index whole,
-so the "easy" way might simply be to also unstash the index whole (if
-requested).
-
-The changes will usually still be available in the worktree
-application, because the 3-way merge is between base and HEAD on one
-side and base and worktree-stash on the other side.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--8323329-1131557436-1250675531=:5594--
