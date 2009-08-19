@@ -1,114 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 0/6] {checkout,reset,stash} --patch
-Date: Wed, 19 Aug 2009 06:11:34 -0400
-Message-ID: <20090819101134.GB28920@sigill.intra.peff.net>
-References: <200908101136.34660.trast@student.ethz.ch>
- <200908151204.36709.trast@student.ethz.ch>
- <20090818164826.GA27377@coredump.intra.peff.net>
- <200908191140.22235.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of 
+ function
+Date: Wed, 19 Aug 2009 12:15:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908191158310.5594@intel-tinevez-2-302>
+References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>  <1250524872-5148-2-git-send-email-lznuaa@gmail.com>  <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>  <3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com> 
+ <alpine.DEB.1.00.0908172134150.8306@pacific.mpi-cbg.de>  <4A8A3ADE.9010703@gmail.com>  <alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302> <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 19 12:11:50 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marius Storm-Olsen <mstormo@gmail.com>,
+	Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 12:15:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdi8y-0003vX-0g
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 12:11:48 +0200
+	id 1MdiCt-0005SS-KG
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 12:15:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbZHSKLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 06:11:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbZHSKLh
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 06:11:37 -0400
-Received: from peff.net ([208.65.91.99]:55962 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751337AbZHSKLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 06:11:35 -0400
-Received: (qmail 18630 invoked by uid 107); 19 Aug 2009 10:11:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 19 Aug 2009 06:11:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Aug 2009 06:11:34 -0400
-Content-Disposition: inline
-In-Reply-To: <200908191140.22235.trast@student.ethz.ch>
+	id S1751246AbZHSKPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 06:15:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZHSKPn
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 06:15:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46950 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751001AbZHSKPn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 06:15:43 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 10:15:42 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp035) with SMTP; 19 Aug 2009 12:15:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/MsaRHhRHM/UTOqNW/BKx07Y7wWKf9nPCUq7v5Ro
+	NbsmEW9Ctzl/0Z
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126531>
 
-On Wed, Aug 19, 2009 at 11:40:20AM +0200, Thomas Rast wrote:
 
-> > I took a look at this today.
-> Heh, now *my* procrastination is paying off :-)
 
-Curses, I fell into your trap!
+On Wed, 19 Aug 2009, Frank Li wrote:
 
-> I think that is the correct way to go about it from the user's POV.
-> He would be confused if the patch applied to WT/index were different
-> (because of a later merge) from the hunks he chose in the -p loop.
+> > Okay, I will wait for Frank's updates (just fetched tgit.git and it still
+> > contains the old branch), merge the early part and add the compiler flags.
+> >
+> Today, I just update 5 patch according review feedback.
+> Do I need send it again?
 > 
-> However, there's the issue of merge conflicts.  Some options I can
-> think of are
+> I have push my change to tgit
+> git://repo.or.cz/tgit.git
+> branch vcpatch2
 > 
-> 1) refuse to work in the face of merge problems
+> How do I know if patch has been applied main line?
 
-I had assumed we would do (1), just to keep things simple. Otherwise
-stash becomes a multi-invocation command (with a --continue feature),
-which really has a lot of complexity and corner cases.
+I applied them to 4msysgit.git's devel.  Note that I had a strange merge 
+conflict in pager.c: you replaced and #ifndef __MINGW32__ with an #ifndef 
+WIN32, but I don't have that #ifndef at all.
 
-> 2) stash requires a clean WT, so we can move the user's index out of
->    the way and use temporary index + WT to let the user resolve the
->    conflicts
-> 
-> 3) require both clean WT and index so we can simply use the repo to
->    resolve
-
-Actually, we currently require that the index and WT match, so
-these two are equivalent. But I think they add a lot of complexity
-because of the continuation.
-
-> (The first one isn't quite as restrictive as it sounds; the user can
-> always apply on top of a clean HEAD, fix conflicts and re-stash, thus
-> doing a "stash rebase".)
-
-Which is really a nice way of dodging the continuation bullet, since the
-results after each step are well-defined in terms of currently existing
-steps. That is, the user could "git stash apply" and never invoke "git
-stash apply -p" if munging the conflicts led to the result they wanted.
-
-OTOH, it may have been simpler for them to edit the stash beforehand to
-avoid the conflicts.
-
-Hmm. Maybe we are really talking about two different commands:
-
-  1. edit the hunks that will be applied to the working tree from the
-     stash (apply -p)
-
-  2. edit the _stash itself_, taking or leaving hunks to create a new
-     stash
-
-What was in my patch was basically (2), but then always followed by
-applying. By splitting them, you can use whichever makes sense for your
-situation.
-
-> >   1. For --index mode, it actually invokes add--interactive twice. It
-> >      would be nice to do both passes at the same time, but I don't think
-> >      it is possible with the current add--interactive infrastructure.
-> 
-> Note that the 'git stash -p' in next always stashes the index whole,
-> so the "easy" way might simply be to also unstash the index whole (if
-> requested).
-
-That might be worthwhile. It is less flexible, but I really wonder if
-people actually keep stash randomly different changes in their index and
-worktree and want to pick through them individually. I guess we could
-also add a --patch-index for people who really wanted it.
-
--Peff
+Ciao,
+Dscho
