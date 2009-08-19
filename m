@@ -1,93 +1,169 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [RFC] Enable compilation by Makefile for the MSVC 
- toolchain
-Date: Wed, 19 Aug 2009 16:51:22 +0200
-Message-ID: <40aa078e0908190751g2eb7197cp661f256eb7ff568d@mail.gmail.com>
-References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <40aa078e0908181502v32cbd223xcde1cd363dc76345@mail.gmail.com> <alpine.DEB.1.00.0908190038110.8306@pacific.mpi-cbg.de> <40aa078e0908181548t5df05b1ct8013b99ea703ebba@mail.gmail.com> <alpine.DEB.1.00.0908190910270.5594@intel-tinevez-2-302> <4A8BA9EC.9000006@storm-olsen.com> <alpine.DEB.1.00.0908190951020.5594@intel-tinevez-2-302> <4A8BDAF6.5060805@gmail.com> <alpine.DEB.1.00.0908191455140.5594@intel-tinevez-2-302> <4A8BFD75.8000706@storm-olsen.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Continue git clone after interruption
+Date: Wed, 19 Aug 2009 17:19:50 +0200
+Message-ID: <200908191719.52974.jnareb@gmail.com>
+References: <1250509342.2885.13.camel@cf-48> <200908182302.10619.jnareb@gmail.com> <alpine.LFD.2.00.0908181711350.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, Marius Storm-Olsen <mstormo@gmail.com>,  "Johan 't Hart" <johanthart@gmail.com>, Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,  git@vger.kernel.org, lznuaa@gmail.com, bonzini@gnu.org
-To: Marius Storm-Olsen <marius@storm-olsen.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Aug 19 16:52:47 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yw0-f140.google.com ([209.85.211.140])
+Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:20:10 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdmWr-0005Bn-CV
-	for gcvm-msysgit@m.gmane.org; Wed, 19 Aug 2009 16:52:45 +0200
-Received: by mail-yw0-f140.google.com with SMTP id 4so7636310ywh.22
-        for <gcvm-msysgit@m.gmane.org>; Wed, 19 Aug 2009 07:52:45 -0700 (PDT)
+	id 1MdmxM-00022o-Jw
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 17:20:09 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752110AbZHSPT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 11:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752020AbZHSPT6
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 11:19:58 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:18040 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752011AbZHSPT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 11:19:57 -0400
+Received: by fg-out-1718.google.com with SMTP id e21so1080337fga.17
+        for <git@vger.kernel.org>; Wed, 19 Aug 2009 08:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:authentication-results
-         :received:dkim-signature:domainkey-signature:mime-version:received
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=AfoW0ZJXpLLrYdWPr/7Rh/knrK7cHekMl5c32Fipinc=;
-        b=zvWtj6z92iilMmUXK4wjNeJWH6iP/4qXKf1TiLedjalZLz/MQAFX+TQBnxqoGH6Qer
-         jz0yQJXwNS4S16gDVXVsjUq8SDJgiy/lTqSWm3URVAB0R9+YDXwJ/p3ltwk3xCJ0epOl
-         OG8LnG5KUxQ2UruTjK8+ZfIhOZ/QtaRGwakYI=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Fh4+nifyRvDkieTe9VTOCyQDVGIrUQ0SJHrzanSMH2s=;
+        b=kXhCpqmjOI0vMfNwI+lGIu6WtpNwNLEOIbPOyf3F/s9S5Acj/lwJmWSSt0YNwk8shb
+         Os6O0l9qG48BG3V+FPy91RJ59K5i97rqZOVS28ehoEYznjt5dY3REKBElUlhTkWYwt2i
+         fUc+shhlXd6+Qurz2LnaG8k7nHci140JCyNdk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=HfkT1Z8UuL854aqpRaDFkYzdRSmy3u1uM6i+56XyHird++slHaCJVwCq4BDCBMjPAj
-         hldnih+u3F55FownJZuYnfkStUOU+IUoPzDLuWYnBBmqioXCR81fRI2Jtkj5+oBLdpkK
-         aW8+jag0QJvnHAwwKOIEwMnWbGK7ibFUa91Dk=
-Received: by 10.220.15.205 with SMTP id l13mr1579256vca.18.1250693547446;
-        Wed, 19 Aug 2009 07:52:27 -0700 (PDT)
-Received: by 10.230.85.148 with SMTP id o20gr6544vbl.0;
-	Wed, 19 Aug 2009 07:51:25 -0700 (PDT)
-X-Sender: kusmabite@googlemail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.220.77.164 with SMTP id g36mr1270037vck.13.1250693483929; Wed, 19 Aug 2009 07:51:23 -0700 (PDT)
-Received: by 10.220.77.164 with SMTP id g36mr1270036vck.13.1250693483864; Wed, 19 Aug 2009 07:51:23 -0700 (PDT)
-Received: from mail-qy0-f178.google.com (mail-qy0-f178.google.com [209.85.221.178]) by gmr-mx.google.com with ESMTP id 21si9877vws.1.2009.08.19.07.51.22; Wed, 19 Aug 2009 07:51:22 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.221.178 as permitted sender) client-ip=209.85.221.178;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.221.178 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
-Received: by mail-qy0-f178.google.com with SMTP id 8so3464696qyk.26 for <msysgit@googlegroups.com>; Wed, 19 Aug 2009 07:51:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=nkGQsak4uXZ9nXLQTz3JOwC+5VaTN+ZqYua9lDm+0v8=; b=hgCaGE4vj8JweZGbEiw27Yfxs1+xYfzjYBJtGw18J6CC9EdGtMipELFekGA+mDnr1T 4Ss82FAX0P/CgV6x0tDasB5kaDcZvxzyP5kf6yc9jmbD+mAJMH2/CtLkAIBRGJiUrvgQ hnoTYoC1UtY0Gc4E7kd12hZCNhwowOId7i0KQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=UTOxPS/DakNM/93h3NTYjO5Z9v9a6Hr71CcgRaYg1DWHY8JhzKcaI8fsILQKc1uSJ5 7/J72Rp5Capq1lBfGeKt6RTMBZAe5xFmUwFRh3XAHdeHyQ5tXSm9ibyM/47o410hcNVh jj/mEFTKNRuoVbRmKpCzFlgFjTOKR6GwVWnZ0=
-Received: by 10.224.52.170 with SMTP id i42mr6516444qag.285.1250693482501;  Wed, 19 Aug 2009 07:51:22 -0700 (PDT)
-In-Reply-To: <4A8BFD75.8000706@storm-olsen.com>
-Sender: msysgit@googlegroups.com
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=XvN4LkHVL/9+4229i8kC8/hghQo1+IVby/Fet3eYXEk2dU6dMseza7lq6GqlMKq5Q6
+         j6NIF3836zeUnzojGJ/whN1W8R4Pf5tQ7Hl13kqozzRFKNgQOXmSjAWGYyOSNADadHzO
+         +ayd23cqaGbwp31hvWmvcpwfI/I27umwJ7nbM=
+Received: by 10.86.173.4 with SMTP id v4mr4309073fge.78.1250695197637;
+        Wed, 19 Aug 2009 08:19:57 -0700 (PDT)
+Received: from ?192.168.1.13? (abvk137.neoplus.adsl.tpnet.pl [83.8.208.137])
+        by mx.google.com with ESMTPS id l19sm732453fgb.12.2009.08.19.08.19.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Aug 2009 08:19:56 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LFD.2.00.0908181711350.6044@xanadu.home>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126548>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126549>
 
+On Tue, 18 Aug 2009, Nicolas Pitre wrote:
+> On Tue, 18 Aug 2009, Jakub Narebski wrote:
+> 
+>> You can probably get number and size taken by delta and non-delta (base)
+>> objects in the packfile somehow.  Neither "git verify-pack -v <packfile>"
+>> nor contrib/stats/packinfo.pl did help me arrive at this data.
+> 
+> Documentation for verify-pack says:
+> 
+> |When specifying the -v option the format used is:
+> |
+> |        SHA1 type size size-in-pack-file offset-in-packfile
+> |
+> |for objects that are not deltified in the pack, and
+> |
+> |        SHA1 type size size-in-packfile offset-in-packfile depth base-SHA1
+> |
+> |for objects that are deltified.
+> 
+> So a simple script should be able to give you the answer.
 
-On Wed, Aug 19, 2009 at 3:26 PM, Marius
-Storm-Olsen<marius@storm-olsen.com> wrote:
-> They would still require the rest of the msysgit environment to be able to
-> use the result. Not until we have zero scripts left as git commands can we
-> ditch the msysgit environment. So yes, even for msvc-built git is msysgit
-> required. Its just not build with MinGW.
+Thanks.
 
-...perhaps support for msvc for a subset of git-core (without all
-shell scripts, that is) is just the incentive some windows-developers
-need to start developing c-versions of the lacking functionality? A
-pure C git-core would IMO be the ideal case. Utilities could still be
-scripted on top of this through bindings given that the developer have
-perl installed, no?
+There are 114937 objects in this packfile, including 56249 objects
+used as base (can be deltified or not).  git-verify-pack -v shows
+that all objects have total size-in-packfile of 33 MB (which agrees
+with packfile size of 33 MB), with 17 MB size-in-packfile taken by
+deltaified objects, and 16 MB taken by base objects.
 
+  git verify-pack -v | 
+    grep -v "^chain" | 
+    grep -v "objects/pack/pack-" > verify-pack.out
+
+  sum=0; bsum=0; dsum=0; 
+  while read sha1 type size packsize off depth base; do
+    echo "$sha1" >> verify-pack.sha1.out
+    sum=$(( $sum + $packsize ))
+    if [ -n "$base" ]; then 
+       echo "$sha1" >> verify-pack.delta.out
+       dsum=$(( $dsum + $packsize ))
+    else
+       echo "$sha1" >> verify-pack.base.out
+       bsum=$(( $bsum + $packsize ))
+    fi
+  done < verify-pack.out
+  echo "sum=$sum; bsum=$bsum; dsum=$dsum"
+ 
+>>>> (BTW what happens if this pack is larger than file size limit for 
+>>>> given filesystem?).
+[...]
+
+>> If I remember correctly FAT28^W FAT32 has maximum file size of 2 GB.
+>> FAT is often used on SSD, on USB drive.  Although if you have  2 GB
+>> packfile, you are doing something wrong, or UGFWIINI (Using Git For
+>> What It Is Not Intended).
+> 
+> Hopefully you're not performing a 'git clone' off of a FAT filesystem.  
+> For physical transport you may repack with the appropriate switches.
+
+Not off a FAT filesystem, but into a FAT filesystem.
+ 
+[...]
+
+>>> I think it is better to "prime" the repository with the content of the 
+>>> top commit in the most straight forward manner using git-archive which 
+>>> has the potential to be fully restartable at any point with little 
+>>> complexity on the server side.
+>> 
+>> But didn't it make fully restartable 2.5 MB part out of 37 MB packfile?
+> 
+> The front of the pack is the critical point.  If you get enough to 
+> create the top commit then further transfers can be done incrementally 
+> with only the deltas between each commits.
+
+How?  You have some objects that can be used as base; how to tell 
+git-daemon that we have them (but not theirs prerequisites), and how
+to generate incrementals?
+
+>> A question about pack protocol negotiation.  If clients presents some
+>> objects as "have", server can and does assume that client has all 
+>> prerequisites for such objects, e.g. for tree objects that it has
+>> all objects for files and directories inside tree; for commit it means
+>> all ancestors and all objects in snapshot (have top tree, and its 
+>> prerequisites).  Do I understand this correctly?
+> 
+> That works only for commits.
+
+Hmmmm... how do you intent for "prefetch top objects restartable-y first"
+to work, then?
+ 
+>> BTW. because of compression it might be more difficult to resume 
+>> archive creation in the middle, I think...
+> 
+> Why so?  the tar+gzip format is streamable.
+
+gzip format uses sliding window in compression.  "cat a b | gzip"
+is different from "cat <(gzip a) <(gzip b)".
+
+But that doesn't matter.  If we are interrupted in the middle, we can
+uncompress what we have to check how far did we get, and tell server
+to send the rest; this way server wouldn't have to even generate 
+(but not send) what we get as partial transfer.
+
+P.S. What do you think about 'bundle' capability extension mentioned
+     in a side sub-thread?
 -- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+Jakub Narebski
+Poland
