@@ -1,75 +1,72 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: ls-files -t broken? Or do I just not understand it?
-Date: Wed, 19 Aug 2009 10:24:23 +0200
-Message-ID: <20090819082423.GA18860@atjola.homenet>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Simple commit mechanism for non-technical users
+Date: Wed, 19 Aug 2009 10:25:30 +0200
+Message-ID: <vpqvdkkus5h.fsf@bauges.imag.fr>
+References: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
+	<alpine.DEB.1.00.0908190940430.5594@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 19 10:24:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: D Sundstrom <sunds@peapod.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 19 10:25:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdgTF-00006t-6E
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:24:37 +0200
+	id 1MdgUM-0000dj-6J
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 10:25:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbZHSIY2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Aug 2009 04:24:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZHSIY2
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:24:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43437 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751795AbZHSIY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 04:24:27 -0400
-Received: (qmail invoked by alias); 19 Aug 2009 08:24:27 -0000
-Received: from i59F55728.versanet.de (EHLO atjola.homenet) [89.245.87.40]
-  by mail.gmx.net (mp015) with SMTP; 19 Aug 2009 10:24:27 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19Ms71sFq5Mr5WwNIOifNetx4Alv4Vwzh1x7FaCD9
-	CFYpHrP0DkzH2s
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
+	id S1751936AbZHSIZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 04:25:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZHSIZi
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 04:25:38 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:54979 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751925AbZHSIZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 04:25:37 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7J8Mi8r012823
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 19 Aug 2009 10:22:44 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MdgU6-0002Wr-2G; Wed, 19 Aug 2009 10:25:30 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MdgU6-0000nf-0w; Wed, 19 Aug 2009 10:25:30 +0200
+In-Reply-To: <alpine.DEB.1.00.0908190940430.5594@intel-tinevez-2-302> (Johannes Schindelin's message of "Wed\, 19 Aug 2009 09\:49\:50 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.91 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 19 Aug 2009 10:22:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n7J8Mi8r012823
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1251274966.6389@K1qTDvC8wZCPYt1mi/X3cw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126517>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-ls-files -t seems to always show status H, even if the file was modifie=
-d
-or deleted, and thus gets shown by -m and -d respectively.
+> Then you have a bunch of people who do not want to care about learning 
+> proper version control.
 
-doener@atjola:git (master) $ git status
-# On branch master
-nothing to commit (working directory clean)
-doener@atjola:git (master) $ rm git.c
-doener@atjola:git (master) $ echo 123 > Makefile
-doener@atjola:git (master) $ git ls-files -m
-Makefile
-git.c
-doener@atjola:git (master) $ git ls-files -d
-git.c
-doener@atjola:git (master) $ git ls-files -t Makefile git.c
-H Makefile
-H git.c
-doener@atjola:git (master) $ git add -u Makefile git.c
-doener@atjola:git (master) $ git ls-files -m
-doener@atjola:git (master) $ git ls-files -d
-doener@atjola:git (master) $ git ls-files -t Makefile git.c
-H Makefile
-doener@atjola:git (master) $=20
+OTOH, my experience with non-technical people and revision control is:
+they send you an email with the file attached, saying they promise
+they will learn the tool one day, but not right now because they don't
+have time, and then you have to find out how to merge and commit
+yourself.
 
+And unfortunately (also from my experience), this is not limited to
+non-technical people ...
 
-I would have expected the first "ls-files -t" to say:
-C Makefile
-K git.c
+For this category of people, a simple web-based commit tool will not
+teach them anything (which is bad), but at least reduces the work of
+the technical guys (which is somehow good).
 
-Is that a bug, or am I just misunderstanding what -t is supposed to do?
-
-Bj=F6rn
+-- 
+Matthieu
