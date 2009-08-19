@@ -1,163 +1,91 @@
 From: Frank Li <lznuaa@gmail.com>
-Subject: [PATCH 01/12] Avoid declaration after instruction
-Date: Wed, 19 Aug 2009 23:52:36 +0800
-Message-ID: <1250697167-5536-1-git-send-email-lznuaa@gmail.com>
+Subject: [PATCH 02/12] Define SNPRINTF_SIZE_CORR=1 for Microsoft Visual C++
+Date: Wed, 19 Aug 2009 23:52:37 +0800
+Message-ID: <1250697167-5536-2-git-send-email-lznuaa@gmail.com>
+References: <1250697167-5536-1-git-send-email-lznuaa@gmail.com>
 Cc: Frank Li <lznuaa@gmail.com>
 To: git@vger.kernel.org, msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Wed Aug 19 17:53:13 2009
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:53:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdnTM-0001U8-Vo
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 17:53:13 +0200
+	id 1MdnTd-0001c6-OI
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 17:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752267AbZHSPw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 11:52:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbZHSPw7
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 11:52:59 -0400
-Received: from rv-out-0506.google.com ([209.85.198.234]:41388 "EHLO
+	id S1752304AbZHSPxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 11:53:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbZHSPxP
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 11:53:15 -0400
+Received: from rv-out-0506.google.com ([209.85.198.239]:41043 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752108AbZHSPw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 11:52:58 -0400
-Received: by rv-out-0506.google.com with SMTP id f6so1310838rvb.1
-        for <git@vger.kernel.org>; Wed, 19 Aug 2009 08:53:00 -0700 (PDT)
+	with ESMTP id S1752146AbZHSPxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 11:53:15 -0400
+Received: by rv-out-0506.google.com with SMTP id k40so1038011rvb.5
+        for <git@vger.kernel.org>; Wed, 19 Aug 2009 08:53:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=4K2IpKNCRsKatc4OrgXfgXASEEeO0VxebrehwTUiQm0=;
-        b=F3mbG/0oseaqc2xWH2ySFYlw4nY9HgIXFLsg0FUgWY/xiNQGugLabInVbgfqlWxTy0
-         UrSCq10wvD2ptCDgI74lsxLuwSu82Nxw5rz8R3QQbDlnlG4elwSIR2bWmeVtl9Q2UrYs
-         ztCric5hcz+YMW1OBr7UO19ntoCuvwgjAgszI=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=GqRDj+LWdHa1KX9CDE5xQ3qnoc7qf+UefM+/tkA5B7s=;
+        b=V+fWge7xzDRKvgqAE+6TfevjK+zi2wVJMk1Otb8ZL55pa1lWobMBbcgDKGpecuBJwe
+         0PHK8W+0bRSVEYSWge/tV0Shod29siqtoPLqxoF/HnOI0s4uWY0QO8VxN86deSk4Qtz5
+         0uLvSTNr8s7KWAZJZqgwW+hcddqiXJRxh2m7Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=aAcAnwPP9M1ZtqyLUF0IWOvhB1B1mj8izIK1hC6J0BWWFNZRrhgk6PdW9a0Pygsg6D
-         Psum2K2+07rEv1U0SIalbWq/j/6QQUvdfD4HpC3BYs+1DE0/MGFyIqzzEuzg1vPAzkq0
-         VgI4LEElUypsyWYUagk1i+a29X8gpY0xYGRvo=
-Received: by 10.140.133.16 with SMTP id g16mr3736854rvd.202.1250697180101;
-        Wed, 19 Aug 2009 08:53:00 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=S6RrGQe/y8zmdl6k1bof2V0LNPPlphXOYgWnFUshg5STmHPjwohwtszcFvMKqNxk5T
+         uasNeKoCU18SXDalXSzgGcJNfzieMRQtvQxODTLD3d+65ZGlOpNCs1qmkfv689Kfw6xV
+         AQWTjddJpId3WD1DgPtd1P+xjmYdmWi1DQtsc=
+Received: by 10.140.135.20 with SMTP id i20mr2605514rvd.145.1250697196470;
+        Wed, 19 Aug 2009 08:53:16 -0700 (PDT)
 Received: from localhost ([58.38.115.215])
-        by mx.google.com with ESMTPS id g31sm1253256rvb.26.2009.08.19.08.52.52
+        by mx.google.com with ESMTPS id l31sm3521178rvb.54.2009.08.19.08.53.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 19 Aug 2009 08:52:59 -0700 (PDT)
+        Wed, 19 Aug 2009 08:53:15 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.msysgit.0
+In-Reply-To: <1250697167-5536-1-git-send-email-lznuaa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126552>
 
-Microsoft Visual C++ does not understand this C99 style
+The Microsoft C runtime's vsnprintf function does not add NUL at
+the end of the buffer.
+
+Further, Microsoft deprecated vsnprintf in favor of _vsnprintf, so
+add a #define to that end.
 
 Signed-off-by: Frank Li <lznuaa@gmail.com>
 ---
- compat/mingw.c |   16 ++++++++++++----
- help.c         |    3 ++-
- run-command.c  |    2 ++
- 3 files changed, 16 insertions(+), 5 deletions(-)
+ compat/snprintf.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index bed4178..75c74b1 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -123,13 +123,17 @@ int mingw_open (const char *filename, int oflags, ...)
- {
- 	va_list args;
- 	unsigned mode;
-+	int fd;
-+
- 	va_start(args, oflags);
- 	mode = va_arg(args, int);
- 	va_end(args);
- 
- 	if (!strcmp(filename, "/dev/null"))
- 		filename = "nul";
--	int fd = open(filename, oflags, mode);
-+
-+	fd = open(filename, oflags, mode);
-+
- 	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
- 		DWORD attrs = GetFileAttributes(filename);
- 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
-@@ -580,10 +584,11 @@ static char **get_path_split(void)
- 
- static void free_path_split(char **path)
- {
-+	char **p = path;
-+
- 	if (!path)
- 		return;
- 
--	char **p = path;
- 	while (*p)
- 		free(*p++);
- 	free(path);
-@@ -1108,9 +1113,11 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
- #undef signal
- sig_handler_t mingw_signal(int sig, sig_handler_t handler)
- {
-+	sig_handler_t old;
-+
- 	if (sig != SIGALRM)
- 		return signal(sig, handler);
--	sig_handler_t old = timer_fn;
-+	old = timer_fn;
- 	timer_fn = handler;
- 	return old;
- }
-@@ -1197,8 +1204,9 @@ struct dirent *mingw_readdir(DIR *dir)
- 
- 	if (dir->dd_handle == (long)INVALID_HANDLE_VALUE && dir->dd_stat == 0)
- 	{
-+		DWORD lasterr;
- 		handle = FindFirstFileA(dir->dd_name, &buf);
--		DWORD lasterr = GetLastError();
-+		lasterr = GetLastError();
- 		dir->dd_handle = (long)handle;
- 		if (handle == INVALID_HANDLE_VALUE && (lasterr != ERROR_NO_MORE_FILES)) {
- 			errno = err_win_to_posix(lasterr);
-diff --git a/help.c b/help.c
-index 6c46d8b..399b0b4 100644
---- a/help.c
-+++ b/help.c
-@@ -127,7 +127,7 @@ static int is_executable(const char *name)
- 		return 0;
- 
- #ifdef __MINGW32__
--	/* cannot trust the executable bit, peek into the file instead */
-+{	/* cannot trust the executable bit, peek into the file instead */
- 	char buf[3] = { 0 };
- 	int n;
- 	int fd = open(name, O_RDONLY);
-@@ -140,6 +140,7 @@ static int is_executable(const char *name)
- 				st.st_mode |= S_IXUSR;
- 		close(fd);
- 	}
-+}
- #endif
- 	return st.st_mode & S_IXUSR;
- }
-diff --git a/run-command.c b/run-command.c
-index ff3d8e2..d1df7ab 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -123,6 +123,7 @@ int start_command(struct child_process *cmd)
- 		exit(127);
- 	}
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index 6c0fb05..47b2b8a 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -6,7 +6,7 @@
+  * number of characters to write without the trailing NUL.
+  */
+ #ifndef SNPRINTF_SIZE_CORR
+-#if defined(__MINGW32__) && defined(__GNUC__) && __GNUC__ < 4
++#if defined(__MINGW32__) && defined(__GNUC__) && __GNUC__ < 4 || defined(_MSC_VER)
+ #define SNPRINTF_SIZE_CORR 1
  #else
-+{
- 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
- 	const char **sargv = cmd->argv;
- 	char **env = environ;
-@@ -186,6 +187,7 @@ int start_command(struct child_process *cmd)
- 		dup2(s1, 1), close(s1);
- 	if (s2 >= 0)
- 		dup2(s2, 2), close(s2);
-+}
+ #define SNPRINTF_SIZE_CORR 0
+@@ -14,6 +14,11 @@
  #endif
  
- 	if (cmd->pid < 0) {
+ #undef vsnprintf
++
++#if defined(_MSC_VER)
++#define vsnprintf _vsnprintf
++#endif
++
+ int git_vsnprintf(char *str, size_t maxsize, const char *format, va_list ap)
+ {
+ 	char *s;
 -- 
 1.6.4.msysgit.0
