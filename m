@@ -1,73 +1,163 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of  
-  function
-Date: Wed, 19 Aug 2009 17:21:29 +0200
-Message-ID: <4A8C1879.2070807@viscovery.net>
-References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>  <1250524872-5148-2-git-send-email-lznuaa@gmail.com>  <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>  <3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com>  <alpine.DEB.1.00.0908172134150.8306@pacific.mpi-cbg.de>  <4A8A3ADE.9010703@gmail.com>  <alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302> <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com> <alpine.DEB.1.00.0908191158310.5594@intel-tinevez-2-302> <4A8BDA2A.9030105@viscovery.net> <alpine.DEB.1.00.0908191514020.5594@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Frank Li <lznuaa@gmail.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 19 17:21:42 2009
+From: Frank Li <lznuaa@gmail.com>
+Subject: [PATCH 01/12] Avoid declaration after instruction
+Date: Wed, 19 Aug 2009 23:52:36 +0800
+Message-ID: <1250697167-5536-1-git-send-email-lznuaa@gmail.com>
+Cc: Frank Li <lznuaa@gmail.com>
+To: git@vger.kernel.org, msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Wed Aug 19 17:53:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdmys-0002pi-6d
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 17:21:42 +0200
+	id 1MdnTM-0001U8-Vo
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 17:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751500AbZHSPVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 11:21:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751284AbZHSPVd
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 11:21:33 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:58910 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070AbZHSPVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 11:21:33 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mdmyf-00014s-Qk; Wed, 19 Aug 2009 17:21:30 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 84B2D4E4; Wed, 19 Aug 2009 17:21:29 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <alpine.DEB.1.00.0908191514020.5594@intel-tinevez-2-302>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1752267AbZHSPw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 11:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752163AbZHSPw7
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 11:52:59 -0400
+Received: from rv-out-0506.google.com ([209.85.198.234]:41388 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752108AbZHSPw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 11:52:58 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so1310838rvb.1
+        for <git@vger.kernel.org>; Wed, 19 Aug 2009 08:53:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=4K2IpKNCRsKatc4OrgXfgXASEEeO0VxebrehwTUiQm0=;
+        b=F3mbG/0oseaqc2xWH2ySFYlw4nY9HgIXFLsg0FUgWY/xiNQGugLabInVbgfqlWxTy0
+         UrSCq10wvD2ptCDgI74lsxLuwSu82Nxw5rz8R3QQbDlnlG4elwSIR2bWmeVtl9Q2UrYs
+         ztCric5hcz+YMW1OBr7UO19ntoCuvwgjAgszI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=aAcAnwPP9M1ZtqyLUF0IWOvhB1B1mj8izIK1hC6J0BWWFNZRrhgk6PdW9a0Pygsg6D
+         Psum2K2+07rEv1U0SIalbWq/j/6QQUvdfD4HpC3BYs+1DE0/MGFyIqzzEuzg1vPAzkq0
+         VgI4LEElUypsyWYUagk1i+a29X8gpY0xYGRvo=
+Received: by 10.140.133.16 with SMTP id g16mr3736854rvd.202.1250697180101;
+        Wed, 19 Aug 2009 08:53:00 -0700 (PDT)
+Received: from localhost ([58.38.115.215])
+        by mx.google.com with ESMTPS id g31sm1253256rvb.26.2009.08.19.08.52.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Aug 2009 08:52:59 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126551>
 
-Johannes Schindelin schrieb:
-> On Wed, 19 Aug 2009, Johannes Sixt wrote:
->> Johannes Schindelin schrieb:
->>> On Wed, 19 Aug 2009, Frank Li wrote:
->>>> I have push my change to tgit
->>>> git://repo.or.cz/tgit.git
->>>> branch vcpatch2
->>>>
->>>> How do I know if patch has been applied main line?
->>> I applied them to 4msysgit.git's devel.  Note that I had a strange 
->>> merge conflict in pager.c: you replaced and #ifndef __MINGW32__ with 
->>> an #ifndef WIN32, but I don't have that #ifndef at all.
->> 4msysgit has my "Windows: Better support PAGER settings with spaces in 
->> the path", which removes the #ifndefs, Frank's version doesn't have it. 
->> Therefore, you should not rebase Frank's patches on top of 4msysgit's 
->> master or devel before they are merged into git.git.
-> 
-> Well, I wanted to give them a little bit more visibility by putting them 
-> into 4msysgit.git, as I think the best way to get Microsoft Visual C++ 
-> support into git.git _is_ via 4msysgit.git.
+Microsoft Visual C++ does not understand this C99 style
 
-Even more so should you keep the original patches (in this case at least),
-not rebased ones. It is unlikely that "Windows: Better support PAGER..."
-will be in git.git _before_ Frank's MINGW32->WIN32 conversion patch.
+Signed-off-by: Frank Li <lznuaa@gmail.com>
+---
+ compat/mingw.c |   16 ++++++++++++----
+ help.c         |    3 ++-
+ run-command.c  |    2 ++
+ 3 files changed, 16 insertions(+), 5 deletions(-)
 
--- Hannes
+diff --git a/compat/mingw.c b/compat/mingw.c
+index bed4178..75c74b1 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -123,13 +123,17 @@ int mingw_open (const char *filename, int oflags, ...)
+ {
+ 	va_list args;
+ 	unsigned mode;
++	int fd;
++
+ 	va_start(args, oflags);
+ 	mode = va_arg(args, int);
+ 	va_end(args);
+ 
+ 	if (!strcmp(filename, "/dev/null"))
+ 		filename = "nul";
+-	int fd = open(filename, oflags, mode);
++
++	fd = open(filename, oflags, mode);
++
+ 	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
+ 		DWORD attrs = GetFileAttributes(filename);
+ 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+@@ -580,10 +584,11 @@ static char **get_path_split(void)
+ 
+ static void free_path_split(char **path)
+ {
++	char **p = path;
++
+ 	if (!path)
+ 		return;
+ 
+-	char **p = path;
+ 	while (*p)
+ 		free(*p++);
+ 	free(path);
+@@ -1108,9 +1113,11 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+ #undef signal
+ sig_handler_t mingw_signal(int sig, sig_handler_t handler)
+ {
++	sig_handler_t old;
++
+ 	if (sig != SIGALRM)
+ 		return signal(sig, handler);
+-	sig_handler_t old = timer_fn;
++	old = timer_fn;
+ 	timer_fn = handler;
+ 	return old;
+ }
+@@ -1197,8 +1204,9 @@ struct dirent *mingw_readdir(DIR *dir)
+ 
+ 	if (dir->dd_handle == (long)INVALID_HANDLE_VALUE && dir->dd_stat == 0)
+ 	{
++		DWORD lasterr;
+ 		handle = FindFirstFileA(dir->dd_name, &buf);
+-		DWORD lasterr = GetLastError();
++		lasterr = GetLastError();
+ 		dir->dd_handle = (long)handle;
+ 		if (handle == INVALID_HANDLE_VALUE && (lasterr != ERROR_NO_MORE_FILES)) {
+ 			errno = err_win_to_posix(lasterr);
+diff --git a/help.c b/help.c
+index 6c46d8b..399b0b4 100644
+--- a/help.c
++++ b/help.c
+@@ -127,7 +127,7 @@ static int is_executable(const char *name)
+ 		return 0;
+ 
+ #ifdef __MINGW32__
+-	/* cannot trust the executable bit, peek into the file instead */
++{	/* cannot trust the executable bit, peek into the file instead */
+ 	char buf[3] = { 0 };
+ 	int n;
+ 	int fd = open(name, O_RDONLY);
+@@ -140,6 +140,7 @@ static int is_executable(const char *name)
+ 				st.st_mode |= S_IXUSR;
+ 		close(fd);
+ 	}
++}
+ #endif
+ 	return st.st_mode & S_IXUSR;
+ }
+diff --git a/run-command.c b/run-command.c
+index ff3d8e2..d1df7ab 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -123,6 +123,7 @@ int start_command(struct child_process *cmd)
+ 		exit(127);
+ 	}
+ #else
++{
+ 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
+ 	const char **sargv = cmd->argv;
+ 	char **env = environ;
+@@ -186,6 +187,7 @@ int start_command(struct child_process *cmd)
+ 		dup2(s1, 1), close(s1);
+ 	if (s2 >= 0)
+ 		dup2(s2, 2), close(s2);
++}
+ #endif
+ 
+ 	if (cmd->pid < 0) {
+-- 
+1.6.4.msysgit.0
