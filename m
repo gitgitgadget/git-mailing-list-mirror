@@ -1,91 +1,69 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: New to Git / Questions about single user / multiple projects
-Date: Wed, 19 Aug 2009 00:00:19 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0908182343210.7195@iabervon.org>
-References: <a2db4dd50908181852s1e2c64fen8b883faf76b3136d@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH][resend 3] git-svn: Use GIT_SSH setting if SVN_SSH is
+	not set
+Date: Tue, 18 Aug 2009 20:58:27 -0700
+Message-ID: <20090819035827.GA1454@dcvr.yhbt.net>
+References: <4A8B3F40.10803@fastmail.fm>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Rob (gmail)" <robvanb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Karthik R <karthikr@fastmail.fm>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Wed Aug 19 06:02:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdcNL-0007ZK-Cc
+	id 1MdcNK-0007ZK-LO
 	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 06:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750747AbZHSEAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 00:00:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbZHSEAT
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 00:00:19 -0400
-Received: from iabervon.org ([66.92.72.58]:49252 "EHLO iabervon.org"
+	id S1751208AbZHSD63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Aug 2009 23:58:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbZHSD63
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Aug 2009 23:58:29 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:42972 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699AbZHSEAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 00:00:19 -0400
-Received: (qmail 16045 invoked by uid 1000); 19 Aug 2009 04:00:19 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Aug 2009 04:00:19 -0000
-In-Reply-To: <a2db4dd50908181852s1e2c64fen8b883faf76b3136d@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1750932AbZHSD62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Aug 2009 23:58:28 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 38B771F4E5;
+	Wed, 19 Aug 2009 03:58:28 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4A8B3F40.10803@fastmail.fm>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126502>
 
-On Tue, 18 Aug 2009, Rob (gmail) wrote:
-
-> I'm new to git and have some (I think) basic questions that I have not
-> been able to find answers to in the documentation.
-> It's very possible that these are the result of my lack in
-> understanding git / version control, so feel free to point me to
-> documentation
-> that might contain the answers.
+Karthik R <karthikr@fastmail.fm> wrote:
+> If SVN_SSH is defined, it will be used. Else value in
+> GIT_SSH is copied to SVN_SSH & then, only on Windows,
+> the \s are escaped.
 > 
-> I'm doing ERP development for my job and various 'hobby' development
-> in my spare time.
-> I'd like to track/store/ version control the code that I write for
-> both work and play.
-> I am (currently) working by myself, no need to have multiple
-> developers working of the same code.
+> On Windows, the shell-variables must be set as follows
+>     GIT_SSH="C:\Program Files\PuTTY\plink.exe"
+>     SVN_SSH="C:\\Program Files\\PuTTY\\plink.exe"
 > 
-> Q1:
-> Can I create a single repository (project?) for all my code, knowing
-> that there are multiple small, unrelated projects. Or should I create
-> a new repository for each project ?
+> See http://code.google.com/p/msysgit/issues/detail?id=305
+> 
+> Signed-off-by: Karthik Rajagopalan <karthikr@fastmail.fm>
 
-It's much easier to have a new repository for each project. There are two 
-possible ways to put multiple projects in a single repository: (1) you 
-could have each one in a subdirectory, which is bad because each commit 
-records the entire tree, so each project would have commits in its history 
-that are about other projects; (2) you could have separate branches for 
-each project; this is fine, but you only get one working directory per 
-repository, so it's awkward because you can only have one of your projects 
-checked out at a time.
+Thanks Karthik,
 
-On the other hand, it's pretty trivial to have lots of repositories, and 
-there isn't really any disadvantage to it. In fact, you may want to have 
-more repositories than projects at times, if you use the same project for 
-multiple purposes and want to extend it in different ways at the same 
-time.
+Acked and pushed out along with a few others I hadn't pushed
+to git://yhbt.net/git-svn
 
-> Q2:
-> After initalizing my repository, and comitting the 1st batch of code:
-> When further working on the code, will the command "git add ." add all
-> changed and new files ? Or do I specifically need to list the new
-> files ?
+Eric Wong (1):
+      svn: assume URLs from the command-line are URI-encoded
 
-You can use "git add .", but be aware that this tends to pick up random 
-cruft you've left in the directory.
+Karthik R (1):
+      git-svn: Use GIT_SSH setting if SVN_SSH is not set
 
-> Q3: Can I run 'git add x' in any subdirectory, or do I need to issue
-> if from the root of the project ?
+Tuomas Suutari (1):
+      git-svn.txt: Fix location of parent argument
 
-You can run almost every git command from subdirectories, and it does what 
-you'd expect with filenames when you're in a subdirectory. E.g., "git add 
-x" while in "a/b/" is like being in the project root and running "git add 
-a/b/x"
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Eric Wong
