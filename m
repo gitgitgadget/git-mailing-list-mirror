@@ -1,164 +1,79 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: [PATCH 1/6] Add supplemental test for trailing-whitespace on incomplete
- lines.
-Date: Wed, 19 Aug 2009 18:06:16 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908191710570.2012@GWPortableVCS>
-References: <1249428804.2774.52.camel@GWPortableVCS> <cover.1250719760.git.git@tbfowler.name>
+From: Adam Simpkins <simpkins@facebook.com>
+Subject: [PATCH] graph API: display uninteresting commits as '^' instead of
+	'*'
+Date: Wed, 19 Aug 2009 16:06:46 -0700
+Message-ID: <20090819230646.GS8147@facebook.com>
+Reply-To: Adam Simpkins <simpkins@facebook.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 01:06:49 2009
+Content-Type: text/plain; charset="us-ascii"
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 20 01:07:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MduEx-0005v2-Cx
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 01:06:47 +0200
+	id 1MduFR-00066Y-VN
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 01:07:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397AbZHSXGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 19:06:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbZHSXGj
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 19:06:39 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:44207 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373AbZHSXGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 19:06:38 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1MduEq-0001TN-Dp; Wed, 19 Aug 2009 18:06:40 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <cover.1250719760.git.git@tbfowler.name>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753412AbZHSXHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 19:07:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753375AbZHSXHI
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 19:07:08 -0400
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:43642 "EHLO
+	mailout-sf2p.facebook.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753338AbZHSXHH (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Aug 2009 19:07:07 -0400
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.15] (may be forged))
+	by pp02.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n7JN6aiZ030967
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Wed, 19 Aug 2009 16:06:36 -0700
+Received: from simpkins (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.104) with Microsoft SMTP Server (TLS) id 8.1.393.1; Wed, 19 Aug
+ 2009 16:06:47 -0700
+Received: from simpkins by simpkins with local (Exim 4.69)	(envelope-from
+ <simpkins@facebook.com>)	id 1MduEw-00063P-RM; Wed, 19 Aug 2009 16:06:46 -0700
+Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-08-19_15:2009-08-11,2009-08-19,2009-08-19 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0907200000 definitions=main-0908190186
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126590>
 
-*** For illustrative purposes only and not meant for upstream ***
+Using --graph and --show-all together now displays UNINTERESTING commits
+using '^' characters instead of '*'.
 
-  - Adds a stand-alone test that loops through A-side B-side with
-    and without new-lines from 0 to 3 spaces per side.
-    This is a draft test meant to expose the issue with xutils.c
-    handling of incomplete lines and trailing-spaces.
+Something like the following command will demonstrate the change:
 
-Signed-off-by: Thell Fowler <git@tbfowler.name>
+   git log --graph --show-all ^HEAD~2 HEAD
+
+Signed-off-by: Adam Simpkins <simpkins@facebook.com>
 ---
- t/t4015-diff-trailing-whitespace.sh |   95 +++++++++++++++++++++++++++++++++++
- 1 files changed, 95 insertions(+), 0 deletions(-)
- create mode 100755 t/t4015-diff-trailing-whitespace.sh
+ graph.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/t/t4015-diff-trailing-whitespace.sh b/t/t4015-diff-trailing-whitespace.sh
-new file mode 100755
-index 0000000000000000000000000000000000000000..c4937c1b457c24b35565b09e7b262443a05f9795
---- /dev/null
-+++ b/t/t4015-diff-trailing-whitespace.sh
-@@ -0,0 +1,95 @@
-+#!/bin/sh
+diff --git a/graph.c b/graph.c
+index 6746d42..50b68a4 100644
+--- a/graph.c
++++ b/graph.c
+@@ -775,6 +775,14 @@ static void graph_output_commit_char(struct git_graph *graph, struct strbuf *sb)
+ 	}
+ 
+ 	/*
++	 * For UNINTERESTING commits (displayed with --show-all), print '^'
++	 */
++	if (graph->commit->object.flags & UNINTERESTING) {
++		strbuf_addch(sb, '^');
++		return;
++	}
 +
-+test_description='Test trailing whitespace in diff engine.
-+
-+'
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/diff-lib.sh
-+
-+# Trailing-space testing with and without newlines.
-+prepare_diff_file () {
-+	printf "%s%$2s" foo "" >"$1"
-+	if [ $3 = "+nl" ]
-+	then
-+		printf "\n" >>"$1"
-+	fi
-+}
-+
-+diff_trailing () {
-+	foo="foo___"
-+	prepare_diff_file "left" "$2" "$3"
-+	lfoo=$( expr substr $foo 1 $((3+$2)) )
-+	lfoo=${lfoo}"$3"
-+
-+	prepare_diff_file "right" "$4" "$5"
-+	rfoo=$( expr substr $foo 1 $((3+$4)) )
-+	rfoo=${rfoo}"$5"
-+
-+	label="-$1 $lfoo $rfoo ($6)"
-+
-+	if [ "$6" != "should_diff" ]
-+	then
-+		negate='!'
-+	else
-+		negate=''
-+	fi
-+
-+	if [ -z "$7" ]
-+	then
-+		test_expect_success "$label" \
-+		"$negate git diff --no-index -$1 -- left right | grep -q foo"
-+	else
-+		test_expect_failure "$label" \
-+		"$negate git diff --no-index -$1 -- left right | grep -q foo"
-+	fi
-+
-+	test_debug "git diff --no-index -$1 -- left right | grep foo"
-+}
-+
-+touch diffout
-+for arg in -ignore-all-space -ignore-space-at-eol -ignore-space-change
-+do
-+	for i1 in 0 1 2 3
-+	do
-+		for i2 in 0 1 2 3
-+		do
-+			diff_trailing $arg $i1 +nl $i2 -nl should_not_diff >> diffout
-+			diff_trailing $arg $i1 -nl $i2 +nl should_not_diff >> diffout
-+
-+			if [ $i1 -ne $i2 ]
-+			then
-+				diff_trailing $arg $i1 +nl $i2 +nl should_not_diff >> diffout
-+				diff_trailing $arg $i1 -nl $i2 -nl should_not_diff >> diffout
-+			fi
-+		done
-+	done
-+done
-+
-+test_debug 'grep "FAIL" diffout'
-+
-+for arg in all eol change
-+do
-+	grep "FAIL" diffout | \
-+	grep "$arg" | \
-+	cut -d " " -f 4- | \
-+
-+	##  Playing with filtering to isolate core issue.
-+	#sort -k 2,2 -k 3,3 | \
-+	#awk '{ forward = $2 " " $3; reverse = $3 " " $2}
-+	#	!seen[forward]++ && !seen[reverse]++' | \
-+	#sort -k 2,2 | \
-+
-+	##  Playing with filtering to isolate core issue.
-+	##  This seems like the most illustrative output...
-+	awk '{ key=$3 ; gsub(/-/, "+", key) ; key=$2 ":" key ; if ( hash[key]++ == 0 ) print ; }'
-+	
-+	##  Playing with filtering to isolate core issue.
-+	#awk '{ if ( $3 ~ /.*\-/ )
-+	#		print $0
-+	#	else
-+	#		print $1 " " $3 " " $2 " " $4
-+	#	; }' | \
-+	#sort -k 2,2 -k 3,3
-+done
-+
-+test_done
++	/*
+ 	 * If revs->left_right is set, print '<' for commits that
+ 	 * come from the left side, and '>' for commits from the right
+ 	 * side.
 -- 
-1.6.4.172.g5c0d0.dirty
+1.6.0.4
