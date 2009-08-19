@@ -1,79 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Simple commit mechanism for non-technical users
-Date: Wed, 19 Aug 2009 06:20:36 -0400
-Message-ID: <20090819102036.GC28920@sigill.intra.peff.net>
-References: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
- <alpine.DEB.1.00.0908190940430.5594@intel-tinevez-2-302>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [msysGit] Re: [PATCH 02/11] Fix declare variable at mid of  
+  function
+Date: Wed, 19 Aug 2009 12:55:38 +0200
+Message-ID: <4A8BDA2A.9030105@viscovery.net>
+References: <1250524872-5148-1-git-send-email-lznuaa@gmail.com>  <1250524872-5148-2-git-send-email-lznuaa@gmail.com>  <alpine.DEB.1.00.0908171827040.4991@intel-tinevez-2-302>  <3f4fd2640908170934w4c48ada1o66745f845ecb7d49@mail.gmail.com>  <alpine.DEB.1.00.0908172134150.8306@pacific.mpi-cbg.de>  <4A8A3ADE.9010703@gmail.com>  <alpine.DEB.1.00.0908181132470.4680@intel-tinevez-2-302> <1976ea660908180911m7469ac20w48a28b90262d25f6@mail.gmail.com> <alpine.DEB.1.00.0908191158310.5594@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: D Sundstrom <sunds@peapod.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Frank Li <lznuaa@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Reece Dunn <msclrhd@googlemail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 19 12:20:46 2009
+X-From: git-owner@vger.kernel.org Wed Aug 19 12:55:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdiHd-0007Hy-Cl
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 12:20:45 +0200
+	id 1Mdipa-0003HM-8s
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 12:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751528AbZHSKUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 06:20:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751474AbZHSKUg
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 06:20:36 -0400
-Received: from peff.net ([208.65.91.99]:41984 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751418AbZHSKUg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 06:20:36 -0400
-Received: (qmail 18690 invoked by uid 107); 19 Aug 2009 10:20:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 19 Aug 2009 06:20:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Aug 2009 06:20:36 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0908190940430.5594@intel-tinevez-2-302>
+	id S1751784AbZHSKzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 06:55:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751761AbZHSKzk
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 06:55:40 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:43696 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466AbZHSKzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 06:55:39 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MdipO-0003JZ-KW; Wed, 19 Aug 2009 12:55:38 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 605E14E4; Wed, 19 Aug 2009 12:55:38 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <alpine.DEB.1.00.0908191158310.5594@intel-tinevez-2-302>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126533>
 
-On Wed, Aug 19, 2009 at 09:49:50AM +0200, Johannes Schindelin wrote:
-
-> Then you have a bunch of people who do not want to care about learning 
-> proper version control.
+Johannes Schindelin schrieb:
+> On Wed, 19 Aug 2009, Frank Li wrote:
+>> I have push my change to tgit
+>> git://repo.or.cz/tgit.git
+>> branch vcpatch2
+>>
+>> How do I know if patch has been applied main line?
 > 
-> This is what I would do: write a very simple .cgi (I'd use Perl for that), 
-> which has a file upload button, takes the name as commit message (or maybe 
-> adds a field where you can type in a commit message, but that might be 
-> asking your bunch of Aunt Tillies too much), strips the "v3"-like suffixes 
-> ($name =~ s/[-_ ]*v\d+(\.[A-Za-z0-9]{1,5})$/$1/;), set author and 
-> committer information according to IP (and refuse if the IP is not in the 
-> internal mapping) and commit.
-> 
-> The whole script would probably not be larger than 50 lines, and require 
-> Git to be installed on the server.
-> 
-> The bigger problem is that your Aunt Tillies most likely would not love 
-> gitweb, so you need a fancier interface.
+> I applied them to 4msysgit.git's devel.  Note that I had a strange merge 
+> conflict in pager.c: you replaced and #ifndef __MINGW32__ with an #ifndef 
+> WIN32, but I don't have that #ifndef at all.
 
-Actually, I think there is a technical problem here. You get Aunt
-Tillie's v3, but you don't necessarily know what it is based on. So if
-some other Aunt Tillie has submitted a v3 in the meantime, what do you
-do with her file? Commit on top? Try to guess where her v2 was, branch
-from there, and merge?
+4msysgit has my "Windows: Better support PAGER settings with spaces in the
+path", which removes the #ifndefs, Frank's version doesn't have it.
+Therefore, you should not rebase Frank's patches on top of 4msysgit's
+master or devel before they are merged into git.git.
 
-If you commit on top, then you are potentially erasing the other
-person's work. If you do a merge, you are likely to get conflicts
-(especially because Aunt Tillie likes to use horrible binary formats)
-that _somebody_ will have to resolve.
-
-I guess you can throw each Tillie on their own branch and then let
-somebody clueful do the merging, but then you do not really have people
-working together.
-
-I think this is a fundamental issue. Most version control systems (and
-especially distributed ones) are about doing concurrent work and
-merging, and merging requires a bit of a clue. The Aunt Tillies of the
-world really need a locking system to manage concurrency.
-
--Peff
+-- Hannes
