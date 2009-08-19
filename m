@@ -1,33 +1,34 @@
 From: Thell Fowler <git@tbfowler.name>
-Subject: [PATCH 2/6] Make xdl_hash_record_with_whitespace ignore eof
-Date: Wed, 19 Aug 2009 18:06:53 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908191725140.2012@GWPortableVCS>
+Subject: [PATCH 3/6] Make diff -w handle trailing-spaces on incomplete
+ lines.
+Date: Wed, 19 Aug 2009 18:07:18 -0500 (CDT)
+Message-ID: <alpine.DEB.2.00.0908191725440.2012@GWPortableVCS>
 References: <1249428804.2774.52.camel@GWPortableVCS> <cover.1250719760.git.git@tbfowler.name>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 01:07:28 2009
+X-From: git-owner@vger.kernel.org Thu Aug 20 01:07:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MduFb-0006BV-Nr
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 01:07:28 +0200
+	id 1MduFw-0006LI-Vx
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 01:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415AbZHSXHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 19:07:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbZHSXHQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 19:07:16 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:44591 "EHLO
+	id S1753417AbZHSXHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 19:07:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbZHSXHl
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 19:07:41 -0400
+Received: from 216.38.49.125.servint.net ([216.38.49.125]:44776 "EHLO
 	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753375AbZHSXHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 19:07:15 -0400
+	with ESMTP id S1753338AbZHSXHk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 19:07:40 -0400
 Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
 	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.69)
 	(envelope-from <git@tbfowler.name>)
-	id 1MduFR-0002Td-7n; Wed, 19 Aug 2009 18:07:17 -0500
+	id 1MduFq-0002xI-9V; Wed, 19 Aug 2009 18:07:42 -0500
 X-X-Sender: almostautomated@GWPortableVCS
 In-Reply-To: <cover.1250719760.git.git@tbfowler.name>
 User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
@@ -43,37 +44,41 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126592>
 
-  - When xdl_hash_record_with_whitespace encountered an incomplete
-    line the hash would be different than the identical line with
-    either --ignore-space-change or --ignore-space-at-eol on an
-    incomplete line because they only terminated with a check for
-    a new-line.
+  - When processing trailing spaces with --ignore-all-space a diff
+    would be found whenever one side had 0 spaces and either (or both)
+    sides was an incomplete line.  xdl_recmatch should process the
+    full length of the record instead of assuming both sides have a
+    terminator.
 
 Signed-off-by: Thell Fowler <git@tbfowler.name>
 ---
- xdiff/xutils.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ xdiff/xutils.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 04ad468702209b77427e635370d41001986042ce..c6512a53b08a8c9039614738310aa2786f4fbb1c 100644
+index c6512a53b08a8c9039614738310aa2786f4fbb1c..1f28f4fb4e0a8fdc6c9aa1904cf0362dd1e7b977 100644
 --- a/xdiff/xutils.c
 +++ b/xdiff/xutils.c
-@@ -248,12 +248,12 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
- 			if (flags & XDF_IGNORE_WHITESPACE)
- 				; /* already handled */
- 			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
--					&& ptr[1] != '\n') {
-+					&& ptr[1] != '\n' && ptr + 1 < top) {
- 				ha += (ha << 5);
- 				ha ^= (unsigned long) ' ';
- 			}
- 			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
--					&& ptr[1] != '\n') {
-+					&& ptr[1] != '\n' && ptr + 1 < top) {
- 				while (ptr2 != ptr + 1) {
- 					ha += (ha << 5);
- 					ha ^= (unsigned long) *ptr2;
+@@ -191,14 +191,14 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 	int i1, i2;
+ 
+ 	if (flags & XDF_IGNORE_WHITESPACE) {
+-		for (i1 = i2 = 0; i1 < s1 && i2 < s2; ) {
++		for (i1 = i2 = 0; i1 <= s1 && i2 <= s2; ) {
+ 			if (isspace(l1[i1]))
+-				while (isspace(l1[i1]) && i1 < s1)
++				while (isspace(l1[i1]) && i1 <= s1)
+ 					i1++;
+ 			if (isspace(l2[i2]))
+-				while (isspace(l2[i2]) && i2 < s2)
++				while (isspace(l2[i2]) && i2 <= s2)
+ 					i2++;
+-			if (i1 < s1 && i2 < s2 && l1[i1++] != l2[i2++])
++			if (i1 <= s1 && i2 <= s2 && l1[i1++] != l2[i2++])
+ 				return 0;
+ 		}
+ 		return (i1 >= s1 && i2 >= s2);
 -- 
 1.6.4.172.g5c0d0.dirty
