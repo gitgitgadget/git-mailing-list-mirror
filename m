@@ -1,69 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] stash: reject stash name starting with a dash.
-Date: Wed, 19 Aug 2009 05:57:16 -0400
-Message-ID: <20090819095716.GA28920@sigill.intra.peff.net>
-References: <7vbpmcc1sc.fsf@alter.siamese.dyndns.org>
- <1250631523-10524-1-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-2-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-3-git-send-email-Matthieu.Moy@imag.fr>
- <1250631523-10524-4-git-send-email-Matthieu.Moy@imag.fr>
- <20090818233535.GB6304@sigill.intra.peff.net>
- <vpq8whg1ebi.fsf@bauges.imag.fr>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Enable compilation by Makefile for the MSVC toolchain
+Date: Wed, 19 Aug 2009 11:58:18 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908191153550.5594@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0908172149480.8306@pacific.mpi-cbg.de> <1250600335-8642-1-git-send-email-mstormo@gmail.com> <alpine.DEB.1.00.0908181605370.4680@intel-tinevez-2-302> <4A8AEAF5.6070205@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 19 11:57:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
+	bonzini@gnu.org, kusmabite@googlemail.com
+To: Marius Storm-Olsen <marius@storm-olsen.com>
+X-From: git-owner@vger.kernel.org Wed Aug 19 11:58:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdhv9-0006q9-5K
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:57:31 +0200
+	id 1Mdhw6-0007El-E1
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 11:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751597AbZHSJ5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 05:57:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbZHSJ5T
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:57:19 -0400
-Received: from peff.net ([208.65.91.99]:60251 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751780AbZHSJ5R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 05:57:17 -0400
-Received: (qmail 18557 invoked by uid 107); 19 Aug 2009 09:57:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 19 Aug 2009 05:57:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Aug 2009 05:57:16 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq8whg1ebi.fsf@bauges.imag.fr>
+	id S1751590AbZHSJ6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 05:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZHSJ6U
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 05:58:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37516 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751569AbZHSJ6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 05:58:20 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 09:58:20 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp036) with SMTP; 19 Aug 2009 11:58:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18BUv00y/gB/jHGa0YI6BLwgkBkpZJQl5sc59qDr4
+	IQ7gqWmrSGKVzw
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4A8AEAF5.6070205@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126529>
 
-On Wed, Aug 19, 2009 at 08:57:05AM +0200, Matthieu Moy wrote:
+Hi,
 
-> >> +test_expect_success 'stash --invalid-option' '
-> >> +       echo bar5 > file &&
-> >> +       echo bar6 > file2 &&
-> >> +       git add file2 &&
-> >> +       ! git stash --invalid-option &&
-> >> +       test bar5,bar6 = $(cat file),$(cat file2) &&
-> >> +       git stash -- -message-starting-with-dash &&
-> >> +       test bar,bar2 = $(cat file),$(cat file2)
-> >> +'
-> >
-> > Should this actually be "git stash save --invalid-option", since it is
-> > really testing the actual save option parsing, and not the behavior to
-> > automatically push options to "git stash save"?
+On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
+
+> Johannes Schindelin said the following on 18.08.2009 16:11:
+>
+> > On Tue, 18 Aug 2009, Marius Storm-Olsen wrote:
+> > 
+> > > diff --git a/Makefile b/Makefile
+> > > +ifneq (,$(findstring Microsoft Visual Studio, $(INCLUDE)))
+> ...
+> > > +else
+> > >  ifneq (,$(findstring MINGW,$(uname_S)))
+> > >   pathsep = ;
+> > >   NO_PREAD = YesPlease
+> > 
+> > This means that gcc is never used when Visual C++ is available?  Hmm.
 > 
-> It could be, but the most annoying DWIM would be the "implicit save"
-> case, so that's the one I'm testing. One could test both, but that'd
-> probably be a bit overkill.
+> Yes it does :)
 
-But if your proposal to accept any "-*' is not accepted, then it is not
-testing your added code at all, is it? Even without the rest of the
-patch, the test would pass.
+As you know, I do not own a Windows computer.  On the Windows computer I 
+am allowed to use sometimes to test Git and my day-time project, the 
+Express edition was installed, but it was never registered, so it is not 
+usable, and I would not want to use it anyway.
 
--Peff
+So this change would break my setup.
+
+> I was actually going to replace it with a USE_MSVC variable check 
+> instead though, so you'd rather do 'make USE_MSVC=1'
+
+That's much nicer, especially since you can put that into config.mak.
+
+> > > diff --git a/compat/msvc.h b/compat/msvc.h
+> > > index 6071565..a9d5f7f 100644
+> > > --- a/compat/msvc.h
+> > > +++ b/compat/msvc.h
+> > > @@ -10,50 +10,120 @@
+> > >  
+> > >  /*Configuration*/
+> > >  
+> > > +#ifndef NO_PREAD
+> > > #define NO_PREAD
+> > > +#endif
+> > 
+> > Why?  You now have the stuff in two places.  If you want to keep them 
+> > in compat/msvc.h to be able to generate .vcproj files, I'd rather not 
+> > have them duplicated in the Makefile.
+>
+> The changes to the msvc.h where added just keep Frank's vcproj project 
+> working. I would have just nuked all that stuff in the msvc.h since the 
+> Makefile would just provide it for me anyways..
+
+So maybe you and Frank (and Pau) hash out what you want?
+
+Ciao,
+Dscho
