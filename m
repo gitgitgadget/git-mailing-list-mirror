@@ -1,90 +1,92 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Continue git clone after interruption
-Date: Wed, 19 Aug 2009 09:35:19 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908190921360.5594@intel-tinevez-2-302>
-References: <1250509342.2885.13.camel@cf-48> <alpine.DEB.1.00.0908171430010.4991@intel-tinevez-2-302> <vpqskfphe2k.fsf@bauges.imag.fr> <1250578735.2885.40.camel@cf-48> <alpine.LFD.2.00.0908181246470.6044@xanadu.home> <m3fxbpneqe.fsf@localhost.localdomain>
- <alpine.LFD.2.00.0908181537360.6044@xanadu.home> <alpine.DEB.1.00.0908190022090.8306@pacific.mpi-cbg.de> <alpine.LFD.2.00.0908181936130.6044@xanadu.home>
+Subject: Re: Simple commit mechanism for non-technical users
+Date: Wed, 19 Aug 2009 09:49:50 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908190940430.5594@intel-tinevez-2-302>
+References: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-174642320-1250667321=:5594"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Aug 19 09:35:31 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: D Sundstrom <sunds@peapod.net>
+X-From: git-owner@vger.kernel.org Wed Aug 19 09:50:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdfhh-0006Q8-Rr
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 09:35:30 +0200
+	id 1Mdfvk-0003Oy-2H
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Aug 2009 09:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751602AbZHSHfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 03:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbZHSHfV
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 03:35:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59795 "HELO mail.gmx.net"
+	id S1751674AbZHSHtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 03:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbZHSHtu
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 03:49:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48909 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751146AbZHSHfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 03:35:20 -0400
-Received: (qmail invoked by alias); 19 Aug 2009 07:35:21 -0000
+	id S1751543AbZHSHtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 03:49:50 -0400
+Received: (qmail invoked by alias); 19 Aug 2009 07:49:50 -0000
 Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp046) with SMTP; 19 Aug 2009 09:35:21 +0200
+  by mail.gmx.net (mp047) with SMTP; 19 Aug 2009 09:49:50 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19X3JArLBNXCJrjNiO8ZfWrgN8FbQnvRNUaCE6Iyn
-	KhGb1ZVmwUC0G2
+X-Provags-ID: V01U2FsdGVkX18otxgOlaUoMzw5M1TEFP3ghU2eYjv7eRZTqwobAI
+	z1mF1LJcuGbZ1Y
 X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <alpine.LFD.2.00.0908181936130.6044@xanadu.home>
+In-Reply-To: <ef72456d0908180905u18593b63tdc850b8552db30b9@mail.gmail.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126512>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323329-174642320-1250667321=:5594
-Content-Type: TEXT/PLAIN; charset=VISCII
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126513>
 
 Hi,
 
-On Tue, 18 Aug 2009, Nicolas Pitre wrote:
+On Tue, 18 Aug 2009, D Sundstrom wrote:
 
-> On Wed, 19 Aug 2009, Johannes Schindelin wrote:
+> I use git to manage all project artifacts, including documentation, 
+> proposals, presentations, and so on.
 > 
-> > But seriously, I miss a very important idea in this discussion: we 
-> > control the Git source code.  So we _can_ add a upload_pack feature 
-> > that a client can ask for after the first failed attempt.
+> However, I have a hard time convincing non-technical staff to learn
+> enough about git or to take the time to go through the effort of
+> committing changes to a repository.  So the steady stream of email
+> attachments with "Acme Specification v3" or "final final spemco
+> proprosal" continues.
 > 
-> Indeed.  So what do you think about my proposal?  It was included in my 
-> first reply to this thread.
+> I'd hoped there was a simple web interface that would allow a user to
+> upload and commit a file to a repository, but I've had no luck finding
+> one.  (I've used cgit for browsing, but it is read-only).
+> 
+> Is anyone aware of a simple way I can have my non-technical users
+> manage their documents against a git repository?  Ideally this would
+> involve no installation of software on their machine (unless it were
+> compelling, for example, the Finder plugin for SVN on the mac was a
+> great tool for these users; or at least those on a mac...)
 
-Did you not talk about an extension of the archive protocol?  That's not 
-what I meant.  The archive protocol can be disabled for completely 
-different reasons than to prevent restartable clones.
+You contradict yourself here, the Finder plugin needs to be installed, and 
+SVN, too.
 
-But you brought up an important point: shallow repositories.
+As for your problem: I think you need a specific solution.  If I 
+understand you correctly, files which have the same name (but maybe a 
+suffix "v3" or similar before the extension), and they should be 
+committed to a Git repository.
 
-Now, the problem, of course, is that if you cannot even get a single ref 
-(shallow'ed to depth 0 -- which reminds me: I think I promised to fix 
-that, but I did not do that yet) due to intermittent network failures, you 
-are borked, as you said.
+Then you have a bunch of people who do not want to care about learning 
+proper version control.
 
-But here comes an idea: together with Nguy­n's sparse series, it is 
-conceivable that we support a shallow & narrow clone via the upload-pack 
-protocol (also making mithro happy).  The problem with narrow clones was 
-not the pack generation side, that is done by a rev-list that can be 
-limited to certain paths.  The problem was that we end up with missing 
-tree objects.  However, if we can make a sparse checkout, we can avoid 
-the problem.
+This is what I would do: write a very simple .cgi (I'd use Perl for that), 
+which has a file upload button, takes the name as commit message (or maybe 
+adds a field where you can type in a commit message, but that might be 
+asking your bunch of Aunt Tillies too much), strips the "v3"-like suffixes 
+($name =~ s/[-_ ]*v\d+(\.[A-Za-z0-9]{1,5})$/$1/;), set author and 
+committer information according to IP (and refuse if the IP is not in the 
+internal mapping) and commit.
 
-Note: this is not well thought-through, but just a brainstorm-like answer 
-to your ideas.
+The whole script would probably not be larger than 50 lines, and require 
+Git to be installed on the server.
+
+The bigger problem is that your Aunt Tillies most likely would not love 
+gitweb, so you need a fancier interface.
 
 Ciao,
-Dscho "who should shut up now and get some work done instead ;-)"
-
---8323329-174642320-1250667321=:5594--
+Dscho
