@@ -1,56 +1,62 @@
-From: Marco Gualtieri <mgualt@math.utoronto.ca>
-Subject: gitweb and symbolic links
-Date: Wed, 19 Aug 2009 21:15:10 -0400
-Message-ID: <2367E9DF-6FB1-48E6-AC9A-73E84C9D54E1@math.utoronto.ca>
-Mime-Version: 1.0 (Apple Message framework v935.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Seba Illingworth <seba.illingworth@gmail.com>
+Subject: Re: difftool, open all diff files immediately, not in serial
+Date: Thu, 20 Aug 2009 01:39:23 +0000 (UTC)
+Message-ID: <loom.20090820T033212-722@post.gmane.org>
+References: <loom.20090804T204107-117@post.gmane.org> <200908042347.48705.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 20 03:39:07 2009
+X-From: git-owner@vger.kernel.org Thu Aug 20 03:40:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdwcK-0000vQ-2n
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 03:39:04 +0200
+	id 1MdwdX-0001II-5D
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 03:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753834AbZHTBiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 21:38:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbZHTBiw
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 21:38:52 -0400
-Received: from mail.math.toronto.edu ([128.100.68.68]:46045 "EHLO
-	mail.math.toronto.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753693AbZHTBiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 21:38:51 -0400
-X-Greylist: delayed 1420 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Aug 2009 21:38:51 EDT
-Received: from mail.math.toronto.edu (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id E28F41180D5
-	for <git@vger.kernel.org>; Wed, 19 Aug 2009 21:15:11 -0400 (EDT)
-Received: from [192.168.2.38] (bas15-toronto63-1279272099.dsl.bell.ca [76.64.36.163])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: mgualt)
-	by mail.math.toronto.edu (Postfix) with ESMTP id 9A1AD1180CB
-	for <git@vger.kernel.org>; Wed, 19 Aug 2009 21:15:11 -0400 (EDT)
-X-Mailer: Apple Mail (2.935.3)
-X-PMX-Version: 5.5.4.371499, Antispam-Engine: 2.7.1.369594, Antispam-Data: 2009.8.20.10317
-X-PMX-Spam: Gauge=IIIIIIII, Probability=8%, Report='
- BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_300_399 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, RDNS_BROADBAND 0, RDNS_POOLED 0, RDNS_SUSP 0, RDNS_SUSP_SPECIFIC 0, TO_NO_NAME 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MSGID_APPLEMAIL 0, __RDNS_BROADBAND_2 0, __RDNS_POOLED_5 0, __SANE_MSGID 0, __TO_MALFORMED_2 0'
+	id S1753910AbZHTBju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 21:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753905AbZHTBjt
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 21:39:49 -0400
+Received: from lo.gmane.org ([80.91.229.12]:53939 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752497AbZHTBjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 21:39:49 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1Mdwd1-0001Af-8y
+	for git@vger.kernel.org; Thu, 20 Aug 2009 03:39:48 +0200
+Received: from 125-239-38-1.jetstream.xtra.co.nz ([125.239.38.1])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 03:39:47 +0200
+Received: from seba.illingworth by 125-239-38-1.jetstream.xtra.co.nz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 03:39:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 125.239.38.1 (Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US) AppleWebKit/530.5 (KHTML, like Gecko) Chrome/2.0.172.39 Safari/530.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126602>
 
-Hello,
+Thomas Rast <trast <at> student.ethz.ch> writes:
+> I posted the script below on IRC the other week[1] in reply to someone
+> looking for a way to do this for 'meld'.  I'm not sure this is the
+> *fastest* way to do this, but I'm at least trying to take a few
+> shortcuts...
 
-I am wondering about a possibly easy bug which you may be aware of.
+I've come up with a simple script that diffs the files in a background task:
 
-For some reason if I place a symbolic link in a directory under the  
-project root,  gitweb is no longer able to find the project.  I was  
-looking through the .cgi file but I don't know enough perl to fix the  
-problem myself.
+  for name in $(git diff --name-only $1); do git difftool $1 $name & done
 
-Let me know if this makes sense.
-Cheers
-Marco
+Then aliased the script for usage:
+
+  git diffall [--staged]
+
+Being a bash newbie, I'd appreciate any feedback on what seems to be 
+a simple solution...??
