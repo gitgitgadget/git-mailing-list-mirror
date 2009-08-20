@@ -1,58 +1,59 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH next] t7407: use 'cut' utility rather than bash's substring expansion notation
-Date: Wed, 19 Aug 2009 20:24:52 -0500
-Message-ID: <QHfHFS_5JGiL-O8GMDfdfscFUdxV1xVObzr6e5LPleagDRd7bCg8I9YUwL9xkbgM64vyf_EVLLg@cipher.nrlssc.navy.mil>
+Subject: [PATCH] git-compat-util.h: remove superfluous test for __sun__
+Date: Wed, 19 Aug 2009 20:27:08 -0500
+Message-ID: <ZUMLsyRzm8CaPjRJDxp6IuUm1_m9f1dLWBj6Z5IUF8KBVpNTSnESx0ur_aqSCnNRKOLfSdPh12w@cipher.nrlssc.navy.mil>
 Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 20 03:25:31 2009
+X-From: git-owner@vger.kernel.org Thu Aug 20 03:27:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MdwPC-0005A1-HG
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 03:25:31 +0200
+	id 1MdwRC-0005w2-2g
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 03:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbZHTBZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Aug 2009 21:25:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbZHTBZS
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 21:25:18 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:55479 "EHLO
+	id S1753197AbZHTB10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Aug 2009 21:27:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752954AbZHTB10
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Aug 2009 21:27:26 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:57504 "EHLO
 	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549AbZHTBZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Aug 2009 21:25:17 -0400
-Received: by mail.nrlssc.navy.mil id n7K1P9Pj014125; Wed, 19 Aug 2009 20:25:09 -0500
-X-OriginalArrivalTime: 20 Aug 2009 01:25:08.0721 (UTC) FILETIME=[0E1C7610:01CA2135]
+	with ESMTP id S1752738AbZHTB1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Aug 2009 21:27:25 -0400
+Received: by mail.nrlssc.navy.mil id n7K1RNV5016373; Wed, 19 Aug 2009 20:27:24 -0500
+X-OriginalArrivalTime: 20 Aug 2009 01:27:22.0817 (UTC) FILETIME=[5E09E310:01CA2135]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126600>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-The substring expansion notation is a bashism that we have not so far
-adopted.  There is precedence for using the 'cut' utility for extracting
-a substring.  So do so here.
+This 'ifndef' macro is entered only when __sun__ is not defined.  This test
+will never fail since it is located inside of the 'else' branch of an 'if'
+macro which tests whether __sun__ is defined.  It has had no effect since
+the merge at 436f66b7.
 
 Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
- t/t7407-submodule-foreach.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ git-compat-util.h |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
-index de1730d..44ea8ac 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -207,8 +207,8 @@ cat > expect <<EOF
-  $nested2sha1 nested1/nested2 (heads/master)
-  $nested3sha1 nested1/nested2/nested3 (heads/master)
-  $submodulesha1 nested1/nested2/nested3/submodule (heads/master)
-- $sub1sha1 sub1 (${sub1sha1:0:7})
-- $sub2sha1 sub2 (${sub1sha1:0:7})
-+ $sub1sha1 sub1 ($(echo $sub1sha1 | cut -c 1-7))
-+ $sub2sha1 sub2 ($(echo $sub1sha1 | cut -c 1-7))
-  $sub3sha1 sub3 (heads/master)
- EOF
- 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9f941e4..71b5acb 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -57,10 +57,8 @@
+ # endif
+ #elif !defined(__APPLE__) && !defined(__FreeBSD__)  && !defined(__USLC__) && !defined(_M_UNIX) && !defined(sgi)
+ #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
+-#ifndef __sun__
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+ #endif
+-#endif
+ #define _ALL_SOURCE 1
+ #define _GNU_SOURCE 1
+ #define _BSD_SOURCE 1
 -- 
 1.6.4
