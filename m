@@ -1,58 +1,76 @@
 From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH] Fix symlink __stdcall problem at MSVC
-Date: Thu, 20 Aug 2009 22:16:50 +0800
-Message-ID: <1976ea660908200716u6643ff3fgd30f6cd859260316@mail.gmail.com>
-References: <1250774680-4720-1-git-send-email-lznuaa@gmail.com>
-	 <alpine.DEB.1.00.0908201546500.4719@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 16:17:04 2009
+Subject: [PATCH v2] Fix symlink __stdcall problem at MSVC
+Date: Thu, 20 Aug 2009 22:21:12 +0800
+Message-ID: <1250778072-4324-1-git-send-email-lznuaa@gmail.com>
+Cc: Frank Li <lznuaa@gmail.com>
+To: git@vger.kernel.org, msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Thu Aug 20 16:21:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Me8Ro-0004yU-SG
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 16:17:01 +0200
+	id 1Me8W1-0007IL-DG
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 16:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754361AbZHTOQv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 10:16:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754331AbZHTOQv
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 10:16:51 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:63609 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754259AbZHTOQu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Aug 2009 10:16:50 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so1746693qwh.37
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 07:16:52 -0700 (PDT)
+	id S1754490AbZHTOVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 10:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754484AbZHTOVM
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 10:21:12 -0400
+Received: from rv-out-0506.google.com ([209.85.198.227]:43005 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754377AbZHTOVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 10:21:11 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so1600001rvb.1
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 07:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2x9sT/7vf1zm4rFoBTNRv5upKjFwKdWn1fBGwp11pXw=;
-        b=QvbqxqpGZYNxtDJk6zUuDdcg9jC4LMobddfSiVLzpifbEwx5GH+jVxnkNCEnxc+qHM
-         EE+q7t5RflUX5Rl3woA9mSKvPytKjp9Ms84jwJfXi60M4E+/sSc8UpiSy9670oc4eJEX
-         oe/x24bbsDfr6NgLaL8c4BZGc7UOwXsOW3FxY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=8F4hWBJo5JBu6mDSUvSabjj6+UP9HlL6U5r0peB3mW0=;
+        b=aY11SerIZqS5ByR0/JhSx1J582f4JDwHchVzJNvUQyHnAThPeUxOG3q16Sodwg6uKM
+         G6JD18DFc6NQn8WmbQ2Fp9Keisvkts4TwevmDt2Fk4YFIP4D79LT9aiYxzf1IzzUVnM/
+         lJWvK4+tk8qlB6s4rgLF+S282tDqDtO2j24WE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iLwvEoY411IBr7wz7DU92Lagj2jZYXbnwqw/kFDSPpM2VmOGwQ64hvsBJo/74o3qV7
-         DWfNHmZIawsRpfipeqddkB/TpFg5Tto+ga1SSMNhz+OZGEd0+NlRUUMORm7zsUazwsu6
-         egblFbpKJKTmhynT8ISOipdW+eZcC9slApQ8A=
-Received: by 10.224.25.6 with SMTP id x6mr7575910qab.30.1250777810544; Thu, 20 
-	Aug 2009 07:16:50 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0908201546500.4719@intel-tinevez-2-302>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=bd1BvYPC87uh0+P6Hgs7JqttmxjYyZGF5dV64+wBExPBgloTo6b9H17rf6rVaEIAkc
+         AkvKc+x4B5wE6AVt3EhjTNM4a7JzvC5C/roMAGmwax4qlCpMWz3rwPXumvpBfMG2YFaj
+         qtBEJc5buWoQYrIYDuOA1P0f+cD8VdOug+e7g=
+Received: by 10.141.29.16 with SMTP id g16mr4553413rvj.81.1250778073517;
+        Thu, 20 Aug 2009 07:21:13 -0700 (PDT)
+Received: from localhost ([58.38.115.215])
+        by mx.google.com with ESMTPS id g14sm943615rvb.5.2009.08.20.07.21.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 20 Aug 2009 07:21:12 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126643>
 
->
-> Like what? =A0Seems you did not paste my complete commit message.
->
-Yes, Sorry about this
+MSVC requires that __stdcall be between return value and function name.
+Further, all Win32 API definitions look like this:
+
+	TYPE WINAPI function_name...
+
+Signed-off-by: Frank Li <lznuaa@gmail.com>
+---
+ compat/mingw.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index fd642e4..4256243 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1421,7 +1421,7 @@ int link(const char *oldpath, const char *newpath)
+ 
+ int symlink(const char *oldpath, const char *newpath)
+ {
+-	typedef BOOL WINAPI (*symlink_fn)(const char*, const char*, DWORD);
++	typedef BOOL (WINAPI *symlink_fn)(const char*, const char*, DWORD);
+ 	static symlink_fn create_symbolic_link = NULL;
+ 	if (!create_symbolic_link) {
+ 		create_symbolic_link = (symlink_fn) GetProcAddress(
+-- 
+1.6.4.msysgit.0
