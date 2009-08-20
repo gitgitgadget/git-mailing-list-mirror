@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [RFC PATCH v4 16/19] unpack-trees(): ignore worktree check outside checkout area
-Date: Thu, 20 Aug 2009 20:47:10 +0700
-Message-ID: <1250776033-12395-17-git-send-email-pclouds@gmail.com>
+Subject: [RFC PATCH v4 19/19] sparse checkout: inhibit empty worktree
+Date: Thu, 20 Aug 2009 20:47:13 +0700
+Message-ID: <1250776033-12395-20-git-send-email-pclouds@gmail.com>
 References: <1250776033-12395-1-git-send-email-pclouds@gmail.com>
  <1250776033-12395-2-git-send-email-pclouds@gmail.com>
  <1250776033-12395-3-git-send-email-pclouds@gmail.com>
@@ -19,119 +19,135 @@ References: <1250776033-12395-1-git-send-email-pclouds@gmail.com>
  <1250776033-12395-14-git-send-email-pclouds@gmail.com>
  <1250776033-12395-15-git-send-email-pclouds@gmail.com>
  <1250776033-12395-16-git-send-email-pclouds@gmail.com>
+ <1250776033-12395-17-git-send-email-pclouds@gmail.com>
+ <1250776033-12395-18-git-send-email-pclouds@gmail.com>
+ <1250776033-12395-19-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 20 15:49:43 2009
+X-From: git-owner@vger.kernel.org Thu Aug 20 15:49:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Me81N-0007ZS-7k
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 15:49:41 +0200
+	id 1Me81Q-0007ZS-8Y
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 15:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754692AbZHTNss convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 09:48:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754689AbZHTNss
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 09:48:48 -0400
+	id S1754716AbZHTNtL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 09:49:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754697AbZHTNtK
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 09:49:10 -0400
 Received: from rv-out-0506.google.com ([209.85.198.228]:44339 "EHLO
 	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754494AbZHTNsr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 09:48:47 -0400
+	with ESMTP id S1754702AbZHTNtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 09:49:07 -0400
 Received: by rv-out-0506.google.com with SMTP id f6so1591323rvb.1
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 06:48:49 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 06:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=B8liftl3B9VHc0MGYgV/4OilsuWvoBTBZzSPE5uXncI=;
-        b=HfpaFrb7dkeVKdNfjEYbxk/hEP+BZrK9Oh9QlCd6MU6raWTl8a3nx43r6HKHrwNPS+
-         pAT27if1bwhoQVRuoOdsHY1gjFf60C01pOQM/F9KqVbJxVHAMH12/SuWmpANDnkYwS5A
-         jt+6W/d4dkqGRS9TRCIBusFWJRc6+FAYpb2Oc=
+        bh=MkPVgGNyGuB0vkiTZrOV9VSBq2flXmIJgN2LzFs50E0=;
+        b=JW/eFq2bXhztMTKnPVFRAw6cXqy0YNp20nIH6SGsz0w246B4Q676hBPBSTp/mPVfGx
+         cbHMGu7nzTNY2Q6JSE5mSvzh1WeyWLbLWq1b4tgpsIb+rVwubGeWT1PGk82yatDKRYNA
+         p0oZyOMrL5OjKk8ozABHVow/fY0z/iXT3wuhg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=DJqW3qtdobei35osIalwTw01FW08OuYnOYcjNXt7jloXWZFDHiQyqaf7CvrcGxxPRp
-         5W2knB2B1kLcTbFL4GXPhX9wZx2t/EtOhDJC7g6fcYQgTpEELQqHwsYHYglQFXf8zU2I
-         qEN5rVfw84MqPtLEOQqLxa3oj8+1H/UnZKFPg=
-Received: by 10.141.51.5 with SMTP id d5mr4718154rvk.172.1250776129744;
-        Thu, 20 Aug 2009 06:48:49 -0700 (PDT)
+        b=jVCrQfszm0pK25ZWSqyJK0sVWT9GfOOmH4A3zTTovw+PsSetfGDm3+8GtfzK23zRbo
+         n8QjGqHp2xH/jSI/b0rsMbUhIkeWSW3K2IdtlJRH3rDYYmWl5p1aXghC53Xes6aoGfNI
+         cWVi6Bv6oAXMQnS4/J2VqNK2crUwU5vmzPJ28=
+Received: by 10.140.148.15 with SMTP id v15mr4000217rvd.22.1250776149781;
+        Thu, 20 Aug 2009 06:49:09 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.241.222])
-        by mx.google.com with ESMTPS id b39sm7218810rvf.20.2009.08.20.06.48.46
+        by mx.google.com with ESMTPS id c20sm2156063rvf.1.2009.08.20.06.49.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 Aug 2009 06:48:48 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 20 Aug 2009 20:48:43 +0700
+        Thu, 20 Aug 2009 06:49:09 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 20 Aug 2009 20:49:03 +0700
 X-Mailer: git-send-email 1.6.3.GIT
-In-Reply-To: <1250776033-12395-16-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1250776033-12395-19-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126638>
 
-verify_absent() and verify_uptodate() are used to ensure worktree
-is safe to be updated, then CE_REMOVE or CE_UPDATE will be set.
-=46inally check_updates() bases on CE_REMOVE, CE_UPDATE and the
-recently added CE_WT_REMOVE to update working directory accordingly.
-
-The entries that are checked may eventually be left out of checkout
-area (done later in apply_sparse_checkout()). We don't want to update
-outside checkout area. This patch teaches Git to assume "good",
-skip these checks when it's sure those entries will be outside checkout
-area, and clear CE_REMOVE|CE_UPDATE that could be set due to this
-assumption.
+The way sparse checkout works, users may empty their worktree
+completely, because of non-matching sparse-checkout spec, or empty
+spec. I believe this is not desired. This patch makes Git refuse to
+produce such worktree.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- unpack-trees.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+ t/t1009-read-tree-sparse-checkout.sh |   10 +++-------
+ unpack-trees.c                       |    7 +++++++
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
+diff --git a/t/t1009-read-tree-sparse-checkout.sh b/t/t1009-read-tree-s=
+parse-checkout.sh
+index 2192f5a..62246db 100755
+--- a/t/t1009-read-tree-sparse-checkout.sh
++++ b/t/t1009-read-tree-sparse-checkout.sh
+@@ -55,20 +55,16 @@ test_expect_success 'read-tree --no-sparse-checkout=
+ with empty .git/info/sparse-
+ 	test -f sub/added
+ '
+=20
+-cat >expected.swt <<EOF
+-S init.t
+-S sub/added
+-EOF
+ test_expect_success 'read-tree with empty .git/info/sparse-checkout' '
+ 	git config core.sparsecheckout true &&
+ 	echo > .git/info/sparse-checkout &&
+-	git read-tree -m -u HEAD &&
++	test_must_fail git read-tree -m -u HEAD &&
+ 	git ls-files --stage > result &&
+ 	test_cmp expected result &&
+ 	git ls-files -t > result &&
+ 	test_cmp expected.swt result &&
+-	test ! -f init.t &&
+-	test ! -f sub/added
++	test -f init.t &&
++	test -f sub/added
+ '
+=20
+ cat >expected.swt <<EOF
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 2d8ecb7..72743b3 100644
+index 72743b3..80ae2a0 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -505,6 +505,14 @@ int unpack_trees(unsigned len, struct tree_desc *t=
-, struct unpack_trees_options
- 				ret =3D -1;
- 				goto done;
- 			}
-+			/*
-+			 * Merge strategies may set CE_UPDATE|CE_REMOVE outside checkout
-+			 * area as a result of ce_skip_worktree() shortcuts in
-+			 * verify_absent() and verify_uptodate(). Clear them.
-+			 */
-+			if (ce_skip_worktree(ce))
-+				ce->ce_flags &=3D ~(CE_UPDATE | CE_REMOVE);
-+
- 		}
+@@ -498,6 +498,7 @@ int unpack_trees(unsigned len, struct tree_desc *t,=
+ struct unpack_trees_options
  	}
 =20
-@@ -577,6 +585,8 @@ static int verify_uptodate_1(struct cache_entry *ce=
-,
- static int verify_uptodate(struct cache_entry *ce,
- 			   struct unpack_trees_options *o)
- {
-+	if (!o->skip_sparse_checkout && will_have_skip_worktree(ce, o))
-+		return 0;
- 	return verify_uptodate_1(ce, o, ERRORMSG(o, not_uptodate_file));
- }
+ 	if (!o->skip_sparse_checkout) {
++		int empty_worktree =3D 1;
+ 		for (i =3D 0;i < o->result.cache_nr;i++) {
+ 			struct cache_entry *ce =3D o->result.cache[i];
 =20
-@@ -776,6 +786,8 @@ static int verify_absent_1(struct cache_entry *ce, =
-const char *action,
- static int verify_absent(struct cache_entry *ce, const char *action,
- 			 struct unpack_trees_options *o)
- {
-+	if (!o->skip_sparse_checkout && will_have_skip_worktree(ce, o))
-+		return 0;
- 	return verify_absent_1(ce, action, o, ERRORMSG(o, would_lose_untracke=
-d));
- }
+@@ -512,8 +513,14 @@ int unpack_trees(unsigned len, struct tree_desc *t=
+, struct unpack_trees_options
+ 			 */
+ 			if (ce_skip_worktree(ce))
+ 				ce->ce_flags &=3D ~(CE_UPDATE | CE_REMOVE);
++			else
++				empty_worktree =3D 0;
 =20
+ 		}
++		if (o->result.cache_nr && empty_worktree) {
++			ret =3D unpack_failed(o, "Sparse checkout leaves no entry on workin=
+g directory");
++			goto done;
++		}
+ 	}
+=20
+ 	o->src_index =3D NULL;
 --=20
 1.6.3.GIT
