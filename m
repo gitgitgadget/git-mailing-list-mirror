@@ -1,96 +1,125 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: [PATCH 6/6 (v4)] support for path name caching in rev-cache
-Date: Fri, 21 Aug 2009 01:22:35 +0200
-Message-ID: <c77435a80908201622o7d69681ftda0ca63c5a915f4b@mail.gmail.com>
-References: <op.uys3qwlmtdk399@sirnot.private>
-	 <alpine.LFD.2.00.0908172235360.6044@xanadu.home>
-	 <c77435a80908180431k2f91e1ffye25aa8895908ddb7@mail.gmail.com>
-	 <alpine.LFD.2.00.0908182313100.6044@xanadu.home>
-	 <c77435a80908200543h74fdb07dm7f30cee4fedef8c5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make 'diff C^!' show the same diff as 'show C'
+Date: Thu, 20 Aug 2009 16:31:25 -0700
+Message-ID: <7vocqanjua.fsf@alter.siamese.dyndns.org>
+References: <86d1201d8adf53c1f48c0f3526d8e81475b18244.1250806019.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 21 01:22:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Abhijit Menon-Sen <ams@toroid.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Aug 21 01:31:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeGxx-0002xh-UX
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 01:22:46 +0200
+	id 1MeH6e-0005h5-DZ
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 01:31:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755515AbZHTXWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 19:22:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755502AbZHTXWg
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 19:22:36 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:31869 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755490AbZHTXWf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 19:22:35 -0400
-Received: by ey-out-2122.google.com with SMTP id 22so106787eye.37
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 16:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AiWbzk+4Hf9z9Tt7CdtuAKxefA2TcB1hcirJEoOkSZI=;
-        b=wkRDA+XeSytVcwM+HjkIrAGp1wYamqDFuY146iBWAbDdZNKAVvqq1bDHlvA+MkWxjp
-         ACh9Ilk+5GHNuxmTATl/c/0qgplkYsyGM5wybK3Xnlom7BPkWY0OTABD9CIq+8eoezdJ
-         /TWNSjVf3FKAJ0kPdoCzisHkc8aKDWOVFwYqY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vWXbeZAGbzcDxelhL4pegbxd3VoAKCHqRn3Clt8fEBkCk2GzjF7Esaz/0mEtVJE2xi
-         zWBiTZt3pbEbZDGtkpRvaF8F4U/QwFsXFb/1CbCXh3DdIhLDg/KgTjlrVa5mEq8xveI0
-         GjA1mxiZks2ehCAKPwGRojGtwZUYVUquHD3XI=
-Received: by 10.216.1.202 with SMTP id 52mr80325wed.15.1250810555675; Thu, 20 
-	Aug 2009 16:22:35 -0700 (PDT)
-In-Reply-To: <c77435a80908200543h74fdb07dm7f30cee4fedef8c5@mail.gmail.com>
+	id S932093AbZHTXbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 19:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754596AbZHTXbf
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 19:31:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40716 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754117AbZHTXbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 19:31:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 918C512806;
+	Thu, 20 Aug 2009 19:31:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=16LoM2kDgmSBQRB+/rDT0U6SB40=; b=PWw9xE
+	GWDFz1MVKVQpmea11mJ/cZmlNVzUWFD1fW2PYNu1yVd68MhVMIIslY0gfO35ef21
+	DzB1ZVQ87Zq2/YlKC1dafmDO807PUOU3A6qaUrTcSl1M/cMBQ46CQiNJfTXCq9qT
+	qesLFHZmXxPBwFPg70YOTU+/Fo+FIfDhQBSyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qTyw5ocEPoRRBbMfyIypMT7dkxGflNt9
+	o99kF1i3YEQYW2Kv7zNSD8Bw5h606fVgG32h00IUJ+i7OpErelzdDlvhuLBjXFJg
+	yHnzmK1peo+wg10WQAHEHkv9WpUXTifko0FElZN8Nf4PWjDkEJCm1Wei8OcvG60I
+	MfKlbads5Bs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53C4612803;
+	Thu, 20 Aug 2009 19:31:31 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63788127FF; Thu, 20 Aug
+ 2009 19:31:26 -0400 (EDT)
+In-Reply-To: <86d1201d8adf53c1f48c0f3526d8e81475b18244.1250806019.git.trast@student.ethz.ch> (Thomas Rast's message of "Fri\, 21 Aug 2009 00\:10\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 974A1366-8DE1-11DE-97EB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126661>
 
-Ok we actually have a small problem, semi-related to the object
-listing.  By default rev-list will list everything not seen in each
-tree, whereas rev-cache will only list object introduced in a given
-commit.  This becomes problematic if you have two different files with
-the same content in the same tree: rev-cache will show the name of the
-youngest file; vanilla rev-list will list the name soonest encountered
-in the tree (which can even change if, e.g., a subdir is renamed so as
-to be list in a different order).
+Thomas Rast <trast@student.ethz.ch> writes:
 
-In fact, even if they're not in the same tree we could have a similar
-problem.  Commits are stored topologically in cache slices, so output
-is always in topo order.  If the same object is introduced in parallel
-branches under different names, the outputted name with `rev-list
---all --objects` (vanilla) could be different from `rev-list --all
---objects` (cached) could be different from `rev-list --all
---topo-order --objects`.
+> * If C has no parents, setup_revision() turns C^! into simply C.  This
+>   meant that 'git diff C^!' compared the current worktree to C, which
+>   is certainly not what the user asked for.
+>
+> * Otherwise setup_revision puts C itself last, i.e., the rev.pending
+>   are ^C^1 ... ^C^N C.  So the first revision is uninteresting and in
+>   the case of exactly two parents, the symmetric difference revspec
+>   (diff A...B) case fired, and compared C only to C^1 (instead of
+>   showing a combined diff).
 
-This isn't feasably changable in rev-cache, as a) the cached position
-(and hence final output order) is effectively unrelated to tree
-structure, and b) commits _have_ to be ordered topologically for
-rev-cache to function.
+I actually have a vague recollection that this ugly syntax C^! (and I am
+entitled to call it ugly as it was my invention) was advertised as a way
+to get "diff C^..C", not the combined diff, iow, this could be deliberate
+and people may depend on it.
 
-The descrepency strikes me as something of a non-issue with
-pack-objects' deltafication, as the object will fit with either of its
-names.  It will mean that the (already sorta finicky) object names
-won't have garuanteed consistency between cached/non-cached calls to
-rev-list.  This is something of a corner case and dosn't strike me as
-a huge issue, but I figured I should consult you all before presuming
-things about git's interface.
+In that light, I would say the first one (showing the root commit as root)
+may be a good change, but the latter one is moderately iffy.
 
- - Nick
+> @@ -292,6 +310,17 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>  	/* Otherwise, we are doing the usual "git" diff */
+>  	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
+>  
+> +	for (i = 1; i < argc; i++) {
+> +		if (prefixcmp(argv[i], "--")) {
+> +			if (strstr(argv[i], "..."))
+> +				mode = DIFF_MODE_SYMMETRIC;
+> +			else if (strstr(argv[i], "^!"))
+> +				mode = DIFF_MODE_SHOW;
+> +		} else if (!strcmp(argv[i], "--")) {
+> +			break;
+> +		}
+> +	}
+> +
+
+This is too ugly beyond words.  
+
+We already mark the left side commit "..." with SYMMETRIC_LEFT bit, so you
+should be able to detect it from the setup_revisions() result.  If we were
+to formerly add some special meaning (other than being a short-hand of
+^C^n C) to the ugly C^! syntax, I would suggest marking the result of in a
+similar way to allow you to detect it from the result.
+
+But I do mean moderately strong negativeness when I say "if we _were_"
+above.
+
+As far as I recall, there were only two reasons C^! was invented for
+(actually, one that was invented for, and another that was found to be
+useful).
+
+One was so that you can say "The traversal should stop around this commit,
+but I want the commit itself to be included in the result".
+
+	$ git log v1.6.3^! v1.6.3.1
+
+This is much less useful than it used to be back when C^! was invented, as
+we can ask for --boundary these days.
+
+The other utility later found was "to view diff with its first parent".  I
+think it is a useful mode of operation, and we should add a simpler way to
+ask for it to "git show", as people often ask to view a merge not in the
+combined way, but a simple diff relative to the merged-to commit, to get
+an overview of the work done by the side branch.
+
+So if anything, I'm actually for deprecating C^! syntax and removing it
+before we hit 1.7.0.
