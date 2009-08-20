@@ -1,94 +1,79 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: question concerning branches
-Date: Thu, 20 Aug 2009 09:33:24 +0200
-Message-ID: <4A8CFC44.8050707@op5.se>
-References: <4a8c4ece@wupperonline.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH next] t7407: use 'cut' utility rather than bash's
+ substring expansion notation
+Date: Thu, 20 Aug 2009 00:34:10 -0700
+Message-ID: <7vskfnq6q5.fsf@alter.siamese.dyndns.org>
+References: <QHfHFS_5JGiL-O8GMDfdfscFUdxV1xVObzr6e5LPleagDRd7bCg8I9YUwL9xkbgM64vyf_EVLLg@cipher.nrlssc.navy.mil> <200908200856.30359.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Ingo Brueckl <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Thu Aug 20 09:33:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>,
+	Brandon Casey <drafnel@gmail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Aug 20 09:34:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Me29X-0000Dv-G8
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 09:33:44 +0200
+	id 1Me2AR-0000cP-36
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 09:34:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753953AbZHTHdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 03:33:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbZHTHdb
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 03:33:31 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:35089 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753953AbZHTHd3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Aug 2009 03:33:29 -0400
-Received: from source ([209.85.219.223]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKSoz8SJtNBYg1wn1eXK5FGmuu2Fgo6tfv@postini.com; Thu, 20 Aug 2009 00:33:31 PDT
-Received: by ewy23 with SMTP id 23so5041991ewy.32
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 00:33:27 -0700 (PDT)
-Received: by 10.210.136.15 with SMTP id j15mr6653988ebd.21.1250753607901;
-        Thu, 20 Aug 2009 00:33:27 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id 7sm1022792eyg.45.2009.08.20.00.33.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 Aug 2009 00:33:27 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
-In-Reply-To: <4a8c4ece@wupperonline.de>
+	id S1753893AbZHTHeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 03:34:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbZHTHeV
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 03:34:21 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45219 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753371AbZHTHeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 03:34:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 502971157C;
+	Thu, 20 Aug 2009 03:34:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y2uK7TBeWPSa7wTSuA5At9s9phY=; b=U6UUGz
+	tqLFK2hDhxQFl63zz5rqO6AT/l5C/scYUkY1ihzOUtMYakUrcRDtMSqHGRA9j4un
+	X2zzIQQFFitZm4cSh+SbPR/wAYBqF/qRBhxF4n1J/abc1kAtsfMeYdUYRUdRtJ75
+	EDZV52W2DSXijNKgBXWNwKxFLtBjtrFq5hDaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LPDqf0m1nTAKYYBcfpZoBrTEf6oPgTBX
+	m54gZqXmfpvppKUV5Nc1w+NG/uD1DpySz8YAnxevZdHotUJcvti/ZRSOWVzi9ZYt
+	eaqt+5S8XOlZwAdp1cL8D5tTAYx2mg3M3+2GOxnG3KNpu9ao4X4Julnurm4nDF+H
+	MLJoTzKPJXA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 182C91157B;
+	Thu, 20 Aug 2009 03:34:17 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34A8A1157A; Thu, 20 Aug
+ 2009 03:34:12 -0400 (EDT)
+In-Reply-To: <200908200856.30359.johan@herland.net> (Johan Herland's message
+ of "Thu\, 20 Aug 2009 08\:56\:30 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DDD1677A-8D5B-11DE-BA44-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126611>
 
-Ingo Brueckl wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> This is one of the most useful features.
-> 
-> Wow. I'm sursprised to hear that, because I consider it at the moment as a
-> very strange one.
-> 
->> For example, it is an essential
->> part of supporting the workflow described here:
->>     http://gitster.livejournal.com/25892.html
-> 
-> Here is what I'd expect to do with git (described with my own words, not in
-> git commands):
-> 
-> 1. commit the quick fix to the release branch
-> 2. push this single commit to origin and master
-> 
-> Now that all branches have the commit a later push and pull should notice
-> this and "skip" it.
-> 
-> This leads to a second question I have. Assuming I have three patches in my
-> repo (#1, #2 and #3), is it possible to push only #2 (because it is a
-> quick fix) and later, maybe after I committed #4, the rest, i.e. #1, #2 and
-> #4?
-> 
+Johan Herland <johan@herland.net> writes:
 
-If they're on different branches, yes. If they're on the same branch, no.
-This is because a commit in git is named uniquely not only by its contents,
-but also by its ancestry.
+>> - $sub1sha1 sub1 (${sub1sha1:0:7})
+>> - $sub2sha1 sub2 (${sub1sha1:0:7})
+>> + $sub1sha1 sub1 ($(echo $sub1sha1 | cut -c 1-7))
+>> + $sub2sha1 sub2 ($(echo $sub1sha1 | cut -c 1-7))
+>
+> Typo (both in the original, and the patch), should be:
+> 	$sub2sha1 sub2 ($(echo $sub2sha1 | cut -c 1-7))
+>
+>>   $sub3sha1 sub3 (heads/master)
+>>  EOF
+>
+> Otherwise:
+>
+> Acked-by: Johan Herland <johan@herland.net>
 
-You can, however, run "git rebase --interactive" and re-order the commits
-before you push them, so that #2 becomes #1 and vice versa. Then you can
-push only #1 (the old #2) while leaving #2 (the old #1), #3 and #4 on
-your machine only. This involves knowing the commit identifier of #1
-though. Assuming it's "deadbeef", you can update the remote branch "foo"
-to hold your new commit by running the following command:
-
-  git push <remote> deadbeef:refs/heads/foo
-
-HTH
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Hmm, what does the command use to shorten these object names?  It may be
+safer and more correct to use "rev-parse --short" in case these object
+names were ambigous in their first 7 hexdigits.
