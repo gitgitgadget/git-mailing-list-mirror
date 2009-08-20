@@ -1,93 +1,111 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb and symbolic links
-Date: Thu, 20 Aug 2009 08:03:09 -0700 (PDT)
-Message-ID: <m3tz02mssz.fsf@localhost.localdomain>
-References: <2367E9DF-6FB1-48E6-AC9A-73E84C9D54E1@math.utoronto.ca>
+Subject: Re: [RFC PATCH v4 00/19] Sparse checkout
+Date: Thu, 20 Aug 2009 08:21:03 -0700 (PDT)
+Message-ID: <m3ocqamrz6.fsf@localhost.localdomain>
+References: <1250776033-12395-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-16be
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Marco Gualtieri <mgualt@math.utoronto.ca>
-X-From: git-owner@vger.kernel.org Thu Aug 20 17:03:25 2009
+To: =?utf-8?b?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?utf-8?b?YyBEdXk=?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 17:24:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Me9Ad-00041p-OA
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 17:03:20 +0200
+	id 1Me9UX-0005Fu-Mv
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 17:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582AbZHTPDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 11:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbZHTPDK
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 11:03:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:57008 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754461AbZHTPDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 11:03:09 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so26506fga.17
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 08:03:10 -0700 (PDT)
+	id S1754840AbZHTPVJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 11:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754772AbZHTPVH
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 11:21:07 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:44618 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754835AbZHTPVD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Aug 2009 11:21:03 -0400
+Received: by mail-fx0-f217.google.com with SMTP id 17so511941fxm.37
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 08:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=e3sO9O79vsk6yA1CPprGyZm005hi9kxWb68JQQRotyY=;
-        b=tXHqAuKMoWcaQGoHh8foJllS32lSfYaW5ckP4qjQ6rTroHMgpQJXmrcey3Pgaiugz1
-         TK1dRrmMGhLczf/awWbwUu2rLIv503xv8xcZIAz6DMWQhnERjqR5SQ2Fbc/K3vlDQb98
-         b43O5ONWF6zJl4ZUmgY7zX7j4SkIeAsGnToBI=
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=2hO2dpxfnoZRo0mXWwVPbVJGM/91pDNSBJwg5QG9GbI=;
+        b=vxldgnwrjQt2CpzOakRHJtgE1/V9QrwCFWM328XdWNI7zh+QcWwSBLzpFJ0oohann+
+         rJSRRx2GFYxaLaU6ogNcyp79pLkxlV+zYWAz/IPkW9meKi1j39kH6IMwkQKlX9u4cf9R
+         Lcz7hnG4nrxinRb0gjtSK7qxWNkoUjPEqab8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=KCv9Pgoy4rc5yxNrnRL5YMkNcUoLVD13o1AOyJ2crHn+ljfhHYaW9aRqlH7tBXvIWT
-         heOWRjlXh6SNX4eHtg3ztDbbyEtU8GJUXXnRlO97MCYA6DZC5gyDH3W+FJSf32ME+XuD
-         5GKtIcCLBCmKyfd430jAqaVywNzvvompOLeDM=
-Received: by 10.86.232.33 with SMTP id e33mr5170520fgh.71.1250780590334;
-        Thu, 20 Aug 2009 08:03:10 -0700 (PDT)
-Received: from localhost.localdomain (abvn197.neoplus.adsl.tpnet.pl [83.8.211.197])
-        by mx.google.com with ESMTPS id 3sm390276fge.11.2009.08.20.08.03.09
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=kDS9wve0LzVbYiSyRGuVa11qDCAq331+3SzTsGYnGbf+FqO0oU513/gJ0Y8zhYnvP1
+         DDWJ3PzkxqU455oHfW+V2dBFPxN/TEVC8DFe01bYx8WJNBiXhsNDtVHeFx9P1HGAKyJN
+         rzt8vBJxlMe8WrLDygFpZ+1I2MbrkLbUl6gG8=
+Received: by 10.103.64.16 with SMTP id r16mr3092031muk.90.1250781664134;
+        Thu, 20 Aug 2009 08:21:04 -0700 (PDT)
+Received: from localhost.localdomain (abwr82.neoplus.adsl.tpnet.pl [83.8.241.82])
+        by mx.google.com with ESMTPS id j6sm5518609mue.31.2009.08.20.08.21.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 Aug 2009 08:03:09 -0700 (PDT)
+        Thu, 20 Aug 2009 08:21:03 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7KF39Hk030776;
-	Thu, 20 Aug 2009 17:03:09 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7KFL2E5031009;
+	Thu, 20 Aug 2009 17:21:02 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7KF38Nr030772;
-	Thu, 20 Aug 2009 17:03:08 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7KFL1vD031006;
+	Thu, 20 Aug 2009 17:21:01 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <2367E9DF-6FB1-48E6-AC9A-73E84C9D54E1@math.utoronto.ca>
+In-Reply-To: <1250776033-12395-1-git-send-email-pclouds@gmail.com>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126646>
 
-Marco Gualtieri <mgualt@math.utoronto.ca> writes:
+Nguy=FE=FF=1E=C5n Th=FE=FF
+> Welcome to the fourth round of sparse checkout this year, dubbed "The
+> mummy^W^W^W^W^Wno-checkout returns", although the bit now comes under
+> a new name "skip-worktree" [1]. This series has two parts: sparse
+> worktree and sparse checkout. Details will be given below.
+>=20
+> For brave users of this series: I have pushed it to my sparse-checkou=
+t
+> branch [2] so you can just clone it and test away. Visible changes:
+>=20
+>  - the spec is now .git/info/sparse-checkout
+>  - the spec is positive matching, that is it matches what _is_ in
+>    worktree, not what is out of worktree like the last series
+>  - you need to set core.sparsecheckout no additional command argument
+>    is needed.
+[...]
 
-> Hello,
-> 
-> I am wondering about a possibly easy bug which you may be aware of.
-> 
-> For some reason if I place a symbolic link in a directory under the
-> project root,  gitweb is no longer able to find the project.  I was
-> looking through the .cgi file but I don't know enough perl to fix the
-> problem myself.
-> 
-> Let me know if this makes sense.
+> [1] There are a few reasons behind this rename:
+>  - there is nothing about "checkout" in the first part, it's about
+>    "sparse worktree"
+>  - the double negation issue with "no-" part of "no-checkout"
+>  - new name makes cache.h diff align beautifully
 
-WORKSFORME.  I have gitweb setup so some of repositories are in
-$projectroot directory via symlink, either to repository itself, or
-with symlinked earlier part of path, and it works correctly and shows
-all those repositories.
+Well, on one hand side it is more clear what is checked out,=20
+and perhaps more common case of checking out only selected files
+is simpler.
 
-I suspect that your web server is configured to not follow symbolic
-links, or your user account used by web server is not allowed (doesn't
-have permissions) to follow symbolic links.
+On the other hand if it was .git/info/no-checkout or checkout-exclude,
+or worktree-exclude, empty file or lack of such file would mean full
+checkout.  Then core.sparsecheckout (or core.sparsefile) would be
+needed only for performance reasons (no need to examine
+checkout-exclude file) even if we decide to ship example file with
+comments describing its syntax, in templates/info--checkout-exclude
 
-P.S. You should look into source file gitweb/gitweb.perl, not
-installed script gitweb.cgi
+But that is just bikeshedding, don't let it distract you from the real
+issue of this series...
 
--- 
-Jakub Narebski
+--=20
+Jakub Nar=FE=FF=01=19bski
 
-Git User's Survey 2009: http://tinyurl.com/GitSurvey2009
+In related news: there is really no question that bike sheds should be
+painted red. Really. =20
+(Johannes Schindelin, on git mailing list)
