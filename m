@@ -1,201 +1,355 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Continue git clone after interruption
-Date: Thu, 20 Aug 2009 14:41:25 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908201358010.6044@xanadu.home>
-References: <1250509342.2885.13.camel@cf-48>
- <200908192142.51384.jnareb@gmail.com>
- <alpine.LFD.2.00.0908191552020.6044@xanadu.home>
- <200908200937.05412.jnareb@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Make 'diff C^!' show the same diff as 'show C'
+Date: Fri, 21 Aug 2009 00:10:07 +0200
+Message-ID: <86d1201d8adf53c1f48c0f3526d8e81475b18244.1250806019.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Tomasz Kontusz <roverorna@gmail.com>, git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 20:42:02 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>,
+	Abhijit Menon-Sen <ams@toroid.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 00:10:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeCaA-0005nk-Pf
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 20:41:55 +0200
+	id 1MeFqB-0003R3-36
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 00:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751593AbZHTSlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 14:41:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751549AbZHTSlp
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 14:41:45 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:12622 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbZHTSlo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 14:41:44 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOO0016NUL12590@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 20 Aug 2009 14:41:26 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <200908200937.05412.jnareb@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754858AbZHTWKa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 18:10:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbZHTWK3
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 18:10:29 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:22017 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754292AbZHTWK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 18:10:28 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.1.375.2; Fri, 21 Aug
+ 2009 00:10:28 +0200
+Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Fri, 21 Aug
+ 2009 00:10:29 +0200
+X-Mailer: git-send-email 1.6.4.363.g2183a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126650>
 
-On Thu, 20 Aug 2009, Jakub Narebski wrote:
+Ideally, we'd like 'git diff C^!' to show the same diff that 'git show =
+C'
+does (with log.showroot enabled).  This gives easy access to a readable
+diff for the commit, irrespective of how many parents it has and withou=
+t
+any trickery to remove the commit message from the git-show output.
 
-> On Wed, 19 Aug 2009, Nicolas Pitre wrote:
-> > You'll get the very latest revision for HEAD, and only that.  The size 
-> > of the transfer will be roughly the size of a daily snapshot, except it 
-> > is fully up to date.  It is however non resumable in the event of a 
-> > network outage.  My proposal is to replace this with a "git archive" 
-> > call.  It won't get all branches, but for the purpose of initialising 
-> > one's repository that should be good enough.  And the "git archive" can 
-> > be fully resumable as I explained.
-> 
-> It is however only 2.5 MB out of 37 MB that are resumable, which is 7%
-> (well, that of course depends on repository).  Not that much that is
-> resumable.
+cmd_diff relied on telling the various diff invocations apart from
+only the number of revisions parsed by setup_revision() (with a twist
+for A...B).  In the case of C^! this failed on two counts:
 
-Take the Linux kernel then.  It is more like 75 MB.
+* If C has no parents, setup_revision() turns C^! into simply C.  This
+  meant that 'git diff C^!' compared the current worktree to C, which
+  is certainly not what the user asked for.
 
-> > Now to deepen that history.  Let's say you want 10 more revisions going 
-> > back then you simply perform the fetch again with a --depth=10.  Right 
-> > now it doesn't seem to work optimally, but the pack that is then being 
-> > sent could be made of deltas against objects found in the commits we 
-> > already have.  Currently it seems that a pack that also includes those 
-> > objects we already have in addition to those we want is created, which 
-> > is IMHO a flaw in the shallow support that shouldn't be too hard to fix.  
-> > Each level of deepening should then be as small as standard fetches 
-> > going forward when updating the repository with new revisions.
-> 
-> You would have the same (or at least quite similar) problems with 
-> deepening part (the 'incrementals' transfer part) as you found with my
-> first proposal of server bisection / division of rev-list, and serving
-> 1/Nth of revisions (where N is selected so packfile is reasonable) to
-> client as incrementals.  Yours is top-down, mine was bottom-up approach
-> to sending series of smaller packs.  The problem is how to select size
-> of incrementals, and that incrementals are all-or-nothing (but see also
-> comment below).
+* Otherwise setup_revision puts C itself last, i.e., the rev.pending
+  are ^C^1 ... ^C^N C.  So the first revision is uninteresting and in
+  the case of exactly two parents, the symmetric difference revspec
+  (diff A...B) case fired, and compared C only to C^1 (instead of
+  showing a combined diff).
 
-Yes and no.  Combined with a slight reordering of commit objects, it 
-could be possible to receive a partial pack and still be able to extract 
-a bunch of full revisions.  The biggest issue is to be able to transfer 
-revision x (75 MB for Linux), but revision x-1 usually requires only a 
-few kilobytes, revision x-2 a few other kilobytes, etc.  Remember that 
-you are likely to have only a few deltas from one revision to another, 
-which is not the case for the very first revision you get.  A special 
-mode to pack-object could place commit objects only after all the 
-objects needed to create that revision.  So once you get a commit object 
-on the receiving end, you could assume that all objects reachable from 
-that commit are already received, or you had them locally already.
+Detect the presence of A...B or C^! style arguments before running
+setup_revisions(), so that we know in which case we are in.  We can
+then dispatch to the right case without peeking at UNINTERESTING
+flags.
 
-> In proposal using git-archive and shallow clone deepening as incrementals
-> you have this small seed (how small it depends on repository: 50% - 5%)
-> which is resumable.  And presumably with deepening you can somehow make
-> some use from incomplete packfile, only part of which was transferred 
-> before network error / disconnect.  And even tell server about objects
-> which you managed to extract from *.pack.part.
+There's still some complication in builtin_diff_combined() because
+0fe7c1d (built-in diff: assorted updates., 2006-04-29) advertises that
+'git diff T0 T1 ... Tn' does a combined diff of arbitrary trees where T=
+0
+is the merge result, so we have to handle both this case and C^!.
 
-yes.  And at that point resuming the transfer is just another case of 
-shallow repository deepening.
+Note that UNINTERESTING is not a good criterion at all, as it is
+tacked onto *trees*; if any of the involved revisions share the same
+trees, the flags will overwrite each other.
 
-> *NEW IDEA*
-> 
-> Another solution would be to try to come up with some sort of stable
-> sorting of objects so that packfile generated for the same parameters
-> (endpoints) would be always byte-for-byte the same.  But that might be
-> difficult, or even impossible.
+Thanks to Abhijit "crab" Menon-Sen for noticing that 'diff C^!' didn't
+work as expected on root commits, and Bj=C3=B6rn "doener" Steinbrink fo=
+r
+helpful discussions.
+---
 
-And I don't want to commit to that either.  Having some flexibility in 
-object ordering makes it possible to improve on the packing heuristics.  
-We certainly should avoid imposing strong restrictions like that for 
-little gain.  Even the deltas are likely to be different from one 
-request to another when using threads as one thread might be getting 
-more CPU time than another slightly modifying the outcome.
-
-> Well, we could send the list of objects in pack in order used later by
-> pack creation to client (non-resumable but small part), and if packfile
-> transport was interrupted in the middle client would compare list of 
-> complete objects in part of packfile against this manifest, and sent
-> request to server with *sorted* list of object it doesn't have yet.
-
-Well... actually that's one of the item for pack V4.  Lots of SHA1s are 
-duplicated in tree and commit objects, in addition to the pack index 
-file.  With pack v4 all those SHA1s would be stored only once in a table 
-and objects would index that table instead.
-
-Still, that is not _that_ small though.  Just look at the size of the 
-pack index file for the Linux repository to give you an idea.
-
-> Server would probably have to check validity of objects list first (the
-> object list might be needed to be more than just object list; it might
-> need to specify topology of deltas, i.e. which objects are base for which
-> ones).  Then it would generate rest of packfile.
-
-I'm afraid that has the looks of something adding lots of complexity to 
-a piece of git that is already quite complex already, namely 
-pack-objects.  And there is already only a few individuals with their 
-brain around it.
-
-> > > It would be useful if it was possible to generate part of this rock-solid
-> > > file for partial (range, resume) request, without need to generate 
-> > > (calculate) parts that client already downloaded.  Otherwise server has
-> > > to either waste disk space and IO for caching, or waste CPU (and IO)
-> > > on generating part which is not needed and dropping it to /dev/null.
-> > > git-archive you say has this feature.
-> > 
-> > "Could easily have" is more appropriate.
-> 
-> O.K.  And I can see how this can be easy done.
-> 
-> > > Next you need to tell server that you have those objects got using
-> > > resumable download part ("git archive HEAD" in your proposal), and
-> > > that it can use them and do not include them in prepared file/pack.
-> > > "have" is limited to commits, and "have <sha1>" tells server that
-> > > you have <sha1> and all its prerequisites (dependences).  You can't 
-> > > use "have <sha1>" with git-archive solution.  I don't know enough
-> > > about 'shallow' capability (and what it enables) to know whether
-> > > it can be used for that.  Can you elaborate?
-> > 
-> > See above, or Documentation/technical/shallow.txt.
->  
-> Documentation/technical/shallow.txt doesn't cover "shallow", "unshallow"
-> and "deepen" commands from 'shallow' capability extension to git pack
-> protocol (http://git-scm.com/gitserver.txt).
-
-404 Not Found
-
-Maybe that should be committed to git in Documentation/technical/  as 
-well?
-
-> > > Then you have to finish clone / fetch.  All solutions so far include
-> > > some kind of incremental improvements.  My first proposal of bisect
-> > > fetching 1/nth or predefined size pack is buttom-up solution, where
-> > > we build full clone from root commits up.  You propose, from what
-> > > I understand build full clone from top commit down, using deepening
-> > > from shallow clone.  In this step you either get full incremental
-> > > or not; downloading incremental (from what I understand) is not
-> > > resumable / they do not support partial fetch.
-> > 
-> > Right.  However, like I said, the incremental part should be much 
-> > smaller and therefore less susceptible to network troubles.
-> 
-> If you have 7% total pack size of git-archive resumable part, how small
-> do you plan to have those incremental deepening?  Besides in my 1/Nth
-> proposal those bottom-up packs werealso meant to be sufficiently small
-> to avoid network troubles.
-
-Two issues here: 1) people with slow links might not be interested in a 
-deep history as it costs them time.  2) Extra revisions should typically 
-require only a few KB each, therefore we might manage to ask for the 
-full history after the initial revision is downloaded and salvage as 
-much as we can if a network outage is encountered.  There is no need for 
-arbitrary size, unless the user decides arbitrarily to get only 10 more 
-revisions, or 100 more, etc.
-
-> P.S. As you can see implementing resumable clone isn't easy...
-
-I've been saying that all along for quite a while now.   ;-)
+Error checking is still iffy, but I'm not sure that can be fixed
+without throwing out the whole "argument parsing through
+setup_revisions" code and handrolling it.
 
 
-Nicolas
+ Documentation/git-diff.txt  |   10 +++++++-
+ builtin-diff.c              |   54 +++++++++++++++++++++++++++++++++++=
+-------
+ t/t4013-diff-various.sh     |    3 ++
+ t/t4013/diff.diff_initial^! |   28 ++++++++++++++++++++++
+ t/t4013/diff.diff_master^!  |   29 +++++++++++++++++++++++
+ t/t4013/diff.diff_side^!    |   32 +++++++++++++++++++++++++
+ 6 files changed, 146 insertions(+), 10 deletions(-)
+ create mode 100644 t/t4013/diff.diff_initial^!
+ create mode 100644 t/t4013/diff.diff_master^!
+ create mode 100644 t/t4013/diff.diff_side^!
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index 0ac7112..5d0f2a6 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -62,9 +62,17 @@ forced by --no-index.
+ 	"git diff $(git-merge-base A B) B".  You can omit any one
+ 	of <commit>, which has the same effect as using HEAD instead.
+=20
++'git diff' [--options] <commit>^{caret}! [--] [<path>...]::
++
++	This shows the changes that <commit> made relative to its
++	parents.  For an ordinary commit it is the same as `git diff
++	<commit>{caret} <commit>`.  For a root commit it shows a
++	creation patch and for a merge commit it shows a combined
++	diff.
++
+ Just in case if you are doing something exotic, it should be
+ noted that all of the <commit> in the above description, except
+-for the last two forms that use ".." notations, can be any
++for the two forms that use ".." notations, can be any
+ <tree-ish>.
+=20
+ For a more complete list of ways to spell <commit>, see
+diff --git a/builtin-diff.c b/builtin-diff.c
+index ffcdd05..285bf29 100644
+--- a/builtin-diff.c
++++ b/builtin-diff.c
+@@ -163,10 +163,17 @@ static int builtin_diff_tree(struct rev_info *rev=
+s,
+ 	return 0;
+ }
+=20
++enum diff_mode {
++	DIFF_MODE_NORMAL,
++	DIFF_MODE_SYMMETRIC,
++	DIFF_MODE_SHOW
++};
++
+ static int builtin_diff_combined(struct rev_info *revs,
+ 				 int argc, const char **argv,
+ 				 struct object_array_entry *ent,
+-				 int ents)
++				 int ents,
++				 enum diff_mode mode)
+ {
+ 	const unsigned char (*parent)[20];
+ 	int i;
+@@ -177,8 +184,18 @@ static int builtin_diff_combined(struct rev_info *=
+revs,
+ 	if (!revs->dense_combined_merges && !revs->combine_merges)
+ 		revs->dense_combined_merges =3D revs->combine_merges =3D 1;
+ 	parent =3D xmalloc(ents * sizeof(*parent));
+-	for (i =3D 0; i < ents; i++)
+-		hashcpy((unsigned char *)(parent + i), ent[i].item->sha1);
++
++	if (mode =3D=3D DIFF_MODE_SHOW) {
++		/* diff C^!, we exploit knowledge that C is last */
++		for (i =3D 1; i < ents; i++)
++			hashcpy((unsigned char *)(parent + i),
++				ent[i-1].item->sha1);
++		hashcpy((unsigned char *)(parent),
++			ent[ents-1].item->sha1);
++	} else {
++		for (i =3D 0; i < ents; i++)
++			hashcpy((unsigned char *)(parent + i), ent[i].item->sha1);
++	}
+ 	diff_tree_combined(parent[0], parent + 1, ents - 1,
+ 			   revs->dense_combined_merges, revs);
+ 	return 0;
+@@ -254,6 +271,7 @@ int cmd_diff(int argc, const char **argv, const cha=
+r *prefix)
+ 	struct blobinfo blob[2];
+ 	int nongit;
+ 	int result =3D 0;
++	enum diff_mode mode =3D DIFF_MODE_NORMAL;
+=20
+ 	/*
+ 	 * We could get N tree-ish in the rev.pending_objects list.
+@@ -292,6 +310,17 @@ int cmd_diff(int argc, const char **argv, const ch=
+ar *prefix)
+ 	/* Otherwise, we are doing the usual "git" diff */
+ 	rev.diffopt.skip_stat_unmatch =3D !!diff_auto_refresh_index;
+=20
++	for (i =3D 1; i < argc; i++) {
++		if (prefixcmp(argv[i], "--")) {
++			if (strstr(argv[i], "..."))
++				mode =3D DIFF_MODE_SYMMETRIC;
++			else if (strstr(argv[i], "^!"))
++				mode =3D DIFF_MODE_SHOW;
++		} else if (!strcmp(argv[i], "--")) {
++			break;
++		}
++	}
++
+ 	/* Default to let external and textconv be used */
+ 	DIFF_OPT_SET(&rev.diffopt, ALLOW_EXTERNAL);
+ 	DIFF_OPT_SET(&rev.diffopt, ALLOW_TEXTCONV);
+@@ -403,11 +432,7 @@ int cmd_diff(int argc, const char **argv, const ch=
+ar *prefix)
+ 	}
+ 	else if (blobs)
+ 		usage(builtin_diff_usage);
+-	else if (ents =3D=3D 1)
+-		result =3D builtin_diff_index(&rev, argc, argv);
+-	else if (ents =3D=3D 2)
+-		result =3D builtin_diff_tree(&rev, argc, argv, ent);
+-	else if ((ents =3D=3D 3) && (ent[0].item->flags & UNINTERESTING)) {
++	else if (mode =3D=3D DIFF_MODE_SYMMETRIC) {
+ 		/* diff A...B where there is one sane merge base between
+ 		 * A and B.  We have ent[0] =3D=3D merge-base, ent[1] =3D=3D A,
+ 		 * and ent[2] =3D=3D B.  Show diff between the base and B.
+@@ -415,9 +440,20 @@ int cmd_diff(int argc, const char **argv, const ch=
+ar *prefix)
+ 		ent[1] =3D ent[2];
+ 		result =3D builtin_diff_tree(&rev, argc, argv, ent);
+ 	}
++	else if (ents =3D=3D 1 && mode =3D=3D DIFF_MODE_SHOW) {
++		/* diff R^! where R is a root commit: creation patch */
++		diff_tree_sha1((const unsigned char *) EMPTY_TREE_SHA1_BIN,
++			       ent[0].item->sha1, "", &rev.diffopt);
++		log_tree_diff_flush(&rev);
++		result =3D 0;
++	}
++	else if (ents =3D=3D 1)
++		result =3D builtin_diff_index(&rev, argc, argv);
++	else if (ents =3D=3D 2)
++		result =3D builtin_diff_tree(&rev, argc, argv, ent);
+ 	else
+ 		result =3D builtin_diff_combined(&rev, argc, argv,
+-					     ent, ents);
++					       ent, ents, mode);
+ 	result =3D diff_result_code(&rev.diffopt, result);
+ 	if (1 < rev.diffopt.skip_stat_unmatch)
+ 		refresh_index_quietly();
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 8b33321..2ce7204 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -273,6 +273,9 @@ diff --no-index --name-status -- dir2 dir
+ diff --no-index dir dir3
+ diff master master^ side
+ diff --dirstat master~1 master~2
++diff initial^!
++diff side^!
++diff master^!
+ EOF
+=20
+ test_done
+diff --git a/t/t4013/diff.diff_initial^! b/t/t4013/diff.diff_initial^!
+new file mode 100644
+index 0000000..22f6bb7
+--- /dev/null
++++ b/t/t4013/diff.diff_initial^!
+@@ -0,0 +1,28 @@
++$ git diff initial^!
++diff --git a/dir/sub b/dir/sub
++new file mode 100644
++index 0000000..35d242b
++--- /dev/null
+++++ b/dir/sub
++@@ -0,0 +1,2 @@
+++A
+++B
++diff --git a/file0 b/file0
++new file mode 100644
++index 0000000..01e79c3
++--- /dev/null
+++++ b/file0
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++diff --git a/file2 b/file2
++new file mode 100644
++index 0000000..01e79c3
++--- /dev/null
+++++ b/file2
++@@ -0,0 +1,3 @@
+++1
+++2
+++3
++$
+diff --git a/t/t4013/diff.diff_master^! b/t/t4013/diff.diff_master^!
+new file mode 100644
+index 0000000..ca2eaa1
+--- /dev/null
++++ b/t/t4013/diff.diff_master^!
+@@ -0,0 +1,29 @@
++$ git diff master^!
++diff --cc dir/sub
++index cead32e,7289e35..992913c
++--- a/dir/sub
+++++ b/dir/sub
++@@@ -1,6 -1,4 +1,8 @@@
++  A
++  B
++ +C
++ +D
++ +E
++ +F
+++ 1
+++ 2
++diff --cc file0
++index b414108,f4615da..10a8a9f
++--- a/file0
+++++ b/file0
++@@@ -1,6 -1,6 +1,9 @@@
++  1
++  2
++  3
++ +4
++ +5
++ +6
+++ A
+++ B
+++ C
++$
+diff --git a/t/t4013/diff.diff_side^! b/t/t4013/diff.diff_side^!
+new file mode 100644
+index 0000000..6d4378a
+--- /dev/null
++++ b/t/t4013/diff.diff_side^!
+@@ -0,0 +1,32 @@
++$ git diff side^!
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++$
+--=20
+1.6.4.363.g2183a
