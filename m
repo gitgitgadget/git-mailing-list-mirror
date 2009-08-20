@@ -1,81 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add test case for rev-list --parents --show-all
-Date: Wed, 19 Aug 2009 21:13:58 -0700
-Message-ID: <7v7hwzt94p.fsf@alter.siamese.dyndns.org>
-References: <1250628954.114121983@192.168.1.201>
- <20090818211812.GL8147@facebook.com>
- <7vk5103chi.fsf@alter.siamese.dyndns.org>
- <20090819022918.GO8147@facebook.com> <20090819023433.GP8147@facebook.com>
- <7vhbw41g3f.fsf@alter.siamese.dyndns.org>
- <7v4os41frm.fsf@alter.siamese.dyndns.org>
- <20090819225547.GR8147@facebook.com> <20090819225852.GA21187@facebook.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH next] t7407: use 'cut' utility rather than bash's substring
+ expansion notation
+Date: Thu, 20 Aug 2009 08:56:30 +0200
+Message-ID: <200908200856.30359.johan@herland.net>
+References: <QHfHFS_5JGiL-O8GMDfdfscFUdxV1xVObzr6e5LPleagDRd7bCg8I9YUwL9xkbgM64vyf_EVLLg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Adam Simpkins <simpkins@facebook.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 06:14:18 2009
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, gitster@pobox.com,
+	Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 20 08:56:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mdz2Y-0007k8-0b
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 06:14:18 +0200
+	id 1Me1Zh-0003KI-Kr
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 08:56:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750834AbZHTEOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 00:14:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbZHTEOH
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 00:14:07 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37477 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbZHTEOG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 00:14:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B614711B0E;
-	Thu, 20 Aug 2009 00:14:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=golR67WIwTUICm+G4jAC822WAOc=; b=gv0yfGRbNJRGebKTuGi9uAv
-	bKQ3GecmJtTeLNcoU1MZrXDrLWgp6GbO9W2CQtnGfWEhFtE2DaoJ7/3sMn/Ezhnm
-	L7bWnHdGjSAo2XFzoVWIqSdfBZksYi6f5GM2jrhgcIikqX7udIl/K1GbOiavFufN
-	DHV8uH6fasKPxWFjmfHs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=QCJZap3cCz9E6bQSoiHpk9SPTHvB6JQhYzplnFpEV+MP2nfNM
-	GR0jDx13+/wMVySaeTGG0n8MXFePSCM9csoz7fMBlilMSK5w0Qfm8GZmKSxViQ1h
-	0akJiuoRkrIrb7ik0KmWoCkzyzhf3XYBsZyKoj75X26JWnW80k1BKH9uXc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89A8011B0D;
-	Thu, 20 Aug 2009 00:14:03 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0A5A11B0B; Thu, 20 Aug
- 2009 00:13:59 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E5318DB8-8D3F-11DE-8F65-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753487AbZHTG4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 02:56:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbZHTG4b
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 02:56:31 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:42641 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753333AbZHTG4b (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 Aug 2009 02:56:31 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KON00CH5XY7WA10@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 20 Aug 2009 08:56:31 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KON00KUHXY6Z200@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 20 Aug 2009 08:56:31 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.20.64221
+User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
+In-reply-to: <QHfHFS_5JGiL-O8GMDfdfscFUdxV1xVObzr6e5LPleagDRd7bCg8I9YUwL9xkbgM64vyf_EVLLg@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126609>
 
-Adam Simpkins <simpkins@facebook.com> writes:
-
-> This test case ensures that rev-list --parents --show-all gets the
-> parent history correct.  Normally, --parents rewrites parent history to
-> skip TREESAME parents.  However, --show-all causes TREESAME parents to
-> still be included in the revision list, so the parents should still be
-> included too.
+On Thursday 20 August 2009, Brandon Casey wrote:
+> From: Brandon Casey <drafnel@gmail.com>
 >
-> Signed-off-by: Adam Simpkins <simpkins@facebook.com>
+> The substring expansion notation is a bashism that we have not so far
+> adopted.  There is precedence for using the 'cut' utility for extracting
+> a substring.  So do so here.
+>
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 > ---
+>  t/t7407-submodule-foreach.sh |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
 >
-> Looking through the code, I believe TREESAME commits are the only ones
-> affected by my earlier bug in simplify_commit().
+> diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.sh
+> index de1730d..44ea8ac 100755
+> --- a/t/t7407-submodule-foreach.sh
+> +++ b/t/t7407-submodule-foreach.sh
+> @@ -207,8 +207,8 @@ cat > expect <<EOF
+>   $nested2sha1 nested1/nested2 (heads/master)
+>   $nested3sha1 nested1/nested2/nested3 (heads/master)
+>   $submodulesha1 nested1/nested2/nested3/submodule (heads/master)
+> - $sub1sha1 sub1 (${sub1sha1:0:7})
+> - $sub2sha1 sub2 (${sub1sha1:0:7})
+> + $sub1sha1 sub1 ($(echo $sub1sha1 | cut -c 1-7))
+> + $sub2sha1 sub2 ($(echo $sub1sha1 | cut -c 1-7))
 
-What I meant was actually a test for the graph part (i.e. the problem we
-would see if we did not apply your update to graph_is_interesting()), but
-protecting the simplify_commit() logic with test from breakage is a good
-thing to do as well.
+Typo (both in the original, and the patch), should be:
+	$sub2sha1 sub2 ($(echo $sub2sha1 | cut -c 1-7))
 
-Thanks.
+>   $sub3sha1 sub3 (heads/master)
+>  EOF
+
+Otherwise:
+
+Acked-by: Johan Herland <johan@herland.net>
+
+Thanks,
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
