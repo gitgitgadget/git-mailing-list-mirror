@@ -1,71 +1,112 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Continue git clone after interruption
-Date: Thu, 20 Aug 2009 14:48:29 +0700
-Message-ID: <fcaeb9bf0908200048v4c918a16o6c0e0fb545742f2@mail.gmail.com>
-References: <1250509342.2885.13.camel@cf-48> <200908192142.51384.jnareb@gmail.com> 
-	<alpine.LFD.2.00.0908191552020.6044@xanadu.home> <200908200937.05412.jnareb@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: question concerning branches
+Date: Thu, 20 Aug 2009 09:57:57 +0200
+Message-ID: <vpqzl9urk6y.fsf@bauges.imag.fr>
+References: <m33a7noc3u.fsf@localhost.localdomain> <4a8c51f5@wupperonline.de>
+	<32541b130908191250w79461592vf1bed7874aa4138b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Tomasz Kontusz <roverorna@gmail.com>,
-	git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 20 09:49:00 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Ingo Brueckl <ib@wupperonline.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 20 10:01:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Me2OJ-0006KV-B5
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 09:48:59 +0200
+	id 1Me2aP-0002R9-6P
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Aug 2009 10:01:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751138AbZHTHst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Aug 2009 03:48:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750828AbZHTHss
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 03:48:48 -0400
-Received: from mail-yx0-f175.google.com ([209.85.210.175]:43579 "EHLO
-	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbZHTHss convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Aug 2009 03:48:48 -0400
-Received: by yxe5 with SMTP id 5so6087168yxe.33
-        for <git@vger.kernel.org>; Thu, 20 Aug 2009 00:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4IWMeV5+b7hYmKg1h9dd31B5xJP4z6mTcswQsIedMtw=;
-        b=G+GB2yuEup8fiu0UloWUx2XddHKnJS+M9Iu9eUvGJc0xBmTJ8/QhXaU8DKSgFk8704
-         OW1Wiktzzt78rzwqdCg72WZMVvMm27hgUgk4rXD6vNY57s8xQfZ5aQQ0XsmFVUkFy0O3
-         1WMEOFkifxEwsrYLvgUd9d4fwbmhJP1h/64BQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=JbT1OQPT3GFN2zZWUyFCkZ0JfTjiN7x4+6JEtdOyUL0FChdc1ATDBgWxWF4t8MqJ9u
-         5O4rl+rSWuCKdEuWilJuAajza1h2TolIeG3H29NzBfHKnuEGIFpgaHiOGwD9hhlcxDru
-         TjkJpTh1p21odH4MDUC6XlhDmOgdECbkPl/JQ=
-Received: by 10.101.81.10 with SMTP id i10mr8216082anl.123.1250754529079; Thu, 
-	20 Aug 2009 00:48:49 -0700 (PDT)
-In-Reply-To: <200908200937.05412.jnareb@gmail.com>
+	id S1752430AbZHTIAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 04:00:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbZHTIAg
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 04:00:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:53374 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752001AbZHTIAe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 04:00:34 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n7K7vvnd025860
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 20 Aug 2009 09:57:57 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Me2Wz-00069n-92; Thu, 20 Aug 2009 09:57:57 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Me2Wz-0002aa-6Z; Thu, 20 Aug 2009 09:57:57 +0200
+In-Reply-To: <32541b130908191250w79461592vf1bed7874aa4138b@mail.gmail.com> (Avery Pennarun's message of "Wed\, 19 Aug 2009 19\:50\:31 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 20 Aug 2009 09:57:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126614>
 
-On Thu, Aug 20, 2009 at 2:37 PM, Jakub Narebski<jnareb@gmail.com> wrote=
-:
-> *NEW IDEA*
->
-> Another solution would be to try to come up with some sort of stable
-> sorting of objects so that packfile generated for the same parameters
-> (endpoints) would be always byte-for-byte the same. =C2=A0But that mi=
-ght be
-> difficult, or even impossible.
+Avery Pennarun <apenwarr@gmail.com> writes:
 
-Isn't it the idea of commit reels [1] from git-torrent?
+> This is a big difference from how centralized VCSs work: there, a
+> commit is a major operation that you're afraid to do in case you make
+> someone else mad.  In git, commits are cheap, you just need to be
+> careful about pushing.
 
-[1] http://gittorrent.utsl.gen.nz/rfc.html#org-reels
---=20
-Duy
+I second this. "commit" is indeed a bad name in decentralized VCSs.
+There's no commitment from the developer, you don't commit to swear
+the code is good, but you commit just to record a set of changes, and
+attach a descriptive message to it.
+
+In Git, a commit takes usually a fraction of a second, and can be
+modified later easily until it's pushed.
+
+'git commit --amend' will allow you to change either the changes or
+the message associated to a commit.
+
+'git reset HEAD^' will just undo the commit, turning your commited
+changes into uncommited ones.
+
+'git rebase --interactive' will allow you another bunch of cool
+things.
+
+So, keeping your changes uncommited has very few advantage, and indeed
+has one big drawback: uncommited changes have no descriptive message
+associated, so if you leave a branch for some time, it makes it more
+difficult for you to remember what you were doing on it when you
+switch back to it:
+
+git checkout -b topic-branch
+# edit foo.bar
+git checkout master
+# hack
+git commit
+# go on holiday
+# come back
+git checkout topic-branch
+git status
+# err, what is this all about?
+
+OTOH:
+
+git checkout -b topic-branch
+# edit foo.bar
+git commit -m "started feature foo, but bar is still to be done"
+git checkout master
+# hack
+git commit
+# go on holiday
+# come back
+git checkout topic-branch
+git show
+# Ah, I remember!
+
+Actually, all the VCSs I know about (Mercurial, Bazaar, Subversion,
+and IIRC GNU Arch) deal with this the way Git does. Hey! there must be
+a reason ;-).
+
+-- 
+Matthieu
