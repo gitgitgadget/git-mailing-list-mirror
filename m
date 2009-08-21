@@ -1,58 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git-daemon via launchd
-Date: Fri, 21 Aug 2009 22:24:23 +0200
-Message-ID: <81b0412b0908211324h25f6a2c0sda6da17b43488925@mail.gmail.com>
-References: <D49DB51B-4D25-44CC-B09C-2598EC7FCEE9@kellerfarm.com>
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: hitting home directory's parent
+Date: Fri, 21 Aug 2009 16:05:04 -0400
+Message-ID: <20090821200503.GA19660@panix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 22:24:36 2009
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 22:26:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Meaf5-0002ED-SV
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:24:36 +0200
+	id 1MeahE-0003Ac-UI
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520AbZHUUYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 16:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932441AbZHUUYX
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:24:23 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:50008 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932390AbZHUUYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 16:24:22 -0400
-Received: by ewy3 with SMTP id 3so944383ewy.18
-        for <git@vger.kernel.org>; Fri, 21 Aug 2009 13:24:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zL94B3VlaXBHLRVxUMZVu1E9H1fQRS5ehtaw1Qsp/wo=;
-        b=Tq6X0SrUw9dprSEA0HoxefvRRNbS477gX7eNw2QsZ3b5TxCyCd+RZjr8luUGbs+FhO
-         SrS9umE3GiMrSjLObtEiXYsk18qnE0ZlKN30HRYXsRmFZTOvRl5ILd1gOpcBxCgesaMW
-         HuI8nGphplYRBLYqSipoG1OOkvgVJBkOrbbOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bS+vJeFwSQJxX1XMizZrKJsAT1fcr/1VfdQmf76Gj/XH68v/i/b/jt8Q6M5m6ykoZH
-         N0316LHVPuy9ytmELF0XWEFVHoaPUnacNgTG8ni63Xj3hUi52DmwPs7kRj8Suo1XdKy/
-         7VGKXow2SewDU5Cknb9XH5xeJcUJMokWmkJNE=
-Received: by 10.210.134.20 with SMTP id h20mr1656233ebd.41.1250886263555; Fri, 
-	21 Aug 2009 13:24:23 -0700 (PDT)
-In-Reply-To: <D49DB51B-4D25-44CC-B09C-2598EC7FCEE9@kellerfarm.com>
+	id S932607AbZHUU0Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 16:26:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbZHUU0Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:26:24 -0400
+Received: from l2mail1.panix.com ([166.84.1.75]:63695 "EHLO l2mail1.panix.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932390AbZHUU0Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 16:26:24 -0400
+X-Greylist: delayed 1281 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Aug 2009 16:26:24 EDT
+Received: from mail2.panix.com (mail2.panix.com [166.84.1.73])
+	by l2mail1.panix.com (Postfix) with ESMTP id 7F00192F
+	for <git@vger.kernel.org>; Fri, 21 Aug 2009 16:06:37 -0400 (EDT)
+Received: from panix5.panix.com (panix5.panix.com [166.84.1.5])
+	by mail2.panix.com (Postfix) with ESMTP id 56E8C38E53
+	for <git@vger.kernel.org>; Fri, 21 Aug 2009 16:05:04 -0400 (EDT)
+Received: by panix5.panix.com (Postfix, from userid 14662)
+	id 3BE7324201; Fri, 21 Aug 2009 16:05:04 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126750>
 
-On Fri, Aug 21, 2009 at 19:40, Andrew Keller<andrew@kellerfarm.com> wrote:
-> Is it possible to configure launchd to run git-daemon based on an incoming
-> connection, rather than having git-daemon listen for connections?
+Hi:
 
-Yes, see inetd and xinetd examples in Documentation/everyday.txt
+I just installed git in my Cygwin installation for the first time.  The 
+git version is 1.6.1.2, which is the latest version they have.  When I 
+enter one of the following commands:
+    git --help
+    git config --global user.name "Daniel Convissor"
+
+I get this error:
+    fatal: Cannot change to /home/danielc/..: Permission denied
+
+Though "git --version" executes fine.
+
+I've been using Cygwin for many years and no other program has ever 
+produced this issue for me.  For example, svn --help, ls --help, etc work 
+just fine.
+
+Why is git venturing into to the home directory's parent directory?  Is 
+this a bug?  If not, is this really necessary?
+
+Thanks,
+
+--Dan
+
+PS:  I'm not subscribed to the list.
+
+-- 
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+ 4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335 f: 718-854-0409
