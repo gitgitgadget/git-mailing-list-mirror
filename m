@@ -1,8 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 0/9] more changes to port rebase -i to C using sequencer
-	code
-Date: Fri, 21 Aug 2009 07:49:51 +0200
-Message-ID: <20090821054729.3726.5078.chriscool@tuxfamily.org>
+Subject: [PATCH v2 6/9] pick: libify "pick_help_msg()"
+Date: Fri, 21 Aug 2009 07:49:57 +0200
+Message-ID: <20090821055001.3726.98280.chriscool@tuxfamily.org>
+References: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Stephan Beyer <s-beyer@gmx.net>,
@@ -14,60 +14,122 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeN76-0001oS-HA
+	id 1MeN77-0001oS-8o
 	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 07:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753256AbZHUFzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 01:55:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbZHUFzp
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:55:45 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56334 "EHLO smtp3-g21.free.fr"
+	id S1753447AbZHUF4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 01:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZHUF4E
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:56:04 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56406 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752743AbZHUFzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 01:55:44 -0400
+	id S1753040AbZHUFzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 01:55:49 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id B766681811E;
-	Fri, 21 Aug 2009 07:55:36 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 3BDC88180F7;
+	Fri, 21 Aug 2009 07:55:38 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 982A18180F0;
-	Fri, 21 Aug 2009 07:55:33 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id F39E9818118;
+	Fri, 21 Aug 2009 07:55:35 +0200 (CEST)
+X-git-sha1: 002c48348b2bb104f04180638aa29b3834732cf5 
 X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126688>
 
-This is a reroll of the series I sent 9 days ago.
+This function gives an help message when pick or revert failed.
 
-Patch 5/9 (revert: libify pick) now contains some fixups suggested by
-Junio, so it's based on a newer commit in the sequencer repo. 
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-revert.c |   23 +----------------------
+ pick.c           |   22 ++++++++++++++++++++++
+ pick.h           |    1 +
+ 3 files changed, 24 insertions(+), 22 deletions(-)
 
-I also updated the commit message of some following patches so they
-display the same commit sha1 from the sequencer repo.
-
-Patch 8/9 has been reworked so that the --cherry-pick option use the
-same arguments as other options.
-
-Christian Couder (5):
-  sequencer: add "--fast-forward" option to "git sequencer--helper"
-  sequencer: let "git sequencer--helper" callers set "allow_dirty"
-  rebase -i: use "git sequencer--helper --fast-forward"
-  pick: libify "pick_help_msg()"
-  rebase -i: use "git sequencer--helper --cherry-pick"
-
-Stephan Beyer (4):
-  sequencer: add "do_fast_forward()" to perform a fast forward
-  revert: libify pick
-  sequencer: add "do_commit()" and related functions
-  sequencer: add "--cherry-pick" option to "git sequencer--helper"
-
- Makefile                    |    2 +
- builtin-revert.c            |  293 ++++++-----------------------------------
- builtin-sequencer--helper.c |  305 +++++++++++++++++++++++++++++++++++++++++--
- git-rebase--interactive.sh  |   22 ++--
- pick.c                      |  232 ++++++++++++++++++++++++++++++++
- pick.h                      |   14 ++
- 6 files changed, 599 insertions(+), 269 deletions(-)
- create mode 100644 pick.c
- create mode 100644 pick.h
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 4797ac5..e5250bd 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -142,27 +142,6 @@ static void set_author_ident_env(const char *message)
+ 			sha1_to_hex(commit->object.sha1));
+ }
+ 
+-static char *help_msg(const unsigned char *sha1)
+-{
+-	static char helpbuf[1024];
+-	char *msg = getenv("GIT_CHERRY_PICK_HELP");
+-
+-	if (msg)
+-		return msg;
+-
+-	strcpy(helpbuf, "  After resolving the conflicts,\n"
+-	       "mark the corrected paths with 'git add <paths>' "
+-	       "or 'git rm <paths>' and commit the result.");
+-
+-	if (!(flags & PICK_REVERSE)) {
+-		sprintf(helpbuf + strlen(helpbuf),
+-			"\nWhen commiting, use the option "
+-			"'-c %s' to retain authorship and message.",
+-			find_unique_abbrev(sha1, DEFAULT_ABBREV));
+-	}
+-	return helpbuf;
+-}
+-
+ static void write_message(struct strbuf *msgbuf, const char *filename)
+ {
+ 	struct lock_file msg_file;
+@@ -211,7 +190,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		exit(1);
+ 	} else if (failed > 0) {
+ 		fprintf(stderr, "Automatic %s failed.%s\n",
+-			me, help_msg(commit->object.sha1));
++			me, pick_help_msg(commit->object.sha1, flags));
+ 		write_message(&msgbuf, git_path("MERGE_MSG"));
+ 		rerere();
+ 		exit(1);
+diff --git a/pick.c b/pick.c
+index 058b877..4f882bb 100644
+--- a/pick.c
++++ b/pick.c
+@@ -208,3 +208,25 @@ int pick_commit(struct commit *pick_commit, int mainline, int flags,
+ 
+ 	return ret;
+ }
++
++char *pick_help_msg(const unsigned char *sha1, int flags)
++{
++	static char helpbuf[1024];
++	char *msg = getenv("GIT_CHERRY_PICK_HELP");
++
++	if (msg)
++		return msg;
++
++	strcpy(helpbuf, "  After resolving the conflicts,\n"
++	       "mark the corrected paths with 'git add <paths>' "
++	       "or 'git rm <paths>' and commit the result.");
++
++	if (!(flags & PICK_REVERSE)) {
++		sprintf(helpbuf + strlen(helpbuf),
++			"\nWhen commiting, use the option "
++			"'-c %s' to retain authorship and message.",
++			find_unique_abbrev(sha1, DEFAULT_ABBREV));
++	}
++	return helpbuf;
++}
++
+diff --git a/pick.h b/pick.h
+index 7a74ad8..115541a 100644
+--- a/pick.h
++++ b/pick.h
+@@ -9,5 +9,6 @@
+ /* We don't need a PICK_QUIET. This is done by
+  *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
+ extern int pick_commit(struct commit *commit, int mainline, int flags, struct strbuf *msg);
++extern char *pick_help_msg(const unsigned char *sha1, int flags);
+ 
+ #endif
+-- 
+1.6.4.271.ge010d
