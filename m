@@ -1,93 +1,80 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Continue git clone after interruption
-Date: Sat, 22 Aug 2009 11:07:05 +1200
-Message-ID: <1250896025.19039.7.camel@maia.lan>
-References: <1250509342.2885.13.camel@cf-48>
-	 <200908200937.05412.jnareb@gmail.com>
-	 <alpine.LFD.2.00.0908201358010.6044@xanadu.home>
-	 <200908211207.38555.jnareb@gmail.com>
-	 <alpine.LFD.2.00.0908211614220.6044@xanadu.home>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: git diffall, open all diff files immediatly (eg tabbed
+	window?in BC)
+Date: Fri, 21 Aug 2009 16:45:13 -0700
+Message-ID: <20090821234512.GA58248@gmail.com>
+References: <loom.20090821T053954-649@post.gmane.org> <20090821054044.GB32879@gmail.com> <loom.20090821T074953-77@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Tomasz Kontusz <roverorna@gmail.com>,
-	git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Aug 22 01:04:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Seba Illingworth <seba.illingworth@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 22 01:45:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MedA5-0002uf-PD
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 01:04:46 +0200
+	id 1MednW-0006Ed-Pa
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 01:45:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932860AbZHUXEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 19:04:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932858AbZHUXEe
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 19:04:34 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:41445 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932769AbZHUXEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 19:04:34 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 8081E21D1F9; Sat, 22 Aug 2009 11:04:35 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 09CF621D22B;
-	Sat, 22 Aug 2009 11:04:30 +1200 (NZST)
-In-Reply-To: <alpine.LFD.2.00.0908211614220.6044@xanadu.home>
-X-Mailer: Evolution 2.24.1 
+	id S932918AbZHUXpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 19:45:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932766AbZHUXpT
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 19:45:19 -0400
+Received: from rv-out-0506.google.com ([209.85.198.231]:11769 "EHLO
+	rv-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932723AbZHUXpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 19:45:18 -0400
+Received: by rv-out-0506.google.com with SMTP id f6so367806rvb.1
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 16:45:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=RR4FwXyXyUnLNGQ2fFBw5cKwFh36enVlNki2TkMy3/A=;
+        b=qflqOjXPhpeb6tfznr1FjxIMF6eqL0yrVFXft5VRARq+JwZCtTYBwzhk481rKJ5dQV
+         NqqAdF9NBzqbEBTMxPuvrh7RO4u9gOXZ6puUJAkgL8reJ/qVESLO3HHVkznU9GY8Wzjw
+         /twXON4ItwLi2GL2SLUP0sV01xICBlZ7TaEn8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=HHhubxBi+4IBHbuVfraOToZYeLASjwfqW9ZOoLhgezAcmYzp6Txt0LqgRtgXODz8UP
+         e54BVZsNXqI4C5RRYxcmnxVRf3rxIXjko+PdUQpIGF8OpJZHeNE7umXE6DdWlZDtVo07
+         bvbqpcDUovo+8YcjLB3GAYaYShPsCcsDrdshk=
+Received: by 10.140.134.17 with SMTP id h17mr920343rvd.282.1250898320117;
+        Fri, 21 Aug 2009 16:45:20 -0700 (PDT)
+Received: from gmail.com (wdas-1.disneyanimation.com [12.188.26.1])
+        by mx.google.com with ESMTPS id k2sm2972206rvb.13.2009.08.21.16.45.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 21 Aug 2009 16:45:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <loom.20090821T074953-77@post.gmane.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126773>
 
-On Fri, 2009-08-21 at 17:07 -0400, Nicolas Pitre wrote:
-> > 2. There is support in git pack format to do 'deepening' of shallow
-> >    clone, which means that git can generate incrementals in top-down
-> >    order, _similar to how objects are ordered in packfile_.
+On Fri, Aug 21, 2009 at 05:54:48AM +0000, Seba Illingworth wrote:
+> David Aguilar <davvid <at> gmail.com> writes:
+> > To make it work irrespective of the configuration...
 > 
-> Well... the pack format was not meant for that "support".  The fact
-> that 
-> the typical object order used by pack-objects when serving fetch
-> request 
-> is amenable to incremental top-down updates is rather coincidental
-> and 
-> not really planned.
+> Hi David, great to get your comments, thanks for the pointers!
 
-Mmm.  And the problem with 'thin' packs is that they normally allow
-deltas the other way.
+One last note (I promise ;)):
 
-I think the first step here would be to allow thin pack generation to
-accept a bounded range of commits, any of the objects within which may
-be used as delta base candidates.  That way, these "top down" thin packs
-can be generated.  Currently of course it just uses the --not and makes
-"bottom up" thin packs.
+I would recommend against saying 'git difftool head' on your
+blog beause that only works on OSX with its case-preserving yet
+case-insensitive filesystem.  It might be worth mentioning that.
 
-> > Another solution would be to try to come up with some sort of stable
-> > sorting of objects so that packfile generated for the same
-> > parameters (endpoints) would be always byte-for-byte the same.  But
-> > that might be difficult, or even impossible.
->
-> And I don't want to commit to that either.  Having some flexibility
-> in object ordering makes it possible to improve on the packing
-> heuristics.
+If you try 'git diff head' on a different filesystem (for
+example, if you tried it on Linux) you'll find that it doesn't
+work because the file is .git/HEAD; .git/head doesn't exist.
 
-You don't have to lose that for storage.  It's only for generating the
-thin packs that it matters; also, the restriction is relaxed when it
-comes to objects which are all being sent in the same pack, which can
-freely delta amongst themselves in any direction.
+On OSX the filesystem tells git that .git/head exists even
+though it's actually finding .git/HEAD.
 
-What did you think about the bundle slicing stuff?
-
-Sam
+-- 
+		David
