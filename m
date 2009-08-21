@@ -1,74 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Issue with gitweb + tag + branch of the same name from master
- branch commit
-Date: Thu, 20 Aug 2009 17:19:02 -0700
-Message-ID: <7vmy5um32h.fsf@alter.siamese.dyndns.org>
-References: <1250811031.26147.42.camel@haakon2.linux-iscsi.org>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [PATCH v2] Fix symlink __stdcall problem at MSVC
+Date: Fri, 21 Aug 2009 10:42:14 +0800
+Message-ID: <1976ea660908201942r7ba14d1cnbb516f9f2c31f8bb@mail.gmail.com>
+References: <1250778072-4324-1-git-send-email-lznuaa@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "J.H." <warthog9@kernel.org>,
-	"H. Peter Anvin" <hpa@zytor.com>
-To: "Nicholas A. Bellinger" <nab@linux-iscsi.org>
-X-From: git-owner@vger.kernel.org Fri Aug 21 02:19:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Frank Li <lznuaa@gmail.com>
+To: git@vger.kernel.org, msysgit@googlegroups.com,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 21 04:42:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeHqo-0005uN-Rh
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 02:19:27 +0200
+	id 1MeK59-0002fT-K3
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 04:42:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbZHUATR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Aug 2009 20:19:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754821AbZHUATR
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 20:19:17 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35234 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754117AbZHUATQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Aug 2009 20:19:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3287831A04;
-	Thu, 20 Aug 2009 20:19:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=Z3uaLlbitNsLuY0DypELOzxUH54=; b=vIdFhk
-	AL1569nwRMOJ0tATc2frWGB+FhAZCr4r7GmI8EdDMjwGaqbkq2MRc8oiGXiWc4h2
-	8lKaOyXqPAwP3QCjLECc5D1oLII+BXKD3lqYXZ3bJS2UYCEg4sR3UxepeSqJRqDm
-	Eh/KsWxo15Sdo1R7L5ZxmWlAwqA1XPRjOdPL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xgqmm22onx0DX8jaH3T59qzGsdptDl3s
-	CeQ8xoZxvqUi0XbIfmp/XHyga1Fw8rSPKyNCGaqdMQkXDRIRYBlt3IJ4FtSxRSla
-	Mv8kK7LpxuiP9Z6FnJ4CtmZ2F4VkF/hdxSViG+A+XdQdNMyGwf6Y/YazsKu0G2wM
-	7Cf0eVCcovQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EE79631A03;
-	Thu, 20 Aug 2009 20:19:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5091C31A00; Thu, 20 Aug 2009
- 20:19:03 -0400 (EDT)
-In-Reply-To: <1250811031.26147.42.camel@haakon2.linux-iscsi.org> (Nicholas A.
- Bellinger's message of "Thu\, 20 Aug 2009 16\:30\:31 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 41896FF6-8DE8-11DE-8FFB-3142836986A2-77302942!a-pb-sasl-sd.pobox.com
+	id S1752203AbZHUCmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Aug 2009 22:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752145AbZHUCmO
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Aug 2009 22:42:14 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:59597 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933AbZHUCmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Aug 2009 22:42:13 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so250605qwh.37
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 19:42:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lWqxSJSKFY/+b9EwY+Fg+4ojNBjoEvrskg77x8zVbrQ=;
+        b=jzG1JAK0TUiekVwyG3OCnXnPV/u+m//aBmgWI8MevSKg5Bcbf2Dtz4QURZl+ICoykJ
+         C1zXzlGrRUJyQHoiBsGPFLQSLuze8sfscYz5SB93OetaIJ3xY6HzQoOGCMMBaP76Lxe8
+         osDQZI4snbzG6F7+W6bYVYAwdcMTeUShC3Cvs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ug68xmopbiXCpRO7UPLrCU0NzWXI1CNYZDqAYfYmnRGiyJLMnhtyqCDbAsQ04b/5si
+         stM+mDIUqN8mk3vc049KYdC331Hljc0v59UrCk//B+351qdRr9OIGlQ4QzPQ51HUd9fL
+         NYoqaocTRwLm0O0t58Cy1E2rHCV1xnnbds7sU=
+Received: by 10.224.53.101 with SMTP id l37mr365820qag.367.1250822534587; Thu, 
+	20 Aug 2009 19:42:14 -0700 (PDT)
+In-Reply-To: <1250778072-4324-1-git-send-email-lznuaa@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126666>
 
-"Nicholas A. Bellinger" <nab@linux-iscsi.org> writes:
+>
+>  int symlink(const char *oldpath, const char *newpath)
+>  {
+> -       typedef BOOL WINAPI (*symlink_fn)(const char*, const char*, DWORD);
+> +       typedef BOOL (WINAPI *symlink_fn)(const char*, const char*, DWORD);
+>        static symlink_fn create_symbolic_link = NULL;
+>        if (!create_symbolic_link) {
+>                create_symbolic_link = (symlink_fn) GetProcAddress(
+> --
+> 1.6.4.msysgit.0
+>
 
-> 22:33 < warthog9> not use the same name, I think what your doing is fine just the identical naming is whats 
->                   causing the problem
-> 22:33 < warthog9> like tag-lio-3.0
-> 22:33 < nab> Ahhhhhh
-> 22:33 < warthog9> and branch: lio-3.0
-> 22:34 < warthog9> since I think somewhere in git it's got two different orders of preference for tag vs. branch
-
-I do not speak for gitweb but we typically favor tags over heads.  The
-only place "branch name" take precedence is where the command expects to
-see a name of a branch, when it can also take any arbitrary object name,
-and changes behaviour.  I.e. "git checkout X", when X is a branch name,
-checks out the branch so that the next commit advances the tip of that
-branch.
+This is new patch for latest devel branch mingw.c.
