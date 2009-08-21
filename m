@@ -1,73 +1,65 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH 05/14] Change regerror() declaration from K&R style to 
-	ANSI C (C89)
-Date: Fri, 21 Aug 2009 22:37:21 +0800
-Message-ID: <1976ea660908210737y7168d5d5od56485a1b4ab2956@mail.gmail.com>
-References: <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com>
-	 <af66de324093bbe8f500b1ef20689dd5d355abf4.1250860247.git.mstormo@gmail.com>
-	 <c899c41fdccfdc94ae294f1a50895ba0290a1ec3.1250860247.git.mstormo@gmail.com>
-	 <cover.1250860247.git.mstormo@gmail.com>
-	 <e06c143a91dc2b5b95bcaca42a419d56e25690ac.1250860247.git.mstormo@gmail.com>
-	 <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
+From: bill lam <cbill.lam@gmail.com>
+Subject: how to do "git merge --abort"
+Date: Fri, 21 Aug 2009 22:51:57 +0800
+Message-ID: <20090821145157.GA6471@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	git@vger.kernel.org
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 16:37:33 2009
+Content-Type: text/plain; charset=iso-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 16:52:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeVFE-0002S5-ML
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 16:37:33 +0200
+	id 1MeVTU-00017r-T9
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 16:52:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932294AbZHUOhW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2009 10:37:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932292AbZHUOhW
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 10:37:22 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:38631 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932291AbZHUOhV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2009 10:37:21 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so437540qwh.37
-        for <git@vger.kernel.org>; Fri, 21 Aug 2009 07:37:22 -0700 (PDT)
+	id S932377AbZHUOwF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 10:52:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932366AbZHUOwF
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 10:52:05 -0400
+Received: from mail-px0-f196.google.com ([209.85.216.196]:41234 "EHLO
+	mail-px0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932358AbZHUOwE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 10:52:04 -0400
+Received: by pxi34 with SMTP id 34so4031107pxi.4
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 07:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LLC7y0u5yiFSXu64K3YXiwlyAh8u5DF5Mue7g91RpFI=;
-        b=WRcMjyE+vD6aTg4D2JFqyQM3aQ9/kLxOhAFNajUkSpyLrqP4HNiC4MKSF2FEtq1YQo
-         gFnxpYqvz2JzHcW9mG4BqFrE1kMy8tUJ9ip6CjbT3jNGqZeoT9BTrikgEfi7+4XB/OvY
-         CDT4g4w7y5mpYJ61XzmraQIyIrAx8oYeK2/fA=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=lwXfIa6p/uoG3qlWNptxRsNKOhW6E7NZ0OrndFaPmd8=;
+        b=UP6njxtwZ6+TyiIuuDefyrFVzqfma1CkcRrbbWB1/niV6yd6hjRuAJAlchHAAnbhoF
+         F50aT//gHXGudL0hVlDNbqhhHrzATeKgNpbzUT9V/EWrM0RJMxkJmW0ymU6XzQL4DpLt
+         PdG8t0jWef14cXYNbfclJb5B6ajKZ7YiYWA68=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jpwQwC+vQCgNrgWjJi6cBVw/vcw5vFjPIPOMUVQ6N1/q+CYhu0KdKpd5MYUZcxjOnt
-         M3ogYkgpWUavCnVDRCak9X8AQHXNy19+b4jmFsYwobFMDsUeaegh3hI8CJEiUpd8PZng
-         i8vWD4mmwhmp78I7PERlINUye9TyLvcF7qu5U=
-Received: by 10.224.102.212 with SMTP id h20mr756258qao.40.1250865441723; Fri, 
-	21 Aug 2009 07:37:21 -0700 (PDT)
-In-Reply-To: <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=A6J6H8uEl8OKsMDk/TojPWSIL1dmvowvXJ16ohqOJzBO16QITRGfIkjLu+f/ILT6KR
+         /1Vmbq++M6raMkQhkoFUnKuQz7at0yOtJvn0Pj+8ISKF98GnQL+9hRufCRWrbA5RxBsv
+         pybReN4pXAP0y+3A0rjgPUWwv5dfAb2cH19yw=
+Received: by 10.115.29.5 with SMTP id g5mr661512waj.223.1250866323805;
+        Fri, 21 Aug 2009 07:52:03 -0700 (PDT)
+Received: from localhost (n219079101006.netvigator.com [219.79.101.6])
+        by mx.google.com with ESMTPS id j31sm1404550waf.49.2009.08.21.07.52.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 21 Aug 2009 07:52:02 -0700 (PDT)
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126729>
 
->
-> =A0size_t
-> -regerror (errcode, preg, errbuf, errbuf_size)
-> - =A0 =A0int errcode;
-> - =A0 =A0const regex_t *preg;
-> - =A0 =A0char *errbuf;
-> - =A0 =A0size_t errbuf_size;
-> +regerror(int errcode, const regex_t *preg,
-> + =A0 =A0 =A0 =A0char *errbuf, size_t errbuf_size)
-> =A0{
+How to abort a merge if it said there are conflicts but I do not want
+to (or can not) resolve it for the moment.  I can not find the --abort
+option as that for git-rebase.
 
-The true reason is MSVC type define errcode as int.
-=46rank Li
+-- 
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
