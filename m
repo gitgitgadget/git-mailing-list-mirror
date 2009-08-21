@@ -1,81 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Aug 2009, #03; Thu, 20)
-Date: Fri, 21 Aug 2009 13:10:10 -0700
-Message-ID: <7vfxbldj31.fsf@alter.siamese.dyndns.org>
-References: <7veir5naq3.fsf@alter.siamese.dyndns.org>
- <F4C7A2F3-B030-449A-87AC-B54CA2B647B4@mailservices.uwaterloo.ca>
- <200908212006.16333.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 22:10:43 2009
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: [PATCH v2 05/14] Change regerror() definition from K&R style to ANSI C (C89)
+Date: Fri, 21 Aug 2009 22:10:57 +0200
+Message-ID: <0123e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
+References: <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	Marius Storm-Olsen <mstormo@gmail.com>
+To: lznuaa@gmail.com
+X-From: git-owner@vger.kernel.org Fri Aug 21 22:11:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeaRf-00050L-7e
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:10:43 +0200
+	id 1MeaSG-0005JO-HK
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:11:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932345AbZHUUKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 16:10:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbZHUUKT
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:10:19 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59409 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932123AbZHUUKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 16:10:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AD3713376;
-	Fri, 21 Aug 2009 16:10:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0/9q0APKs4FMoYbhA4OKI5iRjz0=; b=Pg81DQ
-	5M8vmej+3YGSjZxppl268f3EA7e2WYvUw76sBDs3qHF4mwhcBGtXiuJ+ScG/Nfn9
-	fzNb0gI05DJXKK6DgKXzktNaJUcM1zo/+PMmTJ2nY+3AlY3/ZIF0vsTVofuBD/XI
-	k8zI+vuxzUnVtzp81SX76GHMcRF09s4I5C5iA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cv+g/Q+WNP8R2OUkVGHU/yPDIk3IXRuT
-	3hKfJ1fhZThPBwVHBWKIr5tdQVNmqX1JZ2kP8zXtuxakyCAItFIvsNpi937RWIUt
-	C1wW3j3ITxNBViRMHWHDTSLz8xZ4r10F2U3sxXjDPW/UuBqAyqG/UAqfcRUAIXhW
-	XeK/Sqxtxd4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 354DB13375;
-	Fri, 21 Aug 2009 16:10:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78C0F13370; Fri, 21 Aug
- 2009 16:10:12 -0400 (EDT)
-In-Reply-To: <200908212006.16333.jnareb@gmail.com> (Jakub Narebski's message
- of "Fri\, 21 Aug 2009 20\:06\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A45DB866-8E8E-11DE-85DB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S932394AbZHUULL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 16:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbZHUULL
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:11:11 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:45756 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932299AbZHUULK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 16:11:10 -0400
+Received: by ewy3 with SMTP id 3so935658ewy.18
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 13:11:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=GyQL4ROJrbxiltkWMZfXdaxio5xar27dlVfMWp+KTs4=;
+        b=JLV9VrLz+PJ4S/GFBipFCR8pE6410urSEgDlj34EibKnAH0pw8JSvB1pHXzoxqmPmu
+         ehMF9oB4E6+mjzD46ENfK/b3wVAImPXwI9cJc6Wgt43t00NLfz2h2nxokTK/3nI7hD92
+         4Jb8fO3IWjYFiacLCltgU9zRb3sh+8TfWSuzQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=JAzNjeDB3hdK2F8qKDcWP4i69U9BbN/NXjYryX7aOP6EnFUo0/6f2iErlOqOG2X5xN
+         HciakRYrS5t75dogTQXY0jonrM9+pVqgCvqGNZjbD9RA0A+f5jrYXn4xAHVVGgyhhvjm
+         UzBRJLcvk8UGXY2SNzo5cUDW49oerfpVnB6Ug=
+Received: by 10.210.135.1 with SMTP id i1mr1959338ebd.48.1250885471197;
+        Fri, 21 Aug 2009 13:11:11 -0700 (PDT)
+Received: from localhost.localdomain ([62.70.27.104])
+        by mx.google.com with ESMTPS id 5sm3704973eyf.58.2009.08.21.13.11.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 21 Aug 2009 13:11:10 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.418.g33d56.dirty
+In-Reply-To: <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126747>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+From: Frank Li <lznuaa@gmail.com>
 
->> +cat >>gitweb_config.perl <<EOF
->> +
->> +\$feature{'snapshot'}{'override'} = 0;
->> +EOF
->
-> A trick: use '\EOF' and you don't need to escape $ against variable
-> expansion by shell.
->
->   +cat >>gitweb_config.perl <<\EOF
->   +
->   +$feature{'snapshot'}{'override'} = 0;
->   +EOF
+The MSVC headers typedef errcode as int, and thus confused the
+compiler in the K&R style definition. ANSI style deconfuses it.
 
-It is not a "trick" but is a basic courtesy for reviewers.  Even if you do
-not have any $ to worry about, _unless_ you actively know you would want
-variable substitution to happen, it is easier for readers if you signal
-the fact that the here-doc is verbatim by quoting the \EOF marker upfront.
+Signed-off-by: Frank Li <lznuaa@gmail.com>
+Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
+---
+ Frank, like this one better?
 
-Same thing for use of single quotes vs double quotes when writing strings,
-even though they tend to be small and much less of an issue.
+ compat/regex/regex.c |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/compat/regex/regex.c b/compat/regex/regex.c
+index 5ea0075..67d5c37 100644
+--- a/compat/regex/regex.c
++++ b/compat/regex/regex.c
+@@ -4852,11 +4852,8 @@ regexec (preg, string, nmatch, pmatch, eflags)
+    from either regcomp or regexec.   We don't use PREG here.  */
+ 
+ size_t
+-regerror (errcode, preg, errbuf, errbuf_size)
+-    int errcode;
+-    const regex_t *preg;
+-    char *errbuf;
+-    size_t errbuf_size;
++regerror(int errcode, const regex_t *preg,
++	 char *errbuf, size_t errbuf_size)
+ {
+   const char *msg;
+   size_t msg_size;
+-- 
+1.6.3.msysgit.0.18.gef407
