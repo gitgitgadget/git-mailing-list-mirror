@@ -1,87 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/14] Define SNPRINTF_SIZE_CORR=1 for Microsoft Visual
- C++
-Date: Fri, 21 Aug 2009 15:11:47 -0700
-Message-ID: <7vfxbkbyvw.fsf@alter.siamese.dyndns.org>
-References: <cover.1250860247.git.mstormo@gmail.com>
- <c899c41fdccfdc94ae294f1a50895ba0290a1ec3.1250860247.git.mstormo@gmail.com>
- <7vr5v4dgz0.fsf@alter.siamese.dyndns.org> <200908212341.37531.j6t@kdbg.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 0/6 RFC] Series to correct xutils incomplete line 
+	handling.
+Date: Sat, 22 Aug 2009 00:16:38 +0200
+Message-ID: <81b0412b0908211516l4db79249h180e50ffb8e2c1ab@mail.gmail.com>
+References: <1249428804.2774.52.camel@GWPortableVCS>
+	 <alpine.DEB.2.00.0908191713070.2012@GWPortableVCS>
+	 <alpine.DEB.2.00.0908211228000.2012@GWPortableVCS>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Marius Storm-Olsen" <mstormo@gmail.com>,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	git@vger.kernel.org, lznuaa@gmail.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Aug 22 00:12:16 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Thell Fowler <git@tbfowler.name>
+X-From: git-owner@vger.kernel.org Sat Aug 22 00:16:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MecLG-00023P-MJ
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 00:12:15 +0200
+	id 1MecPf-0003Xu-9c
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 00:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932869AbZHUWME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 18:12:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932859AbZHUWMD
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 18:12:03 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53738 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932390AbZHUWMC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 18:12:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6491213F07;
-	Fri, 21 Aug 2009 18:12:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NW69cbqp6L9GQDXDvKUY1ngF0DM=; b=ffE30w
-	sksUW4LZAgfNOkg2KvXiDBHrSRqDmwbiTDkX7E9b3HmavSpRNP9k65cXGztAJbOu
-	U2E4r6naqLq3rp9dn1YzSOxYGj3f2T5bQY40Zr9SzHj7qf+GsKiyuX108/FsamCH
-	ratHR71HgFFiROUASbnuaJgRqrq+jZX+gLHpM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cv1kCpZmrT9VisoZZurTz5p7SOnwe8tV
-	LGC5lLbyJ8dbDmBL5kMob4c9nFDHyiAAQmN0VYzO8UbpLnBBd7slUn5G3ryRsIkV
-	ZbNgseV7KHgOkJG6rPyCIwKLiuIU0cQOxBLrpDx9cWncCFgS5ahbIkKNtWFTQ1wG
-	jbXdzCI/g7A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 08B6A13F03;
-	Fri, 21 Aug 2009 18:11:56 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0C53613F01; Fri, 21 Aug
- 2009 18:11:48 -0400 (EDT)
-In-Reply-To: <200908212341.37531.j6t@kdbg.org> (Johannes Sixt's message of
- "Fri\, 21 Aug 2009 23\:41\:37 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A3636198-8E9F-11DE-B4D0-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754458AbZHUWQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 18:16:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbZHUWQi
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 18:16:38 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:58233 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514AbZHUWQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 18:16:37 -0400
+Received: by ewy3 with SMTP id 3so1009841ewy.18
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 15:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jmxuVM20ZUADUibCBd0Rzhjl/L/fdCFuwirt4R+hlQk=;
+        b=AGa69saR1jQIdrtivQXdJE02iv8MTejgfxJ+IXs6ZrS57JgP00gVijHoseH1bFhqEv
+         DvxQVrnMLwRW2MsXus6gLfJJUCVysR8xbHr1XVtWllow9kwzhRnSNx86QjzMpPvw+n2b
+         ZiujN38EhiYynxWBusb0DbuifwqI0PEscJrJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TYA23zdcGQwispYVlxFZ9yF8AlhPY0pGXD/Elw6dCEpA1pO7f4pUyxanlBw4CaPkLo
+         l9Ym3Q1fCD/lAFJW9SzgwpryrTN+ZKbHveklE7I+aL/WyOeL13USADdmhJzbUhZEcBc0
+         erJrdULp97vNqc1ZecBYr2KnFFtIndQNnKVSY=
+Received: by 10.210.43.10 with SMTP id q10mr1788488ebq.23.1250892998254; Fri, 
+	21 Aug 2009 15:16:38 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.0908211228000.2012@GWPortableVCS>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126765>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Aug 21, 2009 at 19:39, Thell Fowler<git@tbfowler.name> wrote:
+> What is _REALLY_ odd is that it didn't make any tests fail in the test
+> dir using master, next, and pu.
 
-> Not quite. The parameter *is* the size of the buffer and vsnprintf does not 
-> write beyond the buffer. However, it has the awkward behavior that if the 
-> buffer is too short by exactly one byte...
+The test suite has a very good coverage, but it surely is not complete.
 
-Thanks; I was fooled by the leading comment.  How about ...
+> Perhaps someone can explain what I did wrong when testing?
+>
+> git checkout master
+> make -s clean && make -s all && make -s install && cd t && make
 
- compat/snprintf.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+This should have worked. Although I prefer just:
 
-diff --git a/compat/snprintf.c b/compat/snprintf.c
-index 6c0fb05..4d07087 100644
---- a/compat/snprintf.c
-+++ b/compat/snprintf.c
-@@ -3,7 +3,8 @@
- /*
-  * The size parameter specifies the available space, i.e. includes
-  * the trailing NUL byte; but Windows's vsnprintf expects the
-- * number of characters to write without the trailing NUL.
-+ * number of characters to write, and does not necessarily write the
-+ * trailing NUL.
-  */
- #ifndef SNPRINTF_SIZE_CORR
- #if defined(__MINGW32__) && defined(__GNUC__) && __GNUC__ < 4
+  $ make -j4 && make test -j16
