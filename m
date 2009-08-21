@@ -1,69 +1,101 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH v4 04/19] Teach Git to respect skip-worktree bit 
-	(reading part)
-Date: Fri, 21 Aug 2009 16:19:01 +0700
-Message-ID: <fcaeb9bf0908210219h1c2a4702i81661ced00f39232@mail.gmail.com>
-References: <1250776033-12395-1-git-send-email-pclouds@gmail.com> 
-	<1250776033-12395-2-git-send-email-pclouds@gmail.com> <1250776033-12395-3-git-send-email-pclouds@gmail.com> 
-	<1250776033-12395-4-git-send-email-pclouds@gmail.com> <1250776033-12395-5-git-send-email-pclouds@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] test suite: add a check that all test numbers are unique
+Date: Fri, 21 Aug 2009 11:28:15 +0200
+Message-ID: <4A8E68AF.8040001@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 21 11:19:31 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 21 11:28:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeQHR-0006Si-TO
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 11:19:30 +0200
+	id 1MeQQD-0001S0-NF
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 11:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148AbZHUJTU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Aug 2009 05:19:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755153AbZHUJTU
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 05:19:20 -0400
-Received: from mail-yw0-f173.google.com ([209.85.211.173]:65439 "EHLO
-	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755111AbZHUJTT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2009 05:19:19 -0400
-Received: by ywh3 with SMTP id 3so815324ywh.22
-        for <git@vger.kernel.org>; Fri, 21 Aug 2009 02:19:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=OYM4m2xqlh6dWBDHf8dvjxBZLre8CzJ3TagSA9wfxqg=;
-        b=U2ebSUgxnBFTPrjKOb6UYV0TvQwXAxdzH62p0KcY2f8ad66I6QG+DGwh5y7F+BUA/j
-         5UPS7EDKQkngtDmgEIfooX9X0rehoOcnMy73jOIQoeMLRdLbLLGjH9ozgG/ExJsyxrjw
-         txUwcJoinryup4CyLULycrddtGsQ+k122QYY0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=aXBD+J7KP2mloTZJs7++GD9Y9rbGIzwapReqrivWr6GDybVSiws9J9vuqDw8drq+dP
-         +8m/4sb8nX1Exzo5yyQR6JPnNe2QxqXunAutff40DujZZ4fAtQz0q5YSe/mJ16SUGacE
-         i9LPmhhv3ZAgIOWHTOWWKiPc6WR5s1rwwzvAw=
-Received: by 10.100.233.19 with SMTP id f19mr773505anh.72.1250846361046; Fri, 
-	21 Aug 2009 02:19:21 -0700 (PDT)
-In-Reply-To: <1250776033-12395-5-git-send-email-pclouds@gmail.com>
+	id S1755198AbZHUJ2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 05:28:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755179AbZHUJ2Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 05:28:24 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:47516 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755174AbZHUJ2X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 05:28:23 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MeQPv-0006e1-SF; Fri, 21 Aug 2009 11:28:23 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8755C9F88; Fri, 21 Aug 2009 11:28:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126701>
 
-2009/8/20 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> grep: turn on --cached for files that is marked skip-worktree
-> ls-files: do not check for deleted file that is marked skip-worktree
-> update-index: ignore update request if it's skip-worktree, while stil=
-l allows removing
-> diff*: skip worktree version
+From: Johannes Sixt <j6t@kdbg.org>
 
-I kept reminding myself and still managed to miss it. skip-worktree
-bit is not completely independent from assume-unchanged. It shares
-CE_MATCH_IGNORE_VALID flag in ie_match_stat(). Should have mentioned
-that in commit log.
---=20
-Duy
+The test runs only if 'make all' is used. Its purpose is to alert our
+valued integrator if different branches are merged that happen to
+introduce the same test number.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/Makefile                |    1 +
+ t/check_unique_numbers.sh |   27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 0 deletions(-)
+ create mode 100755 t/check_unique_numbers.sh
+
+diff --git a/t/Makefile b/t/Makefile
+index bd09390..2a451b7 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -17,6 +17,7 @@ T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
+ TSVN = $(wildcard t91[0-9][0-9]-*.sh)
+
+ all: pre-clean
++	'$(SHELL_PATH_SQ)' ./check_unique_numbers.sh
+ 	$(MAKE) aggregate-results-and-cleanup
+
+ $(T):
+diff --git a/t/check_unique_numbers.sh b/t/check_unique_numbers.sh
+new file mode 100755
+index 0000000..e767275
+--- /dev/null
++++ b/t/check_unique_numbers.sh
+@@ -0,0 +1,27 @@
++#!/bin/sh
++
++# checks whether test case numbers are unique;
++# returns non-zero if any duplicates were found
++
++check_numbers () {
++	last= dup=
++	while read name
++	do
++		case $name in
++		t[0-9][0-9][0-9][0-9]-*.sh)
++			number=${name%%-*}
++			if test "$number" = "$last"; then
++				dup="$dup $number"
++			fi
++			last=$number
++			;;
++		esac
++	done
++	test -z "$dup" || {
++		echo >&2 "error: duplicate test numbers:" $dup
++		return 1
++	}
++}
++
++ls -1 |	# no wildcard to avoid overflow of command line
++check_numbers
+-- 
+1.6.4.204.g6aad7
