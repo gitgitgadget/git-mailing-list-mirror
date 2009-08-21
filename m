@@ -1,79 +1,81 @@
-From: Johan 't Hart <johanthart@gmail.com>
-Subject: Re: [msysGit] Re: [PATCH 01/14] Fix non-constant array creation
-Date: Fri, 21 Aug 2009 22:06:01 +0200
-Message-ID: <4A8EFE29.6010706@gmail.com>
-References: <cover.1250860247.git.mstormo@gmail.com>	 <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com>	 <40aa078e0908210641m660b003do6f637535293672ae@mail.gmail.com>	 <4A8EA53B.9080809@gmail.com> <9d6091530908210926p61aa5ea6ya6a7b71f940fdf5a@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2009, #03; Thu, 20)
+Date: Fri, 21 Aug 2009 13:10:10 -0700
+Message-ID: <7vfxbldj31.fsf@alter.siamese.dyndns.org>
+References: <7veir5naq3.fsf@alter.siamese.dyndns.org>
+ <F4C7A2F3-B030-449A-87AC-B54CA2B647B4@mailservices.uwaterloo.ca>
+ <200908212006.16333.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	git@vger.kernel.org, lznuaa@gmail.com
-To: Janos Laube <janos.dev@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 22:06:19 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 21 22:10:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeaNN-00038l-Na
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:06:18 +0200
+	id 1MeaRf-00050L-7e
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 22:10:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346AbZHUUGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 16:06:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbZHUUGH
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:06:07 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:54279 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932371AbZHUUGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 16:06:05 -0400
-Received: by mail-ew0-f207.google.com with SMTP id 3so932028ewy.18
-        for <git@vger.kernel.org>; Fri, 21 Aug 2009 13:06:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=wucHyTMt4Y5Tw+Zg5cn4fea0ppvsxz1rsYVssbzl6ko=;
-        b=cI1q5yeELTR6sB/xfMASyCq1KXgQYBEJrWzLmW4cq65cwbSbBYxMIP/62+cjg4jjto
-         8TFfMhNP2itOdk0edWtdkyohzdd5Ho9zihGjgRcRDwLY5Ny4sY6SCG+iHrcMwWhn77SV
-         RTxLOU2vUMBvebAmn9tGiWXPrk18HZldx+3VU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:newsgroups:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=YN/dFtxtQzXc9mB01h5KHxQgRkEJVZNLYfSsMmIM1Q+rX1Ig69AVN2dHJ4aav2xK0J
-         B9G4Lv7wO3HTksbvvomaRdQOsE4B20GXS5b3b2WM1gXR3zpeteYn7O6lbnP/IL8M2LPj
-         9fKcfFgJQGO5GAQiZthrZMIVJJmpGZxxNCELI=
-Received: by 10.210.105.12 with SMTP id d12mr313636ebc.40.1250885166991;
-        Fri, 21 Aug 2009 13:06:06 -0700 (PDT)
-Received: from ?192.168.2.100? (dsl-083-247-086-199.solcon.nl [83.247.86.199])
-        by mx.google.com with ESMTPS id 10sm2577072eyz.41.2009.08.21.13.06.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 21 Aug 2009 13:06:06 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.22 (Windows/20090605)
-Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
-In-Reply-To: <9d6091530908210926p61aa5ea6ya6a7b71f940fdf5a@mail.gmail.com>
+	id S932345AbZHUUKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 16:10:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932299AbZHUUKT
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 16:10:19 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59409 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932123AbZHUUKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 16:10:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6AD3713376;
+	Fri, 21 Aug 2009 16:10:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0/9q0APKs4FMoYbhA4OKI5iRjz0=; b=Pg81DQ
+	5M8vmej+3YGSjZxppl268f3EA7e2WYvUw76sBDs3qHF4mwhcBGtXiuJ+ScG/Nfn9
+	fzNb0gI05DJXKK6DgKXzktNaJUcM1zo/+PMmTJ2nY+3AlY3/ZIF0vsTVofuBD/XI
+	k8zI+vuxzUnVtzp81SX76GHMcRF09s4I5C5iA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cv+g/Q+WNP8R2OUkVGHU/yPDIk3IXRuT
+	3hKfJ1fhZThPBwVHBWKIr5tdQVNmqX1JZ2kP8zXtuxakyCAItFIvsNpi937RWIUt
+	C1wW3j3ITxNBViRMHWHDTSLz8xZ4r10F2U3sxXjDPW/UuBqAyqG/UAqfcRUAIXhW
+	XeK/Sqxtxd4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 354DB13375;
+	Fri, 21 Aug 2009 16:10:16 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78C0F13370; Fri, 21 Aug
+ 2009 16:10:12 -0400 (EDT)
+In-Reply-To: <200908212006.16333.jnareb@gmail.com> (Jakub Narebski's message
+ of "Fri\, 21 Aug 2009 20\:06\:12 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A45DB866-8E8E-11DE-85DB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126746>
 
-Janos Laube schreef:
->> MSVC compiles regex.c, so it must handle it. I'm fine with that.
-> 
-> msvc supports alloca, but regex.c doesn't make use of it per default
-> (you must define HAVE_ALLOCA_H in order to use it). basically _alloca
-> is fine for that task, but be aware that error handling on windows is
-> a bit compilicated. when _alloca fails it throws a structured
-> exception, you must reset the stack and use traditional memory
-> allocation as fallback. see
-> http://msdn.microsoft.com/en-us/library/wb1s57t5.aspx. :-)
-> 
+Jakub Narebski <jnareb@gmail.com> writes:
 
-alloca() throws an exception when out of stack memory. But what would 
-the dynamically alloced array do when it runs out of memory? (Supposing 
-that those arrays are also created on the stack, which I don't know...) 
-Is that realy more complicated?
+>> +cat >>gitweb_config.perl <<EOF
+>> +
+>> +\$feature{'snapshot'}{'override'} = 0;
+>> +EOF
+>
+> A trick: use '\EOF' and you don't need to escape $ against variable
+> expansion by shell.
+>
+>   +cat >>gitweb_config.perl <<\EOF
+>   +
+>   +$feature{'snapshot'}{'override'} = 0;
+>   +EOF
+
+It is not a "trick" but is a basic courtesy for reviewers.  Even if you do
+not have any $ to worry about, _unless_ you actively know you would want
+variable substitution to happen, it is easier for readers if you signal
+the fact that the here-doc is verbatim by quoting the \EOF marker upfront.
+
+Same thing for use of single quotes vs double quotes when writing strings,
+even though they tend to be small and much less of an issue.
