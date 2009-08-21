@@ -1,101 +1,126 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] test suite: add a check that all test numbers are unique
-Date: Fri, 21 Aug 2009 11:28:15 +0200
-Message-ID: <4A8E68AF.8040001@viscovery.net>
+From: Nigel Magnay <nigel.magnay@gmail.com>
+Subject: Rebase with filters
+Date: Fri, 21 Aug 2009 10:41:55 +0100
+Message-ID: <320075ff0908210241g64fe224dkba1c5d499663c84e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 11:28:37 2009
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 21 11:42:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeQQD-0001S0-NF
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 11:28:34 +0200
+	id 1MeQdJ-0006It-24
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 11:42:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755198AbZHUJ2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 05:28:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755179AbZHUJ2Y
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 05:28:24 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:47516 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755174AbZHUJ2X (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 05:28:23 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MeQPv-0006e1-SF; Fri, 21 Aug 2009 11:28:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8755C9F88; Fri, 21 Aug 2009 11:28:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1755220AbZHUJl4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 05:41:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932152AbZHUJl4
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 05:41:56 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:42075 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755149AbZHUJlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 05:41:55 -0400
+Received: by bwz19 with SMTP id 19so365027bwz.37
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 02:41:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=3+RS4D/zIXSIpwI1aL/Jye14c8xAeSaBwC3D6kfGIcM=;
+        b=B/CiIn+RsHAVAYey5Bx4OcpAmZqn6JdAj1p3OV6lFw36gNOsgQOYn7ZIhzAxYKmbxK
+         JJ5xqycEpPDB3qYAba5FbeFO30u9PGPRP5GARjvJixOdO9AFen134DF0l2H4bUcqbUX0
+         fsgg+5PnpQeMSBcI5//2n/u6Usr2af1iWmWLM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=rVtis+M8dmmac17ka6MYUZ/Qw8JVdWKSp6YsrpuprBbLqvuD0gGDfaHpjxKp5kJvcz
+         170ExdHFI/6npEA1K7eqBc124su9iOmxitdUDdQlBvClNvQAtmchpsO+uc/BhDysxo62
+         o57qgA5YlcntwhEczTZMT3+bF4KcOzybYLHT8=
+Received: by 10.103.126.33 with SMTP id d33mr371546mun.109.1250847715314; Fri, 
+	21 Aug 2009 02:41:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126702>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Hello. I seem to be doing something wrong - that has previously caused
+me to loose data (well, not really, the commit was still there, but it
+took me a while to notice - gotta love the non-destructive nature of
+git)
 
-The test runs only if 'make all' is used. Its purpose is to alert our
-valued integrator if different branches are merged that happen to
-introduce the same test number.
+I have a project that contains a file that, irritatingly, an IDE will
+always re-format on save, even if there are no changes. So, I use a
+clean and smudge filter to re-order it into a sane format that's
+easier to detect if there have actually been changes.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/Makefile                |    1 +
- t/check_unique_numbers.sh |   27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 0 deletions(-)
- create mode 100755 t/check_unique_numbers.sh
+So far, so good. But, not everyone always uses this filter, and I get
+some unexpected behavior when doing a 'git rebase'. For example - the
+repository starts with a commit that has been sanely-ordered. I make a
+change of several files, and commit locally - but when I come to push,
+I find that origin/master has moved.
 
-diff --git a/t/Makefile b/t/Makefile
-index bd09390..2a451b7 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -17,6 +17,7 @@ T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
- TSVN = $(wildcard t91[0-9][0-9]-*.sh)
+No worries, I do
+git fetch
+git rebase origin/master
 
- all: pre-clean
-+	'$(SHELL_PATH_SQ)' ./check_unique_numbers.sh
- 	$(MAKE) aggregate-results-and-cleanup
+Now I see the usual text going past, and including:
 
- $(T):
-diff --git a/t/check_unique_numbers.sh b/t/check_unique_numbers.sh
-new file mode 100755
-index 0000000..e767275
---- /dev/null
-+++ b/t/check_unique_numbers.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+
-+# checks whether test case numbers are unique;
-+# returns non-zero if any duplicates were found
-+
-+check_numbers () {
-+	last= dup=
-+	while read name
-+	do
-+		case $name in
-+		t[0-9][0-9][0-9][0-9]-*.sh)
-+			number=${name%%-*}
-+			if test "$number" = "$last"; then
-+				dup="$dup $number"
-+			fi
-+			last=$number
-+			;;
-+		esac
-+	done
-+	test -z "$dup" || {
-+		echo >&2 "error: duplicate test numbers:" $dup
-+		return 1
-+	}
-+}
-+
-+ls -1 |	# no wildcard to avoid overflow of command line
-+check_numbers
--- 
-1.6.4.204.g6aad7
+....
+error: realtime/modules/realtime-flex-components/.flexLibProperties:
+does not match index
+Using index info to reconstruct a base tree...
+<stdin>:59: trailing whitespace.
+
+<stdin>:81: trailing whitespace.
+			
+<stdin>:83: trailing whitespace.
+				parameters:[					
+<stdin>:98: space before tab in indent.
+   				if (item.value == null )
+<stdin>:99: space before tab in indent.
+   				{
+warning: squelched 214 whitespace errors
+warning: 219 lines add whitespace errors.
+Falling back to patching base and 3-way merge...
+error: Entry 'realtime/modules/realtime-flex-components/.flexLibProperties'
+not uptodate. Cannot merge.
+fatal: merging of trees 85b26f7c165c2a9d362340187b79527428b650e8 and
+3ab3078b55e17dcb1f3f4c8e6a65eff517eedb92 failed
+Failed to merge in the changes.
+Patch failed at 0001 More KPI/Report work
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+
+OK - looking a bit closer, someone committed .flexLibProperties
+without the filter. I guess that's the "does not match index". Let's
+merge..
+
+ (|REBASE) $ git mergetool
+No files need merging
+
+
+Interesting - I guess there were no conflicts when the filtering was
+all done. Let's just look at the status..
+
+ (|REBASE) $ git status
+# Not currently on any branch.
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   realtime/modules/realtime-flex-components/.flexLibProperties
+
+
+Eek... Where's the rest of my files?!
+
+My guess is that the "error" reported further up ought to terminate
+the rebase without giving me the "When you have resolved this problem
+run "git rebase --continue" because otherwise I end up loosing the
+majority of the changes in my rebased commit.. ?
