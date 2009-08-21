@@ -1,8 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/9] sequencer: let "git sequencer--helper" callers set
-	"allow_dirty"
-Date: Fri, 21 Aug 2009 07:49:54 +0200
-Message-ID: <20090821055001.3726.56268.chriscool@tuxfamily.org>
+Subject: [PATCH v2 8/9] sequencer: add "--cherry-pick" option to "git
+	sequencer--helper"
+Date: Fri, 21 Aug 2009 07:49:59 +0200
+Message-ID: <20090821055001.3726.86553.chriscool@tuxfamily.org>
 References: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -15,75 +15,180 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeN6Z-0001bm-Iw
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 07:56:04 +0200
+	id 1MeN6a-0001bm-N7
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 07:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbZHUFzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 01:55:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbZHUFzr
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:55:47 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56357 "EHLO smtp3-g21.free.fr"
+	id S1753362AbZHUFzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 01:55:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZHUFzv
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:55:51 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56409 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752847AbZHUFzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 01:55:44 -0400
+	id S1753191AbZHUFzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 01:55:49 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 05E568180D7;
-	Fri, 21 Aug 2009 07:55:37 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 0890681810A;
+	Fri, 21 Aug 2009 07:55:39 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id C57BF818100;
-	Fri, 21 Aug 2009 07:55:34 +0200 (CEST)
-X-git-sha1: bbe07aba9d00218e4ddc302449b9c2e5fce0dff5 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id BEC1E81811F;
+	Fri, 21 Aug 2009 07:55:36 +0200 (CEST)
+X-git-sha1: d5a681eb25d8c0b19f5b81213d9784e68527e946 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126683>
 
-This flag can be set when using --reset-hard or --fast-forward, and
-in this case changes in the work tree will be kept.
+From: Stephan Beyer <s-beyer@gmx.net>
 
+This patch adds some code that comes from the sequencer GSoC project:
+
+git://repo.or.cz/git/sbeyer.git
+
+(commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
+
+Most of the code from do_cherry_pick() is taken from the
+sequencer insn_pick_act() function.
+
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-sequencer--helper.c |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+ builtin-sequencer--helper.c |   71 +++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 61 insertions(+), 10 deletions(-)
 
 diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
-index bd72f65..71a7fef 100644
+index 61a8f2e..291ba18 100644
 --- a/builtin-sequencer--helper.c
 +++ b/builtin-sequencer--helper.c
-@@ -18,8 +18,10 @@ static unsigned char head_sha1[20];
- 
- static const char * const git_sequencer_helper_usage[] = {
- 	"git sequencer--helper --make-patch <commit>",
--	"git sequencer--helper --reset-hard <commit> <reflog-msg> <verbosity>",
--	"git sequencer--helper --fast-forward <commit> <reflog-msg> <verbosity>",
-+	"git sequencer--helper --reset-hard <commit> <reflog-msg> "
-+		"<verbosity> [<allow-dirty>]",
-+	"git sequencer--helper --fast-forward <commit> <reflog-msg> "
-+		"<verbosity> [<allow-dirty>]",
+@@ -60,7 +60,8 @@ static const char * const git_sequencer_helper_usage[] = {
+ 		"<verbosity> [<allow-dirty>]",
+ 	"git sequencer--helper --fast-forward <commit> <reflog-msg> "
+ 		"<verbosity> [<allow-dirty>]",
+-	"git sequencer--helper --cherry-pick <commit> [<do-not-commit>]",
++	"git sequencer--helper --cherry-pick <commit> <reflog-msg> "
++		"<verbosity> [<do-not-commit>]",
  	NULL
  };
  
-@@ -247,7 +249,7 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
- 		unsigned char sha1[20];
- 		char *commit = ff_commit ? ff_commit : reset_commit;
+@@ -288,7 +289,7 @@ static int do_commit(unsigned char *parent_sha1)
  
--		if (argc != 2)
-+		if (argc != 2 && argc != 3)
+ 	if (update_ref(reflog, "HEAD", commit_sha1, NULL, 0, 0))
+ 		return error("Could not update HEAD to %s.",
+-						sha1_to_hex(commit_sha1));
++			     sha1_to_hex(commit_sha1));
+ 
+ 	return 0;
+ }
+@@ -408,6 +409,46 @@ static int write_commit_summary_into(const char *filename)
+ 	return 0;
+ }
+ 
++static int do_cherry_pick(char *cp_commit, int no_commit)
++{
++	struct commit *commit;
++	int failed;
++	const char *author;
++
++	if (get_sha1("HEAD", head_sha1))
++		return error("You do not have a valid HEAD.");
++
++	commit = get_commit(cp_commit);
++	if (!commit)
++		return 1;
++
++	set_pick_subject(cp_commit, commit);
++
++	failed = pick_commit(commit, 0, 0, &next_commit.summary);
++
++	set_message_source(sha1_to_hex(commit->object.sha1));
++	author = strstr(commit->buffer, "\nauthor ");
++	if (author)
++		set_author_info(author + 8);
++
++	/* We do not want extra Conflicts: lines on cherry-pick,
++	   so just take the old commit message. */
++	if (failed) {
++		strbuf_setlen(&next_commit.summary, 0);
++		strbuf_addstr(&next_commit.summary,
++			      strstr(commit->buffer, "\n\n") + 2);
++		rerere();
++		make_patch(commit);
++		write_commit_summary_into(MERGE_MSG);
++		return error(pick_help_msg(commit->object.sha1, 0));
++	}
++
++	if (!no_commit && do_commit(head_sha1))
++		return error("Could not commit.");
++
++	return 0;
++}
++
+ /**********************************************************************
+  * Builtin sequencer helper functions
+  */
+@@ -436,6 +477,7 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ 	char *patch_commit = NULL;
+ 	char *reset_commit = NULL;
+ 	char *ff_commit = NULL;
++	char *cp_commit = NULL;
+ 	struct option options[] = {
+ 		OPT_STRING(0, "make-patch", &patch_commit, "commit",
+ 			   "create a patch from commit"),
+@@ -443,6 +485,8 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ 			   "reset to commit"),
+ 		OPT_STRING(0, "fast-forward", &ff_commit, "commit",
+ 			   "fast forward to commit"),
++		OPT_STRING(0, "cherry-pick", &cp_commit, "commit",
++			   "cherry pick commit"),
+ 		OPT_END()
+ 	};
+ 
+@@ -459,19 +503,15 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 
+-	if (ff_commit || reset_commit) {
++	if (cp_commit || ff_commit || reset_commit) {
+ 		unsigned char sha1[20];
+-		char *commit = ff_commit ? ff_commit : reset_commit;
++		char *commit;
++		int opt_arg = 0;
+ 
+ 		if (argc != 2 && argc != 3)
  			usage_with_options(git_sequencer_helper_usage,
  					   options);
  
-@@ -263,6 +265,9 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
- 			return 1;
+-		if (get_sha1(commit, sha1)) {
+-			error("Could not find '%s'", commit);
+-			return 1;
+-		}
+-
+ 		reflog = (char *)argv[0];
+ 
+ 		if (parse_verbosity(argv[1])) {
+@@ -480,7 +520,18 @@ int cmd_sequencer__helper(int argc, const char **argv, const char *prefix)
  		}
  
-+		if (argc == 3 && *argv[2] && strcmp(argv[2], "0"))
-+			allow_dirty = 1;
+ 		if (argc == 3 && *argv[2] && strcmp(argv[2], "0"))
+-			allow_dirty = 1;
++			opt_arg = 1;
 +
++		if (cp_commit)
++			return do_cherry_pick(cp_commit, opt_arg);
++
++		allow_dirty = opt_arg;
++
++		commit = ff_commit ? ff_commit : reset_commit;
++		if (get_sha1(commit, sha1)) {
++			error("Could not find '%s'", commit);
++			return 1;
++		}
+ 
  		if (ff_commit)
  			return do_fast_forward(sha1);
- 		else
 -- 
 1.6.4.271.ge010d
