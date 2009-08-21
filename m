@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 5/9] revert: libify pick
-Date: Fri, 21 Aug 2009 07:49:56 +0200
-Message-ID: <20090821055001.3726.15854.chriscool@tuxfamily.org>
+Subject: [PATCH v2 7/9] sequencer: add "do_commit()" and related functions
+Date: Fri, 21 Aug 2009 07:49:58 +0200
+Message-ID: <20090821055001.3726.54463.chriscool@tuxfamily.org>
 References: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,713 +9,325 @@ Cc: git@vger.kernel.org,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 07:56:08 2009
+X-From: git-owner@vger.kernel.org Fri Aug 21 07:56:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeN6b-0001bm-En
+	id 1MeN6c-0001bm-EO
 	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 07:56:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbZHUFzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 01:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZHUFzx
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:55:53 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56405 "EHLO smtp3-g21.free.fr"
+	id S1753411AbZHUFz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 01:55:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZHUFzy
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:55:54 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56408 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753113AbZHUFzt (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753206AbZHUFzt (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 21 Aug 2009 01:55:49 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D337A8180D5;
-	Fri, 21 Aug 2009 07:55:38 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A12CC818131;
+	Fri, 21 Aug 2009 07:55:39 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 77EBD8180B5;
-	Fri, 21 Aug 2009 07:55:35 +0200 (CEST)
-X-git-sha1: 9c1545689274702a60fa4d27a83af155f7cb1304 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 5B69181811C;
+	Fri, 21 Aug 2009 07:55:36 +0200 (CEST)
+X-git-sha1: 00b7b28ecf63785863464432f0032a27b3e185e7 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090821054729.3726.5078.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126685>
 
 From: Stephan Beyer <s-beyer@gmx.net>
 
-This commit is made of code from the sequencer GSoC project:
+This patch adds some code that comes from the sequencer GSoC project:
 
 git://repo.or.cz/git/sbeyer.git
 
 (commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
 
-The goal of this commit is to abstract out pick functionnality
-into a new pick() function made of code from "builtin-revert.c".
+It adds "struct commit_info", the "next_commit" static variable and
+the following functions:
 
-The new pick() function is in a new "pick.c" file with an
-associated "pick.h".
+        - do_commit()
+        - set_author_info()
+        - set_message_source()
+        - set_pick_subject()
+        - write_commit_summary_into()
 
-This commit contains some changes suggested by Junio.
+This makes it possible to prepare and perform a commit.
 
-Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Compared to the sequencer project, the only change is that "mark"
+related (3 lines long) code has been removed from do_commit().
+
+    Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+    Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+    Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile         |    2 +
- builtin-revert.c |  272 +++++++++---------------------------------------------
- pick.c           |  210 +++++++++++++++++++++++++++++++++++++++++
- pick.h           |   13 +++
- 4 files changed, 269 insertions(+), 228 deletions(-)
- create mode 100644 pick.c
- create mode 100644 pick.h
+ builtin-sequencer--helper.c |  214 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 214 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 98dd01d..5e76083 100644
---- a/Makefile
-+++ b/Makefile
-@@ -445,6 +445,7 @@ LIB_H += pack-refs.h
- LIB_H += pack-revindex.h
- LIB_H += parse-options.h
- LIB_H += patch-ids.h
-+LIB_H += pick.h
- LIB_H += pkt-line.h
- LIB_H += progress.h
- LIB_H += quote.h
-@@ -533,6 +534,7 @@ LIB_OBJS += parse-options.o
- LIB_OBJS += patch-delta.o
- LIB_OBJS += patch-ids.o
- LIB_OBJS += path.o
-+LIB_OBJS += pick.o
- LIB_OBJS += pkt-line.o
- LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 151aa6a..4797ac5 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -1,18 +1,14 @@
- #include "cache.h"
- #include "builtin.h"
--#include "object.h"
- #include "commit.h"
- #include "tag.h"
--#include "wt-status.h"
--#include "run-command.h"
- #include "exec_cmd.h"
- #include "utf8.h"
- #include "parse-options.h"
--#include "cache-tree.h"
+diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
+index 71a7fef..61a8f2e 100644
+--- a/builtin-sequencer--helper.c
++++ b/builtin-sequencer--helper.c
+@@ -5,26 +5,69 @@
+ #include "refs.h"
  #include "diff.h"
- #include "revision.h"
- #include "rerere.h"
--#include "merge-recursive.h"
+ #include "unpack-trees.h"
++#include "string-list.h"
 +#include "pick.h"
++#include "rerere.h"
++#include "dir.h"
++#include "cache-tree.h"
++#include "utf8.h"
  
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -35,25 +31,23 @@ static const char * const cherry_pick_usage[] = {
+ #define SEQ_DIR "rebase-merge"
+ 
+ #define PATCH_FILE	git_path(SEQ_DIR "/patch")
++#define MERGE_MSG	git_path("MERGE_MSG")
++#define SQUASH_MSG	git_path("SQUASH_MSG")
++
++/**********************************************************************
++ * Data structures
++ */
++
++struct user_info {
++	const char *name;
++	const char *mail;
++	const char *time; /* "<timestamp> <timezone>" */
++};
++
++struct commit_info {
++	struct user_info author; /* author info */
++	struct user_info committer; /* not used, but for easy extendability */
++	const char *encoding; /* encoding */
++	char *subject; /* basically the first line of the summary */
++	struct strbuf summary; /* the commit message */
++	char *source; /* source of the commit message, either
++		       * "message", "merge", "squash" or a commit SHA1 */
++	char *patch; /* a patch */
++	struct string_list parents; /* list of parents' hex'ed sha1 ids */
++};
++
++/**********************************************************************
++ * Global variables
++ */
+ 
+ static char *reflog;
+ 
++static int squash_count = 0;
++
+ static int allow_dirty = 0, verbosity = 1, advice = 1;
+ 
+ static unsigned char head_sha1[20];
+ 
++static struct commit_info next_commit;
++
+ static const char * const git_sequencer_helper_usage[] = {
+ 	"git sequencer--helper --make-patch <commit>",
+ 	"git sequencer--helper --reset-hard <commit> <reflog-msg> "
+ 		"<verbosity> [<allow-dirty>]",
+ 	"git sequencer--helper --fast-forward <commit> <reflog-msg> "
+ 		"<verbosity> [<allow-dirty>]",
++	"git sequencer--helper --cherry-pick <commit> [<do-not-commit>]",
  	NULL
  };
  
--static int edit, no_replay, no_commit, mainline, signoff;
--static enum { REVERT, CHERRY_PICK } action;
-+static int edit, no_commit, mainline, signoff;
-+static int flags;
- static struct commit *commit;
- 
--static const char *me;
--
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
- static void parse_args(int argc, const char **argv)
++/**********************************************************************
++ * Sequencer functions
++ */
++
+ static int parse_and_init_tree_desc(const unsigned char *sha1,
+ 				    struct tree_desc *desc)
  {
- 	const char * const * usage_str =
--		action == REVERT ?  revert_usage : cherry_pick_usage;
-+		flags & PICK_REVERSE ? revert_usage : cherry_pick_usage;
- 	unsigned char sha1[20];
- 	const char *arg;
- 	int noop;
- 	struct option options[] = {
- 		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
- 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
--		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
-+		OPT_BIT('x', NULL, &flags, "append commit name when cherry-picking", PICK_ADD_NOTE),
- 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
- 		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
-@@ -77,42 +71,12 @@ static void parse_args(int argc, const char **argv)
- 		die ("'%s' does not point to a commit", arg);
+@@ -162,6 +205,157 @@ static void make_patch(struct commit *commit)
+ 	free(args);
  }
  
--static char *get_oneline(const char *message)
--{
--	char *result;
--	const char *p = message, *abbrev, *eol;
--	int abbrev_len, oneline_len;
--
--	if (!p)
--		die ("Could not read commit message of %s",
--				sha1_to_hex(commit->object.sha1));
--	while (*p && (*p != '\n' || p[1] != '\n'))
--		p++;
--
--	if (*p) {
--		p += 2;
--		for (eol = p + 1; *eol && *eol != '\n'; eol++)
--			; /* do nothing */
--	} else
--		eol = p;
--	abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
--	abbrev_len = strlen(abbrev);
--	oneline_len = eol - p;
--	result = xmalloc(abbrev_len + 5 + oneline_len);
--	memcpy(result, abbrev, abbrev_len);
--	memcpy(result + abbrev_len, "... ", 4);
--	memcpy(result + abbrev_len + 4, p, oneline_len);
--	result[abbrev_len + 4 + oneline_len] = '\0';
--	return result;
--}
--
- static char *get_encoding(const char *message)
- {
- 	const char *p = message, *eol;
- 
- 	if (!p)
--		die ("Could not read commit message of %s",
--				sha1_to_hex(commit->object.sha1));
-+		return NULL;
- 	while (*p && *p != '\n') {
- 		for (eol = p + 1; *eol && *eol != '\n'; eol++)
- 			; /* do nothing */
-@@ -128,30 +92,6 @@ static char *get_encoding(const char *message)
- 	return NULL;
- }
- 
--static struct lock_file msg_file;
--static int msg_fd;
--
--static void add_to_msg(const char *string)
--{
--	int len = strlen(string);
--	if (write_in_full(msg_fd, string, len) < 0)
--		die_errno ("Could not write to MERGE_MSG");
--}
--
--static void add_message_to_msg(const char *message)
--{
--	const char *p = message;
--	while (*p && (*p != '\n' || p[1] != '\n'))
--		p++;
--
--	if (!*p)
--		add_to_msg(sha1_to_hex(commit->object.sha1));
--
--	p += 2;
--	add_to_msg(p);
--	return;
--}
--
- static void set_author_ident_env(const char *message)
- {
- 	const char *p = message;
-@@ -214,7 +154,7 @@ static char *help_msg(const unsigned char *sha1)
- 	       "mark the corrected paths with 'git add <paths>' "
- 	       "or 'git rm <paths>' and commit the result.");
- 
--	if (action == CHERRY_PICK) {
-+	if (!(flags & PICK_REVERSE)) {
- 		sprintf(helpbuf + strlen(helpbuf),
- 			"\nWhen commiting, use the option "
- 			"'-c %s' to retain authorship and message.",
-@@ -223,187 +163,68 @@ static char *help_msg(const unsigned char *sha1)
- 	return helpbuf;
- }
- 
--static struct tree *empty_tree(void)
-+static void write_message(struct strbuf *msgbuf, const char *filename)
- {
--	struct tree *tree = xcalloc(1, sizeof(struct tree));
--
--	tree->object.parsed = 1;
--	tree->object.type = OBJ_TREE;
--	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
--	return tree;
-+	struct lock_file msg_file;
-+	int msg_fd;
-+	msg_fd = hold_lock_file_for_update(&msg_file, filename,
-+					   LOCK_DIE_ON_ERROR);
-+	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
-+		die_errno("Could not write to %s.", filename);
-+	strbuf_release(msgbuf);
-+	if (commit_lock_file(&msg_file) < 0)
-+		die("Error wrapping up %s", filename);
- }
- 
- static int revert_or_cherry_pick(int argc, const char **argv)
- {
--	unsigned char head[20];
--	struct commit *base, *next, *parent;
--	int i, index_fd, clean;
--	char *oneline, *reencoded_message = NULL;
--	const char *message, *encoding;
--	char *defmsg = git_pathdup("MERGE_MSG");
--	struct merge_options o;
--	struct tree *result, *next_tree, *base_tree, *head_tree;
--	static struct lock_file index_lock;
-+	const char *me;
-+	struct strbuf msgbuf;
-+	char *reencoded_message = NULL;
-+	const char *encoding;
++/* Commit current index with information next_commit onto parent_sha1. */
++static int do_commit(unsigned char *parent_sha1)
++{
 +	int failed;
- 
- 	git_config(git_default_config, NULL);
--	me = action == REVERT ? "revert" : "cherry-pick";
-+	me = flags & PICK_REVERSE ? "revert" : "cherry-pick";
- 	setenv(GIT_REFLOG_ACTION, me, 0);
- 	parse_args(argc, argv);
- 
--	/* this is copied from the shell script, but it's never triggered... */
--	if (action == REVERT && !no_replay)
--		die("revert is incompatible with replay");
--
- 	if (read_cache() < 0)
- 		die("git %s: failed to read the index", me);
--	if (no_commit) {
--		/*
--		 * We do not intend to commit immediately.  We just want to
--		 * merge the differences in, so let's compute the tree
--		 * that represents the "current" state for merge-recursive
--		 * to work on.
--		 */
--		if (write_cache_as_tree(head, 0, NULL))
--			die ("Your index file is unmerged.");
--	} else {
--		if (get_sha1("HEAD", head))
--			die ("You do not have a valid HEAD");
--		if (index_differs_from("HEAD", 0))
--			die ("Dirty index: cannot %s", me);
--	}
--	discard_cache();
--
--	index_fd = hold_locked_index(&index_lock, 1);
-+	if (!no_commit && index_differs_from("HEAD", 0))
-+		die ("Dirty index: cannot %s", me);
- 
--	if (!commit->parents) {
--		if (action == REVERT)
--			die ("Cannot revert a root commit");
--		parent = NULL;
--	}
--	else if (commit->parents->next) {
--		/* Reverting or cherry-picking a merge commit */
--		int cnt;
--		struct commit_list *p;
--
--		if (!mainline)
--			die("Commit %s is a merge but no -m option was given.",
--			    sha1_to_hex(commit->object.sha1));
--
--		for (cnt = 1, p = commit->parents;
--		     cnt != mainline && p;
--		     cnt++)
--			p = p->next;
--		if (cnt != mainline || !p)
--			die("Commit %s does not have parent %d",
--			    sha1_to_hex(commit->object.sha1), mainline);
--		parent = p->item;
--	} else if (0 < mainline)
--		die("Mainline was specified but commit %s is not a merge.",
--		    sha1_to_hex(commit->object.sha1));
--	else
--		parent = commit->parents->item;
--
--	if (!(message = commit->buffer))
--		die ("Cannot get commit message for %s",
-+	if (!commit->buffer)
-+		return error("Cannot get commit message for %s",
- 				sha1_to_hex(commit->object.sha1));
--
--	if (parent && parse_commit(parent) < 0)
--		die("%s: cannot parse parent commit %s",
--		    me, sha1_to_hex(parent->object.sha1));
--
--	/*
--	 * "commit" is an existing commit.  We would want to apply
--	 * the difference it introduces since its first parent "prev"
--	 * on top of the current HEAD if we are cherry-pick.  Or the
--	 * reverse of it if we are revert.
--	 */
--
--	msg_fd = hold_lock_file_for_update(&msg_file, defmsg,
--					   LOCK_DIE_ON_ERROR);
--
--	encoding = get_encoding(message);
-+	encoding = get_encoding(commit->buffer);
- 	if (!encoding)
- 		encoding = "UTF-8";
- 	if (!git_commit_encoding)
- 		git_commit_encoding = "UTF-8";
--	if ((reencoded_message = reencode_string(message,
-+	if ((reencoded_message = reencode_string(commit->buffer,
- 					git_commit_encoding, encoding)))
--		message = reencoded_message;
--
--	oneline = get_oneline(message);
--
--	if (action == REVERT) {
--		char *oneline_body = strchr(oneline, ' ');
-+		commit->buffer = reencoded_message;
- 
--		base = commit;
--		next = parent;
--		add_to_msg("Revert \"");
--		add_to_msg(oneline_body + 1);
--		add_to_msg("\"\n\nThis reverts commit ");
--		add_to_msg(sha1_to_hex(commit->object.sha1));
--
--		if (commit->parents->next) {
--			add_to_msg(", reversing\nchanges made to ");
--			add_to_msg(sha1_to_hex(parent->object.sha1));
--		}
--		add_to_msg(".\n");
--	} else {
--		base = parent;
--		next = commit;
--		set_author_ident_env(message);
--		add_message_to_msg(message);
--		if (no_replay) {
--			add_to_msg("(cherry picked from commit ");
--			add_to_msg(sha1_to_hex(commit->object.sha1));
--			add_to_msg(")\n");
--		}
--	}
--
--	read_cache();
--	init_merge_options(&o);
--	o.branch1 = "HEAD";
--	o.branch2 = oneline;
--
--	head_tree = parse_tree_indirect(head);
--	next_tree = next ? next->tree : empty_tree();
--	base_tree = base ? base->tree : empty_tree();
--
--	clean = merge_trees(&o,
--			    head_tree,
--			    next_tree, base_tree, &result);
--
--	if (active_cache_changed &&
--	    (write_cache(index_fd, active_cache, active_nr) ||
--	     commit_locked_index(&index_lock)))
--		die("%s: Unable to write new index file", me);
--	rollback_lock_file(&index_lock);
--
--	if (!clean) {
--		add_to_msg("\nConflicts:\n\n");
--		for (i = 0; i < active_nr;) {
--			struct cache_entry *ce = active_cache[i++];
--			if (ce_stage(ce)) {
--				add_to_msg("\t");
--				add_to_msg(ce->name);
--				add_to_msg("\n");
--				while (i < active_nr && !strcmp(ce->name,
--						active_cache[i]->name))
--					i++;
--			}
--		}
--		if (commit_lock_file(&msg_file) < 0)
--			die ("Error wrapping up %s", defmsg);
-+	failed = pick_commit(commit, mainline, flags, &msgbuf);
-+	if (failed < 0) {
-+		exit(1);
-+	} else if (failed > 0) {
- 		fprintf(stderr, "Automatic %s failed.%s\n",
- 			me, help_msg(commit->object.sha1));
-+		write_message(&msgbuf, git_path("MERGE_MSG"));
- 		rerere();
- 		exit(1);
- 	}
--	if (commit_lock_file(&msg_file) < 0)
--		die ("Error wrapping up %s", defmsg);
-+	if (!(flags & PICK_REVERSE))
-+		set_author_ident_env(commit->buffer);
-+	free(reencoded_message);
++	unsigned char tree_sha1[20];
++	unsigned char commit_sha1[20];
++	struct strbuf sbuf;
++	const char *reencoded = NULL;
 +
- 	fprintf(stderr, "Finished one %s.\n", me);
- 
-+	write_message(&msgbuf, git_path("MERGE_MSG"));
++	if (squash_count) {
++		squash_count = 0;
++		if (file_exists(SQUASH_MSG))
++			unlink(SQUASH_MSG);
++	}
 +
- 	/*
--	 *
- 	 * If we are cherry-pick, and if the merge did not result in
- 	 * hand-editing, we will hit this commit and inherit the original
- 	 * author date and name.
-@@ -421,14 +242,11 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 			args[i++] = "-s";
- 		if (!edit) {
- 			args[i++] = "-F";
--			args[i++] = defmsg;
-+			args[i++] = git_path("MERGE_MSG");
- 		}
- 		args[i] = NULL;
- 		return execv_git_cmd(args);
- 	}
--	free(reencoded_message);
--	free(defmsg);
--
- 	return 0;
- }
- 
-@@ -436,14 +254,12 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- {
- 	if (isatty(0))
- 		edit = 1;
--	no_replay = 1;
--	action = REVERT;
-+	flags = PICK_REVERSE | PICK_ADD_NOTE;
- 	return revert_or_cherry_pick(argc, argv);
- }
- 
- int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- {
--	no_replay = 0;
--	action = CHERRY_PICK;
-+	flags = 0;
- 	return revert_or_cherry_pick(argc, argv);
- }
-diff --git a/pick.c b/pick.c
-new file mode 100644
-index 0000000..058b877
---- /dev/null
-+++ b/pick.c
-@@ -0,0 +1,210 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "run-command.h"
-+#include "cache-tree.h"
-+#include "pick.h"
-+#include "merge-recursive.h"
++	if (!index_differs_from("HEAD", 0) &&
++	    !next_commit.parents.nr)
++		return error("No changes! Do you really want an empty commit?");
 +
-+static struct commit *commit;
++	if (!next_commit.author.name || !next_commit.author.mail)
++		return error("Internal error: Author information not set properly.");
 +
-+static char *get_oneline(const char *message)
-+{
-+	char *result;
-+	const char *p = message, *abbrev, *eol;
-+	int abbrev_len, oneline_len;
++	if (write_cache_as_tree(tree_sha1, 0, NULL))
++		return 1;
 +
-+	if (!p)
-+		return NULL;
-+	while (*p && (*p != '\n' || p[1] != '\n'))
-+		p++;
++	if (!next_commit.encoding)
++		next_commit.encoding = xstrdup("utf-8");
++	if (!git_commit_encoding)
++		git_commit_encoding = "utf-8";
 +
-+	if (*p) {
-+		p += 2;
-+		for (eol = p + 1; *eol && *eol != '\n'; eol++)
-+			; /* do nothing */
-+	} else
-+		eol = p;
-+	abbrev = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
-+	abbrev_len = strlen(abbrev);
-+	oneline_len = eol - p;
-+	result = xmalloc(abbrev_len + 5 + oneline_len);
-+	memcpy(result, abbrev, abbrev_len);
-+	memcpy(result + abbrev_len, "... ", 4);
-+	memcpy(result + abbrev_len + 4, p, oneline_len);
-+	result[abbrev_len + 4 + oneline_len] = '\0';
-+	return result;
-+}
++	strbuf_init(&sbuf, 8192); /* should avoid reallocs for the headers */
++	strbuf_addf(&sbuf, "tree %s\n", sha1_to_hex(tree_sha1));
++	if (parent_sha1)
++		strbuf_addf(&sbuf, "parent %s\n", sha1_to_hex(parent_sha1));
++	if (next_commit.parents.nr) {
++		int i;
++		for (i = 0; i < next_commit.parents.nr; ++i)
++			strbuf_addf(&sbuf, "parent %s\n",
++					next_commit.parents.items[i].string);
++	}
++	if (!next_commit.author.time) {
++		char time[50];
++		datestamp(time, sizeof(time));
++		next_commit.author.time = xstrdup(time);
++	}
 +
-+static void add_message_to_msg(struct strbuf *msg, const char *message)
-+{
-+	const char *p = message;
-+	while (*p && (*p != '\n' || p[1] != '\n'))
-+		p++;
++	stripspace(&next_commit.summary, 1);
 +
-+	if (!*p)
-+		strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
++	/* if encodings differ, reencode whole buffer */
++	if (strcasecmp(git_commit_encoding, next_commit.encoding)) {
++		if ((reencoded = reencode_string(next_commit.author.name,
++				git_commit_encoding, next_commit.encoding))) {
++			free((void *)next_commit.author.name);
++			next_commit.author.name = reencoded;
++		}
++		if ((reencoded = reencode_string(next_commit.summary.buf,
++				git_commit_encoding, next_commit.encoding))) {
++			strbuf_reset(&next_commit.summary);
++			strbuf_addstr(&next_commit.summary, reencoded);
++		}
++	}
++	strbuf_addf(&sbuf, "author %s <%s> %s\n", next_commit.author.name,
++			next_commit.author.mail, next_commit.author.time);
++	strbuf_addf(&sbuf, "committer %s\n", git_committer_info(0));
++	if (!is_encoding_utf8(git_commit_encoding))
++		strbuf_addf(&sbuf, "encoding %s\n", git_commit_encoding);
++	strbuf_addch(&sbuf, '\n');
++	strbuf_addbuf(&sbuf, &next_commit.summary);
++	if (sbuf.buf[sbuf.len-1] != '\n')
++		strbuf_addch(&sbuf, '\n');
 +
-+	p += 2;
-+	strbuf_addstr(msg, p);
-+	return;
-+}
++	failed = write_sha1_file(sbuf.buf, sbuf.len, commit_type, commit_sha1);
++	strbuf_release(&sbuf);
++	if (failed)
++		return 1;
 +
-+static struct tree *empty_tree(void)
-+{
-+	struct tree *tree = xcalloc(1, sizeof(struct tree));
++	if (verbosity > 1)
++		printf("Created %scommit %s\n",
++			parent_sha1 || next_commit.parents.nr ? "" : "initial ",
++			sha1_to_hex(commit_sha1));
 +
-+	tree->object.parsed = 1;
-+	tree->object.type = OBJ_TREE;
-+	pretend_sha1_file(NULL, 0, OBJ_TREE, tree->object.sha1);
-+	return tree;
++	if (update_ref(reflog, "HEAD", commit_sha1, NULL, 0, 0))
++		return error("Could not update HEAD to %s.",
++						sha1_to_hex(commit_sha1));
++
++	return 0;
 +}
 +
 +/*
-+ * Pick changes introduced by "commit" argument into current working
-+ * tree and index.
-+ *
-+ * Return 0 on success.
-+ * Return negative value on error before picking,
-+ * and a positive value after picking,
-+ * and return 1 if and only if a conflict occurs but no other error.
++ * Fill next_commit.author according to ident.
++ * Ident may have one of the following forms:
++ * 	"name <e-mail> timestamp timezone\n..."
++ * 	"name <e-mail> timestamp timezone"
++ * 	"name <e-mail>"
 + */
-+int pick_commit(struct commit *pick_commit, int mainline, int flags,
-+		struct strbuf *msg)
++static void set_author_info(const char *ident)
 +{
-+	unsigned char head[20];
-+	struct commit *base, *next, *parent;
-+	int i, index_fd, clean;
-+	int ret = 0;
-+	char *oneline;
-+	const char *message;
-+	struct merge_options o;
-+	struct tree *result, *next_tree, *base_tree, *head_tree;
-+	static struct lock_file index_lock;
++	const char *tmp1 = strstr(ident, " <");
++	const char *tmp2;
++	char *data;
++	if (!tmp1)
++		return;
++	tmp2 = strstr(tmp1+2, ">");
++	if (!tmp2)
++		return;
++	if (tmp2[1] != 0 && tmp2[1] != ' ')
++		return;
 +
-+	strbuf_init(msg, 0);
-+	commit = pick_commit;
++	data = xmalloc(strlen(ident)); /* a trivial upper bound */
 +
-+	/*
-+	 * Let's compute the tree that represents the "current" state
-+	 * for merge-recursive to work on.
-+	 */
-+	if (write_cache_as_tree(head, 0, NULL))
-+		return error("Your index file is unmerged.");
-+	discard_cache();
++	snprintf(data, tmp1-ident+1, "%s", ident);
++	next_commit.author.name = xstrdup(data);
++	snprintf(data, tmp2-tmp1-1, "%s", tmp1+2);
++	next_commit.author.mail = xstrdup(data);
 +
-+	index_fd = hold_locked_index(&index_lock, 0);
-+	if (index_fd < 0)
-+		return error("Unable to create locked index: %s",
-+			     strerror(errno));
-+
-+	if (!commit->parents) {
-+		if (flags & PICK_REVERSE)
-+			return error("Cannot revert a root commit");
-+		parent = NULL;
-+	}
-+	else if (commit->parents->next) {
-+		/* Reverting or cherry-picking a merge commit */
-+		int cnt;
-+		struct commit_list *p;
-+
-+		if (!mainline)
-+			return error("Commit %s is a merge but no mainline was given.",
-+				     sha1_to_hex(commit->object.sha1));
-+
-+		for (cnt = 1, p = commit->parents;
-+		     cnt != mainline && p;
-+		     cnt++)
-+			p = p->next;
-+		if (cnt != mainline || !p)
-+			return error("Commit %s does not have parent %d",
-+				     sha1_to_hex(commit->object.sha1),
-+				     mainline);
-+		parent = p->item;
-+	} else if (0 < mainline)
-+		return error("Mainline was specified but commit %s is not a merge.",
-+			     sha1_to_hex(commit->object.sha1));
-+	else
-+		parent = commit->parents->item;
-+
-+	if (!(message = commit->buffer))
-+		return error("Cannot get commit message for %s",
-+			     sha1_to_hex(commit->object.sha1));
-+
-+	if (parent && parse_commit(parent) < 0)
-+		return error("Cannot parse parent commit %s",
-+			     sha1_to_hex(parent->object.sha1));
-+
-+	oneline = get_oneline(message);
-+
-+	if (flags & PICK_REVERSE) {
-+		char *oneline_body = strchr(oneline, ' ');
-+
-+		base = commit;
-+		next = parent;
-+		strbuf_addstr(msg, "Revert \"");
-+		strbuf_addstr(msg, oneline_body + 1);
-+		strbuf_addstr(msg, "\"\n\nThis reverts commit ");
-+		strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
-+
-+		if (commit->parents->next) {
-+			strbuf_addstr(msg, ", reversing\nchanges made to ");
-+			strbuf_addstr(msg, sha1_to_hex(parent->object.sha1));
-+		}
-+		strbuf_addstr(msg, ".\n");
-+	} else {
-+		base = parent;
-+		next = commit;
-+		add_message_to_msg(msg, message);
-+		if (flags & PICK_ADD_NOTE) {
-+			strbuf_addstr(msg, "(cherry picked from commit ");
-+			strbuf_addstr(msg, sha1_to_hex(commit->object.sha1));
-+			strbuf_addstr(msg, ")\n");
-+		}
++	if (tmp2[1] == 0) {
++		free(data);
++		return;
 +	}
 +
-+	read_cache();
-+	init_merge_options(&o);
-+	o.branch1 = "HEAD";
-+	o.branch2 = oneline;
++	tmp1 = strpbrk(tmp2+2, "\r\n");
++	if (!tmp1)
++		tmp1 = tmp2 + strlen(tmp2);
 +
-+	head_tree = parse_tree_indirect(head);
-+	next_tree = next ? next->tree : empty_tree();
-+	base_tree = base ? base->tree : empty_tree();
-+
-+	clean = merge_trees(&o,
-+			    head_tree,
-+			    next_tree, base_tree, &result);
-+
-+	if (active_cache_changed &&
-+	    (write_cache(index_fd, active_cache, active_nr) ||
-+	     commit_locked_index(&index_lock))) {
-+		error("Unable to write new index file");
-+		return 2;
-+	}
-+	rollback_lock_file(&index_lock);
-+
-+	if (!clean) {
-+		strbuf_addstr(msg, "\nConflicts:\n\n");
-+		for (i = 0; i < active_nr;) {
-+			struct cache_entry *ce = active_cache[i++];
-+			if (ce_stage(ce)) {
-+				strbuf_addstr(msg, "\t");
-+				strbuf_addstr(msg, ce->name);
-+				strbuf_addstr(msg, "\n");
-+				while (i < active_nr && !strcmp(ce->name,
-+						active_cache[i]->name))
-+					i++;
-+			}
-+		}
-+		ret = 1;
-+	}
-+	free(oneline);
-+
-+	discard_cache();
-+	if (read_cache() < 0) {
-+		error("Cannot read the index");
-+		return 2;
-+	}
-+
-+	return ret;
++	snprintf(data, tmp1-tmp2-1, "%s", tmp2+2);
++	next_commit.author.time = xstrdup(data);
++	free(data);
 +}
-diff --git a/pick.h b/pick.h
-new file mode 100644
-index 0000000..7a74ad8
---- /dev/null
-+++ b/pick.h
-@@ -0,0 +1,13 @@
-+#ifndef PICK_H
-+#define PICK_H
 +
-+#include "commit.h"
++static void set_message_source(const char *source)
++{
++	if (next_commit.source)
++		free(next_commit.source);
++	next_commit.source = xstrdup(source);
++}
 +
-+/* Pick flags: */
-+#define PICK_REVERSE   1 /* pick the reverse changes ("revert") */
-+#define PICK_ADD_NOTE  2 /* add note about original commit (unless conflict) */
-+/* We don't need a PICK_QUIET. This is done by
-+ *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
-+extern int pick_commit(struct commit *commit, int mainline, int flags, struct strbuf *msg);
++/* Set subject, an information for the case of conflict */
++static void set_pick_subject(const char *hex, struct commit *commit)
++{
++	const char *tmp = strstr(commit->buffer, "\n\n");
++	if (tmp) {
++		const char *eol;
++		int len = strlen(hex);
++		tmp += 2;
++		eol = strchrnul(tmp, '\n');
++		next_commit.subject = xmalloc(eol - tmp + len + 5);
++		snprintf(next_commit.subject, eol - tmp + len + 5, "%s... %s",
++								hex, tmp);
++	}
++}
 +
-+#endif
+ /* Return a commit object of "arg" */
+ static struct commit *get_commit(const char *arg)
+ {
+@@ -198,6 +392,26 @@ static int set_verbosity(int verbose)
+ 	return 0;
+ }
+ 
++static int write_commit_summary_into(const char *filename)
++{
++	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
++	int fd = hold_lock_file_for_update(lock, filename, 0);
++	if (fd < 0)
++		return error("Unable to create '%s.lock': %s", filename,
++							strerror(errno));
++	if (write_in_full(fd, next_commit.summary.buf,
++			      next_commit.summary.len) < 0)
++		return error("Could not write to %s: %s",
++						filename, strerror(errno));
++	if (commit_lock_file(lock) < 0)
++		return error("Error wrapping up %s", filename);
++	return 0;
++}
++
++/**********************************************************************
++ * Builtin sequencer helper functions
++ */
++
+ /* v should be "" or "t" or "\d" */
+ static int parse_verbosity(const char *v)
+ {
 -- 
 1.6.4.271.ge010d
