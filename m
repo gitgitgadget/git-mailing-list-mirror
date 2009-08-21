@@ -1,71 +1,76 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 03/14] Define SNPRINTF_SIZE_CORR=1 for Microsoft Visual C++
-Date: Fri, 21 Aug 2009 23:41:37 +0200
-Message-ID: <200908212341.37531.j6t@kdbg.org>
-References: <cover.1250860247.git.mstormo@gmail.com> <c899c41fdccfdc94ae294f1a50895ba0290a1ec3.1250860247.git.mstormo@gmail.com> <7vr5v4dgz0.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2009, #03; Thu, 20)
+Date: Fri, 21 Aug 2009 14:43:03 -0700
+Message-ID: <7vskfkc07s.fsf@alter.siamese.dyndns.org>
+References: <7veir5naq3.fsf@alter.siamese.dyndns.org>
+ <F4C7A2F3-B030-449A-87AC-B54CA2B647B4@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Marius Storm-Olsen" <mstormo@gmail.com>,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	git@vger.kernel.org, lznuaa@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 23:44:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Mark A Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Fri Aug 21 23:44:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mebu8-0008RI-OC
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 23:44:13 +0200
+	id 1MebuC-0008RI-JZ
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 23:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932386AbZHUVlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 17:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755017AbZHUVlj
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 17:41:39 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:25089 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754458AbZHUVli (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 17:41:38 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1F843A7EB0;
-	Fri, 21 Aug 2009 23:41:37 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 9D0C545597;
-	Fri, 21 Aug 2009 23:41:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vr5v4dgz0.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S932664AbZHUVnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 17:43:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932609AbZHUVnR
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 17:43:17 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52105 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932515AbZHUVnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 17:43:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 55F7013C86;
+	Fri, 21 Aug 2009 17:43:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=C33Tz8t4Sw6QFSLEP2FC38iCLGE=; b=L4yQ7R
+	X4xmWDIyRHyia9iyhC+P9KzRkkkIig9JB7G8vo7p+YrpTbIXLUaeLMhrAEkvE8C2
+	LLf95Xo4UautVcbXPjUk50gzWZrDOmm/ZsxnZhoO92CY/38rKY+mJ8JIcTgfo52p
+	oWPp+6e/uUva62B5u8F1viIWTMYq700PenJiE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dsmFAlmnTLiqKN0V6gBLSW5hxzV9S31Z
+	Xl7yqXb6BAS6/43omEIXfVQ3EQHnntGIwj2IjBuPK5fiNbWdsT/B9VjAXexozWCc
+	jShsg1rSii+KCmZ/TgkCO5z5wyjYz8C+ced8NjPtHHZQs4eMuaPdlajVA3pTzIa6
+	cEFbpCs/31k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 22E3213C85;
+	Fri, 21 Aug 2009 17:43:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 689EC13C7E; Fri, 21 Aug
+ 2009 17:43:07 -0400 (EDT)
+In-Reply-To: <F4C7A2F3-B030-449A-87AC-B54CA2B647B4@mailservices.uwaterloo.ca>
+ (Mark A. Rada's message of "Fri\, 21 Aug 2009 08\:40\:34 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9F4615BE-8E9B-11DE-86D3-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126762>
 
-On Freitag, 21. August 2009, Junio C Hamano wrote:
-> Marius Storm-Olsen <mstormo@gmail.com> writes:
-> > From: Frank Li <lznuaa@gmail.com>
-> >
-> > The Microsoft C runtime's vsnprintf function does not add NUL at
-> > the end of the buffer.
+Mark A Rada <marada@uwaterloo.ca> writes:
+
+> Unless I missed a case, the tests show that the extra condition check
+> that was added in the &git_snapshot routine is never actually executed,
+> because a disabled snapshot format is not added to @snapshot_fmts, which
+> is checked first.
 >
-> This contradicts the way I read the comment in compat/snprintf.c from
-> f4626df (Add target architecture MinGW., 2007-12-01).
->
-> As far as I can see, the correction is about the meaning of the size
-> parameter to the function, namely, that a broken implementation may
-> mistakenly think that it was told the maximum length of the meat of the
-> string to write, and it is allowed to append a NUL beyond the limit, when
-> the caller actually is telling it the size of the buffer.
+> snippet:
+> 5178     } elsif (!grep($_ eq $format, @snapshot_fmts)) {
+> 5179         die_error(403, "Unsupported snapshot format");
+> 5180     } elsif ($known_snapshot_formats{$format}{'disabled'}) {
+> 5181         die_error(403, "Snapshot format not allowed");
+> 5182     }
+> 5183
 
-Not quite. The parameter *is* the size of the buffer and vsnprintf does not 
-write beyond the buffer. However, it has the awkward behavior that if the 
-buffer is too short by exactly one byte, i.e. there is room for the complete 
-string, but not for the terminating NUL, then vsnprintf does not report an 
-error!
+True; filter_snapshot_fmts looks at 'disabled' first.
 
-Therefore, we tell vsnprintf that the buffer is shorter by one byte and always 
-write NUL in the last position so that we get a correctly terminated string 
-even in this case.
-
--- Hannes
+I do not mind keeping these two lines as belt-and-suspender, though.
