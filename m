@@ -1,135 +1,145 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 6/9] pick: libify "pick_help_msg()"
-Date: Fri, 21 Aug 2009 07:49:57 +0200
-Message-ID: <20090821055001.3726.98280.chriscool@tuxfamily.org>
-References: <20090821054729.3726.5078.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 21 07:56:37 2009
+From: Wilhansen Li <wil@nohakostudios.net>
+Subject: [PATCH] Add support for the Mongoose web server.
+Date: Fri, 21 Aug 2009 14:39:05 +0800
+Message-ID: <bc9549a50908202339h61525d3fo23199313cabe25e5@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 21 08:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeN77-0001oS-8o
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 07:56:37 +0200
+	id 1MeNmf-0006El-J2
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Aug 2009 08:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753447AbZHUF4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 01:56:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZHUF4E
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 01:56:04 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56406 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753040AbZHUFzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 01:55:49 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 3BDC88180F7;
-	Fri, 21 Aug 2009 07:55:38 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id F39E9818118;
-	Fri, 21 Aug 2009 07:55:35 +0200 (CEST)
-X-git-sha1: 002c48348b2bb104f04180638aa29b3834732cf5 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20090821054729.3726.5078.chriscool@tuxfamily.org>
+	id S1753266AbZHUGjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 02:39:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752796AbZHUGjZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 02:39:25 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:58015 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636AbZHUGjY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Aug 2009 02:39:24 -0400
+Received: by vws2 with SMTP id 2so450836vws.4
+        for <git@vger.kernel.org>; Thu, 20 Aug 2009 23:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=6MuQISIuK9jfL6Q+Cg2zeia5h8lCfoz/gCsb4rhTsiw=;
+        b=mQYMLP6ZiS3UcgquKxuVYN+xxDin1Cj4HsPFJkBVnSTnLoUCWEYc/mWgA2RYcRol5q
+         wKNXB/O63xtZWtYP3e6OOYhFcLeOd44ax8wnc7Jnp13tMo5kCfHuqLmmsx3Ynpdf/Ffj
+         c8G9CjzdwN2rLzUos8SQ7oFlN9V8KV0CvMyOA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        b=d2O045uwokNK7UWkZZcg6oIoXdhs/F2JaDOg0WhkIMkkn80jjeQdjYcLGiDwd2Cl31
+         rTGNE1VFD76l6Tmskpa6qtl1xIOKJGSn+CW/NWLWYCcpmKhQm9PIvHJyOHx3/MNaOgdM
+         MMEq42gVM1+g9j2u9IwvUk1Aka/gs6L1tSEz4=
+Received: by 10.220.70.34 with SMTP id b34mr144247vcj.58.1250836765073; Thu, 
+	20 Aug 2009 23:39:25 -0700 (PDT)
+X-Google-Sender-Auth: ea9d540c4d1d1cd0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126689>
 
-This function gives an help message when pick or revert failed.
+Mongoose (http://code.google.com/p/mongoose/) is a lightweight web
+server. It's just a single binary so it's a lot simpler to configure and
+install.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Wilhansen Li <wil@nohakostudios.net>
 ---
- builtin-revert.c |   23 +----------------------
- pick.c           |   22 ++++++++++++++++++++++
- pick.h           |    1 +
- 3 files changed, 24 insertions(+), 22 deletions(-)
+ git-instaweb.sh |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 53 insertions(+), 5 deletions(-)
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 4797ac5..e5250bd 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -142,27 +142,6 @@ static void set_author_ident_env(const char *message)
- 			sha1_to_hex(commit->object.sha1));
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 5f5cac7..2acf707 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -77,11 +77,30 @@ start_httpd () {
+ 	resolve_full_httpd
+
+ 	# don't quote $full_httpd, there can be arguments to it (-f)
+-	$full_httpd "$fqgitdir/gitweb/httpd.conf"
+-	if test $? != 0; then
+-		echo "Could not execute http daemon $httpd."
+-		exit 1
+-	fi
++	case "$httpd" in
++	*mongoose*)
++		#The mongoose server doesn't have a daemon mode so we'll have to fork it
++		$full_httpd "$fqgitdir/gitweb/httpd.conf" &
++		#Save the pid before doing anything else (we'll print it later)
++		pid=$!
++
++		if test $? != 0; then
++			echo "Could not execute http daemon $httpd."
++			exit 1
++		fi
++
++		cat > "$fqgitdir/pid" <<EOF
++$pid
++EOF
++		;;
++	*)
++		$full_httpd "$fqgitdir/gitweb/httpd.conf"
++		if test $? != 0; then
++			echo "Could not execute http daemon $httpd."
++			exit 1
++		fi
++		;;
++	esac
  }
- 
--static char *help_msg(const unsigned char *sha1)
--{
--	static char helpbuf[1024];
--	char *msg = getenv("GIT_CHERRY_PICK_HELP");
--
--	if (msg)
--		return msg;
--
--	strcpy(helpbuf, "  After resolving the conflicts,\n"
--	       "mark the corrected paths with 'git add <paths>' "
--	       "or 'git rm <paths>' and commit the result.");
--
--	if (!(flags & PICK_REVERSE)) {
--		sprintf(helpbuf + strlen(helpbuf),
--			"\nWhen commiting, use the option "
--			"'-c %s' to retain authorship and message.",
--			find_unique_abbrev(sha1, DEFAULT_ABBREV));
--	}
--	return helpbuf;
--}
--
- static void write_message(struct strbuf *msgbuf, const char *filename)
- {
- 	struct lock_file msg_file;
-@@ -211,7 +190,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		exit(1);
- 	} else if (failed > 0) {
- 		fprintf(stderr, "Automatic %s failed.%s\n",
--			me, help_msg(commit->object.sha1));
-+			me, pick_help_msg(commit->object.sha1, flags));
- 		write_message(&msgbuf, git_path("MERGE_MSG"));
- 		rerere();
- 		exit(1);
-diff --git a/pick.c b/pick.c
-index 058b877..4f882bb 100644
---- a/pick.c
-+++ b/pick.c
-@@ -208,3 +208,25 @@ int pick_commit(struct commit *pick_commit, int mainline, int flags,
- 
- 	return ret;
+
+ stop_httpd () {
+@@ -308,6 +327,32 @@ EOF
+ 	fi
  }
+
++mongoose_conf() {
++	cat > "$conf" <<EOF
++# Mongoose web server configuration file.
++# Lines starting with '#' and empty lines are ignored.
++# For detailed description of every option, visit
++# http://code.google.com/p/mongoose/wiki/MongooseManual
 +
-+char *pick_help_msg(const unsigned char *sha1, int flags)
-+{
-+	static char helpbuf[1024];
-+	char *msg = getenv("GIT_CHERRY_PICK_HELP");
++root		$fqgitdir/gitweb
++ports		$port
++index_files	gitweb.cgi
++#ssl_cert	$fqgitdir/gitweb/ssl_cert.pem
++error_log	$fqgitdir/gitweb/error.log
++access_log	$fqgitdir/gitweb/access.log
 +
-+	if (msg)
-+		return msg;
++#cgi setup
++cgi_env		PATH=/usr/local/bin:/usr/bin:/bin,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH
++cgi_interp	$PERL
++cgi_ext		cgi,pl
 +
-+	strcpy(helpbuf, "  After resolving the conflicts,\n"
-+	       "mark the corrected paths with 'git add <paths>' "
-+	       "or 'git rm <paths>' and commit the result.");
-+
-+	if (!(flags & PICK_REVERSE)) {
-+		sprintf(helpbuf + strlen(helpbuf),
-+			"\nWhen commiting, use the option "
-+			"'-c %s' to retain authorship and message.",
-+			find_unique_abbrev(sha1, DEFAULT_ABBREV));
-+	}
-+	return helpbuf;
++# mimetype mapping
++mime_types	.gz=application/x-gzip,.tar.gz=application/x-tgz,.tgz=application/x-tgz,.tar=application/x-tar,.zip=application/zip,.gif=image/gif,.jpg=image/jpeg,.jpeg=image/jpeg,.png=image/png,.css=text/css,.html=text/html,.htm=text/html,.js=text/javascript,.c=text/plain,.cpp=text/plain,.log=text/plain,.conf=text/plain,.text=text/plain,.txt=text/plain,.dtd=text/xml,.bz2=application/x-bzip,.tbz=application/x-bzip-compressed-tar,.tar.bz2=application/x-bzip-compressed-tar
++EOF
++#	test x"$local" = xtrue && echo 'server.bind = "127.0.0.1"' >> "$conf"
 +}
 +
-diff --git a/pick.h b/pick.h
-index 7a74ad8..115541a 100644
---- a/pick.h
-+++ b/pick.h
-@@ -9,5 +9,6 @@
- /* We don't need a PICK_QUIET. This is done by
-  *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
- extern int pick_commit(struct commit *commit, int mainline, int flags, struct strbuf *msg);
-+extern char *pick_help_msg(const unsigned char *sha1, int flags);
- 
- #endif
++
+ script='
+ s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
+ s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
+@@ -344,6 +389,9 @@ case "$httpd" in
+ webrick)
+ 	webrick_conf
+ 	;;
++*mongoose*)
++	mongoose_conf
++	;;
+ *)
+ 	echo "Unknown httpd specified: $httpd"
+ 	exit 1
 -- 
-1.6.4.271.ge010d
+1.6.4
