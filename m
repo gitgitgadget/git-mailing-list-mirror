@@ -1,81 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: git fetch --depth=* broken?
-Date: Sat, 22 Aug 2009 01:52:01 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908220106470.6044@xanadu.home>
+From: Ping Yin <pkufranky@gmail.com>
+Subject: Re: How to recover from "reset --hard"
+Date: Sat, 22 Aug 2009 14:06:42 +0800
+Message-ID: <46dff0320908212306v6b4aec03g761e1ee9035462c4@mail.gmail.com>
+References: <46dff0320908211953u2f63cdb4m9cab863266a03df7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Aug 22 07:52:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 22 08:06:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MejWU-0001qI-6S
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 07:52:18 +0200
+	id 1Mejka-0005KF-8J
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 08:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933135AbZHVFwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 01:52:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933104AbZHVFwI
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 01:52:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:14419 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932778AbZHVFwH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 01:52:07 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOR009FSKAPFF90@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 22 Aug 2009 01:52:01 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S933193AbZHVGGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 02:06:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933166AbZHVGGl
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 02:06:41 -0400
+Received: from mail-yx0-f175.google.com ([209.85.210.175]:46363 "EHLO
+	mail-yx0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933104AbZHVGGk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2009 02:06:40 -0400
+Received: by yxe5 with SMTP id 5so675995yxe.33
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 23:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=R9PjZ+ZDjeKIRxXTl5hqw3BAOzRq4SUPZ6Yvh23Hrfc=;
+        b=R4XcTYQ4C97A0T9J2glm/NgkuD0JwUYV+JxHaOSAgDf81R6oVXCKS5eakCkr7NuLEv
+         GtG94enEIcodFaUtjuPB94M6jUMg5MBgE3Xj8djMkRKU2sP39uXQR3/I3ek/NvYrU+gE
+         jNEOZNsjEOihTQbmLZp/02+zkJvwFnSCVjRGA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=j5Q4PK3Cq4A8AshgMpxZ4higoY5BOrk3MESjhXnqDgo2kuQKUVKBivmFEEuG7xXSDp
+         tnJjESfXKwrzjbUJEompokIPrL5lYAU/O+cVkOzwv0TaFcLwpaeDGScCpTrcckrvYgjx
+         YwMVwhq+ShX8lL7GtI4bWxiyTWhSR0oF+6ul0=
+Received: by 10.91.78.19 with SMTP id f19mr1642416agl.95.1250921202134; Fri, 
+	21 Aug 2009 23:06:42 -0700 (PDT)
+In-Reply-To: <46dff0320908211953u2f63cdb4m9cab863266a03df7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126798>
 
+On Sat, Aug 22, 2009 at 10:53 AM, Ping Yin<pkufranky@gmail.com> wrote:
+> After adding a file to index, i do a "reset --hard", then how do i
+> recovery the file?
+>
+> I want write all lost files to a directory and find it according to
+> the file size.
+>
+> Does "git fsck --lost-found" write this file to .git\lost-found\other ?
 
-try out:
-
-	git clone --depth=1 git://git.kernel.org/pub/scm/git/git
-	cd git
-	git fetch --depth=2
-
-It then silently fails, except for the return code of 1.
-
-With -v this is the same result.  Only if I remove --depth= do I get:
-
->From git://git.kernel.org/pub/scm/git/git
- = [up to date]      html       -> origin/html
- = [up to date]      maint      -> origin/maint
- = [up to date]      man        -> origin/man
- = [up to date]      master     -> origin/master
- = [up to date]      next       -> origin/next
- = [up to date]      pu         -> origin/pu
- = [up to date]      todo       -> origin/todo
-
-and a return code of 0.
-
-It seems that commit c6bc400585 is partly responsible for that 
-misbehavior.  At least reverting it makes the status list appear again 
-even with the presence of --depth=.
-
-But still, actual result isn't any better.  Using --depth=2 or 
---depth=1000 doesn't change anything, unless there is _also_ a ref that 
-was updated on the remote end.  Looks like the code is happy to conclude 
-that there is nothing to do if local refs match remote refs and never go 
-to talk further to the remote end ("no "shallow ..." nor "deepen ..." 
-are sent over the wire) despite the fact that --depth=1000 would 
-certainly have to trigger a pack transfer.
-
-I'm also surprised that such thing as simple deepening of a repo is not 
-in the test suite.  We certainly document this operation in the 
-git-fetch man page though.
-
-The code in builtin-fetch-pack.c still looks rather confusing to me, so 
-hopefully you are more familiar with it and can provide a fix.
-
-
-Nicolas
+It does. I just remembered the wrong size of the file. Sorry for the noise.
