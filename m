@@ -1,79 +1,70 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn pointing at svn branch instead of trunk?
-Date: Sat, 22 Aug 2009 13:46:27 -0700
-Message-ID: <20090822204627.GA22484@dcvr.yhbt.net>
-References: <2729632a0908221140p532a3c29k90af7b4cbd25d65e@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: git-mail-commits (Re: What's a good setup for submitting patches
+	to the list properly?)
+Date: Sat, 22 Aug 2009 22:56:56 +0200
+Message-ID: <20090822205656.GA3526@vidovic>
+References: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS> <alpine.DEB.2.00.0908220953460.2012@GWPortableVCS> <200908222220.35354.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Sat Aug 22 22:46:37 2009
+Cc: Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
+	Julian Phillips <julian@quantumfyre.co.uk>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Aug 22 23:00:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MexTw-0008Et-9v
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 22:46:36 +0200
+	id 1Mexh5-0003vw-Cw
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 23:00:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922AbZHVUq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 16:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753379AbZHVUq1
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:46:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:60708 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752433AbZHVUq1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 16:46:27 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id 100DB1F5F3;
-	Sat, 22 Aug 2009 20:46:29 +0000 (UTC)
+	id S932976AbZHVU5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 16:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932962AbZHVU5E
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:57:04 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:59073 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932901AbZHVU5B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2009 16:57:01 -0400
+Received: by ewy3 with SMTP id 3so1458129ewy.18
+        for <git@vger.kernel.org>; Sat, 22 Aug 2009 13:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=ZWkFRwdmTYRV4VY022/GYo+VmHP4r6lhE3ZuSoit1kQ=;
+        b=KOouzUErNAHXlNGNxB61QgLfNwjW3NA8X/PnZ5GzusCQbZm4TCLfThTb9qR/ckOfvP
+         5DtMQiTygeAiGNoa+GSVLrejGFDfYuomyiGOZkiQZCStlbFrfo4J7U2Sr4QJy6fnA4n7
+         kAfMCQtskOOR2VEHidYht7Iw+LkxFfvtR0iPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tXqxqPR1n8g2PiEDnPb3sDcxDdOj3YDfmZQwgMBY7TQjaDW4piWD0hjWGr7eQGmrYY
+         xHXwpFIOWwQiVCKa19S3Vvp38zBcwiWMUl6jV/ihRnGMXrOlHprjdZoHX+Fag16nV0zw
+         ApIOPSPV8qzIi13st4QKTtToOGecsx2x1BZPo=
+Received: by 10.211.195.3 with SMTP id x3mr3189191ebp.14.1250974621954;
+        Sat, 22 Aug 2009 13:57:01 -0700 (PDT)
+Received: from @ (88-122-112-47.rev.libertysurf.net [88.122.112.47])
+        by mx.google.com with ESMTPS id 28sm3586456eye.40.2009.08.22.13.56.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 22 Aug 2009 13:57:00 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <2729632a0908221140p532a3c29k90af7b4cbd25d65e@mail.gmail.com>
+In-Reply-To: <200908222220.35354.chriscool@tuxfamily.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126821>
 
-skillzero@gmail.com wrote:
-> When I used git svn to clone a repository, it ended up pointing master
-> at a tag in svn instead of trunk. For example, git svn info shows the
-> URL for the tag instead of trunk. git log master also shows the most
-> recent commit is the creation of that tag in svn, but then the next
-> commit is the most recent commit to trunk. It's like it's mixing
-> things from the tag with things from trunk. The most recent commit in
-> svn was to create the tag that master is now pointing to in case that
-> matters.
+The 22/08/09, Christian Couder wrote:
 
-Hi,
+> There is "git send-email" that is bundled with git. But I use 
+> git-mail-commits from Julian Philips. I am very happy with it. Thanks 
+> Julian!
 
-So you have something like this?
-
-----------trunk
-              \
-               \-> tag
-
-It looks like it's mixed but that's because trunk is an ancestor of your
-tag, so the majority of commits (see git-svn-id:) look like they're from
-trunk except the latest git-svn-id: which should have the URL of the tag
-in it.  So in short, everything here is OK.
-
-> Is there something in the svn repository that might cause this? What's
-> the correct way to reset what git svn thinks master should point to?
-> And how should I get rid of the commit on master that created the tag
-> without messing up git svn (e.g. can I just git reset or will that
-> confuse git svn later?).
-
-I changed this recently in b186a261b1f7ec1fbda8c5f6d84595f3a7716d92
-git svn used to always pick the newest change in the entire SVN repo
-to point master to, now it'll attempt to find "trunk" to be master.
-
-You can git reset anything on your master without affecting git svn.
-
-If you have commits on master, just cherry pick them to a new branch
-that's based off trunk and then reset master to be that new branch.
+Isn't there any public repo for it?
 
 -- 
-Eric Wong
+Nicolas Sebrecht
