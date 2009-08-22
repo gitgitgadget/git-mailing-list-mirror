@@ -1,226 +1,193 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/9] sequencer: add "do_fast_forward()" to perform a
- fast forward
-Date: Sat, 22 Aug 2009 00:29:03 -0700
-Message-ID: <7vab1s5mtc.fsf@alter.siamese.dyndns.org>
-References: <20090822041157.4261.92491.chriscool@tuxfamily.org>
- <20090822041616.4261.40442.chriscool@tuxfamily.org>
+Subject: [ANNOUNCE] GIT 1.6.4.1
+Date: Sat, 22 Aug 2009 00:44:25 -0700
+Message-ID: <7vvdkg47ja.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Aug 22 09:29:37 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 22 09:45:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mel2b-0003hd-Oi
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 09:29:34 +0200
+	id 1MelHj-00089M-8E
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 09:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933241AbZHVH3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 03:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933239AbZHVH3U
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 03:29:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40617 "EHLO
+	id S1754289AbZHVHon convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Aug 2009 03:44:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753379AbZHVHom
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 03:44:42 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50387 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933238AbZHVH3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 03:29:19 -0400
+	with ESMTP id S1752736AbZHVHol convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Aug 2009 03:44:41 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4543E14D51;
-	Sat, 22 Aug 2009 03:29:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=etQOu8sDxD8PvXUXk5fOiIXgcMo=; b=hWwF89JCmNwmQX5bK3jKpln
-	lwQA2Ra7kdSws+2C5JXp8hyAuYB4O6sWvznEngR1pWIG+LNa6nk1mnsxFKRG1wmL
-	WHi9lQwNWI5WUWbNMTO4SDm8KnL3l7HU+64FEl0/Z0STVdBwTgz9wNZjnMyho1wG
-	P6OAfNhBc8XAXfeCHqgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OFy2dFgC6HZEsOYvWJ42flHdok5OHYjPF9HIl9BeEy0i6jKl2
-	DsGJe1K0VfA7R67qpeHcTo7E07SPqPP9XOiZfskuzti5Ml9WSAaBJqk1eIuJ8fYt
-	0x92hPDbQmPtDguu5NxPDzlBfDNNvmAhaTJAiCGCW5QbYNw89UeIRbs+go=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E8F014DB4;
+	Sat, 22 Aug 2009 03:44:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=kTlwiwJH4YOpYaZqter3dWJFu
+	OI=; b=Ab4Rsh8EGU0WixDDy4jG8QC+Dza0qakMmsMdvAtyOGA5ASRwWVjiJiH0R
+	lkT7XGcvxHS8CEXhKni+gIaxX4mSWVvKmXoMzcYyPYczjIr5YbZjHrjr84rlltZH
+	U834Amv1gGr/AUNvD0BjUJdaIDosGhYv1qmO0RhueoHFep0niE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=EE/vFwett49D+p2Plj4
+	OFPTnaVrx2GEcxC+3SL2B0eveA5J/hCL6ehiTObtsUDgcujasqScdgiiRCdb4jRT
+	DCH6ZXL24+kX3yHLbkLBQwuM2Zty3zF69Jxgp+loUgc/f8tSLLHQk7RBmf2buUWp
+	VtIhCuJZAoN18styEuQSrelA=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DCA1F14D50;
-	Sat, 22 Aug 2009 03:29:11 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 03DDD14DB3;
+	Sat, 22 Aug 2009 03:44:37 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 893EB14D4E; Sat, 22 Aug
- 2009 03:29:04 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7A1114DB2; Sat, 22 Aug
+ 2009 03:44:27 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7CBB8B3A-8EED-11DE-9FEB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: A4B7C6B0-8EEF-11DE-BA8A-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126800>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+The latest maintenance release GIT 1.6.4.1 is available at the
+usual places:
 
-> From: Stephan Beyer <s-beyer@gmx.net>
->
-> This code is taken from the sequencer GSoC project:
->
->     git://repo.or.cz/git/sbeyer.git
->
->     (commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20)
->
-> but the messages have been changed to be the same as those
-> displayed by git-rebase--interactive.sh.
+  http://www.kernel.org/pub/software/scm/git/
 
-Hmm, forgot to amend, or perhaps you sent out a wrong series?
+  git-1.6.4.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.4.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.4.1.tar.{gz,bz2}		(preformatted docs)
 
-The log message does not explain:
+The RPM binary packages for a few architectures are found in:
 
- - why the patch adds a new static function that nobody calls;
- - what the new function is good for;
+  RPMS/$arch/git-*-1.6.4.1-1.fc9.$arch.rpm	(RPM)
 
-which are the most important things in order to defend the change.
+GIT v1.6.4.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
 
-"The messages have been changed to..." hints that the original commit by
-Stephan had different messages produced, perhaps so that it can be used in
-a different context.  I hoped, in an ideal world, perhaps Stephan defended
-why the change was relevant to his project in some way, and because you
-are using it in a different context that needs modification of the
-message, perhaps Stephan's defense of his commit could be reworded to
-defend your change here.
+=46ixes since v1.6.4
+------------------
 
-So I decided to take a look at the quoted commit to see if I can reword
-this mess.
+ * An unquoted value in the configuration file, when it contains more t=
+han
+   one whitespaces in a row, got them replaced with a single space.
 
-But the quoted commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20 does not
-even seem to be a commit that corresponds to this change.  It is a merge
-from upstream.
+ * "git am" used to accept a single piece of e-mail per file (not a mbo=
+x)
+   as its input, but multiple input format support in v1.6.4 broke it.
+   Apparently many people have been depending on this feature.
 
-    commit e7b8dab0c2a73ade92017a52bb1405ea1534ef20
-    Merge: 0c73ae7 99ddd24
-    Author: Stephan Beyer <s-beyer@gmx.net>
-    Date:   Wed May 20 10:54:37 2009 +0200
+ * The short help text for "git filter-branch" command was a single lon=
+g
+   line, wrapped by terminals, and was hard to read.
 
-        Merge branch 'junio/master' into seq-builtin-dev
+ * The "recursive" strategy of "git merge" segfaulted when a merge has
+   more than one merge-bases, and merging of these merge-bases involves
+   a rename/rename or a rename/add conflict.
 
-        After this merge f79d4c8 "teach git-am to apply a patch to an unborn
-        branch" has to be reimplemented in sequencer by allowing the "patch"
-        insn on unborn branches.
-        The related test in t/t4150-am.sh is set to test_expect_failure.
+ * "git pull --rebase" did not use the right fork point when the
+   repository has already fetched from the upstream that rewinds the
+   branch it is based on in an earlier fetch.
 
-        Conflicts:
-            git-am.sh
+ * Explain the concept of fast-forward more fully in "git push"
+   documentation, and hint to refer to it from an error message when th=
+e
+   command refuses an update to protect the user.
 
-It does not help that the function that is crucial to the implemention of
-this new function, reset_almost_hard(), is not explained at all in the
-earlier commit in the previous series (36f692b (sequencer: add
-"reset_almost_hard()" and related functions, 2009-08-05).  
+ * The default value for pack.deltacachesize, used by "git repack", is =
+now
+   256M, instead of unbounded.  Otherwise a repack of a moderately size=
+d
+   repository would needlessly eat into swap.
 
-The log message to the commit does not even hint in what sense "almost"
-the function is, iow, in what situation it behaves exactly like "reset
---hard", and in what other situation it doesn't, and more importantly why
-that distinction is there.  I thought I asked these questions when the
-previous series was submitted, but I do not remember ever seeing
-satisfactory answers to them.
+ * Document how "git repack" (hence "git gc") interacts with a reposito=
+ry
+   that borrows its objects from other repositories (e.g. ones created =
+by
+   "git clone -s").
 
-I am afraid that the whole cc/sequencer-rebase-i series needs a serious
-reroll before it gets near 'next'.
+ * "git show" on an annotated tag lacked a delimiting blank line betwee=
+n
+   the tag itself and the contents of the object it tags.
 
-Before giving up, I'll quickly re-review how (un)readable the log of each
-commit is in the series.  The following comments are mostly about the log
-messages, which are supposed to entice people to review the code, and more
-importantly, used as part of the release notes to summarize what the newly
-added toys are about.  If they are horrible, the code has little chance to
-be even read, and I'll have a hard time merging the series up into a new
-release.
+ * "git verify-pack -v" erroneously reported number of objects with too
+   deep delta depths as "chain length 0" objects.
 
+ * Long names of authors and committers outside US-ASCII were sometimes
+   incorrectly shown in "gitweb".
 
+Other minor documentation updates are included.
 
-6db6551 sequencer: add "builtin-sequencer--helper.c"
+----------------------------------------------------------------
 
-Good.
+Changes since v1.6.4 are as follows:
 
-b512803 sequencer: add "make_patch" function to save a patch
+Bj=C3=B6rn Steinbrink (1):
+      config: Keep inner whitespace verbatim
 
-Passably okay, but the limitation that it always writes into a file with a
-fixed name "$SEQ_DIR/patch" should be noted in the log.
+Erik Faye-Lund (1):
+      send-email: remove debug trace
 
-0ccc92b sequencer: free memory used in "make_patch" function
+Jakub Narebski (1):
+      gitweb/README: Document $base_url
 
-Should be squashed to the previous.
+Jeff King (3):
+      show: suppress extra newline when showing annotated tag
+      show: add space between multiple items
+      docs: describe impact of repack on "clone -s"
 
-f121b06 rebase -i: use "git sequencer--helper --make-patch"
+Jens Lehmann (1):
+      Documentation: git submodule: add missing options to synopsis
 
-Good.
+Johan Herland (1):
+      help.c: give correct structure's size to memset()
 
-36f692b sequencer: add "reset_almost_hard()" and related functions
+Johannes Schindelin (1):
+      filter-branch: add an example how to add ACKs to a range of commi=
+ts
 
-Horrible.  See above.
+Junio C Hamano (5):
+      merge-recursive: don't segfault while handling rename clashes
+      t5510: harden the way verify-pack is used
+      verify-pack -v: do not report "chain length 0"
+      am: allow individual e-mail files as input
+      GIT 1.6.4.1
 
-9d41fbd sequencer: add comments about reset_almost_hard()
+Mark A Rada (1):
+      git-instaweb: fix mod_perl detection for apache2
 
-Should be squashed to the previous---lift some text to justify the
-existence of the function in the commit log message.  Even though
-allow_dirty is referred to in the comment as affecting the behaviour, it
-is unclear who sets that global variable using what interface, making the
-reader suspect that maybe it should be a function parameter instead of a
-global (but the other parts of the helper may also look at allow_dirty
-and the internal implementation might be--I am just guessing--simpler this
-way, in which case _that_ should be explained and justified).
+Matthieu Moy (3):
+      Better usage string for reflog.
+      push: point to 'git pull' and 'git push --force' in case of non-f=
+ast forward
+      filter-branch: make the usage string fit on 80 chars terminals.
 
-022a9e7 sequencer: add "--reset-hard" option to "git sequencer--helper"
+Miklos Vajna (1):
+      hg-to-git: don't import the unused popen2 module
 
-This by itself is Okay, provided if 36f692b were made readable.  Then you
-can expect the reader to know why reset_almost_hard() needs to be there,
-and you need an interface to that function.  Until then, it is totally
-unclear why you need this, instead of using "reset --hard" itself.
+Nicolas Pitre (1):
+      don't let the delta cache grow unbounded in 'git repack'
 
-ad28459 rebase -i: use "git sequencer--helper --reset-hard"
+Nicolas Sebrecht (1):
+      git-am: print fair error message when format detection fails
 
-Ditto.
+Ori Avtalion (1):
+      Change mentions of "git programs" to "git commands"
 
-e4b3f0f sequencer: add "do_fast_forward()" to perform a fast forward
+Paul Bolle (2):
+      Documentation: merge: one <remote> is required
+      Documentation: add: <filepattern>... is optional
 
-See above.
+Santi B=C3=A9jar (2):
+      t5520-pull: Test for rebased upstream + fetch + pull --rebase
+      pull: support rebased upstream + fetch + pull --rebase
 
-1d88073 sequencer: add "--fast-forward" option to "git sequencer--helper"
+Zolt=C3=A1n F=C3=BCzesi (1):
+      gitweb: parse_commit_text encoding fix
 
-Okay.
-
-6eff656 sequencer: let "git sequencer--helper" callers set "allow_dirty"
-
-Why?  What for?
-
-877ddc1 rebase -i: use "git sequencer--helper --fast-forward"
-
-It is unclear how this relates to the previous one, nor why it is more
-appropriate than "reset-hard" it replaces.
-
-ff312f0 revert: libify pick
-
-Almost good.
-
-ab67716 pick: libify "pick_help_msg()"
-
-Good.
-
-d871b0e sequencer: add "do_commit()" and related functions
-
-We can see from "git show" what static functions that are never called in
-this commit are added, but nobody explains why they are needed.  For
-example, do_commit() may create a new commit object, but does not share
-the code with what "git commit" and/or "git commit-tree" do?  If so, how?
-If not, why not?
-
-ac5fc4d sequencer: add "--cherry-pick" option to "git sequencer--helper"
-
-Passably okay.  I can see ff312f0 made about a half of cherry-pick
-accessible to the sequencer, and this patch uses it to finish the other
-half, although that is not explained in the log message.  Also it is
-unclear why the resulting "libified" code does not share more
-infrastructure with "git cherry-pick" itself (and "git revert").
-
-664c7ab rebase -i: use "git sequencer--helper --cherry-pick"
-
-Passably okay, even though it is not quite convincing why using
-sequencer-helper's cherry-pick option makes it easier to later port the
-script, than keeping calls to cherry-pick.
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec (1):
+      Fix typos in git-remote.txt and git-symbolic-ref.txt
