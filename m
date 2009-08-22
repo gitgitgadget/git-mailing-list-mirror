@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 6/9] pick: libify "pick_help_msg()"
-Date: Sat, 22 Aug 2009 06:16:12 +0200
-Message-ID: <20090822041616.4261.59306.chriscool@tuxfamily.org>
+Subject: [PATCH v3 7/9] sequencer: add "do_commit()" and related functions
+Date: Sat, 22 Aug 2009 06:16:13 +0200
+Message-ID: <20090822041616.4261.65829.chriscool@tuxfamily.org>
 References: <20090822041157.4261.92491.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,127 +9,326 @@ Cc: git@vger.kernel.org,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 22 06:51:32 2009
+X-From: git-owner@vger.kernel.org Sat Aug 22 06:51:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeiZe-0005aq-C3
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 06:51:30 +0200
+	id 1MeiZf-0005aq-6o
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 06:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932531AbZHVEvD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 00:51:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbZHVEuv
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 00:50:51 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:38332 "EHLO smtp3-g21.free.fr"
+	id S932509AbZHVEvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 00:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932436AbZHVEvJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 00:51:09 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:38333 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932276AbZHVEur (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 00:50:47 -0400
+	id S932361AbZHVEus (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2009 00:50:48 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 44E878180C2;
-	Sat, 22 Aug 2009 06:50:38 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 382C4818080;
+	Sat, 22 Aug 2009 06:50:39 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0E9AB818094;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 6667481809C;
 	Sat, 22 Aug 2009 06:50:36 +0200 (CEST)
-X-git-sha1: bf9bb9f10ed00e861e7b367403135e5cbebd020c 
+X-git-sha1: 82a8483ff86bdd6cae1be68b6c8755c1399b3fc9 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090822041157.4261.92491.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126794>
 
-This function gives an help message when pick or revert failed.
+From: Stephan Beyer <s-beyer@gmx.net>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+It adds "struct commit_info", the "next_commit" static variable and
+the following functions:
+
+        - do_commit()
+        - set_author_info()
+        - set_message_source()
+        - set_pick_subject()
+        - write_commit_summary_into()
+
+This makes it possible to prepare and perform a commit (without
+forking and execing "git commit").
+
+This patch adds some code that comes from the sequencer GSoC project:
+
+git://repo.or.cz/git/sbeyer.git
+
+(commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
+
+Compared to the sequencer project, the only change is that "mark"
+related (3 lines long) code has been removed from do_commit().
+
+    Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+    Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+    Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+    Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-revert.c |   23 +----------------------
- pick.c           |   22 ++++++++++++++++++++++
- pick.h           |    1 +
- 3 files changed, 24 insertions(+), 22 deletions(-)
+ builtin-sequencer--helper.c |  214 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 214 insertions(+), 0 deletions(-)
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 4797ac5..e5250bd 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -142,27 +142,6 @@ static void set_author_ident_env(const char *message)
- 			sha1_to_hex(commit->object.sha1));
- }
+diff --git a/builtin-sequencer--helper.c b/builtin-sequencer--helper.c
+index 71a7fef..61a8f2e 100644
+--- a/builtin-sequencer--helper.c
++++ b/builtin-sequencer--helper.c
+@@ -5,26 +5,69 @@
+ #include "refs.h"
+ #include "diff.h"
+ #include "unpack-trees.h"
++#include "string-list.h"
++#include "pick.h"
++#include "rerere.h"
++#include "dir.h"
++#include "cache-tree.h"
++#include "utf8.h"
  
--static char *help_msg(const unsigned char *sha1)
--{
--	static char helpbuf[1024];
--	char *msg = getenv("GIT_CHERRY_PICK_HELP");
--
--	if (msg)
--		return msg;
--
--	strcpy(helpbuf, "  After resolving the conflicts,\n"
--	       "mark the corrected paths with 'git add <paths>' "
--	       "or 'git rm <paths>' and commit the result.");
--
--	if (!(flags & PICK_REVERSE)) {
--		sprintf(helpbuf + strlen(helpbuf),
--			"\nWhen commiting, use the option "
--			"'-c %s' to retain authorship and message.",
--			find_unique_abbrev(sha1, DEFAULT_ABBREV));
--	}
--	return helpbuf;
--}
--
- static void write_message(struct strbuf *msgbuf, const char *filename)
+ #define SEQ_DIR "rebase-merge"
+ 
+ #define PATCH_FILE	git_path(SEQ_DIR "/patch")
++#define MERGE_MSG	git_path("MERGE_MSG")
++#define SQUASH_MSG	git_path("SQUASH_MSG")
++
++/**********************************************************************
++ * Data structures
++ */
++
++struct user_info {
++	const char *name;
++	const char *mail;
++	const char *time; /* "<timestamp> <timezone>" */
++};
++
++struct commit_info {
++	struct user_info author; /* author info */
++	struct user_info committer; /* not used, but for easy extendability */
++	const char *encoding; /* encoding */
++	char *subject; /* basically the first line of the summary */
++	struct strbuf summary; /* the commit message */
++	char *source; /* source of the commit message, either
++		       * "message", "merge", "squash" or a commit SHA1 */
++	char *patch; /* a patch */
++	struct string_list parents; /* list of parents' hex'ed sha1 ids */
++};
++
++/**********************************************************************
++ * Global variables
++ */
+ 
+ static char *reflog;
+ 
++static int squash_count = 0;
++
+ static int allow_dirty = 0, verbosity = 1, advice = 1;
+ 
+ static unsigned char head_sha1[20];
+ 
++static struct commit_info next_commit;
++
+ static const char * const git_sequencer_helper_usage[] = {
+ 	"git sequencer--helper --make-patch <commit>",
+ 	"git sequencer--helper --reset-hard <commit> <reflog-msg> "
+ 		"<verbosity> [<allow-dirty>]",
+ 	"git sequencer--helper --fast-forward <commit> <reflog-msg> "
+ 		"<verbosity> [<allow-dirty>]",
++	"git sequencer--helper --cherry-pick <commit> [<do-not-commit>]",
+ 	NULL
+ };
+ 
++/**********************************************************************
++ * Sequencer functions
++ */
++
+ static int parse_and_init_tree_desc(const unsigned char *sha1,
+ 				    struct tree_desc *desc)
  {
- 	struct lock_file msg_file;
-@@ -211,7 +190,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		exit(1);
- 	} else if (failed > 0) {
- 		fprintf(stderr, "Automatic %s failed.%s\n",
--			me, help_msg(commit->object.sha1));
-+			me, pick_help_msg(commit->object.sha1, flags));
- 		write_message(&msgbuf, git_path("MERGE_MSG"));
- 		rerere();
- 		exit(1);
-diff --git a/pick.c b/pick.c
-index 058b877..4f882bb 100644
---- a/pick.c
-+++ b/pick.c
-@@ -208,3 +208,25 @@ int pick_commit(struct commit *pick_commit, int mainline, int flags,
- 
- 	return ret;
+@@ -162,6 +205,157 @@ static void make_patch(struct commit *commit)
+ 	free(args);
  }
-+
-+char *pick_help_msg(const unsigned char *sha1, int flags)
+ 
++/* Commit current index with information next_commit onto parent_sha1. */
++static int do_commit(unsigned char *parent_sha1)
 +{
-+	static char helpbuf[1024];
-+	char *msg = getenv("GIT_CHERRY_PICK_HELP");
++	int failed;
++	unsigned char tree_sha1[20];
++	unsigned char commit_sha1[20];
++	struct strbuf sbuf;
++	const char *reencoded = NULL;
 +
-+	if (msg)
-+		return msg;
-+
-+	strcpy(helpbuf, "  After resolving the conflicts,\n"
-+	       "mark the corrected paths with 'git add <paths>' "
-+	       "or 'git rm <paths>' and commit the result.");
-+
-+	if (!(flags & PICK_REVERSE)) {
-+		sprintf(helpbuf + strlen(helpbuf),
-+			"\nWhen commiting, use the option "
-+			"'-c %s' to retain authorship and message.",
-+			find_unique_abbrev(sha1, DEFAULT_ABBREV));
++	if (squash_count) {
++		squash_count = 0;
++		if (file_exists(SQUASH_MSG))
++			unlink(SQUASH_MSG);
 +	}
-+	return helpbuf;
++
++	if (!index_differs_from("HEAD", 0) &&
++	    !next_commit.parents.nr)
++		return error("No changes! Do you really want an empty commit?");
++
++	if (!next_commit.author.name || !next_commit.author.mail)
++		return error("Internal error: Author information not set properly.");
++
++	if (write_cache_as_tree(tree_sha1, 0, NULL))
++		return 1;
++
++	if (!next_commit.encoding)
++		next_commit.encoding = xstrdup("utf-8");
++	if (!git_commit_encoding)
++		git_commit_encoding = "utf-8";
++
++	strbuf_init(&sbuf, 8192); /* should avoid reallocs for the headers */
++	strbuf_addf(&sbuf, "tree %s\n", sha1_to_hex(tree_sha1));
++	if (parent_sha1)
++		strbuf_addf(&sbuf, "parent %s\n", sha1_to_hex(parent_sha1));
++	if (next_commit.parents.nr) {
++		int i;
++		for (i = 0; i < next_commit.parents.nr; ++i)
++			strbuf_addf(&sbuf, "parent %s\n",
++					next_commit.parents.items[i].string);
++	}
++	if (!next_commit.author.time) {
++		char time[50];
++		datestamp(time, sizeof(time));
++		next_commit.author.time = xstrdup(time);
++	}
++
++	stripspace(&next_commit.summary, 1);
++
++	/* if encodings differ, reencode whole buffer */
++	if (strcasecmp(git_commit_encoding, next_commit.encoding)) {
++		if ((reencoded = reencode_string(next_commit.author.name,
++				git_commit_encoding, next_commit.encoding))) {
++			free((void *)next_commit.author.name);
++			next_commit.author.name = reencoded;
++		}
++		if ((reencoded = reencode_string(next_commit.summary.buf,
++				git_commit_encoding, next_commit.encoding))) {
++			strbuf_reset(&next_commit.summary);
++			strbuf_addstr(&next_commit.summary, reencoded);
++		}
++	}
++	strbuf_addf(&sbuf, "author %s <%s> %s\n", next_commit.author.name,
++			next_commit.author.mail, next_commit.author.time);
++	strbuf_addf(&sbuf, "committer %s\n", git_committer_info(0));
++	if (!is_encoding_utf8(git_commit_encoding))
++		strbuf_addf(&sbuf, "encoding %s\n", git_commit_encoding);
++	strbuf_addch(&sbuf, '\n');
++	strbuf_addbuf(&sbuf, &next_commit.summary);
++	if (sbuf.buf[sbuf.len-1] != '\n')
++		strbuf_addch(&sbuf, '\n');
++
++	failed = write_sha1_file(sbuf.buf, sbuf.len, commit_type, commit_sha1);
++	strbuf_release(&sbuf);
++	if (failed)
++		return 1;
++
++	if (verbosity > 1)
++		printf("Created %scommit %s\n",
++			parent_sha1 || next_commit.parents.nr ? "" : "initial ",
++			sha1_to_hex(commit_sha1));
++
++	if (update_ref(reflog, "HEAD", commit_sha1, NULL, 0, 0))
++		return error("Could not update HEAD to %s.",
++						sha1_to_hex(commit_sha1));
++
++	return 0;
 +}
 +
-diff --git a/pick.h b/pick.h
-index 7a74ad8..115541a 100644
---- a/pick.h
-+++ b/pick.h
-@@ -9,5 +9,6 @@
- /* We don't need a PICK_QUIET. This is done by
-  *	setenv("GIT_MERGE_VERBOSITY", "0", 1); */
- extern int pick_commit(struct commit *commit, int mainline, int flags, struct strbuf *msg);
-+extern char *pick_help_msg(const unsigned char *sha1, int flags);
++/*
++ * Fill next_commit.author according to ident.
++ * Ident may have one of the following forms:
++ * 	"name <e-mail> timestamp timezone\n..."
++ * 	"name <e-mail> timestamp timezone"
++ * 	"name <e-mail>"
++ */
++static void set_author_info(const char *ident)
++{
++	const char *tmp1 = strstr(ident, " <");
++	const char *tmp2;
++	char *data;
++	if (!tmp1)
++		return;
++	tmp2 = strstr(tmp1+2, ">");
++	if (!tmp2)
++		return;
++	if (tmp2[1] != 0 && tmp2[1] != ' ')
++		return;
++
++	data = xmalloc(strlen(ident)); /* a trivial upper bound */
++
++	snprintf(data, tmp1-ident+1, "%s", ident);
++	next_commit.author.name = xstrdup(data);
++	snprintf(data, tmp2-tmp1-1, "%s", tmp1+2);
++	next_commit.author.mail = xstrdup(data);
++
++	if (tmp2[1] == 0) {
++		free(data);
++		return;
++	}
++
++	tmp1 = strpbrk(tmp2+2, "\r\n");
++	if (!tmp1)
++		tmp1 = tmp2 + strlen(tmp2);
++
++	snprintf(data, tmp1-tmp2-1, "%s", tmp2+2);
++	next_commit.author.time = xstrdup(data);
++	free(data);
++}
++
++static void set_message_source(const char *source)
++{
++	if (next_commit.source)
++		free(next_commit.source);
++	next_commit.source = xstrdup(source);
++}
++
++/* Set subject, an information for the case of conflict */
++static void set_pick_subject(const char *hex, struct commit *commit)
++{
++	const char *tmp = strstr(commit->buffer, "\n\n");
++	if (tmp) {
++		const char *eol;
++		int len = strlen(hex);
++		tmp += 2;
++		eol = strchrnul(tmp, '\n');
++		next_commit.subject = xmalloc(eol - tmp + len + 5);
++		snprintf(next_commit.subject, eol - tmp + len + 5, "%s... %s",
++								hex, tmp);
++	}
++}
++
+ /* Return a commit object of "arg" */
+ static struct commit *get_commit(const char *arg)
+ {
+@@ -198,6 +392,26 @@ static int set_verbosity(int verbose)
+ 	return 0;
+ }
  
- #endif
++static int write_commit_summary_into(const char *filename)
++{
++	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
++	int fd = hold_lock_file_for_update(lock, filename, 0);
++	if (fd < 0)
++		return error("Unable to create '%s.lock': %s", filename,
++							strerror(errno));
++	if (write_in_full(fd, next_commit.summary.buf,
++			      next_commit.summary.len) < 0)
++		return error("Could not write to %s: %s",
++						filename, strerror(errno));
++	if (commit_lock_file(lock) < 0)
++		return error("Error wrapping up %s", filename);
++	return 0;
++}
++
++/**********************************************************************
++ * Builtin sequencer helper functions
++ */
++
+ /* v should be "" or "t" or "\d" */
+ static int parse_verbosity(const char *v)
+ {
 -- 
 1.6.4.271.ge010d
