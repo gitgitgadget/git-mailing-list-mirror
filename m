@@ -1,111 +1,93 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Continue git clone after interruption
-Date: Fri, 21 Aug 2009 23:37:31 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908212324130.6044@xanadu.home>
-References: <1250509342.2885.13.camel@cf-48>
- <200908200937.05412.jnareb@gmail.com>
- <alpine.LFD.2.00.0908201358010.6044@xanadu.home>
- <200908211207.38555.jnareb@gmail.com>
- <alpine.LFD.2.00.0908211614220.6044@xanadu.home>
- <1250896025.19039.7.camel@maia.lan>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: hitting home directory's parent
+Date: Sat, 22 Aug 2009 11:10:18 +0700
+Message-ID: <fcaeb9bf0908212110o5ed1233ek11183fa37b474a06@mail.gmail.com>
+References: <20090821200503.GA19660@panix.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Tomasz Kontusz <roverorna@gmail.com>,
-	git <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Scott Chacon <schacon@gmail.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Aug 22 05:37:46 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniel Convissor <danielc@analysisandsolutions.com>
+X-From: git-owner@vger.kernel.org Sat Aug 22 06:16:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MehQG-00087h-OZ
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 05:37:45 +0200
+	id 1Mei1V-0006lc-Ap
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 06:16:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933221AbZHVDhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 23:37:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933219AbZHVDhg
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 23:37:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59660 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933218AbZHVDhf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 23:37:35 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KOR009XJE2JFF20@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 21 Aug 2009 23:37:32 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1250896025.19039.7.camel@maia.lan>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751327AbZHVEKi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Aug 2009 00:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750860AbZHVEKh
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 00:10:37 -0400
+Received: from mail-yw0-f173.google.com ([209.85.211.173]:43567 "EHLO
+	mail-yw0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbZHVEKh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Aug 2009 00:10:37 -0400
+Received: by ywh3 with SMTP id 3so1646923ywh.22
+        for <git@vger.kernel.org>; Fri, 21 Aug 2009 21:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0czX6Wm2LZC7NWrrECrZ9xwKQIXgUQimroOoN+Th6Jc=;
+        b=l2woYfB+jhBKiBU/o0U2P2GNNvEBY7z0qBG/r7+B+fHQmSji2swqu4y7HvH1jNPiTq
+         4gG9tRcaJY5ZI35L4ra7Gum73QpuGN5XmuM5G8y57HiV8DSecmrlEtshKltFJbNtgb8r
+         huzIRELSTcAiz35i4XWwt2ReNFcltyT6EXC1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=QKmPmYI76Ox7Y8yQNxcEkHgFDhw9QoUm0eSPShCvKXrcyQ5aMY/nrJQz/EIc59GTFp
+         9fOWb0Ha+6f83PNm9h6fuNE0GkZn4cFXfuYza3NMNBN/ZnLUHzIsQfaZjmDoMuyUEdUh
+         t2KQ0IMj8inbpC/1EIQqI8A1HWFgzkM3k5W2k=
+Received: by 10.101.88.1 with SMTP id q1mr2011922anl.177.1250914238217; Fri, 
+	21 Aug 2009 21:10:38 -0700 (PDT)
+In-Reply-To: <20090821200503.GA19660@panix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126782>
 
-On Sat, 22 Aug 2009, Sam Vilain wrote:
+On Sat, Aug 22, 2009 at 3:05 AM, Daniel
+Convissor<danielc@analysisandsolutions.com> wrote:
+> Hi:
+>
+> I just installed git in my Cygwin installation for the first time. =C2=
+=A0The
+> git version is 1.6.1.2, which is the latest version they have. =C2=A0=
+When I
+> enter one of the following commands:
+> =C2=A0 =C2=A0git --help
+> =C2=A0 =C2=A0git config --global user.name "Daniel Convissor"
+>
+> I get this error:
+> =C2=A0 =C2=A0fatal: Cannot change to /home/danielc/..: Permission den=
+ied
+>
+> Though "git --version" executes fine.
+>
+> I've been using Cygwin for many years and no other program has ever
+> produced this issue for me. =C2=A0For example, svn --help, ls --help,=
+ etc work
+> just fine.
+>
+> Why is git venturing into to the home directory's parent directory? =C2=
+=A0Is
+> this a bug? =C2=A0If not, is this really necessary?
 
-> On Fri, 2009-08-21 at 17:07 -0400, Nicolas Pitre wrote:
-> > > 2. There is support in git pack format to do 'deepening' of shallow
-> > >    clone, which means that git can generate incrementals in top-down
-> > >    order, _similar to how objects are ordered in packfile_.
-> > 
-> > Well... the pack format was not meant for that "support".  The fact
-> > that 
-> > the typical object order used by pack-objects when serving fetch
-> > request 
-> > is amenable to incremental top-down updates is rather coincidental
-> > and 
-> > not really planned.
-> 
-> Mmm.  And the problem with 'thin' packs is that they normally allow
-> deltas the other way.
+I guess it tried to find .git directory upward. I think you can set
+GIT_CEILING_DIRECTORIES to make it stop at /home/danielc. Excerpt from
+git.txt
 
-Sure.  The pack format is flexible.
-
-> I think the first step here would be to allow thin pack generation to
-> accept a bounded range of commits, any of the objects within which may
-> be used as delta base candidates.  That way, these "top down" thin packs
-> can be generated.  Currently of course it just uses the --not and makes
-> "bottom up" thin packs.
-
-The pack is still almost top-down.  It's only the missing delta base 
-that are in the other direction, refering to objects you have locally 
-and therefore older.
-
-> > > Another solution would be to try to come up with some sort of stable
-> > > sorting of objects so that packfile generated for the same
-> > > parameters (endpoints) would be always byte-for-byte the same.  But
-> > > that might be difficult, or even impossible.
-> >
-> > And I don't want to commit to that either.  Having some flexibility
-> > in object ordering makes it possible to improve on the packing
-> > heuristics.
-> 
-> You don't have to lose that for storage.  It's only for generating the
-> thin packs that it matters;
-
-What matters?
-
-> also, the restriction is relaxed when it
-> comes to objects which are all being sent in the same pack, which can
-> freely delta amongst themselves in any direction.
-
-That's always the case within a pack, but only for REF_DELTA objects.  
-The OFS_DELTA objects have to be ordered. And yes, having deltas across 
-packs is disallowed to avoid cycles and to keep the database robust.  
-The only exception is for thin packs, but those are never created on 
-disk. Thin packs are only used for transport and quickly "fixed" upon 
-reception by appending the missing objects to them so they are not 
-"thin" anymore.
-
-> What did you think about the bundle slicing stuff?
-
-If I didn't comment on it already, then I probably missed it and have no 
-idea.
-
-
-Nicolas
+-'GIT_CEILING_DIRECTORIES'::
+        This should be a colon-separated list of absolute paths.
+        If set, it is a list of directories that git should not chdir
+        up into while looking for a repository directory.
+        It will not exclude the current working directory or
+        a GIT_DIR set on the command line or in the environment.
+        (Useful for excluding slow-loading network directories.)
+-
+Duy
