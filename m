@@ -1,93 +1,63 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: What's a good setup for submitting patches to the list
- properly?
-Date: Sat, 22 Aug 2009 10:01:22 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908220953460.2012@GWPortableVCS>
-References: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS>
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: Re: hitting home directory's parent
+Date: Sat, 22 Aug 2009 11:05:43 -0400
+Message-ID: <20090822150542.GA29507@panix.com>
+References: <20090821200503.GA19660@panix.com> <fcaeb9bf0908212110o5ed1233ek11183fa37b474a06@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 22 17:02:05 2009
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 22 17:05:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mes6T-0000km-Ea
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 17:02:01 +0200
+	id 1MesAA-0002Xb-GG
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 17:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544AbZHVPBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 11:01:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755354AbZHVPBr
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 11:01:47 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:34587 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1755329AbZHVPBr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 11:01:47 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1Mes6G-0008V5-7A
-	for git@vger.kernel.org; Sat, 22 Aug 2009 10:01:48 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755354AbZHVPFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 11:05:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755329AbZHVPFl
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 11:05:41 -0400
+Received: from mail1.panix.com ([166.84.1.72]:60577 "EHLO mail1.panix.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754990AbZHVPFl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2009 11:05:41 -0400
+Received: from panix5.panix.com (panix5.panix.com [166.84.1.5])
+	by mail1.panix.com (Postfix) with ESMTP id 1A6611F082
+	for <git@vger.kernel.org>; Sat, 22 Aug 2009 11:05:43 -0400 (EDT)
+Received: by panix5.panix.com (Postfix, from userid 14662)
+	id 5F91224202; Sat, 22 Aug 2009 11:05:43 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0908212110o5ed1233ek11183fa37b474a06@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126812>
 
-Thell Fowler (git@tbfowler.name) wrote on Aug 19, 2009:
+Hi Duy:
 
-> I haven't been able to figure out a good setup for posting patches to the 
-> list correctly, perhaps someone could tell me where I'm going wrong.
+On Sat, Aug 22, 2009 at 11:10:18AM +0700, Nguyen Thai Ngoc Duy wrote:
 > 
-> Alpine is setup to access git @ tbfowler.name with the 'postpone' folder 
-> being the 'Drafts' folder on the remote mail host, and a local mbox folder 
-> ~/mail/git
-> 
-> Locally I prepped the emails using:
-> 
-> git format-patch --cover-letter --full-index -n 
-> --in-reply-to=1249428804.2774.52.camel@GWPortableVCS --thread --signoff -6 
-> --stdout>>~/mail/git
-> 
+> I guess it tried to find .git directory upward. I think you can set
+> GIT_CEILING_DIRECTORIES to make it stop at /home/danielc. Excerpt from
+> git.txt
 
-Did I miss something with that command?
+That didn't change the situation.
 
-> http://article.gmane.org/gmane.comp.version-control.git/124834
-> 
-> Thinking that the cover letter would be in reply to a previous thread, and 
-> that the rest would show as a reply to that.  After doing the 
-> format-patch, I went into Alpine's git folder selected the messages and 
-> saved them to the Drafts folder, then did 'compose' for each one, filling 
-> in the information I thought was needed.
-> 
+I did read a bit farther in the manual and initialized a new repository.  
+Issuing "git --help" once inside that new repository works.  Requiring 
+the --help command to be called from inside a repository, or even that 
+it's looking for a repository at all, seems unwise.  All it should do is 
+display the usage information and exit.
 
-Perhaps the saving to a new folder could've messed something up with the 
-headers?
+Thanks,
 
-[snip]
-> What could I have done/checked before sending to make sure that these 
-> would have posted properly?
-
-No input on this?  Perhaps I should've posted to the git user or alpine 
-lists?
-
-Either way, I'll be sending a new version of the patch I've been working 
-on and rather than have them show as top posts again I'd rather do it 
-correctly.
-
-Or perhaps there is an easier more direct route...
+--Dan
 
 -- 
-Thell
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+ 4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335 f: 718-854-0409
