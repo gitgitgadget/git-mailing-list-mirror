@@ -1,92 +1,111 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH JGIT] Ensure created test repositories use canonical paths
-Date: Fri, 21 Aug 2009 23:32:59 -0400
-Message-ID: <2c6b72b30908212032t39a4896x3308148c44692a80@mail.gmail.com>
-References: <1250687891-17916-1-git-send-email-fonseca@diku.dk> 
-	<200908210035.10825.robin.rosenberg.lists@dewire.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Continue git clone after interruption
+Date: Fri, 21 Aug 2009 23:37:31 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908212324130.6044@xanadu.home>
+References: <1250509342.2885.13.camel@cf-48>
+ <200908200937.05412.jnareb@gmail.com>
+ <alpine.LFD.2.00.0908201358010.6044@xanadu.home>
+ <200908211207.38555.jnareb@gmail.com>
+ <alpine.LFD.2.00.0908211614220.6044@xanadu.home>
+ <1250896025.19039.7.camel@maia.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Aug 22 05:33:28 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Tomasz Kontusz <roverorna@gmail.com>,
+	git <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Scott Chacon <schacon@gmail.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Aug 22 05:37:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MehM8-0007H4-5X
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 05:33:28 +0200
+	id 1MehQG-00087h-OZ
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 05:37:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933211AbZHVDdS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Aug 2009 23:33:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933209AbZHVDdS
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 23:33:18 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:12884 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933207AbZHVDdR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Aug 2009 23:33:17 -0400
-Received: by qw-out-2122.google.com with SMTP id 8so716489qwh.37
-        for <git@vger.kernel.org>; Fri, 21 Aug 2009 20:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=4dmrceXSYtUJB1iSB88EwXSSUzVtDbNb0bh44AotD2Y=;
-        b=lZwPJ+qW1e1ldnaV88LkBhlKw+gmyHkb3+1S6Ik2OqegD7Z9e16EmIbJB0+raL4Gq/
-         C0IiRrrUU7hUoF5XKBV0+oHeMfEL7XceimHpGYw23a5T+rFIeOzQdWgOq0ZZ1QwSgHy/
-         8rYgieqjN36vZbc2pqB3eoM7sofH+szpGTfkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=r88ZiFwz/1sE25yYwAyLjgDM6VROWNdREyYTD0rje0g7mInLRpk7cL4txYjEj/YTdJ
-         9CErbYqGQ09iuOKcTfvBEMoYU9y9sFhRWbg8rSvoc/1oYGQi0qNeoeaUD1mFQgijsq51
-         mp+I8IoLJpRlVdMjUgMHH29VZ5D3CSdloyQcw=
-Received: by 10.224.36.139 with SMTP id t11mr1321570qad.350.1250911999061; 
-	Fri, 21 Aug 2009 20:33:19 -0700 (PDT)
-In-Reply-To: <200908210035.10825.robin.rosenberg.lists@dewire.com>
-X-Google-Sender-Auth: 8d99792820778873
+	id S933221AbZHVDhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 23:37:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933219AbZHVDhg
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 23:37:36 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:59660 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933218AbZHVDhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 23:37:35 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOR009XJE2JFF20@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 21 Aug 2009 23:37:32 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1250896025.19039.7.camel@maia.lan>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126781>
 
-[With correct CC list. Sorry for the resend Robin]
+On Sat, 22 Aug 2009, Sam Vilain wrote:
 
-On Thu, Aug 20, 2009 at 18:35, Robin
-Rosenberg<robin.rosenberg.lists@dewire.com> wrote:
-> onsdag 19 augusti 2009 15:18:11 skrev Jonas Fonseca <fonseca@diku.dk>:
->> Fixes breakage in the RepositoryCacheTest when running tests using:
->>
->>       mvn -f ./jgit-maven/jgit/pom.xml test
->> [...]
->> @@ -217,7 +217,7 @@ public void setUp() throws Exception {
->>               trash = new File(trashParent,"trash"+System.currentTimeMillis()+"."+(testcount++));
->> -             trash_git = new File(trash, ".git");
->> +             trash_git = new File(trash, ".git").getCanonicalFile();
->> @@ -307,7 +307,7 @@ protected Repository createNewEmptyRepo() throws IOException {
->>       protected Repository createNewEmptyRepo(boolean bare) throws IOException {
->>               final File newTestRepo = new File(trashParent, "new"
->>                               + System.currentTimeMillis() + "." + (testcount++)
->> -                             + (bare ? "" : "/") + ".git");
->> +                             + (bare ? "" : "/") + ".git").getCanonicalFile();
->
-> We use getCanonicalFile here and Repository.gitDir  is initialized with getAbsoluteDir.
+> On Fri, 2009-08-21 at 17:07 -0400, Nicolas Pitre wrote:
+> > > 2. There is support in git pack format to do 'deepening' of shallow
+> > >    clone, which means that git can generate incrementals in top-down
+> > >    order, _similar to how objects are ordered in packfile_.
+> > 
+> > Well... the pack format was not meant for that "support".  The fact
+> > that 
+> > the typical object order used by pack-objects when serving fetch
+> > request 
+> > is amenable to incremental top-down updates is rather coincidental
+> > and 
+> > not really planned.
+> 
+> Mmm.  And the problem with 'thin' packs is that they normally allow
+> deltas the other way.
 
-BTW, a simpler fix would be to initialize trashParent to a canonical
-path, which might be less intrusive.
+Sure.  The pack format is flexible.
 
-> Does this work on all platforms?
+> I think the first step here would be to allow thin pack generation to
+> accept a bounded range of commits, any of the objects within which may
+> be used as delta base candidates.  That way, these "top down" thin packs
+> can be generated.  Currently of course it just uses the --not and makes
+> "bottom up" thin packs.
 
-I have only tested on Linux.
+The pack is still almost top-down.  It's only the missing delta base 
+that are in the other direction, refering to objects you have locally 
+and therefore older.
 
-> Seems linux normalized things when you do things like, but I'm not sure that happens everywhere.
+> > > Another solution would be to try to come up with some sort of stable
+> > > sorting of objects so that packfile generated for the same
+> > > parameters (endpoints) would be always byte-for-byte the same.  But
+> > > that might be difficult, or even impossible.
+> >
+> > And I don't want to commit to that either.  Having some flexibility
+> > in object ordering makes it possible to improve on the packing
+> > heuristics.
+> 
+> You don't have to lose that for storage.  It's only for generating the
+> thin packs that it matters;
 
-If you think it is a problem, let's drop the patch. It just seemed
-like a simple way to increase robustness.
+What matters?
 
---
-Jonas Fonseca
+> also, the restriction is relaxed when it
+> comes to objects which are all being sent in the same pack, which can
+> freely delta amongst themselves in any direction.
+
+That's always the case within a pack, but only for REF_DELTA objects.  
+The OFS_DELTA objects have to be ordered. And yes, having deltas across 
+packs is disallowed to avoid cycles and to keep the database robust.  
+The only exception is for thin packs, but those are never created on 
+disk. Thin packs are only used for transport and quickly "fixed" upon 
+reception by appending the missing objects to them so they are not 
+"thin" anymore.
+
+> What did you think about the bundle slicing stuff?
+
+If I didn't comment on it already, then I probably missed it and have no 
+idea.
+
+
+Nicolas
