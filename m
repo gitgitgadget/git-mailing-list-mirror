@@ -1,81 +1,145 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [PATCH v2 05/14] Change regerror() definition from K&R
- style to  ANSI C (C89)
-Date: Sat, 22 Aug 2009 08:15:32 +0800
-Message-ID: <1976ea660908211715u5dd20fb6vccc5ed94c07e9b3@mail.gmail.com>
-References: <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com> <0123e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] git-tag(1): Refer to git-check-ref-format(1) for <name>
+Date: Sat, 22 Aug 2009 09:45:18 +0900
+Message-ID: <20090822094518.6117@nanako3.lavabit.com>
+References: <87ab2gsqst.fsf@jondo.cante.net> <7veirs6qxn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Aug 22 02:15:46 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-iw0-f142.google.com ([209.85.223.142])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Jari Aalto <jari.aalto@cante.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 22 02:48:13 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MeeGo-00061D-Ba
-	for gcvm-msysgit@m.gmane.org; Sat, 22 Aug 2009 02:15:46 +0200
-Received: by iwn6 with SMTP id 6so927780iwn.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 21 Aug 2009 17:15:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        bh=zIESr8JrYbHzZG1V9VRb5ukRZO+Pwr/29vbXzAZvLSM=;
-        b=SIhlk2YmEKwk6aW527KjEpI9PsZVVZxdYiK6wNBf63Uz6CcW7wCvgiZjwiPkY9c02E
-         /AoO5yKZgA9QVx2v+D4fe/B9TTK1suemxBPfh3ZGbBy1cergJ8uoi7WioyLgRB9xLDVP
-         cEMjYFUuOB208JEaC8eLOeC9yiyMsUw9VI3/U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=rugHzX4YlgYo9Jp3MWHO/pERuBnijFq6ZFaVTEJA6SCv7v0A8+YV8T7tn8pkuUnvsx
-         RDWw5PMaQFClnH4q4QT3mXMOXVeWEaQ0MPIV7NWjj4qTTpc37efAsI0jm+3z/s7kzAFk
-         rLjU1FkbCEUi2lea95JLVWLo/BfdblNAteKbA=
-Received: by 10.220.43.10 with SMTP id u10mr649084vce.22.1250900139463;
-        Fri, 21 Aug 2009 17:15:39 -0700 (PDT)
-Received: by 10.230.6.197 with SMTP id a5gr6692vba.0;
-	Fri, 21 Aug 2009 17:15:34 -0700 (PDT)
-X-Sender: lznuaa@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.220.16.135 with SMTP id o7mr724543vca.21.1250900133273; Fri, 21 Aug 2009 17:15:33 -0700 (PDT)
-Received: by 10.220.16.135 with SMTP id o7mr724542vca.21.1250900133257; Fri, 21 Aug 2009 17:15:33 -0700 (PDT)
-Received: from qw-out-2122.google.com (qw-out-2122.google.com [74.125.92.24]) by gmr-mx.google.com with ESMTP id 22si244986vws.6.2009.08.21.17.15.32; Fri, 21 Aug 2009 17:15:32 -0700 (PDT)
-Received-SPF: pass (google.com: domain of lznuaa@gmail.com designates 74.125.92.24 as permitted sender) client-ip=74.125.92.24;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of lznuaa@gmail.com designates 74.125.92.24 as permitted sender) smtp.mail=lznuaa@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by qw-out-2122.google.com with SMTP id 9so844322qwb.49 for <msysgit@googlegroups.com>; Fri, 21 Aug 2009 17:15:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type :content-transfer-encoding; bh=k/xSXdtTe5PW90ZGMKNGHgopHfd+JWydaEklbVU2VyQ=; b=tE53iJLbL/pQEfscMqCeJrksifta5V/QARH13hAb6T6Ka63ZcxH7yi/6M9irUiSI0N ONMvATTLsZEIFRNd2mm6B4DfMlljGZJeB4NrASlw7nAiH5Tnhwuofy6Lz9Lrrlului85 VatIGsWg95fY0eZicESNhn8pWL73tKRpo3jlU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type:content-transfer-encoding; b=ncmn/VyY9alZTtv3w2T+0R1wOfAn3l8BM3spzpO9ucI+05IlVrZZqdcbTzx4mL6fdI kVqa9Oa8wqLlftkawJGJP8vU5RitRcNcijUhgrbD2vwwvFJjnVh2LdW3PScx0wDXSc1v IMlEZOxRhsVxuAIJ9GpDfqZQAJKtwml5CPmDg=
-Received: by 10.224.106.207 with SMTP id y15mr1307689qao.14.1250900132128;  Fri, 21 Aug 2009 17:15:32 -0700 (PDT)
-In-Reply-To: <0123e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1MeemC-0005yL-0v
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 02:48:12 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932848AbZHVAsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Aug 2009 20:48:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932723AbZHVAsA
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Aug 2009 20:48:00 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:45425 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932720AbZHVAsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Aug 2009 20:48:00 -0400
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id C6E7A11B88A;
+	Fri, 21 Aug 2009 19:48:01 -0500 (CDT)
+Received: from 2049.lavabit.com (212.62.97.23)
+	by lavabit.com with ESMTP id ML8GBLQ1T9PA; Fri, 21 Aug 2009 19:48:01 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=PwIQQW5d0ilzpUJvryZjSFyLaTGDsoe5/y/Mo38l54to+TBlSw8W/xGFk/1+8tO8fwwOO5S7gn9SRQNy0xj8eMiM+Ju3uc3eVz5QpgnbXEXVXUUTYvUaRWPb3/VKrwU3Mvb2U0TSZudb3oPlGCAqpzroorrIVosVSO2Nwxvp5vc=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7veirs6qxn.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126774>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126775>
 
+Quoting Junio C Hamano <gitster@pobox.com>
 
-> The MSVC headers typedef errcode as int, and thus confused the
-> compiler in the K&R style definition. ANSI style deconfuses it.
->
-It is better
-best regards
-Frank Li
+  but at the same time, I wish if we can somehow teach people that the
+  branches and the tags are just two special cases of refs that follow
+  exactly the same set of rules, we would not have to apply another
+  similar patch to git-branch documentation and instead we can teach what
+  the naming rules are for refs in general.  Then the readers can learn
+  the rule once, and extend the knowledge to other types of refs
+  (e.g. notes) in the future.
+
+I read the help page for the git-branch command and noticed that we don't
+need a similar patch. I think the git-branch help is nicer than git-tag
+help because it doesn't reproduce the rule in an incomplete way that can
+lead to confusion, divergence, and additional maintenance hassle.
+
+-- 8< -- 8< -- 8< -- cut here >8 -- >8 -- >8 --
+
+Subject: Documentation: consistently refer to check-ref-format
+
+Change the <name> placeholder to <tagname> in the SYNOPSIS section of
+git-tag documentation, and describe it in the OPTIONS section in a way
+similar to how documentation for git-branch does.
+
+Add SEE ALSO section to list the other documentation pages these two pages
+refer to.
+
+Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+---
+
+ Documentation/git-branch.txt |    6 ++++++
+ Documentation/git-tag.txt    |   20 ++++++++++++++------
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index ae201de..9998887 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -209,6 +209,12 @@ but different purposes:
+ - `--no-merged` is used to find branches which are candidates for merging
+   into HEAD, since those branches are not fully contained by HEAD.
+ 
++SEE ALSO
++--------
++linkgit:git-check-ref-format[1],
++linkgit:git-fetch[1],
++linkgit:git-remote[1].
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org> and Junio C Hamano <gitster@pobox.com>
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 1118ce2..5113eae 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -10,17 +10,15 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
+-	<name> [<commit> | <object>]
+-'git tag' -d <name>...
++	<tagname> [<commit> | <object>]
++'git tag' -d <tagname>...
+ 'git tag' [-n[<num>]] -l [--contains <commit>] [<pattern>]
+-'git tag' -v <name>...
++'git tag' -v <tagname>...
+ 
+ DESCRIPTION
+ -----------
+ 
+-Adds a 'tag' reference in `.git/refs/tags/`.  The tag <name> must pass
+-linkgit:git-check-ref-format[1] which basicly means that control characters,
+-space, ~, ^, :, ?, *, [ and \ are prohibited.
++Adds a tag reference in `.git/refs/tags/`.
+ 
+ Unless `-f` is given, the tag must not yet exist in
+ `.git/refs/tags/` directory.
+@@ -88,6 +86,12 @@ OPTIONS
+ 	Implies `-a` if none of `-a`, `-s`, or `-u <key-id>`
+ 	is given.
+ 
++<tagname>::
++	The name of the tag to create, delete, or describe.
++	The new tag name must pass all checks defined by
++	linkgit:git-check-ref-format[1].  Some of these checks
++	may restrict the characters allowed in a tag name.
++
+ CONFIGURATION
+ -------------
+ By default, 'git-tag' in sign-with-default mode (-s) will use your
+@@ -252,6 +256,10 @@ $ GIT_COMMITTER_DATE="2006-10-02 10:31" git tag -s v1.0.1
+ ------------
+ 
+ 
++SEE ALSO
++--------
++linkgit:git-check-ref-format[1].
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>,
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
