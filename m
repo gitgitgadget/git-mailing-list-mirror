@@ -1,70 +1,87 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: git-mail-commits (Re: What's a good setup for submitting patches
-	to the list properly?)
-Date: Sat, 22 Aug 2009 22:56:56 +0200
-Message-ID: <20090822205656.GA3526@vidovic>
+From: Thell Fowler <git@tbfowler.name>
+Subject: Re: What's a good setup for submitting patches to the list
+ properly?
+Date: Sat, 22 Aug 2009 15:58:43 -0500 (CDT)
+Message-ID: <alpine.DEB.2.00.0908221531230.29625@GWPortableVCS>
 References: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS> <alpine.DEB.2.00.0908220953460.2012@GWPortableVCS> <200908222220.35354.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
 	Julian Phillips <julian@quantumfyre.co.uk>
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Aug 22 23:00:11 2009
+X-From: git-owner@vger.kernel.org Sat Aug 22 23:00:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mexh5-0003vw-Cw
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 23:00:11 +0200
+	id 1MexhA-0003vw-Ct
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 23:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932976AbZHVU5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 16:57:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932962AbZHVU5E
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:57:04 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:59073 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932901AbZHVU5B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 16:57:01 -0400
-Received: by ewy3 with SMTP id 3so1458129ewy.18
-        for <git@vger.kernel.org>; Sat, 22 Aug 2009 13:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZWkFRwdmTYRV4VY022/GYo+VmHP4r6lhE3ZuSoit1kQ=;
-        b=KOouzUErNAHXlNGNxB61QgLfNwjW3NA8X/PnZ5GzusCQbZm4TCLfThTb9qR/ckOfvP
-         5DtMQiTygeAiGNoa+GSVLrejGFDfYuomyiGOZkiQZCStlbFrfo4J7U2Sr4QJy6fnA4n7
-         kAfMCQtskOOR2VEHidYht7Iw+LkxFfvtR0iPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=tXqxqPR1n8g2PiEDnPb3sDcxDdOj3YDfmZQwgMBY7TQjaDW4piWD0hjWGr7eQGmrYY
-         xHXwpFIOWwQiVCKa19S3Vvp38zBcwiWMUl6jV/ihRnGMXrOlHprjdZoHX+Fag16nV0zw
-         ApIOPSPV8qzIi13st4QKTtToOGecsx2x1BZPo=
-Received: by 10.211.195.3 with SMTP id x3mr3189191ebp.14.1250974621954;
-        Sat, 22 Aug 2009 13:57:01 -0700 (PDT)
-Received: from @ (88-122-112-47.rev.libertysurf.net [88.122.112.47])
-        by mx.google.com with ESMTPS id 28sm3586456eye.40.2009.08.22.13.56.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 22 Aug 2009 13:57:00 -0700 (PDT)
-Content-Disposition: inline
+	id S1755598AbZHVU7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 16:59:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbZHVU7J
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:59:09 -0400
+Received: from 216.38.49.125.servint.net ([216.38.49.125]:55551 "EHLO
+	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751448AbZHVU7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Aug 2009 16:59:08 -0400
+Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
+	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <git@tbfowler.name>)
+	id 1Mexg5-0001v2-Aj; Sat, 22 Aug 2009 15:59:09 -0500
+X-X-Sender: almostautomated@GWPortableVCS
 In-Reply-To: <200908222220.35354.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tbfowler.name
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126822>
 
-The 22/08/09, Christian Couder wrote:
+Christian Couder (chriscool@tuxfamily.org) wrote on Aug 22, 2009:
 
+> On Saturday 22 August 2009, Thell Fowler wrote:
+> >
+> > > What could I have done/checked before sending to make sure that these
+> > > would have posted properly?
+> 
+> Perhaps you could send them to yourself.
+> 
+
+Yes, I did.  They all showed up under the correct thread, but then I 
+changed how I did it by adding cover-letter to the format-patch options.  
+
+BTW - After looking at the headers it looks like the cover letter header 
+worked just fine, but that the cover letter msg-id changed between when 
+format-patch created it and when it was sent out causing the reset of the 
+msgs to not have anything to reference to.
+
+> > No input on this?  Perhaps I should've posted to the git user or alpine
+> > lists?
+> 
+> It's ok to post this kind of questions on the git mailing list.
+> 
 > There is "git send-email" that is bundled with git. But I use 
 > git-mail-commits from Julian Philips. I am very happy with it. Thanks 
 > Julian!
+> 
 
-Isn't there any public repo for it?
+I guess I'll setup smtp and try the send-email route, not sure if that 
+is going to change anything having to do with the In-Reply-To field 
+and a cover letter or how it shows in the threading.
+
+If that doesn't work then I'll give Julian's mail-commits a whirl.
+
+Thanks for replying Christian!
 
 -- 
-Nicolas Sebrecht
+Thell
