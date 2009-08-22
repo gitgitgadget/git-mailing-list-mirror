@@ -1,103 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/9] sequencer: add "do_fast_forward()" to perform a
- fast forward
-Date: Sat, 22 Aug 2009 13:15:34 -0700
-Message-ID: <7viqgf38rd.fsf@alter.siamese.dyndns.org>
-References: <20090822041157.4261.92491.chriscool@tuxfamily.org>
- <20090822041616.4261.40442.chriscool@tuxfamily.org>
- <7vab1s5mtc.fsf@alter.siamese.dyndns.org>
- <200908221319.37737.chriscool@tuxfamily.org>
+From: "Nicholas A. Bellinger" <nab@linux-iscsi.org>
+Subject: Re: Issue with gitweb + tag + branch of the same name from master
+	branch commit
+Date: Sat, 22 Aug 2009 13:12:51 -0700
+Message-ID: <1250971971.26147.122.camel@haakon2.linux-iscsi.org>
+References: <1250811031.26147.42.camel@haakon2.linux-iscsi.org>
+	 <m3fxbkn5ot.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Aug 22 22:16:07 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "J.H." <warthog9@kernel.org>,
+	"H. Peter Anvin" <hpa@zytor.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 22 22:18:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mex0Q-0007S7-DC
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 22:16:06 +0200
+	id 1Mex2k-0008Bl-Cq
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Aug 2009 22:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933321AbZHVUPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 16:15:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933304AbZHVUPw
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:15:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34803 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933300AbZHVUPv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 16:15:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C776833F44;
-	Sat, 22 Aug 2009 16:15:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iyqhfyjH8ViGGTcVXxIfVyLG2IY=; b=jjqeIV
-	ar5rnuEEkyeNJLgFglajmLUJyGa5pGEcLf/pfISxPDBfQvbhtFF39c4gD+X1Rntq
-	lUDxG/rIe//J1GvUHUshbgEfg9Mpm4sixfIMA0djPWjRnjZ12Y1JmU5QxGH+ZPTt
-	YkxeLgmNKaZwFBt1q8TCbl0TFvOkbt17DDBGA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=txrXXub69k/c3ud0IW/kUffzcjzLRbFJ
-	gHcICf2WI6sp8mRav58ioF/BdiAGvXir0hLarLWXJzgeHCC6P+7RwbCHgJsbWGwG
-	pJAK8sQxA79OLjEdKWloMJBXC3RlrmFdjkWgjEscosD9jcex3/ZM2tKMDThpaoSf
-	mU6eTR8rS20=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A79A33F43;
-	Sat, 22 Aug 2009 16:15:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 375A733F42; Sat, 22 Aug 2009
- 16:15:36 -0400 (EDT)
-In-Reply-To: <200908221319.37737.chriscool@tuxfamily.org> (Christian Couder's
- message of "Sat\, 22 Aug 2009 13\:19\:37 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 930B1E62-8F58-11DE-AEEC-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S933345AbZHVUSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 16:18:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933329AbZHVUSV
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 16:18:21 -0400
+Received: from n11.bullet.mail.mud.yahoo.com ([209.191.125.210]:48041 "HELO
+	n11.bullet.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S933300AbZHVUSU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Aug 2009 16:18:20 -0400
+X-Greylist: delayed 329 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Aug 2009 16:18:20 EDT
+Received: from [68.142.200.226] by n11.bullet.mail.mud.yahoo.com with NNFMP; 22 Aug 2009 20:12:53 -0000
+Received: from [68.142.201.72] by t7.bullet.mud.yahoo.com with NNFMP; 22 Aug 2009 20:12:53 -0000
+Received: from [127.0.0.1] by omp424.mail.mud.yahoo.com with NNFMP; 22 Aug 2009 20:12:53 -0000
+X-Yahoo-Newman-Id: 553380.71338.bm@omp424.mail.mud.yahoo.com
+Received: (qmail 49998 invoked from network); 22 Aug 2009 20:12:53 -0000
+Received: from unknown (HELO ?192.168.0.119?) (nab@70.231.234.42 with plain)
+  by smtp108.sbc.mail.sp1.yahoo.com with SMTP; 22 Aug 2009 20:12:52 -0000
+X-YMail-OSG: Zm0l0ocVM1nygnWMrNv4sqGPe50kZ.yVvfeeCVnvPiY4TWes..btLVTuJx07JDC.AnEi2bFPf1hzMG87XTSMVSI1QwpQlBFG3XxOB_TB8Jk.YRk0YUXCagiYhAOULxwLeqNGk_dhNyht7FtG8iIDqSmItIuVO4e4haflX3NIrmnKwFe7diflvoLKnBQ7x56NB.Uyw4ty81GES69qnSZKDrNVSuHMjZEwSy538eKaZ3t2N7bHUKN6knltYMAJnTdU4tPPwjLper6kvPH1M5mbI2x_oA1HzPo-
+X-Yahoo-Newman-Property: ymail-3
+In-Reply-To: <m3fxbkn5ot.fsf@localhost.localdomain>
+X-Mailer: Evolution 2.22.3.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126818>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Greetings Jakub,
 
->> Hmm, forgot to amend, or perhaps you sent out a wrong series?
+On Fri, 2009-08-21 at 15:49 -0700, Jakub Narebski wrote:
+> "Nicholas A. Bellinger" <nab@linux-iscsi.org> writes:
+> 
+> > I have recently been trying to make a tag and branch of the same name
+> 
+> But why?  Why do you want to confuse git and yourself?
+> 
+
+I stumbled the strangeness in k.o gitweb due to my inexperience with git
+tagging+branch..  I absoulutely agree that it makes more sense to use
+different names for these, and that is what I am doing from now on.. :-)
+
+> > from a previous <COMMIT> on a master branch on a kernel.org tree using
+> > the following commands:
+> > 
+> > 	# Create the tag:
+> > 	git tag -a lio-x.y <COMMIT>
+> > 	# Push the tags:
+> > 	git push --tags origin
+> > 	# Fetch to be sure
+> > 	git fetch origin
+> > 	# Make tagged branch:
+> > 	git checkout -b lio-x.y <COMMIT>
+> > 	# Make <NEW_COMMIT> to lio-x.y and commit
+> >         git commit frob
+> > 	# Switch back to master branch
+> > 	git checkout master
+> > 	# Push local branch to origin
+> > 	git push origin refs/heads/lio-x.y
+> > 
+> > At this point after pushing to origin, I can do a fresh clone of the
+> > tree, and do a 'git checkout origin/lio-x.y and I see '<NEW_COMMIT>',
+> > and the logs and blobs look as expected..
+> > 
+> > However, after checking gitweb log for branch lio-x.y on kernel.org, I
+> > only see <COMMIT>, and not <NEW_COMMIT>, and all of the blobs in branch
+> > lio-x.y still reference the original <COMMIT>, et al.
+> 
+> I guess that you meant here gitweb's 'log' / 'shortlog' view linked
+> from 'heads' view, don't you?
+
+That is correct..
+
+>  
+> > John Hawley has been helping to resolve the issue (I am just going to
+> > use different tag/branch names instead), and hpa asked me to report this
+> > as it is easy to reproduce with the gitweb version on kernel.org..
+> 
+> > 22:42 < warthog9> I would got show this to the git people, it *could*
+> >                   just be an old bug in gitweb (ours is not particularly
+> >                   up to date) but if I can replicate it here easily enough
+> >                   I'm guessing there's still a bug elsewhere
+> 
+> This is an old and long fixed (or rather worked around) issue in
+> gitweb, fixed in bf901f8 (gitweb: disambiguate heads and tags withs
+> the same name, 2007-12-15)... well if by fixed you can consider
+> passing around "fully qualified" refnames, i.e. the 'shortlog' link in
+> 'heads' view now uses 'refs/heads/frob', and not only 'frob'.
 >
-> Your comments on the v2 series were in a message replying to patch 5/9, so I 
-> amended only 5/9 and after it, because I thought that you had already 
-> reviewed those before 5/9 and they were ok.
 
-Sorry, but in general I expect readers of this list to be intelligent
-enough and capable of extrapolating, so that I do not have to spell out
-the same issue over and over again ;-)
+Cool, I am hear it has already been fixed.
 
-> As you merged the series in pu, I thought that it was ok.
-
-Heh, being queued to 'pu' does not mean any more than just that we do not
-want to lose what the author spent efforts to produce, and we want to give
-reviewers easier access to the end result.  If it is Ok, it would have
-been in 'next'.
-
-That's why topics initially queued in 'pu' sometimes move to 'stalled'
-state in "What's in" report and then eventually get ejected.
-
-The comment you added only says what it does, namely, that it does two
-different things, based on the allow_dirty global variable that is
-underdocumented.  It does not explain _why_ it is a good thing, in what
-circumstance the caller would want "almost" semantics and in what other
-circumstance the caller would want a "real" hard reset.
-
->> I am afraid that the whole cc/sequencer-rebase-i series needs a serious
->> reroll before it gets near 'next'.
->
-> Ok, I will reroll everything to try to improve commit messages.
-
-It would be a good idea; it may expose a wrong abstraction or an
-insufficient refactoring (e.g. adding yet another function to make a
-commit object that runs parallel to what we already have).
-
-Thanks.
+--nab
