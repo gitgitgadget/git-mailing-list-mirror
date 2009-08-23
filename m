@@ -1,89 +1,72 @@
-From: Mark Rada <marada@uwaterloo.ca>
+From: Sam Vilain <sam@vilain.net>
 Subject: Re: [RFC/PATCH 1/3] gitweb: make suspenders more useful
-Date: Sun, 23 Aug 2009 18:39:14 -0400
-Message-ID: <4A91C512.7000707@mailservices.uwaterloo.ca>
-References: <4A91BA66.5050108@mailservices.uwaterloo.ca> <4A91BE50.7070103@vilain.net>
+Date: Mon, 24 Aug 2009 10:48:45 +1200
+Message-ID: <4A91C74D.1080908@vilain.net>
+References: <4A91BA66.5050108@mailservices.uwaterloo.ca> <4A91BE50.7070103@vilain.net> <4A91C512.7000707@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Mark Rada <marada@uwaterloo.ca>, Jakub Narebski <jnareb@gmail.com>,
+Cc: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Mon Aug 24 00:40:03 2009
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Mon Aug 24 00:49:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfLjG-00032p-3J
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 00:40:02 +0200
+	id 1MfLrw-0005Md-1u
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 00:49:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750954AbZHWWjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 18:39:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbZHWWjU
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 18:39:20 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:45299 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750851AbZHWWjT (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 18:39:19 -0400
-Received: from karakura.local (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7NMdEVJ013728
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 23 Aug 2009 18:39:16 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
-In-Reply-To: <4A91BE50.7070103@vilain.net>
-X-UUID: 69156aeb-2ea8-4bd4-87e4-c392ae2bf38a
-X-Miltered: at mailchk-m05 with ID 4A91C513.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sun, 23 Aug 2009 18:39:19 -0400 (EDT)
+	id S1750829AbZHWWsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 18:48:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbZHWWsu
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 18:48:50 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:48833 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750801AbZHWWsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 18:48:50 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 96B6B21C3BC; Mon, 24 Aug 2009 10:48:50 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id DEC7821C385;
+	Mon, 24 Aug 2009 10:48:45 +1200 (NZST)
+User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
+In-Reply-To: <4A91C512.7000707@mailservices.uwaterloo.ca>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126894>
 
-On 23/08/09 6:10 PM, Sam Vilain wrote:
-> Mark Rada wrote:
->> Subject: [RFC/PATCH 1/3] gitweb: make suspenders more useful
-> 
-> Suspenders?  Really?
-> 
-> Sam
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Mark Rada wrote:
+>>> Subject: [RFC/PATCH 1/3] gitweb: make suspenders more useful
+>>>       
+>> Suspenders?  Really?
+>>     
+> Context:
+>
+> On 21/08/09 5:43 PM, Junio C Hamano wrote:
+>   
+>> I do not mind keeping these two lines as belt-and-suspender, though.
+>>     
+> Yup...I couldn't think of an appropriate title and I expect this
+> patch to be edited (for another reason) or thrown out anyways.
+>   
 
-Context:
+Please don't do that.  Use of metaphors makes the code harder to follow,
+especially for non-native speakers.  In this case you confused me, a
+British/NZ native speaker because you only used half of the idiom; so
+all I was left with was a word which in the English where I speak refers
+to a piece of clothing worn most often by prostitutes and people at the
+Rocky Horror Picture Show.
 
-On 21/08/09 5:43 PM, Junio C Hamano wrote:
-> Mark A Rada <marada@uwaterloo.ca> writes:
-> 
->> Unless I missed a case, the tests show that the extra condition check
->> that was added in the &git_snapshot routine is never actually executed,
->> because a disabled snapshot format is not added to @snapshot_fmts, which
->> is checked first.
->>
->> snippet:
->> 5178     } elsif (!grep($_ eq $format, @snapshot_fmts)) {
->> 5179         die_error(403, "Unsupported snapshot format");
->> 5180     } elsif ($known_snapshot_formats{$format}{'disabled'}) {
->> 5181         die_error(403, "Snapshot format not allowed");
->> 5182     }
->> 5183
-> 
-> True; filter_snapshot_fmts looks at 'disabled' first.
-> 
-> I do not mind keeping these two lines as belt-and-suspender, though.
-> 
-
-
-Yup...I couldn't think of an appropriate title and I expect this
-patch to be edited (for another reason) or thrown out anyways.
-
-
-
--- 
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
+Can I suggest "snapshot error handling" as a more neutral term...
+Sam
