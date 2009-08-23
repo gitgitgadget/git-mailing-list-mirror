@@ -1,91 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb: pull ref markes pull out of subject <a> tag
-Date: Sun, 23 Aug 2009 15:31:22 -0700
-Message-ID: <7vzl9qqi11.fsf@alter.siamese.dyndns.org>
-References: <1251016089-10548-1-git-send-email-giuseppe.bilotta@gmail.com>
- <200908232213.48786.jnareb@gmail.com>
- <cb7bb73a0908231343k3546682ge05cc4f3c3d83638@mail.gmail.com>
+Subject: Re: Pulling one commit at a time.
+Date: Sun, 23 Aug 2009 15:33:55 -0700
+Message-ID: <7vr5v2qhws.fsf@alter.siamese.dyndns.org>
+References: <F536B7C316F9474E9F7091239725AC9A02FA7F44@CHN-CL-MAIL01.mchp-main.com>
+ <4A9172D0.6030507@microchip.com> <20090824060710.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 00:31:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Sanjiv Gupta <sanjiv.gupta@microchip.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 00:34:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfLbG-0000bn-Sa
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 00:31:47 +0200
+	id 1MfLdd-0001MQ-Oq
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 00:34:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbZHWWbi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2009 18:31:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbZHWWbh
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 18:31:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54254 "EHLO
+	id S1750850AbZHWWeF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 18:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750747AbZHWWeE
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 18:34:04 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:32797 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbZHWWbh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 18:31:37 -0400
+	with ESMTP id S1750744AbZHWWeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 18:34:03 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B85E16BE5;
-	Sun, 23 Aug 2009 18:31:38 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CE78C34E2E;
+	Sun, 23 Aug 2009 18:34:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=aLMz7fsMQesywU8aRxrzI7fMx
-	qs=; b=KsPP0gdg66nzUtsI9L/stO2x6h5QuYg7Ff9I+7St6OXSvZ/0AAepRli1D
-	i7ABY5f5ww1lZDF0gN/EGZNzejehMNSOewcdblSIiu/DhJH8kLr6LVKXFfS1Wfyl
-	NScjpsDnm+fWOVzRP2nVpKbafgxheMpQA+EY3vmvf10KTWWXcQ=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=803maxXfRW595t1h/DLz5HXa4A0=; b=xQP0cU/5JieWkvJuiFxpEUS
+	mUnasA8+CshSswqnloCAEJZSQO/cDu+eMUaNfPzTEY7tuNgyqU/YKmLWcX4PS+dU
+	QiJMMRdlijeukHh7S+3cEmlm3gjYmoeU2I7U4KN0MI8FqTHtsX4Z9GH3EoIdxy/0
+	Ob7D8YWTNWRDb5UrYYkA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=psoekf8tIrtHDmPtAH9
-	YVqkrpjM/2xSBP0JFt7qd56Oaldhe0jVxTjUYsdP1ocupQAiFheL3EdmYbXKV/uH
-	H/yGxXec0MPRvKsxza9WsOUXfwAcMd0q9MznPCyuSGHu4HhD52C99C5K0idrgS3w
-	5KdVWlWXDe7jdooEwHAkGWEg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 11C6216BE4;
-	Sun, 23 Aug 2009 18:31:35 -0400 (EDT)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=NfKW2js1BfsKISuWBz023RmSMtxcYmuSJmcwgYu5EbhqolH7x
+	KNsbEVkfNvUSVGAC4cQLh2aB/4FtC65ZZIFTr+FaDhsZEskYKjkGHqcvqI7e2LLi
+	R1RgiVsN2l6kvBVuMjn5dfEr2fZXsRkYKR71dJ+Y93JFHzxL9BC1J5WWSw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9F62634E27;
+	Sun, 23 Aug 2009 18:34:01 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5995B16BE2; Sun, 23 Aug
- 2009 18:31:30 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3AC7D34E1E; Sun, 23 Aug 2009
+ 18:33:56 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B6FD3634-9034-11DE-B1C6-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0E577D72-9035-11DE-91AA-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126892>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> 2009/8/23 Jakub Narebski <jnareb@gmail.com>:
->> For format_subject_html which you are fixing, and which is used by
->> 'shortlog', 'history' and 'tags' views this didn't cause much change=
-s
->> in layout. =C2=A0But the way gitweb uses git_print_header_div in vie=
-ws such
->> as 'tree', 'blob' etc., where the outer (containing) link is made in=
-to
->> *block* element[1] by the way of CSS (display: block) makes layout
->> (visualisation) very screwed up in older browser. =C2=A0But I don't =
-expect
->> you to fix that.
->>
->> [1] Originally so the area to click is larger.
+> When your histories look like this:
 >
-> Fixing that really needs some kind of ridiculously complex
-> workarounds, or a totally different layout. That is actually one of
-> the situations where nested links make perfect sense, and it's a real
-> pity the standard wouldn't allow them, and that some client actually
-> altered the DOM to 'fix' it. But anyway.
+>       A                 your 'master'
+>      /
+>  ---X---U---V---W---Y   public 'master' (your 'origin')
 >
->> Signoff?
+> ... you can fetch first.
 >
-> Aaaargh. Is it enough if I put it here:
+>  git fetch origin
 >
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> Then look at the history in gitk
+>
+>  gitk master origin
+>
+> And find the commit you are interested in merging (U in the above
+> picture). And merge it.
+>
+>  git merge origin~3
+>
+> Replace "origin~3" in the example above with whatever commit you want to
+> merge the entire history leading to it.
 
-I can manage.
+A good description.  Thanks, Nana.
 
-Thanks, both.
+Novice readers should notice the careful wording used here.  She says
+"merge the entire history leading to it" instead of simply "merge the
+commit".  Merging a commit in git always means merging the entire history
+leading to that commit, so they mean the same thing to people who know git
+well, but it avoids a misunderstanding that, if you did
+
+    $ git merge V
+
+it might apply the effect of only V, ignoring what U did, on top of your
+current state A.  It doesn't.
+
+       A-------M         your 'master'
+      /       / 
+  ---X---U---V---W---Y   public 'master' (your 'origin')
+
+To create a commit that has only the effect of a single commit, you would
+need to cherry-pick it.
+
+    $ git cherry-pick V
+
+will give you
+
+       A-------V'        your 'master'
+      /
+  ---X---U---V---W---Y   public 'master' (your 'origin')
+
+where "git diff A V'" is a moral equivalent of "git diff U V".
