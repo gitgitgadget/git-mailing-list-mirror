@@ -1,63 +1,142 @@
-From: Thomas Adam <thomas.adam22@gmail.com>
-Subject: Re: [PATCH] Add script for importing bits-and-pieces to Git.
-Date: Sun, 23 Aug 2009 21:28:23 +0100
-Message-ID: <18071eea0908231328r58b0e22ap20e664d2904420a0@mail.gmail.com>
-References: <20090823201624.206F52FC20@perkele>
+From: Thell Fowler <git@tbfowler.name>
+Subject: Re: [PATCH-v2/RFC 3/6] xutils: fix ignore-all-space on incomplete
+ line
+Date: Sun, 23 Aug 2009 15:33:58 -0500 (CDT)
+Message-ID: <alpine.DEB.2.00.0908231515020.29625@GWPortableVCS>
+References: <1250999285-10683-1-git-send-email-git@tbfowler.name> <1250999357-10827-3-git-send-email-git@tbfowler.name> <7vvdkfx8rl.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908231110500.29625@GWPortableVCS> <7vljlauxmk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Sun Aug 23 22:28:55 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 23 22:34:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfJgN-0001El-0K
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 22:28:55 +0200
+	id 1MfJlo-0003ym-6M
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 22:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934113AbZHWU2n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2009 16:28:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934105AbZHWU2n
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 16:28:43 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:57935 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934090AbZHWU2m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 16:28:42 -0400
-Received: by ewy3 with SMTP id 3so1882809ewy.18
-        for <git@vger.kernel.org>; Sun, 23 Aug 2009 13:28:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1xTHb/ZOIs4OuTOFSJ5huT0EIXQRAeLNAeq+NcFsHOA=;
-        b=YpVXVRdHPb8QG12TWlaog2WWrOIYUt6jlc1J+6lMWvB8CcOfGZczskWaQxXlaxGpty
-         yJaa9BH08OPxR4HMVm3mmqkaslbQPCpNVBiSvoou909mGRu4PqLWRBMYr4GqyWQSUWmI
-         yPs/3i2UEP8YqZ55VfZRlLPBOji42bofDu8tw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=J8LxLFqmSnQUVK3nvkz9jdvAXy2bVakjxl0Bb/V7JoUKCyB5Yoq9g0vUF+o29CICPF
-         B0FiXzsvmw5cpiY3M7OdUhwXxjNrGWOe1VOV8iZkpzBGH/F84vx2aEshESc314fGL1ZA
-         1kLXucttnGyKyv1Bxossv7nrF1DUFpLYpgCXo=
-Received: by 10.216.0.81 with SMTP id 59mr789153wea.77.1251059323074; Sun, 23 
-	Aug 2009 13:28:43 -0700 (PDT)
-In-Reply-To: <20090823201624.206F52FC20@perkele>
+	id S934121AbZHWUeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 16:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934118AbZHWUeW
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 16:34:22 -0400
+Received: from 216.38.49.125.servint.net ([216.38.49.125]:57022 "EHLO
+	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S934117AbZHWUeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 16:34:22 -0400
+Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
+	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <git@tbfowler.name>)
+	id 1MfJlf-0005Jz-Db; Sun, 23 Aug 2009 15:34:23 -0500
+X-X-Sender: almostautomated@GWPortableVCS
+In-Reply-To: <7vljlauxmk.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tbfowler.name
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126873>
 
-2009/8/23 Peter Krefting <peter@softwolves.pp.se>:
-> + =A0 =A0 =A0 my (undef, undef, undef, undef, undef, undef,
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 undef, $size, undef, $time, undef, unde=
-f, undef) =3D stat FILE;
+Junio C Hamano (gitster@pobox.com) wrote on Aug 23, 2009:
 
-Minor nit.  Better written as:
+> Thell Fowler <git@tbfowler.name> writes:
+> 
+> > Because the flow is much more direct it also makes the test additions to 
+> > t4015 obsolete as they essentially tested for line end conditions instead 
+> > of whitespace (like they should have).
+> 
+> Your patch 6/6 that added the tests were useful to find a bug I originally
+> had, which is the one below that is commented out.
+> 
 
-my ($size, $mtime) =3D (stat(FILE))[7,9];
+That's good to hear!
 
--- Thomas Adam
+> >> +		/*
+> >> +		 * If we do not want -b to imply --ignore-space-at-eol
+> >> +		 * then you would need to add this:
+> >> +		 *
+> >> +		 * if (!(flags & XDF_IGNORE_WHITESPACE_AT_EOL))
+> >> +		 *	return (s1 <= i1 && s2 <= i2);
+> >> +		 *
+> >> +		 */
+> >> +
+> >
+> > While it would be nice to have -b and --ignore-space-at-eol be two 
+> > different options that could be merged together the documentation states 
+> > that -b ignores spaces at eol, and there are scripts that depend on this 
+> > behavior.
+> 
+> Also that is how "diff -b" behaves, and that is why I said your tests
+> found a _bug_ in my original.  I'll drop the above large comment and
+> replace it with just a "/* -b implies --ignore-space-at-eol */".
+> 
+
+In that case the only other outstanding issue to being able to use 
+patch-id to validate a whitespace fixed patch is diff's -B option to catch 
+the situations where the original has multiple blank newlines at the end 
+of file.
+
+
+> > Right now the xdl_recmatch() checks three distinct flags before having the 
+> > opportunity to do the default behavior of a straight diff.  In 
+> > xdl_hash_record there is an initial check for whitespace flags.
+> >
+> > ...
+> > 	if (flags & XDF_WHITESPACE_FLAGS)
+> > 		return xdl_hash_record_with_whitespace(data, top, flags);
+> > ...
+> >
+> > Perhaps a similar setup for xdl_rematch() and a 
+> > xdl_recmatch_with_whitespace() ?
+> 
+> Or we can just move the final else clause up and start the function like
+> this:
+> 
+> 	int i1, i2;
+> 
+> 	if (!(flags & XDF_WHITESPACE_FLAGS))
+>  		return s1 == s2 && !memcmp(l1, l2, s1);
+> 
+> 	i1 = i2 = 0;
+>  	if (flags & XDF_IGNORE_WHITESPACE) {
+> 		...
+> 
+> that would get rid of two unnecessary clearing of variables (i1 and i2,
+> even though I suspect that the compiler _could_ optimize them out without
+> such an change), and three flags-bit check in the most common case of not
+> ignoring any whitespaces.
+> 
+
+HA!  That's a nifty way to do that with the variables.
+
+> > Since your to counter-proposals give the same results, provide safer and 
+> > faster processing, eliminate the additional test, as well as being easier 
+> > to read and comprehend I propose a v3 with just those two patches.  I'll 
+> > be glad to post it, with or without a xdl_recmatch_with_whitespace, if 
+> > need be.  And should I, or do I need to, add something to the commit (ie: 
+> > ack, tested, ...) ?
+> 
+> I can amend the counterproposal patches with tests from your 6/6 and add
+> your "Tested-by:" and commit them myself.
+> 
+
+Excellent.
+
+> > Thank you again for taking the time to look at this change!
+> 
+> Thank _you_ for bringing this issue up in the first place.
+
+My pleasure!  It has been quite the learning experience!
+
+-- 
+Thell
