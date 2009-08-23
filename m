@@ -1,72 +1,80 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC/PATCH 1/3] gitweb: make suspenders more useful
-Date: Mon, 24 Aug 2009 10:48:45 +1200
-Message-ID: <4A91C74D.1080908@vilain.net>
-References: <4A91BA66.5050108@mailservices.uwaterloo.ca> <4A91BE50.7070103@vilain.net> <4A91C512.7000707@mailservices.uwaterloo.ca>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: git-mail-commits (Re: What's a good setup for submitting patches
+ to the list properly?)
+Date: Mon, 24 Aug 2009 00:05:21 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0908232357590.15613@reaper.quantumfyre.co.uk>
+References: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS> <200908222220.35354.chriscool@tuxfamily.org> <20090822205656.GA3526@vidovic> <200908230911.07218.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Mon Aug 24 00:49:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Aug 24 01:09:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfLrw-0005Md-1u
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 00:49:00 +0200
+	id 1MfMBX-0001z0-HX
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 01:09:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbZHWWsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 18:48:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750805AbZHWWsu
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 18:48:50 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:48833 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750801AbZHWWsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2009 18:48:50 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 96B6B21C3BC; Mon, 24 Aug 2009 10:48:50 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id DEC7821C385;
-	Mon, 24 Aug 2009 10:48:45 +1200 (NZST)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <4A91C512.7000707@mailservices.uwaterloo.ca>
-X-Enigmail-Version: 0.95.0
+	id S1751056AbZHWXI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 19:08:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750979AbZHWXI6
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 19:08:58 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:48931 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750834AbZHWXI5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 19:08:57 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 6E4602759AD
+	for <git@vger.kernel.org>; Mon, 24 Aug 2009 00:08:58 +0100 (BST)
+Received: (qmail 1358 invoked by uid 103); 24 Aug 2009 00:05:21 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9727. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.035966 secs); 23 Aug 2009 23:05:21 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 24 Aug 2009 00:05:21 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <200908230911.07218.chriscool@tuxfamily.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126895>
 
-Mark Rada wrote:
->>> Subject: [RFC/PATCH 1/3] gitweb: make suspenders more useful
->>>       
->> Suspenders?  Really?
->>     
-> Context:
+On Sun, 23 Aug 2009, Christian Couder wrote:
+
+> On Saturday 22 August 2009, Nicolas Sebrecht wrote:
+>> The 22/08/09, Christian Couder wrote:
+>>> There is "git send-email" that is bundled with git. But I use
+>>> git-mail-commits from Julian Philips. I am very happy with it. Thanks
+>>> Julian!
+>>
+>> Isn't there any public repo for it?
 >
-> On 21/08/09 5:43 PM, Junio C Hamano wrote:
->   
->> I do not mind keeping these two lines as belt-and-suspender, though.
->>     
-> Yup...I couldn't think of an appropriate title and I expect this
-> patch to be edited (for another reason) or thrown out anyways.
->   
+> Not that I know of, but I think it would be a good idea to publish it
+> (perhaps in contrib/).
+>
+> Julian?
 
-Please don't do that.  Use of metaphors makes the code harder to follow,
-especially for non-native speakers.  In this case you confused me, a
-British/NZ native speaker because you only used half of the idiom; so
-all I was left with was a word which in the English where I speak refers
-to a piece of clothing worn most often by prostitutes and people at the
-Rocky Horror Picture Show.
+Using the awsome power of git I have managed to extract it from my random 
+tools private repo to here as if I had written it to be a separate entity 
+from the start:
 
-Can I suggest "snapshot error handling" as a more neutral term...
-Sam
+git://git.q42.co.uk/mail_commits.git
+(gitweb: http://git.q42.co.uk/w/mail_commits.git)
+
+If it would be considered useful, then I can also create a patch to add it 
+to contrib (there is a master branch in the above repo where I have 
+subtree merged it in already - though that was more to experiment with 
+doing subtree merging)
+
+-- 
+Julian
+
+  ---
+The means-and-ends moralists, or non-doers, always end up on their ends
+without any means.
+ 		-- Saul Alinsky
