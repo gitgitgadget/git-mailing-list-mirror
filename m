@@ -1,139 +1,87 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: [PATCH-v2/RFC 2/6] xutils: fix hash with whitespace on incomplete
- line
-Date: Sun, 23 Aug 2009 12:02:14 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908231050240.29625@GWPortableVCS>
-References: <1250999285-10683-1-git-send-email-git@tbfowler.name> <1250999357-10827-2-git-send-email-git@tbfowler.name> <7veir3ynma.fsf@alter.siamese.dyndns.org>
+From: Reece Dunn <msclrhd@googlemail.com>
+Subject: Re: [PATCH 14/14] Add README and gitignore file for MSVC build
+Date: Sun, 23 Aug 2009 19:22:57 +0100
+Message-ID: <3f4fd2640908231122m34604196pc98c5871cf5925b5@mail.gmail.com>
+References: <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com>
+	 <1e623b19b2df001919c83418fef89ef04d7b8dfe.1250860247.git.mstormo@gmail.com>
+	 <74ca14c3a691cc9844a0dd806f5db47977317bdb.1250860247.git.mstormo@gmail.com>
+	 <4b8b550914cfc4e638ff905d9b9aa416e45913f4.1250860247.git.mstormo@gmail.com>
+	 <ba4e68ae32784d8e0c706fa665fbdbbfe67ce673.1250860247.git.mstormo@gmail.com>
+	 <6dd71f163e5410e401fc66088405736d1978ec55.1250860247.git.mstormo@gmail.com>
+	 <cover.1250860247.git.mstormo@gmail.com>
+	 <54673ddb6bef681194e141e5e05e930cdfaa07bc.1250860247.git.mstormo@gmail.com>
+	 <e82f1930173966ebb6b2d2815e037a26e079f969.1250860247.git.mstormo@gmail.com>
+	 <a4c8a6d00908230926of0ea10bhd8f66e7d37c3b39b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 19:02:51 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, Johannes.Schindelin@gmx.de,
+	msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 23 20:24:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfGSw-0006sG-2G
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 19:02:50 +0200
+	id 1MfHje-0000Gg-3P
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 20:24:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934019AbZHWRCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 13:02:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933980AbZHWRCj
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 13:02:39 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:40833 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S933977AbZHWRCi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2009 13:02:38 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1MfGSm-0003YM-FB; Sun, 23 Aug 2009 12:02:40 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <7veir3ynma.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S933646AbZHWSW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 14:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933441AbZHWSW5
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 14:22:57 -0400
+Received: from mail-vw0-f172.google.com ([209.85.212.172]:49527 "EHLO
+	mail-vw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933611AbZHWSW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 14:22:56 -0400
+Received: by vws2 with SMTP id 2so1504609vws.4
+        for <git@vger.kernel.org>; Sun, 23 Aug 2009 11:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UWeLxV3EDZHN28FOW9rqQnWW4L2Gd5d4EEK23tcPj8E=;
+        b=dLfgxEp5C+n6jQWQXJudXNOf5WHvwjKqdOp0A3Pt3kqo5rT/Mf8qxusrI9I6l8tfcH
+         8AnGmpI2jN7FwJkdDfmos+bwnhjts3gXXlPruuepfxiD4pqdAwxRrQTJUpS+Af7ML9Pc
+         uICyeIUHyVRBtM+hOJPiYYn/70coTxMFKDjm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FV5HjZQkwXFL9Kap7Whe5cxOt64TxoBdz+qtrrHUrG131lnzVcv3oJLLjQ9eqw/sgo
+         bxqh88l/Hj9ICkZqXic87zKdbsqWxtWN8VRbxbtHtBhnKaUPE/JpRUAi4lbTtFT16IA3
+         ctcLhaUnv+4IH4XYmexrSb6duNxVm4nZARZrc=
+Received: by 10.220.113.211 with SMTP id b19mr4490010vcq.60.1251051777282; 
+	Sun, 23 Aug 2009 11:22:57 -0700 (PDT)
+In-Reply-To: <a4c8a6d00908230926of0ea10bhd8f66e7d37c3b39b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126863>
 
-Junio C Hamano (gitster@pobox.com) wrote on Aug 23, 2009:
-> Thell Fowler <git@tbfowler.name> writes:
-> 
-> >   - Make xdl_hash_record_with_whitespace stop hashing before the
-> >     eof when ignoring space change or space at eol on an incomplete
-> >     line.
-> >
-> >   Resolves issue with a final trailing space being included in the
-> >   hash on an incomplete line by treating the eof in the same fashion
-> >   as a newline.
-> 
-> Please study the style of existing commit messages and imitate them.
-> 
+2009/8/23 Thiago Farina <tfransosi@gmail.com>:
+> Hi,
+>
+> On Fri, Aug 21, 2009 at 10:30 AM, Marius Storm-Olsen<mstormo@gmail.com> wrote:
+>> From: Frank Li <lznuaa@gmail.com>
+>>
+>> +3. Open gitbuild\gitbuild.sln with VS2008. Then press F7.
+> F7 does nothing in VS2008, to build the solution you have to press
+> Ctrl+Shift+B. To build and start debugging you have to press F5, and
+> for start without debbuging support is Ctrl+F5.
 
-I'll keep trying.
+IIRC, Visual Studio can be configured to use different keyboard shortcuts.
 
-> > Signed-off-by: Thell Fowler <git@tbfowler.name>
-> > ---
-> >  xdiff/xutils.c |    4 ++--
-> >  1 files changed, 2 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-> > index 04ad468..c6512a5 100644
-> > --- a/xdiff/xutils.c
-> > +++ b/xdiff/xutils.c
-> > @@ -248,12 +248,12 @@ static unsigned long xdl_hash_record_with_whitespace(char const **data,
-> >  			if (flags & XDF_IGNORE_WHITESPACE)
-> >  				; /* already handled */
-> >  			else if (flags & XDF_IGNORE_WHITESPACE_CHANGE
-> > -					&& ptr[1] != '\n') {
-> > +					&& ptr[1] != '\n' && ptr + 1 < top) {
-> >  				ha += (ha << 5);
-> >  				ha ^= (unsigned long) ' ';
-> >  			}
-> >  			else if (flags & XDF_IGNORE_WHITESPACE_AT_EOL
-> > -					&& ptr[1] != '\n') {
-> > +					&& ptr[1] != '\n' && ptr + 1 < top) {
-> >  				while (ptr2 != ptr + 1) {
-> >  					ha += (ha << 5);
-> >  					ha ^= (unsigned long) *ptr2;
-> 
-> Thanks.
-> 
-> The issue you identified and tried to fix is a worthy one.  But before the
-> pre-context of this hunk, I notice these lines:
-> 
-> 		if (isspace(*ptr)) {
-> 			const char *ptr2 = ptr;
-> 			while (ptr + 1 < top && isspace(ptr[1])
-> 					&& ptr[1] != '\n')
-> 				ptr++;
-> 
-> If you have trailing whitespaces on an incomplete line, ptr initially
-> points at the first such whitespace, ptr2 points at the same location, and
-> then the while() loop advances ptr to point at the last byte on the line,
-> which in turn will be the last byte of the file.  And the codepath with
-> your updates still try to access ptr[1] that is beyond that last byte.
-> 
-> I would write it like this patch instead.
-> 
-> The intent is the same as your patch, but it avoids accessing ptr[1] when
-> that is beyond the end of the buffer, and the logic is easier to follow as
-> well.
-> 
+However, saying "press F7" says nothing of the intent. It would
+probably be better to have this say something like "Then build the
+solution." or "Open gitbuild\gitbuild.sln with Visual Studio 2008,
+then build it." But then you don't need to open Visual Studio 2008 to
+build it (you can build it from command line).
 
-I appreciate your taking the time to look at the issue and explaining the 
-reasons for your change.
+So, how about:
+   3. You can now build git with Visual Studio 2008 using the
+gitbuild\gitbuild.sln file.
 
-> -- >8 --
-> Subject: xutils: fix hashing an incomplete line with whitespaces at the end
-> 
-> Upon seeing a whitespace, xdl_hash_record_with_whitespace() first skipped
-> the run of whitespaces (excluding LF) that begins there, ensuring that the
-> pointer points the last whitespace character in the run, and assumed that
-> the next character must be LF at the end of the line.  This does not work
-> when hashing an incomplete line, that lacks the LF at the end.
-> 
-> Introduce "at_eol" variable that is true when either we are at the end of
-> line (looking at LF) or at the end of an incomplete line, and use that
-> instead throughout the code.
-> 
-> Noticed by Thell Fowler.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Yeah... comparing this commit message to the original shows a pretty stark 
-difference.  I'll get it 'the git way' eventually.
-
--- 
-Thell
+- Reece
