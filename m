@@ -1,120 +1,173 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Commit performance, or lack thereof
-Date: Sat, 22 Aug 2009 19:42:32 -0400
-Message-ID: <m3r5v39zzz.fsf@lugabout.jhcloos.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Further 'approxidate' improvements
+Date: Sat, 22 Aug 2009 18:11:44 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0908221759420.3158@localhost.localdomain>
+References: <alpine.LFD.2.01.0908221438450.3158@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 23 01:52:19 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 23 03:12:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mf0Nc-00081C-Er
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 01:52:16 +0200
+	id 1Mf1cs-0007bC-Al
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 03:12:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933314AbZHVXwG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Aug 2009 19:52:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933265AbZHVXwG
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 19:52:06 -0400
-Received: from eagle.jhcloos.com ([207.210.242.212]:4759 "EHLO
-	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933254AbZHVXwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 19:52:05 -0400
-X-Greylist: delayed 537 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Aug 2009 19:52:04 EDT
-Received: by eagle.jhcloos.com (Postfix, from userid 10)
-	id 595C24014C; Sat, 22 Aug 2009 23:42:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
-	s=eagle; t=1250984588;
-	bh=hN1+LXSIgr+URF3VBi0AJIuxft7e6q/0XMmjwrZbyR4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=RrbYCapn4hQ7sr/jZy3C4P0cEV1/Ti+CXy3xrjSOs50Qnmfvb6fxwqyTRuoWLqmFz
-	 zrYSVVnsV1EjbTI98NL4numabz8zZOrxIgOtPoWJW5BKrq8LdNKyXYl3/9fk0NYBFa
-	 3Y7sw45imPIdGU7QCN3NWPxI8z/GQe2kgzPvsNtA=
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id A8AFE684FC; Sat, 22 Aug 2009 23:42:57 +0000 (UTC)
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1.50 (gnu/linux)
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
- REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
- eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
- FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
-Copyright: Copyright 2009 James Cloos
-OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
-OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+	id S933419AbZHWBLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Aug 2009 21:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933406AbZHWBLq
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 21:11:46 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:33667 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933389AbZHWBLp (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Aug 2009 21:11:45 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7N1BiP0015855
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 22 Aug 2009 18:11:45 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n7N1Bi6p002820;
+	Sat, 22 Aug 2009 18:11:44 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <alpine.LFD.2.01.0908221438450.3158@localhost.localdomain>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.462 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126828>
 
-Starting in the kernel tree, if one edits and adds a single file and
-then commits it w/o specifying the file name as an argument to commit,
-git uses 10 or so Megs of VM and one sees performace akin to this:
 
-,----=AB gtime -v git commit -m 'make oldconfig' =BB
-| [master 53d6af1] make oldconfig
-|  1 files changed, 5 insertions(+), 2 deletions(-)
-| 	Command being timed: "git commit -m make oldconfig"
-| 	User time (seconds): 0.26
-| 	System time (seconds): 1.06
-| 	Percent of CPU this job got: 2%
-| 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:47.04
-| 	Average shared text size (kbytes): 0
-| 	Average unshared data size (kbytes): 0
-| 	Average stack size (kbytes): 0
-| 	Average total size (kbytes): 0
-| 	Maximum resident set size (kbytes): 0
-| 	Average resident set size (kbytes): 0
-| 	Major (requiring I/O) page faults: 86
-| 	Minor (reclaiming a frame) page faults: 4703
-| 	Voluntary context switches: 4805
-| 	Involuntary context switches: 274
-| 	Swaps: 0
-| 	File system inputs: 48384
-| 	File system outputs: 5680
-| 	Socket messages sent: 0
-| 	Socket messages received: 0
-| 	Signals delivered: 0
-| 	Page size (bytes): 4096
-| 	Exit status: 0
-`----
+The previous patch to improve approxidate got us to the point that a lot 
+of the remaining annoyances were due to the 'strict' date handling running 
+first, and deciding that it got a good enough date that the approximate 
+date routines were never even invoked.
 
-OTOH, if one does specify the filename as an argument to commit, git
-uses almost 300 Megs of VM and the numbers look more like:
+For example, using a date string like
 
-,----=AB gtime -v git commit -m 'make oldconfig' .config =BB
-| [master 4db1e8b] make oldconfig
-|  1 files changed, 1 insertions(+), 1 deletions(-)
-| 	Command being timed: "git commit -m make oldconfig .config"
-| 	User time (seconds): 1.82
-| 	System time (seconds): 1.80
-| 	Percent of CPU this job got: 3%
-| 	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:45.72
-| 	Average shared text size (kbytes): 0
-| 	Average unshared data size (kbytes): 0
-| 	Average stack size (kbytes): 0
-| 	Average total size (kbytes): 0
-| 	Maximum resident set size (kbytes): 0
-| 	Average resident set size (kbytes): 0
-| 	Major (requiring I/O) page faults: 1609
-| 	Minor (reclaiming a frame) page faults: 21363
-| 	Voluntary context switches: 10707
-| 	Involuntary context switches: 620
-| 	Swaps: 0
-| 	File system inputs: 361192
-| 	File system outputs: 11296
-| 	Socket messages sent: 0
-| 	Socket messages received: 0
-| 	Signals delivered: 0
-| 	Page size (bytes): 4096
-| 	Exit status: 0
-`----
+	6AM, June 7, 2009
 
-Git should be able to do the latter operation as efficiently as it can
-do the former operation.
+the strict date logic would be perfectly happy with the "June 7, 2009" 
+part, and ignore the 6AM part that it didn't understand - resulting in the 
+information getting dropped on the floor:
 
--JimC
---=20
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
+	6AM, June 7, 2009 -> Sat Jun 6 00:00:00 2009
+
+and the date being calculated as if it was midnight, and the '6AM' having 
+confused the date routines into thinking about '6 June' rather than 'June 
+7' at 6AM (ie notice how the _day_ was wrong due to this, not just the 
+time).
+
+So this makes the strict date routines a bit stricter, and requires that 
+not just the date, but also the time, has actually been parsed. With that 
+fix, and trivial extension of the approxidate routines, git now properly 
+parses the date as
+
+	6AM, June 7, 2009 -> Sun Jun  7 06:00:00 2009
+
+without dropping the fuzzy time ("6AM" or "noon" or any of the other 
+non-strict time formats) on the floor.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+On Sat, 22 Aug 2009, Linus Torvalds wrote:
+> 
+> There are other oddnesses. This does not fix them all, but I think it 
+> makes for fewer _really_ perplexing cases. At least now we have
+> 
+> 	Jun 6, 5AM -> Sat Jun  6 05:00:00 2009
+> 	5AM, Jun 6 -> Sat Jun  6 05:00:00 2009
+> 
+> which makes me happier. I can still point to cases that don't work as 
+> well, but those are separate issues.
+
+This gets rid of the remaining "obviously bogus" issues with parsing of 
+fuzzy dates. I'm sure there are other issues still remaining, but now I 
+can't come up with any trivial cases any more without having clear 
+garbage in the string. 
+
+So trying to date-parse nonsensical crud still gives odd results:
+
+	I ate six hot-dogs in June -> Sat Jun  6 18:09:26 2009
+
+because it parses "six" and "June" and then puts it together as a date, 
+and then adds the current time (and year) and is happy.
+
+But parsing random things amusingly is a _feature_. Misparsing something 
+that makes sense as a date is a bug.
+
+ date.c |   32 +++++++++++++++++++++++++++-----
+ 1 files changed, 27 insertions(+), 5 deletions(-)
+
+diff --git a/date.c b/date.c
+index 51c6461..1de1845 100644
+--- a/date.c
++++ b/date.c
+@@ -24,6 +24,8 @@ time_t tm_to_time_t(const struct tm *tm)
+ 		return -1;
+ 	if (month < 2 || (year + 2) % 4)
+ 		day--;
++	if (tm->tm_hour < 0 || tm->tm_min < 0 || tm->tm_sec < 0)
++		return -1;
+ 	return (year * 365 + (year + 1) / 4 + mdays[month] + day) * 24*60*60UL +
+ 		tm->tm_hour * 60*60 + tm->tm_min * 60 + tm->tm_sec;
+ }
+@@ -425,13 +427,19 @@ static int match_multi_number(unsigned long num, char c, const char *date, char
+ 	return end - date;
+ }
+ 
+-/* Have we filled in any part of the time/date yet? */
++/*
++ * Have we filled in any part of the time/date yet?
++ * We just do a binary 'and' to see if the sign bit
++ * is set in all the values.
++ */
+ static inline int nodate(struct tm *tm)
+ {
+-	return tm->tm_year < 0 &&
+-		tm->tm_mon < 0 &&
+-		tm->tm_mday < 0 &&
+-		!(tm->tm_hour | tm->tm_min | tm->tm_sec);
++	return (tm->tm_year &
++		tm->tm_mon &
++		tm->tm_mday &
++		tm->tm_hour &
++		tm->tm_min &
++		tm->tm_sec) < 0;
+ }
+ 
+ /*
+@@ -580,6 +588,9 @@ int parse_date(const char *date, char *result, int maxlen)
+ 	tm.tm_mon = -1;
+ 	tm.tm_mday = -1;
+ 	tm.tm_isdst = -1;
++	tm.tm_hour = -1;
++	tm.tm_min = -1;
++	tm.tm_sec = -1;
+ 	offset = -1;
+ 	tm_gmt = 0;
+ 
+@@ -893,6 +904,17 @@ static void pending_number(struct tm *tm, int *num)
+ 		*num = 0;
+ 		if (tm->tm_mday < 0 && number < 32)
+ 			tm->tm_mday = number;
++		else if (tm->tm_mon < 0 && number < 13)
++			tm->tm_mon = number-1;
++		else if (tm->tm_year < 0) {
++			if (number > 1969 && number < 2100)
++				tm->tm_year = number - 1900;
++			else if (number > 69 && number < 100)
++				tm->tm_year = number;
++			else if (number < 38)
++				tm->tm_year = 100 + number;
++			/* We screw up for number = 00 ? */
++		}
+ 	}
+ }
+ 
