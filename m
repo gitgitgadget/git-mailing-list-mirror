@@ -1,93 +1,82 @@
-From: Adam Brewster <adambrewster@gmail.com>
+From: Jeffrey Ratcliffe <jeffrey.ratcliffe@gmail.com>
 Subject: Re: bundles with multiple branches
-Date: Sun, 23 Aug 2009 16:52:40 -0400
-Message-ID: <c376da900908231352o5c5746c0h9e39b80adede66e8@mail.gmail.com>
+Date: Sun, 23 Aug 2009 23:04:06 +0200
+Message-ID: <30e395780908231404k7240dbacu5c258d9816e35dd7@mail.gmail.com>
 References: <30e395780908231336p403c2171ie383a81c3d1bb020@mail.gmail.com>
+	 <c376da900908231352o5c5746c0h9e39b80adede66e8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeffrey Ratcliffe <jeffrey.ratcliffe@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 22:52:53 2009
+To: Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 23 23:04:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfK3V-0001wf-9U
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 22:52:49 +0200
+	id 1MfKEp-0006oV-S5
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 23:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158AbZHWUwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 16:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbZHWUwk
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 16:52:40 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:59159 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753566AbZHWUwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2009 16:52:39 -0400
-Received: by ewy3 with SMTP id 3so1892491ewy.18
-        for <git@vger.kernel.org>; Sun, 23 Aug 2009 13:52:40 -0700 (PDT)
+	id S934079AbZHWVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 17:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbZHWVEH
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 17:04:07 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:64612 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755879AbZHWVEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 17:04:06 -0400
+Received: by fxm17 with SMTP id 17so1187474fxm.37
+        for <git@vger.kernel.org>; Sun, 23 Aug 2009 14:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
          :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=87V5++Yz/bFvwPcdHJbi923koNX4+QQM2x6qP0ZRsbM=;
-        b=NILB+Ia+Yqyefo1bW6G8hNH2h+Tqqi/Xv9R4FK0gZiGNQAXiKbzYIAfwTTUTOQNRv8
-         4FqGHBlRdXgAIL1XZg6RFUn41ovnj8eT0GYg8+qRjdikDbNUAcT71MUXt7CxwQatgNsI
-         bdst7xTlqh5yAiWA0WZbYZ6cX1eyESBwMvD6Y=
+        bh=Faj0STwjSK9y1l7oarJQMnGTQ5bz369xG1kbxjgKmyE=;
+        b=ba/jCywizGlFCfor6v8CQ7F/qSzL/oJO+/7H0Nd1mlh6d+M6of0quQqAKi2X4semFC
+         avgGrjh028VfCu9+1yLfDiwt/nywv/VL6pgVhgaOU3b44tatdrNbx+yMsdU0vEsZL2/1
+         8T4r1wu1f5a5hyLWLRKvcFbf+BI9KgG1MQ0Gc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=uiGRnhNF0p2TRQkxv5d2oiDz0jcOXdxMhYiM/Pf5m21kzmXzoc6yn/dMKLbFk5Ukx1
-         YrSVzuzdbJYwK1BQX3cf6eqtO9o5VxaOXGe4J/RJ/YhT3X4PvO43Y5BSvwO4OHyP02uS
-         DAMX3tbhexlBsNWNsdWKUkp491EfSfjcHku+g=
-Received: by 10.216.16.208 with SMTP id h58mr820639weh.60.1251060760231; Sun, 
-	23 Aug 2009 13:52:40 -0700 (PDT)
-In-Reply-To: <30e395780908231336p403c2171ie383a81c3d1bb020@mail.gmail.com>
+        b=OqiOGvlrn94IS0xkOVun8nAhZNK5jM3XErmNa6uf+noYpW5CWYsQjmfBjcjz/zp48c
+         pLbPHfFyJhfOJ7TDVJy6RV9mJbGYO1QwJgpK8/vGYeNrtvYPqvwwNcBzMcXooqRQA+X+
+         1fbTGsJ9sAF6Uc6B79KE5ZlDx+X/mL5ViIwRA=
+Received: by 10.102.245.20 with SMTP id s20mr1530993muh.74.1251061446359; Sun, 
+	23 Aug 2009 14:04:06 -0700 (PDT)
+In-Reply-To: <c376da900908231352o5c5746c0h9e39b80adede66e8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126878>
 
-On Sun, Aug 23, 2009 at 4:36 PM, Jeffrey
-Ratcliffe<jeffrey.ratcliffe@gmail.com> wrote:
-> I tend to work on multiple machines that don't have direct access to
-> each and therefore keep my git repositories in sync using bundles.
->
-> This works fine for single branches - but how can I set things up so
-> that I can just
->
-> $ git pull <bundle>
->
-> or
->
-> $ git fetch <bundle>
->
-> and have git update all branches?
->
+Thanks for the help
 
-1. Make sure you've got all of the refs you want in the bundle.  I
-usually use `git bundle create ... --all`
+2009/8/23 Adam Brewster <adambrewster@gmail.com>:
+> git remote add bundle /media/cdrom
+> git config --replace-all remotes.bundle.fetch refs/heads/*:refs/remotes/bundle/*
+> git config --add remotes.bundle.fetch refs/remotes/*:refs/remotes/*
 
-2. Set up a remote on the destination side with a url of wherever you
-keep bundles (like /media/cdrom) and a fetch line like
-refs/heads/*:refs/remotes/source/*
+On
 
-git remote add bundle /media/cdrom
-git config --replace-all remotes.bundle.fetch refs/heads/*:refs/remotes/bundle/*
+$ git pull bundle
 
-Since your destination machine is likely not connected to the
-internet, you may also want copy all of the remotes too.  I do that
-with
+or
 
-git config --add remotes.bundle.fetch refs/remotes/*:refs/remotes/*
+$ git fetch bundle
 
-Beware of the use of the name "origin" with setups like this.  If you
-have branches under refs/remotes/origin/ on the machine you use to
-create the bundle, you will should make sure you don't try to copy
-refs from refs/heads and refs/remotes/origin to the same place
-(because refs/remotes/origin is the natural place to store both).
+I get
 
-Adam
+fatal: '/media/cdrom': unable to chdir or not a git archive
+fatal: The remote end hung up unexpectedly
+
+Any ideas?
+
+(I used the mount point of the USB stick where the bundles were but
+the principle is the same)
+
+Regards
+
+Jeff
