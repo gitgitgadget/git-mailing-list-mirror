@@ -1,97 +1,65 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH 2/2 (v3)] reset: make the output more user-friendly.
-Date: Sun, 23 Aug 2009 12:42:29 +0200
-Message-ID: <vpqiqgevmju.fsf@bauges.imag.fr>
-References: <vpqljlipcs6.fsf@bauges.imag.fr>
-	<1250845079-30614-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1250845079-30614-2-git-send-email-Matthieu.Moy@imag.fr>
-	<7v3a7k767j.fsf@alter.siamese.dyndns.org>
-	<vpq8whc8euu.fsf@bauges.imag.fr>
-	<7vmy5r1cpo.fsf@alter.siamese.dyndns.org>
+From: Eric Schaefer <eric.schaefer@ericschaefer.org>
+Subject: Re: Lowlevel documentation
+Date: Sun, 23 Aug 2009 13:34:40 +0200
+Message-ID: <34f8975d0908230434g43c44a6fu17f7dee7c7e52eb3@mail.gmail.com>
+References: <34f8975d0908230304k41ea18b4xf57bdb3099ddfced@mail.gmail.com>
+	 <1f6632e50908230325id8422b1t520831869aadcbce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 12:45:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Matthias Kestenholz <mk@feinheit.ch>
+X-From: git-owner@vger.kernel.org Sun Aug 23 13:37:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfAZN-0001QF-Le
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 12:45:06 +0200
+	id 1MfBNp-0002P8-1F
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 13:37:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755980AbZHWKmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 06:42:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755929AbZHWKmf
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 06:42:35 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51145 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755883AbZHWKme (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2009 06:42:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7NAdWFJ005805
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 23 Aug 2009 12:39:32 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MfAWr-000303-S8; Sun, 23 Aug 2009 12:42:29 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MfAWr-0000kW-Pn; Sun, 23 Aug 2009 12:42:29 +0200
-In-Reply-To: <7vmy5r1cpo.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 22 Aug 2009 19\:33\:07 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 23 Aug 2009 12:39:33 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7NAdWFJ005805
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1251628773.23473@ULKmuS7F8MKVUjv9h364BQ
+	id S933496AbZHWLel convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2009 07:34:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933466AbZHWLek
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 07:34:40 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:36459 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933413AbZHWLek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 07:34:40 -0400
+Received: by ewy3 with SMTP id 3so1680779ewy.18
+        for <git@vger.kernel.org>; Sun, 23 Aug 2009 04:34:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=gZgyHHZKd4pdGVafBmLhxdlJcMSSPOWyDh9uXp3JN2U=;
+        b=GPms6JrQujljixU/iuGzV9JUUNail75UFRp4us6DtajuG3eHKrDn3VXdHQCJMtxxgq
+         DHgxrsAl978l4rPLBHWf3sqhU+3o6Jrvm9Wh2kF/iQhtZfa0rwID09cZtuWSsezwo9Ie
+         jPLsnidNNvtScRDzcO49fmVJYuURzfEo3ilfg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=E060NHUbrgTm64vIhajFnXVyfkVzgrWs6kR3hnBzVSePwO0C0QRaOsUraJeYn9EG+R
+         LxkWRHSJC9HRJciWcIJVpAjrQ0Yq1kPBvv91PCZ9UeRS7c13i4MvORGqBfJYZ2TLKIcD
+         6BmpcY1D2CLjoNBy4U+aMEopNtPS3bHdakpZY=
+Received: by 10.216.93.16 with SMTP id k16mr705926wef.33.1251027280826; Sun, 
+	23 Aug 2009 04:34:40 -0700 (PDT)
+In-Reply-To: <1f6632e50908230325id8422b1t520831869aadcbce@mail.gmail.com>
+X-Google-Sender-Auth: bf4b73c62338d62c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126856>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Two conflicting/competing thoughts come to mind:
+2009/8/23 Matthias Kestenholz <mk@feinheit.ch>:
+> I think you are referring to this blog post:
 >
->  1. Perhaps we should add a similar "explanation" for the list of paths
->     with changes upon switching branches with "git checkout" for
->     consistency.
+> http://tom.preston-werner.com/2009/05/19/the-git-parable.html
 
-Actually, I had never paid much attention to this message for
-checkout. Just checked, and I got it wrong too ;-). I thought checkout
-was showing me the files it was modifying, that wasn't it.
+Yes, thats the one.
 
-That said, I'm not a heavy user of local branches, so I'm a bad judge
-on what should be the behavior.
-
->  2. Such an "explanation" of what the output means would help the first
->     time people, but would everybody stay "first time" forever?  Would the
->     explanation become just another wasted line in valuable screen real
->     estate after people gain experience?
-
-Yes, and this is a much more general issue than just checkout/reset.
-For example, the output of 'git status' is very nice to newbies:
-
-  # On branch master
-  # Changed but not updated:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   git.c
-  #
-  no changes added to commit (use "git add" and/or "git commit -a")
-
-But out of these 8 lines, only two contain real informations, and the
-(use "git bla") are just noise to expert users.
-
-I've been thinking of a configuration option, like "core.expertuser"
-or "ui.expertuser" that would let users disable these informative
-messages on demand. I'm not sure how good the idea is.
-
---
-Matthieu
+Thank Matthias, thanks Bj=F6rn. Sch=F6nen Sonntag noch,
+Eric
