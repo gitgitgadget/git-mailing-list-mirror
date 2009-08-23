@@ -1,97 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Commit performance, or lack thereof
-Date: Sat, 22 Aug 2009 19:20:22 -0700
-Message-ID: <7vvdkf1dax.fsf@alter.siamese.dyndns.org>
-References: <m3r5v39zzz.fsf@lugabout.jhcloos.org>
+From: Daniel Convissor <danielc@analysisandsolutions.com>
+Subject: Re: hitting home directory's parent
+Date: Sun, 23 Aug 2009 00:42:02 -0400
+Message-ID: <20090823044202.GA10761@panix.com>
+References: <20090821200503.GA19660@panix.com> <fcaeb9bf0908212110o5ed1233ek11183fa37b474a06@mail.gmail.com> <20090822150542.GA29507@panix.com> <fcaeb9bf0908220920g29ec24e9v23d0504d10ca6cfb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: James Cloos <cloos@jhcloos.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 06:18:26 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 23 06:43:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mf4XB-00031F-2P
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 06:18:25 +0200
+	id 1Mf4vE-0008VR-IF
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 06:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751253AbZHWESE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 00:18:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751223AbZHWESD
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 00:18:03 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964AbZHWESB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Aug 2009 00:18:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3722915550;
-	Sat, 22 Aug 2009 22:20:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GWLOqeHUzxe39f/2AL79KUUNQDc=; b=x9Koo1
-	ZNjZDTb7P3gkhrPrlApdpbCxLjCC0lsLEuHZ75DQzHVhp2MNRa9dFoe7IB+LUaVI
-	4u9Fk0V08B6z3YJfbYsPGVGkPvyaFAixui1+yPzWUAunJLO0KVZau0kH4aMiSly9
-	XLoT1NesxursO98KZdFaDjvRlb1PNXK+JSUOM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Zf97YV6TA7euacW60TRB8NcQe3OYt61x
-	GnybYn1UiCJ9gA97NaSC9O925aHkFa/KF20OCDiAOcymxo5Ge+kitsQNk/QSZGnw
-	JclIIik4oibAMODiJ6ZVfNuKEfeDjqkufIaeyaxN/0WLChYEW0OARTmFJGqrlHi4
-	rzC07eiCTcU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 112DC1554F;
-	Sat, 22 Aug 2009 22:20:32 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62EB41554E; Sat, 22 Aug
- 2009 22:20:24 -0400 (EDT)
-In-Reply-To: <m3r5v39zzz.fsf@lugabout.jhcloos.org> (James Cloos's message of
- "Sat\, 22 Aug 2009 19\:42\:32 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 88739ADC-8F8B-11DE-AC26-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751282AbZHWEmD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 00:42:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751267AbZHWEmC
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 00:42:02 -0400
+Received: from mail1.panix.com ([166.84.1.72]:60338 "EHLO mail1.panix.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964AbZHWEmB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Aug 2009 00:42:01 -0400
+Received: from panix5.panix.com (panix5.panix.com [166.84.1.5])
+	by mail1.panix.com (Postfix) with ESMTP id AEAEC1F082
+	for <git@vger.kernel.org>; Sun, 23 Aug 2009 00:42:02 -0400 (EDT)
+Received: by panix5.panix.com (Postfix, from userid 14662)
+	id A38E024204; Sun, 23 Aug 2009 00:42:02 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <fcaeb9bf0908220920g29ec24e9v23d0504d10ca6cfb@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126843>
 
-James Cloos <cloos@jhcloos.com> writes:
+Hi Duy:
 
-> Starting in the kernel tree, if one edits and adds a single file and
-> then commits it w/o specifying the file name as an argument to commit,
-> ...
-> OTOH, if one does specify the filename as an argument to commit,...
+On Sat, Aug 22, 2009 at 11:20:39PM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Sat, Aug 22, 2009 at 10:05 PM, Daniel
+> Convissor<danielc@analysisandsolutions.com> wrote:
+> > Hi Duy:
+> >
+> > On Sat, Aug 22, 2009 at 11:10:18AM +0700, Nguyen Thai Ngoc Duy wrote:
+> >>
+> >> I guess it tried to find .git directory upward. I think you can set
+> >> GIT_CEILING_DIRECTORIES to make it stop at /home/danielc. Excerpt from
+> >> git.txt
+> >
+> > That didn't change the situation.
+> 
+> I'd suggest you to degrade Git to a version earlier than 1.6.1, when
+> the error was not added. :-D
 
-When you do:
-
-    git add something && git commit
-
-the commit step is just "write the index out as a tree, create a commit
-object to wrap that tree object".  It never has to look at your work tree
-and is a very cheap operation.
-
-On the other hand, if you do:
-
-    some other random things && git commit pathspec
-
-the commit step involves a lot more operations.  It has to do:
-
-    - create a temporary index from HEAD (i.e. ignore the modification to
-      the real index you did so far with your earlier "git add");
-
-    - rehash all the paths in the work tree that matches the pathspec and
-      add them to that temporary index; and finally
-
-    - write the temporary index out as a tree, create a commit object to
-      wrap that tree object.
-
-The second step has to go to your work tree, and if you have a slow disk,
-or your buffer cache is cold, you naturally have to pay.
-
-So it is not surprising at all if you observe that the latter takes more
-time and resource than the former, although there could be something wrong
-in your set-up that you need to spend 300M for it.  It is fundamentally a
-more expensive operation.
+:)  Might be easier to use "svn ci" instead. :)
 
 
-    
+> But did it at least change the error message? Here is what I got when
+> "chmod 000 /tmp/a":
+
+No.  It produced the same exact error message:
+    fatal: Cannot change to /home/danielc/..: Permission denied
+
+Thanks,
+
+--Dan
+
+-- 
+ T H E   A N A L Y S I S   A N D   S O L U T I O N S   C O M P A N Y
+            data intensive web and database programming
+                http://www.AnalysisAndSolutions.com/
+ 4015 7th Ave #4, Brooklyn NY 11232  v: 718-854-0335 f: 718-854-0409
