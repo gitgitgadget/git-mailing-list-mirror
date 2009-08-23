@@ -1,226 +1,132 @@
 From: Mark Rada <marada@uwaterloo.ca>
-Subject: [RFC/PATCH 2/3] gitweb: break test suite into library and tests
-Date: Sun, 23 Aug 2009 17:52:08 -0400
-Message-ID: <4A91BA08.2010003@mailservices.uwaterloo.ca>
+Subject: [RFC/PATCH 3/3] gitweb: add test cases for snapshot settings
+Date: Sun, 23 Aug 2009 17:53:23 -0400
+Message-ID: <4A91BA53.1040800@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 23 23:57:27 2009
+X-From: git-owner@vger.kernel.org Sun Aug 23 23:58:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfL41-000723-JG
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 23:57:26 +0200
+	id 1MfL5C-0007W3-0g
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 23:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750770AbZHWV5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Aug 2009 17:57:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750759AbZHWV5M
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 17:57:12 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:36714 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750758AbZHWV5L (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 17:57:11 -0400
+	id S1750862AbZHWV61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Aug 2009 17:58:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750802AbZHWV60
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 17:58:26 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:46341 "EHLO
+	mailchk-m04.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750800AbZHWV60 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 17:58:26 -0400
 Received: from karakura.local (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
 	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7NLq9Pj002016
+	by mailchk-m04.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7NLrNZK016732
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 23 Aug 2009 17:52:09 -0400
+	Sun, 23 Aug 2009 17:53:24 -0400
 User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
-X-UUID: f93d53dc-6594-4bc6-a5eb-58e30a1ecc40
-X-Miltered: at mailchk-m05 with ID 4A91BA09.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
+X-UUID: dbe78306-8773-474c-9c39-14e3f27241c2
+X-Miltered: at mailchk-m04 with ID 4A91BA53.001 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m04
 X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sun, 23 Aug 2009 17:52:11 -0400 (EDT)
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m04.uwaterloo.ca [129.97.128.141]); Sun, 23 Aug 2009 17:53:25 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126887>
 
-To accommodate additions to the tests cases for gitweb, the preamble
-from t9500 is now in its library so that new sets of tests for gitweb
-can use the same setup without copying the same code.
+This commit adds a new test file (t9501) that is used for gitweb test
+cases that parse gitweb output to verify the HTTP status code or
+message.
 
 Signed-off-by: Mark Rada <marada@uwaterloo.ca>
 ---
- t/gitweb-lib.sh                        |   79 ++++++++++++++++++++++++++++++++
- t/t9500-gitweb-standalone-no-errors.sh |   74 +-----------------------------
- 2 files changed, 80 insertions(+), 73 deletions(-)
- create mode 100644 t/gitweb-lib.sh
+ t/t9501-gitweb-standalone-http-status.sh |   71 ++++++++++++++++++++++++++++++
+ 1 files changed, 71 insertions(+), 0 deletions(-)
+ create mode 100644 t/t9501-gitweb-standalone-http-status.sh
 
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
 new file mode 100644
-index 0000000..3a60fa5
+index 0000000..c4b0479
 --- /dev/null
-+++ b/t/gitweb-lib.sh
-@@ -0,0 +1,79 @@
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -0,0 +1,71 @@
 +#!/bin/sh
 +#
-+# Copyright (c) 2007 Jakub Narebski
++# Copyright (c) 2009 Mark Rada
 +#
 +
-+test_description='gitweb as standalone script (basic tests).
-+
-+This test runs gitweb (git web interface) as CGI script from
-+commandline, and checks that it would not write any errors
-+or warnings to log.'
-+
-+gitweb_init () {
-+	safe_pwd="$(perl -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
-+	cat >gitweb_config.perl <<EOF
-+#!/usr/bin/perl
-+
-+# gitweb configuration for tests
-+
-+our \$version = 'current';
-+our \$GIT = 'git';
-+our \$projectroot = "$safe_pwd";
-+our \$project_maxdepth = 8;
-+our \$home_link_str = 'projects';
-+our \$site_name = '[localhost]';
-+our \$site_header = '';
-+our \$site_footer = '';
-+our \$home_text = 'indextext.html';
-+our @stylesheets = ('file:///$TEST_DIRECTORY/../gitweb/gitweb.css');
-+our \$logo = 'file:///$TEST_DIRECTORY/../gitweb/git-logo.png';
-+our \$favicon = 'file:///$TEST_DIRECTORY/../gitweb/git-favicon.png';
-+our \$projects_list = '';
-+our \$export_ok = '';
-+our \$strict_export = '';
-+
-+EOF
-+
-+	cat >.git/description <<EOF
-+$0 test repository
-+EOF
-+}
-+
-+gitweb_run () {
-+	GATEWAY_INTERFACE='CGI/1.1'
-+	HTTP_ACCEPT='*/*'
-+	REQUEST_METHOD='GET'
-+	SCRIPT_NAME="$TEST_DIRECTORY/../gitweb/gitweb.perl"
-+	QUERY_STRING=""$1""
-+	PATH_INFO=""$2""
-+	export GATEWAY_INTERFACE HTTP_ACCEPT REQUEST_METHOD \
-+		SCRIPT_NAME QUERY_STRING PATH_INFO
-+
-+	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
-+	export GITWEB_CONFIG
-+
-+	# some of git commands write to STDERR on error, but this is not
-+	# written to web server logs, so we are not interested in that:
-+	# we are interested only in properly formatted errors/warnings
-+	rm -f gitweb.log &&
-+	perl -- "$SCRIPT_NAME" \
-+		>gitweb.output 2>gitweb.log &&
-+	if grep '^[[]' gitweb.log >/dev/null 2>&1; then false; else true; fi
-+
-+	# gitweb.log is left for debugging
-+	# gitweb.output is used to parse http output
-+}
-+
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL; then
-+	say 'skipping gitweb tests, perl not available'
-+	test_done
-+fi
-+
-+perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
-+    say 'skipping gitweb tests, perl version is too old'
-+    test_done
-+}
-+
-+gitweb_init
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 6275181..a5b5b26 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -3,79 +3,7 @@
- # Copyright (c) 2007 Jakub Narebski
- #
- 
--test_description='gitweb as standalone script (basic tests).
--
--This test runs gitweb (git web interface) as CGI script from
--commandline, and checks that it would not write any errors
--or warnings to log.'
--
--gitweb_init () {
--	safe_pwd="$(perl -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
--	cat >gitweb_config.perl <<EOF
--#!/usr/bin/perl
--
--# gitweb configuration for tests
--
--our \$version = "current";
--our \$GIT = "git";
--our \$projectroot = "$safe_pwd";
--our \$project_maxdepth = 8;
--our \$home_link_str = "projects";
--our \$site_name = "[localhost]";
--our \$site_header = "";
--our \$site_footer = "";
--our \$home_text = "indextext.html";
--our @stylesheets = ("file:///$TEST_DIRECTORY/../gitweb/gitweb.css");
--our \$logo = "file:///$TEST_DIRECTORY/../gitweb/git-logo.png";
--our \$favicon = "file:///$TEST_DIRECTORY/../gitweb/git-favicon.png";
--our \$projects_list = "";
--our \$export_ok = "";
--our \$strict_export = "";
--
--EOF
--
--	cat >.git/description <<EOF
--$0 test repository
--EOF
--}
--
--gitweb_run () {
--	GATEWAY_INTERFACE="CGI/1.1"
--	HTTP_ACCEPT="*/*"
--	REQUEST_METHOD="GET"
--	SCRIPT_NAME="$TEST_DIRECTORY/../gitweb/gitweb.perl"
--	QUERY_STRING=""$1""
--	PATH_INFO=""$2""
--	export GATEWAY_INTERFACE HTTP_ACCEPT REQUEST_METHOD \
--		SCRIPT_NAME QUERY_STRING PATH_INFO
--
--	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
--	export GITWEB_CONFIG
--
--	# some of git commands write to STDERR on error, but this is not
--	# written to web server logs, so we are not interested in that:
--	# we are interested only in properly formatted errors/warnings
--	rm -f gitweb.log &&
--	perl -- "$SCRIPT_NAME" \
--		>/dev/null 2>gitweb.log &&
--	if grep "^[[]" gitweb.log >/dev/null 2>&1; then false; else true; fi
--
--	# gitweb.log is left for debugging
--}
--
--. ./test-lib.sh
--
--if ! test_have_prereq PERL; then
--	say 'skipping gitweb tests, perl not available'
--	test_done
--fi
--
--perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
--    say 'skipping gitweb tests, perl version is too old'
--    test_done
--}
--
--gitweb_init
 +. ./gitweb-lib.sh
- 
- # ----------------------------------------------------------------------
- # no commits (empty, just initialized repository)
++
++# ----------------------------------------------------------------------
++# snapshot settings
++
++test_commit \
++	'SnapshotTest' \
++	'i can has snapshot?'
++
++cat >>gitweb_config.perl <<\EOF
++$feature{'snapshot'}{'override'} = 0;
++EOF
++
++test_expect_success \
++    'snapshots: tgz only default format enabled' \
++    'gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tgz" &&
++    grep "Status: 200 OK" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tbz2" &&
++    grep "403 - Unsupported snapshot format" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=txz" &&
++    grep "403 - Snapshot format not allowed" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=zip" &&
++    grep "403 - Unsupported snapshot format" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
++cat >>gitweb_config.perl <<\EOF
++$feature{'snapshot'}{'default'} = ['tgz','tbz2','txz','zip'];
++EOF
++
++test_expect_success \
++    'snapshots: all enabled in default, use default disabled value' \
++    'gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tgz" &&
++    grep "Status: 200 OK" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tbz2" &&
++    grep "Status: 200 OK" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=txz" &&
++    grep "403 - Snapshot format not allowed" gitweb.output &&
++    gitweb_run "p=.git;a=snapshot;h=HEAD;sf=zip" &&
++    grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
++cat >>gitweb_config.perl <<\EOF
++$known_snapshot_formats{'zip'}{'disabled'} = 1;
++EOF
++
++test_expect_success \
++    'snapshots: zip explicitly disabled' \
++    'gitweb_run "p=.git;a=snapshot;h=HEAD;sf=zip" &&
++    grep "403 - Snapshot format not allowed" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
++cat >>gitweb_config.perl <<\EOF
++$known_snapshot_formats{'tgz'}{'disabled'} = 0;
++EOF
++
++test_expect_success \
++    'snapshots: tgz explicitly enabled' \
++    'gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tgz" &&
++    grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
++test_done 
 -- 
 1.6.4
