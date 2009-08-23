@@ -1,162 +1,93 @@
-From: Mike Frysinger <vapier@gentoo.org>
-Subject: [PATCH] post-receive-email: allow customizing of subject/intro/footer
-Date: Sat, 22 Aug 2009 23:51:28 -0400
-Message-ID: <1250999488-10649-1-git-send-email-vapier@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 23 05:51:23 2009
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: hitting home directory's parent
+Date: Sun, 23 Aug 2009 11:07:39 +0700
+Message-ID: <fcaeb9bf0908222107i6d999335r998a304aaa3cd405@mail.gmail.com>
+References: <20090821200503.GA19660@panix.com> <fcaeb9bf0908212110o5ed1233ek11183fa37b474a06@mail.gmail.com> 
+	<20090822150542.GA29507@panix.com> <fcaeb9bf0908220920g29ec24e9v23d0504d10ca6cfb@mail.gmail.com> 
+	<20090822181607.GA25823@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Daniel Convissor <danielc@analysisandsolutions.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Aug 23 06:15:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mf470-0006a6-3O
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 05:51:22 +0200
+	id 1Mf4UB-0002VH-HK
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Aug 2009 06:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933469AbZHWDvO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Aug 2009 23:51:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933455AbZHWDvN
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Aug 2009 23:51:13 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:45553 "EHLO smtp.gentoo.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933453AbZHWDvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Aug 2009 23:51:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by smtp.gentoo.org (Postfix) with ESMTP id 0CFEF66EFA
-	for <git@vger.kernel.org>; Sun, 23 Aug 2009 03:51:13 +0000 (UTC)
-X-Mailer: git-send-email 1.6.4
+	id S1750920AbZHWEH6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Aug 2009 00:07:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750846AbZHWEH6
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Aug 2009 00:07:58 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:38370 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750698AbZHWEH6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Aug 2009 00:07:58 -0400
+Received: by an-out-0708.google.com with SMTP id d40so2275610and.1
+        for <git@vger.kernel.org>; Sat, 22 Aug 2009 21:07:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=WgwtuyQcbv87OTMGqs6V2plPmSexBERkcI8oivZcyLw=;
+        b=W91UKWvhF5ADd9JIIozhdSbZAFKgmBgDmhBiWTHVWzgPgvZip3kyIB+LjnFyWnxPtJ
+         jWe9GII2C05ccicMvplE7ZVoWGR3kTFWOEH6UF3YHBeIh5C5BsP3K9Ul80elWBIL+ejX
+         YvI2B1XVZ2d5q/l+BOBr5w2sRdTGU52Tn9ON4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=W6/jJGGc2Ckfn0l0zbGtvdrXbKTWQCHrfXMmO6Lri/c3Eg+HjVa/t+01QlWG2/nFEF
+         x3QjoCSz/IIqFaXuR4GAWFQgUWUy/95FVhohcpvVTP6taTondI0MTq/uy774keiLCCNt
+         iH4LWTHEiRYUUzk1bYcFnpbgezCzGYZrIIhMc=
+Received: by 10.101.26.26 with SMTP id d26mr3191025anj.9.1251000479223; Sat, 
+	22 Aug 2009 21:07:59 -0700 (PDT)
+In-Reply-To: <20090822181607.GA25823@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126840>
 
-The format of the subject/intro/footer are noise imo, but rather than
-debate the issue, let the user customize the output using the existing
-git config hooks section.  The default output is retained for each part.
+On Sun, Aug 23, 2009 at 1:16 AM, Jeff King<peff@peff.net> wrote:
+> On Sat, Aug 22, 2009 at 11:20:39PM +0700, Nguyen Thai Ngoc Duy wrote:
+>
+>> > I did read a bit farther in the manual and initialized a new repos=
+itory.
+>> > Issuing "git --help" once inside that new repository works. =C2=A0=
+Requiring
+>> > the --help command to be called from inside a repository, or even =
+that
+>> > it's looking for a repository at all, seems unwise. =C2=A0All it s=
+hould do is
+>> > display the usage information and exit.
+>>
+>> For simple things like --help, I agree Git should not do extra work
+>> such as searching for Git repository, which is the cause. That was o=
+n
+>> Jeff's plan IIRC.
+>
+> Without looking, I would not be surprised if it is a side effect of
+> git trying to look up help-related config. So I don't think it is a
+> problem exactly that it checks to see if it is in a repo (which would
+> impact config lookup), but that inability to find a repo is a hard
+> error.
+>
+> Probably it is calling "setup_git_directory_gently" and ignoring an
+> error return, but there is a die() inside that function. The bug
+> then is that the _gently form is calling die().
 
-Signed-off-by: Mike Frysinger <vapier@gentoo.org>
----
- contrib/hooks/post-receive-email |   76 +++++++++++++++++++++++++++++---------
- 1 files changed, 58 insertions(+), 18 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 2a66063..a812143 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -38,6 +38,15 @@
- # hooks.emailprefix
- #   All emails have their subjects prefixed with this prefix, or "[SCM]"
- #   if emailprefix is unset, to aid filtering
-+# hooks.emailsubject
-+#   Allow customizing of the subject.  Default is a description of what
-+#   ref changed and how/why.
-+# hooks.emailbodyintro
-+#   Allow customizing of the body intro.  Default is friendly paragraph that
-+#   explains why the user is receiving this e-mail and what has changed.
-+# hooks.emailfooter
-+#   Allow customizing of the footer.  Default is name of the script and the
-+#   repo description.
- # hooks.showrev
- #   The shell command used to format each revision in the email, with
- #   "%s" replaced with the commit id.  Defaults to "git rev-list -1
-@@ -55,6 +64,10 @@
- # "X-Git-Newrev", and "X-Git-Reftype" to enable fine tuned filtering and
- # give information for debugging.
- #
-+# All variables that start with 'email' have substitution performed on them.
-+# Patterns like @foo@ are replaced with the contents of the variable foo.
-+# See subst_vars() for the specific keywords available for substitution.
-+#
- 
- # ---------------------------- Functions
- 
-@@ -190,36 +203,47 @@ generate_email()
- 	generate_email_footer
- }
- 
-+subst_vars()
-+{
-+	sep=$(printf '\001')
-+	# let this be used in a pipeline or by itself
-+	( [ "$#" -ne 0 ] && echo "$@" || cat ) | sed \
-+		-e "s${sep}@change_type@${sep}${change_type}${sep}g" \
-+		-e "s${sep}@describe@${sep}${describe}${sep}g" \
-+		-e "s${sep}@newrev@${sep}${newrev}${sep}g" \
-+		-e "s${sep}@oldrev@${sep}${oldrev}${sep}g" \
-+		-e "s${sep}@projectdesc@${sep}${projectdesc}${sep}g" \
-+		-e "s${sep}@refname@${sep}${refname}${sep}g" \
-+		-e "s${sep}@refname_type@${sep}${refname_type}${sep}g" \
-+		-e "s${sep}@oldrev@${sep}${oldrev}${sep}g" \
-+		-e "s${sep}@short_refname@${sep}${short_refname}${sep}g"
-+}
-+
- generate_email_header()
- {
- 	# --- Email (all stdout will be the email)
- 	# Generate header
-+	(
- 	cat <<-EOF
- 	To: $recipients
--	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
--	X-Git-Refname: $refname
--	X-Git-Reftype: $refname_type
--	X-Git-Oldrev: $oldrev
--	X-Git-Newrev: $newrev
-+	Subject: ${emailprefix}${emailsubject}
-+	X-Git-Refname: @refname@
-+	X-Git-Reftype: @refname_type@
-+	X-Git-Oldrev: @oldrev@
-+	X-Git-Newrev: @newrev@
-+	EOF
- 
--	This is an automated email from the git hooks/post-receive script. It was
--	generated because a ref change was pushed to the repository containing
--	the project "$projectdesc".
-+	if [ -n "${emailbodyintro}" ] ; then
-+		printf '\n%s\n' "${emailbodyintro}"
-+	fi
- 
--	The $refname_type, $short_refname has been ${change_type}d
--	EOF
-+	printf '\n%s\n' "The @refname_type@, @short_refname@ has been @change_type@d"
-+	) | subst_vars
- }
- 
- generate_email_footer()
- {
--	SPACE=" "
--	cat <<-EOF
--
--
--	hooks/post-receive
--	--${SPACE}
--	$projectdesc
--	EOF
-+	subst_vars "${emailfooter}"
- }
- 
- # --------------- Branches
-@@ -671,6 +695,22 @@ recipients=$(git config hooks.mailinglist)
- announcerecipients=$(git config hooks.announcelist)
- envelopesender=$(git config hooks.envelopesender)
- emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
-+emailsubject=$(git config hooks.emailsubject || \
-+	echo '@projectdesc@ @refname_type@, @short_refname@, @change_type@d. @describe@')
-+emailbodyintro=$(git config hooks.emailbodyintro || cat <<-EOF
-+	This is an automated email from the git hooks/post-receive script. It was
-+	generated because a ref change was pushed to the repository containing
-+	the project "@projectdesc@".
-+	EOF
-+)
-+emailfooter=$(git config hooks.emailfooter || SPACE=" " cat <<-EOF
-+
-+
-+	hooks/post-receive
-+	--${SPACE}
-+	@projectdesc@
-+	EOF
-+)
- custom_showrev=$(git config hooks.showrev)
- 
- # --- Main loop
--- 
-1.6.4
+It is (and should be worked around with GIT_CEILING_DIRECTORIES).
+Unfortunately in my test, it could not chdir() back when it failed to
+find gitdir. chdir() was called with an absolute directory, and one
+directory in that path was inaccesible, leading another die("Cannot
+come back to cwd"). This one is fatal and should not be ignored. I
+don't know whether having an inaccesible parent directory is a real
+scenario, as lots of tools would break.
+--=20
+Duy
