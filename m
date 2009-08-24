@@ -1,80 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: Teach mailinfo to ignore everything before -- >8 --
- mark
-Date: Sun, 23 Aug 2009 23:58:51 -0700
-Message-ID: <7v7hwtofys.fsf@alter.siamese.dyndns.org>
-References: <1250999357-10827-3-git-send-email-git@tbfowler.name>
- <7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
- <20090823171819.6117@nanako3.lavabit.com>
- <7v1vn2yklo.fsf@alter.siamese.dyndns.org>
- <20090824060708.6117@nanako3.lavabit.com>
- <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
- <7v7hwurwmu.fsf@alter.siamese.dyndns.org> <20090824041608.GC3526@vidovic>
- <7vk50tq0g5.fsf@alter.siamese.dyndns.org>
- <7vmy5pojsg.fsf@alter.siamese.dyndns.org> <20090824062141.GD3526@vidovic>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [msysGit] Re: [PATCH 14/14] Add README and gitignore file for
+ MSVC build
+Date: Mon, 24 Aug 2009 09:03:23 +0200
+Message-ID: <4A923B3B.6090302@gmail.com>
+References: <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com> <4b8b550914cfc4e638ff905d9b9aa416e45913f4.1250860247.git.mstormo@gmail.com> <ba4e68ae32784d8e0c706fa665fbdbbfe67ce673.1250860247.git.mstormo@gmail.com> <6dd71f163e5410e401fc66088405736d1978ec55.1250860247.git.mstormo@gmail.com> <cover.1250860247.git.mstormo@gmail.com> <54673ddb6bef681194e141e5e05e930cdfaa07bc.1250860247.git.mstormo@gmail.com> <e82f1930173966ebb6b2d2815e037a26e079f969.1250860247.git.mstormo@gmail.com> <a4c8a6d00908230926of0ea10bhd8f66e7d37c3b39b@mail.gmail.com> <3f4fd2640908231122m34604196pc98c5871cf5925b5@mail.gmail.com> <4A91917F.9000709@gmail.com> <a4c8a6d00908231229v56eceeddue1b927a4e4e49ee3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thell Fowler <git@tbfowler.name>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 24 08:59:20 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 09:03:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfTWQ-0001oc-S1
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 08:59:19 +0200
+	id 1MfTad-0003Lp-7A
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 09:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbZHXG7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 02:59:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZHXG7G
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 02:59:06 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37699 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751547AbZHXG7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 02:59:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C17F8169DE;
-	Mon, 24 Aug 2009 02:59:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=O6djGihPvc484pn6Gqg2swAjV18=; b=vO0Siq
-	yGqHv3uigdNNcOPcxhMDUG2Z4DuAY7aAF8UNUBEn1AtlJVUm7JapjP/7prHb/wd5
-	5RqnaeLFGK1ezonrE/NUPD0ckJpptnrthS31NfE3qRuociRg1//fkJjHCnQ+4VCy
-	feYW8bP6HwWyi45x9dObXgkuGAXnab7b3lFPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I0xoCtzmvNRjXOqeYXW8wRRa+oBDgAGD
-	2WW+C8i46/AnN+SxprulE6lSKUMCSYJEJ52Y4YV+oqSacBZY5eMnYupZtHgujpr/
-	ZOeSZRVH4SJaHnkRqKWfcopZedXylhJ8+tKd1++BYKHbBBSyuqenAaaWDmQOCTg0
-	jtM2O+8ITpU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 767A7169DC;
-	Mon, 24 Aug 2009 02:59:00 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C6C9169DB; Mon, 24 Aug
- 2009 02:58:53 -0400 (EDT)
-In-Reply-To: <20090824062141.GD3526@vidovic> (Nicolas Sebrecht's message of
- "Mon\, 24 Aug 2009 08\:21\:41 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 99DED3F4-907B-11DE-9611-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751663AbZHXHDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 03:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbZHXHDa
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 03:03:30 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:44513 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751467AbZHXHD3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 03:03:29 -0400
+Received: by ewy3 with SMTP id 3so2103087ewy.18
+        for <git@vger.kernel.org>; Mon, 24 Aug 2009 00:03:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=xJ2kQGuweonlWVRdoMZa9q0GiS2zF3085TnhRGSp7rM=;
+        b=IFjonkCsLYFmytcmDDIJu2s+zHjmbsKz4c5kA/ELvp2Ucx85hQ0fgk+6Ui/K+R+FRE
+         w4hmW1tVRDVsOA/qzH0jm79ah/2DMKVh5eyuAt5gDwRTesBETANk+Xl1eRdgoPJm9dqY
+         82drWosv3gL/Lny9D0ziGk03ZNp2wpXYayOx8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=nscY8YzSGZycK3ZdjhOEFrtKVrkG0Cw6YrKZly+fACYuEDpPR7SiF5ON1KqJgTOVh7
+         akfTXrf17yqfQHpKrXCb9KzZ+69X/xMWgboTl94qt685Oboeg/PKWnQnrNMICmZbDOnO
+         Erexucz0PFzS4URiLOR7WCNu+0JwK44hpCjsU=
+Received: by 10.210.88.16 with SMTP id l16mr4404112ebb.76.1251097410637;
+        Mon, 24 Aug 2009 00:03:30 -0700 (PDT)
+Received: from ?172.24.90.95? ([62.70.27.104])
+        by mx.google.com with ESMTPS id 5sm8288849eyf.48.2009.08.24.00.03.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 Aug 2009 00:03:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <a4c8a6d00908231229v56eceeddue1b927a4e4e49ee3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126912>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Thiago Farina said the following on 23.08.2009 21:29:
+> Marius, how common-cmds.h will be generated? In the header file says
+> that it's generated by generate-cmdlist.sh, so the VS user will need
+> to generate this file first (before compiling)?
+> When I tried to compile after pulling from the repository, I couldn't,
+> so I copied it from the the msysgit.
 
->> Does anybody remember what these s_hdr (vs p_hdr) buffers stand for, by
->> the way?
->
-> Has been added by 87ab799234639c .
+The easiest is just do the following on the command line, provided 
+that you have the msysgit environment available (so GNU Make etc):
+     make common-cmds.h
 
-That much I know ;-), thanks anyway.
+That will ensure that the file is generated correctly. After that you 
+can build with msvc, based on the patch series.
 
-The commit does not _explain_ what they are for, what they mean, and what
-these mysteriously named variables do.
+--
+.marius
