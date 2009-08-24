@@ -2,50 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 10327 invoked by uid 107); 11 Jun 2009 15:46:17 -0000
+X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 7109 invoked by uid 107); 24 Aug 2009 09:45:33 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 11 Jun 2009 11:46:15 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 24 Aug 2009 05:45:28 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753246AbZFKPp5 (ORCPT <rfc822;peff@peff.net>);
-	Thu, 11 Jun 2009 11:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbZFKPp5
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Jun 2009 11:45:57 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42956 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751972AbZFKPp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Jun 2009 11:45:56 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20090611154559.SOBH17670.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 11 Jun 2009 11:45:59 -0400
-Received: from localhost ([68.225.240.211])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id 2fly1c00G4aMwMQ04flyZy; Thu, 11 Jun 2009 11:45:59 -0400
-X-VR-Score: -10.00
-X-Authority-Analysis: v=1.0 c=1 a=BAjMoHc70cUA:10 a=UCtxeOKJ4AkA:10
-X-CM-Score: 0.00
-To:	Nick Woolley <nickwoolley@yahoo.co.uk>
-Cc:	Mike Ralphson <mike.ralphson@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] git-cvsexportcommit can't commit files which have been removed from CVS
-References: <4A1F1CF5.8030002@yahoo.co.uk>
-	<e2b179460906100106x2b9c0bb4r931b0a12959d4314@mail.gmail.com>
-	<4A311053.5060802@yahoo.co.uk>
-From:	Junio C Hamano <gitster@pobox.com>
-Date:	Thu, 11 Jun 2009 08:45:58 -0700
-In-Reply-To: <4A311053.5060802@yahoo.co.uk> (Nick Woolley's message of "Thu\, 11 Jun 2009 15\:10\:27 +0100")
-Message-ID: <7vy6ryixjd.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1752136AbZHXJpO (ORCPT <rfc822;peff@peff.net>);
+	Mon, 24 Aug 2009 05:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752074AbZHXJpO
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 05:45:14 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:35718 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752136AbZHXJpM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 05:45:12 -0400
+Received: by ewy3 with SMTP id 3so2202540ewy.18
+        for <git@vger.kernel.org>; Mon, 24 Aug 2009 02:45:13 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=J27+nSY+dCpaUKzeqT7C4FOerAdps5170sokPtWWZVg=;
+        b=d6jLC9ZIe9M1KJCY6d8mjOYHxPEtPTFNWV3Z1P3xjsD4SllBiQvmUTLZD6LGo8ecE0
+         2ubL0MiLJ2vzsBGX/fMfqvPJXabp/kGZIUAk2UxFt6WN5auhkpeBmU+F7H3DPvNEZ7Ze
+         bmYjzb7vyS05nAjuEH0gjPIJ7P72xUGAhPTR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Y7oUgSu5T9NFtPfIYrhcu/o1RWbvhZUpLPZucWbo9jrZiZm87WjvBWGM6UKJ/ae2O7
+         e+2uyAkX8qkw02a69XFTeBZZXoxs+UHjm1Nu9+JTn8Modby4v31WIdJFBgjiJPW2G5nK
+         PsD+Y8JGoYaaAVtiHw9L7RT6X36vTXeMg83Us=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Received: by 10.210.62.4 with SMTP id k4mr4629780eba.25.1251107113562; Mon, 24 
+	Aug 2009 02:45:13 -0700 (PDT)
+In-Reply-To: <1250354813-81349-1-git-send-email-brian@gernhardtsoftware.com>
+References: <1250354813-81349-1-git-send-email-brian@gernhardtsoftware.com>
+Date:	Mon, 24 Aug 2009 11:45:13 +0200
+Message-ID: <81b0412b0908240245l33b04322l923084362197406a@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: Add NEEDS_CRYPTO_WITH_SSL
+From:	Alex Riesen <raa.lkml@gmail.com>
+To:	Brian Gernhardt <brian@gernhardtsoftware.com>
+Cc:	Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+On Sat, Aug 15, 2009 at 18:46, Brian
+Gernhardt<brian@gernhardtsoftware.com> wrote:
+>
+>  After adding BLK_SHA1 to my config.mak, git-imap-send started giving me link
+>  errors:
+>
+>  Undefined symbols:
+>    "_ERR_get_error", referenced from:
+>        _ssl_socket_perror in imap-send.o
+>    "_ERR_error_string", referenced from:
+>        _ssl_socket_perror in imap-send.o
+>
+>  Some investigation led me to the fact that BLK_SHA1 removes LIB_4_CRYPTO from
+>  EXTLIBS.  That let me find the missing functions in libcrypto.  At first I
+>  considered making NEEDS_SSL_WITH_CRYPTO add -lcrypto to the SSL build flags
+>  but decided to go this route in case there are platforms that need it one way
+>  around and not the other.
+
+As imap-send is the only one which uses the symbols, why not just add
+LIB_4_CRYPTO
+to its linking command? Like in the broken GMail-patch below:
+
+diff --git a/Makefile b/Makefile
+index 02ff867..33971f3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1503,7 +1503,7 @@ git-%$X: %.o $(GITLIBS)
+
+ git-imap-send$X: imap-send.o $(GITLIBS)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
++		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+
+ http.o http-walker.o http-push.o: http.h
