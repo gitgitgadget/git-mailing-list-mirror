@@ -1,119 +1,143 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] Teach mailinfo to ignore everything before -- >8 -- mark
-Date: Mon, 24 Aug 2009 06:16:08 +0200
-Message-ID: <20090824041608.GC3526@vidovic>
-References: <1250999285-10683-1-git-send-email-git@tbfowler.name> <1250999357-10827-3-git-send-email-git@tbfowler.name> <7vvdkfx8rl.fsf@alter.siamese.dyndns.org> <20090823171819.6117@nanako3.lavabit.com> <7v1vn2yklo.fsf@alter.siamese.dyndns.org> <20090824060708.6117@nanako3.lavabit.com> <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS> <7v7hwurwmu.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix simple deepening of a repo
+Date: Sun, 23 Aug 2009 21:49:16 -0700
+Message-ID: <7vocq5q0j7.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home>
+ <alpine.LFD.2.00.0908232320410.6044@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thell Fowler <git@tbfowler.name>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 06:16:22 2009
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Aug 24 06:50:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfQyj-0002bg-Tb
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 06:16:22 +0200
+	id 1MfRVX-0001ZL-BM
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 06:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751171AbZHXEQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 00:16:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750933AbZHXEQM
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 00:16:12 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:50696 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750787AbZHXEQL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 00:16:11 -0400
-Received: by ewy3 with SMTP id 3so2043879ewy.18
-        for <git@vger.kernel.org>; Sun, 23 Aug 2009 21:16:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=1W8S57XWsegg7PE1ynhj5e3Hq6cpJQMul8KwoVt7B3s=;
-        b=H9uPYA38jzwyMxjw7+46vYe9jCh8u1mvKU6oLOgODDlnVCeaVefREJVWpD46fZoLE+
-         g8wptOIL4Y04HhO4TguHEWmEcpcfMs1j4ifKjRBV52BheqbjjoeKAEiqDWZMq94nzz9k
-         V/J+kZTGBw4Ybwtor0h/CFMjsDtHtsBltMIlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=rbTxDzmgYibKe4L3WGWAQ7HtILxRaSgKna7jwPKhwhatHJE7m0noZ9n+mlNefCjnDL
-         cQPbeXHlH84RRrzPufzeA2ccqOBy5CBsj9BccyeZvHiukC2hKrQ04/D5v0ixvh87FLoa
-         aDRPolUwJHIRhNHiDmN1kglELlfPQKmj4BIe0=
-Received: by 10.211.194.9 with SMTP id w9mr4357649ebp.4.1251087372799;
-        Sun, 23 Aug 2009 21:16:12 -0700 (PDT)
-Received: from @ (88-121-114-119.rev.libertysurf.net [88.121.114.119])
-        by mx.google.com with ESMTPS id 7sm3757003eyb.37.2009.08.23.21.16.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 23 Aug 2009 21:16:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v7hwurwmu.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751406AbZHXEt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 00:49:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbZHXEt1
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 00:49:27 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54797 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750734AbZHXEt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 00:49:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A98D4342F0;
+	Mon, 24 Aug 2009 00:49:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=VIsPXJ2TOsehssvNkheGlIqc9Nk=; b=IZNtikT9sHjzB4EDAMKY26R
+	LxEBBYEvow1qkwFJGXtpsgvAumY9wafUWUptVgH6RbWFehqELG/Dp4AqszgT5r+a
+	7WfAPPBYa1UsWiOYI+GoirRj+xxiogVT0h8QE24kPGe6boa2I4yPvjcXILLGu82l
+	RPPUfwnY2T6cHKt3aHAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=ZKSL+dXn+bXiVhhbZBlDGRP+O/XriulHuYnsKTlu6/ZRhmTZ5
+	O3GYR61+GGVIvAOjPBKu3Og2nJ3lZYrq3c99lhFMcZbXOfNyFmAgXEL7P0+6+l6M
+	qhBf7dQ+QtaFRlohX4i8f/ooCXcLCNwFl+MwDfR405jKBmP1H0uk/QeimQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 73D7D342EE;
+	Mon, 24 Aug 2009 00:49:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AEE73342ED; Mon, 24 Aug 2009
+ 00:49:18 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7EFEF49A-9069-11DE-9061-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126904>
 
-Subject: [PATCH] Wong title
-From: is this one really the author? <email@somebody.dom>
+Nicolas Pitre <nico@cam.org> writes:
 
-The 23/08/09, Junio C Hamano wrote:
-> 
-> >> > Subject: [PATCH] Teach mailinfo to ignore everything before -- >8 -- mark
-> 
-> The one I sent out had two bugs.  Please discard and replace it with a
-> newer one I'll be pushing out on 'pu' later today.
+> If all refs sent by the remote repo during a fetch are reachable 
+> locally, then no further conversation is performed with the remote. This 
+> check is skipped when the --depth argument is provided to allow the 
+> deepening of a shallow clone which corresponding remote repo has no 
+> changed.
+>
+> However, some additional filtering was added in commit c29727d5 to 
+> remove those refs which are equal on both sides.  If the remote repo has 
+> not changed, then the list of refs to give the remote process becomes 
+> empty and simply attempting to deepen a shallow repo always fails.
+>
+> Let's stop being smart in that case and simply send the whole list over
+> when that condition is met.  The remote will do the right thing anyways.
+>
+> Test cases for this issue are also provided.
+>
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
+> ---
 
-( Tested against current 925bd84 in pu. )
+Thanks.  The fix looks correct (as usual with patches from you).
 
-If we have a mail with this form
+But it makes me wonder if this logic to filter refs is buying us anything.
 
-  <header>
-  Subject: [PATCH] BLAH ONE
-  </header>
+>  	for (rm = refs; rm; rm = rm->next) {
+> +		nr_refs++;
+>  		if (rm->peer_ref &&
+>  		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
+>  			continue;
+		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
+		heads[nr_heads++] = rm;
+	}
 
-  Subject: [PATCH] BLAH TWO
-  <...>
-  -- >8 --
-  Subject: [PATCH] BLAH THREE
+What is the point of not asking for the refs that we know are the same?
 
+In other words, what breaks (not necessarily in the correctness sense, but
+also in the performance sense) if we get rid of this filtering altogether?
 
-the commit message looks like
+Over a native protocol, we will tell the other end what we have and the
+remote end will notice that we are asking for the same thing, so it won't
+include unnecessary objects in the pack anyway.  When calling out to a
+walker, we will also notice that the ref matches what we have already and
+will not fetch anything from the remote.  Because the commit at the tip of
+the ref that is already up-to-date is marked as COMPLETE, we will not even
+locally have to walk the object chain to make sure things are connected.
 
-    BLAH TWO
-    
-    Subject: [PATCH] BLAH THREE
+I think the only thing that this possibly gains is if _everything_ is up
+to date.  Then we won't need to make a call to transport->fetch() and it
+would save a new connection.
 
+But that optimization is already done long ago by the caller's
+quickfetch() in the normal case.
 
-I'd expect that we take the "Subject: " line after the mark and fallback
-to the header if missing.
+Which makes me suspect that the real fix should be something a lot
+simpler, like this (untested) patch.
 
-Same applies to the "From: " lines.
-
-This mail should be usable to your own tests.
-
--- >8 -- Please squash this to 925bd84 -- >8 --
-
-    Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index fcacc94..0c9a791 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -138,6 +138,9 @@ The commit message is formed by the title taken from
-the
- where the patch begins.  Excess whitespace at the end of each
- line is automatically stripped.
+diff --git a/transport.c b/transport.c
+index f231b35..14dab81 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1053,18 +1053,16 @@ const struct ref *transport_get_remote_refs(struct transport *transport)
+ int transport_fetch_refs(struct transport *transport, const struct ref *refs)
+ {
+ 	int rc;
+-	int nr_heads = 0, nr_alloc = 0;
++	int nr_heads = 0;
+ 	const struct ref **heads = NULL;
+ 	const struct ref *rm;
  
-+If a line starts with a "-- >8 --" mark in the body of the message,
-+everything before (and the line itself) will be ignored.
-+
- The patch is expected to be inline, directly following the
- message.  Any line that is of the form:
-
--- 
-Nicolas Sebrecht
+-	for (rm = refs; rm; rm = rm->next) {
+-		if (rm->peer_ref &&
+-		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
+-			continue;
+-		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
++	for (rm = refs; rm; rm = rm->next)
++		nr_heads++;
++	heads = xmalloc(nr_heads * sizeof(*heads));
++	nr_heads = 0;
++	for (rm = refs; rm; rm = rm->next)
+ 		heads[nr_heads++] = rm;
+-	}
+-
+ 	rc = transport->fetch(transport, nr_heads, heads);
+ 	free(heads);
+ 	return rc;
