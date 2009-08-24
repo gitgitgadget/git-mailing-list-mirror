@@ -1,82 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: confirm on empty mail subjects
-Date: Mon, 24 Aug 2009 11:19:46 -0700
-Message-ID: <7v1vn1gjlp.fsf@alter.siamese.dyndns.org>
-References: <1249490994-23455-1-git-send-email-jengelh@medozas.de>
- <7vhbwlpigo.fsf@alter.siamese.dyndns.org>
- <alpine.LSU.2.00.0908241927300.5382@fbirervta.pbzchgretzou.qr>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Pulling one commit at a time.
+Date: Mon, 24 Aug 2009 18:19:56 +0000
+Message-ID: <32541b130908241119t1b969d30q8c8b484481f30ace@mail.gmail.com>
+References: <F536B7C316F9474E9F7091239725AC9A02FA7F44@CHN-CL-MAIL01.mchp-main.com> 
+	<4A9172D0.6030507@microchip.com> <20090824060710.6117@nanako3.lavabit.com> 
+	<4A92318F.6050105@microchip.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jan Engelhardt <jengelh@medozas.de>
-X-From: git-owner@vger.kernel.org Mon Aug 24 20:20:17 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Sanjiv Gupta <sanjiv.gupta@microchip.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 20:20:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mfe9Q-0007Tf-DK
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 20:20:16 +0200
+	id 1Mfe9j-0007YT-Nw
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 20:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753011AbZHXSUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 14:20:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752889AbZHXSUD
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 14:20:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58826 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752647AbZHXSUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 14:20:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4BC67368A7;
-	Mon, 24 Aug 2009 14:19:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DPbGsr0X+UA0QOqZU8bO8g8RjW8=; b=ephXw8
-	JB3AL+a0Bxgpe+CVke7BjOqNiJ7gHTroOrwSjbbuq+jZGvbdw48ZPSQI5sYnnn6p
-	6UxBiQrPoL2uKC2tDYWwMAS+SHQFUUG/6vZPykCJxOAyCLY8ZEySgwn+BjFMc8yJ
-	HGp/T1/OAduLEWV1YNyZtc0lvdzjEINQQMStw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bZ5JoWPzQQyS+V6bQzgs1Ug1f4iagKGd
-	N3BZzCi2ZsNXpR/HkdqHkeCikoM4G6EoDaAFzZTJtcrI+V0fsCRqW8uS5uhhI3QV
-	l/0Te/aT1iEN6Btz39YV6wkfzLAjyhsBetPYzQ/9RGYiK9EaDyHPVENcvaZC1oZx
-	R/uO788Q+Rs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D8DB368A3;
-	Mon, 24 Aug 2009 14:19:52 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E3A86368A2; Mon, 24 Aug 2009
- 14:19:48 -0400 (EDT)
-In-Reply-To: <alpine.LSU.2.00.0908241927300.5382@fbirervta.pbzchgretzou.qr>
- (Jan Engelhardt's message of "Mon\, 24 Aug 2009 19\:27\:56 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B75E8B68-90DA-11DE-AFA9-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753122AbZHXSUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 14:20:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZHXSUQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 14:20:16 -0400
+Received: from mail-yw0-f183.google.com ([209.85.211.183]:43236 "EHLO
+	mail-yw0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752906AbZHXSUP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 14:20:15 -0400
+Received: by ywh13 with SMTP id 13so3013361ywh.15
+        for <git@vger.kernel.org>; Mon, 24 Aug 2009 11:20:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9fDllL3m3gbr1kKW5rotpIsUsyuKlt7dLbWIb+iW2AY=;
+        b=qdW0wEAMKA/sDCesj6TtD8Znzc8IW/D00Cve8O+wZHjd5ToIvNrtMffQGCkuYB6+yx
+         KsKR6TjCr68946z541VqgaItwBqDsWK6lm3hX3pklIE1J72ycm/wtpOaAPs52zDkXsJ5
+         n92tHce90QwJZEzWRGGBvpK73t1PoMKMwyeN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=TtIjGbUclsmJq9m/OsglTjm0KI9Ok+2kmqXH5nz40Ffbea+VQ663hwq3hVIPvtZzFB
+         XfUWETJwRfhd6Bb685/V+9Ki1ExO8oeuq7d97pRfv31UarUt0c3Ax6GIUSu1Xf0f9svT
+         8hCOF9FOx8Qhm8vQe+BD3yEuQ3/omlSM/UCs0=
+Received: by 10.150.160.10 with SMTP id i10mr8629046ybe.186.1251138016703; 
+	Mon, 24 Aug 2009 11:20:16 -0700 (PDT)
+In-Reply-To: <4A92318F.6050105@microchip.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126951>
 
-Jan Engelhardt <jengelh@medozas.de> writes:
+On Mon, Aug 24, 2009 at 6:22 AM, Sanjiv Gupta<sanjiv.gupta@microchip.com> wrote:
+> Excellent description. Thanks for that. I want to merge commits one by one
+> because I want to run a regression suite on each commit and therefore know
+> if any one is causing failures.
 
-> On Thursday 2009-08-06 08:25, Junio C Hamano wrote:
->
->>Jan Engelhardt <jengelh@medozas.de> writes:
->>
->>> When the user forgot to enter a subject in a compose session,
->>> send-email will now inquire whether this is really intended, similar
->>> to what the Alpine MUA does when a subject is absent.
->>
->>This seems to break t9001...
->>
->
-> Did I miss something in building?
->
-> 19:26 sovereign:../git/git-1.6.4.1 > quilt pu
-> Applying patch patches/send-email-empty-subject.diff
-> patching file git-send-email.perl
+Hi Sanjiv,
 
-Is this using 'pu' with your patch?  Near the tip of the 'pu' branch I
-have a iffy workaround to "unbreak" the issue, but it is a rather
-sledgehammer approach I do not feel comfortable enough to squash into your
-patch yet.
+'git bisect' is an even better way to do this, in my experience.  I
+wrote a program (http://github.com/apenwarr/gitbuilder/) that
+automatically runs regression tests against all the new versions on
+all the new branches.  It then publishes the results on a web page and
+via RSS.
+
+gitbuilder does take a shortcut: if commit x passes and commit x+10
+passes, it doesn't bother to test commit x+1..9.  However, if x+10
+fails, it bisects automatically to find the first commit that caused a
+failure.  You could disable this shortcut easily enough, however.
+
+Have fun,
+
+Avery
