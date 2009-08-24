@@ -1,108 +1,111 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Re: [PATCH] send-email: confirm on empty mail subjects
-Date: Mon, 24 Aug 2009 19:27:56 +0200 (CEST)
-Message-ID: <alpine.LSU.2.00.0908241927300.5382@fbirervta.pbzchgretzou.qr>
-References: <1249490994-23455-1-git-send-email-jengelh@medozas.de> <7vhbwlpigo.fsf@alter.siamese.dyndns.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH v2] import-tars: Allow per-tar author and commit message.
+Date: Mon, 24 Aug 2009 18:55:32 +0100
+Message-ID: <20090824175740.71AE22FC20@perkele>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 19:28:09 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 24 19:57:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfdKx-0007gY-H2
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 19:28:08 +0200
+	id 1Mfdnn-0000f3-Bi
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 19:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbZHXR14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 13:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753003AbZHXR14
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 13:27:56 -0400
-Received: from sovereign.computergmbh.de ([85.214.69.204]:38465 "EHLO
-	sovereign.computergmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753021AbZHXR14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 13:27:56 -0400
-Received: by sovereign.computergmbh.de (Postfix, from userid 25121)
-	id 6F5879C866; Mon, 24 Aug 2009 19:27:56 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by sovereign.computergmbh.de (Postfix) with ESMTP id 6CF684318936;
-	Mon, 24 Aug 2009 19:27:56 +0200 (CEST)
-In-Reply-To: <7vhbwlpigo.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1753075AbZHXR5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 13:57:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753067AbZHXR5l
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 13:57:41 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:40180 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752944AbZHXR5k (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 13:57:40 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOW00KGI7852J30@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 19:57:41 +0200 (MEST)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOW001SV7841U30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 19:57:41 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.24.174217
+Received: by perkele (Postfix, from userid 501)	id 71AE22FC20; Mon,
+ 24 Aug 2009 19:57:40 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126949>
 
-On Thursday 2009-08-06 08:25, Junio C Hamano wrote:
+Instead of having each imported tar ball's commit message be "Imported
+from filename.tar", optionally take a commit message from a file
+called "filename.tar.msg". The author and committer of the tar ball
+can also be overridden by embedding an "Author:" or "Committer:" header
+in the .msg file.
 
->Jan Engelhardt <jengelh@medozas.de> writes:
->
->> When the user forgot to enter a subject in a compose session,
->> send-email will now inquire whether this is really intended, similar
->> to what the Alpine MUA does when a subject is absent.
->
->This seems to break t9001...
->
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+Instead of having a .author and .committer file to override the author
+and committer, allow embedding this information in the .msg file, as
+suggested by Sam Vilain <sam@vilain.net>.
 
-Did I miss something in building?
+ contrib/fast-import/import-tars.perl |   38 +++++++++++++++++++++++++++++++--
+ 1 files changed, 35 insertions(+), 3 deletions(-)
 
-19:26 sovereign:../git/git-1.6.4.1 > quilt pu
-Applying patch patches/send-email-empty-subject.diff
-patching file git-send-email.perl
-
-Now at patch patches/send-email-empty-subject.diff
-19:26 sovereign:../git/git-1.6.4.1 > cd t
-19:26 sovereign:../git-1.6.4.1/t > ./t9001-send-email.sh 
-*   ok 1: prepare reference tree
-*   ok 2: Setup helper tool
-*   ok 3: Extract patches
-*   ok 4: No confirm with --suppress-cc
-*   ok 5: No confirm with --confirm=never
-*   ok 6: No confirm with sendemail.confirm=never
-*   ok 7: Send patches
-*   ok 8: Verify commandline
-*   ok 9: Show all headers
-*   ok 10: Prompting works
-*   ok 11: cccmd works
-*   ok 12: reject long lines
-*   ok 13: no patch was sent
-*   ok 14: Author From: in message body
-*   ok 15: Author From: not in message body
-*   ok 16: allow long lines with --no-validate
-*   ok 17: Invalid In-Reply-To
-*   ok 18: Valid In-Reply-To when prompting
-*   ok 19: setup fake editor
-*   ok 20: --compose works
-*   ok 21: first message is compose text
-*   ok 22: second message is patch
-*   ok 23: sendemail.cc set
-*   ok 24: sendemail.cc unset
-*   ok 25: sendemail.cccmd
-*   ok 26: --suppress-cc=all
-*   ok 27: --suppress-cc=body
-*   ok 28: --suppress-cc=body --suppress-cc=cccmd
-*   ok 29: --suppress-cc=sob
-*   ok 30: --suppress-cc=bodycc
-*   ok 31: --suppress-cc=cc
-*   ok 32: --confirm=always
-*   ok 33: --confirm=auto
-*   ok 34: --confirm=cc
-*   ok 35: --confirm=compose
-*   ok 36: confirm by default (due to cc)
-*   ok 37: confirm by default (due to --compose)
-*   ok 38: confirm detects EOF (inform assumes y)
-*   ok 39: confirm detects EOF (auto causes failure)
-*   ok 40: confirm doesnt loop forever
-*   ok 41: utf8 Cc is rfc2047 encoded
-*   ok 42: --compose adds MIME for utf8 body
-*   ok 43: --compose respects user mime type
-*   ok 44: --compose adds MIME for utf8 subject
-*   ok 45: detects ambiguous reference/file conflict
-*   ok 46: feed two files
-*   ok 47: in-reply-to but no threading
-*   ok 48: no in-reply-to and no threading
-*   ok 49: threading but no chain-reply-to
-* passed all 49 test(s)
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 78e40d2..0d59434 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -109,12 +109,44 @@ foreach my $tar_file (@ARGV)
+ 		$have_top_dir = 0 if $top_dir ne $1;
+ 	}
+ 
++	# Optionally read a commit message from <filename.tar>.msg
++	# Add a line on the form "Committer: name <e-mail>" to override
++	# the committer and "Author: name <e-mail>" to override the
++	# author for this tar ball.
++	my $commit_msg = "Imported from $tar_file.";
++	my $this_committer_name = $committer_name;
++	my $this_committer_email = $committer_email;
++	my $this_author_name = $author_name;
++	my $this_author_email = $author_email;
++	if (open MSG, '<', "${tar_file}.msg")
++	{
++		$commit_msg = '';
++		while (<MSG>)
++		{
++			if (/^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i)
++			{
++				$this_committer_name = $1;
++				$this_committer_email = $2;
++			}
++			elsif (/^Author:\s+([^<>]*)\s+<(.*)>\s*$/i)
++			{
++				$this_author_name = $1;
++				$this_author_email = $2;
++			}
++			else
++			{
++				$commit_msg .= $_;
++			}
++		}
++		close MSG;
++	}
++
+ 	print FI <<EOF;
+ commit $branch_ref
+-author $author_name <$author_email> $author_time +0000
+-committer $committer_name <$committer_email> $commit_time +0000
++author $this_author_name <$this_author_email> $author_time +0000
++committer $this_committer_name <$this_committer_email> $commit_time +0000
+ data <<END_OF_COMMIT_MESSAGE
+-Imported from $tar_file.
++$commit_msg
+ END_OF_COMMIT_MESSAGE
+ 
+ deleteall
+-- 
+1.6.3.3
