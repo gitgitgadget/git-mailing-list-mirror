@@ -1,112 +1,240 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: [PATCH] remove ARM and Mozilla SHA1 implementations
-Date: Mon, 24 Aug 2009 16:10:47 -0400
-Message-ID: <eaa105840908241310m5c4007ach19f496fe294eb7ea@mail.gmail.com>
-References: <alpine.LFD.2.00.0908171940540.6044@xanadu.home>
-	 <alpine.DEB.1.00.0908180208160.8306@pacific.mpi-cbg.de>
-	 <alpine.LFD.2.00.0908240011010.6044@xanadu.home>
-	 <alpine.DEB.1.00.0908241333130.11375@intel-tinevez-2-302>
-	 <alpine.DEB.1.00.0908241849160.8306@pacific.mpi-cbg.de>
-	 <alpine.LFD.2.00.0908241318000.6044@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Aug 24 22:11:10 2009
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH v4 3/4] fast-import: add option command
+Date: Mon, 24 Aug 2009 13:52:35 -0700
+Message-ID: <1251147156-19279-4-git-send-email-srabbelier@gmail.com>
+References: <1251147156-19279-1-git-send-email-srabbelier@gmail.com>
+ <1251147156-19279-2-git-send-email-srabbelier@gmail.com>
+ <1251147156-19279-3-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 24 22:53:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mffsj-000125-V6
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 22:11:10 +0200
+	id 1MfgXp-00068r-PJ
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 22:53:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbZHXUKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 16:10:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZHXUKs
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 16:10:48 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:56490 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752530AbZHXUKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 16:10:46 -0400
-Received: by ewy3 with SMTP id 3so2738138ewy.18
-        for <git@vger.kernel.org>; Mon, 24 Aug 2009 13:10:47 -0700 (PDT)
+	id S1753485AbZHXUxC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 16:53:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753484AbZHXUxB
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 16:53:01 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:31951 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753476AbZHXUw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 16:52:58 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so466600wah.21
+        for <git@vger.kernel.org>; Mon, 24 Aug 2009 13:53:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type;
-        bh=BRSTRzBbO2UcWGey60G9DJB7BADTQLtxJpcmXDa8Y2M=;
-        b=viENr1XPlwubsytt1UBxeRbCpJBYtEgufCzfeXY5BGSPp088mZDk8YL+gC7K06X97V
-         NX3p1EgN6X5xvdcd/HSur0CgcVisGKFmtaxUJmgi9UA7seDr6RL/EqjW1VFMVeHhYCLL
-         i6jH67jSiS65VjU8PhHI0S5l/NpfjPKjZoDLw=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=oBIcESGfLbhTZ5H6pUH1SSotz2g+50dcMBNJHgRvGoM=;
+        b=fwZlQeBzAVWgYFbH8zZPOZaIKzEykceqXmSUx9jukAruC21MY54XArbmw5Nsrj91r8
+         v30gFKy2BmD9PCfc+gpBuRnMLe7QO4eM+R9Fgf6QRVPF4HV4XFcRrch46S4fNSsBUBUR
+         8qeNg8PcQ1w5CqdgwrP6py+AFmE5CyyUX5cDU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=mabe97gH5OorvW4HrAD+CfZGMFMaaD37CZBKsBb6EwSd5XBE29H4IHbRmrPFRJe2rd
-         4/8oxSRzKLrZQ2N/CtakhWoYsjlMjPVPT3YI5HlYMqvoVkY3nKZKjcwM7bL1iBqrj/ho
-         1d5STFUGS7eZz+Vo9lFxrBaHuDfncHKlkBkn4=
-Received: by 10.211.200.20 with SMTP id c20mr2519449ebq.15.1251144647043; Mon, 
-	24 Aug 2009 13:10:47 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0908241318000.6044@xanadu.home>
-X-Google-Sender-Auth: c7305f12734009c2
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=FZyUIni5NOFkpN+ZnyzB73D6uuhkHBin/KYbx7CIp/Df/Oro43eUFCkSX7wIKd87G1
+         JmD2RkXH3veQQ0MWJSz3kR9OwthuX6pPhAT6M8KO18yr0R6l2CC+9BCU3V+pgzDxtLXH
+         Xw2giUHcOTCJH4sL+JZF1u37KtYcZ5+DbJk8I=
+Received: by 10.115.61.9 with SMTP id o9mr6476728wak.217.1251147178816;
+        Mon, 24 Aug 2009 13:52:58 -0700 (PDT)
+Received: from localhost.localdomain ([216.239.45.19])
+        by mx.google.com with ESMTPS id 20sm1023981pzk.5.2009.08.24.13.52.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 Aug 2009 13:52:57 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
+In-Reply-To: <1251147156-19279-3-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126964>
 
-On Mon, Aug 24, 2009 at 1:27 PM, Nicolas Pitre<nico@cam.org> wrote:
->
-> TRy a build with PPC_SHA1=1, and then compare with BLK_SHA1=1.
-> And best is to time a fsck --full.
+This allows the frontend to specify any of the supported options as
+long as no non-option command has been given. This way the
+user does not have to include any frontend-specific options, but
+instead she can rely on the frontend to tell fast-import what it
+needs.
 
-I happen to have an old POWER3 AIX box available.
+Also factor out parsing of argv and have it execute when we reach the
+first non-option command, or after all commands have been read and
+no non-option command has been encountered.
 
-I got tired of waiting for a fsck --full to complete on the git repo,
-so I used git://anongit.freedesktop.org/git/xcb/libxcb instead. Best
-of five runs:
+Lastly do not read the marks file till after all options have been
+parsed, instead of when receiving the option.
 
-OpenSSL:
-$ time ../git-1.6.4.1/git fsck --full
+Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
+---
 
-real    0m4.120s
-user    0m3.776s
-sys     0m0.031s
+    Same as v3 but with the --import-marks change already done in 2/4
 
-BLK_SHA1:
-$ time ../git-blk/git fsck --full
+ Documentation/git-fast-import.txt |   23 ++++++++++++++
+ fast-import.c                     |   61 +++++++++++++++++++++++++++++-------
+ 2 files changed, 72 insertions(+), 12 deletions(-)
 
-real    0m4.231s
-user    0m3.867s
-sys     0m0.026s
-
-PPC_SHA1:
-
-    CC ppc/sha1ppc.o
-Assembler:
-/tmp//ccdODWpe.s: line 8: 1252-142 Syntax error.
-/tmp//ccdODWpe.s: line 9: 1252-142 Syntax error.
-[same error repeated 42 times]
-gmake: *** [ppc/sha1ppc.o] Error 1
-
-Hmm. So that may not help so much after all. Let me know if there are
-any other tests you would like me to run.
-
-This machine has:
-$ gcc --version
-gcc (GCC) 3.3.2
-
-$ as -v
-as V5.3
-
-$ lsattr -E -l proc0
-frequency   200000000      Processor Speed       False
-smt_enabled false          Processor SMT enabled False
-smt_threads 0              Processor SMT threads False
-state       enable         Processor state       False
-type        PowerPC_POWER3 Processor type        False
-
-
-Peter Harris
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index c2f483a..ed8bd0d 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -303,6 +303,11 @@ and control the current import process.  More detailed discussion
+ 	standard output.  This command is optional and is not needed
+ 	to perform an import.
+ 
++`option`::
++    Specify any of the options listed under OPTIONS to change
++    fast-import's behavior to suit the frontend's needs. This command
++    is optional and is not needed to perform an import.
++
+ `commit`
+ ~~~~~~~~
+ Create or update a branch with a new commit, recording one logical
+@@ -813,6 +818,24 @@ Placing a `progress` command immediately after a `checkpoint` will
+ inform the reader when the `checkpoint` has been completed and it
+ can safely access the refs that fast-import updated.
+ 
++`option`
++~~~~~~~~
++Processes the specified option so that git fast-import behaves in a
++way that suits the frontend's needs.
++Note that options specified by the frontend are overridden by any
++options the user may specify to git fast-import itself.
++
++....
++    'option' SP <option> LF
++....
++
++The `<option>` part of the command may contain any of the options
++listed in the OPTIONS section, without the leading '--' and is
++treated in the same way.
++
++Option commands must be the first commands on the input, to give an
++option command after any non-option command is an error.
++
+ Crash Reports
+ -------------
+ If fast-import is supplied invalid input it will terminate with a
+diff --git a/fast-import.c b/fast-import.c
+index 812fcf0..dff2937 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -292,6 +292,8 @@ static unsigned long branch_load_count;
+ static int failure;
+ static FILE *pack_edges;
+ static unsigned int show_stats = 1;
++static int global_argc;
++static const char **global_argv;
+ 
+ /* Memory pools */
+ static size_t mem_pool_alloc = 2*1024*1024 - sizeof(struct mem_pool);
+@@ -349,6 +351,9 @@ static struct recent_command *rc_free;
+ static unsigned int cmd_save = 100;
+ static uintmax_t next_mark;
+ static struct strbuf new_data = STRBUF_INIT;
++static int seen_non_option_command;
++
++static void parse_argv(void);
+ 
+ static void write_branch_report(FILE *rpt, struct branch *b)
+ {
+@@ -1700,6 +1705,11 @@ static int read_next_command(void)
+ 			if (stdin_eof)
+ 				return EOF;
+ 
++			if (!seen_non_option_command
++				&& prefixcmp(command_buf.buf, "option ")) {
++				parse_argv();
++			}
++
+ 			rc = rc_free;
+ 			if (rc)
+ 				rc_free = rc->next;
+@@ -2450,6 +2460,16 @@ static void parse_one_option(const char *option)
+ 	}
+ }
+ 
++static void parse_option(void)
++{
++	char* option = command_buf.buf + 7;
++
++	if (seen_non_option_command)
++		die("Got option command '%s' after non-option command", option);
++
++	parse_one_option(option);
++}
++
+ static int git_pack_config(const char *k, const char *v, void *cb)
+ {
+ 	if (!strcmp(k, "pack.depth")) {
+@@ -2474,6 +2494,26 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ static const char fast_import_usage[] =
+ "git fast-import [--date-format=f] [--max-pack-size=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
+ 
++static void parse_argv(void)
++{
++	unsigned int i;
++
++	for (i = 1; i < global_argc; i++) {
++		const char *a = global_argv[i];
++
++		if (*a != '-' || !strcmp(a, "--"))
++			break;
++
++		parse_one_option(a + 2);
++	}
++	if (i != global_argc)
++		usage(fast_import_usage);
++
++	seen_non_option_command = 1;
++	if (input_file)
++		read_marks();
++}
++
+ int main(int argc, const char **argv)
+ {
+ 	unsigned int i;
+@@ -2492,18 +2532,8 @@ int main(int argc, const char **argv)
+ 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
+ 	marks = pool_calloc(1, sizeof(struct mark_set));
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *a = argv[i];
+-
+-		if (*a != '-' || !strcmp(a, "--"))
+-			break;
+-
+-		parse_one_option(a + 2);
+-	}
+-	if (i != argc)
+-		usage(fast_import_usage);
+-	if (input_file)
+-		read_marks();
++	global_argc = argc;
++	global_argv = argv;
+ 
+ 	rc_free = pool_alloc(cmd_save * sizeof(*rc_free));
+ 	for (i = 0; i < (cmd_save - 1); i++)
+@@ -2526,9 +2556,16 @@ int main(int argc, const char **argv)
+ 			parse_checkpoint();
+ 		else if (!prefixcmp(command_buf.buf, "progress "))
+ 			parse_progress();
++		else if (!prefixcmp(command_buf.buf, "option "))
++			parse_option();
+ 		else
+ 			die("Unsupported command: %s", command_buf.buf);
+ 	}
++
++	// argv hasn't been parsed yet, do so
++	if (!seen_non_option_command)
++		parse_argv();
++
+ 	end_packfile();
+ 
+ 	dump_branches();
+-- 
+1.6.4.16.g72c66.dirty
