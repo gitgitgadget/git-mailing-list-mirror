@@ -1,70 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
 Subject: Re: [PATCH] fix simple deepening of a repo
-Date: Mon, 24 Aug 2009 15:21:40 -0700
-Message-ID: <7vmy5o3laj.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home>
- <alpine.LFD.2.00.0908232320410.6044@xanadu.home>
- <7vocq5q0j7.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0908240946390.6044@xanadu.home>
+Date: Mon, 24 Aug 2009 23:30:46 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home> <alpine.LFD.2.00.0908232320410.6044@xanadu.home> <7vocq5q0j7.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908240144530.28290@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Aug 25 00:22:14 2009
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Aug 25 00:32:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mfhva-0004ym-3j
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 00:22:14 +0200
+	id 1Mfi5g-0007vF-4d
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 00:32:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678AbZHXWWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 18:22:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753669AbZHXWWE
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 18:22:04 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61526 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753652AbZHXWWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 18:22:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6EDB9367E1;
-	Mon, 24 Aug 2009 18:21:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3bjTyVcrgdFHBPL0/r73xZFvdzQ=; b=TR6K4H
-	r1dLUiBLDcKyolu3iFRwrvaspOlFBXyIb/AztmKvB/nbstSbOB32LAQ8wr+fMvtZ
-	U2ElCO/ebI9yQl4z7wJriTSDazHv6eEZh5krtxC0gPIH5jsLeW50TE1p5TozFUwJ
-	swpHDEWvnW5mxcHJ3aLMmsagpgQO6jBXEo9P0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=q3BDGtq9Bxnaff/RBnueFzGZGoQNKsNO
-	yqmXLIVTrfnhKe0Oofsx4opNSMFEmWiscsY5hQTzo6o/oR5QlAcFe+JiX7X2ADHA
-	dr9Ah1QXnfpC8cribBMxwwnQTlD/EQA4+TJr0k745pNc36Q52aaNTqPE4o04rnEU
-	2Y6hxm8U1z8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 32FAA367DE;
-	Mon, 24 Aug 2009 18:21:50 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8CFFC367DD; Mon, 24 Aug 2009
- 18:21:42 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0908240946390.6044@xanadu.home> (Nicolas
- Pitre's message of "Mon\, 24 Aug 2009 09\:55\:13 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 84B07B8C-90FC-11DE-B702-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753869AbZHXWcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 18:32:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753854AbZHXWcT
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 18:32:19 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:56303 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753794AbZHXWcR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 18:32:17 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 51607693E6
+	for <git@vger.kernel.org>; Mon, 24 Aug 2009 23:32:18 +0100 (BST)
+Received: (qmail 19120 invoked by uid 103); 24 Aug 2009 23:30:46 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9729. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.026281 secs); 24 Aug 2009 22:30:46 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 24 Aug 2009 23:30:46 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <alpine.LNX.2.00.0908240144530.28290@iabervon.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126978>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Mon, 24 Aug 2009, Daniel Barkalow wrote:
 
-> If you really want to get rid of that filtering, I'd still do it in a 
-> separate patch.  That way if any issue appears because of that then 
-> bissection will point directly to that removal alone.
+> On Sun, 23 Aug 2009, Junio C Hamano wrote:
+>
+>> But it makes me wonder if this logic to filter refs is buying us anything.
+>>
+>>>  	for (rm = refs; rm; rm = rm->next) {
+>>> +		nr_refs++;
+>>>  		if (rm->peer_ref &&
+>>>  		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
+>>>  			continue;
+>> 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
+>> 		heads[nr_heads++] = rm;
+>> 	}
+>>
+>> What is the point of not asking for the refs that we know are the same?
+>
+> This code is part of the original C implementation of fetch; I suspect the
+> optimization was somehow in the shell version and made sense there,
+> perhaps because there wasn't a quickfetch in the shell version or that
+> there was some non-negligable per-ref cost in the code around there, since
+> it was calling helper programs and such.
 
-Fair enough.
+I don't remember copying it from the shell version but my memory is 
+terrible, so I could easily be wrong.  The relevant commit message was:
+
+"git-fetch2: remove ref_maps that are not interesting
+
+Once we have the full list of ref_maps, remove any where the local
+and remote sha1s are the same - as we don't need to do anything for
+them."
+
+So that doesn't help.  I was very concerned about performance though 
+(which was why I wanted fetch in C in the first place), so may have added 
+it to speed up fetches that have only updated a few refs - and I assume 
+that quickfetch was something that came along later after you absorbed the 
+work into the transport series?
+
+> Anyway, I think it makes sense to remove the filtering from
+> transport_fetch_refs(), like your patch does.
+>
+> If it makes a difference for the actual protocol, fetch_refs_via_pack()
+> could filter them at that stage.
+
+I think it would certainly be worth investigating the performance aspects 
+... no time tonight, but maybe tomorrow.
+
+-- 
+Julian
+
+  ---
+Some circumstantial evidence is very strong, as when you find a trout in
+the milk.
+ 		-- Thoreau
