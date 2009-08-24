@@ -1,88 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] remove ARM and Mozilla SHA1 implementations
-Date: Mon, 24 Aug 2009 18:52:32 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908241849160.8306@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.00.0908171940540.6044@xanadu.home> <alpine.DEB.1.00.0908180208160.8306@pacific.mpi-cbg.de> <alpine.LFD.2.00.0908240011010.6044@xanadu.home> <alpine.DEB.1.00.0908241333130.11375@intel-tinevez-2-302>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] import-tars: Allow per-tar author and commit message.
+Date: Mon, 24 Aug 2009 19:07:09 +0200 (CEST)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908241659380.16576@perkele.intern.softwolves.pp.se>
+References: <20090823203640.B195D189B12@perkele> <4A91B8BB.1030906@vilain.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Aug 24 18:52:13 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>, Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Aug 24 19:07:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfcmB-0004ma-If
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 18:52:12 +0200
+	id 1Mfd0t-0001CF-Jg
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 19:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752862AbZHXQvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 12:51:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752826AbZHXQvc
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 12:51:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34584 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752456AbZHXQvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 12:51:31 -0400
-Received: (qmail invoked by alias); 24 Aug 2009 16:51:32 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp049) with SMTP; 24 Aug 2009 18:51:32 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19IEC0gAy9IZGKXG+gL4YypyaRhBMSySECC+oeU/+
-	PeTboBztnfpjWA
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0908241333130.11375@intel-tinevez-2-302>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+	id S1752812AbZHXRHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 13:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752808AbZHXRHL
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 13:07:11 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:51548 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752426AbZHXRHK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 13:07:10 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOW00KAX4VYRV60@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 19:07:10 +0200 (MEST)
+Received: from perkele ([84.215.142.63]) by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KOW001YY4VY3O20@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 19:07:10 +0200 (MEST)
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
+ Antispam-Data: 2009.8.24.165417
+Received: by perkele (Postfix, from userid 501)	id D1B482FC20; Mon,
+ 24 Aug 2009 19:07:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id CDEFD2FBF0; Mon, 24 Aug 2009 19:07:09 +0200 (CEST)
+In-reply-to: <4A91B8BB.1030906@vilain.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126944>
 
-Hi,
+Nanako Shiraishi:
 
-On Mon, 24 Aug 2009, Johannes Schindelin wrote:
+> Instead of requiring the user to have millions of separate files, how 
+> about reading a single metainfo file that may look like this?
 
-> On Mon, 24 Aug 2009, Nicolas Pitre wrote:
-> 
-> > On Tue, 18 Aug 2009, Johannes Schindelin wrote:
-> > 
-> > > On Mon, 17 Aug 2009, Nicolas Pitre wrote:
-> > > 
-> > > > They are both slower than the new BLK_SHA1 implementation, so it is 
-> > > > pointless to keep them around.
-> > > > 
-> > > > Signed-off-by: Nicolas Pitre <nico@cam.org> ---
-> > > > 
-> > > > Someone else would need to make the call for the PPC version.
-> > > 
-> > > If I don't forget, I can test tomorrow on 2 different 32-bit PPCs and 
-> > > possibly one 64-bit PPC.
-> > 
-> > Did you forget?  ;-)
-> 
-> Yes.
+The advantage of having one (or more) files per tarball is that I can use 
+the shell's tab completion to make sure I spell the name of the archive 
+correctly. And that it makes it a lot easier to parse.
 
-At long last (XTools took a real long time to install here; it is an old 
-PowerPC running MacOSX):
 
-Best of 10 "git rev-list --all" runs on a full Git repository (including 
-my own tree):
+Sam Vilain:
 
-before 30ae47b4
+> Also I wonder if there isn't a nicer interface for users.  Why not allow
+> the file to specify From:, Committer: etc as header lines
 
-	1.85 real, 1.52 user, 0.28 sys
+Good idea. My initial patch was simple, just using the .msg file to add a 
+message. Then I needed to have a different author for one commit, so I added 
+the .author file. Then came the changes that are in the current import-tars 
+that separates author and committer, hence the .committer file. Somewhere 
+along there it became a bit too complex.
 
-after 30ae47b4
+Parsing the .msg file for (optional) committer and author info is probably 
+better. I'll update the patch.
 
-	1.86 real, 1.52 user, 0.28 sys
-
-To be frank, the 1.85 looks like an outlier, so I think there is exactly 0 
-difference between the two.
-
-If you want me to perform other tests, please let me know; I'll be back at 
-this computer tomorrow.
-
-Ciao,
-Dscho
+-- 
+\\// Peter - http://www.softwolves.pp.se/
