@@ -1,98 +1,80 @@
-From: Sanjiv Gupta <sanjiv.gupta@microchip.com>
-Subject: Re: Pulling one commit at a time.
-Date: Mon, 24 Aug 2009 11:52:07 +0530
-Message-ID: <4A92318F.6050105@microchip.com>
-References: <F536B7C316F9474E9F7091239725AC9A02FA7F44@CHN-CL-MAIL01.mchp-main.com>	<4A9172D0.6030507@microchip.com> <20090824060710.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Re: Teach mailinfo to ignore everything before -- >8 --
+ mark
+Date: Sun, 23 Aug 2009 23:58:51 -0700
+Message-ID: <7v7hwtofys.fsf@alter.siamese.dyndns.org>
+References: <1250999357-10827-3-git-send-email-git@tbfowler.name>
+ <7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
+ <20090823171819.6117@nanako3.lavabit.com>
+ <7v1vn2yklo.fsf@alter.siamese.dyndns.org>
+ <20090824060708.6117@nanako3.lavabit.com>
+ <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
+ <7v7hwurwmu.fsf@alter.siamese.dyndns.org> <20090824041608.GC3526@vidovic>
+ <7vk50tq0g5.fsf@alter.siamese.dyndns.org>
+ <7vmy5pojsg.fsf@alter.siamese.dyndns.org> <20090824062141.GD3526@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 08:22:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thell Fowler <git@tbfowler.name>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 24 08:59:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfSwl-0007on-Hz
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 08:22:28 +0200
+	id 1MfTWQ-0001oc-S1
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 08:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbZHXGWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 02:22:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbZHXGWP
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 02:22:15 -0400
-Received: from smtp02.microchip.com ([198.175.253.48]:35960 "EHLO
-	smtp02.microchip.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751759AbZHXGWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 02:22:15 -0400
-Received: from CHN-CL-MAIL01.mchp-main.com ([10.10.76.21]) by smtp02.microchip.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 23 Aug 2009 23:22:17 -0700
-Received: from [10.41.200.168] ([10.41.200.168]) by CHN-CL-MAIL01.mchp-main.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Sun, 23 Aug 2009 23:22:15 -0700
-User-Agent: Thunderbird 2.0.0.22 (X11/20090608)
-In-Reply-To: <20090824060710.6117@nanako3.lavabit.com>
-X-OriginalArrivalTime: 24 Aug 2009 06:22:16.0303 (UTC) FILETIME=[39D497F0:01CA2483]
+	id S1751636AbZHXG7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 02:59:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZHXG7G
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 02:59:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547AbZHXG7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 02:59:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C17F8169DE;
+	Mon, 24 Aug 2009 02:59:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O6djGihPvc484pn6Gqg2swAjV18=; b=vO0Siq
+	yGqHv3uigdNNcOPcxhMDUG2Z4DuAY7aAF8UNUBEn1AtlJVUm7JapjP/7prHb/wd5
+	5RqnaeLFGK1ezonrE/NUPD0ckJpptnrthS31NfE3qRuociRg1//fkJjHCnQ+4VCy
+	feYW8bP6HwWyi45x9dObXgkuGAXnab7b3lFPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I0xoCtzmvNRjXOqeYXW8wRRa+oBDgAGD
+	2WW+C8i46/AnN+SxprulE6lSKUMCSYJEJ52Y4YV+oqSacBZY5eMnYupZtHgujpr/
+	ZOeSZRVH4SJaHnkRqKWfcopZedXylhJ8+tKd1++BYKHbBBSyuqenAaaWDmQOCTg0
+	jtM2O+8ITpU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 767A7169DC;
+	Mon, 24 Aug 2009 02:59:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C6C9169DB; Mon, 24 Aug
+ 2009 02:58:53 -0400 (EDT)
+In-Reply-To: <20090824062141.GD3526@vidovic> (Nicolas Sebrecht's message of
+ "Mon\, 24 Aug 2009 08\:21\:41 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 99DED3F4-907B-11DE-9611-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126911>
 
-Nanako Shiraishi wrote:
-> Quoting Sanjiv Gupta <sanjiv.gupta@microchip.com>
->
->   
->> I just wanted to know how can I pull one commit at a time from public
->> repository.
->> e.g.
->> when I first cloned from the public repo, it was at X. now it has
->> reached Y. I just want to pull x+1.
->>     
->
-> When your histories look like this:
->
->       A                 your 'master'
->      /
->  ---X---U---V---W---Y   public 'master' (your 'origin')
->
-> instead of creating a single merge like this with "git pull":
->
->       A---------------M your 'master' (fully merges 'origin')
->      /               / 
->  ---X---U---V---W---Y   public 'master'
->
-> you want to create a history like this?
->
->       A---J             your 'master' (lacks V, W and Y)
->      /   /
->  ---X---U---V---W---Y   public 'master'
->
-> For that, you can fetch first.
->
->  git fetch origin
->
-> Then look at the history in gitk
->
->  gitk master origin
->
-> And find the commit you are interested in merging (U in the above picture). And merge it.
->
->  git merge origin~3
->
-> Replace "origin~3" in the example above with whatever commit you want to merge the entire history leading to it.
->
-> You can repeat this final step as many times you want. For example, if you want create a history like this:
->
->       A---J---K---L---M your 'master'
->      /   /   /   /   / 
->  ---X---U---V---W---Y   public 'master'
->
-> you can do so by repeating the last step for V, W and Y in turn.
->
-> In general the public history isn't necessarily a single straight line like this picture and it doesn't make sense to merge one at a time for all the commits on the public branch, but if that is what you really want to do, you can do so.
->
->   
-Excellent description. Thanks for that. I want to merge commits one by 
-one because I want to run a regression suite on each commit and 
-therefore know if any one is causing failures.
+Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
 
-- Sanjiv
+>> Does anybody remember what these s_hdr (vs p_hdr) buffers stand for, by
+>> the way?
+>
+> Has been added by 87ab799234639c .
+
+That much I know ;-), thanks anyway.
+
+The commit does not _explain_ what they are for, what they mean, and what
+these mysteriously named variables do.
