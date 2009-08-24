@@ -1,75 +1,70 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH] Re: Teach mailinfo to ignore everything before -- >8
-	-- mark
-Date: Mon, 24 Aug 2009 10:02:23 -0400
-Message-ID: <20090824140223.GA22198@redhat.com>
-References: <7v1vn2yklo.fsf@alter.siamese.dyndns.org> <20090824060708.6117@nanako3.lavabit.com> <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS> <7v7hwurwmu.fsf@alter.siamese.dyndns.org> <20090824041608.GC3526@vidovic> <7vk50tq0g5.fsf@alter.siamese.dyndns.org> <7vmy5pojsg.fsf@alter.siamese.dyndns.org> <20090824062141.GD3526@vidovic> <7v7hwtofys.fsf@alter.siamese.dyndns.org> <20090824073147.GG3526@vidovic>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] block-sha1: Use mozilla-sha1 copyright and license
+ information
+Date: Mon, 24 Aug 2009 09:45:10 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908240923360.6044@xanadu.home>
+References: <20090824120756.GA17146@ulrik-ibook>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thell Fowler <git@tbfowler.name>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 24 15:44:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Ulrik Sverdrup <ulrik.sverdrup@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 15:45:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfZqE-0001Kq-FU
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 15:44:10 +0200
+	id 1MfZrb-0001lg-MC
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 15:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752528AbZHXNoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 09:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbZHXNoA
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 09:44:00 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:13622 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752521AbZHXNoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 09:44:00 -0400
-Received: from int-mx04.intmail.prod.int.phx2.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.17])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n7ODhcKN021506;
-	Mon, 24 Aug 2009 09:43:38 -0400
-Received: from redhat.com (dhcp-100-18-242.bos.redhat.com [10.16.18.242])
-	by int-mx04.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id n7ODhaJQ020800;
-	Mon, 24 Aug 2009 09:43:36 -0400
-Content-Disposition: inline
-In-Reply-To: <20090824073147.GG3526@vidovic>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.17
+	id S1752538AbZHXNpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 09:45:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752530AbZHXNpZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 09:45:25 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:48696 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498AbZHXNpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 09:45:24 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOV004UBVJALGB0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 09:45:10 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20090824120756.GA17146@ulrik-ibook>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126924>
 
-On Mon, Aug 24, 2009 at 09:31:47AM +0200, Nicolas Sebrecht wrote:
-> ( cc'ing Don Zickus )
-> 
-> The 23/08/09, Junio C Hamano wrote:
-> > Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
-> > 
-> > >> Does anybody remember what these s_hdr (vs p_hdr) buffers stand for, by
-> > >> the way?
+On Mon, 24 Aug 2009, Ulrik Sverdrup wrote:
 
->From what I remember, I used p_hdr to designate primary headers, ie the
-original mail headers.  s_hdr was supposed to represent the secondary
-headers, ie the embedded mail headers in the body of the email that could
-override the original primary mail headers.
+> block-sha1 needs an independent copyright and license header, in the
+> case that the original mozilla SHA-1 implementation is removed from
+> the tree.
 
-I hope that clears things up.  Let me know if you have more questions and
-I will try my best to remember what I did. :-)
+The Mozilla SHA1 is already removed from the tree in "next", and 
+block-sha1/sha1.c header modified accordingly.
 
-Cheers,
-Don
+As there is nothing remaining from the Mozilla SHA1 code, I don't think 
+copying that Mozilla License block verbatim is appropriate.  As Linus 
+has put it himself, the Mozilla SHA1 code was more inspirational than 
+anything else.
 
-> > >
-> > > Has been added by 87ab799234639c .
-> > 
-> > That much I know ;-), thanks anyway.
-> > 
-> > The commit does not _explain_ what they are for, what they mean, and what
-> > these mysteriously named variables do.
-> 
-> -- 
-> Nicolas Sebrecht
+And even if some license claim could be made, the MPL section was 
+deleted anyway (as explicitly allowed), meaning that only the GPL (by 
+vertu of being included in a GPL project) would then apply.
+
+A question was recently sent to all contributors (see the mail 
+archive) to determine if they 
+would agree 
+to a relicensing of that code to make wider license compatibility.  
+George Spelvin even rewrote that code as well with the goal of 
+putting his version in the public domain.  No definitive conclusion 
+emerged so far though.
+
+Therefore I don't think this patch is appropriate.
+
+
+Nicolas
