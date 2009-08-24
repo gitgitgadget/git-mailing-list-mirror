@@ -1,73 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
 Subject: Re: [PATCH] Teach mailinfo to ignore everything before -- >8 -- mark
-Date: Sun, 23 Aug 2009 21:51:06 -0700
-Message-ID: <7vk50tq0g5.fsf@alter.siamese.dyndns.org>
+Date: Mon, 24 Aug 2009 14:16:23 +0900
+Message-ID: <20090824141623.6117@nanako3.lavabit.com>
 References: <1250999285-10683-1-git-send-email-git@tbfowler.name>
- <1250999357-10827-3-git-send-email-git@tbfowler.name>
- <7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
- <20090823171819.6117@nanako3.lavabit.com>
- <7v1vn2yklo.fsf@alter.siamese.dyndns.org>
- <20090824060708.6117@nanako3.lavabit.com>
- <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
- <7v7hwurwmu.fsf@alter.siamese.dyndns.org> <20090824041608.GC3526@vidovic>
+	<1250999357-10827-3-git-send-email-git@tbfowler.name>
+	<7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
+	<20090823171819.6117@nanako3.lavabit.com>
+	<7v1vn2yklo.fsf@alter.siamese.dyndns.org>
+	<20090824060708.6117@nanako3.lavabit.com>
+	<alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
+	<7v7hwurwmu.fsf@alter.siamese.dyndns.org>
+	<20090824041608.GC3526@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Thell Fowler <git@tbfowler.name>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
 	Johannes.Schindelin@gmx.de
 To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 24 06:51:42 2009
+X-From: git-owner@vger.kernel.org Mon Aug 24 07:19:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfRWw-0001u8-15
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 06:51:42 +0200
+	id 1MfRxg-00009S-1h
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 07:19:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453AbZHXEvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 00:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZHXEvW
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 00:51:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62173 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751447AbZHXEvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 00:51:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AFD0162EC;
-	Mon, 24 Aug 2009 00:51:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uwMtlrKFZ5EwdSbzBEBCTetVngE=; b=l6Q0OS
-	FhloSQ+ex8go1azvemNcumu7tAhjBm9vFpMyhiSVhKVA0VbK3sFknD8pg0IqVQRS
-	EWky0YbAufEB2mkV0LjbWr1s/TW5xmUjU10msMUGvV00DqFmiHeM9kgz/gImUOJJ
-	s2Ve5zTmGdisrCHb1n9OeUs7aemcLe7Yh1fdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ud69Hi9hu3tomiGmcFtQVrLs8JFHyuBY
-	Zbj9m/bs9/axZepaq4QL3P5F18atC/lEqX7253g5bxkitbmVqRTi8uzFQGP+K1aW
-	vtmugWbrnZ3k+yYsj0VRkyHAnoagDc4fjO1xnNEdweVXmCibycT33xSIl7VPkLPx
-	bKf5b5npcuc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BE928162EB;
-	Mon, 24 Aug 2009 00:51:17 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 36977162E8; Mon, 24 Aug
- 2009 00:51:08 -0400 (EDT)
-In-Reply-To: <20090824041608.GC3526@vidovic> (Nicolas Sebrecht's message of
- "Mon\, 24 Aug 2009 06\:16\:08 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C28AB2F8-9069-11DE-80F7-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751359AbZHXFTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 01:19:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbZHXFTJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 01:19:09 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:45713 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751375AbZHXFTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 01:19:08 -0400
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id 452D311B8BD;
+	Mon, 24 Aug 2009 00:19:10 -0500 (CDT)
+Received: from 4130.lavabit.com (200.223.181.44)
+	by lavabit.com with ESMTP id UAMEDSKEW6MU; Mon, 24 Aug 2009 00:19:10 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=tbSdFIpCMXNoAuSk7l26HAbYEVWc9mJmHHHBoVAhzq0tRRm/izeEfzq4HtVZAUhDCMnpoIaYQKSfBJCMtmp3kXQjfKw8SWuDuXjnEhOfHUEd8GpGT4UoTAEjXSa/FI2HD+TyPb5NSwOtp3WOafWVjJB47R/kBDyZ4mYzEuWva4M=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20090824041608.GC3526@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126906>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Quoting Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
 
-> I'd expect that we take the "Subject: " line after the mark and fallback
-> to the header if missing.
+> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+> index fcacc94..0c9a791 100644
+> --- a/Documentation/git-am.txt
+> +++ b/Documentation/git-am.txt
+> @@ -138,6 +138,9 @@ The commit message is formed by the title taken from
+> the
+>  where the patch begins.  Excess whitespace at the end of each
+>  line is automatically stripped.
+>  
+> +If a line starts with a "-- >8 --" mark in the body of the message,
+> +everything before (and the line itself) will be ignored.
 
-Patches welcome.
+Looking at the way other people use the mark in their messages, I think this explanation isn't correct.
+
+A scissors mark doesn't have to be at the beginning. The line has to contain the mark, and it has to consist of only the mark, '-' minus, the phrase "cut here", and whitespaces.
+
+I am not familiar enough with the code to comment on the bug you are reporting.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
