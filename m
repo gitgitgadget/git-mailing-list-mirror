@@ -1,73 +1,76 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: What's cooking in git.git (Aug 2009, #04; Sun, 23)
-Date: Mon, 24 Aug 2009 16:29:00 -0500
-Message-ID: <YE4QMh4rA1r2X3ZG5TvGJZspm0UdCWyP-r6KFthp8PuFewAhHPJ3GQ@cipher.nrlssc.navy.mil>
-References: <7v1vn2qb29.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0908232117460.6044@xanadu.home>
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: Re: bundles with multiple branches
+Date: Mon, 24 Aug 2009 17:42:21 -0400
+Message-ID: <c376da900908241442t385d492cm6925fd2d8abad848@mail.gmail.com>
+References: <30e395780908231336p403c2171ie383a81c3d1bb020@mail.gmail.com>
+	 <c376da900908231352o5c5746c0h9e39b80adede66e8@mail.gmail.com>
+	 <30e395780908231404k7240dbacu5c258d9816e35dd7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Aug 24 23:30:00 2009
+Cc: git@vger.kernel.org
+To: Jeffrey Ratcliffe <jeffrey.ratcliffe@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 24 23:42:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mfh71-0007gB-IK
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 23:30:00 +0200
+	id 1MfhJ9-0002q1-Cs
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 23:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbZHXV3O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 17:29:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753267AbZHXV3O
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 17:29:14 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42434 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359AbZHXV3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 17:29:14 -0400
-Received: by mail.nrlssc.navy.mil id n7OLT0Tr015110; Mon, 24 Aug 2009 16:29:00 -0500
-In-Reply-To: <alpine.LFD.2.00.0908232117460.6044@xanadu.home>
-X-OriginalArrivalTime: 24 Aug 2009 21:29:00.0258 (UTC) FILETIME=[E51D5420:01CA2501]
+	id S1753460AbZHXVmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 17:42:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbZHXVmV
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 17:42:21 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:41347 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753116AbZHXVmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 17:42:21 -0400
+Received: by ewy3 with SMTP id 3so2807565ewy.18
+        for <git@vger.kernel.org>; Mon, 24 Aug 2009 14:42:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mvxRR6HGhQUWDc1weIfBLmfL5DxtMzs1XH0ctp7Y7UE=;
+        b=DzZd7P//+BpuNknm+n6D1VE22bbiF9+g2bpofP5DAPc4b5DHlZTJ76debxuhqzTjVX
+         qaWBrF2W267dqd7S7xXDkfZLxDHAXJFhsPjNkrliTpEG+k34+w8aB4lgPFPpg1NHjV8N
+         zu2bzH6c1Rbvwv9YKrkmxR7dv9OZlwQfN77gU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=baHpnJDRhm24nPp+5stceFkk+LJJOIwnh8SWpGy2HwM/leIQ6+IoZqf9GIGmbRQ3c/
+         0aeRpAmdsewhJa0sjHkgMwVyHgsNSstMiAvwwJIzdAmYFmyl1tvpgHxm7uHUcOCJW4wV
+         vPIA24euBRQAkGJGCTlEexcIQ1Okjgtc+YlnA=
+Received: by 10.216.89.16 with SMTP id b16mr1102529wef.57.1251150141984; Mon, 
+	24 Aug 2009 14:42:21 -0700 (PDT)
+In-Reply-To: <30e395780908231404k7240dbacu5c258d9816e35dd7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126971>
 
-Nicolas Pitre wrote:
-> On Sun, 23 Aug 2009, Junio C Hamano wrote:
-> 
->> * lt/block-sha1 (2009-08-17) 4 commits
->>   (merged to 'next' on 2009-08-18 at 67a1ce8)
->>  + remove ARM and Mozilla SHA1 implementations
->>  + block-sha1: guard gcc extensions with __GNUC__
->>  + make sure byte swapping is optimal for git
->>  + block-sha1: make the size member first in the context struct
->>
->> Finishing touches ;-)  There were a few Solaris portability patches
->> floated around that I didn't pick up, waiting for them to finalize.
-> 
-> Those would be described better as Solaris _optimization_ patches.  The 
-> code is already fully portable as it is, except not necessarily optimal 
-> in some cases.
+>
+> 2009/8/23 Adam Brewster <adambrewster@gmail.com>:
+>> git remote add bundle /media/cdrom
+>> git config --replace-all remotes.bundle.fetch refs/heads/*:refs/remotes/bundle/*
+>> git config --add remotes.bundle.fetch refs/remotes/*:refs/remotes/*
+>
+> On
+>
+> $ git pull bundle
+>
+> or
+>
+> $ git fetch bundle
+>
+> I get
+>
+> fatal: '/media/cdrom': unable to chdir or not a git archive
+> fatal: The remote end hung up unexpectedly
+>
 
-Nicolas is right, the code compiles and executes correctly on Solaris as-is.
-
-Here is the state of the two unsubmitted optimization patches:
-
-  1) Change things like __i386__ to __i386 since GCC defines both, but
-     SUNWspro only defines __i386.
-
-     This works correctly in my testing.  I'm assuming that a test for
-     __amd64 is not necessary and expect that __x86_64 is set whenever
-     __amd64 is set.
-
-  2) Set __GNUC__ on SUNWspro v5.10 and up.
-
-     This compiles correctly and passes the test suite, but produces
-     warnings for __attribute__'s that sun's compiler has not implemented.
-     This produces a very noisy compile.
-
-I've wanted to do some performance testing to see whether this actually
-produces an _improvement_.  I'll try today.
-
--brandon
+Sorry, that's supposed to be /media/cdrom/name-of-bundle
