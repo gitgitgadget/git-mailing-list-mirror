@@ -1,74 +1,119 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Teach mailinfo to ignore everything before -- >8 -- mark
-Date: Mon, 24 Aug 2009 14:16:23 +0900
-Message-ID: <20090824141623.6117@nanako3.lavabit.com>
+Date: Sun, 23 Aug 2009 22:36:15 -0700
+Message-ID: <7vmy5pojsg.fsf@alter.siamese.dyndns.org>
 References: <1250999285-10683-1-git-send-email-git@tbfowler.name>
-	<1250999357-10827-3-git-send-email-git@tbfowler.name>
-	<7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
-	<20090823171819.6117@nanako3.lavabit.com>
-	<7v1vn2yklo.fsf@alter.siamese.dyndns.org>
-	<20090824060708.6117@nanako3.lavabit.com>
-	<alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
-	<7v7hwurwmu.fsf@alter.siamese.dyndns.org>
-	<20090824041608.GC3526@vidovic>
+ <1250999357-10827-3-git-send-email-git@tbfowler.name>
+ <7vvdkfx8rl.fsf@alter.siamese.dyndns.org>
+ <20090823171819.6117@nanako3.lavabit.com>
+ <7v1vn2yklo.fsf@alter.siamese.dyndns.org>
+ <20090824060708.6117@nanako3.lavabit.com>
+ <alpine.DEB.2.00.0908231705200.29625@GWPortableVCS>
+ <7v7hwurwmu.fsf@alter.siamese.dyndns.org> <20090824041608.GC3526@vidovic>
+ <7vk50tq0g5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Thell Fowler <git@tbfowler.name>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
 	Johannes.Schindelin@gmx.de
 To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 24 07:19:20 2009
+X-From: git-owner@vger.kernel.org Mon Aug 24 07:36:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfRxg-00009S-1h
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 07:19:20 +0200
+	id 1MfSEX-0004SS-Fi
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 07:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbZHXFTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 01:19:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbZHXFTJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 01:19:09 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:45713 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751375AbZHXFTI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 01:19:08 -0400
-Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
-	by karen.lavabit.com (Postfix) with ESMTP id 452D311B8BD;
-	Mon, 24 Aug 2009 00:19:10 -0500 (CDT)
-Received: from 4130.lavabit.com (200.223.181.44)
-	by lavabit.com with ESMTP id UAMEDSKEW6MU; Mon, 24 Aug 2009 00:19:10 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=tbSdFIpCMXNoAuSk7l26HAbYEVWc9mJmHHHBoVAhzq0tRRm/izeEfzq4HtVZAUhDCMnpoIaYQKSfBJCMtmp3kXQjfKw8SWuDuXjnEhOfHUEd8GpGT4UoTAEjXSa/FI2HD+TyPb5NSwOtp3WOafWVjJB47R/kBDyZ4mYzEuWva4M=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <20090824041608.GC3526@vidovic>
+	id S1751451AbZHXFgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 01:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbZHXFgf
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 01:36:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60423 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352AbZHXFge (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 01:36:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E27C165CC;
+	Mon, 24 Aug 2009 01:36:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HhdJ+pjfEUYxwb6byF9BotpuSKI=; b=LUGTzi
+	L5wflsmxIU69/SaFEHlMESNzcjrHusqQaWyc3k08ux6jBXUffyx+gGFaY8JZi2eD
+	zVMscW0iiBZFcMgdQbtI4zxePEg3WlYfULS1wb/tcG0IPGi5SlRUxHSPVPx+3XKY
+	MHxYZYvG0g51BwYYmB0XrYvhe2bHRA9Nuq2TI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=arMuSPtOM+FJP+X3B+Hm//GdmzMTg2w6
+	R+befAK7DdWtn+zHV7GMcSZRvVLI9/AD+RXdAOm9R/UlbXY4GKM6m+Dl2nZ+r6Is
+	bgc498605OpOC8Rn/5IHVp/19XV/S91KS1qMUNw9wmdx+FwplSkxaMGhWamUGoTD
+	wgtLBDh/0JQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B787E165C7;
+	Mon, 24 Aug 2009 01:36:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE814165C3; Mon, 24 Aug
+ 2009 01:36:16 -0400 (EDT)
+In-Reply-To: <7vk50tq0g5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sun\, 23 Aug 2009 21\:51\:06 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1300BA60-9070-11DE-8520-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126907>
 
-Quoting Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+Try this patch, perhaps?  I forgot to reset the mysteriously named s_hdr
+buffer.
 
-> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> index fcacc94..0c9a791 100644
-> --- a/Documentation/git-am.txt
-> +++ b/Documentation/git-am.txt
-> @@ -138,6 +138,9 @@ The commit message is formed by the title taken from
-> the
->  where the patch begins.  Excess whitespace at the end of each
->  line is automatically stripped.
->  
-> +If a line starts with a "-- >8 --" mark in the body of the message,
-> +everything before (and the line itself) will be ignored.
+Does anybody remember what these s_hdr (vs p_hdr) buffers stand for, by
+the way?
 
-Looking at the way other people use the mark in their messages, I think this explanation isn't correct.
+ -- >8 -- cut here -- >8 --
+Subject: [PATCH] squashme to 925bd84 (Teach mailinfo to ignore everything before -- >8 -- mark, 2009-08-23)
 
-A scissors mark doesn't have to be at the beginning. The line has to contain the mark, and it has to consist of only the mark, '-' minus, the phrase "cut here", and whitespaces.
+ builtin-mailinfo.c  |    6 ++++++
+ t/t5100/sample.mbox |    4 ++++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
 
-I am not familiar enough with the code to comment on the bug you are reporting.
-
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 26548f0..8a3a184 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -758,9 +758,15 @@ static int handle_commit_msg(struct strbuf *line)
+ 	}
+ 
+ 	if (scissors(line)) {
++		int i;
+ 		rewind(cmitmsg);
+ 		ftruncate(fileno(cmitmsg), 0);
+ 		still_looking = 1;
++		for (i = 0; header[i]; i++) {
++			if (s_hdr_data[i])
++				strbuf_release(s_hdr_data[i]);
++			s_hdr_data[i] = NULL;
++		}
+ 		return 0;
+ 	}
+ 
+diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
+index 95b6842..2c3da52 100644
+--- a/t/t5100/sample.mbox
++++ b/t/t5100/sample.mbox
+@@ -566,10 +566,14 @@ From: Junio Hamano <junkio@cox.net>
+ Date: Thu, 20 Aug 2009 17:18:22 -0700
+ Subject: Why doesn't git-am does not like >8 scissors mark?
+ 
++Subject: [PATCH] BLAH ONE
++
+ In real life, we will see a discussion that inspired this patch
+ discussing related and unrelated things around >8 scissors mark
+ in this part of the message.
+ 
++Subject: [PATCH] BLAH TWO
++
+ And the we will see the scissors.
+ 
+ -- >8 -- cut here -- 8< --
