@@ -1,69 +1,63 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: [PATCH] Makefile: Add NEEDS_CRYPTO_WITH_SSL
-Date: Mon, 24 Aug 2009 10:22:26 -0400
-Message-ID: <4E04F1F2-132A-4695-BCFF-C1F3159671AF@gernhardtsoftware.com>
-References: <1250354813-81349-1-git-send-email-brian@gernhardtsoftware.com> <81b0412b0908240245l33b04322l923084362197406a@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 24 16:22:41 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Announcement: cvs2svn 2.3.0 released
+Date: Mon, 24 Aug 2009 16:33:33 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908241632470.11375@intel-tinevez-2-302>
+References: <4A9074C7.4080002@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Aug 24 16:33:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfaRS-0006Zm-HI
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 16:22:39 +0200
+	id 1MfacD-0002qQ-Oj
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Aug 2009 16:33:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604AbZHXOW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 10:22:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752600AbZHXOW2
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 10:22:28 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:38475 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752598AbZHXOW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 10:22:27 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 67F181FFC08B; Mon, 24 Aug 2009 14:22:26 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.3] (cpe-67-240-168-84.rochester.res.rr.com [67.240.168.84])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 6A9061FFC080;
-	Mon, 24 Aug 2009 14:22:24 +0000 (UTC)
-In-Reply-To: <81b0412b0908240245l33b04322l923084362197406a@mail.gmail.com>
-X-Mailer: Apple Mail (2.936)
+	id S1752622AbZHXOdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 10:33:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbZHXOdd
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 10:33:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51290 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752481AbZHXOdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 10:33:33 -0400
+Received: (qmail invoked by alias); 24 Aug 2009 14:33:33 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp065) with SMTP; 24 Aug 2009 16:33:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/21fpcgG32AYsOzbsNmihI+AROyKZKMFU+4zAjRj
+	8DNVuaBXX7n1KQ
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <4A9074C7.4080002@alum.mit.edu>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126931>
 
+Hi,
 
-On Aug 24, 2009, at 5:45 AM, Alex Riesen wrote:
+On Sun, 23 Aug 2009, Michael Haggerty wrote:
 
-> As imap-send is the only one which uses the symbols, why not just add
-> LIB_4_CRYPTO
-> to its linking command? Like in the broken GMail-patch below:
+> I am happy to announce release 2.3.0 of cvs2svn/cvs2git/cvs2bzr.
+> 
+> cvs2svn is a tool for migrating a CVS repository to Subversion, git,
+> Bazaar, or Mercurial. The main design goals are robustness and 100% data
+> preservation. cvs2svn can convert just about any CVS repository we've
+> ever seen, including gcc, Mozilla, FreeBSD, KDE, and GNOME.
+> 
+> Release 2.3.0 primarily improves the support for converting to git and
+> Bazaar (including explicit cvs2git and cvs2bzr scripts).  This release
+> also adds a few other minor features and fixes a bug when converting to
+> git with non-inline blobs.
 
-I didn't do this because I didn't know if all platforms needed  
-libcrypto to compile imap-send.  If it is, then this is obviously the  
-simpler solution.
+Does it support incremental operation yet?  (I.e. do not bother to 
+re-import what was imported already?)
 
-> diff --git a/Makefile b/Makefile
-> index 02ff867..33971f3 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1503,7 +1503,7 @@ git-%$X: %.o $(GITLIBS)
->
-> git-imap-send$X: imap-send.o $(GITLIBS)
-> 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o, 
-> $^) \
-> -		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-> +		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
->
-> http.o http-walker.o http-push.o: http.h
+Thanks,
+Dscho
