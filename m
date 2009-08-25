@@ -1,8 +1,15 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] fix simple deepening of a repo
-Date: Mon, 24 Aug 2009 23:12:48 -0700
-Message-ID: <20090825061248.GG1033@spearce.org>
-References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home> <alpine.LFD.2.00.0908232320410.6044@xanadu.home> <7vocq5q0j7.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908240144530.28290@iabervon.org> <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0908242001250.6044@xanadu.home> <20090825021223.GE1033@spearce.org> <7vab1osc2m.fsf@alter.siamese.dyndns.org>
+Date: Mon, 24 Aug 2009 23:33:26 -0700
+Message-ID: <7vy6p8pfm1.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home>
+ <alpine.LFD.2.00.0908232320410.6044@xanadu.home>
+ <7vocq5q0j7.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0908240144530.28290@iabervon.org>
+ <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk>
+ <alpine.LFD.2.00.0908242001250.6044@xanadu.home>
+ <20090825021223.GE1033@spearce.org> <7vab1osc2m.fsf@alter.siamese.dyndns.org>
+ <20090825061248.GG1033@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Nicolas Pitre <nico@cam.org>,
@@ -10,119 +17,84 @@ Cc: Nicolas Pitre <nico@cam.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 08:12:58 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Aug 25 08:34:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfpH7-0006C7-S3
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 08:12:58 +0200
+	id 1MfpcE-0002wR-LO
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 08:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbZHYGMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 02:12:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbZHYGMr
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 02:12:47 -0400
-Received: from george.spearce.org ([209.20.77.23]:41174 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754001AbZHYGMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 02:12:47 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id A92D8381FD; Tue, 25 Aug 2009 06:12:48 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vab1osc2m.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1754292AbZHYGdq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 02:33:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752342AbZHYGdq
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 02:33:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37382 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751020AbZHYGdp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 02:33:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D21F81871D;
+	Tue, 25 Aug 2009 02:33:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ucR2ucpUykmlcgsbWcCC/MmVDnU=; b=EngoRC
+	1uA/eJWyqcJxyCxIG2jyaxkJUI2dH2knhzeWwuzQe9L2vC+eIW8IYuOWiupwtxOS
+	qZnMbJTqn1cUD8oYyDDbSexLinLMyJlEnJ+xGuL0kM6WG8ON4nvNjv1Vj2XmiiYT
+	qGmxi0OhpJopW8cCinXEumWE2kP6plQYIh5lM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MpH3IAS2F49Rg/zpzqOmKXULoG3Upkcu
+	FXExAhdp3NklO95VpKkf6dYyNYT37WWjEInSuAYv8W2Yo40d4qxnmQqIKGbUO5F2
+	xTw5XRAOme4ETGr19o4iMduCYSBedep1WCJE45lg43rZocU9SFaNee6Vo+kL2xyo
+	mv2h9e0nAA4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 72ED01871C;
+	Tue, 25 Aug 2009 02:33:38 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 426C318713; Tue, 25 Aug
+ 2009 02:33:28 -0400 (EDT)
+In-Reply-To: <20090825061248.GG1033@spearce.org> (Shawn O. Pearce's message
+ of "Mon\, 24 Aug 2009 23\:12\:48 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3917A322-9141-11DE-8A86-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127010>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > We aren't quite at the 50k ref stage yet, but we're starting to
-> > consider that some of our repositories have a ton of refs, and
-> > that the initial advertisement for either fetch or push is horrid.
-> >
-> > Since the refs are immutable I could actually teach the JGit
-> > daemon to hide them from JGit's receive-pack, thus cutting down the
-> > advertisement on push, but the refs exist so you can literally say:
-> 
-> What do you mean "refs are immutable"?
-> 
-> Do you mean "In the particular application, Gerrit, the server knows that
-> certain refs will never move nor get deleted, once they are created"?  If
-> so, then I would understand, but otherwise what you are describing is not
-> git anymore ;-)
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-The former.  :-)
+> The client knows the *name* of the ref, but not the SHA-1 the ref is
+> currently valued at.  Thus when the client knows it wants a certain
+> ref by name, it needs to send a "want " line to the server that would
+> give it whatever that ref currently points at.  Unfortunately since we
+> have not obtained that value yet, we are stuck.
 
-I mean that this particular server implementation will deny any
-update made to refs/changes/, as if one had the following as the
-update hook on that repository:
+That could be something you can fix in the out-of-band procedure Gerrit
+uses (you let the client learn both name and value offline, and then the
+client uses that value on "want" line).
 
-  #!/bin/sh
-  case "$1" in
-  refs/changes/*) exit 1;;
-  *) exit 0;
-  esac
+However, even if we limit the discussion to Gerrit, you would need an
+updated client that can be called with the out-of-band information
+(i.e. "we know that changes/88/4488/2 points at X, so use X when
+requesting") when talking with such an updated server.
 
-This of course is completely legal, and since the server knows the
-ref cannot be moved, there is no need to advertise it to the client.
-But this is a very specialized thing, its rare that the thing that
-formats the advertisement knows what the update hook will permit
-to be modified.
- 
-> >   git fetch --uploadpack='git upload-pack --ref refs/changes/88/4488/2' URL refs/changes/88/4488/2
-> >
-> > Personally I'd prefer extending the protocol, because making the
-> > end user supply information twice is stupid.
-> 
-> In the upload-pack protocol, the server talks first, so it is rather hard
-> to shoehorn a request from a client to ask "I know about refs/changes/*
-> hiearchy, so don't talk about them".
+So I think that expand-refs is a much nicer general solution than just
+"server side is configured to hide but still allow certain refs", and
+client updates cannot be avoided.
 
-Actually, that assumption is still a problem.
+And again, 
 
-The client knows the *name* of the ref, but not the SHA-1 the ref is
-currently valued at.  Thus when the client knows it wants a certain
-ref by name, it needs to send a "want " line to the server that would
-give it whatever that ref currently points at.  Unfortunately since we
-have not obtained that value yet, we are stuck.
+> The problem with this is servers which are sending this expand-refs
+> tag have hidden certain namespaces from older clients.  Those names
+> can't be seen by older git clients, unless the user does an upgrade.
 
-However, we do have one name we want to know about, but the server may
-have 50k other names in the same namespace we do not know about.
-
-I was thinking instead that we have a new protocol extension:
-
-  S: ... HEAD\0side-band ... expand-refs
-  S: ... refs/heads/master
-  S: 0000
-
-  C: ... expand refs/changes/88/4488/2
-  C: 0000
-
-  S: ... refs/changes/88/4488/2
-  S: 0000
-
-  C: ... want XXXXXX\0side-band-64k ...
- 
-> Of course, the client side cannot grab everything with refs/*:refs/remotes/*
-> wildcard refspecs from such a server, but I think that can be considered a
-> feature.
-
-If expand accepted globs like fetch does, then fetch can ask for
-expand of refs/changes/* if it does not see any refs/changes/*
-on advertisement.  Or just expand a particular ref, or handful of
-refs, that the user has asked for on the fetch line.
-
-The problem with this is servers which are sending this expand-refs
-tag have hidden certain namespaces from older clients.  Those names
-can't be seen by older git clients, unless the user does an upgrade.
-
-This might be OK for Gerrit Code Review's refs/changes/ namespace,
-but it may not be good for others.
-
-
--- 
-Shawn.
+I do not think "generally hidden, but if you need to know you are allowed
+to peek" is much of a problem.  You do not do that for regular refs, only
+for "on-demand-as-needed" type things.  If we are going to make extensive
+use of notes on commits to give richer annotations, I suspect notes
+hierarchy could be hidden by default in a similar way.
