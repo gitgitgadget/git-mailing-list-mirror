@@ -1,182 +1,150 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Possible regression: overwriting untracked files in a fresh
- repo
-Date: Mon, 24 Aug 2009 23:03:16 -0400
-Message-ID: <20090825030316.GA8098@coredump.intra.peff.net>
-References: <alpine.DEB.1.00.0908241829510.11375@intel-tinevez-2-302>
- <20090824190710.GB25168@coredump.intra.peff.net>
- <7vab1o3ikz.fsf@alter.siamese.dyndns.org>
- <20090825013601.GA3515@coredump.intra.peff.net>
- <7vk50sve00.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH/RFC] make the new block-sha1 the default
+Date: Mon, 24 Aug 2009 23:04:37 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908242249420.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 05:03:26 2009
+X-From: git-owner@vger.kernel.org Tue Aug 25 05:04:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfmJh-0006wC-L3
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 05:03:26 +0200
+	id 1MfmL4-0007E2-MV
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 05:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300AbZHYDDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 23:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754298AbZHYDDQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 23:03:16 -0400
-Received: from peff.net ([208.65.91.99]:51650 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754286AbZHYDDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 23:03:16 -0400
-Received: (qmail 13386 invoked by uid 107); 25 Aug 2009 03:03:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 24 Aug 2009 23:03:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Aug 2009 23:03:16 -0400
-Content-Disposition: inline
-In-Reply-To: <7vk50sve00.fsf@alter.siamese.dyndns.org>
+	id S1754306AbZHYDEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 23:04:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304AbZHYDEm
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 23:04:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35225 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754302AbZHYDEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 23:04:41 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOW00HQAWJP3PD0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 23:04:38 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126994>
 
-On Mon, Aug 24, 2009 at 07:11:43PM -0700, Junio C Hamano wrote:
+... and remove support for linking against the openssl SHA1 code.
 
-> This looks a lot saner; I like it.  Care to wrap it up with the usual
-> supporting material?
+The block-sha1 implementation is not significantly worse and sometimes 
+even faster than the openssl SHA1 implementation.  This allows for
+getting rid of the dependency and runtime linking to openssl which is
+a relatively important source of latency when executing git commands.
 
-Patch is below. I did a little digging to see the origin of the
-current behavior. It looks like invoking "force" was probably the
-easiest way to make the shell version work, and then the behavior just
-got ported to C (see below for details).
-
-> I think the "You appear to be" can just go, but I do not feel very
-> strongly either way.
-
-I don't feel strongly, either. I couldn't think of a reason a user would
-care, and it is potentially confusing to new users (though most will
-simply clone and never see it), so I ripped it out.
-
-And now you can try your new scissors patch. ;)
-
--- >8 --
-Subject: [PATCH] checkout: do not imply "-f" on unborn branches
-
-When checkout sees that HEAD points to a non-existent ref,
-it currently acts as if "-f" was given; this behavior dates
-back to 5a03e7f, which enabled checkout from unborn branches
-in the shell version of "git-checkout". The reasoning given
-is to avoid the code path which tries to merge the tree
-contents. When checkout was converted to C, this code
-remained intact.
-
-The unfortunate side effect of this strategy is that the
-"force" code path will overwrite working tree and index
-state that may be precious to the user. Instead of enabling
-"force", this patch uses the normal "merge" codepath for an
-unborn branch, but substitutes the empty tree for the "old"
-commit.
-
-This means that in the absence of an index, any files in the
-working tree will be treated as untracked files, and a
-checkout which would overwrite them is aborted. Similarly,
-any paths in the index will be merged with an empty entry
-as the base, meaning that unless the new branch's content is
-identical to what's in the index, there will be a conflict
-and the checkout will be aborted.
-
-The user is then free to correct the situation or proceed
-with "-f" as appropriate.
-
-This patch also removes the "warning: you are on a branch
-yet to be born" message. Its function was to warn the user
-that we were enabling the "-f" option. Since we are no
-longer doing that, there is no reason for the user to care
-whether we are switching away from an unborn branch.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-checkout.c         |   12 +++---------
- t/t2015-checkout-unborn.sh |   40 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 9 deletions(-)
- create mode 100755 t/t2015-checkout-unborn.sh
 
-diff --git a/builtin-checkout.c b/builtin-checkout.c
-index 8a9a474..c6d6ac9 100644
---- a/builtin-checkout.c
-+++ b/builtin-checkout.c
-@@ -402,7 +402,9 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.dir = xcalloc(1, sizeof(*topts.dir));
- 		topts.dir->flags |= DIR_SHOW_IGNORED;
- 		topts.dir->exclude_per_dir = ".gitignore";
--		tree = parse_tree_indirect(old->commit->object.sha1);
-+		tree = parse_tree_indirect(old->commit ?
-+					   old->commit->object.sha1 :
-+					   (unsigned char *)EMPTY_TREE_SHA1_BIN);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
- 		tree = parse_tree_indirect(new->commit->object.sha1);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
-@@ -541,14 +543,6 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
- 		parse_commit(new->commit);
- 	}
+OK... So here it is.  After all, wanting to get rid of openssl is what 
+started it all in the first place.
+
+diff --git a/INSTALL b/INSTALL
+index ae7f750..55eb962 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -52,13 +52,6 @@ Issues of note:
  
--	if (!old.commit && !opts->force) {
--		if (!opts->quiet) {
--			warning("You appear to be on a branch yet to be born.");
--			warning("Forcing checkout of %s.", new->name);
--		}
--		opts->force = 1;
--	}
+ 	- "zlib", the compression library. Git won't build without it.
+ 
+-	- "openssl".  Unless you specify otherwise, you'll get the SHA1
+-	  library from here.
 -
- 	ret = merge_working_tree(opts, &old, new);
- 	if (ret)
- 		return ret;
-diff --git a/t/t2015-checkout-unborn.sh b/t/t2015-checkout-unborn.sh
-new file mode 100755
-index 0000000..c551d39
---- /dev/null
-+++ b/t/t2015-checkout-unborn.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
+-	  If you don't have openssl, you can use one of the SHA1 libraries
+-	  that come with git (git includes the one from Mozilla, and has
+-	  its own PowerPC and ARM optimized ones too - see the Makefile).
+-
+ 	- libcurl library; git-http-fetch and git-fetch use them.  You
+ 	  might also want the "curl" executable for debugging purposes.
+ 	  If you do not use http transfer, you are probably OK if you
+diff --git a/Makefile b/Makefile
+index 4190a5d..8f28b09 100644
+--- a/Makefile
++++ b/Makefile
+@@ -16,7 +16,6 @@ all::
+ # when attempting to read from an fopen'ed directory.
+ #
+ # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+-# This also implies BLK_SHA1.
+ #
+ # Define NO_CURL if you do not have libcurl installed.  git-http-pull and
+ # git-http-push are not built, and you cannot use http:// and https://
+@@ -84,10 +83,6 @@ all::
+ # specify your own (or DarwinPort's) include directories and
+ # library directories by defining CFLAGS and LDFLAGS appropriately.
+ #
+-# Define BLK_SHA1 environment variable if you want the C version
+-# of the SHA1 that assumes you can do unaligned 32-bit loads and
+-# have a fast htonl() function.
+-#
+ # Define PPC_SHA1 environment variable when running make to make use of
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
+@@ -1013,7 +1008,6 @@ ifndef NO_OPENSSL
+ 	endif
+ else
+ 	BASIC_CFLAGS += -DNO_OPENSSL
+-	BLK_SHA1 = 1
+ 	OPENSSL_LIBSSL =
+ endif
+ ifdef NEEDS_SSL_WITH_CRYPTO
+@@ -1162,18 +1156,14 @@ ifdef NO_DEFLATE_BOUND
+ 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
+ endif
+ 
+-ifdef BLK_SHA1
+-	SHA1_HEADER = "block-sha1/sha1.h"
+-	LIB_OBJS += block-sha1/sha1.o
+-else
+ ifdef PPC_SHA1
+ 	SHA1_HEADER = "ppc/sha1.h"
+ 	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
+ else
+-	SHA1_HEADER = <openssl/sha.h>
+-	EXTLIBS += $(LIB_4_CRYPTO)
+-endif
++	SHA1_HEADER = "block-sha1/sha1.h"
++	LIB_OBJS += block-sha1/sha1.o
+ endif
 +
-+test_description='checkout from unborn branch protects contents'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir parent &&
-+	(cd parent &&
-+	 git init &&
-+	 echo content >file &&
-+	 git add file &&
-+	 git commit -m base
-+	) &&
-+	git fetch parent master:origin
-+'
-+
-+test_expect_success 'checkout from unborn preserves untracked files' '
-+	echo precious >expect &&
-+	echo precious >file &&
-+	test_must_fail git checkout -b new origin &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'checkout from unborn preserves index contents' '
-+	echo precious >expect &&
-+	echo precious >file &&
-+	git add file &&
-+	test_must_fail git checkout -b new origin &&
-+	test_cmp expect file &&
-+	git show :file >file &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'checkout from unborn merges identical index contents' '
-+	echo content >file &&
-+	git add file &&
-+	git checkout -b new origin
-+'
-+
-+test_done
--- 
-1.6.4.1.330.g14cea.dirty
+ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
+diff --git a/cache.h b/cache.h
+index dd7f71e..39a4edd 100644
+--- a/cache.h
++++ b/cache.h
+@@ -6,12 +6,6 @@
+ #include "hash.h"
+ 
+ #include SHA1_HEADER
+-#ifndef git_SHA_CTX
+-#define git_SHA_CTX	SHA_CTX
+-#define git_SHA1_Init	SHA1_Init
+-#define git_SHA1_Update	SHA1_Update
+-#define git_SHA1_Final	SHA1_Final
+-#endif
+ 
+ #include <zlib.h>
+ #if defined(NO_DEFLATE_BOUND) || ZLIB_VERNUM < 0x1200
+diff --git a/configure.ac b/configure.ac
+index b09b8e4..634186c 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -160,7 +160,6 @@ AC_MSG_NOTICE([CHECKS for site configuration])
+ # a bundled SHA1 routine optimized for PowerPC.
+ #
+ # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+-# This also implies BLK_SHA1.
+ #
+ # Define OPENSSLDIR=/foo/bar if your openssl header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
