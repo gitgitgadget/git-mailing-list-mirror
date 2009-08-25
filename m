@@ -1,87 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-tag(1): Refer to git-check-ref-format(1) for <name>
-Date: Tue, 25 Aug 2009 13:37:14 -0700
-Message-ID: <7vd46jocjp.fsf@alter.siamese.dyndns.org>
-References: <87ab2gsqst.fsf@jondo.cante.net>
- <7veirs6qxn.fsf@alter.siamese.dyndns.org>
- <20090822094518.6117@nanako3.lavabit.com>
- <20090825172100.6117@nanako3.lavabit.com>
+Subject: Re: [PATCH v2] Add script for importing bits-and-pieces to Git.
+Date: Tue, 25 Aug 2009 13:42:54 -0700
+Message-ID: <7v3a7foca9.fsf@alter.siamese.dyndns.org>
+References: <20090824171110.DA9202FC20@perkele>
+ <7vy6p9do4k.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0908251953480.19406@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jari Aalto <jari.aalto@cante.net>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 22:38:22 2009
+Cc: git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Aug 25 22:43:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mg2mb-0006uY-QZ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 22:38:22 +0200
+	id 1Mg2rI-0008GY-HA
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 22:43:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755693AbZHYUhY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 16:37:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755550AbZHYUhY
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 16:37:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36449 "EHLO
+	id S1756119AbZHYUnC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 16:43:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756047AbZHYUnB
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 16:43:01 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49345 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755523AbZHYUhX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 16:37:23 -0400
+	with ESMTP id S1755168AbZHYUnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 16:43:01 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 633A218F45;
-	Tue, 25 Aug 2009 16:37:23 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 95ACB36C05;
+	Tue, 25 Aug 2009 16:43:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=NhwUiGCF9Ovo4vtuwmHohoPtTX0=; b=UIIW6gSkHoOuawQAS/LrhN9
-	HdFia8I9nVSLRLdB1qIN/MZbqWyGH9Qmd8Qt2R6eI4ZEeTKIS2ZiNgj0gO2Kb9t5
-	TO0+RyYhr8JhpNoRPaWokkcKIaAty57PcF6lTozewa/TSoIWLWOhH+4RqV/EAnop
-	kCHxiOMIC4LBneyqrYq4=
+	sasl; bh=diGVz1M/yOZTIdJT3mxQq1vkCeA=; b=xxYHi/ImuATvuW4CutuXS/x
+	aIAUu54tIhcRsE3W9gGZnF6DyPSY8uaGmBE3raIC106x2bmXWa+2bz7FFmqEa+oe
+	zeyG9+pCk0wShHX77RpYOdrp+La5QkHCOtGdWEDkjzW7clBd6LuVMkWGUKmlUYT3
+	OwS7DGQNVnS7SYKboXAg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=qIiXJfq9SB0Qj5qMi6B+nrpodYbI/klxQC4XFbrU4sRpWFvSm
-	64xJydPqZszVv4CtWoR9PqvDKGd2y2/52P9LwtowXdqewQsPEzeux+Y+vSE9Y5V2
-	NbfuW1Hd+8qg5YLO6nN+xCYccaR/vzJzVfLFbXWbN/kNlX8SI4TH8oPM9I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 363ED18F43;
-	Tue, 25 Aug 2009 16:37:20 -0400 (EDT)
+	dns; s=sasl; b=VnsSNpXU5OBcH7hyGLeZUX3QxSQVHKoA2KABSZ/Xb7IxSfXqP
+	skOCnjSASldaPKxrkkjzXFnuAz0qi4Guw6Hz9JpzGmTmTRhxHsbwdLZpE+lIO7AG
+	xeDOFNfAyxFPliaKi6C5/sGYVFPghtfOaKTQdaFGNEUsJ5PNRRx7QTR0as=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7583636BFF;
+	Tue, 25 Aug 2009 16:42:59 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C23B18F3F; Tue, 25 Aug
- 2009 16:37:16 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 496D736BFC; Tue, 25 Aug 2009
+ 16:42:55 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1601E5AC-91B7-11DE-B73E-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: E0358306-91B7-11DE-AA9D-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127049>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Peter Krefting <peter@softwolves.pp.se> writes:
 
-> Quoting myself...
+>> You might want to mention that this format is different from what
+>> git uses for its .git/config and .gitmodules files, and none of the
+>> rules apply to them (namely, two/three-level names, case
+>> sensitivity, allowed letters in variable names, stripping of
+>> whitespaces around values, and value quoting) described in 'git help
+>> config' apply to this file.
 >
->> Subject: Documentation: consistently refer to check-ref-format
->>
->> Change the <name> placeholder to <tagname> in the SYNOPSIS section of
->> git-tag documentation, and describe it in the OPTIONS section in a way
->> similar to how documentation for git-branch does.
->>
->> Add SEE ALSO section to list the other documentation pages these two pages
->> refer to.
->>
->> Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+> A quick question on that: Is it possible to use the git-config parser
+> stand-alone from a script like this? Then that note wouldn't need to
+> apply.
+
+Yes, but then you have to update your data language, because some of the
+section names and variables names you would want to use in your script are
+illegal in "git config" configuration language.  Values and the second
+level name in two level section names are more-or-less free form (they
+need to be quoted as appropriately), but the first-level section names and
+the variable names are case insensitive, do not allow SPs and funnies, and
+there is no escaping.  You cannot have "source.c" as the variable name,
+for example.
+
+I'd recommend against re-using the git config format for that reason.
+
+Another possibility would be to use something that does not even resemble
+the git config format, say, YAML as your data language.  There is no risk
+of confusion from the end users if you did so, and we wouldn't need the
+note either.
+
+>> As you seem to be supporting merges, you might want to say
+>> topologically instead of chronologically---this is minor, as you
+>> give more precise definition "all parents must come before a child"
+>> in that sentence later.
 >
-> Should I further polish this patch?
+> I'm not sure I get the distinction here. Could you be a bit more
+> specific (or point me to what I have missed in the Git manual)?
 
-No, it just fell through the cracks of my mailbox.  I tend to agree that
-it is better to mention only the presense of rules, and refer to the rules
-described in the definitive document.
+Your history could be in this shape (numbers are timestamps recorded in
+commit): 
 
-Safe names are designed to be what most sane people would naturally choose
-to use anyway and they would not need to see the clutter that describes
-only the half of the rules there.  And more importantly, the people who do
-get errors by choosing illegal names by accident would _want_ to see the
-full set of rules before choosing another name to avoid getting the same
-error again.
+             1--4
+            /    \
+	0--3--6---9--12
 
-Spelling only the half of the rules in the tag/branch manual page would
-not help neither audience.
+when somebody with a skewed clock forked the project at commit 3, worked
+on a side branch to create two commits 1 and 4, which are pulled back to
+the mainline at commit 9.
+
+Chronological listing would mean 0 1 3 4 6 9 12.  Topological listing
+would be either 0 3 1 4 6 9 12 or 0 3 6 1 4 9 12 or 0 3 1 6 4 9 12.
