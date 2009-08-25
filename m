@@ -1,95 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] upload-pack: add a trigger for post-upload-pack hook
-Date: Tue, 25 Aug 2009 14:45:25 -0400
-Message-ID: <20090825184525.GC23731@coredump.intra.peff.net>
-References: <1250579093-40706-1-git-send-email-tom@mojombo.com>
- <12c267e40908251043g4f3e36aya05d9c705f5afee2@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] import-tars: Allow per-tar author and commit message.
+Date: Tue, 25 Aug 2009 19:52:16 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908251950010.19406@ds9.cixit.se>
+References: <20090823203640.B195D189B12@perkele> <4A91B8BB.1030906@vilain.net> <alpine.DEB.2.00.0908241659380.16576@perkele.intern.softwolves.pp.se> <7vab1pf3fj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tom Preston-Werner <tom@mojombo.com>, git@vger.kernel.org
-To: Tom Werner <mojombo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 20:45:34 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 20:53:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mg11Q-0005IO-F7
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 20:45:32 +0200
+	id 1Mg195-0007k0-5T
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 20:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755730AbZHYSp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 14:45:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755714AbZHYSp0
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 14:45:26 -0400
-Received: from peff.net ([208.65.91.99]:50534 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755602AbZHYSpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 14:45:25 -0400
-Received: (qmail 18262 invoked by uid 107); 25 Aug 2009 18:45:34 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 25 Aug 2009 14:45:34 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Aug 2009 14:45:25 -0400
-Content-Disposition: inline
-In-Reply-To: <12c267e40908251043g4f3e36aya05d9c705f5afee2@mail.gmail.com>
+	id S1756013AbZHYSwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 14:52:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755725AbZHYSwZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 14:52:25 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:37960 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755715AbZHYSwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 14:52:23 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7PIqGdt019783
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 25 Aug 2009 20:52:16 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7PIqG0W019779;
+	Tue, 25 Aug 2009 20:52:16 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <7vab1pf3fj.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 25 Aug 2009 20:52:16 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127040>
 
-On Tue, Aug 25, 2009 at 10:43:57AM -0700, Tom Werner wrote:
+Junio C Hamano:
 
-> On Tue, Aug 18, 2009 at 12:04 AM, Tom Preston-Werner<tom@mojombo.com> wrote:
-> > A post-upload-pack hook is desirable for Git hosts that need to
-> > collect statistics on how many clones and/or fetches are made
-> > on each repository.
-> >
-> > The hook is called with either "clone" or "fetch" as the only
-> > argument, depending on whether a full pack file was sent to the
-> > client or not.
-> 
-> I was hoping to get some feedback on this patch, either positive or
-> negative. Since we'll be applying this patch for our use of the Git
-> Daemon on GitHub, it would be great to see it in core, so we don't
-> have to maintain custom debian builds forever. I'd imagine that other
-> Git hosting sites would find this hook useful as well. Thanks!
+> Unlike your "import-directories" that is a brand new program without any 
+> existing users, you are touching code that other people have already used, 
+> and you do not want to change the behaviour for them only because they 
+> happen to have unrelated files in the same directory.
 
-I expect it didn't get any response because nobody here cared one way or
-the other. Not too surprising, since I think not many people are running
-a GitHub-sized hosting site that cares about such statistics. ;) So I
-think following up as you are doing is the right thing.
+Indeed. Not that it is likely that one have stray filetar.gz.msg files just 
+laying around, but I'll add a command line switch to enable the new 
+functinality. That sounds like the most reasonable way to go, leaving the 
+old usage completely unaffected by the change.
 
-As for the hook itself, the concept certainly seems sane to me. It
-passes the "hook" test defined here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/70781/focus=71069
-
-because it is a remote trigger.
-
-But a few comments on the patch:
-
-> ---
->  upload-pack.c |    9 +++++++++
->  1 files changed, 9 insertions(+), 0 deletions(-)
-
-It needs at least a mention in Documentation/githooks.txt.
-
-> +static void run_post_upload_pack_hook(int create_full_pack)
-> +{
-> +	const char *fetch_type;
-> +	fetch_type = (create_full_pack) ? "clone" : "fetch";
-> +	run_hook(get_index_file(), "post-upload-pack", fetch_type);
-> +}
-
-Does it really need an index file? This operation in question seems to
-be totally disconnected from the index (and indeed, most bare
-repositories won't even have one). Probably it should pass NULL as the
-initial argument to run_hook.
-
-Is there any other information that might be useful to other non-GitHub
-users of the hook? The only thing I can think of is the list of refs
-that were fetched. I don't want to over-engineer it, but nor do I want
-to be left with the mess of retro-fitting more information onto an
-existing hook later. Maybe others can comment on whether they would find
-more information useful.
-
--Peff
+-- 
+\\// Peter - http://www.softwolves.pp.se/
