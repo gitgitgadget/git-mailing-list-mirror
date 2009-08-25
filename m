@@ -1,83 +1,95 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: git-mail-commits (Re:What's a good setup for submitting patches
- to the list properly?)
-Date: Tue, 25 Aug 2009 01:06:30 +0100 (BST)
-Message-ID: <alpine.LNX.2.00.0908250102580.28400@reaper.quantumfyre.co.uk>
-References: <alpine.DEB.2.00.0908191849220.2012@GWPortableVCS> <200908222220.35354.chriscool@tuxfamily.org> <20090822205656.GA3526@vidovic> <200908230911.07218.chriscool@tuxfamily.org> <alpine.LNX.2.00.0908232357590.15613@reaper.quantumfyre.co.uk>
- <20090823234108.GB3526@vidovic>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] fix simple deepening of a repo
+Date: Mon, 24 Aug 2009 20:18:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908242001250.6044@xanadu.home>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home>
+ <alpine.LFD.2.00.0908232320410.6044@xanadu.home>
+ <7vocq5q0j7.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0908240144530.28290@iabervon.org>
+ <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 25 02:07:12 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Tue Aug 25 02:19:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfjZ9-0004st-9P
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 02:07:11 +0200
+	id 1MfjkZ-0007Ml-3X
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 02:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753638AbZHYAHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 20:07:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753381AbZHYAHA
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 20:07:00 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:37205 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753267AbZHYAHA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 20:07:00 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 2C7D0279B7C
-	for <git@vger.kernel.org>; Tue, 25 Aug 2009 01:07:01 +0100 (BST)
-Received: (qmail 26395 invoked by uid 103); 25 Aug 2009 01:06:30 +0100
-Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.94.2/9729. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.035891 secs); 25 Aug 2009 00:06:30 -0000
-Received: from reaper.quantumfyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 25 Aug 2009 01:06:30 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20090823234108.GB3526@vidovic>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753988AbZHYASt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 20:18:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753934AbZHYASt
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 20:18:49 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:50738 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753878AbZHYASt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 20:18:49 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOW00G6WOV9UZG0@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 24 Aug 2009 20:18:45 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126983>
 
-On Mon, 24 Aug 2009, Nicolas Sebrecht wrote:
+On Mon, 24 Aug 2009, Julian Phillips wrote:
 
-> The 24/08/09, Julian Phillips wrote:
->> On Sun, 23 Aug 2009, Christian Couder wrote:
->>
->> Using the awsome power of git I have managed to extract it from my random
->> tools private repo to here as if I had written it to be a separate entity
->> from the start:
->>
->> git://git.q42.co.uk/mail_commits.git
->> (gitweb: http://git.q42.co.uk/w/mail_commits.git)
->
-> Thanks a lot.
->
->> If it would be considered useful, then I can also create a patch to add
->> it to contrib
->
-> I think it worth. That said, I would first add some config options like
-> mail-commits.cc (not reviewed that much yet) to be a bit more consistent
-> with the send-email program. I would also add README and INSTALL files.
+> On Mon, 24 Aug 2009, Daniel Barkalow wrote:
+> 
+> > On Sun, 23 Aug 2009, Junio C Hamano wrote:
+> > 
+> > > What is the point of not asking for the refs that we know are the same?
+> > 
+> > This code is part of the original C implementation of fetch; I suspect the
+> > optimization was somehow in the shell version and made sense there,
+> > perhaps because there wasn't a quickfetch in the shell version or that
+> > there was some non-negligable per-ref cost in the code around there, since
+> > it was calling helper programs and such.
+> 
+> I don't remember copying it from the shell version but my memory is terrible,
+> so I could easily be wrong.  The relevant commit message was:
+> 
+> "git-fetch2: remove ref_maps that are not interesting
+> 
+> Once we have the full list of ref_maps, remove any where the local
+> and remote sha1s are the same - as we don't need to do anything for
+> them."
+> 
+> So that doesn't help.  I was very concerned about performance though (which
+> was why I wanted fetch in C in the first place), so may have added it to speed
+> up fetches that have only updated a few refs - and I assume that quickfetch
+> was something that came along later after you absorbed the work into the
+> transport series?
 
-Yeah ... it would be nice to have more options settable via config.  Some 
-form of documentation would also be a good idea, and I would like to tidy 
-the code up a bit.  Kinda sort on tuits just at the moment though ... :(
+Well... Johan Herland says he has to deal with repositories containing 
+around 50000 refs.  So in that case it is certainly a good idea not to 
+send the whole 50000 refs back if only one or two (or a hundred) need to 
+be updated.  And quickfetch() won't help in that case since its purpose 
+is only to determine if there is anything at all to update.
 
-> Could you please consider to place your code under GPLv2?
+> > Anyway, I think it makes sense to remove the filtering from
+> > transport_fetch_refs(), like your patch does.
+> > 
+> > If it makes a difference for the actual protocol, fetch_refs_via_pack()
+> > could filter them at that stage.
+> 
+> I think it would certainly be worth investigating the performance aspects ...
+> no time tonight, but maybe tomorrow.
 
-I have added a license statement.
+50000 refs * 45 bytes each = 2.25 MB.  That's all wasted bandwidth if 
+only one ref needs updating.
 
--- 
-Julian
 
-  ---
-Thus spake the master programmer:
- 	"When a program is being tested, it is too late to make design changes."
- 		-- Geoffrey James, "The Tao of Programming"
+Nicolas
