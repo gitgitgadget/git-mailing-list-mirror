@@ -1,66 +1,60 @@
-From: =?iso-8859-1?Q?Frank_M=FCnnich?= <git@frank-muennich.com>
-Subject: What IDEs are you using to develop git?
-Date: Tue, 25 Aug 2009 14:15:17 +0200
-Message-ID: <000001ca257d$b60326c0$22097440$@com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: What IDEs are you using to develop git?
+Date: Tue, 25 Aug 2009 13:47:50 +0100
+Message-ID: <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com>
+References: <000001ca257d$b60326c0$22097440$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 25 14:43:44 2009
+Cc: git@vger.kernel.org
+To: =?UTF-8?Q?Frank_M=C3=BCnnich?= <git@frank-muennich.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 14:47:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfvNH-0001M8-Lk
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:43:44 +0200
+	id 1MfvRO-0002du-2W
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758AbZHYMnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 08:43:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbZHYMne
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:43:34 -0400
-Received: from srv6.mw-internet.net ([85.114.129.87]:40785 "EHLO
-	srv6.mw-internet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbZHYMne convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 08:43:34 -0400
-X-Greylist: delayed 1696 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Aug 2009 08:43:34 EDT
-Received: from justme (pD9EA0FF8.dip0.t-ipconnect.de [217.234.15.248])
-	by srv6.mw-internet.net (Postfix) with ESMTP id 8FE613D843D
-	for <git@vger.kernel.org>; Tue, 25 Aug 2009 14:15:18 +0200 (CEST)
-X-Mailer: Microsoft Office Outlook 12.0
-Thread-Index: AcolfbLrTkHZMFQOTPWO6i2fh+G4rg==
-Content-Language: de
-x-cr-hashedpuzzle: AWwp BmCh CAI/ C/7H EBVt ETBm Gk0/ GuxY GvGS Hz4X JJTO KLop Ka7B Ksvj K5qS K8Vu;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{91FC6AB3-026E-4FA1-AB8F-2B3CA5C8DB87};ZwBpAHQAQABmAHIAYQBuAGsALQBtAHUAZQBuAG4AaQBjAGgALgBjAG8AbQA=;Tue, 25 Aug 2009 12:15:13 GMT;VwBoAGEAdAAgAEkARABFAHMAIABhAHIAZQAgAHkAbwB1ACAAdQBzAGkAbgBnACAAdABvACAAZABlAHYAZQBsAG8AcAAgAGcAaQB0AD8A
-x-cr-puzzleid: {91FC6AB3-026E-4FA1-AB8F-2B3CA5C8DB87}
+	id S1750800AbZHYMrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 08:47:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbZHYMrt
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:47:49 -0400
+Received: from mail-gx0-f205.google.com ([209.85.217.205]:61939 "EHLO
+	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750713AbZHYMrs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 08:47:48 -0400
+Received: by gxk1 with SMTP id 1so3924401gxk.17
+        for <git@vger.kernel.org>; Tue, 25 Aug 2009 05:47:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3CZb5zK3gLGpPwF3StKkYpbCqTZDYT5gWlrLUowVy4I=;
+        b=D+P2+1iSKfXEylttd5W9SaesJ2duV0kNErKsYJtNOAjfSGYj1HTIgc4gNu3fESaWGM
+         qQBCCY1Opz4h0wf3bBCYx9dtnjKFdiLdSD4p+JNUbPyNZPKgHa9dCyiCbxqN/j1GgJ/V
+         naggWyZS67CtSA1j7rMFlqUOdjac0qGXIYtbE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aZyQoXQN5GJBwMyY9rXt+0XBhvs5l4oT5lRAQHk6uw230HUXVZCZCIWGMohR1R/9Vu
+         ImvbXwRc2nIi3qUF2gyN+gqlE5zI5QWrSmilKTSYEXu/N6ickwXHdJVnF+Ru4Q1hppm0
+         ChrPu8ttorA+ZhY5x/+gkaNsQ/9pdOSFuWlmw=
+Received: by 10.150.129.40 with SMTP id b40mr9178612ybd.311.1251204470332; 
+	Tue, 25 Aug 2009 05:47:50 -0700 (PDT)
+In-Reply-To: <000001ca257d$b60326c0$22097440$@com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127020>
 
-Hi there,
+2009/8/25 Frank M=C3=BCnnich <git@frank-muennich.com>:
+> One thing I would like to ask you: what, if any, IDEs are you working=
+ with?
 
-I am interested in helping out and improving git, though I haven't
-programmed in C for quite a while now and thus have to relearn quite so=
-me
-things.=20
-I understand the different branches (master, next, pu) and so on, and w=
-ere
-successful in compiling git with my Ubuntu 9.04. [yeea] ;)
+I think everyone just uses vim/emacs :-)
 
-One thing I would like to ask you: what, if any, IDEs are you working w=
-ith?
-I tried Anjuta but were unsuccessful in importing the git folder from a=
-ny
-branch into Anjuta. Eclipse worked a bit better, though I am still batt=
-eling
-with the debugger a bit.
-
-Any recommendations, manuals or how-to tips are greatly welcome.
-And one thing: thank you for your effort! Git really caught my attentio=
-n and
-I was so much amused by the Google-Techtalk that Linus gave about Git, =
-that
-it sparked my interest in relearning how to program again ;)
-
-Best regards from lovely Dresden in Germany
-=46rank M=FCnnich
+John
