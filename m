@@ -1,113 +1,128 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: [PATCH-v2/RFC 3/6] xutils: fix ignore-all-space on incomplete
- line
-Date: Tue, 25 Aug 2009 00:58:21 -0500 (CDT)
-Message-ID: <alpine.DEB.2.00.0908250018510.9656@GWPortableVCS>
-References: <1250999285-10683-1-git-send-email-git@tbfowler.name> <1250999357-10827-3-git-send-email-git@tbfowler.name> <7vvdkfx8rl.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908231110500.29625@GWPortableVCS> <7vljlauxmk.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.00.0908231515020.29625@GWPortableVCS> <7vzl9qtev0.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908232044060.29625@GWPortableVCS> <7viqgdoikz.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908240910120.29625@GWPortableVCS>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] fix simple deepening of a repo
+Date: Mon, 24 Aug 2009 23:12:48 -0700
+Message-ID: <20090825061248.GG1033@spearce.org>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home> <alpine.LFD.2.00.0908232320410.6044@xanadu.home> <7vocq5q0j7.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908240144530.28290@iabervon.org> <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0908242001250.6044@xanadu.home> <20090825021223.GE1033@spearce.org> <7vab1osc2m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 07:58:43 2009
+X-From: git-owner@vger.kernel.org Tue Aug 25 08:12:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mfp3K-0002xl-H1
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 07:58:43 +0200
+	id 1MfpH7-0006C7-S3
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 08:12:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754483AbZHYF6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 01:58:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbZHYF6d
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 01:58:33 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:47216 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1753263AbZHYF6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 01:58:32 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1Mfp3B-00031T-Ka; Tue, 25 Aug 2009 00:58:33 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <alpine.DEB.2.00.0908240910120.29625@GWPortableVCS>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754193AbZHYGMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 02:12:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbZHYGMr
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 02:12:47 -0400
+Received: from george.spearce.org ([209.20.77.23]:41174 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754001AbZHYGMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 02:12:47 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A92D8381FD; Tue, 25 Aug 2009 06:12:48 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vab1osc2m.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127009>
 
-Thell Fowler (git@tbfowler.name) wrote on Aug 24, 2009:
-
-> Junio C Hamano (gitster@pobox.com) wrote on Aug 24, 2009:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > We aren't quite at the 50k ref stage yet, but we're starting to
+> > consider that some of our repositories have a ton of refs, and
+> > that the initial advertisement for either fetch or push is horrid.
+> >
+> > Since the refs are immutable I could actually teach the JGit
+> > daemon to hide them from JGit's receive-pack, thus cutting down the
+> > advertisement on push, but the refs exist so you can literally say:
 > 
-> > Thell Fowler <git@tbfowler.name> writes:
-> > 
-> > > It passed every test I threw at it, although it seemed to be a tad bit 
-> > > slower than the previous revision on my sample data so I ran the following 
-> > > command several times for both the previous and current version:
-> > >
-> > 
-> > Do you mean by "previous version" the one that was broken, or the one I
-> > sent as a "how about" patch?
-> > 
+> What do you mean "refs are immutable"?
 > 
-> A quick test shows the version merged to pu is the one that had the 
-> fastest times.  I'll be away from a connection most of today, but will 
-> test the different versions against the tests and some sample data and 
-> post back.
+> Do you mean "In the particular application, Gerrit, the server knows that
+> certain refs will never move nor get deleted, once they are created"?  If
+> so, then I would understand, but otherwise what you are describing is not
+> git anymore ;-)
+
+The former.  :-)
+
+I mean that this particular server implementation will deny any
+update made to refs/changes/, as if one had the following as the
+update hook on that repository:
+
+  #!/bin/sh
+  case "$1" in
+  refs/changes/*) exit 1;;
+  *) exit 0;
+  esac
+
+This of course is completely legal, and since the server knows the
+ref cannot be moved, there is no need to advertise it to the client.
+But this is a very specialized thing, its rare that the thing that
+formats the advertisement knows what the update hook will permit
+to be modified.
+ 
+> >   git fetch --uploadpack='git upload-pack --ref refs/changes/88/4488/2' URL refs/changes/88/4488/2
+> >
+> > Personally I'd prefer extending the protocol, because making the
+> > end user supply information twice is stupid.
 > 
+> In the upload-pack protocol, the server talks first, so it is rather hard
+> to shoehorn a request from a client to ask "I know about refs/changes/*
+> hiearchy, so don't talk about them".
 
-More extensive testing also shows the version currently in pu is the 
-fastest on my sample data when applied to master.  I'm not sure why pu 
-shows slower times than those same commits applied to master, but they 
-are close enough together that I'm guessing no-one would really be 
-concerned.
+Actually, that assumption is still a problem.
 
-I was sitting in a waiting room and decided to have a little fun figuring 
-out how to average the sys times...
+The client knows the *name* of the ref, but not the SHA-1 the ref is
+currently valued at.  Thus when the client knows it wants a certain
+ref by name, it needs to send a "want " line to the server that would
+give it whatever that ref currently points at.  Unfortunately since we
+have not obtained that value yet, we are stuck.
 
-for arg in "" -w -b --ignore-space-at-eol;do sum=0 && for i in {1..50}; \
-do n="$(/usr/bin/time -f "%S" -o /dev/stdout sh -c 'git diff $arg dirty_first>/dev/null;')"; \
-sum=$sum+$n; done; echo "scale=2; ($sum)/$i"|echo "$(bc) avg for diff $arg"; done;
+However, we do have one name we want to know about, but the server may
+have 50k other names in the same namespace we do not know about.
 
-pu
-.28 avg for diff 
-.29 avg for diff -w
-.33 avg for diff -b
-.29 avg for diff --ignore-space-at-eol
+I was thinking instead that we have a new protocol extension:
 
-pu commits applied to master     <===  FASTEST
-9c0d402 xutils: Fix xdl_recmatch() on incomplete lines
-21245fd xutils: Fix hashing an incomplete line with whitespaces at the end
-.26 avg for diff 
-.25 avg for diff -w
-.29 avg for diff -b
-.31 avg for diff --ignore-space-at-eol 
+  S: ... HEAD\0side-band ... expand-refs
+  S: ... refs/heads/master
+  S: 0000
 
-'how about' patch applied to master
-.26 avg for diff 
-.32 avg for diff -w
-.29 avg for diff -b
-.32 avg for diff --ignore-space-at-eol
+  C: ... expand refs/changes/88/4488/2
+  C: 0000
 
-current master (in order to see the difference in the basic git diff 
--ignoring the fact that incomplete lines where broke since it only affects 
-2 files in the test data)
-.30 avg for diff 
-.30 avg for diff -w
-.29 avg for diff -b
-.29 avg for diff --ignore-space-at-eol
+  S: ... refs/changes/88/4488/2
+  S: 0000
 
--- Thell
+  C: ... want XXXXXX\0side-band-64k ...
+ 
+> Of course, the client side cannot grab everything with refs/*:refs/remotes/*
+> wildcard refspecs from such a server, but I think that can be considered a
+> feature.
+
+If expand accepted globs like fetch does, then fetch can ask for
+expand of refs/changes/* if it does not see any refs/changes/*
+on advertisement.  Or just expand a particular ref, or handful of
+refs, that the user has asked for on the fetch line.
+
+The problem with this is servers which are sending this expand-refs
+tag have hidden certain namespaces from older clients.  Those names
+can't be seen by older git clients, unless the user does an upgrade.
+
+This might be OK for Gerrit Code Review's refs/changes/ namespace,
+but it may not be good for others.
+
+
+-- 
+Shawn.
