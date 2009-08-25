@@ -1,160 +1,66 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Tue, 25 Aug 2009 16:30:45 +0400
-Message-ID: <1251203445-3740-1-git-send-email-catap@catap.ru>
-References: <20090825015726.GB7655@coredump.intra.peff.net>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 25 14:32:45 2009
+From: =?iso-8859-1?Q?Frank_M=FCnnich?= <git@frank-muennich.com>
+Subject: What IDEs are you using to develop git?
+Date: Tue, 25 Aug 2009 14:15:17 +0200
+Message-ID: <000001ca257d$b60326c0$22097440$@com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 25 14:43:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfvCd-0006iH-Em
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:32:43 +0200
+	id 1MfvNH-0001M8-Lk
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647AbZHYMcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 08:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754504AbZHYMcc
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:32:32 -0400
-Received: from mx.catap.ru ([85.25.165.176]:44038 "EHLO mx.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750904AbZHYMcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 08:32:32 -0400
-Received: from [195.218.191.52] (helo=satellite.home.catap.ru)
-	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1MfvBs-0002ub-PP; Tue, 25 Aug 2009 16:31:56 +0400
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1MfvAj-0000yu-Kx; Tue, 25 Aug 2009 16:30:45 +0400
-X-Mailer: git-send-email 1.6.2
-In-Reply-To: <20090825015726.GB7655@coredump.intra.peff.net>
+	id S1750758AbZHYMnf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 08:43:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbZHYMne
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:43:34 -0400
+Received: from srv6.mw-internet.net ([85.114.129.87]:40785 "EHLO
+	srv6.mw-internet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbZHYMne convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 08:43:34 -0400
+X-Greylist: delayed 1696 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Aug 2009 08:43:34 EDT
+Received: from justme (pD9EA0FF8.dip0.t-ipconnect.de [217.234.15.248])
+	by srv6.mw-internet.net (Postfix) with ESMTP id 8FE613D843D
+	for <git@vger.kernel.org>; Tue, 25 Aug 2009 14:15:18 +0200 (CEST)
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AcolfbLrTkHZMFQOTPWO6i2fh+G4rg==
+Content-Language: de
+x-cr-hashedpuzzle: AWwp BmCh CAI/ C/7H EBVt ETBm Gk0/ GuxY GvGS Hz4X JJTO KLop Ka7B Ksvj K5qS K8Vu;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{91FC6AB3-026E-4FA1-AB8F-2B3CA5C8DB87};ZwBpAHQAQABmAHIAYQBuAGsALQBtAHUAZQBuAG4AaQBjAGgALgBjAG8AbQA=;Tue, 25 Aug 2009 12:15:13 GMT;VwBoAGEAdAAgAEkARABFAHMAIABhAHIAZQAgAHkAbwB1ACAAdQBzAGkAbgBnACAAdABvACAAZABlAHYAZQBsAG8AcAAgAGcAaQB0AD8A
+x-cr-puzzleid: {91FC6AB3-026E-4FA1-AB8F-2B3CA5C8DB87}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127019>
 
-Sometimes (especially on production systems) we need to use only one
-remote branch for building software. It really annoying to clone
-origin and then swith branch by hand everytime. So this patch provide
-functionality to clone remote branch with one command without using
-checkout after clone.
----
- Documentation/git-clone.txt |    4 ++++
- builtin-clone.c             |   23 ++++++++++++++++++++---
- t/t5706-clone-brnach.sh     |   31 +++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 3 deletions(-)
- create mode 100755 t/t5706-clone-brnach.sh
+Hi there,
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 2c63a0f..50446d2 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -127,6 +127,10 @@ objects from the source repository into a pack in the cloned repository.
- 	Instead of using the remote name 'origin' to keep track
- 	of the upstream repository, use <name>.
- 
-+--branch <name>::
-+-b <name>::
-+	Instead of using the remote HEAD as master, use <name> branch.
-+
- --upload-pack <upload-pack>::
- -u <upload-pack>::
- 	When given, and the repository to clone from is accessed
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 32dea74..9cea056 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -41,6 +41,7 @@ static int option_quiet, option_no_checkout, option_bare, option_mirror;
- static int option_local, option_no_hardlinks, option_shared;
- static char *option_template, *option_reference, *option_depth;
- static char *option_origin = NULL;
-+static char *option_branch = NULL;
- static char *option_upload_pack = "git-upload-pack";
- static int option_verbose;
- 
-@@ -65,6 +66,8 @@ static struct option builtin_clone_options[] = {
- 		   "reference repository"),
- 	OPT_STRING('o', "origin", &option_origin, "branch",
- 		   "use <branch> instead of 'origin' to track upstream"),
-+	OPT_STRING('b', "branch", &option_branch, "branch",
-+		   "use <branch> from 'origin' as HEAD"),
- 	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
- 		   "path to git-upload-pack on the remote"),
- 	OPT_STRING(0, "depth", &option_depth, "depth",
-@@ -347,8 +350,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	const char *repo_name, *repo, *work_tree, *git_dir;
- 	char *path, *dir;
- 	int dest_exists;
--	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
--	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
-+	const struct ref *refs, *head_points_at, *remote_head = NULL, *mapped_refs;
-+	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT, branch_head = STRBUF_INIT;
- 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
- 	char *src_ref_prefix = "refs/heads/";
-@@ -518,7 +521,21 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 		mapped_refs = write_remote_refs(refs, refspec, reflog_msg.buf);
- 
--		remote_head = find_ref_by_name(refs, "HEAD");
-+		if (option_branch) {
-+			strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_branch);
-+
-+			remote_head = find_ref_by_name(refs, branch_head.buf);
-+		}
-+
-+		if (!remote_head) {
-+			if (option_branch)
-+				warning("Remote branch %s not found in upstream %s"
-+					", using HEAD instead",
-+					option_branch, option_origin);
-+
-+			remote_head = find_ref_by_name(refs, "HEAD");
-+		}
-+
- 		head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
- 	}
- 	else {
-diff --git a/t/t5706-clone-brnach.sh b/t/t5706-clone-brnach.sh
-new file mode 100755
-index 0000000..1f2704b
---- /dev/null
-+++ b/t/t5706-clone-brnach.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+
-+test_description='branch clone options'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+
-+	mkdir parent &&
-+	(cd parent && git init &&
-+	 echo one >file && git add file &&
-+	 git commit -m one && git checkout -b two &&
-+	 echo two >f && git add f && git commit -m two &&
-+	 git checkout master)
-+
-+'
-+
-+test_expect_success 'clone' '
-+
-+	git clone parent clone &&
-+	(cd clone && git rev-parse --verify refs/remotes/origin/master)
-+
-+'
-+
-+test_expect_success 'clone -b' '
-+
-+	git clone -b two parent clone-b &&
-+	(cd clone && git rev-parse --verify refs/remotes/origin/two)
-+
-+'
-+
-+test_done
--- 
-1.6.2
+I am interested in helping out and improving git, though I haven't
+programmed in C for quite a while now and thus have to relearn quite so=
+me
+things.=20
+I understand the different branches (master, next, pu) and so on, and w=
+ere
+successful in compiling git with my Ubuntu 9.04. [yeea] ;)
+
+One thing I would like to ask you: what, if any, IDEs are you working w=
+ith?
+I tried Anjuta but were unsuccessful in importing the git folder from a=
+ny
+branch into Anjuta. Eclipse worked a bit better, though I am still batt=
+eling
+with the debugger a bit.
+
+Any recommendations, manuals or how-to tips are greatly welcome.
+And one thing: thank you for your effort! Git really caught my attentio=
+n and
+I was so much amused by the Google-Techtalk that Linus gave about Git, =
+that
+it sparked my interest in relearning how to program again ;)
+
+Best regards from lovely Dresden in Germany
+=46rank M=FCnnich
