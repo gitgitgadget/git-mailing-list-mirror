@@ -1,162 +1,90 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Tue, 25 Aug 2009 21:20:06 +0400
-Message-ID: <1251220806-17607-1-git-send-email-catap@catap.ru>
-References: <7vfxbgvdx8.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 25 19:21:48 2009
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH 14/14] Add README and gitignore file for MSVC build
+Date: Tue, 25 Aug 2009 14:24:01 -0300
+Message-ID: <a4c8a6d00908251024o24380f7ue409ac5f164c085e@mail.gmail.com>
+References: <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com>
+	 <6dd71f163e5410e401fc66088405736d1978ec55.1250860247.git.mstormo@gmail.com>
+	 <cover.1250860247.git.mstormo@gmail.com>
+	 <54673ddb6bef681194e141e5e05e930cdfaa07bc.1250860247.git.mstormo@gmail.com>
+	 <e82f1930173966ebb6b2d2815e037a26e079f969.1250860247.git.mstormo@gmail.com>
+	 <a4c8a6d00908230926of0ea10bhd8f66e7d37c3b39b@mail.gmail.com>
+	 <3f4fd2640908231122m34604196pc98c5871cf5925b5@mail.gmail.com>
+	 <4A91917F.9000709@gmail.com>
+	 <a4c8a6d00908231229v56eceeddue1b927a4e4e49ee3@mail.gmail.com>
+	 <1976ea660908250732q1e1fc153g663f3a9c13f1c902@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	git@vger.kernel.org
+To: Frank Li <lznuaa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 19:24:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfziF-0001ux-Dl
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 19:21:39 +0200
+	id 1Mfzkh-0003Ug-Rt
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 19:24:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755336AbZHYRV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 13:21:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755297AbZHYRV2
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 13:21:28 -0400
-Received: from mx.catap.ru ([85.25.165.176]:34523 "EHLO mx.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755290AbZHYRV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 13:21:28 -0400
-Received: from [195.218.191.52] (helo=satellite.home.catap.ru)
-	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Mfzht-0004VE-K6; Tue, 25 Aug 2009 21:21:17 +0400
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Mfzgk-0004aW-GM; Tue, 25 Aug 2009 21:20:06 +0400
-X-Mailer: git-send-email 1.6.2
-In-Reply-To: <7vfxbgvdx8.fsf@alter.siamese.dyndns.org>
+	id S1755383AbZHYRYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 13:24:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbZHYRYA
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 13:24:00 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:57493 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755339AbZHYRX7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 13:23:59 -0400
+Received: by an-out-0708.google.com with SMTP id d40so5208039and.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2009 10:24:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Sr2yQzQ/vJmaokruqJrwejg8oIEku5gzyiSYxE4tihM=;
+        b=xGlFgWLhMaFFZReCJA3wfvSfDl0QhV2S2uv/rByoqxr+h+N6NHGr//DR/M5C8mrRlE
+         yBbp54/7MnQgsMR7Q82r6ZhK4TkBqVbyQjKUJbsobnn2xa/tW0VF3jdPhYXQAcVZFqXY
+         d05hUi/TTxCPQnUpeMOqqhwr4CDAmLxKVp0h0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WigmIZA9neSamQMZxMjo7Rr05OVCKFayGMq2O4Lw1DsB6RNtKmDpb///8DtHkt0ggQ
+         qn4qJsqYX5B+3FQleknO+77wX2wbJAjPT9Juiro7UIQ2THCemsHgmgo2QT3b4bSaAmHU
+         LqslyUDAPRf6UHF4D/HmTXKQ0M0C5f4HG20yE=
+Received: by 10.101.45.2 with SMTP id x2mr6303849anj.172.1251221041155; Tue, 
+	25 Aug 2009 10:24:01 -0700 (PDT)
+In-Reply-To: <1976ea660908250732q1e1fc153g663f3a9c13f1c902@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127030>
 
-Sometimes (especially on production systems) we need to use only one
-remote branch for building software. It really annoying to clone
-origin and then swith branch by hand everytime. So this patch provide
-functionality to clone remote branch with one command without using
-checkout after clone.
+Hi,
+On Tue, Aug 25, 2009 at 11:32 AM, Frank Li<lznuaa@gmail.com> wrote:
+>> that it's generated by generate-cmdlist.sh, so the VS user will need
+>> to generate this file first (before compiling)?
+>
+> I update http://repo.or.cz/w/gitbuild.git.
+> Add create_command.bat to create common-cmds.h.
+>
+This is great, thank you for adding this tool.
 
-Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
----
- Documentation/git-clone.txt |    4 ++++
- builtin-clone.c             |   23 ++++++++++++++++++++---
- t/t5706-clone-brnach.sh     |   31 +++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 3 deletions(-)
- create mode 100755 t/t5706-clone-brnach.sh
+Today I ran 'git submodule update --init' and I recieved this error:
+No submodule mapping found in .gitmodules for path 'ext/zlib'
+The entry I have for zlib in .gitmodules is:
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 2c63a0f..50446d2 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -127,6 +127,10 @@ objects from the source repository into a pack in the cloned repository.
- 	Instead of using the remote name 'origin' to keep track
- 	of the upstream repository, use <name>.
- 
-+--branch <name>::
-+-b <name>::
-+	Instead of using the remote HEAD as master, use <name> branch.
-+
- --upload-pack <upload-pack>::
- -u <upload-pack>::
- 	When given, and the repository to clone from is accessed
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 32dea74..9cea056 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -41,6 +41,7 @@ static int option_quiet, option_no_checkout, option_bare, option_mirror;
- static int option_local, option_no_hardlinks, option_shared;
- static char *option_template, *option_reference, *option_depth;
- static char *option_origin = NULL;
-+static char *option_branch = NULL;
- static char *option_upload_pack = "git-upload-pack";
- static int option_verbose;
- 
-@@ -65,6 +66,8 @@ static struct option builtin_clone_options[] = {
- 		   "reference repository"),
- 	OPT_STRING('o', "origin", &option_origin, "branch",
- 		   "use <branch> instead of 'origin' to track upstream"),
-+	OPT_STRING('b', "branch", &option_branch, "branch",
-+		   "use <branch> from 'origin' as HEAD"),
- 	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
- 		   "path to git-upload-pack on the remote"),
- 	OPT_STRING(0, "depth", &option_depth, "depth",
-@@ -347,8 +350,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	const char *repo_name, *repo, *work_tree, *git_dir;
- 	char *path, *dir;
- 	int dest_exists;
--	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
--	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
-+	const struct ref *refs, *head_points_at, *remote_head = NULL, *mapped_refs;
-+	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT, branch_head = STRBUF_INIT;
- 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
- 	char *src_ref_prefix = "refs/heads/";
-@@ -518,7 +521,21 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 
- 		mapped_refs = write_remote_refs(refs, refspec, reflog_msg.buf);
- 
--		remote_head = find_ref_by_name(refs, "HEAD");
-+		if (option_branch) {
-+			strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_branch);
-+
-+			remote_head = find_ref_by_name(refs, branch_head.buf);
-+		}
-+
-+		if (!remote_head) {
-+			if (option_branch)
-+				warning("Remote branch %s not found in upstream %s"
-+					", using HEAD instead",
-+					option_branch, option_origin);
-+
-+			remote_head = find_ref_by_name(refs, "HEAD");
-+		}
-+
- 		head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
- 	}
- 	else {
-diff --git a/t/t5706-clone-brnach.sh b/t/t5706-clone-brnach.sh
-new file mode 100755
-index 0000000..1f2704b
---- /dev/null
-+++ b/t/t5706-clone-brnach.sh
-@@ -0,0 +1,31 @@
-+#!/bin/sh
-+
-+test_description='branch clone options'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+
-+	mkdir parent &&
-+	(cd parent && git init &&
-+	 echo one >file && git add file &&
-+	 git commit -m one && git checkout -b two &&
-+	 echo two >f && git add f && git commit -m two &&
-+	 git checkout master)
-+
-+'
-+
-+test_expect_success 'clone' '
-+
-+	git clone parent clone &&
-+	(cd clone && git rev-parse --verify refs/remotes/origin/master)
-+
-+'
-+
-+test_expect_success 'clone -b' '
-+
-+	git clone -b two parent clone-b &&
-+	(cd clone && git rev-parse --verify refs/remotes/origin/two)
-+
-+'
-+
-+test_done
--- 
-1.6.2
+[submodule "ext\\zlib"]
+       path = ext\\zlib
+       url = git://repo.or.cz/zlib.git
+
+Is this correct?  All the others entries are configured like this:
+[submodule ext/git]
+      path = ext/git
+      url = git://repo.or.cz/tgit.git
+
+Another question: Is not better to put the README inside gitbuild with
+the other files instead of compat/vcbuild/?
