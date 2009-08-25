@@ -1,112 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Tue, 25 Aug 2009 15:42:36 -0700
-Message-ID: <7vvdkbms6b.fsf@alter.siamese.dyndns.org>
-References: <1251228341-29434-1-git-send-email-catap@catap.ru>
- <1251228467-29638-1-git-send-email-catap@catap.ru>
- <20090825215726.GA30981@coredump.intra.peff.net>
+From: Peter Harris <git@peter.is-a-geek.org>
+Subject: Re: git svn messages
+Date: Tue, 25 Aug 2009 18:49:33 -0400
+Message-ID: <eaa105840908251549o6d53fe9fnb1dfc00395ad36f4@mail.gmail.com>
+References: <43d8ce650908251531n397ba6e1xe71e80d7b8a08344@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Kirill A. Korinskiy" <catap@catap.ru>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 26 00:43:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 00:50:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mg4jG-0001kG-8W
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 00:43:02 +0200
+	id 1Mg4qO-0003lx-61
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 00:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756271AbZHYWmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 18:42:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756266AbZHYWmp
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 18:42:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44565 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756248AbZHYWmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 18:42:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 23F46378C6;
-	Tue, 25 Aug 2009 18:42:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bQ8zKcLnIeun2xfo5AUBRCJPVz8=; b=mRygPA
-	RQAQLEL6ltRKHNCF4ixflbK1j/MhCBH0LmCq7Z2jKEmkSUrNQ/mQTg/JXyGMtW2f
-	j3JyuM6MbUWGqIq6wWyDMQZPjFBvnrntVV/Bd4ekQNlUC8JNdwbVt3JfEuKrotgI
-	hieWqHtKSVYQlgumgPsxFRO1e2ARC5hqM4s94=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pLdXwBEdDTrIA//jW/ce1dMzbjlX/6Gr
-	94udsHp3t/An1ooHSbnFeDultPB2DgweY+NGSaLVJLCN7rEIW9PNCwgkiGF+pKhl
-	xVvr+veqRcY6PY0tKohzpib5KVLdbt9deJ+AD8H134If10UZr1mCfEmZAmdHCabK
-	La26qjMTmJU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ED078378C2;
-	Tue, 25 Aug 2009 18:42:42 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E8CA6378C1; Tue, 25 Aug 2009
- 18:42:37 -0400 (EDT)
-In-Reply-To: <20090825215726.GA30981@coredump.intra.peff.net> (Jeff King's
- message of "Tue\, 25 Aug 2009 17\:57\:26 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 99E711EC-91C8-11DE-A691-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1756244AbZHYWtd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 18:49:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753991AbZHYWtc
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 18:49:32 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:60178 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753873AbZHYWtc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 18:49:32 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so876496eya.19
+        for <git@vger.kernel.org>; Tue, 25 Aug 2009 15:49:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=dkItjtHbqM76okPwvvY0/uqPsf+OHyQ0ccGhV+kqpRM=;
+        b=Az379/9AigifCCdmRn4qhkIwvP6QEoLoCjm5q45ZwmlzQOQHSB0D/5vHtKDgmwwz1u
+         EFBoqwxUU1QTrpsRCCNIFmTQpRHnWkgJFceIeftvz+z38bASTGaZapZU6upOWPeefAjY
+         JvB+ZI0Go1fmEWbF30p74oZJ3234SeJ4t3dpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=gCG0AJshcz+98GXoKDjCrw9bg+/lpLLSQQN1KC47fnNh5mDur/7WOiA9BrJiesjcLm
+         KjoXhFg66Y1dM873davlk16CTiXNiqdE0ELR02rrloTTOd+TZvlk/YbZcOcHrMVaJicu
+         7KUVVN5Jm9vORNjhCVqwOaUi3gELT3e2ZNUDA=
+Received: by 10.210.137.16 with SMTP id k16mr5939468ebd.16.1251240573424; Tue, 
+	25 Aug 2009 15:49:33 -0700 (PDT)
+In-Reply-To: <43d8ce650908251531n397ba6e1xe71e80d7b8a08344@mail.gmail.com>
+X-Google-Sender-Auth: ecfcd9a41ea0ef07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127055>
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Aug 25, 2009 at 11:27:47PM +0400, Kirill A. Korinskiy wrote:
+On Tue, Aug 25, 2009 at 6:31 PM, John Tapsell wrote:
+> Hi all,
 >
->> +test_expect_success 'clone' '
->> +
->> +	git clone parent clone &&
->> +	(cd clone && git rev-parse --verify refs/remotes/origin/master)
->> +
->> +'
->> +
->> +test_expect_success 'clone -b' '
->> +
->> +	git clone -b two parent clone-b &&
->> +	(cd clone-b && test $(git rev-parse --verify HEAD) = $(git rev-parse --verify refs/remotes/origin/two))
->> +
->> +'
+> =A0When doing git svn dcommit, the messages that it gives are, well,
+> frightening :-)
+
+Some moreso than others, depending on your level of familiarity with gi=
+t. :-)
+
+> It's full of things like:
 >
-> OK, I think that second test makes sense (though please wrap the very
-> long line), but now what is the first one doing? Shouldn't it be:
+>> No changes between current HEAD and refs/remotes/git-svn
 >
->   (cd clone &&
->    test $(git rev-parse --verify HEAD) = \
->         $(git rev-parse --verify refs/remotes/origin/master)
->   )
+> No changes? =A0What's gone wrong? =A0Why can't it find any changes?..
+
+Because you aren't working from a branch-point older than your current
+refs/remotes/git-svn. I suppose one could misinterpret that as a
+bidirectional "no changes". Still, the message doesn't contain a scary
+prefix like "Error:" or even "Warning:". It's just informational.
+
+>> Resetting to the latest refs/remotes/git-svn
 >
-> also?
+> That doesn't sound good. =A0Why did it have reset?
 
-Are you checking that the HEAD (whichever branch it points at) points at
-the same commit, or are you also interested in the _current branch_ to be
-a particular name as well?  The suggested check only compares commits and
-HEAD can be pointing at a local branch whose name is xyzzy.
+Because the newly created svn commits are a different DAG from your
+former DAG (which contained git commits that weren't in svn yet), even
+though the tree contents are the same. The way git-svn tells the rest
+of git about this change is by running the "git reset" command.
 
-What is the semantics of this new -b option?  When the remote repository
-has 'next' as its default branch (i.e. HEAD points at it), and if you run
-clone with "-b maint" against it, I expect that the checked out commit
-will be the 'maint' of remote repository, but what is the name of the
-current branch in the resulting clone on our end?
+You can run "gitk" before you run "git svn dcommit", then hit refresh
+(F5, I believe) after "git svn dcommit" is done to get a more visual
+idea of what is going on.
 
- - Would we use 'master' as the name of our current branch, because that
-   is the default?
-
- - Would we use 'next' as the name of our current branch, because that is
-   what the remote side uses?
-
- - Would we use 'maint', because that is what -b gave us?
-
-I am _hoping_ it is the last one, as otherwise you would also need to make
-sure that the branch that is different from 'maint' we set as the current
-branch must track 'maint' from the remote.
-
-Oh, with -b, would we set up our 'maint' to track their 'maint'?  Is it
-something you may want to verify as well?
+Peter Harris
