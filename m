@@ -1,47 +1,47 @@
 From: "Kirill A. Korinskiy" <catap@catap.ru>
 Subject: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Tue, 25 Aug 2009 23:25:41 +0400
-Message-ID: <1251228341-29434-1-git-send-email-catap@catap.ru>
-References: <87praj90n8.wl%catap@catap.ru>
+Date: Tue, 25 Aug 2009 23:27:47 +0400
+Message-ID: <1251228467-29638-1-git-send-email-catap@catap.ru>
+References: <1251228341-29434-1-git-send-email-catap@catap.ru>
 Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Aug 25 21:27:17 2009
+X-From: git-owner@vger.kernel.org Tue Aug 25 21:29:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mg1fo-00021V-3G
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 21:27:16 +0200
+	id 1Mg1hj-0002fB-9w
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 21:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756084AbZHYT07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 15:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756086AbZHYT06
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 15:26:58 -0400
-Received: from mx.catap.ru ([85.25.165.176]:44146 "EHLO mx.catap.ru"
+	id S1756083AbZHYT3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 15:29:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756072AbZHYT3A
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 15:29:00 -0400
+Received: from mx.catap.ru ([85.25.165.176]:44501 "EHLO mx.catap.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756023AbZHYT04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 15:26:56 -0400
+	id S1756067AbZHYT3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 15:29:00 -0400
 Received: from [195.218.191.52] (helo=satellite.home.catap.ru)
 	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Mg1fQ-000576-TX; Tue, 25 Aug 2009 23:26:53 +0400
+	id 1Mg1hS-00057o-Cd; Tue, 25 Aug 2009 23:28:58 +0400
 Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
 	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Mg1eH-0007fH-QX; Tue, 25 Aug 2009 23:25:41 +0400
+	id 1Mg1gJ-0007iu-9v; Tue, 25 Aug 2009 23:27:47 +0400
 X-Mailer: git-send-email 1.6.2
-In-Reply-To: <87praj90n8.wl%catap@catap.ru>
+In-Reply-To: <1251228341-29434-1-git-send-email-catap@catap.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127046>
 
 Sometimes (especially on production systems) we need to use only one
-remote branch for building software. It really annoying to clone
-origin and then swith branch by hand everytime. So this patch provide
-functionality to clone remote branch with one command without using
-checkout after clone.
+remote branch for building software. It's really annoying to clone
+origin and then switch branch by hand everytime. So this patch
+provides functionality to clone a remote branch with one command
+without using checkout after clone.
 
 Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
 ---
