@@ -1,132 +1,160 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitosis-lite
-Date: Tue, 25 Aug 2009 14:05:16 +0200
-Message-ID: <200908251405.17644.jnareb@gmail.com>
-References: <2e24e5b90908240528v56fdf30cq4c046fca321a3b17@mail.gmail.com> <m363cdm4pm.fsf@localhost.localdomain> <2e24e5b90908242253v411ad5f3t8a2802079914d0bf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 14:05:46 2009
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] Add option -b/--branch to clone for select a new HEAD
+Date: Tue, 25 Aug 2009 16:30:45 +0400
+Message-ID: <1251203445-3740-1-git-send-email-catap@catap.ru>
+References: <20090825015726.GB7655@coredump.intra.peff.net>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Aug 25 14:32:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfumX-0007ef-IN
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:05:46 +0200
+	id 1MfvCd-0006iH-Em
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478AbZHYMFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 08:05:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752887AbZHYMFb
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:05:31 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:40879 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753094AbZHYMFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 08:05:30 -0400
-Received: by bwz19 with SMTP id 19so2017654bwz.37
-        for <git@vger.kernel.org>; Tue, 25 Aug 2009 05:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=af9y4JV8Bdo0jkvNma4/gr/KrjjQLlpgKsSOjUyivd4=;
-        b=KDX0ah1me2R9pCGE5LnJ+mCpwC15IUMjreXOSfOkcBW0LbTHI5IEDSg2To0sWgAnTj
-         7lr7mrTN6baI/6Ms1S0zRegsBCQdyV4jmlm51YOPB2EQyKMjhYcNjs0WUraK+4LEgzmB
-         a8OdH1RTVsvXI/MNsG87NmS5AXvzDHHWh+UX0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=uTgvjbQXf0XiPGujJO4FGxrQBtjYD9NX0zAoH2dUT5I8cUpgqdqOceGbt0LB1GxsH5
-         grty/2q1jmukiipPX7kYyrQkotCxSUWBJxZDeigYTXJVttmMfQHtMM2X8c1SyfnMODlB
-         igMsYbgGOKZcsuMudEtUBB4nA1v1WOgFwz0DI=
-Received: by 10.103.50.22 with SMTP id c22mr2574567muk.54.1251201929787;
-        Tue, 25 Aug 2009 05:05:29 -0700 (PDT)
-Received: from ?192.168.1.13? (abvm114.neoplus.adsl.tpnet.pl [83.8.210.114])
-        by mx.google.com with ESMTPS id e10sm1061860muf.14.2009.08.25.05.05.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 25 Aug 2009 05:05:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <2e24e5b90908242253v411ad5f3t8a2802079914d0bf@mail.gmail.com>
-Content-Disposition: inline
+	id S1754647AbZHYMcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 08:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754504AbZHYMcc
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:32:32 -0400
+Received: from mx.catap.ru ([85.25.165.176]:44038 "EHLO mx.catap.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750904AbZHYMcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 08:32:32 -0400
+Received: from [195.218.191.52] (helo=satellite.home.catap.ru)
+	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1MfvBs-0002ub-PP; Tue, 25 Aug 2009 16:31:56 +0400
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1MfvAj-0000yu-Kx; Tue, 25 Aug 2009 16:30:45 +0400
+X-Mailer: git-send-email 1.6.2
+In-Reply-To: <20090825015726.GB7655@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127018>
 
-Sitaram Chamarty wrote:
-> On Tue, Aug 25, 2009 at 12:14 AM, Jakub Narebski<jnareb@gmail.com> wrote:
-> 
-> > A few comments about the code, taking gl-auth-command as example.
-> 
-> > Wouldn't it be better to use "use warnings" instead of 'perl -w'?
-> 
-> I'm not sure what is the minimum perl required for git
-> itself.  Has it needed perl > 5.6.0 for more than a year at
-> least?  The only real difference between these two is scope,
-> which is a non-issue here, so I played safe.
+Sometimes (especially on production systems) we need to use only one
+remote branch for building software. It really annoying to clone
+origin and then swith branch by hand everytime. So this patch provide
+functionality to clone remote branch with one command without using
+checkout after clone.
+---
+ Documentation/git-clone.txt |    4 ++++
+ builtin-clone.c             |   23 ++++++++++++++++++++---
+ t/t5706-clone-brnach.sh     |   31 +++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 3 deletions(-)
+ create mode 100755 t/t5706-clone-brnach.sh
 
-I think that git requires Perl at least version 5.6
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 2c63a0f..50446d2 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -127,6 +127,10 @@ objects from the source repository into a pack in the cloned repository.
+ 	Instead of using the remote name 'origin' to keep track
+ 	of the upstream repository, use <name>.
  
-> > It would be, I think, better if you have used POD for such
-> > documentation.  One would be able to generate manpage using pod2man,
-> > and it is no less readable in source code.  See e.g. perl/Git.pm or
-> > contrib/hooks/update-paranoid.
-> 
-> Hmm... I've been spoiled by Markdown's sane bullet list
-> handling.  Visually, POD forces everything other than code
-> to be flush left -- any sort of list is definitely less
-> readable in source code as a result.  IMHO of course.
-
-How it is relevant to the issue at hand?  I was talking about replacing
-documentation comments in the header with POD markup.
-
-Also you usually document top-level structures with POD.
-
-
-> > > # first, fix the biggest gripe I have with gitosis, a 1-line change
-> > > my $user=$ENV{GL_USER}=shift;       # there; now that's available everywhere!
-> >
-> > Eh?  This is standalone script, isn't it?  Shouldn't it be
-> >
-> >   my $user = $ENV{GL_USER} = $ARGV[0];       # there; now that's available everywhere!
-> 
-> Hmm... I didn't know there was a difference, other than
-> depleting @ARGV, if you're outside a subroutine.  I'll take
-> a relook at it.
-
-It is, I think, the matter of taste.  IMHO using @ARGV to get _program_
-parameters is better than use 'shift' which is used to get subroutine
-arguments.
-
-BTW. have you tried using Perl::Critic or http://perlcritic.com on your
-code (but remember that those best practice recommendations do not need
-to be followed blindly)?
-
-> > > open(LOG, ">>", "$GL_ADMINDIR/log");
-> > > print LOG "\n", scalar(localtime), " $ENV{SSH_ORIGINAL_COMMAND} $user\n";
-> > > close(LOG);
-> >
-> > It is better practice to use lexical variables instead of barewords
-> > for filehandles:
-> 
-> Good catch; thanks!  I guess I'm showing my age :)  Fixed
-> all of them!
-> 
-> > Don't forget to check for error.
-> 
-> Hmm.. well I'm still debating if a log file write error
-> should block git access / push, but there were two more
-> important closes (again in gl-compile-conf) that were
-> unguarded.  Fixed, thanks.
-
-I was thinking about not writing to log file if you can't open it.
++--branch <name>::
++-b <name>::
++	Instead of using the remote HEAD as master, use <name> branch.
++
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+ 	When given, and the repository to clone from is accessed
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 32dea74..9cea056 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -41,6 +41,7 @@ static int option_quiet, option_no_checkout, option_bare, option_mirror;
+ static int option_local, option_no_hardlinks, option_shared;
+ static char *option_template, *option_reference, *option_depth;
+ static char *option_origin = NULL;
++static char *option_branch = NULL;
+ static char *option_upload_pack = "git-upload-pack";
+ static int option_verbose;
  
+@@ -65,6 +66,8 @@ static struct option builtin_clone_options[] = {
+ 		   "reference repository"),
+ 	OPT_STRING('o', "origin", &option_origin, "branch",
+ 		   "use <branch> instead of 'origin' to track upstream"),
++	OPT_STRING('b', "branch", &option_branch, "branch",
++		   "use <branch> from 'origin' as HEAD"),
+ 	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
+ 		   "path to git-upload-pack on the remote"),
+ 	OPT_STRING(0, "depth", &option_depth, "depth",
+@@ -347,8 +350,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+ 	int dest_exists;
+-	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
+-	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
++	const struct ref *refs, *head_points_at, *remote_head = NULL, *mapped_refs;
++	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT, branch_head = STRBUF_INIT;
+ 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+ 	char *src_ref_prefix = "refs/heads/";
+@@ -518,7 +521,21 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 		mapped_refs = write_remote_refs(refs, refspec, reflog_msg.buf);
+ 
+-		remote_head = find_ref_by_name(refs, "HEAD");
++		if (option_branch) {
++			strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_branch);
++
++			remote_head = find_ref_by_name(refs, branch_head.buf);
++		}
++
++		if (!remote_head) {
++			if (option_branch)
++				warning("Remote branch %s not found in upstream %s"
++					", using HEAD instead",
++					option_branch, option_origin);
++
++			remote_head = find_ref_by_name(refs, "HEAD");
++		}
++
+ 		head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
+ 	}
+ 	else {
+diff --git a/t/t5706-clone-brnach.sh b/t/t5706-clone-brnach.sh
+new file mode 100755
+index 0000000..1f2704b
+--- /dev/null
++++ b/t/t5706-clone-brnach.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
++
++test_description='branch clone options'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	mkdir parent &&
++	(cd parent && git init &&
++	 echo one >file && git add file &&
++	 git commit -m one && git checkout -b two &&
++	 echo two >f && git add f && git commit -m two &&
++	 git checkout master)
++
++'
++
++test_expect_success 'clone' '
++
++	git clone parent clone &&
++	(cd clone && git rev-parse --verify refs/remotes/origin/master)
++
++'
++
++test_expect_success 'clone -b' '
++
++	git clone -b two parent clone-b &&
++	(cd clone && git rev-parse --verify refs/remotes/origin/two)
++
++'
++
++test_done
 -- 
-Jakub Narebski
-Poland
+1.6.2
