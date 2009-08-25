@@ -1,90 +1,73 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH 14/14] Add README and gitignore file for MSVC build
-Date: Tue, 25 Aug 2009 14:24:01 -0300
-Message-ID: <a4c8a6d00908251024o24380f7ue409ac5f164c085e@mail.gmail.com>
-References: <6283b3e1775f43c6fc07e5047f9c99acdc27bc8f.1250860247.git.mstormo@gmail.com>
-	 <6dd71f163e5410e401fc66088405736d1978ec55.1250860247.git.mstormo@gmail.com>
-	 <cover.1250860247.git.mstormo@gmail.com>
-	 <54673ddb6bef681194e141e5e05e930cdfaa07bc.1250860247.git.mstormo@gmail.com>
-	 <e82f1930173966ebb6b2d2815e037a26e079f969.1250860247.git.mstormo@gmail.com>
-	 <a4c8a6d00908230926of0ea10bhd8f66e7d37c3b39b@mail.gmail.com>
-	 <3f4fd2640908231122m34604196pc98c5871cf5925b5@mail.gmail.com>
-	 <4A91917F.9000709@gmail.com>
-	 <a4c8a6d00908231229v56eceeddue1b927a4e4e49ee3@mail.gmail.com>
-	 <1976ea660908250732q1e1fc153g663f3a9c13f1c902@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH/RFC] make the new block-sha1 the default
+Date: Tue, 25 Aug 2009 13:33:22 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908251323280.6044@xanadu.home>
+References: <alpine.LFD.2.00.0908242249420.6044@xanadu.home>
+ <20090825041859.GA10033@coredump.intra.peff.net>
+ <7vprakpett.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <marius@storm-olsen.com>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	git@vger.kernel.org
-To: Frank Li <lznuaa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 19:24:23 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 19:33:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mfzkh-0003Ug-Rt
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 19:24:12 +0200
+	id 1Mfztp-00076Q-KI
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 19:33:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755383AbZHYRYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 13:24:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbZHYRYA
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 13:24:00 -0400
-Received: from an-out-0708.google.com ([209.85.132.241]:57493 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755339AbZHYRX7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 13:23:59 -0400
-Received: by an-out-0708.google.com with SMTP id d40so5208039and.1
-        for <git@vger.kernel.org>; Tue, 25 Aug 2009 10:24:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Sr2yQzQ/vJmaokruqJrwejg8oIEku5gzyiSYxE4tihM=;
-        b=xGlFgWLhMaFFZReCJA3wfvSfDl0QhV2S2uv/rByoqxr+h+N6NHGr//DR/M5C8mrRlE
-         yBbp54/7MnQgsMR7Q82r6ZhK4TkBqVbyQjKUJbsobnn2xa/tW0VF3jdPhYXQAcVZFqXY
-         d05hUi/TTxCPQnUpeMOqqhwr4CDAmLxKVp0h0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WigmIZA9neSamQMZxMjo7Rr05OVCKFayGMq2O4Lw1DsB6RNtKmDpb///8DtHkt0ggQ
-         qn4qJsqYX5B+3FQleknO+77wX2wbJAjPT9Juiro7UIQ2THCemsHgmgo2QT3b4bSaAmHU
-         LqslyUDAPRf6UHF4D/HmTXKQ0M0C5f4HG20yE=
-Received: by 10.101.45.2 with SMTP id x2mr6303849anj.172.1251221041155; Tue, 
-	25 Aug 2009 10:24:01 -0700 (PDT)
-In-Reply-To: <1976ea660908250732q1e1fc153g663f3a9c13f1c902@mail.gmail.com>
+	id S1755432AbZHYRd1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 13:33:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755210AbZHYRd1
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 13:33:27 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:54133 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754127AbZHYRd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 13:33:27 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KOY00ABD0RMM7O0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 25 Aug 2009 13:33:23 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vprakpett.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127031>
 
-Hi,
-On Tue, Aug 25, 2009 at 11:32 AM, Frank Li<lznuaa@gmail.com> wrote:
->> that it's generated by generate-cmdlist.sh, so the VS user will need
->> to generate this file first (before compiling)?
->
-> I update http://repo.or.cz/w/gitbuild.git.
-> Add create_command.bat to create common-cmds.h.
->
-This is great, thank you for adding this tool.
+On Mon, 24 Aug 2009, Junio C Hamano wrote:
 
-Today I ran 'git submodule update --init' and I recieved this error:
-No submodule mapping found in .gitmodules for path 'ext/zlib'
-The entry I have for zlib in .gitmodules is:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, Aug 24, 2009 at 11:04:37PM -0400, Nicolas Pitre wrote:
+> >
+> >> ... and remove support for linking against the openssl SHA1 code.
+> >> 
+> >> The block-sha1 implementation is not significantly worse and sometimes 
+> >> even faster than the openssl SHA1 implementation.  This allows for
+> >
+> > Is there a reason not to leave the option of linking against openssl?
+> 
+> I think it is a valid question.  Why remove the _option_?
 
-[submodule "ext\\zlib"]
-       path = ext\\zlib
-       url = git://repo.or.cz/zlib.git
+Indeed, there is no value in limiting the choice.
 
-Is this correct?  All the others entries are configured like this:
-[submodule ext/git]
-      path = ext/git
-      url = git://repo.or.cz/tgit.git
+> I would certainly understand it if you made BLK_SHA1 the _default_, though.
 
-Another question: Is not better to put the README inside gitbuild with
-the other files instead of compat/vcbuild/?
+Since this is a RFC, and because this is not a clear choice, I'll simply 
+let others play with it and see for themselves.  Suffice to compile git 
+with or without NO_OPENSSL defined.  Some people (such as Jeff) are 
+finding the openssl SHA1 faster (irrespective of the -O0 issue), whereas 
+Linus simply hammered on the block-sha1 version until it was faster than 
+openssl for him (this is faster for me as well, on X86 and ARM).  Also 
+those who initially found openssl to put a significant overhead on the 
+dynamic linking should probably perform more measurements with and 
+without NO_OPENSSL again.  If more positive results are presented then 
+changing the default might make sense.
+
+
+Nicolas
