@@ -1,80 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Mon, 24 Aug 2009 21:57:26 -0400
-Message-ID: <20090825015726.GB7655@coredump.intra.peff.net>
-References: <1251146568-25248-1-git-send-email-catap@catap.ru>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] fix simple deepening of a repo
+Date: Mon, 24 Aug 2009 19:12:24 -0700
+Message-ID: <20090825021223.GE1033@spearce.org>
+References: <alpine.LFD.2.00.0908220106470.6044@xanadu.home> <alpine.LFD.2.00.0908232320410.6044@xanadu.home> <7vocq5q0j7.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908240144530.28290@iabervon.org> <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0908242001250.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Kirill A. Korinskiy" <catap@catap.ru>
-X-From: git-owner@vger.kernel.org Tue Aug 25 03:58:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Aug 25 04:12:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MflJI-0002ME-SJ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 03:58:57 +0200
+	id 1MflWO-00056a-RE
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 04:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbZHYB50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Aug 2009 21:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754093AbZHYB50
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 21:57:26 -0400
-Received: from peff.net ([208.65.91.99]:59031 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754094AbZHYB5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Aug 2009 21:57:25 -0400
-Received: (qmail 12972 invoked by uid 107); 25 Aug 2009 01:57:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 24 Aug 2009 21:57:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Aug 2009 21:57:26 -0400
+	id S1754082AbZHYCMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Aug 2009 22:12:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbZHYCMW
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 22:12:22 -0400
+Received: from george.spearce.org ([209.20.77.23]:44450 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753875AbZHYCMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Aug 2009 22:12:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 15D76381FD; Tue, 25 Aug 2009 02:12:24 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1251146568-25248-1-git-send-email-catap@catap.ru>
+In-Reply-To: <alpine.LFD.2.00.0908242001250.6044@xanadu.home>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/126989>
 
-On Tue, Aug 25, 2009 at 12:42:48AM +0400, Kirill A. Korinskiy wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> Well... Johan Herland says he has to deal with repositories containing 
+> around 50000 refs.  So in that case it is certainly a good idea not to 
+> send the whole 50000 refs back if only one or two (or a hundred) need to 
+> be updated.  And quickfetch() won't help in that case since its purpose 
+> is only to determine if there is anything at all to update.
+...
+> 50000 refs * 45 bytes each = 2.25 MB.  That's all wasted bandwidth if 
+> only one ref needs updating.
 
-> Sometimes (especially on production systems) we need to use only one
-> remote branch for building software. It really annoying to clone
-> origin and then swith branch by hand everytime. So this patch provide
-> functionality to clone remote branch with one command without using
-> checkout after clone.
+Not just Johan Herland.  Gerrit Code Review creates a new ref
+for every patch proposed for review.  Imagine taking every email
+message on git ML that has "[PATCH]" in the subject, and creating
+a new ref for that in a git.git clone.
 
-If you are doing this a lot, it is probably a sign that you should
-repoint the "HEAD" of the parent repository.
+We aren't quite at the 50k ref stage yet, but we're starting to
+consider that some of our repositories have a ton of refs, and
+that the initial advertisement for either fetch or push is horrid.
 
-That being said, you may want one branch half the time, and another
-branch the other half. So I think this is a good feature.
+Since the refs are immutable I could actually teach the JGit
+daemon to hide them from JGit's receive-pack, thus cutting down the
+advertisement on push, but the refs exist so you can literally say:
 
-A few comments:
+  git fetch URL refs/changes/88/4488/2
+  git show FETCH_HEAD
 
-> ---
->  Documentation/git-clone.txt |    4 ++++
->  builtin-clone.c             |   26 +++++++++++++++++++++++---
->  2 files changed, 27 insertions(+), 3 deletions(-)
+to inspect the "v2" version of whatever 4488 is, and if 4488 was
+the last commit in a patch series, you'd also be able to do:
 
-Tests?
+  git log -p --reverse ..FETCH_HEAD
 
-> -	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
-> -	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
-> +	const struct ref *refs, *head_points_at, *remote_head = NULL, *mapped_refs;
-> +	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT, branch_head = STRBUF_INIT;
+to see the complete series.
 
-Style nit: I don't know if we have a style guideline for declaring
-variables, but I find these "many variables on a line" declarations
-annoying for reviewing, since it is hard to see what actually changed
-(and yes, you only added a declaration on one, so I am partially
-complaining about the person who came before you :) ).
+Given how infrequent it is to grab a given change is though, I'm
+starting to consider either a protocol extension that allows the
+client to probe for a ref which wasn't in the initial advertisement,
+or take it on a command line flag, e.g.:
 
-> +		if (option_branch)
-> +			die("--bare and --branch %s options are incompatible.",
-> +			    option_branch);
+  git fetch --uploadpack='git upload-pack --ref refs/changes/88/4488/2' URL refs/changes/88/4488/2
 
-Hmm. Would it perhaps make sense to have "--bare --branch foo" point the
-HEAD of the newly created bare repo, but not impact the (nonexistent)
-working tree?
+Personally I'd prefer extending the protocol, because making the
+end user supply information twice is stupid.
 
--Peff
+I don't know enough about Johan's case though to know whether or
+not he can get away with hiding the bulk of the refs in the initial
+advertisement.  In the case of Gerrit Code Review, the bulk of the
+refs is under refs/changes/, only a handful of things are under the
+refs/heads/ and ref/tags/ namespace, and most fetches actually are
+for only refs/heads/ and refs/tags/.  So hiding the refs/changes/
+namespace would make large improvement in the advertisement cost.
+
+-- 
+Shawn.
