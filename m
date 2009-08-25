@@ -1,60 +1,75 @@
-From: John Tapsell <johnflux@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: What IDEs are you using to develop git?
-Date: Tue, 25 Aug 2009 13:47:50 +0100
-Message-ID: <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com>
+Date: Tue, 25 Aug 2009 14:49:44 +0200
+Message-ID: <4A93DDE8.1030403@op5.se>
 References: <000001ca257d$b60326c0$22097440$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Frank_M=C3=BCnnich?= <git@frank-muennich.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 14:47:58 2009
+To: =?ISO-8859-15?Q?Frank_M=FCnnich?= <git@frank-muennich.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 14:49:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfvRO-0002du-2W
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:47:58 +0200
+	id 1MfvTJ-0003Fe-Fm
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 14:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750800AbZHYMrt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 08:47:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750772AbZHYMrt
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:47:49 -0400
-Received: from mail-gx0-f205.google.com ([209.85.217.205]:61939 "EHLO
-	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713AbZHYMrs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 08:47:48 -0400
-Received: by gxk1 with SMTP id 1so3924401gxk.17
-        for <git@vger.kernel.org>; Tue, 25 Aug 2009 05:47:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3CZb5zK3gLGpPwF3StKkYpbCqTZDYT5gWlrLUowVy4I=;
-        b=D+P2+1iSKfXEylttd5W9SaesJ2duV0kNErKsYJtNOAjfSGYj1HTIgc4gNu3fESaWGM
-         qQBCCY1Opz4h0wf3bBCYx9dtnjKFdiLdSD4p+JNUbPyNZPKgHa9dCyiCbxqN/j1GgJ/V
-         naggWyZS67CtSA1j7rMFlqUOdjac0qGXIYtbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aZyQoXQN5GJBwMyY9rXt+0XBhvs5l4oT5lRAQHk6uw230HUXVZCZCIWGMohR1R/9Vu
-         ImvbXwRc2nIi3qUF2gyN+gqlE5zI5QWrSmilKTSYEXu/N6ickwXHdJVnF+Ru4Q1hppm0
-         ChrPu8ttorA+ZhY5x/+gkaNsQ/9pdOSFuWlmw=
-Received: by 10.150.129.40 with SMTP id b40mr9178612ybd.311.1251204470332; 
-	Tue, 25 Aug 2009 05:47:50 -0700 (PDT)
+	id S1751037AbZHYMts convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Aug 2009 08:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbZHYMts
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 08:49:48 -0400
+Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:56707 "HELO
+	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750856AbZHYMtr (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Aug 2009 08:49:47 -0400
+Received: from source ([209.85.218.227]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSpPd60RnC826hKc5/1tjSYDqTiOOD0te@postini.com; Tue, 25 Aug 2009 05:49:49 PDT
+Received: by bwz27 with SMTP id 27so2327579bwz.34
+        for <git@vger.kernel.org>; Tue, 25 Aug 2009 05:49:47 -0700 (PDT)
+Received: by 10.204.16.86 with SMTP id n22mr2449688bka.100.1251204586739;
+        Tue, 25 Aug 2009 05:49:46 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id 28sm7459205fkx.24.2009.08.25.05.49.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 25 Aug 2009 05:49:46 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
 In-Reply-To: <000001ca257d$b60326c0$22097440$@com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127021>
 
-2009/8/25 Frank M=C3=BCnnich <git@frank-muennich.com>:
+=46rank M=FCnnich wrote:
+> Hi there,
+>=20
+> I am interested in helping out and improving git, though I haven't
+> programmed in C for quite a while now and thus have to relearn quite =
+some
+> things.=20
+> I understand the different branches (master, next, pu) and so on, and=
+ were
+> successful in compiling git with my Ubuntu 9.04. [yeea] ;)
+>=20
 > One thing I would like to ask you: what, if any, IDEs are you working=
  with?
 
-I think everyone just uses vim/emacs :-)
+No IDE. Just jed (a lightweight emacs-ish editor).
 
-John
+I've tried to learn Geany, but my fingers are too trained to the emacs
+shortcuts and I'm far too used to the behaviour of my current editor to
+be able to switch without a month or so of idling, and that's not reall=
+y
+an option at $dayjob.
+
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
