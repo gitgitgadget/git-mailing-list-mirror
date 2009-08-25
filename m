@@ -1,153 +1,113 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: gitosis-lite
-Date: Tue, 25 Aug 2009 11:23:30 +0530
-Message-ID: <2e24e5b90908242253v411ad5f3t8a2802079914d0bf@mail.gmail.com>
-References: <2e24e5b90908240528v56fdf30cq4c046fca321a3b17@mail.gmail.com>
-	 <m363cdm4pm.fsf@localhost.localdomain>
+From: Thell Fowler <git@tbfowler.name>
+Subject: Re: [PATCH-v2/RFC 3/6] xutils: fix ignore-all-space on incomplete
+ line
+Date: Tue, 25 Aug 2009 00:58:21 -0500 (CDT)
+Message-ID: <alpine.DEB.2.00.0908250018510.9656@GWPortableVCS>
+References: <1250999285-10683-1-git-send-email-git@tbfowler.name> <1250999357-10827-3-git-send-email-git@tbfowler.name> <7vvdkfx8rl.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908231110500.29625@GWPortableVCS> <7vljlauxmk.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0908231515020.29625@GWPortableVCS> <7vzl9qtev0.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908232044060.29625@GWPortableVCS> <7viqgdoikz.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908240910120.29625@GWPortableVCS>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 25 07:53:43 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 25 07:58:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MfoyU-0001qV-63
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 07:53:42 +0200
+	id 1Mfp3K-0002xl-H1
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Aug 2009 07:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754479AbZHYFxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 01:53:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753405AbZHYFx3
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 01:53:29 -0400
-Received: from mail-iw0-f204.google.com ([209.85.223.204]:35763 "EHLO
-	mail-iw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753143AbZHYFx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 01:53:29 -0400
-Received: by iwn42 with SMTP id 42so1198490iwn.33
-        for <git@vger.kernel.org>; Mon, 24 Aug 2009 22:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0s03T/LOia6SAf5VXajJRZGvweRMVDBN2rOcCFA+Yus=;
-        b=QtiJEjQdeGR01VF6+TdYo22bOUyUdivCxxUIlpZU3Db31Lp/3ffp08Sf/ELwpP9Sz1
-         XTPO8Sz3KwWIKbfqUXQTkDTLG1Wzys3MFNzgYOC8NtBPSyKU5WcBstnAmDx0cjwSRkSO
-         9AabLVcyr8tPedyI+JSojbbVvlt+FkQ+Z68c4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Iagd31O0uwGC5rg+57eBWwIvyfPfqrLsCliUpvUw3jKOm3y+33cQBqpGnCUYRNG05U
-         Ls2/qaK5P4nZrqblOqtkvS7cSz8HiF/7WoHSFCMm+vV7Hl9XHZGiiEWVu+2JH+KMCLqu
-         QhreNxf7amlGPsfAkEpcUuJ+DjEXUToK2XsCo=
-Received: by 10.231.11.130 with SMTP id t2mr2597864ibt.51.1251179610933; Mon, 
-	24 Aug 2009 22:53:30 -0700 (PDT)
-In-Reply-To: <m363cdm4pm.fsf@localhost.localdomain>
+	id S1754483AbZHYF6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Aug 2009 01:58:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753693AbZHYF6d
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 01:58:33 -0400
+Received: from 216.38.49.125.servint.net ([216.38.49.125]:47216 "EHLO
+	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1753263AbZHYF6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Aug 2009 01:58:32 -0400
+Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
+	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <git@tbfowler.name>)
+	id 1Mfp3B-00031T-Ka; Tue, 25 Aug 2009 00:58:33 -0500
+X-X-Sender: almostautomated@GWPortableVCS
+In-Reply-To: <alpine.DEB.2.00.0908240910120.29625@GWPortableVCS>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tbfowler.name
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127008>
 
-[took Tommi out of cc; he must be getting enough mail as is...]
+Thell Fowler (git@tbfowler.name) wrote on Aug 24, 2009:
 
-On Tue, Aug 25, 2009 at 12:14 AM, Jakub Narebski<jnareb@gmail.com> wrote:
+> Junio C Hamano (gitster@pobox.com) wrote on Aug 24, 2009:
+> 
+> > Thell Fowler <git@tbfowler.name> writes:
+> > 
+> > > It passed every test I threw at it, although it seemed to be a tad bit 
+> > > slower than the previous revision on my sample data so I ran the following 
+> > > command several times for both the previous and current version:
+> > >
+> > 
+> > Do you mean by "previous version" the one that was broken, or the one I
+> > sent as a "how about" patch?
+> > 
+> 
+> A quick test shows the version merged to pu is the one that had the 
+> fastest times.  I'll be away from a connection most of today, but will 
+> test the different versions against the tests and some sample data and 
+> post back.
+> 
 
-> A few comments about the code, taking gl-auth-command as example.
+More extensive testing also shows the version currently in pu is the 
+fastest on my sample data when applied to master.  I'm not sure why pu 
+shows slower times than those same commits applied to master, but they 
+are close enough together that I'm guessing no-one would really be 
+concerned.
 
-> Wouldn't it be better to use "use warnings" instead of 'perl -w'?
+I was sitting in a waiting room and decided to have a little fun figuring 
+out how to average the sys times...
 
-I'm not sure what is the minimum perl required for git
-itself.  Has it needed perl > 5.6.0 for more than a year at
-least?  The only real difference between these two is scope,
-which is a non-issue here, so I played safe.
+for arg in "" -w -b --ignore-space-at-eol;do sum=0 && for i in {1..50}; \
+do n="$(/usr/bin/time -f "%S" -o /dev/stdout sh -c 'git diff $arg dirty_first>/dev/null;')"; \
+sum=$sum+$n; done; echo "scale=2; ($sum)/$i"|echo "$(bc) avg for diff $arg"; done;
 
-> It would be, I think, better if you have used POD for such
-> documentation.  One would be able to generate manpage using pod2man,
-> and it is no less readable in source code.  See e.g. perl/Git.pm or
-> contrib/hooks/update-paranoid.
+pu
+.28 avg for diff 
+.29 avg for diff -w
+.33 avg for diff -b
+.29 avg for diff --ignore-space-at-eol
 
-Hmm... I've been spoiled by Markdown's sane bullet list
-handling.  Visually, POD forces everything other than code
-to be flush left -- any sort of list is definitely less
-readable in source code as a result.  IMHO of course.
+pu commits applied to master     <===  FASTEST
+9c0d402 xutils: Fix xdl_recmatch() on incomplete lines
+21245fd xutils: Fix hashing an incomplete line with whitespaces at the end
+.26 avg for diff 
+.25 avg for diff -w
+.29 avg for diff -b
+.31 avg for diff --ignore-space-at-eol 
 
->> our $GL_ADMINDIR;
->> our $GL_CONF;
->> our $GL_KEYDIR;
->> our $GL_CONF_COMPILED;
->> our $REPO_BASE;
->> our %repos;
->
-> Why is the reason behind using 'our' instead of 'my' here?
+'how about' patch applied to master
+.26 avg for diff 
+.32 avg for diff -w
+.29 avg for diff -b
+.32 avg for diff --ignore-space-at-eol
 
-They are assigned values in some file being "do"-ed, so they
-can't be lexical scoped.  However, I found a few others that
-were holdovers from an earlier version.  Fixed; thanks for
-catching that.
+current master (in order to see the difference in the basic git diff 
+-ignoring the fact that incomplete lines where broke since it only affects 
+2 files in the test data)
+.30 avg for diff 
+.30 avg for diff -w
+.29 avg for diff -b
+.29 avg for diff --ignore-space-at-eol
 
->> # first, fix the biggest gripe I have with gitosis, a 1-line change
->> my $user=$ENV{GL_USER}=shift;       # there; now that's available everywhere!
->
-> Eh?  This is standalone script, isn't it?  Shouldn't it be
->
->   my $user = $ENV{GL_USER} = $ARGV[0];       # there; now that's available everywhere!
-
-Hmm... I didn't know there was a difference, other than
-depleting @ARGV, if you're outside a subroutine.  I'll take
-a relook at it.
-
->> my $perm = 'W'; $perm = 'R' if $verb =~ $R_COMMANDS;
->
-> Either split it into two lines, or use ?: confitional operator:
->
->   my $perm = ($verb =~ $R_COMMANDS ? 'R' : 'W');
-
-much nicer... Fixed, thanks.
-
->> open(LOG, ">>", "$GL_ADMINDIR/log");
->> print LOG "\n", scalar(localtime), " $ENV{SSH_ORIGINAL_COMMAND} $user\n";
->> close(LOG);
->
-> It is better practice to use lexical variables instead of barewords
-> for filehandles:
-
-Good catch; thanks!  I guess I'm showing my age :)  Fixed
-all of them!
-
-> Don't forget to check for error.
-
-Hmm.. well I'm still debating if a log file write error
-should block git access / push, but there were two more
-important closes (again in gl-compile-conf) that were
-unguarded.  Fixed, thanks.
-
->> $repo = "'$REPO_BASE/$repo.git'";
->> exec("git", "shell", "-c", "$verb $repo");
->
-> That's not enough.  You have to shell-quote $repo, like in gitweb or
-> using String::ShellQuote module, or somehow use list form to pass
-> arguments to git-shell.  You protect here againts spaces in filename,
-> but not againts "'" (single quote) and for show shells "!"
-> (exclamation mark).
-
-It'll never get here.  It'll die much earlier if the
-reponame does not match a much stricter pattern.  Maybe too
-strict, actually: ^[0-9a-zA-Z][0-9a-zA-Z._/-]*$
-
-However, I then realised I should tighten up the R_COMMANDS
-and W_COMMANDS patterns a wee bit; as it stands, if someone
-could create a file called, say "git-upload-pack.pwned", and
-put it in the PATH, he could get the "git" user to execute
-it!  Sure if he managed to put something in the PATH that's
-already game over in some sense but we have to stop what we
-can :-)  Thanks for catching this.
-
-And once again, I really appreciate the extra eyeballs on
-the code!
-
--- 
-Sitaram
+-- Thell
