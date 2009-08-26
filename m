@@ -1,66 +1,95 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: Re: Newbie / git / gitosis question
-Date: Wed, 26 Aug 2009 19:38:35 +1000
-Message-ID: <d2e97e800908260238p28bd6d27o6377f395df32b03c@mail.gmail.com>
-References: <26ae428a0908260227k7ac6aeden9a4eae7ee95d4d45@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] upload-pack: add a trigger for post-upload-pack hook
+Date: Wed, 26 Aug 2009 12:06:59 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908261200160.4713@intel-tinevez-2-302>
+References: <1250579093-40706-1-git-send-email-tom@mojombo.com> <12c267e40908251043g4f3e36aya05d9c705f5afee2@mail.gmail.com> <20090825184525.GC23731@coredump.intra.peff.net> <7vprajmp16.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0908261043140.4713@intel-tinevez-2-302>
+ <7vr5uzeyl7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Wed Aug 26 11:47:16 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Tom Werner <mojombo@gmail.com>,
+	Tom Preston-Werner <tom@mojombo.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 12:07:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgF62-0001Tr-4E
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 11:47:14 +0200
+	id 1MgFPN-000758-0a
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 12:07:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756598AbZHZJqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 05:46:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756551AbZHZJqg
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 05:46:36 -0400
-Received: from an-out-0708.google.com ([209.85.132.240]:56100 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756518AbZHZJqf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 05:46:35 -0400
-Received: by an-out-0708.google.com with SMTP id d40so6182197and.1
-        for <git@vger.kernel.org>; Wed, 26 Aug 2009 02:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sdzC7cAf/ESYSne2dFYFBnk2W397zqkWNNQ8S5CaXU0=;
-        b=uM18dt7/hvIuqb0Fgo0rM441dpUlInhivDOcCEgAoqxzflaZTOSKS0wPgcTVDuQt/L
-         v7hckrf0vniaR/gpAeSEZDYMXgMTg0eUN/vQQa6R20HEiVID7jIDxDEHOYvAjr02tK9w
-         dVT145FJy+t/rHW/Fruk9jmg+M5CVWFYAeT4A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=V7ZhLES1pxh2NZJ3HCvKgU/gbA+KJhwusl2LlYkBbZsYSJzeI8JGqH5J6VGaOvXhq4
-         XtZKgmu+a1AM0XEDJ22KnANwGjWXS63d/nmSVWH8iRQXTRheFLEjZ1TEZDovPUptRyqM
-         UkS9kuPeGjl9vwsp2jxNEW+7gBimr5LcoUbWM=
-Received: by 10.101.98.9 with SMTP id a9mr7381944anm.160.1251279535150; Wed, 
-	26 Aug 2009 02:38:55 -0700 (PDT)
-In-Reply-To: <26ae428a0908260227k7ac6aeden9a4eae7ee95d4d45@mail.gmail.com>
+	id S1756615AbZHZKHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 06:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755792AbZHZKHA
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 06:07:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39411 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754895AbZHZKHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 06:07:00 -0400
+Received: (qmail invoked by alias); 26 Aug 2009 10:07:00 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp045) with SMTP; 26 Aug 2009 12:07:00 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lX/4N86RlWywSp4iUPyIvhbgW8Gr3k8KS/X1GDH
+	N/8L1/EskvmPpi
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7vr5uzeyl7.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.63
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127084>
 
-2009/8/26 Howard Miller <howard@e-learndesign.co.uk>:
-> I've been working away at Gitosis and it's mostly fair enough but
-> there's one bit that's unclear to me...
->
-> git push origin master:refs/heads/master
->
-> Would somebody kindly explain (or point to docs) what
-> refs/heads/master means? How is this different from just 'git push
-> origin master' or even 'git push origin master:master'?
->
-> Any insights much appreciated.
+Hi,
 
-You might find some insight here - http://progit.org/book/ch9-5.html
+On Wed, 26 Aug 2009, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Tue, 25 Aug 2009, Junio C Hamano wrote:
+> >
+> >> and if one of the primary reason for this new hook is statistics, it 
+> >> would be useful to see the number of bytes given, where the 
+> >> fetch-pack came from, and if we are using git-daemon virtual hosting 
+> >> which of our domain served the request.
+> >
+> > Certainly those are possible add-on patches, but would you require 
+> > them to be in the same commit?
+> 
+> I was merely responding to the "what else would be useful" question posed
+> by Peff.
+
+Sure.
+
+> Did you get an impression that I was saying "you must add these 
+> otherwise I'll reject the patch"?
+
+Well, I got the impression that you'd not accept the patch without 
+additional information given by the hook, and I got the impression that 
+Tom would decide as a consequence to rather live with his eternal fork 
+instead of working on getting this patch included.
+
+> It might make sense to define the external interface to be "information 
+> is given through the standard input of the hook, formatted in YAML, and 
+> here are the initial set of items that may be fed", so that we do not 
+> have to worry about the details too much.
+
+Hmm.  You bring up YAML a few times recently, it seems, but I think this 
+is not what you are meaning.  In this case, you'd need to have a simple 
+enquiry system that asks for some information and receives it as a 
+response.
+
+But I would find it utterly overengineered if upload-pack would support 
+something as complicated as that.  IMHO either upload-pack knows already 
+about the information, or the script has to try to discover it using Git 
+commands itself.
+
+My conclusion: I _think_ it would make sense to pass the name of the pack 
+file(s) created by upload-pack to the hook, or something similar, but 
+nothing more.  Well, _maybe_ the byte count of the protocol exchange and 
+the IP.  But nothing that requires calculations.
+
+Ciao,
+Dscho
