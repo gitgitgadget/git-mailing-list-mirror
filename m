@@ -1,181 +1,88 @@
-From: Johan Herland <johan@herland.net>
-Subject: [RFC] Use a 16-tree instead of a 256-tree for storing notes
-Date: Wed, 26 Aug 2009 12:31:01 +0200
-Message-ID: <200908261231.01616.johan@herland.net>
-References: <1248834326-31488-1-git-send-email-johan@herland.net>
- <200907300218.40203.johan@herland.net> <200908010436.57480.johan@herland.net>
+From: =?ISO-8859-1?Q?P=E1draig_Brady?= <P@draigBrady.com>
+Subject: Re: Linus' sha1 is much faster!
+Date: Wed, 26 Aug 2009 12:39:39 +0100
+Message-ID: <4A951EFB.1010400@draigBrady.com>
+References: <4A85F270.20703@draigBrady.com> <3e8340490908151302y33a97d50t38ad0a8a788f1cee@mail.gmail.com> <43d8ce650908151312o6a43416el27965c4b0ab8d83d@mail.gmail.com> <alpine.LFD.2.01.0908151315400.3162@localhost.localdomain> <alpine.LFD.2.01.0908151336530.3162@localhost.localdomain> <alpine.LFD.2.00.0908162151180.6044@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org, spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Aug 26 12:34:22 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	John Tapsell <johnflux@gmail.com>,
+	Bryan Donlan <bdonlan@gmail.com>, Bug-coreutils@gnu.org,
+	Git Mailing List <git@vger.kernel.org>,
+	Brandon Casey <drafnel@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Paul Kocher <paul@paulkocher.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Aug 26 13:40:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgFpb-00082v-67
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 12:34:19 +0200
+	id 1MgGrU-0002i7-4Z
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 13:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757221AbZHZKbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 06:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757200AbZHZKbH
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 06:31:07 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:41548 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757253AbZHZKbE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 06:31:04 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOZ004AIBVRXYB0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 12:31:03 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOZ004LWBVPH900@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 12:31:03 +0200 (MEST)
-X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
- Antispam-Data: 2009.8.26.101815
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <200908010436.57480.johan@herland.net>
+	id S1756352AbZHZLkH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2009 07:40:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754273AbZHZLkG
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 07:40:06 -0400
+Received: from mail121.emailantidote.com ([80.169.59.121]:60677 "EHLO
+	SC-MTA-02.mxsweep.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754066AbZHZLkF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 07:40:05 -0400
+Received: from tombstone.lincor.com ([84.203.137.218]) by SC-MTA-02.mxsweep.com with Microsoft SMTPSVC(7.0.6001.18000);
+	 Wed, 26 Aug 2009 12:40:03 +0100
+Received: from [192.168.2.25] (crom.labs.lincor.com [192.168.2.25])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by tombstone.lincor.com (Postfix) with ESMTP id 0BEF9600C208;
+	Wed, 26 Aug 2009 12:40:01 +0100 (IST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071008)
+In-Reply-To: <alpine.LFD.2.00.0908162151180.6044@xanadu.home>
+X-Enigmail-Version: 0.95.0
+X-OriginalArrivalTime: 26 Aug 2009 11:40:03.0836 (UTC) FILETIME=[F3CABBC0:01CA2641]
+x-MXSweep-CtasdSpam: Unknown
+x-MXSweep-CtasdVirus: Unknown
+x-Ctasd-RefID: str=0001.0A090202.4A951F15.0005,ss=1,fgs=0
+x-MXSweep-KeywordsCount: 0
+x-MXSweep-MetaScanResult: Clean
+x-MXSweep-MetaScanThreat: 
+x-MXSweep-VirusScanned: 26/08/2009 11:40:05
+x-MXPurifier-SpamScore: 0
+x-MXPurifier-VirusScore: 0
+x-MXSweep-Threat: Clean
+X-MXUniqueID: 552e4ab1-f751-41ee-b77e-0d95363584aa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127087>
 
-The 256-tree structure is considerably faster than storing all entries in a
-hash_map. Also, the memory consumption of the 256-tree structure is lower
-than the hash_map, provided that you're only loading a few notes from a
-"properly fanned-out" notes tree (i.e. 100000 notes in a 2/2/36 structure).
-However, in the worst case (loading all 100000 notes), the memory usage of
-the 256-tree structure (62.64 MB) is significantly worse than the hash_map
-approach (10.25 MB).
+Nicolas Pitre wrote:
+> On Sat, 15 Aug 2009, Linus Torvalds wrote:
+>=20
+>> (Heh. Looking at that, I probably should move the 'size' field first=
+,=20
+>> since that would have different alignment rules, and the struct woul=
+d be=20
+>> more tightly packed that way, and initialize better).
+>=20
+> I was about to suggest (i.e. post) a patch for that.  This is indeed =
+a=20
+> good idea.
+>=20
+>> Afaik, none of the actual code remains (the mozilla SHA1 thing did t=
+he=20
+>> wrong thing for performance even for just the final bytes, and did t=
+hose a=20
+>> byte at a time etc, so I rewrote even the trivial SHA1_Final parts).
+>=20
+> Maybe a patch adding a proper header with the actual license would be=
+ a=20
+> good idea too.
 
-This patch modifies the 256-tree structure into a 16-tree structure. This
-significantly improves the memory situation. The result uses less memory
-than both the 256-tree structure, and the hash_map approach, with a worst
-case usage of 8.54 MB. Additionally, it seems to slightly improve the
-runtime performance as well (probably because of the improved memory usage).
+So have you decided on a final licence,
+and if so update the headers accordingly?
 
-In conclusion, this is faster and smaller than all the previous drafts.
-
-$ ./test_performance.sh
-Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 0...
-15.05user 1.44system 0:16.59elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+782490minor)pagefaults 0swaps
-
-Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 1...
-0.68user 0.17system 0:00.87elapsed 98%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+99585minor)pagefaults 0swaps
-
-Timing 100 reps of 'git log -n 10 refs/heads/master >/dev/null' at fanout level 2...
-0.41user 0.17system 0:00.61elapsed 97%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+94084minor)pagefaults 0swaps
-
-Signed-off-by: Johan Herland <johan@herland.net>
----
-
-Hi,
-
-This patch goes on top of the 256-tree RFC I sent earlier.
-
-If nobody suggests further improvements, this patch will be
-included in the next iteration of the jh/notes topic.
-
-
-Have fun! :)
-
-...Johan
-
-
- notes.c |   26 ++++++++++++++------------
- 1 files changed, 14 insertions(+), 12 deletions(-)
-
-diff --git a/notes.c b/notes.c
-index 9282b16..32b1e01 100644
---- a/notes.c
-+++ b/notes.c
-@@ -7,9 +7,9 @@
- #include "tree-walk.h"
- 
- /*
-- * Use a non-balancing simple 256-tree structure with struct int_node as
-+ * Use a non-balancing simple 16-tree structure with struct int_node as
-  * internal nodes, and struct leaf_node as leaf nodes. Each int_node has a
-- * 256-array of pointers to its children
-+ * 16-array of pointers to its children
-  * The bottom 2 bits of each pointer is used to identify the pointer type
-  * - ptr & 3 == 0 - NULL pointer, assert(ptr == NULL)
-  * - ptr & 3 == 1 - pointer to next internal node - cast to struct int_node *
-@@ -21,18 +21,18 @@
-  *
-  * To add a leaf_node:
-  * 1. Start at the root node, with n = 0
-- * 2. Use the nth byte of the key as an index into a:
-- *    - If NULL, store the tweaked pointer directly into a[n]
-- *    - If an int_node, recurse into that node and increment n
-- *    - If a leaf_node:
-+ * 2. Use the nth nibble of the key as an index into a:
-+ *    - If a[n] is NULL, store the tweaked pointer directly into a[n]
-+ *    - If a[n] is an int_node, recurse into that node and increment n
-+ *    - If a[n] is a leaf_node:
-  *      1. Check if they're equal, and handle that (abort? overwrite?)
-  *      2. Create a new int_node, and store both leaf_nodes there
-  *      3. Store the new int_node into a[n].
-  *
-  * To find a leaf_node:
-  * 1. Start at the root node, with n = 0
-- * 2. Use the nth byte of the key as an index into a:
-- *    - If an int_node, recurse into that node and increment n
-+ * 2. Use the nth nibble of the key as an index into a:
-+ *    - If a[n] is an int_node, recurse into that node and increment n
-  *    - If a leaf_node with matching key, return leaf_node (assert note entry)
-  *    - If a matching subtree entry, unpack that subtree entry (and remove it);
-  *      restart search at the current level.
-@@ -42,7 +42,7 @@
-  *        subtree entry (and remove it); restart search at the current level.
-  */
- struct int_node {
--	void *a[256];
-+	void *a[16];
- };
- 
- /*
-@@ -79,11 +79,13 @@ static int initialized;
- static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 		unsigned int n);
- 
-+#define GET_NIBBLE(n, sha1) (((sha1[n >> 1]) >> ((n & 0x01) << 2)) & 0x0f)
-+
- static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
- 		const unsigned char *key_sha1)
- {
- 	struct leaf_node *l;
--	unsigned char i = key_sha1[n];
-+	unsigned char i = GET_NIBBLE(n, key_sha1);
- 	void *p = tree->a[i];
- 
- 	switch(GET_PTR_TYPE(p)) {
-@@ -138,7 +140,7 @@ static int note_tree_insert(struct int_node *tree, unsigned char n,
- 	struct int_node *new_node;
- 	const struct leaf_node *l;
- 	int ret;
--	unsigned char i = entry->key_sha1[n];
-+	unsigned char i = GET_NIBBLE(n, entry->key_sha1);
- 	void *p = tree->a[i];
- 	assert(GET_PTR_TYPE(entry) == PTR_TYPE_NULL);
- 	switch(GET_PTR_TYPE(p)) {
-@@ -211,7 +213,7 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 		     sha1_to_hex(subtree->val_sha1));
- 
- 	prefix_len = subtree->key_sha1[19];
--	assert(prefix_len >= n);
-+	assert(prefix_len * 2 >= n);
- 	memcpy(commit_sha1, subtree->key_sha1, prefix_len);
- 	while (tree_entry(&desc, &entry)) {
- 		int len = get_sha1_hex_segment(entry.path, strlen(entry.path),
--- 
-1.6.4.304.g1365c.dirty
+cheers!
+P=E1draig.
