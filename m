@@ -1,86 +1,66 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] Re: Teach mailinfo to ignore everything before -- >8 --
-	mark
-Date: Wed, 26 Aug 2009 07:02:24 +0200
-Message-ID: <20090826050224.GK3526@vidovic>
-References: <7v3a7g501e.fsf@alter.siamese.dyndns.org> <fc2ecb5cf28cabb7d183e2835ce46aa9afb2a322.1251215299.git.nicolas.s.dev@gmx.fr> <7vvdkbl4ul.fsf@alter.siamese.dyndns.org> <7veiqzjmy7.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] fix simple deepening of a repo
+Date: Wed, 26 Aug 2009 09:08:52 +0200
+Message-ID: <4A94DF84.4050906@viscovery.net>
+References: <alpine.LFD.2.00.0908232320410.6044@xanadu.home> <7vocq5q0j7.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0908240144530.28290@iabervon.org> <alpine.LNX.2.00.0908242212260.26869@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0908242001250.6044@xanadu.home> <20090825021223.GE1033@spearce.org> <7vab1osc2m.fsf@alter.siamese.dyndns.org> <20090825061248.GG1033@spearce.org> <7vy6p8pfm1.fsf@alter.siamese.dyndns.org> <20090825151424.GJ1033@spearce.org> <20090826021057.GL1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 07:04:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 26 09:09:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgAgT-0005Hd-Sk
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 07:04:34 +0200
+	id 1MgCd0-0005R9-Uv
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 09:09:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756623AbZHZFCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 01:02:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755542AbZHZFCa
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 01:02:30 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:46972 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754074AbZHZFC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 01:02:27 -0400
-Received: by ewy2 with SMTP id 2so1072475ewy.17
-        for <git@vger.kernel.org>; Tue, 25 Aug 2009 22:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=GK4kxydx3fXx7hsGByR64uy38LgRXMhvJ9aVujYD/0g=;
-        b=uHxzm8JiN5ZQM4EJkl3l7N/X55EZHdQHPLwJNtpjx8aB123FlYDaDKDLU9zEXyYfyN
-         kCIVi8VNhyRsTcgQrpcaMa/Y3YiHpz5XhXWogKVKsmBSwFQC2WjulswubeXIP9/wVc/R
-         lBJqDM2VA8CUJYJ03mSkzzRAX8Bkg7oSj45NI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=U2e7FhalUWf6Nop6l2+/IG/0vlu9FPY404BX7XxxaXAnqDnIojFl1gwZ30TYQ2X8fI
-         JTu7qpm9zqMlaTvcjZWpkzx3NWLr/i5WfTlLf0jHw489dio2EMfuxngBhFySatReOzOv
-         Ehm5tc4ORV2P0CNh8l9EPhFRYjR28aAL4NOlQ=
-Received: by 10.210.92.8 with SMTP id p8mr5180492ebb.97.1251262948647;
-        Tue, 25 Aug 2009 22:02:28 -0700 (PDT)
-Received: from @ (91-164-128-218.rev.libertysurf.net [91.164.128.218])
-        by mx.google.com with ESMTPS id 7sm2791022eyg.40.2009.08.25.22.02.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 25 Aug 2009 22:02:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7veiqzjmy7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S932359AbZHZHI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 03:08:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932356AbZHZHI5
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 03:08:57 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:2914 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932315AbZHZHI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 03:08:56 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MgCcm-0008Df-UW; Wed, 26 Aug 2009 09:08:53 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.96])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 7D8CB735; Wed, 26 Aug 2009 09:08:52 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <20090826021057.GL1033@spearce.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127067>
 
-The 25/08/09, Junio C Hamano wrote:
+Shawn O. Pearce schrieb:
+>  static void upload_pack(void)
+>  {
+>  	reset_timeout();
+> -	head_ref(send_ref, NULL);
+> -	for_each_ref(send_ref, NULL);
+> -	packet_flush(1);
+> +	head_ref(scan_ref, NULL);
+> +	for_each_ref(scan_ref, NULL);
+> +
+> +	push_advertise("HEAD");
+> +	push_advertise("refs/heads/*");
+> +	push_advertise("refs/tags/*");
+> +	send_refs();
+> +
 
-> I therefore conclude that using the "remove above scissors" should be a
-> conscious decision, and should not be enabled by default.  --obey-scissors
-> would be a good option for this reason.
+How will this mesh with 'git clone --mirror'? Is the client expected to
+ask with 'expand refs/*'?
 
-I'm not sure what between --obey or --ignore will help most to write
-good commit message.  I (as a maintainer myself or as a contributor)
-usually prefer to --amend a commit rather than play with copy/paste or
-starting from scratch. So, I tend to agree even if the reasons are not
-exactly the same. :-)
-
-That said, I don't bother what is the default that much. The main
-purpose is to have the choice.
-
-For people who _really_ want to obey to scissors by default I'll add an
-option to git-config. Whithout more comments, I'll add
-
-  scissors.obey
-
-.
-
--- 
-Nicolas Sebrecht
+-- Hannes
