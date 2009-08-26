@@ -1,430 +1,60 @@
 From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH v3.1] Add script for importing bits-and-pieces to Git.
-Date: Mon, 24 Aug 2009 18:09:10 +0100
-Message-ID: <20090826090928.B82D9189B12@perkele>
+Subject: Re: [PATCH] import-tars: Allow per-tar author and commit message.
+Date: Wed, 26 Aug 2009 10:17:14 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0908261016050.30577@ds9.cixit.se>
+References: <20090823203640.B195D189B12@perkele> <4A91B8BB.1030906@vilain.net> <alpine.DEB.2.00.0908241659380.16576@perkele.intern.softwolves.pp.se> <7vab1pf3fj.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908251950010.19406@ds9.cixit.se>
+ <7v8wh7pumr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 26 11:09:41 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 11:22:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgEVg-00050l-EH
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 11:09:41 +0200
+	id 1MgEi7-0000Gn-6B
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 11:22:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755109AbZHZJJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 05:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755073AbZHZJJa
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 05:09:30 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:57051 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752417AbZHZJJ3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 05:09:29 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOZ00D0J83VXS30@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 11:09:31 +0200 (MEST)
-Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KOZ00MHQ83SWH00@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 11:09:31 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.26.85716
-Received: by perkele (Postfix, from userid 501)	id B82D9189B12; Wed,
- 26 Aug 2009 11:09:28 +0200 (CEST)
+	id S1756347AbZHZJWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 05:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756325AbZHZJWV
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 05:22:21 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:53911 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756443AbZHZJWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 05:22:21 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7Q9HEJ9031759
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 26 Aug 2009 11:17:14 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7Q9HETZ031756;
+	Wed, 26 Aug 2009 11:17:14 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <7v8wh7pumr.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 26 Aug 2009 11:17:14 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127080>
 
-Allows the user to import version history that is stored in bits and
-pieces in the file system, for instance snapshots of old development
-trees, or day-by-day backups. A configuration file is used to
-describe the relationship between the different files and allow
-describing branches and merges, as well as authorship and commit
-messages.
+Junio C Hamano:
 
-Output is created in a format compatible with git-fast-import.
+> And the switch could be "--metainfo=<ext>", so that people can choose to 
+> use other extensions, e.g. with "--metainfo=info" file.tar.info would be 
+> read for descriptions.
 
-Full documentation is provided inline in perldoc format.
+That's a good idea. I just made a simple "-m" switch to enable the new code. 
+I'll change it into a "--metainfo" and post an updated patch later.
 
-Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
----
-This version contains updated documentation, trying to address the
-points raised by Junio. It also fixes a compile error that snuck in
-the v2 patch.
-
- contrib/fast-import/import-directories.perl |  359 +++++++++++++++++++++++++++
- 1 files changed, 359 insertions(+), 0 deletions(-)
- create mode 100755 contrib/fast-import/import-directories.perl
-
-diff --git a/contrib/fast-import/import-directories.perl b/contrib/fast-import/import-directories.perl
-new file mode 100755
-index 0000000..a5429d3
---- /dev/null
-+++ b/contrib/fast-import/import-directories.perl
-@@ -0,0 +1,359 @@
-+#!/usr/bin/perl -w
-+#
-+# Copyright 2008-2009 Peter Krefting <peter@softwolves.pp.se>
-+#
-+# ------------------------------------------------------------------------
-+#
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program; if not, write to the Free Software
-+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-+#
-+# ------------------------------------------------------------------------
-+
-+=pod
-+
-+=head1 NAME
-+
-+import-directories - Import bits and pieces to Git.
-+
-+=head1 SYNOPSIS
-+
-+B<import-directories.perl> F<configfile>
-+
-+=head1 DESCRIPTION
-+
-+Script to import arbitrary projects version controlled by the "copy the
-+source directory to a new location and edit it there"-version controlled
-+projects into version control. Handles projects with arbitrary branching
-+and version trees, taking a file describing the inputs and generating a
-+file compatible with the L<git-fast-import(1)> format.
-+
-+=head1 CONFIGURATION FILE
-+
-+=head2 Format
-+
-+The configuration file is based on the standard I<.ini> format.
-+
-+ ; Comments start with semi-colons
-+ [section]
-+ key=value
-+
-+Unlike the git-config format, no quoting characters are allowed, all
-+section and key names are case-sensitive and whitespace is preserved
-+as-is. For example:
-+
-+ key1 =value1
-+ key2= value2
-+
-+Here the first key is "key1 " (note the trailing white-space) and the
-+second value is " value2" (note the leading white-space). Keys cannot
-+contain equal signs ("=").
-+
-+=head2 Global configuration
-+
-+Global configuration is done in the B<[config]> section, which should be
-+the first section in the file. Configuration can be changed by
-+repeating configuration sections later on.
-+
-+ [config]
-+ ; configure conversion of CRLFs. "convert" means that all CRLFs
-+ ; should be converted into LFs (suitable for the core.autocrlf
-+ ; setting set to true in Git). "none" means that all data is
-+ ; treated as binary.
-+ crlf=convert
-+
-+=head2 Revision configuration
-+
-+Each revision that is to be imported is described in three
-+sections. Revisions should be defined in topological order, so
-+that a revision's parent has always been defined when a new revision
-+is introduced. All the sections for one revision must be defined
-+before defining the next revision.
-+
-+Each revision is assigned a unique numerical identifier. The
-+numbers do not need to be consecutive, nor monotonically
-+increasing.
-+
-+For instance, if your configuration file contains only the two
-+revisions 4711 and 42, where 4711 is the initial commit, the
-+only requirement is that 4711 is completely defined before 42.
-+
-+=pod
-+
-+=head3 Revision description section
-+
-+A section whose section name is just an integer gives meta-data
-+about the revision.
-+
-+ [3]
-+ ; author sets the author of the revisions
-+ author=Peter Krefting <peter@softwolves.pp.se>
-+ ; branch sets the branch that the revision should be committed to
-+ branch=master
-+ ; parent describes the revision that is the parent of this commit
-+ ; (optional)
-+ parent=1
-+ ; merges describes a revision that is merged into this commit
-+ ; (optional; can be repeated)
-+ merges=2
-+ ; selects one file to take the timestamp from
-+ ; (optional; if unspecified, the most recent file from the .files
-+ ;  section is used)
-+ timestamp=3/source.c
-+
-+=head3 Revision contents section
-+
-+A section whose section name is an integer followed by B<.files>
-+describe all the files included in this revision. If a file that
-+was available previously is not included in this revision, it will
-+be removed.
-+
-+If an on-disk revision is incomplete, you can point to files from
-+a previous revision. There are no restriction as to where the source
-+files are located, nor to the names of them.
-+
-+ [3.files]
-+ ; the key is the path inside the repository, the value is the path
-+ ; as seen from the importer script.
-+ source.c=ver-3.00/source.c
-+ source.h=ver-2.99/source.h
-+ readme.txt=ver-3.00/introduction to the project.txt
-+
-+=head3 Revision commit message section
-+
-+A section whose section name is an integer followed by B<.message>
-+gives the commit message. This section is read verbatim, up until
-+the beginning of the next section. As such, a commit message may not
-+contain a line that begins with an opening square bracket ("[") and
-+ends with a closing square bracket ("]"), unless they are surrounded
-+by whitespace or other characters.
-+
-+ [3.message]
-+ Implement foobar.
-+ ; trailing blank lines are ignored.
-+
-+=cut
-+
-+# Globals
-+use strict;
-+use integer;
-+my $crlfmode = 0;
-+my @revs;
-+my (%revmap, %message, %files, %author, %branch, %parent, %merges, %time, %timesource);
-+my $sectiontype = 0;
-+my $rev = 0;
-+my $mark = 1;
-+
-+# Check command line
-+if ($#ARGV == -1 || $ARGV[0] =~ /^--?h/)
-+{
-+    exec('perldoc', $0);
-+    exit 1;
-+}
-+
-+# Open configuration
-+my $config = $ARGV[0];
-+open CFG, '<', $config or die "Cannot open configuration file \"$config\": ";
-+
-+# Open output
-+my $output = $ARGV[1];
-+open OUT, '>', $output or die "Cannot create output file \"$output\": ";
-+binmode OUT;
-+
-+LINE: while (my $line = <CFG>)
-+{
-+	$line =~ s/\r?\n$//;
-+	next LINE if $sectiontype != 4 && $line eq '';
-+	next LINE if $line =~ /^;/;
-+	my $oldsectiontype = $sectiontype;
-+	my $oldrev = $rev;
-+
-+	# Sections
-+	if ($line =~ m"^\[(config|(\d+)(|\.files|\.message))\]$")
-+	{
-+		if ($1 eq 'config')
-+		{
-+			$sectiontype = 1;
-+		}
-+		elsif ($3 eq '')
-+		{
-+			$sectiontype = 2;
-+			$rev = $2;
-+			# Create a new revision
-+			die "Duplicate rev: $line\n " if defined $revmap{$rev};
-+			print "Reading revision $rev\n";
-+			push @revs, $rev;
-+			$revmap{$rev} = $mark ++;
-+			$time{$revmap{$rev}} = 0;
-+		}
-+		elsif ($3 eq '.files')
-+		{
-+			$sectiontype = 3;
-+			$rev = $2;
-+			die "Revision mismatch: $line\n " unless $rev == $oldrev;
-+		}
-+		elsif ($3 eq '.message')
-+		{
-+			$sectiontype = 4;
-+			$rev = $2;
-+			die "Revision mismatch: $line\n " unless $rev == $oldrev;
-+		}
-+		else
-+		{
-+			die "Internal parse error: $line\n ";
-+		}
-+		next LINE;
-+	}
-+
-+	# Parse data
-+	if ($sectiontype != 4)
-+	{
-+		# Key and value
-+		if ($line =~ m"^(.*)=(.*)$")
-+		{
-+			my ($key, $value) = ($1, $2);
-+			# Global configuration
-+			if (1 == $sectiontype)
-+			{
-+				if ($key eq 'crlf')
-+				{
-+					$crlfmode = 1, next LINE if $value eq 'convert';
-+					$crlfmode = 0, next LINE if $value eq 'none';
-+				}
-+				die "Unknown configuration option: $line\n ";
-+			}
-+			# Revision specification
-+			if (2 == $sectiontype)
-+			{
-+				my $current = $revmap{$rev};
-+				$author{$current} = $value, next LINE if $key eq 'author';
-+				$branch{$current} = $value, next LINE if $key eq 'branch';
-+				$parent{$current} = $value, next LINE if $key eq 'parent';
-+				$timesource{$current} = $value, next LINE if $key eq 'timestamp';
-+				push(@{$merges{$current}}, $value), next LINE if $key eq 'merges';
-+				die "Unknown revision option: $line\n ";
-+			}
-+			# Filespecs
-+			if (3 == $sectiontype)
-+			{
-+				# Add the file and create a marker
-+				die "File not found: $line\n " unless -f $value;
-+				my $current = $revmap{$rev};
-+				${$files{$current}}{$key} = $mark;
-+				my $time = &fileblob($value, $crlfmode, $mark ++);
-+
-+				# Update revision timestamp if more recent than other
-+				# files seen, or if this is the file we have selected
-+				# to take the time stamp from using the "timestamp"
-+				# directive.
-+				if ((defined $timesource{$current} && $timesource{$current} eq $value)
-+				    || $time > $time{$current})
-+				{
-+					$time{$current} = $time;
-+				}
-+			}
-+		}
-+		else
-+		{
-+			die "Parse error: $line\n ";
-+		}
-+	}
-+	else
-+	{
-+		# Commit message
-+		my $current = $revmap{$rev};
-+		if (defined $message{$current})
-+		{
-+			$message{$current} .= "\n";
-+		}
-+		$message{$current} .= $line;
-+	}
-+}
-+close CFG;
-+
-+# Start spewing out data for git-fast-import
-+foreach my $commit (@revs)
-+{
-+	# Progress
-+	print OUT "progress Creating revision $commit\n";
-+
-+	# Create commit header
-+	my $mark = $revmap{$commit};
-+
-+	# Branch and commit id
-+	print OUT "commit refs/heads/", $branch{$mark}, "\nmark :", $mark, "\n";
-+
-+	# Author and timestamp
-+	die "No timestamp defined for $commit (no files?)\n" unless defined $time{$mark};
-+	print OUT "committer ", $author{$mark}, " ", $time{$mark}, " +0100\n";
-+
-+	# Commit message
-+	die "No message defined for $commit\n" unless defined $message{$mark};
-+	my $message = $message{$mark};
-+	$message =~ s/\n$//; # Kill trailing empty line
-+	print OUT "data ", length($message), "\n", $message, "\n";
-+
-+	# Parent and any merges
-+	print OUT "from :", $revmap{$parent{$mark}}, "\n" if defined $parent{$mark};
-+	if (defined $merges{$mark})
-+	{
-+		foreach my $merge (@{$merges{$mark}})
-+		{
-+			print OUT "merge :", $revmap{$merge}, "\n";
-+		}
-+	}
-+
-+	# Output file marks
-+	print OUT "deleteall\n"; # start from scratch
-+	foreach my $file (sort keys %{$files{$mark}})
-+	{
-+		print OUT "M 644 :", ${$files{$mark}}{$file}, " $file\n";
-+	}
-+	print OUT "\n";
-+}
-+
-+# Create one file blob
-+sub fileblob
-+{
-+	my ($filename, $crlfmode, $mark) = @_;
-+
-+	# Import the file
-+	print OUT "progress Importing $filename\nblob\nmark :$mark\n";
-+	open FILE, '<', $filename or die "Cannot read $filename\n ";
-+	binmode FILE;
-+	my ($size, $mtime) = (stat(FILE))[7,9];
-+	my $file;
-+	read FILE, $file, $size;
-+	close FILE;
-+	$file =~ s/\r\n/\n/g if $crlfmode;
-+	print OUT "data ", length($file), "\n", $file, "\n";
-+
-+	return $mtime;
-+}
-+
-+__END__
-+
-+=pod
-+
-+=head1 EXAMPLES
-+
-+B<import-directories.perl> F<project.import>
-+
-+=head1 AUTHOR
-+
-+Copyright 2008-2009 Peter Krefting E<lt>peter@softwolves.pp.se>
-+
-+This program is free software; you can redistribute it and/or modify
-+it under the terms of the GNU General Public License as published by
-+the Free Software Foundation.
-+
-+=cut
 -- 
-1.6.3.3
+\\// Peter - http://www.softwolves.pp.se/
