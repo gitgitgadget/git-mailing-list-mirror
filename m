@@ -1,192 +1,105 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] Re: Teach mailinfo to ignore everything before -- >8 --
-	mark
-Date: Wed, 26 Aug 2009 05:54:01 +0200
-Message-ID: <20090826035401.GJ3526@vidovic>
-References: <7v3a7g501e.fsf@alter.siamese.dyndns.org> <fc2ecb5cf28cabb7d183e2835ce46aa9afb2a322.1251215299.git.nicolas.s.dev@gmx.fr> <7vvdkbl4ul.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Thell Fowler <git@tbfowler.name>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 05:54:19 2009
+From: Jeremy O'Brien <obrien654j@gmail.com>
+Subject: Re: What IDEs are you using to develop git?
+Date: Wed, 26 Aug 2009 00:24:50 -0400
+Message-ID: <A3A5440E-75F0-4812-A40D-708A0B54E00F@gmail.com>
+References: <000001ca257d$b60326c0$22097440$@com>
+Mime-Version: 1.0 (iPod Mail 7A341)
+Content-Type: text/plain; charset=utf-8;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "<git@vger.kernel.org>" <git@vger.kernel.org>
+To: =?utf-8?Q?Frank_M=C3=BCnnich?= <git@frank-muennich.com>
+X-From: git-owner@vger.kernel.org Wed Aug 26 06:26:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mg9aU-00012b-Hg
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 05:54:19 +0200
+	id 1MgA5U-0006Yp-8o
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 06:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756692AbZHZDyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Aug 2009 23:54:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756686AbZHZDyH
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Aug 2009 23:54:07 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:40158 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756678AbZHZDyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Aug 2009 23:54:05 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so901426eya.19
-        for <git@vger.kernel.org>; Tue, 25 Aug 2009 20:54:06 -0700 (PDT)
+	id S1751262AbZHZEZx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2009 00:25:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbZHZEZx
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 00:25:53 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:58049 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055AbZHZEZw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 00:25:52 -0400
+Received: by an-out-0708.google.com with SMTP id d40so5921139and.1
+        for <git@vger.kernel.org>; Tue, 25 Aug 2009 21:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=Rm/WnS5Gm7rfzIlCPgBsELfmYZ/4TUN6xZWmKZgF0/g=;
-        b=fpSqsI/SsoRZuNcrMh5bEO7gCAnRdZCmJn7qVYYqIHTcYqUbaEbOvJvfzrTk9qLwT9
-         xkCT4To9KzZXlW6Yafp7PDH8f7el0Bvcm8R/BB6xho/PR3G9bJslrwe7HAezzdXmTQbl
-         OQj24R5FYx+rXxdGIS6lvjurPCdWVR60vHW7Q=
+        h=domainkey-signature:received:received:references:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date:cc;
+        bh=A8tqoZSY0NSEhNv/hUab0S2ii3tiHUGObeIpWH9/+SA=;
+        b=wfHi9mCPlzZy+8XYp/l3NmYScc3Y9WlqCpQTeti5i0wIop2/7qgw9Q1GGFaZIcsObD
+         7WXtXlUyMIoOuMIesNlm9YevoJddd/JNUuCUOpBZ045ATXd162U5xKYxD473ptNSHT5g
+         mem/Y6/rMFEXqmLYYIaGP2YCjlGhl4QucMRB8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dWCKA9gTMYtRj43yhHGMj+JmPllmmn1bt8NwfOO0Pu3J/88QK4gW369UOz0r7SsEsF
-         i5cAtg/m4jmvFj2lnVYewGbq44JJq0ssElrIsCx+eO+T62DZxrK0Gtpp0RFirxCSP/m5
-         5tHPk56GKKvPdQ2vtkePDm/UZxaV1wSQ1kFrU=
-Received: by 10.210.57.1 with SMTP id f1mr7610223eba.66.1251258846358;
-        Tue, 25 Aug 2009 20:54:06 -0700 (PDT)
-Received: from @ (91-164-128-218.rev.libertysurf.net [91.164.128.218])
-        by mx.google.com with ESMTPS id 5sm1865121eyh.21.2009.08.25.20.54.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 25 Aug 2009 20:54:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vvdkbl4ul.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=references:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
+        b=RuweMf6Rhy+fqe8ERuzf07yos8omyp9ncy4rXWk89z2V2q2EsSy3SQBX2EZ1OPaA1l
+         CgwIpRLkcy31eib+yjC7wovN+aGA8IZIluOplSm/ttB9uhhypwTMiGcZDbb4OQoJyixy
+         Um4YhLK2fslFJk6Y2rOaNY2vAQenOKE/12ulI=
+Received: by 10.100.17.27 with SMTP id 27mr6917261anq.199.1251260753883;
+        Tue, 25 Aug 2009 21:25:53 -0700 (PDT)
+Received: from ?10.1.1.249? ([74.83.234.240])
+        by mx.google.com with ESMTPS id 20sm261683yxe.2.2009.08.25.21.25.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 25 Aug 2009 21:25:51 -0700 (PDT)
+In-Reply-To: <000001ca257d$b60326c0$22097440$@com>
+X-Mailer: iPod Mail (7A341)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127063>
 
-The 25/08/09, Junio C Hamano wrote:
+Vim (or gvim if I want better colors), and cscope. Cscope + vim is a =20
+killer combination that enables you to fly around projects of any size =
+=20
+very efficiently. I swear by it. I use it at my job to navigate a =20
+project consisting of over 14000 lines of code. It makes tracing =20
+execution and navigating a project child's play.
 
-> What I meant was that I would not want to spend any more of _my_ time on
-> the definition of the scissors for now.  That means spending or wasting
-> time on improving the 'pu' patch myself, or looking at others patch to
-> find flaws in them.
-> 
-> Of course, as the maintainer, I would need to look at proposals to improve
-> or fix bugs in the code before the series hits the master, but I would
-> give zero priority to the patches that change the definition at least for
-> now to give myself time to work on more useful things.
+Hope that helps,
+Jeremy
 
-Ok, thank you.
+On Aug 25, 2009, at 8:15, Frank M=C3=BCnnich <git@frank-muennich.com> w=
+rote:
 
-> I think --ignore-scissors is a good thing to add, regardless of what the
-> definition of scissors should be.  So your patch should definitely be
-> separated into two parts.
-
-Could find it at the end of the mails.
-
-> >  #include "builtin.h"
-> >  #include "utf8.h"
-> >  #include "strbuf.h"
-> > +#include "git-compat-util.h"
-> 
-> Inclusion of builtin.h is designed to be enough.  What do you need this
-> for?
-
-It is for the warning() call
-
-  warning("scissors line found, will skip text above");
-
-I've added. That said, moving this declaration to builtin.h could be a
-good idea. Hint?
-
-> > @@ -715,51 +717,63 @@ static inline int patchbreak(const struct strbuf *line)
-> >  		if (isspace(buf[i])) {
-> > +			if (scissors_dashes_seen)
-> > +				mark_end = i;
-> 
-> I think you do not want this part, and then you won't have to trim
-> trailing whitespaces from mark_end later.
-
-Good eyes.
-
-> > +			/*
-> > +			 * The mark is 8 charaters long and contains at least one dash and
-> > +			 * either a ">8" or "<8". Check if the last mark in the line
-> > +			 * matches the first mark found without worrying about what could
-> > +			 * be between them. Only one mark in the whole line is permitted.
-> > +			 */
-> 
-> This definition makes "-            8<" a scissors.  
-
-Yes. Instead of looking for dashes alone, I will give a try to something
-like
-
-	  if (!scissors_dashes_seen)
-	    mark_start = i;
-	  if (i + 1 < len) {
-	    if (!memcmp(buf + i, ">8", 2) || !memcmp(buf + i, "8<", 2))) {
-	      scissors_dashes_seen |= 02;
-	      i++;
-	      mark_end = i;
-	      continue;
-	    else if (!memcmp(buf + i "--", 2) {
-	      scissors_dashes_seen |= 04;
-	      i++;
-	      mark_end = i;
-	      continue;
-	    }
-	  }
-	  if (i + 2 < len)
-	    if (!memcmp(buf + i + 1, "- -", 3) {
-	      scissors_dashes_seen |= 04;
-	      i += 2;
-	      mark_end = i;
-	      continue;
-	    }
-	  if (buf[i] == '-') {
-	    mark_end = i;
-	    scissors_dashes_seen |= 01;
-	    continue;
-	  }
-	  break;
-	}
-	
-	if (scissors_dashes_seen == 07) {
-	  ...
-
-> it does not allow
-> 
->     "-- 8< -- please cut here -- 8< -- --"
-
-Actually, I believe this one should really not be a scissors line. If we
-accept some random dashes around markers it will break the definition of
-the mark itself.
-
-As I said, I'd rather rules easy to define over others because if the
-end-user scissors line doesn't work, he can refer to the documentation...
-
-> nor
-> 
->     "-- 8< -- -- please cut here -- -- 8< --"
-> 
-> nor
-> 
->     "-- 8< -- -- please cut here -- -- >8 --"
-
-...and symmetrical markers make sense to the user. Will add this.
-
-> > +	if (!ignore_scissors) {
-> > +		if (is_scissors_line(line)) {
-> > +			warning("scissors line found, will skip text above");
-> > ...
-> > +			return 0;
-> 
-> Don't re-indent like this.  Just do:
-> 
-> 	if (!ignore_scissors && is_scissors_line(line)) {
->         	...
-> 	}
-
-Does the compilers (or a standard) assure that the members are evaluated
-in the left-right order?
-
-Otherwise, we may call is_scissors_line() where not needed.
-
--- 
-Nicolas Sebrecht
+> Hi there,
+>
+> I am interested in helping out and improving git, though I haven't
+> programmed in C for quite a while now and thus have to relearn quite =
+=20
+> some
+> things.
+> I understand the different branches (master, next, pu) and so on, =20
+> and were
+> successful in compiling git with my Ubuntu 9.04. [yeea] ;)
+>
+> One thing I would like to ask you: what, if any, IDEs are you =20
+> working with?
+> I tried Anjuta but were unsuccessful in importing the git folder =20
+> from any
+> branch into Anjuta. Eclipse worked a bit better, though I am still =20
+> batteling
+> with the debugger a bit.
+>
+> Any recommendations, manuals or how-to tips are greatly welcome.
+> And one thing: thank you for your effort! Git really caught my =20
+> attention and
+> I was so much amused by the Google-Techtalk that Linus gave about =20
+> Git, that
+> it sparked my interest in relearning how to program again ;)
+>
+> Best regards from lovely Dresden in Germany
+> Frank M=C3=BCnnich
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
