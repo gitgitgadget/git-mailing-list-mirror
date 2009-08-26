@@ -1,93 +1,183 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [RFC] Use a 16-tree instead of a 256-tree for storing notes
-Date: Wed, 26 Aug 2009 16:43:44 +0200
-Message-ID: <200908261643.45097.johan@herland.net>
-References: <1248834326-31488-1-git-send-email-johan@herland.net> <81b0412b0908260624v30d32cc1m96e798076b51cbc9@mail.gmail.com> <4A95383A.4080104@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org, spearce@spearce.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Aug 26 16:45:49 2009
+From: "Kirill A. Korinskiy" <catap@catap.ru>
+Subject: [PATCH] Add option -b/--branch to clone for select a new HEAD
+Date: Wed, 26 Aug 2009 18:46:47 +0400
+Message-ID: <1251298007-18693-1-git-send-email-catap@catap.ru>
+References: <20090826121600.GA29098@atjola.homenet>
+Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
+To: B.Steinbrink@gmx.de
+X-From: git-owner@vger.kernel.org Wed Aug 26 16:48:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgJky-0006MW-E5
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 16:45:48 +0200
+	id 1MgJnm-0007Qq-4A
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 16:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886AbZHZOpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 10:45:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750829AbZHZOpm
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 10:45:42 -0400
-Received: from sam.opera.com ([213.236.208.81]:37903 "EHLO smtp.opera.com"
+	id S1751123AbZHZOr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 10:47:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbZHZOr6
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 10:47:58 -0400
+Received: from mx.catap.ru ([85.25.165.176]:34182 "EHLO mx.catap.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750862AbZHZOpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 10:45:42 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n7QEhjW3015806
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 26 Aug 2009 14:43:50 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <4A95383A.4080104@op5.se>
-Content-Disposition: inline
+	id S1750895AbZHZOr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 10:47:57 -0400
+Received: from [195.218.191.52] (helo=satellite.home.catap.ru)
+	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1MgJmz-0003DI-Ka; Wed, 26 Aug 2009 18:47:53 +0400
+Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
+	(envelope-from <catap@satellite.home.catap.ru>)
+	id 1MgJlv-0004sE-Cs; Wed, 26 Aug 2009 18:46:47 +0400
+X-Mailer: git-send-email 1.6.2
+In-Reply-To: <20090826121600.GA29098@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127101>
 
-On Wednesday 26 August 2009, Andreas Ericsson wrote:
-> Alex Riesen wrote:
-> > On Wed, Aug 26, 2009 at 14:56, Johan Herland<johan@herland.net> 
-wrote:
-> >> On Wednesday 26 August 2009, Alex Riesen wrote:
-> >>> On Wed, Aug 26, 2009 at 12:31, Johan Herland<johan@herland.net> 
-wrote:
-> >>>> The 256-tree structure is considerably faster than storing all
-> >>>> entries in a
-> >>>
-> >>> This part is confusing. Was 256-tree better (as in "faster")
-> >>> then?
-> >>
-> >> 256-tree is faster than the everything-in-hash_map draft.
-> >> 16-tree is slightly faster than 256-tree
-> >>
-> >> 256-tree uses more memory (in the worst case) that the
-> >> everything-in-hash-map draft.
-> >> 16-tree uses less memory than both.
-> >>
-> >> Makes sense?
-> >
-> > Oh, it does, it is just confusingly presented. How about:
-> >
-> > The 16-tree is both faster and has lower footprint then 256-tree
-> > code, which in its turn is noticably faster and smaller then
-> > existing hash_map implementation. ...
->
-> If it's to be squashed in, why mention the 256-tree at all (except
-> for possibly as something to compare with at the end)?
-> If it goes on top, why mention the hash_map at all?
+Sometimes (especially on production systems) we need to use only one
+remote branch for building software. It's really annoying to clone
+origin and then switch branch by hand everytime. So this patch
+provides functionality to clone a remote branch with one command
+without using checkout after clone.
 
-Ah. Sorry for the confusion. These patches are not meant to standalone 
-patches in the jh/notes series. They just compare various solutions to 
-the problem of parsing a notes tree structure with fanout in an 
-efficient manner.
+Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
+---
+ Documentation/git-clone.txt |    5 ++++
+ builtin-clone.c             |   25 ++++++++++++++++++---
+ t/t5706-clone-branch.sh     |   49 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 75 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5706-clone-branch.sh
 
-The next iteration of the jh/notes series will include the preferred 
-solution (16-tree unless something better shows up), _without_ talking 
-about the differences between alternative solutions. As such the 
-hash_map and 256-tree will not be mentioned at all.
-
-
-...Johan
-
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 2c63a0f..5cd106c 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -127,6 +127,11 @@ objects from the source repository into a pack in the cloned repository.
+ 	Instead of using the remote name 'origin' to keep track
+ 	of the upstream repository, use <name>.
+ 
++--branch <name>::
++-b <name>::
++	Create a local branch head for <name> instead of the branch
++	referenced by the remote repos HEAD.
++
+ --upload-pack <upload-pack>::
+ -u <upload-pack>::
+ 	When given, and the repository to clone from is accessed
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 32dea74..91392a3 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -41,6 +41,7 @@ static int option_quiet, option_no_checkout, option_bare, option_mirror;
+ static int option_local, option_no_hardlinks, option_shared;
+ static char *option_template, *option_reference, *option_depth;
+ static char *option_origin = NULL;
++static char *option_branch = NULL;
+ static char *option_upload_pack = "git-upload-pack";
+ static int option_verbose;
+ 
+@@ -65,6 +66,8 @@ static struct option builtin_clone_options[] = {
+ 		   "reference repository"),
+ 	OPT_STRING('o', "origin", &option_origin, "branch",
+ 		   "use <branch> instead of 'origin' to track upstream"),
++	OPT_STRING('b', "branch", &option_branch, "branch",
++		   "use <branch> from upstream as HEAD"),
+ 	OPT_STRING('u', "upload-pack", &option_upload_pack, "path",
+ 		   "path to git-upload-pack on the remote"),
+ 	OPT_STRING(0, "depth", &option_depth, "depth",
+@@ -347,8 +350,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+ 	int dest_exists;
+-	const struct ref *refs, *head_points_at, *remote_head, *mapped_refs;
+-	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
++	const struct ref *refs, *head_points_at, *remote_head = NULL, *mapped_refs;
++	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT, branch_head = STRBUF_INIT;
+ 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
+ 	struct transport *transport = NULL;
+ 	char *src_ref_prefix = "refs/heads/";
+@@ -518,8 +521,22 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 		mapped_refs = write_remote_refs(refs, refspec, reflog_msg.buf);
+ 
+-		remote_head = find_ref_by_name(refs, "HEAD");
+-		head_points_at = guess_remote_head(remote_head, mapped_refs, 0);
++		if (option_branch) {
++			strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_branch);
++
++			remote_head = find_ref_by_name(refs, branch_head.buf);
++		}
++
++		if (!remote_head) {
++			if (option_branch)
++				warning("Remote branch %s not found in upstream %s"
++					", using HEAD instead",
++					option_branch, option_origin);
++
++			remote_head = find_ref_by_name(refs, "HEAD");
++		}
++
++		head_points_at = guess_remote_head(remote_head, mapped_refs, 1);
+ 	}
+ 	else {
+ 		warning("You appear to have cloned an empty repository.");
+diff --git a/t/t5706-clone-branch.sh b/t/t5706-clone-branch.sh
+new file mode 100755
+index 0000000..b5fec50
+--- /dev/null
++++ b/t/t5706-clone-branch.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++
++test_description='branch clone options'
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++
++	mkdir parent &&
++	(cd parent && git init &&
++	 echo one >file && git add file &&
++	 git commit -m one && git branch foo &&
++	 git checkout -b two &&
++	 echo two >f && git add f && git commit -m two &&
++	 git checkout master)
++
++'
++
++test_expect_success 'clone' '
++
++	git clone parent clone &&
++	(cd clone &&
++	test $(git rev-parse --verify HEAD) = \
++	     $(git rev-parse --verify refs/remotes/origin/master) &&
++	test $(git rev-parse --verify HEAD) != \
++	     $(git rev-parse --verify refs/remotes/origin/two))
++
++
++'
++
++test_expect_success 'clone -b two' '
++
++	git clone -b two parent clone-b &&
++	(cd clone-b &&
++	test $(git rev-parse --verify HEAD) = \
++	     $(git rev-parse --verify refs/remotes/origin/two) &&
++	test $(git rev-parse --verify HEAD) != \
++	     $(git rev-parse --verify refs/remotes/origin/master))
++
++'
++
++test_expect_success 'clone -b foo' '
++
++	git clone -b foo parent clone-b-foo &&
++	(cd clone-b-foo &&
++	test $(git branch | grep \* | sed -e s:\*\ ::) = foo)
++
++'
++
++test_done
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.6.2
