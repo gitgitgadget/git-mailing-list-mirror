@@ -1,130 +1,110 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Wed, 26 Aug 2009 14:16:00 +0200
-Message-ID: <20090826121600.GA29098@atjola.homenet>
-References: <1251228341-29434-1-git-send-email-catap@catap.ru>
- <1251228467-29638-1-git-send-email-catap@catap.ru>
- <20090825223637.GA20523@atjola.homenet>
- <87ljl694fd.wl%catap@catap.ru>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: git clone http://git.savannah.gnu.org/cgit/xboard.git segfaults
+Date: Wed, 26 Aug 2009 20:20:53 +0800
+Message-ID: <20090826202053.6e6442a6.rctay89@gmail.com>
+References: <alpine.DEB.1.00.0908171620160.4991@intel-tinevez-2-302>
+ <20090817135651.GA4570@harikalardiyari>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "Kirill A. Korinskiy" <catap@catap.ru>
-X-From: git-owner@vger.kernel.org Wed Aug 26 14:16:21 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Ali Polatel <polatel@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 26 14:22:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgHQK-00016c-DD
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 14:16:20 +0200
+	id 1MgHWS-0002nO-49
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 14:22:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932430AbZHZMQJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2009 08:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbZHZMQJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 08:16:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46370 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932305AbZHZMQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 08:16:08 -0400
-Received: (qmail invoked by alias); 26 Aug 2009 12:16:08 -0000
-Received: from i59F555FB.versanet.de (EHLO atjola.homenet) [89.245.85.251]
-  by mail.gmx.net (mp047) with SMTP; 26 Aug 2009 14:16:08 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/ohNNrB/voOMbHnZ0Y03KQ/FadGJtP0b765rPeyT
-	JQ3Galq/h7kQGc
-Content-Disposition: inline
-In-Reply-To: <87ljl694fd.wl%catap@catap.ru>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S932510AbZHZMWa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 08:22:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932662AbZHZMWa
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 08:22:30 -0400
+Received: from mail-pz0-f192.google.com ([209.85.222.192]:65350 "EHLO
+	mail-pz0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932579AbZHZMW3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 08:22:29 -0400
+Received: by pzk30 with SMTP id 30so85295pzk.4
+        for <git@vger.kernel.org>; Wed, 26 Aug 2009 05:22:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=FdhF8YT2sFa3/uoF544Hv6/guOl0YAULtCfkYayQYrg=;
+        b=dOEb8f5ea6NCzWZyBkeVi8uhzKO0IEoveDfziYHsvtLBoeRjUEZyMrivy5szhinCsf
+         vcUsWD7fUkhFZh3O2eB5YR9AW/91fnKj/q6zKzhrR6nF/xtsj6ETwFaQ+ulAOyIVmr1+
+         40e8MydmLHkv3jLbLt8Ozlmqq2AEq+9dP5gKs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=oUui/rmWxz1TB7tmDITKQnu4AJc9Sbiml/ayJHPZJjftJnTAZeb7s7n3SqQwyvIM96
+         80AC19PDzYVxBymxJPWrmx55gzsWzYYMQR+JEjdpTcyd2QasLuYCV9qaC9JzD2v59SQo
+         XUeRKSJR6NKS+59tIv0p7C4v68cusaz80L/Cw=
+Received: by 10.115.99.13 with SMTP id b13mr9789233wam.188.1251289350095;
+        Wed, 26 Aug 2009 05:22:30 -0700 (PDT)
+Received: from your-cukc5e3z5n (cm74.zeta152.maxonline.com.sg [116.87.152.74])
+        by mx.google.com with ESMTPS id n40sm334214wag.21.2009.08.26.05.22.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 26 Aug 2009 05:22:28 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0908171620160.4991@intel-tinevez-2-302>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127092>
 
-On 2009.08.26 15:53:58 +0400, Kirill A. Korinskiy wrote:
-> At Wed, 26 Aug 2009 00:36:37 +0200,
-> Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> wrote:
->=20
->=20
-> > > @@ -518,7 +521,21 @@ int cmd_clone(int argc, const char **argv, c=
-onst char *prefix)
-> > > =20
-> > >  		mapped_refs =3D write_remote_refs(refs, refspec, reflog_msg.bu=
-f);
-> > > =20
-> > > -		remote_head =3D find_ref_by_name(refs, "HEAD");
-> > > +		if (option_branch) {
-> > > +			strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_bran=
-ch);
-> > > +
-> > > +			remote_head =3D find_ref_by_name(refs, branch_head.buf);
-> > > +		}
-> > > +
-> > > +		if (!remote_head) {
-> > > +			if (option_branch)
-> > > +				warning("Remote branch %s not found in upstream %s"
-> > > +					", using HEAD instead",
-> > > +					option_branch, option_origin);
-> > > +
-> > > +			remote_head =3D find_ref_by_name(refs, "HEAD");
-> > > +		}
-> > > +
-> > >  		head_points_at =3D guess_remote_head(remote_head, mapped_refs,=
- 0);
-> >=20
-> > This would still pick refs/heads/master if refs/heads/master and
-> > refs/heads/<branch> reference the same commit. That's due to the ch=
-eck
-> > in guess_remote_head() which prefers refs/heads/master over all oth=
-er
-> > refs. While this is acceptable for the HEAD lookup, I'd treat that =
-as a
-> > bug for this new option.
-> >=20
->=20
-> My english is not a good and I don't understand it, sorry.
+Hi,
 
-guess_remote_head() compares the object ids from remote_head and all of
-the remote's refs to guess which is the right one.
+On Mon, Aug 17, 2009 at 10:22 PM, Johannes Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> Seems that an object request is aborted, but the slot, and therefore the
+> callback, is called nevertheless.  Tay, does that ring a bell?
 
-Let's say that the repo has:
+thanks Johannes, your diagnosis was a vital clue.
 
-refs/heads/master: object1
-refs/heads/foo: object2
-refs/heads/bar: object1
+Ali, could you see if this patch fixes it for you? On my side, I had
+some difficulty reproducing your problem reliably (it happened
+sometimes but not on other times).
 
-If you do "git clone -b foo ...", then remote_head->old_sha1 will be
-"object2". guess_remote_head() compares that to all the remote heads. I=
-n
-this case, it will find refs/heads/foo (as expected).
+--
+Cheers,
+Ray Chuan
 
-But when you do "git clone -b bar", then remote_head->old_sha1 will be
-"object1". And guess_remote_head() will then take refs/heads/master,
-as it prefers that one.
+-- >8 --
+Subject: [PATCH] http.c: set slot callback members to NULL when releasing object
 
-doener@atjola:h $ mkdir a; cd a; git init
-Initialized empty Git repository in /home/doener/h/a/.git/
-doener@atjola:a (master) $ git commit --allow-empty -m init
-[master (root-commit) a7a0b54] init
-doener@atjola:a (master) $ git branch bar
-doener@atjola:a (master) $ git checkout -b foo
-Switched to a new branch 'foo'
-doener@atjola:a (foo) $ git commit --allow-empty -m on_foo
-[foo 375047e] on_foo
-doener@atjola:a (foo) $ cd ..
-doener@atjola:h $ (git clone -b foo a foo; cd foo; git branch)
-Initialized empty Git repository in /home/doener/h/foo/.git/
-* foo
-doener@atjola:h $ (git clone -b bar a bar; cd bar; git branch)
-Initialized empty Git repository in /home/doener/h/bar/.git/
-* master
+Set the members callback_func and callback_data of freq->slot to NULL
+when releasing a http_object_request. release_active_slot() is also
+invoked on the slot to remove the curl handle associated with the slot
+from the multi stack (CURLM *curlm in http.c).
 
+These prevent the callback function and data from being used in http
+methods (like http.c::finish_active_slot()) after a
+http_object_request has been free'd.
 
-That said, I actually wonder why you don't simple set HEAD in the
-original repo so that you get whichever branch you want by default
-anyway.
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ http.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-Bj=F6rn
+diff --git a/http.c b/http.c
+index a2720d5..1ae19e0 100644
+--- a/http.c
++++ b/http.c
+ -1285,5 +1285,10 @@ void release_http_object_request(struct http_object_request *freq)
+ 		free(freq->url);
+ 		freq->url = NULL;
+ 	}
+-	freq->slot = NULL;
++	if (freq->slot != NULL) {
++		freq->slot->callback_func = NULL;
++		freq->slot->callback_data = NULL;
++		release_active_slot(freq->slot);
++		freq->slot = NULL;
++	}
+ }
+--
+1.6.4.193.gaceaa.dirty
