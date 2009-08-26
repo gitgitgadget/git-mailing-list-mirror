@@ -1,136 +1,89 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH v3] import-tars: Allow per-tar author and commit message.
-Date: Wed, 26 Aug 2009 20:26:55 +0100
-Message-ID: <20090826193015.962A7189B12@perkele>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] git-gui: fix diff for partially staged submodule changes
+Date: Wed, 26 Aug 2009 22:25:15 +0200
+Message-ID: <4A959A2B.9080505@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 26 21:30:57 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Aug 26 22:25:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgOCu-0003eg-UE
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 21:30:57 +0200
+	id 1MgP3e-00041F-GZ
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 22:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229AbZHZTaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 15:30:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751204AbZHZTaS
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 15:30:18 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:57541 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750873AbZHZTaR (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 15:30:17 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP000MKQ0UHAX10@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 21:30:17 +0200 (MEST)
-Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP000CXT0UGZIF0@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 26 Aug 2009 21:30:17 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.26.191818
-Received: by perkele (Postfix, from userid 501)	id 962A7189B12; Wed,
- 26 Aug 2009 21:30:15 +0200 (CEST)
+	id S1753143AbZHZUZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 16:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752953AbZHZUZP
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 16:25:15 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:59503 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752788AbZHZUZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 16:25:14 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id BB21210FBAAD6;
+	Wed, 26 Aug 2009 22:25:15 +0200 (CEST)
+Received: from [80.128.73.184] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1MgP3T-0008Sn-00; Wed, 26 Aug 2009 22:25:15 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1//4lue6Ck9zt+sO2UUBV/6ktJC8PW8LasuhtC0
+	KMQAROiDoUtchlDAg2uAx7rTNHrZKN4eF1doiYSB4E68Wh/tQZ
+	YCL1tRhAjsuMlW5IQO4Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127116>
 
-If the "--metainfo=<ext>" option is given on the command line, a file
-called "<filename.tar>.<ext>" will be used to create the commit message
-for "<filename.tar>", instead of using "Imported from filename.tar".
+When a submodule commit had already been staged and another commit had
+been checked out inside the submodule, the diff always displayed the
+submodule commit log messages between the last supermodule commit and
+the working tree, totally ignoring the commit in the index.
 
-The author and committer of the tar ball can also be overridden by
-embedding an "Author:" or "Committer:" header in the metainfo file.
-
-Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
-This version adds a command line option --metainfo that is used to
-enable the new behaviour, as suggested by Junio C Hamano.
 
- contrib/fast-import/import-tars.perl |   54 +++++++++++++++++++++++++++++++--
- 1 files changed, 50 insertions(+), 4 deletions(-)
+This fixes a regression introduced by this recent patch of mine:
+"git-gui: display summary when showing diff of a submodule"
 
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index 78e40d2..15835cb 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -8,9 +8,20 @@
- ##  perl import-tars.perl *.tar.bz2
- ##  git whatchanged import-tars
- ##
-+## Use --metainfo to specify the extension for a meta data file, where
-+## import-tars can read the commit message and optionally author and
-+## committer information.
-+##
-+##  echo 'This is the commit message' > myfile.tar.bz2.msg
-+##  perl import-tars.perl --metainfo=msg myfile.tar.bz2
- 
- use strict;
--die "usage: import-tars *.tar.{gz,bz2,Z}\n" unless @ARGV;
-+use Getopt::Long;
-+
-+my $metaext = '';
-+
-+die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,Z}\n"
-+	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
- 
- my $branch_name = 'import-tars';
- my $branch_ref = "refs/heads/$branch_name";
-@@ -109,12 +120,47 @@ foreach my $tar_file (@ARGV)
- 		$have_top_dir = 0 if $top_dir ne $1;
- 	}
- 
-+	my $commit_msg = "Imported from $tar_file.";
-+	my $this_committer_name = $committer_name;
-+	my $this_committer_email = $committer_email;
-+	my $this_author_name = $author_name;
-+	my $this_author_email = $author_email;
-+	if ($metaext ne '')
-+	{
-+		# Optionally read a commit message from <filename.tar>.msg
-+		# Add a line on the form "Committer: name <e-mail>" to override
-+		# the committer and "Author: name <e-mail>" to override the
-+		# author for this tar ball.
-+		if (open MSG, '<', "${tar_file}.${metaext}")
-+		{
-+			$commit_msg = '';
-+			while (<MSG>)
-+			{
-+				if (/^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i)
-+				{
-+					$this_committer_name = $1;
-+					$this_committer_email = $2;
-+				}
-+				elsif (/^Author:\s+([^<>]*)\s+<(.*)>\s*$/i)
-+				{
-+					$this_author_name = $1;
-+					$this_author_email = $2;
-+				}
-+				else
-+				{
-+					$commit_msg .= $_;
-+				}
-+			}
-+			close MSG;
+Sorry for the inconvenience.
+
+
+ git-gui/lib/diff.tcl |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index ae1ea3a..d593323 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -298,7 +298,12 @@ proc start_show_diff {cont_info {add_opts {}}} {
+
+ 	if {[string match {160000 *} [lindex $s 2]]
+         || [string match {160000 *} [lindex $s 3]]} {
+-		set cmd {submodule summary -- $current_diff_path}
++		set is_submodule_diff 1
++		if {$w eq $ui_index} {
++			set cmd {submodule summary --cached -- $current_diff_path}
++		} else {
++			set cmd {submodule summary --files -- $current_diff_path}
 +		}
-+	}
-+
- 	print FI <<EOF;
- commit $branch_ref
--author $author_name <$author_email> $author_time +0000
--committer $committer_name <$committer_email> $commit_time +0000
-+author $this_author_name <$this_author_email> $author_time +0000
-+committer $this_committer_name <$this_committer_email> $commit_time +0000
- data <<END_OF_COMMIT_MESSAGE
--Imported from $tar_file.
-+$commit_msg
- END_OF_COMMIT_MESSAGE
- 
- deleteall
+ 	}
+
+ 	if {[catch {set fd [eval git_read --nice $cmd]} err]} {
+@@ -343,9 +348,6 @@ proc read_diff {fd cont_info} {
+ 		}
+ 		set ::current_diff_inheader 0
+
+-		if {[regexp {^\* } $line]} {
+-			set is_submodule_diff 1
+-		}
+ 		# -- Automatically detect if this is a 3 way diff.
+ 		#
+ 		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
 -- 
-1.6.3.3
+1.6.4.184.ge7b6.dirty
