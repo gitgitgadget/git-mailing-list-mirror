@@ -1,60 +1,61 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH] import-tars: Allow per-tar author and commit message.
-Date: Wed, 26 Aug 2009 10:17:14 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0908261016050.30577@ds9.cixit.se>
-References: <20090823203640.B195D189B12@perkele> <4A91B8BB.1030906@vilain.net> <alpine.DEB.2.00.0908241659380.16576@perkele.intern.softwolves.pp.se> <7vab1pf3fj.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0908251950010.19406@ds9.cixit.se>
- <7v8wh7pumr.fsf@alter.siamese.dyndns.org>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Newbie / git / gitosis question
+Date: Wed, 26 Aug 2009 10:27:30 +0100
+Message-ID: <26ae428a0908260227k7ac6aeden9a4eae7ee95d4d45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 26 11:22:32 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 26 11:28:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgEi7-0000Gn-6B
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 11:22:31 +0200
+	id 1MgEnR-0001m7-Lc
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 11:28:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756347AbZHZJWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 05:22:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756325AbZHZJWV
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 05:22:21 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:53911 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756443AbZHZJWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 05:22:21 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n7Q9HEJ9031759
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 26 Aug 2009 11:17:14 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n7Q9HETZ031756;
-	Wed, 26 Aug 2009 11:17:14 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <7v8wh7pumr.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 26 Aug 2009 11:17:14 +0200 (CEST)
+	id S1756490AbZHZJ1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Aug 2009 05:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756459AbZHZJ1a
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 05:27:30 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:64481 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756289AbZHZJ13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 05:27:29 -0400
+Received: by ewy2 with SMTP id 2so1205138ewy.17
+        for <git@vger.kernel.org>; Wed, 26 Aug 2009 02:27:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=ndNVJyBpc1jEH+VWlNqKAgOWh25RxyFCETeP6pl5ZYM=;
+        b=Kv4NF+thFuSdHyrMQhqp2wYzac5xUC6EGAhs1XhH3i0qyLjj+6YKCeClN4EHvXmJDp
+         keFGSSSb7JV1hlJ9bliGA++P62LPA2xjpIg9hq51qnvbQtl63ihbmhp0V7qN3a1M2j95
+         UKSpvinUizD1HieO8QtVpyvgx/IFTPyjOLBnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=fAqom8gVOMfgcq2YBznEY9Xlj0LyQ/j0de3IglTnn7lJT1ns8IcpoqlObwM05LN4I5
+         OmPXCvOX/2xhBbhRYv4v6BLeJP5KcXU2Nr9W43ylD52Nb3dMLl6GFcmktoOY26i6uNah
+         AYnDp15fOfWyQ/T43l0X6BRWQI2IjNq1AZsg8=
+Received: by 10.216.90.212 with SMTP id e62mr1598725wef.26.1251278850462; Wed, 
+	26 Aug 2009 02:27:30 -0700 (PDT)
+X-Google-Sender-Auth: b63aa3130b0fc9f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127081>
 
-Junio C Hamano:
+I've been working away at Gitosis and it's mostly fair enough but
+there's one bit that's unclear to me...
 
-> And the switch could be "--metainfo=<ext>", so that people can choose to 
-> use other extensions, e.g. with "--metainfo=info" file.tar.info would be 
-> read for descriptions.
+git push origin master:refs/heads/master
 
-That's a good idea. I just made a simple "-m" switch to enable the new code. 
-I'll change it into a "--metainfo" and post an updated patch later.
+Would somebody kindly explain (or point to docs) what
+refs/heads/master means? How is this different from just 'git push
+origin master' or even 'git push origin master:master'?
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Any insights much appreciated.
