@@ -1,88 +1,81 @@
-From: Reilly Grant <reillyeon@qotw.net>
-Subject: [PATCH] git-p4: Avoid modules deprecated in Python 2.6.
-Date: Wed, 26 Aug 2009 09:52:16 -0700
-Message-ID: <1251305536-25887-1-git-send-email-reillyeon@qotw.net>
-Cc: Reilly Grant <reillyeon@qotw.net>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Aug 26 19:03:47 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
+Date: Wed, 26 Aug 2009 13:48:23 -0400
+Message-ID: <20090826174823.GA1202@coredump.intra.peff.net>
+References: <20090826121600.GA29098@atjola.homenet>
+ <1251298007-18693-1-git-send-email-catap@catap.ru>
+ <20090826155029.GA5750@atjola.homenet>
+ <20090826161059.GC32741@coredump.intra.peff.net>
+ <20090826165618.GA7477@atjola.homenet>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Kirill A. Korinskiy" <catap@catap.ru>, git@vger.kernel.org
+To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Aug 26 19:48:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgLuU-0003gI-SQ
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 19:03:47 +0200
+	id 1MgMbp-0002a3-UD
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Aug 2009 19:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbZHZRDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 13:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752124AbZHZRDS
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 13:03:18 -0400
-Received: from jane.qotw.net ([72.14.183.39]:50893 "EHLO jane.qotw.net"
+	id S1752054AbZHZRsY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Aug 2009 13:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751765AbZHZRsY
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 13:48:24 -0400
+Received: from peff.net ([208.65.91.99]:34947 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752109AbZHZRDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Aug 2009 13:03:18 -0400
-X-Greylist: delayed 646 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Aug 2009 13:03:17 EDT
-Received: by jane.qotw.net (Postfix, from userid 1000)
-	id BEE0E53872; Wed, 26 Aug 2009 12:52:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=qotw.net; s=jane;
-	t=1251305552; bh=n4RvBmAvGhPyNggWnrAd0pE0d0putG65hYLhpoZq+E0=;
-	h=From:To:Cc:Subject:Date:Message-Id;
-	b=cfXUZce7DpfFWix+BsVAUUlQ6QCx79XCJmt3pUC0IBSJF5YfEFc9tiRVE2H1nLarl
-	 XASXre3J81JxQF7L5A4tkTNFFGi/tfke2fP6SmXyYFmmjutYAajztSbI9sSFFd+nxa
-	 yFeW953RcfA6wOcrViRvoWCZijag40RgvFtclock=
-X-Mailer: git-send-email 1.6.3.3
+	id S1751522AbZHZRsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Aug 2009 13:48:23 -0400
+Received: (qmail 23857 invoked by uid 107); 26 Aug 2009 17:48:33 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 26 Aug 2009 13:48:33 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Aug 2009 13:48:23 -0400
+Content-Disposition: inline
+In-Reply-To: <20090826165618.GA7477@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127110>
 
-The popen2, sha and sets modules are deprecated in Python 2.6 (sha in
-Python 2.5).  Both popen2 and sha are not actually used in git-p4.
-Replace usage of sets.Set with the builtin set object.
+On Wed, Aug 26, 2009 at 06:56:18PM +0200, Bj=C3=B6rn Steinbrink wrote:
 
-Signed-off-by: Reilly Grant <reillyeon@qotw.net>
----
- contrib/fast-import/git-p4 |   12 +++++-------
- 1 files changed, 5 insertions(+), 7 deletions(-)
+> On 2009.08.26 12:10:59 -0400, Jeff King wrote:
+> > So I think the code should probably look like this (totally unteste=
+d):
+> >=20
+> >   remote_head =3D find_ref_by_name(refs, "HEAD");
+> >   if (option_branch) {
+> >           strbuf_addf(&branch_head, "%s%s", src_ref_prefix, option_=
+branch);
+> >           head_points_at =3D find_ref_by_name(refs, branch_head.buf=
+);
+> >           if (!head_points_at)
+> >                   warning("remote branch not found, etc");
+> >   }
+> >   if (!head_points_at)
+> >     head_points_at =3D guess_remote_head(remote_head, mapped_refs, =
+0);
+>=20
+> Hm, why "refs" for find_ref_by_name(), but "mapped_ref" for
+> guess_remote_head()?
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 342529d..ca58700 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -8,12 +8,10 @@
- # License: MIT <http://www.opensource.org/licenses/mit-license.php>
- #
- 
--import optparse, sys, os, marshal, popen2, subprocess, shelve
--import tempfile, getopt, sha, os.path, time, platform
-+import optparse, sys, os, marshal, subprocess, shelve
-+import tempfile, getopt, os.path, time, platform
- import re
- 
--from sets import Set;
--
- verbose = False
- 
- 
-@@ -861,8 +859,8 @@ class P4Sync(Command):
- 
-         self.usage += " //depot/path[@revRange]"
-         self.silent = False
--        self.createdBranches = Set()
--        self.committedChanges = Set()
-+        self.createdBranches = set()
-+        self.committedChanges = set()
-         self.branch = ""
-         self.detectBranches = False
-         self.detectLabels = False
-@@ -1627,7 +1625,7 @@ class P4Sync(Command):
- 
-             if len(self.changesFile) > 0:
-                 output = open(self.changesFile).readlines()
--                changeSet = Set()
-+                changeSet = set()
-                 for line in output:
-                     changeSet.add(int(line))
- 
--- 
-1.6.3.3
+Blind copying of the current code? :)
+
+Good question, though. AFAICT, the difference between mapped_refs and
+refs is that the former contains only the refs we are actually fetching=
+,
+and its peer_ref member is filled in as appropriate.
+
+Later in the code, we look at head_points_at->peer_ref, which means it
+_must_ come from mapped_refs. And which means the code I posted is
+bogus, as the ref we look up in "refs" will not have that member filled
+in. So I think we do need:
+
+  head_points_at =3D find_ref_by_name(mapped_refs, branch_head.buf);
+
+Good catch.
+
+-Peff
