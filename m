@@ -1,178 +1,143 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v5a 2/6] fast-import: put marks reading in it's own function
-Date: Thu, 27 Aug 2009 11:40:27 -0700
-Message-ID: <1251398431-12461-3-git-send-email-srabbelier@gmail.com>
+Subject: [RFC PATCH v5a 3/6] fast-import: add feature command
+Date: Thu, 27 Aug 2009 11:40:28 -0700
+Message-ID: <1251398431-12461-4-git-send-email-srabbelier@gmail.com>
 References: <1251398431-12461-1-git-send-email-srabbelier@gmail.com>
  <1251398431-12461-2-git-send-email-srabbelier@gmail.com>
+ <1251398431-12461-3-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git List <git@vger.kernel.org>,
 	Ian Clatworthy <ian.cla
-X-From: git-owner@vger.kernel.org Thu Aug 27 20:41:19 2009
+X-From: git-owner@vger.kernel.org Thu Aug 27 20:41:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgjuP-00077O-5k
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 20:41:17 +0200
+	id 1Mgjup-0007FJ-9M
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 20:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbZH0SlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 14:41:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZH0SlF
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 14:41:05 -0400
+	id S1751598AbZH0SlO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 14:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbZH0SlM
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 14:41:12 -0400
 Received: from mail-ew0-f206.google.com ([209.85.219.206]:56292 "EHLO
 	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507AbZH0SlD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 14:41:03 -0400
+	with ESMTP id S1751550AbZH0SlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 14:41:11 -0400
 Received: by mail-ew0-f206.google.com with SMTP id 2so1486483ewy.17
-        for <git@vger.kernel.org>; Thu, 27 Aug 2009 11:41:05 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 27 Aug 2009 11:41:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=AvmH8YWnvOhtaSzxGvx0utjym0eHElhSqJJoaQaXUec=;
-        b=Ra3CsDPfZktiZolJjfqfKQ0HYuRbMoRR0Eal2Yfb6cdPXU3ycZHF/GRmwgV5J742Yj
-         CJ4Dh8maspgytdEPPEzbEu0z2rYwiq8fnuo910tcwXdm4lx14HR3EHP3HSW0LgZWMUtR
-         4g1TpYhTTh2IAY1llEGh/oZQhcGvKVqfKtxCo=
+        bh=YktisYQMc9t8SJ7QqDcLKKSgvuP8Trl0aS8aO1axFxs=;
+        b=IAXg2ZWbIXvZQUeHqeJst+wwvLdbggqigC2P+0CGuQAFI5Focw0fqKXF0Vxp7N63Lc
+         o+7TH6F8FV507yzBTv+mz4IApC3TB8SBQRHl9hpWMlNlCv2Yz7Sp9IXxDgxCFPC1Mk/7
+         HtuY3LtiSC0De21+rNV3BsEVLo6P8wS4dfJgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=eaIymKXcYudwnafy3AnG9ibpvgsyXynnReIIiKsWt33fPvg1RKajUMoOHns+BgVuKc
-         I2lBHrmkv3EkeVZdmLiM1i1U85oxvM1wxFcgsD05Tl+PNOOJXWbdqPHQQaV9nvr8nmCP
-         kMO/bZoT3gAUqZd4EcZU5HaszPjV7lPZi7Ack=
-Received: by 10.216.7.68 with SMTP id 46mr17662weo.228.1251398465034;
-        Thu, 27 Aug 2009 11:41:05 -0700 (PDT)
+        b=H0p8zeGWJCY9uQq55iyX4LJ2Yb6dvte7R1mt4CdOKC8/GMfQqQ4OHtgiK2SFmLCrXs
+         ogExFgpqAXpvjvYP0VX5poJgdy+/gb0W/8xRQJJAvdB/QJ3fr7qzUDv0zOS6ySDQ9ou6
+         UvvDzwZfmNVzZFMxDCYYInDO+m1mENZI/g5Po=
+Received: by 10.216.52.76 with SMTP id d54mr20572wec.119.1251398471671;
+        Thu, 27 Aug 2009 11:41:11 -0700 (PDT)
 Received: from localhost.localdomain (kaayla.mtv.corp.google.com [172.22.72.177])
-        by mx.google.com with ESMTPS id i35sm1687558gve.26.2009.08.27.11.41.02
+        by mx.google.com with ESMTPS id i35sm1687558gve.26.2009.08.27.11.41.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 27 Aug 2009 11:41:04 -0700 (PDT)
+        Thu, 27 Aug 2009 11:41:11 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.122.g6ffd7
-In-Reply-To: <1251398431-12461-2-git-send-email-srabbelier@gmail.com>
+In-Reply-To: <1251398431-12461-3-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127192>
 
-All options do nothing but set settings, with the exception of the
---input-marks option. Delay the reading of the marks file till after
-all options have been parsed.
+This allows the fronted to require a specific feature to be supported
+by the frontend, or abort.
+
+Also add support for the first feature, date-format=.
 
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-	Unchanged from v4/v5.
+	New in this series, currently RFC. This should make it easier
+	for frontends to specify their needs.
 
- fast-import.c |   73 ++++++++++++++++++++++++++++++++-------------------------
- 1 files changed, 41 insertions(+), 32 deletions(-)
+	Also fixed from line.
 
+ Documentation/git-fast-import.txt |   16 ++++++++++++++++
+ fast-import.c                     |   13 +++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index c2f483a..1e293f2 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -303,6 +303,10 @@ and control the current import process.  More detailed discussion
+ 	standard output.  This command is optional and is not needed
+ 	to perform an import.
+ 
++`feature`::
++	Require that fast-import supports the specified feature, or
++	abort if it does not.
++
+ `commit`
+ ~~~~~~~~
+ Create or update a branch with a new commit, recording one logical
+@@ -813,6 +817,18 @@ Placing a `progress` command immediately after a `checkpoint` will
+ inform the reader when the `checkpoint` has been completed and it
+ can safely access the refs that fast-import updated.
+ 
++`feature`
++~~~~~~~~~
++Require that fast-import supports the specified feature, or abort if
++it does not.
++
++....
++	'feature' SP <feature> LF
++....
++
++The <feature> part of the command may be any string matching
++[a-zA-Z-] and should be understood by a version of fast-import.
++
+ Crash Reports
+ -------------
+ If fast-import is supplied invalid input it will terminate with a
 diff --git a/fast-import.c b/fast-import.c
-index b904f20..812fcf0 100644
+index 812fcf0..9bf06a4 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -315,6 +315,7 @@ static struct object_entry_pool *blocks;
- static struct object_entry *object_table[1 << 16];
- static struct mark_set *marks;
- static const char *mark_file;
-+static const char *input_file;
- 
- /* Our last blob */
- static struct last_object last_blob = { STRBUF_INIT, 0, 0, 0 };
-@@ -1643,6 +1644,42 @@ static void dump_marks(void)
+@@ -2450,6 +2450,17 @@ static void parse_one_option(const char *option)
  	}
  }
  
-+static void read_marks(void)
++static void parse_feature(void)
 +{
-+	char line[512];
-+	FILE *f = fopen(input_file, "r");
-+	if (!f)
-+		die_errno("cannot read '%s'", input_file);
-+	while (fgets(line, sizeof(line), f)) {
-+		uintmax_t mark;
-+		char *end;
-+		unsigned char sha1[20];
-+		struct object_entry *e;
++	char *feature = command_buf.buf + 8;
 +
-+		end = strchr(line, '\n');
-+		if (line[0] != ':' || !end)
-+			die("corrupt mark line: %s", line);
-+		*end = 0;
-+		mark = strtoumax(line + 1, &end, 10);
-+		if (!mark || end == line + 1
-+			|| *end != ' ' || get_sha1(end + 1, sha1))
-+			die("corrupt mark line: %s", line);
-+		e = find_object(sha1);
-+		if (!e) {
-+			enum object_type type = sha1_object_info(sha1, NULL);
-+			if (type < 0)
-+				die("object not found: %s", sha1_to_hex(sha1));
-+			e = insert_object(sha1);
-+			e->type = type;
-+			e->pack_id = MAX_PACK_ID;
-+			e->offset = 1; /* just not zero! */
-+		}
-+		insert_mark(mark, e);
++	if (!prefixcmp(feature, "date-format=")) {
++		option_date_format(feature + 12);
++	} else {
++		die("This version of fast-import does not support feature %s.", feature);
 +	}
-+	fclose(f);
 +}
 +
-+
- static int read_next_command(void)
+ static int git_pack_config(const char *k, const char *v, void *cb)
  {
- 	static int stdin_eof = 0;
-@@ -2338,39 +2375,9 @@ static void parse_progress(void)
- 	skip_optional_lf();
- }
- 
--static void option_import_marks(const char *input_file)
-+static void option_import_marks(const char *marks)
- {
--	char line[512];
--	FILE *f = fopen(input_file, "r");
--	if (!f)
--		die_errno("cannot read '%s'", input_file);
--	while (fgets(line, sizeof(line), f)) {
--		uintmax_t mark;
--		char *end;
--		unsigned char sha1[20];
--		struct object_entry *e;
--
--		end = strchr(line, '\n');
--		if (line[0] != ':' || !end)
--			die("corrupt mark line: %s", line);
--		*end = 0;
--		mark = strtoumax(line + 1, &end, 10);
--		if (!mark || end == line + 1
--			|| *end != ' ' || get_sha1(end + 1, sha1))
--			die("corrupt mark line: %s", line);
--		e = find_object(sha1);
--		if (!e) {
--			enum object_type type = sha1_object_info(sha1, NULL);
--			if (type < 0)
--				die("object not found: %s", sha1_to_hex(sha1));
--			e = insert_object(sha1);
--			e->type = type;
--			e->pack_id = MAX_PACK_ID;
--			e->offset = 1; /* just not zero! */
--		}
--		insert_mark(mark, e);
--	}
--	fclose(f);
-+	input_file = xstrdup(marks);
- }
- 
- static void option_date_format(const char *fmt)
-@@ -2495,6 +2502,8 @@ int main(int argc, const char **argv)
+ 	if (!strcmp(k, "pack.depth")) {
+@@ -2526,6 +2537,8 @@ int main(int argc, const char **argv)
+ 			parse_checkpoint();
+ 		else if (!prefixcmp(command_buf.buf, "progress "))
+ 			parse_progress();
++		else if (!prefixcmp(command_buf.buf, "feature "))
++			parse_feature();
+ 		else
+ 			die("Unsupported command: %s", command_buf.buf);
  	}
- 	if (i != argc)
- 		usage(fast_import_usage);
-+	if (input_file)
-+		read_marks();
- 
- 	rc_free = pool_alloc(cmd_save * sizeof(*rc_free));
- 	for (i = 0; i < (cmd_save - 1); i++)
 -- 
 1.6.4.122.g6ffd7
