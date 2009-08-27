@@ -1,106 +1,79 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCHv4 10/12] notes.c: Implement simple memory pooling of leaf 
-	nodes
-Date: Thu, 27 Aug 2009 09:39:31 +0200
-Message-ID: <81b0412b0908270039l7a937c3bmd745274c71526ce1@mail.gmail.com>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
-	 <1251337437-16947-11-git-send-email-johan@herland.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git clone http://git.savannah.gnu.org/cgit/xboard.git
+ segfaults
+Date: Thu, 27 Aug 2009 09:39:55 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908270938480.7562@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0908171620160.4991@intel-tinevez-2-302> <20090817135651.GA4570@harikalardiyari> <20090826202053.6e6442a6.rctay89@gmail.com> <20090826131235.GF16486@harikalardiyari>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Aug 27 09:39:41 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1669151199-1251358796=:7562"
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+To: Ali Polatel <polatel@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 27 09:40:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgZa8-0005iH-HH
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 09:39:41 +0200
+	id 1MgZaY-0005ov-CP
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 09:40:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514AbZH0Hjb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 03:39:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751507AbZH0Hjb
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 03:39:31 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:57276 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751371AbZH0Hjb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 03:39:31 -0400
-Received: by bwz19 with SMTP id 19so780605bwz.37
-        for <git@vger.kernel.org>; Thu, 27 Aug 2009 00:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SLlJu1v9FmewU3ZsMXXTqwivvGQt0/1cu6X12DjpcrA=;
-        b=R6cBbWx4ClCfOIipgRhfLJkO3FkEreylk+kECuVceWzhxvvrt4qS77LfcLms7lnILG
-         SwjTmBc1ZjcXR/G77Bo1zgZJgj5PMMDUlCqryWFUGJG6pHtVQFuxHdH9e6os6fPXZ6hI
-         E/2WzFjsdpexU77YUvmuc1zlxP9geFiHVTXkA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FHeDmZjVqz3p+tz6t0j5bGDxtK33r+Wb+EQlaqjdnATezw1ZeimErz7WTc9aA0LTl7
-         wwNi2R+fvapc2GCuclF97fJh3IJnn0Wl4tfnOATXUwm4keL0S7d2CILpUz8Pq0FZw/dE
-         L5RgGzlElGzN9SdfduTbVz/C/ElBNtC9Dd/to=
-Received: by 10.204.34.197 with SMTP id m5mr4553648bkd.46.1251358771830; Thu, 
-	27 Aug 2009 00:39:31 -0700 (PDT)
-In-Reply-To: <1251337437-16947-11-git-send-email-johan@herland.net>
+	id S1751507AbZH0Hjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 03:39:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbZH0Hjz
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 03:39:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46643 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751244AbZH0Hjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 03:39:55 -0400
+Received: (qmail invoked by alias); 27 Aug 2009 07:39:56 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp071) with SMTP; 27 Aug 2009 09:39:56 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+tuVVem8WtMRE6WVYzPyDoA1jy9nAT1uyyNuw0iD
+	oYkF5eR9NvHGcs
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090826131235.GF16486@harikalardiyari>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127147>
 
-On Thu, Aug 27, 2009 at 03:43, Johan Herland<johan@herland.net> wrote:
-> When allocating a new memory pool, the older pool is leaked, but this=
- is
-> no worse than the current situation, where (pretty much) all leaf_nod=
-es
-> are leaked anyway.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Could you return the unused nodes back into tghe mempool?
-By making the pool a preallocated list, perhaps?
+--8323329-1669151199-1251358796=:7562
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-And then it is trivial to provide a deallocation function for the mempo=
-ol,
-which something really concerned about the memleak can call (like when
-or if libgit get more usable in an application context).
+Hi,
 
-> @@ -95,7 +112,6 @@ static struct leaf_node *note_tree_find(struct int=
-_node *tree, unsigned char n,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0/* unpack tree and resume search */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0tree->a[i] =3D NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0load_subtree(l, tree, n);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 free(l);
+On Wed, 26 Aug 2009, Ali Polatel wrote:
 
-free_leaf_node(l), which returns the node into mempool
+> Tay Ray Chuan yazmış:
+> 
+> > On Mon, Aug 17, 2009 at 10:22 PM, Johannes Schindelin<Johannes.Schindelin@gmx.de> wrote:
+> > > Seems that an object request is aborted, but the slot, and therefore 
+> > > the callback, is called nevertheless.  Tay, does that ring a bell?
+> > 
+> > thanks Johannes, your diagnosis was a vital clue.
+> > 
+> > Ali, could you see if this patch fixes it for you? On my side, I had
+> > some difficulty reproducing your problem reliably (it happened
+> > sometimes but not on other times).
+> > 
+> 
+> It works, I don't get any segfaults after applying this patch.
 
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0return note_tree_find(tree, n, key_sha1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;
-> @@ -118,7 +134,6 @@ static struct leaf_node *note_tree_find(struct in=
-t_node *tree, unsigned char n,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* unpack tree=
- and resume search */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0tree->a[0] =3D=
- NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0load_subtree(l=
-, tree, n);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 free(l);
+Great!
 
-free_leaf_node(l);
+But why did you drop me from the Cc: list?  It's not every day that I can 
+pay that close attention to the mails I get; mails which are not addressed 
+to me directly fall off the plate on other days...
 
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return note_tr=
-ee_find(tree, n, key_sha1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return NULL;
+Ciao,
+Dscho
+
+--8323329-1669151199-1251358796=:7562--
