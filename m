@@ -1,115 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Using git to track my PhD thesis, couple of questions
-Date: Thu, 27 Aug 2009 22:55:15 +0200
-Message-ID: <vpqk50pasek.fsf@bauges.imag.fr>
-References: <20090827203402.GC7168@kisimul>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
+ with various fanout schemes
+Date: Thu, 27 Aug 2009 13:55:00 -0700
+Message-ID: <7vtyztq8nv.fsf@alter.siamese.dyndns.org>
+References: <1251337437-16947-1-git-send-email-johan@herland.net>
+ <1251337437-16947-9-git-send-email-johan@herland.net>
+ <7v7hwp6ebb.fsf@alter.siamese.dyndns.org>
+ <200908271135.31794.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: seanh <seanh.nospam@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 27 22:55:30 2009
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Aug 27 22:55:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgm0H-0007c1-UE
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 22:55:30 +0200
+	id 1Mgm0I-0007c1-LY
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 22:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbZH0UzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 16:55:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752226AbZH0UzT
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 16:55:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42932 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752100AbZH0UzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 16:55:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n7RKrPP5004410
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 27 Aug 2009 22:53:25 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mgm03-0004Dv-GQ; Thu, 27 Aug 2009 22:55:15 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mgm03-0004sj-F7; Thu, 27 Aug 2009 22:55:15 +0200
-In-Reply-To: <20090827203402.GC7168@kisimul> (seanh's message of "Thu\, 27 Aug 2009 21\:34\:02 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 27 Aug 2009 22:53:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7RKrPP5004410
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252011205.71135@T+Ve0fSTwuVRfafb4Etkrw
+	id S1752713AbZH0UzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 16:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752708AbZH0UzW
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 16:55:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49090 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752409AbZH0UzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 16:55:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D04751B749;
+	Thu, 27 Aug 2009 16:55:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8gmUankcFOmDsKLD14AittU+bfY=; b=h83VBO
+	UmPHv4OtMseO8gaAwNQqI47z9YAuio/vnk6jUAaXrXVLpeT6vx5nkUyTyYEMTDPV
+	ZD2hmoUJANSamTCKCotTsVNBuha1FJW3mm0QtP9Tpkwa5biXSPeFgmHy8TmCnvL6
+	j7FJqQzk4uinFLBsHjeIyaww81QwLFZx224FE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K00PIzhckFqZrwn27/+msXQuxFtBCEfh
+	BRn272XSqpcynR315OBFxE3C05tpQCPgAMu2sB5dyonfewY844ZllpNxIK27hyqn
+	1U2CH+88Bmx7Ip9JX6srC2N+NIpTBPlbWJ5Cjob9+HZziRYaROR6cCoinPLBZq54
+	joCM3VOT5+4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 55C621B748;
+	Thu, 27 Aug 2009 16:55:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EF8DA1B746; Thu, 27 Aug
+ 2009 16:55:01 -0400 (EDT)
+In-Reply-To: <200908271135.31794.johan@herland.net> (Johan Herland's message
+ of "Thu\, 27 Aug 2009 11\:35\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E941D946-934B-11DE-AB11-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127209>
 
-seanh <seanh.nospam@gmail.com> writes:
+Johan Herland <johan@herland.net> writes:
 
-> I'm planning to use git to track my PhD thesis as I work on it and to 
-> let my supervisors track it. I've setup a git repository and a gitweb 
-> instance showing it. There are a couple of specific requirements.
->
-> 1. My supervisors don't want to see all the little commits that I make 
-> day by day.
+> 2. Simply decide on a constant 2/2/36 fanout. For the case with < 256K 
+> notes, this is somewhat wasteful, but not prohibitively expensive. For the 
+> case with > 64M notes, performance will start to degrade. The big advantage 
+> with this approach is that when this is hardcoded into the notes code, we 
+> have regained the property that notes for a given commit have exactly _one_ 
+> unique position in the notes tree across all installations (enabling us to 
+> fall back on the regular merge strategy).
 
-I'm not sure I understand why you want that. From what you say, your
-supervisors won't be looking at the LaTeX source, so they won't read
-the diffs for the commits. Instead, they will be looking at regular
-snapshots in PDF. So, how is that disturbing to keep the intermediate
-commits ?
-
-> So I'll commit to a dev branch, then whenever I've made 
-> significant progress will merge it into a trunk branch. I want the trunk 
-> branch to get all the changes but as one big commit, not inherit all the 
-> little commits like a normal merge would do. I think this is a `git 
-> merge --squash`.
-
-It is, but this also means _you_ will somehow lose your intermediate
-commits. Well, you may not really lose them, but after a merge
---squash, you have two options to continue working: work on top of the
-squashed commit (and then your ancestry doesn't contain the small
-ones), or work on top of your previous branches (and then, you don't
-have a proper merge tracking, and you'll get spurious conflicts if you
-try another merge --squash).
-
-> 2. They don't want to look at the latex source but the PDFs built from 
-> it, which they're going to annotate with their comments. So I need an 
-> easy way for them to get the PDF of each commit from gitweb without 
-> having to checkout the repo and build it themselves.
-
-Well, they never need a PDF other than the latest version, will they?
-Then, you don't need Git to send them your PDFs, just upload the PDFs
-somewhere where your supervisors can grab them periodically, and
-you're done.
-
-The issue is when they start modifying the LaTeX files: then you have
-to think of merging, and you'd better do that with a revision control
-system.
-
-
-I also used a revision control system to write my Ph.D (Git was born
-after I started writting, so it wasn't Git yet), and my reviewing
-system has been all the more simple: when a chapter is done, send an
-email with the PDF attached, and "Hi, chapter $n is done, can you have
-a look?". That just works.
-
-> Normally I wouldn't commit the PDF files into the repo because
-> they're compiled files not source files, but it seems that just
-> building a PDF and committing it along with each commit to trunk
-> would be by far the easiest way to achieve this. But will git store
-> the PDFs efficiently, or will the repo start to get really big?
-
-Git will do delta-compression as it can, but I don't think PDFs will
-delta-compress very well, so your repository may grow rather quickly,
-yes. If possible, commit the PDFs on a separate branch so that you can
-easily keep your clean history small in disk space, and discard the
-PDFs if needed.
-
--- 
-Matthieu
+I thought it was Gitney who suggested to use a top-level fan-out based on
+the committer-date.  If you typically have already parsed the commit when
+you want to look up notes objects for it, it won't have extra overhead,
+and when looking at only recent history it will only need to access a
+small subset of trees.  I thought it was a neat idea (except that the
+question becomes what the granularity of the top level fan-out should
+be---one a day?  one a month?---the optimum would depend on commit
+density).  Was that idea shot down for some reason?
