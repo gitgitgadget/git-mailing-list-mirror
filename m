@@ -1,89 +1,80 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv4 10/12] notes.c: Implement simple memory pooling of leaf
- nodes
-Date: Fri, 28 Aug 2009 00:43:44 +0200
-Message-ID: <200908280043.44261.johan@herland.net>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
- <81b0412b0908270039l7a937c3bmd745274c71526ce1@mail.gmail.com>
- <200908271149.11003.johan@herland.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH] upload-pack: add a trigger for post-upload-pack hook
+Date: Thu, 27 Aug 2009 22:56:05 +0000
+Message-ID: <robbat2-20090827T225507-944514463Z@orbis-terrarum.net>
+References: <1250579093-40706-1-git-send-email-tom@mojombo.com>
+ <12c267e40908251043g4f3e36aya05d9c705f5afee2@mail.gmail.com>
+ <20090825184525.GC23731@coredump.intra.peff.net>
+ <7vprajmp16.fsf@alter.siamese.dyndns.org>
+ <7v1vmycfhd.fsf@alter.siamese.dyndns.org>
+ <7vy6p69j6a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 00:44:00 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 28 01:03:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgnhG-000477-Uv
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 00:43:59 +0200
+	id 1Mgnzf-0000NU-My
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 01:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751373AbZH0Wnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 18:43:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbZH0Wnu
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 18:43:50 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:44140 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751300AbZH0Wnt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 18:43:49 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP2003EX4H1H490@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Fri, 28 Aug 2009 00:43:49 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP2009HK4GWMV30@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 28 Aug 2009 00:43:49 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.27.223323
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <200908271149.11003.johan@herland.net>
+	id S1751518AbZH0XCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 19:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZH0XCu
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 19:02:50 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:48357 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751300AbZH0XCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 19:02:50 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Aug 2009 19:02:49 EDT
+Received: (qmail 21448 invoked from network); 27 Aug 2009 22:56:10 -0000
+Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
+    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Thu, 27 Aug 2009 22:56:10 +0000
+Received: (qmail 27418 invoked by uid 10000); 27 Aug 2009 22:56:05 -0000
+Content-Disposition: inline
+In-Reply-To: <7vy6p69j6a.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127230>
-
-On Thursday 27 August 2009, Johan Herland wrote:
-> On Thursday 27 August 2009, Alex Riesen wrote:
-> > On Thu, Aug 27, 2009 at 03:43, Johan Herland<johan@herland.net> wrote:
-> > > When allocating a new memory pool, the older pool is leaked, but this
-> > > is no worse than the current situation, where (pretty much) all
-> > > leaf_nodes are leaked anyway.
-> >
-> > Could you return the unused nodes back into the mempool?
-> > By making the pool a preallocated list, perhaps?
->
-> Yes, maintaining a free-list is certainly possible. However, the number
-> of free()d leaf_nodes is relatively small (only subtree entries are
-> free()d after unpacking them into the tree structure), so I'm not sure it
-> pays off, runtime-wise.
-
-I played around with the free-list idea, but it cost more than the memory 
-pooling code saved in the first place. I'm leaning towards dropping the 
-whole memory pooling idea, as the small run-time improvement is probably not 
-worth the added complexity. We'll see. I'll re-evaluate once I've refactored 
-the code according to the other threads of this discussion.
-
-> > And then it is trivial to provide a deallocation function for the
-> > mempool, which something really concerned about the memleak can call
-> > (like when or if libgit get more usable in an application context).
->
-> Yes, I plan to provide a free_notes() function that free()s all the
-> memory associated with the notes data structure. This would of course
-> keep references to all the mempools, and deallocate them (along with all
-> the int_nodes).
-
-This still stands, of course. Should be part of the next iteration.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127231>
 
 
-...Johan
+--rwEMma7ioTxnRzrJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+On Wed, Aug 26, 2009 at 05:47:41PM -0700, Junio C Hamano wrote:
+> After upload-pack successfully finishes its operation, post-upload-pack
+> hook can be called for logging purposes.
++1 from me.
+
+I'm actually going to scrap my previous pre-upload-pack hook and rebase
+it off this, because I see a lot of commonality (I was passing in
+have/want via stdin too).
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux: Developer, Trustee & Infrastructure Lead
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--rwEMma7ioTxnRzrJ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.11 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iEYEARECAAYFAkqXDwUACgkQPpIsIjIzwiwyuACg/eE5L0L+OFewOblNxPuxFyXc
+/U8AoOK49U38nUgIiDeyEL1RJxKxODUI
+=UOTj
+-----END PGP SIGNATURE-----
+
+--rwEMma7ioTxnRzrJ--
