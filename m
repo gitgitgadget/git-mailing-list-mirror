@@ -1,94 +1,89 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Question regarding git fetch
-Date: Thu, 27 Aug 2009 17:22:55 +0000
-Message-ID: <32541b130908271022i6a825198i37e2ec82ed5f833c@mail.gmail.com>
-References: <1251387045053-3527289.post@n2.nabble.com> <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com> 
-	<20090827164657.GA17090@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2009, #05; Wed, 26)
+Date: Thu, 27 Aug 2009 10:32:46 -0700
+Message-ID: <7vr5uxrwld.fsf@alter.siamese.dyndns.org>
+References: <7vfxbeb0mt.fsf@alter.siamese.dyndns.org>
+ <SW-k_fUnLrE0kFNXSIYgMIc-pexuL5ykWs1ZdvHAo9_LMxe9ggJtCA@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 27 19:25:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Aug 27 19:33:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgiiU-0000yu-Ui
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 19:24:55 +0200
+	id 1MgiqX-0003IH-1l
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 19:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbZH0RXQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 13:23:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751387AbZH0RXP
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 13:23:15 -0400
-Received: from mail-yw0-f184.google.com ([209.85.211.184]:39548 "EHLO
-	mail-yw0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309AbZH0RXN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 13:23:13 -0400
-Received: by ywh14 with SMTP id 14so1690176ywh.1
-        for <git@vger.kernel.org>; Thu, 27 Aug 2009 10:23:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7P2NArPq2gQOx4I7c293MVTWgZA0coFlADDMBTsKEnk=;
-        b=X7iOZ/2NfRgJ/0yCb07FtsBiKHX5rvoJZy5q9VEM+5B+BT1eY14LgcxWY70MvYRd0X
-         Xka6REZ727/iCX9YGMFROfIWCD+vy4S4JCFPflQFAwtbPKPFAniSz2EuxT/6F4861eHL
-         SqoUKuyENypGqDFUWzCZnY/FTCW8a9g+Y8ojE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=IDjxDRCXNj6ROAwGOwCuSS7HCSKFz9kGGpF+PdrrIh9OlR0EwBtCJI2yPzJxcjflvG
-         qs/wTSi8SRZtTQzcyxzaqJMAawa7Pyz1doujzG/38DAwph8to+UA0z3LOxzSJMZiIuPP
-         bfcl9K/xxuesjWd1ZpzB33llRYP8nRm9dOIJg=
-Received: by 10.150.46.31 with SMTP id t31mr175988ybt.285.1251393795201; Thu, 
-	27 Aug 2009 10:23:15 -0700 (PDT)
-In-Reply-To: <20090827164657.GA17090@atjola.homenet>
+	id S1751297AbZH0Rc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 13:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbZH0Rc4
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 13:32:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38086 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189AbZH0Rcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 13:32:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EE003929C;
+	Thu, 27 Aug 2009 13:32:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gE4m7/aePwWsmda3z+iF0UKL2a0=; b=gVVZt6
+	ga62monLRwHaI89xqLSQZ3ZoTKhCI2pY/oF4x9z/yIbHGA42MGop/zrar7+bW1RZ
+	Kq++OoYT16rQtnZ32T5dEkxk4xzlOXmRCG7olIRYHsDOWu3pRKe7GWK8opZRwYEn
+	Tw+fb/zr07ixb0cAYxfWyX/kfy6a0OqmnXE1k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gvq/vubVnQO4NQY0DFYuhfKdlAaoFef+
+	S040mX6KYaaU3qHw2G+Aqsc+do1WXPGL9xtvWRHvXW0Nig8Hh+rS8vl1VWDQSy0n
+	dz6zcRhBn/wnFrI23IspwT3TPWrd1wSqkZN+j0PusM+PDl4e+vkducjZeNAN9rFt
+	+9HeS7Q90/4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 129933929A;
+	Thu, 27 Aug 2009 13:32:54 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 325B939299; Thu, 27 Aug 2009
+ 13:32:47 -0400 (EDT)
+In-Reply-To: <SW-k_fUnLrE0kFNXSIYgMIc-pexuL5ykWs1ZdvHAo9_LMxe9ggJtCA@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu\, 27 Aug 2009 11\:41\:18 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A6E02D94-932F-11DE-ACC8-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127180>
 
-2009/8/27 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> It would also be pretty hard to implement that. Given the default fet=
-ch
-> refspec, it would "simply" be a matter of mapping the given ref to th=
-e
-> refspec, so e.g. "foo" becomes "refs/heads/foo:refs/remotes/origin/fo=
-o".
-> But even just using "git remote add -t master foo git://..." breaks
-> that, as the fetch refspec in the config will no longer be a glob, an=
-d
-> thus no such mapping is possible.
+Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
 
-Hmm, I don't really see why that introduces a problem.  If you use -t
-to override explicitly which refs you want to save, then it's not a
-problem if git doesn't save other refs, right?
+>> This seems to break t9001.  Near the tip of 'pu' I have a iffy
+>> workaround.
+>
+> Can you squash this into your 'iffy' workaround to help platforms
+> (Solaris 7, IRIX 6.5) without the 'yes' utility?
 
-I'd be more concerned about the inconsistency between
+Not in this form, for two reasons ;-)
 
-   git fetch git://whatever master
-and
-   git fetch origin master
+(1) t7610-mergetool.sh,also seems to use "yes".  Perhaps define something
+    in test-lib.sh?
 
-There's no really good way for the first one to know it needs to
-update any branches, even though 'origin' might be an alias for
-git://whatever.  So users will still be confused.
+(2) The implementation is iffy.
 
-Thinking of that also reminds me of another surprise.  If you do:
+> +yes () {
+> +	test -n "$*" && y="$*" || y='y'
 
-   git fetch git://whatever
+Shouldn't it be
 
-=2E..it seems to do nothing at all, as far as I can see.  Which makes
-sense, I guess, since I wouldn't really expect it to be meaningful.
-But it seems to connect up to the remote server anyway just in case.
+	if test $# = 0
+        then
+        	y=y
+	else
+        	y="$*"
+	fi
 
-I suppose I have no useful suggestions here, other than an
-interpretation of why users find the current behaviour confusing.
+so that
 
-Have fun,
+	yes ""
 
-Avery
+would give runs of empty lines?        
