@@ -1,8 +1,11 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v5 1/6] fast-import: put option parsing code in seperate functions
-Date: Thu, 27 Aug 2009 11:12:11 -0700
-Message-ID: <1251396736-928-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [RFC PATCH v5 3/6] fast-import: add feature command
+Date: Thu, 27 Aug 2009 11:12:13 -0700
+Message-ID: <1251396736-928-3-git-send-email-srabbelier@gmail.com>
+References: <1251396736-928-1-git-send-email-srabbelier@gmail.com>
+ <1251396736-928-2-git-send-email-srabbelier@gmail.com>
+Cc: Sverre Rabbelier <srabbelier@google.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -13,211 +16,128 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgjSl-00077M-Q4
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 20:12:44 +0200
+	id 1MgjSn-00077M-HF
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 20:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752043AbZH0SMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 14:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751575AbZH0SMc
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 14:12:32 -0400
+	id S1752346AbZH0SMi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 14:12:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752222AbZH0SMi
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 14:12:38 -0400
 Received: from mail-ew0-f206.google.com ([209.85.219.206]:57306 "EHLO
 	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751293AbZH0SMb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 14:12:31 -0400
-Received: by ewy2 with SMTP id 2so1461338ewy.17
-        for <git@vger.kernel.org>; Thu, 27 Aug 2009 11:12:32 -0700 (PDT)
+	with ESMTP id S1751575AbZH0SMg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 14:12:36 -0400
+Received: by mail-ew0-f206.google.com with SMTP id 2so1461338ewy.17
+        for <git@vger.kernel.org>; Thu, 27 Aug 2009 11:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=ac7bMlnuPzpg4W6V7PJjvvmxMEX/4DlRrxzp2Owmv6w=;
-        b=CwvYU9AgZnBEWvMlgPQZZCy0m1h5O3aZbQyx0RFmx8cpvpCgm7rBCM3kmtl/MX4OOY
-         Qo/uH6Awy9Ms1hta3s2wS5EJq5pP4T3RxzUl+mLcNaDiHMzKE7IvoX6t66APTUJrke5+
-         59dwnVJbzPDvgnDk2I+GLVskjq4ZZiTvC6Zwc=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=4ZioZgXM8+EzflwadAkJn07Xa0i2+wU9ooG8nemIMQ0=;
+        b=xVIZolgfyo3q5jDDLIVHSzt3/EqzTDoAVmHQm+IDf0Y2Z510dWJ0vsniCpkcr43/wE
+         O340Mrkco8FV+sA7+QVzO9pyOXrY4vOAiMz/0Ukz56e+kapMS2aWe+bMdIhVsNHH0B9r
+         CuUtDfOFGEnRI8azu2hflDAdNUL6nkgn9Hfv8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=sitj8xXSMGi0cNu6UqdKPy9LTij0gOGH2qpCwMCQotvL+mLvpCk3N3SKsACkMErblg
-         InLTl3Rfy6nrVOGCJJhf1UCRNkFZNy3909EhsdDC+iKDblSEbs/70cfW0jDCNO6YjGMJ
-         VPUDI2Ur4AIC5AQZWj9hqdGaD/qieNjL3EUqs=
-Received: by 10.210.137.4 with SMTP id k4mr9970601ebd.89.1251396750649;
-        Thu, 27 Aug 2009 11:12:30 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=tzH4jPHSfJTgVKiFZygqFhlXyeK9GrjzY3rrHoOkCkaf45y99JPeQZsL+bVn/1zRZr
+         fvd9wT2+4ORhoVA0ok3larNCzYO5S2hy0kx/VxyuMer31dj/ScoCThRGRsgZ6Y0M+Tgv
+         A30KFwoAQH3zQkmxBpcKAxiyOy7/Ap7Zqd8Qg=
+Received: by 10.211.159.15 with SMTP id l15mr598027ebo.96.1251396756405;
+        Thu, 27 Aug 2009 11:12:36 -0700 (PDT)
 Received: from localhost.localdomain (kaayla.mtv.corp.google.com [172.22.72.177])
-        by mx.google.com with ESMTPS id 10sm62710eyz.25.2009.08.27.11.12.27
+        by mx.google.com with ESMTPS id 10sm62710eyz.25.2009.08.27.11.12.33
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 27 Aug 2009 11:12:30 -0700 (PDT)
+        Thu, 27 Aug 2009 11:12:36 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.122.g6ffd7
+In-Reply-To: <1251396736-928-2-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127185>
 
-Putting the options in their own functions increases readability of
-the option parsing block and makes it easier to reuse the option
-parsing code later on.
+From: Sverre Rabbelier <srabbelier@google.com>
+
+This allows the fronted to require a specific feature to be supported
+by the frontend, or abort.
+
+Also add support for the first feature, date-format=.
 
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-	Unchanged from v4.
+	New in this series, currently RFC. This should make it easier
+	for frontends to specify their needs.
 
- fast-import.c |  115 +++++++++++++++++++++++++++++++++++++--------------------
- 1 files changed, 75 insertions(+), 40 deletions(-)
+ Documentation/git-fast-import.txt |   16 ++++++++++++++++
+ fast-import.c                     |   13 +++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
 
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index c2f483a..1e293f2 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -303,6 +303,10 @@ and control the current import process.  More detailed discussion
+ 	standard output.  This command is optional and is not needed
+ 	to perform an import.
+ 
++`feature`::
++	Require that fast-import supports the specified feature, or
++	abort if it does not.
++
+ `commit`
+ ~~~~~~~~
+ Create or update a branch with a new commit, recording one logical
+@@ -813,6 +817,18 @@ Placing a `progress` command immediately after a `checkpoint` will
+ inform the reader when the `checkpoint` has been completed and it
+ can safely access the refs that fast-import updated.
+ 
++`feature`
++~~~~~~~~~
++Require that fast-import supports the specified feature, or abort if
++it does not.
++
++....
++	'feature' SP <feature> LF
++....
++
++The <feature> part of the command may be any string matching
++[a-zA-Z-] and should be understood by a version of fast-import.
++
+ Crash Reports
+ -------------
+ If fast-import is supplied invalid input it will terminate with a
 diff --git a/fast-import.c b/fast-import.c
-index 7ef9865..b904f20 100644
+index 812fcf0..9bf06a4 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -291,6 +291,7 @@ static unsigned long branch_count;
- static unsigned long branch_load_count;
- static int failure;
- static FILE *pack_edges;
-+static unsigned int show_stats = 1;
- 
- /* Memory pools */
- static size_t mem_pool_alloc = 2*1024*1024 - sizeof(struct mem_pool);
-@@ -2337,7 +2338,7 @@ static void parse_progress(void)
- 	skip_optional_lf();
+@@ -2450,6 +2450,17 @@ static void parse_one_option(const char *option)
+ 	}
  }
  
--static void import_marks(const char *input_file)
-+static void option_import_marks(const char *input_file)
- {
- 	char line[512];
- 	FILE *f = fopen(input_file, "r");
-@@ -2372,6 +2373,76 @@ static void import_marks(const char *input_file)
- 	fclose(f);
- }
- 
-+static void option_date_format(const char *fmt)
++static void parse_feature(void)
 +{
-+	if (!strcmp(fmt, "raw"))
-+		whenspec = WHENSPEC_RAW;
-+	else if (!strcmp(fmt, "rfc2822"))
-+		whenspec = WHENSPEC_RFC2822;
-+	else if (!strcmp(fmt, "now"))
-+		whenspec = WHENSPEC_NOW;
-+	else
-+		die("unknown --date-format argument %s", fmt);
-+}
++	char *feature = command_buf.buf + 8;
 +
-+static void option_max_pack_size(const char *packsize)
-+{
-+	max_packsize = strtoumax(packsize, NULL, 0) * 1024 * 1024;
-+}
-+
-+static void option_depth(const char *depth)
-+{
-+	max_depth = strtoul(depth, NULL, 0);
-+	if (max_depth > MAX_DEPTH)
-+		die("--depth cannot exceed %u", MAX_DEPTH);
-+}
-+
-+static void option_active_branches(const char *branches)
-+{
-+	max_active_branches = strtoul(branches, NULL, 0);
-+}
-+
-+static void option_export_marks(const char *marks)
-+{
-+	mark_file = xstrdup(marks);
-+}
-+
-+static void option_export_pack_edges(const char *edges)
-+{
-+	if (pack_edges)
-+		fclose(pack_edges);
-+	pack_edges = fopen(edges, "a");
-+	if (!pack_edges)
-+		die_errno("Cannot open '%s'", edges);
-+}
-+
-+static void parse_one_option(const char *option)
-+{
-+	if (!prefixcmp(option, "date-format=")) {
-+		option_date_format(option + 12);
-+	} else if (!prefixcmp(option, "max-pack-size=")) {
-+		option_max_pack_size(option + 14);
-+	} else if (!prefixcmp(option, "depth=")) {
-+		option_depth(option + 6);
-+	} else if (!prefixcmp(option, "active-branches=")) {
-+		option_active_branches(option + 16);
-+	} else if (!prefixcmp(option, "import-marks=")) {
-+		option_import_marks(option + 13);
-+	} else if (!prefixcmp(option, "export-marks=")) {
-+		option_export_marks(option + 13);
-+	} else if (!prefixcmp(option, "export-pack-edges=")) {
-+		option_export_pack_edges(option + 18);
-+	} else if (!prefixcmp(option, "force")) {
-+		force_update = 1;
-+	} else if (!prefixcmp(option, "quiet")) {
-+		show_stats = 0;
-+	} else if (!prefixcmp(option, "stats")) {
-+		show_stats = 1;
++	if (!prefixcmp(feature, "date-format=")) {
++		option_date_format(feature + 12);
 +	} else {
-+		die("Unsupported option: %s", option);
++		die("This version of fast-import does not support feature %s.", feature);
 +	}
 +}
 +
  static int git_pack_config(const char *k, const char *v, void *cb)
  {
  	if (!strcmp(k, "pack.depth")) {
-@@ -2398,7 +2469,7 @@ static const char fast_import_usage[] =
- 
- int main(int argc, const char **argv)
- {
--	unsigned int i, show_stats = 1;
-+	unsigned int i;
- 
- 	git_extract_argv0_path(argv[0]);
- 
-@@ -2419,44 +2490,8 @@ int main(int argc, const char **argv)
- 
- 		if (*a != '-' || !strcmp(a, "--"))
- 			break;
--		else if (!prefixcmp(a, "--date-format=")) {
--			const char *fmt = a + 14;
--			if (!strcmp(fmt, "raw"))
--				whenspec = WHENSPEC_RAW;
--			else if (!strcmp(fmt, "rfc2822"))
--				whenspec = WHENSPEC_RFC2822;
--			else if (!strcmp(fmt, "now"))
--				whenspec = WHENSPEC_NOW;
--			else
--				die("unknown --date-format argument %s", fmt);
--		}
--		else if (!prefixcmp(a, "--max-pack-size="))
--			max_packsize = strtoumax(a + 16, NULL, 0) * 1024 * 1024;
--		else if (!prefixcmp(a, "--depth=")) {
--			max_depth = strtoul(a + 8, NULL, 0);
--			if (max_depth > MAX_DEPTH)
--				die("--depth cannot exceed %u", MAX_DEPTH);
--		}
--		else if (!prefixcmp(a, "--active-branches="))
--			max_active_branches = strtoul(a + 18, NULL, 0);
--		else if (!prefixcmp(a, "--import-marks="))
--			import_marks(a + 15);
--		else if (!prefixcmp(a, "--export-marks="))
--			mark_file = a + 15;
--		else if (!prefixcmp(a, "--export-pack-edges=")) {
--			if (pack_edges)
--				fclose(pack_edges);
--			pack_edges = fopen(a + 20, "a");
--			if (!pack_edges)
--				die_errno("Cannot open '%s'", a + 20);
--		} else if (!strcmp(a, "--force"))
--			force_update = 1;
--		else if (!strcmp(a, "--quiet"))
--			show_stats = 0;
--		else if (!strcmp(a, "--stats"))
--			show_stats = 1;
--		else
--			die("unknown option %s", a);
-+
-+		parse_one_option(a + 2);
+@@ -2526,6 +2537,8 @@ int main(int argc, const char **argv)
+ 			parse_checkpoint();
+ 		else if (!prefixcmp(command_buf.buf, "progress "))
+ 			parse_progress();
++		else if (!prefixcmp(command_buf.buf, "feature "))
++			parse_feature();
+ 		else
+ 			die("Unsupported command: %s", command_buf.buf);
  	}
- 	if (i != argc)
- 		usage(fast_import_usage);
 -- 
 1.6.4.122.g6ffd7
