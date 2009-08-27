@@ -1,73 +1,88 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [SCuMD]
-Date: Thu, 27 Aug 2009 16:41:38 +0200
-Message-ID: <200908271641.38368.robin.rosenberg.lists@dewire.com>
-References: <4A965799.6050204@gmx.de> <4A965A1D.3060104@op5.se>
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: Re: vc in emacs problem with git
+Date: Thu, 27 Aug 2009 21:44:33 +0530
+Message-ID: <f46c52560908270914o7027dc0bo873544dc0687cc48@mail.gmail.com>
+References: <f46c52560908270828o574c0de6s17189a7326a1376d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Christian Senkowski <csenkowski@gmx.de>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:51:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: help-gnu-emacs@gnu.org, Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 27 18:14:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MghG2-0005Nj-U3
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 17:51:27 +0200
+	id 1MghcY-0004dg-79
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 18:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbZH0PvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 11:51:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbZH0PvR
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 11:51:17 -0400
-Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:51341 "EHLO
-	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751828AbZH0PvQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 11:51:16 -0400
-X-Greylist: delayed 4167 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Aug 2009 11:51:16 EDT
-Received: from sleipner.localnet (90.232.71.229) by pne-smtpout2-sn1.fre.skanova.net (7.3.140.3)
-        id 4A2D61FD0070309E; Thu, 27 Aug 2009 16:41:43 +0200
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <4A965A1D.3060104@op5.se>
-Content-Disposition: inline
+	id S1752834AbZH0QOc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 12:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752804AbZH0QOc
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 12:14:32 -0400
+Received: from mail-px0-f174.google.com ([209.85.216.174]:44731 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752591AbZH0QOb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 12:14:31 -0400
+Received: by pxi4 with SMTP id 4so1235832pxi.21
+        for <git@vger.kernel.org>; Thu, 27 Aug 2009 09:14:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=AcWp8P8zay8/G6az1H6bn195SnCmPlbECJClo28YXXQ=;
+        b=C1+XpLGIZ6xhQV2wxRtzVKVllHA7h4z/xFAkaruJlgAUr8lg1je7xfjMADoEQ10/89
+         0+87OYGzVrXbPuNQWYLSGs8duDfzE7iws8W4euvwZqH0L5FWdmblIi1gbg1g3sgn+nEt
+         AgvtOPl04xN5OubJ7FU7kJ0PsF54rXOTMIRbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=u18A8ZPs6gGwsN4mwxv1FRdbd4NHlte2rlMIwxHBZffhFZcAy5ZKHnQgIosx/bc++i
+         GpkX0DQjdnjMRFKPnvIAWREbV4cLNcJ7MkgyqU+6SlvIn7cGvaZaHWE+eHrIF5aZp4x/
+         O9Irvu1Gn2Xr7U63Ub5Pkmsu0blyhEeDZpGf8=
+Received: by 10.115.133.7 with SMTP id k7mr11926744wan.96.1251389673614; Thu, 
+	27 Aug 2009 09:14:33 -0700 (PDT)
+In-Reply-To: <f46c52560908270828o574c0de6s17189a7326a1376d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127167>
 
-torsdag 27 augusti 2009 12:04:13 skrev Andreas Ericsson <ae@op5.se>:
-> Christian Senkowski wrote:
-> > Hi,
-> > 
-> > I cloned SCuMD directly via git and started it but got following error:
-> > 
-> > ~/scumd$ ./run.sh
-> > Exception in thread "main" java.lang.NoClassDefFoundError:
-> > com.asolutions.scmsshd.SCuMD
-> >    at gnu.java.lang.MainThread.run(libgcj.so.90)
-> > Caused by: java.lang.ClassNotFoundException:
-> > com.asolutions.scmsshd.SCuMD not found in
-> > gnu.gcj.runtime.SystemClassLoader{urls=[file:depend/lib/jgit.jar,file:depend/lib/minasshd.jar,file:lib/aopalliance-1.0.jar,file:lib/bcprov-jdk15-140.jar,file:lib/commons-io-1.4.jar,file:lib/commons-logging-1.0.4.jar,file:./,file:lib/jline-0.9.1.jar,file:lib/jline-0.9.94.jar,file:lib/jpam-1.1.jar,file:lib/jsch-0.1.40.jar,file:lib/jzlib-1.0.7.jar,file:lib/log4j-1.2.13.jar,file:lib/slf4j-api-1.5.2.jar,file:lib/slf4j-log4j12-1.4.3.jar,file:lib/spring-beans-2.5.5.jar,file:lib/spring-context-2.5.5.jar,file:lib/spring-core-2.5.5.jar],
-> > parent=gnu.gcj.runtime.ExtensionClassLoader{urls=[], parent=null}}
-> >    at java.net.URLClassLoader.findClass(libgcj.so.90)
-> >    at gnu.gcj.runtime.SystemClassLoader.findClass(libgcj.so.90)
-> >    at java.lang.ClassLoader.loadClass(libgcj.so.90)
-> >    at java.lang.ClassLoader.loadClass(libgcj.so.90)
-> >    at gnu.java.lang.MainThread.run(libgcj.so.90)
-> > 
-> > 
-> > Please help me out :)
-> > 
+Just updating my own question:
+when I do a C-x v v (vc-next-action)
+which is supposed to be the most basic operation for checking in a file=
+ I get
 
-Short answer: Don't run things with GCJ unless you make sure it works
-with SUN's java or OPENJDK first. If it still doesn't work ask the GCJ
-people for help.
+ Wrong type argument: stringp, nil
 
-> Please refer to the SCuMD mailing list for this SCuMD related question.
+So vc can be assumed to be a broken I guess?
 
-Their README file refers to the Git mailing list. Hence the tag, Kind'o like
-JGit, which they depend upon.
-
--- robin
+On Thu, Aug 27, 2009 at 8:58 PM, Rustom Mody<rustompmody@gmail.com> wro=
+te:
+> This is emacs 23 using the new 'updated-for-modern-dvcs' vc
+> I see a mode line saying (note the colon)
+> Git:master
+>
+> In the info on vc (Version control and the mode line) the emacs manua=
+l says:
+>
+> =A0 The character between the back-end name and the revision ID
+> indicates the version control status of the file.=A0 `-' means that t=
+he
+> work file is not locked (if locking is in use), or not modified (if
+> locking is not in use).=A0 `:' indicates that the file is locked, or =
+that
+> it is modified.
+>
+> However at the shell a git status says
+> # On branch master
+> nothing to commit (working directory clean)
+>
+> If I close and reopen the file the colon becomes a -
+> But I get a message:
+>
+> `working-revision' not found: using the old `workfile-version' instea=
+d.
+>
