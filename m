@@ -1,72 +1,98 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Question regarding git fetch
-Date: Thu, 27 Aug 2009 17:53:05 -0400
-Message-ID: <20090827215305.GA6348@coredump.intra.peff.net>
-References: <1251387045053-3527289.post@n2.nabble.com>
- <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
- <20090827164657.GA17090@atjola.homenet>
- <32541b130908271022i6a825198i37e2ec82ed5f833c@mail.gmail.com>
- <20090827204835.GC4399@coredump.intra.peff.net>
- <20090827213426.GD4399@coredump.intra.peff.net>
- <7v7hwpors9.fsf@alter.siamese.dyndns.org>
- <20090827215007.GA6231@coredump.intra.peff.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: finding unmerged branches
+Date: Thu, 27 Aug 2009 18:02:41 -0400
+Message-ID: <20090827220241.GA1413@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 27 23:53:17 2009
+Content-Type: multipart/mixed; boundary="Dxnq1zWXvFF0Q93v"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 28 00:12:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgmuC-0007LT-Km
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:53:17 +0200
+	id 1MgnCK-0004Ai-Lz
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 00:12:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255AbZH0VxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 17:53:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZH0VxG
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:53:06 -0400
-Received: from peff.net ([208.65.91.99]:60074 "EHLO peff.net"
+	id S1753331AbZH0WLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 18:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753296AbZH0WLq
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 18:11:46 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:57639 "EHLO kitenet.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752714AbZH0VxF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 17:53:05 -0400
-Received: (qmail 927 invoked by uid 107); 27 Aug 2009 21:53:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 27 Aug 2009 17:53:16 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Aug 2009 17:53:05 -0400
+	id S1753271AbZH0WLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 18:11:46 -0400
+X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Aug 2009 18:11:46 EDT
+Received: from gnu.kitenet.net (unknown [216.184.70.241])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id A1270314413
+	for <git@vger.kernel.org>; Thu, 27 Aug 2009 18:02:57 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 6A390298020; Thu, 27 Aug 2009 18:02:41 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20090827215007.GA6231@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127223>
 
-On Thu, Aug 27, 2009 at 05:50:07PM -0400, Jeff King wrote:
 
-> > I think this is a good example that any change results from this
-> > discussion should apply _only_ to cases where command line refspecs lack
-> > colon (i.e. used to mean "do not store this anywhere but in FETCH_HEAD").
-> 
-> I don't think the colon is the issue. Consider the same situation, but I
-> say:
-> 
->   # but today let's demo it first
->   $ git fetch origin master
->   $ git checkout -b demo FETCH_HEAD
-> 
-> I'm still screwed. The issue is that you consider your configured
-> refspec destinations to be precious, and not merely a cache for what's
-> happening on the remote side.
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Which, btw, led me to consider whether there are heuristics for deciding
-when a fetch refspec means one thing and not the other. I don't think
-there are reliable ones (probably the default configured
-refs/remotes/$remotename/* would not yield false positives, but I think
-limiting to that would yield false negatives). So maybe this is
-something that should be configurable, disabled by default for now, and
-maybe enabled by default in the future (v1.7.0?).
+My situation is this: My project has a lot of remotes with
+lots of branches; about 250 branches in total. I want to
+figure out which of these branches to look at to consider
+merging.
 
--Peff
+So, I reach for git branch -a --no-merged master; that's what
+its man page says its for. But this still finds 120 branches,
+and a lot of them are not things I want to look at. Many of
+them are copies of some of my own branches.
+
+What I really want is a way to find remote branches that
+are not merged with any of my local branches (or any origin
+branches). A slow and stupid implementation of that is in the
+attached git-unmerged script, and it weeds the branch list
+down to 68 branches, which are mostly really ones I might
+want to look at.
+
+So, three questions:
+
+* Is this situation somewhat common, or an I doing something wrong?
+  (Assuming that I have a good reason to want to look at remote 
+  branches rather than waiting to get merge requests.)
+* Is there a better way to accomplish this than a slow perl script that
+  runs git branch -r --merged foreach of my branches?
+* Should git have something builtin to handle this case better?
+
+-- 
+see shy jo
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=git-unmerged
+
+#!/usr/bin/perl
+
+my @remote_branches = split ' ', `git branch -r | awk '{print $1}'`;
+
+# have to filter out the "* "
+my @local_branches = split ' ', `git branch | sed 's/^..//'`;
+
+my @origin_branches = grep /^origin\//, @remote_branches;
+
+my %unmerged = (map { $_ => 1 } @remote_branches),
+	(map { $_ => 0 } @local_branches, @origin_branches);
+
+foreach my $branch (@local_branches, @origin_branches) {
+	map { $unmerged{$_}=0 } split ' ', `git branch -r --merged "$branch" | awk '{print $1}'`
+}
+
+foreach my $branch (sort keys %unmerged) {
+	print "$branch\n" if $unmerged{$branch};
+}
+
+--Dxnq1zWXvFF0Q93v--
