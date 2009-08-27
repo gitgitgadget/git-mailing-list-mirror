@@ -1,86 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
- with various fanout schemes
-Date: Thu, 27 Aug 2009 13:58:00 -0700
-Message-ID: <7vprahq8iv.fsf@alter.siamese.dyndns.org>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
- <1251337437-16947-9-git-send-email-johan@herland.net>
- <7v7hwp6ebb.fsf@alter.siamese.dyndns.org>
- <200908271135.31794.johan@herland.net>
- <alpine.DEB.1.00.0908271243120.7562@intel-tinevez-2-302>
+From: Nico Weber <thakis@chromium.org>
+Subject: Re: Git woes
+Date: Thu, 27 Aug 2009 14:06:21 -0700
+Message-ID: <ca36ec440908271406t214fee11hed2c5e6da0e5ac0@mail.gmail.com>
+References: <ca36ec440908262242l6e818c28gd7b0daff2b537d4@mail.gmail.com>
+	 <f4f35435-79b7-46c2-8c2d-2d4c4deb68c4@s15g2000yqs.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Aug 27 22:58:38 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 27 23:06:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgm3J-0008St-T3
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 22:58:38 +0200
+	id 1MgmB0-0002Ek-T3
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbZH0U6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 16:58:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752815AbZH0U6T
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 16:58:19 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52239 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752775AbZH0U6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 16:58:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C5E71B7A1;
-	Thu, 27 Aug 2009 16:58:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FyYgo/eJlojDP9X7pzSIO+9aDZc=; b=D4CVNz
-	ZlC8wlOju/tNn6mLcKY2R4tm77ONGEqwi+kDnKIxBebyzpcH3bpZHFXRRe98b3V8
-	9UxCM9s33BUN3vp1xiCsJ1QL1eTJZwxbMqpnFSIXSRMdNV/WO3G2ykIQIttOdYKK
-	qeV2dlqHqbod7QyH4+abttSlWNtxvTrUI2tI4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VxRM2REwy3rbJF4Elqr4uivZUWpG7hlC
-	+KGunJCFCPl0i5xfz4Go5Eg2d6azcAf/zO9JdAWa8lrpaDONgY7PSOdAiekjZJyg
-	pNqNViN8taBw7Z1V+Jx8C9sroVMr4AGGqVxzxzJIumti0BmIbZJchydnUVAKM2qH
-	FhCzjj3q42c=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA3421B798;
-	Thu, 27 Aug 2009 16:58:10 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F6DB1B789; Thu, 27 Aug
- 2009 16:58:01 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0908271243120.7562@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Thu\, 27 Aug 2009 12\:47\:49 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 543FD0A4-934C-11DE-AB11-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752721AbZH0VGZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 17:06:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbZH0VGZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:06:25 -0400
+Received: from smtp-out.google.com ([216.239.45.13]:62167 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516AbZH0VGY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 17:06:24 -0400
+Received: from spaceape14.eur.corp.google.com (spaceape14.eur.corp.google.com [172.28.16.148])
+	by smtp-out.google.com with ESMTP id n7RL6PLn004816
+	for <git@vger.kernel.org>; Thu, 27 Aug 2009 14:06:26 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1251407186; bh=49Oykk0oDFErqX7OMuIrtW4HnY4=;
+	h=DomainKey-Signature:MIME-Version:Sender:In-Reply-To:References:
+	 Date:X-Google-Sender-Auth:Message-ID:Subject:From:To:Content-Type:
+	 Content-Transfer-Encoding:X-System-Of-Record; b=StZb9gRtKpydlM5aVh
+	j91dq/02DwkQbJz6+vujlGTeD8r2Zjue7g832s/xAcmVPYAwakU/FO1jR8+fYG87z0x
+	A==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=mime-version:sender:in-reply-to:references:date:
+	x-google-sender-auth:message-id:subject:from:to:content-type:
+	content-transfer-encoding:x-system-of-record;
+	b=dLs4k2r6es8fEqqan1ITayAWtnOCihmUicfqFXI9Ysr/N8pAcwmTaEWMmnpPFagsd
+	m7FRdai0ZtO0jnk8Q/QRw==
+Received: from wa-out-1112.google.com (wagm33.prod.google.com [10.114.214.33])
+	by spaceape14.eur.corp.google.com with ESMTP id n7RL6M3a014156
+	for <git@vger.kernel.org>; Thu, 27 Aug 2009 14:06:22 -0700
+Received: by wa-out-1112.google.com with SMTP id m33so285468wag.13
+        for <git@vger.kernel.org>; Thu, 27 Aug 2009 14:06:22 -0700 (PDT)
+Received: by 10.140.144.2 with SMTP id r2mr249726rvd.0.1251407181982; Thu, 27 
+	Aug 2009 14:06:21 -0700 (PDT)
+In-Reply-To: <f4f35435-79b7-46c2-8c2d-2d4c4deb68c4@s15g2000yqs.googlegroups.com>
+X-Google-Sender-Auth: c6702a509402b08f
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127211>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi git list,
 
-> I half-agree, the code should decide which fanout scheme to use, but 
-> _only_ when producing new notes.
+Alex Riesen asked me to forward this to this list.
+
+On Thu, Aug 27, 2009 at 1:52 PM, Alex Riesen<raa.lkml@gmail.com> wrote:
+> On Aug 27, 7:42=A0am, Nico Weber <tha...@chromium.org> wrote:
+>> Trying to pull:
+>>
+>> thakis-macbookpro:~/src/chrome-git/src thakis$ git pull
+>> remote: Counting objects: 1859, done.
+>> remote: Compressing objects: 100% (1267/1267), done.
+>> remote: Total 1393 (delta 1087), reused 195 (delta 107)
+>> Receiving objects: 100% (1393/1393), 2.57 MiB | 781 KiB/s, done.
+>> fatal: cannot pread pack file: No such file or directory
+>> fatal: index-pack failed
 >
-> I imagine that it could merge the existing notes, and try to make sure 
-> that there are no more blobs in a given subtree than a certain threshold; 
-> if that threshold is reached, it could fan-out using 2-digit subtrees, 
-> merging what needs merging (by concatenation) along the way.
+> You're on MacOSX, right? What version of git are you running?
+> Where do you pull from? (So it can be reproduced)
 >
-> The natural precedence of shallower paths/longer basenames should cope 
-> well with that (i.e. prefer to show abcd/... over ab/cd/...).
+> If you can provide this information, then maybe send it to the
+> Git mailing list (git@vger.kernel.org, no subscription required),
+> or at least back to me? Maybe you can strace (is it possible
+> on MacOSX?) the "git pull" (because pread never returns
+> ENOENT) and attach the trace as well?
+>
+> Sorry for asking you off-list, but I noticed your problem
+> really accidentally (by browsing the list's archives), and
+> not sure I am prepared to deal with the list's traffic.
+>
 
-Oh, if the plan for merging the trees is such that it takes care of
-"multiple notes pointing at the same commit" issues like you outline, then
-I can see it would work nicely.
+Yes, I'm on OS X 10.5.8.
 
-At that point, fan-out would become merely an implementation detail,
-something the end user never needs to worry about, just like what base
-object is chosen to represent another object in a packfile.
+I'm pulling from git://git.chromium.org/chromium.git. This worked fine
+for the last month or so, I had the problem for the first time
+yesterday evening.
+
+$ git --version
+git version 1.6.0.2
+
+Sadly, I fixed the problem accidentally by running something like
+
+  rm -rf .git/svn/
+  git svn fetch; git merge trunk
+  git merge refs/remotes/origin/trunk
+  git checkout -f HEAD
+  git pull
+
+(if that looks like I don't know what I'm doing, you're right)
+
+If it happens again, I'll post a dtrace to this list.
+
+Nico
