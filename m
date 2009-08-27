@@ -1,67 +1,64 @@
-From: Tom Lambda <tom.lambda@gmail.com>
-Subject: Question regarding git fetch
-Date: Thu, 27 Aug 2009 10:30:45 -0500 (CDT)
-Message-ID: <1251387045053-3527289.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 27 17:30:56 2009
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] Makefile: remove pointless conditional assignment in SunOS section
+Date: Thu, 27 Aug 2009 10:35:46 -0500
+Message-ID: <dp9hIoAW5cYWA19k8Uz1mjyaMwG81BRJNhvvYiQVR3eKlOcw9qDI2AVF-YGIRUTxe_5qbaek5Qc@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Aug 27 17:36:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MggwB-0006jF-Mw
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 17:30:56 +0200
+	id 1Mgh1f-0000Mj-IY
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 17:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbZH0Pao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 11:30:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752372AbZH0Pao
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 11:30:44 -0400
-Received: from 216-139-236-80.aus.us.siteprotect.com ([216.139.236.80]:2910
-	"EHLO jim.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752187AbZH0Pan (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 11:30:43 -0400
-Received: from jim ([127.0.0.1]) by jim.nabble.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 27 Aug 2009 10:30:45 -0500
-X-Nabble-From: tom.lambda@gmail.com
-X-OriginalArrivalTime: 27 Aug 2009 15:30:45.0053 (UTC) FILETIME=[583696D0:01CA272B]
+	id S1751949AbZH0Pg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 11:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751828AbZH0Pg0
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 11:36:26 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:44802 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751712AbZH0PgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 11:36:25 -0400
+Received: by mail.nrlssc.navy.mil id n7RFa0pw003499; Thu, 27 Aug 2009 10:36:02 -0500
+X-OriginalArrivalTime: 27 Aug 2009 15:35:59.0854 (UTC) FILETIME=[13D968E0:01CA272C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127164>
 
+From: Brandon Casey <drafnel@gmail.com>
 
-I noticed that git-fetch seems smarter when it is run without a <refspec>
-argument than when one specifies a branch name. I use a simple setup where a
-remote central repository is defined when it is cloned the first time (clone
--o central ...). This leads to these default parameters:
+It is true that NEEDS_RESOLV is needed on SunOS if NO_IPV6 is set since
+hstrerror() resides in libresolv, but performing this test at its current
+location is not very useful.  It will only have any effect if the user
+modifies the make variables from the make command line, and will have no
+effect if a config.mak file is used.  A better location for this
+conditional would have been further down in the Makefile after the
+config.mak and config.mak.autogen had been parsed.  Rather than adding
+clutter to the Makefile for a conditional that will likely never be
+triggered, just remove it, and any user on SunOS that manually sets NO_IPV6
+can also set NEEDS_RESOLV.
 
-remote.central.fetch=+refs/heads/*:refs/remotes/central/*
-branch.master.remote=central
-branch.master.merge=refs/heads/master
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ Makefile |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
 
-When I use "git fetch central" each branch in central's refs/heads/ is
-automatically fetched to my refs/remotes/central/ as expected.
-
-What was a little bit surprising to me is that running "git fetch central
-master" does not update refs/remotes/central/master but simply updates
-FETCH_HEAD.
-
-I read the manual and I know that updating FETCH_HEAD is the expected
-default behavior for git-fetch. However, I really like the fact that git
-fetch (without <refspec>) knows that ANY branch in refs/heads/ corresponds
-to refs/remotes/central/. Is there a way to change the configuration to have
-"git fetch central branch" always updating refs/remotes/central/branch
-whatever the specified branch.
-
-I would prefer not to have to specify the <dst> each time:
-git fetch central branch:remotes/central/branch
-
-Thank you,
-Tom
-
+diff --git a/Makefile b/Makefile
+index 66eedef..a9a4d89 100644
+--- a/Makefile
++++ b/Makefile
+@@ -757,9 +757,6 @@ ifeq ($(uname_S),SunOS)
+ 		NO_C99_FORMAT = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 	endif
+-	ifdef NO_IPV6
+-		NEEDS_RESOLV = YesPlease
+-	endif
+ 	INSTALL = /usr/ucb/install
+ 	TAR = gtar
+ 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__ -DHAVE_ALLOCA_H
 -- 
-View this message in context: http://n2.nabble.com/Question-regarding-git-fetch-tp3527289p3527289.html
-Sent from the git mailing list archive at Nabble.com.
+1.6.4
