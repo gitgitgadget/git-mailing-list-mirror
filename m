@@ -1,84 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
- with various fanout schemes
-Date: Thu, 27 Aug 2009 14:50:11 -0700
-Message-ID: <7vy6p5ncz0.fsf@alter.siamese.dyndns.org>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
- <1251337437-16947-9-git-send-email-johan@herland.net>
- <7v7hwp6ebb.fsf@alter.siamese.dyndns.org>
- <200908271135.31794.johan@herland.net>
- <7vtyztq8nv.fsf@alter.siamese.dyndns.org> <20090827212710.GV1033@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Question regarding git fetch
+Date: Thu, 27 Aug 2009 17:53:05 -0400
+Message-ID: <20090827215305.GA6348@coredump.intra.peff.net>
+References: <1251387045053-3527289.post@n2.nabble.com>
+ <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
+ <20090827164657.GA17090@atjola.homenet>
+ <32541b130908271022i6a825198i37e2ec82ed5f833c@mail.gmail.com>
+ <20090827204835.GC4399@coredump.intra.peff.net>
+ <20090827213426.GD4399@coredump.intra.peff.net>
+ <7v7hwpors9.fsf@alter.siamese.dyndns.org>
+ <20090827215007.GA6231@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Aug 27 23:50:41 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 27 23:53:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgmrg-0006cK-L4
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:50:41 +0200
+	id 1MgmuC-0007LT-Km
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265AbZH0Vua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 17:50:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753205AbZH0Vua
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:50:30 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63270 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163AbZH0Vu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 17:50:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D37E61BC60;
-	Thu, 27 Aug 2009 17:50:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wyDQK8seGeC/n2zAAp6nqOl4pfE=; b=r1q6Ok
-	L7ocVBWmqcdQ0jcpDhj5rw49CLhKISXPu/6grNOfAUj/pATgQBY6hqSJ6wP4iMVQ
-	/GnopDZxJZhDFQEFC1fSeftHPjy1EKVgc3arsJIcgE8Qo0psN4AJOPhK5B+quIMg
-	Yd8DUZZNAlM05NJ/sRuSiYICA9il2aDA+H+Zc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XpdV+FILOb3Mlywbtbn9WSbR+NjW0WmM
-	V/iwYaphmw35UXeu23KTeGnFcFgMjeiYDCF+IpRFoq/alW9vTySjEHx+LxQO8utU
-	YFWHmdi8xQ86PsEtPa3ndyp9/sSS+v73JkFaRiGIos53KI3JYO47cvTL5llFbX3v
-	0YRpwQR5mJU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 575AC1BC5C;
-	Thu, 27 Aug 2009 17:50:23 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCC671BC55; Thu, 27 Aug
- 2009 17:50:12 -0400 (EDT)
-In-Reply-To: <20090827212710.GV1033@spearce.org> (Shawn O. Pearce's message
- of "Thu\, 27 Aug 2009 14\:27\:10 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9F5D6414-9353-11DE-BA5A-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753255AbZH0VxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 17:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbZH0VxG
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:53:06 -0400
+Received: from peff.net ([208.65.91.99]:60074 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752714AbZH0VxF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 17:53:05 -0400
+Received: (qmail 927 invoked by uid 107); 27 Aug 2009 21:53:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 27 Aug 2009 17:53:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Aug 2009 17:53:05 -0400
+Content-Disposition: inline
+In-Reply-To: <20090827215007.GA6231@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127222>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On Thu, Aug 27, 2009 at 05:50:07PM -0400, Jeff King wrote:
 
-> Yea, it was me.  I still think it might be a useful idea, since
-> it allows you better density of loading notes when parsing the
-> recent commits.  In theory the last 256 commits can easly be in
-> each of the 2/ fanout buckets, making 2/38 pointless for reducing
-> the search space.  Commit date on the other hand can probably force
-> all of them into the same bucket, making it easy to have the last
-> 256 commits in cache, from a single bucket.
->
-> But I thought you shot it down, by saying that we also wanted to
-> support notes on blobs.  I happen to see no value in a note on
-> a blob, a blob alone doesn't make much sense without at least an
-> annotated tag or commit to provide it some named context, and the
-> latter two have dates.
+> > I think this is a good example that any change results from this
+> > discussion should apply _only_ to cases where command line refspecs lack
+> > colon (i.e. used to mean "do not store this anywhere but in FETCH_HEAD").
+> 
+> I don't think the colon is the issue. Consider the same situation, but I
+> say:
+> 
+>   # but today let's demo it first
+>   $ git fetch origin master
+>   $ git checkout -b demo FETCH_HEAD
+> 
+> I'm still screwed. The issue is that you consider your configured
+> refspec destinations to be precious, and not merely a cache for what's
+> happening on the remote side.
 
-Yeah, and in this thread everybody seems to be talking about commits so I
-think it is fine to limit notes only to commits.
+Which, btw, led me to consider whether there are heuristics for deciding
+when a fetch refspec means one thing and not the other. I don't think
+there are reliable ones (probably the default configured
+refs/remotes/$remotename/* would not yield false positives, but I think
+limiting to that would yield false negatives). So maybe this is
+something that should be configurable, disabled by default for now, and
+maybe enabled by default in the future (v1.7.0?).
+
+-Peff
