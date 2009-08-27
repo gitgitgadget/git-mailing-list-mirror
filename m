@@ -1,73 +1,78 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: What's cooking in git.git (Aug 2009, #05; Wed, 26)
-Date: Thu, 27 Aug 2009 11:41:18 -0500
-Message-ID: <SW-k_fUnLrE0kFNXSIYgMIc-pexuL5ykWs1ZdvHAo9_LMxe9ggJtCA@cipher.nrlssc.navy.mil>
-References: <7vfxbeb0mt.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Question regarding git fetch
+Date: Thu, 27 Aug 2009 18:46:57 +0200
+Message-ID: <20090827164657.GA17090@atjola.homenet>
+References: <1251387045053-3527289.post@n2.nabble.com>
+ <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 27 18:41:31 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 27 18:47:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgi2U-0004xq-71
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 18:41:30 +0200
+	id 1Mgi7y-0006g6-4M
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 18:47:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752865AbZH0QlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 12:41:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbZH0QlU
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 12:41:20 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33592 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751828AbZH0QlU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 12:41:20 -0400
-Received: by mail.nrlssc.navy.mil id n7RGfIx5004237; Thu, 27 Aug 2009 11:41:19 -0500
-In-Reply-To: <7vfxbeb0mt.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 27 Aug 2009 16:41:18.0186 (UTC) FILETIME=[335B6CA0:01CA2735]
+	id S1753129AbZH0QrB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 12:47:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753125AbZH0QrB
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 12:47:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59413 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753123AbZH0QrA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 12:47:00 -0400
+Received: (qmail invoked by alias); 27 Aug 2009 16:47:01 -0000
+Received: from i59F5455C.versanet.de (EHLO atjola.homenet) [89.245.69.92]
+  by mail.gmx.net (mp071) with SMTP; 27 Aug 2009 18:47:01 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18HXDMk6EkHrAEt77Ni2Nb1vnVJZJDPu4dFA6+Qk2
+	jgUq/nArV6qjgF
+Content-Disposition: inline
+In-Reply-To: <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127177>
 
-Junio C Hamano wrote:
+On 2009.08.27 15:36:53 +0000, Avery Pennarun wrote:
+> On Thu, Aug 27, 2009 at 3:30 PM, Tom Lambda<tom.lambda@gmail.com> wro=
+te:
+> > What was a little bit surprising to me is that running "git fetch c=
+entral
+> > master" does not update refs/remotes/central/master but simply upda=
+tes
+> > FETCH_HEAD.
+>=20
+> I've often wanted this myself, especially when doing things like "git
+> pull origin master".  However, I know the current behaviour is also
+> useful sometimes, and changing it would introduce an unexpected side
+> effect.  Git currently promises that your refs/remotes/* branches wil=
+l
+> never be updated unless you explicitly request it, even if you're
+> fetching, merging, and pulling other stuff.  This means you can write
+> scripts to do complicated things without triggering unexpected
+> user-visible side effects.
+>=20
+> So basically, I agree that it would often be much more user-friendly
+> to do what you're asking.  But it would be less scripting-friendly.  =
+I
+> don't think anyone has thought of an answer that better balances the
+> two.
 
-> [Stalled]
-> 
-> * je/send-email-no-subject (2009-08-05) 1 commit
->  - send-email: confirm on empty mail subjects
-> 
-> This seems to break t9001.  Near the tip of 'pu' I have a iffy
-> workaround.
+It would also be pretty hard to implement that. Given the default fetch
+refspec, it would "simply" be a matter of mapping the given ref to the
+refspec, so e.g. "foo" becomes "refs/heads/foo:refs/remotes/origin/foo"=
+=2E
+But even just using "git remote add -t master foo git://..." breaks
+that, as the fetch refspec in the config will no longer be a glob, and
+thus no such mapping is possible.
 
-Can you squash this into your 'iffy' workaround to help platforms
-(Solaris 7, IRIX 6.5) without the 'yes' utility?
-
----
- t/t9001-send-email.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 960d7d8..641d0c3 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -505,6 +505,14 @@ test_expect_success '--suppress-cc=cc' '
- 	test_suppression cc
- '
- 
-+yes () {
-+	test -n "$*" && y="$*" || y='y'
-+	while echo "$y"
-+	do
-+		:
-+	done
-+}
-+
- test_confirm () {
- 	yes | \
- 		GIT_SEND_EMAIL_NOTTY=1 \
--- 
-1.6.4
+Bj=F6rn
