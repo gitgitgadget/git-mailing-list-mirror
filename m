@@ -1,82 +1,89 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: finding unmerged branches
-Date: Fri, 28 Aug 2009 00:35:04 +0200
-Message-ID: <20090827223504.GA18307@atjola.homenet>
-References: <20090827220241.GA1413@gnu.kitenet.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 10/12] notes.c: Implement simple memory pooling of leaf
+ nodes
+Date: Fri, 28 Aug 2009 00:43:44 +0200
+Message-ID: <200908280043.44261.johan@herland.net>
+References: <1251337437-16947-1-git-send-email-johan@herland.net>
+ <81b0412b0908270039l7a937c3bmd745274c71526ce1@mail.gmail.com>
+ <200908271149.11003.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Fri Aug 28 00:35:24 2009
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 00:44:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgnYy-0001uj-1a
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 00:35:24 +0200
+	id 1MgnhG-000477-Uv
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 00:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752032AbZH0WfJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Aug 2009 18:35:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751518AbZH0WfI
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 18:35:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46643 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751481AbZH0WfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 18:35:07 -0400
-Received: (qmail invoked by alias); 27 Aug 2009 22:35:08 -0000
-Received: from i59F5455C.versanet.de (EHLO atjola.homenet) [89.245.69.92]
-  by mail.gmx.net (mp022) with SMTP; 28 Aug 2009 00:35:08 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/mcsZQq93mPi1YHBqEHi7j/wjrkkZ24DBMnV+lbd
-	fnjdY6E9PsVso6
-Content-Disposition: inline
-In-Reply-To: <20090827220241.GA1413@gnu.kitenet.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S1751373AbZH0Wnu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 18:43:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbZH0Wnu
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 18:43:50 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:44140 "EHLO
+	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751300AbZH0Wnt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 18:43:49 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KP2003EX4H1H490@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 28 Aug 2009 00:43:49 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KP2009HK4GWMV30@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 28 Aug 2009 00:43:49 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.8.27.223323
+User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
+In-reply-to: <200908271149.11003.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127230>
 
-On 2009.08.27 18:02:41 -0400, Joey Hess wrote:
-> My situation is this: My project has a lot of remotes with
-> lots of branches; about 250 branches in total. I want to
-> figure out which of these branches to look at to consider
-> merging.
->=20
-> So, I reach for git branch -a --no-merged master; that's what
-> its man page says its for. But this still finds 120 branches,
-> and a lot of them are not things I want to look at. Many of
-> them are copies of some of my own branches.
->=20
-> What I really want is a way to find remote branches that
-> are not merged with any of my local branches (or any origin
-> branches). A slow and stupid implementation of that is in the
-> attached git-unmerged script, and it weeds the branch list
-> down to 68 branches, which are mostly really ones I might
-> want to look at.
->=20
-> So, three questions:
->=20
-> * Is this situation somewhat common, or an I doing something wrong?
->   (Assuming that I have a good reason to want to look at remote=20
->   branches rather than waiting to get merge requests.)
-> * Is there a better way to accomplish this than a slow perl script th=
-at
->   runs git branch -r --merged foreach of my branches?
+On Thursday 27 August 2009, Johan Herland wrote:
+> On Thursday 27 August 2009, Alex Riesen wrote:
+> > On Thu, Aug 27, 2009 at 03:43, Johan Herland<johan@herland.net> wrote:
+> > > When allocating a new memory pool, the older pool is leaked, but this
+> > > is no worse than the current situation, where (pretty much) all
+> > > leaf_nodes are leaked anyway.
+> >
+> > Could you return the unused nodes back into the mempool?
+> > By making the pool a preallocated list, perhaps?
+>
+> Yes, maintaining a free-list is certainly possible. However, the number
+> of free()d leaf_nodes is relatively small (only subtree entries are
+> free()d after unpacking them into the tree structure), so I'm not sure it
+> pays off, runtime-wise.
 
-Hm, not sure if I'd call it "better", but probably at least a bit
-faster. You could create a "fake" merge to combine all the branches.
+I played around with the free-list idea, but it cost more than the memory 
+pooling code saved in the first place. I'm leaning towards dropping the 
+whole memory pooling idea, as the small run-time improvement is probably not 
+worth the added complexity. We'll see. I'll re-evaluate once I've refactored 
+the code according to the other threads of this discussion.
 
-git branch -r --no-merged $(
-  : | git commit-tree HEAD^{tree} $(
-    git for-each-ref --format=3D'-p %(refname)' \
-      refs/heads/ \
-      refs/remotes/origin
-    )
-  )
+> > And then it is trivial to provide a deallocation function for the
+> > mempool, which something really concerned about the memleak can call
+> > (like when or if libgit get more usable in an application context).
+>
+> Yes, I plan to provide a free_notes() function that free()s all the
+> memory associated with the notes data structure. This would of course
+> keep references to all the mempools, and deallocate them (along with all
+> the int_nodes).
 
-Bj=F6rn
+This still stands, of course. Should be part of the next iteration.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
