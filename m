@@ -1,273 +1,76 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 09/12] Selftests verifying semantics when loading notes trees
- with various fanouts
-Date: Thu, 27 Aug 2009 03:43:54 +0200
-Message-ID: <1251337437-16947-10-git-send-email-johan@herland.net>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] import-tars: Allow per-tar author and commit message.
+Date: Wed, 26 Aug 2009 21:57:16 -0700
+Message-ID: <7viqg96ehf.fsf@alter.siamese.dyndns.org>
+References: <20090826193015.962A7189B12@perkele>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, johan@herland.net, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 27 03:45:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Aug 27 06:57:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgU2t-0004PF-Mh
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 03:45:00 +0200
+	id 1MgX3E-0003xC-Pj
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 06:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932120AbZH0Bop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Aug 2009 21:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932117AbZH0Bom
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 21:44:42 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:52466 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932098AbZH0Boh (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 21:44:37 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP0002B3I6FTPA0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 27 Aug 2009 03:44:39 +0200 (MEST)
-Received: from localhost.localdomain ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP000MW0I5F4H50@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 27 Aug 2009 03:44:39 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.27.13316
-X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
-In-reply-to: <1251337437-16947-1-git-send-email-johan@herland.net>
+	id S1751958AbZH0E5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 00:57:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751751AbZH0E5V
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 00:57:21 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60770 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbZH0E5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 00:57:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D28211A3B3;
+	Thu, 27 Aug 2009 00:57:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=Ai4Gk9zHblb7rFyDAZAx6V1sLdY=; b=GGiBWbm1iibRR20q4w6qquw
+	cF23VwRCKT/R3IFxq31k8ECadu5wVHgifOY3ki08VFjNfZu12GaJ5p+j6JU5WqYJ
+	7Lpn21nU1Kgv6ZljlVC2KeI2l2Pg/TzxvgfGLGizYyH0P21AS7onk8fNXvCppYEI
+	MCmCzKWwXxL+9VSt97i8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=bjUHmsRriAH6fNGw08jITyJ86YildSpmXWOXAbuJ5FialcrT7
+	TyX3+v0A0jN1qLYilk25wMuoVjFFKC2bZrWntnnuXGnLO4MCKQzKL1/mW86AdJEA
+	FqRVKUY1JmTh1BfIOV2YqenMAD6WotVDJh5It5Y5/k6hEhJwNCXt2+MYSk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B20C81A3B2;
+	Thu, 27 Aug 2009 00:57:20 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 086181A3B1; Thu, 27 Aug
+ 2009 00:57:17 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1A1C84B6-92C6-11DE-B2CA-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127140>
 
-Add selftests verifying:
-- that we are able to parse notes trees with various fanout schemes
-- that notes trees with conflicting fanout schemes are parsed as expected
+Peter Krefting <peter@softwolves.pp.se> writes:
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- t/t3303-notes-subtrees.sh |  206 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 206 insertions(+), 0 deletions(-)
- create mode 100755 t/t3303-notes-subtrees.sh
+> +			while (<MSG>)
+> +			{
+> +				if (/^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i)
+> +				{
+> +					$this_committer_name = $1;
+> +					$this_committer_email = $2;
+> +				}
+> +				elsif (/^Author:\s+([^<>]*)\s+<(.*)>\s*$/i)
+> +				{
+> +					$this_author_name = $1;
+> +					$this_author_email = $2;
+> +				}
+> +				else
+> +				{
+> +					$commit_msg .= $_;
+> +				}
 
-diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
-new file mode 100755
-index 0000000..40bb3f4
---- /dev/null
-+++ b/t/t3303-notes-subtrees.sh
-@@ -0,0 +1,206 @@
-+#!/bin/sh
-+
-+test_description='Test commit notes organized in subtrees'
-+
-+. ./test-lib.sh
-+
-+number_of_commits=100
-+
-+start_note_commit () {
-+	test_tick &&
-+	cat <<INPUT_END
-+commit refs/notes/commits
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+notes
-+COMMIT
-+
-+from refs/notes/commits^0
-+deleteall
-+INPUT_END
-+
-+}
-+
-+verify_notes () {
-+	git log | grep "^    " > output &&
-+	i=$number_of_commits &&
-+	while [ $i -gt 0 ]; do
-+		echo "    commit #$i" &&
-+		echo "    note for commit #$i" &&
-+		i=$(($i-1));
-+	done > expect &&
-+	test_cmp expect output
-+}
-+
-+test_expect_success 'setup: create $number_of_commits commits' '
-+
-+	(
-+		nr=0 &&
-+		while [ $nr -lt $number_of_commits ]; do
-+			nr=$(($nr+1)) &&
-+			test_tick &&
-+			cat <<INPUT_END
-+commit refs/heads/master
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+commit #$nr
-+COMMIT
-+
-+M 644 inline file
-+data <<EOF
-+file in commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+		done &&
-+		test_tick &&
-+		cat <<INPUT_END
-+commit refs/notes/commits
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+no notes
-+COMMIT
-+
-+deleteall
-+
-+INPUT_END
-+
-+	) |
-+	git fast-import --quiet &&
-+	git config core.notesRef refs/notes/commits
-+'
-+
-+test_expect_success 'test notes in 2/38-fanout' '
-+
-+	(
-+		start_note_commit &&
-+		nr=$number_of_commits &&
-+		git rev-list refs/heads/master |
-+		while read sha1; do
-+			note_path=$(echo "$sha1" | sed "s|^..|&/|")
-+			cat <<INPUT_END &&
-+M 100644 inline $note_path
-+data <<EOF
-+note for commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+			nr=$(($nr-1))
-+		done
-+	) |
-+	git fast-import --quiet
-+'
-+
-+test_expect_success 'verify notes in 2/38-fanout' 'verify_notes'
-+
-+test_expect_success 'test notes in 4/36-fanout' '
-+
-+	(
-+		start_note_commit &&
-+		nr=$number_of_commits &&
-+		git rev-list refs/heads/master |
-+		while read sha1; do
-+			note_path=$(echo "$sha1" | sed "s|^....|&/|")
-+			cat <<INPUT_END &&
-+M 100644 inline $note_path
-+data <<EOF
-+note for commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+			nr=$(($nr-1))
-+		done
-+	) |
-+	git fast-import --quiet
-+'
-+
-+test_expect_success 'verify notes in 4/36-fanout' 'verify_notes'
-+
-+test_expect_success 'test notes in 4/36-fanout overriding 2/38-fanout' '
-+
-+	(
-+		start_note_commit &&
-+		nr=$number_of_commits &&
-+		git rev-list refs/heads/master |
-+		while read sha1; do
-+			ignored_note_path=$(echo "$sha1" | sed "s|^..|&/|")
-+			preferred_note_path=$(echo "$sha1" | sed "s|^....|&/|")
-+			cat <<INPUT_END &&
-+M 100644 inline $ignored_note_path
-+data <<EOF
-+IGNORED note for commit #$nr
-+EOF
-+
-+M 100644 inline $preferred_note_path
-+data <<EOF
-+note for commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+			nr=$(($nr-1))
-+		done
-+	) |
-+	git fast-import --quiet
-+'
-+
-+test_expect_success 'verify notes in 4/36-fanout overriding 2/38-fanout' 'verify_notes'
-+
-+test_expect_success 'test notes in 2/2/36-fanout' '
-+
-+	(
-+		start_note_commit &&
-+		nr=$number_of_commits &&
-+		git rev-list refs/heads/master |
-+		while read sha1; do
-+			note_path=$(echo "$sha1" | sed "s|^\(..\)\(..\)|\1/\2/|")
-+			cat <<INPUT_END &&
-+M 100644 inline $note_path
-+data <<EOF
-+note for commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+			nr=$(($nr-1))
-+		done
-+	) |
-+	git fast-import --quiet
-+'
-+
-+test_expect_success 'verify notes in 2/2/36-fanout' 'verify_notes'
-+
-+test_expect_success 'test notes in 2/38-fanout overriding 2/2/36-fanout' '
-+
-+	(
-+		start_note_commit &&
-+		nr=$number_of_commits &&
-+		git rev-list refs/heads/master |
-+		while read sha1; do
-+			ignored_note_path=$(echo "$sha1" | sed "s|^\(..\)\(..\)|\1/\2/|")
-+			preferred_note_path=$(echo "$sha1" | sed "s|^..|&/|")
-+			cat <<INPUT_END &&
-+M 100644 inline $ignored_note_path
-+data <<EOF
-+IGNORED note for commit #$nr
-+EOF
-+
-+M 100644 inline $preferred_note_path
-+data <<EOF
-+note for commit #$nr
-+EOF
-+
-+INPUT_END
-+
-+			nr=$(($nr-1))
-+		done
-+	) |
-+	git fast-import --quiet
-+'
-+
-+test_expect_success 'verify notes in 2/38-fanout overriding 2/2/36-fanout' 'verify_notes'
-+
-+test_done
--- 
-1.6.4.304.g1365c.dirty
+Do you really want to slurp Committer:/Author: lines from _anywhere_ in
+the file?  Wouldn't it make more sense to vaguely emulate e-mail message
+format with headers, empty-line and then body that is free form?
