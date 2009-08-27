@@ -1,87 +1,59 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
- with various fanout schemes
-Date: Fri, 28 Aug 2009 01:03:05 +0200
-Message-ID: <200908280103.06015.johan@herland.net>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
- <20090827212710.GV1033@spearce.org> <7vy6p5ncz0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 01:03:23 2009
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: [PATCH] Documentation: git-archive: mark --format as optional in summary
+Date: Thu, 27 Aug 2009 17:08:40 -0600
+Message-ID: <1251414520-28519-1-git-send-email-wjl@icecavern.net>
+Cc: "Wesley J. Landaker" <wjl@icecavern.net>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 01:09:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgo00-0000Tr-7A
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 01:03:20 +0200
+	id 1Mgo5S-0001nh-E0
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 01:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbZH0XDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 19:03:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbZH0XDI
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 19:03:08 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:56954 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751527AbZH0XDH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 19:03:07 -0400
-Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP200CSF5D80Z60@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 28 Aug 2009 01:03:08 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP2009ZR5D6DB50@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 28 Aug 2009 01:03:08 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.8.27.225116
-User-Agent: KMail/1.12.0 (Linux/2.6.30-ARCH; KDE/4.3.0; x86_64; ; )
-In-reply-to: <7vy6p5ncz0.fsf@alter.siamese.dyndns.org>
+	id S1751977AbZH0XIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 19:08:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZH0XIt
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 19:08:49 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:38002 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750891AbZH0XIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 19:08:49 -0400
+Received: from jenova.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 4F7D335A02;
+	Fri, 28 Aug 2009 01:08:47 +0200 (CEST)
+Received: from tonberry.icecavern.net (tonberry.icecavern.net [10.0.0.9])
+	by jenova.icecavern.net (Postfix) with ESMTP id A88BF2906CA;
+	Thu, 27 Aug 2009 17:08:45 -0600 (MDT)
+Received: by tonberry.icecavern.net (Postfix, from userid 1000)
+	id 90BD32FD29; Thu, 27 Aug 2009 17:08:45 -0600 (MDT)
+X-Mailer: git-send-email 1.6.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127233>
 
-On Thursday 27 August 2009, Junio C Hamano wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > Yea, it was me.  I still think it might be a useful idea, since
-> > it allows you better density of loading notes when parsing the
-> > recent commits.  In theory the last 256 commits can easly be in
-> > each of the 2/ fanout buckets, making 2/38 pointless for reducing
-> > the search space.  Commit date on the other hand can probably force
-> > all of them into the same bucket, making it easy to have the last
-> > 256 commits in cache, from a single bucket.
-> >
-> > But I thought you shot it down, by saying that we also wanted to
-> > support notes on blobs.  I happen to see no value in a note on
-> > a blob, a blob alone doesn't make much sense without at least an
-> > annotated tag or commit to provide it some named context, and the
-> > latter two have dates.
->
-> Yeah, and in this thread everybody seems to be talking about commits so I
-> think it is fine to limit notes only to commits.
+The --format option was made optional in v1.5.1-105-g8ff21b1, but it was
+not marked as optional in the summary. This trival patch just changes
+the summary to match the rest of the documentation.
+---
+ Documentation/git-archive.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Agreed. I'm starting to come around to the idea of storing them in subtrees 
-based on commit dates. For one, you don't have multiple notes for one commit 
-in the same notes tree. Also, the common-case access pattern seems tempting.
-
-Dscho: Were there other problems with the date-based approach other than not 
-supporting notes on trees and blobs?
-
-If not, I'll start preparing another series with the date-based approach.
-
-
-Thanks for the input, guys. :)
-
-...Johan
-
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index bc132c8..92444dd 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -9,7 +9,7 @@ git-archive - Create an archive of files from a named tree
+ SYNOPSIS
+ --------
+ [verse]
+-'git archive' --format=<fmt> [--list] [--prefix=<prefix>/] [<extra>]
++'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>]
+ 	      [--output=<file>] [--worktree-attributes]
+ 	      [--remote=<repo> [--exec=<git-upload-archive>]] <tree-ish>
+ 	      [path...]
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.6.3.3
