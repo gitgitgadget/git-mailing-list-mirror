@@ -1,117 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Question regarding git fetch
-Date: Thu, 27 Aug 2009 14:20:46 -0700
-Message-ID: <7viqg9q7gx.fsf@alter.siamese.dyndns.org>
-References: <1251387045053-3527289.post@n2.nabble.com>
- <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes
+	trees with various fanout schemes
+Date: Thu, 27 Aug 2009 14:27:10 -0700
+Message-ID: <20090827212710.GV1033@spearce.org>
+References: <1251337437-16947-1-git-send-email-johan@herland.net> <1251337437-16947-9-git-send-email-johan@herland.net> <7v7hwp6ebb.fsf@alter.siamese.dyndns.org> <200908271135.31794.johan@herland.net> <7vtyztq8nv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tom Lambda <tom.lambda@gmail.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 27 23:21:12 2009
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
+	tavestbo@trolltech.com, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 27 23:27:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgmP8-0006kw-J1
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:21:11 +0200
+	id 1MgmV4-0008Kt-Ut
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 23:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753151AbZH0VVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 17:21:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbZH0VVB
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:21:01 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54746 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753033AbZH0VVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 17:21:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A49A53996E;
-	Thu, 27 Aug 2009 17:21:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nJRJ7AZWz32CKzrgV9KMEhmyiUM=; b=bTfr3B
-	AfROteGIowRj8RH63DL2wWg+iSyVhAXZgANpSenM0V97EcWjmMFcnBKQds4fcePD
-	Ha/Jnl+cumd7JpTH0QEnoxJ7FPkk94yrcDt33gh49jAZCkW+wB/Il1ZrVAJFUeLe
-	UAJkaKAAj0xjJNZJJlkekBMOO1TNM3K6W3wAs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mSJtYYJ1EAtZMnJnbra2Z0C9pWAxGXon
-	1wEjvukPY5o9LzQ70ZY8poUHM1CI3WZ41B262aDF+nCW3wA9o/9X7gjHdEaVLZoT
-	xQpdgvC69eZFKlEoQ9DvFcjnXCNwzi1qs7+NP2oq6QsdCcDpti0xfB39O5q0MvMj
-	5SPf0U7r8dU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C5A93996D;
-	Thu, 27 Aug 2009 17:20:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 50DF13996B; Thu, 27 Aug 2009
- 17:20:52 -0400 (EDT)
-In-Reply-To: <32541b130908270836m50553ccatddf4c870eec54ddb@mail.gmail.com>
- (Avery Pennarun's message of "Thu\, 27 Aug 2009 15\:36\:53 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8371674A-934F-11DE-8F69-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753177AbZH0V1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 17:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753145AbZH0V1J
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 17:27:09 -0400
+Received: from george.spearce.org ([209.20.77.23]:55413 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100AbZH0V1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 17:27:09 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B2A23381FE; Thu, 27 Aug 2009 21:27:10 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vtyztq8nv.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127214>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Johan Herland <johan@herland.net> writes:
+> > 2. Simply decide on a constant 2/2/36 fanout.
+> 
+> I thought it was Gitney who suggested to use a top-level fan-out based on
+> the committer-date.  If you typically have already parsed the commit when
+> you want to look up notes objects for it, it won't have extra overhead,
+> and when looking at only recent history it will only need to access a
+> small subset of trees.  I thought it was a neat idea (except that the
+> question becomes what the granularity of the top level fan-out should
+> be---one a day?  one a month?---the optimum would depend on commit
+> density).  Was that idea shot down for some reason?
 
-> On Thu, Aug 27, 2009 at 3:30 PM, Tom Lambda<tom.lambda@gmail.com> wrote:
->> What was a little bit surprising to me is that running "git fetch central
->> master" does not update refs/remotes/central/master but simply updates
->> FETCH_HEAD.
->
-> I've often wanted this myself, especially when doing things like "git
-> pull origin master".  However, I know the current behaviour is also
-> useful sometimes, and changing it would introduce an unexpected side
-> effect.  Git currently promises that your refs/remotes/* branches will
-> never be updated unless you explicitly request it, even if you're
-> fetching, merging, and pulling other stuff.  This means you can write
-> scripts to do complicated things without triggering unexpected
-> user-visible side effects.
+Yea, it was me.  I still think it might be a useful idea, since
+it allows you better density of loading notes when parsing the
+recent commits.  In theory the last 256 commits can easly be in
+each of the 2/ fanout buckets, making 2/38 pointless for reducing
+the search space.  Commit date on the other hand can probably force
+all of them into the same bucket, making it easy to have the last
+256 commits in cache, from a single bucket.
 
-I think it is reasonable, in 1.7.0, to change "git fetch" with command
-line refspacs that lack colon (i.e. saying "fetch this ref" without saying
-"and store it here") so that it updates remote tracking refs if and only
-if an appropriate remote.$remote.fetch is configured to do so.  E.g. when
-I fetch from Eric for git-svn updates with
+But I thought you shot it down, by saying that we also wanted to
+support notes on blobs.  I happen to see no value in a note on
+a blob, a blob alone doesn't make much sense without at least an
+annotated tag or commit to provide it some named context, and the
+latter two have dates.
 
-	$ git pull git-svn master
-
-because I do have
-
-	[remote "git-svn"]
-                url = git://yhbt.net/git-svn
-                fetch = +refs/heads/*:refs/remotes/git-svn/*
-
-defined, it is Ok to update refs/remotes/git-svn/master (but not others).
-
-On the other hand, if my refspecs for "git svn" _were_ like this:
-
-	[remote "git-svn"]
-		url = git://yhbt.net/git-svn
-                fetch = +refs/heads/master:refs/remotes/git-svn/master
-
-then I would _not_ want this:
-
-	$ git fetch git-svn dev
-
-to create a new tracking branch refs/remotes/git-svn/dev.
-
-It used to be that the only way to check the progress of other people
-were to do this:
-
-	$ git fetch git-svn master
-	$ git log git-svn/master..FETCH_HEAD
-
-But these days, even if we changed the "git fetch" semantics, we can still
-rely on reflogs to do the equivalent with:
-
-	$ git fetch git-svn
-	$ git log git-svn/master@{1}..git-svn/master
-
-In other words, I think the "feature" that an explicit "fetch but do not
-store this time" request to prevent "git fetch" from updating the tracking
-branches outlived its usefulness.
+-- 
+Shawn.
