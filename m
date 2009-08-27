@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 11/12] Add flags to get_commit_notes() to control the format
- of the note string
-Date: Thu, 27 Aug 2009 03:43:56 +0200
-Message-ID: <1251337437-16947-12-git-send-email-johan@herland.net>
+Subject: [PATCHv4 12/12] Add '%N'-format for pretty-printing commit notes
+Date: Thu, 27 Aug 2009 03:43:57 +0200
+Message-ID: <1251337437-16947-13-git-send-email-johan@herland.net>
 References: <1251337437-16947-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -12,31 +11,31 @@ Cc: git@vger.kernel.org, johan@herland.net, Johannes.Schindelin@gmx.de,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
 	spearce@spearce.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 27 03:45:01 2009
+X-From: git-owner@vger.kernel.org Thu Aug 27 03:45:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgU2u-0004PF-Hx
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 03:45:01 +0200
+	id 1MgU2v-0004PF-DH
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Aug 2009 03:45:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932129AbZH0Bor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S932124AbZH0Bor (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 26 Aug 2009 21:44:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932111AbZH0Boo
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 21:44:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932104AbZH0Bop
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Aug 2009 21:44:45 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:52531 "EHLO
 	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932104AbZH0Bok (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 21:44:40 -0400
+	by vger.kernel.org with ESMTP id S932103AbZH0Bom (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Aug 2009 21:44:42 -0400
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KP0002BFI6ITPA0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 27 Aug 2009 03:44:42 +0200 (MEST)
+ with ESMTP id <0KP0002BLI6JTPA0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 27 Aug 2009 03:44:43 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KP000MW0I5F4H50@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 27 Aug 2009 03:44:42 +0200 (MEST)
+ git@vger.kernel.org; Thu, 27 Aug 2009 03:44:43 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.8.27.13316
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,80 +44,42 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127138>
 
-This patch adds the following flags to get_commit_notes() for adjusting the
-format of the produced note string:
-- NOTES_SHOW_HEADER: Print "Notes:" line before the notes contents
-- NOTES_INDENT: Indent notes contents by 4 spaces
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c  |    8 +++++---
- notes.h  |    5 ++++-
- pretty.c |    3 ++-
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ Documentation/pretty-formats.txt |    1 +
+ pretty.c                         |    4 ++++
+ 2 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index 5d1ee17..bf520ae 100644
---- a/notes.c
-+++ b/notes.c
-@@ -282,7 +282,7 @@ static unsigned char *lookup_notes(const unsigned char *commit_sha1)
- }
- 
- void get_commit_notes(const struct commit *commit, struct strbuf *sb,
--		const char *output_encoding)
-+		const char *output_encoding, int flags)
- {
- 	static const char utf8[] = "utf-8";
- 	unsigned char *sha1;
-@@ -322,12 +322,14 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
- 	if (msglen && msg[msglen - 1] == '\n')
- 		msglen--;
- 
--	strbuf_addstr(sb, "\nNotes:\n");
-+	if (flags & NOTES_SHOW_HEADER)
-+		strbuf_addstr(sb, "\nNotes:\n");
- 
- 	for (msg_p = msg; msg_p < msg + msglen; msg_p += linelen + 1) {
- 		linelen = strchrnul(msg_p, '\n') - msg_p;
- 
--		strbuf_addstr(sb, "    ");
-+		if (flags & NOTES_INDENT)
-+			strbuf_addstr(sb, "    ");
- 		strbuf_add(sb, msg_p, linelen);
- 		strbuf_addch(sb, '\n');
- 	}
-diff --git a/notes.h b/notes.h
-index 79d21b6..7f3eed4 100644
---- a/notes.h
-+++ b/notes.h
-@@ -1,7 +1,10 @@
- #ifndef NOTES_H
- #define NOTES_H
- 
-+#define NOTES_SHOW_HEADER 1
-+#define NOTES_INDENT 2
-+
- void get_commit_notes(const struct commit *commit, struct strbuf *sb,
--		const char *output_encoding);
-+		const char *output_encoding, int flags);
- 
- #endif
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 2a845b1..5fb10b3 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -123,6 +123,7 @@ The placeholders are:
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+ - '%b': body
++- '%N': commit notes
+ - '%Cred': switch color to red
+ - '%Cgreen': switch color to green
+ - '%Cblue': switch color to blue
 diff --git a/pretty.c b/pretty.c
-index e25db81..01eadd0 100644
+index 01eadd0..7f350bb 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -978,7 +978,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
- 		strbuf_addch(sb, '\n');
+@@ -702,6 +702,10 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	case 'd':
+ 		format_decoration(sb, commit);
+ 		return 1;
++	case 'N':
++		get_commit_notes(commit, sb, git_log_output_encoding ?
++			     git_log_output_encoding : git_commit_encoding, 0);
++		return 1;
+ 	}
  
- 	if (fmt != CMIT_FMT_ONELINE)
--		get_commit_notes(commit, sb, encoding);
-+		get_commit_notes(commit, sb, encoding,
-+				 NOTES_SHOW_HEADER | NOTES_INDENT);
- 
- 	free(reencoded);
- }
+ 	/* For the rest we have to parse the commit header. */
 -- 
 1.6.4.304.g1365c.dirty
