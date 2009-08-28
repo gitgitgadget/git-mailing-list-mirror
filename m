@@ -1,90 +1,82 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Round-down years in "years+months" relative date view
-Date: Fri, 28 Aug 2009 09:58:27 +0200
-Message-ID: <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
-References: <4A97193A.8090502@facebook.com>
-	 <20090828060538.GA22416@coredump.intra.peff.net>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [RFC] teamGIT bonjour support
+Date: Fri, 28 Aug 2009 09:05:54 +0100
+Message-ID: <43d8ce650908280105x70327db0p7fce1bd6575297d2@mail.gmail.com>
+References: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Reiss <dreiss@facebook.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Aug 28 09:58:44 2009
+To: git <git@vger.kernel.org>, teamgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Fri Aug 28 10:06:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgwM7-0004rB-3F
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 09:58:43 +0200
+	id 1MgwTM-0006rP-VA
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:06:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbZH1H62 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 03:58:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbZH1H62
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 03:58:28 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:48130 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751723AbZH1H61 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 03:58:27 -0400
-Received: by fxm17 with SMTP id 17so1415232fxm.37
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 00:58:28 -0700 (PDT)
+	id S1751862AbZH1IF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 04:05:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbZH1IFz
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:05:55 -0400
+Received: from mail-gx0-f205.google.com ([209.85.217.205]:63308 "EHLO
+	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751294AbZH1IFx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 04:05:53 -0400
+Received: by gxk1 with SMTP id 1so2184941gxk.17
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 01:05:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mBL+joyQMYeQiZS6Q6und6CRni6MN2QcNVLxv5oZGm4=;
-        b=M/mX/FzGmD+XUewcOhjIvXh1xltNYJ4nkf2qtvxG9l7rZ4ongTC2QsOQd8QzWFVKCX
-         ygZmA6fW2/OK17X9c+iDNRTcQu2vYhhu5i2IWfnIC7u/kv80OPrbabn644ZLv0DDQEnw
-         vR+T5+ZWvdqc/YI3U1go/J/92LpzShOIOMJc8=
+         :date:message-id:subject:from:to:content-type;
+        bh=cfxOtqUBzMuntY4rD/P4x5Igc9Ol/6CSUpNjh6+W5FE=;
+        b=ZXgQLAhwk6+gliJSXP2VJSCrPoXkeibjqBY65QYN/tV+m0zjfeZYx9D2ndlt0n1nyn
+         bfwOXAK9vkcJCNR4DVVpyZ4KrYOuv8HY9G4TbOotrkn8wDCJZKtCC5fnCFTaLIWio0sq
+         2WKXNGSxakEGrHVe411GdYX2L6COEMaj9XBFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RUg3G+4rq19A6zro9HW7gjaalv4P2F6IJTUBPbhj1t4ebX6iMpgTXcyx+vCA+8CR13
-         uN9iPK8ZGZbtQ5/nOvOzPRiTnVmdSlmUUCiwwJT9MXIrn4NzkZIY/OmUNgdBcZGEIMVl
-         0f0+qk6OYcYrULgl+Nab46OEYNhY9crdjneEI=
-Received: by 10.204.161.204 with SMTP id s12mr679103bkx.26.1251446308009; Fri, 
-	28 Aug 2009 00:58:28 -0700 (PDT)
-In-Reply-To: <20090828060538.GA22416@coredump.intra.peff.net>
+         :content-type;
+        b=lZroT8RCTwBbY7+HviawIFwgg5j5tDl8PqCDjoVfndk1EuHUA2kzDQKeygMCwLYUPF
+         xNRvk3A1+PSkjYEqjRXxwQk4Pu6XeZ55QVoqZ8VTNBMFSLoth8qsVizB+tGtW+ZWkP4d
+         SV4Eg5BCeOe4wVTL/nztmmceqRqw3aRj0xYY0=
+Received: by 10.150.130.33 with SMTP id c33mr1537452ybd.298.1251446754252; 
+	Fri, 28 Aug 2009 01:05:54 -0700 (PDT)
+In-Reply-To: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127275>
 
-On Fri, Aug 28, 2009 at 08:05, Jeff King<peff@peff.net> wrote:
-> On Thu, Aug 27, 2009 at 04:39:38PM -0700, David Reiss wrote:
+2009/8/28 Abhijit Bhopatkar <bain@devslashzero.com>:
+> Hi,
 >
->> Previously, a commit from 1 year and 7 months ago would display as
->> "2 years, 7 months ago".
+> After a long pause in the development, i am back to drawing boards for teamGit.
 >
-> Wow, embarrassing.
->
-> Acked-by: Jeff King <peff@peff.net>
->
->> Here's my test script. =C2=A0Let me know if you'd rather have it as =
-part
->> of the test suite.
->
-> I couldn't find any tests related to relative date processing, so it
-> would be really nice to have some. But I'm not sure of the best way t=
-o
-> do it without dealing with race conditions. Annoyingly, show_date cal=
-ls
-> gettimeofday at a pretty low level, so there isn't a way of
-> instrumenting it short of LD_PRELOAD trickery (which is probably not
-> very portable).
+> Ever since i adopted git as my preferred version control system for my
+> teams, I had this tough time keeping up with every one. Of course this
+> is a GoodThing(TM) since this means pace of development is rather
+> good. But it has its usual problems of forcing everyone to religiously
+> publish _AND_ keep rebasing on main branch every so often. Also my
+> major problem is that we discover conflicts only _after_ a developer
+> tries to rebase his work, typically (by design) after he has fully
+> coded and tested a feature.
 
-Maybe better prepare the _test_ so that it uses current time and time
-arithmetics then put yet another cludge in operational code? Especially
-when we already have a greate number of GIT_ environment variables,
-documented nowhere, with effects not immediately obvious:
+What sort of time frame are you talking about?  How long are your
+sprints, or however you partition your work.
 
-  $ git grep -n '"GIT_'| perl -ne '/"(GIT_\w+)/ && print "$1\n"' |
-sort |uniq | wc -l
-  49
+I can't help but feel the problem should be solved elsewhere.  Do you
+have daily scrums?  Everyone should know, roughly, what everyone is
+doing.  If you are using 2-3 week sprints (or however you partition
+the time) and everyone is roughly aware of what everyone else around
+them is doing, there shouldn't really be so much of a problem.
 
-  $ git grep -n '"GIT_'|grep ^Documentation
-  $
+> The current way to get around this is shouting aloud before you start
+> working on a new feature/file/section.
 
-GIT_FLUSH? GIT_SEND_EMAIL_NOTTY?! GIT_CHERRY_PICK_HELP?!!
+How do you allocate the features in the first place?  At the start of
+a sprint?  If so, it should be the person in charge of that that
+should see if there are going to be conflicts.  If you don't have
+sprints, then how do you divide up tasks?
+
+John
