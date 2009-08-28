@@ -1,76 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
- with various fanout schemes
-Date: Fri, 28 Aug 2009 13:56:06 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908281349270.7434@intel-tinevez-2-302>
-References: <1251337437-16947-1-git-send-email-johan@herland.net> <200908280103.06015.johan@herland.net> <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302> <200908281240.13311.johan@herland.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
+Date: Fri, 28 Aug 2009 13:10:02 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0908281238350.18415@reaper.quantumfyre.co.uk>
+References: <87praj90n8.wl%catap@catap.ru> <1251228341-29434-1-git-send-email-catap@catap.ru> <4A97B1F3.5060408@gmail.com> <46a038f90908280405o1e86bf4fo60eb07957ce9158a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Aug 28 13:56:20 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: =?ISO-8859-15?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>,
+	"Kirill A. Korinskiy" <catap@catap.ru>, gitster@pobox.com,
+	git@vger.kernel.org, peff@peff.net, B.Steinbrink@gmx.de
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 14:11:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh043-0002Rf-22
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 13:56:19 +0200
+	id 1Mh0IU-0006ZB-NT
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 14:11:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751167AbZH1L4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 07:56:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750975AbZH1L4J
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 07:56:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54009 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750862AbZH1L4I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 07:56:08 -0400
-Received: (qmail invoked by alias); 28 Aug 2009 11:56:08 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp048) with SMTP; 28 Aug 2009 13:56:08 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18VQH9fl6kVdGXYRE9SamcQsSUH38JZyqI/npj9MH
-	VE7GkX504q6Tzp
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200908281240.13311.johan@herland.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1751450AbZH1MLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 08:11:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbZH1MLC
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 08:11:02 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:50917 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750975AbZH1MLB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 08:11:01 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B189D288C96
+	for <git@vger.kernel.org>; Fri, 28 Aug 2009 13:11:02 +0100 (BST)
+Received: (qmail 15116 invoked by uid 103); 28 Aug 2009 13:10:02 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9751. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.03465 secs); 28 Aug 2009 12:10:02 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 28 Aug 2009 13:10:02 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <46a038f90908280405o1e86bf4fo60eb07957ce9158a@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127292>
 
-Hi,
+On Fri, 28 Aug 2009, Martin Langhoff wrote:
 
-On Fri, 28 Aug 2009, Johan Herland wrote:
-
-> On Friday 28 August 2009, Johannes Schindelin wrote:
+> On Fri, Aug 28, 2009 at 12:31 PM, Tor Arne Vestb?<torarnv@gmail.com> wrote:
+>> Glad to see this topic being revised. Here's the original discussion for
+>> reference:
 >
-> > And I can easily imagine a repository that has a daily note generated 
-> > by an automatic build, and no other notes.  The date-based fan-out 
-> > just wastes our time here, and even hurts performance.
-> 
-> What about a month-based fanout?
+> ISTR that early git supported this -- maybe just on the HTTP
+> implementation? I sure remember writing
+>
+>   git clone http://host/foo.git#branchname
+>
+> and getting a cloned repo where 'branchname' was tracking
+> 'origin/branchname', and was checked out as HEAD.
 
-Well, I hoped to convince you that the date-based approach is too rigid.  
-You basically cannot adapt the optimal data layout to the available data.
+Did you use cogito perhaps?  That had #branch syntax IIRC ...
 
-(I like to think of this issue as related to storing deltas: we let Git 
-choose relatively freely what to delta against, and do not force a delta 
-against the parent commit like others do; I think it is pretty obvious 
-that our approach is more powerful.)
+> It would have been dropped by the switch to C builtins :-/
+>
+> cheers,
+>
+>
+>
+> m
+>
 
-So the simplest (yet powerful-enough) way I could imagine is to teach the 
-reading part to accept any fan-out (but that fan-out is really only based 
-on the object name, nothing else), and to adjust the writing/merging part 
-such that it has a maximum bin size (i.e. it starts a new fan-out whenever 
-a tree object contains more than a config-specifyable limit).
+-- 
+Julian
 
-I was certainly not thinking of something as complicated as Huffman.
-
-Ciao,
-Dscho
+  ---
+"What duck?"
+         -- (Terry Pratchett, Soul Music)
