@@ -1,82 +1,66 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: [RFC] teamGIT bonjour support
-Date: Fri, 28 Aug 2009 09:05:54 +0100
-Message-ID: <43d8ce650908280105x70327db0p7fce1bd6575297d2@mail.gmail.com>
-References: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
+From: "Matthias Andree" <matthias.andree@uni-paderborn.de>
+Subject: Re: git-svn intermittent issues with absent_file
+Date: Fri, 28 Aug 2009 10:14:42 +0200
+Organization: =?iso-8859-15?Q?Universit=E4t_Paderborn=3B_EIM-I?=
+Message-ID: <op.uzc46sm43myrm3@balu.cs.uni-paderborn.de>
+References: <op.uzbs4bsq3myrm3@balu.cs.uni-paderborn.de>
+ <20090827191902.GA3185@dcvr.yhbt.net> <op.uzc1njug3myrm3@merlin.emma.line.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>, teamgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Fri Aug 28 10:06:16 2009
+Content-Type: text/plain; format=flowed; delsp=yes; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Eric Wong" <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Aug 28 10:15:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgwTM-0006rP-VA
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:06:13 +0200
+	id 1Mgwc8-0000qx-A3
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862AbZH1IF4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 04:05:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751536AbZH1IFz
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:05:55 -0400
-Received: from mail-gx0-f205.google.com ([209.85.217.205]:63308 "EHLO
-	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294AbZH1IFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 04:05:53 -0400
-Received: by gxk1 with SMTP id 1so2184941gxk.17
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 01:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=cfxOtqUBzMuntY4rD/P4x5Igc9Ol/6CSUpNjh6+W5FE=;
-        b=ZXgQLAhwk6+gliJSXP2VJSCrPoXkeibjqBY65QYN/tV+m0zjfeZYx9D2ndlt0n1nyn
-         bfwOXAK9vkcJCNR4DVVpyZ4KrYOuv8HY9G4TbOotrkn8wDCJZKtCC5fnCFTaLIWio0sq
-         2WKXNGSxakEGrHVe411GdYX2L6COEMaj9XBFY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=lZroT8RCTwBbY7+HviawIFwgg5j5tDl8PqCDjoVfndk1EuHUA2kzDQKeygMCwLYUPF
-         xNRvk3A1+PSkjYEqjRXxwQk4Pu6XeZ55QVoqZ8VTNBMFSLoth8qsVizB+tGtW+ZWkP4d
-         SV4Eg5BCeOe4wVTL/nztmmceqRqw3aRj0xYY0=
-Received: by 10.150.130.33 with SMTP id c33mr1537452ybd.298.1251446754252; 
-	Fri, 28 Aug 2009 01:05:54 -0700 (PDT)
-In-Reply-To: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
+	id S1752330AbZH1IOr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 04:14:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752322AbZH1IOr
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:14:47 -0400
+Received: from mail.uni-paderborn.de ([131.234.142.9]:50540 "EHLO
+	mail.uni-paderborn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752312AbZH1IOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 04:14:44 -0400
+Received: from balu.cs.uni-paderborn.de ([131.234.21.37])
+	by mail.uni-paderborn.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63 spheron)
+	id 1Mgwbc-00036t-GT; Fri, 28 Aug 2009 10:14:45 +0200
+Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@uni-paderborn.de>)
+	id KP2UWJ-0001Z8-64; Fri, 28 Aug 2009 10:14:43 +0200
+In-Reply-To: <op.uzc1njug3myrm3@merlin.emma.line.org>
+User-Agent: Opera Mail/9.64 (Win32)
+X-IMT-Spam-Score: 0.0 ()
+X-PMX-Version: 5.5.7.378829, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2009.8.28.80328
+X-IMT-Authenticated-Sender: uid=mandree,ou=People,o=upb,c=de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127276>
 
-2009/8/28 Abhijit Bhopatkar <bain@devslashzero.com>:
-> Hi,
->
-> After a long pause in the development, i am back to drawing boards for teamGit.
->
-> Ever since i adopted git as my preferred version control system for my
-> teams, I had this tough time keeping up with every one. Of course this
-> is a GoodThing(TM) since this means pace of development is rather
-> good. But it has its usual problems of forcing everyone to religiously
-> publish _AND_ keep rebasing on main branch every so often. Also my
-> major problem is that we discover conflicts only _after_ a developer
-> tries to rebase his work, typically (by design) after he has fully
-> coded and tested a feature.
+Am 28.08.2009, 08:58 Uhr, schrieb Matthias Andree  
+<matthias.andree@uni-paderborn.de>:
 
-What sort of time frame are you talking about?  How long are your
-sprints, or however you partition your work.
+> The other question is how many arcane APR or Subversion binding issues we
+> hit here. Subversion 1.6 + bindings surely is rather picky on Cygwin 1.5,
+> as discussed earlier on this list.
 
-I can't help but feel the problem should be solved elsewhere.  Do you
-have daily scrums?  Everyone should know, roughly, what everyone is
-doing.  If you are using 2-3 week sprints (or however you partition
-the time) and everyone is roughly aware of what everyone else around
-them is doing, there shouldn't really be so much of a problem.
+As an update, Git-SVN 1.6.4.0 and 1.6.4.1 haven't seen such problems last  
+night when run on Ubuntu Linux.
 
-> The current way to get around this is shouting aloud before you start
-> working on a new feature/file/section.
+So, the common idea set is apparently down to (a) intermittent server  
+issues (I've asked for the relevant log excerpts) and (b) Cygwin issues,  
+and we should keep in mind (c) git-svn, or svn bindings/libraries, losing  
+the causes error conditions from (a) or (b) and git-svn just reporting  
+later symptoms (absent files). More on the other experiments once I get  
+around to them.
 
-How do you allocate the features in the first place?  At the start of
-a sprint?  If so, it should be the person in charge of that that
-should see if there are going to be conflicts.  If you don't have
-sprints, then how do you divide up tasks?
-
-John
+Thanks
+Matthias
