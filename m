@@ -1,122 +1,83 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees with various fanout schemes
-Date: Fri, 28 Aug 2009 12:40:12 +0200
-Message-ID: <200908281240.13311.johan@herland.net>
-References: <1251337437-16947-1-git-send-email-johan@herland.net> <200908280103.06015.johan@herland.net> <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
+Date: Fri, 28 Aug 2009 13:05:22 +0200
+Message-ID: <46a038f90908280405o1e86bf4fo60eb07957ce9158a@mail.gmail.com>
+References: <87praj90n8.wl%catap@catap.ru>
+	 <1251228341-29434-1-git-send-email-catap@catap.ru>
+	 <4A97B1F3.5060408@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Aug 28 12:42:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Kirill A. Korinskiy" <catap@catap.ru>, gitster@pobox.com,
+	git@vger.kernel.org, peff@peff.net, B.Steinbrink@gmx.de
+To: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 13:05:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgyuC-0007ja-04
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:42:04 +0200
+	id 1MgzGu-0003fC-St
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 13:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751580AbZH1Klx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 06:41:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbZH1Klx
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:41:53 -0400
-Received: from sam.opera.com ([213.236.208.81]:52753 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751451AbZH1Klx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 06:41:53 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n7SAeDod013224
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 28 Aug 2009 10:40:19 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302>
-Content-Disposition: inline
+	id S1752056AbZH1LFW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 07:05:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752055AbZH1LFW
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 07:05:22 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:55519 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717AbZH1LFV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 07:05:21 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so410819eya.19
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 04:05:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uJXPy8455rxb6FWxzxqdmgFHqmzgx7/msSL81MkxZas=;
+        b=YVtFbU09QU3e4821VF0gwmWEQPQbln3tkYtTXNlgAX9IgbptP4r1tXKnRIpXSmUAwm
+         h8jqLJIKHjqHg30eA9ZrRas3jE36QCXMJtH0vVS+WV5UN2IcdBqpoOXZfOJbqNt24Kv4
+         SiA8GyznLODFoq2lqqmi3nETdUpAS15xPbsWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UcJHIiELNlDeHypIp/7UbN/FAZawsEBUQGEWOSdpYmCXOwzhRnkNEM0gq38PRX/iWM
+         2o+ZoQ4jrXiYeEFdUbk9Cdaef+nEf3h0Ph0Jg4Os7OsY4+JJYvwMhO3KGrcVqhF7LzX7
+         BXJC8FjphG43wOx71Mm0cjwg3UjxY6w/jmWGw=
+Received: by 10.211.158.8 with SMTP id k8mr1084750ebo.38.1251457522894; Fri, 
+	28 Aug 2009 04:05:22 -0700 (PDT)
+In-Reply-To: <4A97B1F3.5060408@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127289>
 
-On Friday 28 August 2009, Johannes Schindelin wrote:
-> Hi,
->
-> On Fri, 28 Aug 2009, Johan Herland wrote:
-> > On Thursday 27 August 2009, Junio C Hamano wrote:
-> > > "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > > > Yea, it was me.  I still think it might be a useful idea, since
-> > > > it allows you better density of loading notes when parsing the
-> > > > recent commits.  In theory the last 256 commits can easly be in
-> > > > each of the 2/ fanout buckets, making 2/38 pointless for
-> > > > reducing the search space.  Commit date on the other hand can
-> > > > probably force all of them into the same bucket, making it easy
-> > > > to have the last 256 commits in cache, from a single bucket.
-> > > >
-> > > > But I thought you shot it down, by saying that we also wanted
-> > > > to support notes on blobs.  I happen to see no value in a note
-> > > > on a blob, a blob alone doesn't make much sense without at
-> > > > least an annotated tag or commit to provide it some named
-> > > > context, and the latter two have dates.
-> > >
-> > > Yeah, and in this thread everybody seems to be talking about
-> > > commits so I think it is fine to limit notes only to commits.
-> >
-> > Agreed. I'm starting to come around to the idea of storing them in
-> > subtrees based on commit dates. For one, you don't have multiple
-> > notes for one commit in the same notes tree. Also, the common-case
-> > access pattern seems tempting.
-> >
-> > Dscho: Were there other problems with the date-based approach other
-> > than not supporting notes on trees and blobs?
->
-> It emphasized an implementation detail too much for my liking.
->
-> And I would rather have some flexibility in the code as to _when_ it
-> fans out and when not.
->
-> So I can easily imagine a full repository which has only, say, 5
-> notes. Why not have a single tree for all of those?
+On Fri, Aug 28, 2009 at 12:31 PM, Tor Arne Vestb=F8<torarnv@gmail.com> =
+wrote:
+> Glad to see this topic being revised. Here's the original discussion =
+for
+> reference:
 
-Yes, if you only have a handful of notes, the date-based approach is 
-definitely overkill. On the other hand, if you only have a handful of 
-notes, performance is not going to be a problem in the first place, no 
-matter which notes structure you use...
+ISTR that early git supported this -- maybe just on the HTTP
+implementation? I sure remember writing
 
-> And I can easily imagine a repository that has a daily note generated
-> by an automatic build, and no other notes.  The date-based fan-out
-> just wastes our time here, and even hurts performance.
+   git clone http://host/foo.git#branchname
 
-What about a month-based fanout? Looking at the kernel repo with
+and getting a cloned repo where 'branchname' was tracking
+'origin/branchname', and was checked out as HEAD.
 
-  git log --all --date=iso --format="%ad" |
-  cut -c1-7 | sort | uniq -c | sort -n
+It would have been dropped by the switch to C builtins :-/
 
-I find that commits are spread across 66 months, and the most active 
-month (2008-07) has 5661 commits. If we assume the one-note-per-commit 
-worst case, that gives up to 5661 notes per month-based subdir. Is that 
-too much?
-
-Doing
-
-  for subdir in $(find . -type d); do
-      echo "$(ls -1 $subdir | wc -l) $subdir"
-  done | sort -n
-
-shows me that the currently largest tree in the kernel has 985 entries 
-(include/linux), so a 5661-entry tree is probably larger than what git 
-is used to...
-
-...just thinking that we shold make things as simple as possible (but no 
-simpler), and if a month-based fanout works adequately in all practical 
-cases, then we should go with that...
+cheers,
 
 
-...Johan
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+m
+--=20
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
