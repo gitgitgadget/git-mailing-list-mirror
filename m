@@ -1,72 +1,122 @@
-From: =?ISO-8859-1?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>
-Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Fri, 28 Aug 2009 12:31:15 +0200
-Message-ID: <4A97B1F3.5060408@gmail.com>
-References: <87praj90n8.wl%catap@catap.ru> <1251228341-29434-1-git-send-email-catap@catap.ru>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees with various fanout schemes
+Date: Fri, 28 Aug 2009 12:40:12 +0200
+Message-ID: <200908281240.13311.johan@herland.net>
+References: <1251337437-16947-1-git-send-email-johan@herland.net> <200908280103.06015.johan@herland.net> <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net,
-	B.Steinbrink@gmx.de
-To: "Kirill A. Korinskiy" <catap@catap.ru>
-X-From: git-owner@vger.kernel.org Fri Aug 28 12:31:32 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, trast@student.ethz.ch,
+	tavestbo@trolltech.com, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 28 12:42:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgyjz-0004sQ-O0
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:31:32 +0200
+	id 1MgyuC-0007ja-04
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751514AbZH1KbS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 06:31:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZH1KbR
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:31:17 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:2217 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbZH1KbR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 06:31:17 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so406559eya.19
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 03:31:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=0bUzpAHKDyRcLLWn2EjnKMhqV30rPsWSZPYQ6lURInw=;
-        b=JsVPrzNWZRZCcsZ7IHzIbvh6EpufqG5mxs7n6aNC93Mh5ueLUEy9BybO4Mchia4KMb
-         og2+36l1kUFFysh266WHmUt0Enxbz8FB/vPW/ogeIzoep1vJbESQGYv7bovd162EAfaa
-         AB0yrmEr7HdqqPdZkVLr7h+Jt6soOKlvSFI/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=HU3H/RPOIYhl4HUYfrrGtdxegAVgJkaSfRoNWUBpMEGVucI6cPGkxUb/gIWdfCDzX8
-         5VATGI1GrIV2UJ74U79Lm5N8ooegq1ryAKL8htXpN/elaZPLtTcC0FwF8ADFnp2keskk
-         nlVybTa57yRanIihjKgvP1s6iwQR1DbssrJPU=
-Received: by 10.210.136.1 with SMTP id j1mr62905ebd.74.1251455478499;
-        Fri, 28 Aug 2009 03:31:18 -0700 (PDT)
-Received: from ?172.24.90.128? ([62.70.27.104])
-        by mx.google.com with ESMTPS id 28sm207016eye.28.2009.08.28.03.31.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 28 Aug 2009 03:31:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
-In-Reply-To: <1251228341-29434-1-git-send-email-catap@catap.ru>
+	id S1751580AbZH1Klx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 06:41:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbZH1Klx
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:41:53 -0400
+Received: from sam.opera.com ([213.236.208.81]:52753 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751451AbZH1Klx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 06:41:53 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n7SAeDod013224
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 28 Aug 2009 10:40:19 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127288>
 
-On 8/25/09 9:25 PM, Kirill A. Korinskiy wrote:
-> Sometimes (especially on production systems) we need to use only one
-> remote branch for building software. It really annoying to clone
-> origin and then swith branch by hand everytime. So this patch provide
-> functionality to clone remote branch with one command without using
-> checkout after clone.
+On Friday 28 August 2009, Johannes Schindelin wrote:
+> Hi,
+>
+> On Fri, 28 Aug 2009, Johan Herland wrote:
+> > On Thursday 27 August 2009, Junio C Hamano wrote:
+> > > "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > > > Yea, it was me.  I still think it might be a useful idea, since
+> > > > it allows you better density of loading notes when parsing the
+> > > > recent commits.  In theory the last 256 commits can easly be in
+> > > > each of the 2/ fanout buckets, making 2/38 pointless for
+> > > > reducing the search space.  Commit date on the other hand can
+> > > > probably force all of them into the same bucket, making it easy
+> > > > to have the last 256 commits in cache, from a single bucket.
+> > > >
+> > > > But I thought you shot it down, by saying that we also wanted
+> > > > to support notes on blobs.  I happen to see no value in a note
+> > > > on a blob, a blob alone doesn't make much sense without at
+> > > > least an annotated tag or commit to provide it some named
+> > > > context, and the latter two have dates.
+> > >
+> > > Yeah, and in this thread everybody seems to be talking about
+> > > commits so I think it is fine to limit notes only to commits.
+> >
+> > Agreed. I'm starting to come around to the idea of storing them in
+> > subtrees based on commit dates. For one, you don't have multiple
+> > notes for one commit in the same notes tree. Also, the common-case
+> > access pattern seems tempting.
+> >
+> > Dscho: Were there other problems with the date-based approach other
+> > than not supporting notes on trees and blobs?
+>
+> It emphasized an implementation detail too much for my liking.
+>
+> And I would rather have some flexibility in the code as to _when_ it
+> fans out and when not.
+>
+> So I can easily imagine a full repository which has only, say, 5
+> notes. Why not have a single tree for all of those?
 
-Glad to see this topic being revised. Here's the original discussion for 
-reference:
+Yes, if you only have a handful of notes, the date-based approach is 
+definitely overkill. On the other hand, if you only have a handful of 
+notes, performance is not going to be a problem in the first place, no 
+matter which notes structure you use...
 
-http://thread.gmane.org/gmane.comp.version-control.git/114919/
+> And I can easily imagine a repository that has a daily note generated
+> by an automatic build, and no other notes.  The date-based fan-out
+> just wastes our time here, and even hurts performance.
 
-Tor Arne
+What about a month-based fanout? Looking at the kernel repo with
+
+  git log --all --date=iso --format="%ad" |
+  cut -c1-7 | sort | uniq -c | sort -n
+
+I find that commits are spread across 66 months, and the most active 
+month (2008-07) has 5661 commits. If we assume the one-note-per-commit 
+worst case, that gives up to 5661 notes per month-based subdir. Is that 
+too much?
+
+Doing
+
+  for subdir in $(find . -type d); do
+      echo "$(ls -1 $subdir | wc -l) $subdir"
+  done | sort -n
+
+shows me that the currently largest tree in the kernel has 985 entries 
+(include/linux), so a 5661-entry tree is probably larger than what git 
+is used to...
+
+...just thinking that we shold make things as simple as possible (but no 
+simpler), and if a month-based fanout works adequately in all practical 
+cases, then we should go with that...
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
