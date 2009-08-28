@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 10/15] rebase -i: use "git sequencer--helper --fast-forward"
-Date: Fri, 28 Aug 2009 06:47:40 +0200
-Message-ID: <20090828044746.4307.55101.chriscool@tuxfamily.org>
+Subject: [PATCH v4 03/15] rebase -i: use "git sequencer--helper --make-patch"
+Date: Fri, 28 Aug 2009 06:47:33 +0200
+Message-ID: <20090828044746.4307.95146.chriscool@tuxfamily.org>
 References: <20090828043913.4307.34708.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -14,76 +14,63 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgtZl-0006Ec-NB
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 07:00:38 +0200
+	id 1MgtZn-0006Ec-VB
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 07:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbZH1E7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 00:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbZH1E7b
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 00:59:31 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:49767 "EHLO smtp3-g21.free.fr"
+	id S1751863AbZH1E7j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 00:59:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbZH1E7M
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 00:59:12 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:49717 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751703AbZH1E7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 00:59:13 -0400
+	id S1751305AbZH1E7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 00:59:08 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 1E61F8180F7;
-	Fri, 28 Aug 2009 06:59:04 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A3F4D8180D5;
+	Fri, 28 Aug 2009 06:59:02 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D1DF68180A0;
-	Fri, 28 Aug 2009 06:59:01 +0200 (CEST)
-X-git-sha1: a2e95c99a2255067cf3836242653f1b6b4c7b97b 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 661D08180AC;
+	Fri, 28 Aug 2009 06:58:59 +0200 (CEST)
+X-git-sha1: e4a110c742d2c3e1b3770c66afa3d74eedb78847 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090828043913.4307.34708.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127268>
 
-when fast forwarding, as it removes a few more lines of shell
-code.
-
-Note that in the first hunk of this patch, there was this line:
-
-test "a$1" = a-n && output git reset --soft $current_sha1
-
-but the test always failed.
+to simplify the "make_patch" function.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-rebase--interactive.sh |   11 +++--------
- 1 files changed, 3 insertions(+), 8 deletions(-)
+ git-rebase--interactive.sh |   13 +------------
+ 1 files changed, 1 insertions(+), 12 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 0041994..7651fd6 100755
+index 23ded48..c9c75c0 100755
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -154,11 +154,8 @@ pick_one () {
- 		die "Could not get the parent of $sha1"
- 	current_sha1=$(git rev-parse --verify HEAD)
- 	if test "$no_ff$current_sha1" = "$parent_sha1"; then
--		git sequencer--helper --reset-hard $sha1 \
-+		git sequencer--helper --fast-forward $sha1 \
- 			"$GIT_REFLOG_ACTION" "$VERBOSE"
--		test "a$1" = a-n && output git reset --soft $current_sha1
--		sha1=$(git rev-parse --short $sha1)
--		output warn Fast forward to $sha1
- 	else
- 		output git cherry-pick "$@"
- 	fi
-@@ -238,10 +235,8 @@ pick_one_preserving_merges () {
- 	done
- 	case $fast_forward in
- 	t)
--		output warn "Fast forward to $sha1"
--		git sequencer--helper --reset-hard $sha1 \
--			"$GIT_REFLOG_ACTION" "$VERBOSE" ||
--			die "Cannot fast forward to $sha1"
-+		git sequencer--helper --fast-forward $sha1 \
-+			"$GIT_REFLOG_ACTION" "$VERBOSE" || exit
- 		;;
- 	f)
- 		first_parent=$(expr "$new_parents" : ' \([^ ]*\)')
+@@ -117,18 +117,7 @@ mark_action_done () {
+ }
+ 
+ make_patch () {
+-	sha1_and_parents="$(git rev-list --parents -1 "$1")"
+-	case "$sha1_and_parents" in
+-	?*' '?*' '?*)
+-		git diff --cc $sha1_and_parents
+-		;;
+-	?*' '?*)
+-		git diff-tree -p "$1^!"
+-		;;
+-	*)
+-		echo "Root commit"
+-		;;
+-	esac > "$DOTEST"/patch
++	git sequencer--helper --make-patch "$1"
+ 	test -f "$DOTEST"/message ||
+ 		git cat-file commit "$1" | sed "1,/^$/d" > "$DOTEST"/message
+ 	test -f "$DOTEST"/author-script ||
 -- 
 1.6.4.271.ge010d
