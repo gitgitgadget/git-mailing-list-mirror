@@ -1,106 +1,92 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: Using git to track my PhD thesis, couple of questions
-Date: Sat, 29 Aug 2009 00:16:10 +0200
-Message-ID: <9b18b3110908281516w463522b3pb3562b8f0cb9fb03@mail.gmail.com>
-References: <vpq7hwo8gxd.fsf@bauges.imag.fr> <4A979690.1050601@gnu.org>
-	 <vpqk50pasek.fsf@bauges.imag.fr>
-	 <9b18b3110908271521w764684cfg3b009f6960ee5dc4@mail.gmail.com>
-	 <7v1vmxq6nw.fsf@alter.siamese.dyndns.org>
-	 <fabb9a1e0908271341o3a558eedq85541e68875ab77f@mail.gmail.com>
-	 <20090827203402.GC7168@kisimul> <20090828133708.GA11146@kisimul>
-	 <9b18b3110908280912o271dc095o67bc82b31e91680e@mail.gmail.com>
-	 <alpine.DEB.2.00.0908281443070.28411@asgard.lang.hm>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Generating patches/Cherry Picking for a large number of commits
+Date: Fri, 28 Aug 2009 15:31:49 -0700
+Message-ID: <7vmy5jh8oa.fsf@alter.siamese.dyndns.org>
+References: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
+ <20090828194556.GA13302@coredump.intra.peff.net>
+ <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: seanh <seanh.nospam@gmail.com>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sat Aug 29 00:23:37 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Alydis <alydis@august8.net>
+X-From: git-owner@vger.kernel.org Sat Aug 29 00:32:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh9r4-0005mj-Ht
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 00:23:35 +0200
+	id 1Mh9zL-0007pF-Kp
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 00:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751533AbZH1WXY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 18:23:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbZH1WXY
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 18:23:24 -0400
-Received: from mail-ew0-f227.google.com ([209.85.219.227]:37955 "EHLO
-	mail-ew0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456AbZH1WXX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 18:23:23 -0400
-X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Aug 2009 18:23:23 EDT
-Received: by ewy27 with SMTP id 27so2685344ewy.40
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 15:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kOOsiFdEkMdbroJflD3X1AiEqNPLwK5rSgfvaxXCnE0=;
-        b=Gs7gSe18HV6XhXETY/9h/Ze/7AoNOgCw2/If8/UV1m4ciu8rTW1xyg0igcIgNhq+Gw
-         Kl+1d69z8kDQQ3YkdhBavPVpb3Seh+HaW0EDrLggluuED+TgqSJtx0u/DIfWy4oc7ksS
-         /ifBncdIfwLG/L1eP9HMe5JLhrJ/GrPn0fTcg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sJ6nBIGXrUcBvvKiIP/mYxhejSWVNCLiC40waRVRmCa/1gNV0Tg00pUcEP7zwUX/PL
-         DwfNw9OP82U4vz1KKyeVkZ1Gh8yOcw0XQps1kQ2+/I04L6w1pxoouhTrZ1MTtsevLcmX
-         IV0rdABo9eVFwEwkBX9HqCtrE7wK8GmBr+NFM=
-Received: by 10.216.87.68 with SMTP id x46mr349459wee.2.1251497770157; Fri, 28 
-	Aug 2009 15:16:10 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.0908281443070.28411@asgard.lang.hm>
+	id S1751151AbZH1Wb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 18:31:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbZH1Wb5
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 18:31:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50610 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751060AbZH1Wb5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 18:31:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D28E51CDB2;
+	Fri, 28 Aug 2009 18:31:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YGqOwkQk+EpDLVwzWfvcThINdQs=; b=UiAXcO
+	iCa7VkK512dCTrm+4AUMEg2IwG6WHxJJ19x/Elw3fXPqon0Hk55B9+GFP2w9krXc
+	LAtyPdGj9z09ouPnzgvlBMFk5QYjmVYjtD2i4uCESns43ux0IOBdNBT7V9SOGsEv
+	BrKfKATqPlllHTUAYDtTkxHuQNH1ASq3uv5mI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VQbPhqTbt6QagzOfZ9J4VFQ9AnIOaU35
+	PHHz02W9qUFZLFwdHiPCVV3t5io41dxbF6Fd+zxIpqelsytzbeWQwZe3nHM8UOQ4
+	vdmiQGX3cWoN3jFeHQzRbi3rcicZSgfC9MhWfVgFX31e/OYDwgjqbrekORgfNBfY
+	VCuV3li/7Wc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9FCB81CDAC;
+	Fri, 28 Aug 2009 18:31:55 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E11E01CDA7; Fri, 28 Aug
+ 2009 18:31:51 -0400 (EDT)
+In-Reply-To: <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
+ (alydis@august8.net's message of "Fri\, 28 Aug 2009 14\:50\:53 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9752C582-9422-11DE-A2A2-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127358>
 
-2009/8/28  <david@lang.hm>:
-> On Fri, 28 Aug 2009, demerphq wrote:
+Alydis <alydis@august8.net> writes:
+
+> Ack!  Embarrassing RTFM.
 >
->> 2009/8/28 seanh <seanh.nospam@gmail.com>:
->>>
->>> On Fri, Aug 28, 2009 at 12:21:42AM +0200, demerphq wrote:
->>>>
->>>> As you can generate the PDF's from the latex then just hack gitweb=
- to
->>>> let them download it from there.
->>>
->>> Unfortunately gitweb is written in Perl. But I know what you mean, =
-it
->>> should in theory be possible for them to click on a 'Get PDF' link =
-for a
->>> particular revision that causes the PDF to be built and returned to
->>> their browser.
->>
->> What is unfortunate about that? Perl is a duct tape/swiss-army-knife
->> of the internet. =A0Hacking gitweb to generate PDF's on the fly from
->> latex documents should be a fairly trivial hack, even if you aren't =
-a
->> Perl hacker.
->
-> I have a situation where I need to generae pdf's from files that are =
-under
-> git. I have a git repository on by webserver that I push to and have =
-a
-> trigger that regenerates the pdfs any time there is a push.
+> While I have your attention, however, I noticed that git am <path>
+> will apply the list patches generated by format-patch.  The
+> documentation said something about mbox/maildir directories, which I
+> actually am not that familiar with.  Is it safe to say that git am
+> <path> will read the path and apply patches in numerical order?  Does
+> it allow skipping?
 
-Actually this discussion makes me think that there is room for a hack
-to gitweb to provide extensible and pluggable renderers of the files
-in a repository. Such a framework would for instance provide for
-syntax highlighting, PDF generation from latex files, etc.
+If you say "git am <directory>/*", like you have in your original message
+shown *below* (sheesh, why am I responding to somebody who top-posts?),
+you let your shell perform a numerical sort, so you would be Ok.
 
-Hypothetically it wouldnt be too hard to do. A Win32 (dare I say)
-registry of file extensions/shebang lines would be linked into a set
-of renderer plugin's, which in turn would automatically add the
-required links to render the file as needed. Quite doable actually.
+>>> git format-patch -o patches v2.6.21..v2.6.30 arch/powerpc/boot
+>>> git am -3 patches/*
 
-Yves
+I do not think the above format-patch, even with --full-diff, is
+necessarily a good idea nor would work in general.
 
+Often, when a series is concocted, you would see this pattern:
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+ * Early parts of the patch series to lay groundwork by introducing non
+   platform specific infrastructure; and then
+
+ * Later parts of the series utilizes the infrastructure to implement the
+   feature for particular platforms.
+
+Obviously you are interested only for powerpc parts in the latter category
+and would want to omit anything irrelevant to powerpc.  But you do want to
+include all of the former class, even if they do not touch anything inside
+the powerpc area.
