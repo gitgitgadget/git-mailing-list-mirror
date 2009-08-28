@@ -1,77 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Using git to track my PhD thesis, couple of questions
-Date: Fri, 28 Aug 2009 10:46:06 +0200
-Message-ID: <vpq7hwo8gxd.fsf@bauges.imag.fr>
-References: <20090827203402.GC7168@kisimul> <vpqk50pasek.fsf@bauges.imag.fr>
-	<4A979690.1050601@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
+ with various fanout schemes
+Date: Fri, 28 Aug 2009 10:48:08 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908281046560.7434@intel-tinevez-2-302>
+References: <1251337437-16947-1-git-send-email-johan@herland.net> <1251337437-16947-9-git-send-email-johan@herland.net> <7v7hwp6ebb.fsf@alter.siamese.dyndns.org> <200908271135.31794.johan@herland.net> <alpine.DEB.1.00.0908271243120.7562@intel-tinevez-2-302>
+ <7vprahq8iv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: seanh <seanh.nospam@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Aug 28 10:46:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 10:48:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgx6F-0004KL-SW
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:46:24 +0200
+	id 1Mgx85-0004uh-Co
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752439AbZH1IqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 04:46:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbZH1IqQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:46:16 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:37282 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752297AbZH1IqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 04:46:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7S8gsmN031478
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 28 Aug 2009 10:42:54 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mgx5y-0003HF-7R; Fri, 28 Aug 2009 10:46:06 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mgx5y-0002pU-53; Fri, 28 Aug 2009 10:46:06 +0200
-In-Reply-To: <4A979690.1050601@gnu.org> (Paolo Bonzini's message of "Fri\, 28 Aug 2009 10\:34\:24 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 28 Aug 2009 10:42:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7S8gsmN031478
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252053775.48463@k+RKocPVO0AMreUZliPsKg
+	id S1752537AbZH1IsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 04:48:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbZH1IsK
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:48:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56659 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752463AbZH1IsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 04:48:08 -0400
+Received: (qmail invoked by alias); 28 Aug 2009 08:48:09 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp069) with SMTP; 28 Aug 2009 10:48:09 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19I/NZd/H5IUJ0kgdXMh52S/NeTMYcMdDgxPJfZgE
+	YnVb9GsLXuxe/Z
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <7vprahq8iv.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127281>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+Hi,
 
-> You can also merge from the master to your working branch after every
-> merge --squash.
+On Thu, 27 Aug 2009, Junio C Hamano wrote:
 
-Yes, good point. I didn't think of this, but it works because ...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > I half-agree, the code should decide which fanout scheme to use, but 
+> > _only_ when producing new notes.
+> >
+> > I imagine that it could merge the existing notes, and try to make sure 
+> > that there are no more blobs in a given subtree than a certain 
+> > threshold; if that threshold is reached, it could fan-out using 
+> > 2-digit subtrees, merging what needs merging (by concatenation) along 
+> > the way.
+> >
+> > The natural precedence of shallower paths/longer basenames should cope 
+> > well with that (i.e. prefer to show abcd/... over ab/cd/...).
+> 
+> Oh, if the plan for merging the trees is such that it takes care of 
+> "multiple notes pointing at the same commit" issues like you outline, 
+> then I can see it would work nicely.
+> 
+> At that point, fan-out would become merely an implementation detail, 
+> something the end user never needs to worry about, just like what base 
+> object is chosen to represent another object in a packfile.
 
->    ... work on local ...
->    git commit
->    ... work on local ...
->    git commit
->
->    git checkout master
->    git merge --squash local; git commit -m'day 1'
+Oh, that's where you're coming from!  Now I understand your concerns; it 
+never occurred to me that the user should be encouraged to add notes to 
+the tree herself.  I was always under the impression that the fan-out is 
+an implementation detail best hidden from the user.
 
-... this should fast-forward, so get the same tree as in branch
-'local' and ...
-
->    git checkout local
->    git merge master
-
-... then this is a merge of two identical trees, so it's trivial.
-
--- 
-Matthieu
+Ciao,
+Dscho
