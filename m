@@ -1,91 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
- with various fanout schemes
-Date: Fri, 28 Aug 2009 10:51:21 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0908281048320.7434@intel-tinevez-2-302>
-References: <1251337437-16947-1-git-send-email-johan@herland.net> <20090827212710.GV1033@spearce.org> <7vy6p5ncz0.fsf@alter.siamese.dyndns.org> <200908280103.06015.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Aug 28 10:51:33 2009
+From: Ben Hoskings <ben@hoskings.net>
+Subject: Re: [RFC] teamGIT bonjour support
+Date: Fri, 28 Aug 2009 20:06:24 +1000
+Message-ID: <47ECFDB7-4189-4573-BC27-685603780F27@hoskings.net>
+References: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1075.2)
+Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, teamgit@googlegroups.com
+To: Abhijit Bhopatkar <bain@devslashzero.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 12:06:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgxBD-0005oC-Ug
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 10:51:32 +0200
+	id 1MgyLu-0005i2-WB
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:06:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbZH1IvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 04:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbZH1IvW
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 04:51:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47501 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750868AbZH1IvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 04:51:21 -0400
-Received: (qmail invoked by alias); 28 Aug 2009 08:51:23 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp024) with SMTP; 28 Aug 2009 10:51:23 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+R41NiJoCRr0EhLXD5ZnkOZjASkE9nB82lRstxHC
-	SoxLpupmnuifaM
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <200908280103.06015.johan@herland.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.61
+	id S1751834AbZH1KG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 06:06:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751617AbZH1KG2
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:06:28 -0400
+Received: from mail-pz0-f178.google.com ([209.85.222.178]:40821 "EHLO
+	mail-pz0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbZH1KG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 06:06:27 -0400
+Received: by pzk8 with SMTP id 8so1887776pzk.22
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 03:06:29 -0700 (PDT)
+Received: by 10.114.163.26 with SMTP id l26mr1334263wae.173.1251453989765;
+        Fri, 28 Aug 2009 03:06:29 -0700 (PDT)
+Received: from ?10.0.1.12? (ppp194-249.static.internode.on.net [59.167.194.249])
+        by mx.google.com with ESMTPS id n40sm2606925wag.56.2009.08.28.03.06.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Aug 2009 03:06:29 -0700 (PDT)
+In-Reply-To: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com>
+X-Mailer: Apple Mail (2.1075.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127283>
 
-Hi,
+On 28/08/2009, at 5:02 PM, Abhijit Bhopatkar wrote:
 
-On Fri, 28 Aug 2009, Johan Herland wrote:
+> I plan to do this on LAN using bonjour service discovery, and rest
+> completely being handled inside teamGIT running as a daemon(may be in
+> widely abused systray?). (Git will handle actual fetch/conflict
+> checking etc.)
+> On a side note i also plan to generate daily reports and configurable
+> notifications.
+>
+> So I ask you people, is there a solution already cooking someplace?
+> may be something i can integrate with teamGIT? (e.g. bonjour plugin
+> for git dameon)
 
-> On Thursday 27 August 2009, Junio C Hamano wrote:
-> > "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > > Yea, it was me.  I still think it might be a useful idea, since it 
-> > > allows you better density of loading notes when parsing the recent 
-> > > commits.  In theory the last 256 commits can easly be in each of the 
-> > > 2/ fanout buckets, making 2/38 pointless for reducing the search 
-> > > space.  Commit date on the other hand can probably force all of them 
-> > > into the same bucket, making it easy to have the last 256 commits in 
-> > > cache, from a single bucket.
-> > >
-> > > But I thought you shot it down, by saying that we also wanted to 
-> > > support notes on blobs.  I happen to see no value in a note on a 
-> > > blob, a blob alone doesn't make much sense without at least an 
-> > > annotated tag or commit to provide it some named context, and the 
-> > > latter two have dates.
-> >
-> > Yeah, and in this thread everybody seems to be talking about commits 
-> > so I think it is fine to limit notes only to commits.
-> 
-> Agreed. I'm starting to come around to the idea of storing them in 
-> subtrees based on commit dates. For one, you don't have multiple notes 
-> for one commit in the same notes tree. Also, the common-case access 
-> pattern seems tempting.
-> 
-> Dscho: Were there other problems with the date-based approach other than 
-> not supporting notes on trees and blobs?
+You should check out bananajour, it sounds like it might fight the  
+bill quite nicely:
 
-It emphasized an implementation detail too much for my liking.
+http://github.com/toolmantim/bananajour
 
-And I would rather have some flexibility in the code as to _when_ it fans 
-out and when not.
+Written by Tim Lucas, and hacked on by a bunch of us at the Gold  
+Coast, Australia Railscamp in May:
+http://railscamps.com/
 
-So I can easily imagine a full repository which has only, say, 5 notes.  
-Why not have a single tree for all of those?
+The idea is that for each repo you want to publish, bananajour creates  
+and looks after a locally stored remote, that you push to ("git push  
+banana master") to publish your work over bonjour.
 
-And I can easily imagine a repository that has a daily note generated by 
-an automatic build, and no other notes.  The date-based fan-out just 
-wastes our time here, and even hurts performance.
+There's also a web interface at your-machine.local:9331 which shows  
+the other bananas that were found (via bonjour) on the network.  
+['9331' is for 'peel' :) ]
 
-Ciao,
-Dscho
+I'm not sure what the state of Linux support is, since most of us run  
+OS X, but I'm pretty sure someone was working on Linux/zeroconf support.
+
+Cheers
+Ben Hoskings
