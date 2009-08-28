@@ -1,67 +1,85 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: bzr to git syncing
-Date: Fri, 28 Aug 2009 09:19:29 -0700
-Message-ID: <fabb9a1e0908280919o412baeb1ka69968a93297ca59@mail.gmail.com>
-References: <F84D4C0F-1CEF-4853-84DB-B7927CBE62B3@gmail.com> 
-	<b2cdc9f30908280902m22d594bam3c70259d4c296e52@mail.gmail.com>
+From: "Matthias Andree" <matthias.andree@gmx.de>
+Subject: Re: Merging in Subversion 1.5
+Date: Fri, 28 Aug 2009 18:28:57 +0200
+Message-ID: <op.uzdr2j0n1e62zd@balu.cs.uni-paderborn.de>
+References: <4A979690.1050601@gnu.org>
+ <m3ocq0km5m.fsf_-_@localhost.localdomain>
+ <32541b130908280829s6fcebbe5ja84b10e649de1eb3@mail.gmail.com>
+ <200908281819.10135.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, David Reitter <david.reitter@gmail.com>
-To: Alex Bennee <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 18:19:58 2009
+Content-Type: text/plain; charset=iso-8859-15;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jakub Narebski" <jnareb@gmail.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 28 18:29:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh4BB-0001bo-5H
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 18:19:57 +0200
+	id 1Mh4KM-0004UB-GA
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 18:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbZH1QTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 12:19:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751439AbZH1QTs
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 12:19:48 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:49673 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269AbZH1QTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 12:19:47 -0400
-Received: by ewy2 with SMTP id 2so2272452ewy.17
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 09:19:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=w2VEeeDptBS0HKg/qu/0kfUpIG+xwFmuLkvMGkzprkA=;
-        b=DVWC+vxJ+J/0LY8jImgfsAU3wzpDw1XPsqd6m/0sAqijO/WbJ18vZFQDKQCm6YY+fU
-         3xlqHozp32cMa5TPGDVqNvnpuctcud5J/p1TxOZ1/mMJ9VLEbpM+TrUbp2L4DouDYAgh
-         lE/CIotRF8dgXPG51hidyAoc/S2UCp/1ziqec=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=cLpyPshZ6OgiQPpEJN44hXNF2vT/6PkDYmpp42QaqBrm+hEHU+qHFtWXBzaTxEar5b
-         gIXjEwsdcmFD1HT501nFLIC1xAoD7vLjHC7If22G/acFwZRaDFTCYW8qU0aku4+TmPpr
-         Bgm1K7e/vo8KazGV3SszQCrynI2yLeiWmGrTs=
-Received: by 10.216.1.205 with SMTP id 55mr255846wed.191.1251476389088; Fri, 
-	28 Aug 2009 09:19:49 -0700 (PDT)
-In-Reply-To: <b2cdc9f30908280902m22d594bam3c70259d4c296e52@mail.gmail.com>
+	id S1751713AbZH1Q26 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 12:28:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbZH1Q26
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 12:28:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49184 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751493AbZH1Q25 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 12:28:57 -0400
+Received: (qmail invoked by alias); 28 Aug 2009 16:28:58 -0000
+Received: from balu.cs.uni-paderborn.de (EHLO balu.cs.uni-paderborn.de) [131.234.21.37]
+  by mail.gmx.net (mp023) with SMTP; 28 Aug 2009 18:28:58 +0200
+X-Authenticated: #428038
+X-Provags-ID: V01U2FsdGVkX19iFKYLsZdi3Ny4OlIVRElgkVcIrlkAlgph0Q35Yt
+	1GF3kQK3YtsaOe
+Received: from localhost ([127.0.0.1] helo=balu.cs.uni-paderborn.de)
+	by balu.cs.uni-paderborn.de with esmtp (Exim 4.69)
+	(envelope-from <matthias.andree@gmx.de>)
+	id KP3HSA-0004O8-4H; Fri, 28 Aug 2009 18:28:58 +0200
+In-Reply-To: <200908281819.10135.jnareb@gmail.com>
+User-Agent: Opera Mail/9.64 (Win32)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127311>
 
-Heya,
+[culling most of Cc: list]
 
-On Fri, Aug 28, 2009 at 09:02, Alex Bennee<kernel-hacker@bennee.com> wrote:
-> I've attached the fast-import crash I'm seeing. Are you seeing the
-> same sort of failure?
+Am 28.08.2009, 18:19 Uhr, schrieb Jakub Narebski <jnareb@gmail.com>:
 
-The program you used to generate the stream (I assume git-bzr?) is
-generating an invalid mode, git understands '100644', '100755',
-'120000', and '160000'; the mode in the stream, '040000', is not
-something we understand.
+> On Fri, 28 Aug 2009, Avery Pennarun wrote:
+>> On Fri, Aug 28, 2009 at 3:12 PM, Jakub Narebski<jnareb@gmail.com> wr=
+ote:
+>
+>> > From what I understand (from what I have read, and browsed, and
+>> > lurged, and noticed) is that Subversion 1.5+ does merge tracking, =
+but
+>> > in very different way that in Git:
+>> >
+>> > =A0* the svn:mergeinfo is client-side property; if I understand
+>> > =A0 correctly this would help you in repeated merges, but not anyo=
+ne
+>> > =A0 other
+>>
+>> I don't believe there is such a thing as a "client-side property" in
+>> svn.
+>
+> What about svn:ignore or svn:mimetype (IIRC) property?
 
--- 
-Cheers,
+All this is committed to the repository, so there isn't a question of i=
+f =20
+it's client-side in a sense of "local to the client/checkout". Some =20
+properties (such as svn:mergeinfo) require a bit of additional server-s=
+ide =20
+support, but that's about it.
 
-Sverre Rabbelier
+Oh, and to complicate matters, let me mention revprops (such as =20
+svn:log).   SCNR :^)
+
+--=20
+Matthias Andree
