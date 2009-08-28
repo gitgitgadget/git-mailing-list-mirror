@@ -1,77 +1,107 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Round-down years in "years+months" relative date view
-Date: Fri, 28 Aug 2009 16:01:38 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0908281554020.6044@xanadu.home>
-References: <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
- <20090828150212.GA6013@coredump.intra.peff.net>
- <alpine.LFD.2.00.0908281307510.6044@xanadu.home>
- <20090828180158.GA6940@coredump.intra.peff.net>
- <81b0412b0908281127h2c444770g411ceaf052952899@mail.gmail.com>
- <20090828183958.GA11488@coredump.intra.peff.net>
- <81b0412b0908281142v7e1b73ddvb727abe915dace86@mail.gmail.com>
- <alpine.LFD.2.00.0908281458370.6044@xanadu.home>
- <81b0412b0908281208h20aa6e81od3d6567fdffa0dec@mail.gmail.com>
- <alpine.LFD.2.00.0908281516440.6044@xanadu.home>
- <20090828194913.GC9233@blimp.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Generating patches/Cherry Picking for a large number of commits
+Date: Fri, 28 Aug 2009 13:34:36 -0700 (PDT)
+Message-ID: <m3k50nllt6.fsf@localhost.localdomain>
+References: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
+	<20090828194556.GA13302@coredump.intra.peff.net>
+	<ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, David Reiss <dreiss@facebook.com>,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 22:02:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+To: Alydis <alydis@august8.net>
+X-From: git-owner@vger.kernel.org Fri Aug 28 22:34:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh7eG-0000i2-4O
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 22:02:12 +0200
+	id 1Mh89n-00014u-AC
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 22:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753128AbZH1UBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 16:01:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbZH1UBn
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 16:01:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18955 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753059AbZH1UBm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 16:01:42 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KP3008L7RMQZ640@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 28 Aug 2009 16:01:39 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20090828194913.GC9233@blimp.localdomain>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753177AbZH1Ueh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 16:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbZH1Ueh
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 16:34:37 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:64031 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753144AbZH1Ueg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 16:34:36 -0400
+Received: by fxm17 with SMTP id 17so1782316fxm.37
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 13:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=hZZT2Ja5EZgswGlc+hZ43pzIk2ngyhZHAKKEawU6i+8=;
+        b=dvBh0WcmVoStFvX/8Qnh0FhZUDkQDpFN8H1lbyE1WPyKupgGia90MjZVLoQF9qF7FA
+         13YrhQCa2tEj4Hs0oMfECvkhRqTeNbe593WuNUxsf0nkOJb2T07Jnrcghvtg2eHDsa4Y
+         rxzpzKPm9u+UsIr60qgODLjjGx948VDmx5lt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=m1o8A3QoPXf+x/H1OfPEFKdZlkPo2Uh9T/uEqA7uNLMH3ncf1QjTl9GYFoQIvqui3D
+         VdqzLNBy1IkbCsJBusBES2JePEeugY3JkD4QiA9duy9GhBY+oPXjoWTeeycEmt5aGpmA
+         upHdyvB0KMWVMn5vMridWr9WHOv756eKb3RHQ=
+Received: by 10.204.151.210 with SMTP id d18mr1258500bkw.203.1251491677610;
+        Fri, 28 Aug 2009 13:34:37 -0700 (PDT)
+Received: from localhost.localdomain (abvl130.neoplus.adsl.tpnet.pl [83.8.209.130])
+        by mx.google.com with ESMTPS id 22sm1774942fkq.23.2009.08.28.13.34.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Aug 2009 13:34:36 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7SKYYok030337;
+	Fri, 28 Aug 2009 22:34:35 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7SKYUDw030334;
+	Fri, 28 Aug 2009 22:34:30 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127347>
 
-On Fri, 28 Aug 2009, Alex Riesen wrote:
+[Alydis, please do not toppost]
 
-> Nicolas Pitre, Fri, Aug 28, 2009 21:27:53 +0200:
-> > On Fri, 28 Aug 2009, Alex Riesen wrote:
-> > > And shouldn't a linker complain regarding duplicated symbols, unless
-> > > the other (library) symbol is defined as a weak symbol, allowing
-> > > overriding it with another symbol of stronger linkage?
-> > 
-> > Normally a linker would search for new objects to link only when there 
-> > are still symbols to resolve.  If the library is well architected (mind 
-> > you I don't know if that is the case on Windows or OS X) you should find 
-> > many small object files in a library, so to have only related functions 
-> > together in a single object for only the needed code to be linked in the 
-> > final binary. Hence the printf symbol should be in a separate object 
-> > file than gettimeofday, etc.
-> > 
-> > Only if the library's object file containing gettimeofday also contains 
-> > another symbol pulled by the linker will you see a duplicated symbol 
-> > error.  But this is still a possibility.  So your proposal is probably 
-> > cleaner.
+Alydis <alydis@august8.net> writes:
+> On Fri, Aug 28, 2009 at 2:45 PM, Jeff King<peff@peff.net> wrote:
+>> On Fri, Aug 28, 2009 at 02:26:43PM -0500, Alydis wrote:
+>>
+>>> I've tried something along these lines:
+>>>
+[...]
+>>> git format-patch -o patches v2.6.21..v2.6.30 arch/powerpc/boot
+>>> git am -3 patches/*
+>>>
+>>> But, to my dismay, format-patch here tears apart the commits and
+>>> applies ONLY the hunks that apply to the arch/powerpc/boot directory.
+>>> What I'd much rather do is obtain a list of commits that apply to
+>>> arch/powerpc/boot; but, then apply the entire patch.
+>>
+>> By default, format-patch (and log, gitk, etc) when given a path limiter
+>> will also limit the diff shown. You can override it with --full-diff.
+>
+> Ack!  Embarrassing RTFM.
 > 
-> Is it so for dynamic linking as well? Like in libc.so?
+> While I have your attention, however, I noticed that git am <path>
+> will apply the list patches generated by format-patch.  The
+> documentation said something about mbox/maildir directories, which I
+> actually am not that familiar with.  Is it safe to say that git am
+> <path> will read the path and apply patches in numerical order? 
 
-Yes.  The linker still links against stubs in that case.
+git-format-patch | git-am pipeline has to work correctly, as it
+originally was the way (modulo extra options) git-rebase was
+implemented.  So yes, "git am <dir>" should understand and apply in
+correct order result of "git format-patch -o <dir> <revspec>".
 
+> Does it allow skipping?
 
-Nicolas
+There is "git am -i".
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
