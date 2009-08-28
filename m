@@ -1,223 +1,72 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: [PATCH v3 2/3] gitweb: split test suite into library and tests
-Date: Thu, 27 Aug 2009 22:07:07 -0400
-Message-ID: <4A973BCB.7000802@mailservices.uwaterloo.ca>
+From: Joey Hess <joey@kitenet.net>
+Subject: Re: finding unmerged branches
+Date: Thu, 27 Aug 2009 22:08:26 -0400
+Message-ID: <20090828020826.GA28782@gnu.kitenet.net>
+References: <20090827220241.GA1413@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 04:07:23 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 28 04:08:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mgqs5-0006ii-8r
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 04:07:21 +0200
+	id 1MgqtX-00072X-AO
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 04:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbZH1CHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 22:07:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751236AbZH1CHL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 22:07:11 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:33051 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751203AbZH1CHK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Aug 2009 22:07:10 -0400
-Received: from karakura.local (CPE0018397ddc22-CM001225dfe86e.cpe.net.cable.rogers.com [174.117.223.147])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n7S2777u022737
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 27 Aug 2009 22:07:08 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
-X-UUID: c53ed288-a570-4e1f-88da-e24bae7cac6a
-X-Miltered: at mailchk-m05 with ID 4A973BCB.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Thu, 27 Aug 2009 22:07:09 -0400 (EDT)
+	id S1751330AbZH1CIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 22:08:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbZH1CIm
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 22:08:42 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:41495 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751203AbZH1CIl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 22:08:41 -0400
+Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 02C25314399
+	for <git@vger.kernel.org>; Thu, 27 Aug 2009 22:08:43 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 15008A81A7; Thu, 27 Aug 2009 22:08:26 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20090827220241.GA1413@gnu.kitenet.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127244>
 
-I just fixed a typo in the commit message, a really obvious typo
-that had to be pointed out to me...
 
-I hope this is not too late.
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Mark A Rada (ferrous26)
-marada@uwaterloo.ca
+Joey Hess wrote:
+> * Is this situation somewhat common, or an I doing something wrong?
+>   (Assuming that I have a good reason to want to look at remote=20
+>   branches rather than waiting to get merge requests.)
 
---->8---
-To accommodate additions to the test cases for gitweb, the preamble
-from t9500 is now in its own library so that new sets of tests for
-gitweb can use the same setup without copying the code.
+Come to think, the github fork queue serves basically the same purpose,
+but only for branches in github.
 
-Signed-off-by: Mark Rada <marada@uwaterloo.ca>
----
- t/gitweb-lib.sh                        |   73 ++++++++++++++++++++++++++++++++
- t/t9500-gitweb-standalone-no-errors.sh |   67 +----------------------------
- 2 files changed, 74 insertions(+), 66 deletions(-)
- create mode 100644 t/gitweb-lib.sh
+--=20
+see shy jo
 
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-new file mode 100644
-index 0000000..8452532
---- /dev/null
-+++ b/t/gitweb-lib.sh
-@@ -0,0 +1,73 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Jakub Narebski
-+#
-+
-+gitweb_init () {
-+	safe_pwd="$(perl -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
-+	cat >gitweb_config.perl <<EOF
-+#!/usr/bin/perl
-+
-+# gitweb configuration for tests
-+
-+our \$version = 'current';
-+our \$GIT = 'git';
-+our \$projectroot = "$safe_pwd";
-+our \$project_maxdepth = 8;
-+our \$home_link_str = 'projects';
-+our \$site_name = '[localhost]';
-+our \$site_header = '';
-+our \$site_footer = '';
-+our \$home_text = 'indextext.html';
-+our @stylesheets = ('file:///$TEST_DIRECTORY/../gitweb/gitweb.css');
-+our \$logo = 'file:///$TEST_DIRECTORY/../gitweb/git-logo.png';
-+our \$favicon = 'file:///$TEST_DIRECTORY/../gitweb/git-favicon.png';
-+our \$projects_list = '';
-+our \$export_ok = '';
-+our \$strict_export = '';
-+
-+EOF
-+
-+	cat >.git/description <<EOF
-+$0 test repository
-+EOF
-+}
-+
-+gitweb_run () {
-+	GATEWAY_INTERFACE='CGI/1.1'
-+	HTTP_ACCEPT='*/*'
-+	REQUEST_METHOD='GET'
-+	SCRIPT_NAME="$TEST_DIRECTORY/../gitweb/gitweb.perl"
-+	QUERY_STRING=""$1""
-+	PATH_INFO=""$2""
-+	export GATEWAY_INTERFACE HTTP_ACCEPT REQUEST_METHOD \
-+		SCRIPT_NAME QUERY_STRING PATH_INFO
-+
-+	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
-+	export GITWEB_CONFIG
-+
-+	# some of git commands write to STDERR on error, but this is not
-+	# written to web server logs, so we are not interested in that:
-+	# we are interested only in properly formatted errors/warnings
-+	rm -f gitweb.log &&
-+	perl -- "$SCRIPT_NAME" \
-+		>gitweb.output 2>gitweb.log &&
-+	if grep '^[[]' gitweb.log >/dev/null 2>&1; then false; else true; fi
-+
-+	# gitweb.log is left for debugging
-+	# gitweb.output is used to parse http output
-+}
-+
-+. ./test-lib.sh
-+
-+if ! test_have_prereq PERL; then
-+	say 'skipping gitweb tests, perl not available'
-+	test_done
-+fi
-+
-+perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
-+    say 'skipping gitweb tests, perl version is too old'
-+    test_done
-+}
-+
-+gitweb_init
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 6275181..2fc7fdb 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -9,73 +9,8 @@ This test runs gitweb (git web interface) as CGI script from
- commandline, and checks that it would not write any errors
- or warnings to log.'
- 
--gitweb_init () {
--	safe_pwd="$(perl -MPOSIX=getcwd -e 'print quotemeta(getcwd)')"
--	cat >gitweb_config.perl <<EOF
--#!/usr/bin/perl
--
--# gitweb configuration for tests
--
--our \$version = "current";
--our \$GIT = "git";
--our \$projectroot = "$safe_pwd";
--our \$project_maxdepth = 8;
--our \$home_link_str = "projects";
--our \$site_name = "[localhost]";
--our \$site_header = "";
--our \$site_footer = "";
--our \$home_text = "indextext.html";
--our @stylesheets = ("file:///$TEST_DIRECTORY/../gitweb/gitweb.css");
--our \$logo = "file:///$TEST_DIRECTORY/../gitweb/git-logo.png";
--our \$favicon = "file:///$TEST_DIRECTORY/../gitweb/git-favicon.png";
--our \$projects_list = "";
--our \$export_ok = "";
--our \$strict_export = "";
- 
--EOF
--
--	cat >.git/description <<EOF
--$0 test repository
--EOF
--}
--
--gitweb_run () {
--	GATEWAY_INTERFACE="CGI/1.1"
--	HTTP_ACCEPT="*/*"
--	REQUEST_METHOD="GET"
--	SCRIPT_NAME="$TEST_DIRECTORY/../gitweb/gitweb.perl"
--	QUERY_STRING=""$1""
--	PATH_INFO=""$2""
--	export GATEWAY_INTERFACE HTTP_ACCEPT REQUEST_METHOD \
--		SCRIPT_NAME QUERY_STRING PATH_INFO
--
--	GITWEB_CONFIG=$(pwd)/gitweb_config.perl
--	export GITWEB_CONFIG
--
--	# some of git commands write to STDERR on error, but this is not
--	# written to web server logs, so we are not interested in that:
--	# we are interested only in properly formatted errors/warnings
--	rm -f gitweb.log &&
--	perl -- "$SCRIPT_NAME" \
--		>/dev/null 2>gitweb.log &&
--	if grep "^[[]" gitweb.log >/dev/null 2>&1; then false; else true; fi
--
--	# gitweb.log is left for debugging
--}
--
--. ./test-lib.sh
--
--if ! test_have_prereq PERL; then
--	say 'skipping gitweb tests, perl not available'
--	test_done
--fi
--
--perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
--    say 'skipping gitweb tests, perl version is too old'
--    test_done
--}
--
--gitweb_init
-+. ./gitweb-lib.sh
- 
- # ----------------------------------------------------------------------
- # no commits (empty, just initialized repository)
--- 
-1.6.4.1
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iD8DBQFKlzwXd8HHehbQuO8RAkmoAKCHiBGrR671ONkKD4s3hAIQBWWDJgCfXePs
+BnhEcb7jMaVScZwxgiB3ByY=
+=DArg
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
