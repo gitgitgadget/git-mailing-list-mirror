@@ -1,80 +1,96 @@
-From: Alydis <alydis@august8.net>
-Subject: Generating patches/Cherry Picking for a large number of commits
-Date: Fri, 28 Aug 2009 14:26:43 -0500
-Message-ID: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Round-down years in "years+months" relative date view
+Date: Fri, 28 Aug 2009 15:27:53 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0908281516440.6044@xanadu.home>
+References: <4A97193A.8090502@facebook.com>
+ <20090828060538.GA22416@coredump.intra.peff.net>
+ <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
+ <20090828150212.GA6013@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0908281307510.6044@xanadu.home>
+ <20090828180158.GA6940@coredump.intra.peff.net>
+ <81b0412b0908281127h2c444770g411ceaf052952899@mail.gmail.com>
+ <20090828183958.GA11488@coredump.intra.peff.net>
+ <81b0412b0908281142v7e1b73ddvb727abe915dace86@mail.gmail.com>
+ <alpine.LFD.2.00.0908281458370.6044@xanadu.home>
+ <81b0412b0908281208h20aa6e81od3d6567fdffa0dec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 28 21:26:55 2009
+Content-Type: multipart/mixed; boundary="Boundary_(ID_lb+ID62xmPim8dGJbDlGTw)"
+Cc: Jeff King <peff@peff.net>, David Reiss <dreiss@facebook.com>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 21:28:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh766-0007xu-4p
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:26:54 +0200
+	id 1Mh77K-0008Ly-Uz
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:28:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbZH1T0n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 15:26:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752469AbZH1T0n
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:26:43 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:32891 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133AbZH1T0n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 15:26:43 -0400
-Received: by fxm17 with SMTP id 17so1753372fxm.37
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 12:26:44 -0700 (PDT)
-Received: by 10.239.139.76 with SMTP id s12mr143215hbs.78.1251487603761; Fri, 
-	28 Aug 2009 12:26:43 -0700 (PDT)
+	id S1752721AbZH1T15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 15:27:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752492AbZH1T15
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:27:57 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:36447 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752343AbZH1T15 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 15:27:57 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KP300AU7Q2H9JK0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 28 Aug 2009 15:27:54 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <81b0412b0908281208h20aa6e81od3d6567fdffa0dec@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127341>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Newly converted git user here.=A0 I've stopped working with Subversion
-ever since working with the Linux kernel has introduced me to git, and
-never looked back!
+--Boundary_(ID_lb+ID62xmPim8dGJbDlGTw)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-I am currently working on a project in which I'm trying to backport
-the powerpc boot-wrapper and device tree handling from Linux 2.6.30
-into Linux 2.6.21.=A0 We have some third party vendor code that is not
-ready for the (new) completely fair scheduler just yet.=A0 Yet, our BSP
-relies on cuImage and the DTS files.
+On Fri, 28 Aug 2009, Alex Riesen wrote:
 
-The approach I'm taking is to try to cherry-pick any commits between
-v2.6.21 and v2.6.30 on the Linux kernel git repository that touch any
-file in the arch/powerpc/boot directory into a v2.6.21 branch (and
-pray that the conflicts are manageable).
+> On Fri, Aug 28, 2009 at 21:00, Nicolas Pitre<nico@cam.org> wrote:
+> >> >> Microsoft's compiler and libraries? MacOSX?
+> >> >
+> >> > Are you saying you know those to be platforms with problems, or are you
+> >> > asking whether those platforms will have problems?
+> >>
+> >> Both: MS never had weak/vague linkage, but I don't know about MacOSX.
+> >
+> > This is not about weak or vague linkage.  This is plain basic linker
+> > feature where no library object needs to be linked if there is no symbol
+> > to resolve.
+> 
+> Maybe I missed something, but wasn't the idea to overwrite gettimeofday
+> with a public gettimeofday, defined in one of the object files?
 
-I've tried something along these lines:
+Yes, in test-date.o.
 
-git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-=
-2.6
-cd linux-2.6
-git checkout -b mybranch v2.6.21
-git format-patch -o patches v2.6.21..v2.6.30 arch/powerpc/boot
-git am -3 patches/*
+> And shouldn't a linker complain regarding duplicated symbols, unless
+> the other (library) symbol is defined as a weak symbol, allowing
+> overriding it with another symbol of stronger linkage?
 
-But, to my dismay, format-patch here tears apart the commits and
-applies ONLY the hunks that apply to the arch/powerpc/boot directory.
-What I'd much rather do is obtain a list of commits that apply to
-arch/powerpc/boot; but, then apply the entire patch.
+Normally a linker would search for new objects to link only when there 
+are still symbols to resolve.  If the library is well architected (mind 
+you I don't know if that is the case on Windows or OS X) you should find 
+many small object files in a library, so to have only related functions 
+together in a single object for only the needed code to be linked in the 
+final binary. Hence the printf symbol should be in a separate object 
+file than gettimeofday, etc.
 
-I'm a bit lost at how to proceed at this point?=A0 Do I need to write m=
-y
-own script that uses git-log to grab the commit hashes that I want,
-then call format-patch (or diff/apply/etc) individually on each of
-them?=A0 I realize I'll have to handle patch numbering myself, if I wer=
-e
-to do that (luckily, I believe format-patch allows you to specify the
-starting number).=A0 I also know at some point, I'll have to drill down
-into individual commits and do some more detailed cherry picking to
-form the desired patch series.=A0 This script seems like a good deal of
-work for me... so before I go off and start it, I was wondering if the
-git gurus have any clever solutions for me?
+Only if the library's object file containing gettimeofday also contains 
+another symbol pulled by the linker will you see a duplicated symbol 
+error.  But this is still a possibility.  So your proposal is probably 
+cleaner.
 
-Thanks,
-Tommy Wang
+
+Nicolas
+
+--Boundary_(ID_lb+ID62xmPim8dGJbDlGTw)--
