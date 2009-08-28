@@ -1,133 +1,79 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] git submodule add: make the <path> parameter optional
-Date: Fri, 28 Aug 2009 21:19:36 +0200
-Message-ID: <4A982DC8.3000407@web.de>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Round-down years in "years+months" relative date view
+Date: Fri, 28 Aug 2009 21:20:50 +0200
+Message-ID: <81b0412b0908281220o1c378d5dn6ed52c8d55a9cdec@mail.gmail.com>
+References: <4A97193A.8090502@facebook.com>
+	 <20090828060538.GA22416@coredump.intra.peff.net>
+	 <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
+	 <20090828150212.GA6013@coredump.intra.peff.net>
+	 <alpine.LFD.2.00.0908281307510.6044@xanadu.home>
+	 <20090828190319.GA9233@blimp.localdomain>
+	 <20090828191521.GA12292@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 21:19:48 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, David Reiss <dreiss@facebook.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 28 21:21:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh6zC-0005s0-MG
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:19:47 +0200
+	id 1Mh70W-0006Fi-7x
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbZH1TTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 15:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbZH1TTh
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:19:37 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:56391 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752810AbZH1TTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 15:19:35 -0400
-Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 0FCA11104E702;
-	Fri, 28 Aug 2009 21:19:37 +0200 (CEST)
-Received: from [80.128.61.96] (helo=[192.168.178.26])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Mh6z2-0006lb-00; Fri, 28 Aug 2009 21:19:36 +0200
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19LFYOkiT59i9+/C6r9xu/XQfe8XNsuz2j5aq0o
-	GkkSoL/S/lHY9r63iDb3U2mTfPw1C6g67u/p5DYqkk7N9T06WE
-	2/Zk6lYzjffm/b2gkKuQ==
+	id S1752717AbZH1TUv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 15:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752550AbZH1TUv
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:20:51 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:41229 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680AbZH1TUu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 15:20:50 -0400
+Received: by bwz19 with SMTP id 19so1785211bwz.37
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 12:20:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pDryQ9ukfYB1h5H0rlgcBl1Fnefq+KBWnJfcJYegjdE=;
+        b=EqbVsu/UOQtO8sxrf7mI2CfUY+91s1dTXJNhhyiwIrWPFIxbkR9sNFm6LSPytbreLu
+         Xric8q04vbKSsaSGM+xaa1Um3CAZpeyd97+nul+cPkvx5klcU0iTfrEpvvhe8MQh8VhA
+         PlWlRoXv90wAcCqASwC2Zmal8lBmCT5ylekrg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ms9qjTpXsQsp1q2lc16S10YhpIS1pDgMf/YyiWZqwR7swMU0U0Em0JWthJrqBWR/oh
+         GMFVB5IHE2tL/IqkevFuaoytxqpmAhCOrjv+3i1MvS2zLeBKvg49tigQwsAhoaugzW5V
+         kKpyvXzPWygQnzbUtMWJ2MeolMjO58qX6ahPw=
+Received: by 10.204.161.197 with SMTP id s5mr1256122bkx.8.1251487250922; Fri, 
+	28 Aug 2009 12:20:50 -0700 (PDT)
+In-Reply-To: <20090828191521.GA12292@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127338>
 
-When <path> is not given, use the "humanish" part of the source repository
-instead.
+On Fri, Aug 28, 2009 at 21:15, Jeff King<peff@peff.net> wrote:
+> On Fri, Aug 28, 2009 at 09:03:19PM +0200, Alex Riesen wrote:
+>
+>> +unsigned long approxidate(const char *date)
+>> +{
+>> + =C2=A0 =C2=A0 struct timeval tv;
+>> + =C2=A0 =C2=A0 gettimeofday(&tv, NULL);
+>> + =C2=A0 =C2=A0 return approxidate_relative(date, &tv);
+>> +}
+>
+> This now always calls gettimeofday, whereas the original approxidate
+> only did if parse_date failed.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+Oh, bugger...
 
-With this patch, git submodule add behaves like git clone in this respect.
+> On the other hand, refactoring the relative date code into its own
+> function is probably a good thing in the long run.
 
- Documentation/git-submodule.txt |    8 ++++++--
- git-submodule.sh                |    7 ++++++-
- t/t7400-submodule-basic.sh      |   16 ++++++++++++++++
- 3 files changed, 28 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 5ccdd18..4ef70c4 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git submodule' [--quiet] add [-b branch]
--	      [--reference <repository>] [--] <repository> <path>
-+	      [--reference <repository>] [--] <repository> [<path>]
- 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
- 'git submodule' [--quiet] init [--] [<path>...]
- 'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
-@@ -69,7 +69,11 @@ add::
- 	to the changeset to be committed next to the current
- 	project: the current project is termed the "superproject".
- +
--This requires two arguments: <repository> and <path>.
-+This requires at least one argument: <repository>. The optional
-+argument <path> is the relative location for the cloned submodule
-+to exist in the superproject. If <path> is not given, the
-+"humanish" part of the source repository is used ("repo" for
-+"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
- +
- <repository> is the URL of the new submodule's origin repository.
- This may be either an absolute URL, or (if it begins with ./
-diff --git a/git-submodule.sh b/git-submodule.sh
-index bfbd36b..0c617eb 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -5,7 +5,7 @@
- # Copyright (c) 2007 Lars Hjemli
-
- dashless=$(basename "$0" | sed -e 's/-/ /')
--USAGE="[--quiet] add [-b branch] [--reference <repository>] [--] <repository> <path>
-+USAGE="[--quiet] add [-b branch] [--reference <repository>] [--] <repository> [<path>]
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
-@@ -160,6 +160,11 @@ cmd_add()
- 	repo=$1
- 	path=$2
-
-+	if test -z "$path"; then
-+		path=$(echo "$repo" |
-+			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
-+	fi
-+
- 	if test -z "$repo" -o -z "$path"; then
- 		usage
- 	fi
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 0f2ccc6..a0cc99a 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -306,4 +306,20 @@ test_expect_success 'submodule <invalid-path> warns' '
-
- '
-
-+test_expect_success 'add submodules without specifying an explicit path' '
-+	mkdir repo &&
-+	cd repo &&
-+	git init &&
-+	echo r >r &&
-+	git add r &&
-+	git commit -m "repo commit 1" &&
-+	cd .. &&
-+	git clone --bare repo/ bare.git &&
-+	cd addtest &&
-+	git submodule add "$submodurl/repo" &&
-+	git config -f .gitmodules submodule.repo.path repo &&
-+	git submodule add "$submodurl/bare.git" &&
-+	git config -f .gitmodules submodule.bare.path bare
-+'
-+
- test_done
--- 
-1.6.4.1.246.g7bae7.dirty
+Exactly.
