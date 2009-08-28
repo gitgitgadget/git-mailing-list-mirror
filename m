@@ -1,67 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Round-down years in "years+months" relative date view
-Date: Fri, 28 Aug 2009 21:49:13 +0200
-Message-ID: <20090828194913.GC9233@blimp.localdomain>
-References: <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com> <20090828150212.GA6013@coredump.intra.peff.net> <alpine.LFD.2.00.0908281307510.6044@xanadu.home> <20090828180158.GA6940@coredump.intra.peff.net> <81b0412b0908281127h2c444770g411ceaf052952899@mail.gmail.com> <20090828183958.GA11488@coredump.intra.peff.net> <81b0412b0908281142v7e1b73ddvb727abe915dace86@mail.gmail.com> <alpine.LFD.2.00.0908281458370.6044@xanadu.home> <81b0412b0908281208h20aa6e81od3d6567fdffa0dec@mail.gmail.com> <alpine.LFD.2.00.0908281516440.6044@xanadu.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Alydis <alydis@august8.net>
+Subject: Re: Generating patches/Cherry Picking for a large number of commits
+Date: Fri, 28 Aug 2009 14:50:53 -0500
+Message-ID: <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
+References: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
+	 <20090828194556.GA13302@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, David Reiss <dreiss@facebook.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 28 21:49:44 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Aug 28 21:51:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh7SB-0005Wl-ME
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:49:44 +0200
+	id 1Mh7Ti-0005yM-Ls
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989AbZH1Ttb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 15:49:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752964AbZH1Tta
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:49:30 -0400
-Received: from mout5.freenet.de ([195.4.92.95]:55849 "EHLO mout5.freenet.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752894AbZH1Tt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 15:49:29 -0400
-Received: from [195.4.92.12] (helo=2.mx.freenet.de)
-	by mout5.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.69 #92)
-	id 1Mh7Rl-0006wt-H1; Fri, 28 Aug 2009 21:49:17 +0200
-Received: from x54ff.x.pppool.de ([89.59.84.255]:37348 helo=tigra.home)
-	by 2.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 587) (Exim 4.69 #94)
-	id 1Mh7Rl-0005Hj-8S; Fri, 28 Aug 2009 21:49:17 +0200
-Received: from blimp.localdomain (blimp.home [192.168.0.8])
-	by tigra.home (Postfix) with ESMTP id 10C33277D8;
-	Fri, 28 Aug 2009 21:49:14 +0200 (CEST)
-Received: by blimp.localdomain (Postfix, from userid 1000)
-	id CA97636D28; Fri, 28 Aug 2009 21:49:13 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0908281516440.6044@xanadu.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752205AbZH1Tux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 15:50:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752103AbZH1Tux
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:50:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:45724 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055AbZH1Tuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 15:50:52 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so90280fge.1
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 12:50:54 -0700 (PDT)
+Received: by 10.239.130.145 with SMTP id 17mr143004hbj.52.1251489053712; Fri, 
+	28 Aug 2009 12:50:53 -0700 (PDT)
+In-Reply-To: <20090828194556.GA13302@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127345>
 
-Nicolas Pitre, Fri, Aug 28, 2009 21:27:53 +0200:
-> On Fri, 28 Aug 2009, Alex Riesen wrote:
-> > And shouldn't a linker complain regarding duplicated symbols, unless
-> > the other (library) symbol is defined as a weak symbol, allowing
-> > overriding it with another symbol of stronger linkage?
-> 
-> Normally a linker would search for new objects to link only when there 
-> are still symbols to resolve.  If the library is well architected (mind 
-> you I don't know if that is the case on Windows or OS X) you should find 
-> many small object files in a library, so to have only related functions 
-> together in a single object for only the needed code to be linked in the 
-> final binary. Hence the printf symbol should be in a separate object 
-> file than gettimeofday, etc.
-> 
-> Only if the library's object file containing gettimeofday also contains 
-> another symbol pulled by the linker will you see a duplicated symbol 
-> error.  But this is still a possibility.  So your proposal is probably 
-> cleaner.
+Ack!  Embarrassing RTFM.
 
-Is it so for dynamic linking as well? Like in libc.so?
+While I have your attention, however, I noticed that git am <path>
+will apply the list patches generated by format-patch.  The
+documentation said something about mbox/maildir directories, which I
+actually am not that familiar with.  Is it safe to say that git am
+<path> will read the path and apply patches in numerical order?  Does
+it allow skipping?
+
+Thanks again,
+Tommy Wang
+
+
+On Fri, Aug 28, 2009 at 2:45 PM, Jeff King<peff@peff.net> wrote:
+> On Fri, Aug 28, 2009 at 02:26:43PM -0500, Alydis wrote:
+>
+>> I've tried something along these lines:
+>>
+>> git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+>> cd linux-2.6
+>> git checkout -b mybranch v2.6.21
+>> git format-patch -o patches v2.6.21..v2.6.30 arch/powerpc/boot
+>> git am -3 patches/*
+>>
+>> But, to my dismay, format-patch here tears apart the commits and
+>> applies ONLY the hunks that apply to the arch/powerpc/boot directory.
+>> What I'd much rather do is obtain a list of commits that apply to
+>> arch/powerpc/boot; but, then apply the entire patch.
+>
+> By default, format-patch (and log, gitk, etc) when given a path limiter
+> will also limit the diff shown. You can override it with --full-diff.
+>
+> -Peff
+>
