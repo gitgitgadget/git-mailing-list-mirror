@@ -1,83 +1,128 @@
-From: demerphq <demerphq@gmail.com>
-Subject: Re: Using git to track my PhD thesis, couple of questions
-Date: Fri, 28 Aug 2009 18:12:41 +0200
-Message-ID: <9b18b3110908280912o271dc095o67bc82b31e91680e@mail.gmail.com>
-References: <vpq7hwo8gxd.fsf@bauges.imag.fr> <4A979690.1050601@gnu.org>
-	 <vpqk50pasek.fsf@bauges.imag.fr>
-	 <9b18b3110908271521w764684cfg3b009f6960ee5dc4@mail.gmail.com>
-	 <7v1vmxq6nw.fsf@alter.siamese.dyndns.org>
-	 <fabb9a1e0908271341o3a558eedq85541e68875ab77f@mail.gmail.com>
-	 <20090827203402.GC7168@kisimul> <20090828133708.GA11146@kisimul>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Merging in Subversion 1.5
+Date: Fri, 28 Aug 2009 18:19:06 +0200
+Message-ID: <200908281819.10135.jnareb@gmail.com>
+References: <4A979690.1050601@gnu.org> <m3ocq0km5m.fsf_-_@localhost.localdomain> <32541b130908280829s6fcebbe5ja84b10e649de1eb3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: seanh <seanh.nospam@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 18:12:53 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Matthias Andree <matthias.andree@gmx.de>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 18:19:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh44I-0007pd-KG
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 18:12:51 +0200
+	id 1Mh4Ab-0001Oc-UH
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 18:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751152AbZH1QMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 12:12:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbZH1QMl
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 12:12:41 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:31106 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750761AbZH1QMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 12:12:40 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so53781eyf.5
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 09:12:41 -0700 (PDT)
+	id S1751326AbZH1QTM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 12:19:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbZH1QTM
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 12:19:12 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:50919 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010AbZH1QTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 12:19:11 -0400
+Received: by bwz19 with SMTP id 19so1700965bwz.37
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 09:19:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=aVNsUEFVIKzRIczr7ogIkt3P/c3EbypRNkKoe7hiuUE=;
-        b=fGc+QYSs7ULgKbvkEfYy+zjLqKBmR2PjsE7D5BOqbfs4rqwcdjZwAaK5KeXKUzE2QT
-         JhYwuEBb+FtblUD65fQ7FMBKhvPJUKSA56DEvVKyb2Exj3hM4F5NzmEKiVwavZ1WzgPk
-         ci8qhW7fWjBx1mQk7Vfw0mR6t/QQS6XSGty0M=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=C7+ZMJ4prHbXjifvtZHaz/V9G3ljc+6SsQGE5AddqAc=;
+        b=FMOLyqoOviWyugYSXWO1AO6YA3lXi/VnYFlF+Zpmrt8qEg2dKab4wrwgzrUBrGL9Nn
+         uZnqermaj/TNzfN4YunE08Iq7WfCbppCqwCn6+w14SRhFgiZVuUXtGDiyjoEJb5pGFDk
+         Pg/OeDbbpO9sXYV7oS4vJkavnOsV1xulTx/kM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=f1V8txPuQmAGG5akuqZMgt3kQzp0OX/cOw6AWDj7CKsYHFc8pVrNSwDhTgdpA5rVab
-         jdqFlmGAMmOrEkQb2t0N+KQ5rgBu90soT+GBvA1PzYpR/MAc8mMteu5F7vRUKyk4stS7
-         5YRmvV92q7He0+nwgEXklkHlcg5BMJpsDf75k=
-Received: by 10.216.52.76 with SMTP id d54mr276390wec.119.1251475961792; Fri, 
-	28 Aug 2009 09:12:41 -0700 (PDT)
-In-Reply-To: <20090828133708.GA11146@kisimul>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=WC+8l76Zd0nfFbByedfFUwbyumpoAtIFKW6xbCEuJ8TGuZHtho/+w9YKfcTOql913y
+         sV3Gk3CX+Wo5UU6VWTG/9sfEULJYQtc0wl6nwoTFYu+PfC79RwLm1cmgTagx9bfsuHfl
+         wvqX+J5POPz+8BuG6v+XxuEjRg9EaLfBkHVeY=
+Received: by 10.102.226.17 with SMTP id y17mr380890mug.67.1251476351846;
+        Fri, 28 Aug 2009 09:19:11 -0700 (PDT)
+Received: from ?192.168.1.13? (abvl130.neoplus.adsl.tpnet.pl [83.8.209.130])
+        by mx.google.com with ESMTPS id j10sm5865484muh.26.2009.08.28.09.19.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Aug 2009 09:19:11 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <32541b130908280829s6fcebbe5ja84b10e649de1eb3@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127309>
 
-2009/8/28 seanh <seanh.nospam@gmail.com>:
-> On Fri, Aug 28, 2009 at 12:21:42AM +0200, demerphq wrote:
->> As you can generate the PDF's from the latex then just hack gitweb to
->> let them download it from there.
->
-> Unfortunately gitweb is written in Perl. But I know what you mean, it
-> should in theory be possible for them to click on a 'Get PDF' link for a
-> particular revision that causes the PDF to be built and returned to
-> their browser.
+On Fri, 28 Aug 2009, Avery Pennarun wrote:
+> On Fri, Aug 28, 2009 at 3:12 PM, Jakub Narebski<jnareb@gmail.com> wro=
+te:
 
-What is unfortunate about that? Perl is a duct tape/swiss-army-knife
-of the internet.  Hacking gitweb to generate PDF's on the fly from
-latex documents should be a fairly trivial hack, even if you aren't a
-Perl hacker.
+> > From what I understand (from what I have read, and browsed, and
+> > lurged, and noticed) is that Subversion 1.5+ does merge tracking, b=
+ut
+> > in very different way that in Git:
+> >
+> > =A0* the svn:mergeinfo is client-side property; if I understand
+> > =A0 correctly this would help you in repeated merges, but not anyon=
+e
+> > =A0 other
+>=20
+> I don't believe there is such a thing as a "client-side property" in
+> svn.
 
-See:
+What about svn:ignore or svn:mimetype (IIRC) property?
 
-http://search.cpan.org/~andrewf/LaTeX-Driver-0.08/lib/LaTeX/Driver.pm
+> I see someone said this on stackoverflow=20
+> (http://stackoverflow.com/questions/1156698/are-svn-merges-idempotent=
+)
+> but I'm pretty sure they were either mistaken or using a different
+> definition of "client-side."
 
-for just one of many Perl modules to interface with with LaTeX.
+I think I got this (wrong?) impression from there.
 
-Good luck.
+> > =A0* svn:mergeinfo contains _per-file_ merge info, so it is much, m=
+uch
+> > =A0 more "chatty" than Git multiple parents. =A0This might be more
+> > =A0 powerfull approach, in the same sense that more advanced merge
+> > =A0 strategies that 3-way merge were more powerfull -- but 3-way me=
+rge
+> > =A0 is best because it is simple (and either it is simple that 3-wa=
+y
+> > =A0 merge is enough, or complicated so manual intervention is requi=
+red).
+>=20
+> svn people really love their cherry-picks and want to keep track of
+> which things get cherry picked from one branch to another.  This is
+> nice (at least for informational purposes) although they go through
+> some probably-unnecessary contortions *after* doing this, including
+> splitting a merge from "maint" into "master" into two sequential
+> merges, if you've previously cherry-picked a commit from master into
+> maint.  The above svn book link describes this in a bit more detail.
+>=20
+> I don't think that behaviour would be much help in any situation I've
+> ever experienced, so I agree with your comment that 3-way merge is
+> generally better.
 
-Yves
+Errr... what I meant here that I have read (on some blog, but either
+I didn't bookmark it, or I can't find the bookmark) that svn:mergeinfo
+is not as simple as listing _revisions_ which are merged (i.e. either
+all parents, or additional parent), but it lists per-file merge=20
+information, and can be quite large.
+=20
+> > =A0* You have to explicitely enable using svn:mergeinfo in log and =
+blame
+>=20
+> Conversely, in git you can basically disable it using --first-parent,
+> which is sometimes handy. [...]
 
--- 
-perl -Mre=debug -e "/just|another|perl|hacker/"
+In git-log.  But in git-blame?
+
+--=20
+Jakub Narebski
+Poland
