@@ -1,78 +1,106 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: [PATCH] Round-down years in "years+months" relative date view
-Date: Fri, 28 Aug 2009 18:01:28 -0400
-Message-ID: <4A9853B8.2090709@gmail.com>
-References: <4A97193A.8090502@facebook.com> <20090828060538.GA22416@coredump.intra.peff.net> <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com> <20090828150212.GA6013@coredump.intra.peff.net> <81b0412b0908281000l41c862f9ye52da7251014c4f7@mail.gmail.com> <20090828171552.GA6821@coredump.intra.peff.net>
-Reply-To: gitzilla@gmail.com
+From: demerphq <demerphq@gmail.com>
+Subject: Re: Using git to track my PhD thesis, couple of questions
+Date: Sat, 29 Aug 2009 00:16:10 +0200
+Message-ID: <9b18b3110908281516w463522b3pb3562b8f0cb9fb03@mail.gmail.com>
+References: <vpq7hwo8gxd.fsf@bauges.imag.fr> <4A979690.1050601@gnu.org>
+	 <vpqk50pasek.fsf@bauges.imag.fr>
+	 <9b18b3110908271521w764684cfg3b009f6960ee5dc4@mail.gmail.com>
+	 <7v1vmxq6nw.fsf@alter.siamese.dyndns.org>
+	 <fabb9a1e0908271341o3a558eedq85541e68875ab77f@mail.gmail.com>
+	 <20090827203402.GC7168@kisimul> <20090828133708.GA11146@kisimul>
+	 <9b18b3110908280912o271dc095o67bc82b31e91680e@mail.gmail.com>
+	 <alpine.DEB.2.00.0908281443070.28411@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	David Reiss <dreiss@facebook.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Aug 29 00:01:45 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: seanh <seanh.nospam@gmail.com>, git@vger.kernel.org
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Sat Aug 29 00:23:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh9Vu-0000Hh-EF
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 00:01:42 +0200
+	id 1Mh9r4-0005mj-Ht
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 00:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbZH1WBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 18:01:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbZH1WBd
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 18:01:33 -0400
-Received: from mail-gx0-f205.google.com ([209.85.217.205]:61797 "EHLO
-	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183AbZH1WBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 18:01:32 -0400
-Received: by gxk1 with SMTP id 1so2883662gxk.17
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 15:01:34 -0700 (PDT)
+	id S1751533AbZH1WXY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 18:23:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbZH1WXY
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 18:23:24 -0400
+Received: from mail-ew0-f227.google.com ([209.85.219.227]:37955 "EHLO
+	mail-ew0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751456AbZH1WXX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 18:23:23 -0400
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Aug 2009 18:23:23 EDT
+Received: by ewy27 with SMTP id 27so2685344ewy.40
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 15:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=V/QqX/qSgXY8+sCUwki/9mdg4IsicvUeGFO/vY4q2Zo=;
-        b=ZTtPu7ztd4HGBSBpb5HEbG/kwXfd841CWMoKqcuKO1XW4e7bS2Kfp0licYhsyZeZpB
-         K8ICLvYwgt9vyuVOfA9HzFRkOVvG6x4rebkoso5Jx3sl/VUStlCzUSnhmTDL+avhzDpR
-         UIR0UFBLJKqVtUgiK7JkfQMqLpmSmsO/QXEcI=
+        bh=kOOsiFdEkMdbroJflD3X1AiEqNPLwK5rSgfvaxXCnE0=;
+        b=Gs7gSe18HV6XhXETY/9h/Ze/7AoNOgCw2/If8/UV1m4ciu8rTW1xyg0igcIgNhq+Gw
+         Kl+1d69z8kDQQ3YkdhBavPVpb3Seh+HaW0EDrLggluuED+TgqSJtx0u/DIfWy4oc7ksS
+         /ifBncdIfwLG/L1eP9HMe5JLhrJ/GrPn0fTcg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=HsIoCTo8wX0Wc5tUQ0WZmo2jp9K3d43HZRX9We737UqJl/usi4S2uDnixjIV8ozUty
-         FihQ6IVTFM13hMLy23yxpZWqBvAtXF0JAo4ZRh1Ib6jFkrJE61ikmKut8hxjg0Gdnyol
-         68f8NWqohRlTO05+vKCqb0dL7riGsB76WEMJ8=
-Received: by 10.90.166.2 with SMTP id o2mr1287484age.93.1251496894273;
-        Fri, 28 Aug 2009 15:01:34 -0700 (PDT)
-Received: from ?10.0.0.6? (c-71-199-240-201.hsd1.fl.comcast.net [71.199.240.201])
-        by mx.google.com with ESMTPS id 34sm3832320agc.71.2009.08.28.15.01.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 28 Aug 2009 15:01:33 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
-In-Reply-To: <20090828171552.GA6821@coredump.intra.peff.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sJ6nBIGXrUcBvvKiIP/mYxhejSWVNCLiC40waRVRmCa/1gNV0Tg00pUcEP7zwUX/PL
+         DwfNw9OP82U4vz1KKyeVkZ1Gh8yOcw0XQps1kQ2+/I04L6w1pxoouhTrZ1MTtsevLcmX
+         IV0rdABo9eVFwEwkBX9HqCtrE7wK8GmBr+NFM=
+Received: by 10.216.87.68 with SMTP id x46mr349459wee.2.1251497770157; Fri, 28 
+	Aug 2009 15:16:10 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.0908281443070.28411@asgard.lang.hm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127357>
 
-Jeff King wrote:
-> On Fri, Aug 28, 2009 at 07:00:59PM +0200, Alex Riesen wrote:
-> 
->> On Fri, Aug 28, 2009 at 17:02, Jeff King<peff@peff.net> wrote:
->>> But that's the point: you can't do that without a race condition. Your
->>> test gets a sense of the current time, then runs git, which checks the
->>> current time again. How many seconds elapsed between the two checks?
->> How _many_ do you need?
-> 
-> I don't understand what you're trying to say. My point is that if you
-> are checking results to a one-second precision, you need to know whether
-> zero seconds elapsed, or one second, or two seconds, or whatever to get
-> a consistent result.
+2009/8/28  <david@lang.hm>:
+> On Fri, 28 Aug 2009, demerphq wrote:
+>
+>> 2009/8/28 seanh <seanh.nospam@gmail.com>:
+>>>
+>>> On Fri, Aug 28, 2009 at 12:21:42AM +0200, demerphq wrote:
+>>>>
+>>>> As you can generate the PDF's from the latex then just hack gitweb=
+ to
+>>>> let them download it from there.
+>>>
+>>> Unfortunately gitweb is written in Perl. But I know what you mean, =
+it
+>>> should in theory be possible for them to click on a 'Get PDF' link =
+for a
+>>> particular revision that causes the PDF to be built and returned to
+>>> their browser.
+>>
+>> What is unfortunate about that? Perl is a duct tape/swiss-army-knife
+>> of the internet. =A0Hacking gitweb to generate PDF's on the fly from
+>> latex documents should be a fairly trivial hack, even if you aren't =
+a
+>> Perl hacker.
+>
+> I have a situation where I need to generae pdf's from files that are =
+under
+> git. I have a git repository on by webserver that I push to and have =
+a
+> trigger that regenerates the pdfs any time there is a push.
 
-To no-one in particular, Gitzilla mumbles "To do this right(tm) would 
-probably require LD_PRELOAD magic with a environment variable invocation.
+Actually this discussion makes me think that there is room for a hack
+to gitweb to provide extensible and pluggable renderers of the files
+in a repository. Such a framework would for instance provide for
+syntax highlighting, PDF generation from latex files, etc.
+
+Hypothetically it wouldnt be too hard to do. A Win32 (dare I say)
+registry of file extensions/shebang lines would be linked into a set
+of renderer plugin's, which in turn would automatically add the
+required links to render the file as needed. Quite doable actually.
+
+Yves
+
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
