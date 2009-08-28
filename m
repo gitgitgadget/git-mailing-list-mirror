@@ -1,107 +1,118 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Generating patches/Cherry Picking for a large number of commits
-Date: Fri, 28 Aug 2009 13:34:36 -0700 (PDT)
-Message-ID: <m3k50nllt6.fsf@localhost.localdomain>
-References: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
-	<20090828194556.GA13302@coredump.intra.peff.net>
-	<ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] import-tars: Allow per-tar author and commit message.
+Date: Fri, 28 Aug 2009 13:50:30 -0700
+Message-ID: <7vskfbhdd5.fsf@alter.siamese.dyndns.org>
+References: <20090828185652.448AD189B7B@perkele>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git <git@vger.kernel.org>
-To: Alydis <alydis@august8.net>
-X-From: git-owner@vger.kernel.org Fri Aug 28 22:34:48 2009
+Cc: git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Fri Aug 28 22:50:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh89n-00014u-AC
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 22:34:47 +0200
+	id 1Mh8PH-0005Y6-Sc
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 22:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177AbZH1Ueh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 16:34:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753170AbZH1Ueh
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 16:34:37 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:64031 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753144AbZH1Ueg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 16:34:36 -0400
-Received: by fxm17 with SMTP id 17so1782316fxm.37
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 13:34:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=hZZT2Ja5EZgswGlc+hZ43pzIk2ngyhZHAKKEawU6i+8=;
-        b=dvBh0WcmVoStFvX/8Qnh0FhZUDkQDpFN8H1lbyE1WPyKupgGia90MjZVLoQF9qF7FA
-         13YrhQCa2tEj4Hs0oMfECvkhRqTeNbe593WuNUxsf0nkOJb2T07Jnrcghvtg2eHDsa4Y
-         rxzpzKPm9u+UsIr60qgODLjjGx948VDmx5lt4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=m1o8A3QoPXf+x/H1OfPEFKdZlkPo2Uh9T/uEqA7uNLMH3ncf1QjTl9GYFoQIvqui3D
-         VdqzLNBy1IkbCsJBusBES2JePEeugY3JkD4QiA9duy9GhBY+oPXjoWTeeycEmt5aGpmA
-         upHdyvB0KMWVMn5vMridWr9WHOv756eKb3RHQ=
-Received: by 10.204.151.210 with SMTP id d18mr1258500bkw.203.1251491677610;
-        Fri, 28 Aug 2009 13:34:37 -0700 (PDT)
-Received: from localhost.localdomain (abvl130.neoplus.adsl.tpnet.pl [83.8.209.130])
-        by mx.google.com with ESMTPS id 22sm1774942fkq.23.2009.08.28.13.34.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 28 Aug 2009 13:34:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n7SKYYok030337;
-	Fri, 28 Aug 2009 22:34:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n7SKYUDw030334;
-	Fri, 28 Aug 2009 22:34:30 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753187AbZH1Uui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 16:50:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbZH1Uui
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 16:50:38 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47353 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071AbZH1Uuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 16:50:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BDD273BB98;
+	Fri, 28 Aug 2009 16:50:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k4Xrxp32mWTm8bBdFd3o72D4YhQ=; b=Vs/5fV
+	hbs6ClsW1hZ6/U1MylZcuqZ8zCC1C2bbeXgbpeoGXbXP2J+sDnNlItdRUyFkp/en
+	Vv575OZgDbkN6RtWcGKFvbADqk69B1bAMzIH4B/Q0fb6N+zdOHaTyAmzV4PPMNKi
+	c57OXWE9+IOqj6tGCpvMBnei3Xk1Nk3d0lHGo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SLpg5w6ANkqR0disRBNIjzjLhUQs2cr5
+	PedswcfvExgvQ7NWG4IOCCjwZJydzSGFai8Z2U1RcLFzSaR+6OO6PBmF4TAsx2Tt
+	SGs1aZvHg7RIMYN8m5viL33yY1uqy51XX8a909vm2VSXhL8W05NN2zJP7rP8d5h/
+	vjFQdSjmI1s=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9D8053BB97;
+	Fri, 28 Aug 2009 16:50:35 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5A0123BB96; Fri, 28 Aug 2009
+ 16:50:31 -0400 (EDT)
+In-Reply-To: <20090828185652.448AD189B7B@perkele> (Peter Krefting's message
+ of "Wed\, 26 Aug 2009 20\:26\:55 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6F5808E8-9414-11DE-B607-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127348>
 
-[Alydis, please do not toppost]
+Peter Krefting <peter@softwolves.pp.se> writes:
 
-Alydis <alydis@august8.net> writes:
-> On Fri, Aug 28, 2009 at 2:45 PM, Jeff King<peff@peff.net> wrote:
->> On Fri, Aug 28, 2009 at 02:26:43PM -0500, Alydis wrote:
->>
->>> I've tried something along these lines:
->>>
-[...]
->>> git format-patch -o patches v2.6.21..v2.6.30 arch/powerpc/boot
->>> git am -3 patches/*
->>>
->>> But, to my dismay, format-patch here tears apart the commits and
->>> applies ONLY the hunks that apply to the arch/powerpc/boot directory.
->>> What I'd much rather do is obtain a list of commits that apply to
->>> arch/powerpc/boot; but, then apply the entire patch.
->>
->> By default, format-patch (and log, gitk, etc) when given a path limiter
->> will also limit the diff shown. You can override it with --full-diff.
->
-> Ack!  Embarrassing RTFM.
-> 
-> While I have your attention, however, I noticed that git am <path>
-> will apply the list patches generated by format-patch.  The
-> documentation said something about mbox/maildir directories, which I
-> actually am not that familiar with.  Is it safe to say that git am
-> <path> will read the path and apply patches in numerical order? 
+> +	my $commit_msg = "Imported from $tar_file.";
+> +	my $this_committer_name = $committer_name;
+> +	my $this_committer_email = $committer_email;
+> +	my $this_author_name = $author_name;
+> +	my $this_author_email = $author_email;
+> +	if ($metaext ne '')
+> +	{
+> +		# Optionally read a commit message from <filename.tar>.msg
+> +		# Add a line on the form "Committer: name <e-mail>" to override
+> +		# the committer and "Author: name <e-mail>" to override the
+> +		# author for this tar ball.
+> +		if (open MSG, '<', "${tar_file}.${metaext}")
+> +		{
+> +			my $header_done = 0;
+> +			$commit_msg = '';
+> +			while (<MSG>)
+> +			{
+> +				if (!$header_done && /^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i)
+> +				{
+> +					$this_committer_name = $1;
+> +					$this_committer_email = $2;
+> +				}
+> +				elsif (!$header_done && /^Author:\s+([^<>]*)\s+<(.*)>\s*$/i)
+> +				{
+> +					$this_author_name = $1;
+> +					$this_author_email = $2;
+> +				}
+> +				else
+> +				{
+> +					$commit_msg .= $_;
+> +					$header_done = 1;
+> +				}
+> +			}
+> +			close MSG;
+> +		}
+> +	}
+> +
 
-git-format-patch | git-am pipeline has to work correctly, as it
-originally was the way (modulo extra options) git-rebase was
-implemented.  So yes, "git am <dir>" should understand and apply in
-correct order result of "git format-patch -o <dir> <revspec>".
+I think people would expect that if they put a blank line after the header
+part, it would be stripped away, because a format that has a list of
+colon-separated key-value pairs, followed by a blank line, and then
+followed by the body of the message is so familiar.
 
-> Does it allow skipping?
+While you are at it, can you also fix the style?  Existing code in
+import-tars.perl looks like this:
 
-There is "git am -i".
+		if ($typeflag == 2) { # symbolic link
+			print FI "data ", length($linkname), "\n", $linkname;
+			$mode = 0120000;
+		} else {
+			print FI "data $size\n";
+			while ($size > 0 && read(I, $_, 512) == 512) {
+				print FI substr($_, 0, $size);
+				$size -= 512;
+			}
+		}
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+i.e. opening brace comes at the end of the line of "if" and "else";
+closing brace comes on the same line immediately before "else".
