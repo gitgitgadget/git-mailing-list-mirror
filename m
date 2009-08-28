@@ -1,65 +1,51 @@
-From: Keshetti Mahesh <keshetti.mahesh@gmail.com>
-Subject: git error : Unable to write new index file
-Date: Fri, 28 Aug 2009 15:36:39 +0530
-Message-ID: <829ded920908280306p50ec375dr90f6593fc6b9ea06@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 28 12:07:08 2009
+From: Ben Hoskings <ben@hoskings.net>
+Subject: Re: [RFC] teamGIT bonjour support
+Date: Fri, 28 Aug 2009 20:17:37 +1000
+Message-ID: <52293B6C-5DE0-4BF4-8A4A-C1C44DD2AA82@hoskings.net>
+References: <2fcfa6df0908280002y221a22e6md27db56865472144@mail.gmail.com> <47ECFDB7-4189-4573-BC27-685603780F27@hoskings.net>
+Mime-Version: 1.0 (Apple Message framework v1075.2)
+Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, teamgit@googlegroups.com
+To: Abhijit Bhopatkar <bain@devslashzero.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 12:17:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgyMN-0005tJ-PB
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:07:08 +0200
+	id 1MgyWl-0000x9-5S
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 12:17:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbZH1KG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 06:06:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750770AbZH1KG5
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:06:57 -0400
-Received: from mail-px0-f174.google.com ([209.85.216.174]:45075 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbZH1KG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 06:06:56 -0400
-Received: by pxi4 with SMTP id 4so1868897pxi.21
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 03:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=I/7aCn43ShInzFT7bcBmqNSEBiHUMdQTpZVkQISPfjs=;
-        b=DiQqzXQEf+dcrWgt6PQxnAFZXyKZszAflfNFaU1YyqQi/3UuiQvMeXKrvTr1MFpjZH
-         X19lOoLAVjrUylyqnvnvBHUGEq2p3LA8qfIW4AIqlhyC+BeWa9Jw+BnsJx4+40MAnFP5
-         hpnYcHBuBjy5SkJHx9TF8l8zCVrDc+vC+U7h4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=dqrqNgAg1t+9ch7mZuKw0o6g2LzMRE3yl/oM4eeuneFZpeyXgZb0dAi6EG2uXXLLOZ
-         hvQNqAUReMvwNGs1zFCX4fmyN3rb+Pxeb9GJdfLwwhqyF0VX9Txm7ko6njtkLPNtWqew
-         7V5CLbhCXnYkkgiGYp7JQDeoKdP/OHg/ARtzk=
-Received: by 10.140.162.16 with SMTP id k16mr465522rve.208.1251454019081; Fri, 
-	28 Aug 2009 03:06:59 -0700 (PDT)
+	id S1751595AbZH1KRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 06:17:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbZH1KRl
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 06:17:41 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:18871 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770AbZH1KRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 06:17:40 -0400
+Received: by wa-out-1112.google.com with SMTP id j5so409527wah.21
+        for <git@vger.kernel.org>; Fri, 28 Aug 2009 03:17:42 -0700 (PDT)
+Received: by 10.115.113.9 with SMTP id q9mr1323707wam.224.1251454662442;
+        Fri, 28 Aug 2009 03:17:42 -0700 (PDT)
+Received: from ?10.0.1.12? (ppp194-249.static.internode.on.net [59.167.194.249])
+        by mx.google.com with ESMTPS id j39sm310315waf.10.2009.08.28.03.17.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 Aug 2009 03:17:42 -0700 (PDT)
+In-Reply-To: <47ECFDB7-4189-4573-BC27-685603780F27@hoskings.net>
+X-Mailer: Apple Mail (2.1075.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127285>
 
-Hello all,
+On 28/08/2009, at 8:06 PM, Ben Hoskings wrote:
 
-I have just started using git for a small project. I have
-created empty repository using "git init" and it worked fine.
-But after that when I have tried to add a file to the repository
-using "git add <file_name>", I am getting the below error.
+> You should check out bananajour, it sounds like it might fight the  
+> bill quite nicely:
 
-> fatal: Unable to write new index file
+I mean, _fit_ the bill. My fingers got stuck in the '*ight' rhythm, I  
+guess. :)
 
-The same error appears not only when adding files but also
-whenever I add something (file, branch etc. ) to git repository.
-
-I am using git on windows using cygwin and I have all permissions
-(rwx) in the directory where I am running this command. Can anyone
-please help me in resolving this issue ?
-
-Thanks,
-Mahesh
+Ben
