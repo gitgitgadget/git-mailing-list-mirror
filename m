@@ -1,70 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Generating patches/Cherry Picking for a large number of commits
-Date: Fri, 28 Aug 2009 15:35:43 -0700
-Message-ID: <7v1vmvh8hs.fsf@alter.siamese.dyndns.org>
-References: <ae09c2a40908281226r744141bm3a5bf4161ddab3e7@mail.gmail.com>
- <20090828194556.GA13302@coredump.intra.peff.net>
- <ae09c2a40908281250r42275a3o96825b89e725bace@mail.gmail.com>
- <m3k50nllt6.fsf@localhost.localdomain>
+From: "Steven E. Harris" <seh@panix.com>
+Subject: How does git follow branch history across a merge commit?
+Date: Fri, 28 Aug 2009 18:37:59 -0400
+Organization: SEH Labs
+Message-ID: <8363c75zug.fsf@torus.sehlabs.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alydis <alydis@august8.net>, Jeff King <peff@peff.net>,
-	git <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 29 00:36:07 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 29 01:25:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhA3D-0000Ru-3s
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 00:36:07 +0200
+	id 1MhAon-0002tl-8q
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 01:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056AbZH1Wf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 18:35:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750868AbZH1Wf5
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 18:35:57 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57544 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750718AbZH1Wf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Aug 2009 18:35:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAC2C3A3A9;
-	Fri, 28 Aug 2009 18:35:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H6rJLO3jNAxPZCUv3/bVab9Qrkg=; b=HWpxg0
-	OfXv8oz02NP90JHNe+WKleQBEXlQEjXY14KTaABqDA0SrGsj6DLQRgjOmr9Nj1g+
-	+9jaPdy7ghVVpLvKUI/bNQIW9VlDHGgYG7Mw8Y1nhAttd3UeivyTSd0ocJrmGfkA
-	6m+C3DifcrYcnNVKq4xEwZHQ5zAfDt8+unwvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jhAHQDRSlg3pS6yAUnRFugIuVmIX6Jh7
-	8tZZyyBxEPrPJbIHvHR6OhEDxcn6/G6g2Jx6KXAW1yXeFxwvG18vPK5rTCOyJPyi
-	1R+Egwr5c2V3FWj6P4rPtItbGliyGdS2UIRMAYX1+n8xIq5g4Aizojb6PUl2bH4D
-	RePpsBxMMJE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9FF2E3A3A7;
-	Fri, 28 Aug 2009 18:35:54 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F0B4F3A3A6; Fri, 28 Aug 2009
- 18:35:46 -0400 (EDT)
-In-Reply-To: <m3k50nllt6.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri\, 28 Aug 2009 13\:34\:36 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 25C472F2-9423-11DE-9601-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751106AbZH1XZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 19:25:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751090AbZH1XZG
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 19:25:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:37857 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750921AbZH1XZF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 19:25:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MhAoZ-0002pv-Po
+	for git@vger.kernel.org; Sat, 29 Aug 2009 01:25:03 +0200
+Received: from pool-68-162-167-240.pitt.east.verizon.net ([68.162.167.240])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Aug 2009 01:25:03 +0200
+Received: from seh by pool-68-162-167-240.pitt.east.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Aug 2009 01:25:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-68-162-167-240.pitt.east.verizon.net
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (windows-nt)
+Cancel-Lock: sha1:gy7CS9VrgKIo4doD6TrueFx01N0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127361>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+This question concerns git's representation of merge commits.
 
-> git-format-patch | git-am pipeline has to work correctly, as it
-> originally was the way (modulo extra options) git-rebase was
-> implemented.  So yes, "git am <dir>" should understand and apply in
-> correct order result of "git format-patch -o <dir> <revspec>".
+I understand that branches in git are references to commit vertices in a
+graph, that each of these vertices have zero or more reference edges to
+a parent (predecessor) vertex, and that merges create vertices with at
+least two parents. Walking back in time from a branch head involves
+traversing parent edges.
 
-You are not making any sense.  rebase is done using --stdout and does not
-rely on the intermediate files nor ordering of their names.
+But what happens when such traversal reaches a merge commit? If one asks
+git to move back, say, in time by a few days, or so many predecessors,
+how does it know (or choose) which way to go upon reaching a merge
+commit?
+
+I set up an experiment with two competing branches that require merging
+back together:
+
+,----
+| mkdir gitexp && cd gitexp && git init
+| $EDITOR file1.txt
+| git add file1.txt
+| git commit -m'Initial impound.'
+| $EDITOR file1.txt
+| git commit -a -m'Added a second line.'
+| 
+| git checkout -b competition
+| $EDITOR file1.txt
+| git commit -a -m'Extended second line.'
+| 
+| git checkout master
+| $EDITOR file1.txt
+| git commit -a -m'Added third line.'
+| 
+| git checkout competition
+| $EDITOR file1.txt
+| git commit -a -m'Edited second line.'
+| $EDITOR file1.txt
+| git commit -a -m'Added an alternate third line.'
+| 
+| git checkout master
+| git merge competition
+| # Edit to resolve conflict:
+| $EDITOR file1.txt
+| git commit -a
+| 
+| git checkout 'HEAD^'
+| # At this point, git picked the predecessor along branch "master".
+`----
+
+Was it just luck that "HEAD^" referred to the predecessor that came from
+branch "master" rather than branch "competition"?
+
+-- 
+Steven E. Harris
