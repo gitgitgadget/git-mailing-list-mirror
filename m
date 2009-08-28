@@ -1,92 +1,95 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] Round-down years in "years+months" relative date view
-Date: Fri, 28 Aug 2009 21:08:39 +0200
-Message-ID: <81b0412b0908281208h20aa6e81od3d6567fdffa0dec@mail.gmail.com>
+Date: Fri, 28 Aug 2009 15:15:21 -0400
+Message-ID: <20090828191521.GA12292@coredump.intra.peff.net>
 References: <4A97193A.8090502@facebook.com>
-	 <20090828060538.GA22416@coredump.intra.peff.net>
-	 <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
-	 <20090828150212.GA6013@coredump.intra.peff.net>
-	 <alpine.LFD.2.00.0908281307510.6044@xanadu.home>
-	 <20090828180158.GA6940@coredump.intra.peff.net>
-	 <81b0412b0908281127h2c444770g411ceaf052952899@mail.gmail.com>
-	 <20090828183958.GA11488@coredump.intra.peff.net>
-	 <81b0412b0908281142v7e1b73ddvb727abe915dace86@mail.gmail.com>
-	 <alpine.LFD.2.00.0908281458370.6044@xanadu.home>
+ <20090828060538.GA22416@coredump.intra.peff.net>
+ <81b0412b0908280058i364bfb83nb04354d982abc053@mail.gmail.com>
+ <20090828150212.GA6013@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0908281307510.6044@xanadu.home>
+ <20090828190319.GA9233@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, David Reiss <dreiss@facebook.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Nicolas Pitre <nico@cam.org>, David Reiss <dreiss@facebook.com>,
 	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Aug 28 21:08:51 2009
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 21:15:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh6ob-0002bT-RS
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:08:50 +0200
+	id 1Mh6vM-0004mE-Pf
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 21:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752243AbZH1TIj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Aug 2009 15:08:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbZH1TIj
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:08:39 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:38178 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751864AbZH1TIi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 15:08:38 -0400
-Received: by fxm17 with SMTP id 17so1745468fxm.37
-        for <git@vger.kernel.org>; Fri, 28 Aug 2009 12:08:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aeHsh4aMuWmavwHNAoug1Zmkimn8TrOBLCgSWhE2Iho=;
-        b=CTqIZrqBAB1H3AGGPWo19JpWM3uiHNJ+/4dMV4f6gIDZE33cJcyH1UQvu3TjU7vLXP
-         ZHFdZkxciYcG4i7Wjcqc+AxbiBWlULQqkzrFU3LTaO0oxTe96v/13MfOlUydxfYUGBu9
-         vgwI0hgl0+ntz618XrZpK0HvICRhy0lbsJ2lc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MLNqKDjkFECFO9qWoXo+WVzBMpzVKCoUhS5u3uHMa5GKErkp9i36t3dzUNizFtFEOt
-         vbzY9eUwWRspSWoQLwUvQAGLSaRqSNrsGhTkDktJvr1PxP0X/APsABLtGXAy0lHaEsID
-         BcsEcfVQo2+LHY6XYPmZ15G89VL3Mm6GoBlgY=
-Received: by 10.204.175.73 with SMTP id w9mr1240715bkz.24.1251486519829; Fri, 
-	28 Aug 2009 12:08:39 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.0908281458370.6044@xanadu.home>
+	id S1752633AbZH1TPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 15:15:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752316AbZH1TPX
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 15:15:23 -0400
+Received: from peff.net ([208.65.91.99]:53010 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752109AbZH1TPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 15:15:21 -0400
+Received: (qmail 7331 invoked by uid 107); 28 Aug 2009 19:15:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 28 Aug 2009 15:15:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Aug 2009 15:15:21 -0400
+Content-Disposition: inline
+In-Reply-To: <20090828190319.GA9233@blimp.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127335>
 
-On Fri, Aug 28, 2009 at 21:00, Nicolas Pitre<nico@cam.org> wrote:
->> >> Microsoft's compiler and libraries? MacOSX?
->> >
->> > Are you saying you know those to be platforms with problems, or ar=
-e you
->> > asking whether those platforms will have problems?
->>
->> Both: MS never had weak/vague linkage, but I don't know about MacOSX=
-=2E
->
-> This is not about weak or vague linkage. =C2=A0This is plain basic li=
-nker
-> feature where no library object needs to be linked if there is no sym=
-bol
-> to resolve.
+On Fri, Aug 28, 2009 at 09:03:19PM +0200, Alex Riesen wrote:
 
-Maybe I missed something, but wasn't the idea to overwrite gettimeofday
-with a public gettimeofday, defined in one of the object files?
-And shouldn't a linker complain regarding duplicated symbols, unless
-the other (library) symbol is defined as a weak symbol, allowing
-overriding it with another symbol of stronger linkage?
+> +unsigned long approxidate(const char *date)
+> +{
+> +	struct timeval tv;
+> +	gettimeofday(&tv, NULL);
+> +	return approxidate_relative(date, &tv);
+> +}
 
->> I suspect them to have the same deficiency, but I'd be glad to be wr=
-ong.
->
-> Are you able to test it?
->
+This now always calls gettimeofday, whereas the original approxidate
+only did if parse_date failed.
 
-Only the MS, but it is not interesting.
+I think you could also make this patch much smaller by just wrapping the
+whole function and using a '0' sentinel for "you need to fill in the
+time." Like:
+
+---
+diff --git a/date.c b/date.c
+index 409a17d..b084d19 100644
+--- a/date.c
++++ b/date.c
+@@ -86,6 +86,14 @@ static int local_tzoffset(unsigned long time)
+ 
+ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ {
++	struct timeval now;
++	now.tv_sec = 0;
++	show_date_at_time(time, tz, mode, &now);
++}
++
++const char *show_date_at_time(unsigned long time, int tz, enum date_mode mode,
++		struct timeval now)
++{
+ 	struct tm *tm;
+ 	static char timebuf[200];
+ 
+@@ -96,8 +104,8 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 
+ 	if (mode == DATE_RELATIVE) {
+ 		unsigned long diff;
+-		struct timeval now;
+-		gettimeofday(&now, NULL);
++		if (!now.tv_sec)
++			gettimeofday(&now, NULL);
+ 		if (now.tv_sec < time)
+ 			return "in the future";
+ 		diff = now.tv_sec - time;
+
+On the other hand, refactoring the relative date code into its own
+function is probably a good thing in the long run.
+
+-Peff
