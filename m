@@ -1,77 +1,120 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] Add option -b/--branch to clone for select a new HEAD
-Date: Fri, 28 Aug 2009 13:10:02 +0100 (BST)
-Message-ID: <alpine.LNX.2.00.0908281238350.18415@reaper.quantumfyre.co.uk>
-References: <87praj90n8.wl%catap@catap.ru> <1251228341-29434-1-git-send-email-catap@catap.ru> <4A97B1F3.5060408@gmail.com> <46a038f90908280405o1e86bf4fo60eb07957ce9158a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: inotify-commit, was Re: git guidance
+Date: Fri, 28 Aug 2009 14:30:46 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0908281424100.7434@intel-tinevez-2-302>
+References: <20071129105220.v40i22q4gw4cgoso@intranet.digizenstudio.com> <200712070737.18519.a1426z@gawab.com> <475906F7.5010309@op5.se> <200712071353.11654.a1426z@gawab.com> <20071207220025.GD2001@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Tor_Arne_Vestb=F8?= <torarnv@gmail.com>,
-	"Kirill A. Korinskiy" <catap@catap.ru>, gitster@pobox.com,
-	git@vger.kernel.org, peff@peff.net, B.Steinbrink@gmx.de
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 14:11:16 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1261885024-1251462647=:7434"
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Aug 28 14:34:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mh0IU-0006ZB-NT
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 14:11:15 +0200
+	id 1Mh0f7-0004TA-BB
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 14:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbZH1MLC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Aug 2009 08:11:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbZH1MLC
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 08:11:02 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:50917 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750975AbZH1MLB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Aug 2009 08:11:01 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B189D288C96
-	for <git@vger.kernel.org>; Fri, 28 Aug 2009 13:11:02 +0100 (BST)
-Received: (qmail 15116 invoked by uid 103); 28 Aug 2009 13:10:02 +0100
-Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.94.2/9751. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.03465 secs); 28 Aug 2009 12:10:02 -0000
-Received: from reaper.quantumfyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 28 Aug 2009 13:10:02 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <46a038f90908280405o1e86bf4fo60eb07957ce9158a@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752846AbZH1Mat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Aug 2009 08:30:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbZH1Mas
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Aug 2009 08:30:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42056 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751123AbZH1Mar (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Aug 2009 08:30:47 -0400
+Received: (qmail invoked by alias); 28 Aug 2009 12:30:47 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp054) with SMTP; 28 Aug 2009 14:30:47 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX181Uel2gis18ZVf/BGeqJzck8OjzGs4v7oPEAIfrA
+	untpgHJMdvovm1
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20071207220025.GD2001@atjola.homenet>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127293>
 
-On Fri, 28 Aug 2009, Martin Langhoff wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Fri, Aug 28, 2009 at 12:31 PM, Tor Arne Vestb?<torarnv@gmail.com> wrote:
->> Glad to see this topic being revised. Here's the original discussion for
->> reference:
->
-> ISTR that early git supported this -- maybe just on the HTTP
-> implementation? I sure remember writing
->
->   git clone http://host/foo.git#branchname
->
-> and getting a cloned repo where 'branchname' was tracking
-> 'origin/branchname', and was checked out as HEAD.
+--8323329-1261885024-1251462647=:7434
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 
-Did you use cogito perhaps?  That had #branch syntax IIRC ...
+Hi,
 
-> It would have been dropped by the switch to C builtins :-/
->
-> cheers,
->
->
->
-> m
->
+[long Cc: list culled, as they probably forgot about this thread]
 
--- 
-Julian
+On Fri, 7 Dec 2007, Björn Steinbrink wrote:
 
-  ---
-"What duck?"
-         -- (Terry Pratchett, Soul Music)
+> That said, out of pure curiousness I came up with the attached script 
+> which just uses inotifywait to watch a directory and issue git commands 
+> on certain events. It is extremely stupid, but seems to work. And at 
+> least it hasn't got the drawbacks of a real gitfs regarding the need to 
+> have a "separate" non-versioned storage area for the working directory, 
+> because it simply uses the existing working directory wherever that 
+> might be stored. It doesn't use GIT_DIR/WORK_DIR yet, but hey, should be 
+> easy to add...
+> 
+> Feel free to mess with that thing, hey, maybe you even like it and
+> extend it to match your proposed workflow even more. I for sure won't
+> use or even extend it, so you're likely on your own there.
+> 
+> Side-note: Writing that script probably took less time than writing this
+> email and probably less time than was wasted on this topic. Makes me
+> want to use today's preferred "Code talks, b...s... walks" statement,
+> but I'll refrain from that... Just because I lack the credibility to say
+> that, and the script attached is quite crappy ;-)
+
+I could not agree more with the statement.
+
+As it happens, I have a very delicate setup that we tested in a test 
+environment as much as possible, but now we have to deploy it and I want 
+to be able to rewind very quickly to a known-good state.
+
+So I adjusted your script a little.  It now reads like this:
+
+-- snip --
+#!/bin/sh
+
+# Originally by Bjoern Steinbrink, simplified by Johannes Schindelin
+
+inotifywait -m -r --exclude ^\./\.git/.* \
+        -e close_write -e move -e create -e delete . 2>/dev/null |
+while read FILE_PATH EVENT FILE_NAME
+do
+        FILE_NAME="$FILE_PATH$FILE_NAME"
+        FILE_NAME=${FILE_NAME#./}
+
+        # git doesn't care about directories
+        test -d "$FILE_NAME" && continue
+
+        case "$EVENT" in
+        *MOVED_TO*|*CREATE*)
+                git add "$FILE_NAME"
+                git commit -m "$FILE_NAME created"
+                ;;
+        *CLOSE_WRITE*|*MODIFY*)
+                git add "$FILE_NAME"
+                git commit -m "$FILE_NAME changed"
+                ;;
+        *DELETE*|*MOVED_FROM*)
+                git rm --cached "$FILE_NAME"
+                git commit -m "$FILE_NAME removed"
+                ;;
+        esac
+done
+-- snap --
+
+Thanks for your original script!
+
+Ciao,
+Dscho
+
+--8323329-1261885024-1251462647=:7434--
