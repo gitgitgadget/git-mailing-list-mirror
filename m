@@ -1,100 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 08/12] Teach the notes lookup code to parse notes trees
-  with various fanout schemes
-Date: Thu, 27 Aug 2009 20:35:07 -0700
-Message-ID: <7vmy5ka9w4.fsf@alter.siamese.dyndns.org>
-References: <1251337437-16947-1-git-send-email-johan@herland.net>
- <20090827212710.GV1033@spearce.org> <7vy6p5ncz0.fsf@alter.siamese.dyndns.org>
- <200908280103.06015.johan@herland.net>
- <20090827233900.GA7347@coredump.intra.peff.net>
- <7viqg8hj98.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0908271740i53ec7d69td696d955366ad23c@mail.gmail.com>
- <7vocq0d86p.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0908271951t1f2db976jb1de1e7687ad9791@mail.gmail.com>
- <7v4orsbpzd.fsf@alter.siamese.dyndns.org>
- <fabb9a1e0908272005i4bf9b906xba08a711d384dd83@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH] Fix overridable written with an extra 'e'
+Date: Thu, 27 Aug 2009 23:43:05 -0400
+Message-ID: <20090828034305.GQ4297@inocybe.localdomain>
+References: <20090828121849.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
-	tavestbo@trolltech.com, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 28 05:35:55 2009
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="VousOZe2B5HJrJZY"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Fri Aug 28 05:43:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MgsFm-0007Nz-5v
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 05:35:54 +0200
+	id 1MgsNU-0000nL-Vn
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Aug 2009 05:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbZH1Dfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Aug 2009 23:35:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751228AbZH1Dfp
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 23:35:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45418 "EHLO
+	id S1751534AbZH1DnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Aug 2009 23:43:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbZH1DnN
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Aug 2009 23:43:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51841 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751216AbZH1Dfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Aug 2009 23:35:44 -0400
+	with ESMTP id S1751442AbZH1DnM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Aug 2009 23:43:12 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DA7E23A639;
-	Thu, 27 Aug 2009 23:35:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EUd1kd78uaWDc9rIOH2aD1vILVw=; b=HPYmaV
-	wWZmbkJcK7KuwUqptItB+DQrwQAeynMY7efO9Ld20fJE6BIHmf1c39imDWlE9eI3
-	BM7o/ItbAsBOK7nv+AdibFMWHEy3qQUg5WzRkuGN1Jw4GaoaP4iwJgThdSGVtV0o
-	u1+QgS2mRdvOzHBRuSyBo4iTZvbWYHQKf33lI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lUXaN3b4L6+5pbQzrn4FY/z+KbgHb6dl
-	Y2AgO2tuOMBAOMfMrb8drObxmhemowI56CLPxBCIpfpvHb/uDxGtAGWAg5oijzD2
-	afo5wTcPxG+P4WcCzCwhA6YWjzZK5ooCs1vCq0iq3MzA24GnO0ojc0gYZSM7i677
-	sE959E24ZGM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 58EF23A635;
-	Thu, 27 Aug 2009 23:35:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 667973A632; Thu, 27 Aug 2009
- 23:35:09 -0400 (EDT)
-In-Reply-To: <fabb9a1e0908272005i4bf9b906xba08a711d384dd83@mail.gmail.com>
- (Sverre Rabbelier's message of "Thu\, 27 Aug 2009 20\:05\:31 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D818A9FA-9383-11DE-ABC9-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4DB01B697;
+	Thu, 27 Aug 2009 23:43:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=1Dg1f7Z33+eSVeCmZlGRqKb3XIk=; b=Apw0c6D
+	Kb5AvRkbMr6ZT9vTZr2LDmhP1YZ/pV32OdRWvptc0hZh2gviMuJKwl6TooyLjTGZ
+	JSLqrQHgAGd6iEi1DLRnUuuUolGrTZ1y1UEsOqRxiuboo3Ig5IF/o7Uj0JLaqSnq
+	osbfi+DPspKaUpBltPgCfr6pgCNVhjZx+axo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=BUA900IuUvkS0FxG31MTCB7TaR3kdYtf3
+	Y3WwzwwhzlWy6op805gAtVJoY8b3HP8F2csnd+xmCAxgHNn+SBlqdG+OXP/itN1L
+	twMzB/S9LeHCgtimqpbhhjIi6mXuHGMKQDIUzI92hwzbmoiJ5oh9aCHY7sOnnape
+	usvxCTTaYg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 950CB1B696;
+	Thu, 27 Aug 2009 23:43:10 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.9.179]) (using TLSv1 with
+ cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D43A1B694; Thu, 27 Aug
+ 2009 23:43:05 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20090828121849.6117@nanako3.lavabit.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: E80D31CC-9384-11DE-90E1-CA0F1FFB4A78-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127251>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-> On Thu, Aug 27, 2009 at 20:02, Junio C Hamano<gitster@pobox.com> wrote:
->> In such a case would you rather want to see the commit itself first, or at
->> least, commit _and_ notes _together_?
->
-> Assuming you do download all notes, I think it would be nice to be
-> able to read the note; and since there's no way to download the commit
-> separately it would require one to guess which head the commit belongs
-> to and fetch the entire branch...?
+--VousOZe2B5HJrJZY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Some random thoughts...
+Nanako Shiraishi wrote:
+> Found during the lunch break by one of my students...
 
- * If there are very many branches (in the worst case, they are so many
-   that the upstream uses the expand extention to serve the project),
-   maybe the notes namespace will also have many branches.  It is unclear
-   how a user is expected to know which notes branch a note to a
-   particular commit is to be found.
+Is overridable a word itself?  While English is my native language, I
+wouldn't call myself an expert on its proper usage. ;)
 
- * Perhaps to solve that problem, such a project may use notes in the
-   corresponding "notes branch"?  Then your assumption does not hold, as
-   you first guess which notes branch to fetch to find the note that may
-   not even exist for this issue to become a real problem.
+However, I can't find 'overridable' in several online dictionaries:
 
- * If you assume all the notes are downloaded in such a project, you can
-   still go through all the top-level trees (that are date based fan-out)
-   and find the note to the commit object you do not have.  At that point,
-   it only becomes performance issue for an unusual case where you have
-   a note but the commit the note applies to.
+http://dictionary.reference.com/browse/overridable
+http://www.merriam-webster.com/dictionary/overridable
+http://www.google.com/dictionary?aq=3Df&langpair=3Den|en&q=3Doverridable&hl=
+=3Den
+http://dictionary.cambridge.org/results.asp?searchword=3Doverridable&x=3D0&=
+y=3D0
+
+Perhaps using overridden would be more accurate?
+
+>  	Prune loose objects older than date (default is 2 weeks ago,
+> -	overrideable by the config variable `gc.pruneExpire`).  This
+> +	overridable by the config variable `gc.pruneExpire`).  This
+>  	option is on by default.
+
+ 	Prune loose objects older than date (default is 2 weeks ago,
+-	overrideable by the config variable `gc.pruneExpire`).  This
++	which can be overridden by the config variable `gc.pruneExpire`).  This
+ 	option is on by default.
+
+> -		warn "feature $name is not overrideable";
+> +		warn "feature $name is not overridable";
+
+and
+
+-		warn "feature $name is not overrideable";
++		warn "feature $name cannot be overridden";
+
+?
+
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+I got stopped by a cop the other day.  He said, "Why'd you run that
+stop sign?"  I said, "Because I don't believe everything I read."
+    -- Stephen Wright
+
+
+--VousOZe2B5HJrJZY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJKl1JDJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjR/MH/A5kSVUNj5YqG98Q10dt4ZXmSYFffE3NhFBg
+GOrcOxxB/FOcB3z8hUShs0Go2cNKsLJJOxZktRfniotycMO1YqFCYJ0r4bCiP1KN
+KHD8aaQYwfelWLMyWKmL4Lzdpi5AmIywx+NbonIdxNhHX2LWP8HyxOEKz5zQbiw7
+fPkts0GqD2m3KOHergBhtXNudFPno4xWfAv+deEz3lPL55pd0u94iY4G8zAChzFU
+XXPVL8k13alfHV6FLoNtNROv0s/DgEPic8bYXwnP69bpGWVJmaEXSUpUUBS2fHfI
+eDxkSKNv0fuaiL7xb7f6nv6HxbLHegql3ObLaG5orvyewPcIRG4=
+=0+1H
+-----END PGP SIGNATURE-----
+
+--VousOZe2B5HJrJZY--
