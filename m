@@ -1,69 +1,69 @@
-From: Rustom Mody <rustompmody@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: vc in emacs problem with git
-Date: Sat, 29 Aug 2009 20:07:52 +0530
-Message-ID: <f46c52560908290737r53e0732o2b552665f9c07098@mail.gmail.com>
+Date: Sat, 29 Aug 2009 11:41:24 -0700
+Message-ID: <7viqg65up7.fsf@alter.siamese.dyndns.org>
 References: <f46c52560908270828o574c0de6s17189a7326a1376d@mail.gmail.com>
-	 <f46c52560908270914o7027dc0bo873544dc0687cc48@mail.gmail.com>
+ <f46c52560908270914o7027dc0bo873544dc0687cc48@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 29 16:38:05 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: help-gnu-emacs@gnu.org, Git Mailing List <git@vger.kernel.org>
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 29 20:41:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhP48-0003Ge-4t
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 16:38:04 +0200
+	id 1MhSrx-0003HJ-92
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 20:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbZH2Ohv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Aug 2009 10:37:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751568AbZH2Ohv
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Aug 2009 10:37:51 -0400
-Received: from mail-vw0-f195.google.com ([209.85.212.195]:34218 "EHLO
-	mail-vw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751508AbZH2Ohu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Aug 2009 10:37:50 -0400
-Received: by vws33 with SMTP id 33so2003723vws.33
-        for <git@vger.kernel.org>; Sat, 29 Aug 2009 07:37:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=hBeC0Y7cA2j68rlHPHZNpIp72GAfH+8iyNCJLONKb+M=;
-        b=PIqc3eAtqdV1i9pOlpscZAfAmruf1TEARYh0tV8JvqHcRCvW4GHyLk2soIldh2ufGe
-         H0pXzaJL164tZurlokx7i5wFDwJ2xa60ODExtDbX8u7D/pr62CuOsIXaZzS1tAt/0d14
-         yMs1YUzSYkHKINywYR2QlTzC+Qyru/CFfm+6E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=wT79WZZFulibl3h63DfWRC+gBq4Of2Lr2E17+17gGYHoOqW/mhYEuwiW1/PElpHOPu
-         o2vnILpOCvDjMplH5HQPSf0BApNf23xjobmJYCveF5FD1u/H7kVZtCk5BaL9wyxYKANQ
-         d3lrBu/pQjd2Pg18ChQhmCsSqC/iMYIQuCUUQ=
-Received: by 10.220.88.15 with SMTP id y15mr2907612vcl.62.1251556672399; Sat, 
-	29 Aug 2009 07:37:52 -0700 (PDT)
+	id S1752395AbZH2Slg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2009 14:41:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbZH2Slf
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Aug 2009 14:41:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59308 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752385AbZH2Slf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2009 14:41:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BD7533CCE1;
+	Sat, 29 Aug 2009 14:41:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gBVNcCg38OzyGTPwBp4HivV0CNk=; b=szSo5v
+	6DZjel9UvuCCCV17ItD6RGEcSg4sm0UFGCdVwT6eG729HRsWEt596dMT2RyI9L1r
+	yCxNH4z7AYbbmeUjZUlpFCNXb/SQoczX36exKAY1zGbLn9+5TlBM+kIW3JdxPKXG
+	oeP1xYuyWUWnJBWEBrHOJ3WUZDbKFA3NfbFl8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uZogiPK/8uKbNwGgchfJSbWyYG1h+WrO
+	q26fzc+OOIwuvlfLIOkslGxujqnFIBJJlnklYBg3ol2r6k8uOG42IGoGU1WW26so
+	Zlk5lo8zGZrO62qNII9SCSXLKuTohEIN/LtAEWcwE1V0q8Zx3YPQ8sQJ2z2zny9a
+	o1CiGJCtKoE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 94C2D3CCDF;
+	Sat, 29 Aug 2009 14:41:32 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 38FCE3CCDB; Sat, 29 Aug 2009
+ 14:41:25 -0400 (EDT)
 In-Reply-To: <f46c52560908270914o7027dc0bo873544dc0687cc48@mail.gmail.com>
+ (Rustom Mody's message of "Thu\, 27 Aug 2009 21\:44\:33 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 928BC8F6-94CB-11DE-B6D7-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127382>
 
-On Thu, Aug 27, 2009 at 9:44 PM, Rustom Mody<rustompmody@gmail.com> wro=
-te:
+Rustom Mody <rustompmody@gmail.com> writes:
+
 > Just updating my own question:
 > when I do a C-x v v (vc-next-action)
-> which is supposed to be the most basic operation for checking in a fi=
-le I get
+> which is supposed to be the most basic operation for checking in a file I get
 >
-> =A0Wrong type argument: stringp, nil
+>  Wrong type argument: stringp, nil
 >
 > So vc can be assumed to be a broken I guess?
 
-Answering my own question:
-Short answer: vc-git.el from git breaks vc in emacs
-Long answer: see emacs mailing list discussion
- http://groups.google.com/group/gnu.emacs.help/browse_thread/thread/657=
-d9c58baed7b0f#
+Have you checked contrib/emacs/README?
