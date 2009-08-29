@@ -1,53 +1,159 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [PATCH] Remove unused t/t8005/iso8859-5.txt file
-Date: Sat, 29 Aug 2009 17:08:09 +0900
-Message-ID: <20090829170809.6117@nanako3.lavabit.com>
-References: <20090829161637.6117@nanako3.lavabit.com>
-	<7vy6p3giwf.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] update-server-info: make builtin, use parseopt
+Date: Sat, 29 Aug 2009 11:04:52 +0200
+Message-ID: <4A98EF34.8050206@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 29 10:08:42 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 29 11:05:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhIzJ-0002a3-6U
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 10:08:41 +0200
+	id 1MhJs7-0006BP-43
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Aug 2009 11:05:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902AbZH2IIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Aug 2009 04:08:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751899AbZH2IIa
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Aug 2009 04:08:30 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:42024 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750718AbZH2II3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Aug 2009 04:08:29 -0400
-Received: from b.earth.lavabit.com (b.earth.lavabit.com [192.168.111.11])
-	by karen.lavabit.com (Postfix) with ESMTP id C3A0211B8A6;
-	Sat, 29 Aug 2009 03:08:31 -0500 (CDT)
-Received: from 9617.lavabit.com (212.62.97.20)
-	by lavabit.com with ESMTP id GDC7TIWTNS6M; Sat, 29 Aug 2009 03:08:31 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=jQqw0bNChQ3uYECcE7f7BAEN5M2cblO0Z66pQKxhC6k0G/7wtxkv+igQ4O/lywsKyZXj3IJYHCktpVkNXzZ2+u0OBC7p7gn4BnpLYWZZfRygYx5YskWLvGy/tpZcq30PGkvRXm5NaCw40dne/vQU0AJCWvwkZXcrHSp7+bptTXU=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vy6p3giwf.fsf@alter.siamese.dyndns.org>
+	id S1751453AbZH2JFC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Aug 2009 05:05:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbZH2JFC
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Aug 2009 05:05:02 -0400
+Received: from india601.server4you.de ([85.25.151.105]:55524 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751183AbZH2JFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Aug 2009 05:05:00 -0400
+Received: from [10.0.1.101] (p57B7EDE1.dip.t-dialin.net [87.183.237.225])
+	by india601.server4you.de (Postfix) with ESMTPSA id 1A79A2F8070;
+	Sat, 29 Aug 2009 11:05:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127378>
 
-Quoting Junio C Hamano <gitster@pobox.com>
+Convert git update-server-info to a built-in command and use parseopt.
 
-> Out of curiosity, how did you find this?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Makefile                     |    2 +-
+ builtin-update-server-info.c |   25 +++++++++++++++++++++++++
+ builtin.h                    |    1 +
+ git.c                        |    1 +
+ update-server-info.c         |   28 ----------------------------
+ 5 files changed, 28 insertions(+), 29 deletions(-)
+ create mode 100644 builtin-update-server-info.c
+ delete mode 100644 update-server-info.c
 
-Soon after you posted your original in http://thread.gmane.org/gmane.comp.version-control.git/121881, I applied it to my tree, and I have been running 'git pull --rebase' for ever. I noticed that rebase didn't remove the commit, even after your 54bc13c.
-
-Today I found that the rebased patch only removed that file. The real question is how you lost the deletion of the file when you applied. What happened?
-
+diff --git a/Makefile b/Makefile
+index d842e52..a614347 100644
+--- a/Makefile
++++ b/Makefile
+@@ -357,7 +357,6 @@ PROGRAMS += git-patch-id$X
+ PROGRAMS += git-shell$X
+ PROGRAMS += git-show-index$X
+ PROGRAMS += git-unpack-file$X
+-PROGRAMS += git-update-server-info$X
+ PROGRAMS += git-upload-pack$X
+ PROGRAMS += git-var$X
+ 
+@@ -636,6 +635,7 @@ BUILTIN_OBJS += builtin-tar-tree.o
+ BUILTIN_OBJS += builtin-unpack-objects.o
+ BUILTIN_OBJS += builtin-update-index.o
+ BUILTIN_OBJS += builtin-update-ref.o
++BUILTIN_OBJS += builtin-update-server-info.o
+ BUILTIN_OBJS += builtin-upload-archive.o
+ BUILTIN_OBJS += builtin-verify-pack.o
+ BUILTIN_OBJS += builtin-verify-tag.o
+diff --git a/builtin-update-server-info.c b/builtin-update-server-info.c
+new file mode 100644
+index 0000000..2b3fddc
+--- /dev/null
++++ b/builtin-update-server-info.c
+@@ -0,0 +1,25 @@
++#include "cache.h"
++#include "builtin.h"
++#include "parse-options.h"
++
++static const char * const update_server_info_usage[] = {
++	"git update-server-info [--force]",
++	NULL
++};
++
++int cmd_update_server_info(int argc, const char **argv, const char *prefix)
++{
++	int force = 0;
++	struct option options[] = {
++		OPT_BOOLEAN('f', "force", &force,
++			"update the info files from scratch"),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options,
++			     update_server_info_usage, 0);
++	if (argc > 0)
++		usage_with_options(update_server_info_usage, options);
++
++	return !!update_server_info(force);
++}
+diff --git a/builtin.h b/builtin.h
+index 51e4ba7..a2174dc 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -102,6 +102,7 @@ extern int cmd_tar_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_unpack_objects(int argc, const char **argv, const char *prefix);
+ extern int cmd_update_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_update_ref(int argc, const char **argv, const char *prefix);
++extern int cmd_update_server_info(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_archive(int argc, const char **argv, const char *prefix);
+ extern int cmd_upload_tar(int argc, const char **argv, const char *prefix);
+ extern int cmd_verify_tag(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index 5da6c65..0b22595 100644
+--- a/git.c
++++ b/git.c
+@@ -359,6 +359,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "unpack-objects", cmd_unpack_objects, RUN_SETUP },
+ 		{ "update-index", cmd_update_index, RUN_SETUP },
+ 		{ "update-ref", cmd_update_ref, RUN_SETUP },
++		{ "update-server-info", cmd_update_server_info, RUN_SETUP },
+ 		{ "upload-archive", cmd_upload_archive },
+ 		{ "verify-tag", cmd_verify_tag, RUN_SETUP },
+ 		{ "version", cmd_version },
+diff --git a/update-server-info.c b/update-server-info.c
+deleted file mode 100644
+index 7b38fd8..0000000
+--- a/update-server-info.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-#include "cache.h"
+-#include "exec_cmd.h"
+-
+-static const char update_server_info_usage[] =
+-"git update-server-info [--force]";
+-
+-int main(int ac, char **av)
+-{
+-	int i;
+-	int force = 0;
+-	for (i = 1; i < ac; i++) {
+-		if (av[i][0] == '-') {
+-			if (!strcmp("--force", av[i]) ||
+-			    !strcmp("-f", av[i]))
+-				force = 1;
+-			else
+-				usage(update_server_info_usage);
+-		}
+-	}
+-	if (i != ac)
+-		usage(update_server_info_usage);
+-
+-	git_extract_argv0_path(av[0]);
+-
+-	setup_git_directory();
+-
+-	return !!update_server_info(force);
+-}
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+1.6.4.1
