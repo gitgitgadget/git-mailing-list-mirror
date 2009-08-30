@@ -1,73 +1,76 @@
-From: Uri Okrent <uokrent@gmail.com>
-Subject: Re: [PATCH] Fix overridable written with an extra 'e'
-Date: Sun, 30 Aug 2009 17:58:26 +0000 (UTC)
-Message-ID: <loom.20090830T195508-894@post.gmane.org>
-References: <20090828121849.6117@nanako3.lavabit.com> <20090828034305.GQ4297@inocybe.localdomain>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: What IDEs are you using to develop git?
+Date: Sun, 30 Aug 2009 20:07:44 +0200
+Message-ID: <1251655664.31273.4.camel@localhost>
+References: <000001ca257d$b60326c0$22097440$@com>
+	 <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 30 20:00:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Frank =?ISO-8859-1?Q?M=FCnnich?= <git@frank-muennich.com>,
+	git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 20:15:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhohQ-0007cV-2C
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 20:00:20 +0200
+	id 1MhowF-0002f5-RC
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 20:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804AbZH3SAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 14:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753641AbZH3SAF
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 14:00:05 -0400
-Received: from lo.gmane.org ([80.91.229.12]:47159 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753514AbZH3SAD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 14:00:03 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1MhohA-0007a9-5o
-	for git@vger.kernel.org; Sun, 30 Aug 2009 20:00:04 +0200
-Received: from cpe-76-90-28-9.socal.res.rr.com ([76.90.28.9])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 30 Aug 2009 20:00:04 +0200
-Received: from uokrent by cpe-76-90-28-9.socal.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 30 Aug 2009 20:00:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 76.90.28.9 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2)
+	id S1753694AbZH3SP0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2009 14:15:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753662AbZH3SP0
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 14:15:26 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:58517 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601AbZH3SPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 14:15:25 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so691516eya.19
+        for <git@vger.kernel.org>; Sun, 30 Aug 2009 11:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=G/tT/sR7MFhPJMP+poA+aJkv0VEqG8uuppd8yksKYvc=;
+        b=RNDO7XuUIVGom2pRLbODfQy8G9nxKjyV34wluD0mTYJwedsjyL+5/jRyLvU3b22RpJ
+         s+6HECnAU9LREWPYWd79D66qymQnVt0eRpdyhBDJiHhDNXT0fPl/Nw5lvKIknApZ/Cnu
+         BaKZJcI/nDxdOJ2A3hIsVsLDVF3jJ6A4ii6IE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=NwG2uHbOgDwGtQNjSb8Gk2Frl5F/kYtUbYxoLySjLHMh+GAxD7we2uC/QZZhBK+uiN
+         lGlZaf0LU/JyIeCX9i79feDukh3/RNEVMGM6K70h3zCHB8pK67ciK/q1G/Rp3QdceFZ4
+         5LC2niWxbRxM9rDwQtIVVz/VE/XqqZp+BGsU4=
+Received: by 10.216.49.194 with SMTP id x44mr900229web.130.1251655743152;
+        Sun, 30 Aug 2009 11:09:03 -0700 (PDT)
+Received: from ?192.168.1.2? (host240-6-dynamic.48-82-r.retail.telecomitalia.it [82.48.6.240])
+        by mx.google.com with ESMTPS id 10sm428321eyd.4.2009.08.30.11.08.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 30 Aug 2009 11:09:01 -0700 (PDT)
+In-Reply-To: <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com>
+X-Mailer: Evolution 2.24.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127419>
 
-Todd Zullinger <tmz <at> pobox.com> writes:
+Il giorno mar, 25/08/2009 alle 13.47 +0100, John Tapsell ha scritto:
+> 2009/8/25 Frank M=C3=BCnnich <git@frank-muennich.com>:
+> > One thing I would like to ask you: what, if any, IDEs are you worki=
+ng with?
+>=20
+> I think everyone just uses vim/emacs :-)
 
-> 
-> Nanako Shiraishi wrote:
-> > Found during the lunch break by one of my students...
-> 
-> Is overridable a word itself?  While English is my native language, I
-> wouldn't call myself an expert on its proper usage. ;)
+I can't get how would one take vim or emacs instead of an IDE like
+Eclipse.
+That's probably because I'm mainingly a Java developer and i don't know
+vim/emacs very much.
 
-No, it's not a word =). But of the two non-words, overridable is probably
-preferred.
+What are the advantages of developing git with vim/emacs over an IDE?
 
-> 
-> However, I can't find 'overridable' in several online dictionaries:
-> 
-> http://dictionary.reference.com/browse/overridable
-> http://www.merriam-webster.com/dictionary/overridable
-> http://www.google.com/dictionary?aq=f&langpair=en|en&q=overridable&hl=en
-> http://dictionary.cambridge.org/results.asp?searchword=overridable&x=0&y=0
-> 
-> Perhaps using overridden would be more accurate?
-
-It would be more correct, but also slightly more verbose. Still, as a grammar
-nazi, my two cents says it raises git's esteem if the language in the docs is
-proper English.
-
-Uri
+Cheers,
+Daniele
