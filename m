@@ -1,258 +1,172 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/3] Add date formatting and parsing functions relative to
- a given time
-Date: Sun, 30 Aug 2009 17:43:09 -0400
-Message-ID: <20090830214309.GA16119@coredump.intra.peff.net>
+Subject: [PATCH 2/3] refactor test-date interface
+Date: Sun, 30 Aug 2009 17:46:04 -0400
+Message-ID: <20090830214604.GB16119@coredump.intra.peff.net>
 References: <20090830093642.GA30922@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 23:43:52 2009
+X-From: git-owner@vger.kernel.org Sun Aug 30 23:46:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhsBh-0003rs-B4
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 23:43:50 +0200
+	id 1MhsE4-0004Qv-Jr
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 23:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108AbZH3VnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 17:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754049AbZH3VnL
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 17:43:11 -0400
-Received: from peff.net ([208.65.91.99]:58426 "EHLO peff.net"
+	id S1754117AbZH3VqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 17:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754082AbZH3VqH
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 17:46:07 -0400
+Received: from peff.net ([208.65.91.99]:42501 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754046AbZH3VnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 17:43:10 -0400
-Received: (qmail 19296 invoked by uid 107); 30 Aug 2009 21:43:22 -0000
+	id S1753897AbZH3VqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 17:46:06 -0400
+Received: (qmail 19329 invoked by uid 107); 30 Aug 2009 21:46:18 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 30 Aug 2009 17:43:22 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Aug 2009 17:43:09 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 30 Aug 2009 17:46:18 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Aug 2009 17:46:04 -0400
 Content-Disposition: inline
 In-Reply-To: <20090830093642.GA30922@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127436>
 
-From: Alex Riesen <raa.lkml@gmail.com>
+The test-date program goes back to the early days of git,
+where it was presumably used to do manual sanity checks on
+changes to the date code. However, it is not actually used
+by the test suite to do any sort of automatic of systematic
+tests.
 
-The main purpose is to allow predictable testing of the code.
+This patch refactors the interface to the program to try to
+make it more suitable for use by the test suite. There
+should be no fallouts to changing the interface since it is
+not actually installed and is not internally called by any
+other programs.
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+The changes are:
+
+  - add a "mode" parameter so the caller can specify which
+    operation to test
+
+  - add a mode to test relative date output from show_date
+
+  - allow faking a fixed time via the TEST_DATE_NOW
+    environment variable, which allows consistent automated
+    testing
+
+  - drop the use of ctime for showing dates in favor of our
+    internal iso8601 printing routines. The ctime output is
+    somewhat redundant (because of the day-of-week) which
+    makes writing test cases more annoying.
+
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h |    5 ++
- date.c  |  152 +++++++++++++++++++++++++++++++++++++--------------------------
- 2 files changed, 94 insertions(+), 63 deletions(-)
+I mulled over replacing ctime for a bit, as we are testing git's date
+code with other parts of git's date code. But it really is more
+convenient for writing test cases to use iso8601, since you don't have
+to calculate the day-of-week (and I also think it is a bit more
+readable). And our iso8601 code is dead simple, so I am not too worried
+about a bug in it hiding a bug elsewhere.
 
-diff --git a/cache.h b/cache.h
-index 808daba..5fad24c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -731,9 +731,14 @@ enum date_mode {
- };
- 
- const char *show_date(unsigned long time, int timezone, enum date_mode mode);
-+const char *show_date_relative(unsigned long time, int tz,
-+			       const struct timeval *now,
-+			       char *timebuf,
-+			       size_t timebuf_size);
- int parse_date(const char *date, char *buf, int bufsize);
- void datestamp(char *buf, int bufsize);
- unsigned long approxidate(const char *);
-+unsigned long approxidate_relative(const char *date, const struct timeval *now);
- enum date_mode parse_date_format(const char *format);
- 
- #define IDENT_WARN_ON_NO_NAME  1
-diff --git a/date.c b/date.c
-index f011692..0b0f7a7 100644
---- a/date.c
-+++ b/date.c
-@@ -84,6 +84,68 @@ static int local_tzoffset(unsigned long time)
- 	return offset * eastwest;
- }
- 
-+const char *show_date_relative(unsigned long time, int tz,
-+			       const struct timeval *now,
-+			       char *timebuf,
-+			       size_t timebuf_size)
-+{
-+	unsigned long diff;
-+	if (now->tv_sec < time)
-+		return "in the future";
-+	diff = now->tv_sec - time;
-+	if (diff < 90) {
-+		snprintf(timebuf, timebuf_size, "%lu seconds ago", diff);
-+		return timebuf;
-+	}
-+	/* Turn it into minutes */
-+	diff = (diff + 30) / 60;
-+	if (diff < 90) {
-+		snprintf(timebuf, timebuf_size, "%lu minutes ago", diff);
-+		return timebuf;
-+	}
-+	/* Turn it into hours */
-+	diff = (diff + 30) / 60;
-+	if (diff < 36) {
-+		snprintf(timebuf, timebuf_size, "%lu hours ago", diff);
-+		return timebuf;
-+	}
-+	/* We deal with number of days from here on */
-+	diff = (diff + 12) / 24;
-+	if (diff < 14) {
-+		snprintf(timebuf, timebuf_size, "%lu days ago", diff);
-+		return timebuf;
-+	}
-+	/* Say weeks for the past 10 weeks or so */
-+	if (diff < 70) {
-+		snprintf(timebuf, timebuf_size, "%lu weeks ago", (diff + 3) / 7);
-+		return timebuf;
-+	}
-+	/* Say months for the past 12 months or so */
-+	if (diff < 360) {
-+		snprintf(timebuf, timebuf_size, "%lu months ago", (diff + 15) / 30);
-+		return timebuf;
-+	}
-+	/* Give years and months for 5 years or so */
-+	if (diff < 1825) {
-+		unsigned long years = diff / 365;
-+		unsigned long months = (diff % 365 + 15) / 30;
-+		int n;
-+		n = snprintf(timebuf, timebuf_size, "%lu year%s",
-+			     years, (years > 1 ? "s" : ""));
-+		if (months)
-+			snprintf(timebuf + n, timebuf_size - n,
-+				 ", %lu month%s ago",
-+				 months, (months > 1 ? "s" : ""));
-+		else
-+			snprintf(timebuf + n, timebuf_size - n,
-+				 " ago");
-+		return timebuf;
-+	}
-+	/* Otherwise, just years. Centuries is probably overkill. */
-+	snprintf(timebuf, timebuf_size, "%lu years ago", (diff + 183) / 365);
-+	return timebuf;
-+}
-+
- const char *show_date(unsigned long time, int tz, enum date_mode mode)
- {
- 	struct tm *tm;
-@@ -95,63 +157,10 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
- 	}
- 
- 	if (mode == DATE_RELATIVE) {
--		unsigned long diff;
- 		struct timeval now;
- 		gettimeofday(&now, NULL);
--		if (now.tv_sec < time)
--			return "in the future";
--		diff = now.tv_sec - time;
--		if (diff < 90) {
--			snprintf(timebuf, sizeof(timebuf), "%lu seconds ago", diff);
--			return timebuf;
--		}
--		/* Turn it into minutes */
--		diff = (diff + 30) / 60;
--		if (diff < 90) {
--			snprintf(timebuf, sizeof(timebuf), "%lu minutes ago", diff);
--			return timebuf;
--		}
--		/* Turn it into hours */
--		diff = (diff + 30) / 60;
--		if (diff < 36) {
--			snprintf(timebuf, sizeof(timebuf), "%lu hours ago", diff);
--			return timebuf;
--		}
--		/* We deal with number of days from here on */
--		diff = (diff + 12) / 24;
--		if (diff < 14) {
--			snprintf(timebuf, sizeof(timebuf), "%lu days ago", diff);
--			return timebuf;
--		}
--		/* Say weeks for the past 10 weeks or so */
--		if (diff < 70) {
--			snprintf(timebuf, sizeof(timebuf), "%lu weeks ago", (diff + 3) / 7);
--			return timebuf;
--		}
--		/* Say months for the past 12 months or so */
--		if (diff < 360) {
--			snprintf(timebuf, sizeof(timebuf), "%lu months ago", (diff + 15) / 30);
--			return timebuf;
--		}
--		/* Give years and months for 5 years or so */
--		if (diff < 1825) {
--			unsigned long years = diff / 365;
--			unsigned long months = (diff % 365 + 15) / 30;
--			int n;
--			n = snprintf(timebuf, sizeof(timebuf), "%lu year%s",
--					years, (years > 1 ? "s" : ""));
--			if (months)
--				snprintf(timebuf + n, sizeof(timebuf) - n,
--					", %lu month%s ago",
--					months, (months > 1 ? "s" : ""));
--			else
--				snprintf(timebuf + n, sizeof(timebuf) - n,
--					" ago");
--			return timebuf;
--		}
--		/* Otherwise, just years. Centuries is probably overkill. */
--		snprintf(timebuf, sizeof(timebuf), "%lu years ago", (diff + 183) / 365);
--		return timebuf;
-+		return show_date_relative(time, tz, &now,
-+					  timebuf, sizeof(timebuf));
- 	}
- 
- 	if (mode == DATE_LOCAL)
-@@ -866,19 +875,13 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num)
- 	return end;
- }
- 
--unsigned long approxidate(const char *date)
-+static unsigned long approxidate_str(const char *date, const struct timeval *tv)
- {
- 	int number = 0;
- 	struct tm tm, now;
--	struct timeval tv;
- 	time_t time_sec;
--	char buffer[50];
- 
--	if (parse_date(date, buffer, sizeof(buffer)) > 0)
--		return strtoul(buffer, NULL, 10);
+ test-date.c |   86 +++++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 66 insertions(+), 20 deletions(-)
+ rewrite test-date.c (63%)
+
+diff --git a/test-date.c b/test-date.c
+dissimilarity index 63%
+index 62e8f23..5b0a220 100644
+--- a/test-date.c
++++ b/test-date.c
+@@ -1,20 +1,66 @@
+-#include "cache.h"
 -
--	gettimeofday(&tv, NULL);
--	time_sec = tv.tv_sec;
-+	time_sec = tv->tv_sec;
- 	localtime_r(&time_sec, &tm);
- 	now = tm;
- 	for (;;) {
-@@ -899,3 +902,26 @@ unsigned long approxidate(const char *date)
- 		tm.tm_year--;
- 	return mktime(&tm);
- }
+-int main(int argc, char **argv)
+-{
+-	int i;
+-
+-	for (i = 1; i < argc; i++) {
+-		char result[100];
+-		time_t t;
+-
+-		memcpy(result, "bad", 4);
+-		parse_date(argv[i], result, sizeof(result));
+-		t = strtoul(result, NULL, 0);
+-		printf("%s -> %s -> %s", argv[i], result, ctime(&t));
+-
+-		t = approxidate(argv[i]);
+-		printf("%s -> %s\n", argv[i], ctime(&t));
+-	}
+-	return 0;
+-}
++#include "cache.h"
 +
-+unsigned long approxidate_relative(const char *date, const struct timeval *tv)
++static const char *usage_msg = "\n"
++"  test-date show [time_t]...\n"
++"  test-date parse [date]...\n"
++"  test-date approxidate [date]...\n";
++
++static void show_dates(char **argv, struct timeval *now)
 +{
-+	char buffer[50];
++	char buf[128];
 +
-+	if (parse_date(date, buffer, sizeof(buffer)) > 0)
-+		return strtoul(buffer, NULL, 10);
-+
-+	return approxidate_str(date, tv);
++	for (; *argv; argv++) {
++		time_t t = atoi(*argv);
++		show_date_relative(t, 0, now, buf, sizeof(buf));
++		printf("%s -> %s\n", *argv, buf);
++	}
 +}
 +
-+unsigned long approxidate(const char *date)
++static void parse_dates(char **argv, struct timeval *now)
 +{
-+	struct timeval tv;
-+	char buffer[50];
++	for (; *argv; argv++) {
++		char result[100];
++		time_t t;
 +
-+	if (parse_date(date, buffer, sizeof(buffer)) > 0)
-+		return strtoul(buffer, NULL, 10);
-+
-+	gettimeofday(&tv, NULL);
-+	return approxidate_str(date, &tv);
++		parse_date(*argv, result, sizeof(result));
++		t = strtoul(result, NULL, 0);
++		printf("%s -> %s\n", *argv,
++			t ? show_date(t, 0, DATE_ISO8601) : "bad");
++	}
 +}
 +
++static void parse_approxidate(char **argv, struct timeval *now)
++{
++	for (; *argv; argv++) {
++		time_t t;
++		t = approxidate_relative(*argv, now);
++		printf("%s -> %s\n", *argv, show_date(t, 0, DATE_ISO8601));
++	}
++}
++
++int main(int argc, char **argv)
++{
++	struct timeval now;
++	const char *x;
++
++	x = getenv("TEST_DATE_NOW");
++	if (x) {
++		now.tv_sec = atoi(x);
++		now.tv_usec = 0;
++	}
++	else
++		gettimeofday(&now, NULL);
++
++	argv++;
++	if (!*argv)
++		usage(usage_msg);
++	if (!strcmp(*argv, "show"))
++		show_dates(argv+1, &now);
++	else if (!strcmp(*argv, "parse"))
++		parse_dates(argv+1, &now);
++	else if (!strcmp(*argv, "approxidate"))
++		parse_approxidate(argv+1, &now);
++	else
++		usage(usage_msg);
++	return 0;
++}
 -- 
 1.6.4.2.375.g73938
