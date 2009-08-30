@@ -1,78 +1,60 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 1/2] Add date formatting and parsing functions relative to 
-	a given time
-Date: Sun, 30 Aug 2009 13:17:28 +0200
-Message-ID: <81b0412b0908300417x1b909242hcd13a00587d6d33c@mail.gmail.com>
-References: <20090828191521.GA12292@coredump.intra.peff.net>
-	 <20090828193302.GB9233@blimp.localdomain>
-	 <20090828205232.GD9233@blimp.localdomain>
-	 <7vk50mz41e.fsf@alter.siamese.dyndns.org>
-	 <81b0412b0908300025r4eeee84fyf0bfc3b2e940ff37@mail.gmail.com>
-	 <20090830091346.GA14928@blimp.localdomain>
-	 <20090830091557.GA28531@coredump.intra.peff.net>
-	 <20090830093642.GA30922@coredump.intra.peff.net>
-	 <81b0412b0908300256l13d308d9oc30172a20a9f6108@mail.gmail.com>
-	 <20090830100826.GA31543@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
-	David Reiss <dreiss@facebook.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 30 13:17:37 2009
+From: Brenton Fletcher <i@bloople.net>
+Subject: Strangeness with git log --follow
+Date: Mon, 31 Aug 2009 00:01:54 +0930
+Message-ID: <E50B7EBE-7DBB-442F-A341-FD8A1EEFB41B@bloople.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 30 16:32:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhiPg-00009h-Ep
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 13:17:36 +0200
+	id 1MhlS8-0007Uq-4b
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 16:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbZH3LR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 07:17:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbZH3LR1
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 07:17:27 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:35215 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752766AbZH3LR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 07:17:27 -0400
-Received: by bwz19 with SMTP id 19so2315394bwz.37
-        for <git@vger.kernel.org>; Sun, 30 Aug 2009 04:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=znA8zyqinyyYToNlU86XZOszKmvXylioNWj3fkP45OA=;
-        b=gjsSaLQy8hpK7ZEbnaB++ebz78it6JirFjEaxoCXF76ANOfQt5w/lLt2Ohb+zhtf74
-         ljMPi7r7JXkKeQrGkho/uGG9dovWnCfrofDc3SIbt3EEAX2kd1lEjE4uPQZ2EnWhS7aE
-         We5ye7c8PBnJMY2lOQu5Nrwsm9jGpPvtY3Wbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=q8Q3btD1q+AWPdut0QI+9HdCWAqEGm91GlqrA2GhH//fp3iW9TJ8mUo+3NIE1s15Iu
-         KB3RQPiBfvzw6dfke1Ity5ZjPIusExJeaTxhyMiYJdoXAp8KoNFDjltHL0BcJrcpvqyu
-         ecV8Zprt3QLWqoFK/+nauYumQKne5cx/VJOYQ=
-Received: by 10.204.154.209 with SMTP id p17mr3098736bkw.104.1251631048089; 
-	Sun, 30 Aug 2009 04:17:28 -0700 (PDT)
-In-Reply-To: <20090830100826.GA31543@coredump.intra.peff.net>
+	id S1753758AbZH3OcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 10:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753754AbZH3OcI
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 10:32:08 -0400
+Received: from mail-vw0-f195.google.com ([209.85.212.195]:45374 "EHLO
+	mail-vw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753736AbZH3OcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 10:32:07 -0400
+Received: by vws33 with SMTP id 33so2321686vws.33
+        for <git@vger.kernel.org>; Sun, 30 Aug 2009 07:32:08 -0700 (PDT)
+Received: by 10.220.108.71 with SMTP id e7mr4265335vcp.46.1251642725822;
+        Sun, 30 Aug 2009 07:32:05 -0700 (PDT)
+Received: from ?115.131.199.162? ([115.131.199.162])
+        by mx.google.com with ESMTPS id 23sm1336152yxe.4.2009.08.30.07.32.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 30 Aug 2009 07:32:05 -0700 (PDT)
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127411>
 
-On Sun, Aug 30, 2009 at 12:08, Jeff King<peff@peff.net> wrote:
-> On Sun, Aug 30, 2009 at 11:56:37AM +0200, Alex Riesen wrote:
->>
->> check_show 630000000 '20.years.ago'?
->> (Arbitrary, non-whitespace delimiters, which was an
->> advertised feature, to make shell's life easier)
->
-> This part is about checking what show_date produces (the first number is
-> an offset from now in seconds, and the second is what we expect), so it
-> always has spaces.
->
-> See the check_approxidate section further down for an example of parsing
-> what you are talking about.
+I'm using git log --follow -p <filename> to list all the commits  
+affecting a certain file. My problem is that git log --follow --topo- 
+order returns fewer commits than git log --follow --date-order (or  
+default). The docs for git log and git-rev-list don't seem to indicate  
+whay this is happening.
 
-Ah, I see
+The repo I'm working with is http://github.com/bloopletech/keycontrol/tree/master 
+  and the file is original/C/kc.c on the master branch; I'm using git  
+v1.6.4.2
+
+Am I misunderstanding what's going on here? --topo-order is kind of  
+doing that I want since it's generating a nice series of commits that  
+diff against each other nicely, whereas running without topo-order is  
+returning the commits in a sequence which means thay don't properly  
+diff against each other. I like the results I'm getting from --topo- 
+order, but I need results in date order, which is not assured AFAIK  
+with topo-order.
+
+If someone could enlighten me as to what's going on, thanks!
+
+-Brenton Fletcher
