@@ -1,85 +1,258 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: What IDEs are you using to develop git?
-Date: Sun, 30 Aug 2009 23:29:11 +0200
-Message-ID: <200908302329.11264.robin.rosenberg.lists@dewire.com>
-References: <000001ca257d$b60326c0$22097440$@com> <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com> <1251655664.31273.4.camel@localhost>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/3] Add date formatting and parsing functions relative to
+ a given time
+Date: Sun, 30 Aug 2009 17:43:09 -0400
+Message-ID: <20090830214309.GA16119@coredump.intra.peff.net>
+References: <20090830093642.GA30922@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>,
-	Frank =?utf-8?q?M=C3=BCnnich?= <git@frank-muennich.com>,
-	git@vger.kernel.org
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 30 23:29:46 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 30 23:43:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mhry4-00005I-Du
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 23:29:44 +0200
+	id 1MhsBh-0003rs-B4
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Aug 2009 23:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752630AbZH3V3S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Aug 2009 17:29:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbZH3V3S
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 17:29:18 -0400
-Received: from mail.dewire.com ([83.140.172.130]:12442 "EHLO dewire.com"
+	id S1754108AbZH3VnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 17:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754049AbZH3VnL
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 17:43:11 -0400
+Received: from peff.net ([208.65.91.99]:58426 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751491AbZH3V3R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Aug 2009 17:29:17 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 34B261493E17;
-	Sun, 30 Aug 2009 23:29:18 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id eeuETdX18Tik; Sun, 30 Aug 2009 23:29:17 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 5B48C1493E15;
-	Sun, 30 Aug 2009 23:29:16 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <1251655664.31273.4.camel@localhost>
+	id S1754046AbZH3VnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 17:43:10 -0400
+Received: (qmail 19296 invoked by uid 107); 30 Aug 2009 21:43:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 30 Aug 2009 17:43:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Aug 2009 17:43:09 -0400
 Content-Disposition: inline
+In-Reply-To: <20090830093642.GA30922@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127435>
 
-s=C3=B6ndag 30 augusti 2009 20:07:44 skrev Daniele Segato <daniele.bilu=
-g@gmail.com>:
-> Il giorno mar, 25/08/2009 alle 13.47 +0100, John Tapsell ha scritto:
-> > 2009/8/25 Frank M=C3=BCnnich <git@frank-muennich.com>:
-> > > One thing I would like to ask you: what, if any, IDEs are you wor=
-king with?
-> >=20
-> > I think everyone just uses vim/emacs :-)
->=20
-> I can't get how would one take vim or emacs instead of an IDE like
-> Eclipse.
-> That's probably because I'm mainingly a Java developer and i don't kn=
-ow
-> vim/emacs very much.
->=20
-> What are the advantages of developing git with vim/emacs over an IDE?
+From: Alex Riesen <raa.lkml@gmail.com>
 
-Vim and Emacs has, and have had tools suitable for C and other language=
-s
-for ages. If you have learned to master them it's hard to find anything=
- as
-good. If you do java the tools in vim and emacs are not as developed as
-those for older languages, which Eclipse is originally developed as a t=
-ool
-for Java development and it shines at it. For non-java things vary. The=
- C/C++
-support in Eclipse is getting better, but it' nowhere near what exists
-for Java. Learning and avoiding its's  bugs and quirks is probably not
-worth it if you already have other good or better tools.=20
+The main purpose is to allow predictable testing of the code.
 
-VIM and Emacs are really IDE's. In particular you can login to emacs di=
-rectly
-and never leave it until you log out. Besdides all you pogramming tools=
- you
-have your email and (yes) your mp3 player there. That's pretty integrat=
-ed to me.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache.h |    5 ++
+ date.c  |  152 +++++++++++++++++++++++++++++++++++++--------------------------
+ 2 files changed, 94 insertions(+), 63 deletions(-)
 
--- robin
+diff --git a/cache.h b/cache.h
+index 808daba..5fad24c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -731,9 +731,14 @@ enum date_mode {
+ };
+ 
+ const char *show_date(unsigned long time, int timezone, enum date_mode mode);
++const char *show_date_relative(unsigned long time, int tz,
++			       const struct timeval *now,
++			       char *timebuf,
++			       size_t timebuf_size);
+ int parse_date(const char *date, char *buf, int bufsize);
+ void datestamp(char *buf, int bufsize);
+ unsigned long approxidate(const char *);
++unsigned long approxidate_relative(const char *date, const struct timeval *now);
+ enum date_mode parse_date_format(const char *format);
+ 
+ #define IDENT_WARN_ON_NO_NAME  1
+diff --git a/date.c b/date.c
+index f011692..0b0f7a7 100644
+--- a/date.c
++++ b/date.c
+@@ -84,6 +84,68 @@ static int local_tzoffset(unsigned long time)
+ 	return offset * eastwest;
+ }
+ 
++const char *show_date_relative(unsigned long time, int tz,
++			       const struct timeval *now,
++			       char *timebuf,
++			       size_t timebuf_size)
++{
++	unsigned long diff;
++	if (now->tv_sec < time)
++		return "in the future";
++	diff = now->tv_sec - time;
++	if (diff < 90) {
++		snprintf(timebuf, timebuf_size, "%lu seconds ago", diff);
++		return timebuf;
++	}
++	/* Turn it into minutes */
++	diff = (diff + 30) / 60;
++	if (diff < 90) {
++		snprintf(timebuf, timebuf_size, "%lu minutes ago", diff);
++		return timebuf;
++	}
++	/* Turn it into hours */
++	diff = (diff + 30) / 60;
++	if (diff < 36) {
++		snprintf(timebuf, timebuf_size, "%lu hours ago", diff);
++		return timebuf;
++	}
++	/* We deal with number of days from here on */
++	diff = (diff + 12) / 24;
++	if (diff < 14) {
++		snprintf(timebuf, timebuf_size, "%lu days ago", diff);
++		return timebuf;
++	}
++	/* Say weeks for the past 10 weeks or so */
++	if (diff < 70) {
++		snprintf(timebuf, timebuf_size, "%lu weeks ago", (diff + 3) / 7);
++		return timebuf;
++	}
++	/* Say months for the past 12 months or so */
++	if (diff < 360) {
++		snprintf(timebuf, timebuf_size, "%lu months ago", (diff + 15) / 30);
++		return timebuf;
++	}
++	/* Give years and months for 5 years or so */
++	if (diff < 1825) {
++		unsigned long years = diff / 365;
++		unsigned long months = (diff % 365 + 15) / 30;
++		int n;
++		n = snprintf(timebuf, timebuf_size, "%lu year%s",
++			     years, (years > 1 ? "s" : ""));
++		if (months)
++			snprintf(timebuf + n, timebuf_size - n,
++				 ", %lu month%s ago",
++				 months, (months > 1 ? "s" : ""));
++		else
++			snprintf(timebuf + n, timebuf_size - n,
++				 " ago");
++		return timebuf;
++	}
++	/* Otherwise, just years. Centuries is probably overkill. */
++	snprintf(timebuf, timebuf_size, "%lu years ago", (diff + 183) / 365);
++	return timebuf;
++}
++
+ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ {
+ 	struct tm *tm;
+@@ -95,63 +157,10 @@ const char *show_date(unsigned long time, int tz, enum date_mode mode)
+ 	}
+ 
+ 	if (mode == DATE_RELATIVE) {
+-		unsigned long diff;
+ 		struct timeval now;
+ 		gettimeofday(&now, NULL);
+-		if (now.tv_sec < time)
+-			return "in the future";
+-		diff = now.tv_sec - time;
+-		if (diff < 90) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu seconds ago", diff);
+-			return timebuf;
+-		}
+-		/* Turn it into minutes */
+-		diff = (diff + 30) / 60;
+-		if (diff < 90) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu minutes ago", diff);
+-			return timebuf;
+-		}
+-		/* Turn it into hours */
+-		diff = (diff + 30) / 60;
+-		if (diff < 36) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu hours ago", diff);
+-			return timebuf;
+-		}
+-		/* We deal with number of days from here on */
+-		diff = (diff + 12) / 24;
+-		if (diff < 14) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu days ago", diff);
+-			return timebuf;
+-		}
+-		/* Say weeks for the past 10 weeks or so */
+-		if (diff < 70) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu weeks ago", (diff + 3) / 7);
+-			return timebuf;
+-		}
+-		/* Say months for the past 12 months or so */
+-		if (diff < 360) {
+-			snprintf(timebuf, sizeof(timebuf), "%lu months ago", (diff + 15) / 30);
+-			return timebuf;
+-		}
+-		/* Give years and months for 5 years or so */
+-		if (diff < 1825) {
+-			unsigned long years = diff / 365;
+-			unsigned long months = (diff % 365 + 15) / 30;
+-			int n;
+-			n = snprintf(timebuf, sizeof(timebuf), "%lu year%s",
+-					years, (years > 1 ? "s" : ""));
+-			if (months)
+-				snprintf(timebuf + n, sizeof(timebuf) - n,
+-					", %lu month%s ago",
+-					months, (months > 1 ? "s" : ""));
+-			else
+-				snprintf(timebuf + n, sizeof(timebuf) - n,
+-					" ago");
+-			return timebuf;
+-		}
+-		/* Otherwise, just years. Centuries is probably overkill. */
+-		snprintf(timebuf, sizeof(timebuf), "%lu years ago", (diff + 183) / 365);
+-		return timebuf;
++		return show_date_relative(time, tz, &now,
++					  timebuf, sizeof(timebuf));
+ 	}
+ 
+ 	if (mode == DATE_LOCAL)
+@@ -866,19 +875,13 @@ static const char *approxidate_digit(const char *date, struct tm *tm, int *num)
+ 	return end;
+ }
+ 
+-unsigned long approxidate(const char *date)
++static unsigned long approxidate_str(const char *date, const struct timeval *tv)
+ {
+ 	int number = 0;
+ 	struct tm tm, now;
+-	struct timeval tv;
+ 	time_t time_sec;
+-	char buffer[50];
+ 
+-	if (parse_date(date, buffer, sizeof(buffer)) > 0)
+-		return strtoul(buffer, NULL, 10);
+-
+-	gettimeofday(&tv, NULL);
+-	time_sec = tv.tv_sec;
++	time_sec = tv->tv_sec;
+ 	localtime_r(&time_sec, &tm);
+ 	now = tm;
+ 	for (;;) {
+@@ -899,3 +902,26 @@ unsigned long approxidate(const char *date)
+ 		tm.tm_year--;
+ 	return mktime(&tm);
+ }
++
++unsigned long approxidate_relative(const char *date, const struct timeval *tv)
++{
++	char buffer[50];
++
++	if (parse_date(date, buffer, sizeof(buffer)) > 0)
++		return strtoul(buffer, NULL, 10);
++
++	return approxidate_str(date, tv);
++}
++
++unsigned long approxidate(const char *date)
++{
++	struct timeval tv;
++	char buffer[50];
++
++	if (parse_date(date, buffer, sizeof(buffer)) > 0)
++		return strtoul(buffer, NULL, 10);
++
++	gettimeofday(&tv, NULL);
++	return approxidate_str(date, &tv);
++}
++
+-- 
+1.6.4.2.375.g73938
