@@ -1,97 +1,81 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Documentation/git-add.txt: Explain --patch option in
  layman terms
-Date: Sun, 30 Aug 2009 16:20:23 -0700
-Message-ID: <7vbplw28js.fsf@alter.siamese.dyndns.org>
+Date: Sun, 30 Aug 2009 16:31:29 -0700
+Message-ID: <7vr5usyj3i.fsf@alter.siamese.dyndns.org>
 References: <87ocpxb46g.fsf@jondo.cante.net>
  <7vab1hdppb.fsf@alter.siamese.dyndns.org> <87tyzp9da4.fsf@jondo.cante.net>
  <7vskf954sr.fsf@alter.siamese.dyndns.org> <87ab1gaol2.fsf@jondo.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Aug 31 01:21:01 2009
+X-From: git-owner@vger.kernel.org Mon Aug 31 01:31:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mhthk-00088Q-JE
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 01:21:01 +0200
+	id 1MhtsC-00026i-KV
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 01:31:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605AbZH3XUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 19:20:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753092AbZH3XUd
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 19:20:33 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33899 "EHLO
+	id S1752764AbZH3Xbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 19:31:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbZH3Xbf
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 19:31:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36369 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752639AbZH3XUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 19:20:33 -0400
+	with ESMTP id S1752661AbZH3Xbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 19:31:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 25CF83DE6D;
-	Sun, 30 Aug 2009 19:20:35 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A33363DEEF;
+	Sun, 30 Aug 2009 19:31:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=poanV3yqCiVeSdRe0/Ba7OsTLF0=; b=TUuPuw
-	3oxV1NGdhLeZ4r1J+ANbNKs3BmYwWAWIetLUgle9o6BzE9iblcroENCfu+APXarV
-	NH+3NFhg/3psSKPaciY6J2L03gFXc96D4bKaFR+tkubEEyYjTo+6mVGUB/T+Jq2q
-	MnSVFlkeNe319xpN55xwIqEVtgLUQY7pTyYB8=
+	:content-type; s=sasl; bh=HTFN0NXim8WKT+hp8sn6IkZ7nw8=; b=FR+EM9
+	G955GiDd93twHLorFLFpJFbspRFPqfsq4YQ+765tAQDVln3qouubHoGSf4akVfbo
+	DlUThC43zapw4bZ9w18DCei6SXxn2CuEqlShY4lhMjg/SZpS8MTY0LqhAHcDU9Ip
+	OneCQ1D6Tin05gAMMJ/OgWjE0TtOkHWV4EvhI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CQq1KQp+SLk5utCzt4H5O30FGRGi4RoI
-	7JSSg7L8gYqb+Bl97byG12Qkf9csIrc6E7WCRNn0wHXS6bVbkLKsxqZ6hxgCihic
-	dhtLK1tUSB5uXHoC3MJ7VUUKofwkGA6Oyxph5yvpIqf5wQwZH+A/jNCNwX8/pUhD
-	Aev15qV5rcI=
+	:content-type; q=dns; s=sasl; b=LUwO+6vwARM6ifJEsV/caSa0cJzwxzw9
+	cgLixn58PmD85PAV8t25DGOfrpoPPy2uhX2JMsCrMOVV6sgNFSLiN5aNleIi1bxG
+	sFuC39fdYguTcHliwzFjjFnoKqUsK4uIpOJKO846IQALfvvp8W49EEO8JHOjOnV1
+	j6blB2IZIGQ=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 080933DE6C;
-	Sun, 30 Aug 2009 19:20:33 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 867CF3DEED;
+	Sun, 30 Aug 2009 19:31:34 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 721753DE6B; Sun, 30 Aug 2009
- 19:20:25 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 712013DEEC; Sun, 30 Aug 2009
+ 19:31:31 -0400 (EDT)
 In-Reply-To: <87ab1gaol2.fsf@jondo.cante.net> (Jari Aalto's message of "Mon\,
  31 Aug 2009 02\:06\:49 +0300")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B7071BAE-95BB-11DE-9C32-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 4153A920-95BD-11DE-8045-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127446>
 
 Jari Aalto <jari.aalto@cante.net> writes:
 
-> Your proposal that starts:
+> I think the convention used in git's manual pages deviate from the
+> standard practise. We could make the git manual pages into line of:
 >
->     ...but bypass the initial command menu
+> - write all the first level headings in all caps: "HEADING LIKE THIS"
+> - write second level heading: start Upper-lower: "Heading like this"
+>
+> Cf. rsync(1), ssh(1) etc. many pages prior git's existense.
 
-No, it doesn't..
+Having seen that nothing happened after a separate thread that was also on
+the documentation consistency:
 
-Go re-read the message you are responding to, paying extra attention to
-the parts you snipped from your quote, which was the important part you
-should have read before you responded.
+    http://thread.gmane.org/gmane.comp.version-control.git/72163/focus=72213
 
-    If you want to start the description with "What it does/what it is used
-    for", I think it is a good idea.  I already made a suggestion for such an
-    improvement in my message you are responding to.
+I am having a hard time to decide how seriously I should take the above
+comment from you.
 
-Now, what was that suggestion?
-
-It is in the message your first response was a follow-up to.  Again you
-didn't quote the relevant part in that response, and perhaps that was
-because you did not even read it before responding.
-
-    If you assume that the reader is not familiar with "add -i", then the
-    above is not descriptive enough, but "Run interactive patch command" is
-    not an improvement either.  We would need a description of "what it is
-    used for" before "how it would look to you" (i.e.. my rewrite shown
-    above).
-
-    "What it is used for" would perhaps read like this.
-
-            Review the difference between the index and the work tree, and add
-            modified contents to the index interactively by choosing which
-            patch hunks to use.
-
-This time I re-quoted things for you because your responses obviously were
-written without reading or understanding them, but please be careful not
-to make me do this.  I do not have infinite time.
+Are you volunteering to coordinate such a change (in other words, you do
+not necessarily have to do _all_ the work yourself, alone), or is it just
+an idle speculation?
