@@ -1,66 +1,51 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Jeff King <peff@peff.net>
 Subject: Re: clong an empty repo over ssh causes (harmless) fatal
-Date: Mon, 31 Aug 2009 16:47:03 +0200
-Message-ID: <vpq4oroqbvc.fsf@bauges.imag.fr>
+Date: Mon, 31 Aug 2009 12:41:46 -0400
+Message-ID: <20090831164146.GA23245@coredump.intra.peff.net>
 References: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net>
-	<vpqskf8z0rj.fsf@bauges.imag.fr>
-	<2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
+ <vpqskf8z0rj.fsf@bauges.imag.fr>
+ <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 16:47:23 2009
+X-From: git-owner@vger.kernel.org Mon Aug 31 18:42:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mi8AD-0005lF-JC
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 16:47:22 +0200
+	id 1Mi9xs-00027I-3R
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 18:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751637AbZHaOrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 10:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbZHaOrK
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 10:47:10 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39682 "EHLO rominette.imag.fr"
+	id S1753446AbZHaQlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 12:41:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753415AbZHaQlt
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 12:41:49 -0400
+Received: from peff.net ([208.65.91.99]:44321 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198AbZHaOrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 10:47:09 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n7VEj2RW007509
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 31 Aug 2009 16:45:02 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mi89v-0006Zn-TG; Mon, 31 Aug 2009 16:47:03 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mi89v-0001YM-Rp; Mon, 31 Aug 2009 16:47:03 +0200
-In-Reply-To: <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com> (Sitaram Chamarty's message of "Mon\, 31 Aug 2009 20\:00\:41 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 31 Aug 2009 16:45:02 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7VEj2RW007509
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252334704.41668@BjVS2bZtaAYY1GqIhrbUrw
+	id S1753382AbZHaQls (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 12:41:48 -0400
+Received: (qmail 25071 invoked by uid 107); 31 Aug 2009 16:42:00 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 31 Aug 2009 12:42:00 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2009 12:41:46 -0400
+Content-Disposition: inline
+In-Reply-To: <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127486>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
+On Mon, Aug 31, 2009 at 08:00:41PM +0530, Sitaram Chamarty wrote:
 
-> To start with, this is Mandriva 2009.1, kernel 2.6.29, git built from
-> scratch locally (not an RPM or something).  Should I try some other
-> things like strace?
+> > Maybe you have an older version of Git?
+> 
+> Had 1.6.4, just tried with 1.6.4.2 -- the error is still there, exactly so.
+> 
+> Anything I can do to provide more info?
 
-Setting $GIT_TRACE to 2 can help, too. The problem is that the git
-instance you want to debug is the remote one, I don't know if there's
-a better way to do that than putting a wrapper script for
-git-upload-pack ...
+IIRC, the message you are seeing comes when the _server_ is an older
+version of git. It is harmless, though.
 
--- 
-Matthieu
+-Peff
