@@ -1,94 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 4/4] fix approxidate parsing of relative months and years
-Date: Sun, 30 Aug 2009 22:31:42 -0400
-Message-ID: <20090831023142.GD5507@coredump.intra.peff.net>
-References: <20090831022228.GA4833@coredump.intra.peff.net>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [msysGit] Re: Using VC build git (split patch)
+Date: Mon, 31 Aug 2009 10:45:16 +0800
+Message-ID: <1976ea660908301945n74a55bb3p42aef0622e3996c7@mail.gmail.com>
+References: <1976ea660908170613ibb9a0fdr7ba630671a6b735f@mail.gmail.com>
+	 <4A899FDB.8080308@gmail.com>
+	 <1976ea660908171807x22f4b755r2e522a15ff462917@mail.gmail.com>
+	 <a4c8a6d00908301236l4394a471vb83ed2befda3a91@mail.gmail.com>
+	 <40aa078e0908301316m68258630oe84c0e9b6191332b@mail.gmail.com>
+	 <a4c8a6d00908301324o25d1cb48u12b527ea68e43680@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 04:31:54 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Marius Storm-Olsen <marius@storm-olsen.com>,
+	git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 04:51:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhwgS-0006KB-P7
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 04:31:53 +0200
+	id 1Mhwzh-0001Lo-V3
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 04:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271AbZHaCbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 22:31:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754269AbZHaCbn
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 22:31:43 -0400
-Received: from peff.net ([208.65.91.99]:51407 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754267AbZHaCbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 22:31:43 -0400
-Received: (qmail 20429 invoked by uid 107); 31 Aug 2009 02:31:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 30 Aug 2009 22:31:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 Aug 2009 22:31:42 -0400
-Content-Disposition: inline
-In-Reply-To: <20090831022228.GA4833@coredump.intra.peff.net>
+	id S1754288AbZHaCvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 22:51:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754276AbZHaCvd
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 22:51:33 -0400
+Received: from mail-yw0-f188.google.com ([209.85.211.188]:45159 "EHLO
+	mail-yw0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606AbZHaCvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 22:51:32 -0400
+Received: by ywh26 with SMTP id 26so5489950ywh.5
+        for <git@vger.kernel.org>; Sun, 30 Aug 2009 19:51:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=jqxNi8rJe2cquGvEZpRvxtpG4TxennlVCy9AmGlXynY=;
+        b=c+uDfIbHNpyrHGHjBh93UKtuAijxAKU8OyYhYwrGXsUCljW0AC2lK+QTFRZjJJQPT3
+         FitQsK2hHxnXbgd3MttlF/j1T5081VFvjgacVQsop5HuuzROc+UBvJmGPvq+pEHhCqMF
+         05fA8sbTz/I+yYZuPy9mFRV3x/umu5UG00qKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ZSFunVOz+li7eVelNNXrsjvGVREkaGtytMSviit7e/pn5WZXI11RF+a2lsZujlN1YJ
+         XpYA167PB0GcoeCWzbL6xYzTOffc9/wVF5nAqa9bXSyIoURLAlFHH3JqepmA7yucXqtS
+         qDKzwsRjqFNU2W/JGcQCPoH3nSXud/HCOKep8=
+Received: by 10.150.8.16 with SMTP id 16mr8050840ybh.131.1251686716143; Sun, 
+	30 Aug 2009 19:45:16 -0700 (PDT)
+In-Reply-To: <a4c8a6d00908301324o25d1cb48u12b527ea68e43680@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127456>
 
-These were broken by b5373e9. The problem is that the code
-marks the month and year with "-1" for "we don't know it
-yet", but the month and year code paths were not adjusted to
-fill in the current time before doing their calculations
-(whereas other units follow a different code path and are
-fine).
+> Yep, an imap-send vcproject with one file(imap-send.c) was added to
+> gitbuild.sln.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This one is new from the last series, as it fixes bugs only found in
-lt/approxidate.
+Sorry, I add imap-send to sln just for testing at solution.
 
- date.c          |    5 ++++-
- t/t0006-date.sh |    4 ++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+You can omit this project.
 
-diff --git a/date.c b/date.c
-index 8e57e5e..e9ee4aa 100644
---- a/date.c
-+++ b/date.c
-@@ -857,7 +857,9 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
- 	}
- 
- 	if (match_string(date, "months") >= 5) {
--		int n = tm->tm_mon - *num;
-+		int n;
-+		update_tm(tm, now, 0); /* fill in date fields if needed */
-+		n = tm->tm_mon - *num;
- 		*num = 0;
- 		while (n < 0) {
- 			n += 12;
-@@ -868,6 +870,7 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
- 	}
- 
- 	if (match_string(date, "years") >= 4) {
-+		update_tm(tm, now, 0); /* fill in date fields if needed */
- 		tm->tm_year -= *num;
- 		*num = 0;
- 		return end;
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 02cd565..a4d8fa8 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -53,8 +53,8 @@ check_approxidate 10.minutes.ago '2009-08-30 19:10:00'
- check_approxidate yesterday '2009-08-29 19:20:00'
- check_approxidate 3.days.ago '2009-08-27 19:20:00'
- check_approxidate 3.weeks.ago '2009-08-09 19:20:00'
--check_approxidate 3.months.ago '2009-05-30 19:20:00' failure
--check_approxidate 2.years.3.months.ago '2007-05-30 19:20:00' failure
-+check_approxidate 3.months.ago '2009-05-30 19:20:00'
-+check_approxidate 2.years.3.months.ago '2007-05-30 19:20:00'
- 
- check_approxidate '6am yesterday' '2009-08-29 06:00:00'
- check_approxidate '6pm yesterday' '2009-08-29 18:00:00'
--- 
-1.6.4.2.373.g5881fd
+best regards
+Frank Li
