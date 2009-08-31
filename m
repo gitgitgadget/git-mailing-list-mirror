@@ -1,76 +1,101 @@
-From: "Yann Dirson" <ydirson@linagora.com>
-Subject: Re: [BUG] git stash refuses to save after "add -N"
-Date: Mon, 31 Aug 2009 10:16:34 +0200
-Message-ID: <51ce4af01c8de1adb66a1818baab1f8a.squirrel@intranet.linagora.com>
-References: <54e098c45bffbf870bdfcee26b9ddecc.squirrel@intranet.linagora.com>
-    <20090828190531.GB11488@coredump.intra.peff.net>
-    <7vmy5ixn96.fsf@alter.siamese.dyndns.org>
-    <20090830095509.GB30922@coredump.intra.peff.net>
-    <7v63c5f4vs.fsf@alter.siamese.dyndns.org>
-    <20090831042724.GA16646@coredump.intra.peff.net>
-    <7vljl0lgms.fsf@alter.siamese.dyndns.org>
-    <20090831050554.GA17197@coredump.intra.peff.net>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: how to skip branches on git svn clone/fetch when there are errors
+Date: Mon, 31 Aug 2009 10:26:36 +0200
+Message-ID: <9accb4400908310126v15b08c7fr425c9daff26012f3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Yann Dirson" <ydirson@linagora.com>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 31 10:16:35 2009
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 31 10:26:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mi240-0000yq-Vn
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 10:16:33 +0200
+	id 1Mi2Du-0004Dv-7v
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 10:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751751AbZHaIQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 04:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbZHaIQW
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 04:16:22 -0400
-Received: from alderaan.linagora.com ([84.14.148.74]:57562 "EHLO
-	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166AbZHaIQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 04:16:21 -0400
-Received: from 10.0.0.2 (unknown [10.75.192.3])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by alderaan.linagora.com (Postfix) with ESMTPSA id 12D90429F03;
-	Mon, 31 Aug 2009 10:16:22 +0200 (CEST)
-Received: from 10.0.0.1 (proxying for 194.206.158.221)
-        (SquirrelMail authenticated user ydirson)
-        by intranet.linagora.com with HTTP;
-        Mon, 31 Aug 2009 10:16:34 +0200
-In-Reply-To: <20090831050554.GA17197@coredump.intra.peff.net>
-User-Agent: SquirrelMail/1.4.18
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1752240AbZHaI0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 04:26:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbZHaI0g
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 04:26:36 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:60904 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750885AbZHaI0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 04:26:36 -0400
+Received: by bwz19 with SMTP id 19so2629986bwz.37
+        for <git@vger.kernel.org>; Mon, 31 Aug 2009 01:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=3b/1aVKQ6NB6s8IhBeyLntZl3UrojtJYh7OBPzzTmgE=;
+        b=ew76ljKAoShWbrDF2XuMbPoTTBoQAQFj67/aOnRcs0l2CMfO2qifORXWKENL3GyiYo
+         +x9pYmeK7IFKZuhY6tFlGETnNox+gHb5xyOAt+LdBVQcUwbR96yDuyUTsHNYo5X9KIk8
+         YJcVtvIX6gVJMyhTjWMWlu2YcD9fPN5GdYQb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=tioeJ9MdQJ0Yy5GmRvWqlIXjQ57qmRtKLgek3kpFPNXuU2o9qDOT4cukogadRMQMqh
+         prtkdfeGeh4b05l9l3Ysr7vRTmphNUXS24nbOsjSAFcGxQqjvVjQypSfInQkAsbTMHIr
+         g6j8OlO8aX6gPK2vBZmkfhfaYoxsL8U7d3vTo=
+Received: by 10.223.101.156 with SMTP id c28mr1421548fao.52.1251707196184; 
+	Mon, 31 Aug 2009 01:26:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127472>
 
-> On Sun, Aug 30, 2009 at 10:03:07PM -0700, Junio C Hamano wrote:
->
->> >   - "-f" is kind of vague. Would people expect it to force aspects of
->> >     the stash? Should it be "--intent-as-empty"?
->>
->> I am not sure if asking for positive confirmation with "-f" is even
->> worth
->> it.  As you pointed out in your earlier message, which prompted me to
->> respond with a patch, when this codepath is exercised, the user is in a
->> rush, and I do not see what else the user would want to do other than
->> including it in the stash by rerunning with -f.
->
-> I guess it was just to mitigate my fear that we are somehow creating a
-> stash that will confuse people when they apply it. But really that fear
-> is probably unjustified.
+Hi,
 
-Well, indeed each time I use "add -N" it is mostly to get "git diff" show
-me the contents of the new file as part of my WIP, so it would not make
-much difference to me if "add -N" would just add the file as empty to the
-index in the first place.
+I'm trying to clone a big repository.
 
-Out of curiosity, does anyone make any use of the current difference
-between not-added-yet and added-as-empty ?
+I follow this steps:
+
+git init
+git svn init svn://svn.mydomain.com/path/to/repo -T HEAD -b BRANCHES -t TAGS
+
+vim .git/config # edited the svn-remote config as follow (add /root to
+branches and tag) to match the repo structure
+[svn-remote "svn"]
+       url = svn://svn.mydomain.com
+       fetch = path/to/repo/HEAD/root:refs/remotes/svn/trunk
+       branches = path/to/repo/BRANCHES/*/root:refs/remotes/svn/*
+       tags = path/to/repo/TAGS/*/root:refs/remotes/svn/tags/*
+
+git svn fetch
+
+When I reach revision ~7500 (I don't remember the exact number) I get an error:
+
+$ git svn fetch
+Use of uninitialized value in concatenation (.) or string at
+/usr/lib/perl5/SVN/Core.pm line 584.
+Authorization failed:  at /usr/bin/git-svn line 1415
+
+
+After some debugging I found out the reason is something strange on
+the SVN server: there is a folder in the SVN that give an error when
+trying to access:
+
+$ svn info svn://svn.mydomain.com/path/to/repo/BRANCHES/V2.1-A
+svn: Authorization failed
+
+The same error with svn list.
+
+I don't know what's wrong with that branch but I just want to skip it...
+
+I tried modifying the .git/config svn-remote configuration adding this:
+
+ignore-paths = path\\/to\\/repo\\/BRANCHES\\/V2\\.1-A
+
+and re-launching git svn fetch.
+
+I had no luck.
+
+Ho do I skip a path on the svn repository?
+
+(I can't provide the real svn repo because it is password protected
+and I can't give you the access)
+
+Thanks,
+Regards,
+Daniele
