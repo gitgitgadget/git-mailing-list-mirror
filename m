@@ -1,81 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-add.txt: Explain --patch option in
- layman terms
-Date: Sun, 30 Aug 2009 16:31:29 -0700
-Message-ID: <7vr5usyj3i.fsf@alter.siamese.dyndns.org>
-References: <87ocpxb46g.fsf@jondo.cante.net>
- <7vab1hdppb.fsf@alter.siamese.dyndns.org> <87tyzp9da4.fsf@jondo.cante.net>
- <7vskf954sr.fsf@alter.siamese.dyndns.org> <87ab1gaol2.fsf@jondo.cante.net>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: how to add an empty initial commit
+Date: Mon, 31 Aug 2009 08:06:22 +0800
+Message-ID: <20090831000622.GA3993@debian.b2j>
+References: <20090830005224.GC10952@debian.b2j>
+ <BLU0-SMTP13B5A682834BA2E926F610AEF30@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Aug 31 01:31:49 2009
+Content-Type: text/plain; charset=iso-8859-1
+Cc: git <git@vger.kernel.org>
+To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Mon Aug 31 02:06:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MhtsC-00026i-KV
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 01:31:49 +0200
+	id 1MhuPv-0000os-TU
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 02:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752764AbZH3Xbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Aug 2009 19:31:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbZH3Xbf
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 19:31:35 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36369 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752661AbZH3Xbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Aug 2009 19:31:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A33363DEEF;
-	Sun, 30 Aug 2009 19:31:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HTFN0NXim8WKT+hp8sn6IkZ7nw8=; b=FR+EM9
-	G955GiDd93twHLorFLFpJFbspRFPqfsq4YQ+765tAQDVln3qouubHoGSf4akVfbo
-	DlUThC43zapw4bZ9w18DCei6SXxn2CuEqlShY4lhMjg/SZpS8MTY0LqhAHcDU9Ip
-	OneCQ1D6Tin05gAMMJ/OgWjE0TtOkHWV4EvhI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LUwO+6vwARM6ifJEsV/caSa0cJzwxzw9
-	cgLixn58PmD85PAV8t25DGOfrpoPPy2uhX2JMsCrMOVV6sgNFSLiN5aNleIi1bxG
-	sFuC39fdYguTcHliwzFjjFnoKqUsK4uIpOJKO846IQALfvvp8W49EEO8JHOjOnV1
-	j6blB2IZIGQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 867CF3DEED;
-	Sun, 30 Aug 2009 19:31:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 712013DEEC; Sun, 30 Aug 2009
- 19:31:31 -0400 (EDT)
-In-Reply-To: <87ab1gaol2.fsf@jondo.cante.net> (Jari Aalto's message of "Mon\,
- 31 Aug 2009 02\:06\:49 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4153A920-95BD-11DE-8045-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753965AbZHaAG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Aug 2009 20:06:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753784AbZHaAG1
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Aug 2009 20:06:27 -0400
+Received: from mail-gx0-f205.google.com ([209.85.217.205]:52421 "EHLO
+	mail-gx0-f205.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753840AbZHaAG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Aug 2009 20:06:26 -0400
+Received: by gxk1 with SMTP id 1so4613171gxk.17
+        for <git@vger.kernel.org>; Sun, 30 Aug 2009 17:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=aiRtgdzXMTgzgqTRE3O173/diATJpyhPRqq97oc5CgM=;
+        b=iVmlynXPe228Xhk4B4amipY9nU4qxJL4xMTmClsMHkND251BspTji61Hr8nXOUCB1J
+         8EEGs0p+DHiEMwgaH8GSWvNQdc1Ty3qAH2BOlY6dtW59qw4DMuTq5wZXmKuFtsKndRo3
+         glPPzsTABmf2f7T73jOOIXZhpn8iZs7e0coEo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=fFfczNz5FXwDB8rR6B8iwwknLOmCz7a3Yi2InOCXS3X/op/cwEDgQ9BhaEKoi9V33F
+         BpqFkTJWGtZHQhkP2Y+bQ8TWlLTwMQSByokWH+cKGKvrcvRjCoNfYk7eL59GwN9oWc3V
+         +jY/jdvIFNljTnRvS5Tow3rxwnnBmfig/zUdg=
+Received: by 10.91.95.5 with SMTP id x5mr3501961agl.28.1251677188038;
+        Sun, 30 Aug 2009 17:06:28 -0700 (PDT)
+Received: from localhost (n219077026253.netvigator.com [219.77.26.253])
+        by mx.google.com with ESMTPS id 36sm2399606agc.60.2009.08.30.17.06.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 30 Aug 2009 17:06:27 -0700 (PDT)
+Mail-Followup-To: Sean Estabrooks <seanlkml@sympatico.ca>,
+	git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <BLU0-SMTP13B5A682834BA2E926F610AEF30@phx.gbl>
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127447>
 
-Jari Aalto <jari.aalto@cante.net> writes:
+On Sat, 29 Aug 2009, Sean Estabrooks wrote:
+> This sounds like a hard way to go about things.  Instead, you can edit
+> the files as you wish, "git add" the new edits, and then use
+> "git commit --amend" to alter the initial commit.   Don't think rebase
+> would help in the situation you describe.
 
-> I think the convention used in git's manual pages deviate from the
-> standard practise. We could make the git manual pages into line of:
->
-> - write all the first level headings in all caps: "HEADING LIKE THIS"
-> - write second level heading: start Upper-lower: "Heading like this"
->
-> Cf. rsync(1), ssh(1) etc. many pages prior git's existense.
+Sean,
 
-Having seen that nothing happened after a separate thread that was also on
-the documentation consistency:
+Yes, you are correct. git-rebase does not help much.  It has to initialise
+another empty git repo and copy all commits to there.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/72163/focus=72213
-
-I am having a hard time to decide how seriously I should take the above
-comment from you.
-
-Are you volunteering to coordinate such a change (in other words, you do
-not necessarily have to do _all_ the work yourself, alone), or is it just
-an idle speculation?
+-- 
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
