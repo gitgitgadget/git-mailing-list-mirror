@@ -1,141 +1,81 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: git-svn-Cloning repository with complex nesting
-Date: Mon, 31 Aug 2009 09:41:28 +0200
-Message-ID: <9accb4400908310041j45d2d1bar9e61348e355892b9@mail.gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/git-add.txt: Explain --patch option in layman terms
+Date: Mon, 31 Aug 2009 10:46:06 +0300
+Organization: Private
+Message-ID: <87y6p08lz5.fsf@jondo.cante.net>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 31 09:41:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 09:46:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mi1WE-0008Sk-Vc
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 09:41:39 +0200
+	id 1Mi1an-0001Ae-0f
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 09:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279AbZHaHl3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2009 03:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbZHaHl3
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 03:41:29 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:46137 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751135AbZHaHl2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2009 03:41:28 -0400
-Received: by bwz19 with SMTP id 19so2613218bwz.37
-        for <git@vger.kernel.org>; Mon, 31 Aug 2009 00:41:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=N9MVg7NI4WxFtLBnDMFuzrPNcbLHpgIZKYLd22+jWR0=;
-        b=CU5YOuvwNOYiXXi2R6Y9dtDb/6T+UmDPlv+oko82rOapGL2+t/jwEfNaS58CNVYRV7
-         CeJF0O7HfpWUL0cGL2LW2uMe7/P/oC5k1AdoLyHtg6Loz9Wx9Zt32iDRvSjP2UU/PY+U
-         uzcVRThopkqjSIUK8bVPLo5P4BilfrDJtU8Sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=W8RlCijyu/+e9KQz7auhS6PHH/F9zqUeoiZV31QnfuMWRzhD3u2dSbpXl9Pqsuwz7r
-         3NxsiN+a4r4lT76nFKuS0dTiP3qqjYHOKAM6dfv5TjeeqpFyObuLaVNZ++I5RhfcjQb9
-         jEIFIow3i27+7GcVgtSc4u+u7vQ3Oj5EBLtxQ=
-Received: by 10.223.103.3 with SMTP id i3mr1290180fao.65.1251704488592; Mon, 
-	31 Aug 2009 00:41:28 -0700 (PDT)
+	id S1751420AbZHaHqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 03:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbZHaHqL
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 03:46:11 -0400
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:47528 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384AbZHaHqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 03:46:10 -0400
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 9570518CEE8;
+	Mon, 31 Aug 2009 10:46:11 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A078A093014; Mon, 31 Aug 2009 10:46:11 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 3A55B2BD51;
+	Mon, 31 Aug 2009 10:46:06 +0300 (EEST)
+cc: jari.aalto@cante.net
+In-Reply-To: <7vbplw28js.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 30 Aug 2009 16:20:23 -0700")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127467>
 
-On Thu, Aug 27, 2009 at 10:32 AM, Daniele Segato<daniele.bilug@gmail.co=
-m> wrote:
-> Hi, this is my first message in the list: this may be a newbie
-> question and my English may not be very good.
+Junio C Hamano <gitster@pobox.com> writes:
 
-to prove my sentence:
-the subject should have been "git-svn-Cloning repository with
-_complex_ nesting" :-)
+I apologize if you though I did not read. I did, but I the separate
+paragraph order did not meet here as you might have intended.
 
-I received help on IRC (#git) and managed to setup the svn-remote in
-an acceptable way
+To recap, your suggestion, if read correct:
 
-> I've an SVN repository structured like this:
->
-> http://<url>/path/to/repo
-> =C2=A0 =C2=A0|
-> =C2=A0HEAD
-> =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0|
-> =C2=A0BRANCHES
-> =C2=A0 =C2=A0|----- V1.0
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- root
-> =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0|----- V1.1
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- root
-> =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0|----- V1.2
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- root
-> =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0|----- DEV
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- FEATURE1
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- FEATURE2
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 |----- FEATURE3
-> =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0|----- BUILDS
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|----- BUILD1
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|----- BUILD2
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0|----- root
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|----- BUILD3
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 |----- root
+    --patch:
+    -p::
+        Review the difference between the index and the work tree, and add
+        modified contents to the index interactively by choosing which
+        patch hunks to use.
 
+        Run ``add --interactive``, but bypass the initial command menu and
+        directly jump to `patch` subcommand.  See ``Interactive mode'' for
+        details.
 
-this is my setting:
+For more direct first line, howabout:
 
-git init
-git svn init svn://svn.mydomain.com/path/to/repo -T HEAD -b BRANCHES -t=
- TAGS
+    --patch:
+    -p::
+        In a modified work tree, choose interactively which patch hunks to
+        add. This gives a change to review the difference between the
+        index and the work before adding modified contents to the index.
 
-vim .git/config # edited the svn-remote config as follow:
-[svn-remote "svn"]
-	url =3D svn://svn.mydomain.com
-	fetch =3D path/to/repo/HEAD/root:refs/remotes/svn/trunk
-	branches =3D path/to/repo/BRANCHES/*/root:refs/remotes/svn/*
-	tags =3D path/to/repo/TAGS/*/root:refs/remotes/svn/tags/*
+        This effectively runs ``add --interactive``, but bypass the
+        initial command menu and directly jump to `patch` subcommand.
+        See ``Interactive mode'' for details.
 
-git svn fetch
-
-it seems to work as expected: only those branches that has a "root"
-folder got downloaded and fetched.
-
-I still couldn't retrieve the DEV/FEATUREx branches in that way.
-On IRC they told me I can add another line for branches:
-
-branches =3D path/to/repo/BRANCHES/*/*/root:refs/remotes/svnbis/*
-
-but I haven't been successful on this. They told me that I can add
-multiple branches lines only on newer versions of git.
-Probably that's the reason for that.
-I have git version 1.5.6.5.
-
-It is not a big deal: I can live without those branches even if I'll
-like to have them too.
-
-I have another problem now on that SVN repo but I'll open another
-topic about that because it is not related.
-
-Regards,
-Daniele
+Jari
