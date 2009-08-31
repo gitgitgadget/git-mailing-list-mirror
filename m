@@ -1,70 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: clong an empty repo over ssh causes (harmless) fatal
-Date: Mon, 31 Aug 2009 13:22:08 +0200
-Message-ID: <vpqskf8z0rj.fsf@bauges.imag.fr>
-References: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net>
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: Re: What IDEs are you using to develop git?
+Date: Mon, 31 Aug 2009 17:06:51 +0530
+Message-ID: <f46c52560908310436l7eb2794eq4f299fbb04c66f97@mail.gmail.com>
+References: <000001ca257d$b60326c0$22097440$@com>
+	 <43d8ce650908250547t17b76c95qb9931983e0a4b232@mail.gmail.com>
+	 <1251655664.31273.4.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 31 13:22:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 31 13:37:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mi4xr-0003Z3-Go
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 13:22:23 +0200
+	id 1Mi5CP-0008AB-E2
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 13:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbZHaLWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 07:22:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbZHaLWM
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 07:22:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:56843 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751798AbZHaLWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 07:22:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n7VBImqP018459
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 31 Aug 2009 13:18:48 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mi4xc-0001YR-Tp; Mon, 31 Aug 2009 13:22:08 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mi4xc-0006pM-SU; Mon, 31 Aug 2009 13:22:08 +0200
-In-Reply-To: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net> (Sitaram Chamarty's message of "Mon\, 31 Aug 2009 11\:14\:22 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 31 Aug 2009 13:18:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7VBImqP018459
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252322328.41554@21nt4lrsNjqDkV2YRIvysA
+	id S1750938AbZHaLgu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Aug 2009 07:36:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbZHaLgu
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 07:36:50 -0400
+Received: from mail-px0-f189.google.com ([209.85.216.189]:45310 "EHLO
+	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750872AbZHaLgt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2009 07:36:49 -0400
+Received: by pxi27 with SMTP id 27so39057pxi.15
+        for <git@vger.kernel.org>; Mon, 31 Aug 2009 04:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=C/uhha2GFBhi4Pu/9CeEWNshLxjK6Th7UhAQd0yMQK0=;
+        b=sL2g9SnwX2S0oY3j/FaPuYHnmIQOWvWb0msR9uu1tryB7+AuaakbMDBsTl2Jkgq5Ba
+         p+9kq7mNbyhjNDa/zQRRwQRgitVB74yXVDQisJ64XlCeyyHuMlEH/AfOurzKAy9nDAMF
+         esnOO8R3+s5gAAxExFrG/HfgCn1F3bTMkKP24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=d6eg50FxscJmaL0rwzpxaA5emOeLOq9dMSCrJoBOghBpVeb/zqmsRLSxbUCRmh9psX
+         AXJUBUu99TXMzT9IZrpkE3lNWdGHiXi3Bm/mgkx8lyMTEty+P0Bh/CQlTJxPD3MTwOhz
+         lKo3fxge7U6goLX2YX8SxX26H8vGNxVaiWmX8=
+Received: by 10.115.101.1 with SMTP id d1mr2497845wam.40.1251718611716; Mon, 
+	31 Aug 2009 04:36:51 -0700 (PDT)
+In-Reply-To: <1251655664.31273.4.camel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127479>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
-
-> Hello,
+On Sun, Aug 30, 2009 at 11:37 PM, Daniele Segato
+<daniele.bilug@gmail.com> wrote:
 >
-> Cloning an empty repo seems to produce a spurious error.
-> The repo still seems fine though.
+> Il giorno mar, 25/08/2009 alle 13.47 +0100, John Tapsell ha scritto:
+> > 2009/8/25 Frank M=FCnnich <git@frank-muennich.com>:
+> > > One thing I would like to ask you: what, if any, IDEs are you wor=
+king with?
+> >
+> > I think everyone just uses vim/emacs :-)
+>
+> I can't get how would one take vim or emacs instead of an IDE like
+> Eclipse.
+> That's probably because I'm mainingly a Java developer and i don't kn=
+ow
+> vim/emacs very much.
+>
+> What are the advantages of developing git with vim/emacs over an IDE?
+>
+> Cheers,
+> Daniele
 
-Can't reproduce here:
-
-$ git clone ssh://.../tmp/empty cloned
-Initialized empty Git repository in /tmp/cloned/.git/
-warning: You appear to have cloned an empty repository.
-$ git --version
-git version 1.6.4.187.gd399.dirty
-
-Maybe you have an older version of Git?
-
--- 
-Matthieu
+How much mouse do you use and how much keyboard?
+And now read http://steve.yegge.googlepages.com/effective-emacs.
+Note: vi is ergonomically superior to emacs (shortest keystrokes, no
+mouse at all)  but emacs can do more than vi
