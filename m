@@ -1,58 +1,59 @@
-From: sigbackup <sigbackup@gmail.com>
-Subject: from local to github
-Date: Mon, 31 Aug 2009 13:46:10 -0700
-Message-ID: <48b054040908311346y853b917l44a7e5d4310501b@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] fast-import.c: Silence build warning
+Date: Mon, 31 Aug 2009 23:27:05 +0200
+Message-ID: <81b0412b0908311427t5b4a24ffg1d7d272669476117@mail.gmail.com>
+References: <d2e97e800908310421u7de8ae58o361bd64a026384bf@mail.gmail.com>
+	 <fabb9a1e0908310529q4c601a73t671cc2813dfdb1a3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 31 22:46:24 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Wookey <michaelwookey@gmail.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 31 23:27:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiDle-0000m4-Hs
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 22:46:23 +0200
+	id 1MiEPI-0003eJ-3U
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 23:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751385AbZHaUqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 16:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbZHaUqL
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 16:46:11 -0400
-Received: from mail-qy0-f181.google.com ([209.85.221.181]:60916 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751152AbZHaUqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 16:46:10 -0400
-Received: by qyk11 with SMTP id 11so3130098qyk.1
-        for <git@vger.kernel.org>; Mon, 31 Aug 2009 13:46:12 -0700 (PDT)
+	id S1751178AbZHaV1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 17:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbZHaV1F
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 17:27:05 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:60892 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751026AbZHaV1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 17:27:04 -0400
+Received: by fxm17 with SMTP id 17so3072074fxm.37
+        for <git@vger.kernel.org>; Mon, 31 Aug 2009 14:27:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=2EdDheWsN0r9lNf+52KLVDWOuOCkOEZZLjQpq50i3TI=;
-        b=HsBO25UvWvb91yObVJbfW4YhPKF2oES4eyStF0f+9sBTrHsjPFc09LRXONi0Ib/1Y4
-         jRZVWru3cO0srFqeZ5gijU/hJ4ZVymLHqwHyBHaITS7zyA6/vLXExfY2FWi/kQm9T8Ps
-         9kE/Aqsuw3Ya0DPKthZF+YC1VFh0I4VgukDNs=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=n0OAsRMecEyDdb3t+NZ6YoCQio8kxK6acmTwWHneia0=;
+        b=WoeHoFC+pUKWBnKBNTAhzVo5hgyG9BE5N44sG/nSynkL4WNzkvVv6/Z4Bcce9uEUGH
+         bXQ1MACV/sp80fxIx/jqIZnyAVuRMKUEH/Ha5SDocyMD3zGrVsDI871Twf3+HKFR102p
+         /sE3erjAHHRWOGetRA0TyBDsxWD7G8O00THz8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=nL/fcHknoyleacquYZTi/TurL86v7As12MefHNV2dyTWjKAGgH3pHfdN+HXwkNMweL
-         vR1r7vdhhtrS/wUuuSyhHotwPtv/IHzwJUTTbljQikfit1AUMryjjaocMIg1stURo/GY
-         ufIAPsO9EfMJjdnTt4M9GpNya7J2QudKtG0bo=
-Received: by 10.229.10.13 with SMTP id n13mr1839604qcn.103.1251751572510; Mon, 
-	31 Aug 2009 13:46:12 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=iec5RDv89wv70ToC34NakRD5/TYy9GjxGhn+/PKNbu2gGemk65J4FpMNGo51uZP9vg
+         wSSdyZNKsCkEjTJjWuOt9Hl6xlmW21YibjHcMx3HvjIDKJEjpK+iEe1nMtb7d0ohT7fx
+         xzFyPtZGqRI7n2h8xBAOjniYSWr5VenF9y13U=
+Received: by 10.204.29.24 with SMTP id o24mr4758129bkc.85.1251754025427; Mon, 
+	31 Aug 2009 14:27:05 -0700 (PDT)
+In-Reply-To: <fabb9a1e0908310529q4c601a73t671cc2813dfdb1a3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127501>
 
-Hello guys,
-I'm a git newbie and I'm looking for some good references about using
-git locally (on Mac) and synchronize my repositories to my github
-account and from there to a Win2003 production server.
+On Mon, Aug 31, 2009 at 14:29, Sverre Rabbelier<srabbelier@gmail.com> wrote:
+> On Mon, Aug 31, 2009 at 04:21, Michael Wookey<michaelwookey@gmail.com> wrote:
+>> Provide a dummy variable to keep the compiler happy.
+>
+> Should we not instead check the value?
 
-Can anyone help me with this?
-
-
-Thanks and have a great day.
-
-Sig
+Why? It is endp (end of the parsed number) we're interested in.
