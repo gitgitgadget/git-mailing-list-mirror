@@ -1,322 +1,86 @@
-From: Giulio Eulisse <Giulio.Eulisse@cern.ch>
-Subject: [PATCH] git-submodule and --upload-pack
-Date: Mon, 31 Aug 2009 15:52:07 +0200
-Message-ID: <9D7140EC-EAFD-4408-93E3-0E756BA363DA@cern.ch>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 31 15:51:31 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: clong an empty repo over ssh causes (harmless) fatal
+Date: Mon, 31 Aug 2009 20:00:41 +0530
+Message-ID: <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
+References: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net>
+	 <vpqskf8z0rj.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 31 16:31:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mi7I6-0004yU-CE
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 15:51:27 +0200
+	id 1Mi7uU-0000eE-MC
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 16:31:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbZHaNvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 09:51:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbZHaNvP
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 09:51:15 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:47596 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750951AbZHaNvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 09:51:14 -0400
-Received: by ewy2 with SMTP id 2so326833ewy.17
-        for <git@vger.kernel.org>; Mon, 31 Aug 2009 06:51:14 -0700 (PDT)
+	id S1752640AbZHaOam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 10:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752605AbZHaOal
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 10:30:41 -0400
+Received: from mail-iw0-f204.google.com ([209.85.223.204]:50351 "EHLO
+	mail-iw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752576AbZHaOaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 10:30:39 -0400
+Received: by iwn42 with SMTP id 42so1828427iwn.33
+        for <git@vger.kernel.org>; Mon, 31 Aug 2009 07:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=ujOXj/1SSS5StmfPgEJcmO8RcuC2eBzzuP8IEL8Cf5k=;
-        b=fBgHLgmXLVQQLTrl/gpK7f8ud/u9AyO+xxYKXjcIFshehKNGSRnpe18tHkYktwO5LY
-         13z6fL28NLvBG8453Ujj24qSCfnn3lbLCo/cHOd4BWoStqZoixEwifnNve5JkDIX0FO8
-         uo3DmmFrO/FFLUt9WQBaTw5zTs5fXBck5xEG4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=jaUsoicwC5PLpg/olJ/MJIBn58GnWQmAQSJp59VCblE=;
+        b=W/W94DfKFrY6JQPUUBuSyxhK/PufGtbWIfYi7qIUbutG9CqhVq0qLs4i925+vB6T8W
+         kuv1nG/hTHM5kAKb4QGu62eTMvrY3iBVYS+v7Fkvgp+mvCqfxNCwAiIbAufZQBoeefQb
+         UHZ33x0/aymB9TCexNhF48DT52QD1Mxamx7K4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=YlHfZWhfFhDBO+GucnGMtF62WlWxXPKzRLFxvGpvWRxrXkAbw7wXVSYi+dgmE+ZrHH
-         LB2fAPgi/qYwyIE3JSf2o9sLlaBBGnwW9eCE5gb6Lnsgqd/DqyCNwRG7waS+/hdm/eY3
-         C6vjd/NIyAAD2Xwwt7Kp5SsWwwNcOiRSmORPs=
-Received: by 10.211.174.10 with SMTP id b10mr5377339ebp.39.1251726652911;
-        Mon, 31 Aug 2009 06:50:52 -0700 (PDT)
-Received: from iguana3.cern.ch (iguana3.cern.ch [137.138.52.211])
-        by mx.google.com with ESMTPS id 10sm148918eyd.39.2009.08.31.06.50.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 31 Aug 2009 06:50:52 -0700 (PDT)
-X-Mailer: Apple Mail (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=trPCuS4dShPkPNecp+tTtOuzuiU7u8AZBcy7uzN48ElYmfPkfl9+1X5znDyOwyDmtp
+         m15V5Uvp+ST53uii1xtipVAQSaBtZ1s/bvjPNVvPG8/wP8qQbmurDg8gsVP4fqqGqRr/
+         g9S0sRdBQovvIf5G5qG4xYNJ236WxO709tgnA=
+Received: by 10.231.124.164 with SMTP id u36mr7183379ibr.21.1251729041741; 
+	Mon, 31 Aug 2009 07:30:41 -0700 (PDT)
+In-Reply-To: <vpqskf8z0rj.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127484>
 
-Ciao,
+[apologies if you get this twice]
 
-There was a thread a while ago aboyt having --upload-pack support for  
-git-submodule.
+On Mon, Aug 31, 2009 at 4:52 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+>
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+> > Hello,
+> >
+> > Cloning an empty repo seems to produce a spurious error.
+> > The repo still seems fine though.
+>
+> Can't reproduce here:
+>
+> $ git clone ssh://.../tmp/empty cloned
+> Initialized empty Git repository in /tmp/cloned/.git/
+> warning: You appear to have cloned an empty repository.
+> $ git --version
+> git version 1.6.4.187.gd399.dirty
+>
+> Maybe you have an older version of Git?
 
-Given that there was no followup (as far as I can tell) and I needed  
-pretty much
-the same functionality I ported Jason's patch to work on top of 1.6.4.2.
+Had 1.6.4, just tried with 1.6.4.2 -- the error is still there, exactly so.
 
-Comments?
+Anything I can do to provide more info?
 
-Ciao,
-Giulio
---
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git- 
-submodule.txt
-index 683ba1a..50aa930 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -9,8 +9,8 @@ git-submodule - Initialize, update or inspect submodules
-  SYNOPSIS
-  --------
-  [verse]
--'git submodule' [--quiet] add [-b branch]
--	      [--reference <repository>] [--] <repository> <path>
-+'git submodule' [--quiet] add [-b branch]
-+              [-u <git-upload-pack>] [--receive-pack <git-receive- 
-pack>] [--reference <repository>] [--] <repository> <path>
-  'git submodule' [--quiet] status [--cached] [--] [<path>...]
-  'git submodule' [--quiet] init [--] [<path>...]
-  'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
-@@ -164,6 +164,19 @@ OPTIONS
-  --branch::
-  	Branch of repository to add as submodule.
-
-+--upload-pack <upload-pack>::
-+-u <upload-pack>::
-+	When given, and the repository to clone from is accessed
-+	via ssh, this specifies a non-default path for the
-+	'git-upload-pack' program on the remote end.  See
-+	linkgit:git-fetch-pack[1].
-+
-+--receive-pack <receive-pack>::
-+	When given, and the repository to clone from is accessed
-+	via ssh, this specifies a non-default path for the
-+	'git-receive-pack' program on the remote end.  See
-+	linkgit:git-push[1].
-+
-  --cached::
-  	This option is only valid for status and summary commands.  These
-  	commands typically use the commit found in the submodule HEAD, but
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index 5daf750..bf982a6 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -30,6 +30,14 @@ submodule.<name>.path::
-  submodule.<name>.url::
-  	Defines an url from where the submodule repository can be cloned.
-
-+submodule.<name>.receivepack::
-+	The default program to execute on the remote side when pushing.  See
-+	option \--receive-pack of linkgit:git-push[1].
-+
-+submodule.<name>.uploadpack::
-+	The default program to execute on the remote side when fetching.  See
-+	option \--upload-pack of linkgit:git-fetch-pack[1].
-+
-  submodule.<name>.update::
-  	Defines what to do when the submodule is updated by the superproject.
-  	If 'checkout' (the default), the new commit specified in the
-@@ -41,7 +49,6 @@ submodule.<name>.update::
-  	This config option is overridden if 'git submodule update' is given
-  	the '--merge' or '--rebase' options.
-
--
-  EXAMPLES
-  --------
-
-@@ -53,12 +60,16 @@ Consider the following .gitmodules file:
-
-  	[submodule "libbar"]
-  		path = include/bar
--		url = git://bar.com/git/lib.git
-+		url = ssh://bar.com/~/git/lib.git
-+		uploadpack = /home/you/bin/git-upload-pack-wrapper
-+		receivepack = /home/you/bin/git-receive-pack-wrapper
+To start with, this is Mandriva 2009.1, kernel 2.6.29, git built from
+scratch locally (not an RPM or something).  Should I try some other
+things like strace?  It's too minor to bother, if that's all it is,
+assuming it's not a symptom of something larger :)
 
 
-  This defines two submodules, `libfoo` and `libbar`. These are  
-expected to
-  be checked out in the paths 'include/foo' and 'include/bar', and for  
-both
-  submodules an url is specified which can be used for cloning the  
-submodules.
-+For `libbar`, packs are retrieved and stored via the upload and receive
-+wrappers, respectively.
-
-  SEE ALSO
-  --------
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ebed711..25edd59 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -82,6 +82,8 @@ module_clone()
-  	path=$1
-  	url=$2
-  	reference="$3"
-+        uploadpack=$4
-+        receivepack=$5
-
-  	# If there already is a directory at the submodule path,
-  	# expect it to be empty (since that is the default checkout
-@@ -97,13 +99,30 @@ module_clone()
-  	test -e "$path" &&
-  	die "A file already exist at path '$path'"
-
-+        uploadpackCmd=""
-+
-+        if test "$uploadpack"
-+        then
-+          uploadpackCmd="--upload-pack $uploadpack"
-+        fi
-+
-  	if test -n "$reference"
-  	then
--		git-clone "$reference" -n "$url" "$path"
-+		git-clone $uploadpackCmd "$reference" -n "$url" "$path"
-  	else
--		git-clone -n "$url" "$path"
-+		git-clone $uploadpackCmd -n "$url" "$path"
-  	fi ||
-  	die "Clone of '$url' into submodule path '$path' failed"
-+	if test "$uploadpack"
-+	then
-+	    git config -f "${path}/.git/config" remote.origin.uploadpack  
-"$uploadpack" ||
-+	    echo "  Warn: Failed to set uploadpack for '$url' in submodule  
-path '$path'."
-+	fi
-+	if test "$receivepack"
-+	then
-+	    git config -f "${path}/.git/config" remote.origin.receivepack  
-"$receivepack" ||
-+	    echo "  Warn: Failed to set receivepack for '$url' in submodule  
-path '$path'."
-+	fi
-  }
-
-  #
-@@ -136,6 +155,16 @@ cmd_add()
-  			reference="$1"
-  			shift
-  			;;
-+		-u|--upload-pack)
-+			case "$2" in '') usage ;; esac
-+			uploadpack=$2
-+			shift
-+			;;
-+		--receive-pack)
-+			case "$2" in '') usage ;; esac
-+			receivepack=$2
-+			shift
-+			;;
-  		--)
-  			shift
-  			break
-@@ -206,9 +235,17 @@ cmd_add()
-  			;;
-  		esac
-  		git config submodule."$path".url "$url"
-+		if test "$uploadpack"
-+			then
-+		    git config submodule."$path".uploadpack "$uploadpack"
-+		fi
-+		if test "$receivepack"
-+		then
-+		    git config submodule."$path".receivepack "$receivepack"
-+		fi
-  	else
-
--		module_clone "$path" "$realrepo" "$reference" || exit
-+		module_clone "$path" "$realrepo" "$reference" "$uploadpack"  
-"$receivepack" || exit
-  		(
-  			unset GIT_DIR
-  			cd "$path" &&
-@@ -224,7 +261,19 @@ cmd_add()
-  	die "Failed to add submodule '$path'"
-
-  	git config -f .gitmodules submodule."$path".path "$path" &&
--	git config -f .gitmodules submodule."$path".url "$repo" &&
-+	git config -f .gitmodules submodule."$path".url "$repo" ||
-+	die "Failed to register submodule '$path'"
-+
-+	if test "$uploadpack"
-+        then
-+	    git config -f .gitmodules submodule."$path".uploadpack  
-"$uploadpack" ||
-+	    die "Failed to register submodule '$path'"
-+	fi
-+	if test "$receivepack"
-+        then
-+	    git config -f .gitmodules submodule."$path".receivepack  
-"$receivepack" ||
-+	    die "Failed to register submodule '$path'"
-+	fi
-  	git add .gitmodules ||
-  	die "Failed to register submodule '$path'"
-  }
-@@ -299,6 +348,19 @@ cmd_init()
-  		git config submodule."$name".url "$url" ||
-  		die "Failed to register url for submodule path '$path'"
-
-+		uploadpack=$(git config -f .gitmodules submodule."$name".uploadpack)
-+		receivepack=$(git config -f .gitmodules  
-submodule."$name".receivepack)
-+		if test "$uploadpack"
-+		then
-+		    git config submodule."$name".uploadpack "$uploadpack" ||
-+		    echo "  Warn: Failed to set uploadpack for '$url' in submodule  
-path '$path'."
-+		fi
-+		if test "$receivepack"
-+		then
-+		    git config submodule."$name".receivepack "$receivepack" ||
-+		    echo "  Warn: Failed to set receivepack for '$url' in submodule  
-path '$path'."
-+		fi
-+
-  		upd="$(git config -f .gitmodules submodule."$name".update)"
-  		test -z "$upd" ||
-  		git config submodule."$name".update "$upd" ||
-@@ -384,7 +446,8 @@ cmd_update()
-
-  		if ! test -d "$path"/.git -o -f "$path"/.git
-  		then
--			module_clone "$path" "$url" "$reference"|| exit
-+			module_clone "$path" "$url" "$reference" "$(git config  
-submodule."$name".uploadpack)" \
-+                            "$(git config  
-submodule."$name".receivepack)" || exit
-  			subsha1=
-  		else
-  			subsha1=$(unset GIT_DIR; cd "$path" &&
-@@ -738,6 +801,18 @@ cmd_sync()
-  			remote=$(get_default_remote)
-  			say "Synchronizing submodule url for '$name'"
-  			git config remote."$remote".url "$url"
-+			uploadpack=$(git config -f .gitmodules submodule."$name".uploadpack)
-+			receivepack=$(git config -f .gitmodules  
-submodule."$name".receivepack)
-+			if test "$uploadpack"
-+			then
-+			    git config submodule."$name".uploadpack "$uploadpack" ||
-+			    echo "  Warn: Failed to set uploadpack for '$url' in submodule  
-path '$name'."
-+			fi
-+			if test "$receivepack"
-+			then
-+			    git config submodule."$name".receivepack "$receivepack" ||
-+			    echo "  Warn: Failed to set receivepack for '$url' in  
-submodule path '$name'."
-+			fi
-  		)
-  		fi
-  	done
+>
+> --
+> Matthieu
