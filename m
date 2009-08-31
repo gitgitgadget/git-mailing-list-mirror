@@ -1,77 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: clong an empty repo over ssh causes (harmless) fatal
-Date: Mon, 31 Aug 2009 19:25:22 +0200
-Message-ID: <vpqocpvevzx.fsf@bauges.imag.fr>
-References: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net>
-	<vpqskf8z0rj.fsf@bauges.imag.fr>
-	<2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
-	<20090831164146.GA23245@coredump.intra.peff.net>
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: Re: [PATCH 3/3] transport: don't show push status if --quiet is given
+Date: Mon, 31 Aug 2009 20:33:02 +0200
+Message-ID: <4A9C175E.6020905@hartwork.org>
+References: <20090805201937.GB9004@coredump.intra.peff.net> <20090805202326.GC23226@coredump.intra.peff.net> <7vhbwm0zcs.fsf@alter.siamese.dyndns.org> <20090805204835.GA24539@coredump.intra.peff.net> <7vws5ix9dz.fsf@alter.siamese.dyndns.org> <20090805211700.GA24697@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Albert Astals Cid <aacid@kde.org>,
+	Pau Garcia i Quiles <pgquiles@elpauer.org>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 31 19:25:44 2009
+X-From: git-owner@vger.kernel.org Mon Aug 31 20:38:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiAdT-0007mZ-OG
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 19:25:44 +0200
+	id 1MiBlx-0004tJ-62
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Aug 2009 20:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753402AbZHaRZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 13:25:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753313AbZHaRZe
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 13:25:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:50092 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753301AbZHaRZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 13:25:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n7VHNK26004790
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 31 Aug 2009 19:23:21 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MiAd8-0002DQ-K6; Mon, 31 Aug 2009 19:25:22 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MiAd8-0003Fg-In; Mon, 31 Aug 2009 19:25:22 +0200
-In-Reply-To: <20090831164146.GA23245@coredump.intra.peff.net> (Jeff King's message of "Mon\, 31 Aug 2009 12\:41\:46 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 31 Aug 2009 19:23:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n7VHNK26004790
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252344202.58947@9UdxYBCmqlBgbwyQuNJk1A
+	id S1753670AbZHaSiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 14:38:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbZHaSiP
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 14:38:15 -0400
+Received: from smtprelay01.ispgateway.de ([80.67.18.13]:50390 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbZHaSiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 14:38:14 -0400
+X-Greylist: delayed 306 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Aug 2009 14:38:14 EDT
+Received: from [85.179.29.7] (helo=[192.168.0.3])
+	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1MiBgd-0002P9-Bq; Mon, 31 Aug 2009 20:33:03 +0200
+User-Agent: Thunderbird 2.0.0.22 (X11/20090820)
+In-Reply-To: <20090805211700.GA24697@coredump.intra.peff.net>
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127490>
 
-Jeff King <peff@peff.net> writes:
+Hello!
 
-> On Mon, Aug 31, 2009 at 08:00:41PM +0530, Sitaram Chamarty wrote:
->
->> > Maybe you have an older version of Git?
->> 
->> Had 1.6.4, just tried with 1.6.4.2 -- the error is still there, exactly so.
->> 
->> Anything I can do to provide more info?
->
-> IIRC, the message you are seeing comes when the _server_ is an older
-> version of git. It is harmless, though.
 
-Since the client and server are the same machine:
+I run git push in a cron job, too.  I want mails in error cases only
+so I need git push to print errors but _only_ errors to stderr.  That
+seems impossible with 1.6.4.* and related to what you're discussing here.
 
-    $ git clone ssh://sitaram@localhost/home/sitaram/t/a b
+Does the patch you're building address that case already?  has it been
+applied to any branch already?  I got a bit lost in this thread, sorry.
 
-I'd bet Sitaram has two installations of git, and plain ssh to the
-machine points to the old one (like a $PATH set in ~/.login and not
-~/.profile or something like that).
 
--- 
-Matthieu
+
+Sebastian
