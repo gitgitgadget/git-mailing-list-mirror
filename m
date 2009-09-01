@@ -1,88 +1,116 @@
-From: david.hagood@gmail.com
-Subject: Making GIT XML aware?
-Date: Tue, 1 Sep 2009 08:57:16 -0500 (CDT)
-Message-ID: <fcdc4d8bb3b1ee0b1473a48ed79e7c61.squirrel@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Making GIT XML aware?
+Date: Tue, 01 Sep 2009 07:25:54 -0700 (PDT)
+Message-ID: <m3bplulop9.fsf@localhost.localdomain>
+References: <fcdc4d8bb3b1ee0b1473a48ed79e7c61.squirrel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 01 15:57:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: david.hagood@gmail.com
+X-From: git-owner@vger.kernel.org Tue Sep 01 16:26:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiTrW-0006lV-1Q
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 15:57:30 +0200
+	id 1MiUJC-00080t-3H
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 16:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754826AbZIAN5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 09:57:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754754AbZIAN5S
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 09:57:18 -0400
-Received: from wa-out-1112.google.com ([209.85.146.181]:61621 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754555AbZIAN5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 09:57:18 -0400
-Received: by wa-out-1112.google.com with SMTP id j5so704758wah.21
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 06:57:19 -0700 (PDT)
+	id S1754950AbZIAOZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 10:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754946AbZIAOZy
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 10:25:54 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:65042 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754921AbZIAOZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 10:25:54 -0400
+Received: by fxm17 with SMTP id 17so46977fxm.37
+        for <git@vger.kernel.org>; Tue, 01 Sep 2009 07:25:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received:message-id
-         :date:subject:from:to:user-agent:mime-version:content-type
-         :content-transfer-encoding:x-priority:importance;
-        bh=nN8Lh/EpwdtQPFPjWuT9cNkxkPluYZ1FnKBGtgHVZ6s=;
-        b=RmTqNo0gEMuKNIVCmnQslhYHzt/C790cPyxXejt4X60z21yBhwjz1s1UqH0FLj6fzP
-         ukV/a0HT98ZZYCZt2OAF31gnH1iibCHRydjNAVLgmwk3RdRPx6PreE/D+aBRlda7xJRG
-         OhIMUzNjLQEJ2WMaCsc2VAlGsPfbbLV78WoR8=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=MNGs6LC0rhoMBzRwd1QY+lSjU22fFMHlapkAkn2drEg=;
+        b=nTrSL63Jsb7h0/cFtK6GhE0gpg4NZ+pr1v6F68eo21mkWjtR1O7nO38EXBDiz1KFcm
+         gruk7PQ189AhybUtA0fiv/2hG5XxK5yDRBt2FpkoMLGrOqw7GrlpdPZkFIsCx2MtUEea
+         0M78H9bAs+0/aVSD9uxmM2LGWiP/H1FpED6C4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:subject:from:to:user-agent:mime-version
-         :content-type:content-transfer-encoding:x-priority:importance;
-        b=BDhNbD1aHeulr4Gu2YEq3JuHTEmGn7t5jhzXnjJR7GY1kktovlT3OKCU/K5cWHiBON
-         lgiMrkfZVS41odEZ30QsAQnPSiD+TvKfwpipKhKbNcWHnh7BLYvWVdVB3vABya6dyCYH
-         1Fvb/R8gfbpRNRp+74QP/lx5kyImXSrZMb3wI=
-Received: by 10.115.113.4 with SMTP id q4mr4549980wam.54.1251813439563;
-        Tue, 01 Sep 2009 06:57:19 -0700 (PDT)
-Received: from Deathwish.hagood.sktc.net (7206-2.clr.64.71.121.34.clradsl.sktc.net [64.71.121.34])
-        by mx.google.com with ESMTPS id 22sm419216pxi.14.2009.09.01.06.57.18
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=HFdrNmB7bdXVU5ZuJbcLyzxjxeEr4nslqlLq7Nh8mDkzZLRb7gbhRqN9hfF5DreiwJ
+         p4PLt4DHZ/oayAa6kHJ5tSkfild6BcUFHNk1aHDcPINLQ2rYS77iq8ONPDgAfJcbIzrG
+         FUaT2xF9+yrkGhKWnJr4dbp9+VFrRWBq3xN+U=
+Received: by 10.103.50.36 with SMTP id c36mr2961431muk.135.1251815155162;
+        Tue, 01 Sep 2009 07:25:55 -0700 (PDT)
+Received: from localhost.localdomain (abwo59.neoplus.adsl.tpnet.pl [83.8.238.59])
+        by mx.google.com with ESMTPS id e8sm1241846muf.36.2009.09.01.07.25.53
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Sep 2009 06:57:19 -0700 (PDT)
-Received: from localhost (Deathwish [127.0.0.1])
-	by Deathwish.hagood.sktc.net (Postfix) with ESMTP id C25FCC7B8248
-	for <git@vger.kernel.org>; Tue,  1 Sep 2009 08:57:16 -0500 (CDT)
-Received: from deathwish ([127.0.0.1])
-        (SquirrelMail authenticated user wowbaggr)
-        by localhost with HTTP;
-        Tue, 1 Sep 2009 08:57:16 -0500 (CDT)
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
+        Tue, 01 Sep 2009 07:25:54 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n81EXNLq007446;
+	Tue, 1 Sep 2009 16:33:25 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n81EXMRi007443;
+	Tue, 1 Sep 2009 16:33:22 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <fcdc4d8bb3b1ee0b1473a48ed79e7c61.squirrel@localhost>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127537>
 
-I have a project that is committing several XML files into GIT, and we
-have a problem when doing merges.
+david.hagood@gmail.com writes:
 
-The files are UML XMI 1.1 files generated by a UML tool (specifically
-Enterprise Architect by Sparx), and EA "helpfully" puts things like
-timestamps of modification and access into the files. As you can guess,
-these are conflict-magnets. Yes, the ideal solution would be to turn that
-off, and I am pursuing that avenue within EA.
+> I have a project that is committing several XML files into GIT, and we
+> have a problem when doing merges.
+> 
+> The files are UML XMI 1.1 files generated by a UML tool (specifically
+> Enterprise Architect by Sparx), and EA "helpfully" puts things like
+> timestamps of modification and access into the files. As you can guess,
+> these are conflict-magnets. Yes, the ideal solution would be to turn that
+> off, and I am pursuing that avenue within EA.
+> 
+> However, it seems to me that if there were some way to plug into GIT's
+> merging logic, it would be possible to design an XML aware merging tool
+> that might help on this (generalizing: if you could have content-aware
+> merging libraries you could make all sorts of merges go more smoothly).
+> For the specific case of an XML file, if you could have some way to denote
+> tags and/or attributes that are "don't cares" you could address problems
+> like I am having. You could also theoretically exploit a knowledge of the
+> format to better identify what chunks are changes and possibly track
+> motion within the files better.
 
-However, it seems to me that if there were some way to plug into GIT's
-merging logic, it would be possible to design an XML aware merging tool
-that might help on this (generalizing: if you could have content-aware
-merging libraries you could make all sorts of merges go more smoothly).
-For the specific case of an XML file, if you could have some way to denote
-tags and/or attributes that are "don't cares" you could address problems
-like I am having. You could also theoretically exploit a knowledge of the
-format to better identify what chunks are changes and possibly track
-motion within the files better.
+With Git you are able to use custom merge driver for specific files
+(files specified by glob, which can be all files) by using `merge`
+gitattribute (it is about file-level merging in the case of file
+contents conflict).  Or you can use 'merge.default' config variable to
+set merge driver for all files.
 
-Absent that, is there a way to tell git "in case of an unresolvable merge
-conflict, don't modify the file but put the other version of the file
-somewhere (e.g. filename.other) so that I can use an external tool to
-resolve the differences"? In this case, EA doesn't know how to use the
-standard conflict tags within a file to extract deltas.
+Also you can set `diff` filter to custom diff driver which ignores
+timestamps, or even remove timestamps from files when checking them in
+using `filter` gitattribute (clean / smudge filters).
+
+> Absent that, is there a way to tell git "in case of an unresolvable merge
+> conflict, don't modify the file but put the other version of the file
+> somewhere (e.g. filename.other) so that I can use an external tool to
+> resolve the differences"? In this case, EA doesn't know how to use the
+> standard conflict tags within a file to extract deltas.
+ 
+You can have `merge` attribute unset , e.g 
+
+  *.uml  -merge
+
+This means "Take the version from the current branch as the tentative
+merge result, and declare that the merge has conflicts."
+
+
+Also if you have some graphical merge tool, you can consider
+configuring and using git-mergetool.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
