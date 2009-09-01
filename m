@@ -1,103 +1,92 @@
-From: David Chanters <david.chanters@googlemail.com>
-Subject: Re: A note from the maintainer: Follow-up questions (MaintNotes)
-Date: Tue, 1 Sep 2009 17:58:36 +0100
-Message-ID: <ac3d41850909010958l890bf2fyda6e61e3cb082c2a@mail.gmail.com>
-References: <ac3d41850908301519s2cf8a45auf11fb4c9285c0cb5@mail.gmail.com>
-	 <7v8wgzla02.fsf@alter.siamese.dyndns.org>
+From: skillzero@gmail.com
+Subject: Re: Problems with GIT under Windows - "not uptodate"
+Date: Tue, 1 Sep 2009 11:19:44 -0700
+Message-ID: <2729632a0909011119l3a19447ds9d4896a27ac488c1@mail.gmail.com>
+References: <a21e6af7ee05f56fd8c02d0955af1c72.squirrel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 18:58:54 2009
+To: david.hagood@gmail.com
+X-From: git-owner@vger.kernel.org Tue Sep 01 20:19:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiWh2-0001UB-VJ
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 18:58:53 +0200
+	id 1MiXxT-0002Qs-JE
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 20:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755178AbZIAQ6f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2009 12:58:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755171AbZIAQ6f
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 12:58:35 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:47365 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755170AbZIAQ6e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 12:58:34 -0400
-Received: by bwz19 with SMTP id 19so130481bwz.37
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 09:58:36 -0700 (PDT)
+	id S1754690AbZIASTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 14:19:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbZIASTn
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 14:19:43 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:53115 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902AbZIASTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 14:19:43 -0400
+Received: by qw-out-2122.google.com with SMTP id 8so111525qwh.37
+        for <git@vger.kernel.org>; Tue, 01 Sep 2009 11:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cHus7vnJCNtLM0Ff8G0YWqoLW2LtlRv1Ohw+vteJ010=;
-        b=lUAecriow+//e42ezBtXoT/CLerrCmf0rObu1RTnQiXFJm9HsnpuCQoQnH6gYbSQvS
-         XmaN+RrUXeilEASaLtv4kZctVeiERKvx7TR2vd0iFa/tMjFBG3b+No64Dm3ZMgmLXOjp
-         oykwjI+vKIu0g/BAt8f9TWv1TQGTNUpeIL/Ck=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=xQ9DgNF/LcZc896h7QmhDbo4jYFiYq+HQt000ySc0GY=;
+        b=anWVVbhOTUxqLsDMQck4ZpN+1qP9LikFTfS3lobENNilEJqTP2KFjPyAPIf+7OxojZ
+         oOluIUa+dFGBZ9Ln3ZByB70mKgDDVCuvWv7Vj/45sGZRH+7etPaSpLH+V7EO3ftNusK9
+         2D1TMB3uDiTGurz6R0M7UcsYjlCUnn6Ecr/oA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
+        d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UvH4TiGVa7fDjdBqnR5zacrxmPnPZFPZmx/AT/6PZkCTp8G5iMAlcfGHxgnrjy8p5u
-         zxOak0U2Yx9aqO/9+JDqQrQrJbJo8m4IHtRzy9ql2kxgzeBfEx7e5o8CHGKBEPTQahfM
-         wMf9EkN+rAqb+tLf227PXSmnn9N1BxKNPmGzA=
-Received: by 10.223.1.18 with SMTP id 18mr2866212fad.90.1251824316216; Tue, 01 
-	Sep 2009 09:58:36 -0700 (PDT)
-In-Reply-To: <7v8wgzla02.fsf@alter.siamese.dyndns.org>
+         :cc:content-type;
+        b=g8EEhwLb+/n2kTwvPkUb2pAJKfJG7JKMfFTIqdef/Prp5uhDhwq4bZqeGfZRwL/v8n
+         0ALvxC8GM/v6QXdJktRM+VPnTzbCI6vst33eOhpZFlAk9holSaabGXgBLLN9Dv2i4e3m
+         KDkzuXBSWCEp1H5Tb/PuuRh+/ARgsjqRzAC+c=
+Received: by 10.224.3.74 with SMTP id 10mr4735019qam.302.1251829184851; Tue, 
+	01 Sep 2009 11:19:44 -0700 (PDT)
+In-Reply-To: <a21e6af7ee05f56fd8c02d0955af1c72.squirrel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127547>
 
-2009/9/1 Junio C Hamano <gitster@pobox.com>:
-> =A0 =A0$ git log --oneline --first-parent origin/master..origin/pu
+On Tue, Sep 1, 2009 at 8:46 AM, <david.hagood@gmail.com> wrote:
+> I am having a problem trying to support my poor, deluded cow-orkers who
+> use Windows and need to use GIT.
 >
-> would be a handy way to view where the tip of each branch is.
-
-Yes it is - thanks for that!  I presume that (in other workflows --
-not necessarily git,git's) that using git-resurrect.sh would be
-preferable to the git-log suggestion above if the topic branch wanting
-to be "resurrected" had several merge points?
-
-> So if you for example happen to be interested in jc/log-tz topic,
-> you would do something like:
+> The scenario goes something like this:
 >
-> =A0 =A0$ git checkout -b jc/log-tz 2178d02^2
-> =A0 =A0$ git log -p master..
+> They have a local repo, they have changes on their branch, they are
+> staging a commit to the master branch on their local.
 >
-> to check out, and view what changes the topic introduces.
+> They do a "git merge" and the merge has conflicts. They need to undo the
+> merge, so they do a "git reset --hard".
+>
+> From that point onward, if they try to access the origin repository (e.g.
+> "git pull") they get the error message
+>
+> Error: Entry "Some file name" not uptodate: cannot merge.
+>
+> We've tried "git reset --hard; git pull ." We've tried "git reset --hard;
+> git checkout -f master". Neither seems to fix this.
+>
+> We Linux users don't see this.
+>
+> I conjecture it is something to do with DOS's CR/LF line endings (the
+> files in question are a type of XML file which ALWAYS have CR/LF endings,
+> even under Linux) - perhaps *something* in the GIT processing chain is
+> trying to do a CR/LF -> LF conversion, and screwing things up.
+>
+> Does anybody have any suggestions on what I am doing wrong (Please, not
+> "you are using Windows")?
 
-This is really useful - thank you - it's solving a missing piece of a
-puzzle for me.  :)
+Yeah I run into the same thing on Windows if somebody accidentally
+checks in a CRLF file. Do you have core.autocrlf on? If you do, I
+think the problem is that it's going to try to convert the line
+endings on every checkout/etc, but since the file is already CRLF (not
+LF as is normally in the repository), it's going to make the file look
+different every time.
 
-> where "ai" is typically the author's initial, and topic-name names th=
-e
-> topic just like you would name a function. =A0A topic typically forks=
- from
-> the tip of master if it is a new feature, or a much older commit in m=
-aint
-> if it is a fix (and in such a case, topic-name typically begins with
-> a string "maint-").
-
-Makes sense - and on that note - in our current workflow of using Git,
-we have a feature branch, call it "featureA" which is forked from
-"master" (where our stable code lives) -- but obviously over time, if
-bugfixes happen and get released, what do we do about then ensuring
-that featureA also benefits from these bug-fixes?  Since invariably
-people will want to develop using the bug-fixes, but "featureA" long
-since branched from "master" at a point in the past, before the
-bug-fixes?
-
-What do you do, about this when handling topic branches merged into
-next, or doesn't it really matter by that point?
-
-[...snip really useful explanation...]
-
-I can't thank you enough, Junio for this -- you've effectively ironed
-out a workflow here I think I can now go away and start using -
-thanks.  :)
-
-David
+It seems like you want core.autocrlf to be false or you want a
+.gitattributes file to override it on a per-file basis for the files
+you know are CRLF (i.e. the ones that are CRLF even on the Linux
+side).
