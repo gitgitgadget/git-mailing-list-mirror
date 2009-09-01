@@ -1,237 +1,1377 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv1 3/5] gitweb: Colorize 'blame_incremental' view during processing
-Date: Tue,  1 Sep 2009 13:39:18 +0200
-Message-ID: <1251805160-5303-4-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv5 2/5] gitweb: Incremental blame (using JavaScript)
+Date: Tue,  1 Sep 2009 13:39:17 +0200
+Message-ID: <1251805160-5303-3-git-send-email-jnareb@gmail.com>
 References: <1251805160-5303-1-git-send-email-jnareb@gmail.com>
  <1251805160-5303-2-git-send-email-jnareb@gmail.com>
- <1251805160-5303-3-git-send-email-jnareb@gmail.com>
 Cc: Petr Baudis <pasky@suse.cz>, Fredrik Kuivinen <frekui@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
 	Luben Tuikov <ltuikov@yahoo.com>,
 	Martin Koegler <mkoegler@auto.tuwien.ac.at>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 01 13:32:48 2009
+X-From: git-owner@vger.kernel.org Tue Sep 01 13:32:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiRbP-0001Kk-7i
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 13:32:43 +0200
+	id 1MiRbQ-0001Kk-0C
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 13:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754109AbZIALcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 07:32:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753915AbZIALcM
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 07:32:12 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:36393 "EHLO
+	id S1753901AbZIALcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 07:32:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754083AbZIALcQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 07:32:16 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:41079 "EHLO
 	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753969AbZIALcC (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753901AbZIALcC (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 1 Sep 2009 07:32:02 -0400
-Received: by mail-fx0-f217.google.com with SMTP id 17so3435900fxm.37
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 04:32:05 -0700 (PDT)
+Received: by mail-fx0-f217.google.com with SMTP id 17so3435894fxm.37
+        for <git@vger.kernel.org>; Tue, 01 Sep 2009 04:32:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received:from:to:cc
          :subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=IpTaQlbdhcy9sFAFTL+lFsjQwAQmND7bfNqVZtkJkfU=;
-        b=xUVAM8D8y3w1jrKydeoPPfeJ9m0BwHJSM+pJnBoWi/qTntkjrSb21yMv9IuE+bVPNM
-         oeIpYq2EwyW1xkzMnyZWy0JaIol+w9uM9WAXqp6NzYVEoX2VCVxZk2p6EfEUKymq2kO/
-         uwYGAfLrDBPwzz0ECYpabWSkJ6hdg2eNqC6IE=
+        bh=QcopDfONEW3iMqcnfhgwi1QAKSKDuh7exXKiTvD3kPs=;
+        b=jokdx2oH82csGqbqKKG0deI5yiAUKJjRm1sbFJuVa2HIghHM2XQIysBr9u1XU2dP9B
+         GSGRi1uYEm2zS9P/QV76gw/RwL9Y4q3pzpzO/Skc0n/Q0Nr1IvFQpv4nv5q5TcJwok6g
+         +3BUR5dKrk1fxY71Y/VbY60oSwo4A91Kjr6DU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=frB3vBNVVtJRvCIiHc3MdODdccuU838eXPyp4gis0rBFxoyMlF56MBNAwItsHuA8A0
-         pTQJfKruG/qajw0FUDy/Fk+DT0bIZP6He6VLDXXklwffAsfdCeZuNXWfrX19wFKenLf7
-         ymS4mN/B/0Vr5o7ZgxmyHyRkaUrmaodA3Mglw=
-Received: by 10.102.236.11 with SMTP id j11mr2826815muh.3.1251804724788;
-        Tue, 01 Sep 2009 04:32:04 -0700 (PDT)
-Received: from localhost.localdomain (abwl209.neoplus.adsl.tpnet.pl [83.8.235.209])
-        by mx.google.com with ESMTPS id j10sm4029382mue.45.2009.09.01.04.32.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        b=az6Js3UT833YUiyrYite2m9oqqhJmobL9ACWLBUBcobZ1tU+kpa0ILHFjiku7EXwK/
+         AnpMYIJi0QyFrpoxkiDMpsMk/0Y1xL5Td9Qk9Z0/hUgOXrdQ04G/nsxHuRX9gJAPLson
+         U7Xalvyu6TyGAPQdTA21jb+exgzcpj0NkAGiU=
+Received: by 10.103.85.12 with SMTP id n12mr2875855mul.29.1251804723256;
         Tue, 01 Sep 2009 04:32:03 -0700 (PDT)
+Received: from localhost.localdomain (abwl209.neoplus.adsl.tpnet.pl [83.8.235.209])
+        by mx.google.com with ESMTPS id j2sm4496685mue.38.2009.09.01.04.32.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Sep 2009 04:32:02 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n81BdWdu005345;
-	Tue, 1 Sep 2009 13:39:32 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n81BdULt005341;
+	Tue, 1 Sep 2009 13:39:30 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n81BdVJe005344;
-	Tue, 1 Sep 2009 13:39:31 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n81BdUQH005340;
+	Tue, 1 Sep 2009 13:39:30 +0200
 X-Mailer: git-send-email 1.6.3.3
-In-Reply-To: <1251805160-5303-3-git-send-email-jnareb@gmail.com>
+In-Reply-To: <1251805160-5303-2-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127535>
 
-This requires using 3 colors, not only two, to be able to choose color
-different from colors of up to 2 neigbours.
+Add 'blame_incremental' view, which uses "git blame --incremental"
+and JavaScript (Ajax), where 'blame' use "git blame --porcelain".
 
-gitweb.js select least used color, if more than one color is possible.
+* gitweb generates initial info by putting file contents (from
+  "git cat-file") together with line numbers in blame table
+* then gitweb makes web browser JavaScript engine call startBlame()
+  function from gitweb.js
+* startBlame() opens XMLHttpRequest connection to 'blame_data' view,
+  which in turn calls "git blame --incremental" for a file, and
+  streams output of git-blame to JavaScript (gitweb.js)
+* XMLHttpRequest event handler updates line info in blame view as soon
+  as it gets data from 'blame_data' (from server), and it also updates
+  progress info
+* when 'blame_data' ends, and gitweb.js finishes updating line info,
+  it fixes colors to match (as far as possible) ordinary 'blame' view,
+  and updates information about how long it took to generate page.
 
+Gitweb deals with streamed 'blame_data' server errors by displaying
+them in the progress info area (just in case).
+
+The 'blame_incremental' view tries to be equivalent to 'blame' action;
+there are however a few differences in output between 'blame' and
+'blame_incremental' view:
+* 'blame_incremental' always used query form for this part of link(s)
+  which is generated by JavaScript code.  The difference is visible
+  if we use path_info link (pass some or all arguments in path_info).
+  Changing this would require implementing something akin to href()
+  subroutine from gitweb.perl in JavaScript (in gitweb.js).
+* 'blame_incremental' always uses "rowspan" attribute, even if
+  rowspan="1".  This simplifies code, and is not visible to user.
+* The progress bar and progress info are still there even after
+  JavaScript part of 'blame_incremental' finishes work.
+
+Note that currently no link generated by gitweb leads to this new
+view.
+
+
+This code is based on patch by Petr Baudis <pasky@suse.cz> patch, which
+in turn was tweaked up version of Fredrik Kuivinen <frekui@gmail.com>'s
+proof of concept patch.
+
+This patch adds GITWEB_JS compile configuration option, and modifies
+git-instaweb.sh to take gitweb.js into account.  The code for
+git-instaweb.sh was taken from Pasky's patch.
+
+Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
+Signed-off-by: Petr Baudis <pasky@suse.cz>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This was earlier part of previous commit (adding 'blame_incremental'
-view).
+References:
+1. Original patch by Frederik Kuivinen
+   http://article.gmane.org/gmane.comp.version-control.git/41361
+2. Tweaked up version by Petr Baudis
+   http://article.gmane.org/gmane.comp.version-control.git/47614
+   http://article.gmane.org/gmane.comp.version-control.git/56657
+3. New link rewriting and some optimization in Matrin Koegler
+   series introducing some JavaScript support in Git
+   http://thread.gmane.org/gmane.comp.version-control.git/47902/focus=47905   
+4. My earlier patches
+   http://thread.gmane.org/gmane.comp.version-control.git/102657/focus=102712
+   http://article.gmane.org/gmane.comp.version-control.git/123202
+   http://thread.gmane.org/gmane.comp.version-control.git/123957/focus=123968
+   http://thread.gmane.org/gmane.comp.version-control.git/125096/focus=125717
 
- gitweb/gitweb.css |    5 ++
- gitweb/gitweb.js  |  108 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 110 insertions(+), 3 deletions(-)
+Changes compared to last version (v4):
+* The file with JavaScript code for 'blame_incremental' got renamed
+  from 'blame.js' to 'gitweb.js' -- it is now meant to contain all
+  JavaScript code, as per Google and Yahoo! guidelines (there should
+  be one file with JavaScript code, to be cached, as JavaScript
+  loading is blocking).
+* Move coloring rows duting 'blame_data' run to a separate commit.
+* The debug(str) function and its use (even commented out) was removed;
+  the code is now meant to be in production, and should have leftover
+  debugging statements.
+* spacePad(input, width) function, which pads with '&nbsp;' got
+  replaced by more generic padLeftStr(input, width, padstr) function.
+* Added information about global variables used by function via 
+  @globals annotation (non in JSDoc standard).
+* Make prevDataLength and nextReadPos properties (fields) of
+  XMLHttpRequest object, instead of being global variables.
+* Pass xhr as parameter to handleError and responseLoaded functions
+  (it shadows xhr as a global variable).
+* Move setting onreadystatechange handler before xhr.open()
+* Add information about GITWEB_JS Makefile configuration variable to
+  gitweb/README
+* Remove unnecessary 'reminder' comments in gitweb.js
 
+TODO for future commits:
+* Use W3C Progress Events (progress, error, load) in addition to
+  currently used readystatechange event
+    http://www.w3.org/TR/progress-events/
+    http://www.w3.org/TR/XMLHttpRequest2/
+    http://www.nczonline.net/blog/2009/07/09/firefox-35firebug-xmlhttprequest-and-readystatechange-bug/
+  if XMLHttpResponse supports it.
+* handleResponse is used both as onreadystatechange and pollTimer;
+  if onreadystatechange works for partial responses we can turn off
+  the timer.
+* JavaScript is single theraded, therefore there is no need for
+  critical section; remove inProgress global variable (flag), and
+  busy-read while loop.
+* Remove (fade out) progress bar and progress info after blame
+  incremental finished run, if possible with large amount of code to
+  deal with browser incompatibilities.
+
+TODO and possible extensions:
+* Profile gitweb.js using YUI Profiler (or other JavaScript profile tool)
+    http://developer.yahoo.com/yui/profiler/
+  to check whether performance improvements described in articles
+  on NCZOnline blog by Nicholas C. Zakas are required, and would help
+    http://www.nczonline.net/blog/
+* Get rid of global variables, if possible.
+* Instead of running startBlame, put it in window.onload handler.
+
+Roads not taken (perhaps that should be part of commit message?):
+* Move most (or all) of "git blame --incremental" output parsing to
+  server side, and instead of sending direct output in text/plain,
+  send processed data in JSON format, e.g.
+
+    {"commit": {
+       "sha1": "e83c5163316f89bfbde7d9ab23ca2e25604af290",
+       "info": "Kay Sievers, 2005-08-07 21:49:46 +0200",
+       "author-initials": "KS",
+       ...
+     },
+     "src-line": 13,
+     "dst-line": 16,
+     "numlines": 3,
+     "filename": "README"
+     }
+
+  (line wrapping added for readibility).  This would require however
+  taking care on Perl side to send properly formatted JSON, and on
+  JavaScript side including json2.js code to read JSON in gitweb.js
+  (unless we rely on eval).
+* Using some lightweight JavaScript library (framework), like jQuery,
+  Prototype, ExtJS, MooTools, etc.  One one hand side this means not
+  having to worry about browser incompatibilities as this would be
+  taken care of by library; on the other hand side we want gitweb to
+  have as few dependences as possible.
+* Use 'multipart/x-mixed-replace': first it is not standard, second
+  I don't think this would be a good solution for our problem.
+
+ Makefile           |    6 +-
+ git-instaweb.sh    |    7 +
+ gitweb/README      |    4 +
+ gitweb/gitweb.css  |   11 +
+ gitweb/gitweb.js   |  726 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ gitweb/gitweb.perl |  272 ++++++++++++++------
+ 6 files changed, 939 insertions(+), 87 deletions(-)
+ create mode 100644 gitweb/gitweb.js
+
+diff --git a/Makefile b/Makefile
+index a614347..407b35c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -261,6 +261,7 @@ GITWEB_HOMETEXT = indextext.html
+ GITWEB_CSS = gitweb.css
+ GITWEB_LOGO = git-logo.png
+ GITWEB_FAVICON = git-favicon.png
++GITWEB_JS = gitweb.js
+ GITWEB_SITE_HEADER =
+ GITWEB_SITE_FOOTER =
+ 
+@@ -1393,13 +1394,14 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
+ 	    -e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
+ 	    -e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
++	    -e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
+ 	    -e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
+ 	    -e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
+ 	    $< >$@+ && \
+ 	chmod +x $@+ && \
+ 	mv $@+ $@
+ 
+-git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
++git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css gitweb/gitweb.js
+ 	$(QUIET_GEN)$(RM) $@ $@+ && \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+@@ -1408,6 +1410,8 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css
+ 	    -e '/@@GITWEB_CGI@@/d' \
+ 	    -e '/@@GITWEB_CSS@@/r gitweb/gitweb.css' \
+ 	    -e '/@@GITWEB_CSS@@/d' \
++	    -e '/@@GITWEB_JS@@/r gitweb/gitweb.js' \
++	    -e '/@@GITWEB_JS@@/d' \
+ 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+ 	    $@.sh > $@+ && \
+ 	chmod +x $@+ && \
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index d96eddb..701c0d7 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -375,8 +375,15 @@ gitweb_css () {
+ EOFGITWEB
+ }
+ 
++gitweb_js () {
++	cat > "$1" <<\EOFGITWEB
++@@GITWEB_JS@@
++EOFGITWEB
++}
++
+ gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
+ gitweb_css "$GIT_DIR/gitweb/gitweb.css"
++gitweb_js  "$GIT_DIR/gitweb/gitweb.js"
+ 
+ case "$httpd" in
+ *lighttpd*)
+diff --git a/gitweb/README b/gitweb/README
+index 66c6a93..b69b0e5 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -92,6 +92,10 @@ You can specify the following configuration variables when building GIT:
+    web browsers that support favicons (website icons) may display them
+    in the browser's URL bar and next to site name in bookmarks).  Relative
+    to base URI of gitweb.  [Default: git-favicon.png]
++ * GITWEB_JS
++   Points to the localtion where you put gitweb.js on your web server
++   (or to be more generic URI of JavaScript code used by gitweb).
++   Relative to base URI of gitweb.  [Default: gitweb.js]
+  * GITWEB_CONFIG
+    This Perl file will be loaded using 'do' and can be used to override any
+    of the options above as well as some other options -- see the "Runtime
 diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 69ef119..977a013 100644
+index 00e2e4c..69ef119 100644
 --- a/gitweb/gitweb.css
 +++ b/gitweb/gitweb.css
-@@ -262,6 +262,11 @@ tr.no-previous td.linenr {
- 	font-weight: bold;
+@@ -353,6 +353,17 @@ td.mode {
+ 	font-family: monospace;
  }
  
-+/* for 'blame_incremental', during processing */
-+tr.color1 { background-color: #f6fff6; }
-+tr.color2 { background-color: #f6f6ff; }
-+tr.color3 { background-color: #fff6f6; }
++/* progress of blame_interactive */
++div#progress_bar {
++	height: 2px;
++	margin-bottom: -2px;
++	background-color: #d8d9d0;
++}
++div#progress_info {
++	float: right;
++	text-align: right;
++}
 +
- td {
- 	padding: 2px 5px;
- 	font-size: 100%;
+ /* styling of diffs (patchsets): commitdiff and blobdiff views */
+ div.diff.header,
+ div.diff.extended_header {
 diff --git a/gitweb/gitweb.js b/gitweb/gitweb.js
-index c8411e7..bf38216 100644
---- a/gitweb/gitweb.js
+new file mode 100644
+index 0000000..c8411e7
+--- /dev/null
 +++ b/gitweb/gitweb.js
-@@ -211,6 +211,101 @@ function errorInfo(str) {
- }
- 
- /* ............................................................ */
-+/* coloring rows during blame_data (git blame --incremental) run */
+@@ -0,0 +1,726 @@
++// Copyright (C) 2007, Fredrik Kuivinen <frekui@gmail.com>
++//               2007, Petr Baudis <pasky@suse.cz>
++//          2008-2009, Jakub Narebski <jnareb@gmail.com>
 +
 +/**
-+ * used to extract N from 'colorN', where N is a number,
-+ * @constant
++ * @fileOverview JavaScript code for gitweb (git web interface).
++ * @license GPLv2 or later
 + */
-+var colorRe = /\bcolor([0-9]*)\b/;
++
++/*
++ * This code uses DOM methods instead of (nonstandard) innerHTML
++ * to modify page.
++ *
++ * innerHTML is non-standard IE extension, though supported by most
++ * browsers; however Firefox up to version 1.5 didn't implement it in
++ * a strict mode (application/xml+xhtml mimetype).
++ *
++ * Also my simple benchmarks show that using elem.firstChild.data =
++ * 'content' is slightly faster than elem.innerHTML = 'content'.  It
++ * is however more fragile (text element fragment must exists), and
++ * less feature-rich (we cannot add HTML).
++ *
++ * Note that DOM 2 HTML is preferred over generic DOM 2 Core; the
++ * equivalent using DOM 2 Core is usually shown in comments.
++ */
++
++
++/* ============================================================ */
++/* generic utility functions */
++
 +
 +/**
-+ * return N if <tr class="colorN">, otherwise return null
-+ * (some browsers require CSS class names to begin with letter)
++ * pad number N with nonbreakable spaces on the left, to WIDTH characters
++ * example: padLeftStr(12, 3, '&nbsp;') == '&nbsp;12'
++ *          ('&nbsp;' is nonbreakable space)
 + *
-+ * @param {HTMLElement} tr: table row element to check
-+ * @param {String} tr.className: 'class' attribute of tr element
-+ * @returns {Number|null} N if tr.className == 'colorN', otherwise null
-+ *
-+ * @globals colorRe
++ * @param {Number|String} input: number to pad
++ * @param {Number} width: visible width of output
++ * @param {String} str: string to prefix to string, e.g. '&nbsp;'
++ * @returns {String} INPUT prefixed with (WIDTH - INPUT.length) x STR
 + */
-+function getColorNo(tr) {
-+	if (!tr) {
-+		return null;
++function padLeftStr(input, width, str) {
++	var prefix = '';
++
++	width -= input.toString().length;
++	while (width > 1) {
++		prefix += str;
++		width--;
 +	}
-+	var className = tr.className;
-+	if (className) {
-+		var match = colorRe.exec(className);
-+		if (match) {
-+			return parseInt(match[1], 10);
-+		}
++	return prefix + input;
++}
++
++/**
++ * Pad INPUT on the left to SIZE width, using given padding character CH,
++ * for example padLeft('a', 3, '_') is '__a'.
++ *
++ * @param {String} input: input value converted to string.
++ * @param {Number} width: desired length of output.
++ * @param {String} ch: single character to prefix to string.
++ *
++ * @returns {String} Modified string, at least SIZE length.
++ */
++function padLeft(input, width, ch) {
++	var s = input + "";
++	while (s.length < width) {
++		s = ch + s;
 +	}
++	return s;
++}
++
++/**
++ * Create XMLHttpRequest object in cross-browser way
++ * @returns XMLHttpRequest object, or null
++ */
++function createRequestObject() {
++	try {
++		return new XMLHttpRequest();
++	} catch (e) {}
++	try {
++		return window.createRequest();
++	} catch (e) {}
++	try {
++		return new ActiveXObject("Msxml2.XMLHTTP");
++	} catch (e) {}
++	try {
++		return new ActiveXObject("Microsoft.XMLHTTP");
++	} catch (e) {}
++
 +	return null;
 +}
 +
-+var colorsFreq = [0, 0, 0];
-+/**
-+ * return one of given possible colors (curently least used one)
-+ * example: chooseColorNoFrom(2, 3) returns 2 or 3
-+ *
-+ * @param {Number[]} arguments: one or more numbers
-+ *        assumes that  1 <= arguments[i] <= colorsFreq.length
-+ * @returns {Number} Least used color number from arguments
-+ * @globals colorsFreq
-+ */
-+function chooseColorNoFrom() {
-+	// choose the color which is least used
-+	var colorNo = arguments[0];
-+	for (var i = 1; i < arguments.length; i++) {
-+		if (colorsFreq[arguments[i]-1] < colorsFreq[colorNo-1]) {
-+			colorNo = arguments[i];
-+		}
-+	}
-+	colorsFreq[colorNo-1]++;
-+	return colorNo;
-+}
++/* ============================================================ */
++/* utility/helper functions (and variables) */
++
++var xhr;        // XMLHttpRequest object
++var projectUrl; // partial query + separator ('?' or ';')
++
++// 'commits' is an associative map. It maps SHA1s to Commit objects.
++var commits = {};
 +
 +/**
-+ * given two neigbour <tr> elements, find color which would be different
-+ * from color of both of neighbours; used to 3-color blame table
-+ *
-+ * @param {HTMLElement} tr_prev
-+ * @param {HTMLElement} tr_next
-+ * @returns {Number} color number N such that
-+ * colorN != tr_prev.className && colorN != tr_next.className
++ * constructor for Commit objects, used in 'blame'
++ * @class Represents a blamed commit
++ * @param {String} sha1: SHA-1 identifier of a commit
 + */
-+function findColorNo(tr_prev, tr_next) {
-+	var color_prev = getColorNo(tr_prev);
-+	var color_next = getColorNo(tr_next);
-+
-+
-+	// neither of neighbours has color set
-+	// THEN we can use any of 3 possible colors
-+	if (!color_prev && !color_next) {
-+		return chooseColorNoFrom(1,2,3);
++function Commit(sha1) {
++	if (this instanceof Commit) {
++		this.sha1 = sha1;
++		this.nprevious = 0; /* number of 'previous', effective parents */
++	} else {
++		return new Commit(sha1);
 +	}
-+
-+	// either both neighbours have the same color,
-+	// or only one of neighbours have color set
-+	// THEN we can use any color except given
-+	var color;
-+	if (color_prev === color_next) {
-+		color = color_prev; // = color_next;
-+	} else if (!color_prev) {
-+		color = color_next;
-+	} else if (!color_next) {
-+		color = color_prev;
-+	}
-+	if (color) {
-+		return chooseColorNoFrom((color % 3) + 1, ((color+1) % 3) + 1);
-+	}
-+
-+	// neighbours have different colors
-+	// THEN there is only one color left
-+	return (3 - ((color_prev + color_next) % 3));
 +}
 +
 +/* ............................................................ */
- /* coloring rows like 'blame' after 'blame_data' finishes */
++/* progress info, timing, error reporting */
++
++var blamedLines = 0;
++var totalLines  = '???';
++var div_progress_bar;
++var div_progress_info;
++
++/**
++ * Detects how many lines does a blamed file have,
++ * This information is used in progress info
++ *
++ * @returns {Number|String} Number of lines in file, or string '...'
++ */
++function countLines() {
++	var table =
++		document.getElementById('blame_table') ||
++		document.getElementsByTagName('table')[0];
++
++	if (table) {
++		return table.getElementsByTagName('tr').length - 1; // for header
++	} else {
++		return '...';
++	}
++}
++
++/**
++ * update progress info and length (width) of progress bar
++ *
++ * @globals div_progress_info, div_progress_bar, blamedLines, totalLines
++ */
++function updateProgressInfo() {
++	if (!div_progress_info) {
++		div_progress_info = document.getElementById('progress_info');
++	}
++	if (!div_progress_bar) {
++		div_progress_bar = document.getElementById('progress_bar');
++	}
++	if (!div_progress_info && !div_progress_bar) {
++		return;
++	}
++
++	var percentage = Math.floor(100.0*blamedLines/totalLines);
++
++	if (div_progress_info) {
++		div_progress_info.firstChild.data  = blamedLines + ' / ' + totalLines +
++			' (' + padLeftStr(percentage, 3, '&nbsp;') + '%)';
++	}
++
++	if (div_progress_bar) {
++		//div_progress_bar.setAttribute('style', 'width: '+percentage+'%;');
++		div_progress_bar.style.width = percentage + '%';
++	}
++}
++
++
++var t_interval_server = '';
++var cmds_server = '';
++var t0 = new Date();
++
++/**
++ * write how much it took to generate data, and to run script
++ *
++ * @globals t0, t_interval_server, cmds_server
++ */
++function writeTimeInterval() {
++	var info_time = document.getElementById('generating_time');
++	if (!info_time || !t_interval_server) {
++		return;
++	}
++	var t1 = new Date();
++	info_time.firstChild.data += ' + (' +
++		t_interval_server + ' sec server blame_data / ' +
++		(t1.getTime() - t0.getTime())/1000 + ' sec client JavaScript)';
++
++	var info_cmds = document.getElementById('generating_cmd');
++	if (!info_time || !cmds_server) {
++		return;
++	}
++	info_cmds.firstChild.data += ' + ' + cmds_server;
++}
++
++/**
++ * show an error message alert to user within page (in prohress info area)
++ * @param {String} str: plain text error message (no HTML)
++ *
++ * @globals div_progress_info
++ */
++function errorInfo(str) {
++	if (!div_progress_info) {
++		div_progress_info = document.getElementById('progress_info');
++	}
++	if (div_progress_info) {
++		div_progress_info.className = 'error';
++		div_progress_info.firstChild.data = str;
++	}
++}
++
++/* ............................................................ */
++/* coloring rows like 'blame' after 'blame_data' finishes */
++
++/**
++ * returns true if given row element (tr) is first in commit group
++ * to be used only after 'blame_data' finishes (after processing)
++ *
++ * @param {HTMLElement} tr: table row
++ * @returns {Boolean} true if TR is first in commit group
++ */
++function isStartOfGroup(tr) {
++	return tr.firstChild.className === 'sha1';
++}
++
++var colorRe = /(?:light|dark)/;
++
++/**
++ * change colors to use zebra coloring (2 colors) instead of 3 colors
++ * concatenate neighbour commit groups belonging to the same commit
++ *
++ * @globals colorRe
++ */
++function fixColorsAndGroups() {
++	var colorClasses = ['light', 'dark'];
++	var linenum = 1;
++	var tr, prev_group;
++	var colorClass = 0;
++	var table =
++		document.getElementById('blame_table') ||
++		document.getElementsByTagName('table')[0];
++
++	while ((tr = document.getElementById('l'+linenum))) {
++	// index origin is 0, which is table header; start from 1
++	//while ((tr = table.rows[linenum])) { // <- it is slower
++		if (isStartOfGroup(tr, linenum, document)) {
++			if (prev_group &&
++			    prev_group.firstChild.firstChild.href ===
++			            tr.firstChild.firstChild.href) {
++				// we have to concatenate groups
++				var prev_rows = prev_group.firstChild.rowSpan || 1;
++				var curr_rows =         tr.firstChild.rowSpan || 1;
++				prev_group.firstChild.rowSpan = prev_rows + curr_rows;
++				//tr.removeChild(tr.firstChild);
++				tr.deleteCell(0); // DOM2 HTML way
++			} else {
++				colorClass = (colorClass + 1) % 2;
++				prev_group = tr;
++			}
++		}
++		var tr_class = tr.className;
++		tr.className = tr_class.replace(colorRe, colorClasses[colorClass]);
++		linenum++;
++	}
++}
++
++/* ............................................................ */
++/* time and data */
++
++/**
++ * used to extract hours and minutes from timezone info, e.g '-0900'
++ * @constant
++ */
++var tzRe = /^([+-][0-9][0-9])([0-9][0-9])$/;
++
++/**
++ * return date in local time formatted in iso-8601 like format
++ * 'yyyy-mm-dd HH:MM:SS +/-ZZZZ' e.g. '2005-08-07 21:49:46 +0200'
++ *
++ * @param {Number} epoch: seconds since '00:00:00 1970-01-01 UTC'
++ * @param {String} timezoneInfo: numeric timezone '(+|-)HHMM'
++ * @returns {String} date in local time in iso-8601 like format
++ *
++ * @globals tzRe
++ */
++function formatDateISOLocal(epoch, timezoneInfo) {
++	var match = tzRe.exec(timezoneInfo);
++	// date corrected by timezone
++	var localDate = new Date(1000 * (epoch +
++		(parseInt(match[1],10)*3600 + parseInt(match[2],10)*60)));
++	var localDateStr = // e.g. '2005-08-07'
++		localDate.getUTCFullYear()                 + '-' +
++		padLeft(localDate.getUTCMonth()+1, 2, '0') + '-' +
++		padLeft(localDate.getUTCDate(),    2, '0');
++	var localTimeStr = // e.g. '21:49:46'
++		padLeft(localDate.getUTCHours(),   2, '0') + ':' +
++		padLeft(localDate.getUTCMinutes(), 2, '0') + ':' +
++		padLeft(localDate.getUTCSeconds(), 2, '0');
++
++	return localDateStr + ' ' + localTimeStr + ' ' + timezoneInfo;
++}
++
++/* ............................................................ */
++/* unquoting/unescaping filenames */
++
++/**#@+
++ * @constant
++ */
++var escCodeRe = /\\([^0-7]|[0-7]{1,3})/g;
++var octEscRe = /^[0-7]{1,3}$/;
++var maybeQuotedRe = /^\"(.*)\"$/;
++/**#@-*/
++
++/**
++ * unquote maybe git-quoted filename
++ * e.g. 'aa' -> 'aa', '"a\ta"' -> 'a	a'
++ *
++ * @param {String} str: git-quoted string
++ * @returns {String} Unquoted and unescaped string
++ *
++ * @globals escCodeRe, octEscRe, maybeQuotedRe
++ */
++function unquote(str) {
++	function unq(seq) {
++		var es = {
++			// character escape codes, aka escape sequences (from C)
++			// replacements are to some extent JavaScript specific
++			t: "\t",   // tab            (HT, TAB)
++			n: "\n",   // newline        (NL)
++			r: "\r",   // return         (CR)
++			f: "\f",   // form feed      (FF)
++			b: "\b",   // backspace      (BS)
++			a: "\x07", // alarm (bell)   (BEL)
++			e: "\x1B", // escape         (ESC)
++			v: "\v"    // vertical tab   (VT)
++		};
++
++		if (seq.search(octEscRe) !== -1) {
++			// octal char sequence
++			return String.fromCharCode(parseInt(seq, 8));
++		} else if (seq in es) {
++			// C escape sequence, aka character escape code
++			return es[seq];
++		}
++		// quoted ordinary character
++		return seq;
++	}
++
++	var match = str.match(maybeQuotedRe);
++	if (match) {
++		str = match[1];
++		// perhaps str = eval('"'+str+'"'); would be enough?
++		str = str.replace(escCodeRe,
++			function (substr, p1, offset, s) { return unq(p1); });
++	}
++	return str;
++}
++
++/* ============================================================ */
++/* main part: parsing response */
++
++/**
++ * Function called for each blame entry, as soon as it finishes.
++ * It updates page via DOM manipulation, adding sha1 info, etc.
++ *
++ * @param {Commit} commit: blamed commit
++ * @param {Object} group: object representing group of lines,
++ *                        which blame the same commit (blame entry)
++ *
++ * @globals blamedLines
++ */
++function handleLine(commit, group) {
++	/* 
++	   This is the structure of the HTML fragment we are working
++	   with:
++
++	   <tr id="l123" class="">
++	     <td class="sha1" title=""><a href=""> </a></td>
++	     <td class="linenr"><a class="linenr" href="">123</a></td>
++	     <td class="pre"># times (my ext3 doesn&#39;t).</td>
++	   </tr>
++	*/
++
++	var resline = group.resline;
++
++	// format date and time string only once per commit
++	if (!commit.info) {
++		/* e.g. 'Kay Sievers, 2005-08-07 21:49:46 +0200' */
++		commit.info = commit.author + ', ' +
++			formatDateISOLocal(commit.authorTime, commit.authorTimezone);
++	}
++
++	// loop over lines in commit group
++	for (var i = 0; i < group.numlines; i++, resline++) {
++		var tr = document.getElementById('l'+resline);
++		if (!tr) {
++			break;
++		}
++		/*
++			<tr id="l123" class="">
++			  <td class="sha1" title=""><a href=""> </a></td>
++			  <td class="linenr"><a class="linenr" href="">123</a></td>
++			  <td class="pre"># times (my ext3 doesn&#39;t).</td>
++			</tr>
++		*/
++		var td_sha1  = tr.firstChild;
++		var a_sha1   = td_sha1.firstChild;
++		var a_linenr = td_sha1.nextSibling.firstChild;
++
++		/* <tr id="l123" class=""> */
++		var tr_class = 'light'; // or tr.className
++		if (commit.boundary) {
++			tr_class += ' boundary';
++		}
++		if (commit.nprevious === 0) {
++			tr_class += ' no-previous';
++		} else if (commit.nprevious > 1) {
++			tr_class += ' multiple-previous';
++		}
++		tr.className = tr_class;
++
++		/* <td class="sha1" title="?" rowspan="?"><a href="?">?</a></td> */
++		if (i === 0) {
++			td_sha1.title = commit.info;
++			td_sha1.rowSpan = group.numlines;
++
++			a_sha1.href = projectUrl + 'a=commit;h=' + commit.sha1;
++			a_sha1.firstChild.data = commit.sha1.substr(0, 8);
++			if (group.numlines >= 2) {
++				var fragment = document.createDocumentFragment();
++				var br   = document.createElement("br");
++				var text = document.createTextNode(
++					commit.author.match(/\b([A-Z])\B/g).join(''));
++				if (br && text) {
++					var elem = fragment || td_sha1;
++					elem.appendChild(br);
++					elem.appendChild(text);
++					if (fragment) {
++						td_sha1.appendChild(fragment);
++					}
++				}
++			}
++		} else {
++			//tr.removeChild(td_sha1); // DOM2 Core way
++			tr.deleteCell(0); // DOM2 HTML way
++		}
++
++		/* <td class="linenr"><a class="linenr" href="?">123</a></td> */
++		var linenr_commit =
++			('previous' in commit ? commit.previous : commit.sha1);
++		var linenr_filename =
++			('file_parent' in commit ? commit.file_parent : commit.filename);
++		a_linenr.href = projectUrl + 'a=blame_incremental' +
++			';hb=' + linenr_commit +
++			';f='  + encodeURIComponent(linenr_filename) +
++			'#l' + (group.srcline + i);
++
++		blamedLines++;
++
++		//updateProgressInfo();
++	}
++}
++
++// ----------------------------------------------------------------------
++
++var inProgress = false;   // are we processing response
++
++/**#@+
++ * @constant
++ */
++var sha1Re = /^([0-9a-f]{40}) ([0-9]+) ([0-9]+) ([0-9]+)/;
++var infoRe = /^([a-z-]+) ?(.*)/;
++var endRe  = /^END ?([^ ]*) ?(.*)/;
++/**@-*/
++
++var curCommit = new Commit();
++var curGroup  = {};
++
++var pollTimer = null;
++
++/**
++ * Parse output from 'git blame --incremental [...]', received via
++ * XMLHttpRequest from server (blamedataUrl), and call handleLine
++ * (which updates page) as soon as blame entry is completed.
++ *
++ * @param {String[]} lines: new complete lines from blamedata server
++ *
++ * @globals commits, curCommit, curGroup, t_interval_server, cmds_server
++ * @globals sha1Re, infoRe, endRe
++ */
++function processBlameLines(lines) {
++	var match;
++
++	for (var i = 0, len = lines.length; i < len; i++) {
++
++		if ((match = sha1Re.exec(lines[i]))) {
++			var sha1 = match[1];
++			var srcline  = parseInt(match[2], 10);
++			var resline  = parseInt(match[3], 10);
++			var numlines = parseInt(match[4], 10);
++
++			var c = commits[sha1];
++			if (!c) {
++				c = new Commit(sha1);
++				commits[sha1] = c;
++			}
++			curCommit = c;
++
++			curGroup.srcline = srcline;
++			curGroup.resline = resline;
++			curGroup.numlines = numlines;
++
++		} else if ((match = infoRe.exec(lines[i]))) {
++			var info = match[1];
++			var data = match[2];
++			switch (info) {
++			case 'filename':
++				curCommit.filename = unquote(data);
++				// 'filename' information terminates the entry
++				handleLine(curCommit, curGroup);
++				updateProgressInfo();
++				break;
++			case 'author':
++				curCommit.author = data;
++				break;
++			case 'author-time':
++				curCommit.authorTime = parseInt(data, 10);
++				break;
++			case 'author-tz':
++				curCommit.authorTimezone = data;
++				break;
++			case 'previous':
++				curCommit.nprevious++;
++				// store only first 'previous' header
++				if (!'previous' in curCommit) {
++					var parts = data.split(' ', 2);
++					curCommit.previous    = parts[0];
++					curCommit.file_parent = unquote(parts[1]);
++				}
++				break;
++			case 'boundary':
++				curCommit.boundary = true;
++				break;
++			} // end switch
++
++		} else if ((match = endRe.exec(lines[i]))) {
++			t_interval_server = match[1];
++			cmds_server = match[2];
++
++		} else if (lines[i] !== '') {
++			// malformed line
++
++		} // end if (match)
++
++	} // end for (lines)
++}
++
++/**
++ * Process new data and return pointer to end of processed part
++ *
++ * @param {String} unprocessed: new data (from nextReadPos)
++ * @param {Number} nextReadPos: end of last processed data
++ * @return {Number} end of processed data (new value for nextReadPos)
++ */
++function processData(unprocessed, nextReadPos) {
++	var lastLineEnd = unprocessed.lastIndexOf('\n');
++	if (lastLineEnd !== -1) {
++		var lines = unprocessed.substring(0, lastLineEnd).split('\n');
++		nextReadPos += lastLineEnd + 1 /* 1 == '\n'.length */;
++
++		processBlameLines(lines);
++	} // end if
++
++	return nextReadPos;
++}
++
++/**
++ * Handle XMLHttpRequest errors
++ *
++ * @param {XMLHttpRequest} xhr: XMLHttpRequest object
++ *
++ * @globals pollTimer, commits, inProgress
++ */
++function handleError(xhr) {
++	errorInfo('Server error: ' +
++		xhr.status + ' - ' + (xhr.statusText || 'Error contacting server'));
++
++	clearInterval(pollTimer);
++	commits = {}; // free memory
++
++	inProgress = false;
++}
++
++/**
++ * Called after XMLHttpRequest finishes (loads)
++ *
++ * @param {XMLHttpRequest} xhr: XMLHttpRequest object (unused)
++ *
++ * @globals pollTimer, commits, inProgress
++ */
++function responseLoaded(xhr) {
++	clearInterval(pollTimer);
++
++	fixColorsAndGroups();
++	writeTimeInterval();
++	commits = {}; // free memory
++
++	inProgress = false;
++}
++
++/**
++ * handler for XMLHttpRequest onreadystatechange event
++ * @see startBlame
++ *
++ * @globals xhr, inProgress
++ */
++function handleResponse() {
++
++	/*
++	 * xhr.readyState
++	 *
++	 *  Value  Constant (W3C)    Description
++	 *  -------------------------------------------------------------------
++	 *  0      UNSENT            open() has not been called yet.
++	 *  1      OPENED            send() has not been called yet.
++	 *  2      HEADERS_RECEIVED  send() has been called, and headers
++	 *                           and status are available.
++	 *  3      LOADING           Downloading; responseText holds partial data.
++	 *  4      DONE              The operation is complete.
++	 */
++
++	if (xhr.readyState !== 4 && xhr.readyState !== 3) {
++		return;
++	}
++
++	// the server returned error
++	if (xhr.readyState === 3 && xhr.status !== 200) {
++		return;
++	}
++	if (xhr.readyState === 4 && xhr.status !== 200) {
++		handleError(xhr);
++		return;
++	}
++
++	// In konqueror xhr.responseText is sometimes null here...
++	if (xhr.responseText === null) {
++		return;
++	}
++
++	// in case we were called before finished processing
++	if (inProgress) {
++		return;
++	} else {
++		inProgress = true;
++	}
++
++	// extract new whole (complete) lines, and process them
++	while (xhr.prevDataLength !== xhr.responseText.length) {
++		if (xhr.readyState === 4 &&
++		    xhr.prevDataLength === xhr.responseText.length) {
++			break;
++		}
++
++		xhr.prevDataLength = xhr.responseText.length;
++		var unprocessed = xhr.responseText.substring(xhr.nextReadPos);
++		xhr.nextReadPos = processData(unprocessed, xhr.nextReadPos);
++	} // end while
++
++	// did we finish work?
++	if (xhr.readyState === 4 &&
++	    xhr.prevDataLength === xhr.responseText.length) {
++		responseLoaded(xhr);
++	}
++
++	inProgress = false;
++}
++
++// ============================================================
++// ------------------------------------------------------------
++
++/**
++ * Incrementally update line data in blame_incremental view in gitweb.
++ *
++ * @param {String} blamedataUrl: URL to server script generating blame data.
++ * @param {String} bUrl: partial URL to project, used to generate links.
++ *
++ * Called from 'blame_incremental' view after loading table with
++ * file contents, a base for blame view.
++ *
++ * @globals xhr, t0, projectUrl, div_progress_bar, totalLines, pollTimer
++*/
++function startBlame(blamedataUrl, bUrl) {
++
++	xhr = createRequestObject();
++	if (!xhr) {
++		errorInfo('ERROR: XMLHttpRequest not supported');
++		return;
++	}
++
++	t0 = new Date();
++	projectUrl = bUrl + (bUrl.indexOf('?') === -1 ? '?' : ';');
++	if ((div_progress_bar = document.getElementById('progress_bar'))) {
++		//div_progress_bar.setAttribute('style', 'width: 100%;');
++		div_progress_bar.style.cssText = 'width: 100%;';
++	}
++	totalLines = countLines();
++	updateProgressInfo();
++
++	/* add extra properties to xhr object to help processing response */
++	xhr.prevDataLength = -1;  // used to detect if we have new data
++	xhr.nextReadPos = 0;      // where unread part of response starts
++
++	xhr.onreadystatechange = handleResponse;
++	//xhr.onreadystatechange = function () { handleResponse(xhr); };
++
++	xhr.open('GET', blamedataUrl);
++	xhr.setRequestHeader('Accept', 'text/plain');
++	xhr.send(null);
++
++	// not all browsers call onreadystatechange event on each server flush
++	// poll response using timer every second to handle this issue
++	pollTimer = setInterval(xhr.onreadystatechange, 1000);
++}
++
++// end of gitweb.js
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 08d410d..88c91ff 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -96,6 +96,8 @@ our $stylesheet = undef;
+ our $logo = "++GITWEB_LOGO++";
+ # URI of GIT favicon, assumed to be image/png type
+ our $favicon = "++GITWEB_FAVICON++";
++# URI of gitweb.js (JavaScript code for gitweb)
++our $javascript = "++GITWEB_JS++";
  
- /**
-@@ -224,8 +319,6 @@ function isStartOfGroup(tr) {
- 	return tr.firstChild.className === 'sha1';
+ # URI and label (title) of GIT logo link
+ #our $logo_url = "http://www.kernel.org/pub/software/scm/git/docs/";
+@@ -575,6 +577,8 @@ our %cgi_param_mapping = @cgi_param_mapping;
+ # we will also need to know the possible actions, for validation
+ our %actions = (
+ 	"blame" => \&git_blame,
++	"blame_incremental" => \&git_blame_incremental,
++	"blame_data" => \&git_blame_data,
+ 	"blobdiff" => \&git_blobdiff,
+ 	"blobdiff_plain" => \&git_blobdiff_plain,
+ 	"blob" => \&git_blob,
+@@ -4800,7 +4804,9 @@ sub git_tag {
+ 	git_footer_html();
  }
  
--var colorRe = /(?:light|dark)/;
--
- /**
-  * change colors to use zebra coloring (2 colors) instead of 3 colors
-  * concatenate neighbour commit groups belonging to the same commit
-@@ -391,6 +484,12 @@ function handleLine(commit, group) {
- 			formatDateISOLocal(commit.authorTime, commit.authorTimezone);
+-sub git_blame {
++sub git_blame_common {
++	my $format = shift || 'porcelain';
++
+ 	# permissions
+ 	gitweb_check_feature('blame')
+ 		or die_error(403, "Blame view not allowed");
+@@ -4822,10 +4828,43 @@ sub git_blame {
+ 		}
  	}
  
-+	// color depends on group of lines, not only on blamed commit
-+	var colorNo = findColorNo(
-+		document.getElementById('l'+(resline-1)),
-+		document.getElementById('l'+(resline+group.numlines))
-+	);
+-	# run git-blame --porcelain
+-	open my $fd, "-|", git_cmd(), "blame", '-p',
+-		$hash_base, '--', $file_name
+-		or die_error(500, "Open git-blame failed");
++	my $fd;
++	if ($format eq 'incremental') {
++		# get file contents (as base)
++		open $fd, "-|", git_cmd(), 'cat-file', 'blob', $hash
++			or die_error(500, "Open git-cat-file failed");
++	} elsif ($format eq 'data') {
++		# run git-blame --incremental
++		open $fd, "-|", git_cmd(), "blame", "--incremental",
++			$hash_base, "--", $file_name
++			or die_error(500, "Open git-blame --incremental failed");
++	} else {
++		# run git-blame --porcelain
++		open $fd, "-|", git_cmd(), "blame", '-p',
++			$hash_base, '--', $file_name
++			or die_error(500, "Open git-blame --porcelain failed");
++	}
 +
- 	// loop over lines in commit group
- 	for (var i = 0; i < group.numlines; i++, resline++) {
- 		var tr = document.getElementById('l'+resline);
-@@ -409,7 +508,10 @@ function handleLine(commit, group) {
- 		var a_linenr = td_sha1.nextSibling.firstChild;
- 
- 		/* <tr id="l123" class=""> */
--		var tr_class = 'light'; // or tr.className
-+		var tr_class = '';
-+		if (colorNo !== null) {
-+			tr_class = 'color'+colorNo;
++	# incremental blame data returns early
++	if ($format eq 'data') {
++		print $cgi->header(
++			-type=>"text/plain", -charset => "utf-8",
++			-status=> "200 OK");
++		local $| = 1; # output autoflush
++		print while <$fd>;
++		close $fd
++			or print "ERROR $!\n";
++
++		print 'END';
++		if (defined $t0 && gitweb_check_feature('timed')) {
++			print ' '.
++			      Time::HiRes::tv_interval($t0, [Time::HiRes::gettimeofday()]).
++			      ' '.$number_of_git_cmds;
 +		}
- 		if (commit.boundary) {
- 			tr_class += ' boundary';
- 		}
++		print "\n";
++
++		return;
++	}
+ 
+ 	# page header
+ 	git_header_html();
+@@ -4836,109 +4875,170 @@ sub git_blame {
+ 		$cgi->a({-href => href(action=>"history", -replay=>1)},
+ 		        "history") .
+ 		" | " .
+-		$cgi->a({-href => href(action=>"blame", file_name=>$file_name)},
++		$cgi->a({-href => href(action=>$action, file_name=>$file_name)},
+ 		        "HEAD");
+ 	git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
+ 	git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
+ 	git_print_page_path($file_name, $ftype, $hash_base);
+ 
+ 	# page body
++	if ($format eq 'incremental') {
++		print "<noscript>\n<div class=\"error\"><center><b>\n".
++		      "This page requires JavaScript to run.\n Use ".
++		      $cgi->a({-href => href(action=>'blame',-replay=>1)},
++		              'this page').
++		      " instead.\n".
++		      "</b></center></div>\n</noscript>\n";
++
++		print qq!<div id="progress_bar" style="width: 100%; background-color: yellow"></div>\n!;
++	}
++
++	print qq!<div class="page_body">\n!;
++	print qq!<div id="progress_info">... / ...</div>\n!
++		if ($format eq 'incremental');
++	print qq!<table id="blame_table" class="blame" width="100%">\n!.
++	      #qq!<col width="5.5em" /><col width="2.5em" /><col width="*" />\n!.
++	      qq!<thead>\n!.
++	      qq!<tr><th>Commit</th><th>Line</th><th>Data</th></tr>\n!.
++	      qq!</thead>\n!.
++	      qq!<tbody>\n!;
++
+ 	my @rev_color = qw(light dark);
+ 	my $num_colors = scalar(@rev_color);
+ 	my $current_color = 0;
+-	my %metainfo = ();
+ 
+-	print <<HTML;
+-<div class="page_body">
+-<table class="blame">
+-<tr><th>Commit</th><th>Line</th><th>Data</th></tr>
+-HTML
+- LINE:
+-	while (my $line = <$fd>) {
+-		chomp $line;
+-		# the header: <SHA-1> <src lineno> <dst lineno> [<lines in group>]
+-		# no <lines in group> for subsequent lines in group of lines
+-		my ($full_rev, $orig_lineno, $lineno, $group_size) =
+-		   ($line =~ /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/);
+-		if (!exists $metainfo{$full_rev}) {
+-			$metainfo{$full_rev} = { 'nprevious' => 0 };
+-		}
+-		my $meta = $metainfo{$full_rev};
+-		my $data;
+-		while ($data = <$fd>) {
+-			chomp $data;
+-			last if ($data =~ s/^\t//); # contents of line
+-			if ($data =~ /^(\S+)(?: (.*))?$/) {
+-				$meta->{$1} = $2 unless exists $meta->{$1};
++	if ($format eq 'incremental') {
++		my $color_class = $rev_color[$current_color];
++
++		#contents of a file
++		my $linenr = 0;
++	LINE:
++		while (my $line = <$fd>) {
++			chomp $line;
++			$linenr++;
++
++			print qq!<tr id="l$linenr" class="$color_class">!.
++			      qq!<td class="sha1"><a href=""> </a></td>!.
++			      qq!<td class="linenr">!.
++			      qq!<a class="linenr" href="">$linenr</a></td>!;
++			print qq!<td class="pre">! . esc_html($line) . "</td>\n";
++			print qq!</tr>\n!;
++		}
++
++	} else { # porcelain, i.e. ordinary blame
++		my %metainfo = (); # saves information about commits
++
++		# blame data
++	LINE:
++		while (my $line = <$fd>) {
++			chomp $line;
++			# the header: <SHA-1> <src lineno> <dst lineno> [<lines in group>]
++			# no <lines in group> for subsequent lines in group of lines
++			my ($full_rev, $orig_lineno, $lineno, $group_size) =
++			   ($line =~ /^([0-9a-f]{40}) (\d+) (\d+)(?: (\d+))?$/);
++			if (!exists $metainfo{$full_rev}) {
++				$metainfo{$full_rev} = { 'nprevious' => 0 };
+ 			}
+-			if ($data =~ /^previous /) {
+-				$meta->{'nprevious'}++;
++			my $meta = $metainfo{$full_rev};
++			my $data;
++			while ($data = <$fd>) {
++				chomp $data;
++				last if ($data =~ s/^\t//); # contents of line
++				if ($data =~ /^(\S+)(?: (.*))?$/) {
++					$meta->{$1} = $2 unless exists $meta->{$1};
++				}
++				if ($data =~ /^previous /) {
++					$meta->{'nprevious'}++;
++				}
+ 			}
+-		}
+-		my $short_rev = substr($full_rev, 0, 8);
+-		my $author = $meta->{'author'};
+-		my %date =
+-			parse_date($meta->{'author-time'}, $meta->{'author-tz'});
+-		my $date = $date{'iso-tz'};
+-		if ($group_size) {
+-			$current_color = ($current_color + 1) % $num_colors;
+-		}
+-		my $tr_class = $rev_color[$current_color];
+-		$tr_class .= ' boundary' if (exists $meta->{'boundary'});
+-		$tr_class .= ' no-previous' if ($meta->{'nprevious'} == 0);
+-		$tr_class .= ' multiple-previous' if ($meta->{'nprevious'} > 1);
+-		print "<tr id=\"l$lineno\" class=\"$tr_class\">\n";
+-		if ($group_size) {
+-			print "<td class=\"sha1\"";
+-			print " title=\"". esc_html($author) . ", $date\"";
+-			print " rowspan=\"$group_size\"" if ($group_size > 1);
+-			print ">";
+-			print $cgi->a({-href => href(action=>"commit",
+-			                             hash=>$full_rev,
+-			                             file_name=>$file_name)},
+-			              esc_html($short_rev));
+-			if ($group_size >= 2) {
+-				my @author_initials = ($author =~ /\b([[:upper:]])\B/g);
+-				if (@author_initials) {
+-					print "<br />" .
+-					      esc_html(join('', @author_initials));
+-					#           or join('.', ...)
++			my $short_rev = substr($full_rev, 0, 8);
++			my $author = $meta->{'author'};
++			my %date =
++				parse_date($meta->{'author-time'}, $meta->{'author-tz'});
++			my $date = $date{'iso-tz'};
++			if ($group_size) {
++				$current_color = ($current_color + 1) % $num_colors;
++			}
++			my $tr_class = $rev_color[$current_color];
++			$tr_class .= ' boundary' if (exists $meta->{'boundary'});
++			$tr_class .= ' no-previous' if ($meta->{'nprevious'} == 0);
++			$tr_class .= ' multiple-previous' if ($meta->{'nprevious'} > 1);
++			print "<tr id=\"l$lineno\" class=\"$tr_class\">\n";
++			if ($group_size) {
++				print "<td class=\"sha1\"";
++				print " title=\"". esc_html($author) . ", $date\"";
++				print " rowspan=\"$group_size\"" if ($group_size > 1);
++				print ">";
++				print $cgi->a({-href => href(action=>"commit",
++				                             hash=>$full_rev,
++				                             file_name=>$file_name)},
++				              esc_html($short_rev));
++				if ($group_size >= 2) {
++					my @author_initials = ($author =~ /\b([[:upper:]])\B/g);
++					if (@author_initials) {
++						print "<br />" .
++						      esc_html(join('', @author_initials));
++						#           or join('.', ...)
++					}
+ 				}
++				print "</td>\n";
+ 			}
+-			print "</td>\n";
+-		}
+-		# 'previous' <sha1 of parent commit> <filename at commit>
+-		if (exists $meta->{'previous'} &&
+-		    $meta->{'previous'} =~ /^([a-fA-F0-9]{40}) (.*)$/) {
+-			$meta->{'parent'} = $1;
+-			$meta->{'file_parent'} = unquote($2);
+-		}
+-		my $linenr_commit =
+-			exists($meta->{'parent'}) ?
+-			$meta->{'parent'} : $full_rev;
+-		my $linenr_filename =
+-			exists($meta->{'file_parent'}) ?
+-			$meta->{'file_parent'} : unquote($meta->{'filename'});
+-		my $blamed = href(action => 'blame',
+-		                  file_name => $linenr_filename,
+-		                  hash_base => $linenr_commit);
+-		print "<td class=\"linenr\">";
+-		print $cgi->a({ -href => "$blamed#l$orig_lineno",
+-		                -class => "linenr" },
+-		              esc_html($lineno));
+-		print "</td>";
+-		print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
+-		print "</tr>\n";
++			# 'previous' <sha1 of parent commit> <filename at commit>
++			if (exists $meta->{'previous'} &&
++			    $meta->{'previous'} =~ /^([a-fA-F0-9]{40}) (.*)$/) {
++				$meta->{'parent'} = $1;
++				$meta->{'file_parent'} = unquote($2);
++			}
++			my $linenr_commit =
++				exists($meta->{'parent'}) ?
++				$meta->{'parent'} : $full_rev;
++			my $linenr_filename =
++				exists($meta->{'file_parent'}) ?
++				$meta->{'file_parent'} : unquote($meta->{'filename'});
++			my $blamed = href(action => 'blame',
++			                  file_name => $linenr_filename,
++			                  hash_base => $linenr_commit);
++			print "<td class=\"linenr\">";
++			print $cgi->a({ -href => "$blamed#l$orig_lineno",
++			                -class => "linenr" },
++			              esc_html($lineno));
++			print "</td>";
++			print "<td class=\"pre\">" . esc_html($data) . "</td>\n";
++			print "</tr>\n";
++		} # end while
++
+ 	}
+-	print "</table>\n";
+-	print "</div>";
++
++	# footer
++	print "</tbody>\n".
++	      "</table>\n"; # class="blame"
++	print "</div>\n";   # class="blame_body"
+ 	close $fd
+ 		or print "Reading blob failed\n";
+ 
+-	# page footer
++	if ($format eq 'incremental') {
++		print qq!<script type="text/javascript" src="$javascript"></script>\n!.
++		      qq!<script type="text/javascript">\n!.
++		      qq!startBlame("!. href(action=>"blame_data", -replay=>1) .qq!",\n!.
++		      qq!           "!. href() .qq!");\n!.
++		      qq!</script>\n!;
++	}
++
+ 	git_footer_html();
+ }
+ 
++sub git_blame {
++	git_blame_common();
++}
++
++sub git_blame_incremental {
++	git_blame_common('incremental');
++}
++
++sub git_blame_data {
++	git_blame_common('data');
++}
++
+ sub git_tags {
+ 	my $head = git_get_head_hash($project);
+ 	git_header_html();
 -- 
 1.6.3.3
