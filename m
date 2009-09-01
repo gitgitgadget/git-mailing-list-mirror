@@ -1,70 +1,68 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2009, #06; Sun, 30)
-Date: Tue, 1 Sep 2009 18:25:05 -0400
-Message-ID: <c77435a80909011525m3a6e7917xe066d61f3863e615@mail.gmail.com>
-References: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Problems with GIT under Windows - "not uptodate"
+Date: Wed, 2 Sep 2009 00:56:16 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909020052550.8306@pacific.mpi-cbg.de>
+References: <a21e6af7ee05f56fd8c02d0955af1c72.squirrel@localhost> <loom.20090901T184650-434@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 00:25:18 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, david.hagood@gmail.com
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 00:55:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mibmv-0006Wy-Bi
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 00:25:17 +0200
+	id 1MicFo-00066J-3H
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 00:55:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755280AbZIAWZF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2009 18:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755272AbZIAWZF
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 18:25:05 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:46050 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755241AbZIAWZE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 18:25:04 -0400
-Received: by fxm17 with SMTP id 17so396678fxm.37
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 15:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=I/4nkWliiX5uoS3MaLTeR6iAZ/YxCO9vvsf7hWQY27o=;
-        b=vpKkEoYl7EHvHnBR0jIc5bjl+9MLZs4bdAIz/zfcHFE0XtnGJssTnuK7Zu5enV7V7t
-         drIt9NAMti8BMjjKRqtzF9LkjHPpAz5jt4RUaZjlQ0NRGObLQ4hWPCrE27Y+cGctdCDj
-         ZekslpzAZwHa9P/cK2um0BsYhazhhy8bt6Xes=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lCudNHzqRQlgLlaZfMhC97tZCszFettV65KlFMmn3JjFxcyN9r6UhlB20S7S1R4+HT
-         oATBkpRp8+3a7PKOFBhhoGOU20MKnP7MSUXE2JkNkPBekaw5eQduKGU9N8vdlC5em87l
-         Sh6d8EaIr4I2mll8EC+v0uxc6t07Af4lCuXdI=
-Received: by 10.204.32.206 with SMTP id e14mr6003513bkd.22.1251843905118; Tue, 
-	01 Sep 2009 15:25:05 -0700 (PDT)
-In-Reply-To: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
+	id S1755340AbZIAWy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 18:54:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755338AbZIAWy6
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 18:54:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54869 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755335AbZIAWy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 18:54:57 -0400
+Received: (qmail invoked by alias); 01 Sep 2009 22:54:58 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 02 Sep 2009 00:54:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/NMEltiSzNXNsasfW2pL6N7vgp+nR1PEANsGZ/9o
+	KvTR2NNbVq8/IE
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <loom.20090901T184650-434@post.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127562>
 
-> * ne/rev-cache (2009-08-21) 6 commits
-> =A0. support for path name caching in rev-cache
-> =A0. full integration of rev-cache into git, completed test suite
-> =A0. administrative functions for rev-cache, start of integration int=
-o git
-> =A0. support for non-commit object caching in rev-cache
-> =A0. basic revision cache system, no integration or features
-> =A0. man page and technical discussion for rev-cache
->
-> Updated but seems to break upload-pack tests when merged to 'pu'; giv=
-en
-> what this series touches, breakages in that area are expected.
-> May discard if a working reroll comes, to give it a fresh start.
+Hi,
 
-I vaguely remember something concerning those tests when starting the
-project.  I'm a bit disconnected from everything right now, but I'll
-try to get those fixed as soon as I can.
+Eric, is there any good reason you neglect netiquette?  I re-added David 
+to the Cc: list.
+
+On Tue, 1 Sep 2009, Eric Raible wrote:
+
+>  <david.hagood <at> gmail.com> writes:
+> 
+> > Error: Entry "Some file name" not uptodate: cannot merge.
+> > 
+> > We've tried "git reset --hard; git pull ." We've tried "git reset --hard;
+> > git checkout -f master". Neither seems to fix this.
+> 
+> http://article.gmane.org/gmane.comp.version-control.git/122862
+
+To summarize: the suggestion is "rm .git/index && git reset --hard".
+
+I have to stress the same point as in "reset --hard considered harmful" a 
+while back, though.
+
+Actually, I started writing a patch to provide "git checkout --fix-crlf" 
+some weeks ago, but I constantly run out of time to finish it.
+
+Ciao,
+Dscho
