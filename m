@@ -1,96 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status: list unmerged files after staged files
-Date: Tue, 01 Sep 2009 13:38:08 -0700
-Message-ID: <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
-References: <20090901145213.GB4194@debian.b2j>
- <7vljkypqfi.fsf@alter.siamese.dyndns.org> <200909012140.08953.j6t@kdbg.org>
- <200909012213.54611.j6t@kdbg.org>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: [JGIT] potential incompatibility with old git repos.
+Date: Tue, 1 Sep 2009 21:07:56 +0000 (GMT)
+Message-ID: <723287.10285.qm@web27802.mail.ukl.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, bill lam <cbill.lam@gmail.com>,
-	git <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Sep 01 22:38:26 2009
+Cc: git@vger.kernel.org
+To: Shawn Spearce <spearce@spearce.org>, robin.rosenberg@dewire.com
+X-From: git-owner@vger.kernel.org Tue Sep 01 23:14:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mia7V-0001pY-H3
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 22:38:26 +0200
+	id 1Miagf-00036v-Tq
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 23:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbZIAUiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 16:38:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbZIAUiQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 16:38:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44040 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752014AbZIAUiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 16:38:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0BB921812;
-	Tue,  1 Sep 2009 16:38:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mmlw/E8fTuf+u6RW3b3ax7FteQc=; b=XLmSBC
-	BvDZwjLKgkWxkSiXkwfDgctHT5Cn34WbSwTwkQTTeFooyR1R0S1SPuo6TaaBYVGX
-	UX1AgicaOOp0J4S9rsPj3CAgp2e0/OQMMFw57FAqaIAu+HuqsLtRpyWQgJEALkM0
-	3qKoR22Oh2jBWl/r8e83LCQpmZQGU6EQUfzSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yk5uZj6PCSYQ4ajDZxEzuax7vvyio0rM
-	5/6rAz1vIWN+00QF1DC1FDQcA40wyf/oevuR8Q9fXAVTtu4aH/b0DQjiY7cK2r7H
-	biKVQYAGRbZxyg5vvs4fzJGb6ZM0U2YLjBd9eTj5PkWJevc5y2foQCJ9Rbfzf+G/
-	XvtBH4GlvvY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7295421810;
-	Tue,  1 Sep 2009 16:38:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9A1412180F; Tue,  1 Sep
- 2009 16:38:09 -0400 (EDT)
-In-Reply-To: <200909012213.54611.j6t@kdbg.org> (Johannes Sixt's message of
- "Tue\, 1 Sep 2009 22\:13\:53 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5F3ABC6E-9737-11DE-98E3-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755066AbZIAVOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 17:14:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbZIAVOg
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 17:14:36 -0400
+Received: from web27802.mail.ukl.yahoo.com ([217.146.182.7]:26989 "HELO
+	web27802.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752302AbZIAVOf (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 17:14:35 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Sep 2009 17:14:35 EDT
+Received: (qmail 10779 invoked by uid 60001); 1 Sep 2009 21:07:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1251839276; bh=gRis+JI2DvbuelBp8+ggRGQEZ22a1doLALIHJWM0kS4=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type; b=oc8OqEoxBIwTJU+x2cLs8Ra0LsX+eAh7NR9vOa9+afPQUHmRcqrxQRV4O5+nMy/slc1RNn+9svtTVt8ggcdNrUAkTyzaWOm5Ts3tG8Uowlapzspx47otK2W80b6VgPDT0DWV5lXmulPfF+rRT0AN7GaTgzMQp91vcUeTvavbr3M=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type;
+  b=11JMKUCfxa1U/ZBYhAp5mnm07N/dv1RqiZnYXHnN7Ar1jczvZXJ3/CLuQcC5QIARKUv+Fk7Skc91nXp58a+eYFbBVhvOeioLlKE23wf+wLWs7pHZAlXfMeMZeB7Om4yhoruodn9e1Kg4/W/liVHLKwhrTAceZ4LmfMkkRu5opYc=;
+X-YMail-OSG: xt89WMIVM1n3vENgBuqSpyDyt27KogOtJ3_COsg41p7_KsOj8vOg4.izgCbQUjqhxavWsTQa9auu56fS7cRxybTGzlJ32qQyP2MHtqcIM9QxLNChqQ3uCrL2mbcFRPTJitEPfnPZ5BgzhlQxF_DGf9sZHdaLsB_vmlgbRq7uj4kt4gfqLtppDAPICS_POVBrF58_vd0kEl1vNVLGQprHkrHVqyDMIwuJ64gYpDQE0l.9ZjzJpyCkhPQcFocheXoLvLEa.kWs.5mBGLKfws1cahr1LUGHrJSI_MJhxvjegT6ze.XyCSsqKeoW
+Received: from [62.47.156.223] by web27802.mail.ukl.yahoo.com via HTTP; Tue, 01 Sep 2009 21:07:56 GMT
+X-Mailer: YahooMailClassic/6.1.2 YahooMailWebService/0.7.338.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127557>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hi Shawn, Robin!
 
-> Moreover, keeping the unmerge entries at the top is inconvenient if a merge
-> touched many files, but only a few conflicted: After the conflicts were
-> resolved, the user will conduct a 'git add' command. In order to do that
-> with copy-and-paste, the user must scroll the terminal window up, and must
-> do so for each individual entry (because terminal windows commonly scroll
-> down automatically on the paste operation to make the cursor visible).
+I'm happy to spend some time on the maven-scm-providers-jgit again, but spotted a problem with running the latest version of JGIT on my test repository [1]. This test repo has been created a good while ago (~nov 2007) with git 1.3.54 or so and has been edited on various computers.
 
-I actually was expecting that you would move this at the very bottom after
-untracked list for the above reason, and also because this part is only
-shown while running status (that was a good point you made in the previous
-message) and never in commit.
+It works with native git but crashes with both SimpleRepository#clone [2] and jgit.
 
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  wt-status.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/wt-status.c b/wt-status.c
-> index 3395456..85f3fcb 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -561,8 +561,8 @@ void wt_status_print(struct wt_status *s)
->  		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
->  	}
->  
-> -	wt_status_print_unmerged(s);
->  	wt_status_print_updated(s);
-> +	wt_status_print_unmerged(s);
->  	wt_status_print_changed(s);
->  	if (s->submodule_summary)
->  		wt_status_print_submodule_summary(s);
-> -- 
-> 1.6.4.2.280.gb16ab
+jgit fails with "cannot checkout; no HEAD advertised by remote"
+in guessHEAD
+
+JGIT used to work on this repo until a few weeks. I tracked it down with git bisect and found commit
+72b1f0d334729a49cc52e4762093148be62bea39
+to be the bad one.
+
+I glimpsed at the code and it appears that the new code in RefDatabase#readLine is not Windows CR+LF aware. (This hits me although I use Linux because our SVN at apache.org seems to have it stored with CR+LF.)
+
+Patch will follow.
+
+txs and LieGrue,
+strub
+
+
+[1] http://github.com/struberg/maven-scm-providers-git/tree/a66e9470ea087030bb8bd40edb2cab22a2de0e6a/maven-scm-provider-gittest/src/main/resources/repository/test-repo
+[2] http://github.com/sonatype/JGit/tree/struberg
+
+
+      
