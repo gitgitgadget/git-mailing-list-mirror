@@ -1,74 +1,70 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: [JGIT PATCH] move the 'empty-line' check in RefDatabase#readLine down a bit to after we removed all the whitespaces.
-Date: Tue, 1 Sep 2009 21:41:35 +0000 (GMT)
-Message-ID: <358677.62716.qm@web27808.mail.ukl.yahoo.com>
+From: Nick Edelen <sirnot@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2009, #06; Sun, 30)
+Date: Tue, 1 Sep 2009 18:25:05 -0400
+Message-ID: <c77435a80909011525m3a6e7917xe066d61f3863e615@mail.gmail.com>
+References: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Shawn Spearce <spearce@spearce.org>, robin.rosenberg@dewire.com
-X-From: git-owner@vger.kernel.org Tue Sep 01 23:41:46 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 00:25:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mib6m-0002hV-C6
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 23:41:44 +0200
+	id 1Mibmv-0006Wy-Bi
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 00:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228AbZIAVle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 17:41:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755221AbZIAVle
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 17:41:34 -0400
-Received: from web27808.mail.ukl.yahoo.com ([217.146.182.13]:43165 "HELO
-	web27808.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755220AbZIAVle (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 17:41:34 -0400
-Received: (qmail 67804 invoked by uid 60001); 1 Sep 2009 21:41:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1251841295; bh=RjKd3pxeNClWzyv71P0iUaeyW0McAf9fcOmzZ1SYh4U=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type; b=YShRpKIgNXsvQCYBBPvtukZNcN0g3uAo97DdYppPQCz1Vg3iKZEFhn1ChgnfVrWbTelwMkH1xu/7TqWp4as3z+tyURV+oMKsW2tECRRJ2/dCTgDrcWdwOMIkAYsyBv3zDQnSNGZTkn01Y95qCSnvEz9ga+7UYl/sT0DVR281ceE=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type;
-  b=PC1WAMjmNeCu02rd+zC40u4GcjiaBI42j+LnLj5Hpp/QCauquaTotzz/TN5T9aoWV6YxX/RwZglR4ya0FSMfqs7Vuw0zwkt4aG9zpmz6uoLSVfir5ve13TlzsL7DR3/gc0IVzo0lktLgySsE99f3NWBvWe/MmYmvtvyah10xSig=;
-X-YMail-OSG: vIvqEhkVM1kupPA6rx4mVGiOipvR0.f9lQsXU6KQMmvWmJf65ivVQUwn0mPssdvt2ZKkzfuBR0pECiuUL_drY8BrOiLoOnSxo4_gRgYo3R23hx2lYHFi8hvnEupPDsGoW_AwWJOLJYMl6Oj0CwXUyfdWDsoIPnQZEyCrryXvUgQqngqrbfXgZX3vPByGHNwNkIdKicBYQ1V000lkqRRPQfVkvqAn8X3uQkc1DGJmsfsznt_2oGVJkOIBIiSWo.0D7qC9n4wsoFlPjT0s_R_KoIqVsXihX3LutJv8WkzsdAB5RxNfJMUYso24IuT81Q--
-Received: from [62.47.156.223] by web27808.mail.ukl.yahoo.com via HTTP; Tue, 01 Sep 2009 21:41:35 GMT
-X-Mailer: YahooMailRC/1358.27 YahooMailWebService/0.7.338.2
+	id S1755280AbZIAWZF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2009 18:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755272AbZIAWZF
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 18:25:05 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:46050 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755241AbZIAWZE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 18:25:04 -0400
+Received: by fxm17 with SMTP id 17so396678fxm.37
+        for <git@vger.kernel.org>; Tue, 01 Sep 2009 15:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=I/4nkWliiX5uoS3MaLTeR6iAZ/YxCO9vvsf7hWQY27o=;
+        b=vpKkEoYl7EHvHnBR0jIc5bjl+9MLZs4bdAIz/zfcHFE0XtnGJssTnuK7Zu5enV7V7t
+         drIt9NAMti8BMjjKRqtzF9LkjHPpAz5jt4RUaZjlQ0NRGObLQ4hWPCrE27Y+cGctdCDj
+         ZekslpzAZwHa9P/cK2um0BsYhazhhy8bt6Xes=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lCudNHzqRQlgLlaZfMhC97tZCszFettV65KlFMmn3JjFxcyN9r6UhlB20S7S1R4+HT
+         oATBkpRp8+3a7PKOFBhhoGOU20MKnP7MSUXE2JkNkPBekaw5eQduKGU9N8vdlC5em87l
+         Sh6d8EaIr4I2mll8EC+v0uxc6t07Af4lCuXdI=
+Received: by 10.204.32.206 with SMTP id e14mr6003513bkd.22.1251843905118; Tue, 
+	01 Sep 2009 15:25:05 -0700 (PDT)
+In-Reply-To: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127561>
 
-This way we consistently return null regardless if the line is empty or if it does only contain whitespaces.
+> * ne/rev-cache (2009-08-21) 6 commits
+> =A0. support for path name caching in rev-cache
+> =A0. full integration of rev-cache into git, completed test suite
+> =A0. administrative functions for rev-cache, start of integration int=
+o git
+> =A0. support for non-commit object caching in rev-cache
+> =A0. basic revision cache system, no integration or features
+> =A0. man page and technical discussion for rev-cache
+>
+> Updated but seems to break upload-pack tests when merged to 'pu'; giv=
+en
+> what this series touches, breakages in that area are expected.
+> May discard if a working reroll comes, to give it a fresh start.
 
-Signed-off-by: Mark Struberg <struberg@yahoo.de>
----
- .../src/org/spearce/jgit/lib/RefDatabase.java      |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-index 477dc62..acc835b 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-@@ -498,14 +498,15 @@ private static String readLine(final File file)
-             throws FileNotFoundException, IOException {
-         final byte[] buf = NB.readFully(file, 4096);
-         int n = buf.length;
--        if (n == 0)
--            return null;
-         
-         // remove trailing whitespaces
-         while (n > 0 && Character.isWhitespace(buf[n - 1])) {
-             n--;
-         }
--        
-+
-+        if (n == 0)
-+            return null;
-+
-         return RawParseUtils.decode(buf, 0, n);
-     }
- 
--- 
-1.6.2.5
-
-
-      
+I vaguely remember something concerning those tests when starting the
+project.  I'm a bit disconnected from everything right now, but I'll
+try to get those fixed as soon as I can.
