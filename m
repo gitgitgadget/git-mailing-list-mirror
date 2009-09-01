@@ -1,97 +1,85 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: unmerged files listed in the beginning of git-status
-Date: Tue, 1 Sep 2009 21:40:08 +0200
-Message-ID: <200909012140.08953.j6t@kdbg.org>
-References: <20090901145213.GB4194@debian.b2j> <7vljkypqfi.fsf@alter.siamese.dyndns.org>
+From: David Reiss <dreiss@facebook.com>
+Subject: [PATCH] Make git status print a helpful death message if the disk
+ is full
+Date: Tue, 1 Sep 2009 12:51:48 -0700
+Message-ID: <4A9D7B54.5020902@facebook.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 21:40:22 2009
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 01 21:52:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiZDJ-0002Js-UF
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 21:40:22 +0200
+	id 1MiZP7-0005if-OJ
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 21:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870AbZIATkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 15:40:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbZIATkK
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 15:40:10 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:56607 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751774AbZIATkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 15:40:09 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 70F861001C;
-	Tue,  1 Sep 2009 21:40:09 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1EB5212219;
-	Tue,  1 Sep 2009 21:40:09 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vljkypqfi.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753533AbZIATwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 15:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752767AbZIATwY
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 15:52:24 -0400
+Received: from mailout-snc1.facebook.com ([69.63.179.25]:47517 "EHLO
+	mailout-snc1.facebook.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752757AbZIATwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 15:52:23 -0400
+Received: from mail.thefacebook.com (intlb01.snat.snc1.facebook.com [10.128.203.15] (may be forged))
+	by pp01.snc1.tfbnw.net (8.14.1/8.14.1) with ESMTP id n81JqGE4009024
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 1 Sep 2009 12:52:20 -0700
+Received: from [172.24.132.70] (192.168.18.252) by mail.TheFacebook.com
+ (192.168.18.105) with Microsoft SMTP Server (TLS) id 8.1.393.1; Tue, 1 Sep
+ 2009 12:51:48 -0700
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-09-01_14:2009-08-26,2009-09-01,2009-09-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-0908210000 definitions=main-0909010173
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127551>
 
-On Dienstag, 1. September 2009, Junio C Hamano wrote:
-> bill lam <cbill.lam@gmail.com> writes:
-> > git-status show unmerged files
-> > with a clause of explanation.  This is very helpful. However these
-> > unmerged files are listed in the beginning and followed by modified
-> > files,
->
-> "git status" is preview of what git commit does.  The "Changes to be
-> committed" section is given at the beginning of the output because it is
-> the most important one.  But while reviewing the conflicts, you would want
-> to notice conflicted paths more than what are already resolved and staged.
->
-> It used to be that unmerged paths were mixed together with locally
-> modified paths in the "Changed but not updated" list, after the "Changes
-> to be committed" list.  This made the unmerged paths harder to spot than
-> necessary.
->
-> To remedy this, unmerged ones are now:
->
->  (1) placed in a new, separate section that appears only when there are
->      unmerged paths, to make the fact that there is something unusual
->      going on (i.e. conflicts) stand out; and
->
->  (2) the new section is given at the top of the status output to give
->      these unmerged paths more prominence.
+The old behavior just said that it failed.  Now it includes the error
+information, which makes it much easier to debug.
 
-But this is very inconvenient if you merge a branch that touched many files, 
-of which only a few have conflicts. In this case, the unmerged entries are 
-scrolled out of view. If you want to copy-paste them into a 'git add' command 
-then (at least my) xterm (and Windows's CMD, BTW) keeps scrolling down to the 
-command line, and since I cannot bulk-select all of them at once, I have to 
-scroll up in order select any individual of them.
+There is a risk that some failure paths could result in misleading error
+messages that actually make debugging more difficult.
 
-Note that I do not complain about the "out of view" part (because if a list is 
-long there is inevitably something that becomes invisible), but about 
-the "must scroll around" part.
+Signed-off-by: David Reiss <dreiss@facebook.com>
+---
+ builtin-commit.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> But unmerged entries are something you need to deal with _first_ before
-> being able to go further, so in that sense it is more important than
-> anything else in the traditional output.
-
-This is actually an argument to place the unmerged entries *last* because this 
-is what will be visible after 'git status' finished. Remember that we don't 
-pass its output through the pager.
-
-> In the output, "the most important part first" rule is unlikely to change,
-> if only because this is what you are shown when committing in the editor,
-> and even in 1.7.0 when "git status" stops being "git commit --dry-run"
-> because we would still keep consistency of the two outputs,
-
-Of course, this argument is irrelevant for the placement of the list of 
-unmerged entries because by the time you enter the commit message editor, 
-this list is empty.
-
--- Hannes
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 4bcce06..3527c73 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -256,7 +256,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 		refresh_cache(REFRESH_QUIET);
+ 		if (write_cache(fd, active_cache, active_nr) ||
+ 		    close_lock_file(&index_lock))
+-			die("unable to write new_index file");
++			die("unable to write new_index file: %s", strerror(errno));
+ 		commit_style = COMMIT_NORMAL;
+ 		return index_lock.filename;
+ 	}
+@@ -275,7 +275,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 		refresh_cache(REFRESH_QUIET);
+ 		if (write_cache(fd, active_cache, active_nr) ||
+ 		    commit_locked_index(&index_lock))
+-			die("unable to write new_index file");
++			die("unable to write new_index file: %s", strerror(errno));
+ 		commit_style = COMMIT_AS_IS;
+ 		return get_index_file();
+ 	}
+@@ -318,7 +318,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix)
+ 	refresh_cache(REFRESH_QUIET);
+ 	if (write_cache(fd, active_cache, active_nr) ||
+ 	    close_lock_file(&index_lock))
+-		die("unable to write new_index file");
++		die("unable to write new_index file: %s", strerror(errno));
+ 
+ 	fd = hold_lock_file_for_update(&false_lock,
+ 				       git_path("next-index-%"PRIuMAX,
+-- 
+1.6.0.4
