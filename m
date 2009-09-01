@@ -1,76 +1,109 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: [JGIT PATCH] fixed error in whitespace handling of RefDatabase#readLine
-Date: Tue, 1 Sep 2009 21:18:52 +0000 (GMT)
-Message-ID: <196796.47610.qm@web27808.mail.ukl.yahoo.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v2] status: list unmerged files last
+Date: Tue, 1 Sep 2009 23:25:45 +0200
+Message-ID: <200909012325.45739.j6t@kdbg.org>
+References: <20090901145213.GB4194@debian.b2j> <200909012213.54611.j6t@kdbg.org> <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Shawn Spearce <spearce@spearce.org>, robin.rosenberg@dewire.com
-X-From: git-owner@vger.kernel.org Tue Sep 01 23:19:01 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 01 23:25:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Miakm-0004Il-8A
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 23:19:00 +0200
+	id 1MiarV-0006G7-TW
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 23:25:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754046AbZIAVSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 17:18:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752218AbZIAVSv
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 17:18:51 -0400
-Received: from web27808.mail.ukl.yahoo.com ([217.146.182.13]:31921 "HELO
-	web27808.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752014AbZIAVSu (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 17:18:50 -0400
-Received: (qmail 51074 invoked by uid 60001); 1 Sep 2009 21:18:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1251839932; bh=//gSuJg8seMvEh1MPuyDBC6iEoTHN4tPFqtVQRLS11A=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type; b=VLM92tldFqW8jH2QOqiX3DImTjpbMuy4RKF3wAV7MNmyNfMwEWDAkPd4TUIoX6LSFbezNhWDqjoGONaVqXZjav+T6iw9L/eDVSaGNfrnW3BTdjYq/JmxW67IUgyZRZqZCzweC1UogWxci+Bm1KmkigiS3UX1QNLqtTu+d2ZLg1k=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type;
-  b=kcV4cQwkiJeRML5fbnPQZ1Lw2aNXbmBheVWc9jGnTS1E+V/+Tir66/3nYlTIRN8wF5+wbd8PKlzKK/WJxyJeVxxU1pqosCfS3IQHZmy5u8mQGNCx1PPZRUhKYH3f44QTHZvyjpUr0esG0+n8JqJ+juJy07aS0RbPCso6IfYJdcM=;
-X-YMail-OSG: b5nbAQwVM1mlPAVqdyaMSEm396b9pREfaTuEA_FlhfRymIkTij2h8TRciRTz11hc0QJrgUNp5i0Ib09Ha67QJvIDJ2k4cwLh0jhisTUwjnEm.Mc7CbdDqTemGzSaWilZYf389zdof_xeIdO3V4pjZVIr8yjFjkQGY7e2weergBdex72_8mSWJC750x9pSVY13Y0R5GekePI1QZjMxwFemMAP0gS93I4Y_44_qkkHMUMDVeKlt2xO46hsDBS3V18ZS_Tua3MzqkXS0qcRjThhyL8u4ur6uxUww7aL65gYQvU1Qf0Ne3vnBcUWb8T3_A--
-Received: from [62.47.156.223] by web27808.mail.ukl.yahoo.com via HTTP; Tue, 01 Sep 2009 21:18:52 GMT
-X-Mailer: YahooMailRC/1358.27 YahooMailWebService/0.7.338.2
+	id S1755185AbZIAVZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 17:25:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755169AbZIAVZs
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 17:25:48 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:56679 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752014AbZIAVZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 17:25:48 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 0D5BECDF8B;
+	Tue,  1 Sep 2009 23:25:46 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id D51AD435AE;
+	Tue,  1 Sep 2009 23:25:45 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127559>
 
-jgit fails with "cannot checkout; no HEAD advertised by remote"
-in guessHEAD on some repositories.
+The list of unmerged files is considered rather important because after
+a conflicted merge they need attention. Since the output of git status does
+not go through the pager, the end of the output remains immediately visible
+in the terminal window. By placing unmerge entries at the end of the list,
+the user can see them immediately.
 
-JGIT used to work on my test repo for the maven-scm-providers-git until a few weeks. I tracked it down with git bisect and found commit 72b1f0d334729a49cc52e4762093148be62bea39 to be the bad one.
+Moreover, keeping the unmerge entries at the top is inconvenient if a merge
+touched many files, but only a few conflicted: After the conflicts were
+resolved, the user will conduct a 'git add' command. In order to do that
+with copy-and-paste, the user must scroll the terminal window up, and must
+do so for each individual entry (because terminal windows commonly scroll
+down automatically on the paste operation to make the cursor visible).
 
-I glimpsed at the code and it appears that the new code in RefDatabase#readLine is not Windows CR+LF aware. (This hits me although I use Linux because our SVN at apache.org seems to have it stored with CR+LF.)
-
-Fixed by subsequently removing all Character.isWhitespaceChar() from the end of the buffer
-
-Signed-off-by: Mark Struberg <struberg@yahoo.de>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- .../src/org/spearce/jgit/lib/RefDatabase.java      |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+On Dienstag, 1. September 2009, Junio C Hamano wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> > Moreover, keeping the unmerge entries at the top is inconvenient if a
+> > merge touched many files, but only a few conflicted: After the conflicts
+> > were resolved, the user will conduct a 'git add' command. In order to do
+> > that with copy-and-paste, the user must scroll the terminal window up,
+> > and must do so for each individual entry (because terminal windows
+> > commonly scroll down automatically on the paste operation to make the
+> > cursor visible).
+>
+> I actually was expecting that you would move this at the very bottom after
+> untracked list for the above reason, and also because this part is only
+> shown while running status (that was a good point you made in the previous
+> message) and never in commit.
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-index ba4b654..477dc62 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
-@@ -500,8 +500,12 @@ private static String readLine(final File file)
-         int n = buf.length;
-         if (n == 0)
-             return null;
--        if (buf[n - 1] == '\n')
-+        
-+        // remove trailing whitespaces
-+        while (n > 0 && Character.isWhitespace(buf[n - 1])) {
-             n--;
-+        }
-+        
-         return RawParseUtils.decode(buf, 0, n);
-     }
+So you would not mind a more "drastic" change?
+
+This version 2 can be regarded as a real improvement with the argument
+above, whereas version 1 would only correct something of some
+sort of regression, compared to v1.6.4.
+
+(Originally I didn't dare to change too much and thought keeping staged
+files together would make sense.)
+
+-- Hannes
+
+ wt-status.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/wt-status.c b/wt-status.c
+index 3395456..60d8425 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -561,7 +561,6 @@ void wt_status_print(struct wt_status *s)
+ 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+ 	}
  
+-	wt_status_print_unmerged(s);
+ 	wt_status_print_updated(s);
+ 	wt_status_print_changed(s);
+ 	if (s->submodule_summary)
+@@ -570,6 +569,7 @@ void wt_status_print(struct wt_status *s)
+ 		wt_status_print_untracked(s);
+ 	else if (s->commitable)
+ 		 fprintf(s->fp, "# Untracked files not listed (use -u option to show untracked 
+files)\n");
++	wt_status_print_unmerged(s);
+ 
+ 	if (s->verbose)
+ 		wt_status_print_verbose(s);
 -- 
-1.6.2.5
-
-
-      
+1.6.4.2.280.gb16ab
