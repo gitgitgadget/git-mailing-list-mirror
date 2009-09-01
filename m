@@ -1,60 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/4] tests: add date printing and parsing tests
-Date: Mon, 31 Aug 2009 23:03:28 -0400
-Message-ID: <20090901030328.GA24938@coredump.intra.peff.net>
-References: <20090831022228.GA4833@coredump.intra.peff.net>
- <20090831023015.GC5507@coredump.intra.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Improve on 'approxidate'
+Date: Mon, 31 Aug 2009 17:27:03 -1000 (HST)
+Message-ID: <alpine.LFD.2.00.0908311725260.21913@eeepc.linux-foundation.org>
+References: <alpine.LFD.2.01.0908221438450.3158@localhost.localdomain> <20090830223558.GA29807@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 05:04:09 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 01 05:28:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiJfD-0007jK-Ri
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 05:04:08 +0200
+	id 1MiK2G-00056J-Cm
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 05:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751816AbZIADDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 23:03:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbZIADDa
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 23:03:30 -0400
-Received: from peff.net ([208.65.91.99]:58321 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751751AbZIADDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 23:03:30 -0400
-Received: (qmail 29917 invoked by uid 107); 1 Sep 2009 03:03:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 31 Aug 2009 23:03:43 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2009 23:03:28 -0400
-Content-Disposition: inline
-In-Reply-To: <20090831023015.GC5507@coredump.intra.peff.net>
+	id S1751848AbZIAD1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 23:27:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbZIAD1p
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 23:27:45 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:55239 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751485AbZIAD1p (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Aug 2009 23:27:45 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n813R6pO027112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 31 Aug 2009 20:27:07 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n813R3sE009829;
+	Mon, 31 Aug 2009 20:27:04 -0700
+In-Reply-To: <20090830223558.GA29807@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.461 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127518>
 
-On Sun, Aug 30, 2009 at 10:30:15PM -0400, Jeff King wrote:
 
->   - We confirm that the improvements in b5373e9 and 1bddb25
->     work.
 
-Ugh. I just realized (when explaining how awesome git resurrect was in
-another mail) that I managed to bungle these commit hashes (and the one
-mentioned in the following patch).
+On Sun, 30 Aug 2009, Jeff King wrote:
+> 
+> This breaks relative dates like "3.months.ago", because
+> approxidate_alpha needs to see the "current" date in tm (and now it sees
+> -1, subtracts from it, and assumes we are just crossing a year boundary
+> because of the negative).  3.years.ago is also broken, but I don't think
+> 3.days.ago is.
 
-What happened is that I was building on the topic branch and lazily did
-a "rebase -i origin" to fix up my patches. I left the first two patches
-untouched, of course, but they still ended up with new committer
-information.
+Gaah. Thanks for noticing and the fixes. I had tested the relative modes, 
+but only the "fixed offset" ones (days, hours, minutes, seconds), not the 
+months and years cases.
 
-As my patches are merged to 'next' already, I think it is too late to
-fixup the commit message. But for posterity, the correct referenced
-commits are 9029055 and 36e4986.
-
-Caveat rebaser.
-
--Peff
+			Linus
