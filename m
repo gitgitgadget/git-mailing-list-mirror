@@ -1,78 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: Making GIT XML aware?
-Date: Tue, 01 Sep 2009 07:25:54 -0700 (PDT)
-Message-ID: <m3bplulop9.fsf@localhost.localdomain>
+Date: Tue, 1 Sep 2009 14:06:30 +0000
+Message-ID: <32541b130909010706s45031e64ld614802f2b57ce5e@mail.gmail.com>
 References: <fcdc4d8bb3b1ee0b1473a48ed79e7c61.squirrel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
 To: david.hagood@gmail.com
-X-From: git-owner@vger.kernel.org Tue Sep 01 16:26:06 2009
+X-From: git-owner@vger.kernel.org Tue Sep 01 16:31:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiUJC-00080t-3H
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 16:26:06 +0200
+	id 1MiUOp-0001fJ-HD
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 16:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754950AbZIAOZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 10:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754946AbZIAOZy
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 10:25:54 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:65042 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754921AbZIAOZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 10:25:54 -0400
-Received: by fxm17 with SMTP id 17so46977fxm.37
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 07:25:55 -0700 (PDT)
+	id S1754994AbZIAObn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 10:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755009AbZIAObn
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 10:31:43 -0400
+Received: from mail-yw0-f188.google.com ([209.85.211.188]:37708 "EHLO
+	mail-yw0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754426AbZIAObm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 10:31:42 -0400
+Received: by ywh26 with SMTP id 26so18818ywh.5
+        for <git@vger.kernel.org>; Tue, 01 Sep 2009 07:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=MNGs6LC0rhoMBzRwd1QY+lSjU22fFMHlapkAkn2drEg=;
-        b=nTrSL63Jsb7h0/cFtK6GhE0gpg4NZ+pr1v6F68eo21mkWjtR1O7nO38EXBDiz1KFcm
-         gruk7PQ189AhybUtA0fiv/2hG5XxK5yDRBt2FpkoMLGrOqw7GrlpdPZkFIsCx2MtUEea
-         0M78H9bAs+0/aVSD9uxmM2LGWiP/H1FpED6C4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=PS0mzE1RNEnkWX/HH8v4hhllF+oLOEMldiCMZBi3qIQ=;
+        b=ce0VyPGbYU12en5NNoTUrq37lMCd+w/EK8V16m3R6joWQjmCfJnsITl7MRDNq4GG9L
+         DQVkRL/Db2nhWe6mB/1YPRRkAeXwfJRtK6zdOPxxw9SLBaDQ9Ozk+ooKDGSHwetTVa3+
+         q3a5PIX/3n+u3B2JUtcIpLajKdZA5S++LxVhU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=HFdrNmB7bdXVU5ZuJbcLyzxjxeEr4nslqlLq7Nh8mDkzZLRb7gbhRqN9hfF5DreiwJ
-         p4PLt4DHZ/oayAa6kHJ5tSkfild6BcUFHNk1aHDcPINLQ2rYS77iq8ONPDgAfJcbIzrG
-         FUaT2xF9+yrkGhKWnJr4dbp9+VFrRWBq3xN+U=
-Received: by 10.103.50.36 with SMTP id c36mr2961431muk.135.1251815155162;
-        Tue, 01 Sep 2009 07:25:55 -0700 (PDT)
-Received: from localhost.localdomain (abwo59.neoplus.adsl.tpnet.pl [83.8.238.59])
-        by mx.google.com with ESMTPS id e8sm1241846muf.36.2009.09.01.07.25.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Sep 2009 07:25:54 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n81EXNLq007446;
-	Tue, 1 Sep 2009 16:33:25 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n81EXMRi007443;
-	Tue, 1 Sep 2009 16:33:22 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=wXXub8OfUNWs11UPFQU/N8EQWh7B2lL+i4iuDGttfyKxLoLA4z4g1XYUYVtVqkFtML
+         USFi2Rp2UdGSWeDJw6yT60QWR9T2L51ngYWX906oBhb4ybVyBVEWBGBUP059vZBF8HMb
+         wGfhmUSQVPMyhMxIoGolegmD+YY/01rBnRnmM=
+Received: by 10.150.55.42 with SMTP id d42mr10456186yba.244.1251814010061; 
+	Tue, 01 Sep 2009 07:06:50 -0700 (PDT)
 In-Reply-To: <fcdc4d8bb3b1ee0b1473a48ed79e7c61.squirrel@localhost>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127538>
 
-david.hagood@gmail.com writes:
-
-> I have a project that is committing several XML files into GIT, and we
-> have a problem when doing merges.
-> 
-> The files are UML XMI 1.1 files generated by a UML tool (specifically
-> Enterprise Architect by Sparx), and EA "helpfully" puts things like
-> timestamps of modification and access into the files. As you can guess,
-> these are conflict-magnets. Yes, the ideal solution would be to turn that
-> off, and I am pursuing that avenue within EA.
-> 
+On Tue, Sep 1, 2009 at 1:57 PM, <david.hagood@gmail.com> wrote:
 > However, it seems to me that if there were some way to plug into GIT's
 > merging logic, it would be possible to design an XML aware merging tool
 > that might help on this (generalizing: if you could have content-aware
@@ -83,34 +60,25 @@ david.hagood@gmail.com writes:
 > format to better identify what chunks are changes and possibly track
 > motion within the files better.
 
-With Git you are able to use custom merge driver for specific files
-(files specified by glob, which can be all files) by using `merge`
-gitattribute (it is about file-level merging in the case of file
-contents conflict).  Or you can use 'merge.default' config variable to
-set merge driver for all files.
+You have a couple of options here, both of which you can read about in
+'man gitattributes'.
 
-Also you can set `diff` filter to custom diff driver which ignores
-timestamps, or even remove timestamps from files when checking them in
-using `filter` gitattribute (clean / smudge filters).
+If you have "don't care" attributes, that's a good sign that you
+shouldn't be storing them *at all*.  You could use the 'filter'
+feature of gitattributes to remove them (or convert them to a
+constant) on checkin, and regenerate them on checkout.
+
+As for merging algorithms, you can supply a custom one using the
+'merge' gitattribute.
 
 > Absent that, is there a way to tell git "in case of an unresolvable merge
 > conflict, don't modify the file but put the other version of the file
 > somewhere (e.g. filename.other) so that I can use an external tool to
 > resolve the differences"? In this case, EA doesn't know how to use the
 > standard conflict tags within a file to extract deltas.
- 
-You can have `merge` attribute unset , e.g 
 
-  *.uml  -merge
+You can apparently override this with the 'merge' attribute as well.
 
-This means "Take the version from the current branch as the tentative
-merge result, and declare that the merge has conflicts."
+Have fun,
 
-
-Also if you have some graphical merge tool, you can consider
-configuring and using git-mergetool.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Avery
