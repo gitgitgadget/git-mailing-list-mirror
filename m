@@ -1,73 +1,60 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: A note from the maintainer: Follow-up questions (MaintNotes)
-Date: Mon, 31 Aug 2009 22:55:04 -0400
-Message-ID: <20090901025504.GA23589@coredump.intra.peff.net>
-References: <ac3d41850908301519s2cf8a45auf11fb4c9285c0cb5@mail.gmail.com>
- <7v8wgzla02.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH v2 3/4] tests: add date printing and parsing tests
+Date: Mon, 31 Aug 2009 23:03:28 -0400
+Message-ID: <20090901030328.GA24938@coredump.intra.peff.net>
+References: <20090831022228.GA4833@coredump.intra.peff.net>
+ <20090831023015.GC5507@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David Chanters <david.chanters@googlemail.com>, git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 04:55:22 2009
+X-From: git-owner@vger.kernel.org Tue Sep 01 05:04:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiJWj-0005H4-LF
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 04:55:22 +0200
+	id 1MiJfD-0007jK-Ri
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 05:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbZIACzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Aug 2009 22:55:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751257AbZIACzI
-	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 22:55:08 -0400
-Received: from peff.net ([208.65.91.99]:43621 "EHLO peff.net"
+	id S1751816AbZIADDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Aug 2009 23:03:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbZIADDa
+	(ORCPT <rfc822;git-outgoing>); Mon, 31 Aug 2009 23:03:30 -0400
+Received: from peff.net ([208.65.91.99]:58321 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750938AbZIACzH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Aug 2009 22:55:07 -0400
-Received: (qmail 29873 invoked by uid 107); 1 Sep 2009 02:55:19 -0000
+	id S1751751AbZIADDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Aug 2009 23:03:30 -0400
+Received: (qmail 29917 invoked by uid 107); 1 Sep 2009 03:03:43 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 31 Aug 2009 22:55:19 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2009 22:55:04 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 31 Aug 2009 23:03:43 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Aug 2009 23:03:28 -0400
 Content-Disposition: inline
-In-Reply-To: <7v8wgzla02.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20090831023015.GC5507@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127517>
 
-On Mon, Aug 31, 2009 at 06:38:37PM -0700, Junio C Hamano wrote:
+On Sun, Aug 30, 2009 at 10:30:15PM -0400, Jeff King wrote:
 
->     a71f64a Merge branch 'pk/import-dirs' into pu
->     ce6cd39 Merge branch 'jh/cvs-helper' into pu
->     ...
->     2178d02 Merge branch 'jc/log-tz' into pu
->     ...
->     927d129 Merge branch 'lt/approxidate' into jch
->     35ada54 Merge branch 'tr/reset-checkout-patch' into jch
->     d82f86c Merge branch 'db/vcs-helper' (early part) into jch
-> 
-> So if you for example happen to be interested in jc/log-tz topic,
-> you would do something like:
-> 
->     $ git checkout -b jc/log-tz 2178d02^2
->     $ git log -p master..
-> 
-> to check out, and view what changes the topic introduces.
+>   - We confirm that the improvements in b5373e9 and 1bddb25
+>     work.
 
-Another alternative: Thomas Rast wrote a handy script called
-'git-resurrect' which does this for you. It's carried in the contrib/
-section right now. I used it just the other day to pull out the
-lt/approxidate topic branch, which I then built some follow-up patches
-for. Usage is something like:
+Ugh. I just realized (when explaining how awesome git resurrect was in
+another mail) that I managed to bungle these commit hashes (and the one
+mentioned in the following patch).
 
-  # contrib scripts aren't installed by "make install",
-  # so put it somewhere in your PATH
-  $ cp contrib/git-resurrect.sh ~/bin/git-resurrect
+What happened is that I was building on the topic branch and lazily did
+a "rebase -i origin" to fix up my patches. I left the first two patches
+untouched, of course, but they still ended up with new committer
+information.
 
-  $ git resurrect -m lt/approxidate
-  ** Candidates for lt/approxidate **
-  931e8e2 [22 hours ago] fix approxidate parsing of relative months and years
-  ** Restoring lt/approxidate to 931e8e2 fix approxidate parsing of relative months and years
+As my patches are merged to 'next' already, I think it is too late to
+fixup the commit message. But for posterity, the correct referenced
+commits are 9029055 and 36e4986.
+
+Caveat rebaser.
 
 -Peff
