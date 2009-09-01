@@ -1,94 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: stash --dwim safety
-Date: Tue, 01 Sep 2009 08:27:20 +0200
-Message-ID: <vpqocpv2n93.fsf@bauges.imag.fr>
-References: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
-	<7v3a77dx5b.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] fast-import.c: Silence build warning
+Date: Tue, 1 Sep 2009 08:30:38 +0200
+Message-ID: <81b0412b0908312330t3135d033o14a6cb73797edf18@mail.gmail.com>
+References: <d2e97e800908310421u7de8ae58o361bd64a026384bf@mail.gmail.com>
+	 <7vfxb7y2h3.fsf@alter.siamese.dyndns.org>
+	 <d2e97e800908311655t553d6c4bo6ed45fe37819c1d8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 01 08:30:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Wookey <michaelwookey@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 01 08:31:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiMsk-0000Y9-G4
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 08:30:19 +0200
+	id 1MiMtq-0000rd-4i
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Sep 2009 08:31:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687AbZIAGaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 02:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZIAGaI
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 02:30:08 -0400
-Received: from imag.imag.fr ([129.88.30.1]:47487 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752013AbZIAGaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 02:30:07 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n816RLKS018711
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Sep 2009 08:27:21 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MiMps-0002JO-R2; Tue, 01 Sep 2009 08:27:20 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MiMps-0001SY-Oy; Tue, 01 Sep 2009 08:27:20 +0200
-In-Reply-To: <7v3a77dx5b.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 31 Aug 2009 22\:58\:08 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 01 Sep 2009 08:27:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752793AbZIAGak convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Sep 2009 02:30:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbZIAGai
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 02:30:38 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:45774 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009AbZIAGah convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Sep 2009 02:30:37 -0400
+Received: by bwz19 with SMTP id 19so3284040bwz.37
+        for <git@vger.kernel.org>; Mon, 31 Aug 2009 23:30:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s2weO/yNk35yR2WBL+M5LPP1J0AEh6HSqIO6Vm0uh/s=;
+        b=CyNR9hzsNcgklgO0sNBZzwIc7yRvufaFDnQwM7nvEmDS+EEEc90avN0iSUUeIjQlnG
+         nv0ye6/8l8Mx9RhQV3wD2Ufgk/UxKEGF86ADib7Ao8VnJ2dGs2nz/zYuUP5y9RE92MHD
+         pkcP368fpedYNS5dbqM/tQUbXZxXf7eo333UM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ja8CWrycaIaQDEoirpvJ7ugGpf352NZqtNTjNyfNEadIFe4kEudJ1Kwjdo/KKiFOc6
+         p7jkLI/tnJGhTI4k7+h6cesi/BzhMmTBoFzknPadOgw0i11HMZRyMa/l0BJpWCHvkKy2
+         H1IsyRMYSZmbYkxbU2Z2t5pbTK1qSntLlHDb0=
+Received: by 10.204.34.196 with SMTP id m4mr5199485bkd.62.1251786638405; Mon, 
+	31 Aug 2009 23:30:38 -0700 (PDT)
+In-Reply-To: <d2e97e800908311655t553d6c4bo6ed45fe37819c1d8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127525>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Sep 1, 2009 at 01:55, Michael Wookey<michaelwookey@gmail.com> w=
+rote:
+>> Otherwise a clever compiler has every right to complain "the variabl=
+e
+>> unused is assigned but never used."
+>
+> =C2=A0I get no other warnings, so does that make gcc less than clever=
+? ;-)
 
-> It turns out that the rework was simple enough, so I did it myself.  Among
-> his 3 patch series, an equivalent to the first one ("save -keep" can be
-> written as "save -k" for brevity) were already in, and the second one
-> (default to "save" if we see any option before command word) was unsafe
-> without the third one (reject unknown option to "save"), so it ended up as
-> a single patch that is a combination of the latter two patches.
-
-Thanks, lack of time on my side to work on this, sorry.
-
-I was actually thinking of being a little more paranoid to prevent
-accidental "stash save": we could refuse to create a named stash when
-the "save" command is not given. The case I hadn't thought of was "git
-stash -q apply", which has 99% chances of being a typo for "git stash
-apply -q", and which would mean "create a stash named apply, quietly".
-
-> +# The default command is "save"
-> +case "$1" in
-> +-*)
-> +	set "save" "$@"
-> +	;;
-> +esac
-
-So, that could become something like
-
-default_to_save=t
-for arg in "$@"; do
-	case "$arg" in
-	-*)
-		;;
-	*)
-		default_to_save=
-	esac
-done
-
-if [ "$default_to_save" = t ]; then
-	set "save" "$@"
-fi
-
-(untested)
-
--- 
-Matthieu
+It only does what it is instructed to do: the function is annotated wit=
+h
+warn_unused_result attribute. What really is annoying is someones
+choice of the functions to annotate.
