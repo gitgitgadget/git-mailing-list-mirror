@@ -1,67 +1,82 @@
-From: "Brian S. Schang" <git@lists.schang.net>
-Subject: Re: Troubles building man pages
-Date: Tue, 01 Sep 2009 20:52:04 -0400
-Message-ID: <4A9DC1B4.8060000@lists.schang.net>
-References: <4A9C8750.60308@lists.schang.net> <7v7hwjidt2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] status: list unmerged files last
+Date: Tue, 1 Sep 2009 21:15:14 -0400
+Message-ID: <20090902011513.GA3874@coredump.intra.peff.net>
+References: <20090901145213.GB4194@debian.b2j>
+ <200909012213.54611.j6t@kdbg.org>
+ <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
+ <200909012325.45739.j6t@kdbg.org>
+ <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j6t@kdbg.org>, bill lam <cbill.lam@gmail.com>,
+	git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 02:52:22 2009
+X-From: git-owner@vger.kernel.org Wed Sep 02 03:15:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mie5D-0000tL-Ik
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 02:52:20 +0200
+	id 1MieRc-0006q7-Es
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 03:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471AbZIBAwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Sep 2009 20:52:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755467AbZIBAwI
-	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 20:52:08 -0400
-Received: from s2.schang.net ([70.90.136.74]:54579 "EHLO s2.schang.net"
+	id S1755336AbZIBBPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Sep 2009 21:15:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755325AbZIBBPR
+	(ORCPT <rfc822;git-outgoing>); Tue, 1 Sep 2009 21:15:17 -0400
+Received: from peff.net ([208.65.91.99]:60602 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755460AbZIBAwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Sep 2009 20:52:08 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by s2.schang.net (Postfix) with ESMTP id AF4B0966F0;
-	Tue,  1 Sep 2009 20:52:09 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at schang.net
-Received: from s2.schang.net ([127.0.0.1])
-	by localhost (server2.schang.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id MPkGWcHW1NBh; Tue,  1 Sep 2009 20:52:09 -0400 (EDT)
-Received: from [192.168.69.100] (desktop.schang.net [192.168.69.100])
-	by s2.schang.net (Postfix) with ESMTP id E20D596650;
-	Tue,  1 Sep 2009 20:52:08 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7v7hwjidt2.fsf@alter.siamese.dyndns.org>
+	id S1755324AbZIBBPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Sep 2009 21:15:16 -0400
+Received: (qmail 3324 invoked by uid 107); 2 Sep 2009 01:15:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 01 Sep 2009 21:15:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Sep 2009 21:15:14 -0400
+Content-Disposition: inline
+In-Reply-To: <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127573>
 
-Junio (et al):
+On Tue, Sep 01, 2009 at 05:18:40PM -0700, Junio C Hamano wrote:
 
-Junio C Hamano wrote:
-> "Brian S. Schang" <git@lists.schang.net> writes:
+> The "keeping related things together" argument does mean your v1 is better
+> than this patch, as you had "unmerged" next to "changed but not updated".
+> I personally think the "keep related things together" argument makes much
+> more sense than the "close to the bottom is easier to cut and paste"
+> argument, as I tend to focus at the top of the output when looking at the
+> status output and almost never cut & paste using mouse (screen for
+> rectangular cutting and pasting works wonderfully), but it probably is
+> just me.  And remember that I am only just one of the users, nothing more.
 > 
->>>     ASCIIDOC git-am.xml
->>>     XMLTO git-am.1
->>> I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd
->>> /raida/packages/git/Documentation/git-am.xml:2: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
->>> D DocBook XML V4.2//EN" "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+> Sadly, "keep related things together" and "as close to the bottom as
+> possible" are not quite compatible, and we can pick one or the other, but
+> not both.
 
-> The following was an ancient experience of mine with a different distro
-> but I am reasonably sure it would point you in the right direction.
-> 
->     http://article.gmane.org/gmane.comp.version-control.git/107387
+Just my two cents (and I think I have as good a track record at UI
+design as Junio... ;) ):
 
-Thank you! The link you sent suggested a reinstall of DocBook. I tried 
-that and magically everything started to work fine.
+I think "related things together" trumps "close to the bottom". Because
+the former is something that _always_ applies to your output, while the
+latter is catering to a particular use case and a particular screen
+setup.
 
-I appreciate the help.
+In other words, why is the _bottom_ reserved for more important things
+instead of the _top_? If I have a tall terminal that is long enough to
+see the output, are you potentially making the important thing less
+obvious (because I tend to read the the output from top to bottom)? If I
+use a pager (either manually, because I have seen that the output is too
+long, or automatically via the pager.status config variable)? What about
+reading status output into an interface wrapper like "tig status"?
 
--- 
-Brian Schang
+So while you may be helping some users, I tend to think you may be
+hurting others.
+
+-Peff
+
+PS I am also not entirely convinced that unmerged entries are somehow
+more important to call attention to in the list than other entries. But
+the above argues that even _if_ you think they are more important, it is
+still not necessarily a good thing to move them to the bottom.
