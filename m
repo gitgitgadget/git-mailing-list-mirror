@@ -1,66 +1,91 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] git-completion.bash: prevent 'git help' from searching 
-	for git repository
-Date: Wed, 2 Sep 2009 13:47:31 +0200
-Message-ID: <fabb9a1e0909020447p212594cake8c6fe3a43b667ec@mail.gmail.com>
-References: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Wed Sep 02 13:53:22 2009
+From: Giulio Eulisse <Giulio.Eulisse@cern.ch>
+Subject: Re: [PATCH] git-submodule and --upload-pack
+Date: Wed, 2 Sep 2009 14:41:33 +0200
+Message-ID: <C58D88DD-1AB7-4727-ABDA-9AC0DEA53A3D@cern.ch>
+References: <9D7140EC-EAFD-4408-93E3-0E756BA363DA@cern.ch> <7vk50jtud8.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 14:41:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MioOv-0007XN-N5
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 13:53:22 +0200
+	id 1Mip9y-00084p-2d
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 14:41:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856AbZIBLxH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Sep 2009 07:53:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZIBLxH
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 07:53:07 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:33058 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751811AbZIBLxF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Sep 2009 07:53:05 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so164330eya.19
-        for <git@vger.kernel.org>; Wed, 02 Sep 2009 04:53:07 -0700 (PDT)
+	id S1751570AbZIBMkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 08:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbZIBMkX
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 08:40:23 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:37409 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbZIBMkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 08:40:23 -0400
+Received: by ewy2 with SMTP id 2so760794ewy.17
+        for <git@vger.kernel.org>; Wed, 02 Sep 2009 05:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PfSj3qxZ5adTWQges8dx97sO0HYMNDhR2Y1xtxSUMtE=;
-        b=RoxxAhgkN+QBAQmxHzitZt5rIpcsMiiMNBSr4uBUUhixdd+4lNJucR+kgQrj5CTxt2
-         w6dhzrtM7xI55Fj+utyma9wyWqrteCl32a7bsN/eOslm0OjCms+cknuE7tJ+DfcJfH6f
-         IkqLKEBZQ83EC8YPSjgWIFHglh84XRy4dyc4M=
+        h=domainkey-signature:received:received:sender:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=X7FbHrt0aiOCJfVxrPxoUaLixfa1B+h+Fg74emMFDwU=;
+        b=c14PE1k+u+vLeuMaQ8dIotHUEkGMgRNAqUgASShC/rEcpwuNHsrPUIrpqlZMfjt5Jw
+         jYgG+JlVeGXYcqLvmY1pel5XDjj7VRMW5rBl92StFI9e9nq6BH3CPY2VnSsKJGL4dOKH
+         fX8AQMwRclSHzB6WyJW314BPySqdB2XbB8eRA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=dc7vSVGHpsy0egYoxYpF/+MYmcrcwkZD/9vIZAkZc4c5HJsckkWWyayF2YTeU9tcmH
-         Q4bScPt6giurR4HtRjS6zBeRKi93zFIsnqwpXxQs1Lp/4kmc3saXEF2WAdFyMlJ+fLlX
-         T7CT0uw6Tq7WF2Kd/HG6XatmQeJTXwtMFOfp0=
-Received: by 10.216.54.207 with SMTP id i57mr125301wec.114.1251892071203; Wed, 
-	02 Sep 2009 04:47:51 -0700 (PDT)
-In-Reply-To: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org>
+        h=sender:cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=mcJJGsPDrLZlR/t4cu97XKzLwO57q4mHONmpk97j3M/mRAIwXOeW6B+V4dEgi8bVcq
+         JayHnufpOXmSSK7zDYbz5i3k7zbrCDdfg62f8vkOdnGOqtuWcM6D3MOp7ZaX4d4gR/dw
+         pSd42cQrZPPQ0cD8TRdVh0ffNkXEaqoIqsq0g=
+Received: by 10.210.131.5 with SMTP id e5mr7836012ebd.45.1251895223044;
+        Wed, 02 Sep 2009 05:40:23 -0700 (PDT)
+Received: from iguana3.cern.ch (iguana3.cern.ch [137.138.52.211])
+        by mx.google.com with ESMTPS id 10sm2163eyd.36.2009.09.02.05.40.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 02 Sep 2009 05:40:22 -0700 (PDT)
+In-Reply-To: <7vk50jtud8.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127605>
 
-Heya,
+>> There was a thread a while ago aboyt having --upload-pack support for
+>> git-submodule.
+>>
+>> Given that there was no followup (as far as I can tell) and I needed
+>> pretty much
+>> the same functionality I ported Jason's patch to work on top of  
+>> 1.6.4.2.
+>
+> Thanks.
+>
+> Can you point at the original patch with a usable commit log  
+> message, in
+> the gmane archive (i.e. http://thread.gmane.org/...) if possible?  I
+> do not think we have that patch queued anywhere even in 'pu'.
 
-On Wed, Sep 2, 2009 at 11:58, Gerrit Pape<pape@smarden.org> wrote:
-> + =A0 =A0 =A0 for i in $(git --git-dir=3D/nonexistent help -a|egrep '=
-^ ')
+Ciao,
+sorry for the mangled patch... Looks like Mail.app did something  
+weird...
 
-Wouldn't implementing "git --no-git-dir" be more appropriate?
+http://article.gmane.org/gmane.comp.version-control.git/104188/match=git+submodule+upload+pack
 
---=20
-Cheers,
 
-Sverre Rabbelier
+> Given that it looks like a new feature, I do not think it would be
+> appropriate for any of the future 1.6.4.X series, but if it is  
+> useful we
+> may want to have it in the upcoming 1.6.5 release.
+[...]
+
+Ok. I will try to follow your suggestion and post an updated patch.
+
+Ciao,
+Giulio
