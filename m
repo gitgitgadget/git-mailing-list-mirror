@@ -1,67 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: stash --dwim safety
-Date: Wed, 02 Sep 2009 08:26:45 +0200
-Message-ID: <vpqvdk1vp3u.fsf@bauges.imag.fr>
-References: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
-	<7v3a77dx5b.fsf@alter.siamese.dyndns.org>
-	<vpqocpv2n93.fsf@bauges.imag.fr>
-	<20090901065716.GA5575@sigill.intra.peff.net>
-	<7vy6oyj892.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] clone: disconnect transport after fetching
+Date: Wed, 2 Sep 2009 02:36:47 -0400
+Message-ID: <20090902063647.GA29559@coredump.intra.peff.net>
+References: <alpine.LNX.2.00.0909020159080.28290@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Sitaram Chamarty <sitaramc@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 08:35:40 2009
+X-From: git-owner@vger.kernel.org Wed Sep 02 08:36:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MijRR-0001sU-Pj
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 08:35:38 +0200
+	id 1MijSi-0002BL-Cn
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 08:36:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932136AbZIBGfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 02:35:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755894AbZIBGfW
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 02:35:22 -0400
-Received: from imag.imag.fr ([129.88.30.1]:33064 "EHLO imag.imag.fr"
+	id S1755907AbZIBGgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 02:36:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbZIBGgt
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 02:36:49 -0400
+Received: from peff.net ([208.65.91.99]:45791 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755893AbZIBGfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 02:35:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n826Qj96021520
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 2 Sep 2009 08:26:46 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MijIr-0003nh-IN; Wed, 02 Sep 2009 08:26:45 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MijIr-0000bR-FR; Wed, 02 Sep 2009 08:26:45 +0200
-In-Reply-To: <7vy6oyj892.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 01 Sep 2009 21\:11\:37 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 02 Sep 2009 08:26:46 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1755897AbZIBGgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 02:36:48 -0400
+Received: (qmail 5248 invoked by uid 107); 2 Sep 2009 06:37:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 02:37:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 02:36:47 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0909020159080.28290@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127587>
 
-Thanks for taking care of this,
+The current code just leaves the transport in whatever state
+it was in after performing the fetch.  For a non-empty clone
+over the git protocol, the transport code already
+disconnects at the end of the fetch.
 
-Junio C Hamano <gitster@pobox.com> writes:
+But for an empty clone, we leave the connection hanging, and
+eventually close the socket when clone exits. This causes
+the remote upload-pack to complain "the remote end hung up
+unexpectedly". While this message is harmless to the clone
+itself, it is unnecessarily scary for a user to see and may
+pollute git-daemon logs.
 
->  'git stash' [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [<message>]]
+This patch just explicitly calls disconnect after we are
+done with the remote end, which sends a flush packet to
+upload-pack and cleanly disconnects, avoiding the error
+message.
 
-To be precise, you can change this to
+Other transports are unaffected or slightly improved:
 
->  'git stash' [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [--] [<message>]]
+ - for a non-empty repo over the git protocol, the second
+   disconnect is a no-op (since we are no longer connected)
 
-(added [--])
+ - for "walker" transports (like HTTP or FTP), we actually
+   free some used memory (which previously just sat until
+   the clone process exits)
 
+ - for "rsync", disconnect is always a no-op anyway
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was suggested by Daniel, so theoretically
+
+  Acked-by: Daniel Barkalow <barkalow@iabervon.org>
+
+:)
+
+As you can see from the commit message, I did a little extra hunting to
+make sure we are not going to impact any other code paths, and I am
+pretty sure we are fine.
+
+ builtin-clone.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 991a7ae..0f231d8 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -580,8 +580,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
+ 
+-	if (transport)
++	if (transport) {
+ 		transport_unlock_pack(transport);
++		transport_disconnect(transport);
++	}
+ 
+ 	if (!option_no_checkout) {
+ 		struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
 -- 
-Matthieu
+1.6.4.2.401.ga275f.dirty
