@@ -1,149 +1,66 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v2] status: list unmerged files last
-Date: Wed, 2 Sep 2009 03:07:32 -0700
-Message-ID: <20090902100730.GA18226@gmail.com>
-References: <20090901145213.GB4194@debian.b2j> <200909012213.54611.j6t@kdbg.org> <7vy6oy9z9r.fsf@alter.siamese.dyndns.org> <200909012325.45739.j6t@kdbg.org> <7vtyzmxkpr.fsf@alter.siamese.dyndns.org> <20090902011513.GA3874@coredump.intra.peff.net> <7vmy5egefh.fsf@alter.siamese.dyndns.org> <20090902051248.GB12046@coredump.intra.peff.net> <7vljkxdiil.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] git-completion.bash: prevent 'git help' from searching 
+	for git repository
+Date: Wed, 2 Sep 2009 13:47:31 +0200
+Message-ID: <fabb9a1e0909020447p212594cake8c6fe3a43b667ec@mail.gmail.com>
+References: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 12:08:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Wed Sep 02 13:53:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mimkk-00006N-Cz
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 12:07:46 +0200
+	id 1MioOv-0007XN-N5
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 13:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbZIBKHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 06:07:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbZIBKHa
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 06:07:30 -0400
-Received: from mail-yw0-f188.google.com ([209.85.211.188]:64229 "EHLO
-	mail-yw0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751252AbZIBKH3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 06:07:29 -0400
-Received: by ywh26 with SMTP id 26so1075030ywh.5
-        for <git@vger.kernel.org>; Wed, 02 Sep 2009 03:07:31 -0700 (PDT)
+	id S1751856AbZIBLxH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Sep 2009 07:53:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZIBLxH
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 07:53:07 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:33058 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751811AbZIBLxF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Sep 2009 07:53:05 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so164330eya.19
+        for <git@vger.kernel.org>; Wed, 02 Sep 2009 04:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RRmf8l5CdM6UmVK9lJVgzEBXuD6GzQFI9P3LmKlD/AI=;
-        b=ioLZA4M35kunB9K/wgo2oMELw7H2STgmG2fmeUyH8bryf2O8JnHCJO5m7/6ri8JHMC
-         NwTH2JcunnzLZx5MPzl+sGurb61BMXz5MhXlEnrQaYhkNTCajhEE8u5o1GHSa9LvbBYf
-         IA3Ue73AskRcb5mrkLDBzkRASITwYoI3oXfm8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PfSj3qxZ5adTWQges8dx97sO0HYMNDhR2Y1xtxSUMtE=;
+        b=RoxxAhgkN+QBAQmxHzitZt5rIpcsMiiMNBSr4uBUUhixdd+4lNJucR+kgQrj5CTxt2
+         w6dhzrtM7xI55Fj+utyma9wyWqrteCl32a7bsN/eOslm0OjCms+cknuE7tJ+DfcJfH6f
+         IkqLKEBZQ83EC8YPSjgWIFHglh84XRy4dyc4M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AhMHjfqxaxe0iafkEt6lmWp1NK+BMaPB+kJ6GZKT7PUVm+cP+LiswPMwkfyzhC/ov5
-         rVlUUw9TS7jPon6Kyb41x1Ezx14DRDh5x1R6V8gWn5B2a9/3s3MCqX4r+LGptPSxa94z
-         gtPP1PBhKh/CcckF1r3Kt9jysn5vlhySVPdhg=
-Received: by 10.90.158.2 with SMTP id g2mr5956354age.92.1251886051509;
-        Wed, 02 Sep 2009 03:07:31 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id 10sm1581725agb.10.2009.09.02.03.07.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Sep 2009 03:07:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vljkxdiil.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=dc7vSVGHpsy0egYoxYpF/+MYmcrcwkZD/9vIZAkZc4c5HJsckkWWyayF2YTeU9tcmH
+         Q4bScPt6giurR4HtRjS6zBeRKi93zFIsnqwpXxQs1Lp/4kmc3saXEF2WAdFyMlJ+fLlX
+         T7CT0uw6Tq7WF2Kd/HG6XatmQeJTXwtMFOfp0=
+Received: by 10.216.54.207 with SMTP id i57mr125301wec.114.1251892071203; Wed, 
+	02 Sep 2009 04:47:51 -0700 (PDT)
+In-Reply-To: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127604>
 
-On Tue, Sep 01, 2009 at 10:26:26PM -0700, Junio C Hamano wrote:
-> 
-> Here is how I would justify the change (the patch is the same as Hannes's
-> first version.
-> 
-> From: Johannes Sixt <j6t@kdbg.org>
-> Date: Tue, 1 Sep 2009 22:13:53 +0200
-> Subject: [PATCH] status: list unmerged files much later
-> 
-> When resolving a conflicted merge, two lists in the status output need
-> more attention from the user than other parts.
-> 
->  - the list of updated paths is useful to review the amount of changes the
->    merge brings in (the user cannot do much about them other than
->    reviewing, though); and
-> 
->  - the list of unmerged paths needs the most attention from the user; the
->    user needs to resolve them in order to proceed.
-> 
-> Since the output of git status does not by default go through the pager,
-> the early parts of the output can scroll away at the top. It is better to
-> put the more important information near the bottom.  During a merge, local
-> changes that are not in the index are minimum, and you should keep the
-> untracked list small in any case, so moving the unmerged list from the top
-> of the output to immediately after the list of updated paths would give us
-> the optimum layout..
+Heya,
 
-I agree with all of this but would also add that we can have
-our cake and eat it too with respect to wanting to "keep
-similar things together" and having "unmerged near bottom".
+On Wed, Sep 2, 2009 at 11:58, Gerrit Pape<pape@smarden.org> wrote:
+> + =A0 =A0 =A0 for i in $(git --git-dir=3D/nonexistent help -a|egrep '=
+^ ')
 
-No one has suggested this, so I figured I would.
-What do you think about this layout?
+Wouldn't implementing "git --no-git-dir" be more appropriate?
 
-- untracked
-- staged
-- modified
-- unmerged
+--=20
+Cheers,
 
-This isn't the first thing someone would think of, but here's
-why it is intuitive:
-
-- untracked entries come first because in the git world they
-  are weird.  We don't like to see these things and we tend to
-  .gitignore them away.
-
-- staged entries come next, though we know that in practice
-  staged is often shown first since we tend to not care about
-  untracked files.  This often contains entries when merging
-  but we do not often do much with these besides review them.
-
-- modified entries come next because they need our attention.
-  When merging this list is often small or non-existant,
-  thus unmerged often follows immediately after staged.
-
-- unmerged comes last for all of the reasons listed above.
-  We give these special treatment because they often
-  require even more attention than modified files.
-
-What do you guys think?
-
-
-While I've got you guys.. I have a patch for the new 1.7
-status that makes it:
-
-	git status [<tree-ish>] [--] [pathspec]
-	(it adds support for tree-ish)
-
-
-I added that because I thought that the porcelain-ish short
-status output could be useful for "what does commit --amend
-do" from a script-writers' pov, and thus adding <tree-ish>
-enables git status -s HEAD^.
-
-Is this a good idea?  I'll send the patch if others are
-interested.  It seemed useful to me; my rationale was that
-right now git-status is hardcoded to HEAD and thus exposing
-that variable seemed useful.
-
-BTW is status -s intended to be something plumbing-like;
-something we can build upon and expect to be stable?
-I'm just curious because other commands have a --porcelain
-option and I wasn't sure if this was the intent.
-
-
-Thanks,
-
--- 
-
-	David
+Sverre Rabbelier
