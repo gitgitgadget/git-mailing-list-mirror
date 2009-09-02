@@ -1,79 +1,65 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: clong an empty repo over ssh causes (harmless) fatal
-Date: Wed, 2 Sep 2009 11:00:54 +0530
-Message-ID: <2e24e5b90909012230s554b8776q515d21d88e6ed1d6@mail.gmail.com>
-References: <slrnh9nc4e.6bn.sitaramc@sitaramc.homelinux.net>
-	 <vpqskf8z0rj.fsf@bauges.imag.fr>
-	 <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
-	 <20090831164146.GA23245@coredump.intra.peff.net>
-	 <vpqocpvevzx.fsf@bauges.imag.fr>
-	 <20090831191032.GB4876@sigill.intra.peff.net>
-	 <20090831201911.GA24989@atjola.homenet>
-	 <20090831224749.GA24190@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Aug 2009, #06; Sun, 30)
+Date: Tue, 01 Sep 2009 22:32:51 -0700
+Message-ID: <7vk50hap30.fsf@alter.siamese.dyndns.org>
+References: <7viqg48nxi.fsf@alter.siamese.dyndns.org>
+ <c77435a80909011525m3a6e7917xe066d61f3863e615@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 02 07:31:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nick Edelen <sirnot@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 07:33:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiiQv-00052l-8G
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 07:31:01 +0200
+	id 1MiiSv-0005Oc-64
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 07:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755755AbZIBFaw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Sep 2009 01:30:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755752AbZIBFaw
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 01:30:52 -0400
-Received: from mail-iw0-f204.google.com ([209.85.223.204]:37505 "EHLO
-	mail-iw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755730AbZIBFav convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Sep 2009 01:30:51 -0400
-Received: by iwn42 with SMTP id 42so263452iwn.33
-        for <git@vger.kernel.org>; Tue, 01 Sep 2009 22:30:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3hmR0WIjbqZ21s/ySzAwsp0su8Dc7PIQLHgMtFPIFGA=;
-        b=KzU90XZFFCxm/1L2u6PlBTe8smj7ZmdTMV68pUlglMhgvxkUz0cUzAh9JJUur4nc+Y
-         21c/RXX8h5H01+p3tonttyAYrLsDtvB3eKHYEjxxnrWiV7SBqblWvde7MvL/08ejAlCH
-         s3Eg59wuAQ0iVXKvNJnVF9Id+HzNmqfIGTYP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dB5u2yRm9If2oRsXNrkFc9QdXwgdnKvDRr3o8a9ArmpvSVahyameUA7PsvIuChokKD
-         lnBBKTOHOb0fENWOQF7Zo8z9erF0zme/16famafwaWjj0YvMGHqAIEk61aktrPy9L6X9
-         ZXVBE/ycaCxRcnA1txtXSOu0h0UY/5gOgzclQ=
-Received: by 10.231.126.21 with SMTP id a21mr8289024ibs.40.1251869454041; Tue, 
-	01 Sep 2009 22:30:54 -0700 (PDT)
-In-Reply-To: <20090831224749.GA24190@sigill.intra.peff.net>
+	id S1755757AbZIBFc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 01:32:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755730AbZIBFc4
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 01:32:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42381 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752912AbZIBFcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 01:32:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C965321D3E;
+	Wed,  2 Sep 2009 01:32:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iuW4J4HgRqLKRU/h9694g88MHqU=; b=n1mImP
+	kenEneAR3qG8sEKFaS/D0WNWJxtbwYlYkB+ja75iVrT/XF8ovVCPnLx/hHYCDnct
+	igo0NDpbmid9amzLIrcFNcuuURa4tQlMxytY/3Vvi0KS2kZ/G5xyQLuGv1kRG5py
+	wRmxcneYprsagdnPXQoYk9mNrjJdew1cwVH+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=K2TvMvxAmHg/XsQQQHex0Xjhn6QpQOVc
+	HPU+PB1YsufvY3sncjHa7x8+qg+DHbtX99xq6fVX4c81pUZvtUmmM/J42+0Qut9q
+	Nj826kK6KOFqQoYUUjjvk2GtIErukafoKDm9osn/5pf0y1HGQgFZS+JJXbSJ37/w
+	qWxk5ulBUeg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5A5A21D3C;
+	Wed,  2 Sep 2009 01:32:55 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A3AF21D3B; Wed,  2 Sep
+ 2009 01:32:52 -0400 (EDT)
+In-Reply-To: <c77435a80909011525m3a6e7917xe066d61f3863e615@mail.gmail.com>
+ (Nick Edelen's message of "Tue\, 1 Sep 2009 18\:25\:05 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 111F6F0C-9782-11DE-8A13-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127583>
 
-2009/9/1 Jeff King <peff@peff.net>:
+Nick Edelen <sirnot@gmail.com> writes:
 
-> OK, it is definitely not about mixed versions, and it is definitely
-> reproducible, even without ssh. The local clone optimization manages =
-to
-> avoid it, but you can see it with:
->
-> =A0git clone file://$PWD/a b
+> I vaguely remember something concerning those tests when starting the
+> project.  I'm a bit disconnected from everything right now, but I'll
+> try to get those fixed as soon as I can.
 
-ok I hadn't noticed that -- good spot!
-
-Anyway this whole thread went way over my head very quickly so just
-wanted to say I appreciate you guys looking at it and fixing it.
-
-Don't know if enough people say that :)
-
-Sitaram
+Thanks.
