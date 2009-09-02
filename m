@@ -1,59 +1,91 @@
-From: Mark Brown <broonie@opensource.wolfsonmicro.com>
-Subject: Re: [PATCH v2] status: list unmerged files last
-Date: Wed, 2 Sep 2009 13:48:32 +0100
-Message-ID: <20090902124832.GC4012@sirena.org.uk>
-References: <20090901145213.GB4194@debian.b2j> <200909012213.54611.j6t@kdbg.org> <7vy6oy9z9r.fsf@alter.siamese.dyndns.org> <200909012325.45739.j6t@kdbg.org> <7vtyzmxkpr.fsf@alter.siamese.dyndns.org> <20090902011513.GA3874@coredump.intra.peff.net> <7vmy5egefh.fsf@alter.siamese.dyndns.org> <20090902051248.GB12046@coredump.intra.peff.net>
+From: Emmanuel Trillaud <etrillaud@gmail.com>
+Subject: [PATCH] git-pull: fix fetch-options.txt to not document --quiet and 
+	--verbose twice in git-pull.txt
+Date: Wed, 2 Sep 2009 16:38:26 +0200
+Message-ID: <9f50533b0909020738l153c928auc4ecbadfaceeea5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 02 14:48:50 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 02 16:38:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MipGc-0001XA-33
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 14:48:50 +0200
+	id 1Miqyr-0000g9-Gf
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 16:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbZIBMsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 08:48:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751778AbZIBMsk
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 08:48:40 -0400
-Received: from cassiel.sirena.org.uk ([80.68.93.111]:52393 "EHLO
-	cassiel.sirena.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751050AbZIBMsj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 08:48:39 -0400
-Received: from broonie by cassiel.sirena.org.uk with local (Exim 4.69)
-	(envelope-from <broonie@sirena.org.uk>)
-	id 1MipGK-0005IP-Mu; Wed, 02 Sep 2009 13:48:32 +0100
-Content-Disposition: inline
-In-Reply-To: <20090902051248.GB12046@coredump.intra.peff.net>
-X-Cookie: Klatu barada nikto.
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: broonie@sirena.org.uk
-X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); SAEximRunCond expanded to false
+	id S1752590AbZIBOi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 10:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbZIBOi0
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 10:38:26 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:45946 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752329AbZIBOiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 10:38:25 -0400
+Received: by bwz19 with SMTP id 19so757768bwz.37
+        for <git@vger.kernel.org>; Wed, 02 Sep 2009 07:38:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=ddVFLZ79tjQ3kTJr2dPHT5ZefgeRVi60ZjOeYz2tQQY=;
+        b=oZXteKGa0MSAU8rqsBVMBHUYP8sNLDHj9Qe4k9SdS6/VLkQ06aV+umO2Vk/1A3myVT
+         TEFoew1Ib2iGv1lLow+dtOkYlHChEMxZW0z/DzveUqQFmsOpGitvKMWFzIvzLi/h1G+n
+         NvFMYLG4IrOpbxRRf1IEMrorjFlWMPuDg1FUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=WxpQVUYhz1ydcG4uUgTC0XIqgDfrzBD0lmdH00XMYj2EgvPvXc4pGNA5vc2V/q2/8S
+         yeptpSHpg5CDR3hP6TSq5GHo86VVQh7RjFEd64HyqlVr44JTrcNsrjgHqhI4UuoiCcaH
+         lstohw3QX2CtSo6V+GZgjMm9UCW52raO977Sc=
+Received: by 10.216.11.210 with SMTP id 60mr174287wex.188.1251902306247; Wed, 
+	02 Sep 2009 07:38:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127607>
 
-On Wed, Sep 02, 2009 at 01:12:48AM -0400, Jeff King wrote:
-> On Tue, Sep 01, 2009 at 09:26:26PM -0700, Junio C Hamano wrote:
+Hello all!
+the current man page of git-pull documents twice the --quiet and
+--verbose options. fetch-options.txt and merge-options.txt which both
+documents these options.
+I choose to "ifndef" the paragraphs in fetch-options.txt because IMHO
+they give too much details on the --quiet option (see the patch
+below). Of course we could modify merge-options.txt instead (the
+--quiet paragraph just says : "operate quietly"), I can provide a
+patch if you want.
 
-> > [1] It might even make sense to omit other sections and show only
-> > "updated" and "unmerged" in this order when the index is unmerged, but
-> > that is a lot more drastic change for 1.7.0.
+Best regards
 
-> I think that is a really bad idea. The mental model of "git status"
-> (versus individual diff or ls-files commands) is to see _everything_
-> going on in the repo. Showing a subset breaks that model and gives a
-> false sense of what is actually happening.
+-----------------
 
-It would be nice to be able to explicitly ask to suppress some of the
-output for cases where there's a lot of it and only a small part is
-interesting (like when resolving a large merge as mentioned earlier) - I
-often end up doing this by hand in those situations.  I do agree that
-doing this by default would be surprising.
+git-pull.txt includes fetch-options.txt and merge-options.txt which both
+document the --quiet and --verbose parameters. So we supress the
+--quiet and --verbose paragraphs if fetch-options.txt is included by
+git-pull.txt.
+
+Signed-off-by: Emmanuel Trillaud <etrillaud@gmail.com>
+---
+ Documentation/fetch-options.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index ea3b1bc..5eb2b0e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -1,3 +1,4 @@
++ifndef::git-pull[]
+ -q::
+ --quiet::
+ 	Pass --quiet to git-fetch-pack and silence any other internally
+@@ -6,6 +7,7 @@
+ -v::
+ --verbose::
+ 	Be verbose.
++endif::git-pull[]
+
+ -a::
+ --append::
+-- 
+1.6.4.2.253.g0b1fac
