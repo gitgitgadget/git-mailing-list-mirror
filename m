@@ -1,180 +1,100 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v6 6/6] fast-import: test the new option command
-Date: Wed,  2 Sep 2009 19:57:03 +0200
-Message-ID: <1251914223-31435-7-git-send-email-srabbelier@gmail.com>
-References: <1251914223-31435-1-git-send-email-srabbelier@gmail.com>
- <1251914223-31435-2-git-send-email-srabbelier@gmail.com>
- <1251914223-31435-3-git-send-email-srabbelier@gmail.com>
- <1251914223-31435-4-git-send-email-srabbelier@gmail.com>
- <1251914223-31435-5-git-send-email-srabbelier@gmail.com>
- <1251914223-31435-6-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git List <git@vger.kernel.org>,
-	Ian Clatworthy <ian.cla
-X-From: git-owner@vger.kernel.org Wed Sep 02 19:58:31 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] status: list unmerged files last
+Date: Wed, 2 Sep 2009 13:59:08 -0400
+Message-ID: <20090902175908.GA5998@coredump.intra.peff.net>
+References: <20090901145213.GB4194@debian.b2j>
+ <200909012213.54611.j6t@kdbg.org>
+ <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
+ <200909012325.45739.j6t@kdbg.org>
+ <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
+ <20090902011513.GA3874@coredump.intra.peff.net>
+ <7vmy5egefh.fsf@alter.siamese.dyndns.org>
+ <20090902051248.GB12046@coredump.intra.peff.net>
+ <7vljkxdiil.fsf@alter.siamese.dyndns.org>
+ <20090902100730.GA18226@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 19:59:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Miu6H-0007Zr-Lu
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 19:58:30 +0200
+	id 1Miu75-0007uC-Qd
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 19:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753248AbZIBR5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 13:57:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbZIBR5t
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 13:57:49 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:48496 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753213AbZIBR5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 13:57:47 -0400
-Received: by mail-bw0-f219.google.com with SMTP id 19so909246bwz.37
-        for <git@vger.kernel.org>; Wed, 02 Sep 2009 10:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Jo3zpqeNsccRmi1//jucXUiCaXKivFJmDpmXKev9/7o=;
-        b=l1L/qVPjoavr8i9SZ2igNWgFHIPfe4dGtXmnZRTccVcw4A/RaVyAwdCQ3wpEX6UxZA
-         BxIMdDzoqcH5dIt6HkMsED2VucS9Q1TAe0FvoYdSD8DQ0N8Dyk6p5AfT0l+opurny3no
-         BmmirMv7MaQvCym3McKZa15MM8GlQpUZka47o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mwADr+TtWPHuPc7Bcupg0OmhzLf3OhPQfeuOUL+poMnEbHqSHHXmsa0iFxvHq/+msd
-         U7ayW661F/TmplKNbt90gQzlUlGt+161H9sc0VCpoIxjjr4619K0DAWsZDNVW+/lpCO4
-         P4rNKQd4xwThSSGAKwf0k9eLtHLKHfjycJp/Q=
-Received: by 10.204.156.28 with SMTP id u28mr2401554bkw.74.1251914270011;
-        Wed, 02 Sep 2009 10:57:50 -0700 (PDT)
-Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id 21sm325505fks.9.2009.09.02.10.57.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Sep 2009 10:57:49 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
-In-Reply-To: <1251914223-31435-6-git-send-email-srabbelier@gmail.com>
+	id S1753179AbZIBR7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 13:59:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbZIBR7J
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 13:59:09 -0400
+Received: from peff.net ([208.65.91.99]:40634 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753113AbZIBR7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 13:59:08 -0400
+Received: (qmail 7933 invoked by uid 107); 2 Sep 2009 17:59:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 13:59:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 13:59:08 -0400
+Content-Disposition: inline
+In-Reply-To: <20090902100730.GA18226@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127621>
 
-Test three options (quiet and import/export-marks) and verify that the
-commandline options override these.
+On Wed, Sep 02, 2009 at 03:07:32AM -0700, David Aguilar wrote:
 
-Also make sure that a option command without a preceeding feature
-git-options command is rejected and that non-git options are ignored.
+> I agree with all of this but would also add that we can have
+> our cake and eat it too with respect to wanting to "keep
+> similar things together" and having "unmerged near bottom".
 
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
----
+Well, my point was that the "bottom" is not really cake, but I am not
+sure anyone else agrees.
 
-  Tests updated to match the new 'option git' syntax. Also added a
-  test to ensure that an option command without a preceeding 'feature
-  git-options' is rejected and that non-git options are ignored.
+> No one has suggested this, so I figured I would.
+> What do you think about this layout?
+> 
+> - untracked
+> - staged
+> - modified
+> - unmerged
 
- t/t9300-fast-import.sh |   84 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 83 insertions(+), 1 deletions(-)
+What about the current branch? Alternate author info? Tracking branch
+relationship? Should those be at the top or bottom?
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 564ed6b..fb795bb 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1089,7 +1089,7 @@ test_expect_success 'P: fail on blob mark in gitlink' '
-     test_must_fail git fast-import <input'
- 
- ###
--### series R (feature)
-+### series R (feature and option)
- ###
- 
- cat >input <<EOF
-@@ -1108,4 +1108,86 @@ test_expect_success 'R: supported feature is accepted' '
- 	git fast-import <input
- '
- 
-+cat >input << EOF
-+feature git-options
-+option git quiet
-+blob
-+data 3
-+hi
-+
-+EOF
-+
-+touch empty
-+
-+test_expect_success 'R: quiet option results in no stats being output' '
-+    cat input | git fast-import 2> output &&
-+    test_cmp empty output
-+'
-+
-+cat >input << EOF
-+feature git-options
-+option git export-marks=git.marks
-+blob
-+mark :1
-+data 3
-+hi
-+
-+EOF
-+
-+test_expect_success \
-+    'R: export-marks option results in a marks file being created' \
-+    'cat input | git fast-import &&
-+    grep :1 git.marks'
-+
-+test_expect_success \
-+    'R: export-marks options can be overriden by commandline options' \
-+    'cat input | git fast-import --export-marks=other.marks &&
-+    grep :1 other.marks'
-+
-+cat >input << EOF
-+feature git-options
-+option git import-marks=marks.out
-+option git export-marks=marks.new
-+EOF
-+
-+test_expect_success \
-+    'R: import to output marks works without any content' \
-+    'cat input | git fast-import &&
-+    test_cmp marks.out marks.new'
-+
-+cat >input <<EOF
-+feature git-options
-+option git import-marks=nonexistant.marks
-+option git export-marks=marks.new
-+EOF
-+
-+test_expect_success \
-+    'R: import marks uses the commandline marks file when the stream specifies one' \
-+    'cat input | git fast-import --import-marks=marks.out &&
-+    test_cmp marks.out marks.new'
-+
-+cat >input <<EOF
-+feature git-options
-+EOF
-+
-+test_expect_success 'R: feature option is accepted' '
-+	  git fast-import <input
-+'
-+
-+cat >input <<EOF
-+option git quiet
-+EOF
-+
-+test_expect_success \
-+    'R: option without preceeding feature command is rejected' \
-+    'test_must_fail git fast-import <input'
-+
-+cat >input <<EOF
-+option non-existing-vcs non-existing-option
-+EOF
-+
-+test_expect_success 'R: ignore non-git options' '
-+    git fast-import <input
-+'
-+
- test_done
--- 
-1.6.4.16.g72c66.dirty
+I dunno. Maybe it is just me being crotchety and hating change, but I
+like the current order (though swapping it below "updated" is fine with
+me).
+
+> While I've got you guys.. I have a patch for the new 1.7
+> status that makes it:
+> 
+> 	git status [<tree-ish>] [--] [pathspec]
+> 	(it adds support for tree-ish)
+> 
+> I added that because I thought that the porcelain-ish short
+> status output could be useful for "what does commit --amend
+> do" from a script-writers' pov, and thus adding <tree-ish>
+> enables git status -s HEAD^.
+
+If you want to know "what does commit --amend do", then shouldn't you be
+using "git commit --amend --dry-run" (which is what "git status" is now,
+but will not be in v1.7.0)?
+
+Are there other uses cases for arbitrary tree-ish's?
+
+> BTW is status -s intended to be something plumbing-like;
+> something we can build upon and expect to be stable?
+> I'm just curious because other commands have a --porcelain
+> option and I wasn't sure if this was the intent.
+
+We mentioned a --porcelain option in other discussion, but I don't think
+there is a patch. I would be in favor of --porcelain, even if it is
+currently identical to --short, because then it gives us freedom to
+diverge later (and in particular it gives us the freedom to let user
+configuration affect what is shown).
+
+-Peff
