@@ -1,79 +1,83 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] git.el: Make it easy to add unmerged files
-Date: Wed, 02 Sep 2009 10:48:52 +0200
-Message-ID: <87iqg120ln.fsf@wine.dyndns.org>
-References: <4A9A92F4.2090209@chromecode.com> <87ws4l47k2.fsf@wine.dyndns.org>
-	<4A9E0717.9040801@chromecode.com>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: unmerged files listed in the beginning of git-status
+Date: Wed, 2 Sep 2009 17:04:01 +0800
+Message-ID: <20090902090401.GA11464@debian.b2j>
+References: <20090901145213.GB4194@debian.b2j>
+ <7vljkypqfi.fsf@alter.siamese.dyndns.org>
+ <200909012140.08953.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Martin Nordholts <martin@chromecode.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 10:49:25 2009
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, bill lam <cbill.lam@gmail.com>,
+	git <git@vger.kernel.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Sep 02 11:04:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MilWs-0002bQ-Ua
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 10:49:23 +0200
+	id 1MillP-0006vn-1V
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 11:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755457AbZIBItB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 04:49:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755249AbZIBItB
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 04:49:01 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:53175 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755230AbZIBItA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 04:49:00 -0400
-Received: from adsl-84-226-16-146.adslplus.ch ([84.226.16.146] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <julliard@winehq.org>)
-	id 1MilWR-0007gf-IC; Wed, 02 Sep 2009 03:49:01 -0500
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id C4C1E1E73DE; Wed,  2 Sep 2009 10:48:52 +0200 (CEST)
-In-Reply-To: <4A9E0717.9040801@chromecode.com> (Martin Nordholts's message of
-	"Wed, 02 Sep 2009 07:48:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.50 (gnu/linux)
-X-Spam-Score: -3.5
+	id S1752080AbZIBJEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 05:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752033AbZIBJEK
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 05:04:10 -0400
+Received: from mail-px0-f204.google.com ([209.85.216.204]:48893 "EHLO
+	mail-px0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941AbZIBJEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 05:04:09 -0400
+Received: by pxi42 with SMTP id 42so719528pxi.20
+        for <git@vger.kernel.org>; Wed, 02 Sep 2009 02:04:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=NM9nIoxrQZp60ByM13YOIHd11sDiJ2r9e3pN7N5Rezo=;
+        b=VqpK4krQH9hUHaJyv9WOudepyoTqBJu2sGzSj+oYP9YuRDbpuPjMLMp1urGzCxgmC1
+         396auesH/hZB8giwMgv59Ln5shNhmFdKKrbcbTjYDp2a3JxLSxNQQC4Us71LA3FBXu9m
+         pfaJ20DFZjHRm7KLYIyopXDIeSPNdwg4zmP44=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=sW0TRAcdCD4fk0h23BPSXI2yGOjGUyoDar97Nul5O1OVio94k8bA4QsYJ6Sjm7rOvG
+         lY5/Ub2lPmM9XD5Y0/qnwpp5V8YgQ/ih+YNitOj6XcfW41eaC9X28WAnI+3PETncGJwt
+         ZSPiQ3byDlIOlI42fS9A4iKpjZrAfagi81MMQ=
+Received: by 10.114.248.7 with SMTP id v7mr6074677wah.92.1251882251556;
+        Wed, 02 Sep 2009 02:04:11 -0700 (PDT)
+Received: from localhost (n219078080082.netvigator.com [219.78.80.82])
+        by mx.google.com with ESMTPS id g25sm580980wag.8.2009.09.02.02.04.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 02 Sep 2009 02:04:10 -0700 (PDT)
+Mail-Followup-To: Johannes Sixt <j6t@kdbg.org>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200909012140.08953.j6t@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127598>
 
-Martin Nordholts <martin@chromecode.com> writes:
+On Tue, 01 Sep 2009, Johannes Sixt wrote:
+> > But unmerged entries are something you need to deal with _first_ before
+> > being able to go further, so in that sense it is more important than
+> > anything else in the traditional output.
+> 
+> This is actually an argument to place the unmerged entries *last* because this 
+> is what will be visible after 'git status' finished. Remember that we don't 
+> pass its output through the pager.
 
-> On 08/30/2009 05:58 PM, Alexandre Julliard wrote:
->> Martin Nordholts <martin@chromecode.com> writes:
->> 
->>> (Resending as I managed to mangle the previous patch despite trying not to...)
->>>
->>> It is nice and easy to git-add ignored and unknown files in a
->>> git-status buffer. Make it equally easy to add unmerged files which is
->>> a common use case.
->> 
->> That's not quite what adding a file means in git.el, unmerged files are
->> considered added already, and marking them resolved is done through the
->> git-resolve-file command. Of course that was implemented before git
->> overloaded the meaning of git-add to mean git-update-index, so maybe we
->> should follow the trend and use git-add-file for all index updates. In
->> that case git-resolve-file should probably be removed.
->
-> Since git instructs the user to use git-add for marking unmerged files
-> as resolved ("After resolving the conflicts, mark the corrected paths
-> with 'git add <paths>' or 'git rm <paths>' and commit the result.") and
-> doesn't even mention git-update-index, I think we should change git.el
-> accordingly.
->
-> But why do we need to also remove and disable git-resolve-file from
-> git.el? It doesn't hurt to keep that function and the keybinding, does
-> it?
-
-It doesn't hurt much, but having two keybindings for the same thing is a
-bit wasteful since there aren't that many simple bindings available. If
-we remove it, it opens the door to later reusing the 'R' key for
-something else (a git-rename function would be the obvious choice).
+If output of git-status is read indirectly such as by gui client, then
+it usually shows the top portion, in such cases, it might be desirable
+to put unmerged file (the most important port) immediately visible.
+But I don't have that experience.
 
 -- 
-Alexandre Julliard
-julliard@winehq.org
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
