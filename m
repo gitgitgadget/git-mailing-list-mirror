@@ -1,61 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] status: list unmerged files last
-Date: Wed, 2 Sep 2009 14:00:50 -0400
-Message-ID: <20090902180050.GB5998@coredump.intra.peff.net>
-References: <20090901145213.GB4194@debian.b2j>
- <200909012213.54611.j6t@kdbg.org>
- <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
- <200909012325.45739.j6t@kdbg.org>
- <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
- <20090902011513.GA3874@coredump.intra.peff.net>
- <7vmy5egefh.fsf@alter.siamese.dyndns.org>
- <20090902051248.GB12046@coredump.intra.peff.net>
- <20090902124832.GC4012@sirena.org.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
-To: Mark Brown <broonie@opensource.wolfsonmicro.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 20:01:06 2009
+From: Mark Struberg <struberg@yahoo.de>
+Subject: [JGIT PATCH 2/2] improve the handling of empty lines
+Date: Wed,  2 Sep 2009 20:00:28 +0200
+Message-ID: <1251914428-1687-2-git-send-email-struberg@yahoo.de>
+References: <1251914428-1687-1-git-send-email-struberg@yahoo.de>
+Cc: Mark Struberg <struberg@yahoo.de>
+To: git@vger.kernel.org, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Sep 02 20:06:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Miu8k-0008Re-O4
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 20:01:03 +0200
+	id 1MiuDv-0001os-2W
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 20:06:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059AbZIBSAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 14:00:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbZIBSAv
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 14:00:51 -0400
-Received: from peff.net ([208.65.91.99]:43291 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752855AbZIBSAv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 14:00:51 -0400
-Received: (qmail 7967 invoked by uid 107); 2 Sep 2009 18:01:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 14:01:05 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 14:00:50 -0400
-Content-Disposition: inline
-In-Reply-To: <20090902124832.GC4012@sirena.org.uk>
+	id S1753165AbZIBSGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 14:06:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbZIBSGL
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 14:06:11 -0400
+Received: from n9.bullet.re3.yahoo.com ([68.142.237.94]:23212 "HELO
+	n9.bullet.re3.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753122AbZIBSGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 14:06:10 -0400
+X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Sep 2009 14:06:10 EDT
+Received: from [68.142.237.87] by n9.bullet.re3.yahoo.com with NNFMP; 02 Sep 2009 18:00:04 -0000
+Received: from [66.196.97.156] by t3.bullet.re3.yahoo.com with NNFMP; 02 Sep 2009 18:00:04 -0000
+Received: from [127.0.0.1] by omp209.mail.re3.yahoo.com with NNFMP; 02 Sep 2009 18:00:04 -0000
+X-Yahoo-Newman-Id: 289449.51808.bm@omp209.mail.re3.yahoo.com
+Received: (qmail 90107 invoked from network); 2 Sep 2009 18:00:04 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Received:X-Yahoo-SMTP:X-YMail-OSG:X-Yahoo-Newman-Property:From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References;
+  b=yvxV4tUwmzWbEEBcNyf0QOaVjeRhTyI49Mh9oNxYCpsZYY2nicJgDXbs/vytbnw6Etzr3Rrq+nEwhGwVNJ1s7J3ScwyBY5QNYSfClsi+6VyggETGiG7f9tbZJj5FlinfZURx9tmW2Qdo4LyhAoN7ASJnEDc3eKiJvGBk0ApqAIc=  ;
+Received: from unknown (HELO localhost.localdomain) (struberg@62.178.39.60 with login)
+  by smtp109.plus.mail.re1.yahoo.com with SMTP; 2 Sep 2009 18:00:03 -0000
+X-Yahoo-SMTP: 2UDFDYyswBBwji.xRJsDPvpy2xFg
+X-YMail-OSG: cyVP.fgVM1nH6rSTXoOOKxrmWKMk4rBo2_8KBbZfddOk1MSnn..n4evjPUMpl.N6HO59gIdp7YBCWlvBIKvKO4q3GZk72M6UPDGSdzrNn5Jb2kFrLtpEuAoyrhigYp3feQ8Y9f14vofyrjtll7ACSBNRtugYR_soVSz8MudilqAzRQIRZmydHpizxI0pWNve3pykMgddFSgjekRxKWn4EPVjafzsTzev7ks_qOJwd6OY9RNdnNwkaDxWVHikiR_PKQMCc.lxEyA_LBrPk3EEHHbSXyj5lSAyx2Lk8mAgmb028qNwwVOvLIjphTx1naXfgwbCjw13ObYHOvOO6jVNase41EJ9AOMYAlrybV0m_w--
+X-Yahoo-Newman-Property: ymail-3
+X-Mailer: git-send-email 1.6.2.5
+In-Reply-To: <1251914428-1687-1-git-send-email-struberg@yahoo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127623>
 
-On Wed, Sep 02, 2009 at 01:48:32PM +0100, Mark Brown wrote:
+Move the 'empty-line' check in RefDatabase#readLine down a bit after we removed all the whitespaces.
+This way we consistently return null regardless if the line 
+is empty or if it does only contain whitespaces.
 
-> It would be nice to be able to explicitly ask to suppress some of the
-> output for cases where there's a lot of it and only a small part is
-> interesting (like when resolving a large merge as mentioned earlier) - I
-> often end up doing this by hand in those situations.  I do agree that
-> doing this by default would be surprising.
+Signed-off-by: Mark Struberg <struberg@yahoo.de>
+---
+ .../src/org/spearce/jgit/lib/RefDatabase.java      |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Yeah, we already have --untracked-files=<no|normal|all> and a matching
-config variable. If there are cases people find useful, I don't see a
-reason why we can't make other sections configurable, too. I think it
-just somebody to write a patch for the behavior they think makes sense
-(or at the very least a concrete proposal).
-
--Peff
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+index 477dc62..acc835b 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefDatabase.java
+@@ -498,14 +498,15 @@ private static String readLine(final File file)
+ 			throws FileNotFoundException, IOException {
+ 		final byte[] buf = NB.readFully(file, 4096);
+ 		int n = buf.length;
+-		if (n == 0)
+-			return null;
+ 		
+ 		// remove trailing whitespaces
+ 		while (n > 0 && Character.isWhitespace(buf[n - 1])) {
+ 			n--;
+ 		}
+-		
++
++		if (n == 0)
++			return null;
++
+ 		return RawParseUtils.decode(buf, 0, n);
+ 	}
+ 
+-- 
+1.6.2.5
