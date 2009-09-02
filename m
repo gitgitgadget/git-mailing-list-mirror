@@ -1,62 +1,69 @@
-From: Jeff King <peff@peff.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [PATCH] clone: disconnect transport after fetching
-Date: Wed, 2 Sep 2009 03:26:38 -0400
-Message-ID: <20090902072638.GC31528@coredump.intra.peff.net>
-References: <alpine.LNX.2.00.0909020159080.28290@iabervon.org>
- <20090902063647.GA29559@coredump.intra.peff.net>
- <fabb9a1e0909020009r3ee28b1fo3cba095abafec9d4@mail.gmail.com>
+Date: Wed, 2 Sep 2009 09:37:40 +0200
+Message-ID: <fabb9a1e0909020037m4ce6237ana6dec41088bba596@mail.gmail.com>
+References: <alpine.LNX.2.00.0909020159080.28290@iabervon.org> 
+	<20090902063647.GA29559@coredump.intra.peff.net> <fabb9a1e0909020009r3ee28b1fo3cba095abafec9d4@mail.gmail.com> 
+	<20090902072638.GC31528@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Sitaram Chamarty <sitaramc@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 09:26:50 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 02 09:38:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MikEz-0005VS-Kk
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 09:26:50 +0200
+	id 1MikQJ-0000Wz-Jl
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 09:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755766AbZIBH0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 03:26:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755356AbZIBH0j
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 03:26:39 -0400
-Received: from peff.net ([208.65.91.99]:54872 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751987AbZIBH0j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 03:26:39 -0400
-Received: (qmail 5467 invoked by uid 107); 2 Sep 2009 07:26:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 03:26:53 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 03:26:38 -0400
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e0909020009r3ee28b1fo3cba095abafec9d4@mail.gmail.com>
+	id S1751978AbZIBHh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 03:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZIBHh7
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 03:37:59 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:45086 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935AbZIBHh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 03:37:58 -0400
+Received: by ewy2 with SMTP id 2so528524ewy.17
+        for <git@vger.kernel.org>; Wed, 02 Sep 2009 00:38:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=o27o2Oh+Ti2jh5nSzF5jCv71Icu03Z9QNm6fq6w9Aoo=;
+        b=kNBNElUSfWfny6EqQfFJgWwFT2JkAsDjKYfo8G/0PBhJBT/6vZ6QvtbMLQtLvhn44K
+         +OGAmLPnlLOEnbzwnLrXZdQxLg+ahRq7TtdlOCAwnOIFF6yVyup304sMZoAAXGzWZerm
+         bGQUW7UbAOFR7qUqSIc1brQvXM6xRfNM9IQIw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=HjGCw4pzKQVWKke+63h5Hoa5p+HOsT7juQkyM7OQTISawTqN6RgIOFq9gOYV4TUK7B
+         afRL69TNBfRWjeMyxuJi2VjE47b3I6z0rkwFsQBGOrF2ITN3KkdhypGSL7kIcJh6+7AZ
+         eH2FPBSsEv2NwifZhp1+EkFztladxcuEz6SMU=
+Received: by 10.216.47.201 with SMTP id t51mr95861web.198.1251877080133; Wed, 
+	02 Sep 2009 00:38:00 -0700 (PDT)
+In-Reply-To: <20090902072638.GC31528@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127591>
 
-On Wed, Sep 02, 2009 at 09:09:19AM +0200, Sverre Rabbelier wrote:
+Heya,
 
-> On Wed, Sep 2, 2009 at 08:36, Jeff King<peff@peff.net> wrote:
-> > As you can see from the commit message, I did a little extra hunting to
-> > make sure we are not going to impact any other code paths, and I am
-> > pretty sure we are fine.
-> 
-> Thank you for fixing my mistake :).
+On Wed, Sep 2, 2009 at 09:26, Jeff King<peff@peff.net> wrote:
+> So think of it as you exposing a long-standing bug. ;)
 
-You're welcome, though I am not sure it is your mistake. Arguably this
-is something we should have been doing all along. The point of
-abstracting transports was that we didn't need to know their details at
-the outer layer, but in this case we were relying on the fact that no
-transports (until empty-clone-over-git) needed an explicit
-transport_disconnect to cleanly hang up on the other end.
+Ah, well in that case, you're all welcome :P.
 
-So think of it as you exposing a long-standing bug. ;)
 
--Peff
+-- 
+Cheers,
+
+Sverre Rabbelier
