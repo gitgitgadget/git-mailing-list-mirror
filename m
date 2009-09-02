@@ -1,69 +1,96 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] clone: disconnect transport after fetching
-Date: Wed, 2 Sep 2009 09:37:40 +0200
-Message-ID: <fabb9a1e0909020037m4ce6237ana6dec41088bba596@mail.gmail.com>
-References: <alpine.LNX.2.00.0909020159080.28290@iabervon.org> 
-	<20090902063647.GA29559@coredump.intra.peff.net> <fabb9a1e0909020009r3ee28b1fo3cba095abafec9d4@mail.gmail.com> 
-	<20090902072638.GC31528@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: `Git Status`-like output for two local branches
+Date: Wed, 2 Sep 2009 03:57:13 -0400
+Message-ID: <20090902075713.GA1832@coredump.intra.peff.net>
+References: <c115fd3c0908311320q46d585d2v457ccd0f411a6404@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Sitaram Chamarty <sitaramc@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 02 09:38:33 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 02 09:57:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MikQJ-0000Wz-Jl
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 09:38:32 +0200
+	id 1MikiZ-0005RJ-Us
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 09:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978AbZIBHh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 03:37:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751535AbZIBHh7
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 03:37:59 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:45086 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbZIBHh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 03:37:58 -0400
-Received: by ewy2 with SMTP id 2so528524ewy.17
-        for <git@vger.kernel.org>; Wed, 02 Sep 2009 00:38:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=o27o2Oh+Ti2jh5nSzF5jCv71Icu03Z9QNm6fq6w9Aoo=;
-        b=kNBNElUSfWfny6EqQfFJgWwFT2JkAsDjKYfo8G/0PBhJBT/6vZ6QvtbMLQtLvhn44K
-         +OGAmLPnlLOEnbzwnLrXZdQxLg+ahRq7TtdlOCAwnOIFF6yVyup304sMZoAAXGzWZerm
-         bGQUW7UbAOFR7qUqSIc1brQvXM6xRfNM9IQIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=HjGCw4pzKQVWKke+63h5Hoa5p+HOsT7juQkyM7OQTISawTqN6RgIOFq9gOYV4TUK7B
-         afRL69TNBfRWjeMyxuJi2VjE47b3I6z0rkwFsQBGOrF2ITN3KkdhypGSL7kIcJh6+7AZ
-         eH2FPBSsEv2NwifZhp1+EkFztladxcuEz6SMU=
-Received: by 10.216.47.201 with SMTP id t51mr95861web.198.1251877080133; Wed, 
-	02 Sep 2009 00:38:00 -0700 (PDT)
-In-Reply-To: <20090902072638.GC31528@coredump.intra.peff.net>
+	id S1752096AbZIBH5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 03:57:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbZIBH5O
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 03:57:14 -0400
+Received: from peff.net ([208.65.91.99]:44931 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752033AbZIBH5O (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 03:57:14 -0400
+Received: (qmail 5636 invoked by uid 107); 2 Sep 2009 07:57:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 03:57:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 03:57:13 -0400
+Content-Disposition: inline
+In-Reply-To: <c115fd3c0908311320q46d585d2v457ccd0f411a6404@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127592>
 
-Heya,
+On Mon, Aug 31, 2009 at 04:20:47PM -0400, Tim Visher wrote:
 
-On Wed, Sep 2, 2009 at 09:26, Jeff King<peff@peff.net> wrote:
-> So think of it as you exposing a long-standing bug. ;)
+> I'm interested in being able to get a message such as 'dev and master
+> have diverged, having 1 and 2 commits different respectively' or 'dev
+> is behind master by 3 commits and can be fast-forwarded', etc.  I'm
+> sure this is simple, but I can't figure out how to do it in the docs.
+> Sorry for the noobness of the question.
 
-Ah, well in that case, you're all welcome :P.
+No, there isn't a simple command to say "show me this status text for
+these two arbitrary branches".
 
+However, the process is relatively simple to implement in a shell
+script:
 
--- 
-Cheers,
+  1. Pick your two branches. I'm not clear on whether you want to
+     compare two arbitrary branches, or what.
 
-Sverre Rabbelier
+     For the regular "status", one is the current branch, and the other
+     is the "upstream" branch (as configured by your
+     branch.$current.merge variables). Calculating "upstream" can
+     actually be a bit tricky because it involves looking at several
+     configuraiton variables. However, recent versions of git allow this
+     shell snippet (the 'upstream' formatter was added in v1.6.3):
+
+       current=`git symbolic-ref HEAD`
+       upstream=`git for-each-ref --format='%(upstream)' $current`
+
+  2. Count the commits on each side that are not in the other. The
+     simplest way to do this is:
+
+       in_a=`git rev-list $b..$a -- | wc -l`
+       in_b=`git rev-list $a..$b -- | wc -l`
+
+     but the internal code actually does both traversals simultaneously,
+     which is slightly more efficient.  You can also do that by parsing
+     the output of:
+
+       git rev-list --left-right $a...$b --
+
+      which will mark commits in "a" with a '<' and commits in "b" with
+      a '>'. I don't know whether the extra complexity is worth the
+      efficiency gain (in the internal code it is easier, since we
+      aren't actually generating output and parsing it; we just keep a
+      count).
+
+  3. Compare the counts. If:
+
+       a=0, b=0: they are the same commit
+       a=0, b>0: a is behind b by $b commits, and can be fast-forwarded
+       a>0, b=0: a is ahead of b by $a commits (and can be pushed, or b
+                 can be fast-forwarded to a)
+       a>0, b>0: branches have diverged and have $a and $b commits
+                 respectively
+
+So it's easy to script, but not exactly a one-liner. We might be able to
+do better if you reduce the problem space. What exactly are you trying
+to accomplish?
+
+-Peff
