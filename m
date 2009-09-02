@@ -1,94 +1,69 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] status: list unmerged files last
-Date: Wed, 2 Sep 2009 01:12:48 -0400
-Message-ID: <20090902051248.GB12046@coredump.intra.peff.net>
-References: <20090901145213.GB4194@debian.b2j>
- <200909012213.54611.j6t@kdbg.org>
- <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
- <200909012325.45739.j6t@kdbg.org>
- <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
- <20090902011513.GA3874@coredump.intra.peff.net>
- <7vmy5egefh.fsf@alter.siamese.dyndns.org>
+Subject: Re: clong an empty repo over ssh causes (harmless) fatal
+Date: Wed, 2 Sep 2009 01:16:15 -0400
+Message-ID: <20090902051615.GC12046@coredump.intra.peff.net>
+References: <vpqskf8z0rj.fsf@bauges.imag.fr>
+ <2e24e5b90908310730u53ee27d3nd2b66c1f58202e7@mail.gmail.com>
+ <20090831164146.GA23245@coredump.intra.peff.net>
+ <vpqocpvevzx.fsf@bauges.imag.fr>
+ <20090831191032.GB4876@sigill.intra.peff.net>
+ <20090831201911.GA24989@atjola.homenet>
+ <20090831224749.GA24190@sigill.intra.peff.net>
+ <fabb9a1e0908311550r1b549eb2k2df65c188a0ea6a0@mail.gmail.com>
+ <20090901010833.GA4033@sigill.intra.peff.net>
+ <alpine.LNX.2.00.0909020024270.28290@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j6t@kdbg.org>, bill lam <cbill.lam@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 02 07:14:06 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Sep 02 07:16:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MiiAV-0001Z5-3I
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 07:14:03 +0200
+	id 1MiiCn-00027X-HM
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Sep 2009 07:16:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755710AbZIBFMu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Sep 2009 01:12:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755708AbZIBFMu
-	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 01:12:50 -0400
-Received: from peff.net ([208.65.91.99]:43905 "EHLO peff.net"
+	id S1755705AbZIBFQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Sep 2009 01:16:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755185AbZIBFQQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 2 Sep 2009 01:16:16 -0400
+Received: from peff.net ([208.65.91.99]:39720 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755703AbZIBFMt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Sep 2009 01:12:49 -0400
-Received: (qmail 4711 invoked by uid 107); 2 Sep 2009 05:13:03 -0000
+	id S1752989AbZIBFQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Sep 2009 01:16:15 -0400
+Received: (qmail 4736 invoked by uid 107); 2 Sep 2009 05:16:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 01:13:03 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 01:12:48 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 02 Sep 2009 01:16:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Sep 2009 01:16:15 -0400
 Content-Disposition: inline
-In-Reply-To: <7vmy5egefh.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <alpine.LNX.2.00.0909020024270.28290@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127579>
 
-On Tue, Sep 01, 2009 at 09:26:26PM -0700, Junio C Hamano wrote:
+On Wed, Sep 02, 2009 at 12:33:52AM -0400, Daniel Barkalow wrote:
 
-> But not everybody is used to such a set-up.  If you rely on terminal's
-> scrollback buffer with mouse and a short terminal, I can see cutting and
-> pasting would be an issue.  I do not have a good answer to "tig status",
-> but the design principle of supporting the lowest denominator is
-> important.
-
-But I'm not sure it is about "lowest common denominator". I think it is
-about different people having different preferences (as a matter of
-fact, I use an 80x25 terminal most of the time, and I think I prefer the
-content at the top. Perhaps it is simply habit, but I do think having it
-right next to "staged for commit" items makes the most sense).
-
-> The above suggests me that (1) we would want to have the new "unmerged"
-> section next to "updated" section, (2) we would want to have it later in
-> the output rather than earlier, and (3) in the traditional output, people
-> are used to see unmerged paths in "changed" section, so it would be easier
-> for them to transition if "unmerged" section were near "changed" section.
+> > The patch below seems to work for me, but I'm a little concerned how it
+> > might impact other transports.
 > 
-> That makes the ideal place between updated and changed, no?
+> Does putting a "transport_disconnect(transport);" after the 
+> "transport_unlock_pack(transport);" in builtin-clone.c also work for you? 
+> I think that's a cleaner solution, and should future-proof it in case we 
+> have a future transport that both doesn't disconnect itself after a fetch 
+> and gives an error message if the connection is dropped suddenly.
+> 
+> It's kind of just an accident that the only transport that cares about 
+> disconnect very much doesn't care if you've fetched after getting the 
+> refs.
 
-Yes, I think that is fine, and makes more sense than where we have it
-now. I mainly wanted to argue against sticking it at the very bottom.
-
-> [1] It might even make sense to omit other sections and show only
-> "updated" and "unmerged" in this order when the index is unmerged, but
-> that is a lot more drastic change for 1.7.0.
-
-I think that is a really bad idea. The mental model of "git status"
-(versus individual diff or ls-files commands) is to see _everything_
-going on in the repo. Showing a subset breaks that model and gives a
-false sense of what is actually happening.
-
-I don't know that it would matter much most of the time anyway. If you
-have unmerged entries, you probably don't have any (or many) "changed
-but not updated" files, too (since you are not working on a new commit
-but rather a merge, they would have to be dirty state you are carrying
-permanently, but not related to the merge). If you do, you probably want
-to see them to be aware of what is going on.
-
-You probably also don't have a lot of untracked files. If you have a
-few, you might want to be reminded of them to make sure they were not
-something you were preparing to help with a tricky merge. And if you are
-the sort of person who carries around a lot of untracked files, and for
-some reason you refuse to put them in your .gitignore, then you probably
-have status.untracked set to "no" already (or you should consider
-setting it), as they will be bugging you in other situations, as well.
+It does work, and I think that is a much saner solution for the reasons
+you mention. Thanks. Do you want to write it up and submit it, or should
+I?
 
 -Peff
