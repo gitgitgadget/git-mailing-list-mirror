@@ -1,100 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] make shallow repository deepening more network efficient
-Date: Thu, 03 Sep 2009 19:08:33 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0909031847520.6044@xanadu.home>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH (RESEND) 3/3] Fix DirCache.findEntry to work on an empty cache
+Date: Fri, 4 Sep 2009 01:14:12 +0200
+Message-ID: <200909040114.12980.robin.rosenberg@dewire.com>
+References: <1251847010-9992-1-git-send-email-spearce@spearce.org> <1251847010-9992-2-git-send-email-spearce@spearce.org> <1251847010-9992-3-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 01:09:04 2009
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <sop@google.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Sep 04 01:14:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjLQM-0007xt-GW
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 01:09:03 +0200
+	id 1MjLVW-0000ie-Iz
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 01:14:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932464AbZICXIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 19:08:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932448AbZICXIw
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 19:08:52 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:52705 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932429AbZICXIv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 19:08:51 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KPF00GGY4A98HP1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 03 Sep 2009 19:08:33 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S932472AbZICXOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 19:14:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932466AbZICXON
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 19:14:13 -0400
+Received: from mail.dewire.com ([83.140.172.130]:5197 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752092AbZICXON (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2009 19:14:13 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id ABF078026F6;
+	Fri,  4 Sep 2009 01:14:14 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id tVITSuxWztDF; Fri,  4 Sep 2009 01:14:14 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 0E2DE80025E;
+	Fri,  4 Sep 2009 01:14:13 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <1251847010-9992-3-git-send-email-spearce@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127669>
 
+onsdag 02 september 2009 01:16:50 skrev "Shawn O. Pearce" <spearce@spearce.org>:
+> If the cache has no entries, we want to return -1 rather than throw
+> ArrayIndexOutOfBoundsException.  This binary search loop was stolen
+> from some other code which contained a test before the loop to see if
+> the collection was empty or not, but we failed to include that here.
+> 
+> Flipping the loop around to a standard while loop ensures we test
+> the condition properly first.
+> 
+> Signed-off-by: Shawn O. Pearce <sop@google.com>
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 
-First of all, I can't find any reason why thin pack generation is 
-explicitly disabled when dealing with a shallow repository.  The 
-possible delta base objects are collected from the edge commits which 
-are always obtained through history walking with the same shallow refs 
-as the client, Therefore the client is always going to have those base 
-objects available. So let's remove that restriction.
+Is this a new policy?
 
-Then we can make shallow repository deepening much more efficient by 
-using the remote's unshallowed commits as edge commits to get preferred 
-base objects for thin pack generation.  On git.git, this makes the data 
-transfer for the deepening of a shallow repository from depth 1 to depth 2
-around 134 KB instead of 3.68 MB.
-
-Signed-off-by: Nicolas Pitre <nico@cam.org>
-
-diff --git a/upload-pack.c b/upload-pack.c
-index f73e3c9..c77ab71 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -32,6 +32,7 @@ static int no_progress, daemon_mode;
- static int shallow_nr;
- static struct object_array have_obj;
- static struct object_array want_obj;
-+static struct object_array extra_edge_obj;
- static unsigned int timeout;
- /* 0 for no sideband,
-  * otherwise maximum packet size (up to 65520 bytes).
-@@ -135,6 +136,10 @@ static int do_rev_list(int fd, void *create_full_pack)
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	mark_edges_uninteresting(revs.commits, &revs, show_edge);
-+	if (use_thin_pack)
-+		for (i = 0; i < extra_edge_obj.nr; i++)
-+			fprintf(pack_pipe, "-%s\n", sha1_to_hex(
-+					extra_edge_obj.objects[i].item->sha1));
- 	traverse_commit_list(&revs, show_commit, show_object, NULL);
- 	fflush(pack_pipe);
- 	fclose(pack_pipe);
-@@ -562,7 +567,6 @@ static void receive_needs(void)
- 		if (!prefixcmp(line, "shallow ")) {
- 			unsigned char sha1[20];
- 			struct object *object;
--			use_thin_pack = 0;
- 			if (get_sha1(line + 8, sha1))
- 				die("invalid shallow line: %s", line);
- 			object = parse_object(sha1);
-@@ -574,7 +578,6 @@ static void receive_needs(void)
- 		}
- 		if (!prefixcmp(line, "deepen ")) {
- 			char *end;
--			use_thin_pack = 0;
- 			depth = strtol(line + 7, &end, 0);
- 			if (end == line + 7 || depth <= 0)
- 				die("Invalid deepen: %s", line);
-@@ -657,6 +660,7 @@ static void receive_needs(void)
- 							NULL, &want_obj);
- 					parents = parents->next;
- 				}
-+				add_object_array(object, NULL, &extra_edge_obj);
- 			}
- 			/* make sure commit traversal conforms to client */
- 			register_shallow(object->sha1);
+-- robin
