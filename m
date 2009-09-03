@@ -1,60 +1,133 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-clone: add missing coma in --reference documentation
-Date: Thu, 3 Sep 2009 13:24:16 +0200
-Message-ID: <20090903112416.GI4770@genesis.frugalware.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH v5] import-tars: Allow per-tar author and commit message.
+Date: Thu, 03 Sep 2009 13:15:00 +0100
+Message-ID: <20090903122004.67A502FC20@perkele>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 13:24:29 2009
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 03 14:22:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjAQW-0002KH-Vk
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 13:24:29 +0200
+	id 1MjBIb-0004QG-LF
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 14:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754963AbZICLYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 07:24:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754961AbZICLYS
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 07:24:18 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:50475 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754946AbZICLYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 07:24:17 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 314965809B;
-	Thu,  3 Sep 2009 13:24:16 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 2267144904;
-	Thu,  3 Sep 2009 13:24:16 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 2632F11F0027; Thu,  3 Sep 2009 13:24:16 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755231AbZICMUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 08:20:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755183AbZICMUJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 08:20:09 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:55750 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755189AbZICMUI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2009 08:20:08 -0400
+Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPE007X5A9K2130@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Sep 2009 14:20:08 +0200 (MEST)
+Received: from perkele ([84.215.142.63]) by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPE00IACA9HO740@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Sep 2009 14:20:08 +0200 (MEST)
+X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
+ Antispam-Data: 2009.9.3.120616
+Received: by perkele (Postfix, from userid 501)	id 67A502FC20; Thu,
+ 03 Sep 2009 14:20:04 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127652>
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+If the "--metainfo=<ext>" option is given on the command line, a file
+called "<filename.tar>.<ext>" will be used to create the commit message
+for "<filename.tar>", instead of using "Imported from filename.tar".
+
+The author and committer of the tar ball can also be overridden by
+embedding an "Author:" or "Committer:" header in the metainfo file.
+
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
 ---
- Documentation/git-clone.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Fixed script to allow an empty line to stop parsing message for
+header lines, and fixed indentation style to match the rest of the
+script.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index b14de6c..87c13ab 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -76,7 +76,7 @@ then the cloned repository will become corrupt.
+ contrib/fast-import/import-tars.perl |   50 +++++++++++++++++++++++++++++++---
+ 1 files changed, 46 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 78e40d2..a909716 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -8,9 +8,20 @@
+ ##  perl import-tars.perl *.tar.bz2
+ ##  git whatchanged import-tars
+ ##
++## Use --metainfo to specify the extension for a meta data file, where
++## import-tars can read the commit message and optionally author and
++## committer information.
++##
++##  echo 'This is the commit message' > myfile.tar.bz2.msg
++##  perl import-tars.perl --metainfo=msg myfile.tar.bz2
  
+ use strict;
+-die "usage: import-tars *.tar.{gz,bz2,Z}\n" unless @ARGV;
++use Getopt::Long;
++
++my $metaext = '';
++
++die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,Z}\n"
++	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
  
- --reference <repository>::
--	If the reference repository is on the local machine
-+	If the reference repository is on the local machine,
- 	automatically setup .git/objects/info/alternates to
- 	obtain objects from the reference repository.  Using
- 	an already existing repository as an alternate will
+ my $branch_name = 'import-tars';
+ my $branch_ref = "refs/heads/$branch_name";
+@@ -109,12 +120,43 @@ foreach my $tar_file (@ARGV)
+ 		$have_top_dir = 0 if $top_dir ne $1;
+ 	}
+ 
++	my $commit_msg = "Imported from $tar_file.";
++	my $this_committer_name = $committer_name;
++	my $this_committer_email = $committer_email;
++	my $this_author_name = $author_name;
++	my $this_author_email = $author_email;
++	if ($metaext ne '') {
++		# Optionally read a commit message from <filename.tar>.msg
++		# Add a line on the form "Committer: name <e-mail>" to override
++		# the committer and "Author: name <e-mail>" to override the
++		# author for this tar ball.
++		if (open MSG, '<', "${tar_file}.${metaext}") {
++			my $header_done = 0;
++			$commit_msg = '';
++			while (<MSG>) {
++				if (!$header_done && /^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i) {
++					$this_committer_name = $1;
++					$this_committer_email = $2;
++				} elsif (!$header_done && /^Author:\s+([^<>]*)\s+<(.*)>\s*$/i) {
++					$this_author_name = $1;
++					$this_author_email = $2;
++				} elsif (!$header_done && /^$/ { # empty line ends header.
++					$header_done = 1;
++				} else {
++					$commit_msg .= $_;
++					$header_done = 1;
++				}
++			}
++			close MSG;
++		}
++	}
++
+ 	print FI <<EOF;
+ commit $branch_ref
+-author $author_name <$author_email> $author_time +0000
+-committer $committer_name <$committer_email> $commit_time +0000
++author $this_author_name <$this_author_email> $author_time +0000
++committer $this_committer_name <$this_committer_email> $commit_time +0000
+ data <<END_OF_COMMIT_MESSAGE
+-Imported from $tar_file.
++$commit_msg
+ END_OF_COMMIT_MESSAGE
+ 
+ deleteall
 -- 
-1.6.4
+1.6.3.3
