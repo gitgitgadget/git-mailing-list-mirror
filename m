@@ -1,133 +1,486 @@
 From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH v5] import-tars: Allow per-tar author and commit message.
+Subject: [PATCH v4] Add script for importing bits-and-pieces to Git.
 Date: Thu, 03 Sep 2009 13:15:00 +0100
-Message-ID: <20090903122004.67A502FC20@perkele>
+Message-ID: <20090903122007.4B19E2FC21@perkele>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 03 14:22:28 2009
+X-From: git-owner@vger.kernel.org Thu Sep 03 14:22:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjBIb-0004QG-LF
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 14:20:22 +0200
+	id 1MjBIq-0004bI-Vh
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 14:20:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755231AbZICMUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 08:20:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755183AbZICMUJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 08:20:09 -0400
+	id S1755213AbZICMUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 08:20:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbZICMUO
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 08:20:14 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:55750 "EHLO
 	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755189AbZICMUI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2009 08:20:08 -0400
+	by vger.kernel.org with ESMTP id S1755203AbZICMUJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Sep 2009 08:20:09 -0400
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPE007X5A9K2130@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Sep 2009 14:20:08 +0200 (MEST)
+ with ESMTP id <0KPE007X7A9L2130@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Sep 2009 14:20:09 +0200 (MEST)
 Received: from perkele ([84.215.142.63]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPE00IACA9HO740@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Sep 2009 14:20:08 +0200 (MEST)
+ with ESMTP id <0KPE00IAGA9JO740@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Sep 2009 14:20:09 +0200 (MEST)
 X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
  Antispam-Data: 2009.9.3.120616
-Received: by perkele (Postfix, from userid 501)	id 67A502FC20; Thu,
- 03 Sep 2009 14:20:04 +0200 (CEST)
+Received: by perkele (Postfix, from userid 501)	id 4B19E2FC21; Thu,
+ 03 Sep 2009 14:20:07 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127653>
 
-If the "--metainfo=<ext>" option is given on the command line, a file
-called "<filename.tar>.<ext>" will be used to create the commit message
-for "<filename.tar>", instead of using "Imported from filename.tar".
+Allows the user to import version history that is stored in bits and
+pieces in the file system, for instance snapshots of old development
+trees, or day-by-day backups. A configuration file is used to
+describe the relationship between the different files and allow
+describing branches and merges, as well as authorship and commit
+messages.
 
-The author and committer of the tar ball can also be overridden by
-embedding an "Author:" or "Committer:" header in the metainfo file.
+Output is created in a format compatible with git-fast-import.
+
+Full documentation is provided inline in perldoc format.
 
 Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
 ---
-Fixed script to allow an empty line to stop parsing message for
-header lines, and fixed indentation style to match the rest of the
-script.
+This version improves the configuration file parser to allow quoted
+strings.
 
- contrib/fast-import/import-tars.perl |   50 +++++++++++++++++++++++++++++++---
- 1 files changed, 46 insertions(+), 4 deletions(-)
+ contrib/fast-import/import-directories.perl |  416 +++++++++++++++++++++++++++
+ 1 files changed, 416 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/fast-import/import-directories.perl
 
-diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
-index 78e40d2..a909716 100755
---- a/contrib/fast-import/import-tars.perl
-+++ b/contrib/fast-import/import-tars.perl
-@@ -8,9 +8,20 @@
- ##  perl import-tars.perl *.tar.bz2
- ##  git whatchanged import-tars
- ##
-+## Use --metainfo to specify the extension for a meta data file, where
-+## import-tars can read the commit message and optionally author and
-+## committer information.
-+##
-+##  echo 'This is the commit message' > myfile.tar.bz2.msg
-+##  perl import-tars.perl --metainfo=msg myfile.tar.bz2
- 
- use strict;
--die "usage: import-tars *.tar.{gz,bz2,Z}\n" unless @ARGV;
-+use Getopt::Long;
+diff --git a/contrib/fast-import/import-directories.perl b/contrib/fast-import/import-directories.perl
+new file mode 100755
+index 0000000..5782d80
+--- /dev/null
++++ b/contrib/fast-import/import-directories.perl
+@@ -0,0 +1,416 @@
++#!/usr/bin/perl -w
++#
++# Copyright 2008-2009 Peter Krefting <peter@softwolves.pp.se>
++#
++# ------------------------------------------------------------------------
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program; if not, write to the Free Software
++# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
++#
++# ------------------------------------------------------------------------
 +
-+my $metaext = '';
++=pod
 +
-+die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,Z}\n"
-+	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
- 
- my $branch_name = 'import-tars';
- my $branch_ref = "refs/heads/$branch_name";
-@@ -109,12 +120,43 @@ foreach my $tar_file (@ARGV)
- 		$have_top_dir = 0 if $top_dir ne $1;
- 	}
- 
-+	my $commit_msg = "Imported from $tar_file.";
-+	my $this_committer_name = $committer_name;
-+	my $this_committer_email = $committer_email;
-+	my $this_author_name = $author_name;
-+	my $this_author_email = $author_email;
-+	if ($metaext ne '') {
-+		# Optionally read a commit message from <filename.tar>.msg
-+		# Add a line on the form "Committer: name <e-mail>" to override
-+		# the committer and "Author: name <e-mail>" to override the
-+		# author for this tar ball.
-+		if (open MSG, '<', "${tar_file}.${metaext}") {
-+			my $header_done = 0;
-+			$commit_msg = '';
-+			while (<MSG>) {
-+				if (!$header_done && /^Committer:\s+([^<>]*)\s+<(.*)>\s*$/i) {
-+					$this_committer_name = $1;
-+					$this_committer_email = $2;
-+				} elsif (!$header_done && /^Author:\s+([^<>]*)\s+<(.*)>\s*$/i) {
-+					$this_author_name = $1;
-+					$this_author_email = $2;
-+				} elsif (!$header_done && /^$/ { # empty line ends header.
-+					$header_done = 1;
-+				} else {
-+					$commit_msg .= $_;
-+					$header_done = 1;
++=head1 NAME
++
++import-directories - Import bits and pieces to Git.
++
++=head1 SYNOPSIS
++
++B<import-directories.perl> F<configfile> F<outputfile>
++
++=head1 DESCRIPTION
++
++Script to import arbitrary projects version controlled by the "copy the
++source directory to a new location and edit it there"-version controlled
++projects into version control. Handles projects with arbitrary branching
++and version trees, taking a file describing the inputs and generating a
++file compatible with the L<git-fast-import(1)> format.
++
++=head1 CONFIGURATION FILE
++
++=head2 Format
++
++The configuration file is based on the standard I<.ini> format.
++
++ ; Comments start with semi-colons
++ [section]
++ key=value
++
++Please see below for information on how to escape special characters.
++
++=head2 Global configuration
++
++Global configuration is done in the B<[config]> section, which should be
++the first section in the file. Configuration can be changed by
++repeating configuration sections later on.
++
++ [config]
++ ; configure conversion of CRLFs. "convert" means that all CRLFs
++ ; should be converted into LFs (suitable for the core.autocrlf
++ ; setting set to true in Git). "none" means that all data is
++ ; treated as binary.
++ crlf=convert
++
++=head2 Revision configuration
++
++Each revision that is to be imported is described in three
++sections. Revisions should be defined in topological order, so
++that a revision's parent has always been defined when a new revision
++is introduced. All the sections for one revision must be defined
++before defining the next revision.
++
++Each revision is assigned a unique numerical identifier. The
++numbers do not need to be consecutive, nor monotonically
++increasing.
++
++For instance, if your configuration file contains only the two
++revisions 4711 and 42, where 4711 is the initial commit, the
++only requirement is that 4711 is completely defined before 42.
++
++=pod
++
++=head3 Revision description section
++
++A section whose section name is just an integer gives meta-data
++about the revision.
++
++ [3]
++ ; author sets the author of the revisions
++ author=Peter Krefting <peter@softwolves.pp.se>
++ ; branch sets the branch that the revision should be committed to
++ branch=master
++ ; parent describes the revision that is the parent of this commit
++ ; (optional)
++ parent=1
++ ; merges describes a revision that is merged into this commit
++ ; (optional; can be repeated)
++ merges=2
++ ; selects one file to take the timestamp from
++ ; (optional; if unspecified, the most recent file from the .files
++ ;  section is used)
++ timestamp=3/source.c
++
++=head3 Revision contents section
++
++A section whose section name is an integer followed by B<.files>
++describe all the files included in this revision. If a file that
++was available previously is not included in this revision, it will
++be removed.
++
++If an on-disk revision is incomplete, you can point to files from
++a previous revision. There are no restriction as to where the source
++files are located, nor to the names of them.
++
++ [3.files]
++ ; the key is the path inside the repository, the value is the path
++ ; as seen from the importer script.
++ source.c=ver-3.00/source.c
++ source.h=ver-2.99/source.h
++ readme.txt=ver-3.00/introduction to the project.txt
++
++File names are treated as byte strings (but please see below on
++quoting rules), and should be stored in the configuration file in
++the encoding that should be used in the generated repository.
++
++=head3 Revision commit message section
++
++A section whose section name is an integer followed by B<.message>
++gives the commit message. This section is read verbatim, up until
++the beginning of the next section. As such, a commit message may not
++contain a line that begins with an opening square bracket ("[") and
++ends with a closing square bracket ("]"), unless they are surrounded
++by whitespace or other characters.
++
++ [3.message]
++ Implement foobar.
++ ; trailing blank lines are ignored.
++
++=cut
++
++# Globals
++use strict;
++use integer;
++my $crlfmode = 0;
++my @revs;
++my (%revmap, %message, %files, %author, %branch, %parent, %merges, %time, %timesource);
++my $sectiontype = 0;
++my $rev = 0;
++my $mark = 1;
++
++# Check command line
++if ($#ARGV < 1 || $ARGV[0] =~ /^--?h/)
++{
++    exec('perldoc', $0);
++    exit 1;
++}
++
++# Open configuration
++my $config = $ARGV[0];
++open CFG, '<', $config or die "Cannot open configuration file \"$config\": ";
++
++# Open output
++my $output = $ARGV[1];
++open OUT, '>', $output or die "Cannot create output file \"$output\": ";
++binmode OUT;
++
++LINE: while (my $line = <CFG>)
++{
++	$line =~ s/\r?\n$//;
++	next LINE if $sectiontype != 4 && $line eq '';
++	next LINE if $line =~ /^;/;
++	my $oldsectiontype = $sectiontype;
++	my $oldrev = $rev;
++
++	# Sections
++	if ($line =~ m"^\[(config|(\d+)(|\.files|\.message))\]$")
++	{
++		if ($1 eq 'config')
++		{
++			$sectiontype = 1;
++		}
++		elsif ($3 eq '')
++		{
++			$sectiontype = 2;
++			$rev = $2;
++			# Create a new revision
++			die "Duplicate rev: $line\n " if defined $revmap{$rev};
++			print "Reading revision $rev\n";
++			push @revs, $rev;
++			$revmap{$rev} = $mark ++;
++			$time{$revmap{$rev}} = 0;
++		}
++		elsif ($3 eq '.files')
++		{
++			$sectiontype = 3;
++			$rev = $2;
++			die "Revision mismatch: $line\n " unless $rev == $oldrev;
++		}
++		elsif ($3 eq '.message')
++		{
++			$sectiontype = 4;
++			$rev = $2;
++			die "Revision mismatch: $line\n " unless $rev == $oldrev;
++		}
++		else
++		{
++			die "Internal parse error: $line\n ";
++		}
++		next LINE;
++	}
++
++	# Parse data
++	if ($sectiontype != 4)
++	{
++		# Key and value
++		if ($line =~ m"^\s*([^\s].*=.*[^\s])\s*$")
++		{
++			my ($key, $value) = &parsekeyvaluepair($1);
++			# Global configuration
++			if (1 == $sectiontype)
++			{
++				if ($key eq 'crlf')
++				{
++					$crlfmode = 1, next LINE if $value eq 'convert';
++					$crlfmode = 0, next LINE if $value eq 'none';
++				}
++				die "Unknown configuration option: $line\n ";
++			}
++			# Revision specification
++			if (2 == $sectiontype)
++			{
++				my $current = $revmap{$rev};
++				$author{$current} = $value, next LINE if $key eq 'author';
++				$branch{$current} = $value, next LINE if $key eq 'branch';
++				$parent{$current} = $value, next LINE if $key eq 'parent';
++				$timesource{$current} = $value, next LINE if $key eq 'timestamp';
++				push(@{$merges{$current}}, $value), next LINE if $key eq 'merges';
++				die "Unknown revision option: $line\n ";
++			}
++			# Filespecs
++			if (3 == $sectiontype)
++			{
++				# Add the file and create a marker
++				die "File not found: $line\n " unless -f $value;
++				my $current = $revmap{$rev};
++				${$files{$current}}{$key} = $mark;
++				my $time = &fileblob($value, $crlfmode, $mark ++);
++
++				# Update revision timestamp if more recent than other
++				# files seen, or if this is the file we have selected
++				# to take the time stamp from using the "timestamp"
++				# directive.
++				if ((defined $timesource{$current} && $timesource{$current} eq $value)
++				    || $time > $time{$current})
++				{
++					$time{$current} = $time;
 +				}
 +			}
-+			close MSG;
++		}
++		else
++		{
++			die "Parse error: $line\n ";
++		}
++	}
++	else
++	{
++		# Commit message
++		my $current = $revmap{$rev};
++		if (defined $message{$current})
++		{
++			$message{$current} .= "\n";
++		}
++		$message{$current} .= $line;
++	}
++}
++close CFG;
++
++# Start spewing out data for git-fast-import
++foreach my $commit (@revs)
++{
++	# Progress
++	print OUT "progress Creating revision $commit\n";
++
++	# Create commit header
++	my $mark = $revmap{$commit};
++
++	# Branch and commit id
++	print OUT "commit refs/heads/", $branch{$mark}, "\nmark :", $mark, "\n";
++
++	# Author and timestamp
++	die "No timestamp defined for $commit (no files?)\n" unless defined $time{$mark};
++	print OUT "committer ", $author{$mark}, " ", $time{$mark}, " +0100\n";
++
++	# Commit message
++	die "No message defined for $commit\n" unless defined $message{$mark};
++	my $message = $message{$mark};
++	$message =~ s/\n$//; # Kill trailing empty line
++	print OUT "data ", length($message), "\n", $message, "\n";
++
++	# Parent and any merges
++	print OUT "from :", $revmap{$parent{$mark}}, "\n" if defined $parent{$mark};
++	if (defined $merges{$mark})
++	{
++		foreach my $merge (@{$merges{$mark}})
++		{
++			print OUT "merge :", $revmap{$merge}, "\n";
 +		}
 +	}
 +
- 	print FI <<EOF;
- commit $branch_ref
--author $author_name <$author_email> $author_time +0000
--committer $committer_name <$committer_email> $commit_time +0000
-+author $this_author_name <$this_author_email> $author_time +0000
-+committer $this_committer_name <$this_committer_email> $commit_time +0000
- data <<END_OF_COMMIT_MESSAGE
--Imported from $tar_file.
-+$commit_msg
- END_OF_COMMIT_MESSAGE
- 
- deleteall
++	# Output file marks
++	print OUT "deleteall\n"; # start from scratch
++	foreach my $file (sort keys %{$files{$mark}})
++	{
++		print OUT "M 644 :", ${$files{$mark}}{$file}, " $file\n";
++	}
++	print OUT "\n";
++}
++
++# Create one file blob
++sub fileblob
++{
++	my ($filename, $crlfmode, $mark) = @_;
++
++	# Import the file
++	print OUT "progress Importing $filename\nblob\nmark :$mark\n";
++	open FILE, '<', $filename or die "Cannot read $filename\n ";
++	binmode FILE;
++	my ($size, $mtime) = (stat(FILE))[7,9];
++	my $file;
++	read FILE, $file, $size;
++	close FILE;
++	$file =~ s/\r\n/\n/g if $crlfmode;
++	print OUT "data ", length($file), "\n", $file, "\n";
++
++	return $mtime;
++}
++
++# Parse a key=value pair
++sub parsekeyvaluepair
++{
++=pod
++
++=head2 Escaping special characters
++
++Key and value strings may be enclosed in quotes, in which case
++whitespace inside the quotes is preserved. Additionally, an equal
++sign may be included in the key by preceeding it with a backslash.
++For example:
++
++ "key1 "=value1
++ key2=" value2"
++ key\=3=value3
++ key4=value=4
++ "key5""=value5
++
++Here the first key is "key1 " (note the trailing white-space) and the
++second value is " value2" (note the leading white-space). The third
++key contains an equal sign "key=3" and so does the fourth value, which
++does not need to be escaped. The fifth key contains a trailing quote,
++which does not need to be escaped since it is inside a surrounding
++quote.
++
++=cut
++	my $pair = shift;
++
++	# Separate key and value by the first non-quoted equal sign
++	my ($key, $value);
++	if ($pair =~ /^(.*[^\\])=(.*)$/)
++	{
++		($key, $value) = ($1, $2)
++	}
++	else
++	{
++		die "Parse error: $pair\n ";
++	}
++
++	# Unquote and unescape the key and value separately
++	return (&unescape($key), &unescape($value));
++}
++
++# Unquote and unescape
++sub unescape
++{
++	my $string = shift;
++
++	# First remove enclosing quotes. Backslash before the trailing
++	# quote leaves both.
++	if ($string =~ /^"(.*[^\\])"$/)
++	{
++		$string = $1;
++	}
++
++	# Second remove any backslashes inside the unquoted string.
++	# For later: Handle special sequences like \t ?
++	$string =~ s/\\(.)/$1/g;
++
++	return $string;
++}
++
++__END__
++
++=pod
++
++=head1 EXAMPLES
++
++B<import-directories.perl> F<project.import>
++
++=head1 AUTHOR
++
++Copyright 2008-2009 Peter Krefting E<lt>peter@softwolves.pp.se>
++
++This program is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License as published by
++the Free Software Foundation.
++
++=cut
 -- 
 1.6.3.3
