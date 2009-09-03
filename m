@@ -1,94 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT] Request for help
-Date: Thu, 3 Sep 2009 08:52:19 -0700
-Message-ID: <20090903155219.GI1033@spearce.org>
-References: <4A9EFFB1.9090501@codeaurora.org> <alpine.DEB.1.00.0909030157090.8306@pacific.mpi-cbg.de> <20090903012207.GF1033@spearce.org> <2c6b72b30909030545y4465b5c8j4b2b5587a07762c0@mail.gmail.com> <20090903144227.GH1033@spearce.org> <2c6b72b30909030838q10b88705gb8c553f2c2d74379@mail.gmail.com>
+From: Christian Halstrick <christian.halstrick@sap.com>
+Subject: Re: jgit diff, was Re: [JGIT] Request for help
+Date: Thu, 3 Sep 2009 15:54:35 +0000 (UTC)
+Message-ID: <loom.20090903T155033-910@post.gmane.org>
+References: <4A9EFFB1.9090501@codeaurora.org> <alpine.DEB.1.00.0909030157090.8306@pacific.mpi-cbg.de> <20090903012207.GF1033@spearce.org> <alpine.DEB.1.00.0909030846230.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nasser Grainawi <nasser@codeaurora.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 03 17:52:28 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 03 18:00:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjEbr-0002yc-Q4
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 17:52:28 +0200
+	id 1MjEjS-0005YI-Iz
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Sep 2009 18:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321AbZICPwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 11:52:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbZICPwR
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 11:52:17 -0400
-Received: from george.spearce.org ([209.20.77.23]:39353 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753328AbZICPwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 11:52:17 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id BC150381FE; Thu,  3 Sep 2009 15:52:19 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <2c6b72b30909030838q10b88705gb8c553f2c2d74379@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755193AbZICQAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 12:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbZICQAE
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 12:00:04 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42228 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751829AbZICQAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2009 12:00:03 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MjEjD-0005Tm-DL
+	for git@vger.kernel.org; Thu, 03 Sep 2009 18:00:03 +0200
+Received: from 155.56.68.217 ([155.56.68.217])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Sep 2009 18:00:03 +0200
+Received: from christian.halstrick by 155.56.68.217 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 03 Sep 2009 18:00:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 155.56.68.217 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127659>
 
-Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-> On Thu, Sep 3, 2009 at 10:42, Shawn O. Pearce<spearce@spearce.org> wrote:
-> > Actually, now that we have forked out of the egit.git repository,
-> > I want to refactor the layout of the JGit project to be more maven
-> > like, and have a proper top-level pom to build things.
+Johannes Schindelin <Johannes.Schindelin <at> gmx.de> writes:
+
+...
+> > > This is not really difficult in Java, however, it relies on a working 
+> > > diff implementation (and IIRC my implementation has not yet been 
+> > > integrated into JGit).
+> > 
+> > Speaking of... where does that stand?
 > 
-> What kind of module structure do you have in mind? Do you want to move
-> some of the modules/subdirectories?
-> Some refactoring of the maven setup for JGit back was done back in
-> April in sonatype's (a maven company) JGit clone. It is not
-> signed-off, but can serve as a reference.
+> Same as where I left off.  IOW it is a working implementation that saw 
+> some testing, but I simply lack the time for performance tuning.
 
-Yea, I was hoping they would contribute this back as patches,
-but thus far they haven't.
- 
-> The Maven layout in the sonatype clone simply uses the Eclipse project layout.
+I can offer my help here. I looked at Dscho's code before, provided patches to
+let it compile and run the tests (IIRC not fully successfully). I started in my
+local repo to modify enhance the tests but didn't finished with that yet. I'll
+try now to add some performance tests and tests derived from native Git diff 
+tests. 
+
 > 
-> pom.xml: JGit :: Parent
->  |- org.spearce.jgit/pom.xml: JGit :: Core
->  |- org.spearce.jgit.pgm/pom.xml: JGit :: Programs
->  `- org.spearce.jgit.test/pom.xml: JGit :: Test
+> It should not be all that bad, though.
 > 
-> However, having tests in a separate module can be both good/bad. For
-> example, they will not automatically get run when you only build the
-> Core module.
-
-Yea, I know.  This is one area where Maven is just whack, by putting
-the tests in the same project the Maven plugin for Eclipse puts
-them into the same classpath, which means you can see test code
-from project code.  Wrong.  They should be different projects so
-the test classpath is isolated.
-
-However.  This is a bug in the Eclipse plugin I think, not
-necessarily with Maven's approach of trying to keep tests alongside
-the code they test.  Thus we probably want:
-
-  pom.xml: JGit :: Parent
-   |- jgit-lib/pom.xml: JGit
-   |     src/main/java  <-- from org.spearce.jgit/src
-   |     src/test/java  <-- from org.spearce.jgit.test/src
-   |
-   `- jgit-pgm/pom.xml: JGit pgm
-         src/main/java  <-- from org.spearce.jgit.pgm/src
-
-IIRC there is Maven support to create proper MANIFEST.MF files for
-OSGI bundles, which is what we need for the Eclipse plugin support.
-That should be able to replace the META-INF/MANIFEST.MF in the top
-of each of the current directories.
-
-> Anyway, I would like to help.
-
-Please post patches; formatted with -M.  I do want to do this, I just
-don't have the patience and Maven-fu to write the new poms myself.
-
--- 
-Shawn.
+...
+> Seems I misremembered a bit.  Christian provided a patch to make it 
+> compileable, but I think that I ran the script to verify that the diffs 
+> are correct on jgit.git and IIRC it completed fine.
