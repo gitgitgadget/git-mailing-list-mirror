@@ -1,61 +1,51 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [JGIT PATCH (RESEND) 3/3] Fix DirCache.findEntry to work on an empty cache
-Date: Fri, 4 Sep 2009 01:14:12 +0200
-Message-ID: <200909040114.12980.robin.rosenberg@dewire.com>
-References: <1251847010-9992-1-git-send-email-spearce@spearce.org> <1251847010-9992-2-git-send-email-spearce@spearce.org> <1251847010-9992-3-git-send-email-spearce@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT PATCH (RESEND) 3/3] Fix DirCache.findEntry to work on an
+	empty cache
+Date: Thu, 3 Sep 2009 16:19:10 -0700
+Message-ID: <20090903231910.GN1033@spearce.org>
+References: <1251847010-9992-1-git-send-email-spearce@spearce.org> <1251847010-9992-2-git-send-email-spearce@spearce.org> <1251847010-9992-3-git-send-email-spearce@spearce.org> <200909040114.12980.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <sop@google.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Sep 04 01:14:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 01:19:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjLVW-0000ie-Iz
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 01:14:23 +0200
+	id 1MjLaL-0001vc-Jb
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 01:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932472AbZICXOO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 19:14:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932466AbZICXON
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 19:14:13 -0400
-Received: from mail.dewire.com ([83.140.172.130]:5197 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752092AbZICXON (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 19:14:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id ABF078026F6;
-	Fri,  4 Sep 2009 01:14:14 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tVITSuxWztDF; Fri,  4 Sep 2009 01:14:14 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 0E2DE80025E;
-	Fri,  4 Sep 2009 01:14:13 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <1251847010-9992-3-git-send-email-spearce@spearce.org>
+	id S1756547AbZICXTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 19:19:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756528AbZICXTI
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 19:19:08 -0400
+Received: from george.spearce.org ([209.20.77.23]:32786 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756035AbZICXTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2009 19:19:08 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id D476738200; Thu,  3 Sep 2009 23:19:10 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <200909040114.12980.robin.rosenberg@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127670>
 
-onsdag 02 september 2009 01:16:50 skrev "Shawn O. Pearce" <spearce@spearce.org>:
-> If the cache has no entries, we want to return -1 rather than throw
-> ArrayIndexOutOfBoundsException.  This binary search loop was stolen
-> from some other code which contained a test before the loop to see if
-> the collection was empty or not, but we failed to include that here.
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> > Signed-off-by: Shawn O. Pearce <sop@google.com>
+> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 > 
-> Flipping the loop around to a standard while loop ensures we test
-> the condition properly first.
-> 
-> Signed-off-by: Shawn O. Pearce <sop@google.com>
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> Is this a new policy?
 
-Is this a new policy?
+Call it a new habit.  I send from my @spearce.org because that's my
+"public identity", but this was on work time, so I added an extra
+SOB line to indicate that yes, my employer is also OK with this.
+Not that anyone probably doubted that in the first place though...
+I work for a company that is pretty friendly towards open source.
 
--- robin
+-- 
+Shawn.
