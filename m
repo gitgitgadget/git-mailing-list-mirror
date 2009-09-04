@@ -1,165 +1,114 @@
-From: Gabe <gabriel.mcarthur@gmail.com>
-Subject: Re: [JGIT] Request for help
-Date: Fri, 4 Sep 2009 16:47:54 -0700
-Message-ID: <524457d10909041647u562601d5q69142eefe894ac5b@mail.gmail.com>
-References: <585278.66341.qm@web27802.mail.ukl.yahoo.com>
-	 <658028.86274.qm@web27804.mail.ukl.yahoo.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Strange merge failure (would be overwritten by merge / cannot
+	merge)
+Date: Fri, 4 Sep 2009 16:45:53 -0700
+Message-ID: <20090904234552.GA43797@gmail.com>
+References: <4AA17874.7090905@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Douglas Campos <douglas@theros.info>,
-	Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
-To: Mark Struberg <struberg@yahoo.de>
-X-From: git-owner@vger.kernel.org Sat Sep 05 01:49:16 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christoph Haas <haas@debian.org>
+X-From: git-owner@vger.kernel.org Sat Sep 05 01:55:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjiWn-0003Cp-HE
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 01:49:14 +0200
+	id 1Mjid3-0004Wf-CM
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 01:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933956AbZIDXrz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 19:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933944AbZIDXry
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 19:47:54 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:33729 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933927AbZIDXrx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 19:47:53 -0400
-Received: by ewy2 with SMTP id 2so852190ewy.17
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 16:47:55 -0700 (PDT)
+	id S933967AbZIDXyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 19:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933961AbZIDXyL
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 19:54:11 -0400
+Received: from an-out-0708.google.com ([209.85.132.247]:2591 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933927AbZIDXyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 19:54:11 -0400
+Received: by an-out-0708.google.com with SMTP id d40so2468614and.1
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 16:54:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FjIj3m8a7essPBJKP64QCeshD1jiQmlRcACh4M6RrKY=;
-        b=SJEHKEYzxhFdSDTRvrAQuSAFH3ANRPVCOi/xElzv0PwFMCrLvzPKAMA3gyybghmbKl
-         x556GN4Zmqccmq3bh9qc93LtSqoIcwIizAKZjATJ3cd8joZoF0bmnA4kezjNIOqcjnXs
-         ESNKTbBYXQkB5UrSWfbgCVt5kPN/Ux54wtp2Y=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rk6CSBS8iXPEKPrnOMXsg1WjAqqTlqX9ZSo3IRMD48s=;
+        b=D+UjsCOUFbHx3La1Odk4MIW1g93vVFPKnn885QdhjLuAxHmu5z1KADyAIfvuOlc5nH
+         tZeUoQMJsbOj5sdMMUE5Mb/wyiqJMt1UQ/BUeBodY8xGRlZrwOV20SKkRNPP+Kpv3nMY
+         Dz/OWGjBZqtpSYeDcQPELqlq5sexyjbwTcrX8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Akt9gAt9SMo+s24i/7JDX7g7tY8j2A3UFm9vYR5MIhrjFGATV3HAhBHoqVVgyGjzfb
-         sDSW0kMgAKDdgrHln7r+YRFeNOEkhrWsemOtmqzi7MrQUOiGPyei/Vhjb/h62zjXqiG0
-         PaXBfmHa3FukcoiiZEodQPoVCcxnlO3ELHe6w=
-Received: by 10.216.7.141 with SMTP id 13mr2200833wep.24.1252108074392; Fri, 
-	04 Sep 2009 16:47:54 -0700 (PDT)
-In-Reply-To: <658028.86274.qm@web27804.mail.ukl.yahoo.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fALqn38RRoOIVjwpxN3zQ5ShtFqgaXvlDSwG/yB1FOnfofajSBTsQujfAoRM7fQK4G
+         boRLJ279uA/fCQGmEkG3fHQmgHpyIq4uVcEYcKdkWdfxiTiW2XuTOXjrg9S17XwbLBc4
+         EfL2sp/T8LwSiUXADLbGtzH/64ZEo7LjYqCGI=
+Received: by 10.101.59.5 with SMTP id m5mr13209918ank.67.1252107959614;
+        Fri, 04 Sep 2009 16:45:59 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id d22sm397453and.7.2009.09.04.16.45.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Sep 2009 16:45:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4AA17874.7090905@debian.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127773>
 
-On Fri, Sep 4, 2009 at 10:28 AM, Mark Struberg<struberg@yahoo.de> wrote=
-:
-> Hi!
->
-> Work has been done at
->
-> http://github.com/sonatype/JGit/tree/mavenize
->
-> Please feel free to pull/fork and share your changes! I'd be happy to=
- pull it in.
->
-> @Gabe: your patch seems to got filtered by the list, I think sharing =
-such big things is easier by using github. Would be cool if you could h=
-elp us!
+On Fri, Sep 04, 2009 at 10:28:36PM +0200, Christoph Haas wrote:
+> 
+> Now I imported a new upstream version into the upstream branch. And then
+> tried to merge the 'upstream' branch into the 'master' branch to work on
+> it. And suddenly I get this error:
+> 
+>    error: Entry 'cream-abbr-eng.vim' would be overwritten by merge.
+>    Cannot merge.
+> 
+> To reproduce my problem:
+> 
+>   $> git clone git://git.workaround.org/cream
+>   $> cd cream
+>   $> git merge origin/upstream
+>   error: Entry 'cream-abbr-eng.vim' would be overwritten by merge.
+>   Cannot merge.
+>   fatal: merging of trees 70008c82f82a7985531aa2d039c03fdf944ea267 and
+>   78d3a35e300434d6369424dd873bb587beacfaa4 failed
 
-Ok, I'll fork and send a patch request shortly.  I was thinking about
-it earlier, and I may add a couple of features that all OS projects
-should follow (e.g. License in the jar, etc.).
+Very odd indeed!
 
-As to a few questions that have been raised:
-1) I pick the 'sources' folder because it's good metadata management.
-Everything in the root folder should be about or related to managing
-the project.  No direct source folders, as it clutters the layout.
-Best to be perfectly clear where all the action is happening.  It's a
-simple convention I wished more projects followed.
-2) I haven't worked with the find-bugs plugin.  I looked it up, but it
-seems to only generate documents in the 'site'/reporting profile.
-Thus it wouldn't necessarily affect the building of the software.  It
-would really only be useful if you had something like a Hudson CI
-infrastructure or site generation going on to build a website and show
-the reports.  I could certainly add that, though, if you like.
-3) The LICENSE file can be at the top level.  Not really an issue for
-me one way or another.  Just a personal preference on how I have
-structured all of my previous Maven projects.
+$ git version
+git version 1.6.4.2.264.g79b4f
 
--Gabe
+I was able to workaround it:
 
+$ rm *
+$ git add -u
+$ git merge origin/upstream
 
+I've never run into this before.
+I think it has to do with all the renamed files.
+It looks like you're running into ain unfortunate edge case.
 
+The merge-base of both branches (the initial commit) has all
+files underneath a cream/ directory.
 
->
-> LieGrue,
-> strub
->
-> --- On Fri, 9/4/09, Mark Struberg <struberg@yahoo.de> wrote:
->
->> From: Mark Struberg <struberg@yahoo.de>
->> Subject: Re: [JGIT] Request for help
->> To: "Douglas Campos" <douglas@theros.info>
->> Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>, git@vger.kernel.org, =
-"Gabe McArthur" <gabriel.mcarthur@gmail.com>
->> Date: Friday, September 4, 2009, 4:49 PM
->> Hi Douglas!
->>
->> http://github.com/sonatype/JGit
->>
->> The branch will be called mavenizing or so.
->>
->> Will post this after I got the tests running.
->>
->> LieGrue,
->> strub
->>
->> --- On Fri, 9/4/09, Douglas Campos <douglas@theros.info>
->> wrote:
->>
->> > From: Douglas Campos <douglas@theros.info>
->> > Subject: Re: [JGIT] Request for help
->> > To: "Mark Struberg" <struberg@yahoo.de>
->> > Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>,
->> git@vger.kernel.org,
->> "Gabe McArthur" <gabriel.mcarthur@gmail.com>
->> > Date: Friday, September 4, 2009, 4:44 PM
->> > On Fri, Sep 4, 2009
->> > at 9:47 AM, Mark Struberg <struberg@yahoo.de>
->> > wrote:
->> >
->> >
->> > as an old saying tells us: how to climb a mountain?
->> step
->> > after step! ;)
->> >
->> >
->> >
->> > I suggest we create a fresh branch based on the
->> Shawns
->> > current version and add all the features
->> incrementally.
->> >
->> >
->> >
->> > please point out where this branch will happen, I want
->> to
->> > give some help too.
->> >
->> >
->>
->>
->>
->> --
->> To unsubscribe from this list: send the line "unsubscribe
->> git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at=C2=A0 http://vger.kernel.org/majordomo-info.h=
-tml
->>
->
->
->
->
+Both descendants (upstream and master) moved files up to the
+root.  So when you go to merge those histories the merge driver
+gets confused.
+
+What happened in master?    cream/A -> A
+What happened in upstream?  cream/A -> A
+
+That seems like an edge case that might need some attention.
+
+Anyways, once you do the workaround merge it'll settle
+itself out and won't happen to you again since the merge will
+resolve it for all your future commits (future merges will
+have a new, rename-safe merge base).
+
+Does anyone else on the list have any insights?
+
+-- 
+		David
