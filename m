@@ -1,69 +1,89 @@
-From: "armencho@gmail.com" <armencho@gmail.com>
-Subject: .git and retrieving full source tree for own project(s)
-Date: Fri, 4 Sep 2009 21:52:07 +0200
-Message-ID: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: .git and retrieving full source tree for own project(s)
+Date: Fri, 04 Sep 2009 13:04:31 -0700
+Message-ID: <7viqfyfpdc.fsf@alter.siamese.dyndns.org>
+References: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 04 21:52:38 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "armencho\@gmail.com" <armencho@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 22:05:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjepp-0004Qs-8A
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:52:37 +0200
+	id 1Mjf20-00088F-B4
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 22:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933926AbZIDTw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 15:52:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933922AbZIDTw2
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:52:28 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:55623 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933911AbZIDTw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 15:52:26 -0400
-Received: by ewy2 with SMTP id 2so730556ewy.17
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 12:52:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=T36zGNFDoKzr45gy6f3W80/LngnqZDz3SzaOfFFCJHk=;
-        b=xCvtueG2MauIGGIUCEJUS/84it5/ik6fKMUX5bFY6X2DYQZKzX+wDIhvDIpEhROLH1
-         ymHm6rDmT1KGjb+5VNd33R5oyYuzbOFBQviYq12sOOyqcBoZtGWoUUtVwYw6Ts/oawvE
-         iUEowzpvIjBotQ6k+tKPEvUT98NOxglHDR1CA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=cDsyqMpgcK4eZ+FlG1qteUiLQrShebgY4lWGLnDdiRxZjbDQIK90RBztapk8BBEUrA
-         FcZI49EPkSpIphTbq7kVM2Azj53bxncqNapFH28kAvA7eycU00cobiQL+3KpxMFghoaz
-         8LLnR0cxgTTRSh7LUVpipWwdJzcTTT+5V5Q1o=
-Received: by 10.216.11.138 with SMTP id 10mr2283930wex.51.1252093947083; Fri, 
-	04 Sep 2009 12:52:27 -0700 (PDT)
+	id S1757290AbZIDUEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 16:04:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757277AbZIDUEh
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 16:04:37 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43188 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757262AbZIDUEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 16:04:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B3B925C4C;
+	Fri,  4 Sep 2009 16:04:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=m9BdjqMBYZvgv9a0ZWX7jfQTj6o=; b=B3f6OJ
+	490XTRo5dvdL7uYijsCOcl1pwDTLxdAWoQKuYaPiw7HhZCy66gtmwPpuqoTeBHOG
+	m4pQbQRAND1Fs+DEu1/gyqYCb2lUO6Xz+Z9Ts5KbpmLxrs1XDna0nMCJGnkAG2yC
+	CR7eKXgG7ygliZcRkWJPVqNp4xTrYgwGTis5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X6bIZVZhJKcDzrM8Dn0QAGaVWQvUOQym
+	9YpaxOWc4rioS3Lc9jNpL9iZnZNbBltLox1Xpg8WXwm6jMBXZpiW+hIQ0ZG6Dt6T
+	e7hfNxlR3sfRq9L6UFF2d6q19dfuF/ZbsmTLwBc3zTaXYRnv+qZScSKHlyWu5T8i
+	htBMvj9ZjCk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DDCAD25C4B;
+	Fri,  4 Sep 2009 16:04:35 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E36725C47; Fri,  4 Sep
+ 2009 16:04:33 -0400 (EDT)
+In-Reply-To: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
+ (armencho@gmail.com's message of "Fri\, 4 Sep 2009 21\:52\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2B507BBA-998E-11DE-ABEB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127765>
 
-Hi all,
+"armencho@gmail.com" <armencho@gmail.com> writes:
 
-I just started with git and suprisingly or unsurprisingly everything
-works, and I love it. I had been working on a software project, and i
-ran "git init" in its source tree, which created the ".git". I added
-all files with "git add ." and first-time committed them all using
-"git commit -a -m "Imported project files". I also did couple three
-commits after that and well, everything works.
+> What I am wondering about is, what is gits identity for a repository?
+> I don't share or publish the source directory anywhere, and just for
+> testing I removed everything but the ".git" directory and tried "git
+> checkout" and "git checkout master".
 
-What I am wondering about is, what is gits identity for a repository?
-I don't share or publish the source directory anywhere, and just for
-testing I removed everything but the ".git" directory and tried "git
-checkout" and "git checkout master". To my surprise, the files in
-repository did NOT reappear, contrary to what I thought. Doesn't
-checkout update/recreate the project file tree according to the
-"trunk" snapshot?
+"git checkout" is a short-hand for "git checkout HEAD" which is to request
+"switch to the branch denoted by HEAD, i.e. the current branch, while
+keeping my local changes to the work tree and the index".
 
-Now, I did all this just out of curiosity, but to my understanding
-everything that is needed for working with the project is stored in
-".git", right? Even if all project files mysteriously disappear, "git
-checkout" should bring the copy of master branch back, no? If not,
-what is the way to tell git I want full copy of a snapshot?
+"git checkout master" is a request to "switch to the master branch, while
+keeping my local changes to the work tree and the index".
+
+In this case, your "delete everything" is your local change, and git did
+its best to preserve it while switching branches.
+
+If you want to "copy this and that files and directories out of the
+commit at the tip of the current branch and deposit them in my work tree
+and index", you would say
+
+    $ git checkout HEAD this that
+
+so a request for checking everything out would be a natural extension of
+the above that would be:
+
+    $ git checkout HEAD .
+
+If you want to "copy this and that files and directories out of the index
+and deposit them in my work tree", you would say
+
+    $ git checkout this that
