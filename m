@@ -1,76 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
- case
-Date: Fri, 4 Sep 2009 11:40:20 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909041114440.28290@iabervon.org>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 17:40:32 2009
+From: Howard Miller <howardsmiller@googlemail.com>
+Subject: Commit to wrong branch. How to fix?
+Date: Fri, 4 Sep 2009 16:54:55 +0100
+Message-ID: <88A0A7C2-7DCB-45A3-B196-BED2A8AC9405@googlemail.com>
+Mime-Version: 1.0 (iPhone Mail 7A400)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 04 17:55:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjatq-00017w-Gt
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 17:40:31 +0200
+	id 1Mjb80-0005sv-Ob
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 17:55:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756847AbZIDPkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 11:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756671AbZIDPkU
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 11:40:20 -0400
-Received: from iabervon.org ([66.92.72.58]:55859 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753631AbZIDPkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 11:40:19 -0400
-Received: (qmail 27163 invoked by uid 1000); 4 Sep 2009 15:40:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Sep 2009 15:40:20 -0000
-In-Reply-To: <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755003AbZIDPy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 11:54:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753924AbZIDPy6
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 11:54:58 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:53260 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753631AbZIDPy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 11:54:57 -0400
+Received: by fxm17 with SMTP id 17so772534fxm.37
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 08:54:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:to
+         :content-type:content-transfer-encoding:x-mailer:mime-version
+         :subject:date;
+        bh=tdNmttPtr9yyCXCvKMb2jyFKfcazfzK/PVtpgkELcJQ=;
+        b=cujJw2gaHfnUBGEL8f3kgXw2gES88JH6TEdHXg0x/1apESn+siUlL1vECILEHeG+4O
+         Cf7+xDfcyChsw8OeE9+CSfU/sGvfiFKm/zkKDyAWMVVumKjH0noU0gceWWqoeP0qioa2
+         qPbEpyjDMcHmU9UOlYPg4zfldqaBh8Hta6c48=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=message-id:from:to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date;
+        b=Txz8mvHB8X4ZsYq7wUTuPMM5o9qKtIg/z+XpWy+70lxq29rqmOh4qGD37fX+j40JwN
+         hnTNRnA/6q2upj0s1PhfVy95cF9OpcM1fV2mTauUd3QM7b9nQ9ByPUrq93Zj2imFEJF5
+         IXgC27IvFvLE5WGn7cpzt4mkcxyOImtTxss6c=
+Received: by 10.204.154.86 with SMTP id n22mr9214076bkw.110.1252079699028;
+        Fri, 04 Sep 2009 08:54:59 -0700 (PDT)
+Received: from ?10.25.170.137? ([82.132.139.8])
+        by mx.google.com with ESMTPS id c28sm1951622fka.49.2009.09.04.08.54.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Sep 2009 08:54:58 -0700 (PDT)
+X-Mailer: iPhone Mail (7A400)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127738>
 
-On Fri, 4 Sep 2009, Sverre Rabbelier wrote:
+I commited to the wrong branch and I can't figure out what to do. To  
+make matters worse I then did 'git reset HEAD^' which has made things  
+much worse. It didn't remove the commit and now I can't change  
+branches. I'm utterly confused. Any help much appreciated!
 
-> Heya,
-> 
-> On Fri, Sep 4, 2009 at 04:13, Daniel Barkalow<barkalow@iabervon.org> wrote:
-> > Instead of trying to make http://, https://, and ftp:// URLs
-> > indicative of some sort of pattern of transport helper usage, make
-> > them a special case which runs the "curl" helper, and leave the
-> > mechanism by which arbitrary helpers will be chosen entirely to future
-> > work.
-> 
-> I'm sorry, I missed a few emails I think :(. Would you mind explaining
-> why we chose to special-case the curl helpers instead of the symlink
-> scheme?
-
-It turns out that the method used to form URLs that use a helper doesn't 
-generalize well to other cases, because it interferes with the ssh-style 
-locations. Instead, some different mechanism needs to be made up to handle 
-arbitrary handlers that git doesn't know about. Since we want to keep 
-supporting "http://something", that'll have to be a special case anyway, 
-and so we might as well handle it by having git know what helpers to use 
-for things that we've always supported, and use a single descriptive name 
-for the helper that handles that collection of URLs.
-
-As of this version, the idea is that there will be three ways helpers get 
-selected:
-
- - git selects a helper based on the URL being something traditionally 
-   supported internally; that is, git recognizes the URL and knows what to 
-   run, if possible, to handle it
-
- - git uses the "vcs" option if it is set
-
- - something with the URL that we don't understand well enough yet to 
-   design, but which doesn't seem to be possible to fit in as a single 
-   rule with the first item.
-
-	-Daniel
-*This .sig left intentionally blank*
+Moral - use git status liberally and read it carefully before doing  
+anything. A 'git undo" command would be great is someone is feeling  
+generous :-) 
