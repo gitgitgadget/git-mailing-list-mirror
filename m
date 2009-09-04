@@ -1,69 +1,78 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
-	case
-Date: Fri, 4 Sep 2009 07:29:23 +0200
-Message-ID: <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
+Date: Fri, 4 Sep 2009 09:02:16 +0200
+Message-ID: <20090904070216.GA3996@darc.dnsalias.org>
+References: <20090902080305.GA11549@neumann> <20090902081917.GA5447@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Sep 04 07:30:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 04 09:06:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjRNW-0000R8-3K
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 07:30:30 +0200
+	id 1MjSre-00087R-8D
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 09:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932611AbZIDF3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 01:29:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932510AbZIDF3n
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 01:29:43 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:17513 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932494AbZIDF3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 01:29:42 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so522346eya.19
-        for <git@vger.kernel.org>; Thu, 03 Sep 2009 22:29:44 -0700 (PDT)
+	id S933126AbZIDHCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 03:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933106AbZIDHCg
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 03:02:36 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:57819 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933126AbZIDHCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 03:02:33 -0400
+Received: by bwz19 with SMTP id 19so50777bwz.37
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 00:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=k0YOEN9Y5yxHWEgTZc8z4gXaqDSMezFOiEd9f9Yqdk0=;
-        b=lorTDAi7cyluedFoYS6KjuoMFBIvCIHu0M/+Am48p5ksCXC30xzN3xUayLSAcat2jf
-         86dXKDkvDuxUI56bNkaXTvmjud2dSMXS6FEm72cS5fiQWCJhLSqgVc1DhYK68t/UfD9U
-         PfCgi9vfXLgYu0FTPfJTunOCTu33YGn8lqW8g=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:bcc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=sNfwNOT2N6UP8beD+ev74LkwRuREYqZuSyGlwJypY+U=;
+        b=orRUzXtOmOLlSeRHbwCsFl+pQQJHnSUzbNX//ZG5ruVCFX2lj1H2b0j9UtxgJFaX0H
+         ltqubl7+XH3ChiFxPy5sdBZamxTmltbc8KK+5Q5ToGDPl1mDPwv8RCRBytvKSLZp075F
+         WlYQ9LG6YWrJWsPrO0l5QbEsm5xPVW3KQjFgI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=A3R+jplejwJyFEtwy99/AdyYDfHLGwgAV9GOe+J+kJ/WvcdCDSvtyokGb0XBSuolNN
-         jyccHAB4DLuHehd2hEn5o+9mCask6OVUPO9gfApgDT2x3EhmtWJUcRs9EfMWk2on9gJz
-         gzp8M1knLksHaZojshuiRMESFzy6gJruWX2jE=
-Received: by 10.216.53.12 with SMTP id f12mr2077568wec.72.1252042183068; Thu, 
-	03 Sep 2009 22:29:43 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=aq8+bqi9VieTFO7MzpOdKbKu5x14TxaY5raQr6sgpFaSjkRNEhVRSyKxHUqgtM4+Cd
+         pUZVrCcXnsx7qhOJ0p3kRcAS1cVZPkLfpsx45OjWjnuvqkuFZFfVY5X+6+37XjpZ10xB
+         UVQzPAoNammyF+hmCyZwk+RkRn2N6f9IoTfh8=
+Received: by 10.204.154.198 with SMTP id p6mr8785949bkw.131.1252047753482;
+        Fri, 04 Sep 2009 00:02:33 -0700 (PDT)
+Received: from darc.lan (p549A4096.dip.t-dialin.net [84.154.64.150])
+        by mx.google.com with ESMTPS id 17sm957777bwz.105.2009.09.04.00.02.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Sep 2009 00:02:32 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1MjSoK-0001Qt-CV; Fri, 04 Sep 2009 09:02:16 +0200
+Content-Disposition: inline
+In-Reply-To: <20090902081917.GA5447@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127687>
 
-Heya,
+On Wed, Sep 02, 2009 at 04:19:17AM -0400, Jeff King wrote:
 
-On Fri, Sep 4, 2009 at 04:13, Daniel Barkalow<barkalow@iabervon.org> wrote:
-> Instead of trying to make http://, https://, and ftp:// URLs
-> indicative of some sort of pattern of transport helper usage, make
-> them a special case which runs the "curl" helper, and leave the
-> mechanism by which arbitrary helpers will be chosen entirely to future
-> work.
+> [1] I would prefer "git add -u ." to add only the current directory, and
+> "git add -u" to touch everything.
 
-I'm sorry, I missed a few emails I think :(. Would you mind explaining
-why we chose to special-case the curl helpers instead of the symlink
-scheme?
+FWIW, I feel the same way. And there is no easy way to do that now. (cd `git
+rev-parse --show-cdup`; git add -u) ?
 
--- 
-Cheers,
+> But then, I am one of the people who
+> turn off status.relativepaths, so I think I may be in the minority in
+> always wanting to think of the project as a whole.
 
-Sverre Rabbelier
+That mindset is one of git's greatest strengths IMO.
+
+Clemens
