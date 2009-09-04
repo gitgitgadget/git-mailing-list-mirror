@@ -1,105 +1,100 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
- case
-Date: Fri, 4 Sep 2009 15:05:03 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909041429540.28290@iabervon.org>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com> <alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
+	case
+Date: Fri, 4 Sep 2009 21:35:21 +0200
+Message-ID: <fabb9a1e0909041235x74a3b9b4gf65e650ca0d00831@mail.gmail.com>
+References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> 
+	<fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com> 
+	<alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org> 
+	<alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0909041429540.28290@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 04 21:05:16 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Sep 04 21:35:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mje5x-0006s6-Jf
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:05:14 +0200
+	id 1MjeZg-0007tc-8n
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932781AbZIDTFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 15:05:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbZIDTFD
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:05:03 -0400
-Received: from iabervon.org ([66.92.72.58]:35845 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754109AbZIDTFB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 15:05:01 -0400
-Received: (qmail 14236 invoked by uid 1000); 4 Sep 2009 19:05:03 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Sep 2009 19:05:03 -0000
-In-Reply-To: <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1757266AbZIDTfr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 15:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757260AbZIDTfp
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:35:45 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:60427 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757258AbZIDTfk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 15:35:40 -0400
+Received: by ewy2 with SMTP id 2so719718ewy.17
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 12:35:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Zm+So3SSp9FKmfpsM62SmdkQOqQNAsYUxJL3N1VB/x8=;
+        b=fjXGirDdz3S5hH+Jv0mQIQQK441obVoDXvRbNqu9jknieWjMerSFubTDXizmn98zHU
+         qRgDx6/3yy5+GtoxCC0jlPKJRU1ISMLInBADueR1hv39gMbyT0OqWwCAXSI0Ro/aSC7i
+         pCbY96T+09ZWBT55Sm0jjkBFb4IGdDAtALwwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=eWSnvms4B1/OiNriHkGZPhZOBJVtn3P3vT6MF/KVs7d+ZhyamvpMLa4kJGTRbKH4E+
+         3gl07wS9R3D0/ctshnB3MGA+m9mV+hTd+VTJMENqWOPwfmiKARy+NfB5Xk1ht3DOI1AO
+         yaIOkmPxE96BxbrQT/vc2lyF4/bNN1rzXYack=
+Received: by 10.216.45.207 with SMTP id p57mr2250186web.94.1252092941425; Fri, 
+	04 Sep 2009 12:35:41 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0909041429540.28290@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127762>
 
-On Fri, 4 Sep 2009, Johannes Schindelin wrote:
+Heya,
 
-> Hi,
-> 
-> On Fri, 4 Sep 2009, Junio C Hamano wrote:
-> 
-> > Daniel Barkalow <barkalow@iabervon.org> writes:
-> > 
-> > > It turns out that the method used to form URLs that use a helper 
-> > > doesn't generalize well to other cases, because it interferes with the 
-> > > ssh-style locations. Instead, some different mechanism needs to be 
-> > > made up to handle arbitrary handlers that git doesn't know about. 
-> > > Since we want to keep supporting "http://something", that'll have to 
-> > > be a special case anyway, and so we might as well handle it by having 
-> > > git know what helpers to use for things that we've always supported, 
-> > > and use a single descriptive name for the helper that handles that 
-> > > collection of URLs.
-> > >
-> > > As of this version, the idea is that there will be three ways helpers 
-> > > get selected:
-> > >
-> > >  - git selects a helper based on the URL being something traditionally 
-> > >    supported internally; that is, git recognizes the URL and knows 
-> > >    what to run, if possible, to handle it
-> > >
-> > >  - git uses the "vcs" option if it is set
-> > >
-> > >  - something with the URL that we don't understand well enough yet to 
-> > >    design, but which doesn't seem to be possible to fit in as a single 
-> > >    rule with the first item.
-> > 
-> > Thanks for a clear description.
-> > 
-> > I do not see that there is much difference between the above description
-> > and what Dscho is advocating, and I do not see anything to get excited
-> > about as Dscho seems to do.
-> 
-> I mainly take exception at complicating things with a "vcs" config 
-> variable.
-> 
-> The way you describe it, I like it, as I do not see any mention of said 
-> config variable there.
-> 
-> If you allow "git clone <URL>" for foreign vcs URLs, you do not need the 
-> "vcs" variable.  If you require that variable, you cannot allow an easy 
-> clone, and you will earn my opposition.
+On Fri, Sep 4, 2009 at 21:05, Daniel Barkalow<barkalow@iabervon.org> wr=
+ote:
+> Some foreign vcses, including the only one I ever personally use, do =
+not
+> have URLs, and require a bunch of options and paths to specify a
+> repository. I don't want to have to use:
+>
+> =A0 =A0 =A0 =A0url =3D p4://rsh:ssh+-q+-a+-x+-l+p4ssh+-q+-x+perforce+=
+%2Fbin%2Ftrue//projects/foo/bar-1.0/...,//projects/foo/bar-1.1/...
 
-Some foreign vcses, including the only one I ever personally use, do not 
-have URLs, and require a bunch of options and paths to specify a 
-repository. I don't want to have to use:
+Btw, doesn't p4 have these config files that you can download that
+contain the configuration? In that case
+'p4://example.org/p4/main-development.configfile' would be very
+convenient.
 
-	url = p4://rsh:ssh+-q+-a+-x+-l+p4ssh+-q+-x+perforce+%2Fbin%2Ftrue//projects/foo/bar-1.0/...,//projects/foo/bar-1.1/...
+Regardless, I do think there should be some way to specify all this
+outside of the url, but to me that's secondary. I think the primary
+usecase is/should be cloning from some url in the form of
+'hg://example.org/foo', rather than 'http://example.org/some-hg-repo'
+or 'p4://.......', since those are both exceptions (the former being
+an ambiguous url, and the latter being a non-url). Now I do understand
+if you don't want to spend your time on implementing the specialized
+url support since it doesn't scratch your itch, but at least your
+series shouldn't impend supporting that in the near future.
 
-(actually, I don't even know what the normal thing is for a URL for 
-something that's split between multiple locations, or how URLs handle 
-"servers" that are arbitrary commands including options which make a 
-connection to the server)
+> For cases where the foreign vcs has something to put in the "url" spo=
+t,
+> you don't need to set "vcs". In fact, you are only allowed to set one=
+ or
+> the other of "vcs" and "url" with my current version. What you're
+> interested in is explicitly left for later, when we have a prototype
+> helper for such a foreign vcs and can try it out with potential users=
+=2E
 
-For cases where the foreign vcs has something to put in the "url" spot, 
-you don't need to set "vcs". In fact, you are only allowed to set one or 
-the other of "vcs" and "url" with my current version. What you're 
-interested in is explicitly left for later, when we have a prototype 
-helper for such a foreign vcs and can try it out with potential users.
+I need to hurry up and get working on that hg implementation then :).
 
-	-Daniel
-*This .sig left intentionally blank*
+--=20
+Cheers,
+
+Sverre Rabbelier
