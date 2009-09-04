@@ -1,122 +1,156 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Commit to wrong branch. How to fix?
-Date: Fri, 04 Sep 2009 11:51:48 -0700 (PDT)
-Message-ID: <m33a72lf0h.fsf@localhost.localdomain>
-References: <88A0A7C2-7DCB-45A3-B196-BED2A8AC9405@googlemail.com>
-	<4AA13DF4.4050604@drmicha.warpmail.net>
-	<26ae428a0909041103p4ecba8efvff6223f902e14f1a@mail.gmail.com>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: Re: [JGIT] Request for help
+Date: Fri, 4 Sep 2009 18:54:08 +0000 (GMT)
+Message-ID: <78662.25308.qm@web27808.mail.ukl.yahoo.com>
+References: <2c6b72b30909041150g6374be2ci4d36bd8ab0824a8d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Howard Miller <howardsmiller@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 20:52:15 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Douglas Campos <douglas@theros.info>, git@vger.kernel.org,
+	Gabe McArthur <gabriel.mcarthur@gmail.com>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 20:54:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjdtN-0002YU-Kf
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 20:52:14 +0200
+	id 1MjdvP-0003Ay-Hs
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 20:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932828AbZIDSvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 14:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757218AbZIDSvs
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 14:51:48 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:49286 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757217AbZIDSvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 14:51:48 -0400
-Received: by fxm17 with SMTP id 17so875656fxm.37
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 11:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=wmLsgd8xTEr73UI1ViIr+SCHMH21uWk+bjAG/Z/T4Vg=;
-        b=iZvgnXWJIl/bXqPb7771shN8foMrBTkIuFxUBNWqfYWLb1j68Td0ahdxb3N0EHr3hs
-         V1zKE04oxZ9L40zBzIzk8ty41ANlfQf/4Lx7MOZiLq2jquDivx05iAi8kCP/9UeC0/H8
-         mIjfzUujApP7E7+RNm4TyL4ePncktflCORMm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=kE8AZKyAjisv+OhogtOAfV+zMQ+3XCk3KcQMtt4RQhXvHzHUxUZUz7SmwYtHILi8Bi
-         wEAfWcVwTfkJ37Huk5UZEwTpfn1TryCPAc64LSKXLOxQrzNa6CokAMl1yd45t0Ujr39C
-         0n9tSYJw10nNgvqUWOLOOGItn9WVzGWXR3my4=
-Received: by 10.86.227.1 with SMTP id z1mr5288734fgg.56.1252090309224;
-        Fri, 04 Sep 2009 11:51:49 -0700 (PDT)
-Received: from localhost.localdomain (abvd31.neoplus.adsl.tpnet.pl [83.8.201.31])
-        by mx.google.com with ESMTPS id l19sm2230549fgb.16.2009.09.04.11.51.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Sep 2009 11:51:48 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n84IpkVm010218;
-	Fri, 4 Sep 2009 20:51:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n84IphG3010215;
-	Fri, 4 Sep 2009 20:51:43 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <26ae428a0909041103p4ecba8efvff6223f902e14f1a@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S933748AbZIDSyJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 14:54:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933651AbZIDSyJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 14:54:09 -0400
+Received: from web27808.mail.ukl.yahoo.com ([217.146.182.13]:32782 "HELO
+	web27808.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1757218AbZIDSyI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 14:54:08 -0400
+Received: (qmail 25843 invoked by uid 60001); 4 Sep 2009 18:54:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1252090449; bh=6xTpR/qqJ+s/TUynoeRk3d0DHW7jywABfPI5yuwP/gw=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=fix3O8BNo8ELg8DJ1zaQWEA+VFbEDuyOGRchNl6RXCK6W3GF5qJH6hMhsI3F/vpVbofsOZnOEuxafXvUfNi4v5aO5vYshq71TCsqNjQ6WQLCQMh9aVSvVQa+nc8vgvNeV7PLPALLAu/T58GMVrQHrP0AHPPSHSVLp3dlAFwsF+4=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=PMUGizJZA2AxDtB1VTC0UVRaPmzrXtlPT89JRJ60h1OYez00cUBYr9ZiGOxMEnH9XsfSx+3eEn9hTDofQbFkvbGygsx9vKRtxDfSekTJmQypcDK5KnNekMNjjTent3NTjgwhHaGTO0npajgdoYfCkt03tqVwUxy0gUGvZIzViWk=;
+X-YMail-OSG: pLfN.V8VM1nExfzXvSNv.325a32bcQF1yvfIyCXYGnUMJBN1km7AewZ9DjI8_1QcmDzFWwvmB9VPL9A4ygBw7RZY6.PW50BsC6rVCpY3tihn3nLmo6LcLTnSMmcQr8YBu4DMV0cxqDv1uODzTVsS6a8uj9IjSNMvTrQqBA8rM8hp761H9J7qA8Na0bjvNdDTZHqYh4xqR5u736ThzH5G1vlBBccTL_6Yto47pYku6_Fr91MxfnUlIapBeocxmgvCCYUpnbcqUWf7kL0n0c7ezy41ugCC45L5yPN5QMZMAMTLePh_PGmEy2tN
+Received: from [81.16.153.112] by web27808.mail.ukl.yahoo.com via HTTP; Fri, 04 Sep 2009 18:54:08 GMT
+X-Mailer: YahooMailClassic/6.1.2 YahooMailWebService/0.7.338.2
+In-Reply-To: <2c6b72b30909041150g6374be2ci4d36bd8ab0824a8d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127759>
 
-Howard Miller <howardsmiller@googlemail.com> writes:
+doing a rebase -i with new stuff atm... ;)
 
-> I must admit I don't understand what 'reflog' is (more reading) - not heard
-> of that before.
+LieGrue,
+strub
 
-I'll try to explain it with some ASCII-art.
+--- On Fri, 9/4/09, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
 
-Let's say that you had the following situation:
+> From: Jonas Fonseca <jonas.fonseca@gmail.com>
+> Subject: Re: [JGIT] Request for help
+> To: "Mark Struberg" <struberg@yahoo.de>
+> Cc: "Douglas Campos" <douglas@theros.info>, git@vger.kernel.org, "Gab=
+e McArthur" <gabriel.mcarthur@gmail.com>
+> Date: Friday, September 4, 2009, 8:50 PM
+> On Fri, Sep 4, 2009 at 13:28, Mark
+> Struberg<struberg@yahoo.de>
+> wrote:
+> > Hi!
+> >
+> > Work has been done at
+> >
+> > http://github.com/sonatype/JGit/tree/mavenize
+> >
+> > Please feel free to pull/fork and share your changes!
+> I'd be happy to pull it in.
+>=20
+> IMO, there are a lot of things that can be squashed
+> together and
+> cleaned up. I know that you advocated for incremental
+> introduction,
+> but it seems wrong to for example add a file and then
+> completely
+> reformat it a few commits later. The same thing with the
+> .gitignore
+> fixes in step 5.
+>=20
+> Some comments ... Some of them I initially entered in
+> github's
+> codereview, but I ended up writing it all here.
+>=20
+> Commit: "mavenizing step 1: moved over the initial poms
+> from Jasons branch"
+>=20
+>  * Please always add an empty line between the subject and
+> the body
+> =A0=A0=A0of the commit message. Like this:
+>=20
+> =A0 mavenizing step 1: moved over the initial poms from
+> Jasons branch
+>=20
+> =A0 Signed-off-by: Mark Struberg >struberg@yahoo.de>
+>=20
+>  * The .gitignore pattern could be further limited to
+> "target/" ...
+> but you seem to change this to /target later.
+>=20
+> In org.spearce.jgit/pom.xml:
+>=20
+> =A0 =A0 * The use of maven-surefire-plugin should be
+> removed. This module
+> does not have any tests.
+>=20
+> =A0 =A0 * Shouldn't we retain the original
+> ${groupId}:${artifactId} naming
+> convention, being org.spearce:jgit?
+>=20
+> In org.spearce.jgit.test/pom.xml:
+>=20
+> =A0 =A0 * Dependency on jsch is unecessary since it
+> is derived from
+> org.spearce.jgit.
+>=20
+> =A0 =A0 * Maybe name as org.spearce:jgit-test?
+>=20
+> In org.spearce.jgit.pgm/pom.xml:
+>=20
+> =A0 =A0 * Maybe name as org.spearce:jgit-pgm?
+>=20
+> Commit: "mavenizing step 2: move the core libs from src to
+> src/main/java"
+>=20
+>  * Please also add an empty line to this commit message.
+>=20
+>  * You might as well squash the whitespace fixes into the
+> first commit.
+>=20
+> Commit: "mavenizing step 3: moving all core tests into the
+> core module"
+>=20
+>  * The commit message wrongly states:
+> =A0 =A0 org.spearce.jgit.test/tst/ ->
+> org.spearce.jgit/src/test/java/tst/
+> =A0=A0=A0Should be:
+> =A0 =A0 org.spearce.jgit.test/tst/ ->
+> org.spearce.jgit/src/test/java/
+>=20
+> Commit: "mavenizing step 4: moving some license files and
+> META-INF"
+>=20
+>  * Shouldn't the commit message rather say "remove JSch"?
+> =A0=A0=A0Then the moving of META-INF can be put in
+> its own commit.
+>=20
+>  * The new NOTICE file has a few typos and the info could
+> fit into the README
+>=20
+> Then I got a bit lost in a huge reformatting.
+>=20
+> --=20
+> Jonas Fonseca
+>=20
 
-  ...---A---B---C           <-- foo  <--- HEAD
 
-Current branch is named 'foo', and three last commits on it are named
-A, B, C.
-
-Now you create new commit (I assume that you comitted unwanted
-changes; the recipe would be different (much simpler) if you have
-realized that you are on wrong branch[1] before committing)
-
-[1] git aware shell prompt, countaing branch name, could help there
-
-  ...---A---B---C---X           <-- foo  <--- HEAD
-
-Reflog records that commit in 'foo' reflog and in HEAD reflog
-
-  foo@{0}: X
-
-
-You have realized that you are on wrong branch, and you did 
-"git reset --hard HEAD^" (too early)
-
-  ...---A---B---C               <-- foo  <--- HEAD
-                 \
-                  \-X
-
-Reflog records that fact (it records where tip of branch was)
-
-  foo@{0}: C
-  foo@{1}: X
-
-
-Then if you want to create new branch 'bar' with X, you would do
-
- $ git checkout -b bar foo@{1}
-
-If you wanted to have this commit on some other existing branch, let's
-call it 'baz', you would do instead (I think):
-
- $ git checkout baz
- $ git cherry-pick foo@{1}
-
-HTH (hope that helps).
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+     =20
