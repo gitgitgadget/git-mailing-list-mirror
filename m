@@ -1,119 +1,105 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: tracking branch for a rebase
-Date: Fri, 4 Sep 2009 20:59:49 +0200
-Message-ID: <20090904185949.GA21583@atjola.homenet>
-References: <20090904135414.GA3728@honk.padd.com>
- <4AA124DD.1030208@drmicha.warpmail.net>
- <20090904181846.GC19093@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
+ case
+Date: Fri, 4 Sep 2009 15:05:03 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0909041429540.28290@iabervon.org>
+References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com> <alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 04 21:00:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 04 21:05:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mje0x-0004wn-M1
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:00:04 +0200
+	id 1Mje5x-0006s6-Jf
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757180AbZIDS7y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 14:59:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757166AbZIDS7x
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 14:59:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40972 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757165AbZIDS7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 14:59:53 -0400
-Received: (qmail invoked by alias); 04 Sep 2009 18:59:54 -0000
-Received: from i59F54DAD.versanet.de (EHLO atjola.homenet) [89.245.77.173]
-  by mail.gmx.net (mp038) with SMTP; 04 Sep 2009 20:59:54 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19SWh4pEXdSmrDASQKaf9AZqvMuQM2daQBLa3oJ66
-	fT4JMW8MUxckVx
-Content-Disposition: inline
-In-Reply-To: <20090904181846.GC19093@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5600000000000001
+	id S932781AbZIDTFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 15:05:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757168AbZIDTFD
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:05:03 -0400
+Received: from iabervon.org ([66.92.72.58]:35845 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754109AbZIDTFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 15:05:01 -0400
+Received: (qmail 14236 invoked by uid 1000); 4 Sep 2009 19:05:03 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Sep 2009 19:05:03 -0000
+In-Reply-To: <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127761>
 
-On 2009.09.04 14:18:46 -0400, Jeff King wrote:
-> On Fri, Sep 04, 2009 at 04:31:57PM +0200, Michael J Gruber wrote:
->=20
-> > Making [rebase against upstream] the default for rebase without
-> > arguments may meet some objections (oh no, I didn't mean to rebase)=
-,
-> > but I guess it's worth trying.
->=20
-> FWIW, that has been a patch I have been meaning to do for a while. I
-> don't see it as any more error-prone than "git pull" without argument=
-s.
-> In either case, you can always recover with a reset from the reflog.
+On Fri, 4 Sep 2009, Johannes Schindelin wrote:
 
-Note that with:
-	branch.foo.remote =3D origin
-	branch.foo.merge =3D refs/heads/foo
+> Hi,
+> 
+> On Fri, 4 Sep 2009, Junio C Hamano wrote:
+> 
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> > 
+> > > It turns out that the method used to form URLs that use a helper 
+> > > doesn't generalize well to other cases, because it interferes with the 
+> > > ssh-style locations. Instead, some different mechanism needs to be 
+> > > made up to handle arbitrary handlers that git doesn't know about. 
+> > > Since we want to keep supporting "http://something", that'll have to 
+> > > be a special case anyway, and so we might as well handle it by having 
+> > > git know what helpers to use for things that we've always supported, 
+> > > and use a single descriptive name for the helper that handles that 
+> > > collection of URLs.
+> > >
+> > > As of this version, the idea is that there will be three ways helpers 
+> > > get selected:
+> > >
+> > >  - git selects a helper based on the URL being something traditionally 
+> > >    supported internally; that is, git recognizes the URL and knows 
+> > >    what to run, if possible, to handle it
+> > >
+> > >  - git uses the "vcs" option if it is set
+> > >
+> > >  - something with the URL that we don't understand well enough yet to 
+> > >    design, but which doesn't seem to be possible to fit in as a single 
+> > >    rule with the first item.
+> > 
+> > Thanks for a clear description.
+> > 
+> > I do not see that there is much difference between the above description
+> > and what Dscho is advocating, and I do not see anything to get excited
+> > about as Dscho seems to do.
+> 
+> I mainly take exception at complicating things with a "vcs" config 
+> variable.
+> 
+> The way you describe it, I like it, as I do not see any mention of said 
+> config variable there.
+> 
+> If you allow "git clone <URL>" for foreign vcs URLs, you do not need the 
+> "vcs" variable.  If you require that variable, you cannot allow an easy 
+> clone, and you will earn my opposition.
 
-"git pull --rebase" is not the same as:
-"git fetch origin && git rebase origin/foo", but:
+Some foreign vcses, including the only one I ever personally use, do not 
+have URLs, and require a bunch of options and paths to specify a 
+repository. I don't want to have to use:
 
-git fetch origin && git rebase --onto origin/foo $reflog_merge_base
+	url = p4://rsh:ssh+-q+-a+-x+-l+p4ssh+-q+-x+perforce+%2Fbin%2Ftrue//projects/foo/bar-1.0/...,//projects/foo/bar-1.1/...
 
-Where $reflog_merge_base is the first merge base is found between the
-current branch head, and the reflog entries for origin/foo.
+(actually, I don't even know what the normal thing is for a URL for 
+something that's split between multiple locations, or how URLs handle 
+"servers" that are arbitrary commands including options which make a 
+connection to the server)
 
+For cases where the foreign vcs has something to put in the "url" spot, 
+you don't need to set "vcs". In fact, you are only allowed to set one or 
+the other of "vcs" and "url" with my current version. What you're 
+interested in is explicitly left for later, when we have a prototype 
+helper for such a foreign vcs and can try it out with potential users.
 
-Same deal for "git pull --rebase origin bla", which is not:
-"git fetch origin bla && git rebase FETCH_HEAD", but:
-
-git fetch origin && git rebase --onto FETCH_HEAD $reflog_merge_base
-
-Where again $reflog_merge_base is found by looking at the reflog for
-origin/foo.
-
-It does that to try to automatically handle cases where upstream has
-been rebased. I'm not completely sure whether I like or hate that.
-Especially the "git pull --rebase <remote> <refspec>" case seems very
-weird to me. And if "rebase" is to pickup the same default as "pull", I
-guess it should also show the same behaviour, but just skips the "fetch=
-"
-part?
-
-> The biggest question is whether it should respect branch.*.merge, or
-> just branch.*.rebase (I never use the latter simply because I never u=
-se
-> "git pull", but I think it is probably reasonable to restrict it to
-> cases where you said you are interested in rebasing in general).
-
-Hm, you'll probably want "git merge" to pickup the default as well then=
-,
-right? And that should only do so if branch.*.rebase is not set. So
-effectively, you still have to use the right command, but can skip the
-argument. Having to deal a lot with git-svn, I also regulary use its
-"git svn rebase --local", which means "just rebase, don't fetch".
-
-Now, basically "git svn rebase" is pretty much git-svn's "pull". Maybe
-its idea could be taken, so we get "git pull --local" to just skip the
-fetch part, but keep "git rebase" and "git merge" 'dumb', requiring
-explicit arguments.
-
-(In the past, I once argued for deprecating "pull", and having
-merge/rebase doing the fetch as well, with a --local argument that stop=
-s
-them from doing so. That was probably mostly due to the fact that I ran
-into too many people that simply didn't understood that "git pull" is
-not "svn up". I still kind of like the idea, but seeing just how often =
-I
-use rebase/merge with already fetched stuff, I can see how having to us=
-e
-a --local flag with them all the time would be quite a PITA, but now,
-having the --local flag for "pull" seems to make sense to me.)
-
-Bj=F6rn
+	-Daniel
+*This .sig left intentionally blank*
