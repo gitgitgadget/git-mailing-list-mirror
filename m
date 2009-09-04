@@ -1,91 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
- case
-Date: Fri, 4 Sep 2009 20:02:25 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com> <alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org>
+From: Howard Miller <howardsmiller@googlemail.com>
+Subject: Re: Commit to wrong branch. How to fix?
+Date: Fri, 4 Sep 2009 19:01:06 +0100
+Message-ID: <26ae428a0909041101h509ffa31odf3502228517043a@mail.gmail.com>
+References: <88A0A7C2-7DCB-45A3-B196-BED2A8AC9405@googlemail.com>
+	 <4AA13DF4.4050604@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 20:01:18 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Sep 04 20:01:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjd63-0005GW-1o
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 20:01:15 +0200
+	id 1Mjd63-0005GW-PR
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 20:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757179AbZIDSBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 14:01:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757177AbZIDSBD
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 14:01:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40898 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757175AbZIDSBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 14:01:02 -0400
-Received: (qmail invoked by alias); 04 Sep 2009 18:01:02 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp067) with SMTP; 04 Sep 2009 20:01:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Kr/Bo1eWK03gOr85dCdhXQyg9WdDrNOCm7dnG6I
-	ya+byUzfz0rCF7
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vy6ouk4io.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S932828AbZIDSBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 14:01:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757185AbZIDSBG
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 14:01:06 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:21400 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757177AbZIDSBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 14:01:05 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so626340eya.19
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 11:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=VF38p9FZeIi9x1/03qo5k7D0hYYsc7eZAU5BCDfJ880=;
+        b=K/SPWFdjQan+S7B+NJDuwxJpbanR6/bYtG9Yfy7dU2J4jqpzMBqdJlGpqlOcdRUvwN
+         GWejF3Ij8XPJ5cZ6N2EuQOsBMn8EbYTjVfxf9O4wygcmoQqsXsL5d49jTkx/x8jyhUiX
+         Ht16MALGGnrrVL6EjOy/V0Sqbn27o+9ogNNEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=AkzIk9UkR4jsf9gMSixMG0X7iMdOmdj37sl3a/yXWgX2qh5vnCHJIo4D44KleqZ8Uq
+         43+yqKGhbClnX4xrg8pxCZs5p9Jt5oYINwSxuLu5/oJ3ETKP93TvimKvJa0wHoSWdvpf
+         MEf0h8NdBXBArtH8O1qRo5/DAyyL1fcTmxwwY=
+Received: by 10.216.70.204 with SMTP id p54mr2293319wed.87.1252087266321; Fri, 
+	04 Sep 2009 11:01:06 -0700 (PDT)
+In-Reply-To: <4AA13DF4.4050604@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127754>
 
-Hi,
+Hi Michael,
 
-On Fri, 4 Sep 2009, Junio C Hamano wrote:
+Thanks for your help.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > It turns out that the method used to form URLs that use a helper 
-> > doesn't generalize well to other cases, because it interferes with the 
-> > ssh-style locations. Instead, some different mechanism needs to be 
-> > made up to handle arbitrary handlers that git doesn't know about. 
-> > Since we want to keep supporting "http://something", that'll have to 
-> > be a special case anyway, and so we might as well handle it by having 
-> > git know what helpers to use for things that we've always supported, 
-> > and use a single descriptive name for the helper that handles that 
-> > collection of URLs.
-> >
-> > As of this version, the idea is that there will be three ways helpers 
-> > get selected:
-> >
-> >  - git selects a helper based on the URL being something traditionally 
-> >    supported internally; that is, git recognizes the URL and knows 
-> >    what to run, if possible, to handle it
-> >
-> >  - git uses the "vcs" option if it is set
-> >
-> >  - something with the URL that we don't understand well enough yet to 
-> >    design, but which doesn't seem to be possible to fit in as a single 
-> >    rule with the first item.
-> 
-> Thanks for a clear description.
-> 
-> I do not see that there is much difference between the above description
-> and what Dscho is advocating, and I do not see anything to get excited
-> about as Dscho seems to do.
+I had modified a few files and then done a 'git commit -a'. It was
+only after this that I did a status and realised that I had switched
+to a different branch (and forgotten). Unfortunately the branch I
+switched to tracks a remote that is my stable release so I'm a bit
+precious about it. If I forget again and push it, I'm in trouble :-)
+Yes, I have done that before!!
 
-I mainly take exception at complicating things with a "vcs" config 
-variable.
+Howard
 
-The way you describe it, I like it, as I do not see any mention of said 
-config variable there.
-
-If you allow "git clone <URL>" for foreign vcs URLs, you do not need the 
-"vcs" variable.  If you require that variable, you cannot allow an easy 
-clone, and you will earn my opposition.
-
-Ciao,
-Dscho
+2009/9/4 Michael J Gruber <git@drmicha.warpmail.net>:
+> Howard Miller venit, vidit, dixit 04.09.2009 17:54:
+>> I commited to the wrong branch and I can't figure out what to do. To
+>> make matters worse I then did 'git reset HEAD^' which has made things
+>> much worse. It didn't remove the commit and now I can't change
+>> branches. I'm utterly confused. Any help much appreciated!
+>>
+>> Moral - use git status liberally and read it carefully before doing
+>> anything. A 'git undo" command would be great is someone is feeling
+>> generous :-)
+>
+> Whatever happens, don't panic ;)
+>
+> Let's say "geesh" is the branch on which you committed by mistake, and
+> which you have reset.
+>
+> git reflog geesh
+>
+> which show you what has happened to that branch lately. In particular,
+> it will list the "lost" commit. (Most probably it is the same as geesh@{1}.)
+>
+> git tag sigh sha1ofthatcommit
+>
+> will assign the tag "sigh", so that it won't get lost by doing "git gc"
+> or such. Now you can lean back!
+>
+> Next step is committing "sigh" to the right branch. Depends on how you
+> arrived at that commit. Did you commit the complete tree you wanted, or
+> did you apply a change to geesh which you rather had wanted applied to
+> some other branch?
+>
+> Michael
+>
