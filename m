@@ -1,84 +1,110 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/8] VCS helpers
-Date: Fri, 4 Sep 2009 12:22:20 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909041141020.28290@iabervon.org>
-References: <alpine.LNX.2.00.0909032213120.28290@iabervon.org> <7v63bz198j.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 18:22:48 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [JGIT PATCH v2 3/3] Fix DirCache.findEntry to work on an empty cache
+Date: Fri,  4 Sep 2009 09:22:45 -0700
+Message-ID: <1252081365-2335-3-git-send-email-spearce@spearce.org>
+References: <1252081365-2335-1-git-send-email-spearce@spearce.org>
+ <1252081365-2335-2-git-send-email-spearce@spearce.org>
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <sop@google.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 18:24:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjbYk-0006q5-OH
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:22:47 +0200
+	id 1MjbZx-0007Iw-6y
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933323AbZIDQWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 12:22:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932819AbZIDQWY
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:22:24 -0400
-Received: from iabervon.org ([66.92.72.58]:58647 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932865AbZIDQWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 12:22:23 -0400
-Received: (qmail 31677 invoked by uid 1000); 4 Sep 2009 16:22:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Sep 2009 16:22:20 -0000
-In-Reply-To: <7v63bz198j.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S933637AbZIDQWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 12:22:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933442AbZIDQWr
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:22:47 -0400
+Received: from george.spearce.org ([209.20.77.23]:52232 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932819AbZIDQWp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 12:22:45 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 34DCA3821F; Fri,  4 Sep 2009 16:22:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 6BC7238221;
+	Fri,  4 Sep 2009 16:22:46 +0000 (UTC)
+X-Mailer: git-send-email 1.6.4.2.395.ge3d52
+In-Reply-To: <1252081365-2335-2-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127742>
 
-On Fri, 4 Sep 2009, Junio C Hamano wrote:
+If the cache has no entries, we want to return -1 rather than throw
+ArrayIndexOutOfBoundsException.  This binary search loop was stolen
+from some other code which contained a test before the loop to see if
+the collection was empty or not, but we failed to include that here.
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > This is the next version of the db/vcs-helper series in pu.
-> 
-> Thanks.
-> 
-> > The first patch is new, a rework of the remote-curl build to produce
-> > "remote-curl" and call it as a special case for the sorts of URLs that
-> > we accept as indicating something that it now handled by this helper.
-> >
-> > The series is rebased onto current next, with some conflicts resolved.
-> 
-> Because the theme of the topic does not have anything to do with fixing
-> the deepening of shallow clones nor giving an extended error message from
-> non-fast-forward git-push, I queued the series after reverse-rebasing onto
-> old db/vcs-helper~8, in order to keep the topic branch pure, instead of
-> merging unrelated topics from maint, master or next into it.  The result
-> merged in 'pu' obviously has to match what you expected by applying the
-> patches on top of 'next', and I am reasonably sure it does.
+Flipping the loop around to a standard while loop ensures we test
+the condition properly first.
 
-I'd thought that topics in pu were carried as based on next, particularly 
-once they depend on something (e.g., the beginning of the series) in next. 
-I suppose there's better options, but what do you do to find them? (Feel 
-free to refer me to the "note from the maintainer" if it's there, but I 
-don't remember that detail)
+Signed-off-by: Shawn O. Pearce <sop@google.com>
+---
+ .../spearce/jgit/dircache/DirCacheBasicTest.java   |    6 ++++++
+ .../src/org/spearce/jgit/dircache/DirCache.java    |    6 ++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-FWIW, there was a semantic mismerge in the original basing of this series 
-on 07a4a3b496, which I finally fixed in this version; the code to handle 
-NULL urls in builtin-fetch was after a new conversion of the url.
-
-In any case, I think both the reverse-rebase and merge are correct.
-
-> > Two patches have been dropped: a memory leak fix for code that was
-> > removed entirely by the first patch, and the "mark" helper capability,
-> > which is not needed (I believe) due to the "option" fast-import command.
-> 
-> Johan's cvs-helper series were depending on the previous iteration of this
-> series, but I thought it is being rerolled, so I'd drop it from pu for now.
-
-You could probably stick the "mark" patch into the start of the cvs-helper 
-series until it gets rerolled if you want to keep that series in pu 
-meanwhile; it was at the end of the series, and doesn't have subtle 
-interactions or interact with anything that's changed.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
+index b3097ac..4d737c0 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
+@@ -39,6 +39,7 @@
+ 
+ import java.io.File;
+ 
++import org.spearce.jgit.lib.Constants;
+ import org.spearce.jgit.lib.RepositoryTestCase;
+ 
+ public class DirCacheBasicTest extends RepositoryTestCase {
+@@ -182,4 +183,9 @@ public void testBuildThenClear() throws Exception {
+ 		assertEquals(0, dc.getEntryCount());
+ 	}
+ 
++	public void testFindOnEmpty() throws Exception {
++		final DirCache dc = DirCache.newInCore();
++		final byte[] path = Constants.encode("a");
++		assertEquals(-1, dc.findEntry(path, path.length));
++	}
+ }
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
+index bfb7925..9f0810a 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
+@@ -583,8 +583,6 @@ public void unlock() {
+ 	 *         information. If < 0 the entry does not exist in the index.
+ 	 */
+ 	public int findEntry(final String path) {
+-		if (entryCnt == 0)
+-			return -1;
+ 		final byte[] p = Constants.encode(path);
+ 		return findEntry(p, p.length);
+ 	}
+@@ -592,7 +590,7 @@ public int findEntry(final String path) {
+ 	int findEntry(final byte[] p, final int pLen) {
+ 		int low = 0;
+ 		int high = entryCnt;
+-		do {
++		while (low < high) {
+ 			int mid = (low + high) >>> 1;
+ 			final int cmp = cmp(p, pLen, sortedEntries[mid]);
+ 			if (cmp < 0)
+@@ -603,7 +601,7 @@ else if (cmp == 0) {
+ 				return mid;
+ 			} else
+ 				low = mid + 1;
+-		} while (low < high);
++		}
+ 		return -(low + 1);
+ 	}
+ 
+-- 
+1.6.4.2.395.ge3d52
