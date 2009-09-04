@@ -1,62 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] git-completion.bash: prevent 'git help' from searching
- for git repository
-Date: Fri, 4 Sep 2009 14:35:00 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909041434310.4605@intel-tinevez-2-302>
-References: <20090902095843.28914.qmail@3cd9dde586d86b.315fe32.mid.smarden.org> <fabb9a1e0909020447p212594cake8c6fe3a43b667ec@mail.gmail.com> <20090904092929.23208.qmail@00cf3567a0e8b4.315fe32.mid.smarden.org> <alpine.DEB.1.00.0909041217370.4605@intel-tinevez-2-302>
- <20090904110936.6663.qmail@046e1bfbf7e41d.315fe32.mid.smarden.org>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: [JGIT] Request for help
+Date: Fri, 4 Sep 2009 08:41:07 -0400
+Message-ID: <2c6b72b30909040541t4c781378g3f35aeb70021050c@mail.gmail.com>
+References: <loom.20090904T064602-511@post.gmane.org> <554991.93608.qm@web27807.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Sep 04 14:35:15 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Gabe McArthur <gabriel.mcarthur@gmail.com>
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Fri Sep 04 14:41:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjY0Y-0007JT-EV
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 14:35:14 +0200
+	id 1MjY6t-0000ej-30
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 14:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756796AbZIDMfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 08:35:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756789AbZIDMfE
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 08:35:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57520 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755862AbZIDMfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 08:35:03 -0400
-Received: (qmail invoked by alias); 04 Sep 2009 12:35:01 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp016) with SMTP; 04 Sep 2009 14:35:01 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yjwZPmMPyy/bfABGw7ELp9mXL+rvhFQP5uS1uzn
-	tcbW/qiZ8XCQBg
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090904110936.6663.qmail@046e1bfbf7e41d.315fe32.mid.smarden.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1755737AbZIDMlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 08:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756773AbZIDMlZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 08:41:25 -0400
+Received: from mail-iw0-f175.google.com ([209.85.223.175]:61647 "EHLO
+	mail-iw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753432AbZIDMlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 08:41:24 -0400
+Received: by iwn5 with SMTP id 5so211115iwn.4
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 05:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=CXM/91clsOEiGdd05TK0eQ9yJcwDcfEb4XvExJc4lHw=;
+        b=lngpbXj3A6wTKP5ZLoYqclOdzXhjQslHYVgEv8EFunxEp9fkpQ9wpi3MpWkA7XMvj5
+         mOke7lBdwuOmv58649mrYjw/6neear0JOCfVMF+CsFfvmhoQgkEI1GSCLm6wJSkRmXDJ
+         q7yEk4iKdocGpTKN//C+b5Iz5NfgGNP32MGLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=hLSqtHJ4ECYBgKfNNCUoB8k8TDLSqdWz1SYAPY1llvRYG/Gq9/GzHmHF6mjbD6XERb
+         JtSKU39rEXL9rW2UsjKKGsdQdjaU0X2J+oIj9epGwq+m7NL17RMMRAmZmjA3hMqAZnn+
+         457E2M+B/QUiRo5CTrCPm3NFo8qTQERaZQEcU=
+Received: by 10.231.24.208 with SMTP id w16mr9909749ibb.38.1252068087070; Fri, 
+	04 Sep 2009 05:41:27 -0700 (PDT)
+In-Reply-To: <554991.93608.qm@web27807.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127728>
 
-Hi,
+On Fri, Sep 4, 2009 at 03:33, Mark Struberg<struberg@yahoo.de> wrote:
+>> From: Gabe McArthur <gabriel.mcarthur@gmail.com>
+> >
+>> I'll try to submit a full patch later, using your
+>> conventions.
 
-On Fri, 4 Sep 2009, Gerrit Pape wrote:
+I have a question as well:
 
-> On Fri, Sep 04, 2009 at 12:22:36PM +0200, Johannes Schindelin wrote:
-> > -- snipsnap --
-> > [PATCH] git help -a: do not look for a repository
-> 
-> Perfect, thanks.
-> 
-> Acked-by: Gerrit Pape <pape@smarden.org>
+Support for using find bug is part of the Eclipse configuration (see
+org.spearce.jgit/findBugs/), and I know that there's a find bug plugin
+for Maven. From looking at sonatype's JGit repositories it is not
+integrated. Have you managed to include it?
 
-Hmm... I haven't checked if 'git help -a' wants to discover the (possibly 
-repository-specific) aliases.  Have you?
-
-Ciao,
-Dscho
+-- 
+Jonas Fonseca
