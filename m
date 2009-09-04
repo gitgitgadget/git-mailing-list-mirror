@@ -1,154 +1,165 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
- case
-Date: Sat, 5 Sep 2009 00:36:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909050023240.8306@pacific.mpi-cbg.de>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>  <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>  <alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org>  <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
- <alpine.LNX.2.00.0909041429540.28290@iabervon.org> <fabb9a1e0909041235x74a3b9b4gf65e650ca0d00831@mail.gmail.com> <alpine.DEB.1.00.0909042305390.8306@pacific.mpi-cbg.de> <alpine.LNX.2.00.0909041750390.28290@iabervon.org>
+From: Gabe <gabriel.mcarthur@gmail.com>
+Subject: Re: [JGIT] Request for help
+Date: Fri, 4 Sep 2009 16:47:54 -0700
+Message-ID: <524457d10909041647u562601d5q69142eefe894ac5b@mail.gmail.com>
+References: <585278.66341.qm@web27802.mail.ukl.yahoo.com>
+	 <658028.86274.qm@web27804.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-2142479076-1252103801=:8306"
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sat Sep 05 00:35:36 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Douglas Campos <douglas@theros.info>,
+	Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Sat Sep 05 01:49:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjhNU-0005Kj-A0
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 00:35:33 +0200
+	id 1MjiWn-0003Cp-HE
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 01:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934415AbZIDWfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 18:35:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934407AbZIDWfS
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 18:35:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45238 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934398AbZIDWfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 18:35:16 -0400
-Received: (qmail invoked by alias); 04 Sep 2009 22:35:17 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp002) with SMTP; 05 Sep 2009 00:35:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+XeacCCHyX5ZDq2SdZZP/gu6EkqHwzZFS21th3fJ
-	3xkESRKx6c2w8i
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.LNX.2.00.0909041750390.28290@iabervon.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S933956AbZIDXrz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 19:47:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933944AbZIDXry
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 19:47:54 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:33729 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933927AbZIDXrx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 19:47:53 -0400
+Received: by ewy2 with SMTP id 2so852190ewy.17
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 16:47:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FjIj3m8a7essPBJKP64QCeshD1jiQmlRcACh4M6RrKY=;
+        b=SJEHKEYzxhFdSDTRvrAQuSAFH3ANRPVCOi/xElzv0PwFMCrLvzPKAMA3gyybghmbKl
+         x556GN4Zmqccmq3bh9qc93LtSqoIcwIizAKZjATJ3cd8joZoF0bmnA4kezjNIOqcjnXs
+         ESNKTbBYXQkB5UrSWfbgCVt5kPN/Ux54wtp2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Akt9gAt9SMo+s24i/7JDX7g7tY8j2A3UFm9vYR5MIhrjFGATV3HAhBHoqVVgyGjzfb
+         sDSW0kMgAKDdgrHln7r+YRFeNOEkhrWsemOtmqzi7MrQUOiGPyei/Vhjb/h62zjXqiG0
+         PaXBfmHa3FukcoiiZEodQPoVCcxnlO3ELHe6w=
+Received: by 10.216.7.141 with SMTP id 13mr2200833wep.24.1252108074392; Fri, 
+	04 Sep 2009 16:47:54 -0700 (PDT)
+In-Reply-To: <658028.86274.qm@web27804.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127772>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Sep 4, 2009 at 10:28 AM, Mark Struberg<struberg@yahoo.de> wrote=
+:
+> Hi!
+>
+> Work has been done at
+>
+> http://github.com/sonatype/JGit/tree/mavenize
+>
+> Please feel free to pull/fork and share your changes! I'd be happy to=
+ pull it in.
+>
+> @Gabe: your patch seems to got filtered by the list, I think sharing =
+such big things is easier by using github. Would be cool if you could h=
+elp us!
 
---8323328-2142479076-1252103801=:8306
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+Ok, I'll fork and send a patch request shortly.  I was thinking about
+it earlier, and I may add a couple of features that all OS projects
+should follow (e.g. License in the jar, etc.).
 
-Hi,
+As to a few questions that have been raised:
+1) I pick the 'sources' folder because it's good metadata management.
+Everything in the root folder should be about or related to managing
+the project.  No direct source folders, as it clutters the layout.
+Best to be perfectly clear where all the action is happening.  It's a
+simple convention I wished more projects followed.
+2) I haven't worked with the find-bugs plugin.  I looked it up, but it
+seems to only generate documents in the 'site'/reporting profile.
+Thus it wouldn't necessarily affect the building of the software.  It
+would really only be useful if you had something like a Hudson CI
+infrastructure or site generation going on to build a website and show
+the reports.  I could certainly add that, though, if you like.
+3) The LICENSE file can be at the top level.  Not really an issue for
+me one way or another.  Just a personal preference on how I have
+structured all of my previous Maven projects.
 
-On Fri, 4 Sep 2009, Daniel Barkalow wrote:
+-Gabe
 
-> On Fri, 4 Sep 2009, Johannes Schindelin wrote:
-> 
-> > Hi,
-> > 
-> > On Fri, 4 Sep 2009, Sverre Rabbelier wrote:
-> > 
-> > > On Fri, Sep 4, 2009 at 21:05, Daniel Barkalow<barkalow@iabervon.org> 
-> > > wrote:
-> > > > Some foreign vcses, including the only one I ever personally use, do 
-> > > > not have URLs, and require a bunch of options and paths to specify a 
-> > > > repository. I don't want to have to use:
-> > > >
-> > > >        url = p4://rsh:ssh+-q+-a+-x+-l+p4ssh+-q+-x+perforce+%2Fbin%2Ftrue//projects/foo/bar-1.0/...,//projects/foo/bar-1.1/...
-> > > 
-> > > Btw, doesn't p4 have these config files that you can download that 
-> > > contain the configuration? In that case 
-> > > 'p4://example.org/p4/main-development.configfile' would be very 
-> > > convenient.
-> > 
-> > If that's how p4 users initialize their working directories, then that is 
-> > the way to go.
-> > 
-> > And I cannot start to believe that the complicated way you described is 
-> > the common way to initialize p4 working directories, as that would tempt 
-> > the intelligence/enthusiasm of the average programmer.
-> 
-> Perforce is probably the single most popular system for git to import 
-> from because it is such a monumental pain to use for anything at all 
-> that it's easier to learn git, write a git importer, and use your git 
-> importer than it is to actually use Perforce directly.
-> 
-> Of course, it's not really beyond the average programmer to get a p4 
-> working directory, because whoever is running the server will have > 
-> provided a file to copy and instructions on setting an environment 
-> variable.
 
-That is what we need to optimize for, then.
 
-> They don't know what the magic formula means; they just use it. And they 
-> only work on one branch until that branch is done with, and then they 
-> throw away that working directory, get a new working directory, and 
-> never look at the other branch's history again (and certainly never 
-> track anything across branches). Also, they have p4 experts who deal 
-> with merging branches so that stuff doesn't get lost when moving to a 
-> new branch. And the experts have scripts built into the release process 
-> that attempt to insure that things don't get lost. The reason that my 
-> helper can't have a single location for a repository is that the 
-> branches of a single project are strewn randomly about the namespace, 
-> and a proper git import needs to know what to stitch into a single 
-> repository.
 
-And why not having the different branches which are strewn randomly about 
-the namespace as separate remotes for a Git repository?  After all, the 
-average p4 user will be wanting to work on _one_ branch, as you so aptly 
-described.
-
-> For the matter of where the server is, Perforce supports just having a 
-> "server:port" value, but if the organization uses this, there's no 
-> authentication of users possible. Instead, organizations set up an ad 
-> hoc collection of ssh proxies and give people a string which is the 
-> command to go through those proxies, because Perforce only knows how to 
-> use rsh or a command you provide that acts like rsh.
-
-That explains a tiny part of the long path you provided, but certainly not 
-all (I am especially curious what /bin/true thinks it's doing in that 
-URL).
-
-If what you said about ssh is true, then it should be the same type of 
-invocation everywhere, and it should certainly be very easy to provide a 
-shortcut for that URL; no need for the _user_ (who could not care less how 
-ssh happens to be called) to remember.
-
-Something like "git clone p4::ssh://p4ssh@projects/foo/bar-1.0/..." should 
-become a very easy and intuitive way for the average programmer to clone a 
-p4 branch into a Git repository.
-
-Should the developer ever need to work with another branch of the same 
-project, very easy:
-
-	$ git remote add -f bar-1.1 p4::ssh://p4ssh@projects/foo/bar-1.1/...
-	$ git checkout -b my-1.1 bar-1.1/master
-
-Now, I am not married to having more than one remote for multiple 
-branches, but there is _no_ reason why this has to be done at clone time, 
-if the average p4 user does not do that either.  You can always teach 
-git-remote-p4 to behave sensibly and ask the user to
-
-	$ git config --add remote.origin.fetch \
-		+/foo/bar-1.1:refs/remotes/origin/bar-1.1
-
-Note, these are two alternative suggestions.  I am not trying to decide 
-what is better here, but I am convinced that both options are more 
-intuitive than the "vcs" variable.
-
-Ciao,
-Dscho
-
---8323328-2142479076-1252103801=:8306--
+>
+> LieGrue,
+> strub
+>
+> --- On Fri, 9/4/09, Mark Struberg <struberg@yahoo.de> wrote:
+>
+>> From: Mark Struberg <struberg@yahoo.de>
+>> Subject: Re: [JGIT] Request for help
+>> To: "Douglas Campos" <douglas@theros.info>
+>> Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>, git@vger.kernel.org, =
+"Gabe McArthur" <gabriel.mcarthur@gmail.com>
+>> Date: Friday, September 4, 2009, 4:49 PM
+>> Hi Douglas!
+>>
+>> http://github.com/sonatype/JGit
+>>
+>> The branch will be called mavenizing or so.
+>>
+>> Will post this after I got the tests running.
+>>
+>> LieGrue,
+>> strub
+>>
+>> --- On Fri, 9/4/09, Douglas Campos <douglas@theros.info>
+>> wrote:
+>>
+>> > From: Douglas Campos <douglas@theros.info>
+>> > Subject: Re: [JGIT] Request for help
+>> > To: "Mark Struberg" <struberg@yahoo.de>
+>> > Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>,
+>> git@vger.kernel.org,
+>> "Gabe McArthur" <gabriel.mcarthur@gmail.com>
+>> > Date: Friday, September 4, 2009, 4:44 PM
+>> > On Fri, Sep 4, 2009
+>> > at 9:47 AM, Mark Struberg <struberg@yahoo.de>
+>> > wrote:
+>> >
+>> >
+>> > as an old saying tells us: how to climb a mountain?
+>> step
+>> > after step! ;)
+>> >
+>> >
+>> >
+>> > I suggest we create a fresh branch based on the
+>> Shawns
+>> > current version and add all the features
+>> incrementally.
+>> >
+>> >
+>> >
+>> > please point out where this branch will happen, I want
+>> to
+>> > give some help too.
+>> >
+>> >
+>>
+>>
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe
+>> git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at=C2=A0 http://vger.kernel.org/majordomo-info.h=
+tml
+>>
+>
+>
+>
+>
