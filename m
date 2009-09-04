@@ -1,168 +1,69 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: Re: [JGIT] Request for help
-Date: Fri, 4 Sep 2009 19:51:21 +0000 (GMT)
-Message-ID: <904535.28308.qm@web27807.mail.ukl.yahoo.com>
-References: <2c6b72b30909041150g6374be2ci4d36bd8ab0824a8d@mail.gmail.com>
+From: "armencho@gmail.com" <armencho@gmail.com>
+Subject: .git and retrieving full source tree for own project(s)
+Date: Fri, 4 Sep 2009 21:52:07 +0200
+Message-ID: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Douglas Campos <douglas@theros.info>, git@vger.kernel.org,
-	Gabe McArthur <gabriel.mcarthur@gmail.com>
-To: Jonas Fonseca <jonas.fonseca@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 21:51:34 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 04 21:52:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjeon-00049v-DU
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:51:33 +0200
+	id 1Mjepp-0004Qs-8A
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 21:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757262AbZIDTvW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 15:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757248AbZIDTvV
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:51:21 -0400
-Received: from web27807.mail.ukl.yahoo.com ([217.146.182.12]:48042 "HELO
-	web27807.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757247AbZIDTvV convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 15:51:21 -0400
-Received: (qmail 29688 invoked by uid 60001); 4 Sep 2009 19:51:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1252093881; bh=LYU4VJwKem1NW3Fafwqy8Bdutjtscfhu8oO7SpZvRAQ=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=uYa/c9JfpUSWwRikCLqJ20FOpWq0CCPYHvQCYH4/J+vQjRF0rYiuCwomzb7YtVZRs8Lt2KPkBN2VEn5D3OjJqP4sFRgCVLA1GDUrOQO9rpNoBAfaOF9nO7C8gyaKBDExeztePdTHOMZiOEHSGIZa0A2yj1LIEj/9MBJ/8Wep3ew=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=SjY2197QRa2TzeMXQUmshyvoIF7cJBVg39v5IssA9KFU1HbKwsf98BqxXmL1b0BUENAlWM6fGilHHVvHFXNvZq4TgPZdzxRfYYHN4l7FLXIPEvUTMxN37XjW/Vw0CIqedF9H8A1rZupTuOQPqSu0fwd1REIzj6+TaKIwvbt5Ivc=;
-X-YMail-OSG: GbgVmoYVM1lWVwL_4AOgsLA16ySAgVecot5lfy8YGSD9hW7Ffx34sjisOk4KIjBTZFBhb7iyoZNRdzM1fLTmWKM4Rq5UsQEOsi2SBPMNtMyazK10XhTiC42rpMinwSyguK8Ji1bCPmafOhal6vFpqZ32kOvWzdbyAZnRiOkkRUDh5IN9HX2tClW_cfMH0oCP8NvnVRf7aKj2jYKLzBTiKvvqbcybIpphIP5dJ8b6no0YzPrAY9kEic3j7cuAk_wYBTsVNalrytBrsgPlyQaO_hjGsO.LHyRzJ7OO2Fk3cxusnbo4eavTO8zB
-Received: from [81.16.153.112] by web27807.mail.ukl.yahoo.com via HTTP; Fri, 04 Sep 2009 19:51:21 GMT
-X-Mailer: YahooMailClassic/6.1.2 YahooMailWebService/0.7.338.2
-In-Reply-To: <2c6b72b30909041150g6374be2ci4d36bd8ab0824a8d@mail.gmail.com>
+	id S933926AbZIDTw3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 15:52:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933922AbZIDTw2
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 15:52:28 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:55623 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933911AbZIDTw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 15:52:26 -0400
+Received: by ewy2 with SMTP id 2so730556ewy.17
+        for <git@vger.kernel.org>; Fri, 04 Sep 2009 12:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=T36zGNFDoKzr45gy6f3W80/LngnqZDz3SzaOfFFCJHk=;
+        b=xCvtueG2MauIGGIUCEJUS/84it5/ik6fKMUX5bFY6X2DYQZKzX+wDIhvDIpEhROLH1
+         ymHm6rDmT1KGjb+5VNd33R5oyYuzbOFBQviYq12sOOyqcBoZtGWoUUtVwYw6Ts/oawvE
+         iUEowzpvIjBotQ6k+tKPEvUT98NOxglHDR1CA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=cDsyqMpgcK4eZ+FlG1qteUiLQrShebgY4lWGLnDdiRxZjbDQIK90RBztapk8BBEUrA
+         FcZI49EPkSpIphTbq7kVM2Azj53bxncqNapFH28kAvA7eycU00cobiQL+3KpxMFghoaz
+         8LLnR0cxgTTRSh7LUVpipWwdJzcTTT+5V5Q1o=
+Received: by 10.216.11.138 with SMTP id 10mr2283930wex.51.1252093947083; Fri, 
+	04 Sep 2009 12:52:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127764>
 
-Thanks Jonas!
+Hi all,
 
-I now squashed a lot of commits together where possible and republished=
- the rebased branch.=20
+I just started with git and suprisingly or unsurprisingly everything
+works, and I love it. I had been working on a software project, and i
+ran "git init" in its source tree, which created the ".git". I added
+all files with "git add ." and first-time committed them all using
+"git commit -a -m "Imported project files". I also did couple three
+commits after that and well, everything works.
 
-Next steps:
+What I am wondering about is, what is gits identity for a repository?
+I don't share or publish the source directory anywhere, and just for
+testing I removed everything but the ".git" directory and tried "git
+checkout" and "git checkout master". To my surprise, the files in
+repository did NOT reappear, contrary to what I thought. Doesn't
+checkout update/recreate the project file tree according to the
+"trunk" snapshot?
 
-* mavenizing org.spearce.jgit.pgm
-
-LieGrue,
-strub
-
---- On Fri, 9/4/09, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
-
-> From: Jonas Fonseca <jonas.fonseca@gmail.com>
-> Subject: Re: [JGIT] Request for help
-> To: "Mark Struberg" <struberg@yahoo.de>
-> Cc: "Douglas Campos" <douglas@theros.info>, git@vger.kernel.org, "Gab=
-e McArthur" <gabriel.mcarthur@gmail.com>
-> Date: Friday, September 4, 2009, 8:50 PM
-> On Fri, Sep 4, 2009 at 13:28, Mark
-> Struberg<struberg@yahoo.de>
-> wrote:
-> > Hi!
-> >
-> > Work has been done at
-> >
-> > http://github.com/sonatype/JGit/tree/mavenize
-> >
-> > Please feel free to pull/fork and share your changes!
-> I'd be happy to pull it in.
->=20
-> IMO, there are a lot of things that can be squashed
-> together and
-> cleaned up. I know that you advocated for incremental
-> introduction,
-> but it seems wrong to for example add a file and then
-> completely
-> reformat it a few commits later. The same thing with the
-> .gitignore
-> fixes in step 5.
->=20
-> Some comments ... Some of them I initially entered in
-> github's
-> codereview, but I ended up writing it all here.
->=20
-> Commit: "mavenizing step 1: moved over the initial poms
-> from Jasons branch"
->=20
->  * Please always add an empty line between the subject and
-> the body
-> =A0=A0=A0of the commit message. Like this:
->=20
-> =A0 mavenizing step 1: moved over the initial poms from
-> Jasons branch
->=20
-> =A0 Signed-off-by: Mark Struberg >struberg@yahoo.de>
->=20
->  * The .gitignore pattern could be further limited to
-> "target/" ...
-> but you seem to change this to /target later.
->=20
-> In org.spearce.jgit/pom.xml:
->=20
-> =A0 =A0 * The use of maven-surefire-plugin should be
-> removed. This module
-> does not have any tests.
->=20
-> =A0 =A0 * Shouldn't we retain the original
-> ${groupId}:${artifactId} naming
-> convention, being org.spearce:jgit?
->=20
-> In org.spearce.jgit.test/pom.xml:
->=20
-> =A0 =A0 * Dependency on jsch is unecessary since it
-> is derived from
-> org.spearce.jgit.
->=20
-> =A0 =A0 * Maybe name as org.spearce:jgit-test?
->=20
-> In org.spearce.jgit.pgm/pom.xml:
->=20
-> =A0 =A0 * Maybe name as org.spearce:jgit-pgm?
->=20
-> Commit: "mavenizing step 2: move the core libs from src to
-> src/main/java"
->=20
->  * Please also add an empty line to this commit message.
->=20
->  * You might as well squash the whitespace fixes into the
-> first commit.
->=20
-> Commit: "mavenizing step 3: moving all core tests into the
-> core module"
->=20
->  * The commit message wrongly states:
-> =A0 =A0 org.spearce.jgit.test/tst/ ->
-> org.spearce.jgit/src/test/java/tst/
-> =A0=A0=A0Should be:
-> =A0 =A0 org.spearce.jgit.test/tst/ ->
-> org.spearce.jgit/src/test/java/
->=20
-> Commit: "mavenizing step 4: moving some license files and
-> META-INF"
->=20
->  * Shouldn't the commit message rather say "remove JSch"?
-> =A0=A0=A0Then the moving of META-INF can be put in
-> its own commit.
->=20
->  * The new NOTICE file has a few typos and the info could
-> fit into the README
->=20
-> Then I got a bit lost in a huge reformatting.
->=20
-> --=20
-> Jonas Fonseca
-> --
-> To unsubscribe from this list: send the line "unsubscribe
-> git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at=A0 http://vger.kernel.org/majordomo-info.html
->=20
-
-
-     =20
+Now, I did all this just out of curiosity, but to my understanding
+everything that is needed for working with the project is stored in
+".git", right? Even if all project files mysteriously disappear, "git
+checkout" should bring the copy of master branch back, no? If not,
+what is the way to tell git I want full copy of a snapshot?
