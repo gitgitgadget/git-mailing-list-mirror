@@ -1,72 +1,109 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
-	case
-Date: Fri, 4 Sep 2009 12:47:14 +0200
-Message-ID: <fabb9a1e0909040347i2a002c62h47f8d39596134095@mail.gmail.com>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org> 
-	<fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com> 
-	<20090904172345.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special
+ case
+Date: Fri, 04 Sep 2009 03:50:12 -0700
+Message-ID: <7vk50fugpn.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>
+ <alpine.DEB.1.00.0909041232500.4605@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Sep 04 12:47:43 2009
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 04 12:50:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjWKU-0001WO-Mt
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 12:47:43 +0200
+	id 1MjWNb-0002NQ-G0
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 12:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755875AbZIDKre convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 06:47:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755319AbZIDKre
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:47:34 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:38215 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751470AbZIDKrd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 06:47:33 -0400
-Received: by ewy2 with SMTP id 2so309493ewy.17
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 03:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qBuvHb66ZzglSGJsD63pEs9CTeLp4VujEZPeyGpQ9GI=;
-        b=uk7DSZB8qH8CDW2xLltjzx+Txh9LrejQIeDHrGUQUcsIUXZ3LmoT6dhqSdqo7v1y39
-         LGXXvhCtu3n9ewYLUBaXD1Fl5OAIgLs2KwPZ6iwS/vPMj5QdGtk1UoaBiIVbpyqIbLlL
-         4pVc8hWiFTnkypVuexeFjRKIXGyHZ9gJPjhIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Z7N0sGT7cCDjijl/29rVwFNXTY6y+gj7kdNehJra6ffFlpwSy5eu8BXEqocbvRM48J
-         UJHz7GkxmNihiaQMGdQbcaJGo1gWoqMk5ODlN3Kn6bZ5Uzn44HRbNS6xui5K2fNX1iXF
-         RfMQxZD3yzD+5qqiAEdTQ6rbCb1aEEf8hDD4o=
-Received: by 10.216.54.207 with SMTP id i57mr816476wec.114.1252061254135; Fri, 
-	04 Sep 2009 03:47:34 -0700 (PDT)
-In-Reply-To: <20090904172345.6117@nanako3.lavabit.com>
+	id S1755737AbZIDKuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 06:50:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbZIDKuW
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:50:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57799 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755203AbZIDKuV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 06:50:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C25AE25E9C;
+	Fri,  4 Sep 2009 06:50:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ta1+D5ix45a1cYaF3bA/qCwqh3Q=; b=aHEhPH
+	QfgAXvKuuGkJUO18hYfKSQLG16nIQnqxjS6GO9r1RHSnTYQetWFmn6jvGQgZxfpD
+	nUyRgYcFONFxa7T0S9lotbpfLUegN6Zrk8ZkAJqDkIwz7rD0lzVcYu86VRLIQ2dc
+	whKh91uCfFvC1YDTMjGt8CT9GMAgvLCF/oVtg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vlkvRgzPa9LuzJ2XS3TLN41Smfy3MAns
+	yn6+v0W94sx2VcK4/hQefnbc8qClwuJSdB2u7hrBGFdqpv4rvyPTErFCqtfr/oJw
+	BEarygH4Jq4M3rjtinFr7/bq0XMarnXv1Qwy8PuGPBZ+Ce4jTXZcUkiP+Sp5LurN
+	j+/RfX0XDSE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F01125E98;
+	Fri,  4 Sep 2009 06:50:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B182325E96; Fri,  4 Sep
+ 2009 06:50:13 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0909041232500.4605@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Fri\, 4 Sep 2009 12\:34\:59 +0200
+ \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BC68242A-9940-11DE-9A4C-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127710>
 
-Heya,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, Sep 4, 2009 at 10:23, Nanako Shiraishi<nanako3@lavabit.com> wro=
-te:
-> =A0http://thread.gmane.org/gmane.comp.version-control.git/127121/focu=
-s=3D127520
+> The special case is "http://" and "https://" which might indicate foreign 
+> VCS repositories.
+>
+> In all other cases, I am afraid that you are complicating the glove.
+>
+> Remember: the whole purpose of the "foreign VCS" helpers is user 
+> convenience.
 
-I don't see anything in that thread that convinces me why this is the
-better solution. Unless I'm reading it wrong Junio said "so this is
-how you're going to do it", and Daniel said "yup".
+Sorry, but you completely lost me here.
 
---=20
-Cheers,
+Here are two URLs that follows your "user convenience" principle.
 
-Sverre Rabbelier
+	http://example.xz/repos/frotz.git/
+	http://example.xz/repo/frotz/trunk/
+
+How do you tell, without relying on .git and trunk, the former is a git
+repository and wants the dumb walker transport to fetch from, while the
+latter is probably a svn and you would either use "svn checkout", or use
+"git clone" on it via the svn helper?
+
+Well, you don't.
+
+One possible "convenient user interface" would be to say
+
+	svn+http://example.xz/repo/frotz/trunk/
+
+(or use :: instead of + as the helper-name separator, as we agreed not to
+decide on it)
+        
+This would give us
+
+ (1) it is clear that it literally is what you would give to git and
+     trigger the svn helper; and
+
+ (2) to people who know how canonical git URLs with foreign helper are
+     spelled, it also is clear that you can use "svn checkout" on
+     everything after "svn+" in it.
+
+     A corollary to this is that you can also use "git svn init" on it.
+
+Compared to that, if you do not have any such prefix, how would that be
+more convenient to the users?
+
+Or perhaps you have an alternative in mind that is more convenient for the
+users and that is not "use identically looking http://... for both", but
+you are being unnecessarily cryptic by not spelling out what it is.
