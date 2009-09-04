@@ -1,122 +1,178 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/9] diff --whitespace=warn/error: obey blank-at-eof
-Date: Fri,  4 Sep 2009 03:55:16 -0700
-Message-ID: <1252061718-11579-8-git-send-email-gitster@pobox.com>
+Subject: [PATCH 9/9] diff --color: color blank-at-eof
+Date: Fri,  4 Sep 2009 03:55:18 -0700
+Message-ID: <1252061718-11579-10-git-send-email-gitster@pobox.com>
 References: <1252061718-11579-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 04 12:56:48 2009
+X-From: git-owner@vger.kernel.org Fri Sep 04 12:56:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjWTH-00041M-JA
+	id 1MjWTI-00041M-Bv
 	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 12:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756748AbZIDKzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1756743AbZIDKzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 4 Sep 2009 06:55:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756745AbZIDKzl
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:55:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61154 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbZIDKzn
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:55:43 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61185 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755737AbZIDKzf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 06:55:35 -0400
+	with ESMTP id S1755893AbZIDKzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 06:55:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1733725EF6
-	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:38 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3E17C25EF9
+	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:42 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=HBqk
-	Kn17IN+lcjdCwK1Aw2arn74=; b=fbUs+99OXazNNkKMYWdsFFJPz6yagUWbh8JN
-	prBjUde3UEBzU7vUUN/p2k3AeUQKnYsPDA7jWjfRnSpf/J9I02pmqIGDd/KHpfps
-	6IN4sj7xKcpBNiOe2s1Fg5p/UGAA9vdW3sWQgBzDoeKyG73Zxxs5nsyXQKa5F70h
-	QZhWzD4=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=EQ+M
+	VEEzfqxUXgSelPemCQSGhAo=; b=b6ZNGcrE9BLylVAaaJr1AmZdE8OYKlZDrPOo
+	ixmvGI90pXMNx4HzI2E7pBXxTNIs+uQP+qsRmevJxa3sudRQxNuxBp1O9ny4CuCl
+	/wezGPZ8kftE+2ecU87jCzx9IbmdUM3C/W9q1kjiPpyMbg8xWeM9c8cfFWPFu4RS
+	A0DtHio=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=Rev57C
-	NQs3oqmsMxCuoQFxPYVeYPK+sKlk9y3Z4hZaFLONvyZ3cxRcmMZdkFJ8FKOyswbB
-	Ey6+wzZUqEBGLIy8ZSCN/pCgfgIC4+43ub+jhXn7+Ml9p8axrZ6PSC8hecbb2ifz
-	nLSadc1VaXDkfDwVMla8xiZ6DEbp7kZnQSbgs=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=CqNpYi
+	STc/WDpjdO56XkvgM66sZ1dY5YbrdxJaML2+4fBYxhkAQO/x29ml7rz3/4Z5b5NJ
+	eJDYAQkxk4cfV5N6h+DEEjXjfmMnY/IuqIwi5bN1odmgOQblRP3/p9ZU7LL8bdfN
+	N+VWbCKoxTuMiaFU2PmU7uG58+cKjG80T9WyE=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 121B825EF5
-	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:38 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3982B25EF8
+	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:42 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C40925EF4 for
- <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:37 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84DF025EF7 for
+ <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:41 -0400 (EDT)
 X-Mailer: git-send-email 1.6.4.2.313.g0425f
 In-Reply-To: <1252061718-11579-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 7AD63334-9941-11DE-82A7-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 7D50FED2-9941-11DE-9A4C-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127718>
 
-The "diff --check" code used to conflate trailing-space whitespace error
-class with this, but now we have a proper separate error class, we should
-check it under blank-at-eof, not trailing-space.
+Since the coloring logic processed the patch output one line at a time, we
+couldn't easily color code the new blank lines at the end of file.
 
-The whitespace error is not about _having_ blank lines at end, but about
-adding _new_ blank lines.  To keep the message consistent with what is
-given by "git apply", call whitespace_error_string() to generate it,
-instead of using a hardcoded custom message.
+Reuse the adds_blank_at_eof() function to find where the runs of such
+blank lines start, keep track of the line number in the preimage while
+processing the patch output one line at a time, and paint the new blank
+lines that appear after that line to implement this.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c                     |   10 +++++++---
- t/t4015-diff-whitespace.sh |    4 ++--
- t/t4019-diff-wserror.sh    |    2 +-
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ diff.c                  |   37 +++++++++++++++++++++++++++----------
+ t/t4019-diff-wserror.sh |    9 +++++++++
+ 2 files changed, 36 insertions(+), 10 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 1eddd59..a693d18 100644
+index c19c476..2b285b8 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1650,10 +1650,14 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 		ecb.priv = &data;
- 		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
+@@ -491,6 +491,8 @@ struct emit_callback {
+ 	struct xdiff_emit_state xm;
+ 	int color_diff;
+ 	unsigned ws_rule;
++	int blank_at_eof;
++	int lno_in_preimage;
+ 	sane_truncate_fn truncate;
+ 	const char **label_path;
+ 	struct diff_words_data *diff_words;
+@@ -547,6 +549,12 @@ static void emit_add_line(const char *reset, struct emit_callback *ecbdata, cons
  
--		if ((data.ws_rule & WS_TRAILING_SPACE) &&
-+		if ((data.ws_rule & WS_BLANK_AT_EOF) &&
- 		    data.trailing_blanks_start) {
--			fprintf(o->file, "%s:%d: ends with blank lines.\n",
--				data.filename, data.trailing_blanks_start);
-+			static char *err;
+ 	if (!*ws)
+ 		emit_line(ecbdata->file, set, reset, line, len);
++	else if ((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
++		 ecbdata->blank_at_eof &&
++		 (ecbdata->blank_at_eof <= ecbdata->lno_in_preimage) &&
++		 ws_blank_line(line + 1, len - 1, ecbdata->ws_rule))
++		/* Blank line at EOF */
++		emit_line(ecbdata->file, ws, reset, line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+ 		emit_line(ecbdata->file, set, reset, line, 1);
+@@ -573,9 +581,16 @@ static unsigned long sane_truncate_line(struct emit_callback *ecb, char *line, u
+ 	return allot - l;
+ }
+ 
++static int find_preimage_lno(const char *line)
++{
++	char *p = strchr(line, '-');
++	if (!p)
++		return 0; /* should not happen */
++	return strtol(p+1, NULL, 10);
++}
 +
-+			if (!err)
-+				err = whitespace_error_string(WS_BLANK_AT_EOF);
-+			fprintf(o->file, "%s:%d: %s\n",
-+				data.filename, data.trailing_blanks_start, err);
- 			data.status = 1; /* report errors */
- 		}
+ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ {
+-	int color;
+ 	struct emit_callback *ecbdata = priv;
+ 	const char *meta = diff_get_color(ecbdata->color_diff, DIFF_METAINFO);
+ 	const char *plain = diff_get_color(ecbdata->color_diff, DIFF_PLAIN);
+@@ -598,6 +613,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 
+ 	if (line[0] == '@') {
+ 		len = sane_truncate_line(ecbdata, line, len);
++		ecbdata->lno_in_preimage = find_preimage_lno(line);
+ 		emit_line(ecbdata->file,
+ 			  diff_get_color(ecbdata->color_diff, DIFF_FRAGINFO),
+ 			  reset, line, len);
+@@ -611,7 +627,6 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		return;
  	}
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index b1cbd36..a5d4461 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -335,10 +335,10 @@ test_expect_success 'line numbers in --check output are correct' '
  
- '
- 
--test_expect_success 'checkdiff detects trailing blank lines' '
-+test_expect_success 'checkdiff detects new trailing blank lines (1)' '
- 	echo "foo();" >x &&
- 	echo "" >>x &&
--	git diff --check | grep "ends with blank"
-+	git diff --check | grep "new blank line"
- '
- 
- test_expect_success 'checkdiff allows new blank lines' '
+-	color = DIFF_PLAIN;
+ 	if (ecbdata->diff_words) {
+ 		if (line[0] == '-') {
+ 			diff_words_append(line, len,
+@@ -630,14 +645,13 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		emit_line(ecbdata->file, plain, reset, line, len);
+ 		return;
+ 	}
+-	if (line[0] == '-')
+-		color = DIFF_FILE_OLD;
+-	else if (line[0] == '+')
+-		color = DIFF_FILE_NEW;
+-	if (color != DIFF_FILE_NEW) {
+-		emit_line(ecbdata->file,
+-			  diff_get_color(ecbdata->color_diff, color),
+-			  reset, line, len);
++
++	if (line[0] != '+') {
++		const char *color =
++			diff_get_color(ecbdata->color_diff,
++				       line[0] == '-' ? DIFF_FILE_OLD : DIFF_PLAIN);
++		ecbdata->lno_in_preimage++;
++		emit_line(ecbdata->file, color, reset, line, len);
+ 		return;
+ 	}
+ 	emit_add_line(reset, ecbdata, line, len);
+@@ -1557,6 +1571,9 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.color_diff = DIFF_OPT_TST(o, COLOR_DIFF);
+ 		ecbdata.found_changesp = &o->found_changes;
+ 		ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
++		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
++			ecbdata.blank_at_eof =
++				adds_blank_at_eof(&mf1, &mf2, ecbdata.ws_rule);
+ 		ecbdata.file = o->file;
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+ 		xecfg.ctxlen = o->context;
 diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 84a1fe3..1517fff 100755
+index 1517fff..1e75f1a 100755
 --- a/t/t4019-diff-wserror.sh
 +++ b/t/t4019-diff-wserror.sh
-@@ -165,7 +165,7 @@ test_expect_success 'trailing empty lines (1)' '
- 
- 	rm -f .gitattributes &&
- 	test_must_fail git diff --check >output &&
--	grep "ends with blank lines." output &&
-+	grep "new blank line at" output &&
- 	grep "trailing whitespace" output
+@@ -190,4 +190,13 @@ test_expect_success 'do not color trailing cr in context' '
  
  '
+ 
++test_expect_success 'color new trailing blank lines' '
++	{ echo a; echo b; echo; echo; } >x &&
++	git add x &&
++	{ echo a; echo; echo; echo; echo; } >x &&
++	git diff --color x >output &&
++	cnt=$(grep "${blue_grep}" output | wc -l) &&
++	test $cnt = 2
++'
++
+ test_done
 -- 
 1.6.4.2.313.g0425f
