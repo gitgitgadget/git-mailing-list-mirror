@@ -1,105 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not scramble password read from .cvspass
-Date: Fri, 04 Sep 2009 09:21:36 -0700
-Message-ID: <7vvdjyn0j3.fsf@alter.siamese.dyndns.org>
-References: <4AA100E8.9030806@obry.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 0/8] VCS helpers
+Date: Fri, 4 Sep 2009 12:22:20 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0909041141020.28290@iabervon.org>
+References: <alpine.LNX.2.00.0909032213120.28290@iabervon.org> <7v63bz198j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, pascal@obry.net
-To: Dirk Hoerner <dirker@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Fri Sep 04 18:22:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjbYj-0006q5-Vu
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:22:46 +0200
+	id 1MjbYk-0006q5-OH
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933225AbZIDQVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 12:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932865AbZIDQVp
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:21:45 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55677 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932855AbZIDQVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 12:21:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4028143C21;
-	Fri,  4 Sep 2009 12:21:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2RdyGaM8wD4+FPhhPRZsO0l8MSA=; b=LJWdRB
-	RTi+sp52LP8S/eXy4FLVGDCQrJ/JHKCaDQNchFmqWVfdafHblRjaKoUpTcuqiPhS
-	EKFdp9EoHCC/zs0zgcfbU0kbSLT5rj8AhdHMRy6xq/cUPly77cc/mY2Ul2GUnIyB
-	bD3gzdIvU67HrkzR2LLJuLayH6jueRvednyMc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LcE593rH1mCCvzPhnAxw+/b3SLUW1WiN
-	d0Ptp6R+swxQeGDye1G7pXoEmWCDWBqstwsoqdv2Z23rPVFx6qThQL/xJb5zUPhI
-	WNcv5ugFlL845w7yCFwbwKmTFQjFtbhmOsUzFg6fQYSF79D0CNYC0T049MxD44MT
-	lbdQyUkHsyQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 14E7343C1C;
-	Fri,  4 Sep 2009 12:21:43 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8C3DC43C1A; Fri,  4 Sep 2009
- 12:21:38 -0400 (EDT)
-In-Reply-To: <4AA100E8.9030806@obry.net> (Pascal Obry's message of "Fri\, 04
- Sep 2009 13\:58\:32 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 087A0E72-996F-11DE-BE0E-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S933323AbZIDQWY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 12:22:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932819AbZIDQWY
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:22:24 -0400
+Received: from iabervon.org ([66.92.72.58]:58647 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932865AbZIDQWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 12:22:23 -0400
+Received: (qmail 31677 invoked by uid 1000); 4 Sep 2009 16:22:20 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Sep 2009 16:22:20 -0000
+In-Reply-To: <7v63bz198j.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127741>
 
-Pascal Obry <pascal@obry.net> writes:
+On Fri, 4 Sep 2009, Junio C Hamano wrote:
 
-> Passwords stored in .cvspass are already scrambled, we do not
-> want to scramble them twice. Only passwords read from the
-> command line are scrambled.
->
-> This fixes a regression introduced by:
-> b2139dbd72d16e40eddfd5b9ad1314703b39fe65
->
-> Signed-off-by: Pascal Obry <pascal@obry.net>
-> ---
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > This is the next version of the db/vcs-helper series in pu.
+> 
+> Thanks.
+> 
+> > The first patch is new, a rework of the remote-curl build to produce
+> > "remote-curl" and call it as a special case for the sorts of URLs that
+> > we accept as indicating something that it now handled by this helper.
+> >
+> > The series is rebased onto current next, with some conflicts resolved.
+> 
+> Because the theme of the topic does not have anything to do with fixing
+> the deepening of shallow clones nor giving an extended error message from
+> non-fast-forward git-push, I queued the series after reverse-rebasing onto
+> old db/vcs-helper~8, in order to keep the topic branch pure, instead of
+> merging unrelated topics from maint, master or next into it.  The result
+> merged in 'pu' obviously has to match what you expected by applying the
+> patches on top of 'next', and I am reasonably sure it does.
 
-Thanks, Pascal.  This bug is not in any tagged release yet, and I am happy
-you caught it before -rc0 ;-)
+I'd thought that topics in pu were carried as based on next, particularly 
+once they depend on something (e.g., the beginning of the series) in next. 
+I suppose there's better options, but what do you do to find them? (Feel 
+free to refer me to the "note from the maintainer" if it's there, but I 
+don't remember that detail)
 
-Dirk, does the patch look Ok to you?
+FWIW, there was a semantic mismerge in the original basing of this series 
+on 07a4a3b496, which I finally fixed in this version; the code to handle 
+NULL urls in builtin-fetch was after a new conversion of the url.
 
->  git-cvsimport.perl |    7 ++++---
->  1 files changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-> index 593832d..c5cdcae 100755
-> --- a/git-cvsimport.perl
-> +++ b/git-cvsimport.perl
-> @@ -238,7 +238,10 @@ sub conn {
->                 }
->                 my $rr = ":pserver:$user\@$serv:$port$repo";
->
-> -               unless ($pass) {
-> +               if ($pass) {
-> +                   $pass = $self->_scramble($pass);
-> +               } else
-> +               {
->                         open(H,$ENV{'HOME'}."/.cvspass") and do {
->                                 #
-> :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
->                                 while (<H>) {
-> @@ -253,8 +256,6 @@ sub conn {
->                         };
->                 }
->
-> -               $pass = $self->_scramble($pass);
-> -
->                 my ($s, $rep);
->                 if ($proxyhost) {
->
-> --
-> 1.6.4.2.253.g0b1fac
+In any case, I think both the reverse-rebase and merge are correct.
+
+> > Two patches have been dropped: a memory leak fix for code that was
+> > removed entirely by the first patch, and the "mark" helper capability,
+> > which is not needed (I believe) due to the "option" fast-import command.
+> 
+> Johan's cvs-helper series were depending on the previous iteration of this
+> series, but I thought it is being rerolled, so I'd drop it from pu for now.
+
+You could probably stick the "mark" patch into the start of the cvs-helper 
+series until it gets rerolled if you want to keep that series in pu 
+meanwhile; it was at the end of the series, and doesn't have subtle 
+interactions or interact with anything that's changed.
+
+	-Daniel
+*This .sig left intentionally blank*
