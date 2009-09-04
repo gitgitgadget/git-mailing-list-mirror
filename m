@@ -1,9 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH v2 3/3] Fix DirCache.findEntry to work on an empty cache
-Date: Fri,  4 Sep 2009 09:22:45 -0700
-Message-ID: <1252081365-2335-3-git-send-email-spearce@spearce.org>
-References: <1252081365-2335-1-git-send-email-spearce@spearce.org>
- <1252081365-2335-2-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH v2 1/3] Allow RefUpdate.setExpectedOldObjectId to accept RevCommit
+Date: Fri,  4 Sep 2009 09:22:43 -0700
+Message-ID: <1252081365-2335-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <sop@google.com>
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
 X-From: git-owner@vger.kernel.org Fri Sep 04 18:24:02 2009
@@ -11,100 +9,127 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjbZx-0007Iw-6y
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:24:01 +0200
+	id 1MjbZw-0007Iw-Fv
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 18:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933637AbZIDQWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 12:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933442AbZIDQWr
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:22:47 -0400
-Received: from george.spearce.org ([209.20.77.23]:52232 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932819AbZIDQWp (ORCPT <rfc822;git@vger.kernel.org>);
+	id S933563AbZIDQWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 4 Sep 2009 12:22:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933442AbZIDQWp
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 12:22:45 -0400
+Received: from george.spearce.org ([209.20.77.23]:52224 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933298AbZIDQWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 12:22:44 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 34DCA3821F; Fri,  4 Sep 2009 16:22:48 +0000 (UTC)
+	id BACB738239; Fri,  4 Sep 2009 16:22:46 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 6BC7238221;
-	Fri,  4 Sep 2009 16:22:46 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 86E9038200;
+	Fri,  4 Sep 2009 16:22:45 +0000 (UTC)
 X-Mailer: git-send-email 1.6.4.2.395.ge3d52
-In-Reply-To: <1252081365-2335-2-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127743>
 
-If the cache has no entries, we want to return -1 rather than throw
-ArrayIndexOutOfBoundsException.  This binary search loop was stolen
-from some other code which contained a test before the loop to see if
-the collection was empty or not, but we failed to include that here.
-
-Flipping the loop around to a standard while loop ensures we test
-the condition properly first.
+RevCommit overrides .equals() such that it only implements a
+reference equality test.  If the expected old ObjectId was set
+by the application to a RevCommit instance, it would always fail,
+resulting in LOCK_FAILURE.  Instead use AnyObject.equals() to compare
+the value, ignoring the possibly overloaded equals in RevCommit.
 
 Signed-off-by: Shawn O. Pearce <sop@google.com>
 ---
- .../spearce/jgit/dircache/DirCacheBasicTest.java   |    6 ++++++
- .../src/org/spearce/jgit/dircache/DirCache.java    |    6 ++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ .../tst/org/spearce/jgit/lib/RefUpdateTest.java    |   52 ++++++++++++++++++++
+ .../src/org/spearce/jgit/lib/RefUpdate.java        |    2 +-
+ 2 files changed, 53 insertions(+), 1 deletions(-)
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-index b3097ac..4d737c0 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-@@ -39,6 +39,7 @@
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+index 800c0a4..a8ccf43 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/RefUpdateTest.java
+@@ -45,6 +45,7 @@
  
- import java.io.File;
+ import org.spearce.jgit.lib.RefUpdate.Result;
+ import org.spearce.jgit.revwalk.RevCommit;
++import org.spearce.jgit.revwalk.RevWalk;
  
-+import org.spearce.jgit.lib.Constants;
- import org.spearce.jgit.lib.RepositoryTestCase;
+ public class RefUpdateTest extends RepositoryTestCase {
  
- public class DirCacheBasicTest extends RepositoryTestCase {
-@@ -182,4 +183,9 @@ public void testBuildThenClear() throws Exception {
- 		assertEquals(0, dc.getEntryCount());
+@@ -397,6 +398,57 @@ public void testUpdateRefLockFailureWrongOldValue() throws IOException {
  	}
  
-+	public void testFindOnEmpty() throws Exception {
-+		final DirCache dc = DirCache.newInCore();
-+		final byte[] path = Constants.encode("a");
-+		assertEquals(-1, dc.findEntry(path, path.length));
+ 	/**
++	 * Try modify a ref forward, fast forward, checking old value first
++	 *
++	 * @throws IOException
++	 */
++	public void testUpdateRefForwardWithCheck1() throws IOException {
++		ObjectId ppid = db.resolve("refs/heads/master^");
++		ObjectId pid = db.resolve("refs/heads/master");
++
++		RefUpdate updateRef = db.updateRef("refs/heads/master");
++		updateRef.setNewObjectId(ppid);
++		updateRef.setForceUpdate(true);
++		Result update = updateRef.update();
++		assertEquals(Result.FORCED, update);
++		assertEquals(ppid, db.resolve("refs/heads/master"));
++
++		// real test
++		RefUpdate updateRef2 = db.updateRef("refs/heads/master");
++		updateRef2.setExpectedOldObjectId(ppid);
++		updateRef2.setNewObjectId(pid);
++		Result update2 = updateRef2.update();
++		assertEquals(Result.FAST_FORWARD, update2);
++		assertEquals(pid, db.resolve("refs/heads/master"));
 +	}
- }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-index bfb7925..9f0810a 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCache.java
-@@ -583,8 +583,6 @@ public void unlock() {
- 	 *         information. If < 0 the entry does not exist in the index.
- 	 */
- 	public int findEntry(final String path) {
--		if (entryCnt == 0)
--			return -1;
- 		final byte[] p = Constants.encode(path);
- 		return findEntry(p, p.length);
- 	}
-@@ -592,7 +590,7 @@ public int findEntry(final String path) {
- 	int findEntry(final byte[] p, final int pLen) {
- 		int low = 0;
- 		int high = entryCnt;
--		do {
-+		while (low < high) {
- 			int mid = (low + high) >>> 1;
- 			final int cmp = cmp(p, pLen, sortedEntries[mid]);
- 			if (cmp < 0)
-@@ -603,7 +601,7 @@ else if (cmp == 0) {
- 				return mid;
- 			} else
- 				low = mid + 1;
--		} while (low < high);
-+		}
- 		return -(low + 1);
- 	}
- 
++
++	/**
++	 * Try modify a ref forward, fast forward, checking old commit first
++	 *
++	 * @throws IOException
++	 */
++	public void testUpdateRefForwardWithCheck2() throws IOException {
++		ObjectId ppid = db.resolve("refs/heads/master^");
++		ObjectId pid = db.resolve("refs/heads/master");
++
++		RefUpdate updateRef = db.updateRef("refs/heads/master");
++		updateRef.setNewObjectId(ppid);
++		updateRef.setForceUpdate(true);
++		Result update = updateRef.update();
++		assertEquals(Result.FORCED, update);
++		assertEquals(ppid, db.resolve("refs/heads/master"));
++
++		// real test
++		RevCommit old = new RevWalk(db).parseCommit(ppid);
++		RefUpdate updateRef2 = db.updateRef("refs/heads/master");
++		updateRef2.setExpectedOldObjectId(old);
++		updateRef2.setNewObjectId(pid);
++		Result update2 = updateRef2.update();
++		assertEquals(Result.FAST_FORWARD, update2);
++		assertEquals(pid, db.resolve("refs/heads/master"));
++	}
++
++	/**
+ 	 * Try modify a ref that is locked
+ 	 *
+ 	 * @throws IOException
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+index 69399ec..8dffed2 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/RefUpdate.java
+@@ -466,7 +466,7 @@ private Result updateImpl(final RevWalk walk, final Store store)
+ 			if (expValue != null) {
+ 				final ObjectId o;
+ 				o = oldValue != null ? oldValue : ObjectId.zeroId();
+-				if (!expValue.equals(o))
++				if (!AnyObjectId.equals(expValue, o))
+ 					return Result.LOCK_FAILURE;
+ 			}
+ 			if (oldValue == null)
 -- 
 1.6.4.2.395.ge3d52
