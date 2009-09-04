@@ -1,109 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special
- case
-Date: Fri, 04 Sep 2009 03:50:12 -0700
-Message-ID: <7vk50fugpn.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>
- <alpine.DEB.1.00.0909041232500.4605@intel-tinevez-2-302>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 04 12:50:56 2009
+Subject: [PATCH 0/9] War on blank-at-eof
+Date: Fri,  4 Sep 2009 03:55:09 -0700
+Message-ID: <1252061718-11579-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 04 12:55:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjWNb-0002NQ-G0
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 12:50:55 +0200
+	id 1MjWSC-0003iL-4J
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 12:55:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbZIDKuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 06:50:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753432AbZIDKuW
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:50:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57799 "EHLO
+	id S1756098AbZIDKzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 06:55:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755862AbZIDKzY
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 06:55:24 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38460 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755203AbZIDKuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 06:50:21 -0400
+	with ESMTP id S1754962AbZIDKzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 06:55:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C25AE25E9C;
-	Fri,  4 Sep 2009 06:50:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ta1+D5ix45a1cYaF3bA/qCwqh3Q=; b=aHEhPH
-	QfgAXvKuuGkJUO18hYfKSQLG16nIQnqxjS6GO9r1RHSnTYQetWFmn6jvGQgZxfpD
-	nUyRgYcFONFxa7T0S9lotbpfLUegN6Zrk8ZkAJqDkIwz7rD0lzVcYu86VRLIQ2dc
-	whKh91uCfFvC1YDTMjGt8CT9GMAgvLCF/oVtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vlkvRgzPa9LuzJ2XS3TLN41Smfy3MAns
-	yn6+v0W94sx2VcK4/hQefnbc8qClwuJSdB2u7hrBGFdqpv4rvyPTErFCqtfr/oJw
-	BEarygH4Jq4M3rjtinFr7/bq0XMarnXv1Qwy8PuGPBZ+Ce4jTXZcUkiP+Sp5LurN
-	j+/RfX0XDSE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F01125E98;
-	Fri,  4 Sep 2009 06:50:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 397B543D23
+	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=gu+J0uEW+qoMnEB1aE7kJmU+mp0
+	=; b=pFHOO/c5sdleBClpWmNeTe/C7+AhptTFkD9TcfGI3CU7XuAy1sSOpBkhEz+
+	IyuFy5gj28Zyaou7EGmUm8jhV2aHT3sBtbEpQRzFlc2eZdwBPffYlLKhVRu2sxe3
+	9MnP2zsW47NWoQxJexxiRj2V+zGn7qzdklXJa4EGAfI3jelc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=l/T9Q6ZuviFdApqkAFB4p+pCI5srt
+	SztMRF5wdZSmBB96Hn0xd97zRZ5JkEm9nx9apT9iFn4pQwvgynY5kE1YcWIZAN4K
+	atzgsujUF8rJMXiVXWPZuK53zQSKSh7D4HsvyYgjptMmr4YyiezY+a6whQ5IHGXd
+	VzV8My2qKSXbe4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 31A1743D22
+	for <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:24 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B182325E96; Fri,  4 Sep
- 2009 06:50:13 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0909041232500.4605@intel-tinevez-2-302>
- (Johannes Schindelin's message of "Fri\, 4 Sep 2009 12\:34\:59 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BC68242A-9940-11DE-9A4C-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 78A6843D21 for
+ <git@vger.kernel.org>; Fri,  4 Sep 2009 06:55:20 -0400 (EDT)
+X-Mailer: git-send-email 1.6.4.2.313.g0425f
+X-Pobox-Relay-ID: 728A4F4E-9941-11DE-8BFF-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127711>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+We had quite inconsistent handing of patches that add new blank lines at
+the end of file, and this miniseries is about fixing it.
 
-> The special case is "http://" and "https://" which might indicate foreign 
-> VCS repositories.
->
-> In all other cases, I am afraid that you are complicating the glove.
->
-> Remember: the whole purpose of the "foreign VCS" helpers is user 
-> convenience.
+Patch 1 is a fix to an ancient bug introduced by v1.5.5-rc0~156^2~11.
 
-Sorry, but you completely lost me here.
+Patch 2 fixes a bug that is even older---I suspect it dates back to the
+very first change that introduced the feature, but I did not bother to
+dig.
 
-Here are two URLs that follows your "user convenience" principle.
+Patch 4 (Patch 3 is a preliminary refactoring used by it) is about the
+discrepancy between "--whitespace=fix" and "--whitespace=warn".  The
+blank-at-eof error was silently fixed but never diagnosed, which has
+been one of the long-standing itch of mine to fix.
 
-	http://example.xz/repos/frotz.git/
-	http://example.xz/repo/frotz/trunk/
+Patch 5 corrects the definition of blank-at-eof.  If a patch adds an
+non-empty line that consists solely of whitespaces at the end of file, we
+should diagnose and strip it just line a new empty line.  After all, both
+are blank lines.
 
-How do you tell, without relying on .git and trunk, the former is a git
-repository and wants the dumb walker transport to fetch from, while the
-latter is probably a svn and you would either use "svn checkout", or use
-"git clone" on it via the svn helper?
+Patch 6 is a simple code reduction I noticed while preparing this series;
+it can be a standalone patch, but it is obvious enough to be here.
 
-Well, you don't.
+Patches 7 and 8 address "git diff --check", which had roughly the same
+logic as the --whitespace=fix.  It shared the same problems the earlier
+parts of the series fixed for "git apply".
 
-One possible "convenient user interface" would be to say
+Patch 9 is about "diff --color" to paint blank-at-eof as error, which we
+did not do so far because it was too cumbersome.  This has been another
+one of the long-standing itch of mine to fix.
 
-	svn+http://example.xz/repo/frotz/trunk/
+The series applies to v1.6.0.6-87-g82d97da; merging the result to 'master'
+needs some conflict resolution.
 
-(or use :: instead of + as the helper-name separator, as we agreed not to
-decide on it)
-        
-This would give us
+ 1 apply --whitespace=fix: fix handling of blank lines at the eof
+ 2 apply --whitespace=fix: detect new blank lines at eof correctly
+ 3 apply.c: split check_whitespace() into two
+ 4 apply --whitespace=warn/error: diagnose blank at EOF
+ 5 apply --whitespace: warn blank but not necessarily empty lines at EOF
+ 6 diff.c: the builtin_diff() deals with only two-file comparison
+ 7 diff --whitespace=warn/error: obey blank-at-eof
+ 8 diff --whitespace=warn/error: fix blank-at-eof check
+ 9 diff --color: color blank-at-eof
 
- (1) it is clear that it literally is what you would give to git and
-     trigger the svn helper; and
-
- (2) to people who know how canonical git URLs with foreign helper are
-     spelled, it also is clear that you can use "svn checkout" on
-     everything after "svn+" in it.
-
-     A corollary to this is that you can also use "git svn init" on it.
-
-Compared to that, if you do not have any such prefix, how would that be
-more convenient to the users?
-
-Or perhaps you have an alternative in mind that is more convenient for the
-users and that is not "use identically looking http://... for both", but
-you are being unnecessarily cryptic by not spelling out what it is.
+ Documentation/config.txt   |    2 +
+ builtin-apply.c            |   61 +++++++++++++++-------
+ cache.h                    |    3 +-
+ diff.c                     |  119 +++++++++++++++++++++++++++++---------------
+ t/t4015-diff-whitespace.sh |   11 +++-
+ t/t4019-diff-wserror.sh    |   11 ++++-
+ t/t4124-apply-ws-rule.sh   |   80 +++++++++++++++++++++++++++++
+ ws.c                       |    6 ++
+ 8 files changed, 230 insertions(+), 63 deletions(-)
