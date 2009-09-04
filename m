@@ -1,132 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
- case
-Date: Fri, 04 Sep 2009 10:23:43 -0700
-Message-ID: <7vy6ouk4io.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>
- <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>
- <alpine.LNX.2.00.0909041114440.28290@iabervon.org>
+From: Mark Struberg <struberg@yahoo.de>
+Subject: Re: [JGIT] Request for help
+Date: Fri, 4 Sep 2009 17:28:39 +0000 (GMT)
+Message-ID: <658028.86274.qm@web27804.mail.ukl.yahoo.com>
+References: <585278.66341.qm@web27802.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Sep 04 19:26:16 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org,
+	Gabe McArthur <gabriel.mcarthur@gmail.com>
+To: Douglas Campos <douglas@theros.info>
+X-From: git-owner@vger.kernel.org Fri Sep 04 19:29:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjcYB-0002gg-8M
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 19:26:15 +0200
+	id 1MjcbW-0003qW-O2
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 19:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933714AbZIDRXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 13:23:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933650AbZIDRXy
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 13:23:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53631 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933599AbZIDRXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 13:23:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A694625964;
-	Fri,  4 Sep 2009 13:23:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GgeVPuMp2eXOvqyCMFndSRHhKls=; b=KIVcdQ
-	xUXFyQTyek5zgxXVogpXiEdnaKeq/tz7PU1aoBcdvuKxF6uXHxjkkCEkfWmG0nFs
-	QLQnlqHJvkmo+fsht8bqiaBXgjvPPfIW6RftwkUBuQdXl6aHa/8SJVSrs1jyoYxe
-	FR73s0IdA9T2k11z9zT+JHsDA3GpVLxrgZln8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xZZGx4aoeutg/l1T63RXRQg9Ukl6Kt/3
-	J+OZ8Xk21W9sxMNCMk+MDg7SxKJ43E4pjk8JtJHK4LgWaItcc7Ld+GpTkF9fSxYK
-	sJPv9MwJVZLFYhpYrcjrWneEfObck6TPzEvlznT5m83mkb0xDU3qFnDEHqVRauU1
-	9KlSKff26qQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6517A25960;
-	Fri,  4 Sep 2009 13:23:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5D74F25956; Fri,  4 Sep
- 2009 13:23:45 -0400 (EDT)
-In-Reply-To: <alpine.LNX.2.00.0909041114440.28290@iabervon.org> (Daniel
- Barkalow's message of "Fri\, 4 Sep 2009 11\:40\:20 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B6BFA908-9977-11DE-A1D3-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S933777AbZIDR2k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Sep 2009 13:28:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933715AbZIDR2j
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 13:28:39 -0400
+Received: from web27804.mail.ukl.yahoo.com ([217.146.182.9]:45109 "HELO
+	web27804.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S933650AbZIDR2j convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 4 Sep 2009 13:28:39 -0400
+Received: (qmail 87335 invoked by uid 60001); 4 Sep 2009 17:28:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1252085319; bh=0hUwkkQ+AjvGd33iK7G02g0l9ub2vlP+uVNoOeG6+qU=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=KzcW2Hvq2f528zA0DmKqqyk6q4fRuTO5yn4aAlxRZEyRVd9E+jgVWgaQc7g6vPDaelFB9hbEM6LZCrd+VCOIsrev0vEyerxbkBehpoPqw60uPwRBbqg6Ws5+8D3Yec1Y2QaT3xZBhBOxVKbai6S2jMrqhSILLJLODph3bpnORlA=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.de;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=SeeEDnU/3zDiIxuK1wfGGHpUEwPz1tM8c9MUtNXYi9E54X/TAQ7rJUfH8NsZaZKDpwwu9uPcSzCbob2PXqkrFtYNpq5Z6U7yHpcswMDx4PCig2i/Ri20WzUZT97pK6aOZwMDmGq2W3d0+4FTFUhTIbPWOrsoVLR3s08fvxUNwAk=;
+X-YMail-OSG: a1LTx.oVM1kIaV035XdX7imSYul9h0BlGBLA7BObtd2rPnjvG4o5AvmRO34c6ThC7evSmBr3yJatIx6SJ880cmmikEyYYjbxmU0gf6xIvNbcKW9LvTrydJ_qBJ3sh2ngO3BwtyYaiDT5whoL3TQLfPEtqLlSvzSuasNMBE88RE3ara6XE5BQnHN6HBP6bwgR65uCedh7Sh0kI4JnDNHlwjmc_7lo5ZrpE77JSWn1fZjKDksMtyghrxl17Fs8oq_S5HTnMO9lUQabkL5HHH9d5PuwX7E1IvcxLJmDv30a.Jwowf3zmnzKA5oS
+Received: from [81.16.153.112] by web27804.mail.ukl.yahoo.com via HTTP; Fri, 04 Sep 2009 17:28:39 GMT
+X-Mailer: YahooMailClassic/6.1.2 YahooMailWebService/0.7.338.2
+In-Reply-To: <585278.66341.qm@web27802.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127751>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Hi!
 
-> It turns out that the method used to form URLs that use a helper doesn't 
-> generalize well to other cases, because it interferes with the ssh-style 
-> locations. Instead, some different mechanism needs to be made up to handle 
-> arbitrary handlers that git doesn't know about. Since we want to keep 
-> supporting "http://something", that'll have to be a special case anyway, 
-> and so we might as well handle it by having git know what helpers to use 
-> for things that we've always supported, and use a single descriptive name 
-> for the helper that handles that collection of URLs.
->
-> As of this version, the idea is that there will be three ways helpers get 
-> selected:
->
->  - git selects a helper based on the URL being something traditionally 
->    supported internally; that is, git recognizes the URL and knows what to 
->    run, if possible, to handle it
->
->  - git uses the "vcs" option if it is set
->
->  - something with the URL that we don't understand well enough yet to 
->    design, but which doesn't seem to be possible to fit in as a single 
->    rule with the first item.
+Work has been done at=20
 
-Thanks for a clear description.
+http://github.com/sonatype/JGit/tree/mavenize
 
-I do not see that there is much difference between the above description
-and what Dscho is advocating, and I do not see anything to get excited
-about as Dscho seems to do.  In his world, hg:// or any URL that begins
-with <unknown>:// wants to be a short-hand to name the helper, and the
-third rule whose detail is unspecified in the above list could be
-something like:
+Please feel free to pull/fork and share your changes! I'd be happy to p=
+ull it in.
 
- - With an explicit <prefix-separator>, i.e.
+@Gabe: your patch seems to got filtered by the list, I think sharing su=
+ch big things is easier by using github. Would be cool if you could hel=
+p us!
 
-        <helper-name> <prefix-separator> <any-string>
+LieGrue,
+strub
 
-   tells the named helper git-remote-<helper-name> to interact with
-   repository that it can find using <any-string>.  We do not interpret,
-   nor guess from, what <any-string> is, in this case.
+--- On Fri, 9/4/09, Mark Struberg <struberg@yahoo.de> wrote:
 
- - When all else fails, and the URL looks like <unknown>://<any-string>,
-   we see if git-remote-<unknown> is available and give it the whole
-   string (including the <unknown>::// part).
+> From: Mark Struberg <struberg@yahoo.de>
+> Subject: Re: [JGIT] Request for help
+> To: "Douglas Campos" <douglas@theros.info>
+> Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>, git@vger.kernel.org, "=
+Gabe McArthur" <gabriel.mcarthur@gmail.com>
+> Date: Friday, September 4, 2009, 4:49 PM
+> Hi Douglas!
+>=20
+> http://github.com/sonatype/JGit
+>=20
+> The branch will be called mavenizing or so.
+>=20
+> Will post this after I got the tests running.
+>=20
+> LieGrue,
+> strub
+>=20
+> --- On Fri, 9/4/09, Douglas Campos <douglas@theros.info>
+> wrote:
+>=20
+> > From: Douglas Campos <douglas@theros.info>
+> > Subject: Re: [JGIT] Request for help
+> > To: "Mark Struberg" <struberg@yahoo.de>
+> > Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>,
+> git@vger.kernel.org,
+> "Gabe McArthur" <gabriel.mcarthur@gmail.com>
+> > Date: Friday, September 4, 2009, 4:44 PM
+> > On Fri, Sep 4, 2009
+> > at 9:47 AM, Mark Struberg <struberg@yahoo.de>
+> > wrote:
+> >=20
+> >=20
+> > as an old saying tells us: how to climb a mountain?
+> step
+> > after step! ;)
+> >=20
+> >=20
+> >=20
+> > I suggest we create a fresh branch based on the
+> Shawns
+> > current version and add all the features
+> incrementally.
+> >=20
+> >=20
+> >=20
+> > please point out where this branch will happen, I want
+> to
+> > give some help too.
+> >=20
+> >=20
+>=20
+>=20
+> =A0 =A0 =A0=20
+> --
+> To unsubscribe from this list: send the line "unsubscribe
+> git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at=A0 http://vger.kernel.org/majordomo-info.html
+>=20
 
-which means that what Dscho wants is already a subset of the future
-direction planned for this series.
 
-As to the "curl" indirection, if you consider the possiblity of someday
-adding the transparently backward compatible cgi based server with updated
-clients Gitney talked about, I am reasonably sure that we would want to
-have a new helper, say http-cgi, and have interested people invoke it
-using the "more explicit" escape hatch:
-
-    $ git clone http-cgi::http://repo.or.cz/w/alt-git.git/
-
-while others can continue using the walker via a plain http://repo.or.cz/
-URL.  When http-cgi helper proves to be successful and everybody's server
-upgrades, we might choose to swap the default, say in git 1.10.0 release,
-while leaving the door open for people to choose the old helper via an
-explicit curl::http://repo.or.cz/ URL.
-
-In short, from where I sit, I do not see much disagreement in the
-semantics and in the future direction between what Dscho is saying (unless
-I again misunderstood what he said) and what this round wants to bring.
-
-The only slight difference is that having an explicit excape hatch as the
-foundation, that usually does not have to be spelled out but does allow
-you to, keeps the concept cleaner, while keeping the usability of the end
-result.
+     =20
