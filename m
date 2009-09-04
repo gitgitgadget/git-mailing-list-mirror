@@ -1,206 +1,123 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 4/8] Allow fetch to modify refs
-Date: Thu, 3 Sep 2009 22:13:55 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909032213260.28290@iabervon.org>
+Subject: [PATCH 6/8] Add a config option for remotes to specify a foreign
+ vcs
+Date: Thu, 3 Sep 2009 22:13:59 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0909032213310.28290@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 04:14:13 2009
+X-From: git-owner@vger.kernel.org Fri Sep 04 04:14:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjOJY-0002pu-Pg
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 04:14:13 +0200
+	id 1MjOJa-0002pu-Ht
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 04:14:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932390AbZIDCN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 22:13:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbZIDCN5
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 22:13:57 -0400
-Received: from iabervon.org ([66.92.72.58]:41095 "EHLO iabervon.org"
+	id S932430AbZIDCOB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 22:14:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbZIDCOA
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 22:14:00 -0400
+Received: from iabervon.org ([66.92.72.58]:41099 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932110AbZIDCNy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 22:13:54 -0400
-Received: (qmail 2375 invoked by uid 1000); 4 Sep 2009 02:13:55 -0000
+	id S932351AbZIDCN6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2009 22:13:58 -0400
+Received: (qmail 2404 invoked by uid 1000); 4 Sep 2009 02:13:59 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Sep 2009 02:13:55 -0000
+  by localhost with SMTP; 4 Sep 2009 02:13:59 -0000
 User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127679>
 
-This allows the transport to use the null sha1 for a ref reported to
-be present in the remote repository to indicate that a ref exists but
-its actual value is presently unknown and will be set if the objects
-are fetched.
+If this is set, the url is not required, and the transport always uses
+a helper named "git-remote-<value>".
 
-Also adds documentation to the API to specify exactly what the methods
-should do and how they should interpret arguments.
+It is a separate configuration option in order to allow a sensible
+configuration for foreign systems which either have no meaningful urls
+for repositories or which require urls that do not specify the system
+used by the repository at that location. However, this only affects
+how the name of the helper is determined, not anything about the
+interaction with the helper, and the contruction is such that, if the
+foreign scm does happen to use a co-named url method, a url with that
+method may be used directly.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- builtin-clone.c    |    6 ++++--
- transport-helper.c |    4 ++--
- transport.c        |   13 +++++++------
- transport.h        |   41 +++++++++++++++++++++++++++++++++++++++--
- 4 files changed, 52 insertions(+), 12 deletions(-)
+ Documentation/config.txt |    4 ++++
+ remote.c                 |    4 +++-
+ remote.h                 |    2 ++
+ transport.c              |    5 +++++
+ 4 files changed, 14 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-clone.c b/builtin-clone.c
-index ad04808..deef435 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -520,8 +520,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 					     option_upload_pack);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5256c7f..436ee91 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1380,6 +1380,10 @@ remote.<name>.tagopt::
+ 	Setting this value to \--no-tags disables automatic tag following when
+ 	fetching from remote <name>
  
- 		refs = transport_get_remote_refs(transport);
--		if (refs)
--			transport_fetch_refs(transport, refs);
-+		if (refs) {
-+			struct ref *ref_cpy = copy_ref_list(refs);
-+			transport_fetch_refs(transport, ref_cpy);
-+		}
++remote.<name>.vcs::
++	Setting this to a value <vcs> will cause git to interact with
++	the remote with the git-remote-<vcs> helper.
++
+ remotes.<group>::
+ 	The list of remotes which are fetched by "git remote update
+ 	<group>".  See linkgit:git-remote[1].
+diff --git a/remote.c b/remote.c
+index fec63fa..e9dbb3b 100644
+--- a/remote.c
++++ b/remote.c
+@@ -50,7 +50,7 @@ static char buffer[BUF_SIZE];
+ 
+ static int valid_remote(const struct remote *remote)
+ {
+-	return !!remote->url;
++	return !remote->url != !remote->foreign_vcs;
+ }
+ 
+ static const char *alias_url(const char *url)
+@@ -427,6 +427,8 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	} else if (!strcmp(subkey, ".proxy")) {
+ 		return git_config_string((const char **)&remote->http_proxy,
+ 					 key, value);
++	} else if (!strcmp(subkey, ".vcs")) {
++		return git_config_string(&remote->foreign_vcs, key, value);
  	}
- 
- 	if (refs) {
-diff --git a/transport-helper.c b/transport-helper.c
-index b1ea7e6..e2b5270 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -70,7 +70,7 @@ static int disconnect_helper(struct transport *transport)
+ 	return 0;
  }
+diff --git a/remote.h b/remote.h
+index 5db8420..ac0ce2f 100644
+--- a/remote.h
++++ b/remote.h
+@@ -11,6 +11,8 @@ struct remote {
+ 	const char *name;
+ 	int origin;
  
- static int fetch_with_fetch(struct transport *transport,
--			    int nr_heads, const struct ref **to_fetch)
-+			    int nr_heads, struct ref **to_fetch)
- {
- 	struct child_process *helper = get_helper(transport);
- 	FILE *file = fdopen(helper->out, "r");
-@@ -94,7 +94,7 @@ static int fetch_with_fetch(struct transport *transport,
- }
- 
- static int fetch(struct transport *transport,
--		 int nr_heads, const struct ref **to_fetch)
-+		 int nr_heads, struct ref **to_fetch)
- {
- 	struct helper_data *data = transport->data;
- 	int i, count;
++	const char *foreign_vcs;
++
+ 	const char **url;
+ 	int url_nr;
+ 	int url_alloc;
 diff --git a/transport.c b/transport.c
-index 4cb8077..93430fa 100644
+index 684fd6c..38bebe3 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -204,7 +204,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
- }
+@@ -818,6 +818,11 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		url = remote->url[0];
+ 	ret->url = url;
  
- static int fetch_objs_via_rsync(struct transport *transport,
--				int nr_objs, const struct ref **to_fetch)
-+				int nr_objs, struct ref **to_fetch)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct child_process rsync;
-@@ -408,7 +408,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
- }
- 
- static int fetch_refs_from_bundle(struct transport *transport,
--			       int nr_heads, const struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch)
- {
- 	struct bundle_transport_data *data = transport->data;
- 	return unbundle(&data->header, data->fd);
-@@ -486,7 +486,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
- }
- 
- static int fetch_refs_via_pack(struct transport *transport,
--			       int nr_heads, const struct ref **to_fetch)
-+			       int nr_heads, struct ref **to_fetch)
- {
- 	struct git_transport_data *data = transport->data;
- 	char **heads = xmalloc(nr_heads * sizeof(*heads));
-@@ -922,16 +922,17 @@ const struct ref *transport_get_remote_refs(struct transport *transport)
- 	return transport->remote_refs;
- }
- 
--int transport_fetch_refs(struct transport *transport, const struct ref *refs)
-+int transport_fetch_refs(struct transport *transport, struct ref *refs)
- {
- 	int rc;
- 	int nr_heads = 0, nr_alloc = 0, nr_refs = 0;
--	const struct ref **heads = NULL;
--	const struct ref *rm;
-+	struct ref **heads = NULL;
-+	struct ref *rm;
- 
- 	for (rm = refs; rm; rm = rm->next) {
- 		nr_refs++;
- 		if (rm->peer_ref &&
-+		    !is_null_sha1(rm->old_sha1) &&
- 		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
- 			continue;
- 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
-diff --git a/transport.h b/transport.h
-index c14da6f..503db11 100644
---- a/transport.h
-+++ b/transport.h
-@@ -18,11 +18,48 @@ struct transport {
- 	int (*set_option)(struct transport *connection, const char *name,
- 			  const char *value);
- 
-+	/**
-+	 * Returns a list of the remote side's refs. In order to allow
-+	 * the transport to try to share connections, for_push is a
-+	 * hint as to whether the ultimate operation is a push or a fetch.
-+	 *
-+	 * If the transport is able to determine the remote hash for
-+	 * the ref without a huge amount of effort, it should store it
-+	 * in the ref's old_sha1 field; otherwise it should be all 0.
-+	 **/
- 	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
--	int (*fetch)(struct transport *transport, int refs_nr, const struct ref **refs);
++	if (remote && remote->foreign_vcs) {
++		transport_helper_init(ret, remote->foreign_vcs);
++		return ret;
++	}
 +
-+	/**
-+	 * Fetch the objects for the given refs. Note that this gets
-+	 * an array, and should ignore the list structure.
-+	 *
-+	 * If the transport did not get hashes for refs in
-+	 * get_refs_list(), it should set the old_sha1 fields in the
-+	 * provided refs now.
-+	 **/
-+	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
-+
-+	/**
-+	 * Push the objects and refs. Send the necessary objects, and
-+	 * then, for any refs where peer_ref is set and
-+	 * peer_ref->new_sha1 is different from old_sha1, tell the
-+	 * remote side to update each ref in the list from old_sha1 to
-+	 * peer_ref->new_sha1.
-+	 *
-+	 * Where possible, set the status for each ref appropriately.
-+	 *
-+	 * The transport must modify new_sha1 in the ref to the new
-+	 * value if the remote accepted the change. Note that this
-+	 * could be a different value from peer_ref->new_sha1 if the
-+	 * process involved generating new commits.
-+	 **/
- 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
- 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
- 
-+	/** get_refs_list(), fetch(), and push_refs() can keep
-+	 * resources (such as a connection) reserved for futher
-+	 * use. disconnect() releases these resources.
-+	 **/
- 	int (*disconnect)(struct transport *connection);
- 	char *pack_lockfile;
- 	signed verbose : 2;
-@@ -74,7 +111,7 @@ int transport_push(struct transport *connection,
- 
- const struct ref *transport_get_remote_refs(struct transport *transport);
- 
--int transport_fetch_refs(struct transport *transport, const struct ref *refs);
-+int transport_fetch_refs(struct transport *transport, struct ref *refs);
- void transport_unlock_pack(struct transport *transport);
- int transport_disconnect(struct transport *transport);
- char *transport_anonymize_url(const char *url);
+ 	if (!prefixcmp(url, "rsync:")) {
+ 		ret->get_refs_list = get_refs_via_rsync;
+ 		ret->fetch = fetch_objs_via_rsync;
 -- 
 1.6.4.2.419.gc86f8
