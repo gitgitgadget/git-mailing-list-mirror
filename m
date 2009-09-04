@@ -1,89 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: .git and retrieving full source tree for own project(s)
-Date: Fri, 04 Sep 2009 13:04:31 -0700
-Message-ID: <7viqfyfpdc.fsf@alter.siamese.dyndns.org>
-References: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 1/8] Make the "traditionally-supported" URLs a special 
+ case
+Date: Fri, 4 Sep 2009 16:10:44 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0909041546030.28290@iabervon.org>
+References: <alpine.LNX.2.00.0909032213180.28290@iabervon.org>  <fabb9a1e0909032229k5e6e2ed5mc11e8ff9c16dfcc0@mail.gmail.com>  <alpine.LNX.2.00.0909041114440.28290@iabervon.org> <7vy6ouk4io.fsf@alter.siamese.dyndns.org>  <alpine.DEB.1.00.0909041930450.8306@pacific.mpi-cbg.de>
+ <alpine.LNX.2.00.0909041429540.28290@iabervon.org> <fabb9a1e0909041235x74a3b9b4gf65e650ca0d00831@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "armencho\@gmail.com" <armencho@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 22:05:14 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2013296706-1252095044=:28290"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 04 22:10:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjf20-00088F-B4
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 22:05:12 +0200
+	id 1Mjf7V-0001Nc-A4
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 22:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757290AbZIDUEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 16:04:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757277AbZIDUEh
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 16:04:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43188 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757262AbZIDUEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 16:04:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B3B925C4C;
-	Fri,  4 Sep 2009 16:04:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m9BdjqMBYZvgv9a0ZWX7jfQTj6o=; b=B3f6OJ
-	490XTRo5dvdL7uYijsCOcl1pwDTLxdAWoQKuYaPiw7HhZCy66gtmwPpuqoTeBHOG
-	m4pQbQRAND1Fs+DEu1/gyqYCb2lUO6Xz+Z9Ts5KbpmLxrs1XDna0nMCJGnkAG2yC
-	CR7eKXgG7ygliZcRkWJPVqNp4xTrYgwGTis5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=X6bIZVZhJKcDzrM8Dn0QAGaVWQvUOQym
-	9YpaxOWc4rioS3Lc9jNpL9iZnZNbBltLox1Xpg8WXwm6jMBXZpiW+hIQ0ZG6Dt6T
-	e7hfNxlR3sfRq9L6UFF2d6q19dfuF/ZbsmTLwBc3zTaXYRnv+qZScSKHlyWu5T8i
-	htBMvj9ZjCk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DDCAD25C4B;
-	Fri,  4 Sep 2009 16:04:35 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E36725C47; Fri,  4 Sep
- 2009 16:04:33 -0400 (EDT)
-In-Reply-To: <981b72360909041252i29551a5chb8b3a2a5c6444ee3@mail.gmail.com>
- (armencho@gmail.com's message of "Fri\, 4 Sep 2009 21\:52\:07 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2B507BBA-998E-11DE-ABEB-CA0F1FFB4A78-77302942!a-pb-sasl-quonix.pobox.com
+	id S933854AbZIDUKo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 16:10:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933848AbZIDUKn
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 16:10:43 -0400
+Received: from iabervon.org ([66.92.72.58]:58705 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933729AbZIDUKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 16:10:43 -0400
+Received: (qmail 21155 invoked by uid 1000); 4 Sep 2009 20:10:44 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 4 Sep 2009 20:10:44 -0000
+In-Reply-To: <fabb9a1e0909041235x74a3b9b4gf65e650ca0d00831@mail.gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127766>
 
-"armencho@gmail.com" <armencho@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> What I am wondering about is, what is gits identity for a repository?
-> I don't share or publish the source directory anywhere, and just for
-> testing I removed everything but the ".git" directory and tried "git
-> checkout" and "git checkout master".
+--1547844168-2013296706-1252095044=:28290
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-"git checkout" is a short-hand for "git checkout HEAD" which is to request
-"switch to the branch denoted by HEAD, i.e. the current branch, while
-keeping my local changes to the work tree and the index".
+On Fri, 4 Sep 2009, Sverre Rabbelier wrote:
 
-"git checkout master" is a request to "switch to the master branch, while
-keeping my local changes to the work tree and the index".
+> Heya,
+> 
+> On Fri, Sep 4, 2009 at 21:05, Daniel Barkalow<barkalow@iabervon.org> wrote:
+> > Some foreign vcses, including the only one I ever personally use, do not
+> > have URLs, and require a bunch of options and paths to specify a
+> > repository. I don't want to have to use:
+> >
+> >        url = p4://rsh:ssh+-q+-a+-x+-l+p4ssh+-q+-x+perforce+%2Fbin%2Ftrue//projects/foo/bar-1.0/...,//projects/foo/bar-1.1/...
+> 
+> Btw, doesn't p4 have these config files that you can download that
+> contain the configuration? In that case
+> 'p4://example.org/p4/main-development.configfile' would be very
+> convenient.
 
-In this case, your "delete everything" is your local change, and git did
-its best to preserve it while switching branches.
+The only thing I know of which you might be thinking of is "client 
+specifications", which are like git superprojects. They're almost certain 
+to only specify one of the multiple locations that you want to have in the 
+same repository; the multiple locations are the paths you want to treat 
+as branches, and the client picks one branch of each project and places 
+it in some non-branch-specific location relative to other projects. (Of 
+course, someday I might want to support importing a client specification 
+as a git project with submodules, but it's got the same issues as 
+svn::externals without revision specifications seems to).
 
-If you want to "copy this and that files and directories out of the
-commit at the tip of the current branch and deposit them in my work tree
-and index", you would say
+In any case, p4 doesn't have any easy generic way to specify how to 
+contact the server, and doesn't have anything client-side.
 
-    $ git checkout HEAD this that
+> Regardless, I do think there should be some way to specify all this
+> outside of the url, but to me that's secondary. I think the primary
+> usecase is/should be cloning from some url in the form of
+> 'hg://example.org/foo', rather than 'http://example.org/some-hg-repo'
+> or 'p4://.......', since those are both exceptions (the former being
+> an ambiguous url, and the latter being a non-url). Now I do understand
+> if you don't want to spend your time on implementing the specialized
+> url support since it doesn't scratch your itch, but at least your
+> series shouldn't impend supporting that in the near future.
 
-so a request for checking everything out would be a natural extension of
-the above that would be:
+I'm pretty sure that this series makes your primary usecase slightly 
+simpler to support, because it no longer is expected to handle the 
+ambiguous "http://" class of URLs.
 
-    $ git checkout HEAD .
-
-If you want to "copy this and that files and directories out of the index
-and deposit them in my work tree", you would say
-
-    $ git checkout this that
+	-Daniel
+*This .sig left intentionally blank*
+--1547844168-2013296706-1252095044=:28290--
