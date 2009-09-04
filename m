@@ -1,78 +1,206 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH 3/8] Use a function to determine whether a remote is valid
-Date: Thu, 3 Sep 2009 22:13:53 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909032213230.28290@iabervon.org>
+Subject: [PATCH 4/8] Allow fetch to modify refs
+Date: Thu, 3 Sep 2009 22:13:55 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0909032213260.28290@iabervon.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 04 04:14:12 2009
+X-From: git-owner@vger.kernel.org Fri Sep 04 04:14:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjOJY-0002pu-1L
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 04:14:12 +0200
+	id 1MjOJY-0002pu-Pg
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 04:14:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346AbZIDCNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Sep 2009 22:13:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932338AbZIDCNx
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 22:13:53 -0400
-Received: from iabervon.org ([66.92.72.58]:41093 "EHLO iabervon.org"
+	id S932390AbZIDCN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Sep 2009 22:13:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbZIDCN5
+	(ORCPT <rfc822;git-outgoing>); Thu, 3 Sep 2009 22:13:57 -0400
+Received: from iabervon.org ([66.92.72.58]:41095 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932302AbZIDCNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Sep 2009 22:13:51 -0400
-Received: (qmail 2371 invoked by uid 1000); 4 Sep 2009 02:13:53 -0000
+	id S932110AbZIDCNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Sep 2009 22:13:54 -0400
+Received: (qmail 2375 invoked by uid 1000); 4 Sep 2009 02:13:55 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Sep 2009 02:13:53 -0000
+  by localhost with SMTP; 4 Sep 2009 02:13:55 -0000
 User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127678>
 
-Currently, it only checks url, but it will allow other things in the future.
+This allows the transport to use the null sha1 for a ref reported to
+be present in the remote repository to indicate that a ref exists but
+its actual value is presently unknown and will be set if the objects
+are fetched.
+
+Also adds documentation to the API to specify exactly what the methods
+should do and how they should interpret arguments.
 
 Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
 ---
- remote.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+ builtin-clone.c    |    6 ++++--
+ transport-helper.c |    4 ++--
+ transport.c        |   13 +++++++------
+ transport.h        |   41 +++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 52 insertions(+), 12 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 4b5b905..fec63fa 100644
---- a/remote.c
-+++ b/remote.c
-@@ -48,6 +48,11 @@ static int rewrite_nr;
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
+diff --git a/builtin-clone.c b/builtin-clone.c
+index ad04808..deef435 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -520,8 +520,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 					     option_upload_pack);
  
-+static int valid_remote(const struct remote *remote)
-+{
-+	return !!remote->url;
-+}
-+
- static const char *alias_url(const char *url)
- {
- 	int i, j;
-@@ -667,14 +672,14 @@ struct remote *remote_get(const char *name)
- 
- 	ret = make_remote(name, 0);
- 	if (valid_remote_nick(name)) {
--		if (!ret->url)
-+		if (!valid_remote(ret))
- 			read_remotes_file(ret);
--		if (!ret->url)
-+		if (!valid_remote(ret))
- 			read_branches_file(ret);
+ 		refs = transport_get_remote_refs(transport);
+-		if (refs)
+-			transport_fetch_refs(transport, refs);
++		if (refs) {
++			struct ref *ref_cpy = copy_ref_list(refs);
++			transport_fetch_refs(transport, ref_cpy);
++		}
  	}
--	if (name_given && !ret->url)
-+	if (name_given && !valid_remote(ret))
- 		add_url_alias(ret, name);
--	if (!ret->url)
-+	if (!valid_remote(ret))
- 		return NULL;
- 	ret->fetch = parse_fetch_refspec(ret->fetch_refspec_nr, ret->fetch_refspec);
- 	ret->push = parse_push_refspec(ret->push_refspec_nr, ret->push_refspec);
+ 
+ 	if (refs) {
+diff --git a/transport-helper.c b/transport-helper.c
+index b1ea7e6..e2b5270 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -70,7 +70,7 @@ static int disconnect_helper(struct transport *transport)
+ }
+ 
+ static int fetch_with_fetch(struct transport *transport,
+-			    int nr_heads, const struct ref **to_fetch)
++			    int nr_heads, struct ref **to_fetch)
+ {
+ 	struct child_process *helper = get_helper(transport);
+ 	FILE *file = fdopen(helper->out, "r");
+@@ -94,7 +94,7 @@ static int fetch_with_fetch(struct transport *transport,
+ }
+ 
+ static int fetch(struct transport *transport,
+-		 int nr_heads, const struct ref **to_fetch)
++		 int nr_heads, struct ref **to_fetch)
+ {
+ 	struct helper_data *data = transport->data;
+ 	int i, count;
+diff --git a/transport.c b/transport.c
+index 4cb8077..93430fa 100644
+--- a/transport.c
++++ b/transport.c
+@@ -204,7 +204,7 @@ static struct ref *get_refs_via_rsync(struct transport *transport, int for_push)
+ }
+ 
+ static int fetch_objs_via_rsync(struct transport *transport,
+-				int nr_objs, const struct ref **to_fetch)
++				int nr_objs, struct ref **to_fetch)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct child_process rsync;
+@@ -408,7 +408,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
+ }
+ 
+ static int fetch_refs_from_bundle(struct transport *transport,
+-			       int nr_heads, const struct ref **to_fetch)
++			       int nr_heads, struct ref **to_fetch)
+ {
+ 	struct bundle_transport_data *data = transport->data;
+ 	return unbundle(&data->header, data->fd);
+@@ -486,7 +486,7 @@ static struct ref *get_refs_via_connect(struct transport *transport, int for_pus
+ }
+ 
+ static int fetch_refs_via_pack(struct transport *transport,
+-			       int nr_heads, const struct ref **to_fetch)
++			       int nr_heads, struct ref **to_fetch)
+ {
+ 	struct git_transport_data *data = transport->data;
+ 	char **heads = xmalloc(nr_heads * sizeof(*heads));
+@@ -922,16 +922,17 @@ const struct ref *transport_get_remote_refs(struct transport *transport)
+ 	return transport->remote_refs;
+ }
+ 
+-int transport_fetch_refs(struct transport *transport, const struct ref *refs)
++int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ {
+ 	int rc;
+ 	int nr_heads = 0, nr_alloc = 0, nr_refs = 0;
+-	const struct ref **heads = NULL;
+-	const struct ref *rm;
++	struct ref **heads = NULL;
++	struct ref *rm;
+ 
+ 	for (rm = refs; rm; rm = rm->next) {
+ 		nr_refs++;
+ 		if (rm->peer_ref &&
++		    !is_null_sha1(rm->old_sha1) &&
+ 		    !hashcmp(rm->peer_ref->old_sha1, rm->old_sha1))
+ 			continue;
+ 		ALLOC_GROW(heads, nr_heads + 1, nr_alloc);
+diff --git a/transport.h b/transport.h
+index c14da6f..503db11 100644
+--- a/transport.h
++++ b/transport.h
+@@ -18,11 +18,48 @@ struct transport {
+ 	int (*set_option)(struct transport *connection, const char *name,
+ 			  const char *value);
+ 
++	/**
++	 * Returns a list of the remote side's refs. In order to allow
++	 * the transport to try to share connections, for_push is a
++	 * hint as to whether the ultimate operation is a push or a fetch.
++	 *
++	 * If the transport is able to determine the remote hash for
++	 * the ref without a huge amount of effort, it should store it
++	 * in the ref's old_sha1 field; otherwise it should be all 0.
++	 **/
+ 	struct ref *(*get_refs_list)(struct transport *transport, int for_push);
+-	int (*fetch)(struct transport *transport, int refs_nr, const struct ref **refs);
++
++	/**
++	 * Fetch the objects for the given refs. Note that this gets
++	 * an array, and should ignore the list structure.
++	 *
++	 * If the transport did not get hashes for refs in
++	 * get_refs_list(), it should set the old_sha1 fields in the
++	 * provided refs now.
++	 **/
++	int (*fetch)(struct transport *transport, int refs_nr, struct ref **refs);
++
++	/**
++	 * Push the objects and refs. Send the necessary objects, and
++	 * then, for any refs where peer_ref is set and
++	 * peer_ref->new_sha1 is different from old_sha1, tell the
++	 * remote side to update each ref in the list from old_sha1 to
++	 * peer_ref->new_sha1.
++	 *
++	 * Where possible, set the status for each ref appropriately.
++	 *
++	 * The transport must modify new_sha1 in the ref to the new
++	 * value if the remote accepted the change. Note that this
++	 * could be a different value from peer_ref->new_sha1 if the
++	 * process involved generating new commits.
++	 **/
+ 	int (*push_refs)(struct transport *transport, struct ref *refs, int flags);
+ 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
+ 
++	/** get_refs_list(), fetch(), and push_refs() can keep
++	 * resources (such as a connection) reserved for futher
++	 * use. disconnect() releases these resources.
++	 **/
+ 	int (*disconnect)(struct transport *connection);
+ 	char *pack_lockfile;
+ 	signed verbose : 2;
+@@ -74,7 +111,7 @@ int transport_push(struct transport *connection,
+ 
+ const struct ref *transport_get_remote_refs(struct transport *transport);
+ 
+-int transport_fetch_refs(struct transport *transport, const struct ref *refs);
++int transport_fetch_refs(struct transport *transport, struct ref *refs);
+ void transport_unlock_pack(struct transport *transport);
+ int transport_disconnect(struct transport *transport);
+ char *transport_anonymize_url(const char *url);
 -- 
 1.6.4.2.419.gc86f8
