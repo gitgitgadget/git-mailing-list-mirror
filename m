@@ -1,66 +1,59 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: [JGIT] Request for help
-Date: Fri, 4 Sep 2009 08:41:07 -0400
-Message-ID: <2c6b72b30909040541t4c781378g3f35aeb70021050c@mail.gmail.com>
-References: <loom.20090904T064602-511@post.gmane.org> <554991.93608.qm@web27807.mail.ukl.yahoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 5/8] Allow programs to not depend on remotes having
+ urls
+Date: Fri, 4 Sep 2009 14:45:49 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909041445230.4605@intel-tinevez-2-302>
+References: <alpine.LNX.2.00.0909032213290.28290@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Gabe McArthur <gabriel.mcarthur@gmail.com>
-To: Mark Struberg <struberg@yahoo.de>
-X-From: git-owner@vger.kernel.org Fri Sep 04 14:41:48 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Sep 04 14:46:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjY6t-0000ej-30
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 14:41:47 +0200
+	id 1MjYAx-0001rb-OW
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Sep 2009 14:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755737AbZIDMlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 08:41:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756773AbZIDMlZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 08:41:25 -0400
-Received: from mail-iw0-f175.google.com ([209.85.223.175]:61647 "EHLO
-	mail-iw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753432AbZIDMlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 08:41:24 -0400
-Received: by iwn5 with SMTP id 5so211115iwn.4
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 05:41:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=CXM/91clsOEiGdd05TK0eQ9yJcwDcfEb4XvExJc4lHw=;
-        b=lngpbXj3A6wTKP5ZLoYqclOdzXhjQslHYVgEv8EFunxEp9fkpQ9wpi3MpWkA7XMvj5
-         mOke7lBdwuOmv58649mrYjw/6neear0JOCfVMF+CsFfvmhoQgkEI1GSCLm6wJSkRmXDJ
-         q7yEk4iKdocGpTKN//C+b5Iz5NfgGNP32MGLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=hLSqtHJ4ECYBgKfNNCUoB8k8TDLSqdWz1SYAPY1llvRYG/Gq9/GzHmHF6mjbD6XERb
-         JtSKU39rEXL9rW2UsjKKGsdQdjaU0X2J+oIj9epGwq+m7NL17RMMRAmZmjA3hMqAZnn+
-         457E2M+B/QUiRo5CTrCPm3NFo8qTQERaZQEcU=
-Received: by 10.231.24.208 with SMTP id w16mr9909749ibb.38.1252068087070; Fri, 
-	04 Sep 2009 05:41:27 -0700 (PDT)
-In-Reply-To: <554991.93608.qm@web27807.mail.ukl.yahoo.com>
+	id S1756795AbZIDMpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Sep 2009 08:45:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756740AbZIDMpu
+	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 08:45:50 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33869 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755737AbZIDMpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Sep 2009 08:45:50 -0400
+Received: (qmail invoked by alias); 04 Sep 2009 12:45:50 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp011) with SMTP; 04 Sep 2009 14:45:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+2ct9KdSq2ikzz8rwTcsfxoD5we3DcSudfyVpRdR
+	RJomqEOR+6GuCH
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <alpine.LNX.2.00.0909032213290.28290@iabervon.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127729>
 
-On Fri, Sep 4, 2009 at 03:33, Mark Struberg<struberg@yahoo.de> wrote:
->> From: Gabe McArthur <gabriel.mcarthur@gmail.com>
-> >
->> I'll try to submit a full patch later, using your
->> conventions.
+Hi,
 
-I have a question as well:
+On Thu, 3 Sep 2009, Daniel Barkalow wrote:
 
-Support for using find bug is part of the Eclipse configuration (see
-org.spearce.jgit/findBugs/), and I know that there's a find bug plugin
-for Maven. From looking at sonatype's JGit repositories it is not
-integrated. Have you managed to include it?
+> For fetch and ls-remote, which use the first url of a remote, have
+> transport_get() determine this by passing a remote and passing NULL
+> for the url. For push, which uses every url of a remote, use each url
+> in turn if there are any, and use NULL if there are none.
+> 
+> This will allow the transport code to do something different if the
+> location is not specified with a url.
 
--- 
-Jonas Fonseca
+For the record: you did not convince me.  Not that you tried, to...
+
+Ciao,
+Dscho
