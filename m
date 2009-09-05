@@ -1,81 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: tracking branch for a rebase
-Date: Sat, 5 Sep 2009 10:28:41 -0400
-Message-ID: <20090905142841.GB15631@coredump.intra.peff.net>
-References: <20090904135414.GA3728@honk.padd.com>
- <4AA124DD.1030208@drmicha.warpmail.net>
- <20090904181846.GC19093@coredump.intra.peff.net>
- <20090904185949.GA21583@atjola.homenet>
- <20090905061250.GA29863@coredump.intra.peff.net>
- <20090905140127.GA29037@atjola.homenet>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: `Git Status`-like output for two local branches
+Date: Sat, 5 Sep 2009 16:58:36 +0200
+Message-ID: <9b18b3110909050758k597f917fn3baefa5fdb4741a0@mail.gmail.com>
+References: <c115fd3c0908311320q46d585d2v457ccd0f411a6404@mail.gmail.com>
+	 <20090902075713.GA1832@coredump.intra.peff.net>
+	 <fabb9a1e0909020118m2fe2e6e1g79cc83ce941ac000@mail.gmail.com>
+	 <20090905081726.GA7109@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Sep 05 16:28:57 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Sep 05 16:58:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjwG8-0007Jt-HC
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 16:28:57 +0200
+	id 1Mjwiz-0006Ck-BH
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 16:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbZIEO2o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Sep 2009 10:28:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbZIEO2n
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 10:28:43 -0400
-Received: from peff.net ([208.65.91.99]:44450 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751936AbZIEO2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 10:28:43 -0400
-Received: (qmail 27971 invoked by uid 107); 5 Sep 2009 14:28:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 10:28:58 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 10:28:41 -0400
-Content-Disposition: inline
-In-Reply-To: <20090905140127.GA29037@atjola.homenet>
+	id S1752135AbZIEO6g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Sep 2009 10:58:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751945AbZIEO6f
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 10:58:35 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:62568 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbZIEO6e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Sep 2009 10:58:34 -0400
+Received: by ewy2 with SMTP id 2so1117446ewy.17
+        for <git@vger.kernel.org>; Sat, 05 Sep 2009 07:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ooEQ2OXNiCvV9c8Bm1VKLLrv/oxvJ1QoJri97vgvrrw=;
+        b=edOEHAQu9Vpm65zXWKc3QaKcnLylXQHD7U5+dnS82YSU/pxHmqT/LsZOaMAvCgcjTT
+         IJ2HzJq8tAcP50U7VxKx3X0e+askpaOJZ0PMtUPxwqeMfLYWnMztB1YHB/zlO49VOY8Y
+         BsC+Zp8aYoNcQAsL49ZhDSJDnfRzohIIM1YyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=r4GO4NLs3+2JYhbH3Khr46m/VAREuTOjSfG/kGUeu8gSUyBbweCpYC5DVMPwUfjOwa
+         GFAXcobUXFWeO7bxZOKnecGQNh1c7VBufujB4ZrsVexAg9GGqI8HR/WblqM2NOcu0VeV
+         IgzMB9PzcwrAdW6Gk2RqdoBemNo89jJvLvyvU=
+Received: by 10.216.7.67 with SMTP id 45mr1071827weo.95.1252162716299; Sat, 05 
+	Sep 2009 07:58:36 -0700 (PDT)
+In-Reply-To: <20090905081726.GA7109@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127818>
 
-On Sat, Sep 05, 2009 at 04:01:27PM +0200, Bj=C3=B6rn Steinbrink wrote:
+2009/9/5 Jeff King <peff@peff.net>:
+> On Wed, Sep 02, 2009 at 10:18:54AM +0200, Sverre Rabbelier wrote:
+>
+>> On Wed, Sep 2, 2009 at 09:57, Jeff King<peff@peff.net> wrote:
+>> > =A02. Count the commits on each side that are not in the other.
+>>
+>> [...]
+>>
+>> > =A0 =A0 =A0You can also do that by parsing the output of:
+>> > =A0 =A0 =A0 git rev-list --left-right $a...$b --
+>>
+>> Perhaps it is useful to introduce a --left-right-count or such?
+>
+> I'm not opposed to that if it is something a lot of people found usef=
+ul,
+> but I am not sure we have established that as the case (I am curious =
+to
+> hear from Tim what his actual use case is).
 
-> > And by automating the shorthand we reduce the chance of errors. For
-> > example, I usually base my topic branches from origin/master. But t=
-he
-> > other day I happened to be building a new branch, jk/date, off of
-> > lt/approxidate, salvaged from origin/pu. I did "git rebase -i
-> > origin/master" and accidentally rewrote the early part of
-> > lt/approxidate.
->=20
-> Hm, I'd prefer a shorthand for "upstream for this branch", instead of
-> magic defaults.
+It would be useful in for instance prompt status line. At $work we
+have a number of people using a prompt that includes the result of
+parsing git-status, but something --left-right-count would be much
+nicer, and if i understand it, more efficient (although maybe im
+wrong). In the prompt they use a number of different unicode arrows to
+show what has happened, with a Y type thing for diverged.
 
-The more I think about, the more I think that is the right solution.
-Because magic defaults for "rebase -i" don't help when you want to do
-"gitk $UPSTREAM..".
+cheers,
+Yves
 
-The previous discussion on the topic seems to be here:
 
-  http://article.gmane.org/gmane.comp.version-control.git/113666
-
-And apparently you and I both participated in the discussion, which I
-totally forgot about.
-
-Looks like the discussion ended with people liking the idea but not
-knowing what the specifier should look like. Maybe tightening the ref
-syntax a bit to allow more extensible "special" refs is a good v1.7.0
-topic? I dunno.
-
-> > That wouldn't help me, because you can't "pull -i". :)
->=20
-> I probably shouldn't tell anyone, as it's a crude hack, but "git pull
-> --rebase -s -i" does the trick... *hides*
-
-OK, that's just sick. :)
-
--Peff
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
