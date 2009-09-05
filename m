@@ -1,136 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Sat, 05 Sep 2009 10:58:56 -0700 (PDT)
-Message-ID: <m3tyzhjmvc.fsf@localhost.localdomain>
-References: <20090902080305.GA11549@neumann>
-	<20090902081917.GA5447@coredump.intra.peff.net>
-	<20090904070216.GA3996@darc.dnsalias.org>
-	<20090905061804.GB29863@coredump.intra.peff.net>
-	<7v8wgt98ms.fsf@alter.siamese.dyndns.org>
-	<20090905084641.GA24865@darc.dnsalias.org>
-	<7veiql1etz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking branch for a rebase
+Date: Sat, 05 Sep 2009 10:59:26 -0700
+Message-ID: <7v4orh1ddt.fsf@alter.siamese.dyndns.org>
+References: <20090904135414.GA3728@honk.padd.com>
+ <4AA124DD.1030208@drmicha.warpmail.net>
+ <20090904181846.GC19093@coredump.intra.peff.net>
+ <20090904185949.GA21583@atjola.homenet>
+ <20090905061250.GA29863@coredump.intra.peff.net>
+ <20090905140127.GA29037@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
-	SZEDER Gabor <szeder@ira.uka.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 19:59:08 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Sep 05 19:59:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjzXX-0000bI-11
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 19:59:07 +0200
+	id 1MjzYD-0000pX-TX
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 19:59:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752846AbZIER66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 13:58:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752811AbZIER65
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 13:58:57 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:15832 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752774AbZIER64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 13:58:56 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so405574fge.1
-        for <git@vger.kernel.org>; Sat, 05 Sep 2009 10:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=NOyzXecwg7fBduXH8lC4oe3WeN9ULzexbhN/q7PPqIE=;
-        b=dd/AYtJzb/vQVwwdCcTIHMzo9akKOsNfLh6mnvy2DkWdQkdUAYkHTqQhVKakyFGFZz
-         t1ZBlNaKFpGnCSc+KkCVf0nbVpU+RmgIrcGqt6lSlRR4haBhTQR8uTyAfocxQCzWxROC
-         +uERvrBmjhb4M63jB4j9+LQSOmBSMJGrAy7m0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=ZbZQDaBFSAXDDc0oL7D8+rHeuuFh8zMmPYmK8Xqx2WiOC5pSZ/ddFYs0NOg2ediZt4
-         UhixnE+KzfNUQv0sYeqCJtPVoUaOWFQOqC1hrjoSMTla6u0u1ViMY5deSMRe1y0T2sH2
-         0WW/sB+hknaCXsfBLAJTIusOZ7X7cffP8KfJU=
-Received: by 10.86.240.9 with SMTP id n9mr6233766fgh.70.1252173537940;
-        Sat, 05 Sep 2009 10:58:57 -0700 (PDT)
-Received: from localhost.localdomain (abvd254.neoplus.adsl.tpnet.pl [83.8.201.254])
-        by mx.google.com with ESMTPS id e20sm4617652fga.15.2009.09.05.10.58.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Sep 2009 10:58:56 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n85HvkWR026892;
-	Sat, 5 Sep 2009 19:57:57 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n85HvCaN026886;
-	Sat, 5 Sep 2009 19:57:12 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7veiql1etz.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752857AbZIER7m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Sep 2009 13:59:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbZIER7l
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 13:59:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58203 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752811AbZIER7k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Sep 2009 13:59:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 40F3145637;
+	Sat,  5 Sep 2009 13:59:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=ZO4pIj/hbj2y
+	6eATAk/fvSQJiC0=; b=sd7pNRBdsUjDy1+sMPtWKcPxM41jPn0MbPNrl/0ijJu3
+	idWo3Q2tqPKY75srHsPGwBuQvDBeEeOMOd8N507GkNhL+prmup7jKz1xf5Y60r15
+	wFSTKfesexN2X4icvp8D6cQXMgecX6h7O2wigcAovCEgSxYrpXc+80n7MCih6QU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=A5UYPS
+	x0RNTd07Vno2mbTB6fpMutu+Um5UBuCYQ/RKYWiGLZQQmhMXOk+7GlfpcdxCCE/W
+	SCA6Dvn18XQiwgyyacBbtl2nNLQboQ8tjKB/fhwVqXMk5GYIcUVFNa+HPH8WsFrR
+	oJypCP79SnnCbGJy5wxPPC37z/l3WD2YmJDHI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F240C45636;
+	Sat,  5 Sep 2009 13:59:37 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2227345631; Sat,  5 Sep 2009
+ 13:59:27 -0400 (EDT)
+In-Reply-To: <20090905140127.GA29037@atjola.homenet> (=?utf-8?Q?=22Bj?=
+ =?utf-8?Q?=C3=B6rn?= Steinbrink"'s message of "Sat\, 5 Sep 2009 16\:01\:27
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E09C863C-9A45-11DE-85B4-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127825>
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> 
-> > "git add -u ." is friendly enough. Just like "git commit ." versus "git
-> > commit -a", which is exactly the same concept and should therefore have the
-> > same behavior.
-> >
-> > You are assuming that people are in a subdirectory because they want to
-> > limit the scope. But I am usually in a subdirectory for totally
-> > versioning-unrelated reasons.
-> 
-> Limit the scope of what you see in "ls" (no argument) output, shorten the
-> paths you must type to non-git commands.  They are the kind of "limit the
-> scope" I meant, and they are totally versioning-unrelated.  In other
-> words, cwd-centric default helps the users (especially the new ones) by
-> making git behave consistently with other commands.
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-Well, there is still complication that some commands are considered
-whole-tree in absence of pathspec, like "git commit".
+> For me, the confusion would arise from the fact that "git rebase"
+> (without args) would seem like a "pull --rebase" without the fetch, b=
+ut
+> isn't.
 
-> 
-> So if anything, I personally think it would be much less surprising if all
-> git commands worked relative to the cwd (not whole tree root) when run
-> without path argument, at least from the newbie's point of view [*1*].
+It is true that one popular way to explain 'git pull' is:
 
-I think it would be very suprising if "git commit" in subdirectory was
-limited to changes affecting given subdirectory...
+    'git pull' is 'git fetch' followed by 'git merge'.
 
-> 
-> But notice that the above is qualified with "personally".  An alternative
-> would be to declare that in 1.8.0, all commands run without path argument
-> will work on the whole tree and you have to give an explicit '.' when you
-> want to limit their effect to the cwd.
-> 
-> This may be slightly less intuitive to newbies than the "relative to cwd",
-> but nevertheless that is the course I would suggest us taking, because of
-> the following observations:
-> 
->  (1) if the commands work on the whole tree when run without paths, it is
->      easy to limit to the cwd with "git frotz ." when you want to.
-> 
->  (2) if the commands work on the cwd when run without paths, you have to
->      always be aware how deep you are, and say "git frotz ../../.." when
->      you want to extend their effects to the whole tree.
-> 
-> The latter is much more irritating.
+These three command names in the sentence merely refer to the concepts =
+of
+what they do.
 
-Well, we can always invent some magic notation meaning either "up to
-top directory", e.g. make
+It is left up to the readers to extend the concepts to concrete command
+line to suit the needs for their situation.  For example you would
+restate the above general explanation into this form:
 
-  $ git frotz ...
+       'git pull git.git master' is 'git fetch git.git master' followed=
+ by
+       'git merge FETCH_HEAD'
 
-more or less equivalent to
+when updating your tree with the master branch of upstream git.git
+repository.
 
-  $ git frotz "$(git rev-parse --show-cdup)"
+Don't confuse the general concept with concrete syntax.
 
-(The other solution of having "git frotz /" to refer to top directory
-is slightly worse, because there are git commands that work without
-git repository, and "/" is legitimate parameter, like e.g. for 
-"git diff --no-index").
+    'git pull --rebase' is 'git fetch' followed by 'git rebase'
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+is exactly the same deal.
