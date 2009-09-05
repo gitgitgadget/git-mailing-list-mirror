@@ -1,57 +1,58 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Sat, 5 Sep 2009 04:19:16 -0400
-Message-ID: <20090905081915.GA11392@coredump.intra.peff.net>
-References: <20090902080305.GA11549@neumann>
- <20090902081917.GA5447@coredump.intra.peff.net>
- <20090904070216.GA3996@darc.dnsalias.org>
- <20090905061804.GB29863@coredump.intra.peff.net>
- <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
- <20090905072017.GA5152@coredump.intra.peff.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git+http:// proof-of-concept (not using CONNECT)
+Date: Sat, 5 Sep 2009 01:23:13 -0700
+Message-ID: <20090905082313.GA26131@dcvr.yhbt.net>
+References: <20090702085440.GC11119@dcvr.yhbt.net> <85647ef50907020252u41e36187jaacacad3d8a10f75@mail.gmail.com> <20090703202839.GB12072@dcvr.yhbt.net> <alpine.LSU.2.00.0907071712580.30197@hermes-2.csi.cam.ac.uk> <20090707205003.GA31195@dcvr.yhbt.net> <ed88cb980908260734x78382052t30d4cdcf07451134@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Tony Finch <dot@dotat.at>,
+	Constantine Plotnikov <constantine.plotnikov@gmail.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 10:19:30 2009
+To: Douglas Campos <douglas@theros.info>
+X-From: git-owner@vger.kernel.org Sat Sep 05 10:23:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjqUb-0003v8-L4
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 10:19:30 +0200
+	id 1MjqYM-0004bp-DA
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 10:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757171AbZIEITT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 04:19:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757055AbZIEITS
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 04:19:18 -0400
-Received: from peff.net ([208.65.91.99]:60866 "EHLO peff.net"
+	id S1757090AbZIEIXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 04:23:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752260AbZIEIXM
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 04:23:12 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43616 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751666AbZIEITQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 04:19:16 -0400
-Received: (qmail 25775 invoked by uid 107); 5 Sep 2009 08:19:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 04:19:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 04:19:16 -0400
+	id S1751666AbZIEIXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 04:23:11 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 2C0A71F78F;
+	Sat,  5 Sep 2009 08:23:14 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <20090905072017.GA5152@coredump.intra.peff.net>
+In-Reply-To: <ed88cb980908260734x78382052t30d4cdcf07451134@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127794>
 
-On Sat, Sep 05, 2009 at 03:20:17AM -0400, Jeff King wrote:
+Douglas Campos <douglas@theros.info> wrote:
+> Any news about this approach? I've heard some noise about a CGI
+> implementation....
 
-> As I mentioned above, not only is that annoying to use, but the real
-> problem is that I _expect_ the other behavior and it silently does the
-> opposite of what I want. You can argue that my brain is defective (for
-> not remembering, I mean -- we _know_ it's defective in other ways), but
-> certainly a config option would be useful to me.
+Hi Douglass,
 
-Bah. Even after this long thread, I _still_ forgot. I just now typed
-"git add -u" from t/ and got annoyed that my changes in the root weren't
-added.
+I've been busy with other things.  This approach is probably
+too limited to get around HTTP-aware proxies to be useful for
+non-git:// users anyways.
 
--Peff
+It also turns out the curl patch that made it into 7.19.6 was still
+unsuitable for bidirectional tunneling, looks like I'll have to port
+curl over to the curl_multi_* interface to get it working properly
+instead...
+
+-- 
+Eric Wong
