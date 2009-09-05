@@ -1,82 +1,87 @@
-From: Gabe McArthur <gabriel.mcarthur@gmail.com>
-Subject: Re: [JGIT] Request for help
-Date: Fri, 4 Sep 2009 18:29:54 -0700
-Message-ID: <63CD88F1-B28B-42B8-A78B-485DB61487D7@gmail.com>
-References: <585278.66341.qm@web27802.mail.ukl.yahoo.com> <658028.86274.qm@web27804.mail.ukl.yahoo.com> <524457d10909041647u562601d5q69142eefe894ac5b@mail.gmail.com> <ed88cb980909041706n26e50107m2343d4d922788459@mail.gmail.com>
-Mime-Version: 1.0 (iPhone Mail 7A400)
-Content-Type: text/plain;
-	charset=us-ascii;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Mark Struberg <struberg@yahoo.de>,
-	Jonas Fonseca <jonas.fonseca@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Douglas Campos <douglas@theros.info>
-X-From: git-owner@vger.kernel.org Sat Sep 05 03:37:41 2009
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Error with git svn show-ignore: forbidden access
+Date: Fri, 4 Sep 2009 22:57:08 -0700
+Message-ID: <20090905055708.GA22272@dcvr.yhbt.net>
+References: <551f769b0909010246u524599bcoc5b227f4a6279259@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yann Simon <yann.simon.fr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 07:57:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjkDi-00086V-Mq
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 03:37:39 +0200
+	id 1MjoH0-0004gi-Bt
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 07:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934228AbZIEBh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Sep 2009 21:37:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934149AbZIEBh2
-	(ORCPT <rfc822;git-outgoing>); Fri, 4 Sep 2009 21:37:28 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:40418 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934146AbZIEBh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Sep 2009 21:37:28 -0400
-Received: by pzk42 with SMTP id 42so1215692pzk.19
-        for <git@vger.kernel.org>; Fri, 04 Sep 2009 18:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:x-mailer
-         :mime-version:subject:date:cc;
-        bh=bFn5AeEo454mXCGbSg0aWJyn1C0H0J/esyqcfS8spnk=;
-        b=dGRD3qX2EhIClCX/0LMG0+nOzI89uCS3tR07X9UcDwNlQytqPcJqU9Th55NqSOtdnj
-         6UClBz8jgju437uMfKW+W9s57I7C70PnP/StzTAltmtosWlE5bUb1Q7s0svVM4wOQFPt
-         g66/EJIkLqgV8bgburvYGsMMUFR/IgKvc+1lo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
-        b=ALoKnsKxPhJBD6vGARFeCEEQrYttWVMHAdXoYIubLMvySjN3k/DhezTJBTyMEJOkgS
-         Az3enHQtXCCq741P3n7gUAv0ljVtfufEMJT1bnP67R4GYX3RyxmwaDD4Rs7UbuvUT3aR
-         oCdPGQW8WzLrdJS7JKeA6ZIkfkwuujYlAbrOU=
-Received: by 10.114.55.31 with SMTP id d31mr10948644waa.98.1252114203278;
-        Fri, 04 Sep 2009 18:30:03 -0700 (PDT)
-Received: from ?10.25.189.190? ([166.205.135.166])
-        by mx.google.com with ESMTPS id 22sm834799pxi.10.2009.09.04.18.30.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Sep 2009 18:30:02 -0700 (PDT)
-In-Reply-To: <ed88cb980909041706n26e50107m2343d4d922788459@mail.gmail.com>
-X-Mailer: iPhone Mail (7A400)
+	id S1751358AbZIEF5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 01:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751225AbZIEF5H
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 01:57:07 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39105 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750986AbZIEF5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 01:57:06 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id CEEB41F585;
+	Sat,  5 Sep 2009 05:57:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <551f769b0909010246u524599bcoc5b227f4a6279259@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127776>
 
-I'll post the pull request to github within  3-4 hours. Is that what  
-you mean by invest?  My patch will contain everything I submitted  
-before plus a bit more.  That patch set should contain everything  
-necessary to build, plus any refinements to whatever is already in the  
-'mavenize' branch.
--Gabe
+Yann Simon <yann.simon.fr@gmail.com> wrote:
+> Hi,
+> 
+> with git version 1.6.4:
+> 
+> $ git svn show-ignore > .gitignore
+> RA layer request failed: Server sent unexpected return value (403
+> Forbidden) in response to PROPFIND request for
+> '/repos/XXX/YYY/ZZZ/trunk/aaa' at /usr/lib/git-core/git-svn line 2243
+> 
+> Is git svn show-ignore making request to the svn server?
 
+Hi Yann,
 
-On Sep 4, 2009, at 5:06 PM, Douglas Campos <douglas@theros.info> wrote:
+Yes, git svn has to read the svn:ignore property remotely since it
+doesn't do anything with it when it fetches.  Do you have read
+permissions to /repos/XXX/YYY/ZZZ/trunk/aaa on that repo?
 
->> Ok, I'll fork and send a patch request shortly.  I was thinking about
->> it earlier, and I may add a couple of features that all OS projects
->> should follow (e.g. License in the jar, etc.).
->
-> Gabe, is there some task that you want to share with me? I have a
-> short timeframe of 4hours to invest on mavenization.
->
-> Cheers
-> Douglas Campos (qmx)
+> I tried also with the --no-minimize-url option but get as answer:
+> $ git svn --no-minimize-url show-ignore
+> Unknown option: no-minimize-url
+> 
+> Thanks for the help
+
+For everything besides initialization/clone, git svn reads the url in
+your $GIT_CONFIG.  --minimize-url is only used for the initial setup.
+
+You can edit it to move the URL down/up a level if you edit your
+corresponding fetch/branches/tags lines:
+
+before:
+
+	[svn-remote "svn"]
+		url = http://example.com/
+		fetch = project/trunk:refs/remotes/trunk
+		branches = project/branches/*:refs/remotes/*
+		tags = project/tags/*:refs/remotes/tags/*
+
+after:
+
+	[svn-remote "svn"]
+		url = http://example.com/project
+		fetch = trunk:refs/remotes/trunk
+		branches = branches/*:refs/remotes/*
+		tags = tags/*:refs/remotes/tags/*
+
+-- 
+Eric Wong
