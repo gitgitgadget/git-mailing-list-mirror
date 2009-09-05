@@ -1,211 +1,164 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH 1/2] grep: accept relative paths outside current working
-	directory
-Date: Sat, 5 Sep 2009 14:31:17 +0200
-Message-ID: <20090905123117.GA3099@darc.dnsalias.org>
-References: <20090902080305.GA11549@neumann> <20090902081917.GA5447@coredump.intra.peff.net> <20090904070216.GA3996@darc.dnsalias.org> <20090905061804.GB29863@coredump.intra.peff.net> <7v8wgt98ms.fsf@alter.siamese.dyndns.org> <20090905072017.GA5152@coredump.intra.peff.net> <7v3a717rgl.fsf@alter.siamese.dyndns.org>
+Subject: [PATCH 2/2] add 'scope' config option
+Date: Sat, 5 Sep 2009 14:33:04 +0200
+Message-ID: <20090905123304.GB3099@darc.dnsalias.org>
+References: <20090902080305.GA11549@neumann> <20090902081917.GA5447@coredump.intra.peff.net> <20090904070216.GA3996@darc.dnsalias.org> <20090905061804.GB29863@coredump.intra.peff.net> <7v8wgt98ms.fsf@alter.siamese.dyndns.org> <20090905072017.GA5152@coredump.intra.peff.net> <7v3a717rgl.fsf@alter.siamese.dyndns.org> <20090905123117.GA3099@darc.dnsalias.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>,
 	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
 	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 14:31:37 2009
+X-From: git-owner@vger.kernel.org Sat Sep 05 14:33:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjuQa-0004GZ-30
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 14:31:36 +0200
+	id 1MjuS9-0004dr-AE
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 14:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341AbZIEMb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 08:31:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757312AbZIEMbZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 08:31:25 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:47010 "EHLO
+	id S932669AbZIEMdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 08:33:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757312AbZIEMdC
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 08:33:02 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:38552 "EHLO
 	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753161AbZIEMbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 08:31:24 -0400
-Received: by fxm17 with SMTP id 17so1171478fxm.37
-        for <git@vger.kernel.org>; Sat, 05 Sep 2009 05:31:26 -0700 (PDT)
+	with ESMTP id S1753161AbZIEMdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 08:33:01 -0400
+Received: by fxm17 with SMTP id 17so1171951fxm.37
+        for <git@vger.kernel.org>; Sat, 05 Sep 2009 05:33:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:sender:received:date:from:to
          :cc:bcc:subject:message-id:references:mime-version:content-type
          :content-disposition:in-reply-to:user-agent;
-        bh=KngV+8F0vRpmnCGPDdzWsGKzmF0QP05+GK1t4wKmfBc=;
-        b=m4mg463lumEH8uaYriS7FXgeP3jo7yR3YaOQ+Ip063ufeWr5fUSQI/wmRro+mXgDhT
-         JDySNMlPBUHhIej6Y1PUecZMm3KHOTBNZtogM/6PsJ2vPs9fSvp08VX5Cf0qp5fdNlx5
-         af7EFVYr9hbtZEn9/ZIo1pQ2B/uqYVSibj4ks=
+        bh=0MYTf4/CJECSL/Q4NEDQ2P0JQkUHwd0iNydtLwZHHFk=;
+        b=CiyUx9wgvQ9UnhhiBayU5dAAFcRWeaHjBcl8UTBwxvfAi7UxCoBhTWJ4+PBHPMzTJ1
+         AC0ZYt2FiE+nP/5fFLaRflsx9zEiXiGovRSjD1VqQPm+4zIX5OV8ZYgI6JZlOfyV7XRD
+         zGtpi48k+ZgAt9+1awNcxhPxYqBktxgVW9ONA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=sender:date:from:to:cc:bcc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        b=utqg/FZb5WZdOI95aKmzQ5Kqv5sASK5cZ2/5IS/tnZGw8AXlPwcW+F29tFTIyafFwF
-         CT45JtOWuKhXNIJ/5+bGPisofSIo9EpK3cwPyIfuS2i7vjvMQt6o5ocVQz87yj4JtJqe
-         LM49K/4ZZm5XM3vh3wNvFYmMCrx7ItASPWpgY=
-Received: by 10.86.208.2 with SMTP id f2mr6025675fgg.16.1252153886010;
-        Sat, 05 Sep 2009 05:31:26 -0700 (PDT)
+        b=OUxQlAWOmMa3czZueZFkMmdEEFBvK4ISzD7IdpRUwN974yv6nPVUqEO13lSF5IsWbl
+         xSf69V/ksaxRmBmzQuWt43hd/J0erMMvhkqylyqkNAsm4dFf5oYRZWg7laN+HUUt4ixl
+         pOKP5S64YF5OG2RhuD5appogsrJS1rULsdERE=
+Received: by 10.86.228.16 with SMTP id a16mr6028141fgh.49.1252153982678;
+        Sat, 05 Sep 2009 05:33:02 -0700 (PDT)
 Received: from darc.lan (p549A2AE8.dip.t-dialin.net [84.154.42.232])
-        by mx.google.com with ESMTPS id l19sm3872504fgb.21.2009.09.05.05.31.24
+        by mx.google.com with ESMTPS id d4sm3890856fga.18.2009.09.05.05.33.01
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Sep 2009 05:31:25 -0700 (PDT)
+        Sat, 05 Sep 2009 05:33:02 -0700 (PDT)
 Received: from drizzd by darc.lan with local (Exim 4.69)
 	(envelope-from <drizzd@aon.at>)
-	id 1MjuQH-0003I0-HU; Sat, 05 Sep 2009 14:31:17 +0200
+	id 1MjuS0-0006n8-Ez; Sat, 05 Sep 2009 14:33:04 +0200
 Content-Disposition: inline
-In-Reply-To: <7v3a717rgl.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20090905123117.GA3099@darc.dnsalias.org>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127811>
 
-On Sat, Sep 05, 2009 at 12:58:50AM -0700, Junio C Hamano wrote:
-> >> If "git add -u ../.." (I mean "the grand parent directory", not "an
-> >> unnamed subdirectory") did not work 
-
-I just noticed that this doesn't work with grep. In git.git:
-
-$ cd t
-$ git grep addremove -- ../
-fatal: git grep: cannot generate relative filenames containing '..'
-
-So here's a fix for that. And a configurable solution for add and grep's
-scope as a follow-up. I did not look at any other commands yet.
-
-Clemens
-
---o<--
-Previously, "git grep" would bark at relative paths pointing outside
-the current working directory (or subdirectories thereof). We already
-have quote_path_relative(), which can handle such cases just fine. So
-use that instead.
+Documentation/config.txt says it all.
 
 Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- builtin-grep.c |   44 ++++++++++++++------------------------------
- grep.h         |    1 +
- 2 files changed, 15 insertions(+), 30 deletions(-)
+ Documentation/config.txt |    6 ++++++
+ builtin-add.c            |    2 +-
+ builtin-grep.c           |    2 +-
+ cache.h                  |    1 +
+ config.c                 |    8 ++++++++
+ environment.c            |    1 +
+ 6 files changed, 18 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5256c7f..f587cf1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -439,6 +439,12 @@ On some file system/operating system combinations, this is unreliable.
+ Set this config setting to 'rename' there; However, This will remove the
+ check that makes sure that existing object files will not get overwritten.
+ 
++core.scope::
++	By default, the commands 'git add -u', 'git add -A' and 'git grep'
++	are limited to files below the current working directory
++	(scope='workdir'). Set this variable to scope='global' to make these
++	commands act on the whole tree instead.
++
+ add.ignore-errors::
+ 	Tells 'git-add' to continue adding files when some files cannot be
+ 	added due to indexing errors. Equivalent to the '--ignore-errors'
+diff --git a/builtin-add.c b/builtin-add.c
+index 006fd08..33ea3e4 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -285,7 +285,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	if (addremove && take_worktree_changes)
+ 		die("-A and -u are mutually incompatible");
+-	if ((addremove || take_worktree_changes) && !argc) {
++	if (!scope_global && (addremove || take_worktree_changes) && !argc) {
+ 		static const char *here[2] = { ".", NULL };
+ 		argc = 1;
+ 		argv = here;
 diff --git a/builtin-grep.c b/builtin-grep.c
-index ad0e0a5..f6af3d4 100644
+index f6af3d4..447b195 100644
 --- a/builtin-grep.c
 +++ b/builtin-grep.c
-@@ -13,6 +13,7 @@
- #include "parse-options.h"
- #include "userdiff.h"
- #include "grep.h"
-+#include "quote.h"
+@@ -861,7 +861,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
  
- #ifndef NO_EXTERNAL_GREP
- #ifdef __unix__
-@@ -152,40 +153,27 @@ static int pathspec_matches(const char **paths, const char *name, int max_depth)
- 	return 0;
- }
- 
--static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1, const char *name, int tree_name_len)
-+static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1, const char *path, int tree_name_len)
- {
- 	unsigned long size;
- 	char *data;
- 	enum object_type type;
--	char *to_free = NULL;
- 	int hit;
-+	struct strbuf pathbuf = STRBUF_INIT;
- 
- 	data = read_sha1_file(sha1, &type, &size);
- 	if (!data) {
--		error("'%s': unable to read %s", name, sha1_to_hex(sha1));
-+		error("'%s': unable to read %s", path, sha1_to_hex(sha1));
- 		return 0;
- 	}
- 	if (opt->relative && opt->prefix_length) {
--		static char name_buf[PATH_MAX];
--		char *cp;
--		int name_len = strlen(name) - opt->prefix_length + 1;
--
--		if (!tree_name_len)
--			name += opt->prefix_length;
--		else {
--			if (ARRAY_SIZE(name_buf) <= name_len)
--				cp = to_free = xmalloc(name_len);
--			else
--				cp = name_buf;
--			memcpy(cp, name, tree_name_len);
--			strcpy(cp + tree_name_len,
--			       name + tree_name_len + opt->prefix_length);
--			name = cp;
--		}
-+		quote_path_relative(path + tree_name_len, -1, &pathbuf, opt->prefix);
-+		strbuf_insert(&pathbuf, 0, path, tree_name_len);
-+		path = pathbuf.buf;
- 	}
--	hit = grep_buffer(opt, name, data, size);
-+	hit = grep_buffer(opt, path, data, size);
-+	strbuf_release(&pathbuf);
- 	free(data);
--	free(to_free);
- 	return hit;
- }
- 
-@@ -195,6 +183,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	int i;
- 	char *data;
- 	size_t sz;
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	if (lstat(filename, &st) < 0) {
- 	err_ret:
-@@ -219,8 +208,9 @@ static int grep_file(struct grep_opt *opt, const char *filename)
- 	}
- 	close(i);
- 	if (opt->relative && opt->prefix_length)
--		filename += opt->prefix_length;
-+		filename = quote_path_relative(filename, -1, &buf, opt->prefix);
- 	i = grep_buffer(opt, filename, data, sz);
-+	strbuf_release(&buf);
- 	free(data);
- 	return i;
- }
-@@ -798,6 +788,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	memset(&opt, 0, sizeof(opt));
-+	opt.prefix = prefix;
- 	opt.prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
- 	opt.relative = 1;
- 	opt.pathname = 1;
-@@ -868,15 +859,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			verify_filename(prefix, argv[j]);
- 	}
- 
--	if (i < argc) {
-+	if (i < argc)
+ 	if (i < argc)
  		paths = get_pathspec(prefix, argv + i);
--		if (opt.prefix_length && opt.relative) {
--			/* Make sure we do not get outside of paths */
--			for (i = 0; paths[i]; i++)
--				if (strncmp(prefix, paths[i], opt.prefix_length))
--					die("git grep: cannot generate relative filenames containing '..'");
--		}
--	}
- 	else if (prefix) {
+-	else if (prefix) {
++	else if (!scope_global && prefix) {
  		paths = xcalloc(2, sizeof(const char *));
  		paths[0] = prefix;
-diff --git a/grep.h b/grep.h
-index 28e6b2a..f6eecc6 100644
---- a/grep.h
-+++ b/grep.h
-@@ -59,6 +59,7 @@ struct grep_opt {
- 	struct grep_pat *pattern_list;
- 	struct grep_pat **pattern_tail;
- 	struct grep_expr *pattern_expression;
-+	const char *prefix;
- 	int prefix_length;
- 	regex_t regexp;
- 	int linenum;
+ 		paths[1] = NULL;
+diff --git a/cache.h b/cache.h
+index 5fad24c..85c5fee 100644
+--- a/cache.h
++++ b/cache.h
+@@ -523,6 +523,7 @@ extern int auto_crlf;
+ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
++extern int scope_global;
+ 
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
+diff --git a/config.c b/config.c
+index e87edea..8dec019 100644
+--- a/config.c
++++ b/config.c
+@@ -503,6 +503,14 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.scope")) {
++		if (!strcasecmp(value, "global"))
++			scope_global = 1;
++		if (!strcasecmp(value, "worktree"))
++			scope_global = 0;
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index 5de6837..4d1c6e1 100644
+--- a/environment.c
++++ b/environment.c
+@@ -50,6 +50,7 @@ enum push_default_type push_default = PUSH_DEFAULT_MATCHING;
+ #endif
+ enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
+ int grafts_replace_parents = 1;
++int scope_global = 0;
+ 
+ /* Parallel index stat data preload? */
+ int core_preload_index = 0;
 -- 
 1.6.4.2.264.g79b4f
