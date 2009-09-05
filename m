@@ -1,113 +1,116 @@
-From: Jeff King <peff@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Sat, 5 Sep 2009 03:20:17 -0400
-Message-ID: <20090905072017.GA5152@coredump.intra.peff.net>
+Date: Sat, 05 Sep 2009 00:25:56 -0700
+Message-ID: <7vljkt7szf.fsf@alter.siamese.dyndns.org>
 References: <20090902080305.GA11549@neumann>
  <20090902081917.GA5447@coredump.intra.peff.net>
  <20090904070216.GA3996@darc.dnsalias.org>
  <20090905061804.GB29863@coredump.intra.peff.net>
  <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Clemens Buchacher <drizzd@aon.at>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 09:26:27 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Sep 05 09:26:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjpfG-0002TF-Qc
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 09:26:27 +0200
+	id 1MjpfH-0002TF-Hq
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 09:26:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbZIEHUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 03:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751226AbZIEHUT
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 03:20:19 -0400
-Received: from peff.net ([208.65.91.99]:55713 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751089AbZIEHUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 03:20:19 -0400
-Received: (qmail 25485 invoked by uid 107); 5 Sep 2009 07:20:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 03:20:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 03:20:17 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+	id S1751628AbZIEH0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 03:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbZIEH0H
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 03:26:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49016 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751088AbZIEH0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 03:26:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F353269A2;
+	Sat,  5 Sep 2009 03:26:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xVyALNce8IsfwuxpUZAG7QOGbWE=; b=Fwjrg8
+	O49TNbFK7u8MD4/zZ10mmCMD7p+tVht1FRTR/l8sc6f0n4EhmanJrbXi1ysW12ns
+	8jSXGnFS0ngsn3H+rmgTlO+B3Qcuaz3YiQi56M/f5HyvMfgGOy73hQWsjl1Nf38F
+	DRquyuK58bWklMqFj5dii2W/Cc4FpqiT0JjUM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KD7TaKTBc6/Sxy9VoTETtFjQ4ucUgIU2
+	PKeR+qBPASv7rplh0O2XB1hs2epEl9gVaLbN2wfBSVRLmYHTi0PaC1/Pw2H6lD+E
+	p3kyUQZz7pL9OwlUyYyk5cQZS2YvxUQ0yX/mDwJ0k+wG7vtor4JBdHe6XUwSovKT
+	CF5SPJB0SEw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D10F7269A0;
+	Sat,  5 Sep 2009 03:26:03 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DE15A26994; Sat,  5 Sep
+ 2009 03:25:57 -0400 (EDT)
+In-Reply-To: <7v8wgt98ms.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Sat\, 05 Sep 2009 00\:02\:35 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5E6EBD54-99ED-11DE-94E5-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127788>
 
-On Sat, Sep 05, 2009 at 12:02:35AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Jeff King <peff@peff.net> writes:
+>
+>> I suspect it is too late to change it due to compatibility issues. OTOH,
+>> I think the intent of v1.7.0 is to allow a few small breakages like
+>> these. You could always write an RFC patch and generate some discussion;
+>> I'm not 100% sure that there are enough people that agree with us to
+>> change the default.
+>
 > The intent of 1.7.0 is to fix usability glitches and warts that everybody
 > has long agreed are problematic.  People have *just started* discussing
 > about this---it is not remotely close to "everybody has long agreed are
 > problematic" criteria.  It is too late for 1.7.0.
 
-What about a config option that could change the behavior? True, the
-time-frame for discussion is much shorter, but we are not proposing to
-make a change that would affect users who do not agree to it. And I
-think the point of giving a long time-frame for discussion is to let
-people decide whether a change that users do not agree to may affect
-them in a bad way.
+I just wanted to see if I am being fair.  Here are the topics that we may
+have in 1.7.0.
 
-The real danger here is that users of the config option may be breaking
-an interface that is used by scripts. But I feel that 1.7.0 is probably
-the best time in the forseeable future to do that, as script-writers
-already must be wary of the version change.
+ * jc/1.7.0-push-safety
 
-> I personally find "add -u" that defaults to the current directory more
-> natural than always going to the root; same preference for "grep".
-> Besides, "add -u subdir" must add subdir relative to the cwd, without
-> going to the root.  Why should "add -u" sans argument behave drastically
-> differently?
+   Prevents gremlin updates from sideways to a repository with a work
+   tree, that confused countless new people.  I've resisted this change
+   for a long time on the backward compatiblity ground, but it is very
+   fair to say that it was long agreed that the benefit from the change
+   far outweigh the donesides of having to say "I do want the old
+   behaviour" by setting an configuration variable or two.
 
-I agree that there is a certain consistency to the current behavior. But
-I also find it terribly annoying, because I _always_ want it to do the
-other thing, and it silently accepts the command without even telling
-me, leaving me to find out ten minutes later that what I thought was
-added was not ("git add", by contrast, yells at you in the same
-situation).
+ * jc/1.7.0-send-email-no-thread-default
 
-I also happen to prefer the other behavior because it is easy to switch
-the two options: "git add -u" versus "git add -u .", whereas with
-current behavior I am stuck calculating (and typing) the correct number
-of "../" markers.
+   Defaults multi-message send-email to thread shallowly.  This change was
+   requested by kernel folks for a long time ago, and discussion on-list
+   resulted in a declaration that unless nobody objects 1.6.2 release
+   notes will say the default will change in 1.6.3.  We did not hear any
+   objection, but the switchover did not happen ;-).
 
-But I respect the fact that even if we had infinite time for discussion,
-there would be people who prefer it the opposite way to me. So how about
-that config option?
+ * jc/1.7.0-status
 
-> Speaking of cwd-ness, I sometimes find ls-tree irritating, but I think
-> this is in "if we had known better we would have designed it differently,
-> but because we didn't, because many scripts already depend on the current
-> behaviour, and because we have an --full-name escape hatch, we are not
-> likely to change it, ever" category.
+   Everybody hated that "status $args" being "commit --dry-run $args"
+   since 1.4.0 days.  We will give "commit --dry-run $args" in 1.6.5.
 
-I assume you mean "ls-files".  I have every once in a while been annoyed
-by that, but given how infrequently I run ls-files, it is not a big
-deal. :)
+ * jc/1.7.0-diff-whitespace-only-status
 
-> If "git add -u ../.." (I mean "the grand parent directory", not "an
-> unnamed subdirectory") did not work, it would be unexcusable and we would
-> want to devise an migration path, but otherwise I do not think it is such
-> a big deal.  I would say the commands that are used to incrementally build
+   We said "diff -w" only affects the appearance but not the exit code, so
+   "diff -w --exit-code" never returned success if there were only
+   whitespace changes.  It was noticed to be illogical since day one
+   of the introduction of --exit-code, but we simply did not bother to fix
+   the implementation of -b and -w, since the combination of these two
+   options were thought to be unlikely, and we were simply lazy ;-)
 
-As I mentioned above, not only is that annoying to use, but the real
-problem is that I _expect_ the other behavior and it silently does the
-opposite of what I want. You can argue that my brain is defective (for
-not remembering, I mean -- we _know_ it's defective in other ways), but
-certainly a config option would be useful to me.
-
-> Oh, "git grep -e foo ../..", however, does not seem to work.  That might be
-> something people may want to tackle.
-
-Thanks for mentioning "git grep"; I had forgotten that I have been
-bitten by expecting full-tree behavior from that in the past, too. A
-config option should cover that, too. ;)
-
--Peff
+I think the first three are clearly 1.7.0 candidates, judging from the
+benefit/downside perspective and also from the escape-hatch perspective,
+The last one is probably less so, but on the other hand it is of far
+lessor impact that we could even roll it out as a bugfix on 'maint'.
