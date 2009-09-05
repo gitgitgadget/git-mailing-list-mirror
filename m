@@ -1,85 +1,81 @@
-From: Mark Struberg <struberg@yahoo.de>
-Subject: Re: [JGIT] Request for help
-Date: Sat, 5 Sep 2009 16:40:57 +0000 (GMT)
-Message-ID: <513639.15699.qm@web27805.mail.ukl.yahoo.com>
-References: <200909051825.49619.robin.rosenberg.lists@dewire.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Use case I don't know how to address
+Date: Sat, 5 Sep 2009 19:23:28 +0200
+Message-ID: <200909051923.28831.j6t@kdbg.org>
+References: <4AA20CEC.8060408@chandlerfamily.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Douglas Campos <douglas@theros.info>,
-	Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org,
-	Gabe McArthur <gabriel.mcarthur@gmail.com>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 18:41:41 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alan Chandler <alan@chandlerfamily.org.uk>
+X-From: git-owner@vger.kernel.org Sat Sep 05 19:23:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjyKa-0006RR-Kc
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 18:41:41 +0200
+	id 1MjyzG-0007R6-Er
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 19:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752518AbZIEQk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 12:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752509AbZIEQk4
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 12:40:56 -0400
-Received: from web27805.mail.ukl.yahoo.com ([217.146.182.10]:26591 "HELO
-	web27805.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752487AbZIEQk4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Sep 2009 12:40:56 -0400
-Received: (qmail 17114 invoked by uid 60001); 5 Sep 2009 16:40:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.de; s=s1024; t=1252168857; bh=ZTx8HbkdudzXSc3tI3h9z5OOh9QvHEqJO9fA38oHkc0=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=P0as6xX1i6aHpmUdkn/NdqHFwTxV6lFM88u7Cm0uQqItdHtjHsUpMordYqc6nybvoADTGpBr+uZMXqtp8M7PIkpxcFYcMe4j9sSWBauEJM5AkeC83uAu1N9lyAR4YWufM+7ygX2olkJo98pJYCP8tHwcNKRtZHi4egRpfc8gehk=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.de;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
-  b=ESMfoAIQkQiToqgMO3JrClzu7GCuW29l0ICgC9g/XojuRK5UYhBPNo43vKX2Jbr1zPr3QdEsbiWlyph5PPGy2YGGu9J45D72kG7uENZLpCLoa9d4MDisg4X2+Xtr6tiKhQtwC5yzvB6p5hMwEDdPbN30GqyfdhuzD+qLiwgj0Gc=;
-X-YMail-OSG: 6t4av_EVM1k2rYpCP5xaSvqyVfichnptl.nyTJcxe2o4gHUMKXEBu6IPCrOX6l7WLV3JIimk56GYHDu4EZ1lHrxEWmmg4ruh_B.M6H1.s5c85m1UAJndcwR0MRNVLr8s_jyEqHCHsZ6cdv1GDreQcKdnvh6ttrd9UIIaleUT8cCVIEM.3Bv2SIMRVAhbfpnlMym7ZwsJI5DRyLd.8ndzgYXQbuza39t6GKRFP_pY9HC8kbt4Vq4Z9hOEdRZTTaioW6wWSZz2eTZagRIiJbqYwx3g0HZmE7yiFrxzO.COzlIK0YrhFC3IbbwB
-Received: from [62.47.142.68] by web27805.mail.ukl.yahoo.com via HTTP; Sat, 05 Sep 2009 16:40:57 GMT
-X-Mailer: YahooMailClassic/6.1.2 YahooMailWebService/0.7.338.2
-In-Reply-To: <200909051825.49619.robin.rosenberg.lists@dewire.com>
+	id S1752686AbZIERXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 13:23:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752575AbZIERXb
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 13:23:31 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:21359 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752576AbZIERXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 13:23:30 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id DCE8410011;
+	Sat,  5 Sep 2009 19:23:29 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 2979A3E65E;
+	Sat,  5 Sep 2009 19:23:29 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <4AA20CEC.8060408@chandlerfamily.org.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127821>
 
-Haven't counted it, but I will check it.
+On Samstag, 5. September 2009, Alan Chandler wrote:
+> The problem comes when I want to now merge back further work that I did
+> on the master branch (the 5-6 transition) to the fan club site
+>
+>
+>         2' - 2a - 3' - 4' ----------------- 6' SITE
+>        /         /    /                    /
+> 1 -  2  ------ 3  - 4  ------------6'''- 6a TEST
+>                       \            /
+>                         5  ------ 6  MASTER
+>                          \         \
+>                            5''- 5a- 6'' DEMO
+>
+>
+> What will happen is the changes made in 4->5 will get applied to the
+> (now) Test branch as part of the 6->6'' merge, and I will be left having
+> to add a new commit, 6a, to undo them all again.  Given this is likely
+> to be quite a substantial change I want to try and avoid it if possible.
+>
+> Is there any way I could use git to remember the 4->5 transition,
+> reverse it and apply it back to the Test branch before hand.
 
-Please note that for running the tests previously in 'exttest' you have to activate the tck profile:
+Basically, your mistake was to rename master to test and continue development 
+on the demo branch. So what you should do instead is this:
 
-$> mvn test -Ptck
+        2' - 2a - 3' - 4' ------ 6' SITE
+       /         /    /         /
+1 -  2  ------ 3  - 4  ------- 6  MASTER
+                      \         \
+                        5 - 5a - 6'' DEMO
 
-And yes, we currently only run *Test.java. Any other patterns/files to include?
+IOW, you keep developing on master, and merge that into the two deployment 
+branches.
 
-txs and LieGrue,
-strub
+In practice, it may be easier to develop commit 6 on DEMO (because you can 
+debug it more easily, or for similar reasons), but then you should rebase it 
+back to MASTER, reset DEMO back to 5a, and finally merge MASTER into DEMO.
 
---- On Sat, 9/5/09, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
-
-> From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-> Subject: Re: [JGIT] Request for help
-> To: "Mark Struberg" <struberg@yahoo.de>
-> Cc: "Douglas Campos" <douglas@theros.info>, "Jonas Fonseca" <jonas.fonseca@gmail.com>, git@vger.kernel.org, "Gabe McArthur" <gabriel.mcarthur@gmail.com>
-> Date: Saturday, September 5, 2009, 6:25 PM
-> fredag 04 september 2009 19:28:39
-> skrev Mark Struberg <struberg@yahoo.de>:
-> > Hi!
-> > 
-> > Work has been done at 
-> > 
-> > http://github.com/sonatype/JGit/tree/mavenize
-> > 
-> > Please feel free to pull/fork and share your changes!
-> I'd be happy to pull it in.
-> > 
-> 
-> Why does this new mvn test only execute 1024 tests here,
-> while the old maven setup
-> does 1108 ones? It seems the classes that don't match
-> *Test.java are omitted.
-> 
-> In both cases I invoke with "mvn clean test"
-> 
-> -- robin
-> 
-
-
-      
+-- Hannes
