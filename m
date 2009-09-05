@@ -1,66 +1,70 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Hosting Git repositories: how useful will git-gc be?
-Date: Sat, 5 Sep 2009 02:24:24 -0400
-Message-ID: <20090905062424.GC29863@coredump.intra.peff.net>
-References: <vpq1vmo9xai.fsf@bauges.imag.fr>
+Subject: Re: [PATCH v2] status: list unmerged files last
+Date: Sat, 5 Sep 2009 02:28:46 -0400
+Message-ID: <20090905062846.GD29863@coredump.intra.peff.net>
+References: <7vy6oy9z9r.fsf@alter.siamese.dyndns.org>
+ <200909012325.45739.j6t@kdbg.org>
+ <7vtyzmxkpr.fsf@alter.siamese.dyndns.org>
+ <20090902011513.GA3874@coredump.intra.peff.net>
+ <7vmy5egefh.fsf@alter.siamese.dyndns.org>
+ <20090902051248.GB12046@coredump.intra.peff.net>
+ <7vljkxdiil.fsf@alter.siamese.dyndns.org>
+ <20090902100730.GA18226@gmail.com>
+ <20090902175908.GA5998@coredump.intra.peff.net>
+ <20090903011234.GA7415@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Sep 05 08:26:54 2009
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 08:29:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjojd-0000ln-J3
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 08:26:54 +0200
+	id 1Mjoli-00016Y-HZ
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 08:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147AbZIEGY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 02:24:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751985AbZIEGY0
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 02:24:26 -0400
-Received: from peff.net ([208.65.91.99]:51132 "EHLO peff.net"
+	id S1751131AbZIEG2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 02:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbZIEG2r
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 02:28:47 -0400
+Received: from peff.net ([208.65.91.99]:40481 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750986AbZIEGY0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 02:24:26 -0400
-Received: (qmail 25237 invoked by uid 107); 5 Sep 2009 06:24:40 -0000
+	id S1750967AbZIEG2r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 02:28:47 -0400
+Received: (qmail 25263 invoked by uid 107); 5 Sep 2009 06:29:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 02:24:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 02:24:24 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 02:29:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 02:28:46 -0400
 Content-Disposition: inline
-In-Reply-To: <vpq1vmo9xai.fsf@bauges.imag.fr>
+In-Reply-To: <20090903011234.GA7415@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127782>
 
-On Thu, Sep 03, 2009 at 11:45:25AM +0200, Matthieu Moy wrote:
+On Wed, Sep 02, 2009 at 06:12:36PM -0700, David Aguilar wrote:
 
-> A question: is it necessary/recommanded/useless to set up a cron job
-> doing a "git gc" in each repository? My understanding is that a push
-> through ssh will do some packing, is it correct? Does receiving a pack
-> trigger a "git gc --auto"?
+> The only use case would be for --amend.
+> Which is why I asked about --porcelain; really what I want is
+> something like
+> 
+> 	git status --porcelain HEAD^
+> 
+> Rolling a patch to make --porcelain an alias for --short seems
+> like a good idea.  If we want to support HEAD^ and HEAD^ only
+> then perhaps an --amend flag is useful.
+> 
+> The real crux of my question was about being able to script
+> it, which is why commit --dry-run is not enough.
 
-The objects are transferred as a pack. If the number of objects is less
-than receive.unpackLimit (default 100), then they are unpacked to loose
-objects. If more, we keep the pack, after completing any missing deltas
-used by a thin pack.
-
-So if you tend to push frequently, you will end up with a lot of loose
-objects. Even if you have packs, they will be larger than necessary
-because you will be missing deltas between objects across packs. And of
-course you will eventually end up with a large number of packs, which is
-less efficient (each pack has an index, but I believe we search the
-indices linearly).
-
-Receiving a pack does not (AFAICT looking at the code) trigger a "gc
---auto".  Running it has other benefits, too, like pruning cruft and
-packing refs. So I think it is probably a good idea to run it
-periodically.
-
-Running it daily or weekly is probably reasonable. You could run it on
-every push using the post-update hook, but that may cause excessive I/O
-for very little benefit.
+I see. I still think you may want to improve "commit --dry-run" with a
+plumbing format, though, instead of "git status". Then it would
+automagically support "--amend", as well as other dry-run things (e.g.,
+"git commit --dry-run --porcelain --amend foo.c"). And not having looked
+at the code, I would guess it is a one-liner patch to switch the "output
+format" flag that commit passes to the wt-status.c code.
 
 -Peff
