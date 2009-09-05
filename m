@@ -1,125 +1,102 @@
-From: Alan Chandler <alan@chandlerfamily.org.uk>
-Subject: Use case I don't know how to address
-Date: Sat, 05 Sep 2009 08:02:04 +0100
-Message-ID: <4AA20CEC.8060408@chandlerfamily.org.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
+Date: Sat, 05 Sep 2009 00:02:35 -0700
+Message-ID: <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+References: <20090902080305.GA11549@neumann>
+ <20090902081917.GA5447@coredump.intra.peff.net>
+ <20090904070216.GA3996@darc.dnsalias.org>
+ <20090905061804.GB29863@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Sat Sep 05 09:03:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MjpJQ-0006ob-Ly
+	id 1MjpJR-0006ob-DB
 	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 09:03:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753999AbZIEHCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 03:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753239AbZIEHCF
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 03:02:05 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:51963 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753161AbZIEHCE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Sep 2009 03:02:04 -0400
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MjpHh-0004IW-L7
-	for git@vger.kernel.org; Sat, 05 Sep 2009 08:02:05 +0100
-Received: from [77.103.217.152] (helo=wol.chandlerfamily.org.uk)
-	by asmtp-out2.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MjpHh-0002yt-7I
-	for git@vger.kernel.org; Sat, 05 Sep 2009 08:02:05 +0100
-Received: from kanga.local ([192.168.0.30])
-	by wol.chandlerfamily.org.uk with esmtp (Exim 4.69)
-	(envelope-from <alan@chandlerfamily.org.uk>)
-	id 1MjpHg-0001o5-Tb
-	for git@vger.kernel.org; Sat, 05 Sep 2009 08:02:04 +0100
-User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090701)
-X-SA-Exim-Connect-IP: 192.168.0.30
-X-SA-Exim-Mail-From: alan@chandlerfamily.org.uk
-X-SA-Exim-Scanned: No (on wol.chandlerfamily.org.uk); SAEximRunCond expanded to false
+	id S1751259AbZIEHCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 03:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751089AbZIEHCq
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 03:02:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34910 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751018AbZIEHCp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 03:02:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B15C726881;
+	Sat,  5 Sep 2009 03:02:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+nxCgr1xY27gGu3TJYKWnbVAxlE=; b=a+kuJc
+	Rs5U4AitdTM8qW3cuZnWJXi1JXuXWZXSaumtmE9a2hgqEVQwjOZX0RLT8pSDxbV3
+	eJ3X6xCHUIhNK2TQuIroRVmmIKqx/9dqVGOfBeM8+PiZFzZ/1WCiqQXIlJd1NGRv
+	dkRYBpXbzyclp54abMXcDC/a1HCdMo8pYoDz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kNlEcTBrr+xXkoXJvG3egenhBpwex6KB
+	LS8YvNka6f8XU7vVVnIgVHM/CX3eOxTpJkPJlH9KULO7kWiAcKId9yY0ytHKMfOG
+	Br5iOy5Dz/gno1H7o7j/lsKUEuLRUnEu1ruBwWOQ6iNjmD4WQUfhkZ5K3pSiC4kf
+	Q84jvrGMKpU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7920E2687E;
+	Sat,  5 Sep 2009 03:02:42 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A07E22687D; Sat,  5 Sep
+ 2009 03:02:37 -0400 (EDT)
+In-Reply-To: <20090905061804.GB29863@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 5 Sep 2009 02\:18\:04 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1B28198A-99EA-11DE-9F34-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127786>
 
-I have a use case that I don't know how to address.  I have a feeling 
-that the way I propose is not using git to its best advantage, and am 
-therefore asking for advice.
+Jeff King <peff@peff.net> writes:
 
-As an intermittent software developer I have been using git for a long 
-time to track software (GPL licenced) I have developed for a web site 
-that I operate supporting a fan club. [Ajax based Chat, a real time Air 
-Hockey Game with associated club Ladder, and an American Football 
-Results Picking Competition]
+> I suspect it is too late to change it due to compatibility issues. OTOH,
+> I think the intent of v1.7.0 is to allow a few small breakages like
+> these. You could always write an RFC patch and generate some discussion;
+> I'm not 100% sure that there are enough people that agree with us to
+> change the default.
 
-Each application uses a pattern like that shown below
+The intent of 1.7.0 is to fix usability glitches and warts that everybody
+has long agreed are problematic.  People have *just started* discussing
+about this---it is not remotely close to "everybody has long agreed are
+problematic" criteria.  It is too late for 1.7.0.
 
-Basically I have two branches that interact as follows
+I agree that there are parts of git that is very whole tree oriented, and
+the later "usability" part that are cwd centric.  "add -u" and "grep" are
+examples of the latter.
 
-        2' - 2a - 3' - 4'  SITE
-       /         /    /
-1 -  2  ------ 3  - 4  MASTER
+I personally find "add -u" that defaults to the current directory more
+natural than always going to the root; same preference for "grep".
+Besides, "add -u subdir" must add subdir relative to the cwd, without
+going to the root.  Why should "add -u" sans argument behave drastically
+differently?
 
-I develop and test Locally on the master branch, in the commit 2a I 
-update settings (such as database password etc that I need for the 
-site), and then progressively merge commits made on master when I am 
-happy that they work in the test environment.  A git hook rsyncs the 
-site branch to site on each merge or commit on that branch.
+Speaking of cwd-ness, I sometimes find ls-tree irritating, but I think
+this is in "if we had known better we would have designed it differently,
+but because we didn't, because many scripts already depend on the current
+behaviour, and because we have an --full-name escape hatch, we are not
+likely to change it, ever" category.
 
-The master branch is also pushed to my public git repository (which is 
-why passwords are changed on the site branch.  The change made back in 
-2a is "remembered" by git, so provided I don't go editing the password 
-on the master branch things work fine.
+If "git add -u ../.." (I mean "the grand parent directory", not "an
+unnamed subdirectory") did not work, it would be unexcusable and we would
+want to devise an migration path, but otherwise I do not think it is such
+a big deal.  I would say the commands that are used to incrementally build
+towards the next commit should be friendly to the practice of limiting the
+scope of the work by chdir, i.e. they should be cwd centric.  On the other
+hand, the commands that are used to review the next commit as a whole,
+e.g. diff and patch, should be whole-tree oriented.
 
-My applications tend to be "skinned" (if that is the right word for the 
-html page that forms the backdrop for them) with the fan club web site 
-look and feel.  However, I am now trying to make a demo site on my home 
-server for these applications, and as such I would like to remove the 
-fan club skinning and add my own look and feel.  In fact there are other 
-changes necessary, because many of the applications use the associated 
-fan club membership information of the user to display - so generically, 
-I need to make quite a lot of modifications to make it all work and 
-would end up with 4 branches as shown, with the difference in commits 
-between 4 and 5 as that major work to update the application.
-
-
-        2' - 2a - 3' - 4'  SITE
-       /         /    /
-1 -  2  ------ 3  - 4  TEST
-                      \
-                        5  ------ 6  MASTER
-                         \         \
-                           5' - 5a- 6' DEMO
-
-
-As you can see, in the process I have renamed Master to Test - the 
-transition to 5a adds passwords to access the database on my demo site.
-
-The problem comes when I want to now merge back further work that I did 
-on the master branch (the 5-6 transition) to the fan club site
-
-
-        2' - 2a - 3' - 4' ----------------- 6' SITE
-       /         /    /                    /
-1 -  2  ------ 3  - 4  ------------6'''- 6a TEST
-                      \            /
-                        5  ------ 6  MASTER
-                         \         \
-                           5''- 5a- 6'' DEMO
-
-
-What will happen is the changes made in 4->5 will get applied to the 
-(now) Test branch as part of the 6->6'' merge, and I will be left having 
-to add a new commit, 6a, to undo them all again.  Given this is likely 
-to be quite a substantial change I want to try and avoid it if possible.
-
-Is there any way I could use git to remember the 4->5 transition, 
-reverse it and apply it back to the Test branch before hand.
-
-
--- 
-Alan Chandler
-http://www.chandlerfamily.org.uk
+Oh, "git grep -e foo ../..", however, does not seem to work.  That might be
+something people may want to tackle.
