@@ -1,114 +1,84 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: [PATCH 0/9] War on blank-at-eof
-Date: Sat, 5 Sep 2009 16:28:22 -0500 (CDT)
-Message-ID: <alpine.WNT.2.00.0909051534380.7040@GWNotebook>
-References: <1252061718-11579-1-git-send-email-gitster@pobox.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: 'add -u' without path is relative to cwd
+Date: Sat, 05 Sep 2009 14:46:16 -0700
+Message-ID: <7vk50dysif.fsf_-_@alter.siamese.dyndns.org>
+References: <20090902080305.GA11549@neumann>
+ <20090902081917.GA5447@coredump.intra.peff.net>
+ <20090904070216.GA3996@darc.dnsalias.org>
+ <20090905061804.GB29863@coredump.intra.peff.net>
+ <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+ <20090905084641.GA24865@darc.dnsalias.org>
+ <7veiql1etz.fsf@alter.siamese.dyndns.org> <20090905184508.GA20124@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 05 23:42:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Sep 05 23:46:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mk327-00008v-A9
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 23:42:55 +0200
+	id 1Mk35i-0000zh-ML
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 23:46:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305AbZIEVmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 17:42:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752636AbZIEVmo
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 17:42:44 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:36457 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889AbZIEVmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 17:42:44 -0400
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1Mk31w-000113-21; Sat, 05 Sep 2009 16:42:44 -0500
-X-X-Sender: almostautomated@GWPortableVCS
-In-Reply-To: <1252061718-11579-1-git-send-email-gitster@pobox.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753426AbZIEVqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 17:46:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753280AbZIEVq3
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 17:46:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57495 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751889AbZIEVq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 17:46:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7389227EA8;
+	Sat,  5 Sep 2009 17:46:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6CTA53LdlssBNTWc/9OrzYPCzGY=; b=jcF4Lo
+	uvdBj50Oj7/uDu8hNYgJCJPL2eH4YCOxWrFrc1AC6VSLRscTAJVRzO/NSqdLmc5b
+	45HOGMeONJgJ+QfqCXoFl1SjBUrxMU/8JH8sbk296735vuNdKv1zEbNWyKFeuT8x
+	d9PWB15XuIL8rXbm2J/qLnHc7QcByxlifX+zQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bJx6Owth0plzY9cfS4nKOZEqRKXhOgLx
+	sTc12dBL9fn3jF1Ew+2HYkkSjW7wc2kzzUoVNhFLj6tMF5lHxudQOx7WDF8b9HGZ
+	JOkEcVv/Szi3WKtInZcHxn6x3rUzXacPCM/1Dbzkso2YCvEbSgUS/2ouDWbIXVSI
+	/z2K4G1O7ZY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B06427EA7;
+	Sat,  5 Sep 2009 17:46:26 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8093B27EA6; Sat,  5 Sep
+ 2009 17:46:20 -0400 (EDT)
+In-Reply-To: <20090905184508.GA20124@localhost> (Clemens Buchacher's message
+ of "Sat\, 5 Sep 2009 20\:45\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8FC5A8D6-9A65-11DE-A189-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127828>
 
-On Fri, 4 Sep 2009, Junio C Hamano wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> Patch 5 corrects the definition of blank-at-eof.  If a patch adds an
-> non-empty line that consists solely of whitespaces at the end of file, we
-> should diagnose and strip it just line a new empty line.  After all, both
-> are blank lines.
->
+> I can only guess that you mean the "sane way for script writers to defeat
+> the configuration without much pain" part. But I'm not sure how that's a
+> problem. If you want the script to continue to work as before you either
+> configure "workdir scope", or you add a '.' to the affected commands.
 
-Thank you. Thank you, thank you. Thank you!  And did I mention thank you?
+One who writes the script and lends it to you may be using different
+`scope` from what the recipient uses, so that is not an escape hatch at
+all.
 
-Tested this out after cherry-picking:
-3b5ef0e xutils: Fix xdl_recmatch() on incomplete lines
-78ed710 xutils: Fix hashing an incomplete line with whitespaces at the end
+One crudest form of workaround may be for your code to notice an
+environment variable to override that `scope` configuration setting, so
+that you can advise the script writers to set it in their script.  But
+that is so ugly I'd rather not go there if we do not absolutely have to.
 
-It worked as nicely!  I'm throwing away the --allow-whitelines-at-eof 
-patch! :D  Converting a _real_ dirty whitespace branch into an 'almost' 
-whitespace policy compliant branch with validation of the diffs was 
-able to be done like so:
-	git diff -b DIRTY CLEAN
-	git diff DIRTY^ CLEAN > diff1
-	git diff CLEAN^ DIRTY > diff2
-	git diff -b diff1 diff2
-
-I mention 'almost' above because unfortunately this type of conversion 
-leaves extra line-spaces at the end of some files that you might not want 
-to have in a whitespace policy.
-
-While thinking about what appeared in:
-
-http://article.gmane.org/gmane.comp.version-control.git/124138
-Junio C Hamano <gitster <at> pobox.com> writes:
->Bruno Haible <bruno <at> clisp.org> writes:
->> In some GNU projects, there are file types for which trailing spaces in a line
->> ...
->> Currently the user has to turn off the 'trailing-space' whitespace attribute
->> in order for 'git diff --check' to not complain about such files. This has
->> the drawback that trailing spaces are not detected.
-	
->Very good problem description.  Thanks.
-
-I thought it might be interesting to throw this out there...  What do you 
-think of an additional attribute value like
-	core.whitespace blank-at-eof-min-<some 0 to N #>
-	core.whitespace blank-at-eof-max-<some 0 to N #>
-that could be read in when core.whitespace blank-at-eof is set.
-
-If neither are present then use current. (No new eof blanks).
-If min but not max is set then allow new blanks and ensure at least min.
-If max but not min is set then only allow max blanks at eof.
-If both then treat it as a boundary.
-
-This could ensure a whitespace policy without the repository maintainer 
-having to correct this type of minutia and without having to nit-pick 
-contributors into submission.
-
-Then perhaps diff could also recognize an in range blank-at-eof so a diff 
-using one of the ignore whitespace options would ignore eof whitelines 
-that are in range?
-
-
-> The series applies to v1.6.0.6-87-g82d97da; merging the result to 'master'
-> needs some conflict resolution.
->
-
-
--- 
-Thell
+That is why in general we should be very careful and avoid any magic that
+makes the same command behave completely differently depending on how a
+repository is configured.
