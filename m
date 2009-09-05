@@ -1,89 +1,139 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: how to skip branches on git svn clone/fetch when there are
- errors
-Date: Sat, 05 Sep 2009 10:55:04 +0200
-Message-ID: <1252140904.8992.6.camel@localhost>
-References: <9accb4400908310126v15b08c7fr425c9daff26012f3@mail.gmail.com>
-	 <20090905061657.GC22272@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH/RFC 5/6] status: add --porcelain output format
+Date: Sat, 5 Sep 2009 04:55:37 -0400
+Message-ID: <20090905085537.GE13157@coredump.intra.peff.net>
+References: <20090905084809.GA13073@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Sep 05 10:55:20 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 05 10:55:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mjr3F-0002h4-RP
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 10:55:18 +0200
+	id 1Mjr3k-0002ou-Ke
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Sep 2009 10:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757243AbZIEIzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Sep 2009 04:55:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757217AbZIEIzI
-	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 04:55:08 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:32313 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756674AbZIEIzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Sep 2009 04:55:06 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so1268308fge.1
-        for <git@vger.kernel.org>; Sat, 05 Sep 2009 01:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=KaxD//ArLJj2J0Lbbi6hbMRo+Z7SgUCIU0LJh2vph0g=;
-        b=wW9Jc1MdhJQbYZuY8kPkUea1+U6JesUy3XLodwxZ2RDLmOCDAr/CVs15JJesqwFYzn
-         JLX27j4ry6RzsW0mFIYYwJI9F/7OJTWNAd3xxCk3CdFSkxTDv53dUOjdVLz/XNfmZTPb
-         vGCnhNWNHSSnp6tjNAVydY1kiOizjxPETX0yQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Ncuw9bYexfZmi1IeSQJN7CatZ/24K8GVGwOwWWsra0/KRfhSos/v67MtMlz52J2Xr1
-         QUevlThuVmaXWddh99z6+404VUvMnzKzMayPmAWoIrCuiHBFUhBdwSUwEIQpDzQzruHu
-         maszHkIc28DNWj8CMlo8BrFHqZ60+bu9ytBTk=
-Received: by 10.86.187.27 with SMTP id k27mr5884458fgf.11.1252140907491;
-        Sat, 05 Sep 2009 01:55:07 -0700 (PDT)
-Received: from ?192.168.1.2? (host98-2-dynamic.52-82-r.retail.telecomitalia.it [82.52.2.98])
-        by mx.google.com with ESMTPS id 3sm3567464fge.7.2009.09.05.01.55.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Sep 2009 01:55:06 -0700 (PDT)
-In-Reply-To: <20090905061657.GC22272@dcvr.yhbt.net>
-X-Mailer: Evolution 2.24.5 
+	id S1757261AbZIEIzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Sep 2009 04:55:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757249AbZIEIzj
+	(ORCPT <rfc822;git-outgoing>); Sat, 5 Sep 2009 04:55:39 -0400
+Received: from peff.net ([208.65.91.99]:51614 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757217AbZIEIzi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Sep 2009 04:55:38 -0400
+Received: (qmail 26146 invoked by uid 107); 5 Sep 2009 08:55:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 05 Sep 2009 04:55:54 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 05 Sep 2009 04:55:37 -0400
+Content-Disposition: inline
+In-Reply-To: <20090905084809.GA13073@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127804>
 
-Il giorno ven, 04/09/2009 alle 23.16 -0700, Eric Wong ha scritto:
-> It's unfortunate, but there's not yet an exclude/ignore directive
-> when globbing.  You'll have to change your $GIT_CONFIG to only
-> have a list of branches you want, something like this:
-> 
-> [svn-remote "svn"]
-> 	url = svn://svn.mydomain.com
-> 	fetch = path/to/repo/HEAD/root:refs/remotes/svn/trunk
-> 
-> 	; have one "fetch" line for every branch except the one you want
-> 	fetch = path/to/repo/BRANCHES/a/root:refs/remotes/svn/a
-> 	fetch = path/to/repo/BRANCHES/b/root:refs/remotes/svn/b
-> 	fetch = path/to/repo/BRANCHES/c/root:refs/remotes/svn/c
-> 
-> 	; you can do the same for tags if you have the same problem
-> 	tags = path/to/repo/TAGS/*/root:refs/remotes/svn/tags/*
-> 
-> But you shouldn't have to worry about having "fetch" entries for
-> stale/old branches/tags you've already imported.
+The "short" format was added to "git status" recently to
+provide a less verbose way of looking at the same
+information. This has two practical uses:
 
-I see...
-That means that then I'll have to manually add new created branches,
-right?
+  1. Users who want a more dense display of the information.
 
-well... I tried to avoid this kind of configuration for weeks :) but
-that's probably my best way with that repo....
+  2. Scripts which want to parse the information and need a
+     stable, easy-to-parse interface.
 
-thank you,
-Daniele
+For now, the "--short" format covers both of those uses.
+However, as time goes on, users of (1) may want additional
+format tweaks, or for "git status" to change its behavior
+based on configuration variables. Those wishes will be at
+odds with (2), which wants to stability for scripts.
+
+This patch introduces a separate --porcelain option early to
+avoid problems later on.  Right now the --short and
+--porcelain outputs are identical. However, as time goes on,
+we will have the freedom to customize --short for human
+consumption while keeping --porcelain stable.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+No tests. Does this really need them? At this point, it would be pure
+duplication of the --short tests; I am inclined to leave such tests
+until later when there is actually a difference between the two formats
+(and then we will know _what_ to test).
+
+ Documentation/git-status.txt |    9 +++++++--
+ builtin-commit.c             |    9 ++++++++-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index fd71a7a..58d35fb 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -27,6 +27,11 @@ OPTIONS
+ --short::
+ 	Give the output in the short-format.
+ 
++--porcelain::
++	Give the output in a stable, easy-to-parse format for scripts.
++	Currently this is identical to --short output, but is guaranteed
++	not to change in the future, making it safe for scripts.
++
+ -u[<mode>]::
+ --untracked-files[=<mode>]::
+ 	Show untracked files (Default: 'all').
+@@ -45,8 +50,8 @@ used to change the default for when the option is not
+ specified.
+ 
+ -z::
+-	Terminate entries with NUL, instead of LF.  This implies `-s`
+-	(short status) output format.
++	Terminate entries with NUL, instead of LF.  This implies
++	the `--porcelain` output format if no other format is given.
+ 
+ 
+ OUTPUT
+diff --git a/builtin-commit.c b/builtin-commit.c
+index aa4a358..ffdee31 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -995,12 +995,16 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	static enum {
+ 		STATUS_FORMAT_LONG,
+ 		STATUS_FORMAT_SHORT,
++		STATUS_FORMAT_PORCELAIN,
+ 	} status_format = STATUS_FORMAT_LONG;
+ 	unsigned char sha1[20];
+ 	static struct option builtin_status_options[] = {
+ 		OPT__VERBOSE(&verbose),
+ 		OPT_SET_INT('s', "short", &status_format,
+ 			    "show status concisely", STATUS_FORMAT_SHORT),
++		OPT_SET_INT(0, "porcelain", &status_format,
++			    "show porcelain output format",
++			    STATUS_FORMAT_PORCELAIN),
+ 		OPT_BOOLEAN('z', "null", &null_termination,
+ 			    "terminate entries with NUL"),
+ 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg,
+@@ -1011,7 +1015,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	if (null_termination && status_format == STATUS_FORMAT_LONG)
+-		status_format = STATUS_FORMAT_SHORT;
++		status_format = STATUS_FORMAT_PORCELAIN;
+ 
+ 	wt_status_prepare(&s);
+ 	git_config(git_status_config, &s);
+@@ -1032,6 +1036,9 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	case STATUS_FORMAT_SHORT:
+ 		short_print(&s, null_termination);
+ 		break;
++	case STATUS_FORMAT_PORCELAIN:
++		short_print(&s, null_termination);
++		break;
+ 	case STATUS_FORMAT_LONG:
+ 		s.verbose = verbose;
+ 		if (s.relative_paths)
+-- 
+1.6.4.2.418.g1a1d3.dirty
