@@ -1,284 +1,187 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH v7 5/6] fast-import: add option command
-Date: Sun,  6 Sep 2009 16:35:47 +0200
-Message-ID: <1252247748-14507-6-git-send-email-srabbelier@gmail.com>
+Subject: [PATCH v7 6/6] fast-import: test the new option command
+Date: Sun,  6 Sep 2009 16:35:48 +0200
+Message-ID: <1252247748-14507-7-git-send-email-srabbelier@gmail.com>
 References: <1252247748-14507-1-git-send-email-srabbelier@gmail.com>
  <1252247748-14507-2-git-send-email-srabbelier@gmail.com>
  <1252247748-14507-3-git-send-email-srabbelier@gmail.com>
  <1252247748-14507-4-git-send-email-srabbelier@gmail.com>
  <1252247748-14507-5-git-send-email-srabbelier@gmail.com>
+ <1252247748-14507-6-git-send-email-srabbelier@gmail.com>
 Cc: Sverre Rabbelier <srabbelier@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Git List <git@vger.kernel.org>,
 	Ian Clatworthy <ian.cla
-X-From: git-owner@vger.kernel.org Sun Sep 06 16:36:43 2009
+X-From: git-owner@vger.kernel.org Sun Sep 06 16:36:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkIrD-00078l-3P
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 16:36:43 +0200
+	id 1MkIrD-00078l-S1
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 16:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757987AbZIFOgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1757985AbZIFOgZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 6 Sep 2009 10:36:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757981AbZIFOgV
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 10:36:21 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:36677 "EHLO
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757975AbZIFOgY
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 10:36:24 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:55913 "EHLO
 	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693AbZIFOgS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2009 10:36:18 -0400
-Received: by mail-ew0-f206.google.com with SMTP id 2so1511768ewy.17
-        for <git@vger.kernel.org>; Sun, 06 Sep 2009 07:36:20 -0700 (PDT)
+	with ESMTP id S1757979AbZIFOgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Sep 2009 10:36:19 -0400
+Received: by mail-ew0-f206.google.com with SMTP id 2so1511761ewy.17
+        for <git@vger.kernel.org>; Sun, 06 Sep 2009 07:36:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=Qyeg/425+nHxCSAz5fNp5LGgZ0kzExkS1kO8mrwqREs=;
-        b=mpCpSuY20ogOoooRJeEnrX41AKum9f/GUtnrCrbzESi6JLQIbSM5iDXxU2OODtrlEO
-         /IuleGILrr0I5w1oRFez5j+8QqC2wIVNyOsJDWH/ET9vBUjqgnsG1nIS6fJIDn0Az+1h
-         1xFSsFBf0QoJNNwU2i2DcS4h8hAhDIEPPQ/qo=
+        bh=XMrc7Fgkjuzbi3F1M4GYxLg53Nl42XdBzTBMw6YQvyQ=;
+        b=yFLJON551WvNjFi34VMIZ++JruVdf9nW3L67bNz72vO+9kxDW5JTpzSqGGsSTiKM7M
+         rQzgEZl/tAcH+CHhxUJX5DMFyixZ/dA0awEueYu4W9BjbNQJTAz8FPR4fVzAw6l+J5jb
+         gHcU+3aG9/ajoKuq/YExpfbHVGxQUlAqhpTnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NiYeHQ2Ah8nMQdUM8xda7Gjm7KP0TsK6r1qqGiAoYIKH2H8LbfkEKZZcFsL3rSpjJu
-         0LSm8gpGWcw+lkmpqBbh5zDq/hpKlJdRCBFLqi0THi3V32hn4pBfBp3f10ecQ+RHfrSZ
-         wpzyShyh6VnLoa9Ls+ZH37GeVlgg5a25sztKQ=
-Received: by 10.216.90.129 with SMTP id e1mr1299324wef.98.1252247780294;
-        Sun, 06 Sep 2009 07:36:20 -0700 (PDT)
+        b=P6vFGKaCQ60mvm0E47ayfQhGtH53ea0u+mddZmmHiWS1doBO7Bc5gYfTFHSDx4AA6t
+         KnGJ3SltiXui/vZZ3L4kT0AMGVdZmqh9RFe4IMyIaGfQuf5tFDUenRoXNvF8JaRR/FZt
+         Ltv5VWKI35OnETRqVwYeJ1Ea2GgwKTZeV9+Wo=
+Received: by 10.216.3.196 with SMTP id 46mr2748379weh.205.1252247781824;
+        Sun, 06 Sep 2009 07:36:21 -0700 (PDT)
 Received: from localhost.localdomain (ip138-114-211-87.adsl2.static.versatel.nl [87.211.114.138])
-        by mx.google.com with ESMTPS id q9sm8759493gve.6.2009.09.06.07.36.17
+        by mx.google.com with ESMTPS id q9sm8759493gve.6.2009.09.06.07.36.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Sep 2009 07:36:19 -0700 (PDT)
+        Sun, 06 Sep 2009 07:36:21 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.16.g72c66.dirty
-In-Reply-To: <1252247748-14507-5-git-send-email-srabbelier@gmail.com>
+In-Reply-To: <1252247748-14507-6-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127861>
 
-This allows the frontend to specify any of the supported options as
-long as no non-option command has been given. This way the
-user does not have to include any frontend-specific options, but
-instead she can rely on the frontend to tell fast-import what it
-needs.
+Test three options (quiet and import/export-marks) and verify that the
+commandline options override these.
 
-Also factor out parsing of argv and have it execute when we reach the
-first non-option command, or after all commands have been read and
-no non-option command has been encountered.
+Also make sure that a option command without a preceeding feature
+git-options command is rejected and that non-git options are ignored.
 
-Non-git options and unrecognised git options are ignored, although
-unrecognised options on the commandline still result in an error.
+Lastly, make sure that git options that we do not recognise are
+ignored as well, but that they are rejected when parsed on the
+commandline.
 
 Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
 
-  Fixed a few style errors pointed out by Junio and ignore
-  unrecognised git options.
+  Updated tests for the new behavior.
 
- Documentation/git-fast-import.txt |   24 +++++++++++
- fast-import.c                     |   81 ++++++++++++++++++++++++++++++------
- 2 files changed, 91 insertions(+), 14 deletions(-)
+ t/t9300-fast-import.sh |   89 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 88 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 1e293f2..f1c94b4 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -307,6 +307,11 @@ and control the current import process.  More detailed discussion
- 	Require that fast-import supports the specified feature, or
- 	abort if it does not.
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 564ed6b..d33fc55 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1089,7 +1089,7 @@ test_expect_success 'P: fail on blob mark in gitlink' '
+     test_must_fail git fast-import <input'
  
-+`option`::
-+    Specify any of the options listed under OPTIONS to change
-+    fast-import's behavior to suit the frontend's needs. This command
-+    is optional and is not needed to perform an import.
-+
- `commit`
- ~~~~~~~~
- Create or update a branch with a new commit, recording one logical
-@@ -829,6 +834,25 @@ it does not.
- The <feature> part of the command may be any string matching
- [a-zA-Z-] and should be understood by a version of fast-import.
+ ###
+-### series R (feature)
++### series R (feature and option)
+ ###
  
-+`option`
-+~~~~~~~~
-+Processes the specified option so that git fast-import behaves in a
-+way that suits the frontend's needs.
-+Note that options specified by the frontend are overridden by any
-+options the user may specify to git fast-import itself.
-+
-+....
-+    'option' SP <option> LF
-+....
-+
-+The `<option>` part of the command may contain any of the options
-+listed in the OPTIONS section, without the leading '--' and is
-+treated in the same way.
-+
-+Option commands must be the first commands on the input (not counting
-+feature commands), to give an option command after any non-option
-+command is an error.
-+
- Crash Reports
- -------------
- If fast-import is supplied invalid input it will terminate with a
-diff --git a/fast-import.c b/fast-import.c
-index 9bf06a4..dcfb8fa 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -292,6 +292,8 @@ static unsigned long branch_load_count;
- static int failure;
- static FILE *pack_edges;
- static unsigned int show_stats = 1;
-+static int global_argc;
-+static const char **global_argv;
+ cat >input <<EOF
+@@ -1108,4 +1108,91 @@ test_expect_success 'R: supported feature is accepted' '
+ 	git fast-import <input
+ '
  
- /* Memory pools */
- static size_t mem_pool_alloc = 2*1024*1024 - sizeof(struct mem_pool);
-@@ -349,6 +351,10 @@ static struct recent_command *rc_free;
- static unsigned int cmd_save = 100;
- static uintmax_t next_mark;
- static struct strbuf new_data = STRBUF_INIT;
-+static int options_enabled;
-+static int seen_non_option_command;
++cat >input << EOF
++feature git-options
++option git quiet
++blob
++data 3
++hi
 +
-+static void parse_argv(void);
- 
- static void write_branch_report(FILE *rpt, struct branch *b)
- {
-@@ -1700,6 +1706,12 @@ static int read_next_command(void)
- 			if (stdin_eof)
- 				return EOF;
- 
-+			if (!seen_non_option_command
-+				&& prefixcmp(command_buf.buf, "feature ")
-+				&& prefixcmp(command_buf.buf, "option ")) {
-+				parse_argv();
-+			}
++EOF
 +
- 			rc = rc_free;
- 			if (rc)
- 				rc_free = rc->next;
-@@ -2423,7 +2435,7 @@ static void option_export_pack_edges(const char *edges)
- 		die_errno("Cannot open '%s'", edges);
- }
- 
--static void parse_one_option(const char *option)
-+static void parse_one_option(const char *option, int optional)
- {
- 	if (!prefixcmp(option, "date-format=")) {
- 		option_date_format(option + 12);
-@@ -2445,7 +2457,7 @@ static void parse_one_option(const char *option)
- 		show_stats = 0;
- 	} else if (!prefixcmp(option, "stats")) {
- 		show_stats = 1;
--	} else {
-+	} else if (!optional) {
- 		die("Unsupported option: %s", option);
- 	}
- }
-@@ -2456,11 +2468,32 @@ static void parse_feature(void)
- 
- 	if (!prefixcmp(feature, "date-format=")) {
- 		option_date_format(feature + 12);
-+	} else if (!strcmp("git-options", feature)) {
-+		options_enabled = 1;
- 	} else {
- 		die("This version of fast-import does not support feature %s.", feature);
- 	}
- }
- 
-+static void parse_option(void)
-+{
-+	char *option = command_buf.buf + 11;
++touch empty
 +
-+	if (!options_enabled)
-+		die("Got option command '%s' before options feature'", option);
++test_expect_success 'R: quiet option results in no stats being output' '
++    cat input | git fast-import 2> output &&
++    test_cmp empty output
++'
 +
-+	if (seen_non_option_command)
-+		die("Got option command '%s' after non-option command", option);
++cat >input << EOF
++feature git-options
++option git export-marks=git.marks
++blob
++mark :1
++data 3
++hi
 +
-+	/* ignore unknown options, instead of erroring */
-+	parse_one_option(option, 1);
-+}
++EOF
 +
-+static void parse_nongit_option(void)
-+{
-+	/* do nothing */
-+}
++test_expect_success \
++    'R: export-marks option results in a marks file being created' \
++    'cat input | git fast-import &&
++    grep :1 git.marks'
 +
- static int git_pack_config(const char *k, const char *v, void *cb)
- {
- 	if (!strcmp(k, "pack.depth")) {
-@@ -2485,6 +2518,27 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- static const char fast_import_usage[] =
- "git fast-import [--date-format=f] [--max-pack-size=n] [--depth=n] [--active-branches=n] [--export-marks=marks.file]";
- 
-+static void parse_argv(void)
-+{
-+	unsigned int i;
++test_expect_success \
++    'R: export-marks options can be overriden by commandline options' \
++    'cat input | git fast-import --export-marks=other.marks &&
++    grep :1 other.marks'
 +
-+	for (i = 1; i < global_argc; i++) {
-+		const char *a = global_argv[i];
++cat >input << EOF
++feature git-options
++option git import-marks=marks.out
++option git export-marks=marks.new
++EOF
 +
-+		if (*a != '-' || !strcmp(a, "--"))
-+			break;
++test_expect_success \
++    'R: import to output marks works without any content' \
++    'cat input | git fast-import &&
++    test_cmp marks.out marks.new'
 +
-+		/* error on unknown options */
-+		parse_one_option(a + 2, 0);
-+	}
-+	if (i != global_argc)
-+		usage(fast_import_usage);
++cat >input <<EOF
++feature git-options
++option git import-marks=nonexistant.marks
++option git export-marks=marks.new
++EOF
 +
-+	seen_non_option_command = 1;
-+	if (input_file)
-+		read_marks();
-+}
++test_expect_success \
++    'R: import marks prefers commandline marks file over the stream' \
++    'cat input | git fast-import --import-marks=marks.out &&
++    test_cmp marks.out marks.new'
 +
- int main(int argc, const char **argv)
- {
- 	unsigned int i;
-@@ -2503,18 +2557,8 @@ int main(int argc, const char **argv)
- 	avail_tree_table = xcalloc(avail_tree_table_sz, sizeof(struct avail_tree_content*));
- 	marks = pool_calloc(1, sizeof(struct mark_set));
- 
--	for (i = 1; i < argc; i++) {
--		const char *a = argv[i];
--
--		if (*a != '-' || !strcmp(a, "--"))
--			break;
--
--		parse_one_option(a + 2);
--	}
--	if (i != argc)
--		usage(fast_import_usage);
--	if (input_file)
--		read_marks();
-+	global_argc = argc;
-+	global_argv = argv;
- 
- 	rc_free = pool_alloc(cmd_save * sizeof(*rc_free));
- 	for (i = 0; i < (cmd_save - 1); i++)
-@@ -2539,9 +2583,18 @@ int main(int argc, const char **argv)
- 			parse_progress();
- 		else if (!prefixcmp(command_buf.buf, "feature "))
- 			parse_feature();
-+		else if (!prefixcmp(command_buf.buf, "option git "))
-+			parse_option();
-+		else if (!prefixcmp(command_buf.buf, "option "))
-+			parse_nongit_option();
- 		else
- 			die("Unsupported command: %s", command_buf.buf);
- 	}
++cat >input <<EOF
++feature git-options
++option git non-existing-option
++EOF
 +
-+	/* argv hasn't been parsed yet, do so */
-+	if (!seen_non_option_command)
-+		parse_argv();
++test_expect_success \
++    'R: feature option is accepted and ignores unknown options' \
++    'git fast-import <input'
 +
- 	end_packfile();
- 
- 	dump_branches();
++cat >input <<EOF
++option git quiet
++EOF
++
++test_expect_success 'R: unknown commandline options are rejected' '\
++    test_must_fail git fast-import --non-existing-option < /dev/null
++'
++
++test_expect_success \
++    'R: option without preceeding feature command is rejected' \
++    'test_must_fail git fast-import <input'
++
++cat >input <<EOF
++option non-existing-vcs non-existing-option
++EOF
++
++test_expect_success 'R: ignore non-git options' '
++    git fast-import <input
++'
++
+ test_done
 -- 
 1.6.4.16.g72c66.dirty
