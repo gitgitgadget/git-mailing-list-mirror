@@ -1,99 +1,107 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Sun, 06 Sep 2009 14:32:44 +0200
-Message-ID: <vpqfxb0s177.fsf@bauges.imag.fr>
-References: <20090902080305.GA11549@neumann>
-	<20090902081917.GA5447@coredump.intra.peff.net>
-	<20090904070216.GA3996@darc.dnsalias.org>
-	<20090905061804.GB29863@coredump.intra.peff.net>
-	<7v8wgt98ms.fsf@alter.siamese.dyndns.org>
-	<20090905084641.GA24865@darc.dnsalias.org>
+From: Alan Chandler <alan@chandlerfamily.org.uk>
+Subject: Re: Use case I don't know how to address
+Date: Sun, 06 Sep 2009 13:50:34 +0100
+Message-ID: <4AA3B01A.7060005@chandlerfamily.org.uk>
+References: <4AA20CEC.8060408@chandlerfamily.org.uk> <200909051923.28831.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Sep 06 14:34:24 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun Sep 06 14:50:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkGwp-00009B-3L
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 14:34:23 +0200
+	id 1MkHCe-0003YR-48
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 14:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754126AbZIFMeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2009 08:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754069AbZIFMeJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 08:34:09 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54573 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754060AbZIFMeI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2009 08:34:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n86CT5ZE009121
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 Sep 2009 14:29:05 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MkGvE-0004N6-9y; Sun, 06 Sep 2009 14:32:44 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MkGvE-00008o-8b; Sun, 06 Sep 2009 14:32:44 +0200
-In-Reply-To: <20090905084641.GA24865@darc.dnsalias.org> (Clemens Buchacher's message of "Sat\, 5 Sep 2009 10\:46\:41 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 06 Sep 2009 14:29:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n86CT5ZE009121
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252844947.37755@7F5w9enqMS5BAa04TJscDA
+	id S1756116AbZIFMue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2009 08:50:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756109AbZIFMue
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 08:50:34 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:58985 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756103AbZIFMud (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Sep 2009 08:50:33 -0400
+X-Greylist: delayed 371 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Sep 2009 08:50:33 EDT
+Received: from [172.23.170.138] (helo=anti-virus01-09)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1MkHCV-0005ky-N6
+	for git@vger.kernel.org; Sun, 06 Sep 2009 13:50:35 +0100
+Received: from [77.103.217.152] (helo=wol.chandlerfamily.org.uk)
+	by asmtp-out4.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1MkHCV-0005tG-6F
+	for git@vger.kernel.org; Sun, 06 Sep 2009 13:50:35 +0100
+Received: from kanga.local ([192.168.0.30])
+	by wol.chandlerfamily.org.uk with esmtp (Exim 4.69)
+	(envelope-from <alan@chandlerfamily.org.uk>)
+	id 1MkHCV-0006Vb-0I
+	for git@vger.kernel.org; Sun, 06 Sep 2009 13:50:35 +0100
+User-Agent: Mozilla-Thunderbird 2.0.0.22 (X11/20090701)
+In-Reply-To: <200909051923.28831.j6t@kdbg.org>
+X-SA-Exim-Connect-IP: 192.168.0.30
+X-SA-Exim-Mail-From: alan@chandlerfamily.org.uk
+X-SA-Exim-Scanned: No (on wol.chandlerfamily.org.uk); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127854>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Johannes Sixt wrote:
+> On Samstag, 5. September 2009, Alan Chandler wrote:
+>> The problem comes when I want to now merge back further work that I did
+>> on the master branch (the 5-6 transition) to the fan club site
+>>
+>>
+>>         2' - 2a - 3' - 4' ----------------- 6' SITE
+>>        /         /    /                    /
+>> 1 -  2  ------ 3  - 4  ------------6'''- 6a TEST
+>>                       \            /
+>>                         5  ------ 6  MASTER
+>>                          \         \
+>>                            5''- 5a- 6'' DEMO
+>>
+>>
+>> What will happen is the changes made in 4->5 will get applied to the
+>> (now) Test branch as part of the 6->6'' merge, and I will be left having
+>> to add a new commit, 6a, to undo them all again.  Given this is likely
+>> to be quite a substantial change I want to try and avoid it if possible.
+>>
+>> Is there any way I could use git to remember the 4->5 transition,
+>> reverse it and apply it back to the Test branch before hand.
+> 
+> Basically, your mistake was to rename master to test and continue development 
+> on the demo branch. So what you should do instead is this:
+> 
+>         2' - 2a - 3' - 4' ------ 6' SITE
+>        /         /    /         /
+> 1 -  2  ------ 3  - 4  ------- 6  MASTER
+>                       \         \
+>                         5 - 5a - 6'' DEMO
+> 
 
-> On Sat, Sep 05, 2009 at 12:02:35AM -0700, Junio C Hamano wrote:
->
->> I personally find "add -u" that defaults to the current directory more
->> natural than always going to the root; same preference for "grep".
->> Besides, "add -u subdir" must add subdir relative to the cwd, without
->> going to the root.  Why should "add -u" sans argument behave drastically
->> differently?
->
-> Sorry for stating the obvious here, but the following commands affect the
-> entire repository, even though they limit themselves to the current
-> directory, if passed a '.'.
->
-> 	git commit
-> 	git log
-> 	git diff
-> 	git checkout
-> 	git reset
 
-You have to add "git add -e", "git add -i" and "git add -p" here.
+I understand what you are saying.  I think I need to consider a slight 
+change to it however.  Master is currently the branch that I push to my 
+public repository and that should ideally have my NON FAN CLUB skinning
 
-I completely agree that "git add -u" should have been a full-tree
-oriented command, just like other "git add" variants and other Git
-commands, from the beginning.
+So actually I think I am like this
 
-Now, I'm unconfortable with both a behavior change and a config
-option. Someone used to the cwd-limited behavior typing "git add -u"
-on a machine configured to git the full-tree behavior could be really
-annoyed (not even mentionning scripts).
+          2' - 2a - 3' - 4' ------ 6' SITE
+         /         /    /         /
+  1 -  2  ------ 3  - 4  ------- 6  MASTER
+                        \         \
+                          5 - -- - 6'' PUBLIC REPO
+                           \        \
+                            5'''-5a -6''' DEMO
 
-I think it has already been proposed to introduce "git add -a" doing
-what "git add -u" do, but for the full tree. The "-a" option here
-being analogous to the one of "git commit": roughly, "git add -a; git
-commit" would be equivalent to "git commit -a". This would allow a
-long deprecation period for "git add -u". I find the proposal
-sensible, but IIRC it has already been rejected.
+
+
+
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Alan Chandler
+http://www.chandlerfamily.org.uk
