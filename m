@@ -1,149 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 4/4] status: make "how to stage" messages optional
-Date: Sun, 6 Sep 2009 02:50:44 -0400
-Message-ID: <20090906065044.GD28941@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/4] push: make non-fast-forward help message
+ configurable
+Date: Sun, 06 Sep 2009 00:09:07 -0700
+Message-ID: <7v8wgsk0rw.fsf@alter.siamese.dyndns.org>
 References: <20090906064454.GA1643@coredump.intra.peff.net>
+ <20090906064816.GC28941@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Sun Sep 06 08:50:57 2009
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 06 09:16:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkBaS-00076l-FT
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 08:50:56 +0200
+	id 1MkBzH-0002Q7-5b
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 09:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521AbZIFGur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2009 02:50:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754369AbZIFGuq
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 02:50:46 -0400
-Received: from peff.net ([208.65.91.99]:38697 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751750AbZIFGup (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2009 02:50:45 -0400
-Received: (qmail 9471 invoked by uid 107); 6 Sep 2009 06:51:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Sep 2009 02:51:02 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Sep 2009 02:50:44 -0400
-Content-Disposition: inline
-In-Reply-To: <20090906064454.GA1643@coredump.intra.peff.net>
+	id S1754581AbZIFHJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2009 03:09:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754556AbZIFHJ0
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 03:09:26 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752163AbZIFHJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Sep 2009 03:09:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7BB6246905;
+	Sun,  6 Sep 2009 03:09:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wey4qdTkymnXVN9YD7bGq+JhEz8=; b=F/kOIN
+	bdg6QvvBfnc/pbOgSOi475FkDAXQ9g6WwDZmHftDtjGpLvfCRxVXts9LSrJBvpsU
+	vHIb97QrVpfWgkZSeuXdX9Dz+8jxSMuXQDG5+1grgr9/CO8QNV0hPR1IGQSHD+IB
+	WBHIfZ+wStwtBqU8PM4/q1+VxxHsf1qlilgPo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FuyzyX5BehYRyCK3elfXxKg6eXG6JfIM
+	oup8rWGP2e4P+/Vr7YFe/0I6qmXKupbbj8sxRtH1h825UOthomCiLvm2kkkH6TU0
+	rltR4sxNHC8gJXSAr0Bmv9OC9+IEUx6Tkz+IgAmIRFtj+HyYXgsoFUJooB+OKktS
+	rxOEDtNwxyE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 34CB1468FA;
+	Sun,  6 Sep 2009 03:09:21 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 41026468E6; Sun,  6 Sep 2009
+ 03:09:09 -0400 (EDT)
+In-Reply-To: <20090906064816.GC28941@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 6 Sep 2009 02\:48\:16 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3336BBCE-9AB4-11DE-97CA-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127840>
 
-These messages are nice for new users, but experienced git
-users know how to manipulate the index, and these messages
-waste a lot of screen real estate.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This also actually cuts out the blank line after the instructions, so:
+> Probably "messages" is too vague a term to use in the code and config.
+> Maybe "advice.*"?
 
-  # Changed but not updated:
-  #   (use "git add <file>..." to update what will be committed)
-  #   (use "git checkout -- <file>..." to discard changes in working directory)
-  #
-  #       modified:   file
-  #
+I hate to start off with a digression, but one expression from Japanese I
+have long been frustrated with, because I cannot find a good counterpart
+in English, is "大きなお世話".
 
-becomes:
+J-E dictionaries often translate this phrase as "none of your business",
+and it indeed is meant to be thrown at somebody who gives an unsolicited
+and an unwanted advice to you, but at the same time it strongly implies
+that the reason why such an advice is unwanted is because you very well
+knows the issue and does not _need_ (not want) the help on the topic at
+all.  It is not about _who_ gives the unwanted advice (which I think the
+expression "none of YOUR business" talks about---if the same advice came
+from somebody else, it might be appreciated), but it is all about on what
+topic the advice is about, and you feel that you know about the topic very
+well yourself and do not need any advice from anybody.
 
-  # Changed but not updated:
-  #       modified:   file
-  #
+Enough digression.
 
-Arguably the blank should be left in.
+I have always felt that many of the messages we have added since the
+"newbie friendliness" drive around 1.3.0 deserve to be labeled with the
+expression 大きなお世話.
 
- Documentation/config.txt |    4 ++++
- messages.c               |    1 +
- messages.h               |    1 +
- wt-status.c              |    8 ++++++++
- 4 files changed, 14 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ec308a6..cadbfc9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1215,6 +1215,10 @@ message.*::
- 	pushNonFastForward::
- 		Help message shown when linkgit:git-push[1] refuses
- 		non-fast-forward refs. Default: true.
-+	statusAdvice::
-+		Directions on how to stage/unstage/add shown in the
-+		output of linkgit:git-status[1] and the template shown
-+		when writing commit messages. Default: true.
- --
- 
- pack.window::
-diff --git a/messages.c b/messages.c
-index 00fc196..d2785b2 100644
---- a/messages.c
-+++ b/messages.c
-@@ -3,6 +3,7 @@
- 
- struct message_preference messages[] = {
- 	{ "pushnonfastforward", 1 },
-+	{ "statusadvice", 1 },
- };
- 
- int git_default_message_config(const char *var, const char *value)
-diff --git a/messages.h b/messages.h
-index f175747..8edd08e 100644
---- a/messages.h
-+++ b/messages.h
-@@ -2,6 +2,7 @@
- #define MESSAGE_H
- 
- #define MESSAGE_PUSH_NONFASTFORWARD 0
-+#define MESSAGE_STATUS_ADVICE 1
- 
- struct message_preference {
- 	const char *name;
-diff --git a/wt-status.c b/wt-status.c
-index 85f3fcb..716d8cc 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -48,6 +48,8 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	color_fprintf_ln(s->fp, c, "# Unmerged paths:");
-+	if (!messages[MESSAGE_STATUS_ADVICE].preference)
-+		return;
- 	if (!s->is_initial)
- 		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to unstage)", s->reference);
- 	else
-@@ -60,6 +62,8 @@ static void wt_status_print_cached_header(struct wt_status *s)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	color_fprintf_ln(s->fp, c, "# Changes to be committed:");
-+	if (!messages[MESSAGE_STATUS_ADVICE].preference)
-+		return;
- 	if (!s->is_initial) {
- 		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to unstage)", s->reference);
- 	} else {
-@@ -73,6 +77,8 @@ static void wt_status_print_dirty_header(struct wt_status *s,
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
-+	if (!messages[MESSAGE_STATUS_ADVICE].preference)
-+		return;
- 	if (!has_deleted)
- 		color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to update what will be committed)");
- 	else
-@@ -85,6 +91,8 @@ static void wt_status_print_untracked_header(struct wt_status *s)
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
- 	color_fprintf_ln(s->fp, c, "# Untracked files:");
-+	if (!messages[MESSAGE_STATUS_ADVICE].preference)
-+		return;
- 	color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to include in what will be committed)");
- 	color_fprintf_ln(s->fp, c, "#");
- }
--- 
-1.6.4.2.266.g981efc.dirty
+Of course, "unsolicited-unneeded-advice.*" is too long as a variable name,
+but I personally would very much welcome changes along this line and I
+think "advice.*" is a good name for the category.
