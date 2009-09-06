@@ -1,206 +1,77 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] githooks.txt: put hooks into subsections
-Date: Sun,  6 Sep 2009 12:22:58 +0200
-Message-ID: <6bd645c76041635d77e5ecc626e4386bd97715b4.1252168850.git.bert.wesarg@googlemail.com>
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 3/4] push: make non-fast-forward help message configurable
+Date: Sun, 6 Sep 2009 13:30:32 +0200
+Message-ID: <fabb9a1e0909060430q473a821ay61f6b418e5e3fa8e@mail.gmail.com>
+References: <20090906064454.GA1643@coredump.intra.peff.net> 
+	<20090906064816.GC28941@coredump.intra.peff.net> <7v8wgsk0rw.fsf@alter.siamese.dyndns.org> 
+	<20090906072322.GA29949@coredump.intra.peff.net> <7vzl98fr22.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Nanako Shiraishi <nanako3@lavabit.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 06 12:23:24 2009
+X-From: git-owner@vger.kernel.org Sun Sep 06 13:31:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkEtz-0005ti-Ox
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 12:23:20 +0200
+	id 1MkFxV-0001cI-Jz
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Sep 2009 13:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754782AbZIFKXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2009 06:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754753AbZIFKXJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 06:23:09 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:56149 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754750AbZIFKXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2009 06:23:07 -0400
-Received: by fxm17 with SMTP id 17so1471132fxm.37
-        for <git@vger.kernel.org>; Sun, 06 Sep 2009 03:23:09 -0700 (PDT)
+	id S1754793AbZIFLaw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2009 07:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754683AbZIFLaw
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 07:30:52 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:53338 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752235AbZIFLav (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Sep 2009 07:30:51 -0400
+Received: by ewy2 with SMTP id 2so1454104ewy.17
+        for <git@vger.kernel.org>; Sun, 06 Sep 2009 04:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=B77Bd0ohMBft2AMa5ncF6NQQAbdQNfsiO/8iJvYtV6s=;
-        b=PtZsaHwukAv26pfJYgSU5fKphf0m9aR7e98f2rNsKGLfbXGoPya89F45yuFYwG0tl+
-         2bucMkgJLrbVDB8iBH0f7Y1uub1mbj679Fbsee2SMH0Z2I0Vyy3riaY+uBt5iWayf9sn
-         FDq3XSlCKNI3TBBIXbS+neBf/5A8LftW4KgUo=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=sy2kxKChEboMT8PLWA7H/3Qpy+tv3osP+uJGARUdtCY=;
+        b=E38mXn/thkKySqI61i++KgrHjB5qLcj5C/8FLt1ARw02/9xjxYYaOSBbxSWvPEv5an
+         /pEvqi++GP8KIr/Znui7stJsTylHOwKPkJ5v97YvJBCmRVYqeoX9yV5P30wz+3QHUVDN
+         ZlxdEvprKsQqGcSVk9uFxKo3xz3r0KCG+4tH8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=MqLbsMoJDYBIOMsM0v/2vG8wy083Cx94RXULKt/ZC6wD52G0LzBFqJUBIt6k8CBxIP
-         uTAOcDMNDSIku/EnJzzVRlrcLF5RaUNiqkBciudFFuLPr1pcfygritGefjvEcyw72NL0
-         gsg4h5JaK7+RIKfHGt8V1vMY9nHgGt8ZI/lbM=
-Received: by 10.86.231.19 with SMTP id d19mr6771193fgh.48.1252232589281;
-        Sun, 06 Sep 2009 03:23:09 -0700 (PDT)
-Received: from localhost ([188.46.111.40])
-        by mx.google.com with ESMTPS id 12sm6691931fgg.27.2009.09.06.03.23.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Sep 2009 03:23:08 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.GIT
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=qlcPYL6qNSo5VEfTfp4tnMTW4Fl5siWjsJ+o378lGKY9VpjHcorVKHLqYMZp/IeXt+
+         F0+8lLHw1jCEJl/m22rMWK5xcigBTcApir//Bvo5w/czM2k2L3VjBgLuCiZPr6acRnYa
+         z0qBigwY68+X+Ghs9b8sfHXcv45bNWiQW5o1U=
+Received: by 10.216.90.76 with SMTP id d54mr1382479wef.55.1252236652189; Sun, 
+	06 Sep 2009 04:30:52 -0700 (PDT)
+In-Reply-To: <7vzl98fr22.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127851>
 
-All hooks are currently in its own section. Which may confuse users,
-because the section name serves as the hook file name and sections are
-all caps for man pages. Putting them into a new HOOKS section and each
-hook into a subsection keeps the case to lower case.
+Heya,
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- Documentation/githooks.txt |   33 ++++++++++++++++++---------------
- 1 files changed, 18 insertions(+), 15 deletions(-)
+On Sun, Sep 6, 2009 at 09:52, Junio C Hamano<gitster@pobox.com> wrote:
+> Resetting is done because I want to build an alternate history starting
+> from an earlier point, and when I am done, I may want to feed this to "git
+> diff" or whatever to sanity check the result, without having to go through
+> the reflog.
 
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 1c73673..acc408d 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -26,8 +26,11 @@ executable by default.
- 
- This document describes the currently defined hooks.
- 
-+HOOKS
-+-----
-+
- applypatch-msg
----------------
-+~~~~~~~~~~~~~~
- 
- This hook is invoked by 'git-am' script.  It takes a single
- parameter, the name of the file that holds the proposed commit
-@@ -43,7 +46,7 @@ The default 'applypatch-msg' hook, when enabled, runs the
- 'commit-msg' hook, if the latter is enabled.
- 
- pre-applypatch
----------------
-+~~~~~~~~~~~~~~
- 
- This hook is invoked by 'git-am'.  It takes no parameter, and is
- invoked after the patch is applied, but before a commit is made.
-@@ -58,7 +61,7 @@ The default 'pre-applypatch' hook, when enabled, runs the
- 'pre-commit' hook, if the latter is enabled.
- 
- post-applypatch
-----------------
-+~~~~~~~~~~~~~~~
- 
- This hook is invoked by 'git-am'.  It takes no parameter,
- and is invoked after the patch is applied and a commit is made.
-@@ -67,7 +70,7 @@ This hook is meant primarily for notification, and cannot affect
- the outcome of 'git-am'.
- 
- pre-commit
------------
-+~~~~~~~~~~
- 
- This hook is invoked by 'git-commit', and can be bypassed
- with `\--no-verify` option.  It takes no parameter, and is
-@@ -84,7 +87,7 @@ variable `GIT_EDITOR=:` if the command will not bring up an editor
- to modify the commit message.
- 
- prepare-commit-msg
--------------------
-+~~~~~~~~~~~~~~~~~~
- 
- This hook is invoked by 'git-commit' right after preparing the
- default log message, and before the editor is started.
-@@ -109,7 +112,7 @@ The sample `prepare-commit-msg` hook that comes with git comments
- out the `Conflicts:` part of a merge's commit message.
- 
- commit-msg
------------
-+~~~~~~~~~~
- 
- This hook is invoked by 'git-commit', and can be bypassed
- with `\--no-verify` option.  It takes a single parameter, the
-@@ -126,7 +129,7 @@ The default 'commit-msg' hook, when enabled, detects duplicate
- "Signed-off-by" lines, and aborts the commit if one is found.
- 
- post-commit
-------------
-+~~~~~~~~~~~
- 
- This hook is invoked by 'git-commit'.  It takes no
- parameter, and is invoked after a commit is made.
-@@ -135,14 +138,14 @@ This hook is meant primarily for notification, and cannot affect
- the outcome of 'git-commit'.
- 
- pre-rebase
------------
-+~~~~~~~~~~
- 
- This hook is called by 'git-rebase' and can be used to prevent a branch
- from getting rebased.
- 
- 
- post-checkout
-------------
-+~~~~~~~~~~~~~
- 
- This hook is invoked when a 'git-checkout' is run after having updated the
- worktree.  The hook is given three parameters: the ref of the previous HEAD,
-@@ -160,7 +163,7 @@ differences from the previous HEAD if different, or set working dir metadata
- properties.
- 
- post-merge
-------------
-+~~~~~~~~~~
- 
- This hook is invoked by 'git-merge', which happens when a 'git-pull'
- is done on a local repository.  The hook takes a single parameter, a status
-@@ -175,7 +178,7 @@ for an example of how to do this.
- 
- [[pre-receive]]
- pre-receive
-------------
-+~~~~~~~~~~~
- 
- This hook is invoked by 'git-receive-pack' on the remote repository,
- which happens when a 'git-push' is done on a local repository.
-@@ -204,7 +207,7 @@ for the user.
- 
- [[update]]
- update
--------
-+~~~~~~
- 
- This hook is invoked by 'git-receive-pack' on the remote repository,
- which happens when a 'git-push' is done on a local repository.
-@@ -247,7 +250,7 @@ unannotated tags to be pushed.
- 
- [[post-receive]]
- post-receive
--------------
-+~~~~~~~~~~~~
- 
- This hook is invoked by 'git-receive-pack' on the remote repository,
- which happens when a 'git-push' is done on a local repository.
-@@ -277,7 +280,7 @@ emails.
- 
- [[post-update]]
- post-update
-------------
-+~~~~~~~~~~~
- 
- This hook is invoked by 'git-receive-pack' on the remote repository,
- which happens when a 'git-push' is done on a local repository.
-@@ -308,7 +311,7 @@ Both standard output and standard error output are forwarded to
- for the user.
- 
- pre-auto-gc
-------------
-+~~~~~~~~~~~
- 
- This hook is invoked by 'git-gc --auto'. It takes no parameter, and
- exiting with non-zero status from this script causes the 'git-gc --auto'
+I agree, the 'you are now at ...' is not very helpful, I just TOLD you
+where I want to go to! However, 'you were at ....' is also not
+optimal, since what I really want to know is where I was at "plus any
+old data I had" (going back to the 'git reset --hard' should create a
+snapshot of the current content before doing it's resetting'). I would
+definitely prefer 'you were at' over 'you are now at' though.
+
+WRT the 'none of your business', it sounds like 'I [already] know
+[that]' might be approriate?
+
 -- 
-1.6.4.GIT
+Cheers,
+
+Sverre Rabbelier
