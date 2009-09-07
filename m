@@ -1,81 +1,181 @@
 From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCH 0/2] Add url.<base>.pushInsteadOf: URL rewriting for push
- only
-Date: Sun, 6 Sep 2009 23:59:28 -0700
-Message-ID: <cover.1252306396.git.josh@joshtriplett.org>
+Subject: [PATCH 1/2] Wrap rewrite globals in a struct in preparation for
+ adding another set
+Date: Mon, 7 Sep 2009 00:00:00 -0700
+Message-ID: <bdf2f41d610eb68d335bfd02c9bf4638a02a225a.1252306396.git.josh@joshtriplett.org>
+References: <cover.1252306396.git.josh@joshtriplett.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 07 09:07:15 2009
+X-From: git-owner@vger.kernel.org Mon Sep 07 09:07:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkYJm-0000fX-WD
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:07:15 +0200
+	id 1MkYK8-0000kF-IA
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751312AbZIGHHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 03:07:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751233AbZIGHHD
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:07:03 -0400
-Received: from slow3-v.mail.gandi.net ([217.70.178.89]:46151 "EHLO
+	id S1751357AbZIGHHH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 03:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbZIGHHH
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:07:07 -0400
+Received: from slow3-v.mail.gandi.net ([217.70.178.89]:47534 "EHLO
 	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893AbZIGHHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 03:07:02 -0400
-Received: from relay2-v.mail.gandi.net (relay2-v.mail.gandi.net [217.70.178.76])
-	by slow3-v.mail.gandi.net (Postfix) with ESMTP id 5FF9E3AEE7
-	for <git@vger.kernel.org>; Mon,  7 Sep 2009 09:00:02 +0200 (CEST)
+	with ESMTP id S1751122AbZIGHHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 03:07:03 -0400
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+	by slow3-v.mail.gandi.net (Postfix) with ESMTP id 6D5103B2B3
+	for <git@vger.kernel.org>; Mon,  7 Sep 2009 09:00:34 +0200 (CEST)
 Received: from feather (pool-173-50-250-234.ptldor.fios.verizon.net [173.50.250.234])
-	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 71D97135D0;
-	Mon,  7 Sep 2009 08:59:40 +0200 (CEST)
+	by relay1-d.mail.gandi.net (Postfix) with ESMTPSA id D8EFF2552FA;
+	Mon,  7 Sep 2009 09:02:04 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <cover.1252306396.git.josh@joshtriplett.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127890>
 
-Many sites host repositories via both git:// for fetch-only anonymous
-access and ssh:// for push-capable access.  The "insteadOf" mechanism
-makes it straightforward to substitute the push-capable URLs for the
-pull-only URLs, which proves convenient when the site hosts many
-repositories using the same URL scheme.  However, if you use such a
-substitution and you cannot use the ssh:// URLs (either because you
-don't have SSH access or you don't have permission to a particular
-repository), you cannot clone or fetch either, even though you could do
-so via the git:// URLs.  A situation like this arises when sharing git
-configuration files between systems, of which only a few have SSH access
-to repositories.
+remote.c has a global set of URL rewrites, accessed by alias_url and
+make_rewrite.  Wrap them in a new "struct rewrites", passed to alias_url
+and make_rewrite.  This allows adding other sets of rewrites.
 
-"pushurl" provides a way to specify URLs used only for push, but this
-requires configuring a pushurl for each such repository.  As in the
-rationale for insteadOf, it makes sense to configure this for all
-repositories hosted on a given system at once.
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+---
+ remote.c |   53 ++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 28 insertions(+), 25 deletions(-)
 
-This patch series adds a new "pushInsteadOf" option to go with
-"insteadOf".  pushInsteadOf allows systematically rewriting fetch-only
-URLs to push-capable URLs when used with push.  For instance:
-
-[url "ssh://example.org/"]
-    pushInsteadOf = "git://example.org/"
-
-This will allow clones of "git://example.org/path/to/repo" to
-subsequently push to "ssh://example.org/path/to/repo", without manually
-configuring pushurl for that remote.
-
-Includes documentation for the new option, bash completion updates, and
-test cases (both that pushInsteadOf applies to push and that it does
-*not* apply to fetch).
-
-
-Josh Triplett (2):
-  Wrap rewrite globals in a struct in preparation for adding another set
-  Add url.<base>.pushInsteadOf: URL rewriting for push only
-
- Documentation/config.txt               |   12 +++++
- Documentation/urls.txt                 |   18 +++++++
- contrib/completion/git-completion.bash |    2 +-
- remote.c                               |   80 +++++++++++++++++++------------
- t/t5516-fetch-push.sh                  |   31 ++++++++++++
- 5 files changed, 111 insertions(+), 32 deletions(-)
+diff --git a/remote.c b/remote.c
+index 4b5b905..ff8e71f 100644
+--- a/remote.c
++++ b/remote.c
+@@ -28,6 +28,11 @@ struct rewrite {
+ 	int instead_of_nr;
+ 	int instead_of_alloc;
+ };
++struct rewrites {
++	struct rewrite **rewrite;
++	int rewrite_alloc;
++	int rewrite_nr;
++};
+ 
+ static struct remote **remotes;
+ static int remotes_alloc;
+@@ -41,14 +46,12 @@ static struct branch *current_branch;
+ static const char *default_remote_name;
+ static int explicit_default_remote_name;
+ 
+-static struct rewrite **rewrite;
+-static int rewrite_alloc;
+-static int rewrite_nr;
++static struct rewrites rewrites;
+ 
+ #define BUF_SIZE (2048)
+ static char buffer[BUF_SIZE];
+ 
+-static const char *alias_url(const char *url)
++static const char *alias_url(const char *url, struct rewrites *r)
+ {
+ 	int i, j;
+ 	char *ret;
+@@ -57,14 +60,14 @@ static const char *alias_url(const char *url)
+ 
+ 	longest = NULL;
+ 	longest_i = -1;
+-	for (i = 0; i < rewrite_nr; i++) {
+-		if (!rewrite[i])
++	for (i = 0; i < r->rewrite_nr; i++) {
++		if (!r->rewrite[i])
+ 			continue;
+-		for (j = 0; j < rewrite[i]->instead_of_nr; j++) {
+-			if (!prefixcmp(url, rewrite[i]->instead_of[j].s) &&
++		for (j = 0; j < r->rewrite[i]->instead_of_nr; j++) {
++			if (!prefixcmp(url, r->rewrite[i]->instead_of[j].s) &&
+ 			    (!longest ||
+-			     longest->len < rewrite[i]->instead_of[j].len)) {
+-				longest = &(rewrite[i]->instead_of[j]);
++			     longest->len < r->rewrite[i]->instead_of[j].len)) {
++				longest = &(r->rewrite[i]->instead_of[j]);
+ 				longest_i = i;
+ 			}
+ 		}
+@@ -72,10 +75,10 @@ static const char *alias_url(const char *url)
+ 	if (!longest)
+ 		return url;
+ 
+-	ret = xmalloc(rewrite[longest_i]->baselen +
++	ret = xmalloc(r->rewrite[longest_i]->baselen +
+ 		     (strlen(url) - longest->len) + 1);
+-	strcpy(ret, rewrite[longest_i]->base);
+-	strcpy(ret + rewrite[longest_i]->baselen, url + longest->len);
++	strcpy(ret, r->rewrite[longest_i]->base);
++	strcpy(ret + r->rewrite[longest_i]->baselen, url + longest->len);
+ 	return ret;
+ }
+ 
+@@ -103,7 +106,7 @@ static void add_url(struct remote *remote, const char *url)
+ 
+ static void add_url_alias(struct remote *remote, const char *url)
+ {
+-	add_url(remote, alias_url(url));
++	add_url(remote, alias_url(url, &rewrites));
+ }
+ 
+ static void add_pushurl(struct remote *remote, const char *pushurl)
+@@ -169,22 +172,22 @@ static struct branch *make_branch(const char *name, int len)
+ 	return ret;
+ }
+ 
+-static struct rewrite *make_rewrite(const char *base, int len)
++static struct rewrite *make_rewrite(struct rewrites *r, const char *base, int len)
+ {
+ 	struct rewrite *ret;
+ 	int i;
+ 
+-	for (i = 0; i < rewrite_nr; i++) {
++	for (i = 0; i < r->rewrite_nr; i++) {
+ 		if (len
+-		    ? (len == rewrite[i]->baselen &&
+-		       !strncmp(base, rewrite[i]->base, len))
+-		    : !strcmp(base, rewrite[i]->base))
+-			return rewrite[i];
++		    ? (len == r->rewrite[i]->baselen &&
++		       !strncmp(base, r->rewrite[i]->base, len))
++		    : !strcmp(base, r->rewrite[i]->base))
++			return r->rewrite[i];
+ 	}
+ 
+-	ALLOC_GROW(rewrite, rewrite_nr + 1, rewrite_alloc);
++	ALLOC_GROW(r->rewrite, r->rewrite_nr + 1, r->rewrite_alloc);
+ 	ret = xcalloc(1, sizeof(struct rewrite));
+-	rewrite[rewrite_nr++] = ret;
++	r->rewrite[r->rewrite_nr++] = ret;
+ 	if (len) {
+ 		ret->base = xstrndup(base, len);
+ 		ret->baselen = len;
+@@ -355,7 +358,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 		subkey = strrchr(name, '.');
+ 		if (!subkey)
+ 			return 0;
+-		rewrite = make_rewrite(name, subkey - name);
++		rewrite = make_rewrite(&rewrites, name, subkey - name);
+ 		if (!strcmp(subkey, ".insteadof")) {
+ 			if (!value)
+ 				return config_error_nonbool(key);
+@@ -433,10 +436,10 @@ static void alias_all_urls(void)
+ 		if (!remotes[i])
+ 			continue;
+ 		for (j = 0; j < remotes[i]->url_nr; j++) {
+-			remotes[i]->url[j] = alias_url(remotes[i]->url[j]);
++			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
+ 		}
+ 		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
+-			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j]);
++			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
+ 		}
+ 	}
+ }
+-- 
+1.6.3.3
