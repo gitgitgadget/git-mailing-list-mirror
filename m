@@ -1,101 +1,89 @@
-From: =?ISO-8859-1?Q?Dirk_H=F6rner?= <dirker@gmail.com>
-Subject: Re: [PATCH] Do not scramble password read from .cvspass
-Date: Mon, 7 Sep 2009 12:39:54 +0200
-Message-ID: <4da546dc0909070339x5d78164flc4171882e8b028db@mail.gmail.com>
-References: <4AA100E8.9030806@obry.net> <7vvdjyn0j3.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 3/4] push: make non-fast-forward help message configurable
+Date: Mon, 07 Sep 2009 13:20:08 +0200
+Message-ID: <vpq63bv9f2v.fsf@bauges.imag.fr>
+References: <20090906064454.GA1643@coredump.intra.peff.net>
+	<20090906064816.GC28941@coredump.intra.peff.net>
+	<7v8wgsk0rw.fsf@alter.siamese.dyndns.org>
+	<20090906072322.GA29949@coredump.intra.peff.net>
+	<7vzl98fr22.fsf@alter.siamese.dyndns.org>
+	<20090907094457.6117@nanako3.lavabit.com>
+	<20090907082430.GA17997@coredump.intra.peff.net>
+	<vpqeiqjf90u.fsf@bauges.imag.fr>
+	<20090907085405.GA17968@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>, pascal@obry.net
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 12:40:31 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Teemu Likonen <tlikonen@iki.fi>, Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 07 13:20:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mkbe9-0002ur-Fu
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 12:40:29 +0200
+	id 1MkcH1-0000qu-TH
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 13:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbZIGKkR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 06:40:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752628AbZIGKkQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 06:40:16 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:51425 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752541AbZIGKkP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 06:40:15 -0400
-Received: by ewy2 with SMTP id 2so1951725ewy.17
-        for <git@vger.kernel.org>; Mon, 07 Sep 2009 03:40:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Be43fkcXyoM1YN8tvRWQ5XopgzimFnMA6IEMv7FCavA=;
-        b=MwPmktt0+SNbX8h57UM65ewdhju5N5jWMuN9lKxFOyZUTi815XyBqVzwN9FgyfLUUO
-         2NBvYQkFv8/ToAAk5eTRxs3yOODIs/xgRu2S9jWHxv7qdA7sf80yXmNPMZJvBWH63FDw
-         lzwk7+BPqMAkdvqvn3IhVZN1UcBTc1nd2DBLM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=n/zHSXa1Hu5wqZBrAg637OTAABn1NMTkt0/BEPcwsJJmnlmKZRYeNFS7B/ilYsyMA7
-         SvaZRpu5xuj/c4MunvoE4N2uxOXG7N2hPComh4RnyE5g2cuWc7I7zYovDpCGv+U0N12W
-         JzTpSaaRL5ZRolgM8mus9AIdmsadShFEcTRak=
-Received: by 10.211.154.10 with SMTP id g10mr5195174ebo.49.1252320016639; Mon, 
-	07 Sep 2009 03:40:16 -0700 (PDT)
-In-Reply-To: <7vvdjyn0j3.fsf@alter.siamese.dyndns.org>
+	id S1752918AbZIGLU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 07:20:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752912AbZIGLU3
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 07:20:29 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38266 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750884AbZIGLU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 07:20:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n87BGRcT012123
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 7 Sep 2009 13:16:27 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MkcGW-0004Hy-Rx; Mon, 07 Sep 2009 13:20:08 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MkcGW-00082f-QW; Mon, 07 Sep 2009 13:20:08 +0200
+In-Reply-To: <20090907085405.GA17968@coredump.intra.peff.net> (Jeff King's message of "Mon\, 7 Sep 2009 04\:54\:05 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 07 Sep 2009 13:16:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n87BGRcT012123
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1252926990.34553@5B6vHuxXueCL16P/jlhgVw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127919>
 
-Hi Junio,
+Jeff King <peff@peff.net> writes:
 
-On Fri, Sep 4, 2009 at 6:21 PM, Junio C Hamano<gitster@pobox.com> wrote=
-:
-> Dirk, does the patch look Ok to you?
+> I'm not sure it solves the problem. The point of "message.all" was to
+> easily say "I'm an expert, so turn off useless advice". But now I would
+> have to manually re-enable any messages that I _do_ want to see. And of
+> course I don't see them to know that I want them, so I have to read
+> through the config documentation and decide on each one.
 
-The patch looks fine :-)
+Well, if it was _that_ important, I'd go for your suggestion of a
+message hierarchy message.advice.foo, message.info.bar and so, with
+the possibility of enabling/disabling a subhierarchy with a config
+option. Now, I really get the feeling that this is overkill...
 
-Ciao,
-Dirk
+> So I think "be verbose, but let the user quiet us" is probably
+> better than "be quiet, but let the user make us louder", because it is
+> easier to discover verbose things. Which implies to me that
+> "message.all", if it exists at all, should be limited in scope to just
+> advice.
 
->
->> =A0git-cvsimport.perl | =A0 =A07 ++++---
->> =A01 files changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/git-cvsimport.perl b/git-cvsimport.perl
->> index 593832d..c5cdcae 100755
->> --- a/git-cvsimport.perl
->> +++ b/git-cvsimport.perl
->> @@ -238,7 +238,10 @@ sub conn {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $rr =3D ":pserver:$user\@$serv:$p=
-ort$repo";
->>
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 unless ($pass) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ($pass) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $pass =3D $self->_scramble($pa=
-ss);
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 open(H,$ENV{'HOME'}.=
-"/.cvspass") and do {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 #
->> :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 whil=
-e (<H>) {
->> @@ -253,8 +256,6 @@ sub conn {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 };
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->>
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 $pass =3D $self->_scramble($pass);
->> -
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my ($s, $rep);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ($proxyhost) {
->>
->> --
->> 1.6.4.2.253.g0b1fac
->
+Yup, you convinced me for the last implication.
+
+Otherwise, one setting "message.all = false" would never even notice
+that another very cool informative message was added to Git in its
+latest version.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
