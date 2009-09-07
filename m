@@ -1,60 +1,111 @@
-From: "Dave Rodgman" <dav1dr@eml.cc>
-Subject: git rebase --interactive problems
-Date: Mon, 07 Sep 2009 13:31:56 +0100
-Message-ID: <1252326716.7497.1333578429@webmail.messagingengine.com>
+From: Emmanuel Trillaud <etrillaud@gmail.com>
+Subject: [PATCH resend] git-pull: fix fetch-options.txt to not document 
+	--quiet and --verbose twice in git-pull.txt
+Date: Mon, 7 Sep 2009 14:34:35 +0200
+Message-ID: <9f50533b0909070534q2375a793mf5d676b519eae69@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 07 14:33:19 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 07 14:35:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkdOA-0006Ys-QK
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 14:32:07 +0200
+	id 1MkdQk-0008CY-St
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 14:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbZIGMb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 08:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753176AbZIGMb4
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 08:31:56 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:39240 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753088AbZIGMbz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 08:31:55 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9DE7469173
-	for <git@vger.kernel.org>; Mon,  7 Sep 2009 08:31:56 -0400 (EDT)
-Received: from web6.messagingengine.com ([10.202.2.215])
-  by compute2.internal (MEProxy); Mon, 07 Sep 2009 08:31:56 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:from:to:mime-version:content-transfer-encoding:content-type:subject:date; s=smtpout; bh=xQW/CebJSG0wgK/f197og6AS3Zk=; b=Gcw4cOxmq2WLz0CTU2KVweaxVr18yKLtkQRZ7VKw0SWDIKK1K0XT30qYqDyxwHQIjfi0EJk2Go7F/kstWuaefgVGXlFquqMBRS1zOYlZhIrFt4CW1z/fm0e9WBRbN8CViezXytuLK9ylr9P1OhDpEDW1DvbIrI85ZPAbYvJqifA=
-Received: by web6.messagingengine.com (Postfix, from userid 99)
-	id 5B19F3B26F; Mon,  7 Sep 2009 08:31:56 -0400 (EDT)
-X-Sasl-Enc: Mo5C3ito5NdBmUJMeKvjM4gXHHOKjwCxprBra125I1Ia 1252326716
-X-Mailer: MessagingEngine.com Webmail Interface
+	id S1751425AbZIGMeg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 08:34:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbZIGMeg
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 08:34:36 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:56641 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750740AbZIGMef convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 08:34:35 -0400
+Received: by ewy2 with SMTP id 2so2020164ewy.17
+        for <git@vger.kernel.org>; Mon, 07 Sep 2009 05:34:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=vJDYmVDUcbb7kmZh+Eml/JW6gjxcJhZ4Zaeq4ShAP8k=;
+        b=j43nqC5NNOSq4DR6YLDR8rBiaD1T/lIwr2nPoXsFk7ypw957cXt0SZZv7ZLeJvox/H
+         1jk0wH/4jfqs9pPK5deOSFxVaf/+GnjL3ATWTSNJzFq6aF0fl+sZ51bjDYt9dKbFv21g
+         Z6u4KYF0J5cNVjxf3NDQfva1vfdDsIRYYt1IY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=HwBlqyBV6zy6t6MLHuUFSWavshixlZ8wXW/qb8M3JNTVPSDChWYkZwqyMRDKjKL/QF
+         ICLY3ygvFacvMa2ojJ71cyniPiuHxq14uBxZN/1QqDbnp0MOPkmY/fMf1gWzsJDQNYDY
+         B8YfqC/zU/R7NYsSSfO4LoMphBF3h+s/KYaO8=
+Received: by 10.216.88.65 with SMTP id z43mr1467058wee.5.1252326876296; Mon, 
+	07 Sep 2009 05:34:36 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127924>
 
-When I try to do even the simplest rebase --interactive, I get a cryptic
-error message:
+Hello all,
+In git-pull(1) we can read :
 
-$ git rebase -i HEAD~2
-<do nothing in the editor that appears, just save>
+OPTIONS
+=C2=A0 =C2=A0 =C2=A0 -q, --quiet
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Operate quietly.
 
-I then get:
+=C2=A0 =C2=A0 =C2=A0 -v, --verbose
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Be verbose.
+=2E..
 
-/usr/lib/git-core/git-rebase--interactive: 1: arithmetic expression:
-expecting primary: "-c ^[^#]
-2+-c ^[^#]
-0"
+=C2=A0 =C2=A0 =C2=A0 -q, --quiet
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Pass --quiet to git-fetch-pack and s=
+ilence any other
+internally used git
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 commands.
 
-and all I can do is git rebase --abort
+=C2=A0 =C2=A0 =C2=A0 -v, --verbose
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Be verbose.
 
-Am I doing something wrong, or is this a bug? I am using git 1.6.4.2
+The first part is included by merge-option.txt and the second by
+fetch-options.txt.
+I choose to "suppress" the fetch-options part because IMHO we don't
+need that level
+of precision. But if you prefer, I can provide a patch to "ifndef" the
+merge-options.txt part.
 
-thanks
+Best regard
 
-Dave
+
+git-pull.txt includes fetch-options.txt and merge-options.txt which bot=
+h
+document the --quiet and --verbose parameters. So we supress the
+--quiet and --verbose paragraphs if fetch-options.txt is included by
+git-pull.txt
+
+Signed-off-by: Emmanuel Trillaud <etrillaud@gmail.com>
+---
+Documentation/fetch-options.txt | =C2=A0 =C2=A02 ++
+1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-opti=
+ons.txt
+index ea3b1bc..5eb2b0e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -1,3 +1,4 @@
++ifndef::git-pull[]
+-q::
+--quiet::
+Pass --quiet to git-fetch-pack and silence any other internally
+@@ -6,6 +7,7 @@
+-v::
+--verbose::
+Be verbose.
++endif::git-pull[]
+
+-a::
+--append::
+--
+1.6.4.2.253.g0b1fac
