@@ -1,96 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 5/6 (v4)] full integration of rev-cache into git,
- completed test suite
-Date: Tue, 08 Sep 2009 09:06:04 +1200
-Message-ID: <1252357564.5969.4.camel@maia.lan>
-References: <op.uys3quhbtdk399@sirnot.private>
-	 <op.uyuwkuoxtdk399@sirnot.private> <op.uyzwycxotdk399@sirnot>
-	 <op.uzv4covmtdk399@sirnot.private>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH resend] git-pull: fix fetch-options.txt to not document 
+ --quiet and --verbose twice in git-pull.txt
+Date: Mon, 07 Sep 2009 14:48:19 -0700
+Message-ID: <7v7hwafmu4.fsf@alter.siamese.dyndns.org>
+References: <9f50533b0909070534q2375a793mf5d676b519eae69@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Edelen <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 23:06:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Emmanuel Trillaud <etrillaud@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 23:49:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MklQO-000407-1U
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 23:06:56 +0200
+	id 1Mkm5r-0007NW-0M
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 23:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbZIGVGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 17:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbZIGVGF
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 17:06:05 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:43592 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752046AbZIGVGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 17:06:02 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 9A8A621C351; Tue,  8 Sep 2009 09:06:03 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 5DC3B21C2D1;
-	Tue,  8 Sep 2009 09:05:57 +1200 (NZST)
-In-Reply-To: <op.uzv4covmtdk399@sirnot.private>
-X-Mailer: Evolution 2.24.1 
+	id S1752336AbZIGVsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 17:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbZIGVsY
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 17:48:24 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44798 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752270AbZIGVsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 17:48:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C97FE47A86;
+	Mon,  7 Sep 2009 17:48:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2ZlIrJNGAeWeyXxQwNIb5GQCaf8=; b=ajFjV+
+	isZySjKsLWIxju58yelAlRFrRfE0cfQr0JRpLgxfGNgl+nRkAyr2ISKQdgvAnJU2
+	BJoegswiErBa+mrQZAQb9bbcvZivOpc0+w5uWCBuYRlnpn1lKLztxhqlA4em3ukj
+	/XehXWbgi6FZ7tj2FstqxIQG4PnaLnjbYqbyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x6ApegzJFFTYUxcDwKrEvGiHSSQV7I/E
+	WmQahk9x9XZ+MGbQawe/wWq0aSJymqEiC6FQ/GsEWrI2+S69ESKDJDMaUBGeU6zc
+	cG2LW7GyDSsjrahfNDqjKiv1VNV2khYQYYVDQlsYYYRewrZZ56rO+4uIHpWwovFv
+	3NuwtPpCHRk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ABDE247A85;
+	Mon,  7 Sep 2009 17:48:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A1DE447A83; Mon,  7 Sep 2009
+ 17:48:20 -0400 (EDT)
+In-Reply-To: <9f50533b0909070534q2375a793mf5d676b519eae69@mail.gmail.com>
+ (Emmanuel Trillaud's message of "Mon\, 7 Sep 2009 14\:34\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2A995586-9BF8-11DE-8248-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127948>
 
-On Mon, 2009-09-07 at 16:11 +0200, Nick Edelen wrote:
-> This last patch 
+Emmanuel Trillaud <etrillaud@gmail.com> writes:
 
-^^ You don't need to write comments like "This patch"; in the history
-such words are meaningless.
+> I choose to "suppress" the fetch-options part because IMHO we don't need
+> that level of precision.
 
-> provides a working integration of rev-cache into the revision 
-> walker, along with some touch-ups:
->  - integration into revision walker and list-objects
->  - tweak of object generation
-
-"tweak" ?
-
->  - more fluid handling of damaged cache slices
-
-What does this mean?
-
->  - numerous tests for both features from the previous patch, and the 
-> integration's integrity
-> 'Integration' is rather broad -- a more detailed description follows for each 
-> aspect:
->  - rev-cache
-> the traversal mechanism is updated to handle many of the non-prune options 
-> rev-list does (date limiting, slop-handling, etc.), and is adjusted to allow 
-> for non-fatal cache-traversal failures.
-> 
->  - revision walker
-> both limited and unlimited traversal attempt to use the cache when possible, 
-> smoothly falling back if it's not.
-> 
->  - list-objects
-> object listing does not recurse into cached trees, and has been adjusted to 
-> guarantee commit-tag-tree-blob ordering.
-
-This is quite a long commit message.  Is the above detail all useful?
-Can it be split into one patch for each of the above integrations?
-
-> Signed-off-by: Nick Edelen <sirnot@gmail.com>
-
-Sam
+I tried to see both versions myself and came to the same conclusion.
+Thanks.
