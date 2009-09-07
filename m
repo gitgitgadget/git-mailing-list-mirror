@@ -1,31 +1,32 @@
 From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCHv2 1/2] Wrap rewrite globals in a struct in preparation for
- adding another set
-Date: Mon, 7 Sep 2009 01:56:00 -0700
-Message-ID: <bdf2f41d610eb68d335bfd02c9bf4638a02a225a.1252313313.git.josh@joshtriplett.org>
+Subject: [PATCHv2 2/2] Add url.<base>.pushInsteadOf: URL rewriting for push
+ only
+Date: Mon, 7 Sep 2009 01:56:33 -0700
+Message-ID: <5e58748923d9b4a182499a6ba8fa4636bce4810e.1252313313.git.josh@joshtriplett.org>
 References: <cover.1252313313.git.josh@joshtriplett.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 07 10:56:26 2009
+X-From: git-owner@vger.kernel.org Mon Sep 07 10:56:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mka1Q-0003g1-3n
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:56:24 +0200
+	id 1Mka1u-0003qF-Gz
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752490AbZIGI4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 04:56:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752488AbZIGI4N
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:56:13 -0400
-Received: from relay1-v.mail.gandi.net ([217.70.178.75]:42091 "EHLO
-	relay1-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277AbZIGI4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 04:56:13 -0400
+	id S1752501AbZIGI4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 04:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752496AbZIGI4o
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:56:44 -0400
+Received: from relay2-d.mail.gandi.net ([217.70.183.194]:56321 "EHLO
+	relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752493AbZIGI4o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 04:56:44 -0400
+X-Greylist: delayed 6993 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Sep 2009 04:56:43 EDT
 Received: from feather (pool-173-50-250-234.ptldor.fios.verizon.net [173.50.250.234])
-	by relay1-v.mail.gandi.net (Postfix) with ESMTP id 75995362C0;
-	Mon,  7 Sep 2009 10:56:14 +0200 (CEST)
+	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 6CCB4225173;
+	Mon,  7 Sep 2009 10:55:31 +0200 (CEST)
 Content-Disposition: inline
 In-Reply-To: <cover.1252313313.git.josh@joshtriplett.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -33,146 +34,222 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127912>
 
-remote.c has a global set of URL rewrites, accessed by alias_url and
-make_rewrite.  Wrap them in a new "struct rewrites", passed to alias_url
-and make_rewrite.  This allows adding other sets of rewrites.
+This configuration option allows systematically rewriting fetch-only
+URLs to push-capable URLs when used with push.  For instance:
+
+[url "ssh://example.org/"]
+    pushInsteadOf = "git://example.org/"
+
+This will allow clones of "git://example.org/path/to/repo" to
+subsequently push to "ssh://example.org/path/to/repo", without manually
+configuring pushurl for that remote.
+
+Includes documentation for the new option, bash completion updates, and
+test cases (both that pushInsteadOf applies to push and that it does
+*not* apply to fetch).
 
 Signed-off-by: Josh Triplett <josh@joshtriplett.org>
 ---
- remote.c |   53 ++++++++++++++++++++++++++++-------------------------
- 1 files changed, 28 insertions(+), 25 deletions(-)
+ Documentation/config.txt               |   13 +++++++++++
+ Documentation/urls.txt                 |   18 ++++++++++++++++
+ contrib/completion/git-completion.bash |    2 +-
+ remote.c                               |   36 ++++++++++++++++++++++++--------
+ t/t5516-fetch-push.sh                  |   31 +++++++++++++++++++++++++++
+ 5 files changed, 90 insertions(+), 10 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5256c7f..38c7086 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1500,6 +1500,19 @@ url.<base>.insteadOf::
+ 	never-before-seen repository on the site.  When more than one
+ 	insteadOf strings match a given URL, the longest match is used.
+ 
++url.<base>.pushInsteadOf::
++	Any URL that starts with this value will not be pushed to;
++	instead, it will be rewritten to start with <base>, and the
++	resulting URL will be pushed to. In cases where some site serves
++	a large number of repositories, and serves them with multiple
++	access methods, some of which do not allow push, this feature
++	allows people to specify a pull-only URL and have git
++	automatically use an appropriate URL to push, even for a
++	never-before-seen repository on the site.  When more than one
++	pushInsteadOf strings match a given URL, the longest match is
++	used.  If a remote has an explicit pushurl, git will ignore this
++	setting for that remote.
++
+ user.email::
+ 	Your email address to be recorded in any newly created commits.
+ 	Can be overridden by the 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_EMAIL', and
+diff --git a/Documentation/urls.txt b/Documentation/urls.txt
+index 5355ebc..d813ceb 100644
+--- a/Documentation/urls.txt
++++ b/Documentation/urls.txt
+@@ -67,3 +67,21 @@ For example, with this:
+ a URL like "work:repo.git" or like "host.xz:/path/to/repo.git" will be
+ rewritten in any context that takes a URL to be "git://git.host.xz/repo.git".
+ 
++If you want to rewrite URLs for push only, you can create a
++configuration section of the form:
++
++------------
++	[url "<actual url base>"]
++		pushInsteadOf = <other url base>
++------------
++
++For example, with this:
++
++------------
++	[url "ssh://example.org/"]
++		pushInsteadOf = git://example.org/
++------------
++
++a URL like "git://example.org/path/to/repo.git" will be rewritten to
++"ssh://example.org/path/to/repo.git" for pushes, but pulls will still
++use the original URL.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index bf688e1..9859204 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1532,7 +1532,7 @@ _git_config ()
+ 	url.*.*)
+ 		local pfx="${cur%.*}."
+ 		cur="${cur##*.}"
+-		__gitcomp "insteadof" "$pfx" "$cur"
++		__gitcomp "insteadOf pushInsteadOf" "$pfx" "$cur"
+ 		return
+ 		;;
+ 	esac
 diff --git a/remote.c b/remote.c
-index 4b5b905..ff8e71f 100644
+index ff8e71f..73d33f2 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -28,6 +28,11 @@ struct rewrite {
- 	int instead_of_nr;
- 	int instead_of_alloc;
- };
-+struct rewrites {
-+	struct rewrite **rewrite;
-+	int rewrite_alloc;
-+	int rewrite_nr;
-+};
- 
- static struct remote **remotes;
- static int remotes_alloc;
-@@ -41,14 +46,12 @@ static struct branch *current_branch;
- static const char *default_remote_name;
+@@ -47,6 +47,7 @@ static const char *default_remote_name;
  static int explicit_default_remote_name;
  
--static struct rewrite **rewrite;
--static int rewrite_alloc;
--static int rewrite_nr;
-+static struct rewrites rewrites;
+ static struct rewrites rewrites;
++static struct rewrites rewrites_push;
  
  #define BUF_SIZE (2048)
  static char buffer[BUF_SIZE];
- 
--static const char *alias_url(const char *url)
-+static const char *alias_url(const char *url, struct rewrites *r)
- {
- 	int i, j;
- 	char *ret;
-@@ -57,14 +60,14 @@ static const char *alias_url(const char *url)
- 
- 	longest = NULL;
- 	longest_i = -1;
--	for (i = 0; i < rewrite_nr; i++) {
--		if (!rewrite[i])
-+	for (i = 0; i < r->rewrite_nr; i++) {
-+		if (!r->rewrite[i])
- 			continue;
--		for (j = 0; j < rewrite[i]->instead_of_nr; j++) {
--			if (!prefixcmp(url, rewrite[i]->instead_of[j].s) &&
-+		for (j = 0; j < r->rewrite[i]->instead_of_nr; j++) {
-+			if (!prefixcmp(url, r->rewrite[i]->instead_of[j].s) &&
- 			    (!longest ||
--			     longest->len < rewrite[i]->instead_of[j].len)) {
--				longest = &(rewrite[i]->instead_of[j]);
-+			     longest->len < r->rewrite[i]->instead_of[j].len)) {
-+				longest = &(r->rewrite[i]->instead_of[j]);
- 				longest_i = i;
- 			}
- 		}
-@@ -72,10 +75,10 @@ static const char *alias_url(const char *url)
- 	if (!longest)
- 		return url;
- 
--	ret = xmalloc(rewrite[longest_i]->baselen +
-+	ret = xmalloc(r->rewrite[longest_i]->baselen +
- 		     (strlen(url) - longest->len) + 1);
--	strcpy(ret, rewrite[longest_i]->base);
--	strcpy(ret + rewrite[longest_i]->baselen, url + longest->len);
-+	strcpy(ret, r->rewrite[longest_i]->base);
-+	strcpy(ret + r->rewrite[longest_i]->baselen, url + longest->len);
- 	return ret;
+@@ -104,17 +105,25 @@ static void add_url(struct remote *remote, const char *url)
+ 	remote->url[remote->url_nr++] = url;
  }
  
-@@ -103,7 +106,7 @@ static void add_url(struct remote *remote, const char *url)
- 
- static void add_url_alias(struct remote *remote, const char *url)
- {
--	add_url(remote, alias_url(url));
-+	add_url(remote, alias_url(url, &rewrites));
- }
- 
+-static void add_url_alias(struct remote *remote, const char *url)
+-{
+-	add_url(remote, alias_url(url, &rewrites));
+-}
+-
  static void add_pushurl(struct remote *remote, const char *pushurl)
-@@ -169,22 +172,22 @@ static struct branch *make_branch(const char *name, int len)
- 	return ret;
+ {
+ 	ALLOC_GROW(remote->pushurl, remote->pushurl_nr + 1, remote->pushurl_alloc);
+ 	remote->pushurl[remote->pushurl_nr++] = pushurl;
  }
  
--static struct rewrite *make_rewrite(const char *base, int len)
-+static struct rewrite *make_rewrite(struct rewrites *r, const char *base, int len)
++static void add_pushurl_alias(struct remote *remote, const char *url)
++{
++	const char *pushurl = alias_url(url, &rewrites_push);
++	if (pushurl != url)
++		add_pushurl(remote, pushurl);
++}
++
++static void add_url_alias(struct remote *remote, const char *url)
++{
++	add_url(remote, alias_url(url, &rewrites));
++	add_pushurl_alias(remote, url);
++}
++
+ static struct remote *make_remote(const char *name, int len)
  {
- 	struct rewrite *ret;
- 	int i;
- 
--	for (i = 0; i < rewrite_nr; i++) {
-+	for (i = 0; i < r->rewrite_nr; i++) {
- 		if (len
--		    ? (len == rewrite[i]->baselen &&
--		       !strncmp(base, rewrite[i]->base, len))
--		    : !strcmp(base, rewrite[i]->base))
--			return rewrite[i];
-+		    ? (len == r->rewrite[i]->baselen &&
-+		       !strncmp(base, r->rewrite[i]->base, len))
-+		    : !strcmp(base, r->rewrite[i]->base))
-+			return r->rewrite[i];
- 	}
- 
--	ALLOC_GROW(rewrite, rewrite_nr + 1, rewrite_alloc);
-+	ALLOC_GROW(r->rewrite, r->rewrite_nr + 1, r->rewrite_alloc);
- 	ret = xcalloc(1, sizeof(struct rewrite));
--	rewrite[rewrite_nr++] = ret;
-+	r->rewrite[r->rewrite_nr++] = ret;
- 	if (len) {
- 		ret->base = xstrndup(base, len);
- 		ret->baselen = len;
-@@ -355,7 +358,7 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	struct remote *ret;
+@@ -358,8 +367,13 @@ static int handle_config(const char *key, const char *value, void *cb)
  		subkey = strrchr(name, '.');
  		if (!subkey)
  			return 0;
--		rewrite = make_rewrite(name, subkey - name);
-+		rewrite = make_rewrite(&rewrites, name, subkey - name);
+-		rewrite = make_rewrite(&rewrites, name, subkey - name);
  		if (!strcmp(subkey, ".insteadof")) {
++			rewrite = make_rewrite(&rewrites, name, subkey - name);
++			if (!value)
++				return config_error_nonbool(key);
++			add_instead_of(rewrite, xstrdup(value));
++		} else if (!strcmp(subkey, ".pushinsteadof")) {
++			rewrite = make_rewrite(&rewrites_push, name, subkey - name);
  			if (!value)
  				return config_error_nonbool(key);
-@@ -433,10 +436,10 @@ static void alias_all_urls(void)
+ 			add_instead_of(rewrite, xstrdup(value));
+@@ -433,14 +447,18 @@ static void alias_all_urls(void)
+ {
+ 	int i, j;
+ 	for (i = 0; i < remotes_nr; i++) {
++		int add_pushurl_aliases;
  		if (!remotes[i])
  			continue;
- 		for (j = 0; j < remotes[i]->url_nr; j++) {
--			remotes[i]->url[j] = alias_url(remotes[i]->url[j]);
-+			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
- 		}
+-		for (j = 0; j < remotes[i]->url_nr; j++) {
+-			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
+-		}
  		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
--			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j]);
-+			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
+ 			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
  		}
++		add_pushurl_aliases = remotes[i]->pushurl_nr == 0;
++		for (j = 0; j < remotes[i]->url_nr; j++) {
++			if (add_pushurl_aliases)
++				add_pushurl_alias(remotes[i], remotes[i]->url[j]);
++			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
++		}
  	}
  }
+ 
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 2d2633f..8f455c7 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -122,6 +122,23 @@ test_expect_success 'fetch with insteadOf' '
+ 	)
+ '
+ 
++test_expect_success 'fetch with pushInsteadOf (should not rewrite)' '
++	mk_empty &&
++	(
++		TRASH=$(pwd)/ &&
++		cd testrepo &&
++		git config "url.trash/.pushInsteadOf" "$TRASH" &&
++		git config remote.up.url "$TRASH." &&
++		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
++		git fetch up &&
++
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
+ test_expect_success 'push without wildcard' '
+ 	mk_empty &&
+ 
+@@ -162,6 +179,20 @@ test_expect_success 'push with insteadOf' '
+ 	)
+ '
+ 
++test_expect_success 'push with pushInsteadOf' '
++	mk_empty &&
++	TRASH="$(pwd)/" &&
++	git config "url.$TRASH.pushInsteadOf" trash/ &&
++	git push trash/testrepo refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd testrepo &&
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
+ test_expect_success 'push with matching heads' '
+ 
+ 	mk_test heads/master &&
 -- 
 1.6.3.3
