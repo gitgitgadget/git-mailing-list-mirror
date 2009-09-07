@@ -1,8 +1,10 @@
 From: "Nick Edelen" <sirnot@gmail.com>
-Subject: [PATCH 7/6 (v4)] support for commit grafts, slight change to general
- mechanism
-Date: Mon, 07 Sep 2009 16:11:48 +0200
-Message-ID: <op.uzv4dyuotdk399@sirnot.private>
+Subject: Re: [PATCH 3/6 (v4)] support for non-commit object caching in
+ rev-cache
+Date: Mon, 07 Sep 2009 16:10:52 +0200
+Message-ID: <op.uzv4cenytdk399@sirnot.private>
+References: <op.uys3qpixtdk399@sirnot.private>
+ <op.uyuwkrfntdk399@sirnot.private> <op.uyzwx4c6tdk399@sirnot>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: 7bit
@@ -11,257 +13,304 @@ To: "Nick Edelen" <sirnot@gmail.com>,
 	"Nicolas Pitre" <nico@cam.org>,
 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
 	"Sam Vilain" <sam@vilain.n
-X-From: git-owner@vger.kernel.org Mon Sep 07 16:12:02 2009
+X-From: git-owner@vger.kernel.org Mon Sep 07 16:18:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mkewp-00035d-OI
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 16:12:00 +0200
+	id 1Mkf3P-0005AD-FS
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 16:18:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753453AbZIGOLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 10:11:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753444AbZIGOLu
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 10:11:50 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:59920 "EHLO
+	id S1753367AbZIGOSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 10:18:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753278AbZIGOSg
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 10:18:36 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:47095 "EHLO
 	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386AbZIGOLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 10:11:49 -0400
-Received: by bwz19 with SMTP id 19so1598273bwz.37
-        for <git@vger.kernel.org>; Mon, 07 Sep 2009 07:11:51 -0700 (PDT)
+	with ESMTP id S1753149AbZIGOSf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 10:18:35 -0400
+Received: by bwz19 with SMTP id 19so1602575bwz.37
+        for <git@vger.kernel.org>; Mon, 07 Sep 2009 07:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:to:subject:from
-         :content-type:mime-version:content-transfer-encoding:message-id
-         :user-agent;
-        bh=WW+BzDUOIgPkTLu9UNvPRNZB55LNa933Z1qN3NuI5Bo=;
-        b=pM8xvkKassa8p88f9A+sY0A3LOfKvO7+9rNHu2nkG16sLQo8HaJ3pgtJrOZ/R/TIE1
-         NrutP0XX5JjVm+tI0bLXnW5hAvvoCdaZyhKRgJzTWmf4Wam+kj0f6ZV6qsXUiIqyHYoP
-         eV+E135rqWb9/CzLTy+LEQgoZUfKseN50kmpY=
+         :content-type:mime-version:references:content-transfer-encoding
+         :message-id:in-reply-to:user-agent;
+        bh=GKGquz0aF23WFYED3wgtKv2Aj+h3p3KxQICIpWudTWM=;
+        b=I3suNwFqPEd0X9sTlieYaClPCHOu9RExhc8r3LpxLwFAjlKfGoHSaRhFY21Unlw3l/
+         cb75U9fxhxHFTYZ2f5OLJ3vV6bsGgqBYK3X9YVMJo1b1N+DOIAf0oVM8OwpbSd0Vb6BB
+         xIGKs1zlduI/kpV5j4XLOtdiVipA9s44akhU4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:to:subject:from:content-type:mime-version
-         :content-transfer-encoding:message-id:user-agent;
-        b=ax6Wfc50SnH01VBeqeNbYmnkCHoF3k9Fkz3tCsIqDODISaBdz6pRSr7hxQid8gMtTp
-         L+ALLRmJFLDP1fMNLfeTQuFaa6pVkb8bDSta+1HedkT2i4TtpOkOY3+6I2wWMQxJlQk3
-         1JKdlXI5QtTJr0evmQY27je2ArxBIyEltKPZY=
-Received: by 10.103.76.5 with SMTP id d5mr6168485mul.131.1252332710895;
-        Mon, 07 Sep 2009 07:11:50 -0700 (PDT)
+        h=date:to:subject:from:content-type:mime-version:references
+         :content-transfer-encoding:message-id:in-reply-to:user-agent;
+        b=m08aVtdxf0vb1qN9X77MpTyYxqgeVoKXFoR5AUl1jiVmESV0TV8NvNDueLZsP2289p
+         Jb2n0vW5k/ZwS1YBqGGjBDVUmnBSnkIieceGTFeipbnmrlK7qao1/wgDCFL0J0CMn61z
+         lIWE83Wr6ahesQ2RVG52ZNplrtpJ2Cl35JB+w=
+Received: by 10.103.84.32 with SMTP id m32mr6110860mul.33.1252332653880;
+        Mon, 07 Sep 2009 07:10:53 -0700 (PDT)
 Received: from sirnot.private (dhcp-077-251-020-197.chello.nl [77.251.20.197])
-        by mx.google.com with ESMTPS id w5sm15503658mue.4.2009.09.07.07.11.49
+        by mx.google.com with ESMTPS id n7sm15373557mue.36.2009.09.07.07.10.52
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Sep 2009 07:11:50 -0700 (PDT)
+        Mon, 07 Sep 2009 07:10:53 -0700 (PDT)
+In-Reply-To: <op.uyzwx4c6tdk399@sirnot>
 User-Agent: Opera Mail/9.63 (Win32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127933>
 
-Adds support for graft commits in rev-cache (w/ test), and slightly alters
-graft mechanism.  Before, parse_commit() checked the graft list on every
-commit.  Now register_commit_graft() preemptively loads graft commits into
-memory, and sets a new 'graft' flag in the object.  This allows awareness of
-the commits' medical history without searching a (normally private) array upon
-each commit.
+Summarized, this third patch contains:
+ - support for non-commit object caching
+ - expansion of porcelain to accomodate non-commit objects
+ - appropriate tests
+
+Objects are stored relative to the commit in which they were introduced -- 
+commits are 'diffed' against their parents.  This will eliminate the need for 
+tree recursion in cached commits (significantly reducing I/O), and potentially 
+be useful to external applications.
 
 Signed-off-by: Nick Edelen <sirnot@gmail.com>
 
 ---
-THE PATCH THAT NEVER WAS!  (sorry about the wack numbering; the change isn't
-very big and it seemed silly to escalate the version)
+ rev-cache.c |  202 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 200 insertions(+), 2 deletions(-)
 
- builtin-rev-cache.c       |   14 ++++++++++++--
- commit.c                  |   25 +++++++++++++++++++++++--
- object.h                  |    3 ++-
- rev-cache.c               |   32 ++++++++++++++++++++++++++++++++
- t/t6017-rev-cache-list.sh |    6 ++++++
- 5 files changed, 75 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-rev-cache.c b/builtin-rev-cache.c
-index 4c1766d..b36bc39 100644
---- a/builtin-rev-cache.c
-+++ b/builtin-rev-cache.c
-@@ -102,8 +102,18 @@ static int test_rev_list(int argc, const char *argv[])
- 			flags ^= UNINTERESTING;
- 		else if (!strcmp(argv[i], "--objects"))
- 			revs.tree_objects = revs.blob_objects = 1;
--		else
--			handle_revision_arg(argv[i], &revs, flags, 1);
-+		else {
-+			struct commit_graft graft;
-+
-+			if (argv[i][0] == ':') {
-+				handle_revision_arg(argv[i] + 1, &revs, flags, 1);
-+
-+				hashcpy(graft.sha1, revs.pending.objects[revs.pending.nr - 1].item->sha1);
-+				graft.nr_parent = -1;
-+				register_commit_graft(&graft, 0);
-+			} else
-+				handle_revision_arg(argv[i], &revs, flags, 1);
-+		}
- 	}
- 
- 	setup_revisions(0, 0, &revs, 0);
-diff --git a/commit.c b/commit.c
-index b7485c4..8429f69 100644
---- a/commit.c
-+++ b/commit.c
-@@ -99,6 +99,7 @@ static int commit_graft_pos(const unsigned char *sha1)
- 
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(graft->sha1);
- 
- 	if (0 <= pos) {
-@@ -123,6 +124,12 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 			(commit_graft_nr - pos - 1) *
- 			sizeof(*commit_graft));
- 	commit_graft[pos] = graft;
-+
-+	commit = lookup_commit(graft->sha1);
-+	commit->object.graft = 1;
-+	commit->object.parsed = 0;
-+	parse_commit(commit); /* in case commit was already parsed */
-+
- 	return 0;
- }
- 
-@@ -221,6 +228,7 @@ int write_shallow_commits(int fd, int use_pack_protocol)
- 
- int unregister_shallow(const unsigned char *sha1)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(sha1);
- 	if (pos < 0)
- 		return -1;
-@@ -229,6 +237,12 @@ int unregister_shallow(const unsigned char *sha1)
- 				sizeof(struct commit_graft *)
- 				* (commit_graft_nr - pos - 1));
- 	commit_graft_nr--;
-+
-+	commit = lookup_commit(sha1);
-+	commit->object.graft = 0;
-+	commit->object.parsed = 0;
-+	parse_commit(commit);
-+
- 	return 0;
- }
- 
-@@ -255,7 +269,11 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 	while (pop_commit(pptr))
- 		; /* clear anything from cache */
- 
--	graft = lookup_commit_graft(item->object.sha1);
-+	if (item->object.graft)
-+		graft = lookup_commit_graft(item->object.sha1);
-+	else
-+		graft = 0;
-+
- 	while (bufptr + 48 < tail && !memcmp(bufptr, "parent ", 7)) {
- 		struct commit *new_parent;
- 
-@@ -283,7 +301,10 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 				continue;
- 			pptr = &commit_list_insert(new_parent, pptr)->next;
- 		}
--	}
-+		item->object.graft = 1;
-+	} else
-+		item->object.graft = 0;
-+
- 	item->date = parse_commit_date(bufptr, tail);
- 
- 	return 0;
-diff --git a/object.h b/object.h
-index 89dd0c4..f848e0f 100644
---- a/object.h
-+++ b/object.h
-@@ -22,7 +22,7 @@ struct object_array {
- };
- 
- #define TYPE_BITS   3
--#define FLAG_BITS  27
-+#define FLAG_BITS  26
- 
- /*
-  * The object type is stored in 3 bits.
-@@ -30,6 +30,7 @@ struct object_array {
- struct object {
- 	unsigned parsed : 1;
- 	unsigned used : 1;
-+	unsigned graft : 1;
- 	unsigned type : TYPE_BITS;
- 	unsigned flags : FLAG_BITS;
- 	unsigned char sha1[20];
 diff --git a/rev-cache.c b/rev-cache.c
-index 3595f66..84305e9 100644
+index 8951cdf..8af8c85 100644
 --- a/rev-cache.c
 +++ b/rev-cache.c
-@@ -663,9 +663,41 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 			}
- 		} else if (!ipath_nr && co->date <= date)
- 			slop--;
-+		else if (!ipath_nr && !upath_nr)
-+			break;
- 		else
- 			slop = SLOP;
+@@ -259,6 +259,32 @@ unsigned char *get_cache_slice(struct commit *commit)
  
-+		/* before opening further topo-relations, check if the parenting has had medical attention */
-+		if (obj->graft) {
-+			struct commit_list *list;
+ /* traversal */
+ 
++static void handle_noncommit(struct rev_info *revs, unsigned char *ptr, struct rc_object_entry *entry)
++{
++	struct object *obj = 0;
 +
-+			parse_commit(co);
-+			obj->flags &= ~FACE_VALUE;
-+			last_objects[path] = 0;
++	switch (entry->type) {
++	case OBJ_TREE :
++		if (revs->tree_objects)
++			obj = (struct object *)lookup_tree(entry->sha1);
++		break;
++	case OBJ_BLOB :
++		if (revs->blob_objects)
++			obj = (struct object *)lookup_blob(entry->sha1);
++		break;
++	case OBJ_TAG :
++		if (revs->tag_objects)
++			obj = (struct object *)lookup_tag(entry->sha1);
++		break;
++	}
 +
-+			/* we're only interested in its indirect influence */
-+			for (list = co->parents; list; list = list->next) {
-+				struct rc_index_entry *iep;
-+				struct object *po = &list->item->object;
++	if (!obj)
++		return;
 +
-+				iep = search_index(po->sha1);
-+				if (!iep || hashcmp(idx_caches + 20 * iep->cache_index, head->sha1)) {
-+					if (!(obj->flags & UNINTERESTING) && !(po->flags & UNINTERESTING))
-+						ioutside = 1;
-+				}
-+			}
++	obj->flags |= FACE_VALUE;
++	add_pending_object(revs, obj, "");
++}
 +
-+			/* an abrupt end */
-+			myworkp = &commit_list_insert(co, myworkp)->next;
-+			if (entry->uninteresting)
-+				upath_nr--;
-+			else
-+				ipath_nr--;
-+			paths[path] = 0;
-+			continue;
+ static int setup_traversal(struct rc_slice_header *head, unsigned char *map, struct commit *commit, struct commit_list **work)
+ {
+ 	struct rc_index_entry *iep;
+@@ -347,9 +373,12 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
+ 		i += RC_ACTUAL_OBJECT_ENTRY_SIZE(entry);
+ 
+ 		/* add extra objects if necessary */
+-		if (entry->type != OBJ_COMMIT)
++		if (entry->type != OBJ_COMMIT) {
++			if (consume_children)
++				handle_noncommit(revs, map + index, entry);
++
+ 			continue;
+-		else
++		} else
+ 			consume_children = 0;
+ 
+ 		if (path >= total_path_nr)
+@@ -777,6 +806,171 @@ static void add_object_entry(const unsigned char *sha1, int type, struct rc_obje
+ 
+ }
+ 
++/* returns non-zero to continue parsing, 0 to skip */
++typedef int (*dump_tree_fn)(const unsigned char *, const char *, unsigned int); /* sha1, path, mode */
++
++/* we need to walk the trees by hash, so unfortunately we can't use traverse_trees in tree-walk.c */
++static int dump_tree(struct tree *tree, dump_tree_fn fn)
++{
++	struct tree_desc desc;
++	struct name_entry entry;
++	struct tree *subtree;
++	int r;
++
++	if (parse_tree(tree))
++		return -1;
++
++	init_tree_desc(&desc, tree->buffer, tree->size);
++	while (tree_entry(&desc, &entry)) {
++		switch (fn(entry.sha1, entry.path, entry.mode)) {
++		case 0 :
++			goto continue_loop;
++		default :
++			break;
 +		}
 +
- 		/* open parents */
- 		if (entry->merge_nr) {
- 			int j, off = index + sizeof(struct rc_object_entry_ondisk);
-diff --git a/t/t6017-rev-cache-list.sh b/t/t6017-rev-cache-list.sh
-index 3286560..6ada7ac 100755
---- a/t/t6017-rev-cache-list.sh
-+++ b/t/t6017-rev-cache-list.sh
-@@ -92,6 +92,7 @@ git-rev-list --topo-order HEAD --not HEAD~2 >proper_commit_list_limited2
- git-rev-list --topo-order HEAD >proper_commit_list
- git-rev-list --objects HEAD >proper_object_list
- git-rev-list HEAD --max-age=$min_date --min-age=$max_date >proper_list_date_limited
-+git-rev-cache test HEAD :HEAD~2 >proper_shallow_list
- 
- cache_sha1=`git-rev-cache add HEAD 2>output.err`
- 
-@@ -252,4 +253,9 @@ test_expect_success 'test --ignore-size function in fuse' '
- 	test -e .git/rev-cache/$cache_sha1
- '
- 
-+test_expect_success 'check graft handling' '
-+	git-rev-cache test HEAD :HEAD~2 >list
-+	test_cmp list proper_shallow_list
-+'
++		if (S_ISDIR(entry.mode)) {
++			subtree = lookup_tree(entry.sha1);
++			if (!subtree)
++				return -2;
 +
- test_done
++			if ((r = dump_tree(subtree, fn)) < 0)
++				return r;
++		}
++
++continue_loop:
++		continue;
++	}
++
++	return 0;
++}
++
++static int dump_tree_callback(const unsigned char *sha1, const char *path, unsigned int mode)
++{
++	unsigned char data[21];
++
++	hashcpy(data, sha1);
++	data[20] = !!S_ISDIR(mode);
++
++	strbuf_add(acc_buffer, data, 21);
++
++	return 1;
++}
++
++static void tree_addremove(struct diff_options *options,
++	int whatnow, unsigned mode,
++	const unsigned char *sha1,
++	const char *concatpath)
++{
++	unsigned char data[21];
++
++	if (whatnow != '+')
++		return;
++
++	hashcpy(data, sha1);
++	data[20] = !!S_ISDIR(mode);
++
++	strbuf_add(acc_buffer, data, 21);
++}
++
++static void tree_change(struct diff_options *options,
++	unsigned old_mode, unsigned new_mode,
++	const unsigned char *old_sha1,
++	const unsigned char *new_sha1,
++	const char *concatpath)
++{
++	unsigned char data[21];
++
++	if (!hashcmp(old_sha1, new_sha1))
++		return;
++
++	hashcpy(data, new_sha1);
++	data[20] = !!S_ISDIR(new_mode);
++
++	strbuf_add(acc_buffer, data, 21);
++}
++
++static int sort_type_hash(const void *a, const void *b)
++{
++	const unsigned char *sa = (const unsigned char *)a,
++		*sb = (const unsigned char *)b;
++
++	if (sa[20] == sb[20])
++		return hashcmp(sa, sb);
++
++	return sa[20] > sb[20] ? -1 : 1;
++}
++
++static int add_unique_objects(struct commit *commit)
++{
++	struct commit_list *list;
++	struct strbuf os, ost, *orig_buf;
++	struct diff_options opts;
++	int i, j, next;
++	char is_first = 1;
++
++	strbuf_init(&os, 0);
++	strbuf_init(&ost, 0);
++	orig_buf = acc_buffer;
++
++	diff_setup(&opts);
++	DIFF_OPT_SET(&opts, RECURSIVE);
++	DIFF_OPT_SET(&opts, TREE_IN_RECURSIVE);
++	opts.change = tree_change;
++	opts.add_remove = tree_addremove;
++
++	/* this is only called for non-ends (ie. all parents interesting) */
++	for (list = commit->parents; list; list = list->next) {
++		if (is_first)
++			acc_buffer = &os;
++		else
++			acc_buffer = &ost;
++
++		strbuf_setlen(acc_buffer, 0);
++		diff_tree_sha1(list->item->tree->object.sha1, commit->tree->object.sha1, "", &opts);
++		qsort(acc_buffer->buf, acc_buffer->len / 21, 21, (int (*)(const void *, const void *))hashcmp);
++
++		/* take intersection */
++		if (!is_first) {
++			for (next = i = j = 0; i < os.len; i += 21) {
++				while (j < ost.len && hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)) < 0)
++					j += 21;
++
++				if (j >= ost.len || hashcmp((unsigned char *)(ost.buf + j), (unsigned char *)(os.buf + i)))
++					continue;
++
++				if (next != i)
++					memcpy(os.buf + next, os.buf + i, 21);
++				next += 21;
++			}
++
++			if (next != i)
++				strbuf_setlen(&os, next);
++		} else
++			is_first = 0;
++	}
++
++	if (is_first) {
++		acc_buffer = &os;
++		dump_tree(commit->tree, dump_tree_callback);
++	}
++
++	if (os.len)
++		qsort(os.buf, os.len / 21, 21, sort_type_hash);
++
++	acc_buffer = orig_buf;
++	for (i = 0; i < os.len; i += 21)
++		add_object_entry((unsigned char *)(os.buf + i), os.buf[i + 20] ? OBJ_TREE : OBJ_BLOB, 0, 0, 0);
++
++	/* last but not least, the main tree */
++	add_object_entry(commit->tree->object.sha1, OBJ_TREE, 0, 0, 0);
++
++	strbuf_release(&ost);
++	strbuf_release(&os);
++
++	return i / 21 + 1;
++}
++
+ static void init_revcache_directory(void)
+ {
+ 	struct stat fi;
+@@ -902,6 +1096,10 @@ int make_cache_slice(struct rev_cache_info *rci,
+ 		add_object_entry(0, 0, &object, &merge_paths, &split_paths);
+ 		object_nr++;
+ 
++		/* add all unique children for this commit */
++		if (rci->objects && !object.is_end)
++			object_nr += add_unique_objects(commit);
++
+ 		/* print every ~1MB or so */
+ 		if (buffer.len > 1000000) {
+ 			write_in_full(fd, buffer.buf, buffer.len);
 -- 
-tg: (3a6aad2..) t/revcache/graft (depends on: t/revcache/names)
+tg: (0b2feda..) t/revcache/objects (depends on: t/revcache/basic)
