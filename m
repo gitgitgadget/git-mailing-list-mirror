@@ -1,97 +1,83 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: how to skip branches on git svn clone/fetch when there are errors
-Date: Mon, 7 Sep 2009 11:30:58 +0200
-Message-ID: <9accb4400909070230n413c6ecfqef8238422dd5d3b@mail.gmail.com>
-References: <9accb4400908310126v15b08c7fr425c9daff26012f3@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: tracking branch for a rebase
+Date: Mon, 07 Sep 2009 11:53:30 +0200
+Message-ID: <4AA4D81A.1030203@drmicha.warpmail.net>
+References: <20090904135414.GA3728@honk.padd.com> <4AA124DD.1030208@drmicha.warpmail.net> <20090904181846.GC19093@coredump.intra.peff.net> <20090904185949.GA21583@atjola.homenet> <20090905061250.GA29863@coredump.intra.peff.net> <20090905140127.GA29037@atjola.homenet> <20090905142841.GB15631@coredump.intra.peff.net> <7vfxaz9wfi.fsf@alter.siamese.dyndns.org> <20090907084324.GB17997@coredump.intra.peff.net> <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 07 11:31:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 07 11:53:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkaZ1-000856-0C
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 11:31:07 +0200
+	id 1Mkav2-0006iZ-B6
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 11:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbZIGJa6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 05:30:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbZIGJa6
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 05:30:58 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:59693 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751649AbZIGJa5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 05:30:57 -0400
-Received: by bwz19 with SMTP id 19so1449018bwz.37
-        for <git@vger.kernel.org>; Mon, 07 Sep 2009 02:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=smv6uQQRCdgQbmWesZHA15kNaCqAFnEzeUotPEAl5XU=;
-        b=Dt+LRAZQIp/uXvgpK0VKEeEviPmi72LzwkxahFpmwzFTjkEj0ol7eDAciYnz2tMU/5
-         AE5m9S5sgRMkFV2tQwxh5GK662vT77f2aGePHmPYaSTXJhxbcqWnFJ4gsftXYbyxHXHb
-         6RpKu0wEO0b8YlOmz56IerLaUDFWcpqKU+Fwg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=br8kFnVD2Lbl3KId4u/64PV/flL3DyvI9UBI+gtcl9WF1D8L/bS0kgGLjnK5CFoOut
-         /jKfw5t+eM+s8BzipYmnaykvbsyoYSBStx7L3lognor7rtU/jkb9rqtaO8jL+0r5UYnP
-         sXIvhVF5p9oC2b4LowftZZyBI/JlOD3O8tIn8=
-Received: by 10.204.152.22 with SMTP id e22mr11935999bkw.93.1252315858487; 
-	Mon, 07 Sep 2009 02:30:58 -0700 (PDT)
-In-Reply-To: <9accb4400908310126v15b08c7fr425c9daff26012f3@mail.gmail.com>
+	id S1752539AbZIGJxm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 05:53:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbZIGJxm
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 05:53:42 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35691 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752008AbZIGJxm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 05:53:42 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id F2265632BD;
+	Mon,  7 Sep 2009 05:53:42 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 07 Sep 2009 05:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=3ayM66O6F4HQVbPHDG51b596OCw=; b=Ocxj/zv+tJB8hKJK+TXS2HBVCwfkmAQB3ZIrq5BGE78Yp6z1mQLr6FUmr3R1alxVZyTrGxV0sOIoBJK+c681Qh2mAIy8RB4tjo2OZUq4OMOT9L55z8ftkDp58qB+4NhvaH9IrLp5H/YTUcJUxBZ1nhn0SuYbkHYwgFsvmJkWsQA=
+X-Sasl-enc: rnsgFrEQt6Vpe+qkiFVBf8XHMQdVlGt2XqMf6RiITgYe 1252317222
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B5F8B6108C;
+	Mon,  7 Sep 2009 05:53:41 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20090902 Lightning/1.0pre Shredder/3.0b4pre
+In-Reply-To: <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127917>
 
-On Mon, Aug 31, 2009 at 10:26 AM, Daniele
-Segato<daniele.bilug@gmail.com> wrote:>
-> git init
-> git svn init svn://svn.mydomain.com/path/to/repo -T HEAD -b BRANCHES =
--t TAGS
-> $ git svn fetch
-> Use of uninitialized value in concatenation (.) or string at
-> /usr/lib/perl5/SVN/Core.pm line 584.
-> Authorization failed: =C2=A0at /usr/bin/git-svn line 1415
->
+Johannes Schindelin venit, vidit, dixit 07.09.2009 11:29:
+> Hi,
+> 
+> On Mon, 7 Sep 2009, Jeff King wrote:
+> 
+>> On Sun, Sep 06, 2009 at 10:05:21PM -0700, Junio C Hamano wrote:
+>>
+>>> 	ref@{number}	-- nth reflog entry
+>>>         ref@{time}	-- ref back then
+>>> 	@{-number}	-- nth branch switching
+>>>
+>>> So perhaps ref@{upstream}, or any string that is not a number and cannot
+>>> be time, can trigger the magic operation on the ref with ref@{magic}
+>>> syntax?
+>>
+>> I think using @{} is a reasonable extension format.
+> 
+> Sorry to enter this thread that late, but I did not realize that it 
+> touches my %<branch> work.
+> 
+> Your proposal leads to something like "master@{upstream}@{2.days.ago}", 
+> which looks ugly.  And it is much more to type.
+> 
+> I still think that it is not too-much asked for to require the 
+> "refs/heads/" prefix if somebody starts her branch names with "%".
+> 
+> Or did I miss something (as I do not have time to read long mails these 
+> days, I tend to read only the short, to-the-point ones; I allowed myself 
+> to only skim over the rest of your mail)?
 
-more info on the error (enabled the confess instead of croak to the
-Core.pm library)
+Solution needs to be:
+- practical (short, clear)
+- not too brutal (on existing users of legal "exotic" refnames)
+- extensible (for later uses)
 
-Use of uninitialized value in concatenation (.) or string at
-/usr/lib/perl5/SVN/Core.pm line 585.
-Authorization failed:  at /usr/lib/perl5/SVN/Core.pm line 654
-	SVN::Error::confess_on_error('_p_svn_error_t=3DSCALAR(0x9492a50)')
-called at /usr/lib/perl5/SVN/Ra.pm line 492
-	SVN::Ra::AUTOLOAD('Git::SVN::Ra=3DHASH(0x945dae8)',
-'alfresco-enterprise-mirror/alfresco/BRANCHES/V2.1-A/root', 7738,
-'SVN::Pool=3DREF(0x9492bc0)') called at /usr/bin/git-svn line 3760
-	Git::SVN::Ra::check_path('Git::SVN::Ra=3DHASH(0x945dae8)',
-'alfresco-enterprise-mirror/alfresco/BRANCHES/V2.1-A/root', 7738)
-called at /usr/bin/git-svn line 4045
-	Git::SVN::Ra::get_dir_check('Git::SVN::Ra=3DHASH(0x945dae8)',
-'HASH(0x92131e0)', 'HASH(0x9388050)', 7738) called at /usr/bin/git-svn
-line 4062
-	Git::SVN::Ra::match_globs('Git::SVN::Ra=3DHASH(0x945dae8)',
-'HASH(0x92131e0)', 'HASH(0x9463c00)', 'ARRAY(0x90bbc00)', 7738) called
-at /usr/bin/git-svn line 3985
-	Git::SVN::Ra::gs_fetch_loop_common('Git::SVN::Ra=3DHASH(0x945dae8)',
-7737, 16113, 'ARRAY(0x90bbbe0)', 'ARRAY(0x90bbc00)') called at
-/usr/bin/git-svn line 1415
-	Git::SVN::fetch_all('svn', 'HASH(0x9464250)') called at
-/usr/bin/git-svn line 372
-	main::cmd_fetch() called at /usr/bin/git-svn line 253
-	eval {...} called at /usr/bin/git-svn line 251
-
-
-I'll keep looking at it to see if I can figure out a way to "skip" the
-error myself and, eventually, provide a patch
-
-Bye,
-Daniele
+Michael
+152 chars for Dscho :)
