@@ -1,88 +1,90 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: Re: how to skip branches on git svn clone/fetch when there are errors
-Date: Mon, 7 Sep 2009 17:53:21 +0200
-Message-ID: <4d8e3fd30909070853u6f4bc179qac96edae5c83a864@mail.gmail.com>
-References: <9accb4400908310126v15b08c7fr425c9daff26012f3@mail.gmail.com> 
-	<9accb4400909070230n413c6ecfqef8238422dd5d3b@mail.gmail.com> 
-	<9accb4400909070634oee46b78g9270586a2b0eb4b9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep: fix exit status if external_grep() returns error
+Date: Mon, 07 Sep 2009 11:13:55 -0700
+Message-ID: <7vskeyvd0c.fsf@alter.siamese.dyndns.org>
+References: <20090902080305.GA11549@neumann>
+ <20090902081917.GA5447@coredump.intra.peff.net>
+ <20090904070216.GA3996@darc.dnsalias.org>
+ <20090905061804.GB29863@coredump.intra.peff.net>
+ <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+ <20090905072017.GA5152@coredump.intra.peff.net>
+ <7v3a717rgl.fsf@alter.siamese.dyndns.org>
+ <20090905123117.GA3099@darc.dnsalias.org>
+ <7v3a6zu1dk.fsf@alter.siamese.dyndns.org> <20090907084801.GB10797@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 17:53:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Sep 07 20:14:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkgXR-0001lt-0B
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 17:53:53 +0200
+	id 1MkijJ-0003MM-K9
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 20:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795AbZIGPxm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 11:53:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753760AbZIGPxm
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 11:53:42 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:39096 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753630AbZIGPxl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 11:53:41 -0400
-Received: by fxm17 with SMTP id 17so2073170fxm.37
-        for <git@vger.kernel.org>; Mon, 07 Sep 2009 08:53:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Jp5XbgYk98uYGCP7Xh8VMtcv+QIvTgRsPCsDQVILFy4=;
-        b=BEV6QCqWfM2liNMbfgVTk87F7t5DqwrpYS3drZmqcgcjgznyreZlUsxPL2+qvCTuvQ
-         wwY5PROUDV6fFd9auC6WrM5/JeeY4gbzVfvbmXar3T0gj6uMtuoE6SYED5erJxJMF517
-         1hc7lJvKwerD7U2Q1NMnlvzK68k+WbHTrPiC4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TLMVxc2yK2Oc6ZcDxXzDQNO09m88n0GVQ9Q+mnnzQSqXHI+g02pB8ctV4NpzY1vG0U
-         fTiAe+gIrIShTQelpDAFld7X/XFSUMO3P3Lin1305I/SKgIDbU9JrYqkNMJ7bgvFcRFJ
-         gELjoGl5JKmn4kYJYvJzaL/05l08F8clmwG2E=
-Received: by 10.86.10.36 with SMTP id 36mr7801708fgj.61.1252338821917; Mon, 07 
-	Sep 2009 08:53:41 -0700 (PDT)
-In-Reply-To: <9accb4400909070634oee46b78g9270586a2b0eb4b9@mail.gmail.com>
+	id S1753454AbZIGSOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 14:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198AbZIGSOH
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 14:14:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61907 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbZIGSOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 14:14:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 33971230F9;
+	Mon,  7 Sep 2009 14:14:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BbN7vKkHuKJFKfYK84y3DKrhyxI=; b=H6i5u/
+	Z2jTD5jbHAa/SvNhmBLeA+nIaBMdgitAQdSu6Dw7NdPjrSwbtgV1kA6QwlSkUhX/
+	uJyn8hLoLX2x0wxXJNTWjEy3U7rGRUR3oO0v7FKEKDdG0om/K2WHsXYI4hPMseoC
+	ReaI0wUL9Sh0qMYGwmD+UZTBtKgX1MdUeFwn0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fH3+VlGlhOs5YqMVpZyk/ZTH/6iw2HBi
+	ujKX3xcaagZ9GrObPGQxD9vsFmvQ0HAp5T2erXNDb//y069yZSyeW+2mp0iGu0G5
+	ZYnEDg52rlZ6XCUJMEfQTyqVdrTkrWe0pBUczJKvqNpKOMexMHls6ZrSg0mRPFm4
+	zsjrFQ+bg44=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DE168230F4;
+	Mon,  7 Sep 2009 14:14:01 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F2599230F3; Mon,  7 Sep
+ 2009 14:13:56 -0400 (EDT)
+In-Reply-To: <20090907084801.GB10797@localhost> (Clemens Buchacher's message
+ of "Mon\, 7 Sep 2009 10\:48\:01 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 385F82D0-9BDA-11DE-98A6-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127941>
 
-On Mon, Sep 7, 2009 at 3:34 PM, Daniele Segato<daniele.bilug@gmail.com>=
- wrote:
-[...]
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Ciao Daniele,
+> diff --git a/builtin-grep.c b/builtin-grep.c
+> index ad0e0a5..b577738 100644
+> --- a/builtin-grep.c
+> +++ b/builtin-grep.c
+> @@ -500,9 +500,9 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached,
+>  	 * be a lot more optimized
+>  	 */
+>  	if (!cached && external_grep_allowed) {
+> -		hit = external_grep(opt, paths, cached);
+> -		if (hit >= 0)
+> -			return hit;
+> +		int ret = external_grep(opt, paths, cached);
+> +		if (ret >= 0)
+> +			return ret;
 
-> From e8a1a12e83b3f0b18ce842190d8fc8eddaa77f68 Mon Sep 17 00:00:00 200=
-1
-> From: Daniele Segato <daniele.bilug@gmail.com>
-> Date: Mon, 7 Sep 2009 15:30:14 +0200
-> Subject: [PATCH] Ignore error 175007 authorization failed on checkpat=
-h
->
-> I don't know if this is the best solution to solve the issue but it d=
-oes
-> let me download the repo skipping the problematics paths
+Well caught, and this deserves to go to maint.
 
-Usually these lines are for the commit message, I guess you don't want
-to store these two lines in git.git :-)
+An alternative would be to reset hit to zero if we decide to use the
+internal one after this conditional.
 
-> ---
-
-So if you want to add comments like you did, write them after the 3
-minus and before the content of the patch.
-
-> =A0git-svn.perl | =A0 16 ++++++++++++++++
-> =A01 files changed, 16 insertions(+), 0 deletions(-)
->
-> diff --git a/git-svn.perl b/git-svn.perl
-> index a366c89..0ab6453 100755
-
-Ciao,
---=20
-Paolo
+Thanks.
