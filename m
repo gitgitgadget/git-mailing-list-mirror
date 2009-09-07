@@ -1,251 +1,178 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: [PATCH 2/2] Add url.<base>.pushInsteadOf: URL rewriting for push
- only
-Date: Mon, 7 Sep 2009 00:00:20 -0700
-Message-ID: <0be9995dcd7d48c918fa75f4d9e557a6144a047c.1252306396.git.josh@joshtriplett.org>
-References: <cover.1252306396.git.josh@joshtriplett.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Issue 323 in msysgit: Can't clone over http
+Date: Mon, 07 Sep 2009 00:10:19 -0700
+Message-ID: <7vocpn44dg.fsf@alter.siamese.dyndns.org>
+References: <7viqfzvwf1.fsf@alter.siamese.dyndns.org>
+ <0016e6470f36315b8a0472bc75a8@google.com>
+ <20090904212956.f02b0c60.rctay89@gmail.com>
+ <7v8wgrbb9e.fsf@alter.siamese.dyndns.org>
+ <be6fef0d0909062253p1b86628et8a9f979952eebb00@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 07 09:07:40 2009
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Tom Preston-Werner <tom@mojombo.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 09:10:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkYK9-0000kF-9T
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:07:37 +0200
+	id 1MkYN4-0001R4-LT
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbZIGHHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 03:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751339AbZIGHHJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:07:09 -0400
-Received: from slow3-v.mail.gandi.net ([217.70.178.89]:47534 "EHLO
-	slow3-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbZIGHHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 03:07:05 -0400
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	by slow3-v.mail.gandi.net (Postfix) with ESMTP id AB3973B47C
-	for <git@vger.kernel.org>; Mon,  7 Sep 2009 09:01:03 +0200 (CEST)
-Received: from feather (pool-173-50-250-234.ptldor.fios.verizon.net [173.50.250.234])
-	by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 8A0A7225187;
-	Mon,  7 Sep 2009 08:59:19 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <cover.1252306396.git.josh@joshtriplett.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751417AbZIGHK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 03:10:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbZIGHK3
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:10:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51048 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751184AbZIGHK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 03:10:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B8E0C28954;
+	Mon,  7 Sep 2009 03:10:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=EtYHrJKWteXkAhVMvjmfpi5CJj4=; b=DDn+JEyrStEaHbSZGmFJwfp
+	5wNO0FXGeKQJwKDTVMZr9YWQWM8w0GUp6AMPmvy5OcaUoApqGUPJtaOZSowox6+k
+	FwgC3/zq2sdIcRnG0/QTQWr+TCPYzePyJH5HZRy4sS0OFmfvRXLuTrVKo/1yTngE
+	xl08fIxXYqp/pVnH8mbA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=l2Hgl9kTJGQhOHemuLY1TVAX1EBo07aitZP38JLYFSw2ev2N6
+	P0efQ/KsT3iDVvAB+DgvNx0EYxOEWnApuN9C9UVzHiK62PolngKVk2s7pb1GM0Zs
+	/tz8RJtEqjvblsG47PGN+IJ13ptOmiPt9end6ate/4Ko8Lgq21kEa2VG3A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 83D5528953;
+	Mon,  7 Sep 2009 03:10:26 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6C6AA28952; Mon,  7 Sep
+ 2009 03:10:21 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 84931FE8-9B7D-11DE-A6A7-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127892>
 
-This configuration option allows systematically rewriting fetch-only
-URLs to push-capable URLs when used with push.  For instance:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-[url "ssh://example.org/"]
-    pushInsteadOf = "git://example.org/"
+> We should only be interested in the MISSING_TARGET error, because it
+> tells us that the pack file is indeed not available. We aren't
+> interested in other errors, like being unable to perform the request
+> (HTTP_START_FAILED), or, say, a 401 (Unauthorized) error, or even a
+> 500; we simply move along and we tell the user we couldn't perform the
+> check.
 
-This will allow clones of "git://example.org/path/to/repo" to
-subsequently push to "ssh://example.org/path/to/repo", without manually
-configuring pushurl for that remote.
+We couldn't perform the check, and then what happens?  We continue as if
+everything is peachy, assuming that the *.idx file we thought we were
+going to get describe what objects are in the corresponding pack, and barf
+when we try to read the *.idx file that we failed to download even though
+the server said we should be able to get it?
 
-Includes documentation for the new option, bash completion updates, and
-test cases (both that pushInsteadOf applies to push and that it does
-*not* apply to fetch).
+> You're right to say that git before 39dc52c would have failed. It did,
+> but no one had the chance to break anything, because 39dc52c was part
+> of my http patch series that only went wild in v1.6.4.
+>
+> We can trace this back to 48188c2 ("http-walker: verify remote
+> packs"), which copied the "feature" from http-push.c to http-walker.c.
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
----
- Documentation/config.txt               |   12 +++++++++++
- Documentation/urls.txt                 |   18 +++++++++++++++++
- contrib/completion/git-completion.bash |    2 +-
- remote.c                               |   33 +++++++++++++++++++++++--------
- t/t5516-fetch-push.sh                  |   31 ++++++++++++++++++++++++++++++
- 5 files changed, 86 insertions(+), 10 deletions(-)
+Ahh, v1.6.3 ships with fetch_index() that checks CURLE_OK and returns an
+error(), but that is about .idx file, and it did not have the "do they
+have the corresponding .pack file?" check introduced by 48188c2
+(http-walker: verify remote packs, 2009-06-06), which is what makes the
+server give us 500 error.  Before that check, we ignored a request to
+fetch_index() if we already had one.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5256c7f..726aa89 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1500,6 +1500,18 @@ url.<base>.insteadOf::
- 	never-before-seen repository on the site.  When more than one
- 	insteadOf strings match a given URL, the longest match is used.
- 
-+url.<base>.pushInsteadOf::
-+	Any URL that starts with this value will not be pushed to;
-+	instead, it will be rewritten to start with <base>, and the
-+	resulting URL will be pushed to. In cases where some site serves
-+	a large number of repositories, and serves them with multiple
-+	access methods, some of which do not allow push, this feature
-+	allows people to specify a pull-only URL and have git
-+	automatically use an appropriate URL to push, even for a
-+	never-before-seen repository on the site.  When more than one
-+	pushInsteadOf strings match a given URL, the longest match is
-+	used.
-+
- user.email::
- 	Your email address to be recorded in any newly created commits.
- 	Can be overridden by the 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_EMAIL', and
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 5355ebc..d813ceb 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -67,3 +67,21 @@ For example, with this:
- a URL like "work:repo.git" or like "host.xz:/path/to/repo.git" will be
- rewritten in any context that takes a URL to be "git://git.host.xz/repo.git".
- 
-+If you want to rewrite URLs for push only, you can create a
-+configuration section of the form:
-+
-+------------
-+	[url "<actual url base>"]
-+		pushInsteadOf = <other url base>
-+------------
-+
-+For example, with this:
-+
-+------------
-+	[url "ssh://example.org/"]
-+		pushInsteadOf = git://example.org/
-+------------
-+
-+a URL like "git://example.org/path/to/repo.git" will be rewritten to
-+"ssh://example.org/path/to/repo.git" for pushes, but pulls will still
-+use the original URL.
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index bf688e1..9859204 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1532,7 +1532,7 @@ _git_config ()
- 	url.*.*)
- 		local pfx="${cur%.*}."
- 		cur="${cur##*.}"
--		__gitcomp "insteadof" "$pfx" "$cur"
-+		__gitcomp "insteadOf pushInsteadOf" "$pfx" "$cur"
- 		return
- 		;;
- 	esac
-diff --git a/remote.c b/remote.c
-index ff8e71f..6789786 100644
---- a/remote.c
-+++ b/remote.c
-@@ -47,6 +47,7 @@ static const char *default_remote_name;
- static int explicit_default_remote_name;
- 
- static struct rewrites rewrites;
-+static struct rewrites rewrites_push;
- 
- #define BUF_SIZE (2048)
- static char buffer[BUF_SIZE];
-@@ -104,17 +105,25 @@ static void add_url(struct remote *remote, const char *url)
- 	remote->url[remote->url_nr++] = url;
- }
- 
--static void add_url_alias(struct remote *remote, const char *url)
--{
--	add_url(remote, alias_url(url, &rewrites));
--}
--
- static void add_pushurl(struct remote *remote, const char *pushurl)
- {
- 	ALLOC_GROW(remote->pushurl, remote->pushurl_nr + 1, remote->pushurl_alloc);
- 	remote->pushurl[remote->pushurl_nr++] = pushurl;
- }
- 
-+static void add_pushurl_alias(struct remote *remote, const char *url)
-+{
-+	const char *pushurl = alias_url(url, &rewrites_push);
-+	if (pushurl != url)
-+		add_pushurl(remote, pushurl);
-+}
-+
-+static void add_url_alias(struct remote *remote, const char *url)
-+{
-+	add_url(remote, alias_url(url, &rewrites));
-+	add_pushurl_alias(remote, url);
-+}
-+
- static struct remote *make_remote(const char *name, int len)
- {
- 	struct remote *ret;
-@@ -358,8 +367,13 @@ static int handle_config(const char *key, const char *value, void *cb)
- 		subkey = strrchr(name, '.');
- 		if (!subkey)
- 			return 0;
--		rewrite = make_rewrite(&rewrites, name, subkey - name);
- 		if (!strcmp(subkey, ".insteadof")) {
-+			rewrite = make_rewrite(&rewrites, name, subkey - name);
-+			if (!value)
-+				return config_error_nonbool(key);
-+			add_instead_of(rewrite, xstrdup(value));
-+		} else if (!strcmp(subkey, ".pushinsteadof")) {
-+			rewrite = make_rewrite(&rewrites_push, name, subkey - name);
- 			if (!value)
- 				return config_error_nonbool(key);
- 			add_instead_of(rewrite, xstrdup(value));
-@@ -435,12 +449,13 @@ static void alias_all_urls(void)
- 	for (i = 0; i < remotes_nr; i++) {
- 		if (!remotes[i])
- 			continue;
--		for (j = 0; j < remotes[i]->url_nr; j++) {
--			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
--		}
- 		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
- 			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
- 		}
-+		for (j = 0; j < remotes[i]->url_nr; j++) {
-+			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
-+			add_pushurl_alias(remotes[i], remotes[i]->url[j]);
-+		}
- 	}
- }
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 2d2633f..8f455c7 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -122,6 +122,23 @@ test_expect_success 'fetch with insteadOf' '
- 	)
- '
- 
-+test_expect_success 'fetch with pushInsteadOf (should not rewrite)' '
-+	mk_empty &&
-+	(
-+		TRASH=$(pwd)/ &&
-+		cd testrepo &&
-+		git config "url.trash/.pushInsteadOf" "$TRASH" &&
-+		git config remote.up.url "$TRASH." &&
-+		git config remote.up.fetch "refs/heads/*:refs/remotes/origin/*" &&
-+		git fetch up &&
-+
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
- test_expect_success 'push without wildcard' '
- 	mk_empty &&
- 
-@@ -162,6 +179,20 @@ test_expect_success 'push with insteadOf' '
- 	)
- '
- 
-+test_expect_success 'push with pushInsteadOf' '
-+	mk_empty &&
-+	TRASH="$(pwd)/" &&
-+	git config "url.$TRASH.pushInsteadOf" trash/ &&
-+	git push trash/testrepo refs/heads/master:refs/remotes/origin/master &&
-+	(
-+		cd testrepo &&
-+		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
-+		test "z$r" = "z$the_commit" &&
-+
-+		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
-+	)
-+'
-+
- test_expect_success 'push with matching heads' '
- 
- 	mk_test heads/master &&
--- 
-1.6.3.3
+Why do we even call fetch_index() when we have one?  After all, we are
+talking about "git clone" here, so it is not about "we failed once and the
+previous attempt left .idx files we fetched".  Why
+
+should we even have .idx file to begin with, that would have protected
+v1.6.3 clients from getting this error?
+
+Unless we are calling fetch_index() on the same .idx file twice from our
+own stupidity, that is.
+
+The same logic now is in fetch_pack_index(), which is called from
+fetch_and_setup_pack_index().  I do not still see how we end up calling
+the function for the same .idx file twice, though.
+
+The repository in question http://github.com/tekkub/addontemplate.git/
+return one liner file when asked for $URL/objects/info/packs.
+
+Which means that it is not like that the loop in http_get_info_packs() is
+calling the fetch_and_setup_pack() twice because the server lists the same
+pack twice.  But if your patch matters, somebody is causing us to call the
+function twice for the same .idx file, and I do not see where it is.
+
+There definitely is something else going on.
+
+Having said all that, after digging some more, I came to the conclusion
+that I'd rather not see us proceed with bug hunting, based on the failures
+we see with the current github repositories over http.  Read on for the
+reasons.
+
+The github's URL responds to request for $URL/HEAD and tells us that it
+points at refs/heads/master, but requests for $URL/packed-refs and
+$URL/refs/heads/master go to somewhere completely unrelated to the
+request, without giving any failure indication.
+
+In order to support fetch/clone over HTTP, a server at least must respond
+to requests to the follwoing locations sensibly, meaning that it gives us
+back the data without frills if they exist, and give us Not found if they
+don't.
+
+ - $URL/objects/info/refs
+
+   This must list all the refs available in the repository and must be
+   up-to-date.  We do not run PROPFIND, nor parse $URL/refs/index.htm, but
+   trust this file's contents and start from there.
+
+ - $URL/objects/info/packs
+
+   This must list all the packs in the repository and must be up-to-date.
+   We do not run PROPFIND, nor parse $URL/objects/pack/index.htm, but
+   trust this file's contents.  If the repository does not have any pack,
+   request to this file must give us Not found.
+
+ - $URL/packed-refs
+
+   This may be a valid packed-refs file left after "git pack-refs".  If
+   the repository's refs are not packed, the file may not exist, and that
+   is Ok, but in that case, the request must give us Not found.
+
+ - $URL/objects/pack/pack-*.pack and pack-*.idx
+
+   If the repository lacks what we asked for , the request must result in Not
+   found.
+
+ - $URL/objects/[0-9a-f][0-9][a-f]/*
+
+   Loose objects.  If the repository lacks what we asked for, the request
+   must result in Not found.
+
+It appears that github always redirects the request to some random project
+page when Not found response is expected, which is very broken from the
+point of view of git-fetch/git-clone.
+
+I cannot tell offhand if it is just this "addontemplate.git" repository,
+or if the way github arranges the URL space is fundamentally broken and
+all of their repositories are unusable in exactly the same way (their URL
+space seems to overlay UI pages meant for browsers over output meant to be
+read by git-fetch/git-clone).
+
+In either case, cloning over http from that "addontemplate" URL is not
+expected to work right now, and the primary reason is that the server is
+utterly misbehaving.
+
+Hopefully that is a temporary breakage something github folks can promptly
+fix.  Tom, could you have your server folks in touch with the git mailing
+list, so that we can figure out what is going on?  Or are they already on
+top of this issue and we can just wait (hopefully not for too long)?
+
+In the meantime, I do not think it is a good idea to loosen the error
+checking on our side to accomodate a server in such a (hopefully
+temporary) broken state, however popular it is.
