@@ -1,101 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/4] push: make non-fast-forward help message configurable
-Date: Mon, 07 Sep 2009 10:34:25 +0200
-Message-ID: <vpqeiqjf90u.fsf@bauges.imag.fr>
-References: <20090906064454.GA1643@coredump.intra.peff.net>
-	<20090906064816.GC28941@coredump.intra.peff.net>
-	<7v8wgsk0rw.fsf@alter.siamese.dyndns.org>
-	<20090906072322.GA29949@coredump.intra.peff.net>
-	<7vzl98fr22.fsf@alter.siamese.dyndns.org>
-	<20090907094457.6117@nanako3.lavabit.com>
-	<20090907082430.GA17997@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: tracking branch for a rebase
+Date: Mon, 7 Sep 2009 04:43:25 -0400
+Message-ID: <20090907084324.GB17997@coredump.intra.peff.net>
+References: <20090904135414.GA3728@honk.padd.com>
+ <4AA124DD.1030208@drmicha.warpmail.net>
+ <20090904181846.GC19093@coredump.intra.peff.net>
+ <20090904185949.GA21583@atjola.homenet>
+ <20090905061250.GA29863@coredump.intra.peff.net>
+ <20090905140127.GA29037@atjola.homenet>
+ <20090905142841.GB15631@coredump.intra.peff.net>
+ <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Teemu Likonen <tlikonen@iki.fi>, Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 07 10:34:58 2009
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 10:43:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkZge-0005cw-4y
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:34:56 +0200
+	id 1MkZp1-0008CF-Vc
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:43:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbZIGIeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 04:34:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbZIGIen
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:34:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39803 "EHLO rominette.imag.fr"
+	id S1752177AbZIGIn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 04:43:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZIGIn0
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:43:26 -0400
+Received: from peff.net ([208.65.91.99]:34271 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752021AbZIGIen (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 04:34:43 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n878W4Qg008921
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 Sep 2009 10:32:04 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MkZg9-0007Wh-Ac; Mon, 07 Sep 2009 10:34:25 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MkZg9-0007gx-9C; Mon, 07 Sep 2009 10:34:25 +0200
-In-Reply-To: <20090907082430.GA17997@coredump.intra.peff.net> (Jeff King's message of "Mon\, 7 Sep 2009 04\:24\:31 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 07 Sep 2009 10:32:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n878W4Qg008921
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252917125.28496@39qib+LGITTL65Rbib//6Q
+	id S1752008AbZIGIn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 04:43:26 -0400
+Received: (qmail 15798 invoked by uid 107); 7 Sep 2009 08:43:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 07 Sep 2009 04:43:43 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Sep 2009 04:43:25 -0400
+Content-Disposition: inline
+In-Reply-To: <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127906>
 
-Jeff King <peff@peff.net> writes:
+On Sun, Sep 06, 2009 at 10:05:21PM -0700, Junio C Hamano wrote:
 
-> On Mon, Sep 07, 2009 at 09:44:57AM +0900, Nanako Shiraishi wrote:
->
->> You may be fixated at the sha1 part of the message when you find this
->> message annoying, but I disagree strongly. I always appreciate the
->> assurance this message gives me that I counted the number of commits
->> correctly, whether I say HEAD^^^^ or HEAD~7.
->
-> Let me add a "me too" to Nanako's comments.
+> At-mark currently is reserved for anything that uses reflog, but we can
+> say that it is to specify operations on refs (as opposed to caret and
+> tilde are to specify operations on object names).
 
-I guess it depends on one's workflow. If you usually cut-and-paste
-sha1's, then the message is superfluous, while if you usually use
-magic revspec, it is useful.
+I assume you meant that @{} is reserved; my reading of the previous
+discussion was that "foo@bar" is still valid.
 
-So, it's probably a good idea to make this configurable.
+> It specifies what ref to work on with the operand on its left side (and an
+> empty string stands for "HEAD"), and what operation is done to it by what
+> is in {} on the right side of it.  This view is quite consistent with the
+> following existing uses of the notation:
+> 
+> 	ref@{number}	-- nth reflog entry
+>         ref@{time}	-- ref back then
+> 	@{-number}	-- nth branch switching
+> 
+> So perhaps ref@{upstream}, or any string that is not a number and cannot
+> be time, can trigger the magic operation on the ref with ref@{magic}
+> syntax?
 
-> So really they are two different conceptual types of message. And while
-> I have no problem with an argument of "I _personally_ find this clutter
-> and would like to configure it off", I don't think such an option should
-> go under "advice.*". My patch had "message.all" (which will become
-> "advice.all")
+I think using @{} is a reasonable extension format. It's easy to read
+and syntactically obvious. We need to watch out for conflicts with
+things that might be valid times, but that is an easy thing to check
+when adding new keywords. The only danger would be some extension
+specifier that used arbitrary input, but that would probably be prefixed
+with a keyword (and I can't even think of an example extension that
+would want arbitrary input).
 
-To me, this is an argument in favor of keeping "message", to allow the
-same mechanism for these different types of messages.
+My only two complaints with ref@{upstream} are (and I don't think either
+is a show-stopper, but maybe something we can improve on).
 
-But I think the individual message.* should not be just true/false
-switch, but could be always/auto/never :
+  1. It is a nice abstraction, but it doesn't save typing in most cases.
+     "origin" is shorter than "master@{upstream}". One of the desired
+     features in the last thread was that it be very short (which isn't
+     to say we can't introduce @{upstream} _now_ and add a shorter
+     synonym later on).
 
-- always: show the message, regardless of message.all
-- auto (the default): rely on message.all to decide whether to show
-  the message
-- never: never show it.
+  2. I assume @{upstream} will be equivalent to HEAD@{upstream}. What
+     should it do? The most useful thing to me would be to find the
+     upstream for the current branch. But that is actually quite
+     different from how HEAD@{1} works, which looks at the reflog for
+     HEAD and not the branch.
 
-So you could say "message.all = false" and "message.resetShowsNewHead
-= always".
+     Maybe this is an inconsistency we can live with. The features are,
+     after all, only syntactically related. I was just hoping to keep
+     things as simple as possible for users to understand (and they
+     often take semantic clues from syntax).
 
-But maybe that's just overkill, dunno...
+And some final thinking out loud in this area (i.e., these ideas are, I
+think, somewhat half baked):
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+We already have some reserved uppercase ref names like HEAD, FETCH_HEAD,
+ORIG_HEAD, and MERGE_HEAD.  One option would be to declare all-caps
+names as reserved and allow UPSTREAM for the feature in question. I can
+think of two arguments against it:
+
+ 1. The obvious one, that somebody somewhere is using all-caps and we
+    are breaking their setup.
+
+ 2. It is not syntactically obvious to the user that it is not a real
+    ref, but rather a magic name. Users are accustomed to punctuation
+    introducing magic, so @{upstream} is probably better in that regard.
+
+So I think that is a bad idea. But what about allowing "ref aliases"?
+Obviously a static one like "f" for "foo" is kind of lame. But if you
+could use the extension syntax, like:
+
+  git config refalias.% '@{upstream}'
+
+then we can let people set up whatever shorthand they think is sane (and
+without worrying about clobbering unlikely-but-allowed setups, since
+they are in control of their setup).
+
+Like I said, I am not sure that is not half-baked. ;)
+
+-Peff
