@@ -1,102 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Sun, 06 Sep 2009 22:07:01 -0700
-Message-ID: <7v1vmj9wcq.fsf@alter.siamese.dyndns.org>
-References: <20090902080305.GA11549@neumann>
- <20090902081917.GA5447@coredump.intra.peff.net>
- <20090904070216.GA3996@darc.dnsalias.org>
- <20090905061804.GB29863@coredump.intra.peff.net>
- <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
- <20090905084641.GA24865@darc.dnsalias.org>
- <20090907090713.6117@nanako3.lavabit.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Issue 323 in msysgit: Can't clone over http
+Date: Mon, 7 Sep 2009 13:53:04 +0800
+Message-ID: <be6fef0d0909062253p1b86628et8a9f979952eebb00@mail.gmail.com>
+References: <7viqfzvwf1.fsf@alter.siamese.dyndns.org>
+	 <0016e6470f36315b8a0472bc75a8@google.com>
+	 <20090904212956.f02b0c60.rctay89@gmail.com>
+	 <7v8wgrbb9e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>,
-	SZEDER Gbor <szeder@ira.uka.de>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 07:07:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 07:53:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkWRp-0001Iz-CT
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 07:07:25 +0200
+	id 1MkXAS-0001qJ-Pl
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 07:53:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754536AbZIGFHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 01:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbZIGFHM
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 01:07:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62193 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754257AbZIGFHL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 01:07:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BDCE28073;
-	Mon,  7 Sep 2009 01:07:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=HamvtffaN4xuzr4g58RXH+G9WLI=; b=WO9NrFCUpYaRMdeHqyYP64o
-	Uk/CWS8JJFA4UQpWlh8Lfqr4Ub0VamBKR15rLpoeEE0RJbaI8m8yXI+zFZsfR3VM
-	omjsdKnjjkMzxRbbH15RUlVKYnneVmdEwN3M64T0Fp9GqtERgLKZBU1Jl1EnvXHx
-	Kj5eDH8xjl241obAV5XM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=K+iTETB0PuQNBTOuCvNV7QlVyM23H1L4S6jO1WSsPgcpGBjoT
-	JK5/xQ9jaMOTuj4pXScAV0LhUoke8a8C/GVynmwnX8RWxT7nmiiTjKhP2ItY8IRb
-	MPm0NuQdoHf7ycTB2dahrsecWPhjIhpYbBmWJA2tBirhz/CYxXci7IGy/A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BFA328070;
-	Mon,  7 Sep 2009 01:07:09 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3B76C2806E; Mon,  7 Sep
- 2009 01:07:03 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B859B42-9B6C-11DE-A298-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S932069AbZIGFxF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 01:53:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758992AbZIGFxF
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 01:53:05 -0400
+Received: from mail-iw0-f175.google.com ([209.85.223.175]:39832 "EHLO
+	mail-iw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758991AbZIGFxD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 01:53:03 -0400
+Received: by iwn5 with SMTP id 5so758038iwn.4
+        for <git@vger.kernel.org>; Sun, 06 Sep 2009 22:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Do+w8YUgwOSV7FLfSn5YJhSr5slFDiGvei2eWhhS4iA=;
+        b=Zkr2aSs3usMVMIxSzyiVn357wE5sZ9JDz7iEPPLPV+QdYsTARcP01YcoKjXFxFvrIR
+         Ol1YUDrmfFecWAWa5iJurGwhJDfPuf5YOcD9TTiNJxhjnceJ4RVI1B7f3f3/CLKOk0mb
+         JLB/anNKlbxv9tOn1z/Crvfwt4xInC2esnzts=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ln8Y++9l2jDCUpLbgA2nRCgHZ4t1WFeKsxs5vn7xE688FGDoblqDy8SnkqXzxyxQBr
+         59Ckeegq30JR8A0+Zp6YrFkYWc/4JzcQlvL5wzZzj5fTUtCZ60iYVnU6N6vunSan2iuc
+         GvUtIUWZqQVeBjXjFn9u3r4qVt12kDW3/oDtA=
+Received: by 10.231.5.200 with SMTP id 8mr3187362ibw.46.1252302784962; Sun, 06 
+	Sep 2009 22:53:04 -0700 (PDT)
+In-Reply-To: <7v8wgrbb9e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127887>
 
-Nanako Shiraishi <nanako3@lavabit.com> writes:
+Hi,
 
-[jc: sometimes but not always your messages have looooooooooooooong lines.
-please line-wrap for readability. I learned to type W Q so often I do not
-complain but other people would find them irritating.]
-
-> The default behavior for 'git-grep' has already been discussed in
-> length, and I don't think it is likely to change. See
+On Mon, Sep 7, 2009 at 12:59 PM, Junio C Hamano<gitster@pobox.com> wrot=
+e:
+> Before 39dc52c (http: use new http API in fetch_index(), 2009-06-06),=
+ we
+> used to run the slot by hand and checked results.curl_request against
+> CURLE_OK. =A0Everything else was an error.
 >
->   http://thread.gmane.org/gmane.comp.version-control.git/111519/focus=111717
+> With the updated code, that all went to http_get_strbuf() which in tu=
+rn
+> calls http_request() that does the same thing, and the function retur=
+ns
+> HTTP_OK only when it gets CURLE_OK, but now it says MISSING_TARGET wh=
+en we
+> ask for an idx file we think exists in the repository but the server =
+says
+> it doesn't, and all other errors will be ignored with this patch.
 
-Interesting.
+We should only be interested in the MISSING_TARGET error, because it
+tells us that the pack file is indeed not available. We aren't
+interested in other errors, like being unable to perform the request
+(HTTP_START_FAILED), or, say, a 401 (Unauthorized) error, or even a
+500; we simply move along and we tell the user we couldn't perform the
+check.
 
-The first message in that thread lists things we have scheduled for 1.7.0
-but it has another item.  It is an off-topic for the thread, but we might
-want to resurrect the "core.quotepath defaults to false" proposal, before
-it gets too late for 1.7.0.
+> If this codepath is what was broken by github returning 500 [*1*], th=
+e
+> client before 39dc52c would have failed the same way. =A0I do not thi=
+nk
+> loosening error checking like this is a real solution, but I may be
+> reading the patch incorrectly.
 
-As to "grep", I am open to the proposal to make git commands consistent by
-letting them operate on everything when no path argument is given, if grep
-is really the single odd-man out remaining after changing the "add -u" and
-"add -A" to work on the whole tree from subdirectories when given no paths.
+You're right to say that git before 39dc52c would have failed. It did,
+but no one had the chance to break anything, because 39dc52c was part
+of my http patch series that only went wild in v1.6.4.
 
-> The original design for the other two in your list was to be a whole
-> tree operation. This commit broke it.
->
->   2ed2c22 "git-add -u paths... now works from subdirectory".
-> ...
-> I think it is a good idea to fix this as an old regression in the maint
-> branch. You don't have to introduce "git add -a". In fact the -a option
-> was explicitly rejected when "git add -A" option was added with this
-> commit.
+We can trace this back to 48188c2 ("http-walker: verify remote
+packs"), which copied the "feature" from http-push.c to http-walker.c.
 
-Geez, you are good at digging things up.
+Before that, if you tried fetching a pack with http-push.c from a
+500-prone server, you would also experience this.
 
-It is very tempting to follow the suggestion above, but I suspect that,
-even though it may be a regression from historical point of view, some
-people who are used to the current behaviour may look at the corrected
-one as a regression.  We've had the change by 2ed2c22 for a long time.
-
-I dunno.
+--=20
+Cheers,
+Ray Chuan
