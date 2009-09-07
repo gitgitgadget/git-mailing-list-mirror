@@ -1,118 +1,96 @@
-From: Josh Triplett <josh@joshtriplett.org>
-Subject: Re: [PATCH 2/2] Add url.<base>.pushInsteadOf: URL rewriting for
- push only
-Date: Mon, 7 Sep 2009 01:19:52 -0700
-Message-ID: <20090907081952.GA21550@feather>
-References: <cover.1252306396.git.josh@joshtriplett.org>
- <0be9995dcd7d48c918fa75f4d9e557a6144a047c.1252306396.git.josh@joshtriplett.org>
- <7vljkr2ntd.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] push: make non-fast-forward help message
+ configurable
+Date: Mon, 7 Sep 2009 04:24:31 -0400
+Message-ID: <20090907082430.GA17997@coredump.intra.peff.net>
+References: <20090906064454.GA1643@coredump.intra.peff.net>
+ <20090906064816.GC28941@coredump.intra.peff.net>
+ <7v8wgsk0rw.fsf@alter.siamese.dyndns.org>
+ <20090906072322.GA29949@coredump.intra.peff.net>
+ <7vzl98fr22.fsf@alter.siamese.dyndns.org>
+ <20090907094457.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 10:20:20 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Teemu Likonen <tlikonen@iki.fi>, Git <git@vger.kernel.org>
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Sep 07 10:25:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkZSS-000208-7v
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:20:16 +0200
+	id 1MkZX6-0003I2-DX
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 10:25:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198AbZIGIUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 04:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752172AbZIGIUF
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:20:05 -0400
-Received: from relay2-v.mail.gandi.net ([217.70.178.76]:35897 "EHLO
-	relay2-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752123AbZIGIUE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 04:20:04 -0400
-X-Greylist: delayed 4824 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Sep 2009 04:20:03 EDT
-Received: from feather (pool-173-50-250-234.ptldor.fios.verizon.net [173.50.250.234])
-	by relay2-v.mail.gandi.net (Postfix) with ESMTP id 0A966135D0;
-	Mon,  7 Sep 2009 10:20:04 +0200 (CEST)
+	id S1752249AbZIGIYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 04:24:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbZIGIYc
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 04:24:32 -0400
+Received: from peff.net ([208.65.91.99]:47363 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752098AbZIGIYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 04:24:32 -0400
+Received: (qmail 15629 invoked by uid 107); 7 Sep 2009 08:24:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 07 Sep 2009 04:24:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Sep 2009 04:24:31 -0400
 Content-Disposition: inline
-In-Reply-To: <7vljkr2ntd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20090907094457.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127903>
 
-On Mon, Sep 07, 2009 at 12:53:18AM -0700, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
-> > This configuration option allows systematically rewriting fetch-only
-> > URLs to push-capable URLs when used with push.  For instance:
+On Mon, Sep 07, 2009 at 09:44:57AM +0900, Nanako Shiraishi wrote:
+
+> > Speaking of which, has anybody felt annoyed by this message?
 > >
-> > [url "ssh://example.org/"]
-> >     pushInsteadOf = "git://example.org/"
+> >     $ git reset --hard HEAD^^
+> >     HEAD is now at 3fb9d58 Do not scramble password read from .cvspass
 > >
-> > This will allow clones of "git://example.org/path/to/repo" to
-> > subsequently push to "ssh://example.org/path/to/repo", without manually
-> > configuring pushurl for that remote.
+> > This is not "maybe you should try this", but I would consider that it
+> > falls into the same "I see you are trying to be helpful, but I know what I
+> > am doing, and you are stealing screen real estate from me without helping
+> > me at all, thank you very much" category.
 > 
-> Nice.
+> You may be fixated at the sha1 part of the message when you find this
+> message annoying, but I disagree strongly. I always appreciate the
+> assurance this message gives me that I counted the number of commits
+> correctly, whether I say HEAD^^^^ or HEAD~7.
 
-Thanks.
+Let me add a "me too" to Nanako's comments. This assurance has actually
+saved me in the past from accidentally going to the wrong commit (just
+the other day I did a rebase followed by "git reset --hard HEAD@{1}",
+when of course what I meant was "git reset --hard master@{1}".
 
-> > @@ -435,12 +449,13 @@ static void alias_all_urls(void)
-> >  	for (i = 0; i < remotes_nr; i++) {
-> >  		if (!remotes[i])
-> >  			continue;
-> > -		for (j = 0; j < remotes[i]->url_nr; j++) {
-> > -			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
-> > -		}
-> >  		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
-> >  			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
-> >  		}
-> > +		for (j = 0; j < remotes[i]->url_nr; j++) {
-> > +			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
-> > +			add_pushurl_alias(remotes[i], remotes[i]->url[j]);
-> > +		}
-> 
-> Even if you have URL but not pushURL, now you get a corresponding pushURL
-> for free by just adding pushinsteadof mapping that covers the URL without
-> having to configue pushURL for each of them.
+I think this type of message is different from the other "advice"
+messages.
 
-Yes, exactly.
+In the case of the push non-fast-forward message and the status "here is
+how you stage" comments, those messages are not specific to this exact
+situation. They are general advice for "if you do not understand or need
+a reminder of how git works, this is it." Experienced users know how git
+works, so the messages are just clutter.
 
-> What happens if you already had a pair of concrete url and pushurl defined
-> for one of your repositories (say git://git.kernel.org/pub/scm/git/git.git
-> for fetch, ssh://x.kernel.org/pub/scm/git/git.git for push) at a site, and
-> then upon seeing this new feature, added a pushinsteadof pattern that also
-> covers the URL side of that pair (e.g. everything in git://git.kernel.org/
-> is mapped to x.kernel.org:/ namespsace)?
-> 
-> Do you end up pushing to both (e.g. ssh://x.kernel.org/pub/scm/git/git.git
-> and x.kernel.org:/pub/scm/git/git.git), or in such a case, the pushURL you
-> gave explicitly prevents the pushinsteadof to give unexpected duplicates?
+This message, on the other hand, tells you about this _specific_
+instance. So even if you have mastered git, the information can reassure
+you that you have gone to the intended commit (and yes, I have actually
+gone to the wrong commit before, noticed it via this reset message, and
+corrected the situation).
 
-You get a duplicate:
+So really they are two different conceptual types of message. And while
+I have no problem with an argument of "I _personally_ find this clutter
+and would like to configure it off", I don't think such an option should
+go under "advice.*". My patch had "message.all" (which will become
+"advice.all") to turn off all advice messages, which can act as a sort
+of "I am an expert" switch. But because this type of message is
+conceptually different, it should not be lumped in with the others.
 
-~$ grep -B1 steadOf .gitconfig
-[url "ssh://joshtriplett.org/"]
-        pushInsteadOf="git://joshtriplett.org/"
-~$ grep -B1 url .git/config
-[remote "origin"]
-        url = git://joshtriplett.org/git/home.git
-        pushurl = ssh://joshtriplett.org/git/home.git
-~$ ~/src/git/git push
-Everything up-to-date
-Everything up-to-date
+OTOH, I am open to arguments against "advice.all"; maybe it is a good
+thing for users to manually say "this message is annoying me, and
+therefore I am now an expert in this particular area". It's not like
+there are more than two. ;)
 
-Initially, that behavior seemed pretty reasonable to me; nothing else in
-the remotes handling attempts to remove duplicates, and they seem
-harmless enough and easily resolved by removing one or the other.  Now
-that I think about it, though, an explicit pushurl should definitely
-disable pushInsteadOf's implicit pushurls.  If you explicitly configure
-a *different* pushurl for a remote, you may not *want* the default
-pushurl that corresponds to your url.  For instance, consider what would
-happen if you configure url to point to the main public repository and
-pushurl to point to a private repository.  In this case, you definitely
-don't want "git push" to helpfully push to the public repository as
-well; if you do, you can easily enough add a second pushurl for that.
-
-I can easily change the patch to make an explicit pushurl disable
-pushInsteadOf.  Expect v2 shortly.
-
-- Josh Triplett
+-Peff
