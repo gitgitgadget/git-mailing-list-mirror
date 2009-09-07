@@ -1,107 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] grep: accept relative paths outside current working
- directory
-Date: Sun, 06 Sep 2009 15:58:15 -0700
-Message-ID: <7v3a6zu1dk.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
+Date: Mon, 07 Sep 2009 09:07:13 +0900
+Message-ID: <20090907090713.6117@nanako3.lavabit.com>
 References: <20090902080305.GA11549@neumann>
- <20090902081917.GA5447@coredump.intra.peff.net>
- <20090904070216.GA3996@darc.dnsalias.org>
- <20090905061804.GB29863@coredump.intra.peff.net>
- <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
- <20090905072017.GA5152@coredump.intra.peff.net>
- <7v3a717rgl.fsf@alter.siamese.dyndns.org>
- <20090905123117.GA3099@darc.dnsalias.org>
+	<20090902081917.GA5447@coredump.intra.peff.net>
+	<20090904070216.GA3996@darc.dnsalias.org>
+	<20090905061804.GB29863@coredump.intra.peff.net>
+	<7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+	<20090905084641.GA24865@darc.dnsalias.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	SZEDER Gbor <szeder@ira.uka.de>, git@vger.kernel.org
 To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Sep 07 00:58:37 2009
+X-From: git-owner@vger.kernel.org Mon Sep 07 02:09:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkQgt-0005ts-LB
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 00:58:36 +0200
+	id 1MkRnh-0002e0-GS
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 02:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758176AbZIFW6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Sep 2009 18:58:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758125AbZIFW6Y
-	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 18:58:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41406 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752847AbZIFW6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Sep 2009 18:58:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8124D28A94;
-	Sun,  6 Sep 2009 18:58:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xPNm/upStBWaQu6qk6zuZdkOEFU=; b=WYcNVL
-	ulwsm1h72ITQu3cp8JBDrJBGKBFKohEYDjf6iUM4zPdKh9wSRH6uGZP+RnEAlUK5
-	RpqaMnkTe+zFdQB7mnVN0cruQkpITYGWYi/dztr1o72XV5IcOv9pPxAHp6c/ad4h
-	71OC3VXmdh5b1kI8/g1ZJykdy3QP8/WgUJo+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WvBNpQFWarqyRoY8olQK0Pc5U7n6LPdr
-	1OA2ZAMg5B1TSNDtj+BVyijKvxQhNFsY7TDw/NPUwNDeiqxEh4fGK2K9u2aMEo4X
-	jc2N8wc8X5yEZ8Q7XdgTk+7erbPgId/dvZgHiwvZcZG57CTH+WO1vPzJnWYramUI
-	7B84BP2oU/k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4CCCA28A93;
-	Sun,  6 Sep 2009 18:58:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 649B728A92; Sun,  6 Sep
- 2009 18:58:17 -0400 (EDT)
-In-Reply-To: <20090905123117.GA3099@darc.dnsalias.org> (Clemens Buchacher's
- message of "Sat\, 5 Sep 2009 14\:31\:17 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C6BF5B24-9B38-11DE-91CB-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758295AbZIGAHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Sep 2009 20:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758275AbZIGAHs
+	(ORCPT <rfc822;git-outgoing>); Sun, 6 Sep 2009 20:07:48 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:53714 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758270AbZIGAHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Sep 2009 20:07:47 -0400
+Received: from h.earth.lavabit.com (h.earth.lavabit.com [192.168.111.17])
+	by karen.lavabit.com (Postfix) with ESMTP id 4085111BCA8;
+	Sun,  6 Sep 2009 19:07:50 -0500 (CDT)
+Received: from 7299.lavabit.com (212.116.219.172)
+	by lavabit.com with ESMTP id W0WQRBMMVZQH; Sun, 06 Sep 2009 19:07:50 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=X3kWe7mBCAVZX1iYqIjVMu2VK5Nbz392MYwZ6hhklHo9dngB0C0HX9UEHtx30SJU0DMT5Xf8+neaPT5RWk+4QX5dfZb1tNlhpq+tXl/4bQHYn2/y+knR4IH69KBIG603uRb4hOCmY2iYPu1wUtfKdiu9bOtNlT3pKbJ3x9tDWs4=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20090905084641.GA24865@darc.dnsalias.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127876>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Quoting Clemens Buchacher <drizzd@aon.at>
 
-> On Sat, Sep 05, 2009 at 12:58:50AM -0700, Junio C Hamano wrote:
->> >> If "git add -u ../.." (I mean "the grand parent directory", not "an
->> >> unnamed subdirectory") did not work 
+> Sorry for stating the obvious here, but the following commands affect the
+> entire repository, even though they limit themselves to the current
+> directory, if passed a '.'.
 >
-> In git.git:
+> 	git commit
+> 	git log
+> 	git diff
+> 	git checkout
+> 	git reset
 >
-> $ cd t
-> $ git grep addremove -- ../
-> fatal: git grep: cannot generate relative filenames containing '..'
+> Due to the frequent use of these commands, I believe many users (myself
+> included) expect "git add" and "git grep" to do the same. AFAICT the
+> following commands are the only non-plumbing ones that behave differently:
 >
-> So here's a fix for that. And a configurable solution for add and grep's
-> scope as a follow-up. I did not look at any other commands yet.
+> 	git add -u
+> 	git add -A
+> 	git grep
+>
+> So I argue that _that_ is the real inconsistency.
 
-Thanks.  This was oa breakage I pointed out in an earlier message in this
-discussion, and it is worth fixing.
+The default behavior for 'git-grep' has already been discussed in length, and I don't think it is likely to change. See 
 
-Your patch is queued in 'pu', but it seems to break the exit status in a
-strange way with my limited test.
+  http://thread.gmane.org/gmane.comp.version-control.git/111519/focus=111717
 
-Here is a non-broken behaviour without the "look in uplevel":
+The original design for the other two in your list was to be a whole tree operation. This commit broke it. 
 
-: git.git/cb/maint-1.6.3-grep-relative-up; ./git grep adddelete .
-: git.git/cb/maint-1.6.3-grep-relative-up; ./git grep adddelete .; echo $?
-1
-: git.git/cb/maint-1.6.3-grep-relative-up; ./git grep adddelete . >/dev/null; echo $?
-1
+  2ed2c22 "git-add -u paths... now works from subdirectory".
 
-Now we go down, and grep from an uplevel:
+'git-add -u' in a subdirectory without any other argument used to work on the entire working tree before that commit, but it didn't prefix the current directory in front of the paths... arguments. 
 
-: git.git/cb/maint-1.6.3-grep-relative-up; cd t
-: t/cb/maint-1.6.3-grep-relative-up; ../git grep adddelete ..
-: t/cb/maint-1.6.3-grep-relative-up; ../git grep adddelete .. ; echo $?
-1
-: t/cb/maint-1.6.3-grep-relative-up; ../git grep adddelete .. >/dev/null; echo $?
-0
+That commit 2ed2c22 fixed 'git-add -u paths...' by prepending the prefix to the arguments, but it broke 'git-add -u' to always limit the updates to the current directory. 
 
-The command should not give different exit status depending on the
-destination of standard output stream.
+I think it is a good idea to fix this as an old regression in the maint branch. You don't have to introduce "git add -a". In fact the -a option was explicitly rejected when "git add -A" option was added with this commit. 
+
+  3ba1f11 "git-add --all: add all files"
+
+because "git commit -a" will never include new files and it will be inconsistent if "git add -a" did so.
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
