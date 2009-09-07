@@ -1,102 +1,101 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Mon, 7 Sep 2009 09:50:58 +0200
-Message-ID: <20090907075058.GA10797@localhost>
-References: <20090902080305.GA11549@neumann> <20090902081917.GA5447@coredump.intra.peff.net> <20090904070216.GA3996@darc.dnsalias.org> <20090905061804.GB29863@coredump.intra.peff.net> <7v8wgt98ms.fsf@alter.siamese.dyndns.org> <20090905084641.GA24865@darc.dnsalias.org> <20090907090713.6117@nanako3.lavabit.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Add url.<base>.pushInsteadOf: URL rewriting for push
+ only
+Date: Mon, 07 Sep 2009 00:53:18 -0700
+Message-ID: <7vljkr2ntd.fsf@alter.siamese.dyndns.org>
+References: <cover.1252306396.git.josh@joshtriplett.org>
+ <0be9995dcd7d48c918fa75f4d9e557a6144a047c.1252306396.git.josh@joshtriplett.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	SZEDER Gbor <szeder@ira.uka.de>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Mon Sep 07 09:51:32 2009
+Cc: git@vger.kernel.org
+To: Josh Triplett <josh@joshtriplett.org>
+X-From: git-owner@vger.kernel.org Mon Sep 07 09:53:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkZ0d-0002Lv-MO
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:51:32 +0200
+	id 1MkZ2c-00033i-FD
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Sep 2009 09:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751817AbZIGHvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Sep 2009 03:51:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751660AbZIGHvW
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:51:22 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:44083 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214AbZIGHvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Sep 2009 03:51:21 -0400
-Received: by bwz19 with SMTP id 19so1402395bwz.37
-        for <git@vger.kernel.org>; Mon, 07 Sep 2009 00:51:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:bcc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=W74fYvmGKiiLNjDPeexww/qzgGJ+f9Va8CbltdpLHCI=;
-        b=sMQ9Hn+zNUILN+HxPjh0osnU8Spgg0Q+ojwehNurKqtJ2jtnHywv6JdBCQBB8pAZHf
-         TS95hR6Pqtkc8y4AJEc3eAK+0sUN3PL+l8w9IeaLniYaX5OGiwcehMjRi9nO2WzMuxYR
-         p0LeYYvziIzYFj7jyFal7HGVEpJGEpNAvFWsk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=IJBAl7ER3YnopP73b9T17vfzHTUNUl3f9JvwnUCZqbqTPGxDKymocxH/ePYkrE91q9
-         2OhKWhlvWB7IVW8E16xlKOyN1Ee89p/TIP5hX0/5xh/03O0mii7EW1/5EOcWj5em7gIS
-         jvI1fhzsu1h8eMaFmhk5soQ/uqw38EpaDevBo=
-Received: by 10.204.162.137 with SMTP id v9mr11759146bkx.60.1252309882822;
-        Mon, 07 Sep 2009 00:51:22 -0700 (PDT)
-Received: from darc.lan (p549A55B4.dip.t-dialin.net [84.154.85.180])
-        by mx.google.com with ESMTPS id 2sm583939bwz.117.2009.09.07.00.51.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Sep 2009 00:51:22 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MkZ06-0003Kt-83; Mon, 07 Sep 2009 09:50:58 +0200
-Content-Disposition: inline
-In-Reply-To: <20090907090713.6117@nanako3.lavabit.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751407AbZIGHxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 03:53:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751351AbZIGHxZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 03:53:25 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38318 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751283AbZIGHxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Sep 2009 03:53:24 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C919628D48;
+	Mon,  7 Sep 2009 03:53:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HK1c1ZNJwfK/qaKRcUP2I+O3LK4=; b=dJJ2xi
+	p61cdtLOUSAcsnuEoTQlKRkPZDSeSwntQSrvMowDAS44rTswmOzb8+L4jtVOgaVe
+	n4p0NfMun1T7yKb8B7ThLubqwrDH1yMOt7XEqlM//bEAGEeaR8TZS+UkCk4lUjcA
+	/msrlILeiY6o3pDno/L+v3XtN7UzozpvvRvf4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lFW96KBFhqzplgHz3fxM4oWjxQLMR3jq
+	JQEZotE7hg+5p3OQ5i9fW/UvBZW4iYBGZb0fF9W3vboPj4ZVMWQgliAtECWOXjj0
+	J7DjrIvw16FBRUOaSji/cWfzI2xx9kBIVk7UpJNQbWzgXyOnMkuovxMhdAAMXZRw
+	uERgxo2LuLU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD5D328D47;
+	Mon,  7 Sep 2009 03:53:23 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 069AE28D46; Mon,  7 Sep
+ 2009 03:53:19 -0400 (EDT)
+In-Reply-To: <0be9995dcd7d48c918fa75f4d9e557a6144a047c.1252306396.git.josh@joshtriplett.org> (Josh Triplett's message of "Mon\, 7 Sep 2009 00\:00\:20 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 84B00CF6-9B83-11DE-A5AA-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127896>
 
-On Mon, Sep 07, 2009 at 09:07:13AM +0900, Nanako Shiraishi wrote:
+Josh Triplett <josh@joshtriplett.org> writes:
 
-> The default behavior for 'git-grep' has already been discussed in length,
-> and I don't think it is likely to change. See 
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/111519/focus=111717
+> This configuration option allows systematically rewriting fetch-only
+> URLs to push-capable URLs when used with push.  For instance:
+>
+> [url "ssh://example.org/"]
+>     pushInsteadOf = "git://example.org/"
+>
+> This will allow clones of "git://example.org/path/to/repo" to
+> subsequently push to "ssh://example.org/path/to/repo", without manually
+> configuring pushurl for that remote.
 
-Actually, most responded with the request for a command or config option,
-and did not refuse the idea outright. One was not even aware that this is
-how "git grep" behaves. And neither was I until a few days ago.
+Nice.
 
-And that is kind of dangerous with this command. You expect it to behave
-analogously to other git commands, but it doesn't. And because grep simply
-does not search superdirectories, you may think that there are in fact no
-matches so you don't even notice that behavior!
+> @@ -435,12 +449,13 @@ static void alias_all_urls(void)
+>  	for (i = 0; i < remotes_nr; i++) {
+>  		if (!remotes[i])
+>  			continue;
+> -		for (j = 0; j < remotes[i]->url_nr; j++) {
+> -			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
+> -		}
+>  		for (j = 0; j < remotes[i]->pushurl_nr; j++) {
+>  			remotes[i]->pushurl[j] = alias_url(remotes[i]->pushurl[j], &rewrites);
+>  		}
+> +		for (j = 0; j < remotes[i]->url_nr; j++) {
+> +			remotes[i]->url[j] = alias_url(remotes[i]->url[j], &rewrites);
+> +			add_pushurl_alias(remotes[i], remotes[i]->url[j]);
+> +		}
 
-> I think it is a good idea to fix this as an old regression in the maint
-> branch. You don't have to introduce "git add -a". In fact the -a option
-> was explicitly rejected when "git add -A" option was added with this
-> commit. 
-> 
->   3ba1f11 "git-add --all: add all files"
-> 
-> because "git commit -a" will never include new files and it will be inconsistent if "git add -a" did so.
+Even if you have URL but not pushURL, now you get a corresponding pushURL
+for free by just adding pushinsteadof mapping that covers the URL without
+having to configue pushURL for each of them.
 
-I certainly don't mind fixing "git add -u". But I was not suggesting "git
-add -a" instead of "git add -A". The idea was to introduce it instead of
-"git add -u" (which can be deprecated later), so that the following are
-exactly the same.
+What happens if you already had a pair of concrete url and pushurl defined
+for one of your repositories (say git://git.kernel.org/pub/scm/git/git.git
+for fetch, ssh://x.kernel.org/pub/scm/git/git.git for push) at a site, and
+then upon seeing this new feature, added a pushinsteadof pattern that also
+covers the URL side of that pair (e.g. everything in git://git.kernel.org/
+is mapped to x.kernel.org:/ namespsace)?
 
-	"git add -a; git commit"
-	"git commit -a"
-
-That way, scripts are not silently broken.
-
-OTOH, "git add --all" is already inconsistent with "git commit --all". And
-we would still need a new command for 'global' "add -A". *sigh*
-
-Clemens
+Do you end up pushing to both (e.g. ssh://x.kernel.org/pub/scm/git/git.git
+and x.kernel.org:/pub/scm/git/git.git), or in such a case, the pushURL you
+gave explicitly prevents the pushinsteadof to give unexpected duplicates?
