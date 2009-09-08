@@ -1,105 +1,68 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv5 00/14] git notes
-Date: Tue, 08 Sep 2009 10:54:02 +0200
-Message-ID: <200909081054.02523.johan@herland.net>
-References: <1252376822-6138-1-git-send-email-johan@herland.net>
- <200909080512.34634.johan@herland.net>
- <7vd462qdeg.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Improving merge failure message
+Date: Tue, 8 Sep 2009 11:11:24 +0200
+Message-ID: <81b0412b0909080211k19470327x97b19eb0bd6ab700@mail.gmail.com>
+References: <20090908153101.6117@nanako3.lavabit.com>
+	 <7vbplmhr0i.fsf@alter.siamese.dyndns.org>
+	 <7veiqhgb4y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 10:54:44 2009
+X-From: git-owner@vger.kernel.org Tue Sep 08 11:13:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkwTL-000467-4A
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 10:54:43 +0200
+	id 1MkwlP-000133-Jr
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 11:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907AbZIHIyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 04:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753850AbZIHIyE
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 04:54:04 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:39682 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753625AbZIHIyD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 04:54:03 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPN00AUDA23KY20@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 10:54:03 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPN00GGTA220K10@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 10:54:03 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.9.8.84223
-User-Agent: KMail/1.12.1 (Linux/2.6.30-ARCH; KDE/4.3.1; x86_64; ; )
-In-reply-to: <7vd462qdeg.fsf@alter.siamese.dyndns.org>
+	id S1753976AbZIHJLX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2009 05:11:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753930AbZIHJLX
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 05:11:23 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:41878 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753961AbZIHJLX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 05:11:23 -0400
+Received: by fxm17 with SMTP id 17so2458679fxm.37
+        for <git@vger.kernel.org>; Tue, 08 Sep 2009 02:11:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=btsYL5fYFGiotDOhKWL5yDd68DjA3BKHVRlR2I2o8fI=;
+        b=p3dfsRx0kW9zmQYPRl8n9FxJzIW2zA2XIZ2raLqnyIDqE0BqreormeeLb+34D1wLx4
+         UV5WQ0bYVovrvMHbPw7/TXEFhjkAj1lR5U4udXiyaxrPbi2F7Y5cYVKUn75fGp2LYYXf
+         6tfeZOKCR981HZ0WR646ZhOcD9xApFq7vRmDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=J2wY7DXjYFp2lM6rfISIOk/wrFQ5O8vf4RwfHkWDmSWkf+5vkI36rwDW2JcQPnutmd
+         rVpULT8ua6gkVBff63BqYmDUl2HEL85b+jM1okwfch27tGsmXvk3Lau1mR0LSI6VNwQO
+         GAVnk+6MkWQsKqU3IPt+2dAlB9Qfag2r130Ps=
+Received: by 10.204.34.208 with SMTP id m16mr13024049bkd.47.1252401084699; 
+	Tue, 08 Sep 2009 02:11:24 -0700 (PDT)
+In-Reply-To: <7veiqhgb4y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127994>
 
-On Tuesday 08 September 2009, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > Furthermore, the following notes tree structures were tested:
-> >
-> > - "no-notes": Testing without any notes at all. This is only present as
-> > a baseline, and to verify that the notes code does not negatively
-> > affect performance when not in use.
-> 
-> Minor nit.
-> 
-> For this to be a baseline, you would need to have another algorithm
->  before "before", i.e., without any of these notes implementation.
-> 
-> Comparison with "before" alone is not meaningful.  That is like starting
-> with a state with unknown performance regression compared to the stock
-> version, and then boast improvements made by various variations.
-> 
-> You would need to compare overhead of various "algorithms" with the stock
-> git in "no-notes" case as well.  It would give us the true performance
-> cost of supporting notes.
+On Tue, Sep 8, 2009 at 09:15, Junio C Hamano<gitster@pobox.com> wrote:
+> @@ -170,6 +170,18 @@ static int git_merge_trees(int index_only,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int rc;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct tree_desc t[3];
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct unpack_trees_options opts;
+> + =C2=A0 =C2=A0 =C2=A0 static struct unpack_trees_error_msgs msgs =3D=
+ {
 
-True. Here is the same table with the baseline ('next') entry on top:
+You can make these const, the struct is copied anyway:
 
+> + =C2=A0 =C2=A0 =C2=A0 opts.msgs =3D msgs;
 
-Algorithm / Notes tree   git log -n10 (x100)   git log --all
-------------------------------------------------------------
-next / no-notes                4.77s              63.84s
-
-before / no-notes              4.78s              63.90s
-before / no-fanout            56.85s              65.69s
-
-16tree / no-notes              4.77s              64.18s
-16tree / no-fanout            30.35s              65.39s
-16tree / 2_38                  5.57s              65.42s
-16tree / 2_2_36                5.19s              65.76s
-
-flexible / no-notes            4.78s              63.91s
-flexible / no-fanout          30.34s              65.57s
-flexible / 2_38                5.57s              65.46s
-flexible / 2_2_36              5.18s              65.72s
-flexible / ym                  5.13s              65.66s
-flexible / ym_2_38             5.08s              65.63s
-flexible / ymd                 5.30s              65.45s
-flexible / ymd_2_38            5.29s              65.90s
-flexible / y_m                 5.11s              65.72s
-flexible / y_m_2_38            5.08s              65.67s
-flexible / y_m_d               5.06s              65.50s
-flexible / y_m_d_2_38          5.07s              65.79s
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Here --^
