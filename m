@@ -1,85 +1,92 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCHv5 00/14] git notes
-Date: Tue, 8 Sep 2009 14:10:46 -0700
-Message-ID: <20090908211046.GV1033@spearce.org>
-References: <1252376822-6138-1-git-send-email-johan@herland.net> <200909080512.34634.johan@herland.net> <7vd462qdeg.fsf@alter.siamese.dyndns.org> <200909081054.02523.johan@herland.net> <alpine.DEB.1.00.0909081100020.4330@intel-tinevez-2-302> <7vocplxjov.fsf@alter.siamese.dyndns.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] post-receive-email: do not call sendmail if no mail was generated
+Date: Tue, 08 Sep 2009 22:12:58 +0100
+Message-ID: <h86hcs$in2$1@ger.gmane.org>
+References: <20090908185555.GA3858@lars.home.noschinski.de> <1252436418-7660-1-git-send-email-lars@public.noschinski.de> <7v4ord19da.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 23:10:54 2009
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 08 23:13:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml7xl-00088C-Dj
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 23:10:53 +0200
+	id 1Ml80M-0000UO-4e
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 23:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752037AbZIHVKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 17:10:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751864AbZIHVKo
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 17:10:44 -0400
-Received: from george.spearce.org ([209.20.77.23]:59663 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751756AbZIHVKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 17:10:44 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id DC5823815E; Tue,  8 Sep 2009 21:10:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vocplxjov.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1751918AbZIHVNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 17:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbZIHVNW
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 17:13:22 -0400
+Received: from lo.gmane.org ([80.91.229.12]:55511 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751870AbZIHVNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 17:13:21 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1Ml80A-0000Qr-Gu
+	for git@vger.kernel.org; Tue, 08 Sep 2009 23:13:22 +0200
+Received: from 91.84.15.31 ([91.84.15.31])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Sep 2009 23:13:22 +0200
+Received: from andyparkins by 91.84.15.31 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 08 Sep 2009 23:13:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 91.84.15.31
+User-Agent: KNode/4.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128038>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Also Gitney talked about annotating commits in the code-review thing.
-> What's the expected notes density and distribution in that application?
+Thanks for CCing me in - I don't monitor the list closely enough these days 
+:-)
 
-Uh, try one note per commit in a project.  A few merges won't need
-a note, but nearly every single non-merge commit would.
+Junio C Hamano wrote:
 
-Consider a project with a velocity of about 200 non-merge
-commits/day; the object count goes up fast.
+> If generate_email results in an empty output in this codepath:
+> 
+> # Check if we've got anyone to send to
+> if [ -z "$recipients" ]; then
+> ...
+> echo >&2 "*** $config_name is not set so no email will be sent"
+> echo >&2 "*** for $refname update $oldrev->$newrev"
+> exit 0
+> fi
+> 
+> shouldn't we rather receive an error e-mail than let the
+> misconfiguration go undetected?
 
-One idea we are starting to kick around might double or quadruple
-that number.  If we store metadata about every version of every
-commit ever proposed to a project, we need a lot more notes than
-commits.  Right now we have this sort of distribution from one of
-our servers:
+I don't know if it's still the case, but when I wrote it, anything that went 
+to standard error appeared on the client terminal, however, it could 
+probably do with being a better description of who is generating the 
+message, otherwise it'll be some anonymous error during a push, giving the 
+user no clue as to how to fix it.
 
-versions | commits 
----------+---------
-       1 |    9262
-       2 |    2626
-       3 |    1053
-       4 |     424
-       5 |     224
-       6 |     124
-       7 |      57
-       8 |      38
-       9 |      28
-      10 |      14
-      11 |      12
-      12 |      10
-      13 |       5
-      14 |       6
-      15 |       2
-      16 |       3
-      17 |       2
-      21 |       1
-      32 |       1
+> Before this check, I do not see anywhere generate_email would return nor
+> exit, and after this check, there is a call to generate_email_header and
+> that guarantees that the output from the generate_email function is not
+> empty, so it looks to me that triggering this check is the only case your
+> patch would change the behaviour of the script.
 
-So most commits (66%) would have only 1 version (and 1 note)
-related to them in the note tree, but if I use the same note tree
-for final commits as individual revisions considered, at least 18%
-of the commits in the final history of the project would actually
-have two notes, and 7.5% would have 3 notes.
+There is also a check for the validity of the update type above the 
+recipients check.
+
+I'm wondering actually if all of these should be "return"s rather than 
+"exit"s.  Better still would be if there were some sort of exception 
+throwing mechanism in shell script - anyone know if there is?
+
+
+
+Andy
+
+P.S. Hope you're all keeping well.
 
 -- 
-Shawn.
+Dr Andy Parkins
+andyparkins@gmail.com
