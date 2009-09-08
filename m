@@ -1,77 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH resend] git-pull: fix fetch-options.txt to not document  --quiet and --verbose twice in git-pull.txt
-Date: Tue, 08 Sep 2009 08:26:14 +0200
-Message-ID: <vpqd462kl4p.fsf@bauges.imag.fr>
-References: <9f50533b0909070534q2375a793mf5d676b519eae69@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Improving merge failure message
+Date: Tue, 08 Sep 2009 15:31:01 +0900
+Message-ID: <20090908153101.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Emmanuel Trillaud <etrillaud@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 08:27:09 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 08 08:34:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkuAW-00030v-TE
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 08:27:09 +0200
+	id 1MkuHJ-0004GY-6Y
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 08:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbZIHG0T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2009 02:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464AbZIHG0T
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 02:26:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49588 "EHLO rominette.imag.fr"
+	id S1753648AbZIHGd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 02:33:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753620AbZIHGd7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 02:33:59 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:34543 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753299AbZIHG0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 02:26:18 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n886NpIw008669
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 8 Sep 2009 08:23:51 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mku9e-0004Ul-S9; Tue, 08 Sep 2009 08:26:14 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mku9e-00079i-Qq; Tue, 08 Sep 2009 08:26:14 +0200
-In-Reply-To: <9f50533b0909070534q2375a793mf5d676b519eae69@mail.gmail.com> (Emmanuel Trillaud's message of "Mon\, 7 Sep 2009 14\:34\:35 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 08 Sep 2009 08:23:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n886NpIw008669
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1252995833.30302@LSpEz+NVAXIKrKQaCY41Tg
+	id S1753408AbZIHGd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 02:33:58 -0400
+Received: from e.earth.lavabit.com (e.earth.lavabit.com [192.168.111.14])
+	by karen.lavabit.com (Postfix) with ESMTP id 5E02011B838
+	for <git@vger.kernel.org>; Tue,  8 Sep 2009 01:34:01 -0500 (CDT)
+Received: from 7054.lavabit.com (212.116.219.112)
+	by lavabit.com with ESMTP id GQGHJK7GPGGZ
+	for <git@vger.kernel.org>; Tue, 08 Sep 2009 01:34:01 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=zHO7EgQGBn3G0bcgh5XN8X5trVBIen0gx6oXR5DFhMLuS4Elm46ZEYXZO+Qhj/sKtldLqmNZ75Hqn8gyVOp3lMBwGnPhs7e2ACpr2ZF6tbuOBGaIU52vOW9eGDT5yR+BjpqlWhgFuMPND0rzQzvA6d3NcPvgrxadWEPdFDJBGnk=;
+  h=From:To:Subject:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127972>
 
-Emmanuel Trillaud <etrillaud@gmail.com> writes:
+I often see my students confused after a failed merge and they can't
+figure out what to do next. Two typical error messages they get are
 
-> Hello all,
-> In git-pull(1) we can read :
+[1]% git merge master
+Auto-merging cool
+CONFLICT (content): Merge conflict in cool
+Automatic merge failed; fix conflicts and then commit the result.
 
-[...]
+[2]% git merge feature
+error: Entry 'cool' not uptodate. Cannot merge.
+fatal: merging of trees 8ec1d96451ff05451720e4e8968812c46b35e5e4 and aad8d5cef3915ab78b3227abaaac99b62db9eb54 failed
 
-> Best regard
+In the former case, the merge command gives a helpful message that
+automatic merge failed because it found a conflict and tells enough
+instruction to the user.
 
-I guess this part of your message is not meant to appear in the commit
-message. If you leave it here, Junio will have to edit it manually,
-whereas if you put it where Documentation/SubmitingPatches suggests,
-i.e.
+But in the latter case, the messages look unnecessarily scary, with two
+"error" and "fatal" comments, and long sha1 commit names.
 
-> ---
+Those of us who used git for some time can tell what it wants to say.
+The merge checked the files in the working tree before doing anything,
+found that the user has uncommitted change to a file that is involved in
+the merge, and it stopped. And it didn't change anything. It may be "fatal"
+but the user has much less reason to be scared about this failure than
+the conflicting case.
 
-here (between --- and diffstat), it's done automatically. Be nice to
-our maintainer, and our mainainer will be nice to you ;-).
+It would be nice if the message in the latter case can be toned down.
 
-> Documentation/fetch-options.txt | =A0 =A02 ++
-> 1 files changed, 2 insertions(+), 0 deletions(-)
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
