@@ -1,71 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git.el: Use git-add-file for unmerged files, remove
- git-resolve-file
-Date: Tue, 08 Sep 2009 13:43:34 -0700
-Message-ID: <7vhbvdxj49.fsf@alter.siamese.dyndns.org>
-References: <4AA026AC.10907@gmail.com> <873a6x9t0l.fsf@wine.dyndns.org>
+From: Thell Fowler <git@tbfowler.name>
+Subject: Re: git-diff: must --exit-code work with --ignore* options?
+Date: Tue, 8 Sep 2009 15:58:38 -0500 (CDT)
+Message-ID: <alpine.WNT.2.00.0909081457190.3732@GWNotebook>
+References: <87k549dyne.fsf@meyering.net> <7vvdnt869j.fsf@alter.siamese.dyndns.org> <87eiuhdnw9.fsf@meyering.net> <7v7i087twu.fsf@alter.siamese.dyndns.org> <87skf9uv3r.fsf@meyering.net> <7vljl1dpud.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Nordholts <enselic@gmail.com>, git@vger.kernel.org
-To: Alexandre Julliard <julliard@winehq.org>
-X-From: git-owner@vger.kernel.org Tue Sep 08 22:43:53 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 22:59:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml7Xd-0007ov-1e
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 22:43:53 +0200
+	id 1Ml7mm-0004Mc-Dk
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 22:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975AbZIHUnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 16:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbZIHUnm
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 16:43:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46536 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751284AbZIHUnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 16:43:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AF20C2B80B;
-	Tue,  8 Sep 2009 16:43:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=tLIJlfpd9igsR2EbYh0466tCXpI=; b=UsvH6DtV+eCixnECOVXX9zu
-	iCWk4IjBypVo1Y5pdQYoyOGzEstkRnYGU11IEIb+3g3dCqiPQ0g8A2rcyMooiLW1
-	G54v29RX6hNQ5KEcPDWGFdKW+hfp5RjuwlpKG48ReWSSDHOeX7Q5/8faIekV/DH/
-	yusTHnW9iKfmPzSXg/Y8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=V2l3jPdzbtU6zcK3H6A0vL1pPCeJjFMgYU8sjkM8EXYQPaWYa
-	1COLkYFpDBV6VmQD8y4h9AtvjKgKrM+t7CeVWxY5RDUJI1aFrMSwsK5fQgagUs0q
-	5H9rZv2LULEumLEl/Dqjh7oPNr+33Ep9KbocO3quGn5vZJFzqGpnXGjrlI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 873022B80A;
-	Tue,  8 Sep 2009 16:43:41 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DBA492B806; Tue,  8 Sep
- 2009 16:43:37 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4B14F282-9CB8-11DE-B14A-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752168AbZIHU7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 16:59:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbZIHU7Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 16:59:16 -0400
+Received: from 216.38.49.125.servint.net ([216.38.49.125]:44513 "EHLO
+	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751168AbZIHU7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 16:59:15 -0400
+Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWPortableVCS.local)
+	by vps5.pyrapat.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <git@tbfowler.name>)
+	id 1Ml7mV-0003BE-FP; Tue, 08 Sep 2009 15:59:15 -0500
+X-X-Sender: almostautomated@GWPortableVCS
+In-Reply-To: <7vljl1dpud.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tbfowler.name
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128034>
 
-Alexandre Julliard <julliard@winehq.org> writes:
+On Sun, 30 Aug 2009, Junio C Hamano wrote:
 
-> Martin Nordholts <enselic@gmail.com> writes:
+> Jim Meyering <jim@meyering.net> writes:
 >
->> Use `git-add-file' to mark unmerged files as resolved in the
->> *git-status* buffer to be consistent with git's CLI instructions. Also
->> remove `git-resolve-file' to make it clear that that "R" is a now a
->> free keybinding.
+>> Junio C Hamano wrote:
+>> ...
+>>> Subject: [PATCH] diff --quiet: special case "ignore whitespace" options
+>>> ...
+>>> Change the semantics of --ignore-whitespace* options to mean more than
+>>> "omit showing the difference in text".  When these options are used, the
+>>> internal "quick" optimization is turned off, and the status reported with
+>>> the --exit-code option will now match if any the textual diff output is
+>>> actually produced.
+>>>
+>>> Also rename the internal option "QUIET" to "QUICK" to better reflect what
+>>> its true purpose is.
 >>
->> Signed-off-by: Martin Nordholts <martinn@src.gnome.org>
+>> Thanks again.
+>> If there's anything I can to do help (add a test?), let me know.
 >
-> Looks good, thanks.
+> The change has been cooking in 'next' and hopefully be in 1.7.0.  I think
+> the updated series adds its own test script, too.
 >
-> Acked-by: Alexandre Julliard <julliard@winehq.org>
+> Using it in every day scenario, and reporting any breakage you notice
+> before 1.7.0 happens, would be greatly appreciated.
+>
+> Thanks.
 
-Thanks, both.
+Perhaps I'm expected something different than what I _should_ be 
+expecting, but shouldn't --quiet always return the same as --exit-code?
+
+# Cut/Paste example
+mkdir test_ws_quiet && cd test_ws_quiet && git init
+printf "foo bar  \n\n" >f1.txt
+git add .
+git commit -m 'f text'
+printf "foo  bar\n\n" >f1.txt
+git commit -a -m 'f with diff white-space in middle & end'
+git diff -w --exit-code HEAD^ >/dev/null
+echo $?
+# returns '0' which it should
+git diff -w --quiet HEAD^
+echo $?
+# returns '0' which it should
+git diff -b --exit-code HEAD^ >/dev/null
+echo $?
+# returns '0' which it should
+git diff -b --quiet HEAD^ >/dev/null
+echo $?
+# returns '0' which it should
+git diff --ignore-space-at-eol --exit-code HEAD^ >/dev/null
+echo $?
+# returns '1' which it should
+git diff --ignore-space-at-eol --quiet HEAD^
+echo $?
+#returns '0' <=== Unexpected.
+
+#
+# Next phase
+#
+printf "foobar\n\n">f1.txt
+git commit -a -m 'f without any spaces'
+git diff -w --exit-code HEAD^ >/dev/null
+echo $?
+# returns '0' which it should
+git diff -w --quiet HEAD^
+echo $?
+# returns '0' which it should
+git diff -b --exit-code HEAD^ >/dev/null
+echo $?
+# returns '1' which it should
+git diff -b --quiet HEAD^ >/dev/null
+echo $?
+# returns '0' <=== Unexpected
+git diff --ignore-space-at-eol --exit-code HEAD^ >/dev/null
+echo $?
+# returns '1' which it should
+git diff --ignore-space-at-eol --quiet HEAD^
+echo $?
+#returns '0' <=== Unexpected.
+
+-- 
+Thell
