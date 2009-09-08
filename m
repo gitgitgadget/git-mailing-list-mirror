@@ -1,79 +1,104 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Improving merge failure message
-Date: Tue, 8 Sep 2009 09:20:07 +0200
-Message-ID: <fabb9a1e0909080020i3daa92aar952fc5102df62bdb@mail.gmail.com>
-References: <20090908153101.6117@nanako3.lavabit.com> <7vbplmhr0i.fsf@alter.siamese.dyndns.org> 
-	<7veiqhgb4y.fsf@alter.siamese.dyndns.org>
+From: Josh Triplett <josh@joshtriplett.org>
+Subject: [PATCH] Add test for ignoring pushInsteadOf when remote has
+ explicit pushurl
+Date: Tue, 8 Sep 2009 00:41:48 -0700
+Message-ID: <20090908074147.GB3236@feather>
+References: <cover.1252313313.git.josh@joshtriplett.org>
+ <5e58748923d9b4a182499a6ba8fa4636bce4810e.1252313313.git.josh@joshtriplett.org>
+ <7vws49gbql.fsf@alter.siamese.dyndns.org>
+ <20090908071513.GA3236@feather>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 09:20:36 2009
+X-From: git-owner@vger.kernel.org Tue Sep 08 09:42:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mkv0G-00078K-2t
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 09:20:36 +0200
+	id 1MkvL6-0004GT-Re
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 09:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753782AbZIHHU0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2009 03:20:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbZIHHU0
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 03:20:26 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:49431 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753661AbZIHHUZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 03:20:25 -0400
-Received: by ewy2 with SMTP id 2so2538090ewy.17
-        for <git@vger.kernel.org>; Tue, 08 Sep 2009 00:20:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BMp5/rCscVU89VBWSO4UiI2hfUytGHafrYZY9MzE8vI=;
-        b=rZz7fchPcb8JPUTM1vLVRh4C7P73jHq8HUaIeq4rvmfhv+Jng9/9H+BoMqvmlHs4Rd
-         vQKOV7P9YUzFOyEhx5MlVsJeNNbKmQbpEGFf4D2Gy+dmk52zy8Guv0bzajchbjpHQGdl
-         tgpayTm0vm1KjMtzOH1Q7al3fj7HtfCf7Qsck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=J19ZYcDXmpdM+wC8XO3LPz+7AzdrQ32y6D1BVMRGTLgePr0QSrnks0n8DUGkc0rB2P
-         CLIT4Kga6h+atlBnzZOuv4XbX1aXTuRyCViGIdBNdGCLUNRlGYSqHnjTR/RCJ82DHCRI
-         njWpdUId+3Ba6F+Vc6yH8/GfG1GHLCgSlFwPM=
-Received: by 10.216.93.141 with SMTP id l13mr1674981wef.67.1252394427127; Tue, 
-	08 Sep 2009 00:20:27 -0700 (PDT)
-In-Reply-To: <7veiqhgb4y.fsf@alter.siamese.dyndns.org>
+	id S1753865AbZIHHl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 03:41:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753853AbZIHHl7
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 03:41:59 -0400
+Received: from relay4-v.mail.gandi.net ([217.70.178.78]:52204 "EHLO
+	relay4-v.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753847AbZIHHl6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 03:41:58 -0400
+Received: from feather (pool-173-50-250-234.ptldor.fios.verizon.net [173.50.250.234])
+	by relay4-v.mail.gandi.net (Postfix) with ESMTP id 12CE9BA26;
+	Tue,  8 Sep 2009 09:41:57 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20090908071513.GA3236@feather>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127985>
 
-Heya,
+Signed-off-by: Josh Triplett <josh@joshtriplett.org>
+---
 
-On Tue, Sep 8, 2009 at 09:15, Junio C Hamano<gitster@pobox.com> wrote:
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* would_overwrite */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "Your local changes to '%s' will be clo=
-bbered by merge. =A0Aborting.",
+On Tue, Sep 08, 2009 at 12:15:13AM -0700, Josh Triplett wrote:
+> On Tue, Sep 08, 2009 at 12:02:42AM -0700, Junio C Hamano wrote:
+> > Josh Triplett <josh@joshtriplett.org> writes:
+> > 
+> > > This configuration option allows systematically rewriting fetch-only
+> > > URLs to push-capable URLs when used with push.  For instance:
+> > >
+> > > [url "ssh://example.org/"]
+> > >     pushInsteadOf = "git://example.org/"
+> > >
+> > > This will allow clones of "git://example.org/path/to/repo" to
+> > > subsequently push to "ssh://example.org/path/to/repo", without manually
+> > > configuring pushurl for that remote.
+> > >
+> > > Includes documentation for the new option, bash completion updates, and
+> > > test cases (both that pushInsteadOf applies to push and that it does
+> > > *not* apply to fetch).
+> > 
+> > Thanks.
+> > 
+> > I will queue these patches, but I presume you would also want to add a
+> > test that pushInsteadOf is ignored for remotes with an explicit pushURL?
+> 
+> Will do.
 
-Still scary, shouldn't that be s/will be/would be/ ?
+Done.  Please add this to the queue, optionally squashing it into patch
+2/2 if you prefer.
 
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* not_uptodate_file */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "Your local changes to '%s' will be clo=
-bbered by merge. =A0Aborting.",
+ t/t5516-fetch-push.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-Ditto.
-
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* not_uptodate_dir */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 "Updating '%s' would lose untracked fil=
-es in it. =A0Aborting.",
-
-Not sure, but maybe s/in it//
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8f455c7..6889a53 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -193,6 +193,22 @@ test_expect_success 'push with pushInsteadOf' '
+ 	)
+ '
+ 
++test_expect_success 'push with pushInsteadOf and explicit pushurl (pushInsteadOf should not rewrite)' '
++	mk_empty &&
++	TRASH="$(pwd)/" &&
++	git config "url.trash2/.pushInsteadOf" trash/ &&
++	git config remote.r.url trash/wrong &&
++	git config remote.r.pushurl "$TRASH/testrepo" &&
++	git push r refs/heads/master:refs/remotes/origin/master &&
++	(
++		cd testrepo &&
++		r=$(git show-ref -s --verify refs/remotes/origin/master) &&
++		test "z$r" = "z$the_commit" &&
++
++		test 1 = $(git for-each-ref refs/remotes/origin | wc -l)
++	)
++'
++
+ test_expect_success 'push with matching heads' '
+ 
+ 	mk_test heads/master &&
+-- 
+1.6.3.3
