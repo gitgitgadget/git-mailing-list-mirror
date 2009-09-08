@@ -1,143 +1,129 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCHv5 00/14] git notes
-Date: Tue, 08 Sep 2009 23:40:05 +0200
-Message-ID: <200909082340.05318.johan@herland.net>
-References: <1252376822-6138-1-git-send-email-johan@herland.net>
- <alpine.DEB.1.00.0909081100020.4330@intel-tinevez-2-302>
- <7vocplxjov.fsf@alter.siamese.dyndns.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGit PATCH] Add import -p option
+Date: Tue, 8 Sep 2009 22:43:39 +0100
+Message-ID: <b0943d9e0909081443g47978cb7mee241d74dc52adf7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 23:40:46 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>,
+	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 08 23:44:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml8Qf-0000HU-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 23:40:45 +0200
+	id 1Ml8Tv-0001Lb-Ec
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 23:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395AbZIHVkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 17:40:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbZIHVkH
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 17:40:07 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:34256 "EHLO
-	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752279AbZIHVkF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 17:40:05 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPO00DW99IUOVA0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 23:40:06 +0200 (MEST)
-Received: from alpha.localnet ([84.215.102.95])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPO002YR9ITVK50@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 23:40:06 +0200 (MEST)
-X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
- Antispam-Data: 2009.9.8.212416
-User-Agent: KMail/1.12.1 (Linux/2.6.30-ARCH; KDE/4.3.1; x86_64; ; )
-In-reply-to: <7vocplxjov.fsf@alter.siamese.dyndns.org>
+	id S1752386AbZIHVnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 17:43:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbZIHVnj
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 17:43:39 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:38859 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbZIHVni (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 17:43:38 -0400
+Received: by bwz19 with SMTP id 19so31349bwz.37
+        for <git@vger.kernel.org>; Tue, 08 Sep 2009 14:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=WTjQz5bDABJlNTliQx+q8pIv/xl+/idw2T8tn0Ah+9c=;
+        b=YpHYlP76IZezhHGSwxTXy+itkHbp8zjL127L6Sfle7p3jOc+mZRNO+JdSRW+miSbg1
+         W2STGLB6s352Jkn9hI7blbxP/IjCz+Isla1bqy9/3Dd6f7VnBgA9A1N+BJQy26XUkStg
+         u4EsraZWOZARSxuYifxURP3z0lveO5Cgknaiw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=hd7uBNK601IBs9JuxwBDoNer7IVcl1MDhI0lfBQ2tme8jPUtGBby3+DOgEuZiRrxN2
+         5RfsIEy0w1gq8xKnJrI3vFn8MPIHpe6SO27DXfS5tvxV7goZKPWHbdCd0eD7mu3Gb0Mk
+         nvLLIkAYzThw2rMDj0X2EpgIXKDEDJ30Z1d8o=
+Received: by 10.223.144.67 with SMTP id y3mr6310889fau.40.1252446219744; Tue, 
+	08 Sep 2009 14:43:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128042>
 
-On Tuesday 08 September 2009, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > On Tue, 8 Sep 2009, Johan Herland wrote:
-> >> Algorithm / Notes tree   git log -n10 (x100)   git log --all
-> >> ------------------------------------------------------------
-> >> next / no-notes                4.77s              63.84s
-> >>
-> >> before / no-notes              4.78s              63.90s
-> >> before / no-fanout            56.85s              65.69s
-> >>
-> >> 16tree / no-notes              4.77s              64.18s
-> >> 16tree / no-fanout            30.35s              65.39s
-> >> 16tree / 2_38                  5.57s              65.42s
-> >> 16tree / 2_2_36                5.19s              65.76s
-> >>
-> >> flexible / no-notes            4.78s              63.91s
-> >> flexible / no-fanout          30.34s              65.57s
-> >> flexible / 2_38                5.57s              65.46s
-> >> flexible / 2_2_36              5.18s              65.72s
-> >> flexible / ym                  5.13s              65.66s
-> >> flexible / ym_2_38             5.08s              65.63s
-> >> flexible / ymd                 5.30s              65.45s
-> >> flexible / ymd_2_38            5.29s              65.90s
-> >> flexible / y_m                 5.11s              65.72s
-> >> flexible / y_m_2_38            5.08s              65.67s
-> >> flexible / y_m_d               5.06s              65.50s
-> >> flexible / y_m_d_2_38          5.07s              65.79s
-> >
-> > I can see that some people may think that date-based fan-out is the
-> > cat's ass,
-> 
-> Actually, my knee-jerk reaction was that 4.77 (next) vs 5.57 (16tree with
-> 2_38) is already a good enough performance/simplicity tradeoff, and 5.57
-> vs 5.08 (16tree with ym_2_38) probably does not justify the risk of worst
-> case behaviour that can come from possible mismatch between the access
-> pattern and the date-optimized tree layout.
+This patch renames some of the existing import options and adds the -p
+(--strip) option which allows stripping the leading slashes of the diff
+paths.
 
-Yes, 16tree / 2_38 looks like a reasonable tradeoff when you look at the 
-absolute numbers, but it's also interesting to highlight the actual cost of 
-doing the notes lookup. In that case, we see that 16tree / 2_38 costs 0.80s, 
-whereas flexible / ym_2_38 only costs 0.31s, i.e. less than half the cost of 
-the former...
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+---
+ stgit/commands/imprt.py |   13 ++++++++-----
+ stgit/git.py            |    4 +++-
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-> But that only argues against supporting _only_ date-optimized layout.
-> 
-> Support of "flexible layout" is not that flexible as its name suggests;
-> one single note tree needs to have a uniform fanout strategy.
+diff --git a/stgit/commands/imprt.py b/stgit/commands/imprt.py
+index 8067beb..0bbacbc 100644
+--- a/stgit/commands/imprt.py
++++ b/stgit/commands/imprt.py
+@@ -57,7 +57,9 @@ options = [
+         short = 'Import a patch from a URL'),
+     opt('-n', '--name',
+         short = 'Use NAME as the patch name'),
+-    opt('-t', '--strip', action = 'store_true',
++    opt('-p', '--strip', type = 'int', metavar = 'N',
++        short = 'Remove N leading slashes from diff paths (default 1)'),
++    opt('-t', '--stripname', action = 'store_true',
+         short = 'Strip numbering and extension from patch name'),
+     opt('-i', '--ignore', action = 'store_true',
+         short = 'Ignore the applied patches in the series'),
+@@ -69,7 +71,7 @@ options = [
+         short = 'leave the rejected hunks in corresponding *.rej files'),
+     opt('-e', '--edit', action = 'store_true',
+         short = 'Invoke an editor for the patch description'),
+-    opt('-p', '--showpatch', action = 'store_true',
++    opt('-d', '--showdiff', action = 'store_true',
+         short = 'Show the patch content in the editor buffer'),
+     opt('-a', '--author', metavar = '"NAME <EMAIL>"',
+         short = 'Use "NAME <EMAIL>" as the author details'),
+@@ -104,7 +106,7 @@ def __create_patch(filename, message, author_name,
+author_email,
+         patch = os.path.basename(filename)
+     else:
+         patch = ''
+-    if options.strip:
++    if options.stripname:
+         patch = __strip_patch_name(patch)
 
-Actually, the uniform strategy is only required at each separate level. You 
-are free to vary the strategy within independent subtrees. I.e. in the case 
-where you have 1 note from 2007, and 1000 notes from 2008, you are free to 
-use a mix of date-based and SHA1-based structures, like this:
+     if not patch:
+@@ -152,9 +154,10 @@ def __create_patch(filename, message,
+author_name, author_email,
+             base = git_id(crt_series, options.base)
+         else:
+             base = None
+-        git.apply_patch(diff = diff, base = base, reject = options.reject)
++        git.apply_patch(diff = diff, base = base, reject = options.reject,
++                        strip = options.strip)
+         crt_series.refresh_patch(edit = options.edit,
+-                                 show_patch = options.showpatch,
++                                 show_patch = options.showdiff,
+                                  sign_str = options.sign_str,
+                                  backup = False)
+         out.done()
+diff --git a/stgit/git.py b/stgit/git.py
+index 268c44b..0886207 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -818,7 +818,7 @@ def repack():
+     GRun('repack', '-a', '-d', '-f').run()
 
-  y2007/1234567...
-  y2008/m01/d01/2345678...
-  y2008/m01/d01/3456789...
-  y2008/m01/d02/45/67890...
-  y2008/m01/d02/56/78901...
-  y2008/m01/d02/67/89012...
-  ...
-
-> > - I find the restriction to commits rather limiting.
-> 
-> Yeah, we would not want to be surprised to find many people want to
-> annotate non-commits with this mechanism.
-
-We could arbitrarily set the "commit date" for non-commit objects to the 
-epoch, so that they can still be represented in a date-based fanout. (Of 
-course, the notes code should be smart enough to choose a more optimal 
-fanout if the number of non-commit notes is significant).
-
-> > - most of the performance difference between the date-based and the
-> > SHA-1 based fan-out looks to me as if the issue was the top-level tree.
-> > Basically, this tree has to be read _every_ time _anybody_ wants to
-> > read a note.
-> 
-> A comparison between 'next' and another algorithm that opens the
->  top-level notes tree object and returns "I did not find any note"
->  without doing anything else would reveal that cost.  But when you are
->  doing "log -n10" (or "log --all"), you would read the notes top-level
->  tree once, and it is likely to be cached in the obj_hash[] (or in
->  delta_base cache) already for the remaining invocations, even if notes
->  mechanism does not do its own cache, which I think it does, no?
-
-Yes it does, since Dscho's original hash_map based implementation, in fact.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+ def apply_patch(filename = None, diff = None, base = None,
+-                fail_dump = True, reject = False):
++                fail_dump = True, reject = False, strip = None):
+     """Apply a patch onto the current or given index. There must not
+     be any local changes in the tree, otherwise the command fails
+     """
+@@ -840,6 +840,8 @@ def apply_patch(filename = None, diff = None, base = None,
+     cmd = ['apply', '--index']
+     if reject:
+         cmd += ['--reject']
++    if strip:
++        cmd += ['-p', strip]
+     try:
+         GRun(*cmd).raw_input(diff).no_output()
+     except GitRunException:
