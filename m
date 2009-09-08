@@ -1,96 +1,145 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Add more instructions about how to install git.
-Date: Tue, 08 Sep 2009 21:41:21 +0200
-Message-ID: <vpqzl95z0ke.fsf@bauges.imag.fr>
-References: <1252386686-15689-1-git-send-email-tfransosi@gmail.com>
-	<81b0412b0909072244k21a4ddf6vdc38d9f713a4a084@mail.gmail.com>
-	<vpqhbvekldk.fsf@bauges.imag.fr>
-	<a4c8a6d00909080724q1c792f6bs641ea9d000d08b5a@mail.gmail.com>
-	<4AA66C54.4060101@viscovery.net>
-	<a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] post-receive-email: do not call sendmail if no mail was
+ generated
+Date: Tue, 08 Sep 2009 13:15:13 -0700
+Message-ID: <7v4ord19da.fsf@alter.siamese.dyndns.org>
+References: <20090908185555.GA3858@lars.home.noschinski.de>
+ <1252436418-7660-1-git-send-email-lars@public.noschinski.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 21:41:40 2009
+Cc: git@vger.kernel.org, andyparkins@gmail.com, pape@smarden.org,
+	gitster@pobox.com
+To: Lars Noschinski <lars@public.noschinski.de>
+X-From: git-owner@vger.kernel.org Tue Sep 08 22:15:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml6ZN-0005QW-DG
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 21:41:37 +0200
+	id 1Ml76P-0007HH-2h
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 22:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbZIHTl0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 15:41:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751383AbZIHTl0
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 15:41:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:55608 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751219AbZIHTlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 15:41:25 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n88JbZRe028305
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 8 Sep 2009 21:37:35 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Ml6Z7-00073t-3r; Tue, 08 Sep 2009 21:41:21 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Ml6Z7-0000V7-2S; Tue, 08 Sep 2009 21:41:21 +0200
-In-Reply-To: <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com> (Thiago Farina's message of "Tue\, 8 Sep 2009 10\:52\:46 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 08 Sep 2009 21:37:36 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n88JbZRe028305
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1253043458.08437@m62AUEWcWexYa0+pAvUiXQ
+	id S1752087AbZIHUP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 16:15:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751956AbZIHUP1
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 16:15:27 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55032 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941AbZIHUPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 16:15:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 99D482B44D;
+	Tue,  8 Sep 2009 16:15:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eYOAIr5WSIiPA/FTGc6YzjkuRqA=; b=YFbha0
+	WvmuujOLzdsK5FeqdcCf8EJNhF+mI7Ve0ePOftzkeFKzv0r3E+VOccpKnfm1M3xV
+	kSzaiAWGFAeN4qO2VdOKWc3v3OpffrQWBjTo3m4fWdIOrfv+GluTSGBfr921EzlT
+	IoaMOh3a90mG0LPwX0hJE4PkmeQgJw9U2rUI8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sWdYLzpLHVP9dr+QBfblpKpnOyPhNeQZ
+	GeM5tXGOdU8Kc6YvOI0xu5JIEw3AUTYsM8LcHlcMsRt2UrVkKD6MRbA1dDfAUg3f
+	hln9iAGAVsax2WYbcfVGqZcJrJs0gv3wNyFfbt8C0N2FBOHCpfm+iZ7pzkMK5lzx
+	/dS0tR+CKnk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 637332B44B;
+	Tue,  8 Sep 2009 16:15:21 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 482A02B445; Tue,  8 Sep
+ 2009 16:15:15 -0400 (EDT)
+In-Reply-To: <1252436418-7660-1-git-send-email-lars@public.noschinski.de>
+ (Lars Noschinski's message of "Tue\,  8 Sep 2009 21\:00\:18 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 55B72664-9CB4-11DE-BDCC-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128028>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+Lars Noschinski <lars@public.noschinski.de> writes:
 
-> Running only "make".
-> $ make
+> contrib/hooks/post-receive-email used to call the send_mail function
+> (and thus, /usr/sbin/sendmail), even if generate_mail generated no
+> output.  This is problematic, as the sendmail binary provided by exim4
+> generates an error mail if provided with an empty input.
 
-[...]
+I actually have a bigger question, not about the implementation but about
+the cause.
 
-> Running configure and then make
-> $ make configure
-> GIT_VERSION = 1.6.5.rc0.dirty
->     GEN configure
-> $ make
+If generate_email results in an empty output in this codepath:
 
-[...]
+	# Check if we've got anyone to send to
+	if [ -z "$recipients" ]; then
+		...
+		echo >&2 "*** $config_name is not set so no email will be sent"
+		echo >&2 "*** for $refname update $oldrev->$newrev"
+		exit 0
+	fi
 
-What about trying to do what the INSTALL file suggests, then?
+shouldn't we rather receive an error e-mail than let the
+misconfiguration go undetected?
 
-| Alternatively you can use autoconf generated ./configure script to
-| set up install paths (via config.mak.autogen), so you can write
-| instead
-| 
-|         $ make configure ;# as yourself
-|         $ ./configure --prefix=/usr ;# as yourself
-|         $ make all doc ;# as yourself
-|         # make install install-doc install-html;# as root
+Before this check, I do not see anywhere generate_email would return nor
+exit, and after this check, there is a call to generate_email_header and
+that guarantees that the output from the generate_email function is not
+empty, so it looks to me that triggering this check is the only case your
+patch would change the behaviour of the script.
 
-You did the first line, but the three next one give you instructions
-that you didn't follow. These instructions start line 16 of the
-INSTALL file, that is, in the first screen when viewing the file with
-a reasonable window size.
+It looks to me that your exim error mail is actually reporting a
+legitimate problem you would want to fix in your configuration.
 
-I tend to disagree with the mainainer that the configure should be the
-"alternate" and plain make the recommanded way, but the configure
-script is there, it works, it's documented early enough in the INSTALL
-file, so what's the problem?
+> Therefore, we now read one line ourselves and use the result to decide
+> if we really want to call /usr/sbin/sendmail.
+> ---
+>  contrib/hooks/post-receive-email |   11 +++++++++++
+>  1 files changed, 11 insertions(+), 0 deletions(-)
+>
+> Two things changed:
+>
+>  - we do not read the whole mail in a shell variable
+>  - the decision whether to call sendmail is based on the output generated
+>    by generate_mail, not its return code
+>
+> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+> index 2a66063..c855c31 100755
+> --- a/contrib/hooks/post-receive-email
+> +++ b/contrib/hooks/post-receive-email
+> @@ -637,6 +637,16 @@ show_new_revisions()
+>  
+>  send_mail()
+>  {
+> +	OIFS=$IFS
+> +	IFS='
+> +'
+> +	read FIRSTLINE || exit 1
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Shouldn't this be merely a "return"?  The caller looks like this:
+
+	while read oldrev newrev refname
+	do
+		generate_email $oldrev $newrev $refname | send_mail
+	done
+
+and you would not want to stop after punting to report on the first ref.
+
+> +	(printf $FIRSTLINE'\n'; cat) | call_sendmail
+> +	IFS=$OLD_IFS
+> +}
+> +
+> +call_sendmail()
+> +{
+>  	if [ -n "$envelopesender" ]; then
+>  		/usr/sbin/sendmail -t -f "$envelopesender"
+>  	else
+> @@ -644,6 +654,7 @@ send_mail()
+>  	fi
+>  }
+>  
+> +
+>  # ---------------------------- main()
+>  
+>  # --- Constants
+
+Why?
