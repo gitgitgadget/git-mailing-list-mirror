@@ -1,59 +1,72 @@
-From: Lars Noschinski <lars@public.noschinski.de>
-Subject: Re: [PATCH] post-receive-email: do not call sendmail if no mail was generated
-Date: Tue, 8 Sep 2009 11:20:59 +0200
-Message-ID: <20090908092059.GA8207@lars.home.noschinski.de>
-References: <1251481187-6361-1-git-send-email-lars@public.noschinski.de>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: Improving merge failure message
+Date: Tue, 08 Sep 2009 19:12:37 +0900
+Message-ID: <20090908191237.6117@nanako3.lavabit.com>
+References: <20090908153101.6117@nanako3.lavabit.com>
+	<7vbplmhr0i.fsf@alter.siamese.dyndns.org>
+	<7veiqhgb4y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 08 11:51:04 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 12:13:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkxLT-0005Wg-78
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 11:50:39 +0200
+	id 1MkxhQ-0004GI-LW
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 12:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754052AbZIHJsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 05:48:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753993AbZIHJsK
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 05:48:10 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:47096 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753850AbZIHJsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 05:48:10 -0400
-X-Greylist: delayed 1629 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Sep 2009 05:48:09 EDT
-Received: from [87.78.90.198] (helo=fruehjahrsmuede.home.noschinski.de)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1Mkwqv-0002vk-Up; Tue, 08 Sep 2009 11:19:06 +0200
-Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@public.noschinski.de>)
-	id 1Mkwsl-000299-TH; Tue, 08 Sep 2009 11:20:59 +0200
-Content-Disposition: inline
-In-Reply-To: <1251481187-6361-1-git-send-email-lars@public.noschinski.de>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-Df-Sender: 336680
+	id S1754076AbZIHKMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 06:12:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbZIHKMx
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 06:12:53 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:38652 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754066AbZIHKMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 06:12:53 -0400
+Received: from h.earth.lavabit.com (h.earth.lavabit.com [192.168.111.17])
+	by karen.lavabit.com (Postfix) with ESMTP id 946EE11B7C0;
+	Tue,  8 Sep 2009 05:12:55 -0500 (CDT)
+Received: from 8426.lavabit.com (60.12.190.58)
+	by lavabit.com with ESMTP id K8AZIVPUXTO6; Tue, 08 Sep 2009 05:12:55 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=bVjd8QE5Cl6IjQz2zGsbIeI59J6U/EJtU8cceVlGni4/grHBzokl4uZtzicYzu+qJLdo/X9c9nnbw8LtRtm2Hkz2uyxr2eDsxrx2eYGsxrdh99OHSlBsFI+pXxpz3uJweD2HpUwtOvc9qi7cEFFr1UhbcACx6aUYS8YGek0OOyY=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7veiqhgb4y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127998>
 
-* Lars Noschinski <lars@public.noschinski.de> [09-08-28 19:39]:
-> contrib/hooks/post-receive-email used to call the send_mail function
-> (and thus, /usr/sbin/sendmail), even if generate_mail returned an error.
-> This is problematic, as the sendmail binary provided by exim4 generates
-> an error mail if provided with an empty input.
-> 
-> Therefore, this commit changes post-receive-email to only call sendmail
-> if generate_mail returned without error.
-> 
-> Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+Quoting Junio C Hamano <gitster@pobox.com>
 
-Is anything wrong with this patch? Or is it just queued to be committed
-some time?
+> Notable points are:
+>
+>  - End the messages with "Aborting."; they are given when the three-way
+>    merge stops without harming the work tree;
+>
+>  - Do not give the extra message after unpack_trees() already errored out.
+>    This "merging of trees failed" message was primarily for debugging
+>    merge-recursive itself, and the end user cannot do much with the object
+>    names given in the message anyway.
+>
+>    But do give it under higher verbosity level, or when it happens during
+>    the inner merge (the "recursive" one), as unpack_trees() should not
+>    fail for the inner merge under normal conditions.
+>
+> We could later add instructions on how to recover (i.e. "stash changes
+> away or commit on a side branch and retry") instead of the silent
+> exit(128) I have down there, and then use Peff's advice.* mechanism to
+> squelch it (e.g. "advice.mergeindirtytree"), but they are separate topics.
 
- - Lars.
+Thank you for a quick response. The patch works fine here, so if you want
+please add:
+
+Tested-by: Nanako Shiraishi <nanako3@lavabit.com>
+
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
