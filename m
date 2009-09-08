@@ -1,143 +1,145 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 2/2] INSTALL: Describe a few knobs from the Makefile
-Date: Tue, 08 Sep 2009 13:26:11 -0700
-Message-ID: <7vy6opxjx8.fsf@alter.siamese.dyndns.org>
-References: <1252425313-69793-1-git-send-email-brian@gernhardtsoftware.com>
- <1252425313-69793-2-git-send-email-brian@gernhardtsoftware.com>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Tue, 08 Sep 2009 13:31:12 -0700
+Message-ID: <7vocplxjov.fsf@alter.siamese.dyndns.org>
+References: <1252376822-6138-1-git-send-email-johan@herland.net>
+ <200909080512.34634.johan@herland.net>
+ <7vd462qdeg.fsf@alter.siamese.dyndns.org>
+ <200909081054.02523.johan@herland.net>
+ <alpine.DEB.1.00.0909081100020.4330@intel-tinevez-2-302>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 22:26:39 2009
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 08 22:31:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml7Gt-0002K5-Um
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 22:26:36 +0200
+	id 1Ml7Ls-000448-U9
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 22:31:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193AbZIHU0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 16:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbZIHU0T
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 16:26:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62256 "EHLO
+	id S1751889AbZIHUbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 16:31:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbZIHUbe
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 16:31:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33497 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922AbZIHU0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 16:26:18 -0400
+	with ESMTP id S1751528AbZIHUbd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 16:31:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3F91449831;
-	Tue,  8 Sep 2009 16:26:20 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8614B49918;
+	Tue,  8 Sep 2009 16:31:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=n6RDidVjNdnKxixc2NC5YjhE+LE=; b=Y0xZtbf50pSFRrn63G1yiVR
-	RylVTFNA2tONFddVQPPiRtxWhub6syxwsLwaLYLfxLewOM7sGUpg9hViht4SDPHJ
-	JALxlWcefI7bFtDQoOeUX+PKJo2RJHDJ3GDOmrx6cugJq3l13ERvD205qHFpXu0I
-	33JZYAb8HDf851sEm2YI=
+	sasl; bh=B1EfG7CzdtYpSsELhZZztpYekFA=; b=uzCx2JsYfMTxBF4On4GEIhY
+	p+6Mrd/mOHQc7OS8L3kg0LsHU2y27TTPeBbuMRmhdxnYoS6Mwsi9PIlpRBB7rcjM
+	M5dJG1X2hzXwa03XxMiECkaoq1QFhK975zrLBco2eIoAeL8nP5aYlUYhHg/dud/3
+	JpomZ4iSWjBYXcXY9oI8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=kYfIvawlm+buH2BR9yHjXM4Uex+EnbshlgNO117SxgRGHY7Vt
-	mCLyfkTZeKl+nhsAlPKGzJj4iYLrgJ6D6O+e5g4zQBC/Wc8NA27g++kfwq4P/DIB
-	fzq4D+6jA2jq370X1byvfZo4elPNwOPx3Z/5lfD4JaSRMYTtptY/HmlTWA=
+	dns; s=sasl; b=n0aM0pmEutb2Z1+LLxQyS1r7DjVxURvk818NsaKwGtg3IyV6J
+	kl+YF6IS6MVf4h8WVuyjaewPgTw83+lw6PGbaXnx8HN7B6Y6Kde9zsG2sGkvsTmr
+	rslINwowOcG99QH8h+9JYPgzfKaH2ruID1Oo32twTvLz9tLkQdxFnhY4tg=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2147749830;
-	Tue,  8 Sep 2009 16:26:18 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 14D2F49912;
+	Tue,  8 Sep 2009 16:31:28 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D164A4982F; Tue,  8 Sep 2009
- 16:26:12 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8CF764990D; Tue,  8 Sep 2009
+ 16:31:14 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DD251BF0-9CB5-11DE-A68F-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 95E3986A-9CB6-11DE-A768-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128032>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> We said that some of our dependencies were optional, but didn't say
-> how to turn them off.  Add information for that and mention where to
-> save the options close to the top of the file.
+> Hi,
 >
-> Also, reorder the list so the absolutely required ones are at the top.
+> On Tue, 8 Sep 2009, Johan Herland wrote:
 >
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> ---
+>> Algorithm / Notes tree   git log -n10 (x100)   git log --all
+>> ------------------------------------------------------------
+>> next / no-notes                4.77s              63.84s
+>> 
+>> before / no-notes              4.78s              63.90s
+>> before / no-fanout            56.85s              65.69s
+>> 
+>> 16tree / no-notes              4.77s              64.18s
+>> 16tree / no-fanout            30.35s              65.39s
+>> 16tree / 2_38                  5.57s              65.42s
+>> 16tree / 2_2_36                5.19s              65.76s
+>> 
+>> flexible / no-notes            4.78s              63.91s
+>> flexible / no-fanout          30.34s              65.57s
+>> flexible / 2_38                5.57s              65.46s
+>> flexible / 2_2_36              5.18s              65.72s
+>> flexible / ym                  5.13s              65.66s
+>> flexible / ym_2_38             5.08s              65.63s
+>> flexible / ymd                 5.30s              65.45s
+>> flexible / ymd_2_38            5.29s              65.90s
+>> flexible / y_m                 5.11s              65.72s
+>> flexible / y_m_2_38            5.08s              65.67s
+>> flexible / y_m_d               5.06s              65.50s
+>> flexible / y_m_d_2_38          5.07s              65.79s
 >
->  I don't know if anyone wants this level of detail in the INSTALL file, or
->  if we'd prefer people actually RTFMakefile.  It didn't take long to write
->  though, so I thought I'd throw it out and see if people liked it.
+> It's good to see that the no-notes behaves roughly like baseline.
+>
+> I can see that some people may think that date-based fan-out is the cat's 
+> ass,
 
-Thanks.
+Actually, my knee-jerk reaction was that 4.77 (next) vs 5.57 (16tree with
+2_38) is already a good enough performance/simplicity tradeoff, and 5.57
+vs 5.08 (16tree with ym_2_38) probably does not justify the risk of worst
+case behaviour that can come from possible mismatch between the access
+pattern and the date-optimized tree layout.
 
-Sprinkling these Makefile variable names in this document does not add too
-much detail.  If anything, they serve as good keyphrases to jump to when
-you have Makefile in your pager and editing your own config.mak.
+But that only argues against supporting _only_ date-optimized layout.
 
-I like your patch especially because it makes it clear what the reader
-will be missing if s/he chooses to omit some dependencies.
+Support of "flexible layout" is not that flexible as its name suggests;
+one single note tree needs to have a uniform fanout strategy.  But it is
+not unusably rigid either; you only need to be extra careful when merging
+two notes trees.  We can leave the heuristics to choose what the optimum
+layout to later rounds.
 
-> +	- "ssh" is used to push and pull over the net
-> +
+> - I find the restriction to commits rather limiting.
 
-Please add a full-stop at the end (original was missing one, too).
+Yeah, we would not want to be surprised to find many people want to
+annotate non-commits with this mechanism.
 
-> +	- A POSIX-compliant shell is needed to use most of the bare-bones
-> +	  Porcelainish scripts.
+> - most of the performance difference between the date-based and the SHA-1 
+>   based fan-out looks to me as if the issue was the top-level tree.  
+>   Basically, this tree has to be read _every_ time _anybody_ wants to read 
+>   a note.
 
-Let's stop talking about Porcelain/plumbing in this document.
+A comparison between 'next' and another algorithm that opens the top-level
+notes tree object and returns "I did not find any note" without doing
+anything else would reveal that cost.  But when you are doing "log -n10"
+(or "log --all"), you would read the notes top-level tree once, and it is
+likely to be cached in the obj_hash[] (or in delta_base cache) already for
+the remaining invocations, even if notes mechanism does not do its own
+cache, which I think it does, no?
 
-It is very likely that the reader of this file has not read the main
-documentation that talks about the two-tier structure.
+> - I'd love to see performance numbers for less than 157118 notes.  Don't 
+>   get me wrong, it is good to see the worst-case scenario in terms of 
+>   notes/commits ratio.  But it will hardly be the common case, and I 
+>   very much would like to optimize for the common case.
+>
+>   So, I'd appreciate if you could do the tests with something like 500 
+>   notes, randomly spread over the commits (rationale: my original 
+>   understanding was that the notes could amend commit messages, and that 
+>   is much more likely to be done with relatively old commits that you 
+>   cannot change anymore).
 
-The self pejorative reference "bare-bones" dates back to the days when git
-Porcelains were supposed to be merely simpler reference implementations,
-as opposed to something more end-user friendly like what Cogito aimed to
-be.  But that is an old history, and there is nothing "bare-bones" about
-them anymore.
+Hmph, is that a typical use case?  How does it relate to CC's object
+replacement mechanism?
 
-So please reword it along this line:
-
-	- A POSIX-compilant shell is needed to use many of the features
-          (e.g. "bisect", "pull") in everyday use.
-
-> +	- "openssl".  Unless you specify otherwise (with NO_OPENSSL),
-> +	  you'll get the SHA1 library from here.
-
-It is not very clear what will be affected by disabling this.
-
- - SHA-1 is not used from OpenSSL, as stated;
- - imap-send won't be able to talk over SSL;
-
-Do we still able to walk https:// URLs?  If your cURL library is linked
-with gnutls I think we can, but I never tried the combination.
-
-> @@ -62,18 +73,20 @@ Issues of note:
->  	- libcurl library; git-http-fetch and git-fetch use them.  You
->  	  might also want the "curl" executable for debugging purposes.
->  	  If you do not use http transfer, you are probably OK if you
-> +	  do not have them (use NO_CURL).
-
-Probably reads more easily if it were:
-
-	If you do not interact with http:// repositories, you do not have
-	to have them (say NO_CURL).
-
-> +	- "perl" is used for several scripts that are useful, but not
-> +	  required for git (e.g. "git add -i" and "git difftool").  If you
-> +	  don't need the *.perl scripts or the library contained in perl/,
-> +	  then use NO_PERL.
-
-I do not think moving "Perl" this low in the requirement level is such a
-good idea, at least for now.  I'd suggest movign it back immediately after
-POSIX-compliant shell, and would say something like this:
-
-	- "Perl" is needed to use some of the features (e.g. preparing a
-          partial commit using "git add -i/-p", interacting with svn
-          repositories with "git svn").  If you can live without these,
-          say NO_PERL.
-
-Maybe they are Ruby, github, and general acceptance by many open source
-projects these days, but it used to be that the initial entry points to
-git were "git cvsimport" and "git svn" for a surprisingly large number of
-people.
+Also Gitney talked about annotating commits in the code-review thing.
+What's the expected notes density and distribution in that application?
