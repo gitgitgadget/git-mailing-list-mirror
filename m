@@ -1,74 +1,55 @@
-From: Mikael Magnusson <mikachu@gmail.com>
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
 Subject: Re: [PATCH] Add more instructions about how to install git.
-Date: Tue, 8 Sep 2009 16:56:03 +0200
-Message-ID: <237967ef0909080756g579f5359te7da19fded27596f@mail.gmail.com>
-References: <1252386686-15689-1-git-send-email-tfransosi@gmail.com>
-	 <81b0412b0909072244k21a4ddf6vdc38d9f713a4a084@mail.gmail.com>
-	 <vpqhbvekldk.fsf@bauges.imag.fr>
-	 <a4c8a6d00909080724q1c792f6bs641ea9d000d08b5a@mail.gmail.com>
-	 <4AA66C54.4060101@viscovery.net>
-	 <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Date: Tue, 8 Sep 2009 11:19:59 -0400
+Message-ID: <D79F79B1-A4F4-4AEA-9E3B-F0CF59019B88@gernhardtsoftware.com>
+References: <1252386686-15689-1-git-send-email-tfransosi@gmail.com> <81b0412b0909072244k21a4ddf6vdc38d9f713a4a084@mail.gmail.com> <vpqhbvekldk.fsf@bauges.imag.fr> <a4c8a6d00909080724q1c792f6bs641ea9d000d08b5a@mail.gmail.com> <4AA66C54.4060101@viscovery.net> <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1075.2)
+Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
 To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 16:56:17 2009
+X-From: git-owner@vger.kernel.org Tue Sep 08 17:20:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml27A-0003ij-W8
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 16:56:13 +0200
+	id 1Ml2Ul-0003M1-6f
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 17:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751089AbZIHO4D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 10:56:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbZIHO4D
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 10:56:03 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:64084 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750881AbZIHO4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 10:56:02 -0400
-Received: by ewy2 with SMTP id 2so2845078ewy.17
-        for <git@vger.kernel.org>; Tue, 08 Sep 2009 07:56:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=9Dgpz65ZkjoUptNehr1TW8Hdbgfh6yBeI415fqmG/EI=;
-        b=PgfPXUkr0x6e9ZSbtas52+Xx8IPG+f/en+SPtHto0inaSRNkFag/AHKk6rJKZkCgZ2
-         s8vG+WBwUdwoi8jA4Mr6IltNitkMtonOVZZOKNprfyVCvWHhDddUy3LhEIL1LtktTXn0
-         r1wiryRj97wVcGZRhBqSysqbXeNSy16XOSyUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=p5BCjwFgvAdPbT5HCuM+PelbJrt+hwvqoJealXYIdMkYAXQnJins7JwYRqVcef8sMD
-         KXSXVAwSzvVQ9aQWVJfYsn4hWcnYM/Ji71IHDOMYso01xsrULHJR69E8obNH79a+PdHq
-         66zNCxCTDKtrrHwYjoyGTxW2zzG5K3vlIrTUg=
-Received: by 10.211.147.25 with SMTP id z25mr3333372ebn.84.1252421763533; Tue, 
-	08 Sep 2009 07:56:03 -0700 (PDT)
+	id S1751180AbZIHPUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 11:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbZIHPUN
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 11:20:13 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:60608 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094AbZIHPUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 11:20:12 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 467A91FFC087; Tue,  8 Sep 2009 15:20:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.5.155] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id A74A71FFC06B;
+	Tue,  8 Sep 2009 15:19:57 +0000 (UTC)
 In-Reply-To: <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
+X-Mailer: Apple Mail (2.1075.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128013>
 
-2009/9/8 Thiago Farina <tfransosi@gmail.com>:
-> On Tue, Sep 8, 2009 at 10:38 AM, Johannes Sixt<j.sixt@viscovery.net> wrote:
->> Thiago Farina schrieb:
->>> I tried to being more explicit about what the new users has to do. The
->>> first instruction that the text says is: "Normaly you can just do
->>> "make"".
->>> But the new user, cloning git won't have a configure file, so he can't
->>> just do "make".
->>>
->>> And then, the text says: "so you can write instead". This brings me to
->>> one alternative (not what I really should do), when in fact it should
->>> be (I guess) the first instructions that new users need to follow.
->>
+
+On Sep 8, 2009, at 10:52 AM, Thiago Farina wrote:
+
+> On Tue, Sep 8, 2009 at 10:38 AM, Johannes Sixt<j.sixt@viscovery.net>  
+> wrote:
 >> Then guessed wrong. You really only have to say "make". The use of
 >> autoconf and ./configure is purely optional and not necessary.
 > I don't think so.
@@ -79,41 +60,62 @@ Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128012>
 >    CC fast-import.o
 > In file included from builtin.h:4,
 >                 from fast-import.c:143:
-> git-compat-util.h:129:25: error: openssl/ssl.h: No such file or directory
-> git-compat-util.h:130:25: error: openssl/err.h: No such file or directory
-[snip]
+> git-compat-util.h:129:25: error: openssl/ssl.h: No such file or  
+> directory
+> git-compat-util.h:130:25: error: openssl/err.h: No such file or  
+> directory
 
-You need to edit the Makefile if your system needs tweaks, there are tons
-of comments.
+You don't have OpenSSL, a perquisite mentioned in the INSTALL file at  
+line 55.  You can do the following:
+
+make NO_OPENSSL=Yes
+
+or save the option so you don't have to retype it each time:
+
+echo "NO_OPENSSL=Yes" > config.mak
+make
+
+Or install OpenSSL or run the autoconf.
+
+The Makefile tries it's best to be as smart as possible without being  
+a configure script of it's own (see ll. 656-925), and it's highly  
+commented at the beginning so that only a minimal knowledge of make is  
+required (ll. 4-198).  I suppose we could  note that the defines  
+should be put in a config.mak file.
 
 > Running configure and then make
 > $ make configure
 > GIT_VERSION = 1.6.5.rc0.dirty
 >    GEN configure
+
+  $ ./configure
+[lots of output]
 > $ make
 >    CC fast-import.o
-> In file included from builtin.h:4,
->                 from fast-import.c:143:
-> git-compat-util.h:129:25: error: openssl/ssl.h: No such file or directory
-> git-compat-util.h:130:25: error: openssl/err.h: No such file or directory
 
-You forgot to run configure.
+As pointed out before, you forgot to run the generated configure  
+script (as already documented at Makefile:20).
 
-> Now autconf, ./configure, make.
-> $ autoconf
-> $ ./configure
-> configure: Setting lib to 'lib' (the default)
-> configure: Will try -pthread then -lpthread to enable POSIX Threads.
-> configure: CHECKS for site configuration
-> configure: CHECKS for programs
-[...]
-> checking for mkstemps... no
-> checking Checking for POSIX Threads with '-pthread'... yes
-> configure: creating ./config.status
-> config.status: error: cannot find input file: config.mak.in
-> $ make
->
-> Now it compiles everything.
+However, it's generally considered preferable to hand-create a  
+config.mak for the few options you need on a regular basis and let the  
+Makefile do it's work.  The autoconf files occasionally lag behind the  
+rest of development as they're not widely used by git developers  
+(AFAICT).
 
--- 
-Mikael Magnusson
+I'd personally argue that we should point out in INSTALL that git can  
+be configured via a hand-written config.mak using the defines  
+described at the top of the Makefile before we talk about using  
+autoconf.  (Perhaps with quick notes about the most commonly used  
+defines.)
+
+For example, my config.mak contains:
+
+prefix=/usr/local
+ASCIIDOC8=Yes
+MAN_BOLD_LITERAL=Yes
+BLK_SHA1=Yes
+
+The rest of the configuration for my OS (OS X/Darwin, specifically)  
+are handled by the Makefile.
+
+~~ Brian
