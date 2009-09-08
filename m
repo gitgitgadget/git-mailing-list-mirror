@@ -1,89 +1,91 @@
 From: Lars Noschinski <lars@public.noschinski.de>
-Subject: [PATCH] post-receive-email: do not call sendmail if no mail was generated
-Date: Tue,  8 Sep 2009 21:00:18 +0200
-Message-ID: <1252436418-7660-1-git-send-email-lars@public.noschinski.de>
-References: <20090908185555.GA3858@lars.home.noschinski.de>
-Cc: andyparkins@gmail.com, pape@smarden.org, gitster@pobox.com,
-	Lars Noschinski <lars@public.noschinski.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 08 21:09:25 2009
+Subject: Re: [PATCH] post-receive-email: do not call sendmail if no mail was generated
+Date: Tue, 8 Sep 2009 20:55:55 +0200
+Message-ID: <20090908185555.GA3858@lars.home.noschinski.de>
+References: <1251481187-6361-1-git-send-email-lars@public.noschinski.de> <20090908092059.GA8207@lars.home.noschinski.de> <7vk5098jcv.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Gerrit Pape <pape@smarden.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 08 21:16:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml64D-00048S-4H
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 21:09:25 +0200
+	id 1Ml6BT-0006QX-O6
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 21:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750966AbZIHTJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 15:09:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750912AbZIHTJO
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 15:09:14 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.38]:56318 "EHLO
+	id S1751349AbZIHTQp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 15:16:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751074AbZIHTQp
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 15:16:45 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.38]:54207 "EHLO
 	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777AbZIHTJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 15:09:13 -0400
+	with ESMTP id S1750880AbZIHTQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 15:16:45 -0400
 Received: from [87.78.95.112] (helo=fruehjahrsmuede.home.noschinski.de)
 	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.68)
-	(envelope-from <lars@vertikal.home.noschinski.de>)
-	id 1Ml5uV-0007MU-DQ; Tue, 08 Sep 2009 20:59:23 +0200
+	(envelope-from <lars@public.noschinski.de>)
+	id 1Ml5pJ-0006Fe-IX; Tue, 08 Sep 2009 20:54:01 +0200
 Received: from lars by fruehjahrsmuede.home.noschinski.de with local (Exim 4.69)
-	(envelope-from <lars@vertikal.home.noschinski.de>)
-	id 1Ml5wL-000202-Bp; Tue, 08 Sep 2009 21:01:18 +0200
-X-Mailer: git-send-email 1.6.3.3
-In-Reply-To: <20090908185555.GA3858@lars.home.noschinski.de>
+	(envelope-from <lars@public.noschinski.de>)
+	id 1Ml5r9-0001vT-Mj; Tue, 08 Sep 2009 20:55:55 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk5098jcv.fsf@alter.siamese.dyndns.org>
+User-Agent: mutt-ng/devel-r804 (Linux)
 X-Df-Sender: 336680
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128025>
 
-contrib/hooks/post-receive-email used to call the send_mail function
-(and thus, /usr/sbin/sendmail), even if generate_mail generated no
-output.  This is problematic, as the sendmail binary provided by exim4
-generates an error mail if provided with an empty input.
+* Junio C Hamano <gitster@pobox.com> [09-09-08 19:22]:
+> Lars Noschinski <lars@public.noschinski.de> writes:
+> > * Lars Noschinski <lars@public.noschinski.de> [09-08-28 19:39]:
+> >> contrib/hooks/post-receive-email used to call the send_mail function
+> >> (and thus, /usr/sbin/sendmail), even if generate_mail returned an error.
+> >> This is problematic, as the sendmail binary provided by exim4 generates
+> >> an error mail if provided with an empty input.
+> >> 
+> >> Therefore, this commit changes post-receive-email to only call sendmail
+> >> if generate_mail returned without error.
+> >> 
+> >> Signed-off-by: Lars Noschinski <lars@public.noschinski.de>
+[...]
+>  - Slurping generate_email's output into a shell variable is a bad taste.
+>    You said that the message is always small enough but _how_ do we know
+>    it?
 
-Therefore, we now read one line ourselves and use the result to decide
-if we really want to call /usr/sbin/sendmail.
----
- contrib/hooks/post-receive-email |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+You are right; I overlooked that the revision formatting is configurable
+and if set up to display the full patch, the mail could get pretty big.
 
-Two things changed:
+I know found a solution which does neither store the full output in a
+variable nor needs a temporary file. I will post it as a reply to this
+mail.
 
- - we do not read the whole mail in a shell variable
- - the decision whether to call sendmail is based on the output generated
-   by generate_mail, not its return code
+>  - If this is to save us from a quirk in some but not all implementations
+>    of /usr/lib/sendmail, then shouldn't the logic be made into a new
+>    conditional?
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 2a66063..c855c31 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -637,6 +637,16 @@ show_new_revisions()
- 
- send_mail()
- {
-+	OIFS=$IFS
-+	IFS='
-+'
-+	read FIRSTLINE || exit 1
-+	(printf $FIRSTLINE'\n'; cat) | call_sendmail
-+	IFS=$OLD_IFS
-+}
-+
-+call_sendmail()
-+{
- 	if [ -n "$envelopesender" ]; then
- 		/usr/sbin/sendmail -t -f "$envelopesender"
- 	else
-@@ -644,6 +654,7 @@ send_mail()
- 	fi
- }
- 
-+
- # ---------------------------- main()
- 
- # --- Constants
--- 
-1.6.3.3
+I don't know if this a quirk in exim; I could not find a formal
+specification of the sendmail behaviour and treating such an "input" as
+an error seems at least not insane.
+
+In any case, I think the overhead implied by new patch is small enough,
+that a switch is unnecessary.
+
+>  - I do not see a direct link between "if generate_mail returned an error"
+>    and "if ... an empty input".  What if generate_mail started its output
+>    but then failed halfway?  We have some output so the send_mail won't be
+>    fed empty, but $? would be not zero, so the patch is testing a
+>    different condition from what the log message claims to be checking.
+
+Yeah, you are right. This is also fixed in the new patch.
+
+> People who do use this script and people who have worked on it may have
+> other more useful comments.
+
+CCed some of them.
