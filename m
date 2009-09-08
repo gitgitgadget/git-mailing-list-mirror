@@ -1,92 +1,165 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: [PATCH 5/6 (v4)] full integration of rev-cache into git, 
-	completed test suite
-Date: Wed, 9 Sep 2009 00:24:22 +0200
-Message-ID: <c77435a80909081524i493603efhb32dee77c1e7223b@mail.gmail.com>
-References: <op.uys3quhbtdk399@sirnot.private>
-	 <op.uyuwkuoxtdk399@sirnot.private> <op.uyzwycxotdk399@sirnot>
-	 <op.uzv4covmtdk399@sirnot.private> <1252357564.5969.4.camel@maia.lan>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Wed, 09 Sep 2009 00:46:45 +0200
+Message-ID: <200909090046.45213.johan@herland.net>
+References: <1252376822-6138-1-git-send-email-johan@herland.net>
+ <200909081436.30761.johan@herland.net>
+ <alpine.DEB.1.00.0909081741590.4330@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Sep 09 00:24:39 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 09 00:46:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml977-0003rC-JF
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 00:24:38 +0200
+	id 1Ml9Si-00029m-AB
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 00:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbZIHWYV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2009 18:24:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbZIHWYV
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 18:24:21 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:36085 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751362AbZIHWYU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 18:24:20 -0400
-Received: by ewy2 with SMTP id 2so3213555ewy.17
-        for <git@vger.kernel.org>; Tue, 08 Sep 2009 15:24:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2tzowBw0DN6EzjOszvZmMExk52CiUXpMhE4s0BkYg+Y=;
-        b=spaG0gzQ0xUqGrRe0aNr7X1vuMVKg5sxOhT3uKIMt6R5IFtN35jNQRo5E08413ClJ+
-         0xEbDV7Fk+y+DfBQbEYiM1rJqSyXWdbahFfdOfFFnKV5hbuvyCTgSO0QE41gQf/Y872u
-         qLs9Q40XWqzxUqn9GSU6a3OMAy+2zQycGdhTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fOugNuign5mjz3XHFK4Ag/3DGjvzbsYZlSDxvqNivAe3Cgf1XRBeQiAh31sJuuPigD
-         kQTXWifR2i+5KjEMdcWkR+KMZQYvB0fWLxtYmGB7+JtIwYOp96Iv4wg/rKytjaJKJ/3L
-         NqtgkHxroN47LcPvodQx3TZf6RNyiNUwx0vQg=
-Received: by 10.216.70.205 with SMTP id p55mr1781519wed.55.1252448662224; Tue, 
-	08 Sep 2009 15:24:22 -0700 (PDT)
-In-Reply-To: <1252357564.5969.4.camel@maia.lan>
+	id S1752111AbZIHWqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 18:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751989AbZIHWqq
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 18:46:46 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:54451 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751168AbZIHWqp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 18:46:45 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPO001U6CLYBOD0@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 09 Sep 2009 00:46:46 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPO0005WCLXO400@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 09 Sep 2009 00:46:46 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.9.8.223332
+User-Agent: KMail/1.12.1 (Linux/2.6.30-ARCH; KDE/4.3.1; x86_64; ; )
+In-reply-to: <alpine.DEB.1.00.0909081741590.4330@intel-tinevez-2-302>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128046>
 
-> ^^ You don't need to write comments like "This patch"; in the history
-> such words are meaningless.
+On Tuesday 08 September 2009, Johannes Schindelin wrote:
+> On Tue, 8 Sep 2009, Johan Herland wrote:
+> > On Tuesday 08 September 2009, Johannes Schindelin wrote:
+> > > I can see that some people may think that date-based fan-out is the
+> > > cat's ass, but I have to warn that we have no idea how notes will be
+> > > used,
+> >
+> > I don't agree. Although we will certainly see many more use cases for
+> > notes, I believe that the vast majority of them can be placed in one of
+> > two categories:
+> 
+> My experience with Git is that having beliefs how my work is used was a
+> constant source of surprise.
 
-I had meant to delete that...
+And you believe that a system that only allows SHA1-based fanout schemes is 
+better equipped to tackle such surprises than a system that provides both 
+date-based and SHA1-based fanout schemes?
 
-> "tweak" ?
+> > > - I find the restriction to commits rather limiting.
+> >
+> > I see your point, but I don't agree until I see a compelling case for
+> > annotating a non-commit.
+> 
+> My point is that it is too late by then, if you don't allow for a
+>  flexible and still efficient scheme.
 
-Yeah I had modified the messages and didn't replace the additional
-info I deleted.  It's not really important, as it's modified again
-(for the last time) in the name-related patch, but here it's revised
-to take advantage of the size storage.
+As I replied to Junio, we could use the epoch as a "commit date" for tree 
+and blob objects, thus making them representable in a date-based fanout 
+scheme (although if there are a signficant number of non-commit notes, the 
+code should be smart enough to find a better (SHA1-based probably) fanout 
+scheme for those notes).
 
->> =A0- more fluid handling of damaged cache slices
->
-> What does this mean?
+> > > - most of the performance difference between the date-based and the
+> > >   SHA-1 based fan-out looks to me as if the issue was the top-level
+> > >   tree. Basically, this tree has to be read _every_ time _anybody_
+> > >   wants to read a note.
+> >
+> > Not sure what you're trying to say here. The top-level notes tree is
+> > read (as in fill_tree_descriptor()) exactly _once_. After that, it is
+> > cached by the internal data structure (until free_commit_notes() or
+> > end-of-process).
+> 
+> By that reasoning, we do not need any fan-out scheme.
+> 
+> Keep in mind: reading a large tree object takes a long time.  That's why
+> we started fan-out.  Reading a large number of tree objects also takes a
+> long time.  That's why I propagated flexible fan-out that is only read-in
+> on demand.
 
-That it remembers/is aware of bad slices, instead of dumbly attempting
-to load them upon each commit.
+Not sure where you're going with this. Of course we want to strike an 
+optimal balance between the size of tree objects and the number of tree 
+objects. Nobody is arguing about that. Both SHA1-based and (in the most 
+common cases) date-based schemes can be used to achieve this balance. But 
+using date-based fanout has the added advantage of providing better 
+performance (both runtime- and memory-wise) when looking up notes in a 
+chronological order.
 
-> This is quite a long commit message. =A0Is the above detail all usefu=
-l?
-> Can it be split into one patch for each of the above integrations?
+> > > But I think that having a dynamic fan-out that can even put blobs
+> > > into the top-level tree (nothing prevents us from doing that, right?)
+> >
+> > Well, the "flexible" code does add the new requirement that all entries
+> > in a notes (sub)tree object must follow the same scheme, i.e. you
+> > cannot have:
+> >
+> >   /12/34567890123456789012345678901234567890
+> >   /2345/678901234567890123456789012345678901
+> >
+> > but you can have
+> >
+> >   /12/34567890123456789012345678901234567890
+> >   /23/45/678901234567890123456789012345678901
+> 
+> Umm, why?  Is there any good technical reason?
 
-Erm, I suppose they could be split, but the changes to revision and
-list-objects aren't very big, so I figured it'd be easier/cleaner to
-just put everything required for smooth integration into a single
-patch.  I dunno, it dosn't seem hugely necessary; the bits modifying
-git code are relatively small and already obviously seperate in the
-patch.
+In the date-based parts of notes tree, there are very good reasons for doing 
+so: The code peeks at the first tree entry in order to determine what kind 
+of date-based fanout is used in the current tree object. Subsequent entries 
+(in that tree object) that do not follow the same format are 
+skipped/ignored.
+
+The SHA1-based fanout code has not changed since the last iteration, so this 
+extra requirement is not absolutely necessary for the SHA1-based parts of 
+the notes tree. However, the extra requirement does guarantee that commit 
+notes have exactly one unique location in the notes tree, and thus relieves 
+us of having to keep searching for alternative notes locations, and 
+concatenate the notes found.
+
+> > > The real question for me, therefore, is: what is the optimal way to
+> > > strike the balance between size of the tree objects (which we want to
+> > > be small, so that unpacking them is fast)  and depth of the fan-out
+> > > (which we want to be shallow to avoid reading worst-case 39 tree
+> > > objects to get at one single note).
+> >
+> > s/39/19/ (each fanout must use at least 2 chars of the 40-char SHA1)
+> 
+> That is another unnecessary restriction that could cost you dearly.  Just
+> think what happens if it turns out that the optimal number of tree items
+> is closer to 16 than to 255...
+
+The code can easily be rewritten to allow for "odd" fanouts (1/39, 1/1/38, 
+etc.). Feel free to submit a patch.
+
+I was, however, naive enough to assume that when git.git decided on using 
+2/38 fanout for its loose objects, then some performance-related thoughts
+went into that decision. If there are indications that multiple-of-2-type 
+fanouts are not optimal, we should probably reconsider.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
