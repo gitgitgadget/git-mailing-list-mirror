@@ -1,121 +1,126 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: [PATCH] Add more instructions about how to install git.
-Date: Tue, 8 Sep 2009 11:19:59 -0400
-Message-ID: <D79F79B1-A4F4-4AEA-9E3B-F0CF59019B88@gernhardtsoftware.com>
-References: <1252386686-15689-1-git-send-email-tfransosi@gmail.com> <81b0412b0909072244k21a4ddf6vdc38d9f713a4a084@mail.gmail.com> <vpqhbvekldk.fsf@bauges.imag.fr> <a4c8a6d00909080724q1c792f6bs641ea9d000d08b5a@mail.gmail.com> <4AA66C54.4060101@viscovery.net> <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1075.2)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 08 17:20:43 2009
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Tue, 8 Sep 2009 17:53:06 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909081741590.4330@intel-tinevez-2-302>
+References: <1252376822-6138-1-git-send-email-johan@herland.net> <200909081054.02523.johan@herland.net> <alpine.DEB.1.00.0909081100020.4330@intel-tinevez-2-302> <200909081436.30761.johan@herland.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Sep 08 17:53:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml2Ul-0003M1-6f
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 17:20:35 +0200
+	id 1Ml30R-0006kG-16
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 17:53:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbZIHPUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 11:20:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbZIHPUN
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 11:20:13 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:60608 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094AbZIHPUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 11:20:12 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 467A91FFC087; Tue,  8 Sep 2009 15:20:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.5.155] (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id A74A71FFC06B;
-	Tue,  8 Sep 2009 15:19:57 +0000 (UTC)
-In-Reply-To: <a4c8a6d00909080752p5b663fc8r8bf1c60023ef39b4@mail.gmail.com>
-X-Mailer: Apple Mail (2.1075.2)
+	id S1751170AbZIHPxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Sep 2009 11:53:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751082AbZIHPxI
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 11:53:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58174 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750890AbZIHPxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Sep 2009 11:53:07 -0400
+Received: (qmail invoked by alias); 08 Sep 2009 15:53:07 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp008) with SMTP; 08 Sep 2009 17:53:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18EGwY9Xt0Eq9optrBITPpT3qkLrfdyyYcy63jxo9
+	z0TIyykjyzFICX
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <200909081436.30761.johan@herland.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128014>
 
+Hi,
 
-On Sep 8, 2009, at 10:52 AM, Thiago Farina wrote:
+On Tue, 8 Sep 2009, Johan Herland wrote:
 
-> On Tue, Sep 8, 2009 at 10:38 AM, Johannes Sixt<j.sixt@viscovery.net>  
-> wrote:
->> Then guessed wrong. You really only have to say "make". The use of
->> autoconf and ./configure is purely optional and not necessary.
-> I don't think so.
-> Running only "make".
-> $ make
-> GIT_VERSION = 1.6.5.rc0
->    * new build flags or prefix
->    CC fast-import.o
-> In file included from builtin.h:4,
->                 from fast-import.c:143:
-> git-compat-util.h:129:25: error: openssl/ssl.h: No such file or  
-> directory
-> git-compat-util.h:130:25: error: openssl/err.h: No such file or  
-> directory
+> On Tuesday 08 September 2009, Johannes Schindelin wrote:
 
-You don't have OpenSSL, a perquisite mentioned in the INSTALL file at  
-line 55.  You can do the following:
+> > I can see that some people may think that date-based fan-out is the 
+> > cat's ass, but I have to warn that we have no idea how notes will be 
+> > used,
+> 
+> I don't agree. Although we will certainly see many more use cases for 
+> notes, I believe that the vast majority of them can be placed in one of 
+> two categories:
 
-make NO_OPENSSL=Yes
+My experience with Git is that having beliefs how my work is used was a 
+constant source of surprise.
 
-or save the option so you don't have to retype it each time:
+> > - I find the restriction to commits rather limiting.
+> 
+> I see your point, but I don't agree until I see a compelling case for 
+> annotating a non-commit.
 
-echo "NO_OPENSSL=Yes" > config.mak
-make
+My point is that it is too late by then, if you don't allow for a flexible 
+and still efficient scheme.
 
-Or install OpenSSL or run the autoconf.
+> > - most of the performance difference between the date-based and the 
+> >   SHA-1 based fan-out looks to me as if the issue was the top-level 
+> >   tree. Basically, this tree has to be read _every_ time _anybody_ 
+> >   wants to read a note.
+> 
+> Not sure what you're trying to say here. The top-level notes tree is 
+> read (as in fill_tree_descriptor()) exactly _once_. After that, it is 
+> cached by the internal data structure (until free_commit_notes() or 
+> end-of-process).
 
-The Makefile tries it's best to be as smart as possible without being  
-a configure script of it's own (see ll. 656-925), and it's highly  
-commented at the beginning so that only a minimal knowledge of make is  
-required (ll. 4-198).  I suppose we could  note that the defines  
-should be put in a config.mak file.
+By that reasoning, we do not need any fan-out scheme.
 
-> Running configure and then make
-> $ make configure
-> GIT_VERSION = 1.6.5.rc0.dirty
->    GEN configure
+Keep in mind: reading a large tree object takes a long time.  That's why 
+we started fan-out.  Reading a large number of tree objects also takes a 
+long time.  That's why I propagated flexible fan-out that is only read-in 
+on demand.
 
-  $ ./configure
-[lots of output]
-> $ make
->    CC fast-import.o
+> > But I think that having a dynamic fan-out that can even put blobs into 
+> > the top-level tree (nothing prevents us from doing that, right?)
+> 
+> Well, the "flexible" code does add the new requirement that all entries 
+> in a notes (sub)tree object must follow the same scheme, i.e. you 
+> cannot have:
+> 
+>   /12/34567890123456789012345678901234567890
+>   /2345/678901234567890123456789012345678901
+> 
+> but you can have
+> 
+>   /12/34567890123456789012345678901234567890
+>   /23/45/678901234567890123456789012345678901
 
-As pointed out before, you forgot to run the generated configure  
-script (as already documented at Makefile:20).
+Umm, why?  Is there any good technical reason?
 
-However, it's generally considered preferable to hand-create a  
-config.mak for the few options you need on a regular basis and let the  
-Makefile do it's work.  The autoconf files occasionally lag behind the  
-rest of development as they're not widely used by git developers  
-(AFAICT).
+> > The real question for me, therefore, is: what is the optimal way to 
+> > strike the balance between size of the tree objects (which we want to 
+> > be small, so that unpacking them is fast)  and depth of the fan-out 
+> > (which we want to be shallow to avoid reading worst-case 39 tree 
+> > objects to get at one single note).
+> 
+> s/39/19/ (each fanout must use at least 2 chars of the 40-char SHA1)
 
-I'd personally argue that we should point out in INSTALL that git can  
-be configured via a hand-written config.mak using the defines  
-described at the top of the Makefile before we talk about using  
-autoconf.  (Perhaps with quick notes about the most commonly used  
-defines.)
+That is another unnecessary restriction that could cost you dearly.  Just 
+think what happens if it turns out that the optimal number of tree items 
+is closer to 16 than to 255...
 
-For example, my config.mak contains:
+> Yes, the challenge is indeed striking the correct balance. I believe 
+> that the notes code should be taught to write (and automatically 
+> re-organize) the notes tree so that it is optimized for the current 
+> collection of notes.
 
-prefix=/usr/local
-ASCIIDOC8=Yes
-MAN_BOLD_LITERAL=Yes
-BLK_SHA1=Yes
+Of course!  I never thought that the user should be allowed to make the 
+choice how to organize the notes.
 
-The rest of the configuration for my OS (OS X/Darwin, specifically)  
-are handled by the Makefile.
-
-~~ Brian
+Ciao,
+Dscho
