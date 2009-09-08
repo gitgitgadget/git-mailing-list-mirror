@@ -1,11 +1,11 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 02/14] Add a script to edit/inspect notes
-Date: Tue, 08 Sep 2009 04:26:50 +0200
-Message-ID: <1252376822-6138-3-git-send-email-johan@herland.net>
+Subject: [PATCHv5 04/14] Add an expensive test for git-notes
+Date: Tue, 08 Sep 2009 04:26:52 +0200
+Message-ID: <1252376822-6138-5-git-send-email-johan@herland.net>
 References: <1252376822-6138-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, johan@herland.net, Johannes.Schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
@@ -17,26 +17,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MkqQd-0005Zj-Bi
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 04:27:31 +0200
+	id 1MkqQe-0005Zj-2q
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 04:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392AbZIHC1W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Sep 2009 22:27:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZIHC1W
-	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 22:27:22 -0400
+	id S1753401AbZIHC1X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Sep 2009 22:27:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbZIHC1X
+	(ORCPT <rfc822;git-outgoing>); Mon, 7 Sep 2009 22:27:23 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:34030 "EHLO
 	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753291AbZIHC1T (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 22:27:19 -0400
+	by vger.kernel.org with ESMTP id S1753357AbZIHC1V (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Sep 2009 22:27:21 -0400
 Received: from mx.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPM00CXUS5LLI90@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 04:27:21 +0200 (MEST)
+ with ESMTP id <0KPM00CY6S5OLI90@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 08 Sep 2009 04:27:24 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KPM0072GS5GQN30@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Sep 2009 04:27:21 +0200 (MEST)
+ git@vger.kernel.org; Tue, 08 Sep 2009 04:27:24 +0200 (MEST)
 X-PMX-Version: 5.5.5.374460, Antispam-Engine: 2.7.1.369594,
  Antispam-Data: 2009.9.8.21525
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,344 +45,129 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/127953>
 
-=46rom: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-The script 'git notes' allows you to edit and show commit notes, by
-calling either
-
-	git notes show <commit>
-
-or
-
-	git notes edit <commit>
+git-notes have the potential of being pretty expensive, so test with
+a lot of commits.  A lot.  So to make things cheaper, you have to
+opt-in explicitely, by setting the environment variable
+GIT_NOTES_TIMING_TESTS.
 
 This patch has been improved by the following contributions:
-- Tor Arne Vestb=C3=B8: fix printing of multi-line notes
-- Michael J Gruber: test and handle empty notes gracefully
-- Thomas Rast:
-  - only clean up message file when editing
-  - use GIT_EDITOR and core.editor over VISUAL/EDITOR
-  - t3301: fix confusing quoting in test for valid notes ref
-  - t3301: use test_must_fail instead of !
-  - refuse to edit notes outside refs/notes/
-- Junio C Hamano: tests: fix "export var=3Dval"
-- Christian Couder: documentation: fix 'linkgit' macro in "git-notes.tx=
-t"
-- Johan Herland: minor cleanup and bugfixing in git-notes.sh (v2)
+- Junio C Hamano: tests: fix "export var=val"
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Tor Arne Vestb=C3=B8 <tavestbo@trolltech.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Johan Herland <johan@herland.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .gitignore                  |    1 +
- Documentation/git-notes.txt |   46 +++++++++++++++++
- Makefile                    |    1 +
- command-list.txt            |    1 +
- git-notes.sh                |   73 +++++++++++++++++++++++++++
- t/t3301-notes.sh            |  114 +++++++++++++++++++++++++++++++++++=
-++++++++
- 6 files changed, 236 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-notes.txt
- create mode 100755 git-notes.sh
- create mode 100755 t/t3301-notes.sh
+ t/t3302-notes-index-expensive.sh |   98 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 98 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3302-notes-index-expensive.sh
 
-diff --git a/.gitignore b/.gitignore
-index c446290..703241b 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -86,6 +86,7 @@ git-mktag
- git-mktree
- git-name-rev
- git-mv
-+git-notes
- git-pack-redundant
- git-pack-objects
- git-pack-refs
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-new file mode 100644
-index 0000000..7136016
---- /dev/null
-+++ b/Documentation/git-notes.txt
-@@ -0,0 +1,46 @@
-+git-notes(1)
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+NAME
-+----
-+git-notes - Add/inspect commit notes
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git-notes' (edit | show) [commit]
-+
-+DESCRIPTION
-+-----------
-+This command allows you to add notes to commit messages, without
-+changing the commit.  To discern these notes from the message stored
-+in the commit object, the notes are indented like the message, after
-+an unindented line saying "Notes:".
-+
-+To disable commit notes, you have to set the config variable
-+core.notesRef to the empty string.  Alternatively, you can set it
-+to a different ref, something like "refs/notes/bugzilla".  This settin=
-g
-+can be overridden by the environment variable "GIT_NOTES_REF".
-+
-+
-+SUBCOMMANDS
-+-----------
-+
-+edit::
-+	Edit the notes for a given commit (defaults to HEAD).
-+
-+show::
-+	Show the notes for a given commit (defaults to HEAD).
-+
-+
-+Author
-+------
-+Written by Johannes Schindelin <johannes.schindelin@gmx.de>
-+
-+Documentation
-+-------------
-+Documentation by Johannes Schindelin
-+
-+GIT
-+---
-+Part of the linkgit:git[7] suite
-diff --git a/Makefile b/Makefile
-index 37b8f85..8e8376c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -316,6 +316,7 @@ SCRIPT_SH +=3D git-merge-one-file.sh
- SCRIPT_SH +=3D git-merge-resolve.sh
- SCRIPT_SH +=3D git-mergetool.sh
- SCRIPT_SH +=3D git-mergetool--lib.sh
-+SCRIPT_SH +=3D git-notes.sh
- SCRIPT_SH +=3D git-parse-remote.sh
- SCRIPT_SH +=3D git-pull.sh
- SCRIPT_SH +=3D git-quiltimport.sh
-diff --git a/command-list.txt b/command-list.txt
-index fb03a2e..4296941 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -74,6 +74,7 @@ git-mktag                               plumbingmanip=
-ulators
- git-mktree                              plumbingmanipulators
- git-mv                                  mainporcelain common
- git-name-rev                            plumbinginterrogators
-+git-notes                               mainporcelain
- git-pack-objects                        plumbingmanipulators
- git-pack-redundant                      plumbinginterrogators
- git-pack-refs                           ancillarymanipulators
-diff --git a/git-notes.sh b/git-notes.sh
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
 new file mode 100755
-index 0000000..f06c254
+index 0000000..0ef3e95
 --- /dev/null
-+++ b/git-notes.sh
-@@ -0,0 +1,73 @@
-+#!/bin/sh
-+
-+USAGE=3D"(edit | show) [commit]"
-+. git-sh-setup
-+
-+test -n "$3" && usage
-+
-+test -z "$1" && usage
-+ACTION=3D"$1"; shift
-+
-+test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"$(git config core.notesre=
-f)"
-+test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"refs/notes/commits"
-+
-+COMMIT=3D$(git rev-parse --verify --default HEAD "$@") ||
-+die "Invalid commit: $@"
-+
-+case "$ACTION" in
-+edit)
-+	if [ "${GIT_NOTES_REF#refs/notes/}" =3D "$GIT_NOTES_REF" ]; then
-+		die "Refusing to edit notes in $GIT_NOTES_REF (outside of refs/notes=
-/)"
-+	fi
-+
-+	MSG_FILE=3D"$GIT_DIR/new-notes-$COMMIT"
-+	GIT_INDEX_FILE=3D"$MSG_FILE.idx"
-+	export GIT_INDEX_FILE
-+
-+	trap '
-+		test -f "$MSG_FILE" && rm "$MSG_FILE"
-+		test -f "$GIT_INDEX_FILE" && rm "$GIT_INDEX_FILE"
-+	' 0
-+
-+	GIT_NOTES_REF=3D git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
-+
-+	CURRENT_HEAD=3D$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
-+	if [ -z "$CURRENT_HEAD" ]; then
-+		PARENT=3D
-+	else
-+		PARENT=3D"-p $CURRENT_HEAD"
-+		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
-+		git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
-+	fi
-+
-+	core_editor=3D"$(git config core.editor)"
-+	${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
-+
-+	grep -v ^# < "$MSG_FILE" | git stripspace > "$MSG_FILE".processed
-+	mv "$MSG_FILE".processed "$MSG_FILE"
-+	if [ -s "$MSG_FILE" ]; then
-+		BLOB=3D$(git hash-object -w "$MSG_FILE") ||
-+			die "Could not write into object database"
-+		git update-index --add --cacheinfo 0644 $BLOB $COMMIT ||
-+			die "Could not write index"
-+	else
-+		test -z "$CURRENT_HEAD" &&
-+			die "Will not initialise with empty tree"
-+		git update-index --force-remove $COMMIT ||
-+			die "Could not update index"
-+	fi
-+
-+	TREE=3D$(git write-tree) || die "Could not write tree"
-+	NEW_HEAD=3D$(echo Annotate $COMMIT | git commit-tree $TREE $PARENT) |=
-|
-+		die "Could not annotate"
-+	git update-ref -m "Annotate $COMMIT" \
-+		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
-+;;
-+show)
-+	git rev-parse -q --verify "$GIT_NOTES_REF":$COMMIT > /dev/null ||
-+		die "No note for commit $COMMIT."
-+	git show "$GIT_NOTES_REF":$COMMIT
-+;;
-+*)
-+	usage
-+esac
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-new file mode 100755
-index 0000000..73e53be
---- /dev/null
-+++ b/t/t3301-notes.sh
-@@ -0,0 +1,114 @@
++++ b/t/t3302-notes-index-expensive.sh
+@@ -0,0 +1,98 @@
 +#!/bin/sh
 +#
 +# Copyright (c) 2007 Johannes E. Schindelin
 +#
 +
-+test_description=3D'Test commit notes'
++test_description='Test commit notes index (expensive!)'
 +
 +. ./test-lib.sh
 +
-+cat > fake_editor.sh << \EOF
-+echo "$MSG" > "$1"
-+echo "$MSG" >& 2
-+EOF
-+chmod a+x fake_editor.sh
-+VISUAL=3D./fake_editor.sh
-+export VISUAL
++test -z "$GIT_NOTES_TIMING_TESTS" && {
++	say Skipping timing tests
++	test_done
++	exit
++}
 +
-+test_expect_success 'cannot annotate non-existing HEAD' '
-+	(MSG=3D3 && export MSG && test_must_fail git notes edit)
-+'
++create_repo () {
++	number_of_commits=$1
++	nr=0
++	parent=
++	test -d .git || {
++	git init &&
++	tree=$(git write-tree) &&
++	while [ $nr -lt $number_of_commits ]; do
++		test_tick &&
++		commit=$(echo $nr | git commit-tree $tree $parent) ||
++			return
++		parent="-p $commit"
++		nr=$(($nr+1))
++	done &&
++	git update-ref refs/heads/master $commit &&
++	{
++		GIT_INDEX_FILE=.git/temp; export GIT_INDEX_FILE;
++		git rev-list HEAD | cat -n | sed "s/^[ 	][ 	]*/ /g" |
++		while read nr sha1; do
++			blob=$(echo note $nr | git hash-object -w --stdin) &&
++			echo $sha1 | sed "s/^/0644 $blob 0	/"
++		done | git update-index --index-info &&
++		tree=$(git write-tree) &&
++		test_tick &&
++		commit=$(echo notes | git commit-tree $tree) &&
++		git update-ref refs/notes/commits $commit
++	} &&
++	git config core.notesRef refs/notes/commits
++	}
++}
 +
-+test_expect_success setup '
-+	: > a1 &&
-+	git add a1 &&
-+	test_tick &&
-+	git commit -m 1st &&
-+	: > a2 &&
-+	git add a2 &&
-+	test_tick &&
-+	git commit -m 2nd
-+'
-+
-+test_expect_success 'need valid notes ref' '
-+	(MSG=3D1 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit) &&
-+	(MSG=3D2 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes show)
-+'
-+
-+test_expect_success 'refusing to edit in refs/heads/' '
-+	(MSG=3D1 GIT_NOTES_REF=3Drefs/heads/bogus &&
-+	 export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit)
-+'
-+
-+test_expect_success 'refusing to edit in refs/remotes/' '
-+	(MSG=3D1 GIT_NOTES_REF=3Drefs/remotes/bogus &&
-+	 export MSG GIT_NOTES_REF &&
-+	 test_must_fail git notes edit)
-+'
-+
-+# 1 indicates caught gracefully by die, 128 means git-show barked
-+test_expect_success 'handle empty notes gracefully' '
-+	git notes show ; test 1 =3D $?
-+'
-+
-+test_expect_success 'create notes' '
++test_notes () {
++	count=$1 &&
 +	git config core.notesRef refs/notes/commits &&
-+	MSG=3Db1 git notes edit &&
-+	test ! -f .git/new-notes &&
-+	test 1 =3D $(git ls-tree refs/notes/commits | wc -l) &&
-+	test b1 =3D $(git notes show) &&
-+	git show HEAD^ &&
-+	test_must_fail git notes show HEAD^
-+'
++	git log | grep "^    " > output &&
++	i=1 &&
++	while [ $i -le $count ]; do
++		echo "    $(($count-$i))" &&
++		echo "    note $i" &&
++		i=$(($i+1));
++	done > expect &&
++	git diff expect output
++}
 +
-+cat > expect << EOF
-+commit 268048bfb8a1fb38e703baceb8ab235421bf80c5
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:14:13 2005 -0700
-+
-+    2nd
-+
-+Notes:
-+    b1
++cat > time_notes << \EOF
++	mode=$1
++	i=1
++	while [ $i -lt $2 ]; do
++		case $1 in
++		no-notes)
++			GIT_NOTES_REF=non-existing; export GIT_NOTES_REF
++		;;
++		notes)
++			unset GIT_NOTES_REF
++		;;
++		esac
++		git log >/dev/null
++		i=$(($i+1))
++	done
 +EOF
 +
-+test_expect_success 'show notes' '
-+	! (git cat-file commit HEAD | grep b1) &&
-+	git log -1 > output &&
-+	test_cmp expect output
-+'
-+test_expect_success 'create multi-line notes (setup)' '
-+	: > a3 &&
-+	git add a3 &&
-+	test_tick &&
-+	git commit -m 3rd &&
-+	MSG=3D"b3
-+c3c3c3c3
-+d3d3d3" git notes edit
-+'
++time_notes () {
++	for mode in no-notes notes
++	do
++		echo $mode
++		/usr/bin/time sh ../time_notes $mode $1
++	done
++}
 +
-+cat > expect-multiline << EOF
-+commit 1584215f1d29c65e99c6c6848626553fdd07fd75
-+Author: A U Thor <author@example.com>
-+Date:   Thu Apr 7 15:15:13 2005 -0700
++for count in 10 100 1000 10000; do
 +
-+    3rd
++	mkdir $count
++	(cd $count;
 +
-+Notes:
-+    b3
-+    c3c3c3c3
-+    d3d3d3
-+EOF
++	test_expect_success "setup $count" "create_repo $count"
 +
-+printf "\n" >> expect-multiline
-+cat expect >> expect-multiline
++	test_expect_success 'notes work' "test_notes $count"
 +
-+test_expect_success 'show multi-line notes' '
-+	git log -2 > output &&
-+	test_cmp expect-multiline output
-+'
++	test_expect_success 'notes timing' "time_notes 100"
++	)
++done
 +
 +test_done
---=20
+-- 
 1.6.4.304.g1365c.dirty
