@@ -1,97 +1,79 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] Makefile: Add NEEDS_CRYPTO_WITH_SSL
-Date: Tue,  8 Sep 2009 09:54:38 -0400
-Message-ID: <1252418078-68650-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 08 15:55:04 2009
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] Add more instructions about how to install git.
+Date: Tue, 8 Sep 2009 11:24:37 -0300
+Message-ID: <a4c8a6d00909080724q1c792f6bs641ea9d000d08b5a@mail.gmail.com>
+References: <1252386686-15689-1-git-send-email-tfransosi@gmail.com>
+	 <81b0412b0909072244k21a4ddf6vdc38d9f713a4a084@mail.gmail.com>
+	 <vpqhbvekldk.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 08 16:32:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ml19z-00071N-GQ
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 15:55:04 +0200
+	id 1Ml1jq-0003JP-2K
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Sep 2009 16:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754509AbZIHNyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Sep 2009 09:54:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754492AbZIHNyx
-	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 09:54:53 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:42381 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754461AbZIHNyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Sep 2009 09:54:52 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 47C9A1FFC087; Tue,  8 Sep 2009 13:54:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
-	by silverinsanity.com (Postfix) with ESMTPA id 4ADE71FFC06B;
-	Tue,  8 Sep 2009 13:54:40 +0000 (UTC)
-X-Mailer: git-send-email 1.6.4.2.420.g30ecf
+	id S1750940AbZIHObz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Sep 2009 10:31:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbZIHOby
+	(ORCPT <rfc822;git-outgoing>); Tue, 8 Sep 2009 10:31:54 -0400
+Received: from mail-yx0-f194.google.com ([209.85.210.194]:61664 "EHLO
+	mail-yx0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729AbZIHOby convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Sep 2009 10:31:54 -0400
+Received: by yxe32 with SMTP id 32so5905713yxe.23
+        for <git@vger.kernel.org>; Tue, 08 Sep 2009 07:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GJSJ5heupuvCGrdkcFUXNsJbfecXWyTBfIkFdiENxI0=;
+        b=Wx63E0eW9gr4OaLbvp0olylRnpOztF2n/FLLxOclU++0WjAiIQW1gLn9JHTvGhVhGc
+         wyDOgGdFE5+dY6fPznBoVMtUwzcy19hdDM/DJeX15acFSD63ai/w5KyBNDb2QsSE52w8
+         4KW5XfGGZ1jqbvM+SbiL/hrOE9k0Xfvc1bF08=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UFruik2EA7TOu41muww5j6reA5kJMEYn3mYyM6BPOzc3PkWmFyuRBftwkQUH2iR3MG
+         4E3MOuTRiaNPpNs0jWmg04E70AX4ZSiXvNGf/MK+iH57c8V4kmV9outPWbye1TvTx0cx
+         hdKqkxlpphUtXXM1mPRTXgBthDzjNJO1Z2auI=
+Received: by 10.100.60.1 with SMTP id i1mr16985897ana.11.1252419877858; Tue, 
+	08 Sep 2009 07:24:37 -0700 (PDT)
+In-Reply-To: <vpqhbvekldk.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128008>
 
-The Makefile comment for NEEDS_SSL_WITH_CRYPTO says to define it "if
-you need -lcrypto with -lssl (Darwin)."  However, what it actually
-does is add -lssl when you use -lcrypto and not the other way around.
-However, libcrypto contains a majority of the ERR_* functions from
-OpenSSL (at least on OS X) so we need it both ways.
+On Tue, Sep 8, 2009 at 3:20 AM, Matthieu
+Moy<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Your commit message doesn't say what's wrong with
+>
+> | Alternatively you can use autoconf generated ./configure script to
+> | set up install paths (via config.mak.autogen), so you can write
+> | instead
+> |
+> | =A0 =A0 =A0 =A0 $ make configure ;# as yourself
+> | =A0 =A0 =A0 =A0 $ ./configure --prefix=3D/usr ;# as yourself
+> | =A0 =A0 =A0 =A0 $ make all doc ;# as yourself
+> | =A0 =A0 =A0 =A0 # make install install-doc install-html;# as root
+>
+> which is already in INSTALL a few lines after what your patch adds.
 
-So, add NEEDS_CRYPTO_WITH_SSL which adds -lcrypto to the OpenSSL link
-flags and clarify the difference between it and NEEDS_SSL_WITH_CRYPTO.
+I tried to being more explicit about what the new users has to do. The
+first instruction that the text says is: "Normaly you can just do
+"make"".
+But the new user, cloning git won't have a configure file, so he can't
+just do "make".
 
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
----
-
- Compilation using BLK_SHA1 on OS X 10.5 and 10.6 (at least) is still
- broken without this patch.
-
- Alex Riesen <raa.lkml@gmail.com> pointed out that just adding LIB_4_CRYPTO
- to git-imap-send is simpler, but judging from the fact that nobody else
- has complained about this issue, I'm guessing that the need for -lcrypto
- when using -lssl is not widespread.  (Or BLK_SHA1 isn't getting used much
- or those who do don't compile git-imap-send with SSL.)
-
- Makefile |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index ce882d0..121be04 100644
---- a/Makefile
-+++ b/Makefile
-@@ -91,7 +91,9 @@ all::
- # Define PPC_SHA1 environment variable when running make to make use of
- # a bundled SHA1 routine optimized for PowerPC.
- #
--# Define NEEDS_SSL_WITH_CRYPTO if you need -lcrypto with -lssl (Darwin).
-+# Define NEEDS_CRYPTO_WITH_SSL if you need -lcrypto when using -lssl (Darwin).
-+#
-+# Define NEEDS_SSL_WITH_CRYPTO if you need -lssl when using -lcrypto (Darwin).
- #
- # Define NEEDS_LIBICONV if linking with libc is not enough (Darwin).
- #
-@@ -707,6 +709,7 @@ ifeq ($(uname_S),SCO_SV)
- 	TAR = gtar
- endif
- ifeq ($(uname_S),Darwin)
-+	NEEDS_CRYPTO_WITH_SSL = YesPlease
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
- 	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
-@@ -1009,6 +1012,9 @@ ifndef NO_OPENSSL
- 	else
- 		OPENSSL_LINK =
- 	endif
-+	ifdef NEEDS_CRYPTO_WITH_SSL
-+		OPENSSL_LINK += -lcrypto
-+	endif
- else
- 	BASIC_CFLAGS += -DNO_OPENSSL
- 	BLK_SHA1 = 1
--- 
-1.6.4.2.420.g30ecf
+And then, the text says: "so you can write instead". This brings me to
+one alternative (not what I really should do), when in fact it should
+be (I guess) the first instructions that new users need to follow.
