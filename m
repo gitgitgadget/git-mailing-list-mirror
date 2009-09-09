@@ -1,79 +1,63 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: [StGit PATCH] Add import -p option
-Date: Wed, 9 Sep 2009 23:09:51 +0100
-Message-ID: <b0943d9e0909091509i16b556f0x9dd3aa6788054298@mail.gmail.com>
-References: <b0943d9e0909081443g47978cb7mee241d74dc52adf7@mail.gmail.com>
-	 <20090908223714.GA6364@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: obnoxious CLI complaints
+Date: Thu, 10 Sep 2009 00:06:04 +0200
+Message-ID: <4C1FB36D-F8A6-4C01-A42A-8AD2355A9961@wincent.com>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <m3fxavvl5k.fsf@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v1075.2)
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karl Wiberg <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 00:10:05 2009
+Cc: Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 00:21:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlVMb-0000UZ-65
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 00:10:05 +0200
+	id 1MlVX9-0003Ij-Tu
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 00:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbZIIWJu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 18:09:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752815AbZIIWJu
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 18:09:50 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:60321 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514AbZIIWJt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 18:09:49 -0400
-Received: by bwz19 with SMTP id 19so771899bwz.37
-        for <git@vger.kernel.org>; Wed, 09 Sep 2009 15:09:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rxNweuc7DcH2GzEfvqY7fisguot+O2LEJ7vpf7aELUk=;
-        b=l+ZPug0JbGPCC3RhkDGrBTjIjOKaKaW4Ychd6bMqe2gvu3ZX672j7uDq/1PTYbjGeg
-         BzNCUFBjiBHK/PJJZKSU5ewAU4GFtK8jL+8+UPs6Bru33GKoWk75CpCnxja49OI+er7N
-         0Qs/CFVatBmbrMPyZPeil6/z9sM8vLeQxQ+vg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wExyd2qTsyv6vTvVyeLQrOCG/7wWTVBLp/OjseoreqR7cZKFqWoqYKwXNFt89+dBQO
-         4MrWtc8frXEotG1vJBe/GbA5CK3Xk9RO6aYUrBK8+fJ4lVxvDcFuoX79QZ2qLAFtjG88
-         /y/GzPKF/tdamLrLTSjQLw3ylMNWkrdgx8VNw=
-Received: by 10.223.92.153 with SMTP id r25mr743666fam.99.1252534191618; Wed, 
-	09 Sep 2009 15:09:51 -0700 (PDT)
-In-Reply-To: <20090908223714.GA6364@diana.vm.bytemark.co.uk>
+	id S1753572AbZIIWUu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 18:20:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753134AbZIIWUu
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 18:20:50 -0400
+Received: from wincent1.inetu.net ([209.235.192.161]:43486 "EHLO
+	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752159AbZIIWUt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 18:20:49 -0400
+X-Greylist: delayed 882 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Sep 2009 18:20:49 EDT
+Received: from [192.168.1.2] (231.Red-83-59-195.dynamicIP.rima-tde.net [83.59.195.231])
+	(authenticated bits=0)
+	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n89M647q021405
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 9 Sep 2009 18:06:06 -0400
+In-Reply-To: <m3fxavvl5k.fsf@localhost.localdomain>
+X-Mailer: Apple Mail (2.1075.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128088>
 
-2009/9/8 Karl Wiberg <kha@treskal.com>:
-> On 2009-09-08 22:43:39 +0100, Catalin Marinas wrote:
+El 09/09/2009, a las 23:54, Jakub Narebski escribi=F3:
+
+> Brendan Miller <catphive@catphive.net> writes:
 >
->> This patch renames some of the existing import options and adds the
->> -p (--strip) option which allows stripping the leading slashes of
->> the diff paths.
+>> 5. Most commands require lots of flags, and don't have reasonable
+>> defaults. e.g. archive.
+>>
+>> git archive --format=3Dtar --prefix=3Dmyproject/ HEAD | gzip =20
+>> >myproject.tar.gz
+>>
+>> Should just be:
+>> git archive
+>> run from the root of the repo.
 >
-> Looks good (and the intent is very good). The import test should
-> probably be augmented with a test case for -pN, though.
+> I'd rather not have "git archive" work without specifying tree-ish.
 
-Yes. I'll try to add one. As you noticed, not all options are tested.
+Why, out of interest? I would've thought that HEAD would be a pretty =20
+good default, although I confess that I have never used "git archive" =20
+without specifying a particular signed tag.
 
->> + =A0 =A0if strip:
->> + =A0 =A0 =A0 =A0cmd +=3D ['-p', strip]
->
-> This test should probably be "if strip !=3D None". It doesn't _really=
-_
-> matter, technically, since -p0 is the default, but still ...
-
-I modified it after posting the patch. The git default is -p1, so we
-would miss the -p0 case.
-
---=20
-Catalin
+Cheers,
+Wincent
