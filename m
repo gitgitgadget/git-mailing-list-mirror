@@ -1,126 +1,79 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: obnoxious CLI complaints
-Date: Wed, 9 Sep 2009 23:58:32 +0200
-Message-ID: <fabb9a1e0909091458m1b2115a4g96e8fc47329257a2@mail.gmail.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Add import -p option
+Date: Wed, 9 Sep 2009 23:09:51 +0100
+Message-ID: <b0943d9e0909091509i16b556f0x9dd3aa6788054298@mail.gmail.com>
+References: <b0943d9e0909081443g47978cb7mee241d74dc52adf7@mail.gmail.com>
+	 <20090908223714.GA6364@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Brendan Miller <catphive@catphive.net>
-X-From: git-owner@vger.kernel.org Wed Sep 09 23:59:02 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Karl Wiberg <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 00:10:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlVBt-0006HI-OA
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 23:59:02 +0200
+	id 1MlVMb-0000UZ-65
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 00:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754438AbZIIV6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2009 17:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754413AbZIIV6w
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 17:58:52 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:33303 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754432AbZIIV6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 17:58:50 -0400
-Received: by ewy2 with SMTP id 2so4145109ewy.17
-        for <git@vger.kernel.org>; Wed, 09 Sep 2009 14:58:52 -0700 (PDT)
+	id S1753386AbZIIWJu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 18:09:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752815AbZIIWJu
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 18:09:50 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:60321 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514AbZIIWJt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 18:09:49 -0400
+Received: by bwz19 with SMTP id 19so771899bwz.37
+        for <git@vger.kernel.org>; Wed, 09 Sep 2009 15:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=aekI5IJ9zziF/XHqqDhKFagdi/qVyxVzeaIgfhUhw+U=;
-        b=MI7Xv5rJCkI+mjx44T/qgMENjQ23m7s8ezBd1Y640VBlJGWYVwN0uDd8NiVC1vFDrB
-         Iq5gvtwibygB/8Q/Y0tedE5boonGULMgVjGX7YaAwzHVxDXsfrEgP14dqGt+S4Bv5DzN
-         aj2RPvGNm46zGYYcUO1UZuLD6kUVMfq5nyDp4=
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=rxNweuc7DcH2GzEfvqY7fisguot+O2LEJ7vpf7aELUk=;
+        b=l+ZPug0JbGPCC3RhkDGrBTjIjOKaKaW4Ychd6bMqe2gvu3ZX672j7uDq/1PTYbjGeg
+         BzNCUFBjiBHK/PJJZKSU5ewAU4GFtK8jL+8+UPs6Bru33GKoWk75CpCnxja49OI+er7N
+         0Qs/CFVatBmbrMPyZPeil6/z9sM8vLeQxQ+vg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=IT6rpw0S/T9FokwopY9DniZbCWNZIo/NOuYI9mR63jR1pxVLTNt4tolzWx3rR7h42D
-         2HEADsBgdp+8ju6wnskKlvV+WA8tOC6LDf7834wsq7Bs4ELCDhD+idf9IbfXigimlPzn
-         Oh0vfXGUKjdxsLJWe8NXjjKOuTU5932QxCNqY=
-Received: by 10.216.7.207 with SMTP id 57mr167546wep.104.1252533532096; Wed, 
-	09 Sep 2009 14:58:52 -0700 (PDT)
-In-Reply-To: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wExyd2qTsyv6vTvVyeLQrOCG/7wWTVBLp/OjseoreqR7cZKFqWoqYKwXNFt89+dBQO
+         4MrWtc8frXEotG1vJBe/GbA5CK3Xk9RO6aYUrBK8+fJ4lVxvDcFuoX79QZ2qLAFtjG88
+         /y/GzPKF/tdamLrLTSjQLw3ylMNWkrdgx8VNw=
+Received: by 10.223.92.153 with SMTP id r25mr743666fam.99.1252534191618; Wed, 
+	09 Sep 2009 15:09:51 -0700 (PDT)
+In-Reply-To: <20090908223714.GA6364@diana.vm.bytemark.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128087>
 
-Heya,
-
-On Wed, Sep 9, 2009 at 23:27, Brendan Miller<catphive@catphive.net> wrote:
-> 1. cloning from a new empty repo fails, and so do a lot of other
-> operations. This adds unnecessary steps to setting up a new shared
-> repo.
-
-Actually, it works in recent git.
-
-> 2. git --bare init. The flag goes before the operation unlike every other flag?
-
-Because unlike most flags it applies to anything git does, e.g. 'git
---bare status' to treat the current directory as a git repository
-rather than looking for a .git directory.
-
-> 4. The index is inconsistently referred to as too many different
-> things (cache, index, staging area) and only the last one makes any
-> intuitive sense to a new user. This is partially a CLI issue, and
-> partially a documentation issue, but both add up to cause confusion.
+2009/9/8 Karl Wiberg <kha@treskal.com>:
+> On 2009-09-08 22:43:39 +0100, Catalin Marinas wrote:
 >
-> 5. Most commands require lots of flags, and don't have reasonable
-> defaults. e.g. archive.
+>> This patch renames some of the existing import options and adds the
+>> -p (--strip) option which allows stripping the leading slashes of
+>> the diff paths.
+>
+> Looks good (and the intent is very good). The import test should
+> probably be augmented with a test case for -pN, though.
 
-Most git commands need no more than two flags, and the defaults are
-reasonable to me; of course everybody has different needs, git
-aliasses make it easy to overcome this.
+Yes. I'll try to add one. As you noticed, not all options are tested.
 
-> This is what I want to do 90% of the time, so it should just have the
-> proper defaults, and not make me look at the man page every time I
-> want to use it.
+>> + =A0 =A0if strip:
+>> + =A0 =A0 =A0 =A0cmd +=3D ['-p', strip]
+>
+> This test should probably be "if strip !=3D None". It doesn't _really=
+_
+> matter, technically, since -p0 is the default, but still ...
 
-Again, make an alias if you use it a lot; it might be what _you_ want
-to do, but as you can see from the plethora of other examples, it is
-perhaps not what everybody else wants to do 90% of the time.
+I modified it after posting the patch. The git default is -p1, so we
+would miss the -p0 case.
 
-> 6. Where is the bug tracker? If people users can't find the bug
-> tracker, they can't report issues, and obnoxious bugs go unfixed, or
-> people have to whine on the mailing list. There should be a nice big
-> link on the front page of git-scm.com. A bug tracker is really the
-> only way for the vast majority of a community that use a tool can give
-> feedback on the problems the tool has.
-
-Nope, that's not how things work for us. We _want_ people to 'whine'
-on the mailing list, so that if they really don't care that much about
-something, it is "dropped on the floor" (because the thread becomes
-stale) after a while, and we move on. Bug trackers are notorious for
-growing in size very fast, and becoming cluttered (I have experience
-with this as well, and am very pleased with how the git's mailing list
-approach solves this).
-
-> 7. Man pages: It's nice we have them, but we shouldn't need them to do
-> basic stuff. I rarely had to look at the man pages using svn, but
-> every single time I use git I have to dig into these things. Frankly,
-> I have better things to do than RTFM.
-
-Honestly, you never had to consult the help for svn? Perhaps the help
-was not in a man page, but in some obscure website online; I for one
-welcome our on-disk information bringing overlords.
-
-> 8. There's no obvious way to make a remote your default push pull
-> location without editing the git config file. Why not just something
-> like
-
-> It's ok to have kind of a weak UI on a new tool, when people are busy
-> adding basic functionality. However, at this point git already has way
-> more features than most of the competition, and the needless
-> complexity of the CLI is the biggest issue in day to day use.
-
-If you don't need all that functionality, why not just use one of them
-fancy GUI's out there?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+--=20
+Catalin
