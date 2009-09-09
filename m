@@ -1,57 +1,75 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [ JGIT ] incompatiblity found in DirCache
-Date: Wed, 9 Sep 2009 23:11:06 +0200
-Message-ID: <200909092311.07145.robin.rosenberg.lists@dewire.com>
-References: <4AA7FA2B.4090707@writeme.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Adam W. Hawks" <awhawks@writeme.com>, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Sep 09 23:11:23 2009
+From: Henrik Tidefelt <tidefelt@isy.liu.se>
+Subject: Re: Problem with "dashless options"
+Date: Wed, 9 Sep 2009 23:12:12 +0200
+Message-ID: <4EEF55B5-46E1-4C06-AA60-62F700F7B279@isy.liu.se>
+References: <D69FA890-4249-4DC9-B8AE-C9F105F1AD3B@isy.liu.se> <20090909143455.GA10092@sigill.intra.peff.net> <AB9C50E3-E2BB-4449-B8F9-75777ADE1602@isy.liu.se> <20090909163001.GE4859@laphroaig.corp>
+Mime-Version: 1.0 (Apple Message framework v1075.2)
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@madism.org>
+X-From: git-owner@vger.kernel.org Wed Sep 09 23:13:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlURj-0001fU-BQ
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 23:11:19 +0200
+	id 1MlUTi-0002Bq-Ef
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 23:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214AbZIIVLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2009 17:11:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754193AbZIIVLI
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 17:11:08 -0400
-Received: from mail.dewire.com ([83.140.172.130]:1256 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753018AbZIIVLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 17:11:07 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3D4B1139DE4F;
-	Wed,  9 Sep 2009 23:11:09 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TRFYJ9sMf+VN; Wed,  9 Sep 2009 23:11:08 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 0F689139DE46;
-	Wed,  9 Sep 2009 23:11:08 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <4AA7FA2B.4090707@writeme.com>
-Content-Disposition: inline
+	id S1754321AbZIIVMd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 17:12:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754319AbZIIVMc
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 17:12:32 -0400
+Received: from bogotron.isy.liu.se ([130.236.48.26]:49687 "EHLO
+	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754282AbZIIVMa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 17:12:30 -0400
+Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
+	by bogotron.isy.liu.se (Postfix) with ESMTP id F148B25A9E;
+	Wed,  9 Sep 2009 23:12:31 +0200 (MEST)
+Received: from bogotron.isy.liu.se ([130.236.48.26])
+ by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
+ with ESMTP id 05503-05; Thu,  9 Jul 2009 10:11:11 +0200 (MEST)
+Received: from [192.168.0.169] (c83-252-172-144.bredband.comhem.se [83.252.172.144])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by bogotron.isy.liu.se (Postfix) with ESMTP id 19CB325A9C;
+	Wed,  9 Sep 2009 23:12:14 +0200 (MEST)
+In-Reply-To: <20090909163001.GE4859@laphroaig.corp>
+X-Mailer: Apple Mail (2.1075.2)
+X-Virus-Scanned: by amavisd-new at isy.liu.se
+X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128082>
 
-onsdag 09 september 2009 20:55:39 skrev "Adam W. Hawks" <awhawks@writeme.com>:
-> When using the DirCache interface to the index you can create a invalid/corrupt tree for git 1.6.5.
-> 
-> The problem seems to be you can add a path to the index that starts with a "/" and DirCache creates a entry with a mode but no path.
-> This causes git 1.6.5 to fail with a corrupt tree.
+No, but it is mapped to WHITE FROWNING FACE; I guess I defined it so =20
+to avoid the trouble I was previously experiencing from accidentally =20
+typing the &nbsp; instead of space without being able to see the =20
+difference on screen.  Why would it matter?
 
-I think there are more ways of entering bad stuff. Preventing a deliberate programmatic creation of invalid trees is probably not the most important
-thing, but then again, validating the data to prevent e.g. the EGit plugin from doing it by mistake due to bugs could probably
-be worthwhile.
 
--- robin
+Henrik
+
+On 09-09-09, at 18:30 , Pierre Habouzit wrote:
+
+> On Wed, Sep 09, 2009 at 06:26:37PM +0200, Henrik Tidefelt wrote:
+>> Yes, that was a strange error.  I applied the patch, but could not
+>> reproduce the error any more.  Also, Gustaf Hendeby built git
+>> directly from the git distribution (not via MacPorts) on my machine,
+>> and could not reproduce the error.  Then I simply tried to clean and
+>> build the git from MacPorts again, and voila!, now it works.
+>> Something very strange must have happened during the previous build.
+>
+> Are you using a keyboard mapping where AltGr+space produces an =20
+> &nbsp; ?
+>
+> --=20
+> =B7O=B7  Pierre Habouzit
+> =B7=B7O                                                madcoder@debia=
+n.org
+> OOO                                                http://www.madism.=
+org
