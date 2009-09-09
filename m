@@ -1,75 +1,98 @@
-From: Henrik Tidefelt <tidefelt@isy.liu.se>
-Subject: Re: Problem with "dashless options"
-Date: Wed, 9 Sep 2009 23:12:12 +0200
-Message-ID: <4EEF55B5-46E1-4C06-AA60-62F700F7B279@isy.liu.se>
-References: <D69FA890-4249-4DC9-B8AE-C9F105F1AD3B@isy.liu.se> <20090909143455.GA10092@sigill.intra.peff.net> <AB9C50E3-E2BB-4449-B8F9-75777ADE1602@isy.liu.se> <20090909163001.GE4859@laphroaig.corp>
-Mime-Version: 1.0 (Apple Message framework v1075.2)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@madism.org>
-X-From: git-owner@vger.kernel.org Wed Sep 09 23:13:22 2009
+From: Brendan Miller <catphive@catphive.net>
+Subject: obnoxious CLI complaints
+Date: Wed, 9 Sep 2009 14:27:56 -0700
+Message-ID: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 09 23:28:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlUTi-0002Bq-Ef
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 23:13:22 +0200
+	id 1MlUhx-0006Mq-IB
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 23:28:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321AbZIIVMd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 17:12:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754319AbZIIVMc
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 17:12:32 -0400
-Received: from bogotron.isy.liu.se ([130.236.48.26]:49687 "EHLO
-	bogotron.isy.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754282AbZIIVMa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 17:12:30 -0400
-Received: from spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19])
-	by bogotron.isy.liu.se (Postfix) with ESMTP id F148B25A9E;
-	Wed,  9 Sep 2009 23:12:31 +0200 (MEST)
-Received: from bogotron.isy.liu.se ([130.236.48.26])
- by spamotron.isy.liu.se (spamotron.isy.liu.se [130.236.48.19]) (amavisd-new, port 10022)
- with ESMTP id 05503-05; Thu,  9 Jul 2009 10:11:11 +0200 (MEST)
-Received: from [192.168.0.169] (c83-252-172-144.bredband.comhem.se [83.252.172.144])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by bogotron.isy.liu.se (Postfix) with ESMTP id 19CB325A9C;
-	Wed,  9 Sep 2009 23:12:14 +0200 (MEST)
-In-Reply-To: <20090909163001.GE4859@laphroaig.corp>
-X-Mailer: Apple Mail (2.1075.2)
-X-Virus-Scanned: by amavisd-new at isy.liu.se
-X-Spam-Checker-Version: SpamAssassin 2.63-isy (2004-01-11) on spamotron.isy.liu.se
+	id S1754251AbZIIV1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 17:27:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753830AbZIIV1y
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 17:27:54 -0400
+Received: from mail-qy0-f181.google.com ([209.85.221.181]:40267 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753816AbZIIV1y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2009 17:27:54 -0400
+Received: by qyk11 with SMTP id 11so4191180qyk.1
+        for <git@vger.kernel.org>; Wed, 09 Sep 2009 14:27:57 -0700 (PDT)
+Received: by 10.229.93.41 with SMTP id t41mr560394qcm.81.1252531676887; Wed, 
+	09 Sep 2009 14:27:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128083>
 
-No, but it is mapped to WHITE FROWNING FACE; I guess I defined it so =20
-to avoid the trouble I was previously experiencing from accidentally =20
-typing the &nbsp; instead of space without being able to see the =20
-difference on screen.  Why would it matter?
+Here are a bunch of really basic usability issues I have with git:
 
+1. cloning from a new empty repo fails, and so do a lot of other
+operations. This adds unnecessary steps to setting up a new shared
+repo.
 
-Henrik
+2. git --bare init. The flag goes before the operation unlike every other flag?
 
-On 09-09-09, at 18:30 , Pierre Habouzit wrote:
+3. It's not obvious whether operations work on the working
+directory/the "index"/the repository
+e.g. get reset --soft, --mixed, --hard. git diff --cached
 
-> On Wed, Sep 09, 2009 at 06:26:37PM +0200, Henrik Tidefelt wrote:
->> Yes, that was a strange error.  I applied the patch, but could not
->> reproduce the error any more.  Also, Gustaf Hendeby built git
->> directly from the git distribution (not via MacPorts) on my machine,
->> and could not reproduce the error.  Then I simply tried to clean and
->> build the git from MacPorts again, and voila!, now it works.
->> Something very strange must have happened during the previous build.
->
-> Are you using a keyboard mapping where AltGr+space produces an =20
-> &nbsp; ?
->
-> --=20
-> =B7O=B7  Pierre Habouzit
-> =B7=B7O                                                madcoder@debia=
-n.org
-> OOO                                                http://www.madism.=
-org
+4. The index is inconsistently referred to as too many different
+things (cache, index, staging area) and only the last one makes any
+intuitive sense to a new user. This is partially a CLI issue, and
+partially a documentation issue, but both add up to cause confusion.
+
+5. Most commands require lots of flags, and don't have reasonable
+defaults. e.g. archive.
+
+git archive --format=tar --prefix=myproject/ HEAD | gzip >myproject.tar.gz
+
+Should just be:
+git archive
+run from the root of the repo.
+
+This is what I want to do 90% of the time, so it should just have the
+proper defaults, and not make me look at the man page every time I
+want to use it.
+
+6. Where is the bug tracker? If people users can't find the bug
+tracker, they can't report issues, and obnoxious bugs go unfixed, or
+people have to whine on the mailing list. There should be a nice big
+link on the front page of git-scm.com. A bug tracker is really the
+only way for the vast majority of a community that use a tool can give
+feedback on the problems the tool has.
+
+7. Man pages: It's nice we have them, but we shouldn't need them to do
+basic stuff. I rarely had to look at the man pages using svn, but
+every single time I use git I have to dig into these things. Frankly,
+I have better things to do than RTFM.
+
+8. There's no obvious way to make a remote your default push pull
+location without editing the git config file. Why not just something
+like
+
+git remote setdefault origin
+
+or even
+
+git remote add --default origin http://somegiturl.org/
+
+This come up in the use case where I:
+1. set up a remote bare repo
+2. push from my local repo, and thence forth want to keep local and
+remote in sink.
+
+Right now I have to modify .git/config to do this.
+
+It's ok to have kind of a weak UI on a new tool, when people are busy
+adding basic functionality. However, at this point git already has way
+more features than most of the competition, and the needless
+complexity of the CLI is the biggest issue in day to day use.
+
+Brendan
