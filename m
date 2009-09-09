@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 1/2] push: make non-fast-forward help message configurable
-Date: Wed, 9 Sep 2009 07:38:58 -0400
-Message-ID: <20090909113858.GA31051@coredump.intra.peff.net>
+Subject: [PATCH 2/2] status: make "how to stage" messages optional
+Date: Wed, 9 Sep 2009 07:43:03 -0400
+Message-ID: <20090909114303.GB31051@coredump.intra.peff.net>
 References: <20090909112623.GA30765@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,209 +9,150 @@ Cc: Nanako Shiraishi <nanako3@lavabit.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>,
 	Teemu Likonen <tlikonen@iki.fi>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 09 13:39:12 2009
+X-From: git-owner@vger.kernel.org Wed Sep 09 13:43:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlLW3-0002pl-QP
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 13:39:12 +0200
+	id 1MlLa2-000420-1J
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 13:43:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145AbZIILjC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2009 07:39:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751830AbZIILjB
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 07:39:01 -0400
-Received: from peff.net ([208.65.91.99]:57492 "EHLO peff.net"
+	id S1752689AbZIILnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 07:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752684AbZIILnH
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 07:43:07 -0400
+Received: from peff.net ([208.65.91.99]:47242 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751789AbZIILjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 07:39:00 -0400
-Received: (qmail 27970 invoked by uid 107); 9 Sep 2009 11:39:18 -0000
+	id S1752229AbZIILnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2009 07:43:06 -0400
+Received: (qmail 28000 invoked by uid 107); 9 Sep 2009 11:43:24 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Sep 2009 07:39:18 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Sep 2009 07:38:58 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Sep 2009 07:43:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Sep 2009 07:43:03 -0400
 Content-Disposition: inline
 In-Reply-To: <20090909112623.GA30765@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128062>
 
-This message is designed to help new users understand what
-has happened when refs fail to push. However, it does not
-help experienced users at all, and significantly clutters
-the output, frequently dwarfing the regular status table and
-making it harder to see.
-
-This patch introduces a general configuration mechanism for
-optional messages, with this push message as the first
-example.
+These messages are nice for new users, but experienced git
+users know how to manipulate the index, and these messages
+waste a lot of screen real estate.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Changes from the original version:
+Most changes are just from rebasing on the prior patch.
 
- - s/message/advice/ in the config and filenames.
+Since advice.statusAdvice was a bit redundant, I switched it to
+advice.statusHints. Just advice.status was a bit too vague for my taste,
+especially as we might want something like advice.statusCurrentBranch or
+something later. statusHints is a little vague, too, so I'm open to
+suggestions.
 
- - no more advice.all config option. The point of this is to shut up
-   messages that annoy you; It's probably best to let users see a
-   message, dislike it, and then turn it off manually after making a
-   decision that they don't need or want to see it. But adding a "never
-   show me any advice" option means they will never see some of the
-   messages, which might otherwise be helpful.
+This version retains the "compact" output of the last version. I.e., no
+newline between header and files, as there would be with the hints.
+Like:
 
-   My thinking here is influenced by the fact that we are usually pretty
-   conservative about adding messages in the first place. If we suddenly
-   had a period of adding a bunch of "you are clueless, and here is how
-   git works" messages, enabled by default, then I might reconsider.
+  # Changed but not updated:
+          modified: foo
 
- - I re-worked the code to give each preference its own variable. This
-   means we can avoid maintaining a separate list of "#define
-   MESSAGE_ONE 1" in addition to the array. It also means that checking
-   a preference is a little nicer. Instead of:
+I tried looking at it both with and without the newline, and didn't feel
+strongly. My reasoning was that people turning off the hints are
+probably interested in compactness. Suggestions welcome.
 
-     if (advice[ADVICE_PUSH_NONFASTFORWARD].preference)
-
-   you get:
-
-     if (advice_push_nonfastforward)
-
- Documentation/config.txt |   11 +++++++++++
- Makefile                 |    2 ++
- advice.c                 |   25 +++++++++++++++++++++++++
- advice.h                 |    8 ++++++++
- builtin-push.c           |    2 +-
- cache.h                  |    1 +
- config.c                 |    3 +++
- 7 files changed, 51 insertions(+), 1 deletions(-)
- create mode 100644 advice.c
- create mode 100644 advice.h
+ Documentation/config.txt |    4 ++++
+ advice.c                 |    2 ++
+ advice.h                 |    1 +
+ wt-status.c              |    8 ++++++++
+ 4 files changed, 15 insertions(+), 0 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5256c7f..a35b918 100644
+index a35b918..8cbabe8 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -113,6 +113,17 @@ For command-specific variables, you will find a more detailed description
- in the appropriate manual page. You will find a description of non-core
- porcelain configuration variables in the respective porcelain documentation.
+@@ -122,6 +122,10 @@ advice.*::
+ 	pushNonFastForward::
+ 		Advice shown when linkgit:git-push[1] refuses
+ 		non-fast-forward refs. Default: true.
++	statusHints::
++		Directions on how to stage/unstage/add shown in the
++		output of linkgit:git-status[1] and the template shown
++		when writing commit messages. Default: true.
+ --
  
-+advice.*::
-+	When set to 'true', display the given optional help message.
-+	When set to 'false', do not display. The configuration variables
-+	are:
-++
-+--
-+	pushNonFastForward::
-+		Advice shown when linkgit:git-push[1] refuses
-+		non-fast-forward refs. Default: true.
-+--
-+
  core.fileMode::
- 	If false, the executable bit differences between the index and
- 	the working copy are ignored; useful on broken filesystems like FAT.
-diff --git a/Makefile b/Makefile
-index a614347..9d9ff45 100644
---- a/Makefile
-+++ b/Makefile
-@@ -397,6 +397,7 @@ export PERL_PATH
- LIB_FILE=libgit.a
- XDIFF_LIB=xdiff/lib.a
- 
-+LIB_H += advice.h
- LIB_H += archive.h
- LIB_H += attr.h
- LIB_H += blob.h
-@@ -454,6 +455,7 @@ LIB_H += utf8.h
- LIB_H += wt-status.h
- 
- LIB_OBJS += abspath.o
-+LIB_OBJS += advice.o
- LIB_OBJS += alias.o
- LIB_OBJS += alloc.o
- LIB_OBJS += archive.o
 diff --git a/advice.c b/advice.c
-new file mode 100644
-index 0000000..b5216a2
---- /dev/null
+index b5216a2..ae4b1e8 100644
+--- a/advice.c
 +++ b/advice.c
-@@ -0,0 +1,25 @@
-+#include "cache.h"
-+
-+int advice_push_nonfastforward = 1;
-+
-+static struct {
-+	const char *name;
-+	int *preference;
-+} advice_config[] = {
-+	{ "pushnonfastforward", &advice_push_nonfastforward },
-+};
-+
-+int git_default_advice_config(const char *var, const char *value)
-+{
-+	const char *k = skip_prefix(var, "advice.");
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(advice_config); i++) {
-+		if (strcmp(k, advice_config[i].name))
-+			continue;
-+		*advice_config[i].preference = git_config_bool(var, value);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
+@@ -1,12 +1,14 @@
+ #include "cache.h"
+ 
+ int advice_push_nonfastforward = 1;
++int advice_status_hints = 1;
+ 
+ static struct {
+ 	const char *name;
+ 	int *preference;
+ } advice_config[] = {
+ 	{ "pushnonfastforward", &advice_push_nonfastforward },
++	{ "statushints", &advice_status_hints },
+ };
+ 
+ int git_default_advice_config(const char *var, const char *value)
 diff --git a/advice.h b/advice.h
-new file mode 100644
-index 0000000..862bae3
---- /dev/null
+index 862bae3..e9df8e0 100644
+--- a/advice.h
 +++ b/advice.h
-@@ -0,0 +1,8 @@
-+#ifndef ADVICE_H
-+#define ADVICE_H
-+
-+extern int advice_push_nonfastforward;
-+
-+int git_default_advice_config(const char *var, const char *value);
-+
-+#endif /* ADVICE_H */
-diff --git a/builtin-push.c b/builtin-push.c
-index 787011f..6eda372 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -157,7 +157,7 @@ static int do_push(const char *repo, int flags)
- 			continue;
+@@ -2,6 +2,7 @@
+ #define ADVICE_H
  
- 		error("failed to push some refs to '%s'", url[i]);
--		if (nonfastforward) {
-+		if (nonfastforward && advice_push_nonfastforward) {
- 			printf("To prevent you from losing history, non-fast-forward updates were rejected\n"
- 			       "Merge the remote changes before pushing again.  See the 'non-fast forward'\n"
- 			       "section of 'git push --help' for details.\n");
-diff --git a/cache.h b/cache.h
-index 5fad24c..e1ab092 100644
---- a/cache.h
-+++ b/cache.h
-@@ -4,6 +4,7 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- #include "hash.h"
-+#include "advice.h"
+ extern int advice_push_nonfastforward;
++extern int advice_status_hints;
  
- #include SHA1_HEADER
- #ifndef git_SHA_CTX
-diff --git a/config.c b/config.c
-index e87edea..f21530c 100644
---- a/config.c
-+++ b/config.c
-@@ -627,6 +627,9 @@ int git_default_config(const char *var, const char *value, void *dummy)
- 	if (!prefixcmp(var, "mailmap."))
- 		return git_default_mailmap_config(var, value);
+ int git_default_advice_config(const char *var, const char *value);
  
-+	if (!prefixcmp(var, "advice."))
-+		return git_default_advice_config(var, value);
-+
- 	if (!strcmp(var, "pager.color") || !strcmp(var, "color.pager")) {
- 		pager_use_color = git_config_bool(var,value);
- 		return 0;
+diff --git a/wt-status.c b/wt-status.c
+index 85f3fcb..38eb245 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -48,6 +48,8 @@ static void wt_status_print_unmerged_header(struct wt_status *s)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 	color_fprintf_ln(s->fp, c, "# Unmerged paths:");
++	if (!advice_status_hints)
++		return;
+ 	if (!s->is_initial)
+ 		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to unstage)", s->reference);
+ 	else
+@@ -60,6 +62,8 @@ static void wt_status_print_cached_header(struct wt_status *s)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 	color_fprintf_ln(s->fp, c, "# Changes to be committed:");
++	if (!advice_status_hints)
++		return;
+ 	if (!s->is_initial) {
+ 		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to unstage)", s->reference);
+ 	} else {
+@@ -73,6 +77,8 @@ static void wt_status_print_dirty_header(struct wt_status *s,
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
++	if (!advice_status_hints)
++		return;
+ 	if (!has_deleted)
+ 		color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to update what will be committed)");
+ 	else
+@@ -85,6 +91,8 @@ static void wt_status_print_untracked_header(struct wt_status *s)
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
+ 	color_fprintf_ln(s->fp, c, "# Untracked files:");
++	if (!advice_status_hints)
++		return;
+ 	color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to include in what will be committed)");
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
 -- 
 1.6.5.rc0.173.g0bfef
