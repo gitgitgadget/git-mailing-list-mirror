@@ -1,71 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/3] INSTALL: Describe dependency knobs from Makefile
-Date: Tue, 08 Sep 2009 23:16:08 -0700
-Message-ID: <7vpra0hcd3.fsf@alter.siamese.dyndns.org>
-References: <1252461061-75840-1-git-send-email-brian@gernhardtsoftware.com>
- <1252461061-75840-4-git-send-email-brian@gernhardtsoftware.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: tracking branch for a rebase
+Date: Wed, 9 Sep 2009 06:45:50 -0400
+Message-ID: <20090909104550.GA20108@coredump.intra.peff.net>
+References: <20090904135414.GA3728@honk.padd.com>
+ <4AA124DD.1030208@drmicha.warpmail.net>
+ <20090904181846.GC19093@coredump.intra.peff.net>
+ <20090904185949.GA21583@atjola.homenet>
+ <20090905061250.GA29863@coredump.intra.peff.net>
+ <20090905140127.GA29037@atjola.homenet>
+ <20090905142841.GB15631@coredump.intra.peff.net>
+ <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
+ <20090907084324.GB17997@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Wed Sep 09 08:16:23 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 09 12:46:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlGTf-000184-3v
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 08:16:23 +0200
+	id 1MlKge-00051o-Rq
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 12:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751873AbZIIGQN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2009 02:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751787AbZIIGQM
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 02:16:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63060 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751514AbZIIGQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 02:16:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C54332B43E;
-	Wed,  9 Sep 2009 02:16:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tjDQ4HMyzQVOfb3q4vadYccfzwE=; b=hSK8ec
-	CGhBy1AhT2rlxdF3rPf4ptzu6LZijnIbHusE8c9pe0cB3Am3RsK0Qhv1r+rg6BBe
-	+MATo//JgkK6Qvv+CZLc1gmSX9GkiHR+iaQgZ7T6rqKNqbQoyy/0j/oZBYwr/KQz
-	ZZOC9BRYPl+f+mRKG7cxNrWdi0Dh+w+2ozahk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Rakg9Y4nAoV0VE+FQp+kr2JdejKzXdQ9
-	C0nGbq6nQxueavTIC6MxmFJPgNXrzevxwZUpEogiMA8b5+MziVc89Nq8j3A0ppfd
-	zlcQMT9tSyF8OAPicrbtz+s/fjro09cOAVkjfJWgnV6cobxRtyUZ5QvXxgbVhxY+
-	VTT7c/AhzCg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A86282B43C;
-	Wed,  9 Sep 2009 02:16:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BE2FD2B43B; Wed,  9 Sep
- 2009 02:16:09 -0400 (EDT)
-In-Reply-To: <1252461061-75840-4-git-send-email-brian@gernhardtsoftware.com>
- (Brian Gernhardt's message of "Tue\,  8 Sep 2009 21\:51\:01 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 45F467CE-9D08-11DE-A6F3-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752829AbZIIKpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 06:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbZIIKpz
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 06:45:55 -0400
+Received: from peff.net ([208.65.91.99]:39185 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751979AbZIIKpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2009 06:45:54 -0400
+Received: (qmail 27773 invoked by uid 107); 9 Sep 2009 10:46:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Sep 2009 06:46:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Sep 2009 06:45:51 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128058>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+On Mon, Sep 07, 2009 at 11:29:50AM +0200, Johannes Schindelin wrote:
 
-> +There are many options that can be configured in the makefile using either
-> +command line defines or a config.mak file.  These options are documented at
-> +the beginning of the Makefile.
-> +
+> > I think using @{} is a reasonable extension format.
+> 
+> Sorry to enter this thread that late, but I did not realize that it 
+> touches my %<branch> work.
+> 
+> Your proposal leads to something like "master@{upstream}@{2.days.ago}", 
+> which looks ugly.  And it is much more to type.
+> 
+> I still think that it is not too-much asked for to require the 
+> "refs/heads/" prefix if somebody starts her branch names with "%".
 
-I did not like calling "make variables" "options", and also it was unclear
-what good these "options" are for.  How about...
+I don't have a problem with restricting branch names starting with "%".
+However, I do think "%.." is a bit ugly to read. And I am somewhat
+concerned that we are eating the last reasonable available
+meta-character for this feature, which will make things even harder next
+time somebody suggests a clever feature. Which is why the discussion
+turned to a generic extension syntax.
 
-    The beginning of the Makefile documents many variables that affect the way
-    git is built.  You can override them either from the command line, or in a
-    config.mak file.
+I wonder if it is worth adding @{upstream} now, which is fairly safe,
+letting it cook for a while, and then adding a "%" alias later after the
+concept has proved itself (and people say "I like this feature, but it
+really is too much to type").
+
+-Peff
