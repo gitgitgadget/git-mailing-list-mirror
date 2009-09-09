@@ -1,63 +1,92 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: obnoxious CLI complaints
-Date: Thu, 10 Sep 2009 00:06:04 +0200
-Message-ID: <4C1FB36D-F8A6-4C01-A42A-8AD2355A9961@wincent.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <m3fxavvl5k.fsf@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v1075.2)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 00:21:01 2009
+From: Pierre Habouzit <madcoder@madism.org>
+Subject: Re: Problem with "dashless options"
+Date: Thu, 10 Sep 2009 00:49:30 +0200
+Message-ID: <20090909224930.GC29776@artemis.corp>
+References: <D69FA890-4249-4DC9-B8AE-C9F105F1AD3B@isy.liu.se>
+ <20090909143455.GA10092@sigill.intra.peff.net>
+ <AB9C50E3-E2BB-4449-B8F9-75777ADE1602@isy.liu.se>
+ <20090909163001.GE4859@laphroaig.corp>
+ <4EEF55B5-46E1-4C06-AA60-62F700F7B279@isy.liu.se>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="UFHRwCdBEJvubb2X"
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Henrik Tidefelt <tidefelt@isy.liu.se>
+X-From: git-owner@vger.kernel.org Thu Sep 10 00:50:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlVX9-0003Ij-Tu
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 00:21:00 +0200
+	id 1MlVzY-0002K8-OE
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 00:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572AbZIIWUu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 18:20:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753134AbZIIWUu
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 18:20:50 -0400
-Received: from wincent1.inetu.net ([209.235.192.161]:43486 "EHLO
-	wincent1.inetu.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159AbZIIWUt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 18:20:49 -0400
-X-Greylist: delayed 882 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Sep 2009 18:20:49 EDT
-Received: from [192.168.1.2] (231.Red-83-59-195.dynamicIP.rima-tde.net [83.59.195.231])
-	(authenticated bits=0)
-	by wincent1.inetu.net (8.13.8/8.13.8) with ESMTP id n89M647q021405
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 9 Sep 2009 18:06:06 -0400
-In-Reply-To: <m3fxavvl5k.fsf@localhost.localdomain>
-X-Mailer: Apple Mail (2.1075.2)
+	id S1754509AbZIIWta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 18:49:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbZIIWta
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 18:49:30 -0400
+Received: from pan.madism.org ([88.191.52.104]:37230 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752648AbZIIWt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2009 18:49:29 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 90DB14711E;
+	Thu, 10 Sep 2009 00:49:31 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8517F777049; Thu, 10 Sep 2009 00:49:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4EEF55B5-46E1-4C06-AA60-62F700F7B279@isy.liu.se>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128089>
 
-El 09/09/2009, a las 23:54, Jakub Narebski escribi=F3:
 
-> Brendan Miller <catphive@catphive.net> writes:
->
->> 5. Most commands require lots of flags, and don't have reasonable
->> defaults. e.g. archive.
->>
->> git archive --format=3Dtar --prefix=3Dmyproject/ HEAD | gzip =20
->> >myproject.tar.gz
->>
->> Should just be:
->> git archive
->> run from the root of the repo.
->
-> I'd rather not have "git archive" work without specifying tree-ish.
+--UFHRwCdBEJvubb2X
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Why, out of interest? I would've thought that HEAD would be a pretty =20
-good default, although I confess that I have never used "git archive" =20
-without specifying a particular signed tag.
+On Wed, Sep 09, 2009 at 11:12:12PM +0200, Henrik Tidefelt wrote:
+> No, but it is mapped to WHITE FROWNING FACE; I guess I defined it so
+> to avoid the trouble I was previously experiencing from accidentally
+> typing the &nbsp; instead of space without being able to see the
+> difference on screen.  Why would it matter?
 
-Cheers,
-Wincent
+well because then one of your space could have been that, and the shell
+doesn't consider non breakable space as .. breakable, hence you can read
+something where you believe there is (n+1) arguments but the shell (and
+git) see only n.
+
+It often yields errors really hard to grasp like the dreaded:
+
+$ ls |=C2=A0grep
+zsh: command not found: =C2=A0grep
+notice the              ^
+
+sorry then I don't really know what happened...
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--UFHRwCdBEJvubb2X
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAkqoMPoACgkQvGr7W6Hudhwh4wCeLmvVBzdimgphHzmf229ebYL9
+n20AoIskR1wlCWXhO8XRQ6ZA8C6UYAgk
+=IEAf
+-----END PGP SIGNATURE-----
+
+--UFHRwCdBEJvubb2X--
