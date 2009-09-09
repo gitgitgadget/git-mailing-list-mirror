@@ -1,76 +1,76 @@
 From: Jeff King <peff@peff.net>
-Subject: jk/1.7.0-status, was: What's cooking in git.git (Sep 2009, #02;
- Mon, 07)
-Date: Wed, 9 Sep 2009 07:59:24 -0400
-Message-ID: <20090909115924.GA31149@coredump.intra.peff.net>
-References: <7vtyzexnhm.fsf@alter.siamese.dyndns.org>
+Subject: Re: `Git Status`-like output for two local branches
+Date: Wed, 9 Sep 2009 08:26:02 -0400
+Message-ID: <20090909122602.GA31208@coredump.intra.peff.net>
+References: <c115fd3c0908311320q46d585d2v457ccd0f411a6404@mail.gmail.com>
+ <20090902075713.GA1832@coredump.intra.peff.net>
+ <fabb9a1e0909020118m2fe2e6e1g79cc83ce941ac000@mail.gmail.com>
+ <20090905081726.GA7109@coredump.intra.peff.net>
+ <9b18b3110909050758k597f917fn3baefa5fdb4741a0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 09 13:59:36 2009
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Tim Visher <tim.visher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 09 14:26:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlLpm-0000GB-Cz
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 13:59:34 +0200
+	id 1MlMFe-0008S7-Me
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 14:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753205AbZIIL71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Sep 2009 07:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbZIIL71
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 07:59:27 -0400
-Received: from peff.net ([208.65.91.99]:33929 "EHLO peff.net"
+	id S1752681AbZIIM0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 08:26:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752243AbZIIM0H
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 08:26:07 -0400
+Received: from peff.net ([208.65.91.99]:34516 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753179AbZIIL70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 07:59:26 -0400
-Received: (qmail 28057 invoked by uid 107); 9 Sep 2009 11:59:44 -0000
+	id S1751582AbZIIM0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Sep 2009 08:26:06 -0400
+Received: (qmail 28157 invoked by uid 107); 9 Sep 2009 12:26:23 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Sep 2009 07:59:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Sep 2009 07:59:24 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Sep 2009 08:26:23 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Sep 2009 08:26:02 -0400
 Content-Disposition: inline
-In-Reply-To: <7vtyzexnhm.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <9b18b3110909050758k597f917fn3baefa5fdb4741a0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128064>
 
-On Mon, Sep 07, 2009 at 05:56:53PM -0700, Junio C Hamano wrote:
+On Sat, Sep 05, 2009 at 04:58:36PM +0200, demerphq wrote:
 
-> * jk/1.7.0-status (2009-09-05) 5 commits
->  - docs: note that status configuration affects only long format
->   (merged to 'next' on 2009-09-07 at 8a7c563)
->  + commit: support alternate status formats
->  + status: add --porcelain output format
->  + status: refactor format option parsing
->  + status: refactor short-mode printing to its own function
->  (this branch uses jc/1.7.0-status.)
-> 
-> Gives the --short output format to post 1.7.0 "git commit --dry-run" that
-> is similar to that of post 1.7.0 "git status".
-> 
-> It might be a good idea to make the --short format part of 1.6.6 without
-> waiting for 1.7.0; it would require some branch shuffling to bring the
-> short-status patch earlier than the one that makes "status" different from
-> "commit --dry-run", though.
+> It would be useful in for instance prompt status line. At $work we
+> have a number of people using a prompt that includes the result of
+> parsing git-status, but something --left-right-count would be much
+> nicer, and if i understand it, more efficient (although maybe im
+> wrong). In the prompt they use a number of different unicode arrows to
+> show what has happened, with a Y type thing for diverged.
 
-It looks like the short-status patch is already right before "commit
---dry-run", but it is of course part of "git stat". So we could get by
-with branching from jc/1.7.0-status^, and do one of:
+Well, if they are using the other bits of "git status" then it may not
+be that inefficient compared to a "--left-right-count".
 
- 1. develop as if we were a totally separate topic, refactoring, adding
-    --porcelain mode, etc.
+However, it sounds like they are not actually interested in the count,
+but just the two bits of information: is A ahead of B, and is B ahead of
+A (and then displaying one of four symbols as a result).
 
- 2. just support "--short" from "git status" with as small a change as
-    possible, and let the rest of the enhancements stay where they are,
-    for 1.7.0
+And getting that information is even more efficient than just a count,
+because you don't have to traverse all of the commits. Though you do
+still have to find the merge base, so I'm not sure how much you would be
+saving in practice.
 
-Option (1) is what I would usually do, but I think in this case it is
-just going to end up with me re-doing lots of work as the
-almost-duplicated refactoring happening in the two branches is going to
-make a gigantic conflict.
+A "--left-right-count" does feel like an odd option to "git log" or "git
+rev-list", as you are no longer logging or listing anything. In a way,
+it makes more sense to me as a special output format of "git
+merge-base".
 
-And of course option (3) is to just let --short rest until 1.7.0.
+Anyway, I think your example sounds like a reasonable application.
+Personally, I do not use a git-enhanced prompt, so it is not my itch to
+scratch (and I think a plumbing patch would only make sense if it was a
+stepping stone to an actual application, which means somebody needs to
+write the actual application).
 
 -Peff
