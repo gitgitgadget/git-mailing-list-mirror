@@ -1,60 +1,120 @@
-From: Pierre Habouzit <madcoder@madism.org>
-Subject: Re: Problem with "dashless options"
-Date: Wed, 9 Sep 2009 18:30:01 +0200
-Message-ID: <20090909163001.GE4859@laphroaig.corp>
-References: <D69FA890-4249-4DC9-B8AE-C9F105F1AD3B@isy.liu.se>
- <20090909143455.GA10092@sigill.intra.peff.net>
- <AB9C50E3-E2BB-4449-B8F9-75777ADE1602@isy.liu.se>
+From: "Adam W. Hawks" <awhawks@writeme.com>
+Subject: [ JGIT ] incompatiblity found in DirCache
+Date: Wed, 09 Sep 2009 14:55:39 -0400
+Message-ID: <4AA7FA2B.4090707@writeme.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Henrik Tidefelt <tidefelt@isy.liu.se>
-X-From: git-owner@vger.kernel.org Wed Sep 09 18:36:55 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 09 20:56:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlQAB-0002Se-5D
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 18:36:55 +0200
+	id 1MlSKq-0003V1-Uu
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Sep 2009 20:56:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753796AbZIIQg1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 12:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753318AbZIIQg0
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 12:36:26 -0400
-Received: from pan.madism.org ([88.191.52.104]:53072 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753312AbZIIQg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 12:36:26 -0400
-X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Sep 2009 12:36:26 EDT
-Received: from laphroaig.corp (def92-12-88-177-251-208.fbx.proxad.net [88.177.251.208])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(Client did not present a certificate)
-	by hermes.madism.org (Postfix) with ESMTPSA id 80BEA45390;
-	Wed,  9 Sep 2009 18:30:04 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <AB9C50E3-E2BB-4449-B8F9-75777ADE1602@isy.liu.se>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753374AbZIISzn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Sep 2009 14:55:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbZIISzn
+	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 14:55:43 -0400
+Received: from outbound1-1.us4.outblaze.com ([208.36.123.129]:51873 "EHLO
+	outbound1-1.us4.outblaze.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752007AbZIISzm (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Sep 2009 14:55:42 -0400
+Received: from smtp1.us4.outblaze.com (ws1-8.us4.outblaze.com.int [192.168.11.70])
+	by outbound1-1.us4.outblaze.com (Postfix) with SMTP id 604537A0DA8
+	for <git@vger.kernel.org>; Wed,  9 Sep 2009 18:55:45 +0000 (GMT)
+Received: (qmail 18473 invoked from network); 9 Sep 2009 18:49:28 -0000
+Received: from unknown (HELO ?192.168.0.4?) (awhawks:writeme.com@mail.com@24.74.41.120)
+  by ws1-8.us4.outblaze.com with SMTP; 9 Sep 2009 18:49:27 -0000
+User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128075>
 
-On Wed, Sep 09, 2009 at 06:26:37PM +0200, Henrik Tidefelt wrote:
-> Yes, that was a strange error.  I applied the patch, but could not
-> reproduce the error any more.  Also, Gustaf Hendeby built git
-> directly from the git distribution (not via MacPorts) on my machine,
-> and could not reproduce the error.  Then I simply tried to clean and
-> build the git from MacPorts again, and voila!, now it works.
-> Something very strange must have happened during the previous build.
+When using the DirCache interface to the index you can create a invalid/corrupt tree for git 1.6.5.
 
-Are you using a keyboard mapping where AltGr+space produces an &nbsp; ?
+The problem seems to be you can add a path to the index that starts with a "/" and DirCache creates a entry with a mode but no path.
+This causes git 1.6.5 to fail with a corrupt tree.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+The following code will create the problem
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import org.spearce.jgit.dircache.DirCache;
+import org.spearce.jgit.dircache.DirCacheBuilder;
+import org.spearce.jgit.dircache.DirCacheEntry;
+import org.spearce.jgit.lib.Commit;
+import org.spearce.jgit.lib.FileMode;
+import org.spearce.jgit.lib.ObjectId;
+import org.spearce.jgit.lib.ObjectWriter;
+import org.spearce.jgit.lib.PersonIdent;
+import org.spearce.jgit.lib.RefUpdate;
+import org.spearce.jgit.lib.Repository;
+import org.spearce.jgit.lib.RefUpdate.Result;
+
+public class BuildTest
+{
+	private Repository db;
+	
+	public static void main(String[] args)
+	{
+		BuildTest bt = new BuildTest();
+		bt.doit();
+	}
+	
+	public void doit()
+	{		
+		Date when = Calendar.getInstance().getTime();
+		File gitDir = new File("gitProblem/.git");
+		gitDir.mkdirs();
+		try
+		{
+			db = new Repository(gitDir);
+			db.create(true);
+			DirCache dirc = DirCache.newInCore();
+			DirCacheBuilder dcb = dirc.builder();
+			byte[] data = "Some File data".getBytes();
+			ObjectWriter ow = new ObjectWriter(db);
+			ObjectId dataId = ow.writeBlob(data);
+			DirCacheEntry newEntry = new DirCacheEntry("/someDir/someFile");
+			newEntry.setAssumeValid(false);
+			newEntry.setFileMode(FileMode.REGULAR_FILE);
+			newEntry.setLastModified(when.getTime());
+			newEntry.setLength(data.length);
+			newEntry.setObjectId(dataId);
+			dcb.add(newEntry );
+			dcb.finish();
+			dirc = dcb.getDirCache();
+			PersonIdent pi = new PersonIdent("someonw","someone@somewhere",when,TimeZone.getDefault());
+			ObjectId tree = dirc.writeTree(new ObjectWriter(db));
+			Commit commit = new Commit(db);
+			commit.setAuthor(pi);
+			commit.setCommitter(pi);
+			commit.setMessage("This causes a corrupt tree");
+			commit.setTreeId(tree);
+			commit.commit();
+			ObjectId cid = commit.getCommitId();
+			RefUpdate ru = db.updateRef("refs/heads/master");		
+			ru.setExpectedOldObjectId(ObjectId.zeroId());
+			ru.setNewObjectId(cid);
+			ru.setRefLogIdent(pi);
+			ru.setRefLogMessage("some reflog message", true);
+			Result result = ru.update();
+			System.out.println("Result = "+result.toString());
+		}
+		catch (IOException e)
+		{
+			System.out.println(e);
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}	
+}
