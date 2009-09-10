@@ -1,93 +1,158 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: obnoxious CLI complaints
-Date: Thu, 10 Sep 2009 22:46:58 +0300
-Message-ID: <43d8ce650909101246l50189c97r4f3fc4a8d7a0bd4@mail.gmail.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
-	 <m3fxavvl5k.fsf@localhost.localdomain>
-	 <4C1FB36D-F8A6-4C01-A42A-8AD2355A9961@wincent.com>
-	 <200909101850.26109.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
+Date: Thu, 10 Sep 2009 12:53:40 -0700
+Message-ID: <7vmy527f0b.fsf@alter.siamese.dyndns.org>
+References: <20090902080305.GA11549@neumann>
+ <20090902081917.GA5447@coredump.intra.peff.net>
+ <20090904070216.GA3996@darc.dnsalias.org>
+ <20090905061804.GB29863@coredump.intra.peff.net>
+ <7v8wgt98ms.fsf@alter.siamese.dyndns.org>
+ <20090905072017.GA5152@coredump.intra.peff.net>
+ <7v3a717rgl.fsf@alter.siamese.dyndns.org>
+ <20090905080249.GA8801@coredump.intra.peff.net>
+ <7vy6ot4x61.fsf@alter.siamese.dyndns.org>
+ <20090910084653.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 21:52:34 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Clemens Buchacher <drizzd@aon.at>,
+	SZEDER Gbor <szeder@ira.uka.de>, git@vger.kernel.org
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 21:54:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mlph3-0007mc-3p
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 21:52:33 +0200
+	id 1MlpiV-0008Gz-8I
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 21:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbZIJTwX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 15:52:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbZIJTwW
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 15:52:22 -0400
-Received: from mail-yw0-f174.google.com ([209.85.211.174]:49634 "EHLO
-	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbZIJTwW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 15:52:22 -0400
-X-Greylist: delayed 326 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2009 15:52:22 EDT
-Received: by ywh4 with SMTP id 4so466682ywh.5
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 12:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=CbdfTpmlTp8MXuP5h3nlOzPiN6uTS4sZuvOEMpFROCI=;
-        b=kNvu+jbjLERv/Evcr5JKYFR0gPo8Q8MKp2vRDIicRFdS37S8sb1rY+vSlnCsIAqKQA
-         DsAoye2lkxvuzfnqvOwBi8LfEJS2UKwl09ZjbNqw0jjeTdUxKiW1UDSz2IL4H+907/El
-         4hjS5SDTYbze6LZNQIWQOg4iv2iAAv0C8v0nw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=onCpmAmAn/+g45ZcSJsNj3yub2u8Vrsh45+UhVVgaomXRmkfhpfnx6s45u7DVLOD3p
-         2cx8NCEMAj8u4ihYCXPNUQoxAUIJTlu2VqMTzl36hJS7xIFu+HyKORRHFr3XRG/Wqsvl
-         I8w7nbrCOQn5lM7kgTxSFFiOGB74cM8FA83a8=
-Received: by 10.150.65.19 with SMTP id n19mr3398338yba.119.1252612018329; Thu, 
-	10 Sep 2009 12:46:58 -0700 (PDT)
-In-Reply-To: <200909101850.26109.jnareb@gmail.com>
+	id S1753334AbZIJTxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 15:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbZIJTxy
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 15:53:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62605 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753134AbZIJTxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 15:53:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C27C2DF96;
+	Thu, 10 Sep 2009 15:53:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=hzVs3ESe4nuoscDqrJX5Kq//wTA=; b=oSqB40zzTVb/t+L0dP2WZnO
+	iOx6j9qaiSWUzrcCdwHGI/ALfFPZgJF1bD7egKKjX6btzHqHZg1e3hweDfa9opf2
+	9QqWYBaYC79NhxD9PJH9sh80qmHGb5DcUywfNlDhw+VFUkdjuxuM/F1Z4GISHEM/
+	MjojVfqanTRm1EEvx0bo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=X6BGcPPQ5ug+pm2q1LRYrDWJo3c50pZqIjE1dHLPvfOC428Fs
+	SWTJKj1zTFcA9QwpodlNydxAaQMbP3gmp63eRotC+KqNThuy/rBETU88KwvGPHaR
+	dveC4YbFEieBKnEbyJJzHRiN21Y6OH/zpdOGLN7GUVOVdi1rz7X94VjJ/0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB9292DF95;
+	Thu, 10 Sep 2009 15:53:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7E0822DF8A; Thu, 10 Sep
+ 2009 15:53:41 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A8AA0D38-9E43-11DE-9527-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128138>
 
-2009/9/10 Jakub Narebski <jnareb@gmail.com>:
-> Dnia czwartek 10. wrze=C5=9Bnia 2009 00:06, Wincent Colaiuta napisa=C5=
-=82:
->> El 09/09/2009, a las 23:54, Jakub Narebski escribi=C3=B3:
->>> Brendan Miller <catphive@catphive.net> writes:
->>>
->>>> 5. Most commands require lots of flags, and don't have reasonable
->>>> defaults. e.g. archive.
->>>>
->>>> $ git archive --format=3Dtar --prefix=3Dmyproject/ HEAD |
->>>> > gzip myproject.tar.gz
->>>>
->>>> Should just be:
->>>> git archive
->>>> run from the root of the repo.
->>>
->>> I'd rather not have "git archive" work without specifying tree-ish.
->>
->> Why, out of interest? I would've thought that HEAD would be a pretty
->> good default, although I confess that I have never used "git archive=
-"
->> without specifying a particular signed tag.
+Nanako Shiraishi <nanako3@lavabit.com> writes:
+
+> Quoting Junio C Hamano <gitster@pobox.com>
 >
-> First, it would be consistent with how ordinary archivers such as tar
-> or zip are used, where you have to specify list of files to archive
-> (in our case this list is HEAD). =C2=A0Second, I'd rather not acciden=
-tally
-> dump binary to terminal: "git archive [HEAD]" dumps archive to standa=
-rd
-> output.
+>> We could probably declare "In 1.X.0 everything will be relative to the
+>> root and you have to give an explicit '.' if you mean the cwd".
+>>
+>> Three questions:
+>>
+>>  #1 What are the commands that will be affected, other than "add -u" and
+>>     "grep"?  Are there others?
+>>
+>>  #2 Do all the commands in the answer to #1 currently behave exactly the
+>>     same when run without any path parameter and when run with a single
+>>     '.'?
+>
+> 'git-archive' behaves relative to your current directory.
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/41300/focus=44125
+>
+> You can limit it to the current directory with a dot.
 
-That could be fixed by outputting to a file.  git format-patch outputs
-to a file, so why wouldn't git achieve?
+Thanks.
 
-John
+If you want to make a tarball of the Documentation directory from your
+work tree, you do this:
+
+    $ cd Documentation
+    $ tar cf - . >/tmp/docs.tar
+
+If you want to do the same but from your committed content, you do this:
+
+    $ cd Documentation
+    $ git archive HEAD >/tmp/docs.tar
+
+and you do not have to say:
+
+    $ cd Documentation
+    $ git archive HEAD . >/tmp/docs.tar
+
+So in that sense it does make sense to archive the current directory.  It
+matches what the users expect from their archivers.
+
+The traditional archivers may not default to "." but we do.  That is about
+giving a sensible default [*1*].  Perhaps defaulting to the cwd behaviour
+for one command may seem a sensible thing when looking at that particular
+command alone; archive and grep fall into that category.
+
+But as this "add -u" discussion showed us [*2*], people may expect
+different "sensible default", and as a suite of commands as the whole, it
+becomes messy.  People have to remember which ones obey cwd, and to some
+people the choice is not intuitive.
+
+To avoid confusion, I am beginning to agree with people who said in the
+thread that it is a good idea to consistently default to the root of the
+contents.  When we use "everything" as the default due to lack of command
+line pathspec, we would use "everything from root" no matter where you
+are, regardless of what command we are talking about.  That would make the
+rule easier to remember [*3*].
+
+This changes the way how "git (add -u|grep|clean|archive)" without
+pathspec and "git (add -u|grep|clean|archive) ." with an explicit dot
+work.  The former (adds all changed files in, finds hits in, removes
+untracked paths in, creates a tarball for) the whole tree, while the
+latter limits the operation explicitly to the current directory.
+
+If this were going to happen as a list concensus, I am very tempted to
+suggest that we at least _consider_ applying the same rule even to
+ls-files and ls-tree.  That would impact scripts, so we need to be extra
+careful, though.
+
+Also this takes us to a tangent.
+
+If we try to give a sensible default to make it easier for the user,
+perhaps we should also default to HEAD when the user did not specify which
+tree-ish to archive from.  This is a topic in a separate thread.
+
+[Footnote]
+
+*1* Actually we don't allow "git archive HEAD ..", which I think is a
+bug.  Also we do not have --full-tree workaround, which makes it slightly
+cumbersome to use.
+
+*2* And the thread you quoted shows us that the argument applies equally
+to "git archive" as well; you see me complaining that it is unintuitive
+for me to care about "archive", and the counterargument was that ls-tree
+does so.  I however think it is more important for archive to behave in a
+way that is easier for the users to understand, than mimick the historical
+mistake in a plumbing command.
+
+*3* Command line pathspec of course should honor cwd as before.  When you
+say "git distim Makefile" inside t/ directory, we distim t/Makefile, not
+the toplevel Makefile.  This discussion is only about the case where the
+user didn't give us any pathspec.
