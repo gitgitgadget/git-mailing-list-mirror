@@ -1,93 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 3/3] INSTALL: Describe dependency knobs from Makefile
-Date: Thu, 10 Sep 2009 11:56:39 -0700
-Message-ID: <7v7hw6aas8.fsf@alter.siamese.dyndns.org>
-References: <7vpra0hcd3.fsf@alter.siamese.dyndns.org>
- <1252591928-2278-1-git-send-email-brian@gernhardtsoftware.com>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: obnoxious CLI complaints
+Date: Thu, 10 Sep 2009 22:46:58 +0300
+Message-ID: <43d8ce650909101246l50189c97r4f3fc4a8d7a0bd4@mail.gmail.com>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+	 <m3fxavvl5k.fsf@localhost.localdomain>
+	 <4C1FB36D-F8A6-4C01-A42A-8AD2355A9961@wincent.com>
+	 <200909101850.26109.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 20:57:00 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 21:52:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlopI-0007j0-6A
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 20:57:00 +0200
+	id 1Mlph3-0007mc-3p
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 21:52:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753315AbZIJS4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 14:56:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753266AbZIJS4p
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 14:56:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48173 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753246AbZIJS4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 14:56:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 789132D7F0;
-	Thu, 10 Sep 2009 14:56:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GQi2gLVK9hB7yNkdQCy1dLGjbsI=; b=f/p/XQ
-	OWlwQBh1Hub4hF72ALP788amvCVogfMUIAmkGNYOXk/0ueDpRX6C+gHbJip29MQ7
-	AxBU77cV1nB15iZfTgBeAQDcXqwqoSRplRKnAiipk0YtD6CoZlrh5u3feS2Xl3hb
-	NSm9JroMgbiEB74Uv1+dl09hlNVM2a10fe9H4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y+riR67ckEt+B27nKzQikghIzkj2sq4i
-	u6XKcVIjUAK4vuoOZStWYrzIz0l2QcZ9JYE3uB3Gp3qmYAOYRKxPRSFtsMX2y4kW
-	+1jT3iaQ7X7hbjizT+54+WZW2E+6lXOFfZjKBI0ZqLpW30hb+4OxP0OFJEu1VfIx
-	XmLUI69uP+I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D3512D7EE;
-	Thu, 10 Sep 2009 14:56:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5C4A2D7EB; Thu, 10 Sep
- 2009 14:56:40 -0400 (EDT)
-In-Reply-To: <1252591928-2278-1-git-send-email-brian@gernhardtsoftware.com>
- (Brian Gernhardt's message of "Thu\, 10 Sep 2009 10\:12\:08 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AF92070C-9E3B-11DE-9C2E-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752434AbZIJTwX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 15:52:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751150AbZIJTwW
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 15:52:22 -0400
+Received: from mail-yw0-f174.google.com ([209.85.211.174]:49634 "EHLO
+	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751096AbZIJTwW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 15:52:22 -0400
+X-Greylist: delayed 326 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2009 15:52:22 EDT
+Received: by ywh4 with SMTP id 4so466682ywh.5
+        for <git@vger.kernel.org>; Thu, 10 Sep 2009 12:52:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CbdfTpmlTp8MXuP5h3nlOzPiN6uTS4sZuvOEMpFROCI=;
+        b=kNvu+jbjLERv/Evcr5JKYFR0gPo8Q8MKp2vRDIicRFdS37S8sb1rY+vSlnCsIAqKQA
+         DsAoye2lkxvuzfnqvOwBi8LfEJS2UKwl09ZjbNqw0jjeTdUxKiW1UDSz2IL4H+907/El
+         4hjS5SDTYbze6LZNQIWQOg4iv2iAAv0C8v0nw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=onCpmAmAn/+g45ZcSJsNj3yub2u8Vrsh45+UhVVgaomXRmkfhpfnx6s45u7DVLOD3p
+         2cx8NCEMAj8u4ihYCXPNUQoxAUIJTlu2VqMTzl36hJS7xIFu+HyKORRHFr3XRG/Wqsvl
+         I8w7nbrCOQn5lM7kgTxSFFiOGB74cM8FA83a8=
+Received: by 10.150.65.19 with SMTP id n19mr3398338yba.119.1252612018329; Thu, 
+	10 Sep 2009 12:46:58 -0700 (PDT)
+In-Reply-To: <200909101850.26109.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128137>
 
-Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+2009/9/10 Jakub Narebski <jnareb@gmail.com>:
+> Dnia czwartek 10. wrze=C5=9Bnia 2009 00:06, Wincent Colaiuta napisa=C5=
+=82:
+>> El 09/09/2009, a las 23:54, Jakub Narebski escribi=C3=B3:
+>>> Brendan Miller <catphive@catphive.net> writes:
+>>>
+>>>> 5. Most commands require lots of flags, and don't have reasonable
+>>>> defaults. e.g. archive.
+>>>>
+>>>> $ git archive --format=3Dtar --prefix=3Dmyproject/ HEAD |
+>>>> > gzip myproject.tar.gz
+>>>>
+>>>> Should just be:
+>>>> git archive
+>>>> run from the root of the repo.
+>>>
+>>> I'd rather not have "git archive" work without specifying tree-ish.
+>>
+>> Why, out of interest? I would've thought that HEAD would be a pretty
+>> good default, although I confess that I have never used "git archive=
+"
+>> without specifying a particular signed tag.
+>
+> First, it would be consistent with how ordinary archivers such as tar
+> or zip are used, where you have to specify list of files to archive
+> (in our case this list is HEAD). =C2=A0Second, I'd rather not acciden=
+tally
+> dump binary to terminal: "git archive [HEAD]" dumps archive to standa=
+rd
+> output.
 
-> We said that some of our dependencies were optional, but didn't say
-> how to turn them off.  Add information for that and mention where to
-> save the options close to the top of the file.
->
-> Also, standardize on both using quotes for the names of the dependencies
-> and tabs for indentation of the list.
->
-> Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-> ---
->
->   Junio C Hamano <gitster@pobox.com> wrote:
->   > I did not like calling "make variables" "options", and also it was unclear
->   > what good these "options" are for.  How about...
->
->  Sounds good.  Would have sent this out yesterday, but I ran out of tuits.
->
->  INSTALL |   38 ++++++++++++++++++++++++--------------
->  1 files changed, 24 insertions(+), 14 deletions(-)
->
-> diff --git a/INSTALL b/INSTALL
-> index 7ab2580..69c97b2 100644
-> --- a/INSTALL
-> +++ b/INSTALL
-> @@ -13,6 +13,10 @@ that uses $prefix, the built results have some paths encoded,
->  which are derived from $prefix, so "make all; make prefix=/usr
->  install" would not work.
->  
-> +There are many options that can be configured in the makefile using either
-> +command line defines or a config.mak file.  These options are documented at
-> +the beginning of the Makefile.
+That could be fixed by outputting to a file.  git format-patch outputs
+to a file, so why wouldn't git achieve?
 
-Sorry, but the description still speaks of options and does not say what
-good they are.  Sent a wrong patch?
+John
