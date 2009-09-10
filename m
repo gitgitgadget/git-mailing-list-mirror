@@ -1,85 +1,152 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: obnoxious CLI complaints
-Date: Thu, 10 Sep 2009 22:23:29 +0200
-Message-ID: <200909102223.31602.jnareb@gmail.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <200909101850.26109.jnareb@gmail.com> <43d8ce650909101246l50189c97r4f3fc4a8d7a0bd4@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:23:31 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 3/4] reset: add option "--merge-dirty" to "git reset"
+Date: Thu, 10 Sep 2009 22:23:31 +0200
+Message-ID: <20090910202333.3722.37592.chriscool@tuxfamily.org>
+References: <20090910200334.3722.20140.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:24:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlqB0-0001H3-Mt
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:23:31 +0200
+	id 1MlqBh-0001WS-Fk
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839AbZIJUXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 16:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753751AbZIJUXV
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:23:21 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:52287 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753657AbZIJUXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 16:23:20 -0400
-Received: by bwz19 with SMTP id 19so376596bwz.37
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 13:23:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Ri38Ej/LPUb7JtCgfqblEqD2jc9gQM1eKqc106rzUyk=;
-        b=e5HH96MnVrHcEyjAIQnS0s8CJLuWnjUxeA6FwVqZIhyh7iYl38/MMHSFjHMzQBnyLa
-         HbCFxgwVMXxUurZ7+jUibQg7gcgsWsgx0vD9qldPK/KGPXBqYhO4DJgIcUzdZQkZIV20
-         YR3xU04sPtehYydmZLiBM6jerjdodvOIPe7qU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=K5Upb77WJ1pXO2m53NdcMTomIL6EDoCHxL0HvoTcmSc2L3Tg9X4PBIzLGnRMN4KMPV
-         fj3GstE81/1dy5rTHna1ulW7oO1s+L2P3ZW2TQHNb6l9F+pt7vQPB2xI2YBu4kmEEDJH
-         j05OlDEbArlr6BB+5Sg+JiL9UPll+r3ebevzo=
-Received: by 10.86.230.27 with SMTP id c27mr1563032fgh.63.1252614202635;
-        Thu, 10 Sep 2009 13:23:22 -0700 (PDT)
-Received: from ?192.168.1.13? (abwa69.neoplus.adsl.tpnet.pl [83.8.224.69])
-        by mx.google.com with ESMTPS id 12sm101524fgg.6.2009.09.10.13.23.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Sep 2009 13:23:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <43d8ce650909101246l50189c97r4f3fc4a8d7a0bd4@mail.gmail.com>
-Content-Disposition: inline
+	id S1754065AbZIJUYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 16:24:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbZIJUYB
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:24:01 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:49971 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753962AbZIJUX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 16:23:58 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 81CEF818197;
+	Thu, 10 Sep 2009 22:23:52 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 754368181C3;
+	Thu, 10 Sep 2009 22:23:50 +0200 (CEST)
+X-git-sha1: 4fc8eff960ebcb537edf65df5f5888a2d3beaa6b 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20090910200334.3722.20140.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128141>
 
-Dnia czwartek 10. wrze=C5=9Bnia 2009 21:46, John Tapsell napisa=C5=82:
-> 2009/9/10 Jakub Narebski <jnareb@gmail.com>:
+From: Stephan Beyer <s-beyer@gmx.net>
 
-> > First, it would be consistent with how ordinary archivers such as t=
-ar
-> > or zip are used, where you have to specify list of files to archive
-> > (in our case this list is HEAD). =C2=A0Second, I'd rather not accid=
-entally
-> > dump binary to terminal: "git archive [HEAD]" dumps archive to stan=
-dard
-> > output.
->=20
-> That could be fixed by outputting to a file.  git format-patch output=
-s
-> to a file, so why wouldn't git achieve?
+This option is nearly like "--merge" except that it is
+a little bit safer as it seems that it tries to keep
+changes in the index. On the contrary "--merge", only
+keep changes in the work tree.
 
-"git format-patch" outputs to files because it generates _multiple_
-files; generating single patch is special case.  Also git-format-patch
-can generate file names from patch (commit) subject; it is not the case
-for "git archive" (what name should it use?).
+This will be shown in the next patch that adds some
+test cases for "--merge-dirty".
 
---=20
-Jakub Narebski
-Poland
+In fact with "--merge-dirty", changes that are both in
+the work tree and the index are kept in the work tree
+after the reset (but discarded in the index). As with
+"--merge", changes that are in both the work tree and
+the index are discarded after the reset.
+
+So "--merge-dirty" is probably a very bad name for
+this new option. Perhaps "--merge-safe" is better?
+
+The code comes from the sequencer GSoC project:
+
+git://repo.or.cz/git/sbeyer.git
+
+(at commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
+
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-reset.c |   30 +++++++++++++++++++++++++-----
+ 1 files changed, 25 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-reset.c b/builtin-reset.c
+index ddb81f3..be7aa8d 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -22,13 +22,15 @@
+ #include "cache-tree.h"
+ 
+ static const char * const git_reset_usage[] = {
+-	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
++	"git reset [--mixed | --soft | --hard | --merge | --merge-dirty] [-q] [<commit>]",
+ 	"git reset [--mixed] <commit> [--] <paths>...",
+ 	NULL
+ };
+ 
+-enum reset_type { MIXED, SOFT, HARD, MERGE, NONE };
+-static const char *reset_type_names[] = { "mixed", "soft", "hard", "merge", NULL };
++enum reset_type { MIXED, SOFT, HARD, MERGE, MERGE_DIRTY, NONE };
++static const char *reset_type_names[] = {
++	"mixed", "soft", "hard", "merge", "merge_dirty", NULL
++};
+ 
+ static char *args_to_str(const char **argv)
+ {
+@@ -84,6 +86,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
+ 	case MERGE:
+ 		opts.update = 1;
+ 		break;
++	case MERGE_DIRTY:
+ 	case HARD:
+ 		opts.update = 1;
+ 		/* fallthrough */
+@@ -95,6 +98,16 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
+ 
+ 	read_cache_unmerged();
+ 
++	if (reset_type == MERGE_DIRTY) {
++		unsigned char *head_sha1;
++		if (get_sha1("HEAD", head_sha1))
++			return error("You do not have a valid HEAD.");
++		if (parse_and_init_tree_desc(head_sha1, desc))
++			return error("Failed to find tree of HEAD.");
++		nr++;
++		opts.fn = twoway_merge;
++	}
++
+ 	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
+ 		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
+ 	if (unpack_trees(nr, desc, &opts))
+@@ -238,6 +251,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				"reset HEAD, index and working tree", HARD),
+ 		OPT_SET_INT(0, "merge", &reset_type,
+ 				"reset HEAD, index and working tree", MERGE),
++		OPT_SET_INT(0, "merge-dirty", &reset_type,
++				"reset HEAD, index and working tree",
++				MERGE_DIRTY),
+ 		OPT_BOOLEAN('q', NULL, &quiet,
+ 				"disable showing new HEAD in hard reset and progress message"),
+ 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
+@@ -324,9 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 	if (reset_type == SOFT) {
+ 		if (is_merge() || read_cache() < 0 || unmerged_cache())
+ 			die("Cannot do a soft reset in the middle of a merge.");
++	} else {
++		int err = reset_index_file(sha1, reset_type, quiet);
++		if (reset_type == MERGE_DIRTY)
++			err = err || reset_index_file(sha1, MIXED, quiet);
++		if (err)
++			die("Could not reset index file to revision '%s'.", rev);
+ 	}
+-	else if (reset_index_file(sha1, reset_type, quiet))
+-		die("Could not reset index file to revision '%s'.", rev);
+ 
+ 	/* Any resets update HEAD to the head being switched to,
+ 	 * saving the previous head in ORIG_HEAD before. */
+-- 
+1.6.4.271.ge010d
