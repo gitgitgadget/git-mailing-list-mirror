@@ -1,84 +1,187 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/4] reset: add a few tests for "git reset --merge"
-Date: Thu, 10 Sep 2009 22:59:15 +0200
-Message-ID: <200909102259.16469.jnareb@gmail.com>
-References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.45063.chriscool@tuxfamily.org>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [RFC/PATCH 1/2] gitweb: extend &git_get_head_hash to be &git_get_hash
+Date: Thu, 10 Sep 2009 17:20:27 -0400
+Message-ID: <4AA96D9B.6090003@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:59:58 2009
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 10 23:20:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlqkH-0004EU-9A
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:59:57 +0200
+	id 1Mlr4I-0001tN-9j
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 23:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754321AbZIJU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 16:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754077AbZIJU7I
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:59:08 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:32933 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754032AbZIJU7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 16:59:07 -0400
-Received: by fxm17 with SMTP id 17so407635fxm.37
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 13:59:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=AmpsCnPHVP3kRPrHqdp1BeDd1L/BXGdvVUn0L2ixf3o=;
-        b=de8CEicZS9MjD3KEy+6FxJarVCOW91ZYOwo5rXEs1p5eH3/wDH2pwep/qityUCm0sX
-         IhnHE2oNddeLd8M70nKixln8rTkAWhIg4utL8IoVdgLEEagO9o8LpQXk1LwUiuV3xxcy
-         HNKFt0lDHzKQH0ZJeKsJUzvLoBMGVwJAIFWOo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=lvnQNGYtnPSVYBYkOoGXnsaQsmPItRwwYKpAQBkn51NVKh3yWEtPE5g9p5BHqfpR76
-         smzMrMAgp2WASar03fTeqXmjHi0uRI9Iu+w1dN6esAsgu+4QH9b5VH5Dubd/uSqhWapK
-         R6HukNaZpG8X80Ctv9upyX4OLicbKxVPllwE8=
-Received: by 10.86.220.11 with SMTP id s11mr1609008fgg.47.1252616349315;
-        Thu, 10 Sep 2009 13:59:09 -0700 (PDT)
-Received: from ?192.168.1.13? (abwa69.neoplus.adsl.tpnet.pl [83.8.224.69])
-        by mx.google.com with ESMTPS id 4sm845043fge.23.2009.09.10.13.59.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Sep 2009 13:59:08 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20090910202333.3722.45063.chriscool@tuxfamily.org>
-Content-Disposition: inline
+	id S1754521AbZIJVUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 17:20:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754457AbZIJVUb
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 17:20:31 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:58772 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753855AbZIJVUa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 17:20:30 -0400
+Received: from karakura.local (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
+	(authenticated bits=0)
+	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n8ALKR9u026908
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Sep 2009 17:20:29 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
+X-UUID: fcad5366-bc70-4088-af46-fe0380759568
+X-Miltered: at mailchk-m05 with ID 4AA96D9C.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Thu, 10 Sep 2009 17:20:30 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128149>
 
-Christian Couder wrote:
+This adds an optional second argument to the routine which lets the
+caller specify a treeish that can be translated to a hash id by
+rev-parse.
 
-> diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-> new file mode 100755
-> index 0000000..45714ae
-> --- /dev/null
-> +++ b/t/t7110-reset-merge.sh
-> @@ -0,0 +1,70 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2009 Christian Couder
-> +#
-> +
-> +test_description='Tests for "git reset --merge"'
-> +
-> +exec </dev/null
+To maintain some backwards compatability, the second argument is
+optional and it will default to `HEAD' if not specified.
 
-What does this do?
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
+ gitweb/gitweb.perl |   31 ++++++++++++++++---------------
+ 1 files changed, 16 insertions(+), 15 deletions(-)
 
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 24b2193..d650188 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1981,13 +1981,14 @@ sub quote_command {
+ 		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
+ }
+ 
+-# get HEAD ref of given project as hash
+-sub git_get_head_hash {
++# get object id of given project as full hash, defaults to HEAD
++sub git_get_hash {
+ 	my $project = shift;
++	my $hash = shift || 'HEAD';
+ 	my $o_git_dir = $git_dir;
+ 	my $retval = undef;
+ 	$git_dir = "$projectroot/$project";
+-	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
++	if (open my $fd, '-|', git_cmd(), 'rev-parse', '--verify', "$hash") {
+ 		my $head = <$fd>;
+ 		close $fd;
+ 		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
+@@ -4737,7 +4738,7 @@ sub git_summary {
+ }
+ 
+ sub git_tag {
+-	my $head = git_get_head_hash($project);
++	my $head = &git_get_hash($project);
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	my %tag = parse_tag($hash);
+@@ -4778,7 +4779,7 @@ sub git_blame {
+ 
+ 	# error checking
+ 	die_error(400, "No file name given") unless $file_name;
+-	$hash_base ||= git_get_head_hash($project);
++	$hash_base ||= &git_get_hash($project);
+ 	die_error(404, "Couldn't find base commit") unless $hash_base;
+ 	my %co = parse_commit($hash_base)
+ 		or die_error(404, "Commit not found");
+@@ -4911,7 +4912,7 @@ HTML
+ }
+ 
+ sub git_tags {
+-	my $head = git_get_head_hash($project);
++	my $head = &git_get_hash($project);
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+@@ -4924,7 +4925,7 @@ sub git_tags {
+ }
+ 
+ sub git_heads {
+-	my $head = git_get_head_hash($project);
++	my $head = &git_get_hash($project);
+ 	git_header_html();
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+@@ -4942,7 +4943,7 @@ sub git_blob_plain {
+ 
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+-			my $base = $hash_base || git_get_head_hash($project);
++			my $base = $hash_base || &git_get_hash($project);
+ 			$hash = git_get_hash_by_path($base, $file_name, "blob")
+ 				or die_error(404, "Cannot find file");
+ 		} else {
+@@ -4994,7 +4995,7 @@ sub git_blob {
+ 
+ 	if (!defined $hash) {
+ 		if (defined $file_name) {
+-			my $base = $hash_base || git_get_head_hash($project);
++			my $base = $hash_base || &git_get_hash($project);
+ 			$hash = git_get_hash_by_path($base, $file_name, "blob")
+ 				or die_error(404, "Cannot find file");
+ 		} else {
+@@ -5197,7 +5198,7 @@ sub git_snapshot {
+ 	}
+ 
+ 	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
++		$hash = &git_get_hash($project);
+ 	}
+ 
+ 	my $name = $project;
+@@ -5229,7 +5230,7 @@ sub git_snapshot {
+ }
+ 
+ sub git_log {
+-	my $head = git_get_head_hash($project);
++	my $head = &git_get_hash($project);
+ 	if (!defined $hash) {
+ 		$hash = $head;
+ 	}
+@@ -5833,7 +5834,7 @@ sub git_patches {
+ 
+ sub git_history {
+ 	if (!defined $hash_base) {
+-		$hash_base = git_get_head_hash($project);
++		$hash_base = &git_get_hash($project);
+ 	}
+ 	if (!defined $page) {
+ 		$page = 0;
+@@ -5904,7 +5905,7 @@ sub git_search {
+ 		die_error(400, "Text field is empty");
+ 	}
+ 	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
++		$hash = &git_get_hash($project);
+ 	}
+ 	my %co = parse_commit($hash);
+ 	if (!%co) {
+@@ -6159,7 +6160,7 @@ EOT
+ }
+ 
+ sub git_shortlog {
+-	my $head = git_get_head_hash($project);
++	my $head = &git_get_hash($project);
+ 	if (!defined $hash) {
+ 		$hash = $head;
+ 	}
+@@ -6486,7 +6487,7 @@ XML
+ 
+ 	foreach my $pr (@list) {
+ 		my %proj = %$pr;
+-		my $head = git_get_head_hash($proj{'path'});
++		my $head = &git_get_hash($proj{'path'});
+ 		if (!defined $head) {
+ 			next;
+ 		}
 -- 
-Jakub Narebski
-Poland
+1.6.4.2
