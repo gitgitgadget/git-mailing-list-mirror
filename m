@@ -1,74 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Sep 2009, #02; Mon, 07)
-Date: Thu, 10 Sep 2009 11:41:56 -0700
-Message-ID: <7vk506abgr.fsf@alter.siamese.dyndns.org>
-References: <7vtyzexnhm.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.0909101206540.28290@iabervon.org>
- <alpine.DEB.1.00.0909101852080.8306@pacific.mpi-cbg.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: obnoxious CLI complaints
+Date: Thu, 10 Sep 2009 20:52:08 +0200
+Message-ID: <fabb9a1e0909101152n4d55b344p60da1529fa58eb01@mail.gmail.com>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> 
+	<m3fxavvl5k.fsf@localhost.localdomain> <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com> 
+	<200909101116.55098.jnareb@gmail.com> <34f8975d0909101118x7c95be1ehda085bea1611b70c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 10 20:42:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Eric Schaefer <eric.schaefer@ericschaefer.org>
+X-From: git-owner@vger.kernel.org Thu Sep 10 20:52:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mlob0-0002qQ-RF
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 20:42:15 +0200
+	id 1Mlol2-0006Dj-3V
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 20:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752865AbZIJSmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 14:42:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbZIJSmF
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 14:42:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34281 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165AbZIJSmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 14:42:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4AB82D630;
-	Thu, 10 Sep 2009 14:42:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8o3ewbwR3axGenzJQpCQkpf5o/E=; b=lLajdY
-	Gq+Fuc0NVZ3LcU1hp/O7QgFSI02XGvvqTPDC4p9GmprKx+78OIzZc1++FRYX5EmY
-	9s48MmUJ7sOlQEKWw1YOBQNZw1f7oagfuLFhSlZlTzo/Ca1pqDuj7IoOO6zQ2A9r
-	trhxRyrZouHNMwB4I5mCzBRQtnfiWJt4UtTEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tTLeEFofgIRHgpVRAr+pwl3NpJT0USR1
-	+zObU5QRFtr2HNySDPGMicWFLH4PA9a2wa0pMYLa9Co4wJ8i++/m4WZJZRWrfYqB
-	4OX2G9kOHY7lLRIMSMxDxCZHEEb747yBnNnT4aIKqbw+Lan87neLr72XPBv26uAU
-	d8NyEEUU4Dk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 767BE2D62A;
-	Thu, 10 Sep 2009 14:42:03 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B92632D626; Thu, 10 Sep
- 2009 14:41:58 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0909101852080.8306@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Thu\, 10 Sep 2009 18\:53\:34 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A1EBA15A-9E39-11DE-827A-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753254AbZIJSw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 14:52:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753246AbZIJSw0
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 14:52:26 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:34418 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753245AbZIJSw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 14:52:26 -0400
+Received: by ewy2 with SMTP id 2so416144ewy.17
+        for <git@vger.kernel.org>; Thu, 10 Sep 2009 11:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=MK6vx6+1PQv1pyjWjIJ2N+9d0/Ao5zTQbohS7Y2haQY=;
+        b=k/TyqWzKSdKrfiUsXY1uOhiRXoAddlz8wZpgWfnWuKvu/LuWqaSgh2AIje1Gzx+O80
+         VwVMY0yGj6RKaWUmfLK3OyaYJd5jtHYlZ6IQCpeiXGQbb3bpb2e+S/AiEDWtHoDXggVq
+         K41oKD2QH3WfdNhN3GTL26e3Hqm8E5aFaL2S4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ORPILcD+XcrAe7Rsng23SRktlYkk118W3EkYSiyi0gmdSxhwaELyWU8yG6lqMUmMp6
+         JJnphUNA6xd8XMBoMsr6WZsT2fH9H7Fv2IVMCR9GGrzhSiJJApyoyqmktZsu3gvTDmk+
+         RxJb5sgLM29yWOhM4BKpMxwK0zaYuZ4fM/xv0=
+Received: by 10.216.88.71 with SMTP id z49mr485686wee.90.1252608748210; Thu, 
+	10 Sep 2009 11:52:28 -0700 (PDT)
+In-Reply-To: <34f8975d0909101118x7c95be1ehda085bea1611b70c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128133>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Heya,
 
-> There is a reason why you call the series "foreign" vcs helpers.  And 
-> that's because it would be very wrong to pretend that they are the rule, 
-> and the current URL schemes the exception.  Very wrong, indeed.
+On Thu, Sep 10, 2009 at 20:18, Eric Schaefer
+<eric.schaefer@ericschaefer.org> wrote:
+> "Unimportant bug reports"? Interesting concept... ;-)
 
-I do not know what you mean by "very wrong".
+Sure, if there's a bug in feature foo, but it only happens when
+invoking it with some rarely used argument, and only on Solaris
+platforms, it is probably not worth spending time on it if the
+original reporter does not even have the time to stick around and aid
+in resolving the issue. It's probably better to spend that precious
+time on other bug fixes, or features instead.
 
-If the name bothers you, you can think of the earlier part of the series
-cleaning up the transport code so that it makes easier to choose which
-transport, either internal or external, and ports the native transport
-support to use the mechanism.  Then the rest of the series builds on it to
-add further support for "foreign" vcs helpers.
+-- 
+Cheers,
+
+Sverre Rabbelier
