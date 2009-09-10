@@ -1,101 +1,84 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [BUG] 'add -u' doesn't work from untracked subdir
-Date: Thu, 10 Sep 2009 22:32:09 +0200
-Message-ID: <20090910203209.GA27391@localhost>
-References: <20090902081917.GA5447@coredump.intra.peff.net> <20090904070216.GA3996@darc.dnsalias.org> <20090905061804.GB29863@coredump.intra.peff.net> <7v8wgt98ms.fsf@alter.siamese.dyndns.org> <20090905072017.GA5152@coredump.intra.peff.net> <7v3a717rgl.fsf@alter.siamese.dyndns.org> <20090905080249.GA8801@coredump.intra.peff.net> <7vy6ot4x61.fsf@alter.siamese.dyndns.org> <20090910084653.6117@nanako3.lavabit.com> <7vmy527f0b.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/4] reset: add a few tests for "git reset --merge"
+Date: Thu, 10 Sep 2009 22:59:15 +0200
+Message-ID: <200909102259.16469.jnareb@gmail.com>
+References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.45063.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, Jeff King <peff@peff.net>,
-	SZEDER Gbor <szeder@ira.uka.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:32:31 2009
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:59:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlqJj-00049C-5w
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:32:31 +0200
+	id 1MlqkH-0004EU-9A
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752924AbZIJUcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 16:32:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbZIJUcV
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:32:21 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:50834 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751302AbZIJUcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 16:32:21 -0400
-Received: by bwz19 with SMTP id 19so382483bwz.37
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 13:32:23 -0700 (PDT)
+	id S1754321AbZIJU7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 16:59:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754077AbZIJU7I
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:59:08 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:32933 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754032AbZIJU7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 16:59:07 -0400
+Received: by fxm17 with SMTP id 17so407635fxm.37
+        for <git@vger.kernel.org>; Thu, 10 Sep 2009 13:59:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:bcc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=RN9E/D0QD22DuFEBfxWIpD/ypy1O5HhRz3zRiOawhLE=;
-        b=Y6w+TYbxZDrL6jEsX/9NySdFx4g/IUWFVO8Yyi+16jdzwdJsVNYHzYGusENCTtglNX
-         oo/PjfzFuchHEA3hdutkYwIW4hmCPNcNcrxdm9ggr+71FlD02PqN+JeANPyKbJsvTHg8
-         orEy9pAaBwuKqE31H5hCxeZQ0yO6wp44qEUO8=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=AmpsCnPHVP3kRPrHqdp1BeDd1L/BXGdvVUn0L2ixf3o=;
+        b=de8CEicZS9MjD3KEy+6FxJarVCOW91ZYOwo5rXEs1p5eH3/wDH2pwep/qityUCm0sX
+         IhnHE2oNddeLd8M70nKixln8rTkAWhIg4utL8IoVdgLEEagO9o8LpQXk1LwUiuV3xxcy
+         HNKFt0lDHzKQH0ZJeKsJUzvLoBMGVwJAIFWOo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=mfx+8fEPQ/7/K+q9DAj5NjpDUUXuq/nghq0tlR08hrjk9O3yvBKusJXqOhZZmO75sH
-         zOXUHrGwl6tqL/ManExXbYDYJWeVnQOqIPT2wg8Ja4I6Mc7+WBtq8SbM4FeHKkxk5BwL
-         BxKMo3VhC+YYYkMnjtoUfxiLn98m2JOGJiKbY=
-Received: by 10.204.34.205 with SMTP id m13mr1318826bkd.80.1252614742963;
-        Thu, 10 Sep 2009 13:32:22 -0700 (PDT)
-Received: from darc.lan (p549A414D.dip.t-dialin.net [84.154.65.77])
-        by mx.google.com with ESMTPS id 6sm503102bwz.26.2009.09.10.13.32.19
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=lvnQNGYtnPSVYBYkOoGXnsaQsmPItRwwYKpAQBkn51NVKh3yWEtPE5g9p5BHqfpR76
+         smzMrMAgp2WASar03fTeqXmjHi0uRI9Iu+w1dN6esAsgu+4QH9b5VH5Dubd/uSqhWapK
+         R6HukNaZpG8X80Ctv9upyX4OLicbKxVPllwE8=
+Received: by 10.86.220.11 with SMTP id s11mr1609008fgg.47.1252616349315;
+        Thu, 10 Sep 2009 13:59:09 -0700 (PDT)
+Received: from ?192.168.1.13? (abwa69.neoplus.adsl.tpnet.pl [83.8.224.69])
+        by mx.google.com with ESMTPS id 4sm845043fge.23.2009.09.10.13.59.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Sep 2009 13:32:20 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MlqJO-0007QI-1j; Thu, 10 Sep 2009 22:32:10 +0200
+        Thu, 10 Sep 2009 13:59:08 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20090910202333.3722.45063.chriscool@tuxfamily.org>
 Content-Disposition: inline
-In-Reply-To: <7vmy527f0b.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128148>
 
-On Thu, Sep 10, 2009 at 12:53:40PM -0700, Junio C Hamano wrote:
+Christian Couder wrote:
 
-> If this were going to happen as a list concensus, I am very tempted to
-> suggest that we at least _consider_ applying the same rule even to
-> ls-files and ls-tree.  That would impact scripts, so we need to be extra
-> careful, though.
+> diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
+> new file mode 100755
+> index 0000000..45714ae
+> --- /dev/null
+> +++ b/t/t7110-reset-merge.sh
+> @@ -0,0 +1,70 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2009 Christian Couder
+> +#
+> +
+> +test_description='Tests for "git reset --merge"'
+> +
+> +exec </dev/null
 
-I originally thought those commands should be consistent with plain "ls",
-simply because of their name. However, ls-files is already inconsistent
-because "ls-files <subdir>" lists files relative to the current directory,
-as opposed to "ls <subdir>", which does so relative to <subdir>. And ls-tree
-is even more different from "ls".
+What does this do?
 
-So I don't think users are tempted to associate those commands with the
-behavior they are used from "ls". From that perspective it would therefore
-be ok to traverse the entire tree by default. To me that seems perfectly
-natural, especially for ls-tree.
-
-In case of ls-files, I don't know. Its current behavior certainly did not
-bother me so far. But the same arguments as for "add -u" apply if you think
-of doing something like "git ls-files -u | cut -f2 | xargs git add", for
-example.
-
-I can't really speak for the impact on scripts. But that is certainly an
-issue, more so than with "add -u" or "grep", which are more typically used
-interactively.
-
-> If we try to give a sensible default to make it easier for the user,
-> perhaps we should also default to HEAD when the user did not specify which
-> tree-ish to archive from.  This is a topic in a separate thread.
-
-I don't see why not.
-
-> *3* Command line pathspec of course should honor cwd as before.
-
-No argument there.
-
-Clemens
+-- 
+Jakub Narebski
+Poland
