@@ -1,227 +1,158 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: obnoxious CLI complaints
-Date: Thu, 10 Sep 2009 11:16:53 +0200
-Message-ID: <200909101116.55098.jnareb@gmail.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <m3fxavvl5k.fsf@localhost.localdomain> <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Thu, 10 Sep 2009 11:25:35 +0200
+Message-ID: <200909101125.35451.johan@herland.net>
+References: <1252376822-6138-1-git-send-email-johan@herland.net>
+ <alpine.DEB.1.00.0909081100020.4330@intel-tinevez-2-302>
+ <200909081436.30761.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Brendan Miller <catphive@catphive.net>
-X-From: git-owner@vger.kernel.org Thu Sep 10 11:17:15 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 10 11:25:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mlfm6-00057Z-KX
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 11:17:07 +0200
+	id 1MlfuR-0008GU-WC
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 11:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754638AbZIJJQ4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 05:16:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754575AbZIJJQ4
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 05:16:56 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:33647 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752980AbZIJJQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 05:16:54 -0400
-Received: by fxm28 with SMTP id 28so3245598fxm.17
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 02:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=63wNc9EKW2YT+FZ9n9yAR8ef2McnePGmgFQRimrWMNY=;
-        b=dyWbzJiPunNp2aTtmH/poqMRErANTulDQG0xXAxF7/1CwgIBcXkYgwUQeTo9MUk6oI
-         G5ZviSh9/R/FxGrfBl+bUd8nqxUlaa8lgCyzGyccFEhbksdOVMegDY6qqJ9X/sWXu3kX
-         Dq7NaZyl67h8goikR6Odf0VHiiOeQPb/ZjUco=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KOYjvE0/7vg8YClKA+P0loayUntSo0GitlzVNwWumsq9koFsHK70ZHlnECZEWZCF/Z
-         SMHr6Uiel99JV3TeJUE1TmeLAPPSF+XLJblM+ouNp8IOZB/1lgzroRrTshw86l/WA1XD
-         v6QQ7k0vfZsFOQTHc7X8M6JsPFTH9h4dLOzkk=
-Received: by 10.86.20.8 with SMTP id 8mr940092fgt.44.1252574216764;
-        Thu, 10 Sep 2009 02:16:56 -0700 (PDT)
-Received: from ?192.168.1.13? (abwt218.neoplus.adsl.tpnet.pl [83.8.243.218])
-        by mx.google.com with ESMTPS id d4sm1010587fga.15.2009.09.10.02.16.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Sep 2009 02:16:54 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
-Content-Disposition: inline
+	id S1755322AbZIJJZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 05:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755314AbZIJJZg
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 05:25:36 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:53329 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755311AbZIJJZf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 05:25:35 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPR00F1B0UP62B0@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 10 Sep 2009 11:25:37 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPR004EA0UNZ920@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 10 Sep 2009 11:25:37 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.9.10.91216
+User-Agent: KMail/1.12.1 (Linux/2.6.30-ARCH; KDE/4.3.1; x86_64; ; )
+In-reply-to: <200909081436.30761.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128102>
 
-On Thu, 10 Sep 2009, Brendan Miller wrote:
-> On Wed, Sep 9, 2009 at 2:54 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
+On Tuesday 08 September 2009, Johan Herland wrote:
+> On Tuesday 08 September 2009, Johannes Schindelin wrote:
+> > On Tue, 8 Sep 2009, Johan Herland wrote:
+> > > Algorithm / Notes tree   git log -n10 (x100)   git log --all
+> > > ------------------------------------------------------------
+> > > next / no-notes                4.77s              63.84s
+> > >
+> > > before / no-notes              4.78s              63.90s
+> > > before / no-fanout            56.85s              65.69s
+> > >
+> > > 16tree / no-notes              4.77s              64.18s
+> > > 16tree / no-fanout            30.35s              65.39s
+> > > 16tree / 2_38                  5.57s              65.42s
+> > > 16tree / 2_2_36                5.19s              65.76s
+> > >
+> > > flexible / no-notes            4.78s              63.91s
+> > > flexible / no-fanout          30.34s              65.57s
+> > > flexible / 2_38                5.57s              65.46s
+> > > flexible / 2_2_36              5.18s              65.72s
+> > > flexible / ym                  5.13s              65.66s
+> > > flexible / ym_2_38             5.08s              65.63s
+> > > flexible / ymd                 5.30s              65.45s
+> > > flexible / ymd_2_38            5.29s              65.90s
+> > > flexible / y_m                 5.11s              65.72s
+> > > flexible / y_m_2_38            5.08s              65.67s
+> > > flexible / y_m_d               5.06s              65.50s
+> > > flexible / y_m_d_2_38          5.07s              65.79s
 
->> Brendan Miller <catphive@catphive.net> writes:
->> First question: which git version do you use?
->=20
-> It sounds like a bunch of things have been fixed in yet to be release=
-d
-> versions. That's great.
+[snip]
 
-Both "git init --bare" and cloning empty repository are in _released_
-versions.
-=20
->>> This is what I want to do 90% of the time, so it should just have t=
-he
->>> proper defaults, and not make me look at the man page every time I
->>> want to use it.
->>
->> You learn those idioms.
->=20
-> I guess. Is that a good thing? Is the goal of interface design to mak=
-e
-> it difficult so I need to learn a lot of things, or easy so I can
-> remain blissfully ignorant but still do what I want?
+> > - I'd love to see performance numbers for less than 157118 notes.
+> > Don't get me wrong, it is good to see the worst-case scenario in
+> > terms of notes/commits ratio.  But it will hardly be the common case,
+> > and I very much would like to optimize for the common case.
+> >
+> >   So, I'd appreciate if you could do the tests with something like
+> > 500 notes, randomly spread over the commits (rationale: my original
+> > understanding was that the notes could amend commit messages, and
+> > that is much more likely to be done with relatively old commits that
+> > you cannot change anymore).
+> 
+> Ok. I will try to test that.
 
-There are at least two issues:
-1. What you want to do 90% of time might be not what other people want
-   to do 90% of time.
-2. Some thing are due to git philosophy (like e.g. "git commit -a").
-=20
-As to git-archive example: first, git-archive _has_ default format, and
-it is tar.  Second, compression is better left to separate program, but
-I guess we can follow GNU tar example and add equivalents of -Z/-z/-j
-and --use-compress-program options when using --output=3D<file>.  Third=
-,
-when using e.g. tar you have to specify files to compress, so I don't
-know why you complain that git-archive requires equivalent, HEAD in you=
-r
-example.
+Here are the results of the 500-notes-in-kernel-repo test:
 
->>> 6. Where is the bug tracker? If people users can't find the bug
->>> tracker, they can't report issues, and obnoxious bugs go unfixed, o=
-r
->>> people have to whine on the mailing list. There should be a nice bi=
-g
->>> link on the front page of git-scm.com. A bug tracker is really the
->>> only way for the vast majority of a community that use a tool can g=
-ive
->>> feedback on the problems the tool has.
->>
->> Do you offer to maintain and manage such bug tracker? =A0I mean here
->> taking care of duplicated bugs, tracking which bugs are resolved and
->> which are not, checking if bug is reproductible, etc. =A0Do you?
->> Unmaintained bugtracker is worse than useless.
->>
->> Using mailing list for bug reports and for patches is time-honored
->> workflow, which works rather well for smaller projects such as Git.
->> Note that git mailing list is free for all; you don't need to
->> subscribe to send, and you can watch it via many archives and gatewa=
-ys
->> (like GMane).
->=20
-> Bug trackers are a hassle, believe me, I know... but I think they
-> contribute to the overall quality of the product if used effectively.
-> Mailing lists seem like a good way to forget about bugs after people
-> have given up on getting developers to fix them.
+Algorithm / Notes tree   git log -n10 (x100)   git log --all
 
-This is a good way to separate important from unimportant bug reports
-and feature requests ;-)
+next / no-notes                 4.83s             64.78s
 
->>> 7. Man pages: It's nice we have them, but we shouldn't need them to=
- do
->>> basic stuff. I rarely had to look at the man pages using svn, but
->>> every single time I use git I have to dig into these things. Frankl=
-y,
->>> I have better things to do than RTFM.
->>
->> Learn. =A0If you learn the philosophy behind git design, you would h=
-ave
->> much easier understanding and remembering git.
->=20
-> I think what you mean by philosophy is the underlying data structures=
-,
-> which are discussed in the manual (how many apps do you have that do
-> that!). I have read that. However, that one needs to understand
-> underlying data structure is just one more hurdle to understanding
-> git.
+before / no-notes               4.84s             64.76s
+before / no-fanout              4.98s             64.89s
 
-No, I didn't mean understanding underlying data structures, but=20
-understanding philosophy: graph of revisions; tracking contents; refs
-as pointers to graph of revisions; the trifecta of working area,=20
-the index and repository, etc.
+16tree / no-notes               4.84s             64.61s
+16tree / no-fanout              4.92s             64.68s
+16tree / 2_38                   4.85s             64.45s
+16tree / 2_2_36                 4.85s             64.63s
 
-> If I use GCC, do I need to know that it has a recursive descent
-> parser? That it is implemented with a garbage collector? No. I just
-> need to know that I give it C, and it gives me a binary.
+flexible / no-notes             4.84s             64.82s
+flexible / no-fanout            4.91s             65.01s
+flexible / 2_38                 4.85s             64.93s
+flexible / 2_2_36               4.85s             64.63s
+flexible / ym                   4.83s             64.63s
+flexible / ym_2_38              4.86s             64.72s
+flexible / ymd                  4.91s             64.74s
+flexible / ymd_2_38             4.91s             64.56s
+flexible / y_m                  4.86s             64.76s
+flexible / y_m_2_38             4.86s             64.71s
+flexible / y_m_d                4.86s             64.73s
+flexible / y_m_d_2_38           4.84s             64.50s
 
-Better example would be using "make".  You need to understand 'make'
-philosophy to write all but most simple of Makefiles.
+I don't like the noise level in the second column ('git log --all'). Then 
+again, I don't find that column very interesting (it's mostly there to 
+verify that we don't have any abysmal worst-case behaviours in the notes 
+code).
 
->=20
-> Example:
-> gcc main.c
->=20
-> Think about all the defaults that are specified here! I don't
-> explicitly tell it how to find libc.so or what path the dynamic linke=
-r
-> is at. I don't even really need to tell it which operation it is
-> performing, i.e. generating a binary, .o, .so, .os, .a, etc because i=
-t
-> has a smart default.
+The first column is fairly nice and tidy, though. At a first glance it shows 
+pretty much the same results as the 157000-notes table previously posted. 
+Obviously the abysmal performance of no-fanout is gone (500 notes in a 
+single tree object is not _that_ bad), although a 2/38-fanout is still a 
+better choice for 500 notes (but 2/2/36 does not provide any additional 
+improvement).
 
-And if you are smart, you never use this form, but "gcc -o main main.c"=
-=2E
-And you have to specify '-lm' if you use math routines.  Not that simpl=
-e,
-isn't it?
+>From this we can start to guess that the threshold for moving from no fanout 
+to 2/38 is somewhere below 500 notes, while the theshold for moving from 
+2/38 to 2/2/36 is between 500 and ~157000 notes (probably much closer to 
+157000 than to 500; I wouldn't be surprised if ~256 entries per level turns 
+out to be good a threshold).
 
-> This an order of magnitude more complex than any git operation in
-> terms of implementation, but it is dead simple from the users
-> perspective.
+The date-based fanout performs on par with the SHA1-based fanout, although 
+it's hard to say anything conclusively when the numbers are as close as 
+this. However, the ymd and ymd_2_38 fanout probably show signs of too much 
+overhead (too many levels) at only 500 notes. This is not surprising.
 
-When git (or the concept of DVCS) is as old as gcc (or C compiler) is
-now, then we can talk.
-=20
->> There is "Git User's Manual", "The Git Community Book", "Pro Git" an=
-d
->> many other references.
->=20
-> Yeah, I've been reading them. I'm saying that the docs are a crutch.
-> RTFM is the problem not the solution. It makes the user do more work
-> to avoid fixing usability issues.
+My gut feeling tells me that moving from 'no-fanout' to either '2_38' or 
+'ym' is a good idea at ~256 notes. Then, if we went with '2_38', we'd have 
+to switch to '2_2_36' at ~64K notes (i.e. when each /38 level reaches ~256 
+notes) However, it seems that with 'ym', we could stick with it for much 
+longer before having to consider switching to a different fanout alternative 
+(probably 'ym_2_38' or 'y_m_d').
 
-When the tool is more complicated (like DVCS), you can't use it in all
-but simplest cases without understanding it.
 
-> A CLI has some inherent limitations in that it doesn't have big
-> labeled buttons to press. However, that doesn't mean it has to be har=
-d
-> to use. I think a lot of the strength of the linux CLI is that most o=
-f
-> the utilities have actually pretty well thought out interfaces that
-> have been refined over time. That one's that aren't like that... well=
-,
-> no one uses them.
->=20
-> I'm not saying that a unixy approach is wrong, but that most unix
-> utilities are much easier to use than git, and that git needs
-> improvement on this front.
+Have fun! :)
 
-I'm not saying that git doesn't need UI (and documentation) improvement=
-s.
-But first, your attitude is a bit grating, and second, your examples
-are not it.
+...Johan
 
-On the other hand there is inherent problems that serious git=20
-contributors use git for a long time and are used to (and perhaps even
-attached to) git UI warts, and newbies which start to use git not alway=
-s
-can distinguish between things that can be changed and things that cann=
-ot
-be changed.
-
---=20
-Jakub Narebski
-Poland
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
