@@ -1,61 +1,80 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: Re: [PATCHv5 00/14] git notes
-Date: Thu, 10 Sep 2009 10:12:10 -0400
-Message-ID: <DAAED274-A4D5-40A2-9A5F-3F84D6D424AF@adacore.com>
-References: <1252376822-6138-1-git-send-email-johan@herland.net> <8445CEA3-AC5D-4A38-9C73-B4E14BD4864C@adacore.com> <4AA9089D.3000507@drmicha.warpmail.net>
-Mime-Version: 1.0 (Apple Message framework v1075.2)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	chriscool@tuxfamily.org, spearce@spearce.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 10 16:12:20 2009
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Introduce <branch>@{tracked} as shortcut to the
+ tracked branch
+Date: Thu, 10 Sep 2009 10:16:18 -0400
+Message-ID: <20090910141618.GB4942@coredump.intra.peff.net>
+References: <20090905061250.GA29863@coredump.intra.peff.net>
+ <20090905140127.GA29037@atjola.homenet>
+ <20090905142841.GB15631@coredump.intra.peff.net>
+ <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
+ <20090907084324.GB17997@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
+ <20090909104550.GA20108@coredump.intra.peff.net>
+ <7vzl93cncn.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909101135590.8306@pacific.mpi-cbg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 10 16:16:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlkNn-0004Rg-95
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 16:12:19 +0200
+	id 1MlkRq-0005y4-JO
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 16:16:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755683AbZIJOMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 10:12:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753319AbZIJOMJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 10:12:09 -0400
-Received: from rock.gnat.com ([205.232.38.15]:45426 "EHLO rock.gnat.com"
+	id S1755708AbZIJOQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 10:16:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbZIJOQV
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 10:16:21 -0400
+Received: from peff.net ([208.65.91.99]:32945 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753299AbZIJOMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 10:12:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 861792BABFC;
-	Thu, 10 Sep 2009 10:12:11 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at gnat.com
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id OEQxzfPoeV0m; Thu, 10 Sep 2009 10:12:11 -0400 (EDT)
-Received: from [172.16.1.5] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTPSA id 19E002BAAE0;
-	Thu, 10 Sep 2009 10:12:11 -0400 (EDT)
-In-Reply-To: <4AA9089D.3000507@drmicha.warpmail.net>
-X-Mailer: Apple Mail (2.1075.2)
+	id S1753319AbZIJOQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 10:16:20 -0400
+Received: (qmail 1514 invoked by uid 107); 10 Sep 2009 14:16:39 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 10 Sep 2009 10:16:39 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Sep 2009 10:16:18 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0909101135590.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128115>
 
+On Thu, Sep 10, 2009 at 11:36:42AM +0200, Johannes Schindelin wrote:
 
-On Sep 10, 2009, at 10:09, Michael J Gruber wrote:
+> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+> index 82045a2..09a2145 100644
+> --- a/Documentation/git-rev-parse.txt
+> +++ b/Documentation/git-rev-parse.txt
+> @@ -231,6 +231,10 @@ when you run 'git-merge'.
+>  * The special construct '@\{-<n>\}' means the <n>th branch checked out
+>    before the current one.
+>  
+> +* The suffix '@{tracked}' to a ref (short form 'blabla@{t}') refers to
+> +  the branch tracked by that ref.  If no ref was specified, it means the
+> +  branch tracked by the current branch.
+> +
 
-> It's not separate, that's the point. They're stored as objects in  
-> trees,
-> just like anything else. The discussion about the structure is about  
-> how
-> to organize the tree structure, not actual subdirectories under .git/.
+It looks like the code dereferences symbolic refs when doing the lookup
+(so HEAD@{t} will find the upstream of the current branch), which I
+think is the best thing to do. However, that does make it behave
+slightly differently than HEAD@{2.minutes.ago}, so it may be worth
+adding a sentence to this paragraph like:
 
-Arghh, sorry for the noise.
+  If the ref is a symbolic ref, it is dereferenced before searching
+  for the upstream ref.
 
-   -Geert
+And we may want to add a test for HEAD, as well.
+
+Also, I seem to be able to stimulate a segfault on a detached HEAD, but
+I haven't investigated it yet.
+
+-Peff
