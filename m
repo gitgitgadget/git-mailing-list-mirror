@@ -1,67 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-p4: Avoid modules deprecated in Python 2.6.
-Date: Thu, 10 Sep 2009 11:22:37 -0700
-Message-ID: <7v63bqd5hu.fsf@alter.siamese.dyndns.org>
-References: <1252566158-13305-1-git-send-email-reillyeon@qotw.net>
+Subject: Re: [PATCH] Introduce <branch>@{tracked} as shortcut to the tracked
+ branch
+Date: Thu, 10 Sep 2009 11:29:54 -0700
+Message-ID: <7vzl92bql9.fsf@alter.siamese.dyndns.org>
+References: <20090904135414.GA3728@honk.padd.com>
+ <alpine.DEB.1.00.0909101135590.8306@pacific.mpi-cbg.de>
+ <4AA8CA88.9060802@drmicha.warpmail.net>
+ <200909101218.06789.johan@herland.net>
+ <20090910111156.GA2910@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Reilly Grant <reillyeon@qotw.net>
-X-From: git-owner@vger.kernel.org Thu Sep 10 20:22:54 2009
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Pete Wyckoff <pw@padd.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 10 20:30:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MloIF-00056M-U7
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 20:22:52 +0200
+	id 1MloPY-0007S1-Gd
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 20:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbZIJSWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 14:22:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752603AbZIJSWm
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 14:22:42 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43090 "EHLO
+	id S1752614AbZIJSaN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 14:30:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752414AbZIJSaN
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 14:30:13 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46230 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752593AbZIJSWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 14:22:42 -0400
+	with ESMTP id S1751916AbZIJSaL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 14:30:11 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A1D614B014;
-	Thu, 10 Sep 2009 14:22:44 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BC9EC4B120;
+	Thu, 10 Sep 2009 14:30:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9EKirmoNfq9XSCGg56OZcwTzRLU=; b=QCd4zS
-	ByCA+/+L2guv//5zr3M14Q9zGKqrx/28EWOXQkb30JABUZnoVbnI4QVPyAdCvrxC
-	/gCBOcOrhBESwy5h13nN8u2BUcAfPHgSJE6TB33OUdJrZFcTLzmuw4M4xNPODc1Z
-	75RVVLmAInfyTOySNPGXKhi7cLb8PxBjjrHIw=
+	:content-type; s=sasl; bh=VVMFjXvXcKN7ndksyhOXqjjpeIg=; b=MA/REg
+	QnB5ahJeo1ROJWY8+AINPKNQo70gBCIrEXZne+MmT51B71u2ewesZnafP0mK/7QP
+	tsnkpCtXW3S+izoKC1DixI3tlFD74KiZpfmB6faFDccyHE+UYKp5bWjE2SdMfEBz
+	fqGEdG6k/X7Cd2PDT64jydJct1SxokYzYSy7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kTSjTV4d2UQcoQE+5pUjj+ylESILtIdD
-	Dfp+jHCzUzMlVq0JcvMkGsTDuoFTAOgTzCpqQ4VdmbbP1BxJ1wRHKQeIzZVZzWGj
-	7TtirrmBVUJ7u1MqklVqPHad3R/ZqanuVti5z2FaoAN67sqauF52HYw4ePVra2Qb
-	uUnorADH7jE=
+	:content-type; q=dns; s=sasl; b=WNpqd4AznPsZQX8g6QITHh2c7AEI3rvQ
+	UBp/AZB3+HCVVLECZF3Y43pF2xpiIb8MZTEr98QosJ9u+faUhYGXlzIl58E7MixR
+	xrugRURL+9ZTbHhY5o3wBNls/3S1MjzZTfny0/bdSFxbQlhAF4oBlfNtf1Ya/jJD
+	/2zTQUlYUvs=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 866A64B010;
-	Thu, 10 Sep 2009 14:22:42 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5A60A4B11F;
+	Thu, 10 Sep 2009 14:30:07 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3B2164B00F; Thu, 10 Sep 2009
- 14:22:38 -0400 (EDT)
-In-Reply-To: <1252566158-13305-1-git-send-email-reillyeon@qotw.net> (Reilly
- Grant's message of "Thu\, 10 Sep 2009 00\:02\:38 -0700")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 25EFB4B116; Thu, 10 Sep 2009
+ 14:29:55 -0400 (EDT)
+In-Reply-To: <20090910111156.GA2910@coredump.intra.peff.net> (Jeff King's
+ message of "Thu\, 10 Sep 2009 07\:11\:56 -0400")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EDD6BD96-9E36-11DE-AD6E-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: F711D8AE-9E37-11DE-9BBB-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128131>
 
-Reilly Grant <reillyeon@qotw.net> writes:
+Jeff King <peff@peff.net> writes:
 
-> The popen2, sha and sets modules are deprecated in Python 2.6 (sha in
-> Python 2.5).  Both popen2 and sha are not actually used in git-p4.
-> Replace usage of sets.Set with the builtin set object.
+> On Thu, Sep 10, 2009 at 12:18:06PM +0200, Johan Herland wrote:
 >
-> The built-in set object was added in Python 2.4 and is already used in
-> other parts of this script, so this dependency is nothing new.
+>> > > A special shortcut '@{tracked}' refers to the branch tracked by the
+>> > > current branch.
+>> >
+>> > Sorry, I didn't know the name of the long form was up for discussion.
+>> > But it should certainly coincide with the key which for-each-ref
+>> > uses, shouldn't it? I don't care whether tracked or upstream, but
+>> > for-each-ref's "upstream" has set the precedent.
+>> 
+>> ...and 'git branch --track' set an even earlier precedent...
+>
+> FWIW, that came about from this discussion:
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/115765
 
-Thanks for a resend.  Will apply.
+After re-reading the discussion in the thread that contains the quoted
+article, it sounds like we may want to fix "branch --track X Y".  X does
+not "track" Y in the same sense as origin/master "tracks" master at
+origin.  Rather, X builds on Y.
