@@ -1,91 +1,54 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: obnoxious CLI complaints
-Date: Thu, 10 Sep 2009 03:32:35 +0200
-Message-ID: <20090910013235.GA9980@atjola.homenet>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+From: "Stephen R. van den Berg" <srb@cuci.nl>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Thu, 10 Sep 2009 08:23:11 +0200
+Message-ID: <20090910062311.GA27466@cuci.nl>
+References: <1252376822-6138-1-git-send-email-johan@herland.net> <200909081436.30761.johan@herland.net> <alpine.DEB.1.00.0909081741590.4330@intel-tinevez-2-302> <200909090046.45213.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Brendan Miller <catphive@catphive.net>
-X-From: git-owner@vger.kernel.org Thu Sep 10 03:32:53 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Sep 10 08:30:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlYWq-0004GF-1J
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 03:32:52 +0200
+	id 1MldBF-0001HX-Ma
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 08:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbZIJBcn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Sep 2009 21:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753320AbZIJBcn
-	(ORCPT <rfc822;git-outgoing>); Wed, 9 Sep 2009 21:32:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57580 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752679AbZIJBcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Sep 2009 21:32:42 -0400
-Received: (qmail invoked by alias); 10 Sep 2009 01:32:38 -0000
-Received: from i59F54B57.versanet.de (EHLO atjola.homenet) [89.245.75.87]
-  by mail.gmx.net (mp055) with SMTP; 10 Sep 2009 03:32:38 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19zKT5gDXlzpQq+8X0e5ClNeUjkqJYLIjtfz/YytP
-	KhO70/VD24pV4x
+	id S1755149AbZIJGaR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 02:30:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755144AbZIJGaO
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 02:30:14 -0400
+Received: from aristoteles.cuci.nl ([212.125.128.18]:43228 "EHLO
+	aristoteles.cuci.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755140AbZIJGaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 02:30:10 -0400
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2009 02:30:10 EDT
+Received: by aristoteles.cuci.nl (Postfix, from userid 500)
+	id 377E65420; Thu, 10 Sep 2009 08:23:11 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: -0.07000000000000001
+In-Reply-To: <200909090046.45213.johan@herland.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128096>
 
-On 2009.09.09 14:27:56 -0700, Brendan Miller wrote:
-> 8. There's no obvious way to make a remote your default push pull
-> location without editing the git config file. Why not just something
-> like
->=20
-> git remote setdefault origin
+Johan Herland wrote:
+>I was, however, naive enough to assume that when git.git decided on using 
+>2/38 fanout for its loose objects, then some performance-related thoughts
+>went into that decision. If there are indications that multiple-of-2-type 
 
-Because "git remote" is the wrong tool. The default remote for
-fetch/push is configured per branch head, not globally.
+I presume that that choice was based on the fact that on a typical filesystem
+(e.g. ext2 old-style) without directory indexing, the sort-of optimal fanout
+should aim for no more than 100-200 directory entries per directory.
+-- 
+Sincerely,
+           Stephen R. van den Berg.
 
-> or even
->=20
-> git remote add --default origin http://somegiturl.org/
-
-Because that would likely mean changing all the existing branch head
-configurations, quite possibly making them invalid, because the
-branch.<name>.merge value suddenly makes no sense anymore.
-
-> This come up in the use case where I:
-> 1. set up a remote bare repo
-> 2. push from my local repo, and thence forth want to keep local and
-> remote in sink.
-
-Maybe you want something like this?
-http://thread.gmane.org/gmane.comp.version-control.git/107671
-
-> Right now I have to modify .git/config to do this.
-
-You can also do:
-git config branch.<name>.remote <remote>
-
-which does the config editing for you.
-
-And maybe:
-git config branch.<name>.merge <ref>
-
-if you also want just "git pull" to work, or use push.default =3D track=
-ing.
-
-
-There's also still my old "retrack" hack, which John Wiegley extended:
-http://github.com/jwiegley/git-scripts/blob/6ba3184d7b9f6dae3d10379a6ba=
-c29a01ceef190/git-retrack
-
-That's a bit more comfortable, but probably doesn't work for a lot of
-"non-standard" setups.
-
-Bj=F6rn
+Mommy, what happens to your files when you die?
