@@ -1,241 +1,122 @@
-From: David Fraser <davidf@sjsoft.com>
-Subject: git svn propset support
-Date: Thu, 10 Sep 2009 10:41:06 -0500 (CDT)
-Message-ID: <1077746712.371252597266033.JavaMail.root@klofta.sjsoft.com>
-References: <1699967795.351252597251356.JavaMail.root@klofta.sjsoft.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] Introduce <branch>@{upstream} as shortcut to the
+ tracked branch
+Date: Thu, 10 Sep 2009 11:55:47 -0400
+Message-ID: <20090910155547.GA12409@coredump.intra.peff.net>
+References: <20090907084324.GB17997@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
+ <20090909104550.GA20108@coredump.intra.peff.net>
+ <7vzl93cncn.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909101135590.8306@pacific.mpi-cbg.de>
+ <20090910141618.GB4942@coredump.intra.peff.net>
+ <20090910142628.GA7275@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0909101723260.8306@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909101724520.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_6_1527419887.1252597266023"
-Cc: David Moore <davidm@sjsoft.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 10 17:48:51 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 10 17:56:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mllt9-0005Jc-LS
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 17:48:48 +0200
+	id 1Mlm08-0007pG-Fd
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 17:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751917AbZIJPsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 11:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751913AbZIJPsi
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 11:48:38 -0400
-Received: from klofta.sjsoft.com ([66.135.55.210]:49041 "EHLO
-	klofta.sjsoft.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751709AbZIJPsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 11:48:37 -0400
-X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Sep 2009 11:48:37 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by klofta.sjsoft.com (Postfix) with ESMTP id E5EA218384C2
-	for <git@vger.kernel.org>; Thu, 10 Sep 2009 10:41:10 -0500 (CDT)
-X-Virus-Scanned: amavisd-new at klofta.sjsoft.com
-Received: from klofta.sjsoft.com ([127.0.0.1])
-	by localhost (klofta.sjsoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xyTp-lB61TVg; Thu, 10 Sep 2009 10:41:06 -0500 (CDT)
-Received: from klofta.sjsoft.com (klofta.sjsoft.com [66.135.55.210])
-	by klofta.sjsoft.com (Postfix) with ESMTP id 1954018384BB;
-	Thu, 10 Sep 2009 10:41:06 -0500 (CDT)
-In-Reply-To: <1699967795.351252597251356.JavaMail.root@klofta.sjsoft.com>
-X-Originating-IP: [41.245.152.2]
-X-Mailer: Zimbra 5.0.18_GA_3011.RHEL5_64 (ZimbraWebClient - FF3.0 (Linux)/5.0.18_GA_3011.RHEL5_64)
+	id S1752016AbZIJPzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 11:55:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbZIJPzu
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 11:55:50 -0400
+Received: from peff.net ([208.65.91.99]:59633 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751607AbZIJPzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 11:55:50 -0400
+Received: (qmail 2081 invoked by uid 107); 10 Sep 2009 15:56:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 10 Sep 2009 11:56:09 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Sep 2009 11:55:47 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0909101724520.8306@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128123>
 
-------=_Part_6_1527419887.1252597266023
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+On Thu, Sep 10, 2009 at 05:25:57PM +0200, Johannes Schindelin wrote:
 
-Hi
+> 	Changes since v1:
+> 	- changed to @{upstream} (and @{u})
 
-I've been trying to hack at getting manually property setting support for git-svn.
+Hmm. After applying v2, I accidentally tried "git rev-parse @{t}" and
+was surprised to find that it worked! The problem, of course, is that we
+saw that it was not one of our keywords and therefore dumped it into
+approxidate, which happily converted it into the current time, and
+provided me with HEAD@{now}.
 
-I've got a start of a patch that basically stores an attribute 'svn-properties' for each file that needs them changed, and then sets the properties when committing.
+Which is sad, because it means "HEAD@{usptream}" will silently produce
+incorrect results.
 
-Issues remaining:
- * The way it edits the .gitattributes file is suboptimal - it just appends to the end the latest version
- * It could use the existing code to get the current svn properties to see if properties need to be changed; but this doesn't work on add
- * It would be better to cache all the svn properties locally - this could be done automatically in .gitattributes but I'm not sure everyone would want this, etc
- * No support for deleting properties
+I don't see a way around it, though, short of tightening approxidate's
+parsing. Maybe it could keep a flag for "I noticed _anything_ of value
+in this string", and we could barf if it isn't set. That would still
+allow arbitrary stuff like:
 
-Usage is:
- git svn propset PROPNAME PROPVALUE PATH
+  the 6th of july
 
-Patch attached (against 1.6.0.2) - any comments welcome
+and keep Linus' favorite
 
-David
+  I ate 6 hot dogs in July.
 
--- 
-David Fraser
-St James Software
+but disallow the most obviously wrong dates like:
 
-------=_Part_6_1527419887.1252597266023
-Content-Type: text/x-patch; name=git-svn-propset-0.patch
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename=git-svn-propset-0.patch
+  t
+  usptream
+  total bogosity
 
---- git-1.6.0.2/git-svn.perl	2008-12-15 15:52:14.000000000 +0200
-+++ git-svn.perl	2009-09-10 17:35:04.000000000 +0200
-@@ -66,7 +66,7 @@
- 	$_version, $_fetch_all, $_no_rebase,
- 	$_merge, $_strategy, $_dry_run, $_local,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
--	$_git_format, $_commit_url);
-+	$_git_format, $_commit_url, $_set_svn_props);
- $Git::SVN::_follow_parent = 1;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-                     'config-dir=s' => \$Git::SVN::Ra::config_dir,
-@@ -128,6 +128,7 @@
- 			  'dry-run|n' => \$_dry_run,
- 			  'fetch-all|all' => \$_fetch_all,
- 			  'commit-url=s' => \$_commit_url,
-+			  'set-svn-props=s' => \$_set_svn_props,
- 			  'revision|r=i' => \$_revision,
- 			  'no-rebase' => \$_no_rebase,
- 			%cmt_opts, %fc_opts } ],
-@@ -141,6 +142,9 @@
-         'propget' => [ \&cmd_propget,
- 		       'Print the value of a property on a file or directory',
- 		       { 'revision|r=i' => \$_revision } ],
-+        'propset' => [ \&cmd_propset,
-+		       'Set the value of a property on a file or directory - will be set on commit',
-+		       {} ],
-         'proplist' => [ \&cmd_proplist,
- 		       'List all properties of a file or directory',
- 		       { 'revision|r=i' => \$_revision } ],
-@@ -700,6 +704,64 @@
- 	print $props->{$prop} . "\n";
- }
- 
-+sub check_attr
-+{
-+    my ($attr,$path) = @_;
-+    if ( open my $fh, '-|', "git", "check-attr", $attr, "--", $path )
-+    {
-+	my $val = <$fh>;
-+	close $fh;
-+	$val =~ s/^[^:]*:\s*[^:]*:\s*(.*)\s*$/$1/;
-+	return $val;
-+    }
-+    else
-+    {
-+	return undef;
-+    }
-+}
-+
-+# cmd_propset (PROPNAME, PROPVAL, PATH)
-+# ------------------------
-+# Adjust the SVN property PROPNAME to PROPVAL for PATH.
-+sub cmd_propset {
-+	my ($propname, $propval, $path) = @_;
-+	$path = '.' if not defined $path;
-+	$path = $cmd_dir_prefix . $path;
-+	usage(1) if not defined $propname;
-+	usage(1) if not defined $propval;
-+	my $file = basename($path);
-+	my $dn = dirname($path);
-+	my $current_properties = check_attr( "svn-properties", $path );
-+	my $new_properties = "";
-+	if ($current_properties eq "unset" || $current_properties eq "" || $current_properties eq "set") {
-+		$new_properties = "$propname=$propval";
-+	} else {
-+		# TODO: handle combining properties better
-+		my @props = split(/;/, $current_properties);
-+		my $replaced_prop = 0;
-+		foreach my $prop (@props) {
-+			# Parse 'name=value' syntax and set the property.
-+			if ($prop =~ /([^=]+)=(.*)/) {
-+				my ($n,$v) = ($1,$2);
-+				if ($n eq $propname)
-+				{
-+					$v = $propval;
-+					$replaced_prop = 1;
-+				}
-+				if ($new_properties eq "") { $new_properties="$n=$v"; }
-+				else { $new_properties="$new_properties;$n=$v"; }
-+			}
-+		}
-+		if ($replaced_prop eq 0) {
-+			$new_properties = "$new_properties;$propname=$propval";
-+		}
-+	}
-+	my $attrfile = "$dn/.gitattributes";
-+	open my $attrfh, '>>', $attrfile or die "Can't open $attrfile: $!\n";
-+	# TODO: don't simply append here if $file already has svn-properties
-+	print $attrfh "$file svn-properties=$new_properties\n";
-+}
-+
- # cmd_proplist (PATH)
- # -------------------
- # Print the list of SVN properties for PATH.
-@@ -3598,6 +3660,34 @@
- 	}
- }
- 
-+sub apply_manualprops {
-+	my ($self, $file, $fbat) = @_;
-+	my $path = $cmd_dir_prefix . $file;
-+	my $pending_properties = ::check_attr( "svn-properties", $path );
-+	if ($pending_properties eq "") { return; }
-+	# Parse the list of properties to set.
-+	my @props = split(/;/, $pending_properties);
-+	# TODO: get existing properties to compare to - this fails for add so currently not done
-+	# my $existing_props = ::get_svnprops($file);
-+	my $existing_props = {};
-+	# TODO: caching svn properties or storing them in .gitattributes would make that faster
-+	foreach my $prop (@props) {
-+		# Parse 'name=value' syntax and set the property.
-+		if ($prop =~ /([^=]+)=(.*)/) {
-+			my ($n,$v) = ($1,$2);
-+			for ($n, $v) {
-+				s/^\s+//; s/\s+$//;
-+			}
-+			# FIXME: clearly I don't know perl and couldn't work out how to evaluate this better
-+			if (defined $existing_props->{$n} && $existing_props->{$n} eq $v) {
-+				my $needed = 0;
-+			} else {
-+				$self->change_file_prop($fbat, $n, $v);
-+			}
-+		}
-+	}
-+}
-+
- sub A {
- 	my ($self, $m) = @_;
- 	my ($dir, $file) = split_path($m->{file_b});
-@@ -3606,6 +3696,7 @@
- 					undef, -1);
- 	print "\tA\t$m->{file_b}\n" unless $::_q;
- 	$self->apply_autoprops($file, $fbat);
-+	$self->apply_manualprops($file, $fbat);
- 	$self->chg_file($fbat, $m);
- 	$self->close_file($fbat,undef,$self->{pool});
- }
-@@ -3617,6 +3708,7 @@
- 	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
- 				$self->url_path($m->{file_a}), $self->{r});
- 	print "\tC\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
-+	$self->apply_manualprops($file, $fbat);
- 	$self->chg_file($fbat, $m);
- 	$self->close_file($fbat,undef,$self->{pool});
- }
-@@ -3636,6 +3728,7 @@
- 	my $fbat = $self->add_file($self->repo_path($m->{file_b}), $pbat,
- 				$self->url_path($m->{file_a}), $self->{r});
- 	print "\tR\t$m->{file_a} => $m->{file_b}\n" unless $::_q;
-+	$self->apply_manualprops($file, $fbat);
- 	$self->chg_file($fbat, $m);
- 	$self->close_file($fbat,undef,$self->{pool});
- 
-@@ -3651,6 +3744,7 @@
- 	my $fbat = $self->open_file($self->repo_path($m->{file_b}),
- 				$pbat,$self->{r},$self->{pool});
- 	print "\t$m->{chg}\t$m->{file_b}\n" unless $::_q;
-+	$self->apply_manualprops($file, $fbat);
- 	$self->chg_file($fbat, $m);
- 	$self->close_file($fbat,undef,$self->{pool});
- }
+> +	ret = tracked_suffix(*string, *len);
+> +	if (ret) {
+> +		char *ref = xstrndup(*string, *len - ret);
+> +		struct branch *tracking = branch_get(*ref ? ref : NULL);
+> +
+> +		free(ref);
+> +		if (!tracking)
+> +			die ("No tracking branch found for '%s'", ref);
+> +		if (tracking->merge && tracking->merge[0]->dst) {
+> +			*string = xstrdup(tracking->merge[0]->dst);
+> +			*len = strlen(*string);
+> +			return (char *)*string;
+> +		}
+> +	}
+> +
 
-------=_Part_6_1527419887.1252597266023--
+I don't think it is a good idea to die for !tracking, but not for
+!tracking->merge. That leads to inconsistent user-visible results:
+
+  $ git checkout HEAD^0
+  $ git rev-parse HEAD@{u}
+  fatal: No tracking branch found for 'HEAD'
+  $ git rev-parse bogus@{u}
+  bogus@{u}
+  fatal: ambiguous argument 'bogus@{u}': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions
+
+Shouldn't both cases say the same thing?
+
+Also, your die message has two problems:
+
+ 1. It looks at ref immediately after it is free'd, spewing junk.
+
+ 2. Ref can be the empty string, which gives you the ugly:
+
+       fatal: No tracking branch found for ''
+
+    Should we munge that into HEAD (or "the current branch") for the
+    user?
+
+-Peff
