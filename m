@@ -1,84 +1,130 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv5 00/14] git notes
-Date: Thu, 10 Sep 2009 16:09:33 +0200
-Message-ID: <4AA9089D.3000507@drmicha.warpmail.net>
-References: <1252376822-6138-1-git-send-email-johan@herland.net> <8445CEA3-AC5D-4A38-9C73-B4E14BD4864C@adacore.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, tavestbo@trolltech.com,
-	chriscool@tuxfamily.org, spearce@spearce.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 16:09:57 2009
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH v3 3/3] INSTALL: Describe dependency knobs from Makefile
+Date: Thu, 10 Sep 2009 10:12:08 -0400
+Message-ID: <1252591928-2278-1-git-send-email-brian@gernhardtsoftware.com>
+References: <7vpra0hcd3.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 10 16:12:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlkLS-0003ZU-Sy
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 16:09:55 +0200
+	id 1MlkNn-0004Rg-PY
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 16:12:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755682AbZIJOJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 10:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755660AbZIJOJq
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 10:09:46 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57507 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753319AbZIJOJp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 10:09:45 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 34B3C69B54;
-	Thu, 10 Sep 2009 10:09:46 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 10 Sep 2009 10:09:48 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=k9j9Dm69rXiNsgKNASKbXVbx2l8=; b=XV1NWw6b89dynlnZaW3AdJwxTWlPXRAoolciQYIDqcBKJUMlTN1WLt/IJJ+vsEdUm9OfrHSjk3WTP7kXn3i2U96eP3CPfziJ+LGYRYJKING8+lG4EN8RJxJsoQdmJZ3+ZivGHSD9aFNRDFOnbBZfMe0ySvouRlndsZH5AtS7dhA=
-X-Sasl-enc: SslxA8/w68FwvPGkB6Oxo17R6g3TYc9amiaxtl/lcg1W 1252591785
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id C6D78E222;
-	Thu, 10 Sep 2009 10:09:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20090908 Lightning/1.0pre Shredder/3.0b4pre
-In-Reply-To: <8445CEA3-AC5D-4A38-9C73-B4E14BD4864C@adacore.com>
+	id S1755705AbZIJOMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 10:12:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755685AbZIJOMM
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 10:12:12 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:37550 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753325AbZIJOMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Sep 2009 10:12:09 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 29F9B1FFC087; Thu, 10 Sep 2009 14:12:09 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (nmd.sbx07360.rocheny.wayport.net [98.98.50.102])
+	by silverinsanity.com (Postfix) with ESMTPA id B7CBE1FFC06B;
+	Thu, 10 Sep 2009 14:12:05 +0000 (UTC)
+X-Mailer: git-send-email 1.6.4.2.420.g30ecf
+In-Reply-To: <7vpra0hcd3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128113>
 
-Geert Bosch venit, vidit, dixit 10.09.2009 16:00:
-> On Sep 7, 2009, at 22:26, Johan Herland wrote:
-...
-> 
-> Hi Johan,
-> 
-> I've been following this series with some interest, and am curious
-> why notes need to be stored in a separate data structure from regular
-> objects. Note that I'm not questioning the design (and certainly would
+We said that some of our dependencies were optional, but didn't say
+how to turn them off.  Add information for that and mention where to
+save the options close to the top of the file.
 
-It's not separate, that's the point. They're stored as objects in trees,
-just like anything else. The discussion about the structure is about how
-to organize the tree structure, not actual subdirectories under .git/.
+Also, standardize on both using quotes for the names of the dependencies
+and tabs for indentation of the list.
 
-> not want to, this late in the process), rather I'd like to learn
-> about the reasons.
-> 
-> I've wondered about this as well in the context of refs, reflog and
-> git config. In a completely unified model, every change to the
-> repository (except  for the index, pack indices and working directory)
-> would be a  commit of the .git/ directory (again excluding indices).
-> One of the advantages (besides allowing configuration management
-> of the repository itself in addition to its contents) would be that
-> no locking is ever required.
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
 
-...and one of the disadvantages that you're not in control of your
-config any more, if you pull from upstream. config and reflog are
-something inherently private and local. The reflog does not even make
-sense other than in a local (per repo) context.
+  Junio C Hamano <gitster@pobox.com> wrote:
+  > I did not like calling "make variables" "options", and also it was unclear
+  > what good these "options" are for.  How about...
 
-For the config, one may think up a solution where parts of config are
-shared (by storing them as objects and referencing them) and git asks
-you before changing anything on pull/fetch. In a sense git submodule
-does that already.
+ Sounds good.  Would have sent this out yesterday, but I ran out of tuits.
 
-Cheers,
-Michael
+ INSTALL |   38 ++++++++++++++++++++++++--------------
+ 1 files changed, 24 insertions(+), 14 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 7ab2580..69c97b2 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -13,6 +13,10 @@ that uses $prefix, the built results have some paths encoded,
+ which are derived from $prefix, so "make all; make prefix=/usr
+ install" would not work.
+ 
++There are many options that can be configured in the makefile using either
++command line defines or a config.mak file.  These options are documented at
++the beginning of the Makefile.
++
+ Alternatively you can use autoconf generated ./configure script to
+ set up install paths (via config.mak.autogen), so you can write instead
+ 
+@@ -48,7 +52,9 @@ Issues of note:
+ 	export GIT_EXEC_PATH PATH GITPERLLIB
+ 
+  - Git is reasonably self-sufficient, but does depend on a few external
+-   programs and libraries:
++   programs and libraries.  Git can be used without most of them by adding
++   the approriate "NO_<LIBRARY>=YesPlease" to the make command line or
++   config.mak file.
+ 
+ 	- "zlib", the compression library. Git won't build without it.
+ 
+@@ -59,25 +65,29 @@ Issues of note:
+ 
+ 	- "Perl" is needed to use some of the features (e.g. preparing a
+ 	  partial commit using "git add -i/-p", interacting with svn
+-	  repositories with "git svn").
++	  repositories with "git svn").  If you can live without these, use
++	  NO_PERL.
+ 
+-	- "openssl".  Unless you specify otherwise, you'll get the SHA1
+-	  library from here.
++	- "openssl" library is used by git-imap-send to use IMAP over SSL.
++	  If you don't need it, use NO_OPENSSL.
+ 
+-	  If you don't have openssl, you can use one of the SHA1 libraries
+-	  that come with git (git includes one inspired by Mozilla's and a
+-	  PowerPC optimized one too - see the Makefile).
++	  By default, git uses OpenSSL for SHA1 but it will use it's own
++	  library (inspired by Mozilla's) with either NO_OPENSSL or
++	  BLK_SHA1.  Also included is a version optimized for PowerPC
++	  (PPC_SHA1).
+ 
+-	- libcurl library; git-http-fetch and git-fetch use them.  You
++	- "libcurl" library is used by git-http-fetch and git-fetch.  You
+ 	  might also want the "curl" executable for debugging purposes.
+-	  If you do not use http transfer, you are probably OK if you
+-	  do not have them.
++	  If you do not use http:// or https:// repositories, you do not
++	  have to have them (use NO_CURL).
+ 
+-	- expat library; git-http-push uses it for remote lock
+-	  management over DAV.  Similar to "curl" above, this is optional.
++	- "expat" library; git-http-push uses it for remote lock
++	  management over DAV.  Similar to "curl" above, this is optional
++	  (with NO_EXPAT).
+ 
+-        - "wish", the Tcl/Tk windowing shell is used in gitk to show the
+-          history graphically, and in git-gui.
++	- "wish", the Tcl/Tk windowing shell is used in gitk to show the
++	  history graphically, and in git-gui.  If you don't want gitk or
++	  git-gui, you can use NO_TCLTK.
+ 
+  - Some platform specific issues are dealt with Makefile rules,
+    but depending on your specific installation, you may not
+-- 
+1.6.4.2.420.g30ecf
