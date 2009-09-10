@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/4] reset: add option "--merge-dirty" to "git reset"
-Date: Thu, 10 Sep 2009 22:23:31 +0200
-Message-ID: <20090910202333.3722.37592.chriscool@tuxfamily.org>
+Subject: [PATCH 2/4] reset: use "unpack_trees()" directly instead of "git
+	read-tree"
+Date: Thu, 10 Sep 2009 22:23:30 +0200
+Message-ID: <20090910202333.3722.58409.chriscool@tuxfamily.org>
 References: <20090910200334.3722.20140.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -10,55 +11,41 @@ Cc: git@vger.kernel.org,
 	Jakub Narebski <jnareb@gmail.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 10 22:24:14 2009
+X-From: git-owner@vger.kernel.org Thu Sep 10 22:24:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlqBh-0001WS-Fk
+	id 1MlqBg-0001WS-Vp
 	for gcvg-git-2@lo.gmane.org; Thu, 10 Sep 2009 22:24:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754065AbZIJUYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 16:24:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbZIJUYB
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:24:01 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:49971 "EHLO smtp3-g21.free.fr"
+	id S1754017AbZIJUYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Sep 2009 16:24:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbZIJUYA
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 16:24:00 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:49962 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753962AbZIJUX6 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753554AbZIJUX6 (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 10 Sep 2009 16:23:58 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 81CEF818197;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 254328181BD;
 	Thu, 10 Sep 2009 22:23:52 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 754368181C3;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 16A78818172;
 	Thu, 10 Sep 2009 22:23:50 +0200 (CEST)
-X-git-sha1: 4fc8eff960ebcb537edf65df5f5888a2d3beaa6b 
+X-git-sha1: 3e41de579c276b134c257e2b2b2a9b723c90156f 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090910200334.3722.20140.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128142>
 
 From: Stephan Beyer <s-beyer@gmx.net>
 
-This option is nearly like "--merge" except that it is
-a little bit safer as it seems that it tries to keep
-changes in the index. On the contrary "--merge", only
-keep changes in the work tree.
-
-This will be shown in the next patch that adds some
-test cases for "--merge-dirty".
-
-In fact with "--merge-dirty", changes that are both in
-the work tree and the index are kept in the work tree
-after the reset (but discarded in the index). As with
-"--merge", changes that are in both the work tree and
-the index are discarded after the reset.
-
-So "--merge-dirty" is probably a very bad name for
-this new option. Perhaps "--merge-safe" is better?
+This patch makes "reset_index_file()" call "unpack_trees()" directly
+instead of forking and execing "git read-tree".
 
 The code comes from the sequencer GSoC project:
 
@@ -71,82 +58,89 @@ Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin-reset.c |   30 +++++++++++++++++++++++++-----
- 1 files changed, 25 insertions(+), 5 deletions(-)
+ builtin-reset.c |   51 ++++++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 40 insertions(+), 11 deletions(-)
 
 diff --git a/builtin-reset.c b/builtin-reset.c
-index ddb81f3..be7aa8d 100644
+index 73e6022..ddb81f3 100644
 --- a/builtin-reset.c
 +++ b/builtin-reset.c
-@@ -22,13 +22,15 @@
- #include "cache-tree.h"
+@@ -18,6 +18,8 @@
+ #include "tree.h"
+ #include "branch.h"
+ #include "parse-options.h"
++#include "unpack-trees.h"
++#include "cache-tree.h"
  
  static const char * const git_reset_usage[] = {
--	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
-+	"git reset [--mixed | --soft | --hard | --merge | --merge-dirty] [-q] [<commit>]",
- 	"git reset [--mixed] <commit> [--] <paths>...",
- 	NULL
- };
+ 	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
+@@ -52,29 +54,56 @@ static inline int is_merge(void)
+ 	return !access(git_path("MERGE_HEAD"), F_OK);
+ }
  
--enum reset_type { MIXED, SOFT, HARD, MERGE, NONE };
--static const char *reset_type_names[] = { "mixed", "soft", "hard", "merge", NULL };
-+enum reset_type { MIXED, SOFT, HARD, MERGE, MERGE_DIRTY, NONE };
-+static const char *reset_type_names[] = {
-+	"mixed", "soft", "hard", "merge", "merge_dirty", NULL
-+};
- 
- static char *args_to_str(const char **argv)
- {
-@@ -84,6 +86,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 	case MERGE:
- 		opts.update = 1;
- 		break;
-+	case MERGE_DIRTY:
- 	case HARD:
- 		opts.update = 1;
- 		/* fallthrough */
-@@ -95,6 +98,16 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 
- 	read_cache_unmerged();
- 
-+	if (reset_type == MERGE_DIRTY) {
-+		unsigned char *head_sha1;
-+		if (get_sha1("HEAD", head_sha1))
-+			return error("You do not have a valid HEAD.");
-+		if (parse_and_init_tree_desc(head_sha1, desc))
-+			return error("Failed to find tree of HEAD.");
-+		nr++;
-+		opts.fn = twoway_merge;
-+	}
++static int parse_and_init_tree_desc(const unsigned char *sha1,
++					     struct tree_desc *desc)
++{
++	struct tree *tree = parse_tree_indirect(sha1);
++	if (!tree)
++		return 1;
++	init_tree_desc(desc, tree->buffer, tree->size);
++	return 0;
++}
 +
- 	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
- 		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
- 	if (unpack_trees(nr, desc, &opts))
-@@ -238,6 +251,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				"reset HEAD, index and working tree", HARD),
- 		OPT_SET_INT(0, "merge", &reset_type,
- 				"reset HEAD, index and working tree", MERGE),
-+		OPT_SET_INT(0, "merge-dirty", &reset_type,
-+				"reset HEAD, index and working tree",
-+				MERGE_DIRTY),
- 		OPT_BOOLEAN('q', NULL, &quiet,
- 				"disable showing new HEAD in hard reset and progress message"),
- 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
-@@ -324,9 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (reset_type == SOFT) {
- 		if (is_merge() || read_cache() < 0 || unmerged_cache())
- 			die("Cannot do a soft reset in the middle of a merge.");
-+	} else {
-+		int err = reset_index_file(sha1, reset_type, quiet);
-+		if (reset_type == MERGE_DIRTY)
-+			err = err || reset_index_file(sha1, MIXED, quiet);
-+		if (err)
-+			die("Could not reset index file to revision '%s'.", rev);
- 	}
--	else if (reset_index_file(sha1, reset_type, quiet))
--		die("Could not reset index file to revision '%s'.", rev);
+ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
+ {
+-	int i = 0;
+-	const char *args[6];
++	int nr = 1;
++	int newfd;
++	struct tree_desc desc[2];
++	struct unpack_trees_options opts;
++	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
  
- 	/* Any resets update HEAD to the head being switched to,
- 	 * saving the previous head in ORIG_HEAD before. */
+-	args[i++] = "read-tree";
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = 1;
++	opts.src_index = &the_index;
++	opts.dst_index = &the_index;
++	opts.fn = oneway_merge;
++	opts.merge = 1;
+ 	if (!quiet)
+-		args[i++] = "-v";
++		opts.verbose_update = 1;
+ 	switch (reset_type) {
+ 	case MERGE:
+-		args[i++] = "-u";
+-		args[i++] = "-m";
++		opts.update = 1;
+ 		break;
+ 	case HARD:
+-		args[i++] = "-u";
++		opts.update = 1;
+ 		/* fallthrough */
+ 	default:
+-		args[i++] = "--reset";
++		opts.reset = 1;
+ 	}
+-	args[i++] = sha1_to_hex(sha1);
+-	args[i] = NULL;
+ 
+-	return run_command_v_opt(args, RUN_GIT_CMD);
++	newfd = hold_locked_index(lock, 1);
++
++	read_cache_unmerged();
++
++	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
++		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
++	if (unpack_trees(nr, desc, &opts))
++		return -1;
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock))
++		return error("Could not write new index file.");
++
++	return 0;
+ }
+ 
+ static void print_new_head_line(struct commit *commit)
 -- 
 1.6.4.271.ge010d
