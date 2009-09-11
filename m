@@ -1,72 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: obnoxious CLI complaints
-Date: Fri, 11 Sep 2009 07:47:01 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0909110744030.3654@localhost.localdomain>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <m3fxavvl5k.fsf@localhost.localdomain> <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com> <200909101116.55098.jnareb@gmail.com> <4AA97B61.6030301@lsrfire.ath.cx>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [ JGIT ] incompatiblity found in DirCache
+Date: Fri, 11 Sep 2009 08:05:23 -0700
+Message-ID: <20090911150522.GI1033@spearce.org>
+References: <4AA7FA2B.4090707@writeme.com> <200909092311.07145.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Sep 11 16:48:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Adam W. Hawks" <awhawks@writeme.com>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 17:05:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mm7Pu-0004Us-QE
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 16:48:03 +0200
+	id 1Mm7gn-0002E3-QK
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 17:05:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752684AbZIKOrw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Sep 2009 10:47:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752179AbZIKOrw
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 10:47:52 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:38565 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752109AbZIKOrv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2009 10:47:51 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n8BEl1wW015104
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Sep 2009 07:47:02 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n8BEl1bQ002977;
-	Fri, 11 Sep 2009 07:47:01 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <4AA97B61.6030301@lsrfire.ath.cx>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.458 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753467AbZIKPFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 11:05:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752843AbZIKPFU
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 11:05:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:55936 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752749AbZIKPFU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 11:05:20 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 23F243815E; Fri, 11 Sep 2009 15:05:23 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200909092311.07145.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128198>
 
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+> onsdag 09 september 2009 20:55:39 skrev "Adam W. Hawks" <awhawks@writeme.com>:
+> > When using the DirCache interface to the index you can create a
+> > invalid/corrupt tree for git 1.6.5.
+> > 
+> > The problem seems to be you can add a path to the index that starts
+> > with a "/" and DirCache creates a entry with a mode but no path.
+> > This causes git 1.6.5 to fail with a corrupt tree.
+> 
+> I think there are more ways of entering bad stuff. Preventing a
+> deliberate programmatic creation of invalid trees is probably not
+> the most important thing, but then again, validating the data to
+> prevent e.g. the EGit plugin from doing it by mistake due to bugs
+> could probably be worthwhile.
 
+We already check for and fail fast on a 0 mode in DirCache, as this
+mode is also not valid in the index, or in a git tree.
 
-On Fri, 11 Sep 2009, Ren=E9 Scharfe wrote:
->=20
-> Using zlib directly avoids the overhead of a pipe and of buffering th=
-e
-> output for blocked writes; surprisingly (to me), it isn't any faster.
+We should be doing the same thing for an empty path name.  "a//b" is
+not a valid path in the index, as "" is not a valid tree entry path.
+For the same reason, "/a" is not a valid path in the index.
 
-In fact, it should be slower.
+Unfortunately our API also allows you to try and create a name of
+"a\u0000b", which is a valid Java string, but will create a corrupt
+tree.  \u0000 in a name with more than 4095 bytes will also create
+a corrupt index (shorter strings are semi-valid because shorter
+strings use a Pascal like string format, and longer ones use a C
+like string format).  Though C git is unable to access a path whose
+name contains "\u0000", no matter how long the string is.
 
-On SMP, you're quite likely better off using the pipe, and compressing =
-on=20
-another CPU. Of course, it's usually the case that the compression is _=
-so_=20
-much slower than generating the tar-file (especially for the hot-cache=20
-case) that it doesn't matter or the pipe overhead is even a slowdown.
+I think we should try a bit harder in DirCache to prevent these sorts
+of really bad entries from being constructed by application code.
+Yes, applications should not do this, but I think the library also
+should not write known bogus trash to the disk and claim it is OK.
 
-But especially if generating the tar-file has some delays in it=20
-(cold-cache object lookup, whatever), the "compress in separate process=
-"=20
-is likely simply better, because you can compress while the other proce=
-ss=20
-is looking up data for the tar.
+I'll try to work up a patch for this today.
 
-				Linus
+-- 
+Shawn.
