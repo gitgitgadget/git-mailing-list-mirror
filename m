@@ -1,174 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: bash_completion outside repo
-Date: Fri, 11 Sep 2009 13:43:24 -0700
-Message-ID: <7viqfpw6tv.fsf@alter.siamese.dyndns.org>
-References: <a3b675320909100813i3e70ab3at66408aebb9952c7d@mail.gmail.com>
- <20090911133313.GF2582@inocybe.localdomain>
- <a3b675320909110700k7eb7286qc8cb5691aae214c7@mail.gmail.com>
- <20090911141730.GA384@coredump.intra.peff.net>
- <20090911143651.GE1033@spearce.org>
- <20090911150934.GB977@coredump.intra.peff.net>
- <20090911164730.GA21536@coredump.intra.peff.net>
+Subject: Re: [PATCH v2] Re: add documentation for mailinfo.scissors and
+ '--no-scissors'
+Date: Fri, 11 Sep 2009 14:00:46 -0700
+Message-ID: <7v8wglw60x.fsf@alter.siamese.dyndns.org>
+References: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr> <f63e8402656c02fc2ecdcce8a37cc1d60a61aa1d.1252628643.git.nicolas.s.dev@gmx.fr> <7veiqe0x05.fsf@alter.siamese.dyndns.org> <20090911134112.GA18684@vidovic> <7vws45wbxq.fsf@alter.siamese.dyndns.org> <20090911200849.GB18684@vidovic>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	james bardin <jbardin@bu.edu>, Todd Zullinger <tmz@pobox.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 11 22:43:52 2009
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 11 23:01:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmCyF-000655-Ma
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 22:43:52 +0200
+	id 1MmDEy-0002d2-2g
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 23:01:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754699AbZIKUni (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 16:43:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752455AbZIKUnh
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 16:43:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45893 "EHLO
+	id S1756412AbZIKVA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 17:00:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756407AbZIKVA5
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 17:00:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33618 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752393AbZIKUnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 16:43:37 -0400
+	with ESMTP id S1756405AbZIKVA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 17:00:56 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 20FC62F35C;
-	Fri, 11 Sep 2009 16:43:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=H+FHO9btAmIeIOi+nafrQodhkrw=; b=OdtASBhG8GNelsteZwyuaps
-	jMb3eyLkljhI0bF2w4iosR7jACW0ZIrJgc/VoA1guzlp8vzkbssdEW2wRp69dJ+F
-	iCwD3CJTrD48BoxlDa3Hjw50XarddVvKHOsqt73nOoycMin/GKBCP2BNHfsks9D1
-	0CYv4y8tOnW+FY59UUjU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ahdN2x6twH3IQUDmAqXPxyRD5fKQiIQIVm6KwKG0YKqjKQb96
-	H8sZU1QCvOK5wP6zKLjFhImr1GSQB28EpC1mNP02Q2eclz296XMeQpJkD73OXSs1
-	QoZ6D5I1pzf1cR2LwS8HI/1erJXqoq1nl7yyzwGwA3ia8RC+htg4HWO4ro=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A42052F52A;
+	Fri, 11 Sep 2009 17:00:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc
+	:mime-version:content-type:subject:references:from:date
+	:in-reply-to:message-id; s=sasl; bh=ds+CY/FGacUszaqJNrYbnNlAi8g=; b=
+	tiKt4hq/Xz3EE4d+y42xJN8DT2Wt0tHQhBCSNimE8oCXC99gnvvGnR6SuqxgSaXE
+	GWL4MiMkAS3yYeCAUwb68OuEMy3TsX7dxJS4GzW458JkrrlQlWAx7RSYyTERKXqu
+	kTT9BFdP8eGUps5OtdSgksPtFjDhX0eTlgCVI6IVBV0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc
+	:mime-version:content-type:subject:references:from:date
+	:in-reply-to:message-id; q=dns; s=sasl; b=ZYvTJFGUwEZMuznNH0B+Kg
+	hHkfNy13f1ko7bq5oLCv8oCX5Qp7oh0BnyJTEP+26ZBdxwvKjcJNP5bKvWZmkAVC
+	OBBewltdYKa8T20dhikKNCSHuMQbN+YpOD8NSau3LufhKgU9inuoq/vHkCrYorQe
+	c9D2DcEyCuEX5A1cmTKaQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC2682F35B;
-	Fri, 11 Sep 2009 16:43:32 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 10DB32F529;
+	Fri, 11 Sep 2009 17:00:53 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8B77D2F35A; Fri, 11 Sep
- 2009 16:43:25 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 417D82F528; Fri, 11 Sep
+ 2009 17:00:48 -0400 (EDT)
+In-Reply-To: <20090911200849.GB18684@vidovic> (Nicolas Sebrecht's message of
+ "Fri\, 11 Sep 2009 22\:08\:49 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C51FDE5E-9F13-11DE-8893-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 3126A5C2-9F16-11DE-A34F-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128218>
 
-Jeff King <peff@peff.net> writes:
+Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
 
-> This is actually a bit overengineered. Of the hundreds of calls to
-> git_config, there are exactly _two_ which check the return value. And
-> neither of them cares whether we parsed files or not; they really only
-> care if there was an error. So we could simply return 0 as long as there
-> is no error.
->
-> This also makes me wonder, though. Git can do wildly different things
-> (including hard-to-reverse things) based on config (e.g., just consider
-> gc.pruneExpire). Yet we call git_config() without ever checking for
-> errors. In the actual parsing routines, we die() if there is an error.
-> But if we fail to open the file due to some transient error, we will
-> silently ignore the situation.
->
-> Granted, such transient errors are unlikely. The biggest reasons for
-> failing to open a file are that it doesn't exist, or that we have no
-> permission to read it, both of which are treated explicitly in
-> git_config as "silently ok". But I wonder if we should simply be dying
-> on such an error, and git_config() should just have a void return.
+> Ok. So, the fact that the usage of git-am doesn't tell about
+> --no-scissors is the expected behaviour?
 
-Thanks.
+You _could_ argue that we _could_ describe a long option "frotz" that
+lacks the '!' flag in OPTIONS_SPEC as "--[no-]frotz" in the output by
+changing the rev-parse --parseopt, if you really want to.
 
-ENOENT should be the same as having an empty file, which is the main point
-of the patch and at the same time why you feel this is overengineered.  I
-agree with you on both counts.
+However, I think that is not done deliberately to avoid cluttering the
+output.  I Cc'ed the primary guilty party ;-) of the parse-options
+infrastructure.
 
-While I also agree that EACCESS and other failures should be treated as
-fatal in principle for safety, e.g. when running prune without being able
-to read gc.pruneExpire as you mentioned, we would need a tradeoff between
-safety and convenience.  When asked to help looking at a complex merge in
-a colleages' repository, do you want your "git diff" to refuse to run only
-because her .git/config cannot be read by you?  Of course, you _can_ work
-this particular one around by various means (e.g. prefixing GIT_CONFIG=...
-to force ignoring the file; telling the colleage that she'd better make
-her .git/config readable to you if she wants your help), if either one of
-the owner of the .git/config file or the party that wants to access the
-repository is a non-person such a workaround would be harder to arrange.
+Currently, non-bool options are not marked with '!'.  Nobody sane would
+say "git am --no-directory foo", but "rev-parse --parseopt" acccepts such
+a nonsense input, and it is up to the calling script to catch it and barf.
+But "rev-parse --parseopt" will start saying "--[no-]directory=" with such
+a change, which is not good.
 
-Also there was a move going in the opposite direction to allow a config
-file that is syntactically broken to be handled without the parser dying,
-primarily to help "git config -e".  In the longer term, our direction
-shouldn't be adding more die() in the git_config() callchain, but instead
-allowing it to report different kind of failures to let the caller act
-based on what it does and what the nature of failure is.
+And --no-scissors is not that special.  We could add --no-signoff to say
+"I do not want to sign-off this one time" explicitly, and it is crazy if
+we had to add another line in OPTIONS_SPEC when we want to do so, when it
+is clear "signoff" option is a boolean.
 
-For example, "gc" may say "I won't prune because I had to skip some of the
-lines in your .git/config because you have syntax errors in them, and I
-may have missed the definition of gc.pruneExpire you may wanted to place
-on them", while "diff" may ignore that kind of errors.
-
-Having said all that, my preference *for now* would be to ignore "there is
-no $HOME/.gitconfig (or /etc/gitconfig) file", but catch all other errors
-and die().
-
-There are some other glitches in the current git_config() callchain.
-
- - No config file anywhere gives an error.  I agree with you that this is
-   a bug.
-
- - Having GIT_CONFIG=/no/such/file in the environment gives an error,
-   which is good.
-
- - config.c::git_parse_file() [*1*] dies when it detects certain file
-   format errors itself.  This is not good for "git config -e", as it
-   needs to learn core.editor before it can be used to fix such an error.
-
-   This function then calls config.c::get_value() and it dies when
-   config.c::get_value() reports any error.
-
- - config.c::get_value() is called by config.c::git_parse_file() to finish
-   parsing out the <name, value> pair, and stores the "value" in a form
-   usable in the code, e.g. a variable defined in environment.c.  The
-   function returns an error on some file format errors (e.g. a variable
-   name is too long, string quoting unterminated) that signals the calling
-   config.c::git_parse_file() to die().  These error returns are good (the
-   caller however may need to be fixed for "config -e" issue not to die).
-
-   It then calls the parse callbacck routines.  They return error when
-   they detect semantic errors (e.g. "branch.autosetupmerge = alwys" is
-   not one of the valid values).
-
-The last one is not the topic of this patch, but it is quite problematic.
-When you are interested in finding out what value gc.pruneExpire is set,
-you do not care (as long as the configuration file was syntactically
-correct and you did not have to skip any file you were supposed to read
-due to EACCESS) if "branch.autosetupmerge" has an invalid value.
-
-A possible longer term solution would be to:
-
- - Change the signature of callbacks (e.g. git_default_branch_config()) so
-   that they return void.  They are not allowed to report any semantic
-   errors while parsing.
-
- - Instead, they use special "INVALID" value and store that when they see
-   a semantically incorrect value.  They may also want to store what the
-   actual string the config file gave them for later reporting, together
-   with the name of and the line number in the config file for diagnostic
-   purposes.
-
- - The user of the internalized value (i.e. "git grep git_branch_track"
-   shows there are only two, cmd_branch() and cmd_checkout()) must check
-   for the above INVALID value before they use the variable, and die at
-   the point of the use.
-
-I'll send an illustration patch separately.
-
-[Footnote]
-
-*1* What a horrible name for this function!  It is static so git_ prefix
-is unneeded, and if it anticipates it might get someday exported, parse_file
-is too generic and should be named git_parse_config_file().
+As a long term direction, I'd rather not to see "no-" in OPTIONS_SPEC, but
+have that taken care of by "rev-parse --parseopt" to keep our sanity.  The
+only existing offender is "no-verify" in "rebase -i".  Let's solve it (if
+there is anything to solve, which I doubt) without adding new ones.
