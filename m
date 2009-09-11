@@ -1,71 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/4] reset: add option "--merge-dirty" to "git reset"
-Date: Fri, 11 Sep 2009 09:02:50 -0700 (PDT)
-Message-ID: <alpine.LFD.2.01.0909110859390.3654@localhost.localdomain>
-References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.37592.chriscool@tuxfamily.org> <alpine.LFD.2.01.0909101617280.3654@localhost.localdomain> <200909110729.32581.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Cannot clone redirecting stdout
+Date: Fri, 11 Sep 2009 12:05:10 -0400
+Message-ID: <20090911160510.GA10848@coredump.intra.peff.net>
+References: <fc8ab2ad0909101533l135c8003m80091cb40ec93f16@mail.gmail.com>
+ <20090911102329.GA13044@sigill.intra.peff.net>
+ <20090911135110.GA30860@coredump.intra.peff.net>
+ <9e0f31700909110846h54959ae6u466ceda40799ba37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Sep 11 18:03:15 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Aloisio <aloisiojr@gmail.com>, git@vger.kernel.org,
+	support@gitorious.org
+To: Johan =?utf-8?B?U8O4cmVuc2Vu?= <johan@johansorensen.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 18:05:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mm8af-0004iE-Pl
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 18:03:14 +0200
+	id 1Mm8d6-0005ZR-08
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 18:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754471AbZIKQDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 12:03:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754269AbZIKQDD
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 12:03:03 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:58508 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752749AbZIKQDC (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2009 12:03:02 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n8BG2p9W021814
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Sep 2009 09:02:52 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n8BG2onm021193;
-	Fri, 11 Sep 2009 09:02:50 -0700
-X-X-Sender: torvalds@localhost.localdomain
-In-Reply-To: <200909110729.32581.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
-X-Spam-Status: No, hits=-3.958 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1754602AbZIKQFN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Sep 2009 12:05:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754566AbZIKQFM
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 12:05:12 -0400
+Received: from peff.net ([208.65.91.99]:49051 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754553AbZIKQFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 12:05:11 -0400
+Received: (qmail 7951 invoked by uid 107); 11 Sep 2009 16:05:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 11 Sep 2009 12:05:31 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Sep 2009 12:05:10 -0400
+Content-Disposition: inline
+In-Reply-To: <9e0f31700909110846h54959ae6u466ceda40799ba37@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128203>
 
+On Fri, Sep 11, 2009 at 05:46:23PM +0200, Johan S=C3=B8rensen wrote:
 
+> Some quick tests seem to indicate it's related to the fact that our
+> wonderful little fork+exec git-daemon[1] (which is different from the
+> one distributed with git) exec's to "git-upload-pack --strict
+> --timeout=3D30 /path/to/repo". Now, why exactly that'll trigger when =
+the
+> no-progress flag is given I'm not sure of. The daemon itself execs as
+> soon as it figures out what repo the client requested, so apart from
+> the timeout the only thing it reacts to is the header (the
+> "${headersize}git-upload-pack project/repo.git\0host=3Dgitorious.org\=
+0"
+> part).
+>=20
+> We also do redirect stderr to /dev/null for reasons I cannot remember
+> (so probably not good ones), that may be related as well. Well run
+> some more tests...
 
-On Fri, 11 Sep 2009, Christian Couder wrote:
-> 
-> No, I realize it was my writing skills that were lacking again. I will 
-> rework the commit message using some tables like in Daniel's message.
+Ah. I have a theory. If I do a clone of git://gitorious.org/qt/qt.git,
+the counting/compressing stages take a long time (I timed it at 1m40
+before it actually sends any data). And looking at upload-pack.c, we
+leave the 30-second alarm set while creating the pack. Meaning we die 3=
+0
+seconds into creating the pack.
 
-Ok, thanks.
+When progress is being displayed, however, the progress timer actually
+uses SIGALRM, as well. So we are constantly resetting the timer and it
+never goes off.
 
-> > The patch also seems to imply that it's always about HEAD. True?
-> 
-> Yes.
+And we should be able to test this theory. How long does it take for th=
+e
+failure case to fail:
 
-It might be worth noting/explaining very explicitly. "git reset" uin 
-general does not ever try to make HEAD special - except as a _default_ 
-location, of course, and as the thing that is actually modified.
+  $ time git clone -n git://gitorious.org/qt/qt.git repo >log
+  fatal: The remote end hung up unexpectedly
+  fatal: early EOF
+  fatal: index-pack failed
 
-I realize _why_ (HEAD is kind of the "base" for the index state), but I 
-think it's worth a comment or something. I did a double-take when I saw 
-that part of the diff exactly because it's unusual.
+  real    0m31.106s
+  user    0m0.000s
+  sys     0m0.012s
 
-		Linus
+Hmm. Suspicious. :)
+
+So that implies to me a few things:
+
+  1. You guys should really pack your repos, as you are wasting over a
+     minute of CPU time every time somebody clones this repo.
+
+  2. Upload-pack has what I consider a bug. The --timeout should be
+     suspended while we are actually crunching numbers to create the
+     pack. We probably don't want it when sending the pack, either, as
+     people with slow connections (or big repos) will get timed out
+     during the send. Probably we just want to apply it to times when w=
+e
+     are waiting to get the list of refs from the client.
+
+  3. Upload-pack and the progress code are both using the global alarm
+     timer and signal, and that is papering over the bug in (2) when
+     progress is enabled. I'm not sure of the simplest way of having
+     those interact. But maybe we can just ignore it, because we
+     probably don't want to using the --timeout alarm during the packin=
+g
+     phase, anyway.
+
+-Peff
