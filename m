@@ -1,76 +1,144 @@
-From: Geoffrey Irving <irving@naml.us>
-Subject: one half of a rebase
-Date: Fri, 11 Sep 2009 13:25:59 -0400
-Message-ID: <7f9d599f0909111025q42e3cdc6vba602b84c1d81215@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH 1/2] start_command: do not clobber cmd->env on Windows code path
+Date: Fri, 11 Sep 2009 19:40:08 +0200
+Message-ID: <200909111940.08652.j6t@kdbg.org>
+References: <200909092337.39885.j6t@kdbg.org> <1252560077-1725-1-git-send-email-snaury@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Dylan Simon <dylan@dylex.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 11 19:26:39 2009
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, Alexey Borzenkov <snaury@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 19:40:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mm9tP-0007v5-90
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 19:26:39 +0200
+	id 1MmA6e-0003kT-FX
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 19:40:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755706AbZIKR0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 13:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755693AbZIKR0T
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 13:26:19 -0400
-Received: from mail-vw0-f195.google.com ([209.85.212.195]:57541 "EHLO
-	mail-vw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752347AbZIKR0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 13:26:16 -0400
-Received: by vws33 with SMTP id 33so852330vws.33
-        for <git@vger.kernel.org>; Fri, 11 Sep 2009 10:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        bh=Wy1U/QUSMbpm6rb6KeTfOq3jewUf1MfzXauo5PVahnI=;
-        b=Ry3Gg7oC3wiTbnLS5m+6NsaHbLRspriR7wBxqtnYx9unWwNuaTrjPZzcJw2/1NnYtx
-         5gEoXQ3vRJJs06h2UcU3s2E8hjaMW9uMzj7vf8t7oR3nug8LZ7JbmUB5gLRoLtKuRF3c
-         RSVPIBPABsPsnCGqz5AVLt+nOI6POoBS2mHDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        b=ot/IPg15AGy4Upp2zBPWGwMSA6rWi7Cn0+GX0mIfXMd4kxyGRhLgfcxGyRZjJG5T9c
-         x3z4bbmczA4VwCdFY9Jt8NZGA4xjopTuiaEG+i832OvLROyW8jgyN7qWdRy9p8zNEnjg
-         rV8/C+PeLJr5m5os96FxUsEDq0OsW8F0qMJME=
-Received: by 10.220.88.140 with SMTP id a12mr4067039vcm.27.1252689979345; Fri, 
-	11 Sep 2009 10:26:19 -0700 (PDT)
-X-Google-Sender-Auth: 413f6654dc55ac4c
+	id S1755773AbZIKRkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 13:40:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755771AbZIKRkK
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 13:40:10 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:61080 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755766AbZIKRkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 13:40:09 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id A24B01001A;
+	Fri, 11 Sep 2009 19:40:09 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EC2EE435B8;
+	Fri, 11 Sep 2009 19:40:08 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <1252560077-1725-1-git-send-email-snaury@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128208>
 
-If I'm on branch topic and do "git rebase master", git performs two operations:
+Previously, it would not be possible to call start_command twice for the
+same struct child_process that has env set.
 
-1. Rewind the current head to master.
-2. For each commit in topic that isn't in master, cherry pick it onto
-the current head.
+The fix is achieved by moving the loop that modifies the environment block
+into a helper function. This also allows us to make two other helper
+functions static.
 
-I would like to be able to do (2) as a separate operation.  For
-example, if I start out on branch master and want to get all of
-topic's commits on top of the current head, I currently do
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ We don't call start_command twice in a row anywhere in git.git, but
+ msysgit has a patch that does, and with the next patch the buglet would
+ be triggered.
 
-    git checkout topic
-    git rebase master
-    git branch -d master
-    git branch -m master
+ Even after this patch, other members of *cmd are clobbered, so it could
+ be argued that this patch is unnecessary, but at least the Windows code
+ path now keeps the same members that the Unix code path keeps, and it
+ makes start_command easier to read by moving a loop into a helper.
 
-If I could do (2) as a separate operation, it would look something like
+ -- Hannes
 
-    git cherry-pick-all topic
+ compat/mingw.c |   16 ++++++++++++++--
+ compat/mingw.h |    3 +--
+ run-command.c  |    7 ++-----
+ 3 files changed, 17 insertions(+), 9 deletions(-)
 
-which is simpler and faster since it avoids switching files back and
-forth (master to topic and back).  Is there a robust way to achieve
-the cherry-pick-all semantics with current commands?  If not, how
-difficult would it be to partition rebase accordingly?
-
-Thanks,
-Geoffrey
+diff --git a/compat/mingw.c b/compat/mingw.c
+index bed4178..36ef8d3 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -824,7 +824,7 @@ void mingw_execvp(const char *cmd, char *const *argv)
+ 	free_path_split(path);
+ }
+ 
+-char **copy_environ()
++static char **copy_environ(void)
+ {
+ 	char **env;
+ 	int i = 0;
+@@ -861,7 +861,7 @@ static int lookup_env(char **env, const char *name, size_t nmln)
+ /*
+  * If name contains '=', then sets the variable, otherwise it unsets it
+  */
+-char **env_setenv(char **env, const char *name)
++static char **env_setenv(char **env, const char *name)
+ {
+ 	char *eq = strchrnul(name, '=');
+ 	int i = lookup_env(env, name, eq-name);
+@@ -886,6 +886,18 @@ char **env_setenv(char **env, const char *name)
+ 	return env;
+ }
+ 
++/*
++ * Copies global environ and adjusts variables as specified by vars.
++ */
++char **make_augmented_environ(const char *const *vars)
++{
++	char **env = copy_environ();
++
++	while (*vars)
++		env = env_setenv(env, *vars++);
++	return env;
++}
++
+ /* this is the first function to call into WS_32; initialize it */
+ #undef gethostbyname
+ struct hostent *mingw_gethostbyname(const char *host)
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 948de66..c43917c 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -222,9 +222,8 @@ void mingw_open_html(const char *path);
+  * helpers
+  */
+ 
+-char **copy_environ(void);
++char **make_augmented_environ(const char *const *vars);
+ void free_environ(char **env);
+-char **env_setenv(char **env, const char *name);
+ 
+ /*
+  * A replacement of main() that ensures that argv[0] has a path
+diff --git a/run-command.c b/run-command.c
+index f3e7abb..ac314a5 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -173,11 +173,8 @@ fail_pipe:
+ 
+ 	if (cmd->dir)
+ 		die("chdir in start_command() not implemented");
+-	if (cmd->env) {
+-		env = copy_environ();
+-		for (; *cmd->env; cmd->env++)
+-			env = env_setenv(env, *cmd->env);
+-	}
++	if (cmd->env)
++		env = make_augmented_environ(cmd->env);
+ 
+ 	if (cmd->git_cmd) {
+ 		cmd->argv = prepare_git_cmd(cmd->argv);
+-- 
+1.6.5.rc0.28.gfb9b
