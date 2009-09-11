@@ -1,8 +1,7 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [JGIT PATCH 2/3] Don't allow DirCacheEntry with mode of 0
-Date: Fri, 11 Sep 2009 12:58:48 -0700
-Message-ID: <1252699129-6961-2-git-send-email-spearce@spearce.org>
-References: <1252699129-6961-1-git-send-email-spearce@spearce.org>
+Subject: [JGIT PATCH 1/3] Disallow creating invalid DirCacheEntry records
+Date: Fri, 11 Sep 2009 12:58:47 -0700
+Message-ID: <1252699129-6961-1-git-send-email-spearce@spearce.org>
 Cc: git@vger.kernel.org, "Shawn O. Pearce" <sop@google.com>,
 	"Adam W. Hawks" <awhawks@writeme.com>
 To: Robin Rosenberg <robin.rosenberg@dewire.com>
@@ -11,423 +10,276 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmCGp-0001tD-FA
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 21:59:00 +0200
+	id 1MmCGo-0001tD-Ti
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 21:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756182AbZIKT6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 15:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbZIKT6w
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 15:58:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:53651 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755992AbZIKT6t (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756129AbZIKT6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 11 Sep 2009 15:58:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756068AbZIKT6t
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 15:58:49 -0400
+Received: from george.spearce.org ([209.20.77.23]:53645 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbZIKT6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 15:58:48 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id A0DFB381FF; Fri, 11 Sep 2009 19:58:52 +0000 (UTC)
+	id 6656F38200; Fri, 11 Sep 2009 19:58:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id A36443815E;
+	by george.spearce.org (Postfix) with ESMTP id 2ED5538153;
 	Fri, 11 Sep 2009 19:58:50 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.rc0.164.g5f6b0
-In-Reply-To: <1252699129-6961-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128214>
 
-A 0 file mode in a DirCacheEntry is not a valid mode.  To C git
-such a value indicates the record should not be present.  We already
-were catching this bad state and exceptioning out when writing tree
-objects to disk, but we did not fail when writing the dircache back
-to disk.  This allowed JGit applications to create a dircache file
-which C git would not like to read.
+A dircache record must not use a path string like "/a" or "a//b"
+as this results in a tree entry being written with a zero length
+name component in the record.  C git does not support an empty name,
+and neither does any modern filesystem.
 
-Instead of checking the mode during writes, we now check during
-mutation.  This allows application bugs to be detected sooner and
-closer to the cause site.  It also allows us to avoid checking most
-of the records which we read in from disk, as we can assume these
-are formatted correctly.
+A record also must not have a stage outside of the standard 0-3
+value range, as there are only 2 bits of space available in the
+on-disk format of the record to store the stage information.
+Any other values would be truncated into this space, storing a
+different value than the caller expected.
 
-Some of our unit tests were not setting the FileMode on their test
-entry, so they had to be updated to use REGULAR_FILE.
+If an application tries to create a DirCache record with either of
+these wrong values, we abort with an IllegalArgumentException.
 
 Signed-off-by: Shawn O. Pearce <sop@google.com>
 CC: Adam W. Hawks <awhawks@writeme.com>
 ---
- .../spearce/jgit/dircache/DirCacheBasicTest.java   |    5 ++-
- .../spearce/jgit/dircache/DirCacheBuilderTest.java |   27 +++++++++++++--
- .../spearce/jgit/dircache/DirCacheEntryTest.java   |   37 ++++++++++++++++++++
- .../spearce/jgit/dircache/DirCacheFindTest.java    |    5 ++-
- .../jgit/dircache/DirCacheIteratorTest.java        |    4 ++-
- .../jgit/dircache/DirCacheLargePathTest.java       |    5 +++
- .../spearce/jgit/dircache/DirCacheTreeTest.java    |   13 +++++--
- .../org/spearce/jgit/dircache/DirCacheBuilder.java |    8 +++--
- .../org/spearce/jgit/dircache/DirCacheEditor.java  |   11 ++++--
- .../org/spearce/jgit/dircache/DirCacheEntry.java   |   12 ++++++-
- .../org/spearce/jgit/dircache/DirCacheTree.java    |    4 --
- 11 files changed, 111 insertions(+), 20 deletions(-)
+ .../spearce/jgit/dircache/DirCacheEntryTest.java   |  115 ++++++++++++++++++++
+ .../org/spearce/jgit/dircache/DirCacheEntry.java   |   55 +++++++++-
+ 2 files changed, 169 insertions(+), 1 deletions(-)
+ create mode 100644 org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheEntryTest.java
 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-index 4d737c0..3b48b11 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBasicTest.java
-@@ -40,6 +40,7 @@
- import java.io.File;
- 
- import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.RepositoryTestCase;
- 
- public class DirCacheBasicTest extends RepositoryTestCase {
-@@ -170,8 +171,10 @@ public void testBuildThenClear() throws Exception {
- 
- 		final String[] paths = { "a.", "a.b", "a/b", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 
- 		final DirCacheBuilder b = dc.builder();
- 		for (int i = 0; i < ents.length; i++)
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBuilderTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBuilderTest.java
-index 2cf1d92..f64e4f6 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBuilderTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheBuilderTest.java
-@@ -59,6 +59,20 @@ public void testBuildEmpty() throws Exception {
- 		}
- 	}
- 
-+	public void testBuildRejectsUnsetFileMode() throws Exception {
-+		final DirCache dc = DirCache.newInCore();
-+		final DirCacheBuilder b = dc.builder();
-+		assertNotNull(b);
-+
-+		final DirCacheEntry e = new DirCacheEntry("a");
-+		assertEquals(0, e.getRawMode());
-+		try {
-+			b.add(e);
-+		} catch (IllegalArgumentException err) {
-+			assertEquals("FileMode not set for path a", err.getMessage());
-+		}
-+	}
-+
- 	public void testBuildOneFile_FinishWriteCommit() throws Exception {
- 		final String path = "a-file-path";
- 		final FileMode mode = FileMode.REGULAR_FILE;
-@@ -162,6 +176,7 @@ public void testFindSingleFile() throws Exception {
- 		assertNotNull(b);
- 
- 		final DirCacheEntry entOrig = new DirCacheEntry(path);
-+		entOrig.setFileMode(FileMode.REGULAR_FILE);
- 		assertNotSame(path, entOrig.getPathString());
- 		assertEquals(path, entOrig.getPathString());
- 		b.add(entOrig);
-@@ -185,8 +200,10 @@ public void testAdd_InGitSortOrder() throws Exception {
- 
- 		final String[] paths = { "a.", "a.b", "a/b", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 
- 		final DirCacheBuilder b = dc.builder();
- 		for (int i = 0; i < ents.length; i++)
-@@ -207,8 +224,10 @@ public void testAdd_ReverseGitSortOrder() throws Exception {
- 
- 		final String[] paths = { "a.", "a.b", "a/b", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 
- 		final DirCacheBuilder b = dc.builder();
- 		for (int i = ents.length - 1; i >= 0; i--)
-@@ -229,8 +248,10 @@ public void testBuilderClear() throws Exception {
- 
- 		final String[] paths = { "a.", "a.b", "a/b", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 		{
- 			final DirCacheBuilder b = dc.builder();
- 			for (int i = 0; i < ents.length; i++)
 diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheEntryTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheEntryTest.java
-index a6ff5a8..971f201 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheEntryTest.java
+new file mode 100644
+index 0000000..a6ff5a8
+--- /dev/null
 +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheEntryTest.java
-@@ -40,6 +40,7 @@
- import junit.framework.TestCase;
- 
- import org.spearce.jgit.lib.Constants;
-+import org.spearce.jgit.lib.FileMode;
- 
- public class DirCacheEntryTest extends TestCase {
- 	public void testIsValidPath() {
-@@ -112,4 +113,40 @@ public void testCreate_ByStringPathAndStage() {
- 			assertEquals("Invalid stage 4 for path a", err.getMessage());
- 		}
- 	}
+@@ -0,0 +1,115 @@
++/*
++ * Copyright (C) 2009, Google Inc.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
 +
-+	public void testSetFileMode() {
-+		final DirCacheEntry e = new DirCacheEntry("a");
++package org.spearce.jgit.dircache;
 +
-+		assertEquals(0, e.getRawMode());
++import junit.framework.TestCase;
 +
-+		e.setFileMode(FileMode.REGULAR_FILE);
-+		assertSame(FileMode.REGULAR_FILE, e.getFileMode());
-+		assertEquals(FileMode.REGULAR_FILE.getBits(), e.getRawMode());
++import org.spearce.jgit.lib.Constants;
 +
-+		e.setFileMode(FileMode.EXECUTABLE_FILE);
-+		assertSame(FileMode.EXECUTABLE_FILE, e.getFileMode());
-+		assertEquals(FileMode.EXECUTABLE_FILE.getBits(), e.getRawMode());
++public class DirCacheEntryTest extends TestCase {
++	public void testIsValidPath() {
++		assertTrue(isValidPath("a"));
++		assertTrue(isValidPath("a/b"));
++		assertTrue(isValidPath("ab/cd/ef"));
 +
-+		e.setFileMode(FileMode.SYMLINK);
-+		assertSame(FileMode.SYMLINK, e.getFileMode());
-+		assertEquals(FileMode.SYMLINK.getBits(), e.getRawMode());
++		assertFalse(isValidPath(""));
++		assertFalse(isValidPath("/a"));
++		assertFalse(isValidPath("a//b"));
++		assertFalse(isValidPath("ab/cd//ef"));
++		assertFalse(isValidPath("a/"));
++		assertFalse(isValidPath("ab/cd/ef/"));
++		assertFalse(isValidPath("a\u0000b"));
++	}
 +
-+		e.setFileMode(FileMode.GITLINK);
-+		assertSame(FileMode.GITLINK, e.getFileMode());
-+		assertEquals(FileMode.GITLINK.getBits(), e.getRawMode());
++	private static boolean isValidPath(final String path) {
++		return DirCacheEntry.isValidPath(Constants.encode(path));
++	}
++
++	public void testCreate_ByStringPath() {
++		assertEquals("a", new DirCacheEntry("a").getPathString());
++		assertEquals("a/b", new DirCacheEntry("a/b").getPathString());
 +
 +		try {
-+			e.setFileMode(FileMode.MISSING);
-+			fail("incorrectly accepted FileMode.MISSING");
++			new DirCacheEntry("/a");
++			fail("Incorrectly created DirCacheEntry");
 +		} catch (IllegalArgumentException err) {
-+			assertEquals("Invalid mode 0 for path a", err.getMessage());
-+		}
-+
-+		try {
-+			e.setFileMode(FileMode.TREE);
-+			fail("incorrectly accepted FileMode.TREE");
-+		} catch (IllegalArgumentException err) {
-+			assertEquals("Invalid mode 40000 for path a", err.getMessage());
++			assertEquals("Invalid path: /a", err.getMessage());
 +		}
 +	}
- }
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheFindTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheFindTest.java
-index 0eb0302..470c80a 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheFindTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheFindTest.java
-@@ -37,6 +37,7 @@
- 
- package org.spearce.jgit.dircache;
- 
-+import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.RepositoryTestCase;
- 
- public class DirCacheFindTest extends RepositoryTestCase {
-@@ -45,8 +46,10 @@ public void testEntriesWithin() throws Exception {
- 
- 		final String[] paths = { "a.", "a/b", "a/c", "a/d", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 		final int aFirst = 1;
- 		final int aLast = 3;
- 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheIteratorTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheIteratorTest.java
-index 047c989..71581dc 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheIteratorTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheIteratorTest.java
-@@ -68,8 +68,10 @@ public void testNoSubtree_NoTreeWalk() throws Exception {
- 
- 		final String[] paths = { "a.", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
-+		}
- 
- 		final DirCacheBuilder b = dc.builder();
- 		for (int i = 0; i < ents.length; i++)
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheLargePathTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheLargePathTest.java
-index 4ea286c..a9945f1 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheLargePathTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheLargePathTest.java
-@@ -40,6 +40,7 @@
- import java.io.IOException;
- 
- import org.spearce.jgit.errors.CorruptObjectException;
-+import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.RepositoryTestCase;
- 
- public class DirCacheLargePathTest extends RepositoryTestCase {
-@@ -70,6 +71,10 @@ private void testLongPath(final int len) throws CorruptObjectException,
- 
- 		final DirCacheEntry longEnt = new DirCacheEntry(longPath);
- 		final DirCacheEntry shortEnt = new DirCacheEntry(shortPath);
 +
-+		longEnt.setFileMode(FileMode.REGULAR_FILE);
-+		shortEnt.setFileMode(FileMode.REGULAR_FILE);
++	public void testCreate_ByStringPathAndStage() {
++		DirCacheEntry e;
 +
- 		assertEquals(longPath, longEnt.getPathString());
- 		assertEquals(shortPath, shortEnt.getPathString());
- 
-diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
-index aca0b90..6efa207 100644
---- a/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
-+++ b/org.spearce.jgit.test/tst/org/spearce/jgit/dircache/DirCacheTreeTest.java
-@@ -40,6 +40,7 @@
- import java.io.IOException;
- 
- import org.spearce.jgit.errors.CorruptObjectException;
-+import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.RepositoryTestCase;
- 
- public class DirCacheTreeTest extends RepositoryTestCase {
-@@ -75,8 +76,10 @@ public void testSingleSubtree() throws Exception {
- 
- 		final String[] paths = { "a.", "a/b", "a/c", "a/d", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
++		e = new DirCacheEntry("a", 0);
++		assertEquals("a", e.getPathString());
++		assertEquals(0, e.getStage());
++
++		e = new DirCacheEntry("a/b", 1);
++		assertEquals("a/b", e.getPathString());
++		assertEquals(1, e.getStage());
++
++		e = new DirCacheEntry("a/c", 2);
++		assertEquals("a/c", e.getPathString());
++		assertEquals(2, e.getStage());
++
++		e = new DirCacheEntry("a/d", 3);
++		assertEquals("a/d", e.getPathString());
++		assertEquals(3, e.getStage());
++
++		try {
++			new DirCacheEntry("/a", 1);
++			fail("Incorrectly created DirCacheEntry");
++		} catch (IllegalArgumentException err) {
++			assertEquals("Invalid path: /a", err.getMessage());
 +		}
- 		final int aFirst = 1;
- 		final int aLast = 3;
- 
-@@ -110,8 +113,10 @@ public void testTwoLevelSubtree() throws Exception {
- 
- 		final String[] paths = { "a.", "a/b", "a/c/e", "a/c/f", "a/d", "a0b" };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
++
++		try {
++			new DirCacheEntry("a", -11);
++			fail("Incorrectly created DirCacheEntry");
++		} catch (IllegalArgumentException err) {
++			assertEquals("Invalid stage -11 for path a", err.getMessage());
 +		}
- 		final int aFirst = 1;
- 		final int aLast = 4;
- 		final int acFirst = 2;
-@@ -167,8 +172,10 @@ public void testWriteReadTree() throws CorruptObjectException, IOException {
- 		final String B = String.format("b%2000s", "b");
- 		final String[] paths = { A + ".", A + "." + B, A + "/" + B, A + "0" + B };
- 		final DirCacheEntry[] ents = new DirCacheEntry[paths.length];
--		for (int i = 0; i < paths.length; i++)
-+		for (int i = 0; i < paths.length; i++) {
- 			ents[i] = new DirCacheEntry(paths[i]);
-+			ents[i].setFileMode(FileMode.REGULAR_FILE);
++
++		try {
++			new DirCacheEntry("a", 4);
++			fail("Incorrectly created DirCacheEntry");
++		} catch (IllegalArgumentException err) {
++			assertEquals("Invalid stage 4 for path a", err.getMessage());
 +		}
- 
- 		final DirCacheBuilder b = dc.builder();
- 		for (int i = 0; i < ents.length; i++)
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheBuilder.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheBuilder.java
-index aee12fb..8acb3d0 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheBuilder.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheBuilder.java
-@@ -41,7 +41,6 @@
- import java.util.Arrays;
- 
- import org.spearce.jgit.lib.AnyObjectId;
--import org.spearce.jgit.lib.FileMode;
- import org.spearce.jgit.lib.Repository;
- import org.spearce.jgit.lib.WindowCursor;
- import org.spearce.jgit.treewalk.AbstractTreeIterator;
-@@ -90,8 +89,13 @@ protected DirCacheBuilder(final DirCache dc, final int ecnt) {
- 	 *
- 	 * @param newEntry
- 	 *            the new entry to add.
-+	 * @throws IllegalArgumentException
-+	 *             If the FileMode of the entry was not set by the caller.
- 	 */
- 	public void add(final DirCacheEntry newEntry) {
-+		if (newEntry.getRawMode() == 0)
-+			throw new IllegalArgumentException("FileMode not set for path "
-+					+ newEntry.getPathString());		
- 		beforeAdd(newEntry);
- 		fastAdd(newEntry);
- 	}
-@@ -187,8 +191,6 @@ public void finish() {
- 	}
- 
- 	private void beforeAdd(final DirCacheEntry newEntry) {
--		if (FileMode.TREE.equals(newEntry.getRawMode()))
--			throw bad(newEntry, "Adding subtree not allowed");
- 		if (sorted && entryCnt > 0) {
- 			final DirCacheEntry lastEntry = entries[entryCnt - 1];
- 			final int cr = DirCache.cmp(lastEntry, newEntry);
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEditor.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEditor.java
-index 10b554e..6eaceb7 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEditor.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEditor.java
-@@ -138,11 +138,16 @@ private void applyEdits() {
- 			}
- 
- 			final DirCacheEntry ent;
--			if (missing)
-+			if (missing) {
- 				ent = new DirCacheEntry(e.path);
--			else
-+				e.apply(ent);
-+				if (ent.getRawMode() == 0)
-+					throw new IllegalArgumentException("FileMode not set"
-+							+ " for path " + ent.getPathString());							
-+			} else {
- 				ent = cache.getEntry(eIdx);
--			e.apply(ent);
-+				e.apply(ent);
-+			}
- 			fastAdd(ent);
- 		}
- 
++	}
++}
 diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
-index d7abd6e..872ef33 100644
+index 47b1cc5..d7abd6e 100644
 --- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
 +++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheEntry.java
-@@ -377,11 +377,21 @@ public FileMode getFileMode() {
- 
- 	/**
- 	 * Set the file mode for this entry.
--	 *
-+	 * 
- 	 * @param mode
- 	 *            the new mode constant.
+@@ -166,6 +166,10 @@
+ 	 *
+ 	 * @param newPath
+ 	 *            name of the cache entry.
 +	 * @throws IllegalArgumentException
-+	 *             If {@code mode} is {@link FileMode#MISSING},
-+	 *             {@link FileMode#TREE}, or any other type code not permitted
-+	 *             in a tree object.
++	 *             If the path starts or ends with "/", or contains "//" either
++	 *             "\0". These sequences are not permitted in a git tree object
++	 *             or DirCache file.
  	 */
- 	public void setFileMode(final FileMode mode) {
-+		switch (mode.getBits() & FileMode.TYPE_MASK) {
-+		case FileMode.TYPE_MISSING:
-+		case FileMode.TYPE_TREE:
-+			throw new IllegalArgumentException("Invalid mode " + mode
-+					+ " for path " + getPathString());
-+		}
- 		NB.encodeInt32(info, infoOffset + P_MODE, mode.getBits());
+ 	public DirCacheEntry(final String newPath) {
+ 		this(Constants.encode(newPath));
+@@ -178,6 +182,11 @@ public DirCacheEntry(final String newPath) {
+ 	 *            name of the cache entry.
+ 	 * @param stage
+ 	 *            the stage index of the new entry.
++	 * @throws IllegalArgumentException
++	 *             If the path starts or ends with "/", or contains "//" either
++	 *             "\0". These sequences are not permitted in a git tree object
++	 *             or DirCache file.  Or if {@code stage} is outside of the
++	 *             range 0..3, inclusive.
+ 	 */
+ 	public DirCacheEntry(final String newPath, final int stage) {
+ 		this(Constants.encode(newPath), stage);
+@@ -188,6 +197,10 @@ public DirCacheEntry(final String newPath, final int stage) {
+ 	 *
+ 	 * @param newPath
+ 	 *            name of the cache entry, in the standard encoding.
++	 * @throws IllegalArgumentException
++	 *             If the path starts or ends with "/", or contains "//" either
++	 *             "\0". These sequences are not permitted in a git tree object
++	 *             or DirCache file.
+ 	 */
+ 	public DirCacheEntry(final byte[] newPath) {
+ 		this(newPath, STAGE_0);
+@@ -200,8 +213,20 @@ public DirCacheEntry(final byte[] newPath) {
+ 	 *            name of the cache entry, in the standard encoding.
+ 	 * @param stage
+ 	 *            the stage index of the new entry.
++	 * @throws IllegalArgumentException
++	 *             If the path starts or ends with "/", or contains "//" either
++	 *             "\0". These sequences are not permitted in a git tree object
++	 *             or DirCache file.  Or if {@code stage} is outside of the
++	 *             range 0..3, inclusive.
+ 	 */
+ 	public DirCacheEntry(final byte[] newPath, final int stage) {
++		if (!isValidPath(newPath))
++			throw new IllegalArgumentException("Invalid path: "
++					+ toString(newPath));
++		if (stage < 0 || 3 < stage)
++			throw new IllegalArgumentException("Invalid stage " + stage
++					+ " for path " + toString(newPath));
++
+ 		info = new byte[INFO_LEN];
+ 		infoOffset = 0;
+ 		path = newPath;
+@@ -461,7 +486,7 @@ public void setObjectIdFromRaw(final byte[] bs, final int p) {
+ 	 *         returned string.
+ 	 */
+ 	public String getPathString() {
+-		return Constants.CHARSET.decode(ByteBuffer.wrap(path)).toString();
++		return toString(path);
  	}
  
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
-index 79e95cb..2f2a5ed 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/dircache/DirCacheTree.java
-@@ -376,10 +376,6 @@ private int computeSize(final DirCacheEntry[] cache, int cIdx,
- 			}
- 
- 			final FileMode mode = e.getFileMode();
--			if (mode.getObjectType() == Constants.OBJ_BAD)
--				throw new IllegalStateException("Entry \"" + e.getPathString()
--						+ "\" has incorrect mode set up.");
--
- 			size += mode.copyToLength();
- 			size += ep.length - pathOffset;
- 			size += OBJECT_ID_LENGTH + 2;
+ 	/**
+@@ -492,4 +517,32 @@ private void encodeTS(final int pIdx, final long when) {
+ 		NB.encodeInt32(info, base, (int) (when / 1000));
+ 		NB.encodeInt32(info, base + 4, ((int) (when % 1000)) * 1000000);
+ 	}
++
++	private static String toString(final byte[] path) {
++		return Constants.CHARSET.decode(ByteBuffer.wrap(path)).toString();
++	}
++
++	static boolean isValidPath(final byte[] path) {
++		if (path.length == 0)
++			return false; // empty path is not permitted.
++
++		boolean componentHasChars = false;
++		for (final byte c : path) {
++			switch (c) {
++			case 0:
++				return false; // NUL is never allowed within the path.
++
++			case '/':
++				if (componentHasChars)
++					componentHasChars = false;
++				else
++					return false;
++				break;
++
++			default:
++				componentHasChars = true;
++			}
++		}
++		return componentHasChars;
++	}
+ }
 -- 
 1.6.5.rc0.164.g5f6b0
