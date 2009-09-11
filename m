@@ -1,104 +1,88 @@
-From: Todd Zullinger <tmz@pobox.com>
-Subject: Re: bash_completion outside repo
-Date: Fri, 11 Sep 2009 09:33:13 -0400
-Message-ID: <20090911133313.GF2582@inocybe.localdomain>
-References: <a3b675320909100813i3e70ab3at66408aebb9952c7d@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v2] Re: add documentation for mailinfo.scissors and
+	'--no-scissors'
+Date: Fri, 11 Sep 2009 15:41:12 +0200
+Message-ID: <20090911134112.GA18684@vidovic>
+References: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr> <f63e8402656c02fc2ecdcce8a37cc1d60a61aa1d.1252628643.git.nicolas.s.dev@gmx.fr> <7veiqe0x05.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="VuQYccsttdhdIfIP"
-Cc: git@vger.kernel.org
-To: james bardin <jbardin@bu.edu>
-X-From: git-owner@vger.kernel.org Fri Sep 11 15:33:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 15:41:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mm6Fv-0004LX-71
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 15:33:39 +0200
+	id 1Mm6NT-0006ly-SC
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 15:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbZIKNdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 09:33:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbZIKNdW
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 09:33:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38865 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbZIKNdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 09:33:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 02D3E2EC3E;
-	Fri, 11 Sep 2009 09:33:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=tPjVIyc5lTAZDvQCk6vAR7p9nic=; b=gMEa5qM
-	LzjciCVKTyzzwPmyyk/M6tt11H9c6oYjHWzdhn3PK6M9ZsQ0IR0+vUg8Ee49bXxg
-	5VfAv3HoF27X18ort5N+ZybdQxpTB6NDF+/5IEb3LRdtEgDxMEFLwqeu2X2fJt/d
-	36P7EP1hescYLzj0RI7/+yG7ykLckqibvvpk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=sasl; b=dGZ49q82iChCAD6R53fwFDVPSkc5cX1dk
-	7MWK1b6L+SC8b+HcuwUWN4OfzgnZ61iew0KExVsk7KxGdJ0uZG+CFI5UYXPHMZh6
-	ml/uHp+UABXU+Sowa2+aySpKzJzfQ8CYg/BcwkvpoHl82bCuL+vxJ5a963pMSqxN
-	Tb2EZft/SY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E606C2EC3D;
-	Fri, 11 Sep 2009 09:33:15 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [98.117.9.179]) (using TLSv1 with
- cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9BAFD2EC3C; Fri, 11 Sep
- 2009 09:33:14 -0400 (EDT)
+	id S1752217AbZIKNlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 09:41:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbZIKNlR
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 09:41:17 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:54196 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110AbZIKNlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 09:41:17 -0400
+Received: by fxm17 with SMTP id 17so795861fxm.37
+        for <git@vger.kernel.org>; Fri, 11 Sep 2009 06:41:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=RTnRGaMpnig3eEnKRg68zDL9jFxGJ7CZe0yjSojCq5s=;
+        b=XT/I175zECBQURIkNBbBiMo4BxvE4ZslcvDElP0qehIlyoklmhB35K5dJNIbRVBlNx
+         YtGwQBYIu2AKBa6DHOmQNHZBukcYyPu5MW33ap3bgz+zmpbHRPRRROVOxlqm04e3eO5Y
+         qwfmCcvn0Ommgf62KrprRwXX0I0nVlqVn1PmE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=sZPn/G8+LgVsXyyasOB4iSRcXIce/6jCt8UBgRNYyzJkSTDZssdlPsN5QqKTOAVsL5
+         sCaayLeMexqkjZ6eTn+K80ViJRXKv5hBwbjVvR92Ot/acbaiugJ0vnPMEoD39Tzn92Nj
+         5KXzeeVMJJh8yk2yiInsAFzlGZPDcHH0eRzsM=
+Received: by 10.86.16.9 with SMTP id 9mr2291107fgp.8.1252676479160;
+        Fri, 11 Sep 2009 06:41:19 -0700 (PDT)
+Received: from @ (91-164-133-105.rev.libertysurf.net [91.164.133.105])
+        by mx.google.com with ESMTPS id 4sm1385853fgg.2.2009.09.11.06.41.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 11 Sep 2009 06:41:17 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <a3b675320909100813i3e70ab3at66408aebb9952c7d@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Pobox-Relay-ID: A90E8030-9ED7-11DE-8C12-A13518FFA523-09356542!a-pb-sasl-quonix.pobox.com
+In-Reply-To: <7veiqe0x05.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128192>
 
+[ Thank you for this review. ]
 
---VuQYccsttdhdIfIP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The 11/09/09, Junio C Hamano wrote:
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+> 
+> > diff --git a/git-am.sh b/git-am.sh
+> > index 26ffe70..f242d1a 100755
+> > --- a/git-am.sh
+> > +++ b/git-am.sh
+> > @@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
+> >  u,utf8          recode into utf8 (default)
+> >  k,keep          pass -k flag to git-mailinfo
+> >  c,scissors      strip everything before a scissors line
+> > +no-scissors     don't obey to a scissors line (default)
+> >  whitespace=     pass it through git-apply
+> >  ignore-space-change pass it through git-apply
+> >  ignore-whitespace pass it through git-apply
+> 
+> Do we want it to allow --no-no-scissors?  I do not think this hunk is
+> necessary at all.
 
-james bardin wrote:
-> I'm making a git rpm for our site, and I'm getting an error with
-> bash_completion on RHEL/CentOS 5.
+I don't understand your point here. This hunk doesn't allow
+--no-no-scissors but add --no-scissors to usage of 'git am', no?
 
-Out of curiosity, have you tried rebuilding the Fedora packages from
-rawhide?  They should work on RHEL/CentOS 5 just fine (I use them
-myself).
+Do I miss something around $OPTIONS_SPEC?
 
-> When outside a repo, any completion causes git to spit out
->   fatal: error processing config file(s)
->
-> This is 1.6.4.2 using the contrib bash completion file
-
-I can't reproduce this on either Fedora or CentOS.
-
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-A great many people think they are thinking when they are merely
-rearranging their prejudices.
-    -- William James
-
-
---VuQYccsttdhdIfIP
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBCAAtBQJKqlGTJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjcpkH/jMT9tt5HiuYic6gmyjFCshMcQ8JLbptqqzx
-Vzd6KK+w1Y+TTS/LmPScttoStNmsT/D8CJBuW132pYWrH2N0XqWxgjHpuBbIWrUu
-vBUaKu8GfGXWNO0x95wZYgvitT/TxKMyqZZtxmgh+C36eXsElYZ+VYBZfpkUj5bh
-HyYWx1SHo6T9H+g8zTtmb/2oKBqfify6GpKNbF4dI+6kI6VVpGy0tSvZsdyXW0Ej
-PWrSgnKq79Bn4Y8YvV0br/3jjgOnLm7syXu5mneIHh5kkJc5b1ZG+8t3tDRQPIyt
-BeczimyLwRmH8YJDKE7gyYQ9H0sELKuu3angwPFhKyIX/mbKkC8=
-=Rdqq
------END PGP SIGNATURE-----
-
---VuQYccsttdhdIfIP--
+-- 
+Nicolas Sebrecht
