@@ -1,77 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Re: add documentation for mailinfo.scissors and
- '--no-scissors'
-Date: Fri, 11 Sep 2009 11:53:05 -0700
-Message-ID: <7vws45wbxq.fsf@alter.siamese.dyndns.org>
-References: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr> <f63e8402656c02fc2ecdcce8a37cc1d60a61aa1d.1252628643.git.nicolas.s.dev@gmx.fr> <7veiqe0x05.fsf@alter.siamese.dyndns.org> <20090911134112.GA18684@vidovic>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Fri Sep 11 20:56:57 2009
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v3 2/2] add documentation for mailinfo.scissors and '--no-scissors'
+Date: Fri, 11 Sep 2009 21:50:25 +0200
+Message-ID: <46a8212df1c43729a9b2d3ff3029e2c28ac34119.1252698215.git.nicolas.s.dev@gmx.fr>
+References: <7veiqe0x05.fsf@alter.siamese.dyndns.org>
+Cc: Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 21:50:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmBIl-00011e-Rj
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 20:56:56 +0200
+	id 1MmC90-00087z-F3
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 21:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938AbZIKSxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 14:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755925AbZIKSxN
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 14:53:13 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37059 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755938AbZIKSxL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 14:53:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3CE6E4D722;
-	Fri, 11 Sep 2009 14:53:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dMSxljYHcq3IYxB1JyxUGmXAObE=; b=x/OZ9T
-	t+i2fwLFIQ1YoA+sx2ck2YBeNJJH6QrpwXMjUxEprlawuTXXhmjEDTSxsLJ3Qube
-	3KDqF+SY5jCFPrMTaDaFSCsTibEZ5U+BgN+7HoCdlj5tXS8FyLG+fjj9k3OLMM32
-	Zaam6iD+BCOhWYIF2XfxLyROoga0qQgE3jeXU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XzgkBLpYAJDh8Cgb0K7lbM5A594ki1cw
-	rmzjaGvx3+Ig8SDSDaNATsNo7uM99mc6FEigAo4BNfxpkqqkva8DWBJbce/CLVI7
-	YccAC1TmLgVgv+ZOp9AMDixkzdHhe59wXlBIEmZMtaUTACSzJ3nPmtFN2cyMekp6
-	q5yuNsBtlU0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0E5A14D721;
-	Fri, 11 Sep 2009 14:53:11 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B1BB54D720; Fri, 11 Sep 2009
- 14:53:06 -0400 (EDT)
-In-Reply-To: <20090911134112.GA18684@vidovic> (Nicolas Sebrecht's message of
- "Fri\, 11 Sep 2009 15\:41\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5A39598A-9F04-11DE-AA2E-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752779AbZIKTup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 15:50:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbZIKTuo
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 15:50:44 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:21447 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752198AbZIKTuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 15:50:44 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so287436eya.19
+        for <git@vger.kernel.org>; Fri, 11 Sep 2009 12:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:in-reply-to
+         :references;
+        bh=ZXBdHk8I5fc75Dr+lOovZUIG4QovM1wICPUPvgnoGVk=;
+        b=C4pH4+s+i28HMEXermFacyf/hR4p8LzWLAIeluWNVaDFyYX0rM9uksj2cGwrz5C10K
+         3nMTjxVPAqqo5eIUIhC8nIeccMYd/AhRVimSU7wfc5+MJlJY+wnam39Imx0O8ywC0ulg
+         4An7n34d27vMz/BZBAIaZeuBJxbS745SKqsOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        b=NgEw5fCmsY6JCZGYkRftxNP4osj8K0ciyC5qhKwSB3oxsIhzAddjJi7e8QeCSeJnMQ
+         Vz4WpNc5BCfqz0/YCtfuZITp4k/7+EBkeRBLilKvUBC9FIWrlK63mFo0GZDr5aFTCrQf
+         tX//8cYvrB0Fqz27YuYqrsRPBepQ6SdpTm7EI=
+Received: by 10.211.141.2 with SMTP id t2mr1012045ebn.59.1252698646041;
+        Fri, 11 Sep 2009 12:50:46 -0700 (PDT)
+Received: from localhost (91-165-134-53.rev.libertysurf.net [91.165.134.53])
+        by mx.google.com with ESMTPS id 7sm1853197eyb.37.2009.09.11.12.50.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Sep 2009 12:50:44 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.rc0.166.g46a82
+In-Reply-To: <7veiqe0x05.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <682ef47420f36d8c53e42981370d377b621d7b86.1252698215.git.nicolas.s.dev@gmx.fr>
+References: <682ef47420f36d8c53e42981370d377b621d7b86.1252698215.git.nicolas.s.dev@gmx.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128212>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+The 11/09/09, Junio C Hamano wrote:
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+> 
+> > +---no-scissors::
+> > +   Do not obey to a scissors line (see linkgit:git-mailinfo[1]).
+> > +
+> 
+> obey is v.t. so "do not obey a scissors line" would be grammatical; I
+> think "ignore scissors lines" would be better.
+> 
+> > +--no-scissors::
+> > +   Do not obey to a scissors line. This is only useful if mailinfo.scissors is
+> > +   enabled (see --scissors).
+> 
+> Ditto; also it is useful in general if you do not know which way it is
+> configured.  Saying "_only_" is misleading.
+> 
+>       Ignore scissors lines; useful for overriding mailinfo.scissors
+>       settings.
+> 
+> > diff --git a/git-am.sh b/git-am.sh
+> > index 26ffe70..f242d1a 100755
+> > --- a/git-am.sh
+> > +++ b/git-am.sh
+> > @@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
+> >  u,utf8          recode into utf8 (default)
+> >  k,keep          pass -k flag to git-mailinfo
+> >  c,scissors      strip everything before a scissors line
+> > +no-scissors     don't obey to a scissors line (default)
+> >  whitespace=     pass it through git-apply
+> >  ignore-space-change pass it through git-apply
+> >  ignore-whitespace pass it through git-apply
+> 
+> Do we want it to allow --no-no-scissors?  I do not think this hunk is
+> necessary at all.
 
-> I don't understand your point here. This hunk doesn't allow
-> --no-no-scissors but add --no-scissors to usage of 'git am', no?
->
-> Do I miss something around $OPTIONS_SPEC?
+This version includes the above comments.
 
-You missed two thirds of the issue and I missed the other one third ;-)
+Thanks,
 
-As scissors is not marked with ! (see PARSEOPT section in the rev-parse
-documentation), no-scissors is already available without that hunk, and
-that is why your patch is unnecessary.
+-- >8 --
 
-Your patch did not mark no-scissors with ! either, so it makes the call to
-rev-parse --parseopt to process your OPTIONS_SPEC pass --no-no-scissors.
+Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+---
+ Documentation/git-am.txt       |    5 ++++-
+ Documentation/git-mailinfo.txt |    5 +++++
+ builtin-mailinfo.c             |    2 +-
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-However, you did not add --no-no-scissors arm to the case statement that
-processes rev-parse --parseopt output, so the command as the whole still
-rejects --no-no-scissors as invalid (this is the last third I missed).
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 87781f4..06e6ea6 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	 [--3way] [--interactive] [--committer-date-is-author-date]
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+-	 [--reject] [-q | --quiet] [--scissors]
++	 [--reject] [-q | --quiet] [--scissors | --no-scissors]
+ 	 [<mbox> | <Maildir>...]
+ 'git am' (--skip | --resolved | --abort)
+ 
+@@ -44,6 +44,9 @@ OPTIONS
+ 	Remove everything in body before a scissors line (see
+ 	linkgit:git-mailinfo[1]).
+ 
++---no-scissors::
++	ignore scissors lines (see linkgit:git-mailinfo[1]).
++
+ -q::
+ --quiet::
+ 	Be quiet. Only print error messages.
+diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
+index 823ab82..d1f9cb8 100644
+--- a/Documentation/git-mailinfo.txt
++++ b/Documentation/git-mailinfo.txt
+@@ -62,6 +62,11 @@ This is useful if you want to begin your message in a discussion thread
+ with comments and suggestions on the message you are responding to, and to
+ conclude it with a patch submission, separating the discussion and the
+ beginning of the proposed commit log message with a scissors line.
+++
++This can enabled by default with the configuration option mailinfo.scissors.
++
++--no-scissors::
++	ignore scissors lines; useful for overriding mailinfo.scissors settings.
+ 
+ <msg>::
+ 	The commit log message extracted from e-mail, usually
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 7d22fd7..d498b1c 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -1004,7 +1004,7 @@ static int git_mailinfo_config(const char *var, const char *value, void *unused)
+ }
+ 
+ static const char mailinfo_usage[] =
+-	"git mailinfo [-k] [-u | --encoding=<encoding> | -n] [--scissors] msg patch < mail >info";
++	"git mailinfo [-k] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] msg patch < mail >info";
+ 
+ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
+ {
+-- 
+1.6.5.rc0.166.g46a82
