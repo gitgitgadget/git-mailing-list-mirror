@@ -1,71 +1,113 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: obnoxious CLI complaints
-Date: Fri, 11 Sep 2009 05:15:19 +0200
-Message-ID: <20090911031519.GA6385@atjola.homenet>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
- <m3fxavvl5k.fsf@localhost.localdomain>
- <4C1FB36D-F8A6-4C01-A42A-8AD2355A9961@wincent.com>
- <200909101850.26109.jnareb@gmail.com>
- <7vbpliaaxo.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: tracking branch for a rebase
+Date: Thu, 10 Sep 2009 21:54:13 -0700
+Message-ID: <7vy6om2ia2.fsf@alter.siamese.dyndns.org>
+References: <20090904135414.GA3728@honk.padd.com>
+ <4AA124DD.1030208@drmicha.warpmail.net>
+ <20090904181846.GC19093@coredump.intra.peff.net>
+ <20090904185949.GA21583@atjola.homenet>
+ <20090905061250.GA29863@coredump.intra.peff.net>
+ <20090905140127.GA29037@atjola.homenet>
+ <20090905142841.GB15631@coredump.intra.peff.net>
+ <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
+ <20090907084324.GB17997@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
+ <20090909104550.GA20108@coredump.intra.peff.net>
+ <7vzl93cncn.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 05:15:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 11 06:54:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mlwbt-0006aW-El
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 05:15:41 +0200
+	id 1Mly9v-0001U6-Kr
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 06:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471AbZIKDPX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 23:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbZIKDPX
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 23:15:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37628 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752565AbZIKDPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 23:15:22 -0400
-Received: (qmail invoked by alias); 11 Sep 2009 03:15:24 -0000
-Received: from i59F57339.versanet.de (EHLO atjola.homenet) [89.245.115.57]
-  by mail.gmx.net (mp007) with SMTP; 11 Sep 2009 05:15:24 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX187OtpMG0g7PkKJLu7ZuB7n74CFskrBf02pc4DbSA
-	wSODBsENuxU/Ec
-Content-Disposition: inline
-In-Reply-To: <7vbpliaaxo.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1751113AbZIKEya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 00:54:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbZIKEy3
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 00:54:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45334 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849AbZIKEy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 00:54:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 833C84C5AF;
+	Fri, 11 Sep 2009 00:54:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mX1/FcmkNvd/0Z/XTa9m98DZADc=; b=qDrF/v
+	ppkGIZT3K+MQPkUmqRvkt3RUY1Mwpjzk0wiDUHzUDrvBwJ/x3GsF/lWVgYaw8Wrr
+	iEjoabNQzIlHROKeU6WfwnIggola6M36O7vh89eY2BasH2/xc+RBlpZE8ny/BUmR
+	u3TwB5vg2+Y6SBF3ETOBNvYrXbTWacAcJCmcw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U3yfmDrUJMkW32QYBt8yfs0/fl7fkD9a
+	jYLbzk3aoQSaRtavf0rBEtJpXcRghTzeVU6ozBkwhAqTXAJpueDMSs934XtlzWhh
+	h6bvWYHm1Do59RSNhHc8V7r3/RXHDTkmLYYDjU5SwqeeYsGpgQFWNiaeM3Pa4Ko/
+	CiR1Dov3Rpo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EFE04C5AD;
+	Fri, 11 Sep 2009 00:54:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B46C84C5AA; Fri, 11 Sep 2009
+ 00:54:15 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
+ (Johannes Schindelin's message of "Thu\, 10 Sep 2009 09\:47\:52 +0200
+ \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2D13886A-9E8F-11DE-9F50-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128168>
 
-On 2009.09.10 11:53:23 -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > First, it would be consistent with how ordinary archivers such as t=
-ar
-> > or zip are used, where you have to specify list of files to archive
-> > (in our case this list is HEAD).  Second, I'd rather not accidental=
-ly
-> > dump binary to terminal: "git archive [HEAD]" dumps archive to stan=
-dard
-> > output.
->=20
-> So does "cat".  I do not agree with your second point.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-"cat $some_binary" does, not just "cat". I guess Jakub's point was that
-a command without arguments shouldn't just put some binary crap onto
-your screen. Of course, "git archive HEAD" still does that, but I kind
-of he where he's coming from, being one of those that tends to run
-"$some_command" without arguments, just to see if it shows me some sort
-of short help.
+> How about ^^branch? *ducks*
 
-Bj=F6rn
+You'd better duck.
+
+Just like %branch, it is a selfish and short-sighted "good enough for this
+particular case but there is no room for extending it" hack that I have
+serious problem with.  It closes the door for people who come later, and
+such an attitude is okay only if this is _the last great invention_ and
+there is no more great feature that deserves short-and-sweet notation to
+come.  It might be the _latest_ great invention, but chances are that it
+won't be the last.
+
+> Seriously again, I think that ^{tracking} (with shorthand ^t, maybe) is 
+> not too shabby an option.  The point is: if we make this unattractive 
+> enough by requiring a lot of typing, we will never get to the point where 
+> it is popular enough to make a shorthand: it just will not be used at all.
+
+I actually think it is the other way around.
+
+If it is so useful to be able to specify the ref your branch is based on
+by applying a magic to the name of your branch, the users will use it even
+if it is rather long to type, as long as the feature is easy to discover
+and remember, and then they will demand a short-hand.
+
+If on the other hand users say "Hey, I know can say 'git log X@{upstream}'
+but why bother?  I always build my branch X on top of origin/X anyway, so
+I'd forego that feature and type 'git log origin/X'.  It's not worth my
+time to type that long magic," then the feature is not as useful as you
+hoped.  And there is no point in coming up with a short-hand syntax for
+it.
+
+I personally suspect that users love to use the feature _despite_ the
+initial lack of short-hand, and we would end up adding some short-hand,
+and that would be a far better proof that the feature itself is useful
+than "it is used just %X happens to be shorter than origin/X".
+
+But before that happens, I'd rather not waste short-hand notations, such
+as @{t} or @{u}, that will be in short-supply in the longer term.
