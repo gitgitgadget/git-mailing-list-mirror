@@ -1,123 +1,144 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH 2/2] add documentation for mailinfo.scissors and '--no-scissors'
-Date: Fri, 11 Sep 2009 02:09:21 +0200
-Message-ID: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr>
-References: <7vtyzexnhm.fsf@alter.siamese.dyndns.org>
-Cc: Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: obnoxious CLI complaints
+Date: Fri, 11 Sep 2009 03:18:55 +0300
+Message-ID: <43d8ce650909101718j2f1f77cbgc347ee755145353f@mail.gmail.com>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+	 <200909101850.26109.jnareb@gmail.com>
+	 <43d8ce650909101246l50189c97r4f3fc4a8d7a0bd4@mail.gmail.com>
+	 <200909102223.31602.jnareb@gmail.com>
+	 <43d8ce650909101504q32448cb9w562a43969d01b1fe@mail.gmail.com>
+	 <7v4ora76vr.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Brendan Miller <catphive@catphive.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 11 02:10:03 2009
+X-From: git-owner@vger.kernel.org Fri Sep 11 02:19:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MltiE-0005UP-KO
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 02:10:02 +0200
+	id 1Mltr1-0007L2-AK
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 02:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591AbZIKAJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Sep 2009 20:09:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbZIKAJn
-	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 20:09:43 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:49555 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751087AbZIKAJm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Sep 2009 20:09:42 -0400
-Received: by mail-ew0-f206.google.com with SMTP id 2so647358ewy.17
-        for <git@vger.kernel.org>; Thu, 10 Sep 2009 17:09:45 -0700 (PDT)
+	id S1751448AbZIKASw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Sep 2009 20:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751406AbZIKASw
+	(ORCPT <rfc822;git-outgoing>); Thu, 10 Sep 2009 20:18:52 -0400
+Received: from mail-yx0-f176.google.com ([209.85.210.176]:59069 "EHLO
+	mail-yx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751003AbZIKASw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Sep 2009 20:18:52 -0400
+Received: by yxe6 with SMTP id 6so875394yxe.22
+        for <git@vger.kernel.org>; Thu, 10 Sep 2009 17:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:in-reply-to
-         :references;
-        bh=ZW8OMupmbCFqvH9ZEF2fXpogMxs6qXFRiXCJqWrwB8U=;
-        b=PluN2YBGPyywHi9g/0LLNmvVKIuUBmDf84FiIuFyVQHvR++bnJw/njlREjRqMY3w2p
-         nO5hQlsZq1B6tyi/gYLINAhxYNj2yLkl2RHVzU89MEx2c+X1PiWaAx30kSQbAQqo9t7C
-         +qV9RcoD4KxNk0D9Sy+4qDmHHP7S3y62CPLOA=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Fq7H8qPskwEHBDQr/W8XzCDJfRfbEYD8wPCSE/Q/qtU=;
+        b=xGv7K8jhvwuTgb/5ESzQqyDfhRrvH36eEK/B9JtDPJvuklgsJHAu50zkCYbq224QFe
+         dT7+q4iBQDlf0F7z/4C4ZkBwmGABGiJLqsBe9OETIrpfM0votCrDpHpsOHDNZvla3P52
+         +x9MTcJRPu7WhxafG9Tvhoxf41UkHFbtc7Ces=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=x3Lfz8JzYMfSOHcdok4tIDEBiYYfynQwYeXuWtqsJypJXnU3yhHNOOzTYQiCbJmx5X
-         vDWE/dHt2j+xMsAvMqL52M/FQaSsuWGApfaAptiRqtef1UjUSUh4hZArrdhuBLhjNfyK
-         DFIoa3qPx7ouw1v1ODEn3Cu15XYIfg2nO/06g=
-Received: by 10.210.96.12 with SMTP id t12mr1665759ebb.71.1252627785733;
-        Thu, 10 Sep 2009 17:09:45 -0700 (PDT)
-Received: from localhost (91-164-133-105.rev.libertysurf.net [91.164.133.105])
-        by mx.google.com with ESMTPS id 7sm98254eyb.10.2009.09.10.17.09.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Sep 2009 17:09:45 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc0.164.g5f6b0
-In-Reply-To: <7vtyzexnhm.fsf@alter.siamese.dyndns.org>
-In-Reply-To: <682ef47420f36d8c53e42981370d377b621d7b86.1252626034.git.nicolas.s.dev@gmx.fr>
-References: <682ef47420f36d8c53e42981370d377b621d7b86.1252626034.git.nicolas.s.dev@gmx.fr>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gIyQAUekfkpzqV3I8Dq354bE3j8+Yb3UGjWWTKiXB/itPAoUlm8JHXGb8LoNSllXxu
+         G1KP/FyFfmGFwgAw34ILaNbBqi8GZIZt07wYw+VMC0MCoCo2HnV3gU7NAfaAQr1Gij/J
+         ePsRUqGTeihPJrJ/5UpfJf4lxFbE4WX5hiKDQ=
+Received: by 10.150.237.4 with SMTP id k4mr3816987ybh.93.1252628335104; Thu, 
+	10 Sep 2009 17:18:55 -0700 (PDT)
+In-Reply-To: <7v4ora76vr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128163>
 
-Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
- Documentation/git-am.txt       |    2 +-
- Documentation/git-mailinfo.txt |    6 ++++++
- builtin-mailinfo.c             |    2 +-
- git-am.sh                      |    1 +
- 4 files changed, 9 insertions(+), 2 deletions(-)
+2009/9/11 Junio C Hamano <gitster@pobox.com>:
+> John Tapsell <johnflux@gmail.com> writes:
+>
+>> 2009/9/10 Jakub Narebski <jnareb@gmail.com>:
+>>> Dnia czwartek 10. wrze=C5=9Bnia 2009 21:46, John Tapsell napisa=C5=82=
+:
+>>>> 2009/9/10 Jakub Narebski <jnareb@gmail.com>:
+>>>
+>>>> > First, it would be consistent with how ordinary archivers such a=
+s tar
+>>>> > or zip are used, where you have to specify list of files to arch=
+ive
+>>>> > (in our case this list is HEAD). =C2=A0Second, I'd rather not ac=
+cidentally
+>>>> > dump binary to terminal: "git archive [HEAD]" dumps archive to s=
+tandard
+>>>> > output.
+>>>>
+>>>> That could be fixed by outputting to a file. =C2=A0git format-patc=
+h outputs
+>>>> to a file, so why wouldn't git achieve?
+>>>
+>>> "git format-patch" outputs to files because it generates _multiple_
+>>> files; generating single patch is special case. =C2=A0Also git-form=
+at-patch
+>>> can generate file names from patch (commit) subject; it is not the =
+case
+>>> for "git archive" (what name should it use?).
+>>
+>> What if it used the current (or topleve) directory name? =C2=A0Would=
+n't
+>> that work in most cases?
+>
+> Following along the same line of reasoning, it would work in most cas=
+es if
+> the output is literally named "archive.tar". =C2=A0If it is not the n=
+ame the
+> user wants, the user can "mv" afterwards, or give an explicit filenam=
+e.
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 87781f4..8b2897b 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -13,7 +13,7 @@ SYNOPSIS
- 	 [--3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
--	 [--reject] [-q | --quiet] [--scissors]
-+	 [--reject] [-q | --quiet] [--scissors | --no-scissors]
- 	 [<mbox> | <Maildir>...]
- 'git am' (--skip | --resolved | --abort)
- 
-diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
-index 823ab82..55b8c5e 100644
---- a/Documentation/git-mailinfo.txt
-+++ b/Documentation/git-mailinfo.txt
-@@ -62,6 +62,12 @@ This is useful if you want to begin your message in a discussion thread
- with comments and suggestions on the message you are responding to, and to
- conclude it with a patch submission, separating the discussion and the
- beginning of the proposed commit log message with a scissors line.
-++
-+This can enabled by default with the configuration option mailinfo.scissors.
-+
-+--no-scissors::
-+	Do not obey to a scissors line. This is only useful if mailinfo.scissors is
-+	enabled (see --scissors).
- 
- <msg>::
- 	The commit log message extracted from e-mail, usually
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 7d22fd7..d498b1c 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -1004,7 +1004,7 @@ static int git_mailinfo_config(const char *var, const char *value, void *unused)
- }
- 
- static const char mailinfo_usage[] =
--	"git mailinfo [-k] [-u | --encoding=<encoding> | -n] [--scissors] msg patch < mail >info";
-+	"git mailinfo [-k] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] msg patch < mail >info";
- 
- int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- {
-diff --git a/git-am.sh b/git-am.sh
-index 26ffe70..f242d1a 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -16,6 +16,7 @@ s,signoff       add a Signed-off-by line to the commit message
- u,utf8          recode into utf8 (default)
- k,keep          pass -k flag to git-mailinfo
- c,scissors      strip everything before a scissors line
-+no-scissors     don't obey to a scissors line (default)
- whitespace=     pass it through git-apply
- ignore-space-change pass it through git-apply
- ignore-whitespace pass it through git-apply
--- 
-1.6.5.rc0.164.g5f6b0
+That would also work.  Like how gcc uses "a.out" as the default filenam=
+e
+
+
+> What it does _not_ allow is to send the output to a downstream comman=
+d for
+> postprocessing without introducing some magic token to say "standard
+> output" (e.g. "git archive -f - | (cd ../foo && tar xf -)").
+
+Right, so what's wrong with the magic token?  There's plenty of precede=
+nce.
+
+
+> If the default is to write to the standard output, we won't have all =
+of
+> these issues.
+
+These are issues?
+
+> =C2=A0People who want a file can name the file by
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git archive >my.file.tar
+
+I thought you didn't like this because then you dump binary to the
+console by default ?
+
+> and people who want to pipe (which is 99% of the use pattern for me) =
+can
+> say
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git archive | down stream commands.
+
+Why would it be so bad to do:
+
+git archive -f - | down stream commands
+
+?
+
+This is the most logical way forward.  It keeps the command simple for
+simple use cases (make an archive - "git archive")  but easily
+scalable for more complex use cases (add a  "-f -" if you want to do
+magical things)
+
+John
