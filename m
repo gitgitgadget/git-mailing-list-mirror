@@ -1,76 +1,85 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/4] reset: use "unpack_trees()" directly instead of "git
- read-tree"
-Date: Fri, 11 Sep 2009 02:32:11 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0909110136160.28290@iabervon.org>
-References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.58409.chriscool@tuxfamily.org> <7v1vme2h2f.fsf@alter.siamese.dyndns.org> <200909110734.13903.chriscool@tuxfamily.org>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+Subject: Re: Cannot clone redirecting stdout
+Date: Fri, 11 Sep 2009 08:39:30 +0200
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4AA9F0A2.6050105@atlas-elektronik.com>
+References: <fc8ab2ad0909101533l135c8003m80091cb40ec93f16@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Sep 11 08:32:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Aloisio <aloisiojr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 09:12:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MlzgB-0004lg-Lw
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 08:32:20 +0200
+	id 1Mm0Id-00059E-Kv
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 09:12:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753925AbZIKGcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 02:32:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753895AbZIKGcJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 02:32:09 -0400
-Received: from iabervon.org ([66.92.72.58]:40225 "EHLO iabervon.org"
+	id S1751926AbZIKHLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 03:11:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751304AbZIKHLy
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 03:11:54 -0400
+Received: from lxsrv96.atlas.de ([194.156.172.86]:54069 "EHLO mail96.atlas.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752404AbZIKGcI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 02:32:08 -0400
-Received: (qmail 638 invoked by uid 1000); 11 Sep 2009 06:32:11 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Sep 2009 06:32:11 -0000
-In-Reply-To: <200909110734.13903.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1751263AbZIKHLx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 03:11:53 -0400
+X-Greylist: delayed 1940 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Sep 2009 03:11:53 EDT
+Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
+	by mail96.atlas.de (Postfix) with ESMTP id DC5C5138A5
+	for <git@vger.kernel.org>; Fri, 11 Sep 2009 08:39:35 +0200 (CEST)
+X-AuditID: 0ac86512-00001680000005b8-3b-4aa9f0a778e7
+Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 11 Sep 2009 08:39:35 +0200
+Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
+	by mail01-int.atlas.de (Postfix) with ESMTP id D8D6627180;
+	Fri, 11 Sep 2009 08:39:34 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
+	autolearn=disabled version=3.2.5
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mail01.atlas.de (Postfix) with ESMTP id CD7812717F;
+	Fri, 11 Sep 2009 08:39:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
+In-Reply-To: <fc8ab2ad0909101533l135c8003m80091cb40ec93f16@mail.gmail.com>
+X-Enigmail-Version: 0.96.0
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128179>
 
-On Fri, 11 Sep 2009, Christian Couder wrote:
-
-> On Friday 11 September 2009, Junio C Hamano wrote:
-> > Christian Couder <chriscool@tuxfamily.org> writes:
-> > > From: Stephan Beyer <s-beyer@gmx.net>
-> > >
-> > > This patch makes "reset_index_file()" call "unpack_trees()" directly
-> > > instead of forking and execing "git read-tree".
-> >
-> > And the reason why it is a good idea is...?
+On 9/11/2009 12:33 AM, Aloisio wrote:
+> Hi all,
 > 
-> ...that it should be faster.
+> I faced a problem when trying to clone git://gitorious.org/qt/qt.git
 > 
-> Ok, I will add that to the commit message in the next version.
+> this works:
+> git clone -n git://gitorious.org/qt/qt.git repo
+> 
+> this doesn't:
+> git clone -n git://gitorious.org/qt/qt.git repo >log
+> fatal: The remote end hung up unexpectedly
+> fatal: early EOF
+> fatal: index-pack failed
+> 
+> I reproduced the error in the following versions:
+> git version 1.6.0.4
+> git version 1.6.4.2
+> git version 1.5.4.7
+> 
+> Any clues?
+> Thanks
 
-There's also the benefit (IMHO, more significant) that git-read-tree's 
-command line parsing is complicated, and using it from git-reset makes it 
-hard to see exactly what each option of "git reset" does in terms of 
-operations on the index and the working tree.
+I'd say:
 
-For example, it's not obvious when reading the code to run read-tree that 
-all of the branches lead to the use of the "merge" flag, because some 
-branches use "-m" and some use "--reset".
+Take a look at /proc/<pid-of-git>/fd
 
-Actually, there's a behavior difference between the old version and the 
-new version. The old version gives an error for "git reset --merge" with 
-unmerged entries (unlike any other option to "git reset", AFAICT), and the 
-new version does not. There's no way you'd know this without a careful 
-reading of cmd_read_tree() and cross-reference with reset_index_file(), 
-since the documentation doesn't mention it, the code in reset_index_file() 
-only replaces "--reset" with "-m", and it seems to be doing that for the 
-effect of not ignoring differences in the working tree.
+fd 0 (stdout) is linked through a pipe to 'git index-pack'.
+Redirecting this link breaks everything.
 
-	-Daniel
-*This .sig left intentionally blank*
+Regards,
+Stefan
