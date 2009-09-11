@@ -1,113 +1,141 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: tracking branch for a rebase
-Date: Thu, 10 Sep 2009 21:54:13 -0700
-Message-ID: <7vy6om2ia2.fsf@alter.siamese.dyndns.org>
-References: <20090904135414.GA3728@honk.padd.com>
- <4AA124DD.1030208@drmicha.warpmail.net>
- <20090904181846.GC19093@coredump.intra.peff.net>
- <20090904185949.GA21583@atjola.homenet>
- <20090905061250.GA29863@coredump.intra.peff.net>
- <20090905140127.GA29037@atjola.homenet>
- <20090905142841.GB15631@coredump.intra.peff.net>
- <7vfxaz9wfi.fsf@alter.siamese.dyndns.org>
- <20090907084324.GB17997@coredump.intra.peff.net>
- <alpine.DEB.1.00.0909071126040.8306@pacific.mpi-cbg.de>
- <20090909104550.GA20108@coredump.intra.peff.net>
- <7vzl93cncn.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [RFC/PATCH v2] gitweb: check given hash before trying to create snapshot
+Date: Fri, 11 Sep 2009 01:01:10 -0400
+Message-ID: <4AA9D996.8030405@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 11 06:54:57 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 11 07:01:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mly9v-0001U6-Kr
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 06:54:55 +0200
+	id 1MlyGL-0002hO-6u
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Sep 2009 07:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbZIKEya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 00:54:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbZIKEy3
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 00:54:29 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45334 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750849AbZIKEy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 00:54:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 833C84C5AF;
-	Fri, 11 Sep 2009 00:54:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=mX1/FcmkNvd/0Z/XTa9m98DZADc=; b=qDrF/v
-	ppkGIZT3K+MQPkUmqRvkt3RUY1Mwpjzk0wiDUHzUDrvBwJ/x3GsF/lWVgYaw8Wrr
-	iEjoabNQzIlHROKeU6WfwnIggola6M36O7vh89eY2BasH2/xc+RBlpZE8ny/BUmR
-	u3TwB5vg2+Y6SBF3ETOBNvYrXbTWacAcJCmcw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=U3yfmDrUJMkW32QYBt8yfs0/fl7fkD9a
-	jYLbzk3aoQSaRtavf0rBEtJpXcRghTzeVU6ozBkwhAqTXAJpueDMSs934XtlzWhh
-	h6bvWYHm1Do59RSNhHc8V7r3/RXHDTkmLYYDjU5SwqeeYsGpgQFWNiaeM3Pa4Ko/
-	CiR1Dov3Rpo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EFE04C5AD;
-	Fri, 11 Sep 2009 00:54:24 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B46C84C5AA; Fri, 11 Sep 2009
- 00:54:15 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0909100941330.8306@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Thu\, 10 Sep 2009 09\:47\:52 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2D13886A-9E8F-11DE-9F50-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751585AbZIKFBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 01:01:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751242AbZIKFBY
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 01:01:24 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:55914 "EHLO
+	mailchk-m02.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751144AbZIKFBY (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2009 01:01:24 -0400
+Received: from karakura.local (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
+	(authenticated bits=0)
+	by mailchk-m02.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n8B51ASO027193
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 Sep 2009 01:01:21 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
+X-UUID: 435e38ab-c63a-4855-a884-142015004b92
+X-Miltered: at mailchk-m02 with ID 4AA9D996.002 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m02
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m02.uwaterloo.ca [129.97.128.141]); Fri, 11 Sep 2009 01:01:24 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128169>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+I squashed the two commits together and I also used Jakub's idea to
+create a wrapper for git_get_head_hash.
 
-> How about ^^branch? *ducks*
+--
+Mark Rada (ferrous26)
+marada@uwaterloo.ca
 
-You'd better duck.
 
-Just like %branch, it is a selfish and short-sighted "good enough for this
-particular case but there is no room for extending it" hack that I have
-serious problem with.  It closes the door for people who come later, and
-such an attitude is okay only if this is _the last great invention_ and
-there is no more great feature that deserves short-and-sweet notation to
-come.  It might be the _latest_ great invention, but chances are that it
-won't be the last.
+--->8---
+Make things nicer in cases when you hand craft the snapshot URL but
+make a typo in defining the hash variable (e.g. netx instead of next);
+you will now get an error message instead of a broken tarball.
 
-> Seriously again, I think that ^{tracking} (with shorthand ^t, maybe) is 
-> not too shabby an option.  The point is: if we make this unattractive 
-> enough by requiring a lot of typing, we will never get to the point where 
-> it is popular enough to make a shorthand: it just will not be used at all.
+To maintain backwards compatibility, git_get_head_hash is now a wrapper
+for git_get_full_hash, as suggested by Jakub Narebski.
 
-I actually think it is the other way around.
+Tests for t9501 are included to demonstrate changed functionality.
 
-If it is so useful to be able to specify the ref your branch is based on
-by applying a magic to the name of your branch, the users will use it even
-if it is rather long to type, as long as the feature is easy to discover
-and remember, and then they will demand a short-hand.
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
+ gitweb/gitweb.perl                       |   13 ++++++++++---
+ t/t9501-gitweb-standalone-http-status.sh |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 3 deletions(-)
 
-If on the other hand users say "Hey, I know can say 'git log X@{upstream}'
-but why bother?  I always build my branch X on top of origin/X anyway, so
-I'd forego that feature and type 'git log origin/X'.  It's not worth my
-time to type that long magic," then the feature is not as useful as you
-hoped.  And there is no point in coming up with a short-hand syntax for
-it.
-
-I personally suspect that users love to use the feature _despite_ the
-initial lack of short-hand, and we would end up adding some short-hand,
-and that would be a far better proof that the feature itself is useful
-than "it is used just %X happens to be shorter than origin/X".
-
-But before that happens, I'd rather not waste short-hand notations, such
-as @{t} or @{u}, that will be in short-supply in the longer term.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 24b2193..a40a50d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1983,11 +1983,17 @@ sub quote_command {
+ 
+ # get HEAD ref of given project as hash
+ sub git_get_head_hash {
++	return git_get_full_hash(shift, 'HEAD');
++}
++
++# given a project and tree-ish, returns full hash
++sub git_get_full_hash {
+ 	my $project = shift;
++	my $hash = shift;
+ 	my $o_git_dir = $git_dir;
+ 	my $retval = undef;
+ 	$git_dir = "$projectroot/$project";
+-	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
++	if (open my $fd, '-|', git_cmd(), 'rev-parse', '--verify', $hash) {
+ 		my $head = <$fd>;
+ 		close $fd;
+ 		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
+@@ -5196,8 +5202,9 @@ sub git_snapshot {
+ 		die_error(403, "Unsupported snapshot format");
+ 	}
+ 
+-	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
++	my $snapshot = git_get_full_hash($project, $hash);
++	if (!$snapshot) {
++		die_error(400, "Not a valid hash id: $hash");
+ 	}
+ 
+ 	my $name = $project;
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index d0ff21d..81abfae 100644
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -75,4 +75,33 @@ test_expect_success \
+ test_debug 'cat gitweb.output'
+ 
+ 
++# ----------------------------------------------------------------------
++# snapshot hash ids
++
++test_expect_success \
++	'snapshots: bad treeish id' \
++	'gitweb_run "p=.git;a=snapshot;h=frizzumFrazzum;sf=tgz" &&
++	grep "400 - Not a valid hash id:" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: good treeish id' \
++	'gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
++	grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: bad object id' \
++	'gitweb_run "p=.git;a=snapshot;h=abcdef01234;sf=tgz" &&
++	grep "400 - Not a valid hash id:" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: good object id' \
++	'ID=`git rev-parse --verify HEAD` &&
++	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
++	grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
+ test_done
+-- 
+1.6.4.2
