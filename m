@@ -1,151 +1,1036 @@
-From: Owen Taylor <otaylor@redhat.com>
-Subject: Re: git push --confirm ?
-Date: Sat, 12 Sep 2009 16:11:06 -0400
-Message-ID: <1252786266.2974.61.camel@localhost.localdomain>
-References: <1252777897.2974.24.camel@localhost.localdomain>
-	 <20090912184342.GB20561@coredump.intra.peff.net>
+From: Tito <farmatito@tiscali.it>
+Subject: [DIFF] build git on armv6l emulator with uclibc
+Date: Sat, 12 Sep 2009 22:18:07 +0200
+Message-ID: <200909122218.07830.farmatito@tiscali.it>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Colin Walters <walters@verbum.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 12 22:11:27 2009
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_/HArK/fd+eFxnap"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 12 22:19:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmYwQ-0006Uk-MD
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 22:11:27 +0200
+	id 1MmZ44-00086Z-J4
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 22:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753906AbZILULS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 16:11:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753903AbZILULR
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 16:11:17 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:51115 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753779AbZILULR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 16:11:17 -0400
-Received: from int-mx04.intmail.prod.int.phx2.redhat.com (int-mx04.intmail.prod.int.phx2.redhat.com [10.5.11.17])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8CKBGMo012919;
-	Sat, 12 Sep 2009 16:11:16 -0400
-Received: from [127.0.0.1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
-	by int-mx04.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8CKBF0e010866;
-	Sat, 12 Sep 2009 16:11:15 -0400
-In-Reply-To: <20090912184342.GB20561@coredump.intra.peff.net>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.17
+	id S1754027AbZILUSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 16:18:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198AbZILUSO
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 16:18:14 -0400
+Received: from smtp-out26.alice.it ([85.33.2.26]:3505 "EHLO
+	smtp-out26.alice.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751770AbZILUSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 16:18:13 -0400
+Received: from FBCMMO03.fbc.local ([192.168.68.197]) by smtp-out26.alice.it with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:18:15 +0200
+Received: from FBCMCL01B05.fbc.local ([192.168.69.86]) by FBCMMO03.fbc.local with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:18:15 +0200
+Received: from [192.168.1.100] ([79.45.5.203]) by FBCMCL01B05.fbc.local with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:18:13 +0200
+User-Agent: KMail/1.9.9
+X-OriginalArrivalTime: 12 Sep 2009 20:18:13.0919 (UTC) FILETIME=[27F2AAF0:01CA33E6]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128294>
 
-On Sat, 2009-09-12 at 14:43 -0400, Jeff King wrote:
-> On Sat, Sep 12, 2009 at 01:51:37PM -0400, Owen Taylor wrote:
-> 
-> >  * An initial --dry-run pass is done but with more verbosity -
-> >    for updates of existing references, it would show what commits
-> >    were being added or removed in a one-line format.
-> > 
-> >  * The user is prompted if they want to proceed
-> >  
-> >  * If the user agrees, then the push is run without --dry-run
-> >
-> > [...]
-> >
-> > I think this wouldn't be too hard to add to 'git push', though
-> > I haven't tried to code it. Yes, it's not atomic without protocol
-> > changes - I think that's OK:
-> 
-> I have never wanted such a feature, so maybe I am a bad person to
-> comment, but I don't see much advantage from a UI standpoint over what
-> we have now. Which is "git push --dry-run", check to see if you like it,
-> and then re-run without --dry-run. If you just want to see more output
-> in the first --dry-run, then that is easy to do with an alternate
-> format.
+--Boundary-00=_/HArK/fd+eFxnap
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-The main UI advantage is that you can adjust the default with 'git
-config' it on and leave it on. The time you screw up is not when you are
-worried that you are going to push the wrong thing. It's when you are
-you know exactly what 'git push' is going to do and it does something
-different.
+Hi,
+this by no means could be considered a patch, it is only a
+report of the modifications i had to make to git-1.6.4.2
+sources in order to build it with uClibc-0.9.30.1 in Rob Landley's
+Firmware Linux 0.9.7 in a armv6l qemu emulator.
+The major problem really was to get perl to build.
+I've tested git (mainly git pull as it is the only thing I really
+need in this case) and it seems to work fine.
+Attached you'll find a diff and my config.log.
+Maybe some more experienced developer with better knowledge
+of Makefile/autoconf voodoo could use this to add uClibc support
+to git if there is a interest.
 
-Secondarily, I don't really find the output of 'git push --dry-run'
-that great - it's pretty good for finding out what branches you are
-going to push... that you correctly understood the syntax of git push
-and the relationship to your branch configuration, but not so good at
-seeing what's going to be pushed,
+Best regards and Ciao,
+Tito
 
-If it shows:
+--Boundary-00=_/HArK/fd+eFxnap
+Content-Type: text/x-diff;
+  charset="iso 8859-15";
+  name="git_uclibc_on_armv6l.diff"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="git_uclibc_on_armv6l.diff"
 
- 72b3142..1fa3134 my-topic -> my-topic
- 12a31aa..34f2621 master -> master
+signed off by Tito Ragusa <farmatito@tiscali.it>
 
-That doesn't necessarily warn you that along with the bug fix you think
-you are pushing you have a big merge into master sitting there that you
-haven't finished testing. For updates, showing a commit count and (a
-probably limited number of) commit subjects would avoid having to
-cut-and-paste the update summary into git log.
+--- builtin-fetch-pack.c.orig	2009-08-29 23:58:52.000000000 +0200
++++ builtin-fetch-pack.c	2009-09-12 11:47:00.000000000 +0200
+@@ -813,7 +813,11 @@
+ 		int fd;
+ 
+ 		mtime.sec = st.st_mtime;
++#if 0
+ 		mtime.nsec = ST_MTIME_NSEC(st);
++#else
++		mtime.nsec = (unsigned long int)st.st_mtimensec;
++#endif
+ 		if (stat(shallow, &st)) {
+ 			if (mtime.sec)
+ 				die("shallow file was removed during fetch");
+--- read-cache.c.orig	2009-08-29 23:58:52.000000000 +0200
++++ read-cache.c	2009-09-12 22:04:22.000000000 +0200
+@@ -69,8 +69,13 @@
+ {
+ 	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
+ 	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
++#if 0 
+ 	ce->ce_ctime.nsec = ST_CTIME_NSEC(*st);
+ 	ce->ce_mtime.nsec = ST_MTIME_NSEC(*st);
++#else
++	ce->ce_ctime.nsec = (unsigned long int)st->st_ctimensec;
++	ce->ce_mtime.nsec = (unsigned long int)st->st_mtimensec;
++#endif
+ 	ce->ce_dev = st->st_dev;
+ 	ce->ce_ino = st->st_ino;
+ 	ce->ce_uid = st->st_uid;
+@@ -1299,7 +1304,11 @@
+ 		dst_offset += ce_size(ce);
+ 	}
+ 	istate->timestamp.sec = st.st_mtime;
++#if 0
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
++#else
++	istate->timestamp.nsec = (unsigned long int)st.st_mtimensec;
++#endif
+ 
+ 	while (src_offset <= mmap_size - 20 - 8) {
+ 		/* After an array of active_nr index entries,
+@@ -1564,7 +1573,11 @@
+ 	if (ce_flush(&c, newfd) || fstat(newfd, &st))
+ 		return -1;
+ 	istate->timestamp.sec = (unsigned int)st.st_mtime;
++#if 0
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
++#else
++	istate->timestamp.nsec = (unsigned long int)st.st_mtimensec;
++#endif
+ 	return 0;
+ }
+ 
 
-As you say, maybe that's something that just needs to be fixed
-with a better format for --dry-run. But that doesn't negate the main UI
-advantage.
+--Boundary-00=_/HArK/fd+eFxnap
+Content-Type: text/x-log;
+  charset="iso 8859-15";
+  name="config.log"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+	filename="config.log"
 
-> But what _would_ be useful is doing it atomically. You can certainly do
-> all three of those steps from within one "git push" invocation, and I
-> think that is enough without any protocol changes. The protocol already
-> sends for each ref a line like:
-> 
->   <old-sha1> <new-sha1> <ref>
-> 
-> and receive-pack will not proceed with the update unless the <old-sha1>
-> matches what is about to be changed.
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
 
-Hmm, yeah, I've certainly looked at git-receive-pack(1) before but
-hadn't internalized that --force was client side. Certainly doing it
-with a single atomic pass is the better way to do it.
+It was created by git configure 1.6.4.2, which was
+generated by GNU Autoconf 2.63.  Invocation command line was
 
-(Wouldn't work for rsync and http pushes, right? A simple "Not
-supported" perhaps.)
+  $ ./configure --disable-pthreads --prefix=/usr --without-tcltk
 
-> >  - If the push isn't being forced intermediate ref updates will
-> >    be caught as a non-fast-forward in the second pass.
-> > 
-> >  - If the push is being forced, you might overwrite someone else's
-> >    push anyways even without --confirm.
-> 
-> Yeah, "--force" is not very fine-grained. I wonder if rather than a
-> complete --confirm you would rather have something iterative like:
-> 
->   $ git push --interactive
->   Pushing to server:/path/to/repo.git
->     * [new branch]      topic -> topic
->   Push this branch [Yn]?
->       5ad9dce..cfc497a  topic -> topic
->   Push this branch [Yn]?
+## --------- ##
+## Platform. ##
+## --------- ##
 
-Hmm, of two minds about this. Doing it as a pick-and-choose
---interactive does integrate it conceptually with other parts of Git.
-And probably is occasionally useful.
+hostname = (none)
+uname -m = armv6l
+uname -r = 2.6.30.4
+uname -s = Linux
+uname -v = #1 Fri Sep 4 23:05:31 CEST 2009
 
-But it makes it considerably less convenient to just config on.
-Because any time you want to push more than 2-3 refs at once you'll have
-to add --no-interactive.
+/usr/bin/uname -p = unknown
+/bin/uname -X     = unknown
 
-It also increases the amount of reading - if I see all the branches at
-once that are being pushed I can immediately notice that I'm pushing two
-branches when I thought I was pushing one, without actually having to
-read the branch names.
+/bin/arch              = unknown
+/usr/bin/arch -k       = unknown
+/usr/convex/getsysinfo = unknown
+/usr/bin/hostinfo      = unknown
+/bin/machine           = unknown
+/usr/bin/oslevel       = unknown
+/bin/universe          = unknown
 
-My conception of the feature is as a safety harness. That some people
-will be willing to pay a keystroke or two for that double check that
-their mental model matches reality.
+PATH: /usr/bin
 
-      5ad9dce...cfc497a topic -> topic (non-fast forward) 
-> Force this branch [yN]?
 
-This one is a disaster waiting to happen. Even with the reversed
-defaults you may well have the 'y<return>' habit going. Unless the
-non-fast-forward looks completely different (Red and Blinky) you
-probably are going to go right past it.
+## ----------- ##
+## Core tests. ##
+## ----------- ##
 
-- Owen
+configure:1919: Setting lib to 'lib' (the default)
+configure:1935: POSIX Threads will be disabled.
+configure:1950: CHECKS for site configuration
+configure:2187: CHECKS for programs
+configure:2244: checking for cc
+configure:2260: found /usr/bin/cc
+configure:2271: result: cc
+configure:2305: checking for C compiler version
+configure:2313: cc --version >&5
+uClibc rawgcc (GCC) 4.2.1
+Copyright (C) 2007 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+configure:2317: $? = 0
+configure:2324: cc -v >&5
+Invoked as cc
+Reference path: /usr/bin/..
+arg[ 0] = rawgcc
+arg[ 1] = -U__nptl__
+arg[ 2] = -v
+Using built-in specs.
+Target: armv6l-unknown-linux-gnueabi
+Configured with: /home/tito/Desktop/firmware-0.9.7/build/temp-armv6l/gcc-core/configure --prefix=/home/tito/Desktop/firmware-0.9.7/build/root-filesystem-armv6l/usr --disable-multilib --build=i686-walrus-linux --host=armv6l-unknown-linux-gnueabi --target=armv6l-unknown-linux-gnueabi --enable-long-long --enable-c99 --enable-shared --enable-threads=posix --enable-__cxa_atexit --disable-nls --enable-languages=c,c++ --disable-libstdcxx-pch --program-prefix= --with-march=armv6 --with-mfloat-abi=soft --with-mfp=vfp --disable-sjlj-exceptions
+Thread model: posix
+gcc version 4.2.1
+configure:2328: $? = 0
+configure:2335: cc -V >&5
+rawgcc: '-V' must come at the start of the command line
+configure:2339: $? = 1
+configure:2362: checking for C compiler default output file name
+configure:2384: cc    conftest.c  >&5
+configure:2388: $? = 0
+configure:2426: result: a.out
+configure:2445: checking whether the C compiler works
+configure:2455: ./a.out
+configure:2459: $? = 0
+configure:2478: result: yes
+configure:2485: checking whether we are cross compiling
+configure:2487: result: no
+configure:2490: checking for suffix of executables
+configure:2497: cc -o conftest    conftest.c  >&5
+configure:2501: $? = 0
+configure:2527: result: 
+configure:2533: checking for suffix of object files
+configure:2559: cc -c   conftest.c >&5
+configure:2563: $? = 0
+configure:2588: result: o
+configure:2592: checking whether we are using the GNU C compiler
+configure:2621: cc -c   conftest.c >&5
+configure:2628: $? = 0
+configure:2645: result: yes
+configure:2654: checking whether cc accepts -g
+configure:2684: cc -c -g  conftest.c >&5
+configure:2691: $? = 0
+configure:2792: result: yes
+configure:2809: checking for cc option to accept ISO C89
+configure:2883: cc  -c -g -O2  conftest.c >&5
+configure:2890: $? = 0
+configure:2913: result: none needed
+configure:2933: checking if linker supports -R
+configure:2962: cc -o conftest -g -O2   -R / conftest.c  >&5
+rawgcc: unrecognized option '-R'
+/: file not recognized: Is a directory
+collect2: ld returned 1 exit status
+configure:2969: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| 
+| int
+| main ()
+| {
+| 
+|   ;
+|   return 0;
+| }
+configure:2991: result: no
+configure:2997: checking if linker supports -Wl,-rpath,
+configure:3026: cc -o conftest -g -O2   -Wl,-rpath,/ conftest.c  >&5
+configure:3033: $? = 0
+configure:3055: result: yes
+configure:3180: checking for gar
+configure:3210: result: no
+configure:3180: checking for ar
+configure:3196: found /usr/bin/ar
+configure:3207: result: ar
+configure:3235: checking for gtar
+configure:3265: result: no
+configure:3235: checking for tar
+configure:3251: found /usr/bin/tar
+configure:3262: result: tar
+configure:3335: checking for asciidoc
+configure:3365: result: no
+configure:3399: CHECKS for libraries
+configure:3414: checking for SHA1_Init in -lcrypto
+configure:3449: cc -o conftest -g -O2   conftest.c -lcrypto   >&5
+/usr/bin/../libexec/gcc/armv6l-unknown-linux-gnueabi/4.2.1/ld: cannot find -lcrypto
+collect2: ld returned 1 exit status
+configure:3456: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| 
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char SHA1_Init ();
+| int
+| main ()
+| {
+| return SHA1_Init ();
+|   ;
+|   return 0;
+| }
+configure:3477: result: no
+configure:3482: checking for SHA1_Init in -lssl
+configure:3517: cc -o conftest -g -O2   conftest.c -lssl   >&5
+/usr/bin/../libexec/gcc/armv6l-unknown-linux-gnueabi/4.2.1/ld: cannot find -lssl
+collect2: ld returned 1 exit status
+configure:3524: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| 
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char SHA1_Init ();
+| int
+| main ()
+| {
+| return SHA1_Init ();
+|   ;
+|   return 0;
+| }
+configure:3545: result: no
+configure:3580: checking for curl_global_init in -lcurl
+configure:3615: cc -o conftest -g -O2   conftest.c -lcurl   >&5
+/usr/bin/../libexec/gcc/armv6l-unknown-linux-gnueabi/4.2.1/ld: cannot find -lcurl
+collect2: ld returned 1 exit status
+configure:3622: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| 
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char curl_global_init ();
+| int
+| main ()
+| {
+| return curl_global_init ();
+|   ;
+|   return 0;
+| }
+configure:3643: result: no
+configure:3674: checking for XML_ParserCreate in -lexpat
+configure:3709: cc -o conftest -g -O2   conftest.c -lexpat   >&5
+/usr/bin/../libexec/gcc/armv6l-unknown-linux-gnueabi/4.2.1/ld: cannot find -lexpat
+collect2: ld returned 1 exit status
+configure:3716: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| 
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char XML_ParserCreate ();
+| int
+| main ()
+| {
+| return XML_ParserCreate ();
+|   ;
+|   return 0;
+| }
+configure:3737: result: no
+configure:3790: checking for iconv in -lc
+configure:3809: cc -o conftest -g -O2   conftest.c  -lc >&5
+conftest.c:2:19: error: iconv.h: No such file or directory
+configure:3816: $? = 1
+configure: failed program was:
+| 
+| #include <iconv.h>
+| 
+| int main(void)
+| {
+| 	iconv_open("", "");
+| 	return 0;
+| }
+| 
+configure:3832: result: no
+configure:3790: checking for iconv in -liconv
+configure:3809: cc -o conftest -g -O2   conftest.c  -liconv >&5
+conftest.c:2:19: error: iconv.h: No such file or directory
+configure:3816: $? = 1
+configure: failed program was:
+| 
+| #include <iconv.h>
+| 
+| int main(void)
+| {
+| 	iconv_open("", "");
+| 	return 0;
+| }
+| 
+configure:3832: result: no
+configure:3874: checking for deflateBound in -lz
+configure:3895: cc -o conftest -g -O2   conftest.c  -lz >&5
+configure:3902: $? = 0
+configure:3910: result: yes
+configure:3938: checking for socket in -lc
+configure:3973: cc -o conftest -g -O2   conftest.c -lc   >&5
+configure:3980: $? = 0
+configure:4001: result: yes
+configure:4016: checking for hstrerror in -lc
+configure:4051: cc -o conftest -g -O2   conftest.c -lc   >&5
+configure:4058: $? = 0
+configure:4079: result: yes
+configure:4090: checking for basename in -lc
+configure:4125: cc -o conftest -g -O2   conftest.c -lc   >&5
+configure:4132: $? = 0
+configure:4153: result: yes
+configure:4165: CHECKS for header files
+configure:4174: checking how to run the C preprocessor
+configure:4214: cc -E  conftest.c
+configure:4221: $? = 0
+configure:4252: cc -E  conftest.c
+conftest.c:8:28: error: ac_nonexistent.h: No such file or directory
+configure:4259: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4292: result: cc -E
+configure:4321: cc -E  conftest.c
+configure:4328: $? = 0
+configure:4359: cc -E  conftest.c
+conftest.c:8:28: error: ac_nonexistent.h: No such file or directory
+configure:4366: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4406: checking for grep that handles long lines and -e
+configure:4466: result: /usr/bin/grep
+configure:4471: checking for egrep
+configure:4535: result: /usr/bin/grep -E
+configure:4540: checking for ANSI C header files
+configure:4570: cc -c -g -O2  conftest.c >&5
+configure:4577: $? = 0
+configure:4673: cc -o conftest -g -O2   conftest.c  >&5
+configure:4677: $? = 0
+configure:4683: ./conftest
+configure:4687: $? = 0
+configure:4705: result: yes
+configure:4729: checking for sys/types.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for sys/stat.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for stdlib.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for string.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for memory.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for strings.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for inttypes.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for stdint.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4729: checking for unistd.h
+configure:4750: cc -c -g -O2  conftest.c >&5
+configure:4757: $? = 0
+configure:4774: result: yes
+configure:4798: checking sys/select.h usability
+configure:4815: cc -c -g -O2  conftest.c >&5
+configure:4822: $? = 0
+configure:4836: result: yes
+configure:4840: checking sys/select.h presence
+configure:4855: cc -E  conftest.c
+configure:4862: $? = 0
+configure:4876: result: yes
+configure:4909: checking for sys/select.h
+configure:4916: result: yes
+configure:4942: checking for old iconv()
+configure:4964: cc -c -g -O2  conftest.c >&5
+conftest.c:2:19: error: iconv.h: No such file or directory
+conftest.c:4: error: expected '=', ',', ';', 'asm' or '__attribute__' before 'iconv'
+configure:4971: $? = 1
+configure: failed program was:
+| 
+| #include <iconv.h>
+| 
+| extern size_t iconv(iconv_t cd,
+| 		    char **inbuf, size_t *inbytesleft,
+| 		    char **outbuf, size_t *outbytesleft);
+| 
+| int main(void)
+| {
+| 	return 0;
+| }
+| 
+configure:4982: result: yes
+configure:4999: CHECKS for typedefs, structures, and compiler characteristics
+configure:5003: checking for struct dirent.d_ino
+configure:5032: cc -c -g -O2  conftest.c >&5
+configure:5039: $? = 0
+configure:5098: result: yes
+configure:5110: checking for struct dirent.d_type
+configure:5139: cc -c -g -O2  conftest.c >&5
+configure:5146: $? = 0
+configure:5205: result: yes
+configure:5217: checking for struct sockaddr_storage
+configure:5249: cc -c -g -O2  conftest.c >&5
+configure:5256: $? = 0
+configure:5287: cc -c -g -O2  conftest.c >&5
+conftest.c: In function 'main':
+conftest.c:26: error: expected expression before ')' token
+configure:5294: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| 
+| #include <sys/types.h>
+| #include <sys/socket.h>
+| 
+| 
+| int
+| main ()
+| {
+| if (sizeof ((struct sockaddr_storage)))
+| 	  return 0;
+|   ;
+|   return 0;
+| }
+configure:5317: result: yes
+configure:5328: checking for struct addrinfo
+configure:5361: cc -c -g -O2  conftest.c >&5
+configure:5368: $? = 0
+configure:5400: cc -c -g -O2  conftest.c >&5
+conftest.c: In function 'main':
+conftest.c:27: error: expected expression before ')' token
+configure:5407: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| 
+| #include <sys/types.h>
+| #include <sys/socket.h>
+| #include <netdb.h>
+| 
+| 
+| int
+| main ()
+| {
+| if (sizeof ((struct addrinfo)))
+| 	  return 0;
+|   ;
+|   return 0;
+| }
+configure:5430: result: yes
+configure:5434: checking for getaddrinfo
+configure:5490: cc -o conftest -g -O2   conftest.c  >&5
+configure:5497: $? = 0
+configure:5517: result: yes
+configure:5521: checking for library containing getaddrinfo
+configure:5562: cc -o conftest -g -O2   conftest.c  >&5
+configure:5569: $? = 0
+configure:5600: result: none required
+configure:5626: checking whether formatted IO functions support C99 size specifiers
+configure:5666: cc -o conftest -g -O2   conftest.c  >&5
+configure:5670: $? = 0
+configure:5676: ./conftest
+configure:5680: $? = 0
+configure:5698: result: yes
+configure:5709: checking whether system succeeds to read fopen'ed directory
+configure:5747: cc -o conftest -g -O2   conftest.c  >&5
+configure:5751: $? = 0
+configure:5757: ./conftest
+configure:5761: $? = 0
+configure:5779: result: no
+configure:5791: checking whether snprintf() and/or vsnprintf() return bogus value
+configure:5842: cc -o conftest -g -O2   conftest.c  >&5
+configure:5846: $? = 0
+configure:5852: ./conftest
+configure:5856: $? = 0
+configure:5874: result: no
+configure:5886: CHECKS for library functions
+configure:5900: checking libgen.h usability
+configure:5917: cc -c -g -O2  conftest.c >&5
+configure:5924: $? = 0
+configure:5938: result: yes
+configure:5942: checking libgen.h presence
+configure:5957: cc -E  conftest.c
+configure:5964: $? = 0
+configure:5978: result: yes
+configure:6011: checking for libgen.h
+configure:6018: result: yes
+configure:6032: checking for strcasestr
+configure:6088: cc -o conftest -g -O2   conftest.c  >&5
+configure:6095: $? = 0
+configure:6115: result: yes
+configure:6119: checking for library containing strcasestr
+configure:6160: cc -o conftest -g -O2   conftest.c  >&5
+configure:6167: $? = 0
+configure:6198: result: none required
+configure:6216: checking for memmem
+configure:6272: cc -o conftest -g -O2   conftest.c  >&5
+configure:6279: $? = 0
+configure:6299: result: yes
+configure:6303: checking for library containing memmem
+configure:6344: cc -o conftest -g -O2   conftest.c  >&5
+configure:6351: $? = 0
+configure:6382: result: none required
+configure:6400: checking for strlcpy
+configure:6456: cc -o conftest -g -O2   conftest.c  >&5
+configure:6463: $? = 0
+configure:6483: result: yes
+configure:6487: checking for library containing strlcpy
+configure:6528: cc -o conftest -g -O2   conftest.c  >&5
+configure:6535: $? = 0
+configure:6566: result: none required
+configure:6584: checking for uintmax_t
+configure:6615: cc -c -g -O2  conftest.c >&5
+configure:6622: $? = 0
+configure:6652: cc -c -g -O2  conftest.c >&5
+conftest.c: In function 'main':
+conftest.c:25: error: expected expression before ')' token
+configure:6659: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| 
+| #include <inttypes.h>
+| 
+| 
+| int
+| main ()
+| {
+| if (sizeof ((uintmax_t)))
+| 	  return 0;
+|   ;
+|   return 0;
+| }
+configure:6682: result: yes
+configure:6693: checking for strtoumax
+configure:6749: cc -o conftest -g -O2   conftest.c  >&5
+configure:6756: $? = 0
+configure:6776: result: yes
+configure:6780: checking for library containing strtoumax
+configure:6821: cc -o conftest -g -O2   conftest.c  >&5
+configure:6828: $? = 0
+configure:6859: result: none required
+configure:6877: checking for setenv
+configure:6933: cc -o conftest -g -O2   conftest.c  >&5
+configure:6940: $? = 0
+configure:6960: result: yes
+configure:6964: checking for library containing setenv
+configure:7005: cc -o conftest -g -O2   conftest.c  >&5
+configure:7012: $? = 0
+configure:7043: result: none required
+configure:7061: checking for unsetenv
+configure:7117: cc -o conftest -g -O2   conftest.c  >&5
+configure:7124: $? = 0
+configure:7144: result: yes
+configure:7148: checking for library containing unsetenv
+configure:7189: cc -o conftest -g -O2   conftest.c  >&5
+configure:7196: $? = 0
+configure:7227: result: none required
+configure:7245: checking for mkdtemp
+configure:7301: cc -o conftest -g -O2   conftest.c  >&5
+configure:7308: $? = 0
+configure:7328: result: yes
+configure:7332: checking for library containing mkdtemp
+configure:7373: cc -o conftest -g -O2   conftest.c  >&5
+configure:7380: $? = 0
+configure:7411: result: none required
+configure:7429: checking for mkstemps
+configure:7485: cc -o conftest -g -O2   conftest.c  >&5
+/tmp/ccaFxzaQ.o: In function `main':
+/home/git-1.6.4.2/conftest.c:52: undefined reference to `mkstemps'
+collect2: ld returned 1 exit status
+configure:7492: $? = 1
+configure: failed program was:
+| /* confdefs.h.  */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "1.6.4.2"
+| #define PACKAGE_STRING "git 1.6.4.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| /* Define mkstemps to an innocuous variant, in case <limits.h> declares mkstemps.
+|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+| #define mkstemps innocuous_mkstemps
+| 
+| /* System header to define __stub macros and hopefully few prototypes,
+|     which can conflict with char mkstemps (); below.
+|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+|     <limits.h> exists even on freestanding compilers.  */
+| 
+| #ifdef __STDC__
+| # include <limits.h>
+| #else
+| # include <assert.h>
+| #endif
+| 
+| #undef mkstemps
+| 
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char mkstemps ();
+| /* The GNU C library defines this for functions which it implements
+|     to always fail with ENOSYS.  Some functions are actually named
+|     something starting with __ and the normal name is an alias.  */
+| #if defined __stub_mkstemps || defined __stub___mkstemps
+| choke me
+| #endif
+| 
+| int
+| main ()
+| {
+| return mkstemps ();
+|   ;
+|   return 0;
+| }
+configure:7512: result: no
+configure:7637: Skipping POSIX Threads at user request.
+configure:7904: creating ./config.status
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by git config.status 1.6.4.2, which was
+generated by GNU Autoconf 2.63.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status 
+
+on (none)
+
+config.status:684: creating config.mak.autogen
+
+## ---------------- ##
+## Cache variables. ##
+## ---------------- ##
+
+ac_cv_c_c99_format=yes
+ac_cv_c_compiler_gnu=yes
+ac_cv_env_CC_set=
+ac_cv_env_CC_value=
+ac_cv_env_CFLAGS_set=
+ac_cv_env_CFLAGS_value=
+ac_cv_env_CPPFLAGS_set=
+ac_cv_env_CPPFLAGS_value=
+ac_cv_env_CPP_set=
+ac_cv_env_CPP_value=
+ac_cv_env_LDFLAGS_set=
+ac_cv_env_LDFLAGS_value=
+ac_cv_env_LIBS_set=
+ac_cv_env_LIBS_value=
+ac_cv_env_build_alias_set=
+ac_cv_env_build_alias_value=
+ac_cv_env_host_alias_set=
+ac_cv_env_host_alias_value=
+ac_cv_env_target_alias_set=
+ac_cv_env_target_alias_value=
+ac_cv_fread_reads_directories=no
+ac_cv_func_getaddrinfo=yes
+ac_cv_func_memmem=yes
+ac_cv_func_mkdtemp=yes
+ac_cv_func_mkstemps=no
+ac_cv_func_setenv=yes
+ac_cv_func_strcasestr=yes
+ac_cv_func_strlcpy=yes
+ac_cv_func_strtoumax=yes
+ac_cv_func_unsetenv=yes
+ac_cv_header_inttypes_h=yes
+ac_cv_header_libgen_h=yes
+ac_cv_header_memory_h=yes
+ac_cv_header_stdc=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_sys_select_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_types_h=yes
+ac_cv_header_unistd_h=yes
+ac_cv_lib_c_basename=yes
+ac_cv_lib_c_hstrerror=yes
+ac_cv_lib_c_socket=yes
+ac_cv_lib_crypto_SHA1_Init=no
+ac_cv_lib_curl_curl_global_init=no
+ac_cv_lib_expat_XML_ParserCreate=no
+ac_cv_lib_ssl_SHA1_Init=no
+ac_cv_member_struct_dirent_d_ino=yes
+ac_cv_member_struct_dirent_d_type=yes
+ac_cv_objext=o
+ac_cv_path_EGREP='/usr/bin/grep -E'
+ac_cv_path_GREP=/usr/bin/grep
+ac_cv_prog_CPP='cc -E'
+ac_cv_prog_TAR=tar
+ac_cv_prog_ac_ct_AR=ar
+ac_cv_prog_ac_ct_CC=cc
+ac_cv_prog_cc_c89=
+ac_cv_prog_cc_g=yes
+ac_cv_search_getaddrinfo='none required'
+ac_cv_search_memmem='none required'
+ac_cv_search_mkdtemp='none required'
+ac_cv_search_setenv='none required'
+ac_cv_search_strcasestr='none required'
+ac_cv_search_strlcpy='none required'
+ac_cv_search_strtoumax='none required'
+ac_cv_search_unsetenv='none required'
+ac_cv_snprintf_returns_bogus=no
+ac_cv_type_struct_addrinfo=yes
+ac_cv_type_struct_sockaddr_storage=yes
+ac_cv_type_uintmax_t=yes
+git_cv_ld_dashr=no
+git_cv_ld_wl_rpath=yes
+
+## ----------------- ##
+## Output variables. ##
+## ----------------- ##
+
+AR='ar'
+ASCIIDOC8=''
+ASCIIDOC=''
+CC='cc'
+CC_LD_DYNPATH='-Wl,-rpath,'
+CFLAGS=''
+CPP='cc -E'
+CPPFLAGS=''
+DEFS='-DPACKAGE_NAME=\"git\" -DPACKAGE_TARNAME=\"git\" -DPACKAGE_VERSION=\"1.6.4.2\" -DPACKAGE_STRING=\"git\ 1.6.4.2\" -DPACKAGE_BUGREPORT=\"git@vger.kernel.org\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1'
+ECHO_C=''
+ECHO_N='-n'
+ECHO_T=''
+EGREP='/usr/bin/grep -E'
+EXEEXT=''
+FREAD_READS_DIRECTORIES=''
+GREP='/usr/bin/grep'
+LDFLAGS=''
+LIBOBJS=''
+LIBS=''
+LTLIBOBJS=''
+NEEDS_LIBGEN=''
+NEEDS_LIBICONV=''
+NEEDS_RESOLV=''
+NEEDS_SOCKET=''
+NEEDS_SSL_WITH_CRYPTO=''
+NO_C99_FORMAT=''
+NO_CURL='YesPlease'
+NO_DEFLATE_BOUND=''
+NO_D_INO_IN_DIRENT=''
+NO_D_TYPE_IN_DIRENT=''
+NO_EXPAT='YesPlease'
+NO_ICONV='YesPlease'
+NO_IPV6=''
+NO_LIBGEN_H=''
+NO_MEMMEM=''
+NO_MKDTEMP=''
+NO_MKSTEMPS='YesPlease'
+NO_OPENSSL='YesPlease'
+NO_PTHREADS='UnfortunatelyYes'
+NO_SETENV=''
+NO_SOCKADDR_STORAGE=''
+NO_STRCASESTR=''
+NO_STRLCPY=''
+NO_STRTOUMAX=''
+NO_SYS_SELECT_H=''
+NO_UINTMAX_T=''
+NO_UNSETENV=''
+OBJEXT='o'
+OLD_ICONV='UnfortunatelyYes'
+PACKAGE_BUGREPORT='git@vger.kernel.org'
+PACKAGE_NAME='git'
+PACKAGE_STRING='git 1.6.4.2'
+PACKAGE_TARNAME='git'
+PACKAGE_VERSION='1.6.4.2'
+PATH_SEPARATOR=':'
+PTHREAD_LIBS=''
+SHELL='/bin/sh'
+SNPRINTF_RETURNS_BOGUS=''
+TAR='tar'
+TCLTK_PATH=''
+THREADED_DELTA_SEARCH=''
+ac_ct_AR='ar'
+ac_ct_CC='cc'
+bindir='${exec_prefix}/bin'
+build_alias=''
+datadir='${datarootdir}'
+datarootdir='${prefix}/share'
+docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
+dvidir='${docdir}'
+exec_prefix='${prefix}'
+host_alias=''
+htmldir='${docdir}'
+includedir='${prefix}/include'
+infodir='${datarootdir}/info'
+libdir='${exec_prefix}/lib'
+libexecdir='${exec_prefix}/libexec'
+localedir='${datarootdir}/locale'
+localstatedir='${prefix}/var'
+mandir='${datarootdir}/man'
+oldincludedir='/usr/include'
+pdfdir='${docdir}'
+prefix='/usr'
+program_transform_name='s,x,x,'
+psdir='${docdir}'
+sbindir='${exec_prefix}/sbin'
+sharedstatedir='${prefix}/com'
+sysconfdir='${prefix}/etc'
+target_alias=''
+
+## ----------- ##
+## confdefs.h. ##
+## ----------- ##
+
+#define PACKAGE_NAME "git"
+#define PACKAGE_TARNAME "git"
+#define PACKAGE_VERSION "1.6.4.2"
+#define PACKAGE_STRING "git 1.6.4.2"
+#define PACKAGE_BUGREPORT "git@vger.kernel.org"
+#define STDC_HEADERS 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_MEMORY_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_UNISTD_H 1
+
+configure: exit 0
+
+--Boundary-00=_/HArK/fd+eFxnap--
