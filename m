@@ -1,113 +1,78 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH v2] Re: add documentation for mailinfo.scissors and
-	'--no-scissors'
-Date: Sat, 12 Sep 2009 05:03:51 +0200
-Message-ID: <20090912030351.GC18684@vidovic>
-References: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr> <f63e8402656c02fc2ecdcce8a37cc1d60a61aa1d.1252628643.git.nicolas.s.dev@gmx.fr> <7veiqe0x05.fsf@alter.siamese.dyndns.org> <20090911134112.GA18684@vidovic> <7vws45wbxq.fsf@alter.siamese.dyndns.org> <20090911200849.GB18684@vidovic> <7v8wglw60x.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] start_command: do not clobber cmd->env on
+ Windows code path
+Date: Fri, 11 Sep 2009 21:32:22 -0700
+Message-ID: <7vws44lr55.fsf@alter.siamese.dyndns.org>
+References: <200909092337.39885.j6t@kdbg.org> <1252560077-1725-1-git-send-email-snaury@gmail.com> <200909111940.08652.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 05:05:00 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: msysgit@googlegroups.com, Alexey Borzenkov <snaury@gmail.com>,  git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Sep 12 06:32:52 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yw0-f140.google.com ([209.85.211.140])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmIv5-0004zu-E9
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 05:04:59 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753607AbZILDEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Sep 2009 23:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZILDEB
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 23:04:01 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:56198 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753208AbZILDEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Sep 2009 23:04:00 -0400
-Received: by ewy2 with SMTP id 2so1607670ewy.17
-        for <git@vger.kernel.org>; Fri, 11 Sep 2009 20:04:02 -0700 (PDT)
+	id 1MmKI6-0003rJ-OS
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Sep 2009 06:32:50 +0200
+Received: by ywh4 with SMTP id 4so4005709ywh.9
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Sep 2009 21:32:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=2I+8TX9Eq9TkAYWCL63lsUSUoAeMhWj+7x781sXh2BY=;
-        b=jPM0J/Y/5pRhYIXMSqhFGpJSQM+L8GZCcdXDi2Q3yNHWNuizn5ss979pcZjvCBEhvX
-         RboRUaphPUkO9fIcjM7OCIAVLHJAHfct5inwVhTyEWxtfnJdMoUtAG1G81jyq3HWocJ2
-         DHhIJsnd3ph9mhq2dZi8vn51dkLOI9SE3t8mE=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:received:received:to:cc:subject:references:from
+         :date:in-reply-to:message-id:user-agent:mime-version:content-type
+         :x-pobox-relay-id:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
+         :x-beenthere;
+        bh=R1bRGztItIsGfBB1+Tl6TRqAxr+NmqekvjELeAb2J2M=;
+        b=BeN6V2K5C6hlP5bWT9mXyBGMKjiS7uOKUyz/vu0CfVrntRXYmlcyWKdzMzxG8VFPCF
+         Q6yFmyFbD0Khh4HZVxhGSHUkGOz3nFF3xIZ67oaqZmHzQ7nW/BPyyy7ZnQmAmTkK+XYx
+         h2v4YyAN7NShH6wnIGHIqA0aM7hVoaUmYN0Vg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=G0UMfEE1kGNJtNyZ8JeLsQQo7qC8K8mRE3Q66o0rbjtm6lVkWnQ2+x5SiQWco2Crxz
-         uA+esrAwSq7sfAqsOjZpo5/di0b10SN9FhKe2jVSfTqGbqXbblK7BUT0pUBQiSkYGtMt
-         eMszwR2C0sV3DrteJpMHCd+QozOam/2za7TVg=
-Received: by 10.210.2.16 with SMTP id 16mr4077193ebb.31.1252724642710;
-        Fri, 11 Sep 2009 20:04:02 -0700 (PDT)
-Received: from @ (91-165-134-53.rev.libertysurf.net [91.165.134.53])
-        by mx.google.com with ESMTPS id 23sm979089eya.25.2009.09.11.20.03.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 11 Sep 2009 20:04:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v8wglw60x.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:to:cc:subject:references:from
+         :date:in-reply-to:message-id:user-agent:mime-version:content-type
+         :x-pobox-relay-id:sender:precedence:x-google-loop:mailing-list
+         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
+         :x-beenthere;
+        b=TvoXvJRYP2vLqlt5xpuQPGEBDUM6VPiXqk+51GbyohMotS2KlPzlm8YNlpG2j1rSfA
+         MRdfRSUReRnKBJG+CHDNoo9YKe3nkAnhegRq99/vo3aIIN7gjYSiWhfcunQFS+UPypoj
+         j+/nPJT67ZAsC6kouKWGbjO6QrTjMp4PA79YU=
+Received: by 10.101.131.33 with SMTP id i33mr882337ann.26.1252729963899;
+        Fri, 11 Sep 2009 21:32:43 -0700 (PDT)
+Received: by 10.177.5.4 with SMTP id h4gr6924yqi.0;
+	Fri, 11 Sep 2009 21:32:36 -0700 (PDT)
+X-Sender: gitster@pobox.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.229.68.23 with SMTP id t23mr465820qci.16.1252729955898; Fri, 11 Sep 2009 21:32:35 -0700 (PDT)
+Received: by 10.229.68.23 with SMTP id t23mr465819qci.16.1252729955853; Fri, 11 Sep 2009 21:32:35 -0700 (PDT)
+Received: from sasl.smtp.pobox.com (a-pb-sasl-sd.pobox.com [64.74.157.62]) by gmr-mx.google.com with ESMTP id 24si530735qyk.2.2009.09.11.21.32.34; Fri, 11 Sep 2009 21:32:34 -0700 (PDT)
+Received-SPF: pass (google.com: domain of gitster@pobox.com designates 64.74.157.62 as permitted sender) client-ip=64.74.157.62;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of gitster@pobox.com designates 64.74.157.62 as permitted sender) smtp.mail=gitster@pobox.com; dkim=pass header.i=@pobox.com
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1]) by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 15C2F4D173; Sat, 12 Sep 2009 00:32:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject :references:from:date:in-reply-to:message-id:mime-version :content-type; s=sasl; bh=AxLE82L8/Cuzzueqo93BrbxHNAw=; b=e4Y18X c2gKxKW9pVAVrMqXApoYfyPlvbT88JJ64QQrXDFjHW5XKgR7Q06tLGf52j+fSbfX wH99y8pWxG8maKOImcgahm9Lbk4Zm5kK22n+TWHlahu3ubpqAAntPDB7g15m3Pll hOALTRYa1VODb2ArEoh1qrhmu/eStuARFJ02c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject :references:from:date:in-reply-to:message-id:mime-version :content-type; q=dns; s=sasl; b=WWzBuWiETgxq95hlEJan0fBrXQLpH9Bm Mr6lKSU2bFHkg/cmYfEgrZhoqEwgAx6683vf0j8VM67XHpI3KKa3MUjpGYetmMRk t8GRyJXa40z/Lc56qgZKvXQPfOXCQccfrFGIx8ol6pmRp1l3BA5qYaYDV5cJ1WNc IVyX19R9Uh8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1]) by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CAC904D171; Sat, 12 Sep 2009 00:32:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 366DD4D170; Sat, 12 Sep 2009 00:32:23 -0400 (EDT)
+In-Reply-To: <200909111940.08652.j6t@kdbg.org> (Johannes Sixt's message of "Fri\, 11 Sep 2009 19\:40\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4811B0BC-9F55-11DE-A68B-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128235>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128236>
 
-[ Thank you (again) for this very good explanation. ]
 
-The 11/09/09, Junio C Hamano wrote:
-> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
-> 
-> > Ok. So, the fact that the usage of git-am doesn't tell about
-> > --no-scissors is the expected behaviour?
-> 
-> You _could_ argue that we _could_ describe a long option "frotz" that
-> lacks the '!' flag in OPTIONS_SPEC as "--[no-]frotz" in the output by
-> changing the rev-parse --parseopt, if you really want to.
-> 
-> However, I think that is not done deliberately to avoid cluttering the
-> output.  I Cc'ed the primary guilty party ;-) of the parse-options
-> infrastructure.
-
-Well, if it is expected to not have the "--[no-]frotz" in usage where
-applicable I'll be fine with that (even if it may sounds a bit odd for a
-sane user). Otherwise, I believe it could be a (small) improvement for
-the UI.
-
-> Currently, non-bool options are not marked with '!'.  Nobody sane would
-> say "git am --no-directory foo", but "rev-parse --parseopt" acccepts such
-> a nonsense input, and it is up to the calling script to catch it and barf.
-> But "rev-parse --parseopt" will start saying "--[no-]directory=" with such
-> a change, which is not good.
-> 
-> And --no-scissors is not that special.  We could add --no-signoff to say
-> "I do not want to sign-off this one time" explicitly, and it is crazy if
-> we had to add another line in OPTIONS_SPEC when we want to do so, when it
-> is clear "signoff" option is a boolean.
-> 
-> As a long term direction, I'd rather not to see "no-" in OPTIONS_SPEC, but
-> have that taken care of by "rev-parse --parseopt" to keep our sanity.  The
-> only existing offender is "no-verify" in "rebase -i".  Let's solve it (if
-> there is anything to solve, which I doubt) without adding new ones.
-
-Now (with all this background in mind), I agree that the "no-" in
-OPTIONS_SPEC looks ugly.
-
-<If there were something to change>
-
-As you say, we can't blindly rely on the "is a boolean" and "option name
-begin with 'no-'" things altogether. Perhaps a new magic character
-('-'?) beside the current flags of PARSEOPT could smartly do the trick?
-
-</>
-
-Pierre, opinion?
-
--- 
-Nicolas Sebrecht
+Thanks; both patches applied.
