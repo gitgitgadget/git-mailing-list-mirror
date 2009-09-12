@@ -1,82 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2009, #02; Mon, 07)
-Date: Sat, 12 Sep 2009 13:46:30 +0200
-Message-ID: <fabb9a1e0909120446k33df5261q63b1a8d5ed6219a7@mail.gmail.com>
-References: <7vtyzexnhm.fsf@alter.siamese.dyndns.org> <7veiqdngs0.fsf@alter.siamese.dyndns.org>
+From: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Subject: Effectively tracing project contributions with git
+Date: Sat, 12 Sep 2009 14:30:17 +0200
+Message-ID: <4AAB9459.3070809@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jan Engelhardt <jengelh@medozas.de>,
-	Johan Herland <johan@herland.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 13:46:58 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 12 15:00:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmR4D-0000xA-PG
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 13:46:58 +0200
+	id 1MmSD0-0000kB-M2
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 15:00:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753779AbZILLqs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2009 07:46:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZILLqs
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 07:46:48 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:34563 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750904AbZILLqr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 07:46:47 -0400
-Received: by ewy2 with SMTP id 2so1763643ewy.17
-        for <git@vger.kernel.org>; Sat, 12 Sep 2009 04:46:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Acip8OB3OTmSZc3joBCqym/ic31sVMDUmUrWVGlgrK0=;
-        b=S7fJlZiGElYFjtIFcbMwQ09MF/1d8hJAMcHf6CNU+H5wkp8CIgbexYjGUzOnpPe3zE
-         IwPPB36wRXTtyHQitiCds+MwNweJlvOn3O5zk/3q4lTZxswjT60YBZcglgh2qsoyok5K
-         Fx+YWY7RQACFeFPmq0EIdfcaThgIJ105bRFcA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DxzKPDwuLPT22D+lfqrxFCBxe6MiY3lT3fD3LC1ab1gX2tFVeiOvSGYihAtub13B7f
-         9WOmn+epGkqqt0iXW4I5Khw97PdvyTZKQb40KQaAVKG+KM1dgO61cSLXA/1eQ46/MCbC
-         AkBNfPt3XG7jGtNbJw/dlSOyaBa7Tvya0M0Hk=
-Received: by 10.216.87.71 with SMTP id x49mr1077416wee.11.1252756010101; Sat, 
-	12 Sep 2009 04:46:50 -0700 (PDT)
-In-Reply-To: <7veiqdngs0.fsf@alter.siamese.dyndns.org>
+	id S1753639AbZILM5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 08:57:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753317AbZILM5l
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 08:57:41 -0400
+Received: from up.nbi.dk ([130.225.212.6]:60808 "EHLO mail2.nbi.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753260AbZILM5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 08:57:40 -0400
+X-Greylist: delayed 1645 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Sep 2009 08:57:40 EDT
+Received: from [192.168.0.4] (zux221-207-155.adsl.green.ch [81.221.207.155])
+	by mail2.nbi.dk (Postfix) with ESMTP id 6751D3C941
+	for <git@vger.kernel.org>; Sat, 12 Sep 2009 14:30:16 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128249>
 
-Heya,
+Hello,
 
-On Sat, Sep 12, 2009 at 02:33, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * sr/gfi-options (2009-09-06) 6 commits
-> =A0(merged to 'next' on 2009-09-07 at 5f6b0ff)
-> =A0+ fast-import: test the new option command
-> =A0+ fast-import: add option command
-> =A0+ fast-import: test the new feature command
-> =A0+ fast-import: add feature command
-> =A0+ fast-import: put marks reading in it's own function
-> =A0+ fast-import: put option parsing code in separate functions
->
-> Perhaps 1.6.5 material but I wasn't sure. =A0I saw Sverre asking Shaw=
-n for
-> opinion but I may have missed the response.
+I've recently begun contributing to a FOSS project that has a problem --
+although it has extensive git logs (some being CVS/SVN imports) dating
+back over many years, there has not been maintenance of contribution
+records on a file-by-file basis.
 
-No response from Shawn so far, I assume he's short on Git budget :).
+I'm trying to rectify this and track down who contributed what.
+Unfortunately while I'm used to basic operations with git, I don't know
+it well enough to be confident in how to go about tracing contributions
+in this way.
 
---=20
-Cheers,
+'git annotate' of course is a nice starting point but of limited use
+because every time someone tweaks a line (and there have been many such
+tweaks in the history of the project) the responsibility of the original
+contributor is replaced by that of the tweaker.
 
-Sverre Rabbelier
+An alternative is to use gitk to trace the history of individual files
+(or paths, as gitk has it).  The problem here is that files have been
+renamed, content has been moved about between different files and so on.
+
+Finally, there's the option to use gitk to trace contributors (someone
+has prepared a .mailman file with a complete list of contributors by
+name and email) and manually or otherwise tally their significant
+contributions.  Again, I'm not sure to what extent this is made
+difficult by copy/pasting and tweaking of file content.
+
+I'm just hoping that the git community can offer some good advice on
+this, to what extent the process of tracing contributions can be
+automated, and so on.  I'm not expecting anyone to provide a solution
+for me, but suggestions and pointers in the possible right directions
+would be much appreciated.
+
+Thanks & best wishes,
+
+    -- Joe
