@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv6 08/14] Add flags to get_commit_notes() to control the format
- of the note string
-Date: Sat, 12 Sep 2009 18:08:42 +0200
-Message-ID: <1252771728-27206-9-git-send-email-johan@herland.net>
+Subject: [PATCHv6 10/14] Teach notes code to free its internal data structures
+ on request.
+Date: Sat, 12 Sep 2009 18:08:44 +0200
+Message-ID: <1252771728-27206-11-git-send-email-johan@herland.net>
 References: <200909121752.07523.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -12,31 +12,31 @@ Cc: git@vger.kernel.org, johan@herland.net, Johannes.Schindelin@gmx.de,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
 	spearce@spearce.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Sep 12 18:09:50 2009
+X-From: git-owner@vger.kernel.org Sat Sep 12 18:09:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmVAc-0008SS-0r
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 18:09:50 +0200
+	id 1MmVAd-0008SS-JD
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 18:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754631AbZILQJ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 12:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754657AbZILQJ1
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 12:09:27 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:44198 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754597AbZILQJV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 12:09:21 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1754764AbZILQJh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 12:09:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754752AbZILQJg
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 12:09:36 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:39547 "EHLO
+	get-mta-out03.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754682AbZILQJZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 12:09:25 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KPV003IB8VNZG20@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 12 Sep 2009 18:09:23 +0200 (MEST)
+ with ESMTP id <0KPV003BM8VTQZ70@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 12 Sep 2009 18:09:29 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KPV0048W8V0EM30@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sat, 12 Sep 2009 18:09:23 +0200 (MEST)
+ git@vger.kernel.org; Sat, 12 Sep 2009 18:09:29 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.9.12.155718
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,80 +45,41 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128261>
 
-This patch adds the following flags to get_commit_notes() for adjusting the
-format of the produced note string:
-- NOTES_SHOW_HEADER: Print "Notes:" line before the notes contents
-- NOTES_INDENT: Indent notes contents by 4 spaces
+There's no need to be rude to memory-concious callers...
 
-Suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c  |    8 +++++---
- notes.h  |    5 ++++-
- pretty.c |    3 ++-
- 3 files changed, 11 insertions(+), 5 deletions(-)
+ notes.c |    7 +++++++
+ notes.h |    2 ++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index 9172154..84c30c1 100644
+index 84c30c1..008c3d4 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -106,7 +106,7 @@ static unsigned char *lookup_notes(const unsigned char *commit_sha1)
+@@ -160,3 +160,10 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+ 
+ 	free(msg);
  }
- 
- void get_commit_notes(const struct commit *commit, struct strbuf *sb,
--		const char *output_encoding)
-+		const char *output_encoding, int flags)
- {
- 	static const char utf8[] = "utf-8";
- 	unsigned char *sha1;
-@@ -146,12 +146,14 @@ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
- 	if (msglen && msg[msglen - 1] == '\n')
- 		msglen--;
- 
--	strbuf_addstr(sb, "\nNotes:\n");
-+	if (flags & NOTES_SHOW_HEADER)
-+		strbuf_addstr(sb, "\nNotes:\n");
- 
- 	for (msg_p = msg; msg_p < msg + msglen; msg_p += linelen + 1) {
- 		linelen = strchrnul(msg_p, '\n') - msg_p;
- 
--		strbuf_addstr(sb, "    ");
-+		if (flags & NOTES_INDENT)
-+			strbuf_addstr(sb, "    ");
- 		strbuf_add(sb, msg_p, linelen);
- 		strbuf_addch(sb, '\n');
- 	}
++
++void free_commit_notes()
++{
++	free(hash_map.entries);
++	memset(&hash_map, 0, sizeof(struct hash_map));
++	initialized = 0;
++}
 diff --git a/notes.h b/notes.h
-index 79d21b6..7f3eed4 100644
+index 7f3eed4..41802e5 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -1,7 +1,10 @@
- #ifndef NOTES_H
- #define NOTES_H
- 
-+#define NOTES_SHOW_HEADER 1
-+#define NOTES_INDENT 2
-+
+@@ -7,4 +7,6 @@
  void get_commit_notes(const struct commit *commit, struct strbuf *sb,
--		const char *output_encoding);
-+		const char *output_encoding, int flags);
+ 		const char *output_encoding, int flags);
  
++void free_commit_notes();
++
  #endif
-diff --git a/pretty.c b/pretty.c
-index e25db81..01eadd0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -978,7 +978,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
- 		strbuf_addch(sb, '\n');
- 
- 	if (fmt != CMIT_FMT_ONELINE)
--		get_commit_notes(commit, sb, encoding);
-+		get_commit_notes(commit, sb, encoding,
-+				 NOTES_SHOW_HEADER | NOTES_INDENT);
- 
- 	free(reencoded);
- }
 -- 
 1.6.4.304.g1365c.dirty
