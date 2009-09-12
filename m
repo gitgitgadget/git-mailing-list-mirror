@@ -1,85 +1,113 @@
-From: Geoffrey Irving <irving@naml.us>
-Subject: Re: one half of a rebase
-Date: Fri, 11 Sep 2009 22:23:24 -0400
-Message-ID: <7f9d599f0909111923v76e0f411n16555e7cdc0c3ed1@mail.gmail.com>
-References: <7f9d599f0909111025q42e3cdc6vba602b84c1d81215@mail.gmail.com> 
-	<81b0412b0909111410k3f3ebfaco393bb37ff5a6b5c1@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v2] Re: add documentation for mailinfo.scissors and
+	'--no-scissors'
+Date: Sat, 12 Sep 2009 05:03:51 +0200
+Message-ID: <20090912030351.GC18684@vidovic>
+References: <33445216edc4c4e1976cdd81521922042955e6eb.1252626034.git.nicolas.s.dev@gmx.fr> <f63e8402656c02fc2ecdcce8a37cc1d60a61aa1d.1252628643.git.nicolas.s.dev@gmx.fr> <7veiqe0x05.fsf@alter.siamese.dyndns.org> <20090911134112.GA18684@vidovic> <7vws45wbxq.fsf@alter.siamese.dyndns.org> <20090911200849.GB18684@vidovic> <7v8wglw60x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Dylan Simon <dylan@dylex.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 04:24:06 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 05:05:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmIHV-00066O-12
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 04:24:05 +0200
+	id 1MmIv5-0004zu-E9
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 05:04:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753975AbZILCXn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Sep 2009 22:23:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753008AbZILCXn
-	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 22:23:43 -0400
-Received: from mail-vw0-f195.google.com ([209.85.212.195]:55199 "EHLO
-	mail-vw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752714AbZILCXm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Sep 2009 22:23:42 -0400
-Received: by vws33 with SMTP id 33so1072440vws.33
-        for <git@vger.kernel.org>; Fri, 11 Sep 2009 19:23:45 -0700 (PDT)
+	id S1753607AbZILDEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Sep 2009 23:04:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZILDEB
+	(ORCPT <rfc822;git-outgoing>); Fri, 11 Sep 2009 23:04:01 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:56198 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753208AbZILDEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Sep 2009 23:04:00 -0400
+Received: by ewy2 with SMTP id 2so1607670ewy.17
+        for <git@vger.kernel.org>; Fri, 11 Sep 2009 20:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Dowig/LoZy6Wzxmw8ufE3lalxZFezrWB/eA8nL7TE8Q=;
-        b=NzWqiZpu/yRz7EccZkrGBHdlVfQwoI9uYhFofXORmY5uKTfivZ0gErQ5Qsm7NZSzgd
-         lRTiwZ5gAPbk0GuiutN7S8ta2zwD/bG9VCbtd4L6p+xiOfqennMQ+AY0mGqKARcblZbi
-         I9TAASn9oDk8WVZoqyf8DRJDNHay80bfHggBY=
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=2I+8TX9Eq9TkAYWCL63lsUSUoAeMhWj+7x781sXh2BY=;
+        b=jPM0J/Y/5pRhYIXMSqhFGpJSQM+L8GZCcdXDi2Q3yNHWNuizn5ss979pcZjvCBEhvX
+         RboRUaphPUkO9fIcjM7OCIAVLHJAHfct5inwVhTyEWxtfnJdMoUtAG1G81jyq3HWocJ2
+         DHhIJsnd3ph9mhq2dZi8vn51dkLOI9SE3t8mE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=TzDgwvjEH4porKykYSI37khArJ4RVIYepO1c2iSBub671vqzaMKFkarMB7DUKsjQ6+
-         JUM31GdF0jHUZMrvgDOPteOF+Qz1jzBoyb5K8i+VSFg4Lma5XLPcoqecm+Tmh2AERN5A
-         krGjf823fmYmkfQ7QDQAesHyW09sB7eLjK//U=
-Received: by 10.220.108.233 with SMTP id g41mr4473829vcp.2.1252722224701; Fri, 
-	11 Sep 2009 19:23:44 -0700 (PDT)
-In-Reply-To: <81b0412b0909111410k3f3ebfaco393bb37ff5a6b5c1@mail.gmail.com>
-X-Google-Sender-Auth: 5c7c98d78afa9d2f
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=G0UMfEE1kGNJtNyZ8JeLsQQo7qC8K8mRE3Q66o0rbjtm6lVkWnQ2+x5SiQWco2Crxz
+         uA+esrAwSq7sfAqsOjZpo5/di0b10SN9FhKe2jVSfTqGbqXbblK7BUT0pUBQiSkYGtMt
+         eMszwR2C0sV3DrteJpMHCd+QozOam/2za7TVg=
+Received: by 10.210.2.16 with SMTP id 16mr4077193ebb.31.1252724642710;
+        Fri, 11 Sep 2009 20:04:02 -0700 (PDT)
+Received: from @ (91-165-134-53.rev.libertysurf.net [91.165.134.53])
+        by mx.google.com with ESMTPS id 23sm979089eya.25.2009.09.11.20.03.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 11 Sep 2009 20:04:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8wglw60x.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128235>
 
-On Fri, Sep 11, 2009 at 5:10 PM, Alex Riesen<raa.lkml@gmail.com> wrote:
-> On Fri, Sep 11, 2009 at 19:25, Geoffrey Irving <irving@naml.us> wrote=
-:
->> If I could do (2) as a separate operation, it would look something l=
-ike
->>
->> =A0 =A0git cherry-pick-all topic
->>
->> which is simpler and faster since it avoids switching files back and
->> forth (master to topic and back). =A0Is there a robust way to achiev=
-e
->> the cherry-pick-all semantics with current commands? =A0If not, how
->> difficult would it be to partition rebase accordingly?
->
-> I have this in my .bashrc:
->
-> $ gcp3 ()
-> {
-> =A0 =A0git format-patch -k --stdout --full-index "$@" | git am -k -3 =
---binary
-> }
->
-> Then, while on master branch:
->
-> $ gcp3 master..topic
+[ Thank you (again) for this very good explanation. ]
 
-Great!  That should work nicely.
+The 11/09/09, Junio C Hamano wrote:
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+> 
+> > Ok. So, the fact that the usage of git-am doesn't tell about
+> > --no-scissors is the expected behaviour?
+> 
+> You _could_ argue that we _could_ describe a long option "frotz" that
+> lacks the '!' flag in OPTIONS_SPEC as "--[no-]frotz" in the output by
+> changing the rev-parse --parseopt, if you really want to.
+> 
+> However, I think that is not done deliberately to avoid cluttering the
+> output.  I Cc'ed the primary guilty party ;-) of the parse-options
+> infrastructure.
 
-Geoffrey
+Well, if it is expected to not have the "--[no-]frotz" in usage where
+applicable I'll be fine with that (even if it may sounds a bit odd for a
+sane user). Otherwise, I believe it could be a (small) improvement for
+the UI.
+
+> Currently, non-bool options are not marked with '!'.  Nobody sane would
+> say "git am --no-directory foo", but "rev-parse --parseopt" acccepts such
+> a nonsense input, and it is up to the calling script to catch it and barf.
+> But "rev-parse --parseopt" will start saying "--[no-]directory=" with such
+> a change, which is not good.
+> 
+> And --no-scissors is not that special.  We could add --no-signoff to say
+> "I do not want to sign-off this one time" explicitly, and it is crazy if
+> we had to add another line in OPTIONS_SPEC when we want to do so, when it
+> is clear "signoff" option is a boolean.
+> 
+> As a long term direction, I'd rather not to see "no-" in OPTIONS_SPEC, but
+> have that taken care of by "rev-parse --parseopt" to keep our sanity.  The
+> only existing offender is "no-verify" in "rebase -i".  Let's solve it (if
+> there is anything to solve, which I doubt) without adding new ones.
+
+Now (with all this background in mind), I agree that the "no-" in
+OPTIONS_SPEC looks ugly.
+
+<If there were something to change>
+
+As you say, we can't blindly rely on the "is a boolean" and "option name
+begin with 'no-'" things altogether. Perhaps a new magic character
+('-'?) beside the current flags of PARSEOPT could smartly do the trick?
+
+</>
+
+Pierre, opinion?
+
+-- 
+Nicolas Sebrecht
