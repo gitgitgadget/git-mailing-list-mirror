@@ -1,102 +1,146 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Issue 323 in msysgit: Can't clone over http
-Date: Sat, 12 Sep 2009 18:01:06 +0800
-Message-ID: <be6fef0d0909120301r79072d5ase0d4b174753af9b5@mail.gmail.com>
-References: <be6fef0d0909080610j89c0a4bkf1cb0119b9b11db@mail.gmail.com>
-	 <0016e6470f36315b8a0472bc75a8@google.com>
-	 <20090904212956.f02b0c60.rctay89@gmail.com>
-	 <7v8wgrbb9e.fsf@alter.siamese.dyndns.org>
-	 <be6fef0d0909062253p1b86628et8a9f979952eebb00@mail.gmail.com>
-	 <7vocpn44dg.fsf@alter.siamese.dyndns.org>
-	 <20090907172751.6cf38640.rctay89@gmail.com>
-	 <7v7hwatw0v.fsf@alter.siamese.dyndns.org>
-	 <20090909203350.e3d7e5dc.rctay89@gmail.com>
-	 <7veiqdzwrk.fsf@alter.siamese.dyndns.org>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: obnoxious CLI complaints
+Date: Sat, 12 Sep 2009 14:31:56 +0400
+Message-ID: <20090912103156.GA30385@dpotapov.dyndns.org>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com> <m3fxavvl5k.fsf@localhost.localdomain> <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Tom Preston-Werner <tom@mojombo.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 12:13:43 2009
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Brendan Miller <catphive@catphive.net>
+X-From: git-owner@vger.kernel.org Sat Sep 12 12:37:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmPby-0006gj-J1
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 12:13:42 +0200
+	id 1MmPyy-0003ld-VX
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 12:37:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471AbZILKJR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2009 06:09:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753465AbZILKJR
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 06:09:17 -0400
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:58757 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448AbZILKJQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 06:09:16 -0400
-X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Sep 2009 06:09:16 EDT
-Received: by iwn8 with SMTP id 8so767751iwn.4
-        for <git@vger.kernel.org>; Sat, 12 Sep 2009 03:09:19 -0700 (PDT)
+	id S1753478AbZILKhP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Sep 2009 06:37:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752940AbZILKhP
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 06:37:15 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:37271 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752460AbZILKhN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 06:37:13 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so564262fge.1
+        for <git@vger.kernel.org>; Sat, 12 Sep 2009 03:37:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZeZ7ePRI47eVBX1dWtW5tXPbqpDaZSLDR4bw8qMwAYE=;
-        b=dzzPxvQv8D4qrN20iyx2XVEq9xSunpxgMrS0UjHFPjCbK5fnqLGCsFaDi679cnUGD1
-         RtZi8phoyi/cEpCDWktOMSk2ZxdyRsYut+I20u+E3iQQbS++mfBJxZ/I1iTjuo2U5yYI
-         +U2WABG9FcKmPn4NWiz5UQdtCtJxWdGvH8O3E=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=DHb9L2DH+3AIqXBxGuB57HUvotBRau6S7nlRfAxKJcQ=;
+        b=JcQNJcJFa3ry0a/hZHcwnVqbe8TJtgZIEPLlV06h3F0E6eDPTsUANK4aFQP5ossbY2
+         AbJZExYSR+7cB8utxPSsCya5gjeBdIu1d07j0BXfloHYFvTXMHgOd3fVTNuGd9okJj61
+         toPD22rqXQ0bjWKIvam8/fPLse/80BJYdH+wk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=N8Y8ERFnNkJx6a5zWaOkmobM2Y2JN7ZSu/JH2OKWB4eqbYRQBijKN/AHonwTYlSwg5
-         y+Lb5V+FaFoUEjSf88VqcJvJG7pQOBBzMl9LAmM1uajPznwt2Ch7QNLPfL9jYJljtpnP
-         dK9oj/RaAWHJpQMgRo3Gm/LEYuRvLtxF2T6No=
-Received: by 10.231.6.164 with SMTP id 36mr7806504ibz.39.1252749666409; Sat, 
-	12 Sep 2009 03:01:06 -0700 (PDT)
-In-Reply-To: <7veiqdzwrk.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=oROgAXuPEG8mwG0lJ1SRaAIhghTXiVeILUPqk9Fjg2pthrwlw9s9gv3InyF3G2RusQ
+         qxtJEIZqf5JzcgAMgn0IoOr79BqpDifjI1QBsFhUpQqnHvQ8zsDQTKkFAkEzTlvyoadY
+         y7bJMjjT3PVZGAB90CdKoJ6mEBqGmU23ir2BE=
+Received: by 10.86.238.30 with SMTP id l30mr3035241fgh.75.1252751835767;
+        Sat, 12 Sep 2009 03:37:15 -0700 (PDT)
+Received: from localhost (ppp91-77-226-194.pppoe.mtu-net.ru [91.77.226.194])
+        by mx.google.com with ESMTPS id e20sm983572fga.20.2009.09.12.03.37.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Sep 2009 03:37:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128246>
 
-Hi,
-
-On Fri, Sep 11, 2009 at 4:54 PM, Junio C Hamano <gitster@pobox.com> wro=
+On Wed, Sep 09, 2009 at 05:09:31PM -0700, Brendan Miller wrote:
+> On Wed, Sep 9, 2009 at 2:54 PM, Jakub Narebski <jnareb@gmail.com> wro=
 te:
-> =A0- You fetch, and the walker walks the loose objects, and then find=
-s one
-> =A0 object that cannot be obtained as a loose object. =A0It tries to =
-look up
-> =A0 in the *.idx file and finds it in B.
->
-> =A0 But the packfile B is long gone.
->
-> I didn't follow the codepath that uses http_get_info_packs() and then=
- uses
-> repo->packs list to see what it does, but as long as the above does n=
-ot
-> happen we should be Ok.
+> > Brendan Miller <catphive@catphive.net> writes:
+> >>
+> >> This is what I want to do 90% of the time, so it should just have =
+the
+> >> proper defaults, and not make me look at the man page every time I
+> >> want to use it.
+> >
+> > You learn those idioms.
+>=20
+> I guess. Is that a good thing?
 
-To determine which pack to get when fetching an object, http-walker.c
-does not refer to the *.idx files git already has (that is, those
-found locally). Instead, it builds a list of *.idx files (repo->packs
-or walker->data->alt->packs) from the remote's objects/info/packs, and
-uses that.
+In general, yes, because most of them exist for a good reason.
 
-So even if the *.idx file for pack B was downloaded from a previous
-fetch, it won't be used at all.
+> Is the goal of interface design to make
+> it difficult so I need to learn a lot of things, or easy so I can
+> remain blissfully ignorant but still do what I want?
 
-Therefore, your concern (over fetching a non-existent pack) won't play
-out, unless the server does a repack -a, but forgets to update the
-pack list (at objects/info/packs).
+Neither. You cannot get what unless you have specified what you want,
+and for that you have to learn how to say that. Having good defaults is
+very important, but the problem with choosing them is that people have
+different preferences about them. For instance, you wanted the default
+prefix for git-archive to be $myproject. For me, a good default would b=
+e
+either $tag_name, or $myproject-$tag_name, or empty (as it is now!). So=
+,
+what you propose is *never* a good default for me. Moreover, changing
+any default will cause a lot of pain for other people who use Git now.
+Besides, writing something like --prefix=3D'' is very ugly. So, the
+current default makes perfect sense.
 
-PS. The above was solely based on my reading of the code, no testing do=
-ne.
+> >>
+> >> 7. Man pages: It's nice we have them, but we shouldn't need them t=
+o do
+> >> basic stuff. I rarely had to look at the man pages using svn, but
+> >> every single time I use git I have to dig into these things. Frank=
+ly,
+> >> I have better things to do than RTFM.
+> >
+> > Learn. =A0If you learn the philosophy behind git design, you would =
+have
+> > much easier understanding and remembering git.
+>=20
+> I think what you mean by philosophy is the underlying data structures=
+,
+> which are discussed in the manual=20
 
---=20
-Cheers,
-Ray Chuan
+I think I have read them a lot, but I do not remember any underlying
+data structures described in them. What are you reading?
+
+> If I use GCC, do I need to know that it has a recursive descent
+> parser? That it is implemented with a garbage collector? No. I just
+> need to know that I give it C, and it gives me a binary.
+>=20
+> Example:
+> gcc main.c
+
+The fallacy in your logic is that you compare two completely different
+things thinking about them as almost identical. In case of GCC, the fil=
+e
+contains a program written in the C language. If you do not learn the C
+language, you will not be able to use GCC. On the other hand, for Git
+any file is just bytes, but the command-line interface describes what
+you want to do with them. There is no single action that would make
+sense in all cases, you have to specify what you want. Even with simple
+tools like sed or awk, you have to learn something before you can use
+them.
+
+> >
+> > There is "Git User's Manual", "The Git Community Book", "Pro Git" a=
+nd
+> > many other references.
+>=20
+> Yeah, I've been reading them. I'm saying that the docs are a crutch.
+> RTFM is the problem not the solution. It makes the user do more work
+> to avoid fixing usability issues.
+
+A usability issue exists when a person knows how to do that, but it is
+inconvenient or error-prone; or when a learning curve is too steep.
+But when someone cannot use, let's say, a compiler, because he or she
+refuses to read to learn the language, it is not a usability issue.
+
+
+Dmitry
