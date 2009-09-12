@@ -1,67 +1,54 @@
-From: Robert Wohlrab <robert.wohlrab@gmx.de>
-Subject: Re: diffstat and signoff in git-format-patch
-Date: Sat, 12 Sep 2009 20:29:30 +0200
-Message-ID: <200909122029.30220.robert.wohlrab@gmx.de>
-References: <200909121713.13296.robert.wohlrab@gmx.de> <200909121717.57896.robert.wohlrab@gmx.de> <20090912181919.GA20561@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] completion: Replace config --list with --get-regexp
+Date: Sat, 12 Sep 2009 11:31:39 -0700
+Message-ID: <20090912183139.GO1033@spearce.org>
+References: <a3b675320909100813i3e70ab3at66408aebb9952c7d@mail.gmail.com> <20090911133313.GF2582@inocybe.localdomain> <a3b675320909110700k7eb7286qc8cb5691aae214c7@mail.gmail.com> <20090911141730.GA384@coredump.intra.peff.net> <20090911143651.GE1033@spearce.org> <20090911150934.GB977@coredump.intra.peff.net> <20090911232344.GH2582@inocybe.localdomain>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 12 20:29:26 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, james bardin <jbardin@bu.edu>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Todd Zullinger <tmz@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 12 20:32:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmXLg-0000Lh-6q
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 20:29:24 +0200
+	id 1MmXOO-0000vv-Fg
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 20:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754640AbZILS3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 14:29:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754561AbZILS3P
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 14:29:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45624 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754559AbZILS3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 14:29:14 -0400
-Received: (qmail invoked by alias); 12 Sep 2009 18:29:16 -0000
-Received: from unknown (EHLO resul-server) [89.246.208.0]
-  by mail.gmx.net (mp048) with SMTP; 12 Sep 2009 20:29:16 +0200
-X-Authenticated: #15668376
-X-Provags-ID: V01U2FsdGVkX1/WxfJ+i5fWNW7Kx/HY4xvdp+W1d1Nyqh2tyGXw09
-	f/yJxZ/lM5R7lR
-User-Agent: KMail/1.12.1 (Linux/2.6.31-rc5; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <20090912181919.GA20561@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.66
+	id S1754695AbZILSbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 14:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754691AbZILSbg
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 14:31:36 -0400
+Received: from george.spearce.org ([209.20.77.23]:56359 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754745AbZILSbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 14:31:35 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 28018381FD; Sat, 12 Sep 2009 18:31:39 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20090911232344.GH2582@inocybe.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128277>
 
-> On Sat, Sep 12, 2009 at 05:17:57PM +0200, Robert Wohlrab wrote:
-> > > Hi,
-> > > I am currently trying to use git-format-patch in a script to generate
-> > > files which must be in a special format. This means that I have to
-> > > override also changes by users. This is as far as I can see suffix,
-> > > signoff and some more. Most of the stuff works, but I cannot get away
-> > > the signoff message as their is nothing like --no-signoff and the -p
-> > > option which should be disable generation of diffstat doesn't do
-> > > anything. How can I disable them anyway?
-> > > git version 1.6.3.3
-> >
-> > And can i disable this "--\n1.6.3.3" at the end of the patch?
+Todd Zullinger <tmz@pobox.com> wrote:
+> James Bardin noted that the completion spewed warnings when no git
+> config file is present.  This is likely a bug to be fixed in git config,
+> but it's also a good excuse to simplify the completion code by using the
+> --get-regexp option as Jeff King pointed out.
 > 
-> format-patch isn't very configurable in its output. Maybe you want to
-> just do:
-> 
->   git log -1 --pretty=email -p
-> 
-> instead (or if you want to tweak the format even further, try
-> --pretty=format)?
-Thanks. I am currently playing with it and i think that I can create what I 
-want with it.
+> Signed-off-by: Todd Zullinger <tmz@pobox.com>
+
+Thanks, looks good.
+
+Trivially-acked-by: Shawn O. Pearce <spearce@spearce.org>
+
+>  contrib/completion/git-completion.bash |   30 +++++++++---------------------
+>  1 files changed, 9 insertions(+), 21 deletions(-)
+
 -- 
-Robert Wohlrab
+Shawn.
