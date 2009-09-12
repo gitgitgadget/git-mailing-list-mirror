@@ -1,78 +1,184 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Issue 323 in msysgit: Can't clone over http
-Date: Sat, 12 Sep 2009 10:31:05 -0700
-Message-ID: <7vvdjof4ti.fsf@alter.siamese.dyndns.org>
-References: <be6fef0d0909080610j89c0a4bkf1cb0119b9b11db@mail.gmail.com>
- <0016e6470f36315b8a0472bc75a8@google.com>
- <20090904212956.f02b0c60.rctay89@gmail.com>
- <7v8wgrbb9e.fsf@alter.siamese.dyndns.org>
- <be6fef0d0909062253p1b86628et8a9f979952eebb00@mail.gmail.com>
- <7vocpn44dg.fsf@alter.siamese.dyndns.org>
- <20090907172751.6cf38640.rctay89@gmail.com>
- <7v7hwatw0v.fsf@alter.siamese.dyndns.org>
- <20090909203350.e3d7e5dc.rctay89@gmail.com>
- <7veiqdzwrk.fsf@alter.siamese.dyndns.org>
- <be6fef0d0909120301r79072d5ase0d4b174753af9b5@mail.gmail.com>
+From: Owen Taylor <otaylor@redhat.com>
+Subject: git push --confirm ?
+Date: Sat, 12 Sep 2009 13:51:37 -0400
+Message-ID: <1252777897.2974.24.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Tom Preston-Werner <tom@mojombo.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 19:31:30 2009
+Content-Type: multipart/mixed; boundary="=-piiZj9msrj51zxTF9WeV"
+Cc: Colin Walters <walters@verbum.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 12 19:51:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmWRd-0002hW-Um
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 19:31:30 +0200
+	id 1MmWlL-00083a-Ia
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 19:51:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752481AbZILRbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 13:31:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbZILRbT
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 13:31:19 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55441 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966AbZILRbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 13:31:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D6B34E7A3;
-	Sat, 12 Sep 2009 13:31:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MthNW9dm/bm6gPisfYe/A4dRL3k=; b=IzB5VC
-	4U4Qv6Uxp0MKhuH7kR3KPD0lMg77SogGO0LUslXP+RljZrCEgAXtDdMUbmyJl0Nu
-	hC0laOBYgWFSqdJZVRyg248bRSW8V4bSMvdcyn6MJGHwFdVJoQxNSz1LN59sduGb
-	VOZn9IWQZ9WpedYiXyG9XVnblPjVqFhJaUxjU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jKQ4aBmhl+/fHwbdHXbrV7Fw+W4awNyp
-	bMWblW5rwotr7JfOy7xvmFoa+Dy7hxNVN4SiQ6hYdYDGpMuZ9hzHKr263bbbi/Vh
-	+T3E7PtXA8VkYD5o0Xp42XY/TAEfuTAGfNvflNFrj3BjnyQb2aT6Bsd1VyHSbWrl
-	MKhbGMtIWH0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DE4A24E7A2;
-	Sat, 12 Sep 2009 13:31:13 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E6F274E7A1; Sat, 12 Sep 2009
- 13:31:06 -0400 (EDT)
-In-Reply-To: <be6fef0d0909120301r79072d5ase0d4b174753af9b5@mail.gmail.com>
- (Tay Ray Chuan's message of "Sat\, 12 Sep 2009 18\:01\:06 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 11CA4CEA-9FC2-11DE-B2AF-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753798AbZILRvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 13:51:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753692AbZILRvh
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 13:51:37 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:65006 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753553AbZILRvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 13:51:36 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8CHpdMQ028543;
+	Sat, 12 Sep 2009 13:51:39 -0400
+Received: from [127.0.0.1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8CHpcSI027480;
+	Sat, 12 Sep 2009 13:51:38 -0400
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128273>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> PS. The above was solely based on my reading of the code, no testing done.
+--=-piiZj9msrj51zxTF9WeV
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-That matches the understanding I had from reading the code.  I just wanted
-a sanity check by another person who looked at and worked on the code more
-deeply than I did.
+People sometimes push things they don't mean to. Depending on the
+workflow and environment, that can be anywhere between a trivial
+nuisance to an embarrassing and awkward cleanup.
 
-Thanks, so the patch is a go.
+It would seem handy to me to have a --confirm option to git-push
+(and 'core.confirm-push' to turn it on be default), that would
+have the following behavior:
+
+ * An initial --dry-run pass is done but with more verbosity -
+   for updates of existing references, it would show what commits
+   were being added or removed in a one-line format.
+
+ * The user is prompted if they want to proceed
+ 
+ * If the user agrees, then the push is run without --dry-run
+
+I've attached a mockup of this as a porcelain 'git safe-push'.
+
+(Done not using 'git push --porcelain' because I wanted it to work
+with existing released Git versions. I was hoping to be able to do 
+'git config alias.push safe-push', but no facility for interactive 
+only aliases...)
+
+I think this wouldn't be too hard to add to 'git push', though
+I haven't tried to code it. Yes, it's not atomic without protocol
+changes - I think that's OK:
+
+ - If the push isn't being forced intermediate ref updates will
+   be caught as a non-fast-forward in the second pass.
+
+ - If the push is being forced, you might overwrite someone else's
+   push anyways even without --confirm.
+
+Thoughts on whether this makes sense as an addition?
+
+- Owen
+
+
+--=-piiZj9msrj51zxTF9WeV
+Content-Disposition: attachment; filename="git-safe-push"
+Content-Type: application/x-shellscript; name="git-safe-push"
+Content-Transfer-Encoding: 7bit
+
+#!/bin/sh
+
+SUBDIRECTORY_OK=Yes
+OPTIONS_SPEC="\
+git safe-push [options] [<repository> <refspec>...]
+
+git safe-push is exactly like git push, but the user is asked to
+confirm before the push is run. (By default, can be disabled with
+--no-confirm, or 'git config core.confirm-push false'.)
+--
+v,verbose           be verbose
+repo=               repository
+all                 push all refs
+mirror              mirror all refs
+tags                push tags
+dry-run             dry run
+f,force             force updates
+thin                use thin pack
+receive-pack=       receive pack program
+exec=               receive pack program
+confirm             confirm ask before pushing
+"
+. git-sh-setup
+
+confirm=`git config --bool core.confirm-push || echo true`
+
+first=true
+for x in "$@" ; do
+    case "$x" in
+        --confirm)    confirm=true ;;
+        --no-confirm) confirm=false ;;
+	*)
+	    if $first ; then
+                set -- "$x"
+		first=false
+            else
+		set -- "$@" "$x"
+            fi
+	    ;;
+    esac
+done
+
+$confirm || exec git push "$@"
+
+git push --dry-run "$@" 2>&1 |
+(
+    IFS=''
+    have_changes=false
+    while read line ; do
+	echo "$line" | (
+            unset IFS
+	    # 'summary' is only the summary for a successful update - no flag. It
+	    # could also end up as the flag (!*=) or as a random word
+	    read summary from arrow to
+    	    case $summary in
+	    	 "*" | -) echo "$line" >&2 ; exit 0 ;; # new or deleted
+	  	 [a-f0-9][a-f0-9][a-f0-9]*[a-f0-9]..[a-f0-9][a-f0-9][a-f0-9]*[a-f0-9] |\
+	  	 [a-f0-9][a-f0-9][a-f0-9]*[a-f0-9]...[a-f0-9][a-f0-9][a-f0-9]*[a-f0-9]) ;;
+		     # Succesful updated, ... used for non-fastforward updated
+		 *) echo "$line" >&2 ; exit 1 ;;
+	    esac
+	    old=`echo $summary | sed 's/\.\+.*//'`;
+	    new=`echo $summary | sed 's/[^.]*\.\+//'`;
+
+	    echo >&2 "Updating remote reference '$to' from $old to $new (local '$from')"
+
+	    old=`git rev-parse $old`
+	    new=`git rev-parse $new`
+	    base=`git merge-base $old $new`
+	    if [ $base = $old ] ; then
+		echo >&2 "New commits being added:"
+		git >&2 log --pretty='format:  %h %s' $old..$new
+	    else
+		echo >&2 "NOT A FAST-FORWARD"
+		echo >&2 "Commits being removed:"
+		git >&2 log --pretty='format:  %h %s' $new..$old
+		if [ $base = $new ] ; then : ; else
+		    echo >&2 "Commits being added:"
+		    git >&2 log --pretty='format:  %h %s' $old..$new
+		fi
+	    fi
+	    exit 0
+	) && have_changes=true
+    done
+    $have_changes
+) || exit 0
+
+printf 'Proceed [y/N]? '
+read yesno
+case $yesno in
+     [yY]*) ;;
+     *) exit 1;;
+esac
+
+echo >&2 "Pushing..."
+
+exec git push "$@"
+
+--=-piiZj9msrj51zxTF9WeV--
