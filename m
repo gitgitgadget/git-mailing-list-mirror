@@ -1,144 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git push --confirm ?
-Date: Sat, 12 Sep 2009 16:49:06 -0400
-Message-ID: <20090912204905.GA31427@coredump.intra.peff.net>
-References: <1252777897.2974.24.camel@localhost.localdomain>
- <20090912184342.GB20561@coredump.intra.peff.net>
- <1252786266.2974.61.camel@localhost.localdomain>
+From: Tito <farmatito@tiscali.it>
+Subject: Re: [DIFF] build git on armv6l emulator with uclibc
+Date: Sat, 12 Sep 2009 22:52:45 +0200
+Message-ID: <200909122252.45995.farmatito@tiscali.it>
+References: <200909122218.07830.farmatito@tiscali.it> <20090912204230.GA31317@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org,
-	Colin Walters <walters@verbum.org>
-To: Owen Taylor <otaylor@redhat.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 22:49:39 2009
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 12 22:53:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmZXO-0006A6-AA
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 22:49:38 +0200
+	id 1MmZaf-0006p7-Hq
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 22:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728AbZILUtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 16:49:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754726AbZILUtK
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 16:49:10 -0400
-Received: from peff.net ([208.65.91.99]:49152 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754533AbZILUtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 16:49:09 -0400
-Received: (qmail 14238 invoked by uid 107); 12 Sep 2009 20:49:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 12 Sep 2009 16:49:27 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Sep 2009 16:49:06 -0400
+	id S1754733AbZILUwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 16:52:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbZILUww
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 16:52:52 -0400
+Received: from smtp-out25.alice.it ([85.33.2.25]:2605 "EHLO
+	smtp-out25.alice.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754578AbZILUwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 16:52:51 -0400
+Received: from FBCMMO01.fbc.local ([192.168.68.195]) by smtp-out25.alice.it with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:52:52 +0200
+Received: from FBCMCL01B03.fbc.local ([192.168.69.84]) by FBCMMO01.fbc.local with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:52:52 +0200
+Received: from [192.168.1.100] ([79.45.5.203]) by FBCMCL01B03.fbc.local with Microsoft SMTPSVC(6.0.3790.3959);
+	 Sat, 12 Sep 2009 22:52:51 +0200
+User-Agent: KMail/1.9.9
+In-Reply-To: <20090912204230.GA31317@localhost>
 Content-Disposition: inline
-In-Reply-To: <1252786266.2974.61.camel@localhost.localdomain>
+X-OriginalArrivalTime: 12 Sep 2009 20:52:51.0716 (UTC) FILETIME=[FE695440:01CA33EA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128297>
 
-[cc'd Daniel; I think this proposal for a "confirm push" might interact
-with your foreign VCS work a bit. I'm not sure anymore what would be the
-right level for inserting this code.]
-
-On Sat, Sep 12, 2009 at 04:11:06PM -0400, Owen Taylor wrote:
-
-> The main UI advantage is that you can adjust the default with 'git
-> config' it on and leave it on. The time you screw up is not when you are
-> worried that you are going to push the wrong thing. It's when you are
-> you know exactly what 'git push' is going to do and it does something
-> different.
-
-That makes sense. I would not want to use such a feature, but I see the
-use case you are talking about (see, I told you I was bad person to
-comment. ;) ).
-
-It should be pretty straightforward to implement for the git protocol.
-Pushing goes something like:
-
-  1. Get the list of refs from the remote.
-
-  2. Using the desired refspecs (either configured or from the command
-     line), make a list of src/dst pairs of refs to be pushed.
-
-  3. For each ref pair, send the "<old> <new> <name>" triple to the
-     remote (or not, if it is already up-to-date, a non-fast-forward,
-     etc).
-
-  4. Send the packed objects.
-
-  5. For each ref pair, print the status in a summary table.
-
-So you would just want a "2.5" where you show something similar to the
-summary table and get some confirmation (or abort). An iterative "do you
-want to push this ref" strategy would be similar; just mark the refs you
-do and don't want to push.
-
-The tricky thing will be handling different transports. Some of that
-code has been factored out, but I haven't looked at the details. On top
-of that, I think Daniel is working in this area for his support
-of foreign VCS helpers (and other transports like libcurl are getting
-pushed out into their own helpers). So he may have a better idea of how
-to go about this sanely.
-
-> haven't finished testing. For updates, showing a commit count and (a
-> probably limited number of) commit subjects would avoid having to
-> cut-and-paste the update summary into git log.
+On Saturday 12 September 2009 22:42:30 Clemens Buchacher wrote:
+> On Sat, Sep 12, 2009 at 10:18:07PM +0200, Tito wrote:
 > 
-> As you say, maybe that's something that just needs to be fixed
-> with a better format for --dry-run. But that doesn't negate the main UI
-> advantage.
-
-Sure. I just think the two concepts are somewhat orthogonal (though you
-would probably want to enable them together for your particular
-workflow). It sounds like you want something like (and obviously you
-could have a config option to avoid typing --log-changes each time):
-
-  $ git push --dry-run --log-changes
-  To server:/path/to/repo.git
-    5ad9dce..cfc497a  topic -> topic
-      abcd123: commit subject 1
-      cfc497a: commit subject 2
-
-That can potentially get long, though. I'm not sure if you would want to
-abbreviate it in some way, and if so, how.
-
-> Hmm, yeah, I've certainly looked at git-receive-pack(1) before but
-> hadn't internalized that --force was client side. Certainly doing it
-> with a single atomic pass is the better way to do it.
-
-There is actually a server-side analogue, which is the
-"receive.denyNonFastForwards" config option, and it defaults to "off".
-The "--force" option is a client side way of helping you be polite. The
-receive config option is about actual policy.
-
-> (Wouldn't work for rsync and http pushes, right? A simple "Not
-> supported" perhaps.)
-
-Rsync, at least, is already non-atomic because there is no way to do
-locking. So you wouldn't make anything worse by supporting this feature
-(though you do widen the gap for the race condition by waiting for user
-input). I'm not sure anyone really cares about rsync these days, though.
-
-I believe http-push actually does some kind of DAV locking. So there's
-no reason you this couldn't work for http push.
-
-> Hmm, of two minds about this. Doing it as a pick-and-choose
-> --interactive does integrate it conceptually with other parts of Git.
-> And probably is occasionally useful.
+> > +#if 0
+> >  		mtime.nsec = ST_MTIME_NSEC(st);
+> > +#else
+> > +		mtime.nsec = (unsigned long int)st.st_mtimensec;
+> > +#endif
 > 
-> But it makes it considerably less convenient to just config on.
-> Because any time you want to push more than 2-3 refs at once you'll have
-> to add --no-interactive.
+> You can do this instead:
 > 
-> It also increases the amount of reading - if I see all the branches at
-> once that are being pushed I can immediately notice that I'm pushing two
-> branches when I thought I was pushing one, without actually having to
-> read the branch names.
+> $ echo NO_NSEC=YesPlease >> config.mak
+> $ make
+> 
+> Clemens
+> 
 
-I think it really depends on your workflow, and how many refs you are
-typically pushing. So yeah, I can see that the iterative asking is not
-really a replacement for what you are asking for.
+Maybe something about this could be added to configure
 
--Peff
+Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-pthreads=FLAGS FLAGS is the value to pass to the compiler to enable
+ 
+ --disable-nsec
+
+to avoid to someone else to reinvent the wheel like i did :-)
+
+Ciao,
+Tito
