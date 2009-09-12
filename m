@@ -1,102 +1,96 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: obnoxious CLI complaints
-Date: Sat, 12 Sep 2009 21:32:09 +0300
-Message-ID: <43d8ce650909121132n76cda485ycd53a0497e397960@mail.gmail.com>
-References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
-	 <m3fxavvl5k.fsf@localhost.localdomain>
-	 <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
-	 <20090912103156.GA30385@dpotapov.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv5 00/14] git notes
+Date: Sat, 12 Sep 2009 20:35:46 +0200
+Message-ID: <200909122035.47051.johan@herland.net>
+References: <1252376822-6138-1-git-send-email-johan@herland.net>
+ <200909121750.00733.johan@herland.net> <20090912181150.GN1033@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Brendan Miller <catphive@catphive.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 12 20:32:29 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Sep 12 20:35:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmXOc-000106-SO
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 20:32:27 +0200
+	id 1MmXRz-0001im-So
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Sep 2009 20:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754791AbZILScI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 14:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754722AbZILScH
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 14:32:07 -0400
-Received: from mail-yx0-f176.google.com ([209.85.210.176]:59264 "EHLO
-	mail-yx0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754691AbZILScG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 14:32:06 -0400
-Received: by yxe6 with SMTP id 6so2797430yxe.22
-        for <git@vger.kernel.org>; Sat, 12 Sep 2009 11:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=IazDugsvolQtKmAxNJh+apo5nxKTzKt4UgJM5avGiq0=;
-        b=V0DcHoXqeoOGNb3TJInpG6EOQH3NnZqPhWCdcFDva9PxtmJFymZpBOpxdkhWyjbgMR
-         wUYJy7BUuD/vBDVxD5medZtKiAMpkn+SL9bwvQcVNwuhSuQMoLUOXCwJCIfVQ/nUvC5J
-         d9njwXkEyB3g6v2sjx/36tkS1rTcFs67lR9Z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=OxfmS0oc6ETlKvl44FqL84XbF7Eo+wqaTeYJ9exaFBRsCoP/+h617lAOH+e6WzNB3V
-         OwLkBFqMe9rUOhZYOqFFzksU2Z1Wg4R8EyWYRKxmCU9T13WUWOUNJSjbaKcSHcG/XU1k
-         WvnFnHNwm2riryZ+dSwUaxwsE0ZCueL7KJ7D0=
-Received: by 10.150.88.2 with SMTP id l2mr7042753ybb.260.1252780329496; Sat, 
-	12 Sep 2009 11:32:09 -0700 (PDT)
-In-Reply-To: <20090912103156.GA30385@dpotapov.dyndns.org>
+	id S1754859AbZILSfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 14:35:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754845AbZILSfr
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 14:35:47 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:39237 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754824AbZILSfr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 14:35:47 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPV003VCFNPZG40@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 12 Sep 2009 20:35:49 +0200 (MEST)
+Received: from alpha.localnet ([84.215.102.95])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0KPV003KRFNN3920@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 12 Sep 2009 20:35:49 +0200 (MEST)
+X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
+ Antispam-Data: 2009.9.12.182116
+User-Agent: KMail/1.12.1 (Linux/2.6.30-ARCH; KDE/4.3.1; x86_64; ; )
+In-reply-to: <20090912181150.GN1033@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128279>
 
-2009/9/12 Dmitry Potapov <dpotapov@gmail.com>:
-> On Wed, Sep 09, 2009 at 05:09:31PM -0700, Brendan Miller wrote:
->> On Wed, Sep 9, 2009 at 2:54 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> > Brendan Miller <catphive@catphive.net> writes:
->> >>
->> >> This is what I want to do 90% of the time, so it should just have the
->> >> proper defaults, and not make me look at the man page every time I
->> >> want to use it.
->> >
->> > You learn those idioms.
->>
->> I guess. Is that a good thing?
->
-> In general, yes, because most of them exist for a good reason.
->
->> Is the goal of interface design to make
->> it difficult so I need to learn a lot of things, or easy so I can
->> remain blissfully ignorant but still do what I want?
->
-> Neither. You cannot get what unless you have specified what you want,
-> and for that you have to learn how to say that. Having good defaults is
-> very important, but the problem with choosing them is that people have
-> different preferences about them. For instance, you wanted the default
-> prefix for git-archive to be $myproject. For me, a good default would be
-> either $tag_name, or $myproject-$tag_name, or empty (as it is now!). So,
-> what you propose is *never* a good default for me. Moreover, changing
-> any default will cause a lot of pain for other people who use Git now.
-> Besides, writing something like --prefix='' is very ugly. So, the
-> current default makes perfect sense.
+On Saturday 12 September 2009, Shawn O. Pearce wrote:
+> Johan Herland <johan@herland.net> wrote:
+> > Shawn, do you have any additional defence for the date-based fanout?
+> 
+> No.
+> 
+> The only defense I have for it is "it sounds like a nice theory
+> given access patterns", and the note about memory usage you made,
+> but which I clipped to keep this email shorter. :-)
+> 
+> It was only a theory I tossed out there in a back-seat-driver
+> sort of way.  Your results show my hunch was correct, it may help.
+> But they also say it may not help enough to justify the complexity,
+> so I now agree with you that SHA-1 fan out may be good enough.
 
-Ah, great logic.  You can't find a default that will suit everyone,
-therefore don't bother.
+Ok, so I guess we can drop the flexible part of notes code. Junio: Feel free 
+to drop the two last patches from the jh/notes series.
 
->> Yeah, I've been reading them. I'm saying that the docs are a crutch.
->> RTFM is the problem not the solution. It makes the user do more work
->> to avoid fixing usability issues.
->
-> A usability issue exists when a person knows how to do that, but it is
-> inconvenient or error-prone; or when a learning curve is too steep.
-> But when someone cannot use, let's say, a compiler, because he or she
-> refuses to read to learn the language, it is not a usability issue.
+> > How does the plan for notes usage in your code-review thingy
+> > compare to my test scenario?
+> 
+> I think your tests may still have been too low in volume, 115k notes
+> isn't a lot.  Based on the distributions I was looking at before,
+> I could be seeing a growth of >100k notes/year.  Ask me again in
+> 5 years if 115k notes is a lot. :-)
+> 
+> But we all know that SHA-1 distributes data quite well, so the SHA-1
+> fan-out may just need to change from 2_38 to 2_2_2_34 (or something)
+> to handle that larger volume.
 
-It's a usability issue when it doesn't just do the right thing in the
-majority of cases and lets you specify what you want it to do in the
-rest of the cases.
+Yes, I expect that the optimal number of entries per tree level is ~256, so 
+if we add an upper threshold at ~300 (where we start using another fanout 
+level), and a lower threshold at ~200 (where we consolidate subtrees and put 
+all into this level), the (still-to-be-written) writing part of the notes 
+code should automatically adjust the notes tree to the optimal layout.
 
-John
+With those assumptions, and a growth of 100k notes/year, a 2/2/36 fanout 
+should last you ~150 years, and a 2/2/2/34 fanout should be enough for the 
+next ~40,000 years... ;)
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
