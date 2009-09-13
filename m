@@ -1,60 +1,73 @@
-From: Nelson Elhage <nelhage@MIT.EDU>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] git-push: Accept -n as a synonym for --dry-run.
-Date: Sat, 12 Sep 2009 23:54:21 -0400
-Message-ID: <20090913035421.GP4275@mit.edu>
-References: <1252800302-26560-1-git-send-email-nelhage@mit.edu> <7vfxar5zsi.fsf@alter.siamese.dyndns.org> <20090913034031.GO4275@mit.edu>
+Date: Sat, 12 Sep 2009 22:18:12 -0700
+Message-ID: <7vhbv72zjf.fsf@alter.siamese.dyndns.org>
+References: <1252800302-26560-1-git-send-email-nelhage@mit.edu>
+ <7vfxar5zsi.fsf@alter.siamese.dyndns.org> <20090913034031.GO4275@mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 05:54:35 2009
+To: Nelson Elhage <nelhage@MIT.EDU>
+X-From: git-owner@vger.kernel.org Sun Sep 13 07:20:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmgAc-0000zi-Lw
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 05:54:35 +0200
+	id 1MmhVY-0004U6-Ge
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 07:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754991AbZIMDyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 23:54:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754983AbZIMDyW
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 23:54:22 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:60739 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754878AbZIMDyV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 23:54:21 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n8D3sML5028955;
-	Sat, 12 Sep 2009 23:54:23 -0400 (EDT)
-Received: from LUNATIQUE.MIT.EDU (LUNATIQUE.MIT.EDU [18.208.0.153])
-	(authenticated bits=0)
-        (User authenticated as nelhage@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n8D3sL9i014358
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 12 Sep 2009 23:54:22 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20090913034031.GO4275@mit.edu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1751541AbZIMFSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 01:18:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751466AbZIMFSU
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 01:18:20 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49189 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416AbZIMFST (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 01:18:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5E9E14ED25;
+	Sun, 13 Sep 2009 01:18:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4Ej3TlbMyfL9ez0y1mUm+P+Vgt0=; b=l1vdeS
+	wuR4hqm2qyz+wIDZ5eXJOhQWKQ0qmqaX3FK/JEyaH8pD9/2n2nisU6MBlRtftMRb
+	TocMjjOWTFG61yE3ViHBwplQVu/BTI48CDdsl+yaVUC371280qroEyFs9NzbwNPO
+	LBzmoeRvHuM/oLkedTYZgUhrTwpZlrNpZ4ELA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SMvW+GtaI7IxWBMMAzs94HUy6FeVka8u
+	AYM0jjAXjyPseHGN/WtFgLT26yaslCowuxtQvdFrCsM4fAs1hhYYsdMkfnD3j8Ho
+	TsByZ9MYztUkBKsYoe6IsotxvwpoNkKA4yUXXOkeKR/3/hM7D0/+GdF5XdRAfw6t
+	XdwTsfd4G5I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 382294ED24;
+	Sun, 13 Sep 2009 01:18:18 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1DEA24ED23; Sun, 13 Sep 2009
+ 01:18:13 -0400 (EDT)
+In-Reply-To: <20090913034031.GO4275@mit.edu> (Nelson Elhage's message of
+ "Sat\, 12 Sep 2009 23\:40\:31 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D8A48D78-A024-11DE-9790-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128333>
 
-On Sat, Sep 12, 2009 at 11:40:31PM -0400, Nelson Elhage wrote:
-> On Sat, Sep 12, 2009 at 07:44:29PM -0700, Junio C Hamano wrote:
+Nelson Elhage <nelhage@MIT.EDU> writes:
+
+>> commit, push (as you identified), reflog, and send-email have --dry-run
+>> but -n is not a synonym for it.  Some of them even use -n as a shorthand
+>> for a more often used option than --dry-run.
+>
 > Can you point to an example of a git command supporting --dry-run, and
-> using -n for something else? I personally would find that confusing,
-> since -n is a common alias for dry-run both inside and outside of git
-> (c.f. make, rsync, libtool). I guess patch(1) has that property, but
-> none of your examples from git use -n to mean something else.
+> using -n for something else?
 
-Oops, I missed 'commit' in your list, which I see (as of recently) has
-that property. In that case, though, --dry-run was added after an
-established -n option had been there for a long time; I think my
-general argument still stands for commands where that is not the case.
+Doesn't commit -n stand for no-verify?  I think that is how it is
+documented.
 
-- Nelson
+> In fact, reflog already supports '-n' to mean dry-run,
+
+Huh?  "git reflog -n 4" is for show-four-entries-from-the-top.
