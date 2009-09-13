@@ -1,79 +1,79 @@
-From: Geoffrey Thomas <geofft@mit.edu>
-Subject: [PATCH] diffcore-order: Default the order file to .git/info/order.
-Date: Sat, 12 Sep 2009 19:49:48 -0400
-Message-ID: <1252799388-16295-1-git-send-email-geofft@mit.edu>
-Cc: Geoffrey Thomas <geofft@mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 02:11:12 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push --confirm ?
+Date: Sat, 12 Sep 2009 17:41:23 -0700
+Message-ID: <7vvdjn8ymk.fsf@alter.siamese.dyndns.org>
+References: <1252777897.2974.24.camel@localhost.localdomain>
+ <20090912184342.GB20561@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Owen Taylor <otaylor@redhat.com>, git@vger.kernel.org,
+	Colin Walters <walters@verbum.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 13 02:41:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmcgR-000544-KW
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 02:11:11 +0200
+	id 1MmdA3-00020x-Ff
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 02:41:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225AbZIMALD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 20:11:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753203AbZIMALC
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 20:11:02 -0400
-Received: from JIS.MIT.EDU ([18.7.21.84]:53196 "EHLO jis.mit.edu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752946AbZIMALB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 20:11:01 -0400
-X-Greylist: delayed 1204 seconds by postgrey-1.27 at vger.kernel.org; Sat, 12 Sep 2009 20:11:01 EDT
-Received: from localhost.localdomain (DR-WILY.MIT.EDU [18.181.0.233])
-	by jis.mit.edu (8.12.8p2/8.12.8) with ESMTP id n8CNoKpN019882;
-	Sat, 12 Sep 2009 19:50:20 -0400 (EDT)
-X-Mailer: git-send-email 1.6.5.rc0.11.g0c3d3.dirty
-Spam-Alum-Prob: 0.000027
-Spam-Alum-Time: 1.999598
+	id S1754180AbZIMAlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 20:41:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbZIMAlj
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 20:41:39 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57639 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754046AbZIMAli (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 20:41:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3642C4EF0E;
+	Sat, 12 Sep 2009 20:41:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=6jYx+a8C4jPm+MwcvGoI7wohn0E=; b=Ji1UgDjMrSvf4TM6ngtwvj9
+	NGK8x73wOcKqkY2SwL6vYCwHF8GPTXQvS6Ql04pOjuJ/rH7HDhLcUW1qF5uBSfE1
+	sDcJjTTKkxyRzrMMJo++ZaNbdYTAmLVPOWYWitbR+SxDtoiThl3FIePUR3dqDlTJ
+	8EDEWbszI1pcF9rqaO1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=h2YtlVm89e73XZ4FgfS6XDfR2FdXIuACLdTD9V58CwVOEGFgT
+	hxW/oW57xp62A5hV0yjrt2GfvixygGCJhC0+dBHoA9x4p/HLbO605E4ICC0NzzRM
+	YkMRuqtmHR3UjucrXNg/MVqrss1dV+E5eLK4pBre2VxGT46BcV7wRCOR0w=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EEFC64EF0B;
+	Sat, 12 Sep 2009 20:41:35 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 39A434EF09; Sat, 12 Sep 2009
+ 20:41:24 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 30F10B40-9FFE-11DE-84D4-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128321>
 
-Since order files tend to be useful for all operations in the
-project/repository, add a default location for the order file, so that
-you don't have to specify -O<orderfile> on every diff or similar
-operation.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Geoffrey Thomas <geofft@mit.edu>
----
- diff.c           |    3 +--
- diffcore-order.c |    6 ++++++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+> But what _would_ be useful is doing it atomically. You can certainly do
+> all three of those steps from within one "git push" invocation, and I
+> think that is enough without any protocol changes. The protocol already
+> sends for each ref a line like:
+>
+>   <old-sha1> <new-sha1> <ref>
+>
+> and receive-pack will not proceed with the update unless the <old-sha1>
+> matches what is about to be changed.
 
-diff --git a/diff.c b/diff.c
-index e1be189..148342c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3461,8 +3461,7 @@ void diffcore_std(struct diff_options *options)
- 		diffcore_merge_broken();
- 	if (options->pickaxe)
- 		diffcore_pickaxe(options->pickaxe, options->pickaxe_opts);
--	if (options->orderfile)
--		diffcore_order(options->orderfile);
-+	diffcore_order(options->orderfile);
- 	diff_resolve_rename_copy();
- 	diffcore_apply_filter(options->filter);
- 
-diff --git a/diffcore-order.c b/diffcore-order.c
-index 23e9385..d116dc9 100644
---- a/diffcore-order.c
-+++ b/diffcore-order.c
-@@ -109,6 +109,12 @@ void diffcore_order(const char *orderfile)
- 	if (!q->nr)
- 		return;
- 
-+	if (!orderfile) {
-+		orderfile = git_path("info/order");
-+		if (access(orderfile, R_OK) != 0)
-+			return;
-+	}
-+
- 	o = xmalloc(sizeof(*o) * q->nr);
- 	prepare_order(orderfile);
- 	for (i = 0; i < q->nr; i++) {
--- 
-1.5.6.5
+Be careful that using that information and doing things in one session
+won't give you atomicity in the sense that it may still fail after you
+said "yes that is what I want to push, really" to the confirmation
+question.
+
+It does save you an extra connection, compared to separate invocations
+without and then with --dry-run, so it still is a plus.
+
+I do not think this is an unreasonable option to have.  Just please don't
+justify this change based on atomicity argument, but justify it as a mere
+convenience feature.
