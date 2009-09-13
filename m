@@ -1,175 +1,71 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH 2/2] teach git-archive to auto detect the output format
-Date: Sun, 13 Sep 2009 21:36:47 +0400
-Message-ID: <1252863407-2598-2-git-send-email-dpotapov@gmail.com>
-References: <7v3a6r5znq.fsf@alter.siamese.dyndns.org>
- <1252863407-2598-1-git-send-email-dpotapov@gmail.com>
-Cc: John Tapsell <johnflux@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 19:43:42 2009
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: suggest gc only when counting at least 2
+ objects
+Date: Sun, 13 Sep 2009 10:58:45 -0700
+Message-ID: <7vr5uasp4a.fsf@alter.siamese.dyndns.org>
+References: <20090909195158.GA12968@localhost>
+ <20090913160637.GA15256@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Sep 13 19:59:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmt6y-00056Z-HG
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 19:43:40 +0200
+	id 1MmtLt-0000W0-Io
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 19:59:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754898AbZIMRmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 13:42:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbZIMRl7
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 13:41:59 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:59756 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195AbZIMRl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 13:41:58 -0400
-Received: by fxm17 with SMTP id 17so410491fxm.37
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 10:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Hw2EUPcN46bqVw4hlWTGAFHMSj/7bQWzN1T0Rqk1dNE=;
-        b=Fmq9Wz8IvW5yplAftN2J6hz+cfa3K6fquVGTCwPU+V3r6fc88OTZrb4TxE19eV4Y6O
-         B5BGvI/dNBGjaL97s7DHy3RKER5u1JAvXdHS7Dcln94Rn2vZEy3q6v4hfablzlhgf5BB
-         k1Qb3+4A+cC50/P1Xw7hFlPqIUwpgnAxX8k+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=vrlzN/HmcA2ULKeGCC2XwxVvqMVZyoQwplIOBzUqnhGYwcO4+iDBiewm8Wj+KycJs0
-         j5HL7I1jmeZzndbwQH/DIsX4gOuy+cVdI3VlPbWAQ9nKpqHGFdqdXUJaCPMT2BGPdu9H
-         W4nQxeEmGDa3VIC34TbJ/IE6nkJzjdT1Jmfdc=
-Received: by 10.204.153.18 with SMTP id i18mr4314658bkw.123.1252863721235;
-        Sun, 13 Sep 2009 10:42:01 -0700 (PDT)
-Received: from localhost (ppp91-77-225-181.pppoe.mtu-net.ru [91.77.225.181])
-        by mx.google.com with ESMTPS id p17sm4014438fka.42.2009.09.13.10.42.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 10:42:00 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc1.2.g6bb993
-In-Reply-To: <1252863407-2598-1-git-send-email-dpotapov@gmail.com>
+	id S1752259AbZIMR65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 13:58:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbZIMR64
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 13:58:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61111 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751595AbZIMR64 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 13:58:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D153E31EEB;
+	Sun, 13 Sep 2009 13:58:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n2NQt3P8oFFrJ49Z474cLLhgbF0=; b=evsCrd
+	A2/Dq0CBUWDftNM9z7lfmmSxoPzQD7MmzSDzQ5MoHCOiuekVbTQIpH6Sx+wqYuiB
+	p0uyY3LR/vlS6Ur9hE0So16619Ghiq7xXXcfVRT/OVvPnc1Wmdg7TNGZdfxQJ5nh
+	VpSc1dgLYcGwSF/h+qQWzX5pxf2RhXaxFGQpY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BtARQ8Uzf+1qlJ4yUt3LlD91vTZVeYj1
+	k8h2gGinJ2bHyxu2izRnifod5FyN4wCZChHa0RXF5fyVQWaknDj/4mbzgN82Mtgv
+	PqDurgAvjmMD+tW8zwfIHPB3cGGwyQjjoCj3zolhCW0H6+3cz5GzwZUYvS/sIDHX
+	DHcmKfofYDo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CB2731EEA;
+	Sun, 13 Sep 2009 13:58:51 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB06B31EE3; Sun, 13 Sep
+ 2009 13:58:46 -0400 (EDT)
+In-Reply-To: <20090913160637.GA15256@localhost> (Clemens Buchacher's message
+ of "Sun\, 13 Sep 2009 18\:06\:37 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 184C3074-A08F-11DE-9D48-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128378>
 
-When I type something like this:
-  git archive -o my-v2.0.zip v2.0
-it is almost certainly that I want to create a zip archive, and not
-a tar file.
+Clemens Buchacher <drizzd@aon.at> writes:
 
-This patch teaches git-archive to auto detect the output format from the
-file name. Currently, only '.zip' is supported. If the auto detect failed,
-the tar format is used as default. The auto detect is not used when the
-output format is specified explicitly.
+> On Windows, git-gui suggests running the garbage collector if it finds
+> 1 or more files in .git/objects/42 (as opposed to 8 files on other
+> platforms).
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
-
-On Sat, Sep 12, 2009 at 07:47:21PM -0700, Junio C Hamano wrote:
-> John Tapsell <johnflux@gmail.com> writes:
->_
-> > Why not have  --format=tgz  then or something?  Or better yet, give
-> > the filename on the command line and detect the format from the file
-> > extension.
->_
-> That is an interesting enhancement and sounds like a useful feature.
-
-Here is my first attempt to implement that. I have not added 'tgz' yet,
-but only auto detect the format from the output file name.
-
-PS I resend this patch because I forgot to include the git mailing list when
-I sent it before. Sorry for inconvinience...
-
- Documentation/git-archive.txt |   10 +++++++++-
- builtin-archive.c             |   25 +++++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index f7a3b95..c6fb21c 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -35,7 +35,9 @@ OPTIONS
- 
- --format=<fmt>::
- 	Format of the resulting archive: 'tar' or 'zip'.  The default
--	is 'tar'.
-+	is 'tar', unless the output file is specified, and it has a known
-+	extension (such as '.zip') then the default for the output format
-+	will be determined by this extension.
- 
- -l::
- --list::
-@@ -130,6 +132,12 @@ git archive --format=zip --prefix=git-docs/ HEAD:Documentation/ > git-1.4.0-docs
- 	Put everything in the current head's Documentation/ directory
- 	into 'git-1.4.0-docs.zip', with the prefix 'git-docs/'.
- 
-+git archive -o latest.zip HEAD::
-+
-+	Create a Zip archive that contains the contents of the latest
-+	commit on the current branch. Note that the output format is
-+	specified implicitly by the extension of the output file.
-+
- 
- SEE ALSO
- --------
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 565314b..878c6b2 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -60,6 +60,17 @@ static int run_remote_archiver(int argc, const char **argv,
- 	return !!rv;
- }
- 
-+static const char* format_from_name(const char *filename)
-+{
-+	const char *ext = strrchr(filename, '.');
-+	if (!ext)
-+		return NULL;
-+	ext++;
-+	if (!strcasecmp(ext, "zip"))
-+		return "zip";
-+	return NULL;
-+}
-+
- #define PARSE_OPT_KEEP_ALL ( PARSE_OPT_KEEP_DASHDASH | 	\
- 			     PARSE_OPT_KEEP_ARGV0 | 	\
- 			     PARSE_OPT_KEEP_UNKNOWN |	\
-@@ -70,6 +81,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 	const char *exec = "git-upload-archive";
- 	const char *output = NULL;
- 	const char *remote = NULL;
-+	const char *format = NULL;
- 	struct option local_opts[] = {
- 		OPT_STRING('o', "output", &output, "file",
- 			"write the archive to this file"),
-@@ -77,14 +89,27 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 			"retrieve the archive from remote repository <repo>"),
- 		OPT_STRING(0, "exec", &exec, "cmd",
- 			"path to the remote git-upload-archive command"),
-+		OPT_STRING(0, "format", &format, "fmt", "archive format"),
- 		OPT_END()
- 	};
-+	char fmt_opt[32];
- 
- 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
- 			     PARSE_OPT_KEEP_ALL);
- 
- 	if (output)
-+	{
- 		create_output_file(output);
-+		if (!format)
-+			format = format_from_name(output);
-+	}
-+
-+	if (format)
-+	{
-+		sprintf(fmt_opt, "--format=%s", format);
-+		argv[argc++] = fmt_opt;
-+		argv[argc] = NULL;
-+	}
- 
- 	if (remote)
- 		return run_remote_archiver(argc, argv, remote, exec);
--- 
-1.6.4
+Somebody cares to explain why this threashold number has to be different
+per platform in the first place?  Instead of bumping up to 2 like your
+patch did, what bad things would happen if you increased it to 8 on
+Windows?  Doesn't the same badness happen on non-Windows because they have
+the threashold set to 8 already?
