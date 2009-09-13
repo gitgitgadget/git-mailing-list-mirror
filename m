@@ -1,7 +1,7 @@
 From: mr.gaffo@gmail.com
-Subject: [PATCH JGit 12/19] moved info/packs into a constant
-Date: Sun, 13 Sep 2009 13:44:28 -0500
-Message-ID: <1252867475-858-13-git-send-email-mr.gaffo@gmail.com>
+Subject: [PATCH JGit 18/19] Added Copyright Notices
+Date: Sun, 13 Sep 2009 13:44:34 -0500
+Message-ID: <1252867475-858-19-git-send-email-mr.gaffo@gmail.com>
 References: <1252867475-858-1-git-send-email-mr.gaffo@gmail.com>
  <1252867475-858-2-git-send-email-mr.gaffo@gmail.com>
  <1252867475-858-3-git-send-email-mr.gaffo@gmail.com>
@@ -14,117 +14,393 @@ References: <1252867475-858-1-git-send-email-mr.gaffo@gmail.com>
  <1252867475-858-10-git-send-email-mr.gaffo@gmail.com>
  <1252867475-858-11-git-send-email-mr.gaffo@gmail.com>
  <1252867475-858-12-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-13-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-14-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-15-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-16-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-17-git-send-email-mr.gaffo@gmail.com>
+ <1252867475-858-18-git-send-email-mr.gaffo@gmail.com>
 Cc: "mike.gaffney" <mike.gaffney@asolutions.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 20:50:19 2009
+X-From: git-owner@vger.kernel.org Sun Sep 13 20:51:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmu9Q-0004WC-T0
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 20:50:17 +0200
+	id 1MmuAI-0004gY-0V
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 20:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752345AbZIMSuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 14:50:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbZIMSuI
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 14:50:08 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:50060 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569AbZIMSuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 14:50:06 -0400
-Received: by an-out-0708.google.com with SMTP id d40so7555460and.1
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 11:50:09 -0700 (PDT)
+	id S1754612AbZIMSu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 14:50:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754526AbZIMSu6
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 14:50:58 -0400
+Received: from mail-yx0-f191.google.com ([209.85.210.191]:65346 "EHLO
+	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754540AbZIMSuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 14:50:55 -0400
+X-Greylist: delayed 373 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Sep 2009 14:50:54 EDT
+Received: by yxe29 with SMTP id 29so3068552yxe.16
+        for <git@vger.kernel.org>; Sun, 13 Sep 2009 11:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=+MQ7iYtUuh/+ok2i0EKXO/rx2OtnBNwE+wKpF3YoiMI=;
-        b=Q/8nx4XcfMJ4489ML+ndES7uLeo4X2fhHp4r1UdrikuHSqV644ZQq8TwZXULcxdTml
-         VmRjgnuse0RdFtvBYduvGB9T1Jb1vEYBwZZCsn3rz3zbkvr+BcxBMU0kUM0tEeuyaD6B
-         nTO7TDkcXAKP7Yxb/en5Kf84cR4fJACFzJkxQ=
+        bh=qK7f1HNWeR03C8dAzff/+A1qrM96JcFzCJoQ5s1Jz/w=;
+        b=N2J4duIUGZgMzd99iLabjrpdyqmsVfQ2HaJ/m127YoDm8aIZJOJ5Xls88XYmvqjNUB
+         KoI9rHS94BhC+Gs6eTBRvYpWveHf5aWxucKYYzu20ee4wTsab39GZ/KwstGcYW2qYQXl
+         8AbpBpeJ6EmQSU88IhaU5S9pImnmK7Y5J+d4s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=qiRQ0mgm/IIOSz2VhWwdDois9rak/fPB39Zu4gM8Z7TtVqU86imDC0HmN+4pblTIWd
-         AHh4PNfNXBgNbE6/1MdvjIuaViHKucyUtVuNe9TQmWKIv2OMEmnNBEQuCmJa3xD53cSw
-         +o1CLTNxMmHLsCvl69r+Zt4aOM/cnpSmlZcLk=
-Received: by 10.101.213.5 with SMTP id p5mr5593754anq.1.1252867496336;
-        Sun, 13 Sep 2009 11:44:56 -0700 (PDT)
+        b=ow9siBRReflbaz3xWTlWC1Cfa0ml9irr6XXGdWPydMnwX2BD4DB5K8UJhCUCUeYFA3
+         jYE/nOcamDnA8j5RCuHhLM8QPAYC71VGCkV7qp7n11WEwkfaUFYrYOjoC1wwKuErW+MT
+         EsvRnnGi19nZsUKFaDhe07N99VFBWYGHOV0bI=
+Received: by 10.101.183.7 with SMTP id k7mr3403172anp.164.1252867503669;
+        Sun, 13 Sep 2009 11:45:03 -0700 (PDT)
 Received: from localhost.localdomain ([70.230.157.86])
-        by mx.google.com with ESMTPS id 23sm1238736yxe.0.2009.09.13.11.44.55
+        by mx.google.com with ESMTPS id 23sm1238736yxe.0.2009.09.13.11.45.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 11:44:56 -0700 (PDT)
+        Sun, 13 Sep 2009 11:45:03 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.2
-In-Reply-To: <1252867475-858-12-git-send-email-mr.gaffo@gmail.com>
+In-Reply-To: <1252867475-858-18-git-send-email-mr.gaffo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128398>
 
 From: mike.gaffney <mike.gaffney@asolutions.com>
 
 ---
- .../org/spearce/jgit/lib/ObjectDirectoryTest.java  |    5 ++---
- .../src/org/spearce/jgit/lib/Constants.java        |    3 +++
- .../src/org/spearce/jgit/lib/ObjectDirectory.java  |    2 +-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ .../jgit/lib/InfoDirectoryDatabaseTest.java        |   36 +++++++++++++++++
+ .../org/spearce/jgit/lib/ObjectDirectoryTest.java  |   41 ++++++++++++++++++-
+ .../jgit/lib/PacksFileContentsCreatorTest.java     |   36 +++++++++++++++++
+ .../src/org/spearce/jgit/lib/InfoDatabase.java     |   36 +++++++++++++++++
+ .../spearce/jgit/lib/InfoDirectoryDatabase.java    |   36 +++++++++++++++++
+ .../spearce/jgit/lib/PacksFileContentsCreator.java |   36 +++++++++++++++++
+ .../lib/UpdateDirectoryBasedPacksInfoCache.java    |   36 +++++++++++++++++
+ 7 files changed, 254 insertions(+), 3 deletions(-)
 
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/InfoDirectoryDatabaseTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/InfoDirectoryDatabaseTest.java
+index 22972fa..3aa0fd6 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/InfoDirectoryDatabaseTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/InfoDirectoryDatabaseTest.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
+ 
+ import java.io.File;
 diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java
-index 4ac62fa..b27f2f8 100644
+index 4fecce7..e14db75 100644
 --- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java
 +++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java
-@@ -79,7 +79,7 @@ public void testListLocalPacksWhenThereIsAPack() throws Exception {
- 		assertEquals(TEST_PACK.getName(), localPacks.get(0).getPackFile().getName());
- 	}
- 	
--	public void testUpdateInfoCacheCreatesPacksFile() throws Exception {
-+	public void testUpdateInfoCacheCreatesPacksAndRefsFile() throws Exception {
- 		createSamplePacksDir();
+@@ -1,14 +1,49 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
  
- 		ObjectDirectory od = new ObjectDirectory(testDir);
-@@ -87,7 +87,7 @@ public void testUpdateInfoCacheCreatesPacksFile() throws Exception {
- 		od.updateInfoCache();
- 		
- 		String expectedContents = new PacksFileContentsCreator(od.listLocalPacks()).toString();
--		File packsFile = new File(od.getDirectory(), "info/packs");
-+		File packsFile = new File(od.getDirectory(), Constants.CACHED_PACKS_FILE);
+ import java.io.File;
+ import java.io.IOException;
+-import java.util.ArrayList;
+ import java.util.List;
  
- 		assertTrue(packsFile.exists());
- 		assertEquals(expectedContents, JGitTestUtil.readFileAsString(packsFile));
-@@ -103,7 +103,6 @@ public boolean deleteDir(File dir) {
-                 }
-             }
-         }
--    
-         // The directory is now empty so delete it
-         return dir.delete();
-     }
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-index 9afea67..2d78dda 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Constants.java
-@@ -224,6 +224,9 @@
+-import org.spearce.jgit.util.JGitTestUtil;
+-
+ import junit.framework.TestCase;
  
- 	/** Info refs folder */
- 	public static final String INFO_REFS = "info/refs";
-+	
-+	/** cached packs file */
-+	public static final String CACHED_PACKS_FILE = "info/packs"; 
++import org.spearce.jgit.util.JGitTestUtil;
++
+ public class ObjectDirectoryTest extends TestCase {
+ 	private static final String PACK_NAME = "pack-34be9032ac282b11fa9babdc2b2a93ca996c9c2f";
+ 	private static final File TEST_PACK = JGitTestUtil.getTestResourceFile(PACK_NAME + ".pack");
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/PacksFileContentsCreatorTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/PacksFileContentsCreatorTest.java
+index ef28a26..8dc9109 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/PacksFileContentsCreatorTest.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/PacksFileContentsCreatorTest.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
  
- 	/** Packed refs file */
- 	public static final String PACKED_REFS = "packed-refs";
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-index 71536c9..f4251c1 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/ObjectDirectory.java
-@@ -517,6 +517,6 @@ boolean tryAgain(final long currLastModified) {
+ import java.io.File;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDatabase.java
+index 26f8f22..96a39fc 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDatabase.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
  
- 	@Override
- 	public void updateInfoCache() throws IOException {
--		new UpdateDirectoryBasedPacksInfoCache(this.listLocalPacks(), new File(this.infoDirectory, "packs")).execute();
-+		new UpdateDirectoryBasedPacksInfoCache(this.listLocalPacks(), new File(this.getDirectory(), Constants.CACHED_PACKS_FILE)).execute();
- 	}
- }
+ import java.io.IOException;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDirectoryDatabase.java b/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDirectoryDatabase.java
+index f95be2f..48f60d1 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDirectoryDatabase.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/InfoDirectoryDatabase.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
+ 
+ import java.io.File;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/PacksFileContentsCreator.java b/org.spearce.jgit/src/org/spearce/jgit/lib/PacksFileContentsCreator.java
+index 3dd0418..0efc244 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/PacksFileContentsCreator.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/PacksFileContentsCreator.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
+ 
+ import java.util.List;
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/UpdateDirectoryBasedPacksInfoCache.java b/org.spearce.jgit/src/org/spearce/jgit/lib/UpdateDirectoryBasedPacksInfoCache.java
+index e4caa43..af61069 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/UpdateDirectoryBasedPacksInfoCache.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/UpdateDirectoryBasedPacksInfoCache.java
+@@ -1,3 +1,39 @@
++/*
++ * Copyright (C) 2009, Mike Gaffney.
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Git Development Community nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
+ package org.spearce.jgit.lib;
+ 
+ import java.io.File;
 -- 
 1.6.4.2
