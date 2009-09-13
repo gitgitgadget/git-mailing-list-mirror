@@ -1,65 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Confusing git pull error message
-Date: Sun, 13 Sep 2009 17:36:09 -0400
-Message-ID: <20090913213609.GA6993@sigill.intra.peff.net>
-References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
- <20090912211119.GA30966@coredump.intra.peff.net>
- <7v1vmar353.fsf@alter.siamese.dyndns.org>
- <20090913204231.GA8654@coredump.intra.peff.net>
- <7vfxaqpnpa.fsf@alter.siamese.dyndns.org>
+From: Tony Finch <dot@dotat.at>
+Subject: Re: [PATCH 1/4] reset: add a few tests for "git reset --merge"
+Date: Sun, 13 Sep 2009 23:01:20 +0100
+Message-ID: <alpine.LSU.2.00.0909132300420.21486@hermes-2.csi.cam.ac.uk>
+References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.45063.chriscool@tuxfamily.org> <200909102259.16469.jnareb@gmail.com> <200909110722.13331.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 23:36:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Sep 14 00:01:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmwk4-0002qq-SC
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 23:36:17 +0200
+	id 1Mmx8S-0000A4-IP
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 00:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755173AbZIMVgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 17:36:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754942AbZIMVgI
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 17:36:08 -0400
-Received: from peff.net ([208.65.91.99]:40260 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754461AbZIMVgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 17:36:07 -0400
-Received: (qmail 20626 invoked by uid 107); 13 Sep 2009 21:36:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 13 Sep 2009 17:36:28 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 17:36:09 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfxaqpnpa.fsf@alter.siamese.dyndns.org>
+	id S1750867AbZIMWBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 18:01:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750748AbZIMWBT
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 18:01:19 -0400
+Received: from ppsw-6.csi.cam.ac.uk ([131.111.8.136]:41261 "EHLO
+	ppsw-6.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746AbZIMWBS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 18:01:18 -0400
+X-Cam-AntiVirus: no malware found
+X-Cam-SpamDetails: not scanned
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-2.csi.cam.ac.uk ([131.111.8.54]:54445)
+	by ppsw-6.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.156]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1Mmx8K-000160-La (Exim 4.70)
+	(return-path <fanf2@hermes.cam.ac.uk>); Sun, 13 Sep 2009 23:01:20 +0100
+Received: from fanf2 (helo=localhost) by hermes-2.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local-esmtp id 1Mmx8K-0006ic-Ll (Exim 4.67)
+	(return-path <fanf2@hermes.cam.ac.uk>); Sun, 13 Sep 2009 23:01:20 +0100
+X-X-Sender: fanf2@hermes-2.csi.cam.ac.uk
+In-Reply-To: <200909110722.13331.chriscool@tuxfamily.org>
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128421>
 
-On Sun, Sep 13, 2009 at 01:57:37PM -0700, Junio C Hamano wrote:
+On Fri, 11 Sep 2009, Christian Couder wrote:
+> On Thursday 10 September 2009, Jakub Narebski wrote:
+> > Christian Couder wrote:
+> > >
+> > > exec </dev/null
+> >
+> > What does this do?
+>
+> Nothing! Yeah, this is a mistake.
 
-> > What you have here is precisely what we observed. But I think one of the
-> > complaints was to say more explicitly "that ref doesn't exist on the
-> > remote", which I think should be the case if we have got to this point
-> > (anything else would have triggered an error in fetch).
-> 
-> Wouldn't you get into the situation with this?
-> 
-> 	[remote "origin"]
->         	fetch = refs/heads/master:refs/heads/master
-> 	[branch "master"]
->         	remote = origin
->                 merge = refs/heads/next
-> 
-> I think saying "does not exist" will repeat the same mistake of
-> overguessing you are trying to rectify.
+It redirects stdin of the current shell.
 
-You are right, of course. I think your wording makes sense, then
-(otherwise we get stuck with "well, we didn't fetch it. Maybe because it
-didn't exist. Or maybe because your configuration didn't include it.").
-
--Peff
+Tony.
+-- 
+f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
+GERMAN BIGHT HUMBER: SOUTHWEST 5 TO 7. MODERATE OR ROUGH. SQUALLY SHOWERS.
+MODERATE OR GOOD.
