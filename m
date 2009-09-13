@@ -1,78 +1,101 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] completion: Replace config --list with --get-regexp
-Date: Sun, 13 Sep 2009 12:51:05 +0200
-Message-ID: <36ca99e90909130351m7ad5a641t8adb3ade3d2ec5ca@mail.gmail.com>
-References: <a3b675320909100813i3e70ab3at66408aebb9952c7d@mail.gmail.com>
-	 <20090911133313.GF2582@inocybe.localdomain>
-	 <a3b675320909110700k7eb7286qc8cb5691aae214c7@mail.gmail.com>
-	 <20090911141730.GA384@coredump.intra.peff.net>
-	 <20090911143651.GE1033@spearce.org>
-	 <20090911150934.GB977@coredump.intra.peff.net>
-	 <20090911232344.GH2582@inocybe.localdomain>
-	 <20090912183139.GO1033@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git push --confirm ?
+Date: Sun, 13 Sep 2009 06:52:47 -0400
+Message-ID: <20090913105247.GA21750@coredump.intra.peff.net>
+References: <1252777897.2974.24.camel@localhost.localdomain>
+ <20090912184342.GB20561@coredump.intra.peff.net>
+ <7vvdjn8ymk.fsf@alter.siamese.dyndns.org>
+ <20090913093324.GB14438@coredump.intra.peff.net>
+ <7vljkjuo43.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
-	james bardin <jbardin@bu.edu>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Sep 13 12:51:21 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Owen Taylor <otaylor@redhat.com>, git@vger.kernel.org,
+	Colin Walters <walters@verbum.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 12:52:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmmfx-0004FJ-4W
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 12:51:21 +0200
+	id 1MmmhW-0004WL-7y
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 12:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752809AbZIMKvG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Sep 2009 06:51:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbZIMKvE
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 06:51:04 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:48431 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752565AbZIMKvD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2009 06:51:03 -0400
-Received: by fxm17 with SMTP id 17so298826fxm.37
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 03:51:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aq+5NFjV2V8lsfSIC5Ms2kUExLGvSOy8v60CCukNktw=;
-        b=MFSKx3kxqklPTw1WEqvRf6ZAbRyL4l+n2NMfAohz1aWFMzBs7pO43oufVdWUug0D+J
-         QvbML//4s18nfgC1ZNrRnokVFd7venp2l2B9dhV3NIbht9zsfIQ+fxit5tAtl77+Hpks
-         jAgl8LQLiRHixcMyFP7e570UTYw7AETY8t3gc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ktWYvhJ60TTOYPlYedbQSvSqIvLyD8P2hpoNQ9g/pe75myCJ7RsrSkI4FRZ1xmREXE
-         6x6EZjaWfXWAhhrdSMHjYTFGYxYaLDxjhrRvfGDA1Y49k5wR7wBIQ7tt2O6VOgKOLoly
-         CXKges3zs+e2gZ4CQtFXX7MPLjs13q7nhPZTI=
-Received: by 10.223.7.90 with SMTP id c26mr1809267fac.73.1252839065578; Sun, 
-	13 Sep 2009 03:51:05 -0700 (PDT)
-In-Reply-To: <20090912183139.GO1033@spearce.org>
+	id S1752822AbZIMKwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 06:52:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751746AbZIMKws
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 06:52:48 -0400
+Received: from peff.net ([208.65.91.99]:45574 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751122AbZIMKwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 06:52:47 -0400
+Received: (qmail 17423 invoked by uid 107); 13 Sep 2009 10:53:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 13 Sep 2009 06:53:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 06:52:47 -0400
+Content-Disposition: inline
+In-Reply-To: <7vljkjuo43.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128355>
 
-On Sat, Sep 12, 2009 at 20:31, Shawn O. Pearce <spearce@spearce.org> wr=
-ote:
-> Todd Zullinger <tmz@pobox.com> wrote:
->> James Bardin noted that the completion spewed warnings when no git
->> config file is present. =C2=A0This is likely a bug to be fixed in gi=
-t config,
->> but it's also a good excuse to simplify the completion code by using=
- the
->> --get-regexp option as Jeff King pointed out.
->>
->> Signed-off-by: Todd Zullinger <tmz@pobox.com>
->
-> Thanks, looks good.
-I have not looked into this, but what about pushurl?
+On Sun, Sep 13, 2009 at 03:37:32AM -0700, Junio C Hamano wrote:
 
-Bert
+> With --confirm, the wait happens while the --confirm waits for the human,
+> and perhaps the command does "git log --oneline old...new" as convenience.
+> While all this is happening, the TCP connection to the remote end is still
+> kept open.  We do not lock anything, but if somebody else pushed from
+> sideways, at the end of this session we would notice that, and the push
+> will be aborted.
+> 
+> This somewhat makes me worry about DoS point of view, but it does make it
+> somewhat safer.
+
+I don't see how it makes a DoS any worse. A malicious attacker can
+always open the TCP connection and let it sit; we are changing only the
+client code, after all.
+
+It does increase the possibility of _accidentally_ wasting a TCP
+connection. I don't know if that is a real-world problem or not. I would
+think heavily-utilized sites might put a time-out on the connection to
+avoid such a DoS in the first place.
+
+However, such a timeout is perhaps reason for us to be concerned with
+implementing this feature with a single session. Will users looking at
+the commits for confirmation delay enough to hit configured timeouts,
+dropping their connection and forcing them to start again?
+
+One other way to implement this would be with two TCP connections:
+
+  1. git push --dry-run, recording <old-sha1> for each ref to be pushed.
+     Afterwards, drop the TCP connection.
+
+  2. Get confirmation from the user.
+
+  3. Do the push again, confirming that the <old-sha1> values sent by
+     the server match what we showed the user for confirmation. If not,
+     abort the push.
+
+Besides being a lot more annoying to implement, there is one big
+downside: in many cases the single TCP connection is a _feature_. If you
+are pushing via ssh and providing a password manually, it is a
+significant usability regression to have to input it twice.
+
+Also, given that ssh is going to be by far the biggest transport for
+pushing via the git protocol, I suspect any timeouts are set for
+_before_ the authentication phase (i.e., SSH times you out if you don't
+actually log in). So in that sense it may not be worth worrying about
+how long we take during the push itself.
+
+> I think the largest practical safety would come from the fact that this
+> would make it convenient (i.e. a single command "push --confirm") than
+> having to run two separate ones with manual inspection in between.  A
+> safety feature that is cumbersome to use won't add much to safety, as that
+> is unlikely to be used in the first place.
+
+Sure. But that is about packaging it up as a single session for the
+user. If there is no concern about atomicity, you could do that with a
+simple wrapper script.
+
+-Peff
