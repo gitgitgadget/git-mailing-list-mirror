@@ -1,95 +1,75 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] git-gui: suggest gc only when counting at least 2
-	objects
-Date: Sun, 13 Sep 2009 23:19:25 +0200
-Message-ID: <20090913211916.GA5029@localhost>
-References: <20090909195158.GA12968@localhost> <20090913160637.GA15256@localhost> <7vr5uasp4a.fsf@alter.siamese.dyndns.org> <20090913184150.GA19209@localhost> <20090913204433.GA8796@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] teach git-archive to auto detect the output
+ format
+Date: Sun, 13 Sep 2009 14:27:52 -0700
+Message-ID: <7v4or6o7qf.fsf@alter.siamese.dyndns.org>
+References: <7v3a6r5znq.fsf@alter.siamese.dyndns.org>
+ <1252863407-2598-1-git-send-email-dpotapov@gmail.com>
+ <1252863407-2598-2-git-send-email-dpotapov@gmail.com>
+ <7vzl8yr81j.fsf@alter.siamese.dyndns.org>
+ <20090913201701.GH30385@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 13 23:19:44 2009
+Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 23:28:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmwU2-0007Ck-0d
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 23:19:42 +0200
+	id 1MmwcC-0000kl-JV
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 23:28:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755163AbZIMVTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 17:19:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755156AbZIMVTe
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 17:19:34 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:45689 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755155AbZIMVTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 17:19:33 -0400
-Received: by fxm17 with SMTP id 17so482853fxm.37
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 14:19:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:bcc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=zu9CSfm3Sy/+JNsBaoP7XTyipbOZ+b0K2dIRQN1mTWE=;
-        b=Df7Zcma1BJs4z0J8G8TzZl3G90Yt7sa7GneeVHPAsvc+fmKdEmKaCgtPiY5Wu/sm19
-         lE1nxtFhYo7DqmQfee56uJHPBZyNOALz4fkB0UJZmoCO8hpQELMGFcEvDuPKzPwJ+QGF
-         1sf0Na+RIj0R3+Z+LpfYn30MhsPToCfU1U0t8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=nQVjnOYCtfArBjbZQoShLOUsmmaDIahtQ6sUIsxsV1uT3p3W2mVZ3bJCLLzEzrNRve
-         QhbkYnl/P5U5c5oRJ+rZWOFjQRDlcAMGsM1VS6BS9Mdvv3T4SzfBo2yZtwWN8HA691rn
-         MLjYBsyjV14glD6B5dSufhn7kcoXWy7wb5GGM=
-Received: by 10.204.18.145 with SMTP id w17mr4466180bka.42.1252876775231;
-        Sun, 13 Sep 2009 14:19:35 -0700 (PDT)
-Received: from darc.lan (p549A51F1.dip.t-dialin.net [84.154.81.241])
-        by mx.google.com with ESMTPS id 11sm6947266bwz.95.2009.09.13.14.19.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 14:19:34 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MmwTm-0001uR-0Q; Sun, 13 Sep 2009 23:19:26 +0200
-Content-Disposition: inline
-In-Reply-To: <20090913204433.GA8796@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755167AbZIMV2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 17:28:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755119AbZIMV17
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 17:27:59 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38967 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754972AbZIMV16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 17:27:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AB9684FA06;
+	Sun, 13 Sep 2009 17:28:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=HJygUOLxGEQHkbyXG+g1S2mxNqs=; b=HbrxQoEwBn3jcsvZGLzGdv6
+	2/7y7d9NkY9+KU8JkOv2doCL6oqfMT8+WCoCaszIJPYG95vrlMA6syZRGMaKjLDf
+	fwL9gpY6h3M1M/8elgV0sM2flAr2vA3mM11OCwuiu1AJv4iXYYgnPlILKABHe2dF
+	FpeX/NG8MpYstHEeoAsA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=Oo3B3w0m7tisGm24KBjlzAt52l8xFKfwFW6hZB3VvosCSG7z4
+	cCK1PiLzRtB6aD/oUPYyah1M8sM+hlGFZ6n1wtsWRFoshIJpT0l4I65rdoi50/Nr
+	j0Tzv9fbgmANIp6tAuid6nruwrhJKCcmcT1Av1uspywu6lQOoQSee32tqk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8350D4FA05;
+	Sun, 13 Sep 2009 17:27:58 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3C6ED4F9FD; Sun, 13 Sep 2009
+ 17:27:53 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4ED249EA-A0AC-11DE-B7DE-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128418>
 
-On Sun, Sep 13, 2009 at 04:44:33PM -0400, Jeff King wrote:
-> On Sun, Sep 13, 2009 at 08:41:50PM +0200, Clemens Buchacher wrote:
-> 
-> > On Sun, Sep 13, 2009 at 10:58:45AM -0700, Junio C Hamano wrote:
-> > > Somebody cares to explain why this threashold number has to be different
-> > > per platform in the first place? 
-> > 
-> > I really don't know. I vaguely remember someone claim that performance on
-> > Windows suffered from many loose objects more than on other platforms. I
-> > can't find any discussion of it though.
-> 
-> Maybe 8ff487c?
+Dmitry Potapov <dpotapov@gmail.com> writes:
 
-Ok. But it's been 2 years since then and if I'm not mistaken, there have
-been a number of performance improvements to msysgit. So maybe it's time to
-revisit that threshold.
+> On Sun, Sep 13, 2009 at 11:52:56AM -0700, Junio C Hamano wrote:
+>> > +		sprintf(fmt_opt, "--format=%s", format);
+>> > +		argv[argc++] = fmt_opt;
+>> > +		argv[argc] = NULL;
+>> 
+> Either --output or --format option was used before, and this option is
+> extracted from argv[] by parse_options(). So it should be space for at
+> least one argument in argv.
 
-If, on the other hand, requiring 2 objects really is too many, we should
-maybe check at least two or four directories, which would greatly improve
-the statistic.
+To my taste, that is a unwarranted (on the borderline) assumption of what
+parse_options() does, but I'll let it pass with some additional comment to
+warn readers of the code.
 
-For example, the probability of q directories containing q objects, for n
-objects total is
-
-n \ q	1	4
-50	18%	1%
-100	32%	7%
-200	54%	38%
-500	86%	95%
-
-Clemens
+Applied.
