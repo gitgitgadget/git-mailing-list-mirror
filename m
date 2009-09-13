@@ -1,93 +1,154 @@
-From: Nelson Elhage <nelhage@MIT.EDU>
-Subject: [PATCH] git-push: Accept -n as a synonym for --dry-run.
-Date: Sat, 12 Sep 2009 20:05:02 -0400
-Message-ID: <1252800302-26560-1-git-send-email-nelhage@mit.edu>
-Cc: Nelson Elhage <nelhage@mit.edu>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [RFC/PATCH v4 1/2] gitweb: check given hash before trying to create
+ snapshot
+Date: Sat, 12 Sep 2009 20:09:23 -0400
+Message-ID: <4AAC3833.8060905@mailservices.uwaterloo.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 02:08:56 2009
+X-From: git-owner@vger.kernel.org Sun Sep 13 02:10:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmceF-0004gx-SQ
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 02:08:56 +0200
+	id 1Mmcfb-0004vH-9T
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 02:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752674AbZIMAGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 20:06:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752624AbZIMAGV
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 20:06:21 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:37606 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752570AbZIMAGU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 20:06:20 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n8D06INZ013849;
-	Sat, 12 Sep 2009 20:06:22 -0400 (EDT)
-Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
+	id S1752697AbZIMAJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 20:09:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZIMAJb
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 20:09:31 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:48722 "EHLO
+	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752012AbZIMAJa (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 20:09:30 -0400
+Received: from karakura.local (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
 	(authenticated bits=0)
-        (User authenticated as nelhage@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n8D05LOX027100
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 12 Sep 2009 20:05:21 -0400 (EDT)
-X-Mailer: git-send-email 1.6.3.1.499.ge7b8da
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n8D09OdS028245
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 12 Sep 2009 20:09:30 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
+X-UUID: 3556414c-0526-4f98-a858-1dd2c361b23e
+X-Miltered: at mailchk-m05 with ID 4AAC3834.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sat, 12 Sep 2009 20:09:31 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128318>
 
-'-n' is the standard way to specify a dry run for other git commands,
-so make 'git-push' accept it as well.
+Makes things nicer in cases when you hand craft the snapshot URL but
+make a typo in defining the hash variable (e.g. netx instead of next);
+you will now get an error message instead of a broken tarball.
+
+To maintain backwards compatibility, git_get_head_hash is now a wrapper
+for git_get_full_hash, as suggested by Jakub Narebski.
+
+Tests for t9501 are included to demonstrate added functionality.
+
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
 ---
- Documentation/git-push.txt |    3 ++-
- builtin-push.c             |    4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 58d2bd5..ba6a8a2 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
- SYNOPSIS
- --------
- [verse]
--'git push' [--all | --mirror | --tags] [--dry-run] [--receive-pack=<git-receive-pack>]
-+'git push' [--all | --mirror | --tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
- 	   [--repo=<repository>] [-f | --force] [-v | --verbose]
- 	   [<repository> <refspec>...]
+	This is just a re-send based on getting torn a new one by Junio.
+	Changes since v3:
+		- variables have been renamed for readability
+
+
+ gitweb/gitweb.perl                       |   19 +++++++++++++------
+ t/t9501-gitweb-standalone-http-status.sh |   29 +++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 6 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 24b2193..e1beca5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1983,14 +1983,20 @@ sub quote_command {
  
-@@ -82,6 +82,7 @@ nor in any Push line of the corresponding remotes file---see below).
- 	if the configuration option `remote.<remote>.mirror` is
- 	set.
+ # get HEAD ref of given project as hash
+ sub git_get_head_hash {
++	return git_get_full_hash(shift, 'HEAD');
++}
++
++# given a project and tree-ish, returns full hash
++sub git_get_full_hash {
+ 	my $project = shift;
++	my $hash = shift;
+ 	my $o_git_dir = $git_dir;
+ 	my $retval = undef;
+ 	$git_dir = "$projectroot/$project";
+-	if (open my $fd, "-|", git_cmd(), "rev-parse", "--verify", "HEAD") {
+-		my $head = <$fd>;
++	if (open my $fd, '-|', git_cmd(), 'rev-parse', '--verify', $hash) {
++		$hash = <$fd>;
+ 		close $fd;
+-		if (defined $head && $head =~ /^([0-9a-fA-F]{40})$/) {
++		if (defined $hash && $hash =~ /^([0-9a-fA-F]{40})$/) {
+ 			$retval = $1;
+ 		}
+ 	}
+@@ -5196,8 +5202,9 @@ sub git_snapshot {
+ 		die_error(403, "Unsupported snapshot format");
+ 	}
  
-+-n::
- --dry-run::
- 	Do everything except actually send the updates.
+-	if (!defined $hash) {
+-		$hash = git_get_head_hash($project);
++	my $full_hash = git_get_full_hash($project, $hash);
++	if (!$full_hash) {
++		die_error(404, 'Hash id was not valid');
+ 	}
  
-diff --git a/builtin-push.c b/builtin-push.c
-index 787011f..5e5f3ad 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
+ 	my $name = $project;
+@@ -5210,7 +5217,7 @@ sub git_snapshot {
+ 	$cmd = quote_command(
+ 		git_cmd(), 'archive',
+ 		"--format=$known_snapshot_formats{$format}{'format'}",
+-		"--prefix=$name/", $hash);
++		"--prefix=$name/", $full_hash);
+ 	if (exists $known_snapshot_formats{$format}{'compressor'}) {
+ 		$cmd .= ' | ' . quote_command(@{$known_snapshot_formats{$format}{'compressor'}});
+ 	}
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-standalone-http-status.sh
+index d0ff21d..632007e 100644
+--- a/t/t9501-gitweb-standalone-http-status.sh
++++ b/t/t9501-gitweb-standalone-http-status.sh
+@@ -75,4 +75,33 @@ test_expect_success \
+ test_debug 'cat gitweb.output'
  
- static const char * const push_usage[] = {
--	"git push [--all | --mirror] [--dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
  
-@@ -182,7 +182,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
- 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
--		OPT_BIT( 0 , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
-+		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
- 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPORT_PUSH_PORCELAIN),
- 		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
- 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
++# ----------------------------------------------------------------------
++# snapshot hash ids
++
++test_expect_success \
++	'snapshots: good treeish id' \
++	'gitweb_run "p=.git;a=snapshot;h=master;sf=tgz" &&
++	grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: bad treeish id' \
++	'gitweb_run "p=.git;a=snapshot;h=frizzumFrazzum;sf=tgz" &&
++	grep "404 - Hash id was not valid" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: good object id' \
++	'ID=`git rev-parse --verify HEAD` &&
++	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
++	grep "Status: 200 OK" gitweb.output'
++test_debug 'cat gitweb.output'
++
++test_expect_success \
++	'snapshots: bad object id' \
++	'gitweb_run "p=.git;a=snapshot;h=abcdef01234;sf=tgz" &&
++	grep "404 - Hash id was not valid" gitweb.output'
++test_debug 'cat gitweb.output'
++
++
+ test_done
 -- 
-1.6.3.1.499.ge7b8da
+1.6.4.2
