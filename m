@@ -1,102 +1,141 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v4 1/2] gitweb: check given hash before trying to
- create snapshot
-Date: Sat, 12 Sep 2009 20:30:38 -0700
-Message-ID: <7vmy4z4j35.fsf@alter.siamese.dyndns.org>
-References: <4AAC3833.8060905@mailservices.uwaterloo.ca>
+Subject: Re: [RFC/PATCH v4 2/2] gitweb: append short hash ids to snapshot
+ files
+Date: Sat, 12 Sep 2009 20:35:10 -0700
+Message-ID: <7v7hw34ivl.fsf@alter.siamese.dyndns.org>
+References: <4AAC2917.6000306@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>
 To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Sun Sep 13 05:30:57 2009
+X-From: git-owner@vger.kernel.org Sun Sep 13 05:35:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmfni-00061N-VA
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 05:30:55 +0200
+	id 1Mmfs9-0006e5-K0
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 05:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754922AbZIMDaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 23:30:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754914AbZIMDap
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 23:30:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51081 "EHLO
+	id S1754944AbZIMDfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 23:35:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbZIMDfU
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 23:35:20 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55201 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754886AbZIMDao (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 23:30:44 -0400
+	with ESMTP id S1754886AbZIMDfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 23:35:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1337330045;
-	Sat, 12 Sep 2009 23:30:47 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DA144E7F8;
+	Sat, 12 Sep 2009 23:35:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d/r2wnCWahBVcthiB2SLFD7l4dc=; b=vEM/da
-	4uEN645O6Ii7CtAYLlUKhE8uAO11MfEepkC3r47I5A5tH1p3iNjZxPHqA5eNWlor
-	0ctOgPkhPMtSGwI9sGLvaObz/E1IWk/39cFG2vvpNLomlsVFJwcivh9GK2jI/nMg
-	S4HQ9WumqUggkDAgqlo9EvSv2Junv521SZ4Gw=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=ZwbLSTPFo8wecodYWd6XyKJE8yo=; b=aLuuXknEoytRtNG6uQ5CrYZ
+	/HetSvHdNlvT+uBQXZaAtCXFPhxKI3wd3NMF7dCwMd3ghNWTgxt6cyrlrsJM4m8B
+	rFl4fsPL+VzVTAorI1Okd/rEGLdgw0GxJyeZ6WMQj27u7QzJUHYDzWu+sYvOBGgQ
+	aHMt7AabAPwM8/zvumzg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tOK7uEzxyy9uJNLNZPFErzccUhqOxkRG
-	FZfupodaRxGNPya4wZwC/yc3lasMp/Zu7TQNyamRedEpw5mFd2hs2kfROytNFA2+
-	XBzCyTvDLTw06nWuAhQAjT3rxwR/jYZLB4jBOZsChz+sGInrhHWx0K/gCiv81XcS
-	z88jzzeoCRs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DA5C030042;
-	Sat, 12 Sep 2009 23:30:43 -0400 (EDT)
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=hr0vBChgvDmS7i14r7GJT4159yabSv1nT2OEzYXLXsFt1Qf+x
+	GM1KczQ4urmDjI90NQo69dxzf1Qx/+CW8+JDJ6iY3SVw6Xo8cVlxKlu0gtA/fXmg
+	9wqWrwzghpzkmyQsjiwd9reYXmsGOOkSVSHnf/+/KqrxElRaiV/LNBNpII=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5D4B4E7F7;
+	Sat, 12 Sep 2009 23:35:19 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 362373003D; Sat, 12 Sep
- 2009 23:30:40 -0400 (EDT)
-In-Reply-To: <4AAC3833.8060905@mailservices.uwaterloo.ca> (Mark Rada's
- message of "Sat\, 12 Sep 2009 20\:09\:23 -0400")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E33524E7F2; Sat, 12 Sep 2009
+ 23:35:11 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D1956B6A-A015-11DE-916E-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 76118746-A016-11DE-B952-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128329>
 
 Mark Rada <marada@uwaterloo.ca> writes:
 
-> Makes things nicer in cases when you hand craft the snapshot URL but
-> make a typo in defining the hash variable (e.g. netx instead of next);
-> you will now get an error message instead of a broken tarball.
->
-> To maintain backwards compatibility, git_get_head_hash is now a wrapper
-> for git_get_full_hash, as suggested by Jakub Narebski.
->
-> Tests for t9501 are included to demonstrate added functionality.
->
-> Signed-off-by: Mark Rada <marada@uwaterloo.ca>
-> ---
->
-> 	This is just a re-send based on getting torn a new one by Junio.
-> 	Changes since v3:
-> 		- variables have been renamed for readability
+> Teach gitweb how to produce nicer snapshot names by only using the
+> short hash id. If clients make requests using a tree-ish that is not a
+> partial or full SHA-1 hash, then the short hash will also be appended
+> to whatever they asked for.
+> ...
+> +sub git_get_short_hash {
+> +	my $project = shift;
+> +	my $hash = shift;
+> +	my $o_git_dir = $git_dir;
+> +	my $retval = undef;
+> +	$git_dir = "$projectroot/$project";
+> +	if (open my $fd, '-|', git_cmd(), 'rev-parse', '--short', $hash) {
+> +		$hash = <$fd>;
+> +		close $fd;
+> +		if (defined $hash && $hash =~ /^([0-9a-fA-F]{7,})$/) {
 
-Much nicer to read.  Thanks.
+If you want to make sure it is 7 or longer, ask rev-parse to give you 7 or
+longer explicitly, so that you won't be hit by default changing under you
+in the future.
 
-> @@ -5196,8 +5202,9 @@ sub git_snapshot {
->  		die_error(403, "Unsupported snapshot format");
->  	}
->  
-> -	if (!defined $hash) {
-> -		$hash = git_get_head_hash($project);
-> +	my $full_hash = git_get_full_hash($project, $hash);
-> +	if (!$full_hash) {
-> +		die_error(404, 'Hash id was not valid');
->  	}
+> @@ -5207,6 +5227,12 @@ sub git_snapshot {
+> ...
+> +
+> +	if ($full_hash !~ /$hash/) {
+> +		$hash .= '-' . git_get_short_hash($project, $hash);
+> +	} else {
+> +		$hash = git_get_short_hash($project, $hash);
+> +	}
 
-This is in the context of "snapshot", so obviously you care more about
-just "such an object exists", don't you?  You also want it to be a
-tree-ish.  Try giving it $hash = 'junio-gpg-pub' and see how it breaks.
+I do not get this test.  What is this unanchored pattern match about?
 
-> @@ -5210,7 +5217,7 @@ sub git_snapshot {
->  	$cmd = quote_command(
->  		git_cmd(), 'archive',
->  		"--format=$known_snapshot_formats{$format}{'format'}",
-> -		"--prefix=$name/", $hash);
-> +		"--prefix=$name/", $full_hash);
+I do not think you wanted to allow matching a partial 1234567 $hash to
+substitute a full 01234567..... $full_hash, so I am guessing that you
+meant to say "$full_hash !~ /^$hash/" at least, or perhaps you meant even
+"$full_hash ne $hash".
 
-Why?  There was no justification as to why this change is necessary in the
-commit log message.
+But that still does not make much sense to me.  Perhaps you meant to catch
+a case where $hash is a tagname (or refname), i.e. $hash = 'v1.6.3' or
+$hash = 'next'?
+
+If that is indeed the case, then perhaps you should check for that more
+explicitly, perhaps using "git show-ref $hash" or something.  I do not
+know if the complexity (not just the "detect handcrafted $hash string that
+is not an SHA-1", but this whole "give shorten one" topic) is worth it,
+though.  And if you drop the hunk that changes user supplied $hash to
+$full_hash in the output file name in your [PATCH 1/2], I do not think you
+need this anyway.  If somebody asked for 'next', he will get 'next'.
+
+If somebody asked for 01234... (full 40 hexdigits) because that was the
+link on the gitweb output page, it might make sense to give him a
+shortened name, but then the above conditional needs to be only:
+
+	if ($full_hash eq $hash) {
+        	$hash = git_get_short_hash($project, $hash);
+	}
+
+no?        
+
+> +test_commit \
+> +	'SnapshotFileTests' \
+> +	'i can has snapshot?'
+> +test_expect_success \
+> +	'snapshots: give full hash' \
+> +	'ID=`git rev-parse --verify HEAD` &&
+> +	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
+> +	ID=`git rev-parse --short HEAD` &&
+> +	grep ".git-$ID.tar.gz" gitweb.output'
+
+I'd rather see these indented like:
+
+        test_expect_success 'snapshots: give full hash' '
+		ID=$(git rev-parse --verify HEAD) &&
+		gitweb_run ...
+        '
+
+Also, if I am not mistaken, "test_commit" is not about doing any test, but
+is a short-hand for doing an operation, right?  It would be better to have
+it inside test_expect_success just in case your "git commit" or some other
+commands are broken.  I.e. like
+
+	test_expect_success 'create a test commit' '
+		test_commit SnapshotFileTests "Can I have shapshot?"
+        '
