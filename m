@@ -1,74 +1,144 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 4/4] reset: add test cases for "--merge-dirty" option
-Date: Mon, 14 Sep 2009 00:15:01 +0200
-Message-ID: <4AAD6EE5.20508@gnu.org>
-References: <20090910200334.3722.20140.chriscool@tuxfamily.org> <20090910202333.3722.13214.chriscool@tuxfamily.org> <alpine.LNX.2.00.0909101757530.28290@iabervon.org> <200909110705.35083.chriscool@tuxfamily.org>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] git-gui: search 4 directories to improve statistic of gc
+	hint
+Date: Mon, 14 Sep 2009 00:20:44 +0200
+Message-ID: <20090913222044.GA17146@localhost>
+References: <20090909195158.GA12968@localhost> <20090913160637.GA15256@localhost> <7vr5uasp4a.fsf@alter.siamese.dyndns.org> <20090913184150.GA19209@localhost> <20090913204433.GA8796@coredump.intra.peff.net> <20090913211916.GA5029@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Sep 14 00:15:12 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, msysgit@googlegroups.com,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 14 00:20:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmxLi-000378-Vf
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 00:15:11 +0200
+	id 1MmxRL-0004E3-Al
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 00:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751944AbZIMWPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 18:15:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbZIMWPB
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 18:15:01 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:58110 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751572AbZIMWPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 18:15:00 -0400
-Received: by fxm17 with SMTP id 17so498241fxm.37
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 15:15:03 -0700 (PDT)
+	id S1751738AbZIMWUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 18:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751207AbZIMWUs
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 18:20:48 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:1843 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094AbZIMWUr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 18:20:47 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so390524fge.1
+        for <git@vger.kernel.org>; Sun, 13 Sep 2009 15:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=veDo9E0zxhQ6QVm9SvRz5b7/Cmyv4VF4BtraAE1RDx4=;
-        b=szDfwYulOyW7xkRAIXdM7rsnb0/Brk/kp7oTSL050/ughOhrNTxoYMJYPa9Apt95wE
-         elEZQIdGq7svvrfNv98NZiHhZoNBWck2T7winucrT/iC3cWaNPRxalWn/l90VdiR3izA
-         8UVI7tIWNwah75slwAD98+Ro9u7kU3jxOpWTg=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:bcc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=8/6LeqiRZCJhCiPrSPT6YU7bNB8/20woCoq/QKH1Gfc=;
+        b=ruwjqPCyglYG5BiJVOzAFSF5rYkJnat8tpLF9Q3GZOaY+gyospYyL9PV6JJjhXuaJI
+         K072k9mGL5k0611Lpt2CLG4ivzbqx7E8SBexFQalV0WwTieTiGRByMhvuQYHrMAnfRH3
+         rE8nhNHUBDgPaa8uoUatRATOxy/onoELP54Cs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=rAp53noyH7WcM4VIn1RyGsQYSfl1CUbJnJ4pPcfUD/gF+JxmWnu+QmV1GH0YNnDsfT
-         +DkczeZnF7NyeZ6BewaF2TAK5hwzwt4lWkelH2nbA/0MBJvsrZ87NuQKnmttRXKt4bfU
-         8eva5KsfrF0Tmu2k3j8axLbVf00gjGYIvw+u8=
-Received: by 10.86.220.1 with SMTP id s1mr4306394fgg.50.1252880103485;
-        Sun, 13 Sep 2009 15:15:03 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-str.redhat.com [66.187.229.200])
-        by mx.google.com with ESMTPS id e11sm938164fga.26.2009.09.13.15.15.01
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=FHxpaMG6Wi0ifuMoUk9oSZbxfATqtIlii24JQ2ziUw2xJX5oWVKNVvF9hCRwrma2ZJ
+         q/Hzz8o3MfooQiZBkXFreYXLInv8ObQEoie4dceAi46iLO9SBoWs/2ECEbWBmt0s4aPL
+         2bJ/go/KpUUHwcM7Qis5llg7usM6hGUPEjNDE=
+Received: by 10.87.42.14 with SMTP id u14mr630056fgj.28.1252880449448;
+        Sun, 13 Sep 2009 15:20:49 -0700 (PDT)
+Received: from darc.lan (p549A51F1.dip.t-dialin.net [84.154.81.241])
+        by mx.google.com with ESMTPS id l12sm1553162fgb.23.2009.09.13.15.20.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 15:15:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Lightning/1.0pre Thunderbird/3.0b3
-In-Reply-To: <200909110705.35083.chriscool@tuxfamily.org>
+        Sun, 13 Sep 2009 15:20:49 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1MmxR6-0004wT-QV; Mon, 14 Sep 2009 00:20:44 +0200
+Content-Disposition: inline
+In-Reply-To: <20090913211916.GA5029@localhost>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128424>
 
+On Windows, git-gui suggests running the garbage collector if it finds
+1 or more files in .git/objects/42 (as opposed to 8 files on other
+platforms). The probability of that happening if the repo contains
+about 100 loose objects is 32%. The probability for the same to happen
+when searching 4 directories is only 8%, which is bit more reasonable.
 
-> If they get merged, the option name '--merge-dirty" will probably be changed
-> to something else like "--merge-safe" so I will have to change some patches
-> anyway.
+Also remove $objects_limit from the message, because we already know
+that we are above (or close to) that limit. Telling the user about
+that number does not really give him any useful information.
 
---merge-index or --merge-staged?
+The following octave script shows the probability for at least m*q
+objects to be found in q subdirectories of .git/objects if n is the
+total number of objects.
 
-Also, it would be great if you would prepare tables like these for all 
-cases of git-reset.
+q = 4;
+m = [1 2 8];
+n = 0:10:2000;
 
-Paolo
+P = zeros(length(n), length(m));
+for k = 1:length(n)
+        P(k, :) = 1-binocdf(q*m-1, n(k), q/(256-q));
+end
+plot(n, P);
+
+n \ q   1       4
+50      18%     1%
+100     32%     8%
+200     54%     39%
+500     86%     96%
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+ git-gui/lib/database.tcl |   21 ++++++++++-----------
+ 1 files changed, 10 insertions(+), 11 deletions(-)
+
+diff --git a/git-gui/lib/database.tcl b/git-gui/lib/database.tcl
+index a18ac8b..d4e0bed 100644
+--- a/git-gui/lib/database.tcl
++++ b/git-gui/lib/database.tcl
+@@ -89,27 +89,26 @@ proc do_fsck_objects {} {
+ }
+ 
+ proc hint_gc {} {
+-	set object_limit 8
++	set ndirs 1
++	set limit 8
+ 	if {[is_Windows]} {
+-		set object_limit 1
++		set ndirs 4
++		set limit 1
+ 	}
+ 
+-	set objects_current [llength [glob \
+-		-directory [gitdir objects 42] \
++	set count [llength [glob \
+ 		-nocomplain \
+-		-tails \
+ 		-- \
+-		*]]
++		[gitdir objects 4\[0-[expr {$ndirs-1}]\]/*]]]
+ 
+-	if {$objects_current >= $object_limit} {
+-		set objects_current [expr {$objects_current * 250}]
+-		set object_limit    [expr {$object_limit    * 250}]
++	if {$count >= $limit * $ndirs} {
++		set objects_current [expr {$count * 256/$ndirs}]
+ 		if {[ask_popup \
+ 			[mc "This repository currently has approximately %i loose objects.
+ 
+-To maintain optimal performance it is strongly recommended that you compress the database when more than %i loose objects exist.
++To maintain optimal performance it is strongly recommended that you compress the database.
+ 
+-Compress the database now?" $objects_current $object_limit]] eq yes} {
++Compress the database now?" $objects_current]] eq yes} {
+ 			do_gc
+ 		}
+ 	}
+-- 
+1.6.5.rc0.164.g5f6b0
