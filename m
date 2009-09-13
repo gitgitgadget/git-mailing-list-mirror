@@ -1,216 +1,196 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [ANNOUNCE] CGIT 0.8.3
-Date: Sun, 13 Sep 2009 23:00:17 +0200
-Message-ID: <8c5c35580909131400r18b37ec7wa938e3fc136bd149@mail.gmail.com>
-References: <8c5c35580909131355n78d817e0x67c15a1e19beb8c3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Confusing git pull error message
+Date: Sun, 13 Sep 2009 14:16:39 -0700
+Message-ID: <7v7hw2pmtk.fsf@alter.siamese.dyndns.org>
+References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
+ <20090912211119.GA30966@coredump.intra.peff.net>
+ <7v1vmar353.fsf@alter.siamese.dyndns.org>
+ <20090913204231.GA8654@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 13 23:08:29 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 13 23:16:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmwJ4-0004kO-PI
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 23:08:23 +0200
+	id 1MmwRM-0006af-6s
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 23:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153AbZIMVIN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Sep 2009 17:08:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754975AbZIMVIN
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 17:08:13 -0400
-Received: from mail-yw0-f174.google.com ([209.85.211.174]:50063 "EHLO
-	mail-yw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754695AbZIMVIM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2009 17:08:12 -0400
-Received: by ywh4 with SMTP id 4so3471091ywh.5
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 14:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=lfAaA2GTS3V67duaA22qtlGbf2IaZmkx4JAflrD4RcY=;
-        b=sW6M+HxgqOOUw8Zz8HbCOjxNfswbrIuKo91ICmRWhU5GAo81InJDadg0N3Wu2IWqgp
-         UVfGtiAGAof1GVHm5m9jSRoJDCnxZ3qKs1MKpXJlC6rOyZ46/TRUepwSqaCroCuo58KA
-         hU6uHe9BPvTur9sRTWlzlVBwzPu3oawmaaAw8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=LgLNW1//vAbdlfpmNNCdg61ZBgYQgzBVUOGOYf1sGAOIyrZ99fwOUEIq/2FWYUYRGs
-         g/Pyhjlg1EKOkOGF4ho1pWW1OfhJhCemn97IfejA1BXNugU7BU3MmAhCqN/0rkUvqixW
-         0I2ZIx7W2mf96p61HulQzHNtXfKD+THCWM/E8=
-Received: by 10.150.103.21 with SMTP id a21mr8808221ybc.54.1252875617196; Sun, 
-	13 Sep 2009 14:00:17 -0700 (PDT)
-In-Reply-To: <8c5c35580909131355n78d817e0x67c15a1e19beb8c3@mail.gmail.com>
+	id S1754975AbZIMVQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 17:16:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbZIMVQq
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 17:16:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37566 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751805AbZIMVQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 17:16:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 970414F950;
+	Sun, 13 Sep 2009 17:16:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GdHEFoDK/LobRPQGTqcnCZdbMiY=; b=Sgdd0N
+	+KWOUt9ACRUG0pLJb7fwfXtekAelrP0uVznuTweXcEdMrCbMF9GFQZERaRuL5rUS
+	U3BGIPt3rQuoWvaqkY5DQNOLoTAIuqkevfHcouO10nudEnpxFH84k9+0JzxxhUMD
+	t8Rqxyn/EJckjyoFYH8/i7RqYM2Xtjngt/olA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mV3CGQd4vrSSLiR7iYaySujVHRmwYI8f
+	A3r7C7vjBJwpv/RXcPKi2GwW85neuUAbL09Jqyu80NyV2iwAEpjiF6nTiOqfmkCZ
+	Y0mPwGjRnga50Po0O61rMAhAdBzdbYdYfdshE6twg4txjvsrMto1oIkPq0xcz45u
+	ISG8BXZ5fkI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 69F014F94D;
+	Sun, 13 Sep 2009 17:16:45 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B54304F94A; Sun, 13 Sep 2009
+ 17:16:40 -0400 (EDT)
+In-Reply-To: <20090913204231.GA8654@coredump.intra.peff.net> (Jeff King's
+ message of "Sun\, 13 Sep 2009 16\:42\:31 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BD9E8ACA-A0AA-11DE-A1BF-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128415>
 
-A new feature-release of cgit, a fast webinterface for git, is now
-available for cloning from git://hjemli.net/pub/git/cgit (or browsing
-on http://hjemli.net/git/cgit).
+Jeff King <peff@peff.net> writes:
 
-Some release highlights:
-* support for output filters, e.g. syntax highlighting and bugtracker
- =C2=A0integration - check subdirectory "filters" for examples
-* support for automatic scanning for repositories and caching of the
- =C2=A0resulting list
-* improved support for mimetypes in "plain" view
-* improved support for lightweight tags
-* improved support for embedding cgit in site-specific layouts
-* option to avoid printing author/committer/tagger email
-* support for styling treeview based on filename extension (i.e. icons)
-* lots of bugfixes
+> On Sun, Sep 13, 2009 at 01:38:48PM -0700, Junio C Hamano wrote:
+>
+>> I saw some discussion on improving the wording.  Here is what I plan to
+>> commit.
+>
+> Thanks for picking this up, I meant to re-post with improvements.
 
-Thanks to everyone who contributed code and/or feedback.
+I am _not_ going to commit the following patch, because it will interfere
+with this clarification effort, but I think we want to do something along
+this line after the "clarification" settles.
 
+An observation I'd like to make is that this is way too ugly:
 
-Shortlog v0.8.2.1..v0.8.2.2
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D
+	[advice]
+        	pullNoMergeFound = false
+                pushNonFastForward = false
+                statusHints = false
 
-Lars Hjemli (4):
-=C2=A0 =C2=A0 =C2=A0ui-tag.c: do not segfault when id is missing from q=
-uery-string
-=C2=A0 =C2=A0 =C2=A0cgit.c: do not segfault on unexpected query-string =
-format
-=C2=A0 =C2=A0 =C2=A0ui-plain.c: only return the blob with the specified=
- path
-=C2=A0 =C2=A0 =C2=A0CGIT 0.8.2.2
+than
 
-Matthew Metnetsky (1):
-=C2=A0 =C2=A0 =C2=A0ui-shared: don't print header <img/> if there isn't=
- a logo defined
+	[IKnowWhatIAmDoingThankYouVeryMuch]
+        	pullNoMergeFound
+                pushNonFastForward
+                statusHints
 
+but this feature is for people who know what they are doing, so I guess
+the current set-up would be fine.
 
-Shortlog v0.8.2.2..v0.8.3
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
+ git-pull.sh |   78 ++++++++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 54 insertions(+), 24 deletions(-)
 
-Simon Arlott (1):
-=C2=A0 =C2=A0 =C2=A0truncate buffer before reading empty files
-
-Diego Ongaro (2):
-=C2=A0 =C2=A0 =C2=A0add cgit_httpscheme() -> http:// or https://
-=C2=A0 =C2=A0 =C2=A0use cgit_httpscheme() for atom feed
-
-=46lorian Pritz (2):
-=C2=A0 =C2=A0 =C2=A0ui-tree.c: show line numbers when highlighting
-=C2=A0 =C2=A0 =C2=A0Add 'linenumbers' config option
-
-Lars Hjemli (62):
-=C2=A0 =C2=A0 =C2=A0Add support for an 'embedded' option in cgitrc
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: make the cgitrc options a valid ascii=
-doc labeled list
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: wrap the example file in an asciidoc =
-LiteralBlock
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: un-indent the name section
-=C2=A0 =C2=A0 =C2=A0Add cgit-doc.css
-=C2=A0 =C2=A0 =C2=A0Makefile: add doc-related targets
-=C2=A0 =C2=A0 =C2=A0Add support for ETag in 'plain' view
-=C2=A0 =C2=A0 =C2=A0Add support for HEAD requests
-=C2=A0 =C2=A0 =C2=A0Fix doc-related glitches in Makefile and .gitignore
-=C2=A0 =C2=A0 =C2=A0Return http statuscode 404 on unknown branch
-=C2=A0 =C2=A0 =C2=A0ui-blob: return 'application/octet-stream' for bina=
-ry blobs
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: document 'head-include'
-=C2=A0 =C2=A0 =C2=A0Add support for 'noheader' option
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: document 'embedded' and 'noheader'
-=C2=A0 =C2=A0 =C2=A0cgit.h: keep config flags sorted
-=C2=A0 =C2=A0 =C2=A0Add support for mime type registration and lookup
-=C2=A0 =C2=A0 =C2=A0Add generic filter/plugin infrastructure
-=C2=A0 =C2=A0 =C2=A0ui-snapshot: use cgit_{open|close}_filter() to exec=
-ute compressors
-=C2=A0 =C2=A0 =C2=A0ui-tree: add support for source-filter option
-=C2=A0 =C2=A0 =C2=A0ui-commit: add support for 'commit-filter' option
-=C2=A0 =C2=A0 =C2=A0Add support for repo.commit-filter and repo.source-=
-filter
-=C2=A0 =C2=A0 =C2=A0cgit.c: allow repo.*-filter options to unset the cu=
-rrent default
-=C2=A0 =C2=A0 =C2=A0ui-summary: enable arbitrary paths below repo.readm=
-e
-=C2=A0 =C2=A0 =C2=A0Add 'about-filter' and 'repo.about-filter' options
-=C2=A0 =C2=A0 =C2=A0Add some example filter scripts
-=C2=A0 =C2=A0 =C2=A0Cleanup handling of environment variables
-=C2=A0 =C2=A0 =C2=A0ui-shared: add support for NO_HTTP=3D1/--nohttp
-=C2=A0 =C2=A0 =C2=A0cgit.css: align commit message with subject in expa=
-nded log listing
-=C2=A0 =C2=A0 =C2=A0cgit.c: make '/cgit.png' the default value for 'log=
-o' option
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: describe where/how cgit will locate c=
-gitrc
-=C2=A0 =C2=A0 =C2=A0ui-shared: add support for header/footer options wh=
-en embedded=3D1
-=C2=A0 =C2=A0 =C2=A0Use GIT-1.6.3.4
-=C2=A0 =C2=A0 =C2=A0ui-log.c: handle lightweight tags when printing com=
-mit decorations
-=C2=A0 =C2=A0 =C2=A0Add and use a common readfile() function
-=C2=A0 =C2=A0 =C2=A0cgit.c: fix caching keyed on PATH_INFO with no QUER=
-Y_STRING
-=C2=A0 =C2=A0 =C2=A0Rename "linenumbers" to "enable-tree-linenumbers", =
-change default to "1"
-=C2=A0 =C2=A0 =C2=A0cgit.css: make the blob display in tree view a bit =
-prettier
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: fix description and markup for 'snaps=
-hots' option
-=C2=A0 =C2=A0 =C2=A0scan-tree: detect non-bare repository and stop scan=
-ning early
-=C2=A0 =C2=A0 =C2=A0cgit.c: add support for cgitrc option 'repo.scan'
-=C2=A0 =C2=A0 =C2=A0cache.h: export hash_str()
-=C2=A0 =C2=A0 =C2=A0cgit.c: make print_repolist() and print_repo() reus=
-able for caching
-=C2=A0 =C2=A0 =C2=A0cgit.c: add support for caching autodetected reposi=
-tories
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: document repo.scan and cache-scanrc-t=
-tl
-=C2=A0 =C2=A0 =C2=A0Rename 'repo.scan' to 'scan-path'
-=C2=A0 =C2=A0 =C2=A0Add support for --scan-path command line option
-=C2=A0 =C2=A0 =C2=A0Introduce 'section' as canonical spelling for 'repo=
-=2Egroup'
-=C2=A0 =C2=A0 =C2=A0Add config option 'repo.section'
-=C2=A0 =C2=A0 =C2=A0ui-repolist.c: sort by section name, repo name as d=
-efault
-=C2=A0 =C2=A0 =C2=A0cgit.c: refactor repo_config() from config_cb()
-=C2=A0 =C2=A0 =C2=A0Add support for repo-local cgitrc file
-=C2=A0 =C2=A0 =C2=A0ui-repolist: handle empty sections similar to NULL =
-sections
-=C2=A0 =C2=A0 =C2=A0cgitrc.5.txt: fix markup errors
-=C2=A0 =C2=A0 =C2=A0Add config option 'enable-filter-overrides'
-=C2=A0 =C2=A0 =C2=A0shared.c: initialize cgit_repo structs properly
-=C2=A0 =C2=A0 =C2=A0cgit.c: add missing options to print_repo()
-=C2=A0 =C2=A0 =C2=A0cgit.c: generate repo.snapshots in print_repo()
-=C2=A0 =C2=A0 =C2=A0Add and use cgit_find_stats_periodname() in print_r=
-epo()
-=C2=A0 =C2=A0 =C2=A0cgit.c: only print first line of repo.desc in print=
-_repo()
-=C2=A0 =C2=A0 =C2=A0cgit.c: respect repo-local 'snapshots' option for -=
--scan-path
-=C2=A0 =C2=A0 =C2=A0Use GIT-1.6.4.3
-=C2=A0 =C2=A0 =C2=A0CGIT 0.8.3
-
-Mark Lodato (1):
-=C2=A0 =C2=A0 =C2=A0Add head-include configuration option.
-
-Martin Szulecki (2):
-=C2=A0 =C2=A0 =C2=A0Introduce noplainemail option to hide email adresse=
-s from spambots
-=C2=A0 =C2=A0 =C2=A0Expose file extension in tree lists as class to all=
-ow nicer tree styling
-
-Matt McCormick (thewtex) (1):
-=C2=A0 =C2=A0 =C2=A0make cgitrc.5.txt asciidoc manpage compatible
-
-Remko Tron=C3=A7on (1):
-=C2=A0 =C2=A0 =C2=A0ui-plain: Return 'application/octet-stream' for bin=
-ary files.
-
-Stefan B=C3=BChler (1):
-=C2=A0 =C2=A0 =C2=A0ui-refs.c: improve handling of lightweight tags
-
-Stefan Naewe (1):
-=C2=A0 =C2=A0 =C2=A0scan-tree: split the pw_gecos field at the ',' to g=
-et the real name
+diff --git a/git-pull.sh b/git-pull.sh
+index 0bbd5bf..101545e 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -76,14 +76,64 @@ do
+ 	shift
+ done
+ 
++advice_tags_only () {
++	if test -z "$1"
++	then
++		echo "Fetching tags only."
++		return
++	fi
++	echo "Fetching tags only, you probably meant:"
++	echo "  git fetch --tags"
++}
++
++advice_detached_head () {
++	if test -z "$1"
++	then
++		echo "No default merge candidate on a detached HEAD."
++		return
++	fi
++	echo "You are not currently on a branch, so I cannot use any"
++	echo "'branch.<branchname>.merge' in your configuration file."
++	echo "Please specify which branch you want to merge on the command"
++	echo "line and try again (e.g. 'git pull <repository> <refspec>')."
++	echo "See git-pull(1) for details."
++}
++
++advice_no_merge_candidates () {
++	if test -z "$1"
++	then
++		echo "No merge candidate for the current branch fetched."
++		return
++	fi
++	cat <<EOF
++You asked me to pull without telling me which branch you
++want to merge with, and 'branch.$2.merge' in
++your configuration file does not tell me either.  Please
++specify which branch you want to merge on the command line and
++try again (e.g. 'git pull <repository> <refspec>').
++See git-pull(1) for details.
++
++If you often merge with the same branch, you may want to
++configure the following variables in your configuration
++file:
++
++    branch.$2.remote = <nickname>
++    branch.$2.merge = <remote-ref>
++    remote.<nickname>.url = <url>"
++    remote.<nickname>.fetch = <refspec>
++
++See git-config(1) for details.
++EOF
++}
++
+ error_on_no_merge_candidates () {
+ 	exec >&2
++	advice=$(git config --bool advice.pullNoMergeFound)
+ 	for opt
+ 	do
+ 		case "$opt" in
+ 		-t|--t|--ta|--tag|--tags)
+-			echo "Fetching tags only, you probably meant:"
+-			echo "  git fetch --tags"
++			advice_tags_only "$advice"
+ 			exit 1
+ 		esac
+ 	done
+@@ -91,29 +141,9 @@ error_on_no_merge_candidates () {
+ 	curr_branch=${curr_branch#refs/heads/}
+ 
+ 	if [ -z "$curr_branch" ]; then
+-		echo "You are not currently on a branch, so I cannot use any"
+-		echo "'branch.<branchname>.merge' in your configuration file."
+-		echo "Please specify which branch you want to merge on the command"
+-		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+-		echo "See git-pull(1) for details."
++		advice_detached_head "$advice"
+ 	else
+-		echo "You asked me to pull without telling me which branch you"
+-		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
+-		echo "your configuration file does not tell me either.	Please"
+-		echo "specify which branch you want to merge on the command line and"
+-		echo "try again (e.g. 'git pull <repository> <refspec>')."
+-		echo "See git-pull(1) for details."
+-		echo
+-		echo "If you often merge with the same branch, you may want to"
+-		echo "configure the following variables in your configuration"
+-		echo "file:"
+-		echo
+-		echo "    branch.${curr_branch}.remote = <nickname>"
+-		echo "    branch.${curr_branch}.merge = <remote-ref>"
+-		echo "    remote.<nickname>.url = <url>"
+-		echo "    remote.<nickname>.fetch = <refspec>"
+-		echo
+-		echo "See git-config(1) for details."
++		advice_no_merge_candidate "$advice" "$curr_branch"
+ 	fi
+ 	exit 1
+ }
