@@ -1,79 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push: Accept -n as a synonym for --dry-run.
-Date: Sat, 12 Sep 2009 19:44:29 -0700
-Message-ID: <7vfxar5zsi.fsf@alter.siamese.dyndns.org>
-References: <1252800302-26560-1-git-send-email-nelhage@mit.edu>
+Subject: Re: obnoxious CLI complaints
+Date: Sat, 12 Sep 2009 19:47:21 -0700
+Message-ID: <7v3a6r5znq.fsf@alter.siamese.dyndns.org>
+References: <ef38762f0909091427m5b8f3am72c88fd4dbfebc59@mail.gmail.com>
+ <m3fxavvl5k.fsf@localhost.localdomain>
+ <ef38762f0909091709t7336d86dkd2f175e5b3a6a3f@mail.gmail.com>
+ <20090912103156.GA30385@dpotapov.dyndns.org>
+ <43d8ce650909121132n76cda485ycd53a0497e397960@mail.gmail.com>
+ <20090912214428.GB30385@dpotapov.dyndns.org>
+ <43d8ce650909121521m3dbac12co7f5f2dcaf15190e7@mail.gmail.com>
+ <20090912224335.GC30385@dpotapov.dyndns.org>
+ <43d8ce650909121608t2b9c4b9bw44104acceea26e12@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nelson Elhage <nelhage@MIT.EDU>
-X-From: git-owner@vger.kernel.org Sun Sep 13 04:44:45 2009
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Brendan Miller <catphive@catphive.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 04:47:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmf53-0007M8-Fz
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 04:44:45 +0200
+	id 1Mmf7v-0007nZ-SJ
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 04:47:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698AbZIMCoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 22:44:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754670AbZIMCog
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 22:44:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58767 "EHLO
+	id S1754794AbZIMCrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 22:47:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754771AbZIMCrf
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 22:47:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47694 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751120AbZIMCog (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 22:44:36 -0400
+	with ESMTP id S1754670AbZIMCre (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Sep 2009 22:47:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CFDB30DE3;
-	Sat, 12 Sep 2009 22:44:39 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 26A3F4E5B6;
+	Sat, 12 Sep 2009 22:47:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BzkeA4i31Xk5NIJHum4UmhBDLr4=; b=l3v7Ca
-	mhDwf0WBEkSNLUObEUlrlzCoi9xTG00OYHTjsb5aXpy9PI15ScndVfikitkqoj3k
-	JJZGRtLHNRujOfz0DhPrlMRNdp6OX2MkjoJwYk8XLGv3p3oXKbR1aM0RMAEUpAMI
-	jG2UtZMNOnZ9Qkg+eq85xJ15AkWhAVTMN5NLo=
+	:content-type; s=sasl; bh=LCoVxyFb3zVlEEa2Oc5UC9lpRjA=; b=m7iFk6
+	EotBzQf1mkiCt7up0wY8Dp9gjuAvuFhiguAI19Mri7bP9f2pcYDljaXLzerZDr3X
+	p2vLmmCo1Hq0rcWTETNCSCGJSeCzPN7JTs17TRQ3ab9SlI3gXbAk5+Asz8x6euWf
+	tnz+x9Wi1+pMO1lXrGmGai5k0dH9nBQIQpo5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wdZgeLQCB3VJhTvYfpmsSxmB6jlJ5fUg
-	TwyagVTG6g3bhu0hTu5QhOR6ec0e413U4AvxCoq37FuA7scmCLDCbLpH/t2foC3k
-	H8x9VgromDoZfL6lNIggZuXOxaJRafBPGRaR3Jn3q6TgGXV+LixXMwKzdjChMgP7
-	JV5midYyiUU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E5F4630DE2;
-	Sat, 12 Sep 2009 22:44:36 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=kaFR6+b4VnbPtb2uq96JJ7lm9vy8FDsD
+	WgEH1vK+5CZegr8wLScVTLvCX9LZLk+SpZsxLKyXmgCdWmAorU3CZpxDnyezDO9n
+	rNQS/0oY0R3V2QQhlBcZWuUJoRNT7lj47126xWbM46h89pdDPmIhOsus3ZU5O5Bh
+	CiqlfzTgrXM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D31014E5B4;
+	Sat, 12 Sep 2009 22:47:32 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5AC7030DE1; Sat, 12 Sep
- 2009 22:44:31 -0400 (EDT)
-In-Reply-To: <1252800302-26560-1-git-send-email-nelhage@mit.edu> (Nelson
- Elhage's message of "Sat\, 12 Sep 2009 20\:05\:02 -0400")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CE7224E5B1; Sat, 12 Sep 2009
+ 22:47:22 -0400 (EDT)
+In-Reply-To: <43d8ce650909121608t2b9c4b9bw44104acceea26e12@mail.gmail.com>
+ (John Tapsell's message of "Sun\, 13 Sep 2009 02\:08\:50 +0300")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 605A19C4-A00F-11DE-8F41-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C931EAD0-A00F-11DE-9FA6-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128326>
 
-Nelson Elhage <nelhage@MIT.EDU> writes:
+John Tapsell <johnflux@gmail.com> writes:
 
-> '-n' is the standard way to specify a dry run for other git commands,
-> so make 'git-push' accept it as well.
-> ---
+> Ah, the manpage examples specifically give the --format=tar though.
 
-Sign-off?
+So what?
 
-Indeed -n is used in many places for --dry-run, but it is not _the_
-standard way.
+> Why not have  --format=tgz  then or something?  Or better yet, give
+> the filename on the command line and detect the format from the file
+> extension.
 
-commit, push (as you identified), reflog, and send-email have --dry-run
-but -n is not a synonym for it.  Some of them even use -n as a shorthand
-for a more often used option than --dry-run.
-
-So the justification should be more like "push does not any other option
-that deserves a short-and-sweet -n better, it will not have any such
-option in the future, and --dry-run is very often used that it deserves to
-use -n as its short-hand."
-
-I tend to agree with the first two points, but I am not sure about the
-third point.  Do people dry-push that often?
+That is an interesting enhancement and sounds like a useful feature.
