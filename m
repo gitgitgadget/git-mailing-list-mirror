@@ -1,93 +1,93 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] transport-helper.c: don't leak fdopen'd stream buffers
-Date: Sun, 13 Sep 2009 17:20:36 +0200
-Message-ID: <200909131720.36853.j6t@kdbg.org>
-References: <87hbv833kd.fsf@meyering.net> <7vtyz760lm.fsf@alter.siamese.dyndns.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [ANNOUNCE] Stacked Git 0.15-rc3
+Date: Sun, 13 Sep 2009 17:01:41 +0100
+Message-ID: <b0943d9e0909130901n7655db7av71471148117711d3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 17:20:48 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Karl Wiberg <kha@treskal.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 13 18:01:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmqsh-0004Zr-Io
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 17:20:47 +0200
+	id 1MmrWO-0005jO-B9
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 18:01:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754677AbZIMPUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 11:20:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbZIMPUi
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 11:20:38 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:64172 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754527AbZIMPUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 11:20:38 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 44224CDF83;
-	Sun, 13 Sep 2009 17:20:37 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 33244435B3;
-	Sun, 13 Sep 2009 17:20:37 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <7vtyz760lm.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754668AbZIMQBk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Sep 2009 12:01:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbZIMQBj
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 12:01:39 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:38667 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750947AbZIMQBi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2009 12:01:38 -0400
+Received: by fxm17 with SMTP id 17so378701fxm.37
+        for <git@vger.kernel.org>; Sun, 13 Sep 2009 09:01:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=y8BKZgRAnJIHw6lKKi1c/d1Xo92Kp7FKkjel9gWxxmo=;
+        b=ahTBof4yXagcwPGFkuzh7NGcSopVPvBbDqFlcXjfB2bkqkR90C0tpuHrCp5j52uEbn
+         seRa3W/bOMKGX5s2CQgijZPin8ZzXa0UrXLNQnvV7oaBraPAB5Om2KZECBsvPB6Lk/KC
+         V839UV+9JQ8JoDCGwGLx/jFvXD2ROxhKCpFlo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=CpkQDCt6FecCtiPmzfJjB1pfInQYZ3bK93ZmBTVxGxE8nQ0u298DChJB1nw++VelsN
+         V5xtklxSiGBjWnCs9jjoiH+ol3K3ka6ZoTGMZdwoDHBnU817blApsSK82ahZQkjmfDY8
+         M35rQbyp4v70/LVf9GwVqcT/Jm5kb90Azxyeg=
+Received: by 10.223.3.137 with SMTP id 9mr1911500fan.45.1252857701216; Sun, 13 
+	Sep 2009 09:01:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128370>
 
-On Sonntag, 13. September 2009, Junio C Hamano wrote:
-> Jim Meyering <jim@meyering.net> writes:
-> > diff --git a/transport-helper.c b/transport-helper.c
-> > index f57e84c..0bbd014 100644
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -49,6 +49,7 @@ static struct child_process *get_helper(struct
-> > transport *transport) if (!strcmp(buf.buf, "fetch"))
-> >  			data->fetch = 1;
-> >  	}
-> > +	fclose (file);
-> >  	return data->helper;
-> >  }
-> >
-> > @@ -88,6 +89,7 @@ static int fetch_with_fetch(struct transport
-> > *transport, if (strbuf_getline(&buf, file, '\n') == EOF)
-> >  			exit(128); /* child died, message supplied already */
-> >  	}
-> > +	fclose (file);
-> >  	return 0;
-> >  }
->
-> The callchain of fetch_with_fetch() looks like:
->
->     fetch_with_fetch()
->         helper = get_helper();
->         --> get_helper()
->             - start helper with start_command();
->             - read from helper->out until it sees an empty line;
->             - break out of the loop;
->         <-- return helper
->         - file = xfdopen(helper->out) to get another FILE on the fd
->         - read the rest of the output from helper->out via file
->
-> It seems to me that the fclose() in get_helper() will close the underlying
-> fd and would break the caller, no?
->
-> I think "struct helper_data" should get a new FILE* field and once
-> somebody creates a FILE* out of its helper->out, that FILE* can be passed
-> around without a new xfdopen().
->
-> Or something like that.
->
-> Who is responsible for closing the underlying helper->out fd in the
-> start_command() API, by the way?
+The third release candidate for StGit 0.15 is available from the
+git://repo.or.cz/stgit.git or http://download.gna.org/stgit/. Bugs can
+be reported on the Git mailing list or via the project bugs page
+(https://gna.org/bugs/?group=3Dstgit).
 
-A pipe was requested by setting helper->out = -1 before the call to 
-start_command(), and in such a case the caller must close the fd.
+StGit is a Python application providing similar functionality to Quilt
+(i.e. pushing/popping patches to/from a stack) on top of Git. These
+operations are performed using Git commands and the patches are stored
+as Git commit objects, allowing easy merging of the StGit patches into
+other repositories using standard Git functionality.
 
--- Hannes
+Unless there are major issues, the aim is for this to be the last
+release candidate before 0.15.
+
+The main changes since release 0.15-rc2:
+
+- 'stg import' command fixes to allow the importing of 'git show' outpu=
+t
+  and also support the -pN option for stripping leading slashes from
+  diff paths. The author date when importing e-mails is also preserved
+- Generate binary diffs by default when exporting patches
+- Other bug-fixes
+
+Acknowledgements:
+
+Catalin Marinas (7):
+      Add stg-build, stg-dbg and RELEASENOTES to the MANIFEST.in file
+      Merge commit 'kha/safe'
+      Import git show output easily
+      Merge commit 'kha/safe'
+      Add import -p option
+      Preserve the given author date during import
+      Generate binary diffs by default
+
+David K=E5gedal (1):
+      Escape patch name when creating regexp
+
+Karl Wiberg (2):
+      When reading a config value, pick the last value, not the first
+      squash: Make commit message editing more convenient
+
+--=20
+Catalin
