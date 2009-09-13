@@ -1,160 +1,88 @@
-From: Mark Rada <marada@uwaterloo.ca>
-Subject: Re: [RFC/PATCH v4 2/2] gitweb: append short hash ids to snapshot
- files
-Date: Sun, 13 Sep 2009 01:39:56 -0400
-Message-ID: <4AAC85AC.9080004@mailservices.uwaterloo.ca>
-References: <4AAC2917.6000306@mailservices.uwaterloo.ca> <7v7hw34ivl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v4 1/2] gitweb: check given hash before trying to
+ create snapshot
+Date: Sat, 12 Sep 2009 22:42:31 -0700
+Message-ID: <7vy6oj1jug.fsf@alter.siamese.dyndns.org>
+References: <4AAC3833.8060905@mailservices.uwaterloo.ca>
+ <7vmy4z4j35.fsf@alter.siamese.dyndns.org>
+ <4AAC8521.1060005@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 07:40:10 2009
+To: Mark Rada <marada@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Sun Sep 13 07:42:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmhon-0007L2-Hk
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 07:40:09 +0200
+	id 1MmhrU-0007pL-H8
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 07:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbZIMFj7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Sep 2009 01:39:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751766AbZIMFj6
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 01:39:58 -0400
-Received: from mailservices.uwaterloo.ca ([129.97.128.141]:57013 "EHLO
-	mailchk-m05.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750867AbZIMFj5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2009 01:39:57 -0400
-Received: from karakura.local (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
-	(authenticated bits=0)
-	by mailchk-m05.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n8D5dui4005867
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 13 Sep 2009 01:39:57 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.1) Gecko/20090715 Thunderbird/3.0b3
-In-Reply-To: <7v7hw34ivl.fsf@alter.siamese.dyndns.org>
-X-UUID: c7250a01-89df-4614-be4d-21d174f17c85
-X-Miltered: at mailchk-m05 with ID 4AAC85AC.000 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
-X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m05
-X-Virus-Status: Clean
-X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m05.uwaterloo.ca [129.97.128.141]); Sun, 13 Sep 2009 01:39:58 -0400 (EDT)
+	id S1752081AbZIMFmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 01:42:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752073AbZIMFms
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 01:42:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64438 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752004AbZIMFmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 01:42:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7B97E4EE38;
+	Sun, 13 Sep 2009 01:42:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GFcJfnGlN7sIUmF3WV8DUyHLVe0=; b=rPTOFD
+	1AOV99r9IMUx8tX+8O0iZZDF7elei9IlyME8gJ9CUa3pB4yrO/LkhE1hzzhsghx2
+	RQrEqddsRZf8ReUhNJ2P5+98hxIddSQa8cmPwutC7BHFkIwFfHAId77Z47LmwCsi
+	9FHTIfA1k/A/xfEr9EpYQtxlp9b3xy5Jt9+3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dh00aFHjE6wd+Fb42zYXcxlLTX7yjJvm
+	8yjSnvMu8RE4bnoKYZmu5gvTB6MkinOukKymF/nzlsrVo2pQLpT6Ba4eP98qMSE9
+	VxK05kU3Pv5dO1mL9Yl2TYCnEmop3We2YgHwd8q6qcHd76YDdOss/+MJaKLGsd6u
+	QpZJvUWDQnk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4D00D4EE37;
+	Sun, 13 Sep 2009 01:42:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7851F4EE36; Sun, 13 Sep 2009
+ 01:42:33 -0400 (EDT)
+In-Reply-To: <4AAC8521.1060005@mailservices.uwaterloo.ca> (Mark Rada's
+ message of "Sun\, 13 Sep 2009 01\:37\:37 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 41E9C2FA-A028-11DE-9790-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128337>
 
-On 09-09-12 11:35 PM, Junio C Hamano wrote:
->> @@ -5207,6 +5227,12 @@ sub git_snapshot {
->> ...
->> +
->> +	if ($full_hash !~ /$hash/) {
->> +		$hash .=3D '-' . git_get_short_hash($project, $hash);
->> +	} else {
->> +		$hash =3D git_get_short_hash($project, $hash);
->> +	}
->=20
-> I do not get this test.  What is this unanchored pattern match about?
+Mark Rada <marada@uwaterloo.ca> writes:
 
-I missed that, it should have been anchored.
+> On 09-09-12 11:30 PM, Junio C Hamano wrote:
+>>> @@ -5196,8 +5202,9 @@ sub git_snapshot {
+>>>  		die_error(403, "Unsupported snapshot format");
+>>>  	}
+>>>  
+>>> -	if (!defined $hash) {
+>>> -		$hash = git_get_head_hash($project);
+>>> +	my $full_hash = git_get_full_hash($project, $hash);
+>>> +	if (!$full_hash) {
+>>> +		die_error(404, 'Hash id was not valid');
+>>>  	}
+>> 
+>> This is in the context of "snapshot", so obviously you care more about
+>> just "such an object exists", don't you?  You also want it to be a
+>> tree-ish.  Try giving it $hash = 'junio-gpg-pub' and see how it breaks.
+>  
+> You have confused me. How is using 'junio-gpg-pub' different from the 
+> second test case that tries to use 'frizzumFrazzum'?
 
-> I do not think you wanted to allow matching a partial 1234567 $hash t=
-o
-> substitute a full 01234567..... $full_hash, so I am guessing that you
-> meant to say "$full_hash !~ /^$hash/" at least, or perhaps you meant =
-even
-> "$full_hash ne $hash".
->=20
-> But that still does not make much sense to me.  Perhaps you meant to =
-catch
-> a case where $hash is a tagname (or refname), i.e. $hash =3D 'v1.6.3'=
- or
-> $hash =3D 'next'?
->=20
-> If that is indeed the case, then perhaps you should check for that mo=
-re
-> explicitly, perhaps using "git show-ref $hash" or something.  I do no=
-t
-> know if the complexity (not just the "detect handcrafted $hash string=
- that
-> is not an SHA-1", but this whole "give shorten one" topic) is worth i=
-t,
-> though.  And if you drop the hunk that changes user supplied $hash to
-> $full_hash in the output file name in your [PATCH 1/2], I do not thin=
-k you
-> need this anyway.  If somebody asked for 'next', he will get 'next'.
->=20
-> If somebody asked for 01234... (full 40 hexdigits) because that was t=
-he
-> link on the gitweb output page, it might make sense to give him a
-> shortened name, but then the above conditional needs to be only:
->=20
-> 	if ($full_hash eq $hash) {
->         	$hash =3D git_get_short_hash($project, $hash);
-> 	}
->=20
-> no?
+junio-gpg-pub tag exists in git.git but it tags a blob not a tree.
 
-This was a manifestation of a suggestion from Jakub:
-> Second, I'd rather have better names for snapshots than using full SH=
-A-1.
-> For snapshot of 'v1.5.0' of repository 'repo.git' I'd prefer for snap=
-shot
-> to be named 'repo-v1.5.0', and for snapshot of 'next' branch of the s=
-ame
-> project to be named for example 'repo-next-20090909', or perhaps
-> 'repo-next-2009-09-10T09:16:18' or 'repo-next-20090909-g5f6b0ff',
-> or 'repo-v1.6.5-rc0-164-g5f6b0ff'.
->=20
-> I'm not sure what would be the best name of snapshot of given=20
-> subdirectory...
->=20
->=20
-> In short: I'd rather not improve on bad design of using full SHA-1
-> in snapshot name.
-
-=46or me, there are two fates that snapshots will end up with: being de=
-leted
-as soon as I have unrolled the contents, or long term archiving. For th=
-e
-latter case, it is nice to have an idea of when it came from, though I
-guess I should have appended a date in that case... =AF\(=B0_o)/=AF
-
-Thoughts?
-
-
->> +test_commit \
->> +	'SnapshotFileTests' \
->> +	'i can has snapshot?'
->> +test_expect_success \
->> +	'snapshots: give full hash' \
->> +	'ID=3D`git rev-parse --verify HEAD` &&
->> +	gitweb_run "p=3D.git;a=3Dsnapshot;h=3D$ID;sf=3Dtgz" &&
->> +	ID=3D`git rev-parse --short HEAD` &&
->> +	grep ".git-$ID.tar.gz" gitweb.output'
->=20
-> I'd rather see these indented like:
->=20
->         test_expect_success 'snapshots: give full hash' '
-> 		ID=3D$(git rev-parse --verify HEAD) &&
-> 		gitweb_run ...
->         '
->=20
-> Also, if I am not mistaken, "test_commit" is not about doing any test=
-, but
-> is a short-hand for doing an operation, right?  It would be better to=
- have
-> it inside test_expect_success just in case your "git commit" or some =
-other
-> commands are broken.  I.e. like
->=20
-> 	test_expect_success 'create a test commit' '
-> 		test_commit SnapshotFileTests "Can I have shapshot?"
->         '
-
-Can I have snapshot?!?! What do you have against LOLspeak? :P
-
-
---=20
-Mark Rada (ferrous26)
-marada@uwaterloo.ca
+	$ git rev-parse junio-gpg-pub
+        6019c27d966fe3ce8adcc0e9f12078eef96ca6ef
+        $ git archive junio-gpg-pub
+        fatal: not a tree object
