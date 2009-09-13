@@ -1,79 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Confusing git pull error message
-Date: Sun, 13 Sep 2009 18:39:23 -0400
-Message-ID: <20090913223923.GA8840@coredump.intra.peff.net>
-References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
- <20090912211119.GA30966@coredump.intra.peff.net>
- <7v1vmar353.fsf@alter.siamese.dyndns.org>
- <20090913204231.GA8654@coredump.intra.peff.net>
- <7v7hw2pmtk.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 14 00:39:35 2009
+From: Owen Taylor <otaylor@redhat.com>
+Subject: Patches for git-push --confirm and --show-subjects
+Date: Sun, 13 Sep 2009 19:31:21 -0400
+Message-ID: <1252884685-9169-1-git-send-email-otaylor@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 14 01:31:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmxjK-0007zg-Si
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 00:39:35 +0200
+	id 1MmyXl-0001Gx-TR
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 01:31:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752081AbZIMWjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 18:39:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbZIMWjZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 18:39:25 -0400
-Received: from peff.net ([208.65.91.99]:59421 "EHLO peff.net"
+	id S1753915AbZIMXbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 19:31:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753860AbZIMXbX
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 19:31:23 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:50925 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751173AbZIMWjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 18:39:24 -0400
-Received: (qmail 21616 invoked by uid 107); 13 Sep 2009 22:39:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 13 Sep 2009 18:39:44 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 18:39:23 -0400
-Content-Disposition: inline
-In-Reply-To: <7v7hw2pmtk.fsf@alter.siamese.dyndns.org>
+	id S1753841AbZIMXbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 19:31:23 -0400
+Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8DNVQfe030237
+	for <git@vger.kernel.org>; Sun, 13 Sep 2009 19:31:26 -0400
+Received: from localhost.localdomain (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
+	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8DNVPIx026475
+	for <git@vger.kernel.org>; Sun, 13 Sep 2009 19:31:26 -0400
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128426>
 
-On Sun, Sep 13, 2009 at 02:16:39PM -0700, Junio C Hamano wrote:
+Here's a first try at something like what was discussed. Various notes:
 
-> I am _not_ going to commit the following patch, because it will interfere
-> with this clarification effort, but I think we want to do something along
-> this line after the "clarification" settles.
+ * I didn't try to implement --confirm for rsync and http pushes; it would
+   require completely different code and it sounds like they will eventually
+   be switched to the "push_refs" code path as well.
 
-Please, yes. When I first suggested the advice.* mechanism, I had a
-feeling in the back of my mind that there were several such messages
-which had bothered me, but I didn't read through the code base looking
-for them. But now that you mention it, this "no merge candidate" message
-is definitely one of them (not even because it's wrong or anything, but
-because of sheer _size_ of it).
+ * I picked the name --show-subjects for the that option because
+   --show-commits/--log-commits implied a closer connection to 'git show'
+   or 'git log'. --show-subjects implies (to me) something more free-form.
 
-> An observation I'd like to make is that this is way too ugly:
-> 
-> 	[advice]
->         	pullNoMergeFound = false
->                 pushNonFastForward = false
->                 statusHints = false
-> 
-> than
-> 
-> 	[IKnowWhatIAmDoingThankYouVeryMuch]
->         	pullNoMergeFound
->                 pushNonFastForward
->                 statusHints
-> 
-> but this feature is for people who know what they are doing, so I guess
-> the current set-up would be fine.
+ * --show-subjects might actually benefit from having a short option
+   but I omitted that for now.
 
-Maybe a nice shorthand would be '!' for negative booleans. I.e.,
+ * I ripped off a big hunk of code from builtin-fmt-merge-msg.c to do the
+   commit synopsis without completely understanding it. There are quite
+   a few differences from the original and it was beyond my knowledge of
+   the git code base to figure out whether some shared utility could be
+   added.
 
-  [advice]
-  !pullNoMergeFound
-  !pushNonFastForward
-  !statusHints
+   Along with differences in the input parameters and the output, there's
+   one "bug fix" I made to the code - in the orginal, if you have exactly
+   21 commits it will show:
 
--Peff
+     (21 commits):
+      <commit 1>
+      <commit 2>
+      [...]
+      <commit 20>
+     ...
+
+   So the last commit is pointlessly substituted with '...'; that's more
+   annoying if you are showing just a few commits, so I fixed it in the
+   adapted code.
+
+ * Passing three booleans 'int verbose, int show_subjects, int porcelain'
+   between functions in transport.c is somewhat error-prone, but I didn't
+   want to switch to flags, since it would have made the patches here
+   less incremental.
+
+ * The interaction between --confirm and --show-subjects and --porcelain
+   is a bit tricky, but I think what I ended up with right - the basic
+   idea is that that '--confirm --porcelain' should let the user confirm
+   then output what actually got done to the wrapper script on stdout in
+   porcelain format. Didn't try to describe the details in the docs.
+
+ * My first attempt at changing the git code, so probably some stupidity
+   in there somewhere :-)
