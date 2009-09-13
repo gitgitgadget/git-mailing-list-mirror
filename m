@@ -1,73 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push: Accept -n as a synonym for --dry-run.
-Date: Sat, 12 Sep 2009 23:10:10 -0700
-Message-ID: <7veiqb1ikd.fsf@alter.siamese.dyndns.org>
-References: <1252800302-26560-1-git-send-email-nelhage@mit.edu>
- <7vfxar5zsi.fsf@alter.siamese.dyndns.org> <20090913034031.GO4275@mit.edu>
- <20090913035421.GP4275@mit.edu> <7vd45v2za4.fsf@alter.siamese.dyndns.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] Improve --patch option documentation in git-add
+Date: Sun, 13 Sep 2009 09:44:32 +0300
+Organization: Private
+Message-ID: <87ab0zny27.fsf_-_@jondo.cante.net>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nelson Elhage <nelhage@MIT.EDU>
-X-From: git-owner@vger.kernel.org Sun Sep 13 08:10:37 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 13 08:44:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmiIF-0004WG-TZ
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 08:10:36 +0200
+	id 1MmipF-0001zK-GO
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 08:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753608AbZIMGKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 02:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbZIMGKU
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 02:10:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35556 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753439AbZIMGKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 02:10:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9A6B4EFB5;
-	Sun, 13 Sep 2009 02:10:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=v3eryji9RGroBHb4+5z5n0aKuj8=; b=v8QoG5
-	zTpnZhQokLLY2n9cbs/mw1mSe2xtVXN4GoiJOMmlfFiWO+tUey9uip2WWyARMfbC
-	gv360j/mK+w/XUufzBu917HlmLlAZSBmM7g93nUQR/xUeBrGrldWjeTBdSb30Ln/
-	7MgU4Xj0B9A8nIKDAjcTgqmIO9k/+OAjECdZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WOI+1zrZShtIkHRURlseoCjgsGbbO7RO
-	IB+ScjVFpHwjMFlVxcwzq0PpcClPl0ELMs82CQWE3bw+fQsx0dxLzMDABomaWlNB
-	bAXuljUTBrScJYZjFGe2tt9t36nA2utlmA+JjxKORfFqGTDEF0UqFKXJqWVfwO/u
-	1+fClXjp0Bs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9A144EFB3;
-	Sun, 13 Sep 2009 02:10:18 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 08E114EFB2; Sun, 13 Sep 2009
- 02:10:11 -0400 (EDT)
-In-Reply-To: <7vd45v2za4.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 12 Sep 2009 22\:23\:47 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1CA2864A-A02C-11DE-AA8A-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752934AbZIMGod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 02:44:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752876AbZIMGoc
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 02:44:32 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:43960 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752818AbZIMGob (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 02:44:31 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 0962FC7AE9
+	for <git@vger.kernel.org>; Sun, 13 Sep 2009 09:44:34 +0300 (EEST)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A025690693C; Sun, 13 Sep 2009 09:44:34 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id ECC7E41BE9
+	for <git@vger.kernel.org>; Sun, 13 Sep 2009 09:44:32 +0300 (EEST)
+In-Reply-To: <7vmy5fy2hz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Mon, 31 Aug 2009 16:42:16 -0700")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128340>
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> ..., so you are not arguing against
-> me at all.
-> ... it is likely that we would try very
-> hard to find a name that does not begin with 'n' to avoid the issue.
+> Jari Aalto <jari.aalto@cante.net> writes:
+>
+>>     --patch:
+>>     -p::
+>>         In a modified work tree, choose interactively which patch hunks to
+>>         add. This gives a change to review the difference between the
+>>         index and the work before adding modified contents to the index.
+>
+> Sounds sensible.  You may want to be even more direct and succinct, e.g.
+>
+>     Interactively choose hunks of patch between the index and the work
+>     tree and add them to the index.
 
-So what's my objection, in short?
+Thanks, see below,
+Jari
 
-It is just the wording "_the_ standard" that implies that anything that
-uses -n to mean something other than --dry-run is _wrong_.
+>From 63aa94e7782d6340ead0446ea80ed6223d7ac5c1 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Sun, 13 Sep 2009 09:43:10 +0300
+Subject: [PATCH] Improve --patch option documentation in git-add
 
-I didn't want to see anybody arguing against "commit -n".  It is used to
-defeat pre-commit hook and has been there with us for a long time.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-add.txt |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index e67b7e8..b94fbec 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -72,9 +72,14 @@ OPTIONS
+ 
+ -p::
+ --patch::
+-	Similar to Interactive mode but the initial command loop is
+-	bypassed and the 'patch' subcommand is invoked using each of
+-	the specified filepatterns before exiting.
++	Interactively choose hunks of patch between the index and the
++	work tree and add them to the index. This gives a change to
++	review the difference before adding modified contents to the
++	index.
++
++	This effectively runs ``add --interactive``, but bypass the
++	initial command menu and directly jump to `patch` subcommand.
++	See ``Interactive mode'' for details.
+ 
+ -e, \--edit::
+ 	Open the diff vs. the index in an editor and let the user
+-- 
+1.6.3.3
