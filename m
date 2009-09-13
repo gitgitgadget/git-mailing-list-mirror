@@ -1,99 +1,77 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] transport-helper.c: don't leak fdopen'd stream buffers
-Date: Sun, 13 Sep 2009 09:45:10 +0200
-Message-ID: <878wgjz3sp.fsf@meyering.net>
-References: <87hbv833kd.fsf@meyering.net>
-	<7vtyz760lm.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Effectively tracing project contributions with git
+Date: Sun, 13 Sep 2009 05:24:30 -0400
+Message-ID: <20090913092429.GA14438@coredump.intra.peff.net>
+References: <4AAB9459.3070809@webdrake.net>
+ <20090912185940.GA21277@coredump.intra.peff.net>
+ <fabb9a1e0909121203r527bc81ctd68382fc1107bf06@mail.gmail.com>
+ <4AAC3889.6030908@webdrake.net>
+ <20090913022843.GB26588@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 09:45:46 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Joseph Wakeling <joseph.wakeling@webdrake.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Sep 13 11:25:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmjmL-0003Ba-R4
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 09:45:46 +0200
+	id 1MmlKs-0008EH-EW
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 11:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752442AbZIMHpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 03:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752434AbZIMHpP
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 03:45:15 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:51845 "EHLO smtp3-g21.free.fr"
+	id S1751563AbZIMJYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 05:24:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbZIMJYb
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 05:24:31 -0400
+Received: from peff.net ([208.65.91.99]:49487 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752259AbZIMHpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 03:45:14 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 42E26818085
-	for <git@vger.kernel.org>; Sun, 13 Sep 2009 09:45:12 +0200 (CEST)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 64827818036
-	for <git@vger.kernel.org>; Sun, 13 Sep 2009 09:45:10 +0200 (CEST)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 3F01D38B5A; Sun, 13 Sep 2009 09:45:10 +0200 (CEST)
-In-Reply-To: <7vtyz760lm.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sat, 12 Sep 2009 19:27:01 -0700")
+	id S1751033AbZIMJYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 05:24:30 -0400
+Received: (qmail 16740 invoked by uid 107); 13 Sep 2009 09:24:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 13 Sep 2009 05:24:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 05:24:30 -0400
+Content-Disposition: inline
+In-Reply-To: <20090913022843.GB26588@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128345>
 
-Junio C Hamano wrote:
-> Jim Meyering <jim@meyering.net> writes:
->
->> diff --git a/transport-helper.c b/transport-helper.c
->> index f57e84c..0bbd014 100644
->> --- a/transport-helper.c
->> +++ b/transport-helper.c
->> @@ -49,6 +49,7 @@ static struct child_process *get_helper(struct transport *transport)
->>  		if (!strcmp(buf.buf, "fetch"))
->>  			data->fetch = 1;
->>  	}
->> +	fclose (file);
->>  	return data->helper;
->>  }
->>
->> @@ -88,6 +89,7 @@ static int fetch_with_fetch(struct transport *transport,
->>  		if (strbuf_getline(&buf, file, '\n') == EOF)
->>  			exit(128); /* child died, message supplied already */
->>  	}
->> +	fclose (file);
->>  	return 0;
->>  }
->
-> The callchain of fetch_with_fetch() looks like:
->
->     fetch_with_fetch()
->         helper = get_helper();
->         --> get_helper()
->             - start helper with start_command();
->             - read from helper->out until it sees an empty line;
->             - break out of the loop;
->         <-- return helper
->         - file = xfdopen(helper->out) to get another FILE on the fd
->         - read the rest of the output from helper->out via file
->
-> It seems to me that the fclose() in get_helper() will close the underlying
-> fd and would break the caller, no?
+On Sat, Sep 12, 2009 at 10:28:43PM -0400, Theodore Tso wrote:
 
-I confess that my sole test was to run "make test", which passed.
-If the fd must live on, a slightly less invasive change would be to
-xdup each descriptor just before each of the three xfdopen calls, e.g.,
+> > I don't see any solution that doesn't see me browsing diffs -- there's
+> > no metric that will solve the problem -- but if your stats work could
+> > help me get an output of the form 'here are all the diffs on file X by
+> > contributor Y in order of size, largest first' then I think it would
+> > help a LOT.
+> 
+> This will display all of the diffs on file (pathname) XXX by contributor YYY:
+> 
+> 	git log -p --author=YYY XXX 
+> 
+> You might also find the diffstats useful:
+> 
+> 	git log --stat --author=YYY XXX
+> 
+> Or if you want *only* the diffstats for the file in question, you might try:
+> 
+> 	git log --stat --pretty=format: --author=YYY XXX | grep XXX
 
--       file = xfdopen(helper->out, "r");
-+       file = xfdopen(xdup(helper->out), "r");
+There is also the "--numstat" format which is a bit easier for parsing.
+I think the "all diffs on file $X by contributor $Y, ordered by size"
+would look like:
 
-> I think "struct helper_data" should get a new FILE* field and once
-> somebody creates a FILE* out of its helper->out, that FILE* can be passed
-> around without a new xfdopen().
->
-> Or something like that.
+  git log -z --pretty=tformat:%H --numstat --author=$Y $X |
+  perl -0ne '
+    my ($commit) = /^([0-9a-f]{40})$/m;
+    my ($lines_added) = /^(\d+)\s/m;
+    print "$lines_added $commit\n";
+  ' |
+  sort -rn |
+  cut -d ' ' -f2 |
+  xargs -n 1 git show
 
-That's probably best.
-
-> Who is responsible for closing the underlying helper->out fd in the
-> start_command() API, by the way?
+-Peff
