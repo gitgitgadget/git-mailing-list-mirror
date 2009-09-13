@@ -1,141 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v4 2/2] gitweb: append short hash ids to snapshot
- files
-Date: Sat, 12 Sep 2009 20:35:10 -0700
-Message-ID: <7v7hw34ivl.fsf@alter.siamese.dyndns.org>
-References: <4AAC2917.6000306@mailservices.uwaterloo.ca>
+From: Nelson Elhage <nelhage@MIT.EDU>
+Subject: Re: [PATCH] git-push: Accept -n as a synonym for --dry-run.
+Date: Sat, 12 Sep 2009 23:40:31 -0400
+Message-ID: <20090913034031.GO4275@mit.edu>
+References: <1252800302-26560-1-git-send-email-nelhage@mit.edu> <7vfxar5zsi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Sun Sep 13 05:35:30 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 05:40:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmfs9-0006e5-K0
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 05:35:29 +0200
+	id 1MmfxA-0007Qe-Sc
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 05:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754944AbZIMDfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Sep 2009 23:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754936AbZIMDfU
-	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 23:35:20 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55201 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754886AbZIMDfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Sep 2009 23:35:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DA144E7F8;
-	Sat, 12 Sep 2009 23:35:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=ZwbLSTPFo8wecodYWd6XyKJE8yo=; b=aLuuXknEoytRtNG6uQ5CrYZ
-	/HetSvHdNlvT+uBQXZaAtCXFPhxKI3wd3NMF7dCwMd3ghNWTgxt6cyrlrsJM4m8B
-	rFl4fsPL+VzVTAorI1Okd/rEGLdgw0GxJyeZ6WMQj27u7QzJUHYDzWu+sYvOBGgQ
-	aHMt7AabAPwM8/zvumzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=hr0vBChgvDmS7i14r7GJT4159yabSv1nT2OEzYXLXsFt1Qf+x
-	GM1KczQ4urmDjI90NQo69dxzf1Qx/+CW8+JDJ6iY3SVw6Xo8cVlxKlu0gtA/fXmg
-	9wqWrwzghpzkmyQsjiwd9reYXmsGOOkSVSHnf/+/KqrxElRaiV/LNBNpII=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D5D4B4E7F7;
-	Sat, 12 Sep 2009 23:35:19 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E33524E7F2; Sat, 12 Sep 2009
- 23:35:11 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 76118746-A016-11DE-B952-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754953AbZIMDkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Sep 2009 23:40:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754921AbZIMDkc
+	(ORCPT <rfc822;git-outgoing>); Sat, 12 Sep 2009 23:40:32 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:59945 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754852AbZIMDkb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Sep 2009 23:40:31 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n8D3eWts024998;
+	Sat, 12 Sep 2009 23:40:32 -0400 (EDT)
+Received: from LUNATIQUE.MIT.EDU (LUNATIQUE.MIT.EDU [18.208.0.153])
+	(authenticated bits=0)
+        (User authenticated as nelhage@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n8D3eVRR013800
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 12 Sep 2009 23:40:32 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vfxar5zsi.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128330>
 
-Mark Rada <marada@uwaterloo.ca> writes:
+On Sat, Sep 12, 2009 at 07:44:29PM -0700, Junio C Hamano wrote:
+> Sign-off?
 
-> Teach gitweb how to produce nicer snapshot names by only using the
-> short hash id. If clients make requests using a tree-ish that is not a
-> partial or full SHA-1 hash, then the short hash will also be appended
-> to whatever they asked for.
-> ...
-> +sub git_get_short_hash {
-> +	my $project = shift;
-> +	my $hash = shift;
-> +	my $o_git_dir = $git_dir;
-> +	my $retval = undef;
-> +	$git_dir = "$projectroot/$project";
-> +	if (open my $fd, '-|', git_cmd(), 'rev-parse', '--short', $hash) {
-> +		$hash = <$fd>;
-> +		close $fd;
-> +		if (defined $hash && $hash =~ /^([0-9a-fA-F]{7,})$/) {
+Signed-off-by: Nelson Elhage <nelhage@mit.edu>
 
-If you want to make sure it is 7 or longer, ask rev-parse to give you 7 or
-longer explicitly, so that you won't be hit by default changing under you
-in the future.
+(I can resend the entire patch, but I'll resend with a new commit
+message if appropriate after any discussion plays itself out).
 
-> @@ -5207,6 +5227,12 @@ sub git_snapshot {
-> ...
-> +
-> +	if ($full_hash !~ /$hash/) {
-> +		$hash .= '-' . git_get_short_hash($project, $hash);
-> +	} else {
-> +		$hash = git_get_short_hash($project, $hash);
-> +	}
+> 
+> Indeed -n is used in many places for --dry-run, but it is not _the_
+> standard way.
+> 
+> commit, push (as you identified), reflog, and send-email have --dry-run
+> but -n is not a synonym for it.  Some of them even use -n as a shorthand
+> for a more often used option than --dry-run.
 
-I do not get this test.  What is this unanchored pattern match about?
+Can you point to an example of a git command supporting --dry-run, and
+using -n for something else? I personally would find that confusing,
+since -n is a common alias for dry-run both inside and outside of git
+(c.f. make, rsync, libtool). I guess patch(1) has that property, but
+none of your examples from git use -n to mean something else.
 
-I do not think you wanted to allow matching a partial 1234567 $hash to
-substitute a full 01234567..... $full_hash, so I am guessing that you
-meant to say "$full_hash !~ /^$hash/" at least, or perhaps you meant even
-"$full_hash ne $hash".
+In fact, reflog already supports '-n' to mean dry-run, it's just not
+documented. I'll send along a documentation patch to fix that.
 
-But that still does not make much sense to me.  Perhaps you meant to catch
-a case where $hash is a tagname (or refname), i.e. $hash = 'v1.6.3' or
-$hash = 'next'?
+I got the claim that -n was "standard" from parse-options.h, which
+defines OPT__DRY_RUN, which defines both -n and --dry-run switches at
+the same time. Given the number of commands that treat them as
+synonymous, I think it would be a win for UI consistency to make them
+synonymous everywhere.
 
-If that is indeed the case, then perhaps you should check for that more
-explicitly, perhaps using "git show-ref $hash" or something.  I do not
-know if the complexity (not just the "detect handcrafted $hash string that
-is not an SHA-1", but this whole "give shorten one" topic) is worth it,
-though.  And if you drop the hunk that changes user supplied $hash to
-$full_hash in the output file name in your [PATCH 1/2], I do not think you
-need this anyway.  If somebody asked for 'next', he will get 'next'.
+> 
+> So the justification should be more like "push does not any other option
+> that deserves a short-and-sweet -n better, it will not have any such
+> option in the future, and --dry-run is very often used that it deserves to
+> use -n as its short-hand."
+> 
+> I tend to agree with the first two points, but I am not sure about the
+> third point.  Do people dry-push that often?
 
-If somebody asked for 01234... (full 40 hexdigits) because that was the
-link on the gitweb output page, it might make sense to give him a
-shortened name, but then the above conditional needs to be only:
-
-	if ($full_hash eq $hash) {
-        	$hash = git_get_short_hash($project, $hash);
-	}
-
-no?        
-
-> +test_commit \
-> +	'SnapshotFileTests' \
-> +	'i can has snapshot?'
-> +test_expect_success \
-> +	'snapshots: give full hash' \
-> +	'ID=`git rev-parse --verify HEAD` &&
-> +	gitweb_run "p=.git;a=snapshot;h=$ID;sf=tgz" &&
-> +	ID=`git rev-parse --short HEAD` &&
-> +	grep ".git-$ID.tar.gz" gitweb.output'
-
-I'd rather see these indented like:
-
-        test_expect_success 'snapshots: give full hash' '
-		ID=$(git rev-parse --verify HEAD) &&
-		gitweb_run ...
-        '
-
-Also, if I am not mistaken, "test_commit" is not about doing any test, but
-is a short-hand for doing an operation, right?  It would be better to have
-it inside test_expect_success just in case your "git commit" or some other
-commands are broken.  I.e. like
-
-	test_expect_success 'create a test commit' '
-		test_commit SnapshotFileTests "Can I have shapshot?"
-        '
+I personally use --dry-run almost every time I push, which is what
+inspired this patch. Especially now that the push.default can change
+the behavior of push from repo to repo, I want to be sure I know what
+I'm about to push. The recent 'git push --confirm' thread suggests I
+am not the only person with this concern.
