@@ -1,66 +1,72 @@
-From: Yuri D'Elia <wavexx@users.sf.net>
-Subject: rename tracking and file-name swapping
-Date: Sun, 13 Sep 2009 13:17:13 +0200
-Message-ID: <wavexx-2ECE7F.13171313092009@ger.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 13 13:21:07 2009
+From: Nelson Elhage <nelhage@MIT.EDU>
+Subject: Re: [PATCH] reflog documentation: -n is an alias for --dry-run
+Date: Sun, 13 Sep 2009 08:53:13 -0400
+Message-ID: <20090913125313.GQ4275@mit.edu>
+References: <1252813314-14408-1-git-send-email-nelhage@mit.edu> <20090913094032.GC14438@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 13 14:55:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mmn8h-0002cm-Uv
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 13:21:04 +0200
+	id 1MmocB-00007t-J0
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 14:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752631AbZIMLUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 07:20:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752565AbZIMLUD
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 07:20:03 -0400
-Received: from lo.gmane.org ([80.91.229.12]:59118 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752271AbZIMLUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 07:20:02 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1Mmn7k-0002Ni-Mn
-	for git@vger.kernel.org; Sun, 13 Sep 2009 13:20:04 +0200
-Received: from 88-149-143-162.dynamic.ngi.it ([88.149.143.162])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 13:20:04 +0200
-Received: from wavexx by 88-149-143-162.dynamic.ngi.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 13:20:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 88-149-143-162.dynamic.ngi.it
-User-Agent: MT-NewsWatcher/3.5.2 (PPC Mac OS X)
+	id S1753421AbZIMMxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 08:53:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbZIMMxQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 08:53:16 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61593 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753001AbZIMMxP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 13 Sep 2009 08:53:15 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n8DCrFTl007123;
+	Sun, 13 Sep 2009 08:53:15 -0400 (EDT)
+Received: from LUNATIQUE.MIT.EDU (LUNATIQUE.MIT.EDU [18.208.0.153])
+	(authenticated bits=0)
+        (User authenticated as nelhage@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n8DCrEUl020264
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sun, 13 Sep 2009 08:53:14 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20090913094032.GC14438@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128357>
 
-Hi everyone. Does rename tracking recognize two file names being swapped?
+Oh, I see. I was reading builtin-reflog.c, which, in both
+cmd_reflog_expire and cmd_reflog_delete, does check for -n as
+synonymous to --dry-run:
 
-% ls -l
-total 24
--rw-rw-r--   1 wavexx  wavexx  5952 Sep 13 13:09 file1.txt
--rw-rw-r--   1 wavexx  wavexx  3330 Sep 13 13:09 file2.txt
-% mv file1.txt file3.txt 
-% mv file2.txt file1.txt
-% mv file3.txt file2.txt
-% git add file1.txt file2.txt 
-% git diff -M --stat --cached
- file1.txt |  150 +++++++++++++++++++++++-------------------------------------
- file2.txt |  150 +++++++++++++++++++++++++++++++++++++-----------------------
- 2 files changed, 150 insertions(+), 150 deletions(-)
+if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+    cb.dry_run = 1;
 
-I would expect at least to see
+but I missed that 'reflog show' aliases for git-log, and that that
+accepts -n.
 
-  file1.txt => file2.txt
-  file2.txt => file1.txt
+Patch withdrawn -- I'd send one documenting that -n works for delete
+and expire, but it'd probably just complicate the documentation more
+than clarify anything.
 
-if the contents are totally unchanged.
+- Nelson
 
-Am I doing something wrong?
-
-Thanks
+On Sun, Sep 13, 2009 at 05:40:32AM -0400, Jeff King wrote:
+> On Sat, Sep 12, 2009 at 11:41:54PM -0400, Nelson Elhage wrote:
+> 
+> >  static const char reflog_expire_usage[] =
+> > -"git reflog (show|expire) [--verbose] [--dry-run] [--stale-fix] [--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...";
+> > +"git reflog (show|expire) [--verbose] [-n | --dry-run] [--stale-fix] [--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...";
+> 
+> Really? I think "git reflog show -n" is not about dry-run at all...
+> 
+> -Peff
