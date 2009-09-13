@@ -1,106 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH v4 1/2] gitweb: check given hash before trying to create snapshot
-Date: Sun, 13 Sep 2009 17:03:45 +0200
-Message-ID: <200909131703.45806.jnareb@gmail.com>
-References: <4AAC3833.8060905@mailservices.uwaterloo.ca> <4AAC8521.1060005@mailservices.uwaterloo.ca> <7vy6oj1jug.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] transport-helper.c: don't leak fdopen'd stream buffers
+Date: Sun, 13 Sep 2009 17:20:36 +0200
+Message-ID: <200909131720.36853.j6t@kdbg.org>
+References: <87hbv833kd.fsf@meyering.net> <7vtyz760lm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Mark Rada <marada@uwaterloo.ca>, git@vger.kernel.org
+Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
+	Daniel Barkalow <barkalow@iabervon.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 17:04:04 2009
+X-From: git-owner@vger.kernel.org Sun Sep 13 17:20:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmqcV-0000hV-Ai
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 17:04:03 +0200
+	id 1Mmqsh-0004Zr-Io
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 17:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754637AbZIMPDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 11:03:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754635AbZIMPDs
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 11:03:48 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:10211 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754616AbZIMPDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 11:03:47 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so328721fge.1
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 08:03:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=+LfKxzI/QE7Gn4jHN8GXQwei5+H1Kur/hDqq7nfwb8o=;
-        b=bbCAjyJiBV8A9c88KApSRRv7lbQn0/In+zMN4RZrkL0fWRCJZ+2bp5E+vxRYU132LM
-         diBiPTPwiT58y15VhTOz5pTgWInvPH8dta1u214W8WmUZcu1QkT6f5FITa2yhllIBg5N
-         GmJL4d3oQoSDNoxEfxQaswocQhCkpxmLGABOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=mm/JGcB/ttLeFSY2Pv/1OX3/j7mL0e+6keR+jkaKJJCCoOi+lwk+Fnnts3jx4g6afQ
-         R+edJyN4QfehpiloRpXPSkcKLCgLmLoDRuLS2E6j6PqOxQGgoI5fUQZxcCCYYx62SqGu
-         bKqMaFqyB30xK6w7i6gxTUaoGY7SnXi9ivebM=
-Received: by 10.86.238.30 with SMTP id l30mr3984858fgh.75.1252854230091;
-        Sun, 13 Sep 2009 08:03:50 -0700 (PDT)
-Received: from ?192.168.1.13? (abvj176.neoplus.adsl.tpnet.pl [83.8.207.176])
-        by mx.google.com with ESMTPS id 12sm3334461fgg.11.2009.09.13.08.03.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 08:03:48 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vy6oj1jug.fsf@alter.siamese.dyndns.org>
+	id S1754677AbZIMPUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 11:20:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754676AbZIMPUi
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 11:20:38 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:64172 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754527AbZIMPUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 11:20:38 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 44224CDF83;
+	Sun, 13 Sep 2009 17:20:37 +0200 (CEST)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 33244435B3;
+	Sun, 13 Sep 2009 17:20:37 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vtyz760lm.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128369>
 
-On Sun, 13 Sep 2009, Junio C Hamano wrote:
-> Mark Rada <marada@uwaterloo.ca> writes:
->> On 09-09-12 11:30 PM, Junio C Hamano wrote:
+On Sonntag, 13. September 2009, Junio C Hamano wrote:
+> Jim Meyering <jim@meyering.net> writes:
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index f57e84c..0bbd014 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -49,6 +49,7 @@ static struct child_process *get_helper(struct
+> > transport *transport) if (!strcmp(buf.buf, "fetch"))
+> >  			data->fetch = 1;
+> >  	}
+> > +	fclose (file);
+> >  	return data->helper;
+> >  }
+> >
+> > @@ -88,6 +89,7 @@ static int fetch_with_fetch(struct transport
+> > *transport, if (strbuf_getline(&buf, file, '\n') == EOF)
+> >  			exit(128); /* child died, message supplied already */
+> >  	}
+> > +	fclose (file);
+> >  	return 0;
+> >  }
+>
+> The callchain of fetch_with_fetch() looks like:
+>
+>     fetch_with_fetch()
+>         helper = get_helper();
+>         --> get_helper()
+>             - start helper with start_command();
+>             - read from helper->out until it sees an empty line;
+>             - break out of the loop;
+>         <-- return helper
+>         - file = xfdopen(helper->out) to get another FILE on the fd
+>         - read the rest of the output from helper->out via file
+>
+> It seems to me that the fclose() in get_helper() will close the underlying
+> fd and would break the caller, no?
+>
+> I think "struct helper_data" should get a new FILE* field and once
+> somebody creates a FILE* out of its helper->out, that FILE* can be passed
+> around without a new xfdopen().
+>
+> Or something like that.
+>
+> Who is responsible for closing the underlying helper->out fd in the
+> start_command() API, by the way?
 
->>>> @@ -5196,8 +5202,9 @@ sub git_snapshot {
->>>>  		die_error(403, "Unsupported snapshot format");
->>>>  	}
->>>>  
->>>> -	if (!defined $hash) {
->>>> -		$hash = git_get_head_hash($project);
->>>> +	my $full_hash = git_get_full_hash($project, $hash);
->>>> +	if (!$full_hash) {
->>>> +		die_error(404, 'Hash id was not valid');
->>>>  	}
->>> 
->>> This is in the context of "snapshot", so obviously you care more about
->>> just "such an object exists", don't you?  You also want it to be a
->>> tree-ish.  Try giving it $hash = 'junio-gpg-pub' and see how it breaks.
->>  
->> You have confused me. How is using 'junio-gpg-pub' different from the 
->> second test case that tries to use 'frizzumFrazzum'?
-> 
-> junio-gpg-pub tag exists in git.git but it tags a blob not a tree.
-> 
-> 	$ git rev-parse junio-gpg-pub
->         6019c27d966fe3ce8adcc0e9f12078eef96ca6ef
->         $ git archive junio-gpg-pub
->         fatal: not a tree object
+A pipe was requested by setting helper->out = -1 before the call to 
+start_command(), and in such a case the caller must close the fd.
 
-So the proper solution with respect to snapshot parameters validation
-would be to use
-
-	my $type = git_get_type("$hash^{}");
-
-and check it:
- * if $type is empty or undef (if it is false-ish) then requested object
-   does not exist and we return '404 - No such object' (or something like
-   that)
- * if $type is 'blob' then we return '400 - Object is not a tree-ish'
-   (or something like that)
- * otherwise $type is 'commit' or 'tree'
-
--- 
-Jakub Narebski
-Poland
+-- Hannes
