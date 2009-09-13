@@ -1,180 +1,102 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: [PATCH v2 2/2] teach git-archive to auto detect the output format
-Date: Mon, 14 Sep 2009 00:17:01 +0400
-Message-ID: <20090913201701.GH30385@dpotapov.dyndns.org>
-References: <7v3a6r5znq.fsf@alter.siamese.dyndns.org> <1252863407-2598-1-git-send-email-dpotapov@gmail.com> <1252863407-2598-2-git-send-email-dpotapov@gmail.com> <7vzl8yr81j.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Confusing git pull error message
+Date: Sun, 13 Sep 2009 13:38:48 -0700
+Message-ID: <7v1vmar353.fsf@alter.siamese.dyndns.org>
+References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
+ <20090912211119.GA30966@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John Tapsell <johnflux@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 13 22:22:10 2009
+Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 13 22:39:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmvaL-0002JV-O3
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 22:22:10 +0200
+	id 1Mmvqi-0005zw-3g
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 22:39:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897AbZIMUWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 16:22:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754880AbZIMUWA
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 16:22:00 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:3568 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754275AbZIMUV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 16:21:59 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so374149fge.1
-        for <git@vger.kernel.org>; Sun, 13 Sep 2009 13:22:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=+LcDh3rrterehv8GcADwBXjLnbWsBBmAhqYxgSjPOhQ=;
-        b=V7mv5h/hGSYXY/ebiiGpXCEdut5MRDXLKaNiIO9OKMLun7SyWgdRJ1K4tP7yk2PA6D
-         VTfJoaWexraf3vLRJAHr6K1D8mViekux0oi5uEPiyYcnHjIibx46t1KE2ubHgomJ+Sys
-         6DW8nbvIq4Ja3jTvygRVWYMZyIPryjf4Y9ydo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=B7aaVVgj7ElLxrBF2Heoz6nOJfEGVuh2dj+B2BTc6OWm8Z75R0OuYUl9fonnTaVRRC
-         M401SPvIjvDfixtYGZwedeIbjKSOzIoTqf5gFiIrm4EwlevILAbuyHQazbNTWvNihxgi
-         vwhIQYEuvxPmr9Q8s1ArPupmhVtfIP54MqgRI=
-Received: by 10.86.20.8 with SMTP id 8mr4247867fgt.44.1252873322157;
-        Sun, 13 Sep 2009 13:22:02 -0700 (PDT)
-Received: from localhost (ppp91-77-225-181.pppoe.mtu-net.ru [91.77.225.181])
-        by mx.google.com with ESMTPS id l19sm266085fgb.27.2009.09.13.13.22.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Sep 2009 13:22:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzl8yr81j.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755125AbZIMUi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 16:38:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755116AbZIMUi4
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 16:38:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54595 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755079AbZIMUiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 16:38:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A4831956;
+	Sun, 13 Sep 2009 16:38:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Yu/XwrdSrNURcl0JaiZo1YWQmFs=; b=AV5QzG
+	GOs86+3c+YCMAbpFcVwRDHz0Yn5c8baNma6p+uhvTH/qUw3dEZ1tYGtwkQSTi5oO
+	wOTtrzfaIPseF8dOSV1W9HyZTi7P1D6Kh9AHyn1Lyhsm81PW+dIvCapHIsjVtXFJ
+	8G1u+JKHFd3McOPh7gXdtZ2q4ClibFI/exnBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KHOu1ikTeOE9MtnrMy2vVHsfXJLdmDQM
+	aKPkUadj1m82JTsg2k5vPiBaY82bU969WVO49bOioZHIVFkXAa234c9IKpYWxxX6
+	Ctmkt5hlr8RsVUIdzdE0wR1EnzPWCN7wPUGBR966AU6/++XMna1k/gh/LK4klO5F
+	EGROCGppTrI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1ADCE31955;
+	Sun, 13 Sep 2009 16:38:54 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 65D8131954; Sun, 13 Sep
+ 2009 16:38:50 -0400 (EDT)
+In-Reply-To: <20090912211119.GA30966@coredump.intra.peff.net> (Jeff King's
+ message of "Sat\, 12 Sep 2009 17\:11\:19 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 73D14EE6-A0A5-11DE-A09C-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128408>
 
-When I type something like this:
-  git archive -o my-v2.0.zip v2.0
-it is almost certainly that I want to create a zip archive, and not
-a tar file.
+Jeff King <peff@peff.net> writes:
 
-This patch teaches git-archive to auto detect the output format from the
-file name. Currently, only '.zip' is supported. If the auto detect failed,
-the tar format is used as before. The auto detect is not used when the
-output format is specified explicitly.
+> I think it is enough for git-pull to just check whether the config
+> exists, and if so, guess that the ref was simply not fetched. IOW,
+> this:
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
+Thanks.
 
-I have corrected all remarks except this:
+I saw some discussion on improving the wording.  Here is what I plan to
+commit.
 
-On Sun, Sep 13, 2009 at 11:52:56AM -0700, Junio C Hamano wrote:
-> > +		sprintf(fmt_opt, "--format=%s", format);
-> > +		argv[argc++] = fmt_opt;
-> > +		argv[argc] = NULL;
-> 
-> Did you make sure you are allowed to write into argv[] and the array is
-> large enough?  You probably need to make a copy of the array.
-
-Either --output or --format option was used before, and this option is
-extracted from argv[] by parse_options(). So it should be space for at
-least one argument in argv.
-
-
- Documentation/git-archive.txt |   13 +++++++++++--
- builtin-archive.c             |   25 ++++++++++++++++++++++++-
- 2 files changed, 35 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 1917f2e..3d1c1e7 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -34,8 +34,11 @@ OPTIONS
- -------
+diff --git a/git-pull.sh b/git-pull.sh
+index 0bbd5bf..2c2fa79 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -89,6 +89,8 @@ error_on_no_merge_candidates () {
+ 	done
  
- --format=<fmt>::
--	Format of the resulting archive: 'tar' or 'zip'.  The default
--	is 'tar'.
-+	Format of the resulting archive: 'tar' or 'zip'. If this option
-+	is not given, and the output file is specified, the format is
-+	inferred from the filename if possible (e.g. writing to "foo.zip"
-+	makes the output to be in the zip format). Otherwise the output
-+	format is `tar`.
+ 	curr_branch=${curr_branch#refs/heads/}
++	upstream=$(git config "branch.$curr_branch.merge" ||
++			git config "branch.$curr_branch.rebase")
  
- -l::
- --list::
-@@ -130,6 +133,12 @@ git archive --format=zip --prefix=git-docs/ HEAD:Documentation/ > git-1.4.0-docs
- 	Put everything in the current head's Documentation/ directory
- 	into 'git-1.4.0-docs.zip', with the prefix 'git-docs/'.
- 
-+git archive -o latest.zip HEAD::
-+
-+	Create a Zip archive that contains the contents of the latest
-+	commit on the current branch. Note that the output format is
-+	inferred by the extension of the output file.
-+
- 
- SEE ALSO
- --------
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 565314b..6efba6f 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -60,6 +60,17 @@ static int run_remote_archiver(int argc, const char **argv,
- 	return !!rv;
+ 	if [ -z "$curr_branch" ]; then
+ 		echo "You are not currently on a branch, so I cannot use any"
+@@ -96,7 +98,7 @@ error_on_no_merge_candidates () {
+ 		echo "Please specify which branch you want to merge on the command"
+ 		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+ 		echo "See git-pull(1) for details."
+-	else
++	elif [ -z "$upstream" ]; then
+ 		echo "You asked me to pull without telling me which branch you"
+ 		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
+ 		echo "your configuration file does not tell me either.	Please"
+@@ -114,6 +116,10 @@ error_on_no_merge_candidates () {
+ 		echo "    remote.<nickname>.fetch = <refspec>"
+ 		echo
+ 		echo "See git-config(1) for details."
++	else
++		echo "Your configuration specifies to merge the ref"
++		echo "'${upstream#refs/heads/}' from the remote, but no such ref"
++		echo "was fetched."
+ 	fi
+ 	exit 1
  }
- 
-+static const char* format_from_name(const char *filename)
-+{
-+	const char *ext = strrchr(filename, '.');
-+	if (!ext)
-+		return NULL;
-+	ext++;
-+	if (!strcasecmp(ext, "zip"))
-+		return "zip";
-+	return NULL;
-+}
-+
- #define PARSE_OPT_KEEP_ALL ( PARSE_OPT_KEEP_DASHDASH | 	\
- 			     PARSE_OPT_KEEP_ARGV0 | 	\
- 			     PARSE_OPT_KEEP_UNKNOWN |	\
-@@ -70,6 +81,7 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 	const char *exec = "git-upload-archive";
- 	const char *output = NULL;
- 	const char *remote = NULL;
-+	const char *format = NULL;
- 	struct option local_opts[] = {
- 		OPT_STRING('o', "output", &output, "file",
- 			"write the archive to this file"),
-@@ -77,14 +89,25 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 			"retrieve the archive from remote repository <repo>"),
- 		OPT_STRING(0, "exec", &exec, "cmd",
- 			"path to the remote git-upload-archive command"),
-+		OPT_STRING(0, "format", &format, "fmt", "archive format"),
- 		OPT_END()
- 	};
-+	char fmt_opt[32];
- 
- 	argc = parse_options(argc, argv, prefix, local_opts, NULL,
- 			     PARSE_OPT_KEEP_ALL);
- 
--	if (output)
-+	if (output) {
- 		create_output_file(output);
-+		if (!format)
-+			format = format_from_name(output);
-+	}
-+
-+	if (format) {
-+		sprintf(fmt_opt, "--format=%s", format);
-+		argv[argc++] = fmt_opt;
-+		argv[argc] = NULL;
-+	}
- 
- 	if (remote)
- 		return run_remote_archiver(argc, argv, remote, exec);
--- 
-1.6.5.rc1.2.g6bb993
