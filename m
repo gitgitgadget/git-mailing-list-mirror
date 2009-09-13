@@ -1,77 +1,87 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Effectively tracing project contributions with git
-Date: Sun, 13 Sep 2009 05:24:30 -0400
-Message-ID: <20090913092429.GA14438@coredump.intra.peff.net>
-References: <4AAB9459.3070809@webdrake.net>
- <20090912185940.GA21277@coredump.intra.peff.net>
- <fabb9a1e0909121203r527bc81ctd68382fc1107bf06@mail.gmail.com>
- <4AAC3889.6030908@webdrake.net>
- <20090913022843.GB26588@mit.edu>
+Subject: Re: git push --confirm ?
+Date: Sun, 13 Sep 2009 05:33:24 -0400
+Message-ID: <20090913093324.GB14438@coredump.intra.peff.net>
+References: <1252777897.2974.24.camel@localhost.localdomain>
+ <20090912184342.GB20561@coredump.intra.peff.net>
+ <7vvdjn8ymk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Joseph Wakeling <joseph.wakeling@webdrake.net>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Sep 13 11:25:31 2009
+Cc: Owen Taylor <otaylor@redhat.com>, git@vger.kernel.org,
+	Colin Walters <walters@verbum.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 13 11:33:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MmlKs-0008EH-EW
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 11:25:30 +0200
+	id 1MmlSh-0001KZ-Q0
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Sep 2009 11:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751563AbZIMJYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Sep 2009 05:24:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751488AbZIMJYb
-	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 05:24:31 -0400
-Received: from peff.net ([208.65.91.99]:49487 "EHLO peff.net"
+	id S1752127AbZIMJdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Sep 2009 05:33:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752119AbZIMJdY
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Sep 2009 05:33:24 -0400
+Received: from peff.net ([208.65.91.99]:50126 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751033AbZIMJYa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Sep 2009 05:24:30 -0400
-Received: (qmail 16740 invoked by uid 107); 13 Sep 2009 09:24:50 -0000
+	id S1752113AbZIMJdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Sep 2009 05:33:24 -0400
+Received: (qmail 16771 invoked by uid 107); 13 Sep 2009 09:33:44 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 13 Sep 2009 05:24:50 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 05:24:30 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 13 Sep 2009 05:33:44 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Sep 2009 05:33:24 -0400
 Content-Disposition: inline
-In-Reply-To: <20090913022843.GB26588@mit.edu>
+In-Reply-To: <7vvdjn8ymk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128346>
 
-On Sat, Sep 12, 2009 at 10:28:43PM -0400, Theodore Tso wrote:
+On Sat, Sep 12, 2009 at 05:41:23PM -0700, Junio C Hamano wrote:
 
-> > I don't see any solution that doesn't see me browsing diffs -- there's
-> > no metric that will solve the problem -- but if your stats work could
-> > help me get an output of the form 'here are all the diffs on file X by
-> > contributor Y in order of size, largest first' then I think it would
-> > help a LOT.
+> > But what _would_ be useful is doing it atomically. You can certainly do
+> > all three of those steps from within one "git push" invocation, and I
+> > think that is enough without any protocol changes. The protocol already
+> > sends for each ref a line like:
+> >
+> >   <old-sha1> <new-sha1> <ref>
+> >
+> > and receive-pack will not proceed with the update unless the <old-sha1>
+> > matches what is about to be changed.
 > 
-> This will display all of the diffs on file (pathname) XXX by contributor YYY:
-> 
-> 	git log -p --author=YYY XXX 
-> 
-> You might also find the diffstats useful:
-> 
-> 	git log --stat --author=YYY XXX
-> 
-> Or if you want *only* the diffstats for the file in question, you might try:
-> 
-> 	git log --stat --pretty=format: --author=YYY XXX | grep XXX
+> Be careful that using that information and doing things in one session
+> won't give you atomicity in the sense that it may still fail after you
+> said "yes that is what I want to push, really" to the confirmation
+> question.
 
-There is also the "--numstat" format which is a bit easier for parsing.
-I think the "all diffs on file $X by contributor $Y, ordered by size"
-would look like:
+Of course, but that issue exists already. It is just that the window
+between receiving the refs and then asking them to be updated is much
+smaller when there is no human input in the loop (and since we haven't
+actually _shown_ the list to the user, it appears atomic to them).
 
-  git log -z --pretty=tformat:%H --numstat --author=$Y $X |
-  perl -0ne '
-    my ($commit) = /^([0-9a-f]{40})$/m;
-    my ($lines_added) = /^(\d+)\s/m;
-    print "$lines_added $commit\n";
-  ' |
-  sort -rn |
-  cut -d ' ' -f2 |
-  xargs -n 1 git show
+I think this type of atomicity is fine for this application. The point
+of this is to err on the side of caution. So it is OK to say "Push
+this?" and then after the user has confirmed say "Oops, somebody pushed
+something else while we were waiting for your input. Try again." The
+important thing is to not say "Push this?", have the user confirm that
+what they are pushing over is OK, and then end up pushing over something
+different (which is what can happen with separate push invocations).
+
+The only way to get true atomicity across the confirmation and push
+would be to take a lock at the beginning of the push session. Which is
+too coarse-grained in the first place (it disallows simultaneous update
+of unrelated refs), but would also require protocol updates.
+
+> It does save you an extra connection, compared to separate invocations
+> without and then with --dry-run, so it still is a plus.
+> 
+> I do not think this is an unreasonable option to have.  Just please don't
+> justify this change based on atomicity argument, but justify it as a mere
+> convenience feature.
+
+I don't agree. Making sure we use the _same_ <old-sha1> in the
+confirmation output we show to the user and in the ref update we send to
+the remote is critical for this to be safe.
 
 -Peff
