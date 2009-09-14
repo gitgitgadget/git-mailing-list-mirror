@@ -1,129 +1,95 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: [PATCH 16/17] Add README for MSVC build
-Date: Mon, 14 Sep 2009 15:11:29 +0200
-Message-ID: <686c174b95c6e20977cbb43e462f6d280a228035.1252925290.git.mstormo@gmail.com>
-References: <cover.1252925290.git.mstormo@gmail.com> <1b36d8e041c9c1a6dc68f9cc3919fcf91b7a9ac6.1252925290.git.mstormo@gmail.com> <7786dfa1b74b5c4974bcf2018d3991c215a9466f.1252925290.git.mstormo@gmail.com> <e2eff51e8d956e7cf854bea9fb9f10491f6d6543.1252925290.git.mstormo@gmail.com> <baa73a58d459d9cd29227b1f0fb02306c14db807.1252925290.git.mstormo@gmail.com> <54b586ed58d1e9b4204658871f6f34453b48758b.1252925290.git.mstormo@gmail.com> <160ceafba5f58cfcadb13380e3d8ef724009b700.1252925290.git.mstormo@gmail.com> <1d699897d4163224ce22db9400569fab20547e9d.1252925290.git.mstormo@gmail.com> <8da5dcea21ce49b3a57fd224c088785a9f98e867.1252925290.git.mstormo@gmail.com> <a48108513bf13247ba9b42fd703ba679804e8d8a.1252925290.git.mstormo@gmail.com> <aed24a7f9524c9872f8a2455cfc5dd8baf6c3c0b.1252925290.git.mstorm
- o@gmail.com> <4931b7ac3102ee259353fe6b3c5ceeb2a67c53ba.1252925290.git.mstormo@gmail.com> <1b5c5e90392e813ffab4fd510b70e57903a451cc.1252925290.git.mstormo@gmail.com> <9c5670f92cd0b3b8b74dd2204698e9c45ad03c90.1252925290.git.mstormo@gmail.com> <c95a367520435feec0833d2d0edc33d86cf939a8.1252925290.git.mstormo@gmail.com> <abaa803c30801c570f4b8e1baf6648a482bf295d.1252925290.git.mstormo@gmail.com>
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com, Marius Storm-Olsen <mstormo@gmail.com>
-To: Johannes.Schindelin@gmx.de
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Sep 14 15:13:32 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f157.google.com ([209.85.210.157])
+From: Sean Estabrooks <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] Improve --patch option documentation in git-add
+Date: Mon, 14 Sep 2009 06:13:16 -0700
+Message-ID: <BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
+	<87ab0zny27.fsf_-_@jondo.cante.net>
+	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
+	<87vdjnlywo.fsf@jondo.cante.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Mon Sep 14 15:13:45 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnBN5-0004Ql-8T
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Sep 2009 15:13:31 +0200
-Received: by mail-yx0-f157.google.com with SMTP id 29so6077722yxe.16
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Sep 2009 06:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=Bdm2UldpKTKpXp4jyLP8FGvd2nq5qj9gDOHIlqitBE0=;
-        b=AlsW0JmdbemVG81LuY8SrEQiRGNEKKvxs7dNMfc7/dylHk/9q8RKTQXluYy5gYY1Mj
-         jHgFctcpjDh/mNjZcLZPx7Swrrk17LZiW5Kx6tBbrqAByvLFqpBBIkKNtRQDBOx5ctur
-         +oOQmobv1vBufGhn/HbR+ZJyIAbnA5QqWjUNI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=GBY4kR9Qq0XY1LmifgSV9alQkLEUYEu+lFbT7Jc29zMWCGirLJVpRMu3jwXIxnzKZG
-         GlgcoJOxDmLlQ+UOFXOmaBrHAMe5KwpP1+tKpFHmQ4wctVkVIRHRfZ5A1D1ZRJoV+GD3
-         +o+DkhreefnKWGWE0Ljv2z8OFIWLyphBrJoIk=
-Received: by 10.150.168.4 with SMTP id q4mr1951174ybe.24.1252934005047;
-        Mon, 14 Sep 2009 06:13:25 -0700 (PDT)
-Received: by 10.176.168.4 with SMTP id q4gr6973yqe.0;
-	Mon, 14 Sep 2009 06:13:12 -0700 (PDT)
-X-Sender: mstormo@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.211.146.33 with SMTP id y33mr696227ebn.6.1252933991676; Mon, 14 Sep 2009 06:13:11 -0700 (PDT)
-Received: by 10.211.146.33 with SMTP id y33mr696226ebn.6.1252933991633; Mon, 14 Sep 2009 06:13:11 -0700 (PDT)
-Received: from mail-ew0-f214.google.com (mail-ew0-f214.google.com [209.85.219.214]) by gmr-mx.google.com with ESMTP id 13si1273811ewy.2.2009.09.14.06.13.10; Mon, 14 Sep 2009 06:13:10 -0700 (PDT)
-Received-SPF: pass (google.com: domain of mstormo@gmail.com designates 209.85.219.214 as permitted sender) client-ip=209.85.219.214;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of mstormo@gmail.com designates 209.85.219.214 as permitted sender) smtp.mail=mstormo@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by mail-ew0-f214.google.com with SMTP id 10so3192606ewy.13 for <msysgit@googlegroups.com>; Mon, 14 Sep 2009 06:13:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer:in-reply-to:references:in-reply-to:references; bh=FKql8wibHUlpN9Y8TkruBOPnRfaIH1lADZQccHg553s=; b=nkICbroLXiqh394EXLbPiNnXW1pHYpzMoy/9nMjYvSB2V5FSpRgkY02rvAt1/Qa0Zf zjWKkGiMIhWmr1ZkzhEHiuilzpuVZCTzkHdriOjtq0M2syiGpysvy1eFa68VBe3jiGoA mBEIDiM/S1ooIQ+Wwa0wGHuz29NfITVFnzeWw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references; b=aNAYqN6BWHNjV6QMiz06ZQlPKz1EZnl3INsC+/VNisent5LGU/dg1aj76nuri5X30p 6Hhd8SkxTrmAzN6ych8Un/nFUyJw3OaYt3fTfUmanG497IrKO/3DhZu+xiQyPcW5DG0j qArQmsap9GLFG4pg9DZg29/AXZ671zq5aHPt4=
-Received: by 10.211.174.10 with SMTP id b10mr6977464ebp.39.1252933990411; Mon, 14 Sep 2009 06:13:10 -0700 (PDT)
-Received: from localhost.localdomain ([62.70.27.104]) by mx.google.com with ESMTPS id 10sm2690277eyz.2.2009.09.14.06.13.08 (version=SSLv3 cipher=RC4-MD5); Mon, 14 Sep 2009 06:13:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.418.g33d56.dirty
-In-Reply-To: <abaa803c30801c570f4b8e1baf6648a482bf295d.1252925290.git.mstormo@gmail.com>
-In-Reply-To: <cover.1252925290.git.mstormo@gmail.com>
-References: <cover.1252925290.git.mstormo@gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1MnBNC-0004XM-UF
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 15:13:39 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755533AbZINNN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2009 09:13:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZINNNY
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 09:13:24 -0400
+Received: from blu0-omc3-s18.blu0.hotmail.com ([65.55.116.93]:39695 "EHLO
+	blu0-omc3-s18.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755518AbZINNNR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2009 09:13:17 -0400
+Received: from BLU0-SMTP18 ([65.55.116.73]) by blu0-omc3-s18.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 14 Sep 2009 06:13:20 -0700
+X-Originating-IP: [66.183.97.179]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from hobo ([66.183.97.179]) by BLU0-SMTP18.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Mon, 14 Sep 2009 06:13:20 -0700
+In-Reply-To: <87vdjnlywo.fsf@jondo.cante.net>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.5; i586-redhat-linux-gnu)
+X-OriginalArrivalTime: 14 Sep 2009 13:13:20.0181 (UTC) FILETIME=[21527650:01CA353D]
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128475>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128476>
+
+On Sun, 13 Sep 2009 17:09:11 +0300
+Jari Aalto <jari.aalto@cante.net> wrote:
+
+> An update. Thanks,
+> Jari
+> 
+[...]
+>  -p::
+> --patch::
+> -	Similar to Interactive mode but the initial command loop is
+> -	bypassed and the 'patch' subcommand is invoked using each of
+> -	the specified filepatterns before exiting.
+> +	Interactively choose hunks of diff between the index and the
+> +	work tree and add them to the index. This gives a change to
+> +	review the differences before adding modified contents to the
+> +	index.
+> +
+> +	This effectively runs ``add --interactive``, but bypass the
+> +	initial command menu and directly jumps to `patch` subcommand.
+> +	See ``Interactive mode'' for details.
 
 
-Based on original README patch from Frank Li
+Jari,
 
-Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
----
- compat/vcbuild/README |   39 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 39 insertions(+), 0 deletions(-)
- create mode 100644 compat/vcbuild/README
+It's good that you're working to make the documentation better.  To
+me though, it seems more difficult to parse this description than the
+one offered by Junio in an earlier thread:
 
-diff --git a/compat/vcbuild/README b/compat/vcbuild/README
-new file mode 100644
-index 0000000..5d7a07a
---- /dev/null
-+++ b/compat/vcbuild/README
-@@ -0,0 +1,39 @@
-+The Steps of Build Git with VS2008
-+
-+1. You need the build environment, which contains the Git dependencies
-+   to be able to compile, link and run Git with MSVC.
-+
-+   You can either use the binary repository:
-+
-+       WWW: http://repo.or.cz/w/msvcgit.git
-+       Git: git clone git://repo.or.cz/msvcgit.git
-+       Zip: http://repo.or.cz/w/msvcgit.git?a=snapshot;h=master;sf=zip
-+
-+   and call the setup_32bit_env.cmd batch script before compiling Git,
-+   (see repo/package README for details), or the source repository:
-+
-+       WWW: http://repo.or.cz/w/gitbuild.git
-+       Git: git clone git://repo.or.cz/gitbuild.git
-+       Zip: (None, as it's a project with submodules)
-+
-+   and build the support libs as instructed in that repo/package.
-+
-+2. Ensure you have the msysgit environment in your path, so you have
-+   GNU Make, bash and perl available.
-+
-+       WWW: http://repo.or.cz/w/msysgit.git
-+       Git: git clone git://repo.or.cz/msysgit.git
-+       Zip: http://repo.or.cz/w/msysgit.git?a=snapshot;h=master;sf=zip
-+
-+   This environment is also needed when you use the resulting
-+   executables, since Git might need to run scripts which are part of
-+   the git operations.
-+
-+4. Inside Git's directory run the command:
-+       make common-cmds.h
-+   to generate the common-cmds.h file needed to compile git.
-+
-+5. Then build Git with the GNU Make Makefile in the Git projects root
-+       make MSVC=1
-+
-+Done!
--- 
-1.6.2.1.418.g33d56.dirty
+        Review the difference between the index and the work tree, and add
+        modified contents to the index interactively by choosing which
+        patch hunks to use. 
+
+If you don't want to just use that description verbatim, perhaps you'd
+consider something closer to yours, such as:
+
+	Interactively review the differences between the index and the
+	work tree and choose which hunks to add into the index.
+
+	This effectively runs ``add --interactive``, but bypasses the
+	initial command menu and jumps directly to the `patch` subcommand.
+	See ``Interactive mode'' for details.
+
+Cheers,
+Sean
