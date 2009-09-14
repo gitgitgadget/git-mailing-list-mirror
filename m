@@ -1,76 +1,123 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 2/2] remove NORETURN from function pointers
-Date: Mon, 14 Sep 2009 13:56:29 +0200
-Message-ID: <40aa078e0909140456l47cfce92yc44262c96b59bf2d@mail.gmail.com>
+Date: Mon, 14 Sep 2009 08:03:11 -0400
+Message-ID: <20090914120311.GA17172@sigill.intra.peff.net>
 References: <1252923370-5768-1-git-send-email-kusmabite@gmail.com>
-	 <1252923370-5768-2-git-send-email-kusmabite@gmail.com>
-	 <20090914105750.GB9216@sigill.intra.peff.net>
-	 <40aa078e0909140440x2e189957uf66f36ff29bef302@mail.gmail.com>
+ <1252923370-5768-2-git-send-email-kusmabite@gmail.com>
+ <20090914105750.GB9216@sigill.intra.peff.net>
+ <40aa078e0909140440x2e189957uf66f36ff29bef302@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 14 13:56:36 2009
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 14:03:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnAAe-0004vu-F7
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 13:56:36 +0200
+	id 1MnAHA-0006oO-BS
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 14:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754507AbZINL42 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2009 07:56:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752429AbZINL41
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 07:56:27 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:43519 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751276AbZINL41 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2009 07:56:27 -0400
-Received: by bwz19 with SMTP id 19so2015880bwz.37
-        for <git@vger.kernel.org>; Mon, 14 Sep 2009 04:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=zo4bdYnW2rK9crytEAEMXuyTLPSOR+wn3+HyxbIi1+E=;
-        b=cuczD1KQPaVk1gkzltTju0WeWcjvdf6eDxBHdJdwaHAUaLYxNV2Ubuif0JdyLAIqis
-         j9DqX9TtHeTYJ1K+QZiA/LwnMpW/TGGHN9O1DU6Cl3E1Tw/D55FYTe326QlppAdGJOLO
-         S9GbCVg7nz4P28aBtNQj6Ne+VS/NwLFb2aO5U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KIfmiKUtqqSWtQQTx1o/hZU36V/oj2FCDfkyMIXZp4scaTvoIDpN0ptL6+QZpgAof4
-         SeIxUkOjh/gEBZXkuc6btqDxhmJuQUtlAm3SIcNZVMO5bTPeqcKydCDDbF32hIMsgEV3
-         IkZhZ8UBvFhLpo4Spqwzuxxu3vFjiYwcOeJvc=
-Received: by 10.204.162.204 with SMTP id w12mr4959847bkx.18.1252929389544; 
-	Mon, 14 Sep 2009 04:56:29 -0700 (PDT)
+	id S1755301AbZINMDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2009 08:03:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752971AbZINMDK
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 08:03:10 -0400
+Received: from peff.net ([208.65.91.99]:54944 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751276AbZINMDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2009 08:03:09 -0400
+Received: (qmail 24252 invoked by uid 107); 14 Sep 2009 12:03:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 14 Sep 2009 08:03:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Sep 2009 08:03:11 -0400
+Content-Disposition: inline
 In-Reply-To: <40aa078e0909140440x2e189957uf66f36ff29bef302@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128450>
 
-On Mon, Sep 14, 2009 at 1:40 PM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-> On Mon, Sep 14, 2009 at 12:57 PM, Jeff King <peff@peff.net> wrote:
->>
->> I didn't see a patch 1/2, so maybe it impacts this in some way, but by
->> itself, I don't think this patch is a good idea. See below.
->
+On Mon, Sep 14, 2009 at 01:40:02PM +0200, Erik Faye-Lund wrote:
+
+> > I didn't see a patch 1/2, so maybe it impacts this in some way, but by
+> > itself, I don't think this patch is a good idea. See below.
+> 
 > That's odd. It's listed in my git-folder on GMail as sent to the
 > mailing-list, but I can't find it in any of the list-archives. They
 > were both sent through the same instance of "git send-email". I guess
-> I'll just re-send it.
+> I'll just re-send it. It shouldn't affect this patch directly, though.
 
-OK, I think I figured out why: For some reason, the From-field of the
-mail had gotten changed from kus...e@gmail.com to
-kus...e@googlemail.com, and that's not the address I'm subsribed to
-this list as. I hope whoever manages the list is able to remove my
-duplicates from the moderation-queue or something ;)
+Possibly it got swallowed by vger's list filter. The taboo list is here:
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+  http://vger.kernel.org/majordomo-taboos.txt
+
+> > I think the right solution to turn on NORETURN for (2) is to split it
+> > into two cases: NORETURN and NORETURN_PTR. Gcc platforms can define both
+> > identically, platforms under (2) above can define NORETURN_PTR as empty,
+> > and (3) will keep both off.
+> 
+> Yeah, this could work. I initially suggested doing this, but Junio
+> suggested removing NORETURN all together. I didn't think that was a
+> good idea for die() etc, thus this patch.
+
+Doing it this way would keep warnings on compilers that could use them.
+I am generally of the opinion that since most development happens on
+gcc, it is "good enough" to let gcc warnings help us find broken code,
+and then those fixes will be available to users of less-capable
+compilers. And we don't have to bend over backwards in the code with
+little hacks to trick all compilers into not issuing a warning (like
+calling abort() after something we already know is going to exit).
+
+The downside of that attitude is that code that is not exercised by gcc
+builds does not get the benefit. And in the case of MSVC, there is
+probably quite a bit of code in #ifdef's that gcc will never even parse.
+So maybe a hack like abort() is worthwhile in this case.
+
+> > #include <stdlib.h>
+> > void (*exit_fun)(int) = exit;
+> > static void die(void) __attribute__((__noreturn__));
+> > static void die(void) { exit_fun(1); }
+> > int main(void) { die(); }
+> 
+> Well, it fails to compile ;)
+> 
+> If your change it around this way (which is basically what 1/2 + a
+> separate patch that is cooking in msysgit for a litte while longer is
+> supposed to do), it does compiles without warnings even on the highest
+> warning level:
+> 
+> -static void die(void) __attribute__((__noreturn__));
+> +static void __declspec(noreturn) die(void);
+
+Hmm. So either it doesn't bother checking that noreturn functions don't
+return, or it assumes that a function pointer may exit.  Interesting,
+but I guess it doesn't change the main point too much: it's not as
+strict as gcc's checking.
+
+> Yeah. So we need a portable (enough) way of showing it that it does
+> die. How about abort()?
+> 
+> -static void die(void) { exit_fun(1); }
+> +static void die(void) { exit_fun(1); abort(); }
+> 
+> Adding abort() makes the warning go away here, at least. And reaching
+> this point is an error anyway, it means that one of the functions
+> passed to set_die_routine() does not hold up it's guarantees. Your
+> suggestion (double defines) would make this a compile-time warning
+> instead of a run-time error, which I find much more elegant. However,
+> it's questionable how much this means in reality - there's only two
+> call-sites for set_die_routine() ATM. Do we expect it to grow a lot?
+
+No, I don't think we expect it to grow. Mostly this is about documenting
+our assumptions so that gcc can do the right thing in making die() a
+noreturn function, which is what we actually care about. We would notice
+very quickly, I think, if a die() handler did not actually exit.
+
+I think I am fine doing it either way. The NORETURN_PTR thing is a bit
+more elegant to me, but that is maybe just my gcc snobiness. We
+shouldn't have to change our code to accomodate MSVC's crappy noreturn
+handling. ;)
+
+-Peff
