@@ -1,95 +1,74 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: Re: [PATCH] Improve --patch option documentation in git-add
-Date: Mon, 14 Sep 2009 06:13:16 -0700
-Message-ID: <BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
-References: <87ocpxb46g.fsf@jondo.cante.net>
-	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
-	<87tyzp9da4.fsf@jondo.cante.net>
-	<7vskf954sr.fsf@alter.siamese.dyndns.org>
-	<87ab1gaol2.fsf@jondo.cante.net>
-	<7vbplw28js.fsf@alter.siamese.dyndns.org>
-	<87y6p08lz5.fsf@jondo.cante.net>
-	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
-	<87ab0zny27.fsf_-_@jondo.cante.net>
-	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
-	<87vdjnlywo.fsf@jondo.cante.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] remove NORETURN from function pointers
+Date: Mon, 14 Sep 2009 15:19:46 +0200
+Message-ID: <4AAE42F2.30304@viscovery.net>
+References: <1252923370-5768-1-git-send-email-kusmabite@gmail.com>	 <1252923370-5768-2-git-send-email-kusmabite@gmail.com>	 <20090914105750.GB9216@sigill.intra.peff.net>	 <40aa078e0909140440x2e189957uf66f36ff29bef302@mail.gmail.com>	 <20090914120311.GA17172@sigill.intra.peff.net>	 <40aa078e0909140532q693a7f9qc3d9b1d354cac356@mail.gmail.com>	 <4AAE4087.5030607@viscovery.net> <40aa078e0909140612w71ad3bdeyfa94838cb57cec19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Mon Sep 14 15:13:45 2009
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 15:19:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnBNC-0004XM-UF
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 15:13:39 +0200
+	id 1MnBTG-0006nj-Lt
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 15:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755533AbZINNN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2009 09:13:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755437AbZINNNY
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 09:13:24 -0400
-Received: from blu0-omc3-s18.blu0.hotmail.com ([65.55.116.93]:39695 "EHLO
-	blu0-omc3-s18.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755518AbZINNNR (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Sep 2009 09:13:17 -0400
-Received: from BLU0-SMTP18 ([65.55.116.73]) by blu0-omc3-s18.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 14 Sep 2009 06:13:20 -0700
-X-Originating-IP: [66.183.97.179]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from hobo ([66.183.97.179]) by BLU0-SMTP18.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 14 Sep 2009 06:13:20 -0700
-In-Reply-To: <87vdjnlywo.fsf@jondo.cante.net>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.5; i586-redhat-linux-gnu)
-X-OriginalArrivalTime: 14 Sep 2009 13:13:20.0181 (UTC) FILETIME=[21527650:01CA353D]
+	id S1754671AbZINNTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2009 09:19:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753384AbZINNTp
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 09:19:45 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:16707 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181AbZINNTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2009 09:19:44 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MnBT8-0000nM-J0; Mon, 14 Sep 2009 15:19:46 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 53FB89F88; Mon, 14 Sep 2009 15:19:46 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <40aa078e0909140612w71ad3bdeyfa94838cb57cec19@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128477>
 
-On Sun, 13 Sep 2009 17:09:11 +0300
-Jari Aalto <jari.aalto@cante.net> wrote:
-
-> An update. Thanks,
-> Jari
+Erik Faye-Lund schrieb:
+> On Mon, Sep 14, 2009 at 3:09 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Erik Faye-Lund schrieb:
+>>> Compiling the following code gives a warning about unreachable code,
+>>> so it's clear that msvc doesn't simply ignore the directive. I'm not
+>>> saying that anyone suggested otherwise, I just wanted to know for
+>>> sure.
+>>>
+>>> #include <stdio.h>
+>>> #include <stdlib.h>
+>>> void (*exit_fun)(int) = exit;
+>>> void __declspec(noreturn) die(void);
+>>> void die(void) { exit_fun(1); }
+>>> int main(void) { printf("hello!\n"); die(); printf("world!\n"); }
+>> In order to countermand any clever optimizations you should make it
+>>
+>> -void (*exit_fun)(int) = exit;
+>> +extern void (*exit_fun)(int);
+>>
+>> (of course, this fails to link). But if this results in only *one* warning
+>> (that the printf() call is unreachable), then I wouldn't bother with this
+>> problem anymore, because you really should also have been warned that a
+>> __declspec(noreturn) function actually does return.
 > 
-[...]
->  -p::
-> --patch::
-> -	Similar to Interactive mode but the initial command loop is
-> -	bypassed and the 'patch' subcommand is invoked using each of
-> -	the specified filepatterns before exiting.
-> +	Interactively choose hunks of diff between the index and the
-> +	work tree and add them to the index. This gives a change to
-> +	review the differences before adding modified contents to the
-> +	index.
-> +
-> +	This effectively runs ``add --interactive``, but bypass the
-> +	initial command menu and directly jumps to `patch` subcommand.
-> +	See ``Interactive mode'' for details.
+> Ah, good point. Still gives the warning (as well as the linker-error), though.
 
+"The" warning? Not "the two" warnings? Then I suggest to stop here; MSVC
+is only half-competent with regards to noreturn.
 
-Jari,
-
-It's good that you're working to make the documentation better.  To
-me though, it seems more difficult to parse this description than the
-one offered by Junio in an earlier thread:
-
-        Review the difference between the index and the work tree, and add
-        modified contents to the index interactively by choosing which
-        patch hunks to use. 
-
-If you don't want to just use that description verbatim, perhaps you'd
-consider something closer to yours, such as:
-
-	Interactively review the differences between the index and the
-	work tree and choose which hunks to add into the index.
-
-	This effectively runs ``add --interactive``, but bypasses the
-	initial command menu and jumps directly to the `patch` subcommand.
-	See ``Interactive mode'' for details.
-
-Cheers,
-Sean
+-- Hannes
