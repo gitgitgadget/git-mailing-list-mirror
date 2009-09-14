@@ -1,88 +1,79 @@
-From: Marius Storm-Olsen <marius@storm-olsen.com>
-Subject: Re: [PATCH 15/17] Add MSVC to Makefile
-Date: Mon, 14 Sep 2009 21:09:13 +0200
-Message-ID: <4AAE94D9.7000802@gmail.com>
-References: <1b36d8e041c9c1a6dc68f9cc3919fcf91b7a9ac6.1252925290.git.mstormo@gmail.com>	 <8da5dcea21ce49b3a57fd224c088785a9f98e867.1252925290.git.mstormo@gmail.com>	 <a48108513bf13247ba9b42fd703ba679804e8d8a.1252925290.git.mstormo@gmail.com>	 <aed24a7f9524c9872f8a2455cfc5dd8baf6c3c0b.1252925290.git.mstormo@gmail.com>	 <4931b7ac3102ee259353fe6b3c5ceeb2a67c53ba.1252925290.git.mstormo@gmail.com>	 <1b5c5e90392e813ffab4fd510b70e57903a451cc.1252925290.git.mstormo@gmail.com>	 <9c5670f92cd0b3b8b74dd2204698e9c45ad03c90.1252925290.git.mstormo@gmail.com>	 <cover.1252925290.git.mstormo@gmail.com>	 <c95a367520435feec0833d2d0edc33d86cf939a8.1252925290.git.mstormo@gmail.com>	 <abaa803c30801c570f4b8e1baf6648a482bf295d.1252925290.git.mstormo@gmail.com> <81b0412b0909140706s32e888ddwe4bbd668c3a7ccfd@mail.gma
- il.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Tracking remote branches
+Date: Mon, 14 Sep 2009 21:19:58 +0200
+Message-ID: <20090914191957.GB64280@macbook.lan>
+References: <a4c8a6d00909131737v35d7c63dsea669f47456f5acb@mail.gmail.com> <20090914050145.GA12985@vidovic> <a4c8a6d00909141130o628a069fu4c489b25f95f543d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,  git@vger.kernel.org, lznuaa@gmail.com
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Sep 14 21:09:20 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qy0-f158.google.com ([209.85.221.158])
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 14 21:20:07 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnGvP-0001pO-Dh
-	for gcvm-msysgit@m.gmane.org; Mon, 14 Sep 2009 21:09:19 +0200
-Received: by qyk30 with SMTP id 30so3894168qyk.15
-        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Sep 2009 12:09:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:received:received
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=ZItClC8mBrwjiH8wM47KWOsITlxZH4wi7NwMaEORzPs=;
-        b=2tGIH5V/GwcFpAuoTs+XV1kblWkvTQHmqHFGwp1IYFtkpdUAwNdXH62Vpvm9i8RRA6
-         kWG1+SYDpWktf+gA4tPswS2gDGOZcscEcvDIfb/pUGpE2IoqNiSpzDnSVSak3WjBFTMB
-         R38KT59xRJukpEvj3K5xpI6A/kmgrXEkU/s3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=AWpkCr1y1E99a3+5pdSkxaz1fcY2r5e7OAYEISFgBjsee5qSyC3qjYfqRu7vmdtaxa
-         zj1mI+VlagaiFeWvBMUxWvwMvyJ+SSMFn/qfsUZPT7ekgc9yYGwsQvk28MY8PQ7FkXL9
-         BwshIxE2CsGxafs/BLfGUeVsK+ubMfuIBKaKo=
-Received: by 10.224.124.131 with SMTP id u3mr582336qar.3.1252955352155;
-        Mon, 14 Sep 2009 12:09:12 -0700 (PDT)
-Received: by 10.176.151.15 with SMTP id y15gr6995yqd.0;
-	Mon, 14 Sep 2009 12:09:08 -0700 (PDT)
-X-Sender: marius@storm-olsen.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.211.132.10 with SMTP id j10mr1012755ebn.3.1252955346843; Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-Received: by 10.211.132.10 with SMTP id j10mr1012754ebn.3.1252955346811; Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-Received: from mail-ew0-f225.google.com (mail-ew0-f225.google.com [209.85.219.225]) by gmr-mx.google.com with ESMTP id 16si1368001ewy.3.2009.09.14.12.09.06; Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-Received-SPF: neutral (google.com: 209.85.219.225 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) client-ip=209.85.219.225;
-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 209.85.219.225 is neither permitted nor denied by best guess record for domain of marius@storm-olsen.com) smtp.mail=marius@storm-olsen.com
-Received: by ewy25 with SMTP id 25so1535699ewy.9 for <msysgit@googlegroups.com>; Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-Received: by 10.210.7.21 with SMTP id 21mr7269574ebg.75.1252955346569; Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-Received: from ?192.168.0.196? (cm-84.215.55.206.getinternet.no [84.215.55.206]) by mx.google.com with ESMTPS id 7sm1875727eyg.22.2009.09.14.12.09.05 (version=SSLv3 cipher=RC4-MD5); Mon, 14 Sep 2009 12:09:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.23) Gecko/20090812 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <81b0412b0909140706s32e888ddwe4bbd668c3a7ccfd@mail.gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1MnH5q-0004yD-IC
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 21:20:06 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756802AbZINTT6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Sep 2009 15:19:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754810AbZINTT5
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 15:19:57 -0400
+Received: from darksea.de ([83.133.111.250]:36764 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751043AbZINTT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2009 15:19:56 -0400
+Received: (qmail 7979 invoked from network); 14 Sep 2009 21:19:58 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 14 Sep 2009 21:19:58 +0200
+Content-Disposition: inline
+In-Reply-To: <a4c8a6d00909141130o628a069fu4c489b25f95f543d@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128492>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128493>
 
+On Mon, Sep 14, 2009 at 03:30:10PM -0300, Thiago Farina wrote:
+> On Mon, Sep 14, 2009 at 2:01 AM, Nicolas Sebrecht <nicolas.s.dev@gmx.=
+fr> wrote:
+> > The 13/09/09, Thiago Farina wrote:
+> > $ git checkout -t origin/maint
+> >
+> >> OK, now I switched to maint branch. And then I did:
+> >> $ git status
+> >>
+> >> # On branch maint
+> >> # Changes to be committed
+> >> # =A0 =A0(use "git reset HEAD <file>..." to unstage)
+> >> #
+> >> # =A0 =A0 =A0 =A0 =A0new file: =A0 =A0git-remote-curl
+> >> # =A0 =A0 =A0 =A0 =A0new file: =A0 =A0git-replace
+> >> #
+> >>
+> >> What happened here? What I have to do now?
+>
+> Why these files has this status? Is supposed to me to do something
+> about that when this situation occurs?
 
-Alex Riesen said the following on 14.09.2009 16:06:
-> On Mon, Sep 14, 2009 at 15:11, Marius Storm-Olsen <mstormo@gmail.com> wrote:
->> @@ -1327,7 +1379,7 @@ strip: $(PROGRAMS) git$X
->>  git.o: git.c common-cmds.h GIT-CFLAGS
->>        $(QUIET_CC)$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
->>                '-DGIT_HTML_PATH="$(htmldir_SQ)"' \
->> -               $(ALL_CFLAGS) -c $(filter %.c,$^)
->> +               $(ALL_CFLAGS) -o git.o -c $(filter %.c,$^)
-> 
-> Why do you use "-o git.o" instead of "-o $@"?
+I just checked and this is because you probably made a build on the
+master branch which creates these files. They are untracked but ignored
+through the .gitignore file in the master branch.
 
-No reason really. I'll resend tomorrow.
+Now the situation is that the .gitignore on the current 'maint' branch
+does not have these files ignored because they are quite new.
 
---
-.marius
+In this situation you can do a
+
+  git clean -f
+
+which gets rid of all untracked but not ignored files (all files that
+git status shows as new) or
+
+  make clean
+
+while you are still on the master branch.
+
+cheers Heiko
