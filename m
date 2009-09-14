@@ -1,67 +1,101 @@
-From: Intland Software <intland.software@gmail.com>
-Subject: codeBeamer, Collaborative ALM Solution for Git and Android
-Date: Mon, 14 Sep 2009 14:49:11 +0200
-Message-ID: <ffc57eec0909140549g619579dap8a1967f3825c121d@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 2/2] remove NORETURN from function pointers
+Date: Mon, 14 Sep 2009 14:56:20 +0200
+Message-ID: <40aa078e0909140556j401085ccmdf43521b8b839e8e@mail.gmail.com>
+References: <1252923370-5768-1-git-send-email-kusmabite@gmail.com>
+	 <1252923370-5768-2-git-send-email-kusmabite@gmail.com>
+	 <20090914105750.GB9216@sigill.intra.peff.net>
+	 <40aa078e0909140440x2e189957uf66f36ff29bef302@mail.gmail.com>
+	 <20090914120311.GA17172@sigill.intra.peff.net>
+	 <40aa078e0909140532q693a7f9qc3d9b1d354cac356@mail.gmail.com>
+	 <20090914124428.GA9394@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 14 14:49:25 2009
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 14 14:56:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnAzh-0004Hw-7v
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 14:49:21 +0200
+	id 1MnB6c-0006WP-L8
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Sep 2009 14:56:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755475AbZINMtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2009 08:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755457AbZINMtJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 08:49:09 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:40748 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755456AbZINMtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2009 08:49:08 -0400
-Received: by fxm17 with SMTP id 17so804093fxm.37
-        for <git@vger.kernel.org>; Mon, 14 Sep 2009 05:49:11 -0700 (PDT)
+	id S1752318AbZINM4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2009 08:56:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZINM4V
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 08:56:21 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:45549 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750891AbZINM4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2009 08:56:20 -0400
+Received: by bwz19 with SMTP id 19so2050791bwz.37
+        for <git@vger.kernel.org>; Mon, 14 Sep 2009 05:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=MjkmjyHbpklFGaa1Ndw6PPljanCEK1NhpTM5iL2aTiY=;
-        b=jGISFzhwYlVSHOj9yobcuNEgtD48x3rxpgqRhQsvPkhSF2X5lEbM4hihiEu5+pLCCX
-         oL/Ez2GtFdSYSkdUQ2+GHbXCaQgPRueHcO2orcb95Tn+6SPnkDZfr+cl+syxOnRXw6vg
-         T10lnUl7EfUX8bYX644HdIm55aO63Z3x021ZA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=0ZMgiOjLkn+RwBAuDYxTec+pJNep0rQ+DrXOvjl9PMc=;
+        b=ekUWkTocfaxUuXllB+koFLFCZHKXURh02O7E+lT4nQeLNzUq45FQD+jK37ILaiVcM9
+         8675dxnImlof0K1f8wPpVflyi1cuDTr1Ebt5YlilOkP6DdtSf5A1mae6jeO7zHl/Rltb
+         1dZLs92Di9EUwHg0q+ZiSu6RmfEQHU9QXReus=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=lwmBY9Rl+OsdMNdzG+IxR5cdvm9yQnS+Dy9QltYtrPsb0A65zah/oNdhkiQ2f3k+1M
-         jppQIYvQh7kIVvJU/DX0KS77fQQ70T5WwQdz8gfyeQGU4j1Q8VPVClrJGkaD1cT2gdds
-         JcB5lL37wKXXEayN4tmB8YO5jL9ifeJhg48Po=
-Received: by 10.223.3.137 with SMTP id 9mr2150638fan.45.1252932551028; Mon, 14 
-	Sep 2009 05:49:11 -0700 (PDT)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=jttvLTHB7VekWKl2sfgveoigqTa+76Ijpp6Ye+nZc+mntLS8bYBrdLdH8QhGM1vGCO
+         1+4ZRbKKnYBy6qd0pptRdb1cAbnnTTe0tZm/40I0wYA+N5sOo0lIQZ6/b4zVOpcJHjqr
+         Afr7JNFggTr9vVV79ifGQou4fM8Yar8Unh4ig=
+Received: by 10.204.21.4 with SMTP id h4mr5114286bkb.58.1252932982612; Mon, 14 
+	Sep 2009 05:56:22 -0700 (PDT)
+In-Reply-To: <20090914124428.GA9394@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128455>
 
-Intland Software announces the availability of codeBeamer 5.4, the
-award winning Collaborative Application Lifecycle Management Solution
-for distributed software development. Today's challenge is to tackle
-*Android sized projects* with 2GB of code and hundreds of thousands of
-change sets, and codeBeamer 5.4 is capable of processing these
-repositories.
+On Mon, Sep 14, 2009 at 2:44 PM, Jeff King <peff@peff.net> wrote:
+> Right. What I'm guessing is that it sees the noreturn on die(), but then
+> doesn't actually look inside die to confirm that the noreturn is upheld.
+> You could test that with:
+>
+> #include <stdlib.h>
+> void __declspec(noreturn) die(void);
+> void die(void) { }
+> int main(void) { die(); }
+>
+> If it doesn't complain, then I am right. If it does, then it is
+> something magic with the function pointer (presumably it decides that
+> the function pointer could exit, so it stops the analysis and gives your
+> code the benefit of the doubt).
 
-Version highlights:
-* Issue escalation with hierarchic working calendars
-* Calculated tracker fields with rich formula
-* Wiki page editing directly in Microsoft Word
-* Scalable version control management
-* Major enhancements in supporting Git and Mercurial
-* Revised search: more relevancy, richer query syntax, friendlier interface
+It seems that you are right. It doesn't complain here.
 
-Links
-* Product homepage: http://www.intland.com/products/cb/overview.html
-* FREE download (no expiration!):
-http://www.intland.com/products/download.html#download
-* FREE hosted version: http://www.intland.com/products/download.html#trial
+>> The arguments against each solution I see are these:
+>> - abort() gives a run-time error instead of a compile-time warning, so
+>> breakage is trickier to detect (on GCC, which seems to be the target
+>> compiler for the vast majority of git-developers).
+>> - NORETURN_PTR might be bit big of a hammer for a small problem, as it
+>> "pollutes" the whole git source-tree instead of just usage.c.
+>
+> I don't know that NORETURN_PTR pollutes the whole source-tree. At least
+> no more than NORETURN does. The only functions that will need it are
+> these two function pointers.
+
+Well, it does pollute the global name space, and it's "noise" when
+reading the source code. But those are really very unimportant points
+IMO.
+
+And sure, that "pollution/noise" is there for the NORETURN case anyway
+for a functional/practical reason, so you might argue that it
+justifies the presence in the NORETURN_PTR case.
+
+I'll wait a day or so and see if anyone else has any insight. If not,
+I'll go ahead and re-post a version based on the
+NORETURN_PTR-solution.
+
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
