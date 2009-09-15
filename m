@@ -1,63 +1,57 @@
-From: Alexey Borzenkov <snaury@gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
 Subject: Re: [PATCH 1/2] Work around leftover temporary save file.
-Date: Tue, 15 Sep 2009 18:14:48 +0400
-Message-ID: <e2480c70909150714n3b7d6018rcb5bcb42d1d78218@mail.gmail.com>
+Date: 15 Sep 2009 15:47:12 +0100
+Message-ID: <87tyz4b6z3.fsf@users.sourceforge.net>
 References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
-	 <87ab0wcsyp.fsf@users.sourceforge.net>
-	 <81b0412b0909150601j74d40181pc2308f4f63b4817e@mail.gmail.com>
+	<87ab0wcsyp.fsf@users.sourceforge.net>
+	<81b0412b0909150601j74d40181pc2308f4f63b4817e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+Cc: git@vger.kernel.org, Alexy Borzenkov <snaury@gmail.com>,
 	Paul Mackerras <paulus@samba.org>
 To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 16:14:57 2009
+X-From: git-owner@vger.kernel.org Tue Sep 15 16:47:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnYo4-0008K7-Ec
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:14:56 +0200
+	id 1MnZJX-0002La-7C
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197AbZIOOOs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 10:14:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754111AbZIOOOr
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:14:47 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:63449 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754068AbZIOOOq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2009 10:14:46 -0400
-Received: by fxm17 with SMTP id 17so1593941fxm.37
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 07:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cpsZoykWvoX20PlJoQXSzACx1GejyJTfBtnR/UquFNI=;
-        b=EMFdyP1pbQCM53zV6KxNoVsGpFt8y4TDg/XjYvYTS0j4S94vqDiTyiDJEO52tDRtjm
-         AKCsdpsqtxnl89sug0jXlpxCpe+YXhfF49xG7ooIovgtlfMW04eqEYWATwIVTVj8RSh/
-         FRqTC+IFCMQN59kUAZhaQHsrddMUsiULspto4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dr7yvhvmN+LHVTTbC3+RvYGdDh2XBUigkm95yeOge2DpEd6vTdRbThwH+sjJ57iCRK
-         BiHkZON/93NMGEa7nexVXYH99S5pZYBNulRpaVFZWDdl0vsqAsn1N1N4Kxa6XAyUUAhK
-         sGlDZycor/lunC5ploGEJ7N0WbSYJmW5NNAbA=
-Received: by 10.223.22.133 with SMTP id n5mr2692278fab.16.1253024088824; Tue, 
-	15 Sep 2009 07:14:48 -0700 (PDT)
+	id S1754516AbZIOOrO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 10:47:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754439AbZIOOrO
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:47:14 -0400
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:40854 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754370AbZIOOrN convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 10:47:13 -0400
+Received: from [172.23.170.145] (helo=anti-virus03-08)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1MnZJL-0006ZK-OI; Tue, 15 Sep 2009 15:47:15 +0100
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1MnZJJ-0003Oy-HP; Tue, 15 Sep 2009 15:47:13 +0100
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id ECC5B51843; Tue, 15 Sep 2009 15:47:12 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
 In-Reply-To: <81b0412b0909150601j74d40181pc2308f4f63b4817e@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128568>
 
-On Tue, Sep 15, 2009 at 5:01 PM, Alex Riesen <raa.lkml@gmail.com> wrote=
-:
-> On Tue, Sep 15, 2009 at 11:26, Pat Thoyts
-> <patthoyts@users.sourceforge.net> wrote:
+Alex Riesen <raa.lkml@gmail.com> writes:
+
+>On Tue, Sep 15, 2009 at 11:26, Pat Thoyts
+><patthoyts@users.sourceforge.net> wrote:
 >>
 >> If a file exists and is hidden on Windows the Tcl open command will
 >> fail as the attributes provided in the CREAT call fail to match thos=
@@ -70,23 +64,35 @@ e
 >>
 >> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
 >> ---
->> =C2=A0gitk | =C2=A0 =C2=A01 +
->> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
+>> =A0gitk | =A0 =A01 +
+>> =A01 files changed, 1 insertions(+), 0 deletions(-)
 >>
 >> diff --git a/gitk b/gitk
 >> index 1306178..a0214b7 100755
 >> --- a/gitk
 >> +++ b/gitk
 >> @@ -2526,6 +2526,7 @@ proc savestuff {w} {
->> =C2=A0 =C2=A0 if {$stuffsaved} return
->> =C2=A0 =C2=A0 if {![winfo viewable .]} return
->> =C2=A0 =C2=A0 catch {
->> + =C2=A0 =C2=A0 =C2=A0 if {[file exists ~/.gitk-new]} {file delete -=
-force ~/.gitk-new}
+>> =A0 =A0 if {$stuffsaved} return
+>> =A0 =A0 if {![winfo viewable .]} return
+>> =A0 =A0 catch {
+>> + =A0 =A0 =A0 if {[file exists ~/.gitk-new]} {file delete -force ~/.=
+gitk-new}
 >
-> maybe another gitk instance is writing it at exactly same moment
-> in time? Writing is known to take a few moments. Especially on Window=
-s.
+>maybe another gitk instance is writing it at exactly same moment
+>in time? Writing is known to take a few moments. Especially on Windows=
+=2E
 
-Then deleting would fail, because on Windows opened files cannot be
-deleted (unless they are opened in a special way that permits it).
+no - 'open $file w' is translated into O_WRONLY|O_CREAT|O_TRUNC
+internally and passed to the win32 layer to get converted to a call to =
+CreateFile with
+GENERIC_WRITE, CREATE_ALWAYS and FILE_ATTRIBUTE_NORMAL. The file has
+got FILE_ATTRIBUTE_HIDDEN though and as it exists and our attributes
+do not match we get failed.
+'open $file {O_WRONLY O_TRUNC}' would open it but we'd have to check
+for non-existence and redo with O_CREAT if it was not already present.
+
+See tclWinChan.c:TclpOpenFileChannel.
+
+--=20
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
