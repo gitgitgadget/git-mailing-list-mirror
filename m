@@ -1,179 +1,231 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Re: Commited to wrong branch
-Date: Tue, 15 Sep 2009 14:27:21 +0100
-Message-ID: <26ae428a0909150627n4e5935bcxdcdf0fdd33a44aa8@mail.gmail.com>
-References: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>
-	 <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>
-	 <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>
-	 <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>
-	 <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>
-	 <46a038f90909150546i508d3781id1dcd8e6c64942cf@mail.gmail.com>
-	 <26ae428a0909150558i508e5878q8a1ee7cb7311fc57@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 15:27:31 2009
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: [RFC/PATCH v3 00/14] Build Git with MSVC
+Date: Tue, 15 Sep 2009 15:44:03 +0200
+Message-ID: <cover.1253021221.git.mstormo@gmail.com>
+Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
+	raa.lkml@gmail.com, snaury@gmail.com,
+	Marius Storm-Olsen <mstormo@gmail.com>
+To: Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Tue Sep 15 15:44:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnY4A-0001nS-Q8
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:27:31 +0200
+	id 1MnYKw-0007Be-9d
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753901AbZION1V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 09:27:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753708AbZION1U
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:27:20 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:48390 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbZION1T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2009 09:27:19 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so785422eya.19
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:27:22 -0700 (PDT)
+	id S1754017AbZIONoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 09:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753988AbZIONog
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:44:36 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:40504 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753817AbZIONof (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 09:44:35 -0400
+Received: by ewy2 with SMTP id 2so473419ewy.17
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:44:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=/E+/dcGo/bv2DHNdNVBCvf/fdZ3KkR46hwh8Xg79OR4=;
-        b=F7wxOKJoCgkMoJBPTt6yzc0n5xBEkyMq2r9+iLAWwXiinaKYhgRzYYZkbbiT1Tce1o
-         zof3uXmTxIDRB0wAQucipWlZiNOLPOO7OlMMdOZLzcWRFU+/ka7s5Qv16h/F3w+zsAPT
-         qRVkj0pX3MsgQjxpTFOFC7smtBQOitcqPEzFM=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=P1W4xabASJvvYeKBObIkFBNdlqCez38SoJa5uNLbgSQ=;
+        b=Pl5w6KhObH49afADeNiNK1nyKT7VZM7yCx7e3kAN+QLQceB+Viwjvx9Yl8uwpzKmJl
+         gxRemmv7y7bIu9PnEJBQD3rRZ0PY2VHrz7yo46tDr5b6FgEnT/RPaP0huj59eYhIE/7x
+         DXyCNZw3PLei6IEfGnCP9L1Z4+uR4Jba3EsnU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=vHPFi2C70S1yova7Z1tlGmyLv8S67GMlVysIWhGmPF0lTVQ/VOE09FXxBVvrqT3R4V
-         wfsVvajPC7l8JtzSvUzD6AVSBNuCdBH+s5v/agAzOV/4E9zzlbTcRVLp0huR8DFq1e/v
-         YlLQkYE7wGlDojIhGtSLxAyCFBrVuHFH567F4=
-Received: by 10.216.4.84 with SMTP id 62mr1334725wei.199.1253021241820; Tue, 
-	15 Sep 2009 06:27:21 -0700 (PDT)
-In-Reply-To: <26ae428a0909150558i508e5878q8a1ee7cb7311fc57@mail.gmail.com>
-X-Google-Sender-Auth: b82934b619183e6c
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ISgKva3rFb9sPimIxrNElcbvkuw02iOKEYlhdHek0GYVWNEl3dATnzAq+rsxHX/xjG
+         hO77YQA0pZEodzIl2xKnOrxf1SQxXOQfnlP41ycxdslUVJyMTBjU7Gx32HNQfQz56ZnM
+         3TBiX84RHsG5FLJBNOR5iZCfKg6Bfhi7bw3y8=
+Received: by 10.211.139.17 with SMTP id r17mr8472232ebn.88.1253022275328;
+        Tue, 15 Sep 2009 06:44:35 -0700 (PDT)
+Received: from localhost.localdomain ([62.70.27.104])
+        by mx.google.com with ESMTPS id 7sm81939eyg.4.2009.09.15.06.44.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 15 Sep 2009 06:44:34 -0700 (PDT)
+X-Mailer: git-send-email 1.6.2.1.418.g33d56.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128544>
 
-What's to stop me.........
+=== V3 2009.09.15 ===
 
-* The "wrong" branch just tracks a remote so I can just dump it once I
-have this fixed - (delete it and recreate it?)
-* after my 'reset' the files I have in my working copy (still the
-wrong branch) should be the latest version ('git reset' does not
-change the working copy I think?)
-* So can I grab these files (they are mostly new), checkout the
-correct version, and just overwrite the existing files? I'll loose
-some history but not much and I don't care
+1) Reworded patch 01: s/Microsoft Visual C++/MSVC/
+2) Nuked patch 02
+3) Merged patch 03 into path 08
+4) Rewrote patch 06 to set _fmode instead for both MinGW and MSVC
+5) Fix patch 07 to use __stdcall for thread functions instead of WINAPI
+6) Rewrote patch 14 to rather use a define to _chsize
+7) Fix patch 15 to use "-o $@" instead of "-o git.o"
 
-Seems too easy :-)
+Think that's it..
 
-2009/9/15 Howard Miller <howard@e-learndesign.co.uk>:
-> Martin,
->
-> Got as far as applying the temporary patch and I now get a load of...
->
-> Reversed (or previously applied) patch detected! =A0Assume -R? [n]
-> Apply anyway? [n]
-> Skipping patch.
-> 1 out of 1 hunk ignored -- saving rejects to file
-> theme/onepointnine/local.css.rej
-> The next patch would create the file theme/onepointnine/local.css,
->
-> funnily I didn't think that file had anything to do with it, but when
-> I changed branched I got
->
-> T =A0 =A0 =A0 theme/onepointnine/local.css
->
-> Not sure what the T means :-(
->
-> H.
->
-> 2009/9/15 Martin Langhoff <martin.langhoff@gmail.com>:
->> On Tue, Sep 15, 2009 at 2:10 PM, Howard Miller
->> <howard@e-learndesign.co.uk> wrote:
->>> Martin,
->>>
->>> Looked at gitk - yes there is definitely one more commit still on t=
-he
->>> current (wrong) branch.
->>>
->>> I deleted the offending file and have now successfully switched to =
-the
->>> other (correct) branch.
->>
->> ok!
->>
->> so you have
->>
->> A - The commit you undid, and have in the temp patch. Note that this
->> patch file is missing the file you've rm'd.
->>
->> B - A commit you haven't "undone" on the "wrong" branch X.
->>
->> =A0and you are on branch Y
->>
->> so now...
->>
->> 1 - git format-patch Y^..Y =A0# will export that patch B into a file=
- for you.
->> 2 - git am 0001-whatever-the-name-of-the-file.txt # patch B
->> =A0 =A0this may need conflict resolution - read the notes it prints!=
- If
->> it refuses to apply the patch, do "git am --skip" to indicate you
->> won't use git-am no more for this, and try applying it with the patc=
-h
->> utility.
->> 3 - patch -p1 < your-patch-A.patch
->> 4 - find and readd the file you rm'd earlier -- if you don't have
->> another copy, we can get it from git reflog but that'll take extra
->> steps :-)
->> 5 - git commit # you're committing your patch A here
->>
->> Now, review with gitk to see that you have what you want to have
->> there. If it's all ok...
->>
->> =A06 - git checkout X
->> =A07 - git reset --hard # unstich that last stray commit
->> =A0 --
->>
->> hope the above helps. Git pros will see that the process could be mu=
-ch
->> shorter :-) I chose this specific path because in exporting your
->> patches and applying them again you can see each step.
->>
->> If we were to start again, and the branches are reasonably close to
->> eachother (not 19_STABLE vs cvshead :-) ) then you can say
->>
->> =A0- X has 2 bad commits that belong to Y, then
->> =A01 - gitk X & # open gitk to visualise the commits, send it to the=
- background
->> =A02 - git checkout Y
->> =A03 - git cherry-pick X^ # takes the next-to-last commit from X and
->> tries to apply it here - conflict resolution may be needed
->> =A04 - git cherry-pick X # same with the very last commit on X
->> =A05 - gitk # check that is all as you want it
->> =A06 - git checkout X
->> =A07 - git reset --hard X^^ # "rewind 2 commits"
->>
->> hth,
->>
->>
->>
->> m
->> --
->> =A0martin.langhoff@gmail.com
->> =A0martin@laptop.org -- School Server Architect
->> =A0- ask interesting questions
->> =A0- don't get distracted with shiny stuff =A0- working code first
->> =A0- http://wiki.laptop.org/go/User:Martinlanghoff
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->>
->
+=== V2 2009.09.14 ===
+
+Here's a second roll of the series for supporting compilation of Git
+using Visual C++ (MSVC). (Sorry for the long delay on a followup, time
+is in short supply these days)
+
+There's no guarantee that the compiled result will work as well as the
+current MinGW compile, or at all. However, I think it's important to
+get the Git repo to a compilable state with MSVC as quickly as
+possible, to further enable contributions from the Windows developers
+which we are sorely lacking at the moment.
+I hope that a repo which compiles successfully with the tools they are
+accustomed to (also a very good debugger) will entice them to send more
+patches.
+
+In addition to this series, I have also setup a repo with binaries of
+the required libs to compile Git with MSVC. Only 32bit versions for now.
+So, the developer can choose to either use that, or Frank's source code
+repo to build Git with MSVC. You'll find the binary repo here:
+    http://repo.or.cz/w/msvcgit.git
+
+Note that the binaries will still require the msysgit environment for
+execution, due to the non-binary components of Git. (Scripts, gitk,
+git-gui, etc). You'll find that repo here:
+    http://repo.or.cz/w/msysgit.git
+
+1) Rebased ontop on current git.git 'next'.
+2) Fixed code and commit msgs based on the previous feedback.
+   Let me know if I forgot anything!
+3) Added a proper Makefile patch for MSVC support.
+   You now compile with 'make MSVC=1'.
+4) Added perl scripts (contrib) which uses GNU Make output to generate
+   MSVC IDE (.sln & .vcproj) projects and QMake projects, and picking
+   up the project settings from the Makefile, so it's all in one place.
+5) Added necessary patches to make things compile ontop of current
+   'next'.
+
+=== V1 2009.08.21 ===
+So, Frank Li started this series, and I took it upon my self to help
+out a bit; cleaning, reorganizing, rebasing the series. Hopefully
+we're now a bit closer to including the series into mainline..
+
+Here's a summary of what has happend:
+1) This series is rebased ontop of git.git 'next', which needed an
+   extra patch to avoid a non-constant array creation, which
+   mscv doesn't like.
+2) I've polished (tied to anyways) the commit messages a bit.
+3) I've applied much of the feedback provided to the first round of
+   the patches.
+4) I've split, merged and reordered some of the patches, so things
+   that belong together are in the same commits, and in a order of
+   'importance'
+5) I've removed the
+       #define func _func
+   stuff, as it's not needed and Microsoft cannot really kill the
+   compatibility functions anyways. So, adding the define
+       _CRT_NONSTDC_NO_DEPRECATE
+   will kill the warnings seen without the defines above.
+6) ..probably much more as well, but I forget..
+
+Note: I did not sign off on the last two commits, which involve the
+adding of the vcproj files, since I don't agree on adding them as is.
+We need a Makefile way of compiling primarily, and second, a script
+to generate the vcproj, as already discussed. But the commits are
+included for completeness, at to let others compile and play with it.
+
+I've kept the original author as is, and just signed the patches..
+Thanks for watching, now bring on the comments!
+
+
+
+Frank Li (6):
+  Avoid declaration after statement
+  Change regerror() declaration from K&R style to ANSI C (C89)
+  Fix __stdcall placement and function prototype
+  Test for WIN32 instead of __MINGW32_
+  Add MinGW header files to build git with MSVC
+  Add platform files for MSVC porting
+
+Marius Storm-Olsen (8):
+  Add define guards to compat/win32.h
+  Set _O_BINARY as default fmode for both MinGW and MSVC
+  Add empty header files for MSVC port
+  Make usage of windows.h lean and mean
+  Define strncasecmp and ftruncate for MSVC
+  Add MSVC to Makefile
+  Add README for MSVC build
+  Add scripts to generate projects for other buildsystems (MSVC vcproj,
+    QMake)
+
+ .gitignore                                |   11 +
+ Makefile                                  |   54 +++-
+ compat/mingw.c                            |   20 +-
+ compat/mingw.h                            |    9 +
+ compat/msvc.c                             |   35 ++
+ compat/msvc.h                             |   50 +++
+ compat/regex/regex.c                      |    7 +-
+ compat/snprintf.c                         |   10 +-
+ compat/vcbuild/README                     |   50 +++
+ compat/vcbuild/include/alloca.h           |    1 +
+ compat/vcbuild/include/arpa/inet.h        |    1 +
+ compat/vcbuild/include/dirent.h           |  128 ++++++
+ compat/vcbuild/include/grp.h              |    1 +
+ compat/vcbuild/include/inttypes.h         |    1 +
+ compat/vcbuild/include/netdb.h            |    1 +
+ compat/vcbuild/include/netinet/in.h       |    1 +
+ compat/vcbuild/include/netinet/tcp.h      |    1 +
+ compat/vcbuild/include/pwd.h              |    1 +
+ compat/vcbuild/include/sys/ioctl.h        |    1 +
+ compat/vcbuild/include/sys/param.h        |    1 +
+ compat/vcbuild/include/sys/poll.h         |    1 +
+ compat/vcbuild/include/sys/select.h       |    1 +
+ compat/vcbuild/include/sys/socket.h       |    1 +
+ compat/vcbuild/include/sys/time.h         |    1 +
+ compat/vcbuild/include/sys/utime.h        |   34 ++
+ compat/vcbuild/include/sys/wait.h         |    1 +
+ compat/vcbuild/include/unistd.h           |   92 ++++
+ compat/vcbuild/include/utime.h            |    1 +
+ compat/vcbuild/scripts/clink.pl           |   48 +++
+ compat/vcbuild/scripts/lib.pl             |   26 ++
+ compat/win32.h                            |    7 +
+ compat/winansi.c                          |    1 -
+ contrib/buildsystems/Generators.pm        |   42 ++
+ contrib/buildsystems/Generators/QMake.pm  |  189 +++++++++
+ contrib/buildsystems/Generators/Vcproj.pm |  639 +++++++++++++++++++++++++++++
+ contrib/buildsystems/engine.pl            |  353 ++++++++++++++++
+ contrib/buildsystems/generate             |   29 ++
+ contrib/buildsystems/parse.pl             |  228 ++++++++++
+ git-compat-util.h                         |    9 +
+ help.c                                    |    5 +-
+ pager.c                                   |    4 +-
+ run-command.c                             |   12 +-
+ run-command.h                             |    2 +-
+ setup.c                                   |    2 +-
+ thread-utils.c                            |    5 +-
+ 45 files changed, 2084 insertions(+), 33 deletions(-)
+ create mode 100644 compat/msvc.c
+ create mode 100644 compat/msvc.h
+ create mode 100644 compat/vcbuild/README
+ create mode 100644 compat/vcbuild/include/alloca.h
+ create mode 100644 compat/vcbuild/include/arpa/inet.h
+ create mode 100644 compat/vcbuild/include/dirent.h
+ create mode 100644 compat/vcbuild/include/grp.h
+ create mode 100644 compat/vcbuild/include/inttypes.h
+ create mode 100644 compat/vcbuild/include/netdb.h
+ create mode 100644 compat/vcbuild/include/netinet/in.h
+ create mode 100644 compat/vcbuild/include/netinet/tcp.h
+ create mode 100644 compat/vcbuild/include/pwd.h
+ create mode 100644 compat/vcbuild/include/sys/ioctl.h
+ create mode 100644 compat/vcbuild/include/sys/param.h
+ create mode 100644 compat/vcbuild/include/sys/poll.h
+ create mode 100644 compat/vcbuild/include/sys/select.h
+ create mode 100644 compat/vcbuild/include/sys/socket.h
+ create mode 100644 compat/vcbuild/include/sys/time.h
+ create mode 100644 compat/vcbuild/include/sys/utime.h
+ create mode 100644 compat/vcbuild/include/sys/wait.h
+ create mode 100644 compat/vcbuild/include/unistd.h
+ create mode 100644 compat/vcbuild/include/utime.h
+ create mode 100644 compat/vcbuild/scripts/clink.pl
+ create mode 100644 compat/vcbuild/scripts/lib.pl
+ create mode 100644 contrib/buildsystems/Generators.pm
+ create mode 100644 contrib/buildsystems/Generators/QMake.pm
+ create mode 100644 contrib/buildsystems/Generators/Vcproj.pm
+ create mode 100644 contrib/buildsystems/engine.pl
+ create mode 100644 contrib/buildsystems/generate
+ create mode 100644 contrib/buildsystems/parse.pl
