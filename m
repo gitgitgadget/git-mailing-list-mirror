@@ -1,49 +1,62 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Commited to wrong branch
-Date: Tue, 15 Sep 2009 16:08:07 +0200
-Message-ID: <4AAF9FC7.2090003@viscovery.net>
-References: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>	 <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>	 <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>	 <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>	 <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>	 <46a038f90909150546i508d3781id1dcd8e6c64942cf@mail.gmail.com>	 <26ae428a0909150558i508e5878q8a1ee7cb7311fc57@mail.gmail.com>	 <26ae428a0909150627n4e5935bcxdcdf0fdd33a44aa8@mail.gmail.com> <26ae428a0909150645s59e1fb40hbb19e672230077eb@mail.gmail.com>
+From: Alexey Borzenkov <snaury@gmail.com>
+Subject: Re: [PATCH 2/2] Fix the geometry when restoring from zoomed state.
+Date: Tue, 15 Sep 2009 18:11:41 +0400
+Message-ID: <e2480c70909150711h6bd556e3t683c1d1473f9cb58@mail.gmail.com>
+References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
+	 <8763bkcsxb.fsf@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 15 16:08:38 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Sep 15 16:12:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnYhx-0006H3-2Q
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:08:37 +0200
+	id 1MnYlG-0007Rf-IH
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754104AbZIOOI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 10:08:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbZIOOI1
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:08:27 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:54397 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511AbZIOOI1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 10:08:27 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MnYhX-0004Qn-1A; Tue, 15 Sep 2009 16:08:11 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 13F536D9; Tue, 15 Sep 2009 16:08:08 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <26ae428a0909150645s59e1fb40hbb19e672230077eb@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1754302AbZIOOLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 10:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754238AbZIOOLk
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:11:40 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:46183 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754197AbZIOOLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 10:11:39 -0400
+Received: by bwz19 with SMTP id 19so2816063bwz.37
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 07:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=TT73+a+huqAPxA5DGUThmvNJoDXDxPP8Nr9xVSYzTt0=;
+        b=ZE00BKtycS6RE/b678HGejIX6/cFv3IKZGjFXBkklFO2OpTVoWF/IwlsNduy2GLGj/
+         7LJhdXHb44rR24dzhO6z4rk8dtWHk8JMKvppObbnZQYrIp3ysXhN46N72FLummerdlxR
+         vTuDewm8C5/cgwNQXQLIwFj6O53iDRvEoNMcM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=KtmKOnYK7oIfcWZ6lFASW40zW047/obJKztFPs6J+7BEwjtRBuvYBTYFT5wJVVO+ou
+         B/5JIGHPn9Qhfdw3hqpJnNgvCtFr9+PJ3/kq+gMOQ+K3LMbCjeF8JlUWa03IdZhTYctB
+         t3wbRiwnuTnMDT18AcCigRHlsaLvkMfjLXEV4=
+Received: by 10.223.20.85 with SMTP id e21mr2706718fab.25.1253023901831; Tue, 
+	15 Sep 2009 07:11:41 -0700 (PDT)
+In-Reply-To: <8763bkcsxb.fsf@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128565>
 
-Howard Miller schrieb:
-> (PS. I now even know what 'top-posting' is - but not why it's bad.)
+On Tue, Sep 15, 2009 at 1:37 PM, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> The patch to handle the geometry of a restored gitk by Alexy Borzenkov
+> causes the position of the columns to creep each time the application
+> is restarted. This patch addresses this by remembering the application
+> geometry for the normal state and saving that regardless of the actual
+> state when the application is closed.
 
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing in e-mail?
+I can confirm it works even when the difference between normal and
+maximized window are big.
