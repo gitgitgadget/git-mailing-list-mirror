@@ -1,77 +1,49 @@
-From: Alexey Borzenkov <snaury@gmail.com>
-Subject: Re: [PATCH] gitk: restore wm state to normal before saving geometry 
-	information
-Date: Tue, 15 Sep 2009 17:58:24 +0400
-Message-ID: <e2480c70909150658p4293b596w6860d7cc9b3670ef@mail.gmail.com>
-References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
-	 <87eiq8ct40.fsf@users.sourceforge.net>
-	 <e2480c70909150554p2e211d60y18049b5534f8922e@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Commited to wrong branch
+Date: Tue, 15 Sep 2009 16:08:07 +0200
+Message-ID: <4AAF9FC7.2090003@viscovery.net>
+References: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>	 <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>	 <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>	 <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>	 <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>	 <46a038f90909150546i508d3781id1dcd8e6c64942cf@mail.gmail.com>	 <26ae428a0909150558i508e5878q8a1ee7cb7311fc57@mail.gmail.com>	 <26ae428a0909150627n4e5935bcxdcdf0fdd33a44aa8@mail.gmail.com> <26ae428a0909150645s59e1fb40hbb19e672230077eb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Sep 15 15:58:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 15 16:08:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnYYC-0003CA-Fy
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:58:32 +0200
+	id 1MnYhx-0006H3-2Q
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:08:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754034AbZION6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 09:58:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754005AbZION6X
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:58:23 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:59424 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753978AbZION6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 09:58:22 -0400
-Received: by fxm17 with SMTP id 17so1581064fxm.37
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=vS3BI9JXDVfGewu6WtP4SJfmnnNDy9Dp1CunNMAqc9A=;
-        b=uH8foaOx5riezjUQlj6O+wwQ1oakp8sdWvHbFbXKW6aqmXQ0ngw9v92wI8p4/YlFfr
-         p7th2aJG6Nc1gWBMeLRZ0RSm/pCn0MQiW5WK8o3nTBuPZoSwuBK9H5dRFwPQc2Da56jc
-         wAw+IBD577JiH3M/evXc9iblp5MaRcKqTF+CY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=TOrZ1DGpjl2ps5oPgoPxFfe8qTM3l1y27+tIvJkCUyjZKyVllJ1eej350poPeYN9to
-         B4EUTw33kjajI2aY/RocfJo2NHvJ7aEtDw+V/m7ZKquFZP9t+mdN+/SeMP+DAUuSenoi
-         GonQUGqw1uaWK9oCNMEGLjFwQRLwYbtsScOBc=
-Received: by 10.223.7.21 with SMTP id b21mr2556138fab.104.1253023105023; Tue, 
-	15 Sep 2009 06:58:25 -0700 (PDT)
-In-Reply-To: <e2480c70909150554p2e211d60y18049b5534f8922e@mail.gmail.com>
+	id S1754104AbZIOOI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 10:08:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbZIOOI1
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:08:27 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:54397 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511AbZIOOI1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 10:08:27 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MnYhX-0004Qn-1A; Tue, 15 Sep 2009 16:08:11 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 13F536D9; Tue, 15 Sep 2009 16:08:08 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <26ae428a0909150645s59e1fb40hbb19e672230077eb@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128564>
 
-On Tue, Sep 15, 2009 at 4:54 PM, Alexey Borzenkov <snaury@gmail.com> wrote:
-> On the other hand, when I resize columns and then maximize/restore the
-> window repeatedly I see that their sizes change in a strange way (and
-> the smaller restored window they stranger are results) until hitting
-> some sort of equilibrium, then maximize/restore doesn't have effect on
-> their sizes anymore. So maybe there's a bug not in a way my patch
-> restores the window, but in a way window resizes are handled.
+Howard Miller schrieb:
+> (PS. I now even know what 'top-posting' is - but not why it's bad.)
 
-It seems that I found what's the problem. When the window is very
-small, and we maximize it, sash coords would initially be small. Then
-we calculate their new positions and set it with $win sash place, but
-unfortunately, tk limits them to the OLD pane size for some reason.
-Initially I though that maybe Configure is fired too early (before
-window is resized), but [winfo width $win] shows $win has the new
-size. Here's some output that I got during debugging:
-
-resizing 422 -> 1261 (winfo shows 1261)
-    s0: 138 1
-    s1: 288 1
-    sash0: 412 -> 412 1
-    sash1: 860 -> 417 1
-
-I'm at a loss why this happens and how to lift this restriction.
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
+A: Top-posting.
+Q: What is the most annoying thing in e-mail?
