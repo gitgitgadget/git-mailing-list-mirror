@@ -1,124 +1,103 @@
-From: Owen Taylor <otaylor@redhat.com>
-Subject: Re: Patches for git-push --confirm and --show-subjects
-Date: Mon, 14 Sep 2009 22:38:49 -0400
-Message-ID: <1252982329.11581.111.camel@localhost.localdomain>
-References: <1252884685-9169-1-git-send-email-otaylor@redhat.com>
-	 <7vpr9ugxn5.fsf@alter.siamese.dyndns.org>
-	 <1252895719.11581.53.camel@localhost.localdomain>
-	 <alpine.LNX.2.00.0909141745410.14907@iabervon.org>
-	 <1252970294.11581.71.camel@localhost.localdomain>
-	 <7v7hw19gr5.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: [Bug?] "diff -B --color" output doesn't show space errors
+Date: Tue, 15 Sep 2009 12:34:56 +0900
+Message-ID: <20090915123456.6117@nanako3.lavabit.com>
+References: <wavexx-2ECE7F.13171313092009@ger.gmane.org>
+	<7viqfmsoej.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Yuri D'Elia" <wavexx@users.sf.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 04:39:05 2009
+X-From: git-owner@vger.kernel.org Tue Sep 15 05:35:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnNwf-0005Vr-0h
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 04:39:05 +0200
+	id 1MnOpA-00083e-2O
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 05:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934142AbZIOCi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Sep 2009 22:38:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758021AbZIOCiz
-	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 22:38:55 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:5244 "EHLO mx1.redhat.com"
+	id S1757963AbZIODfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Sep 2009 23:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756600AbZIODfF
+	(ORCPT <rfc822;git-outgoing>); Mon, 14 Sep 2009 23:35:05 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:45195 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758020AbZIOCiz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Sep 2009 22:38:55 -0400
-Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8F2cpmK027370;
-	Mon, 14 Sep 2009 22:38:51 -0400
-Received: from [127.0.0.1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
-	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8F2coW2005724;
-	Mon, 14 Sep 2009 22:38:50 -0400
-In-Reply-To: <7v7hw19gr5.fsf@alter.siamese.dyndns.org>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
+	id S1754379AbZIODfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Sep 2009 23:35:04 -0400
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id 6108211B866;
+	Mon, 14 Sep 2009 22:35:07 -0500 (CDT)
+Received: from 9427.lavabit.com (delhi-202.54.61-99.vsnl.net.in [202.54.61.99])
+	by lavabit.com with ESMTP id BF93IE0FG4YX; Mon, 14 Sep 2009 22:35:07 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=wPveRhaN2VdetKzi0AMOadXJtTJblkZ+m38BkfPzXn7QQXGYuVuQHMI3tl8/GC2YBDeanJmRCgS8zzE5EWVyYnJRSnfo+s3ZsbttmHl2HMPPTmgG9pfHLyHWCAxq6FzpZjbw/VoALmDd0ehcOr7i0iEAqmsB4bMgDnU/1lTgniw=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7viqfmsoej.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128506>
 
-On Mon, 2009-09-14 at 17:46 -0700, Junio C Hamano wrote:
-> Owen Taylor <otaylor@redhat.com> writes:
-> 
-> > If I can figure out the rest of it, I'll look at adding a hook on top as
-> > a sweetener :-)
-> 
-> Please don't.
-> 
-> I seriously suggest you start from, and stick to, nothing but a hook.
-> 
-> The pre-push codepath is conceptually very simple --- something needs to
-> inspect a list of <ref, old, new> and say yes or no.  But what the users
-> want needs great customizability (e.g. Daniel's sign-off validation
-> example).  It's the prime example of codepath that should have a hook and
-> no built-in policy logic.
+Quoting Junio C Hamano <gitster@pobox.com>
 
-Let me back up on this a little bit.
+> By default, if the pathname that was present in the old version still
+> appears in the new version, that path is not considered as a candiate
+> for rename detection.  Only "X used to be there but is gone" and "Y did
+> not exist but appeared" are paired up and checked if they are similar.
+>
+> Give the command -B option, too, to break the filepair that does not
+> disappear.
 
-Is confirmation a general need?
+I wanted to try this -B option, and wrote a little test program.
 
-In the context of the kernel or git personal repository workflows,
-probably not. If you push something wrong, and discover it quickly, you
-can just push over it and nobody is wiser. But a large fraction of the
-projects listed on the front page of git-scm.com are using shared
-repositories. And with a shared repository, a messed up push is more of
-an issue: there may be notifications sent out over email or IRC, the
-repository may be configured with denyFastForward true, people may
-quickly pull your accidental push, etc.
+While it shows correctly that the file was rewritten, it doesn't
+point out various whitespace mistakes in the file anymore.
 
-It's also a sticky point for first using git. The push syntax and
-behavior is a bit cryptic until you are used to it. Is it going to push
-all branches or just the one I'm on? Is 'git push --tags' a superset of
-'git push'? etc. If the first repository you are pushing to is public
-and shared, heavy use of --dry-run at first is certainly advisable. But
-repeating with --dry-run and without is pretty awkward.
+Is this a bug, or should I give some other options as well?
 
-How would the quality of use be as a hook?
+-- >8 -- cut here -- 8< --
+git init
 
-Probably good enough. The broad outlines are achievable anyways. There
-are some aspects of my patches that wouldn't be there. A few that come
-to mind:
+cat >file <<"EOF"
+This is an article that will be
+completely rewritten in a
+later commit.
+EOF
 
- - The --show-subjects option applied to all displays of push
-   references, not just for --confirm.
+git add file
 
- - In the case of a successful push when the updates are exactly what
-   was confirmed, outputting them again after the push is suppressed.
+sed -e "s/T/\t/g" -e "s/_/ /g" >file <<"EOF"
+An article was written but it was_
+later rewritten to be_
+a completely different text.
+_____
+An article was written but it was_
+later rewritten to be_
+a completely different text.
 
-How would ease of configuration be for a hook?
+An article was written but it was_
+later rewritten to be_
+a completely different text.
 
-> E.g. perhaps in $HOME/.gitconfig, you may want to allow
-> 
-> 	[hook]
->         	prePush = $HOME/.githooks/my-pre-push-hook
->                 preCommit = $HOME/.githooks/my-pre-commit-hook
+Worse yet, the replacement text_
+introduces a lot of
+_Twhite space errors_
+such as SP before HT and trailing
+whitespaces, when the file was modified by the 
+later commit.
 
-This is certainly better than having to set it up per-repo, but if I
-wanted to tell GNOME contributors how to turn it on, I'd have to provide
-a gnome-contributor-git-setup.sh. Even if the hooks were shipped with
-git, there's not going to be a cross-distro path to the where they are
-installed.
+Also there are trailing empty lines at the end of the file.
 
-Maybe if a there was a "hook path" that included ~/.githooks and a
-system directory? Though:
 
- git-config --global hook.prePush git-pre-push-confirm
 
-could still overwrite something that they already have configured; it
-wouldn't be an "orthogonal tip" that you could find on a web page and
-apply blindly.
+EOF
 
-Providing a gnome-contributor-git-setup.sh is generally an approach of
-last resort. I don't think there is anything unique or special about how
-we do we do git on gnome.org that makes it different from other
-shared-repository workflows. I'd like the knowledge that people get
-using Git with GNOME to carry over to other work they do with Git and
-vice-versa.
+git diff --color
+git diff --color -B
+# end of test program
 
-- Owen
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
