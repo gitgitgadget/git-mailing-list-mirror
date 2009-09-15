@@ -1,94 +1,193 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: [PATCH 11/14] Define strncasecmp and ftruncate for MSVC
-Date: Tue, 15 Sep 2009 15:44:14 +0200
-Message-ID: <65347d022ba857d57d3c081f28b239b9b665c587.1253021728.git.mstormo@gmail.com>
-References: <cover.1253021221.git.mstormo@gmail.com> <213f3c7799721c3f42ffa689498175f0495048eb.1253021728.git.mstormo@gmail.com> <26c067500d8adf17a2d75e2956e4d4a6cef27fc1.1253021728.git.mstormo@gmail.com> <6e6345fb3fbc19b1a2467e33e1633fe9025e547b.1253021728.git.mstormo@gmail.com> <badc5d24387c28c752a45f75e8aec6bce64f81fe.1253021728.git.mstormo@gmail.com> <8368a0b347c01e7ddb5e5b514a46e55dd6f0daf7.1253021728.git.mstormo@gmail.com> <ffd7cfd6114f08c6502b21140d56d9bcd5d2a554.1253021728.git.mstormo@gmail.com> <4924c3de4fa490d1f41b75d18864f0a57fbd0eda.1253021728.git.mstormo@gmail.com> <88c817f030cfcc1e3b9e08f80d7ccfbcdfad7ecb.1253021728.git.mstormo@gmail.com> <8bcd4b022f59a5f55b63f87c9cf6a4dadc71cc44.1253021728.git.mstormo@gmail.com> <606db5a89cc49818fa225312a3bb6dbda18867a6.1253021728.git.mstorm
- o@gmail.com>
-Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com, raa.lkml@gmail.com, snaury@gmail.com, Marius Storm-Olsen <mstormo@gmail.com>
-To: Johannes.Schindelin@gmx.de
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Sep 15 15:45:31 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f137.google.com ([209.85.210.137])
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: R: Commited to wrong branch
+Date: Tue, 15 Sep 2009 15:45:04 +0200
+Message-ID: <9accb4400909150645g72e3d78bhd1621e48d3857d99@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 15 15:45:55 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnYLZ-0007FY-GY
-	for gcvm-msysgit@m.gmane.org; Tue, 15 Sep 2009 15:45:29 +0200
-Received: by mail-yx0-f137.google.com with SMTP id 1so7426652yxe.21
-        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Sep 2009 06:45:28 -0700 (PDT)
+	id 1MnYLz-0007XQ-1H
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:45:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754188AbZIONp1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 09:45:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754177AbZIONp0
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:45:26 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:54838 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754138AbZIONpD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2009 09:45:03 -0400
+Received: by bwz19 with SMTP id 19so2795041bwz.37
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:45:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references
-         :sender:precedence:x-google-loop:mailing-list:list-id:list-post
-         :list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=ieh8hE+NKhG3BoqwJvQXmbwHIuv4Vz3Kp3xDZQVGUyk=;
-        b=tFW4nUhhaVoEKyHdMxR3rVq5KAHU3mnNI42xdY5+dO2gZF/KqNkZDyN39feCT6L8R5
-         rCCngosu0YAtFFnUKq8JxtoaGzfc5Wd3TmGOjst6p9ml3crQxr6f5VUxenHgQ4PN09yi
-         UuRZ0F+SshN2Vtp73APJ8TV7c6OMPn/Zj8mp0=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=/PrRRJD3EIJj90wRXv5NY3pfI1uPegdOQ3QOQ5O5Yi8=;
+        b=ddj90ucBmB2eMAeZW6vcvaXpyA7K2hA9EKnCd4MiDWTJjLlFrXSz1niac3CBUyJlyR
+         xTtJ8edigrxe0Pj+m0Wnf285L98cVQtHbJ4ZQoh3xSjWEAtbyJEhP/N/husQfZ0VANjA
+         xdTtyrjGlvlJzsKilOcbXthsa//JD7ByZZqB4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=vzdFGQFu206X+eg0B2DanGtJodYUuIVzPwOn/l3x5BSE2W1kVMKLh7A+yms4tqZErN
-         pKjG2r7NQojvoFwGM8tzztcoDudfbKIrIhok0kmlNK1NFWy0sx3S5usFqbc3Q8akloE9
-         HRg7gX6gWZeJHabLSRSAkcUYeNT4pst1oWpP8=
-Received: by 10.150.106.5 with SMTP id e5mr2173875ybc.13.1253022307404;
-        Tue, 15 Sep 2009 06:45:07 -0700 (PDT)
-Received: by 10.177.112.39 with SMTP id p39gr7018yqm.0;
-	Tue, 15 Sep 2009 06:44:54 -0700 (PDT)
-X-Sender: mstormo@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.210.3.25 with SMTP id 25mr1424762ebc.14.1253022293502; Tue, 15 Sep 2009 06:44:53 -0700 (PDT)
-Received: by 10.210.3.25 with SMTP id 25mr1424761ebc.14.1253022293395; Tue, 15 Sep 2009 06:44:53 -0700 (PDT)
-Received: from mail-ew0-f214.google.com (mail-ew0-f214.google.com [209.85.219.214]) by gmr-mx.google.com with ESMTP id 16si1530745ewy.7.2009.09.15.06.44.52; Tue, 15 Sep 2009 06:44:52 -0700 (PDT)
-Received-SPF: pass (google.com: domain of mstormo@gmail.com designates 209.85.219.214 as permitted sender) client-ip=209.85.219.214;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of mstormo@gmail.com designates 209.85.219.214 as permitted sender) smtp.mail=mstormo@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by mail-ew0-f214.google.com with SMTP id 10so4211179ewy.13 for <msysgit@googlegroups.com>; Tue, 15 Sep 2009 06:44:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer:in-reply-to:references:in-reply-to:references; bh=0wPtbNap1i35jbqpufYOO6VeUM+8nKCaRfvLntymFGc=; b=PBX0sAPmI66mN8xCI6BwD/KKQijHOxN0VjYiUkUNmgcg4e8pKrbxENx9x/AN+7JbHk VCC6uTsTuiSkFq+S7d0ZONO6ixtt6FP31+Wd1VUz1a3TJL7KhC2kzZH7jRwXpfUZyDIE dxkp2DQdPSRNeWtYW0jvDsm7eu0Ea8/alBb1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references; b=agx0CxxQE8qWvF6J03WECMa3EGFTDFYMpo/5Mwo8YPd/Is0STdv9bGb07lJ622PIkh gKSU4OJ/KnizxcBWxxQPegyzIxJj/Esz22B9HGSsn1Y2EsPO/P55b6jFRN9eEBckAzy7 wWzbj1gy7XZ8Ffw7ZFNBjuESdhGuyITt9Jgg4=
-Received: by 10.210.9.17 with SMTP id 17mr7629070ebi.23.1253022292307; Tue, 15 Sep 2009 06:44:52 -0700 (PDT)
-Received: from localhost.localdomain ([62.70.27.104]) by mx.google.com with ESMTPS id 7sm81939eyg.4.2009.09.15.06.44.51 (version=SSLv3 cipher=RC4-MD5); Tue, 15 Sep 2009 06:44:51 -0700 (PDT)
-X-Mailer: git-send-email 1.6.2.1.418.g33d56.dirty
-In-Reply-To: <606db5a89cc49818fa225312a3bb6dbda18867a6.1253021728.git.mstormo@gmail.com>
-In-Reply-To: <cover.1253021728.git.mstormo@gmail.com>
-References: <cover.1253021728.git.mstormo@gmail.com>
-Sender: msysgit@googlegroups.com
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=Hjp9p+MomaMPAEytBQwjovQopPYQqRC2PN+CelzrqpG+sz8+A4V5q/dl6d9h9jyysE
+         RzwMRwxKqWHHpCkrHfw6OcKvzTZcQpOX6qOt2hgaXX+Ge7vT/81I91dQtDpZpAhxqPIZ
+         lJoiZ8jgJkg4WcpVjf2eM3R0R/i2GZFtpB6Ok=
+Received: by 10.204.152.144 with SMTP id g16mr6166209bkw.189.1253022304129; 
+	Tue, 15 Sep 2009 06:45:04 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128558>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128559>
+
+I replied to Howard directly without CCing the Git ML (as a mistake)
+
+anyway he solved the problem on his own now.
+
+this was my first reply that didn't reached the list
 
 
-Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
----
- compat/msvc.h |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+On Tue, Sep 15, 2009 at 12:31 PM, Howard Miller
+<howard@e-learndesign.co.uk> wrote:
+> I had made some changes to some files and then done a commit. Only
+> then did I realise that I had the wrong branch checked out. To make
+> matters worse I then did a 'git reset HEAD^' which means that I can
+> now no longer switch branches. I am stuck. I had some advice (thanks!=
+)
+> but it was not complete. I'd appreciate some more help.
 
-diff --git a/compat/msvc.h b/compat/msvc.h
-index 53a6d30..9c753a5 100644
---- a/compat/msvc.h
-+++ b/compat/msvc.h
-@@ -10,6 +10,8 @@
- #define __inline__ __inline
- #define __attribute__(x)
- #define va_copy(dst, src)     ((dst) = (src))
-+#define strncasecmp  _strnicmp
-+#define ftruncate    _chsize
- 
- static __inline int strcasecmp (const char *s1, const char *s2)
- {
--- 
-1.6.2.1.418.g33d56.dirty
+I think that explaining what you did and what happened along your
+modification will help you to understand.
+It's not that hard, really :)
+
+so this are the steps you followed (confirmed by your reply to Martin)
+
+=C2=A01 - you were on branch X, thinking your were on branch Y
+
+Branch X point to a commit which is the last commit of branch X:
+
+you can visualize the situation like this
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BRANCH Y
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
+c1 - c2 - c3 - c5
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0c4 - c6
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 BRANCH X (and your cur=
+rent HEAD)
+
+the cN stuffs are commits
+
+BranchX, BranchY and HEAD are only pointers to a commit
+
+=C2=A02 - you worked on on branch X
+
+modified some files/added new one/whatever
+
+now you may have some untracked files (new files)
+and some untracked modification (modified files)
+
+untracked means that those files/modification aren't in the git
+repository, they are not indexed
+
+=C2=A03 - git add .
+
+You ask git to index the modification to prepare a commit: we say that
+files are "staged"
+
+At this time HEAD and BRANCH X are still on c6 commit (see graphic abov=
+e)
+
+=C2=A04 - git commit
+
+Ok what happen here?
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BRANCH Y
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
+c1 - c2 - c3 - c5
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0c4 - c6 - c7
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0|
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 BRANCH X=
+ (and your current HEAD)
+
+you created a new commit and moved the 2 pointers.
+
+
+6 - you realized the mistake
+
+now what you want here is to make your Branch X point again the c6
+commit and, probably,
+save your modification for c7
+
+but you actually panicked :)
+
+and you did:
+
+=C2=A05 - git reset HEAD^
+
+Let's see what happen to the index:
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0BRANCH Y
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |
+c1 - c2 - c3 - c5
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0c4 - c6 -c7
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 BRANCH X (and your cur=
+rent HEAD)
+
+seems right uh?
+
+no you have a lot of untracked files in your directory
+
+that's because git reset doesn't change your directory content
+it only work on indexes.
+
+So what you now have in your project directory is what you did on the
+top of your initial Branch X
+
+try a
+gitk --all
+
+it should show you that
+
+
+Now you have 2 options:
+1) discard what you did for the wrong commit c7 (and restart again on b=
+ranch Y)
+2) try to backup your work and migrate it to branch Y
+
+the 1) is the easiest one: just execute
+git reset HEAD --hard
+the option --hard ask git to give you a "clean" reset modifying your
+working directory to be exactly
+like the indexed c6 commit.
+
+then checkout branch Y:
+git checkout Y
+
+and restart to work on that branch
+
+
+if you want to recover what you did to avoid re-doing it then the
+things became a little harder but not
+that much :)
+
+there are many way to do it because git gave you a lot of tools
+
+we can help if you calm down :)
+
+for now: question about this?
+
+regards,
+Daniele
