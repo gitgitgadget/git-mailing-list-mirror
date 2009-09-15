@@ -1,98 +1,125 @@
-From: Michael.Kraemer@eisenmann.com
-Subject: put in scripts
-Date: Tue, 15 Sep 2009 14:16:32 +0200
-Message-ID: <OF3DD76F51.E291FC6C-ONC1257632.004311EF-C1257632.00436FB5@EISENMANN.DE>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Commited to wrong branch
+Date: Tue, 15 Sep 2009 14:46:16 +0200
+Message-ID: <46a038f90909150546i508d3781id1dcd8e6c64942cf@mail.gmail.com>
+References: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>
+	 <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>
+	 <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>
+	 <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>
+	 <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 14:22:49 2009
+Cc: git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Tue Sep 15 14:46:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnX3Y-00071O-H9
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 14:22:48 +0200
+	id 1MnXQa-000696-5n
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 14:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752010AbZIOMWj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 08:22:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbZIOMWi
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 08:22:38 -0400
-Received: from mailout02.rmx.de ([217.111.120.10]:33658 "EHLO mailout02.rmx.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750763AbZIOMWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 08:22:37 -0400
-X-Greylist: delayed 313 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Sep 2009 08:22:37 EDT
-Received: from [172.19.21.68] (HELO crypto02.retarus.de)
-  by mailout02.rmx.de (CommuniGate Pro SMTP 5.2.13 _community_)
-  with ESMTPS id 51762607 for git@vger.kernel.org; Tue, 15 Sep 2009 14:16:52 +0200
-Received: (from daemon@localhost)
-	by crypto02.retarus.de (8.13.6/8.13.6) id n8FCHOGc026314
-	for <git@vger.kernel.org>; Tue, 15 Sep 2009 14:17:24 +0200
-Received: from mailcc07.retarus.de (localhost [127.0.0.1])
- 	by crypto02.retarus.de (8.13.6/8.13.6) with SMTP id n8F5NMUA015579
- 	for <git@vger.kernel.org>; Tue, 15 Sep 2009 14:17:24 +0200
-X-Mailer: Lotus Notes Release 6.5.5 November 30, 2005
-X-MIMETrack: Serialize by Router on EN-INET01/EISENMANN(Release 7.0.2|September 26, 2006) at
- 15.09.2009 14:16:20
-X-RMX-ID: 20090915-141639-n8FCGco1012612-0@kdin03
-X-RMX-TRACE: 2009-09-15 14:16:39 KdIn@kdin03/mailcc09 [0.4s] 20090915-141639-n8FCGco1012612-0@kdin03 0:00:00
-X-RMX-TRACE: 2009-09-15 14:16:40 RmxMSO@kdin03/mailcc07 [0.1s] 20090915-141639-n8FCGco1012612-0@kdin03 0:00:01
-X-MIME-Autoconverted: from quoted-printable to 8bit by crypto02.retarus.de id n8F5NMUA015579
+	id S1753453AbZIOMqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 08:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752668AbZIOMqP
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 08:46:15 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:47980 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012AbZIOMqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 08:46:15 -0400
+Received: by ewy2 with SMTP id 2so418728ewy.17
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 05:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=a9XPJRpmnnSCvxbzjSxNLSetOLmc6zboc+9+NJXfulw=;
+        b=fa9KaXePv5uFOFfV+NC/qcdg9Ixo4d2lJwTyWE41r0sexjro4TudW9e4/LxCs6pAx6
+         8Ivt/ZLS6DHuJCprtJP15mHmGmMIQDKExgEoFYU6agCzic09Ol24YDSH+anND/whQO0d
+         njnkrmEO+uiOQ8M/2vpA5dQgkuK3DEZl2mny4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Kdsm30BEzhL2SghJ5if+aIcPoFQz7dfBoM0G9/6NqWf5oAwiHyz5A8/afLrTbRZFgj
+         CUBDFNgbJUVbWGMl5nRPVUCTjX0zs6NHVV/aZSZKUa1psKw1if9a6LAJbWbpUN6m90ZR
+         zFj5SulHkSw0GpXX1k2aTCn7o1s7Q7qgTE+y8=
+Received: by 10.211.132.36 with SMTP id j36mr8459995ebn.51.1253018776713; Tue, 
+	15 Sep 2009 05:46:16 -0700 (PDT)
+In-Reply-To: <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128536>
+
+On Tue, Sep 15, 2009 at 2:10 PM, Howard Miller
+<howard@e-learndesign.co.uk> wrote:
+> Martin,
+>
+> Looked at gitk - yes there is definitely one more commit still on the
+> current (wrong) branch.
+>
+> I deleted the offending file and have now successfully switched to the
+> other (correct) branch.
+
+ok!
+
+so you have
+
+A - The commit you undid, and have in the temp patch. Note that this
+patch file is missing the file you've rm'd.
+
+B - A commit you haven't "undone" on the "wrong" branch X.
+
+ and you are on branch Y
+
+so now...
+
+1 - git format-patch Y^..Y  # will export that patch B into a file for you.
+2 - git am 0001-whatever-the-name-of-the-file.txt # patch B
+    this may need conflict resolution - read the notes it prints! If
+it refuses to apply the patch, do "git am --skip" to indicate you
+won't use git-am no more for this, and try applying it with the patch
+utility.
+3 - patch -p1 < your-patch-A.patch
+4 - find and readd the file you rm'd earlier -- if you don't have
+another copy, we can get it from git reflog but that'll take extra
+steps :-)
+5 - git commit # you're committing your patch A here
+
+Now, review with gitk to see that you have what you want to have
+there. If it's all ok...
+
+ 6 - git checkout X
+ 7 - git reset --hard # unstich that last stray commit
+   --
+
+hope the above helps. Git pros will see that the process could be much
+shorter :-) I chose this specific path because in exporting your
+patches and applying them again you can see each step.
+
+If we were to start again, and the branches are reasonably close to
+eachother (not 19_STABLE vs cvshead :-) ) then you can say
+
+ - X has 2 bad commits that belong to Y, then
+ 1 - gitk X & # open gitk to visualise the commits, send it to the background
+ 2 - git checkout Y
+ 3 - git cherry-pick X^ # takes the next-to-last commit from X and
+tries to apply it here - conflict resolution may be needed
+ 4 - git cherry-pick X # same with the very last commit on X
+ 5 - gitk # check that is all as you want it
+ 6 - git checkout X
+ 7 - git reset --hard X^^ # "rewind 2 commits"
+
+hth,
 
 
-hello,
 
-How i can put in this script in GIT?
-(http://git.or.cz/gitwiki/ExampleScripts#Settingthetimestampsofthefiles=
-tothecommittimestampofthecommitwhichlasttouchedthem
- )
-I need the "last commit time" function like in SVN.
-THANKS
-
-EISENMANN AG
-i.A. Michael Kr=E4mer
-Postfach 1280 - 71002 B=F6blingen
-T=FCbinger Stra=DFe 81 - 71032 B=F6blingen
-E-Mail:     Michael.Kraemer@eisenmann.com
-Internet:   http://www.eisenmann.com
-
-_______________________________________________________________________=
-__
-
-Sitz: B=F6blingen, AG Stuttgart HRB 245891
-USt.-IdNr.: DE 145 141 533
-Vorstand: Dr. Matthias von Krauland (Sprecher), Dr. Thomas Beck, Dr.
-Kersten Christoph Link
-Vorsitzender des Aufsichtsrates: Peter Eisenmann
-
-
-Diese E-Mail sowie etwaige Anlagen sind ausschlie=DFlich f=FCr den Adre=
-ssaten
-bestimmt und k=F6nnen vertrauliche oder gesetzlich gesch=FCtzte Informa=
-tionen
-enthalten. Wenn Sie nicht der bestimmungsgem=E4=DFe Empf=E4nger sind,
-unterrichten Sie bitte den Absender und vernichten Sie diese Mail.
-Anderen als dem bestimmungsgem=E4=DFen Adressaten ist es untersagt, die=
-se
-E-Mail zu speichern, weiterzuleiten oder ihren Inhalt, auf welche Weise
-auch immer, zu verwenden. Wir verwenden aktuelle Virenschutzprogramme.
-=46=FCr Sch=E4den, die dem Empf=E4nger gleichwohl durch von uns zugesan=
-dte, mit
-Viren befallene E-Mails entstehen, schlie=DFen wir jede Haftung aus.
-
-The information contained in this e-mail or attachments is intended onl=
-y
-for its addressee and may contain confidential and/or privileged
-information. If you have received this e-mail in error, please notify
-the sender and delete the e-mail. If you are not the intended recipient=
-,
-you are hereby notified, that  saving, distribution or use of the
-content of this e-mail in any way is prohibited. We use updated virus
-protection software. We do not accept any responsibility for damages
-caused anyhow by viruses transmitted via e-mail.
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
