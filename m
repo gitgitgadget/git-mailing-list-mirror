@@ -1,245 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] diff --whitespace: fix blank lines at end
-Date: Mon, 14 Sep 2009 22:05:57 -0700
-Message-ID: <7vocpc94qy.fsf_-_@alter.siamese.dyndns.org>
-References: <wavexx-2ECE7F.13171313092009@ger.gmane.org>
- <7viqfmsoej.fsf@alter.siamese.dyndns.org>
- <20090915123456.6117@nanako3.lavabit.com>
- <7vvdjk95qi.fsf@alter.siamese.dyndns.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Improve --patch option documentation in git-add (updated patch)
+Date: Tue, 15 Sep 2009 08:35:42 +0300
+Organization: Private
+Message-ID: <87fxaolqhd.fsf_-_@jondo.cante.net>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
+	<87ab0zny27.fsf_-_@jondo.cante.net>
+	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
+	<87vdjnlywo.fsf@jondo.cante.net>
+	<BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Yuri D'Elia" <wavexx@users.sf.net>, git@vger.kernel.org
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 07:07:54 2009
+Content-Type: multipart/mixed; boundary="=-=-="
+Cc: Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
+To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Tue Sep 15 07:35:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnQGf-0007T7-8S
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 07:07:53 +0200
+	id 1MnQho-0004gq-Ub
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 07:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751855AbZIOFGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 01:06:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751801AbZIOFGH
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 01:06:07 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36424 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751641AbZIOFGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 01:06:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BCBB151D14;
-	Tue, 15 Sep 2009 01:06:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ETC7+I/DvRVjVGRWuKimSeQOvEs=; b=IDFgOa
-	3uEM1coKcmsxSKy7i6BR4Mm3/dJwZz+HaNcSjXgAYPVmyjDQ6vElCbL40+MXzNO0
-	OGMglSN2jMkCuLkagt2Q9432oVWac9t2TNx+IpxZecaXNJGkJMRhdsAt2sGKYw0j
-	iIuDrcPYfayyvwjsEtxbEjijnzefGedQ1EgUw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VyHyvWBUsgkNd0PuisU0D9rih/EKJi/a
-	H5fygnVlRzCLfUsDnHvxrVZqhti04/grl1j+7tpmd5x64rPpK7+4M8YDstmwU060
-	sm+MKSDnfwZMeBiKEsiI9XOAWJPSmw0VsFljiRC+ErMDMTx0np69lrnXokavi3+k
-	YjQupL6Qu1k=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 902FA51D13;
-	Tue, 15 Sep 2009 01:06:04 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AD6E151D10; Tue, 15 Sep 2009
- 01:05:59 -0400 (EDT)
-In-Reply-To: <7vvdjk95qi.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 14 Sep 2009 21\:44\:37 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7832D700-A1B5-11DE-9978-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753198AbZIOFfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 01:35:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbZIOFfr
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 01:35:47 -0400
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:45013 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751641AbZIOFfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 01:35:46 -0400
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 81C8C18CF41;
+	Tue, 15 Sep 2009 08:35:48 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A003D97DF8A; Tue, 15 Sep 2009 08:35:48 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 7372F4030;
+	Tue, 15 Sep 2009 08:35:43 +0300 (EEST)
+In-Reply-To: <BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl> (Sean Estabrooks's
+	message of "Mon, 14 Sep 2009 06:13:16 -0700")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128510>
 
-The earlier logic tried to colour any and all blank lines that were added
-beyond the last blank line in the original, but this was very wrong.  If
-you added 96 blank lines, a non-blank line, and then 3 blank lines at the
-end, only the last 3 lines should trigger the error, not the earlier 96
-blank lines.
+--=-=-=
 
-We need to also make sure that the lines are after the last non-blank line
-in the postimage as well before deciding to paint them.
+Sean Estabrooks <seanlkml@sympatico.ca> writes:
+> ... To me though, it seems more difficult to parse this description
+> than the one offered by Junio in an earlier thread ...perhaps you'd
+> consider something closer to yours, such as:
+>
+> 	Interactively review the differences between the index and the
+> 	work tree and choose which hunks to add into the index.
+>
+> 	This effectively runs ``add --interactive``, but bypasses the
+> 	initial command menu and jumps directly to the `patch` subcommand.
+> 	See ``Interactive mode'' for details.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Updated, thanks,
+Jari
+
+
+--=-=-=
+Content-Type: text/x-diff
+Content-Disposition: inline;
+ filename=0001-Improve-patch-option-documentation-in-git-add.patch
+
+>From be5eebc53c2e3dcf67edfb371d8aa8263e1a8d69 Mon Sep 17 00:00:00 2001
+From: Jari Aalto <jari.aalto@cante.net>
+Date: Tue, 15 Sep 2009 08:33:51 +0300
+Subject: [PATCH] Improve --patch option documentation in git-add
+
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
+ Documentation/git-add.txt |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
- * This is _not_ about colouring whitespace errors in -B output;
-   that is a bit more involved change that needs a few more changes.
-
- diff.c                  |   74 +++++++++++++++++++++++++++++++++-------------
- t/t4019-diff-wserror.sh |    2 +-
- 2 files changed, 54 insertions(+), 22 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 2b285b8..63a3bfc 100644
---- a/diff.c
-+++ b/diff.c
-@@ -491,8 +491,10 @@ struct emit_callback {
- 	struct xdiff_emit_state xm;
- 	int color_diff;
- 	unsigned ws_rule;
--	int blank_at_eof;
-+	int blank_at_eof_in_preimage;
-+	int blank_at_eof_in_postimage;
- 	int lno_in_preimage;
-+	int lno_in_postimage;
- 	sane_truncate_fn truncate;
- 	const char **label_path;
- 	struct diff_words_data *diff_words;
-@@ -542,6 +544,17 @@ static void emit_line(FILE *file, const char *set, const char *reset, const char
- 		fputc('\n', file);
- }
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index e67b7e8..c57895a 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -72,9 +72,12 @@ OPTIONS
  
-+static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
-+{
-+	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
-+	      ecbdata->blank_at_eof_in_preimage &&
-+	      ecbdata->blank_at_eof_in_postimage &&
-+	      ecbdata->blank_at_eof_in_preimage <= ecbdata->lno_in_preimage &&
-+	      ecbdata->blank_at_eof_in_postimage <= ecbdata->lno_in_postimage))
-+		return 0;
-+	return ws_blank_line(line + 1, len - 1, ecbdata->ws_rule);
-+}
+ -p::
+ --patch::
+-	Similar to Interactive mode but the initial command loop is
+-	bypassed and the 'patch' subcommand is invoked using each of
+-	the specified filepatterns before exiting.
++	Interactively review the differences between the index and the
++	work tree and choose which hunks to add into the index.
 +
- static void emit_add_line(const char *reset, struct emit_callback *ecbdata, const char *line, int len)
- {
- 	const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
-@@ -549,11 +562,8 @@ static void emit_add_line(const char *reset, struct emit_callback *ecbdata, cons
++	This effectively runs ``add --interactive``, but bypasses the
++	initial command menu and jumps directly to the `patch` subcommand.
++	See ``Interactive mode'' for details.
  
- 	if (!*ws)
- 		emit_line(ecbdata->file, set, reset, line, len);
--	else if ((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
--		 ecbdata->blank_at_eof &&
--		 (ecbdata->blank_at_eof <= ecbdata->lno_in_preimage) &&
--		 ws_blank_line(line + 1, len - 1, ecbdata->ws_rule))
--		/* Blank line at EOF */
-+	else if (new_blank_line_at_eof(ecbdata, line, len))
-+		/* Blank line at EOF - paint '+' as well */
- 		emit_line(ecbdata->file, ws, reset, line, len);
- 	else {
- 		/* Emit just the prefix, then the rest. */
-@@ -581,12 +591,19 @@ static unsigned long sane_truncate_line(struct emit_callback *ecb, char *line, u
- 	return allot - l;
- }
- 
--static int find_preimage_lno(const char *line)
-+static void find_lno(const char *line, struct emit_callback *ecbdata)
- {
--	char *p = strchr(line, '-');
-+	const char *p;
-+	ecbdata->lno_in_preimage = 0;
-+	ecbdata->lno_in_postimage = 0;
-+	p = strchr(line, '-');
- 	if (!p)
--		return 0; /* should not happen */
--	return strtol(p+1, NULL, 10);
-+		return; /* cannot happen */
-+	ecbdata->lno_in_preimage = strtol(p + 1, NULL, 10);
-+	p = strchr(p, '+');
-+	if (!p)
-+		return; /* cannot happen */
-+	ecbdata->lno_in_postimage = strtol(p + 1, NULL, 10);
- }
- 
- static void fn_out_consume(void *priv, char *line, unsigned long len)
-@@ -613,7 +630,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 
- 	if (line[0] == '@') {
- 		len = sane_truncate_line(ecbdata, line, len);
--		ecbdata->lno_in_preimage = find_preimage_lno(line);
-+		find_lno(line, ecbdata);
- 		emit_line(ecbdata->file,
- 			  diff_get_color(ecbdata->color_diff, DIFF_FRAGINFO),
- 			  reset, line, len);
-@@ -651,10 +668,13 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 			diff_get_color(ecbdata->color_diff,
- 				       line[0] == '-' ? DIFF_FILE_OLD : DIFF_PLAIN);
- 		ecbdata->lno_in_preimage++;
-+		if (line[0] == ' ')
-+			ecbdata->lno_in_postimage++;
- 		emit_line(ecbdata->file, color, reset, line, len);
--		return;
-+	} else {
-+		ecbdata->lno_in_postimage++;
-+		emit_add_line(reset, ecbdata, line, len);
- 	}
--	emit_add_line(reset, ecbdata, line, len);
- }
- 
- static char *pprint_rename(const char *a, const char *b)
-@@ -1470,16 +1490,23 @@ static int count_trailing_blank(mmfile_t *mf, unsigned ws_rule)
- 	return cnt;
- }
- 
--static int adds_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2, unsigned ws_rule)
-+static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
-+			       struct emit_callback *ecbdata)
- {
- 	int l1, l2, at;
-+	unsigned ws_rule = ecbdata->ws_rule;
- 	l1 = count_trailing_blank(mf1, ws_rule);
- 	l2 = count_trailing_blank(mf2, ws_rule);
--	if (l2 <= l1)
--		return 0;
--	/* starting where? */
-+	if (l2 <= l1) {
-+		ecbdata->blank_at_eof_in_preimage = 0;
-+		ecbdata->blank_at_eof_in_postimage = 0;
-+		return;
-+	}
- 	at = count_lines(mf1->ptr, mf1->size);
--	return (at - l1) + 1; /* the line number counts from 1 */
-+	ecbdata->blank_at_eof_in_preimage = (at - l1) + 1;
-+
-+	at = count_lines(mf2->ptr, mf2->size);
-+	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
- }
- 
- static void builtin_diff(const char *name_a,
-@@ -1572,8 +1599,7 @@ static void builtin_diff(const char *name_a,
- 		ecbdata.found_changesp = &o->found_changes;
- 		ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
- 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
--			ecbdata.blank_at_eof =
--				adds_blank_at_eof(&mf1, &mf2, ecbdata.ws_rule);
-+			check_blank_at_eof(&mf1, &mf2, &ecbdata);
- 		ecbdata.file = o->file;
- 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
- 		xecfg.ctxlen = o->context;
-@@ -1699,7 +1725,13 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 		xdi_diff(&mf1, &mf2, &xpp, &xecfg, &ecb);
- 
- 		if (data.ws_rule & WS_BLANK_AT_EOF) {
--			int blank_at_eof = adds_blank_at_eof(&mf1, &mf2, data.ws_rule);
-+			struct emit_callback ecbdata;
-+			int blank_at_eof;
-+
-+			ecbdata.ws_rule = data.ws_rule;
-+			check_blank_at_eof(&mf1, &mf2, &ecbdata);
-+			blank_at_eof = ecbdata.blank_at_eof_in_preimage;
-+
- 			if (blank_at_eof) {
- 				static char *err;
- 				if (!err)
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 1e75f1a..3a3663f 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -193,7 +193,7 @@ test_expect_success 'do not color trailing cr in context' '
- test_expect_success 'color new trailing blank lines' '
- 	{ echo a; echo b; echo; echo; } >x &&
- 	git add x &&
--	{ echo a; echo; echo; echo; echo; } >x &&
-+	{ echo a; echo; echo; echo; echo c; echo; echo; echo; echo; } >x &&
- 	git diff --color x >output &&
- 	cnt=$(grep "${blue_grep}" output | wc -l) &&
- 	test $cnt = 2
+ -e, \--edit::
+ 	Open the diff vs. the index in an editor and let the user
 -- 
-1.6.5.rc1.54.g4aad
+1.6.3.3
+
+
+--=-=-=--
