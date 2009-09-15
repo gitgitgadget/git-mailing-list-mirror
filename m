@@ -1,105 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/4] diff.c: split emit_line() from the first char and the
- rest of the line
-Date: Mon, 14 Sep 2009 23:15:04 -0700
-Message-ID: <1252995306-32329-3-git-send-email-gitster@pobox.com>
-References: <1252995306-32329-1-git-send-email-gitster@pobox.com>
-Cc: Nanako Shiraishi <nanako3@lavabit.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 08:15:46 2009
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Improve --patch option documentation in git-add (updated patch)
+Date: Tue, 15 Sep 2009 15:52:08 +0900
+Message-ID: <20090915155208.6117@nanako3.lavabit.com>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
+	<87ab0zny27.fsf_-_@jondo.cante.net>
+	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
+	<87vdjnlywo.fsf@jondo.cante.net>
+	<BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
+	<87fxaolqhd.fsf_-_@jondo.cante.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Sean Estabrooks <seanlkml@sympatico.ca>,
+	Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Tue Sep 15 08:53:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnRKD-00057k-Q2
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 08:15:38 +0200
+	id 1MnRuR-0005nb-Hu
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 08:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755464AbZIOGPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 02:15:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbZIOGPP
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 02:15:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42505 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753608AbZIOGPN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 02:15:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D8F8432A57;
-	Tue, 15 Sep 2009 02:15:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Q/28
-	5b5oTr9YqdI4YiS/5aAnXzc=; b=KTY6m4fQBx3Ro6QUHCpONSPo9QxKEPO5iFhy
-	woaHT/mRj+pCTXAG24IHyx4gpPDtGHHNmrmgaDM++tc+1TWmi6h/xozquiDBggMZ
-	8OfBi8hlGyMv+EAFRRFBouWF4HEtt8aW347SQUvXguAuyR3v+P/XfN5bm1nc13uB
-	EISBn7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	seLThqRG3ewJ521N7kzH3rW62qWfBczD9XYlumu0MDlFl4M2Bmjppyms5JYv+XXU
-	dgPucVOV1fQ6GSWcJHTBawFgTQzbOJ9HmwLv9JbagOOIfKCbCts+eX/uUkVgG6O2
-	r3YUit8m+Lg4H24TkhqEr9uqhP0oZoZdSGTMsY3yFsg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C815632A56;
-	Tue, 15 Sep 2009 02:15:15 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F2C032A54; Tue, 15 Sep
- 2009 02:15:14 -0400 (EDT)
-X-Mailer: git-send-email 1.6.5.rc1.54.g4aad
-In-Reply-To: <1252995306-32329-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 228892F4-A1BF-11DE-BAC5-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757171AbZIOGwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 02:52:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756898AbZIOGwx
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 02:52:53 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:49170 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756890AbZIOGwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 02:52:53 -0400
+Received: from d.earth.lavabit.com (d.earth.lavabit.com [192.168.111.13])
+	by karen.lavabit.com (Postfix) with ESMTP id D5FB311B853;
+	Tue, 15 Sep 2009 01:52:56 -0500 (CDT)
+Received: from 8314.lavabit.com (delhi-202.54.61-99.vsnl.net.in [202.54.61.99])
+	by lavabit.com with ESMTP id RJ2UNHGWCX0W; Tue, 15 Sep 2009 01:52:56 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=rrSZhVSfHRWuSbI3aTF8ZrG5PigHpEyo32vsrNz8C4JV7jy1QSWef5xD3uwgpgNxPywghqaMWan5ACnKx7MY/GZG+XfEUqhyui3kcF8c/CHf0QiOt9+cx0jnrACH//gxQ//kqSDS6hWBiznGGJVVzLsCWHev5JsgWFYDbTxgwM8=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <87fxaolqhd.fsf_-_@jondo.cante.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128518>
 
-A new helper function emit_line_0() takes the first line of diff output
-(typically "-", " ", or "+") separately from the remainder of the line.
-No other functional changes.
+Quoting Jari Aalto <jari.aalto@cante.net>
 
-This change will make it easier to reuse the logic when emitting the
-rewrite diff, as we do not want to copy a line only to add "+"/"-"/" "
-immediately before its first character when we produce rewrite diff
-output.
+> Sean Estabrooks <seanlkml@sympatico.ca> writes:
+>> ... To me though, it seems more difficult to parse this description
+>> than the one offered by Junio in an earlier thread ...perhaps you'd
+>> consider something closer to yours, such as:
+>>
+>> 	Interactively review the differences between the index and the
+>> 	work tree and choose which hunks to add into the index.
+>>
+>> 	This effectively runs ``add --interactive``, but bypasses the
+>> 	initial command menu and jumps directly to the `patch` subcommand.
+>> 	See ``Interactive mode'' for details.
+>
+>
+> Updated, thanks,
+> Jari
+>
+>
+> From be5eebc53c2e3dcf67edfb371d8aa8263e1a8d69 Mon Sep 17 00:00:00 2001
+> From: Jari Aalto <jari.aalto@cante.net>
+> Date: Tue, 15 Sep 2009 08:33:51 +0300
+> Subject: [PATCH] Improve --patch option documentation in git-add
+>
+> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+> ---
+>  Documentation/git-add.txt |    9 ++++++---
+>  1 files changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+> index e67b7e8..c57895a 100644
+> --- a/Documentation/git-add.txt
+> +++ b/Documentation/git-add.txt
+> @@ -72,9 +72,12 @@ OPTIONS
+>  
+>  -p::
+>  --patch::
+> -	Similar to Interactive mode but the initial command loop is
+> -	bypassed and the 'patch' subcommand is invoked using each of
+> -	the specified filepatterns before exiting.
+> +	Interactively review the differences between the index and the
+> +	work tree and choose which hunks to add into the index.
+> +
+> +	This effectively runs ``add --interactive``, but bypasses the
+> +	initial command menu and jumps directly to the `patch` subcommand.
+> +	See ``Interactive mode'' for details.
+>  
+>  -e, \--edit::
+>  	Open the diff vs. the index in an editor and let the user
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+Sorry, but this patch doesn't seem to apply anywhere. Have you fetched recently?
 
-diff --git a/diff.c b/diff.c
-index 7548966..b5c2574 100644
---- a/diff.c
-+++ b/diff.c
-@@ -377,7 +377,8 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
- 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
- }
- 
--static void emit_line(FILE *file, const char *set, const char *reset, const char *line, int len)
-+static void emit_line_0(FILE *file, const char *set, const char *reset,
-+			int first, const char *line, int len)
- {
- 	int has_trailing_newline, has_trailing_carriage_return;
- 
-@@ -389,6 +390,7 @@ static void emit_line(FILE *file, const char *set, const char *reset, const char
- 		len--;
- 
- 	fputs(set, file);
-+	fputc(first, file);
- 	fwrite(line, len, 1, file);
- 	fputs(reset, file);
- 	if (has_trailing_carriage_return)
-@@ -397,6 +399,12 @@ static void emit_line(FILE *file, const char *set, const char *reset, const char
- 		fputc('\n', file);
- }
- 
-+static void emit_line(FILE *file, const char *set, const char *reset,
-+		      const char *line, int len)
-+{
-+	emit_line_0(file, set, reset, line[0], line+1, len-1);
-+}
-+
- static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
- {
- 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
 -- 
-1.6.5.rc1.54.g4aad
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
