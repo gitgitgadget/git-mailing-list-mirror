@@ -1,8 +1,12 @@
 From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: [PATCH 01/14] Avoid declaration after statement
-Date: Tue, 15 Sep 2009 15:44:04 +0200
-Message-ID: <213f3c7799721c3f42ffa689498175f0495048eb.1253021728.git.mstormo@gmail.com>
+Subject: [PATCH 05/14] Fix __stdcall placement and function prototype
+Date: Tue, 15 Sep 2009 15:44:08 +0200
+Message-ID: <8368a0b347c01e7ddb5e5b514a46e55dd6f0daf7.1253021728.git.mstormo@gmail.com>
 References: <cover.1253021221.git.mstormo@gmail.com>
+ <213f3c7799721c3f42ffa689498175f0495048eb.1253021728.git.mstormo@gmail.com>
+ <26c067500d8adf17a2d75e2956e4d4a6cef27fc1.1253021728.git.mstormo@gmail.com>
+ <6e6345fb3fbc19b1a2467e33e1633fe9025e547b.1253021728.git.mstormo@gmail.com>
+ <badc5d24387c28c752a45f75e8aec6bce64f81fe.1253021728.git.mstormo@gmail.com>
 Cc: msysgit@googlegroups.com, git@vger.kernel.org, lznuaa@gmail.com,
 	raa.lkml@gmail.com, snaury@gmail.com,
 	Marius Storm-Olsen <mstormo@gmail.com>
@@ -12,159 +16,97 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnYKx-0007Be-Di
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:44:51 +0200
+	id 1MnYKx-0007Be-Uh
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 15:44:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014AbZIONon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 09:44:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754022AbZIONok
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:44:40 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:59848 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753950AbZIONog (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 09:44:36 -0400
-Received: by ewy2 with SMTP id 2so473453ewy.17
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:44:38 -0700 (PDT)
+	id S1754080AbZIONop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 09:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754022AbZIONoo
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 09:44:44 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:49262 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753990AbZIONok (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 09:44:40 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so789017eya.19
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 06:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
-        bh=z19TPtsCjvMI//lw0Lp/gPQfhD3Q5s2LzpXUWGaVDVg=;
-        b=QOAuFR/CGA0+pjXwW7k0v/QNPw/Jo/V79wU4lxGCdOnAAv3hhG9EotyfmLmzKTEPot
-         0UuLZx5NiHomWNf7RYg1zfpnmnHWlqY7GmfF6JBTymU+cNERYdSJd5UvGwcOYl99Kn4B
-         uJ0+Cwgh9ie0JK5hiUbpmaV48LovN4UrQR5Co=
+        bh=d1U/nbPQGutCNl8YSVd1zhEpZPBISbpR8tZoqjGLCIg=;
+        b=o24dO/d/pKMir0NHFvhycS1EOBMAdpB3D6wVeBCMMDsooIxs5hMwozlB7Ir99Bh8JF
+         OGJ64xc/MnUVbk5sba5efGMojyDX4p6Gek+/UxMTEleejvGvn8BGqwusYTGQTFeuV7Ol
+         Eqo5sqWFtNriNJBopjwsXJkP/umhSJ7K2Qhhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=HbmSeRx1dbduB5ZPAADRbSQZswdPDACJ1kgarRYvQwlXi6CNfKFxZs/b/xDEhka5wv
-         +3R1QjqW5wptZypnG/cySOQZiKMMb84UdjB9yrDPZoJA2nlsfo3pL6ETK+RiUVcNfy1m
-         WQ8or/Wz+52/NYwtwBHj9VX645Mg/fdYtVBos=
-Received: by 10.216.90.203 with SMTP id e53mr2145658wef.28.1253022276829;
-        Tue, 15 Sep 2009 06:44:36 -0700 (PDT)
+        b=oL5ygN2Ofof9Bn2u/q9+reTQ1ngwC+PfDuexJOD3NBCOtRNeQ40rE9TMw5OY0NGTjl
+         dWG4dUcy8Ee/udG4YMNQi37SlO+cuIlvyBMxWDHnDijlqsj6mjmPln+f8ThaXdEbk+0T
+         H9mKtrYbRzq/mZccLCRAnkbtJUtn3QGoiVIxI=
+Received: by 10.211.154.17 with SMTP id g17mr839091ebo.32.1253022283633;
+        Tue, 15 Sep 2009 06:44:43 -0700 (PDT)
 Received: from localhost.localdomain ([62.70.27.104])
-        by mx.google.com with ESMTPS id 7sm81939eyg.4.2009.09.15.06.44.35
+        by mx.google.com with ESMTPS id 7sm81939eyg.4.2009.09.15.06.44.41
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 15 Sep 2009 06:44:36 -0700 (PDT)
+        Tue, 15 Sep 2009 06:44:42 -0700 (PDT)
 X-Mailer: git-send-email 1.6.2.1.418.g33d56.dirty
-In-Reply-To: <cover.1253021221.git.mstormo@gmail.com>
+In-Reply-To: <badc5d24387c28c752a45f75e8aec6bce64f81fe.1253021728.git.mstormo@gmail.com>
 In-Reply-To: <cover.1253021728.git.mstormo@gmail.com>
 References: <cover.1253021728.git.mstormo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128547>
 
 From: Frank Li <lznuaa@gmail.com>
 
-MSVC does not understand this C99 style
+MSVC requires __stdcall to be between the functions return value and
+the function name, and that the function pointer type is in the form
+of
+    return_type (WINAPI *function_name)(arguments...)
 
 Signed-off-by: Frank Li <lznuaa@gmail.com>
 Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
 ---
- compat/mingw.c |   14 ++++++++++----
- help.c         |    3 ++-
- run-command.c  |    2 ++
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ compat/mingw.c |    4 ++--
+ run-command.c  |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 36ef8d3..5478b74 100644
+index 5a8fae8..34ee427 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -123,13 +123,17 @@ int mingw_open (const char *filename, int oflags, ...)
+@@ -1027,7 +1027,7 @@ static sig_handler_t timer_fn = SIG_DFL;
+  * length to call the signal handler.
+  */
+ 
+-static __stdcall unsigned ticktack(void *dummy)
++static unsigned __stdcall ticktack(void *dummy)
  {
- 	va_list args;
- 	unsigned mode;
-+	int fd;
-+
- 	va_start(args, oflags);
- 	mode = va_arg(args, int);
- 	va_end(args);
+ 	while (WaitForSingleObject(timer_event, timer_interval) == WAIT_TIMEOUT) {
+ 		if (timer_fn == SIG_DFL)
+@@ -1154,7 +1154,7 @@ void mingw_open_html(const char *unixpath)
  
- 	if (!strcmp(filename, "/dev/null"))
- 		filename = "nul";
--	int fd = open(filename, oflags, mode);
-+
-+	fd = open(filename, oflags, mode);
-+
- 	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
- 		DWORD attrs = GetFileAttributes(filename);
- 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
-@@ -580,10 +584,11 @@ static char **get_path_split(void)
- 
- static void free_path_split(char **path)
+ int link(const char *oldpath, const char *newpath)
  {
-+	char **p = path;
-+
- 	if (!path)
- 		return;
- 
--	char **p = path;
- 	while (*p)
- 		free(*p++);
- 	free(path);
-@@ -1120,9 +1125,9 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
- #undef signal
- sig_handler_t mingw_signal(int sig, sig_handler_t handler)
- {
-+	sig_handler_t old = timer_fn;
- 	if (sig != SIGALRM)
- 		return signal(sig, handler);
--	sig_handler_t old = timer_fn;
- 	timer_fn = handler;
- 	return old;
- }
-@@ -1209,8 +1214,9 @@ struct dirent *mingw_readdir(DIR *dir)
- 
- 	if (dir->dd_handle == (long)INVALID_HANDLE_VALUE && dir->dd_stat == 0)
- 	{
-+		DWORD lasterr;
- 		handle = FindFirstFileA(dir->dd_name, &buf);
--		DWORD lasterr = GetLastError();
-+		lasterr = GetLastError();
- 		dir->dd_handle = (long)handle;
- 		if (handle == INVALID_HANDLE_VALUE && (lasterr != ERROR_NO_MORE_FILES)) {
- 			errno = err_win_to_posix(lasterr);
-diff --git a/help.c b/help.c
-index 294337e..fd51b8e 100644
---- a/help.c
-+++ b/help.c
-@@ -127,7 +127,7 @@ static int is_executable(const char *name)
- 		return 0;
- 
- #ifdef __MINGW32__
--	/* cannot trust the executable bit, peek into the file instead */
-+{	/* cannot trust the executable bit, peek into the file instead */
- 	char buf[3] = { 0 };
- 	int n;
- 	int fd = open(name, O_RDONLY);
-@@ -140,6 +140,7 @@ static int is_executable(const char *name)
- 				st.st_mode |= S_IXUSR;
- 		close(fd);
- 	}
-+}
- #endif
- 	return st.st_mode & S_IXUSR;
- }
+-	typedef BOOL WINAPI (*T)(const char*, const char*, LPSECURITY_ATTRIBUTES);
++	typedef BOOL (WINAPI *T)(const char*, const char*, LPSECURITY_ATTRIBUTES);
+ 	static T create_hard_link = NULL;
+ 	if (!create_hard_link) {
+ 		create_hard_link = (T) GetProcAddress(
 diff --git a/run-command.c b/run-command.c
-index ac314a5..02aaedf 100644
+index 02aaedf..bb76750 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -134,6 +134,7 @@ fail_pipe:
- 		error("cannot fork() for %s: %s", cmd->argv[0],
- 			strerror(failed_errno = errno));
- #else
-+{
- 	int s0 = -1, s1 = -1, s2 = -1;	/* backups of stdin, stdout, stderr */
- 	const char **sargv = cmd->argv;
- 	char **env = environ;
-@@ -197,6 +198,7 @@ fail_pipe:
- 		dup2(s1, 1), close(s1);
- 	if (s2 >= 0)
- 		dup2(s2, 2), close(s2);
-+}
- #endif
+@@ -316,7 +316,7 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
+ }
  
- 	if (cmd->pid < 0) {
+ #ifdef __MINGW32__
+-static __stdcall unsigned run_thread(void *data)
++static unsigned __stdcall run_thread(void *data)
+ {
+ 	struct async *async = data;
+ 	return async->proc(async->fd_for_proc, async->data);
 -- 
 1.6.2.1.418.g33d56.dirty
