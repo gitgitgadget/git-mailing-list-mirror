@@ -1,58 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/4] diff.c: emit_add_line() takes only the rest of the line
-Date: Mon, 14 Sep 2009 23:15:05 -0700
-Message-ID: <1252995306-32329-4-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/4] diff.c: split emit_line() from the first char and the
+ rest of the line
+Date: Mon, 14 Sep 2009 23:15:04 -0700
+Message-ID: <1252995306-32329-3-git-send-email-gitster@pobox.com>
 References: <1252995306-32329-1-git-send-email-gitster@pobox.com>
 Cc: Nanako Shiraishi <nanako3@lavabit.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 08:15:40 2009
+X-From: git-owner@vger.kernel.org Tue Sep 15 08:15:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnRKF-00057k-BC
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 08:15:39 +0200
+	id 1MnRKD-00057k-Q2
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 08:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756603AbZIOGP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 02:15:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756627AbZIOGPZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 02:15:25 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51372 "EHLO
+	id S1755464AbZIOGPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 02:15:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbZIOGPP
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 02:15:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42505 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756581AbZIOGPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 02:15:17 -0400
+	with ESMTP id S1753608AbZIOGPN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 02:15:13 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 489CD51265;
-	Tue, 15 Sep 2009 02:15:20 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D8F8432A57;
+	Tue, 15 Sep 2009 02:15:16 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=FWaz
-	M1B5EoCmtqJBf/k0uiUus+w=; b=D2v8YRllzqj7s+7pVBy05FMftOtZNyrCMYQn
-	ak/9HMfvFhPn0FNNxRJkKQl94ewWj1fwpZnUnHIeVEETUruClLp2AECwPDVAjAh1
-	ZjzqoTOfZVRIQ/q6VeTSEDzSQa7DPX/9M1anJqsMJIi+sqsxp6+FGrtLDOy9p9y7
-	qB8jg1A=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Q/28
+	5b5oTr9YqdI4YiS/5aAnXzc=; b=KTY6m4fQBx3Ro6QUHCpONSPo9QxKEPO5iFhy
+	woaHT/mRj+pCTXAG24IHyx4gpPDtGHHNmrmgaDM++tc+1TWmi6h/xozquiDBggMZ
+	8OfBi8hlGyMv+EAFRRFBouWF4HEtt8aW347SQUvXguAuyR3v+P/XfN5bm1nc13uB
+	EISBn7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-	HR3rN46YWJARZYmBd77A0xKMPxC/K/2urqOP+Oduj+sfkUXvFtImLaLEADCebwyr
-	p+1t7c04idzyBJgF4LePJAc821fAjf7zL1oR/4LfViPryWzykqra31kfx3kfIuat
-	Q3ZYCPS9xOj09leq0OYETHSdCS6BwJiIkhqZB/SAJgo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 36EDA51263;
-	Tue, 15 Sep 2009 02:15:19 -0400 (EDT)
+	seLThqRG3ewJ521N7kzH3rW62qWfBczD9XYlumu0MDlFl4M2Bmjppyms5JYv+XXU
+	dgPucVOV1fQ6GSWcJHTBawFgTQzbOJ9HmwLv9JbagOOIfKCbCts+eX/uUkVgG6O2
+	r3YUit8m+Lg4H24TkhqEr9uqhP0oZoZdSGTMsY3yFsg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C815632A56;
+	Tue, 15 Sep 2009 02:15:15 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4940651262; Tue, 15 Sep 2009
- 02:15:16 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3F2C032A54; Tue, 15 Sep
+ 2009 02:15:14 -0400 (EDT)
 X-Mailer: git-send-email 1.6.5.rc1.54.g4aad
 In-Reply-To: <1252995306-32329-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 248DAEEA-A1BF-11DE-A53E-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 228892F4-A1BF-11DE-BAC5-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128517>
 
-As the first character on the line that is fed to this function is always
-"+", it is pointless to send that along with the rest of the line.
+A new helper function emit_line_0() takes the first line of diff output
+(typically "-", " ", or "+") separately from the remainder of the line.
+No other functional changes.
 
 This change will make it easier to reuse the logic when emitting the
 rewrite diff, as we do not want to copy a line only to add "+"/"-"/" "
@@ -61,49 +63,43 @@ output.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+ diff.c |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index b5c2574..baf46ab 100644
+index 7548966..b5c2574 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -416,20 +416,22 @@ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line
- 	return ws_blank_line(line + 1, len - 1, ecbdata->ws_rule);
+@@ -377,7 +377,8 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+ 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
  }
  
--static void emit_add_line(const char *reset, struct emit_callback *ecbdata, const char *line, int len)
-+static void emit_add_line(const char *reset,
-+			  struct emit_callback *ecbdata,
-+			  const char *line, int len)
+-static void emit_line(FILE *file, const char *set, const char *reset, const char *line, int len)
++static void emit_line_0(FILE *file, const char *set, const char *reset,
++			int first, const char *line, int len)
  {
- 	const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
- 	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_NEW);
+ 	int has_trailing_newline, has_trailing_carriage_return;
  
- 	if (!*ws)
--		emit_line(ecbdata->file, set, reset, line, len);
-+		emit_line_0(ecbdata->file, set, reset, '+', line, len);
- 	else if (new_blank_line_at_eof(ecbdata, line, len))
- 		/* Blank line at EOF - paint '+' as well */
--		emit_line(ecbdata->file, ws, reset, line, len);
-+		emit_line_0(ecbdata->file, ws, reset, '+', line, len);
- 	else {
- 		/* Emit just the prefix, then the rest. */
--		emit_line(ecbdata->file, set, reset, line, 1);
--		ws_check_emit(line + 1, len - 1, ecbdata->ws_rule,
-+		emit_line_0(ecbdata->file, set, reset, '+', "", 0);
-+		ws_check_emit(line, len, ecbdata->ws_rule,
- 			      ecbdata->file, set, reset, ws);
- 	}
- }
-@@ -726,7 +728,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		emit_line(ecbdata->file, color, reset, line, len);
- 	} else {
- 		ecbdata->lno_in_postimage++;
--		emit_add_line(reset, ecbdata, line, len);
-+		emit_add_line(reset, ecbdata, line + 1, len - 1);
- 	}
+@@ -389,6 +390,7 @@ static void emit_line(FILE *file, const char *set, const char *reset, const char
+ 		len--;
+ 
+ 	fputs(set, file);
++	fputc(first, file);
+ 	fwrite(line, len, 1, file);
+ 	fputs(reset, file);
+ 	if (has_trailing_carriage_return)
+@@ -397,6 +399,12 @@ static void emit_line(FILE *file, const char *set, const char *reset, const char
+ 		fputc('\n', file);
  }
  
++static void emit_line(FILE *file, const char *set, const char *reset,
++		      const char *line, int len)
++{
++	emit_line_0(file, set, reset, line[0], line+1, len-1);
++}
++
+ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+ {
+ 	if (!((ecbdata->ws_rule & WS_BLANK_AT_EOF) &&
 -- 
 1.6.5.rc1.54.g4aad
