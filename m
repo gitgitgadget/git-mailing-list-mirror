@@ -2,86 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 7086 invoked by uid 107); 24 Aug 2009 09:42:31 -0000
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 28970 invoked by uid 107); 15 Sep 2009 08:18:34 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 24 Aug 2009 05:42:26 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Tue, 15 Sep 2009 04:18:32 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751939AbZHXJmL (ORCPT <rfc822;peff@peff.net>);
-	Mon, 24 Aug 2009 05:42:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbZHXJmL
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Aug 2009 05:42:11 -0400
-Received: from mail-qy0-f173.google.com ([209.85.221.173]:37395 "EHLO
-	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751441AbZHXJmK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Aug 2009 05:42:10 -0400
-Received: by qyk3 with SMTP id 3so211156qyk.4
-        for <git@vger.kernel.org>; Mon, 24 Aug 2009 02:42:12 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ALXhV/srhg9bpnmA867ajVJilvOV6VwIYH7hYpH0Gj4=;
-        b=CJL0Ap86kJTAwJBB1s+NjZE9N4hPDz2hEZCl/6z595g4kXlKE3xA11A+G9uF4ya56k
-         EsxK4lRSH7tR0D5nGT1eBzxdiT7Fy4aQhebb0RHJiPJQMRK1E+T8QsH5AKzH1dKFX9gg
-         6Dbn+wDyd1jt3tAyuSMYK7m5VQrO160H6QTd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=j80E1Upr/TswsTeuAoVAovZ2owyRiozj9UMSpDAL/lefTpBQHKckJEd+Edq7+Mpxsy
-         G2/zvC+EeKqVUtU2HsfxUz7mCDuJ+LKvgiSNyjKnYBQ4LfvvzgliWs9BWsoHX8yRCzaD
-         ZDJ+fmkK+L/0VC8zpAngIdp1qEHjhBLCB/Ero=
+	id S1755501AbZIOISG (ORCPT <rfc822;peff@peff.net>);
+	Tue, 15 Sep 2009 04:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755396AbZIOISF
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 04:18:05 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:58560 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751724AbZIOISD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 04:18:03 -0400
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id AA4D7C83F6;
+	Tue, 15 Sep 2009 11:18:05 +0300 (EEST)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A01E74A3C09; Tue, 15 Sep 2009 11:18:05 +0300
+Received: from jondo.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id C72451C6389;
+	Tue, 15 Sep 2009 11:18:00 +0300 (EEST)
+From:	Jari Aalto <jari.aalto@cante.net>
+To:	Nanako Shiraishi <nanako3@lavabit.com>
+Cc:	Sean Estabrooks <seanlkml@sympatico.ca>,
+	Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Improve --patch option documentation in git-add (updated patch)
+Organization: Private
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
+	<87ab0zny27.fsf_-_@jondo.cante.net>
+	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
+	<87vdjnlywo.fsf@jondo.cante.net>
+	<BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
+	<87fxaolqhd.fsf_-_@jondo.cante.net>
+	<20090915155208.6117@nanako3.lavabit.com>
+Date:	Tue, 15 Sep 2009 11:17:59 +0300
+In-Reply-To: <20090915155208.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+	message of "Tue, 15 Sep 2009 15:52:08 +0900")
+Message-ID: <87tyz4k4eg.fsf@jondo.cante.net>
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.224.74.146 with SMTP id u18mr2550783qaj.67.1251106932174; Mon, 
-	24 Aug 2009 02:42:12 -0700 (PDT)
-In-Reply-To: <0123e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
-References: <07846e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
-	 <0123e22f50dfd5e1b483a02cf550e5373125f1d.1250860247.git.mstormo@gmail.com>
-Date:	Mon, 24 Aug 2009 11:42:12 +0200
-Message-ID: <40aa078e0908240242t6ff6c5b7y9a5957e6472b7b14@mail.gmail.com>
-Subject: Re: [PATCH v2 05/14] Change regerror() definition from K&R style to 
-	ANSI C (C89)
-From:	Erik Faye-Lund <kusmabite@googlemail.com>
-To:	Marius Storm-Olsen <mstormo@gmail.com>
-Cc:	lznuaa@gmail.com, msysgit@googlegroups.com, git@vger.kernel.org
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=us-ascii
+X-Antivirus: VAMS
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On Fri, Aug 21, 2009 at 10:10 PM, Marius Storm-Olsen<mstormo@gmail.com> wrote:
->  size_t
-> -regerror (errcode, preg, errbuf, errbuf_size)
-> -    int errcode;
-> -    const regex_t *preg;
-> -    char *errbuf;
-> -    size_t errbuf_size;
-> +regerror(int errcode, const regex_t *preg,
-> +        char *errbuf, size_t errbuf_size)
->  {
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-Since the real reason isn't the K&R style defintion, but that
-"errcode" has been typedef'ed, perhaps it's better to either do
-something like this:
+> Sorry, but this patch doesn't seem to apply anywhere. Have you fetched recently?
 
-#ifdef _MSC_VER
-#define errcode dummy_def
-#include <crtdefs.h>
-#undef errcode
-#endif
+Junio merged the patch at 5f2b1e6
 
-...before the first crt-inclusion, or simply to rename "errcode" to
-something like "error"? The latter can be done with the preprocessor
-after the first crt-inclusion.
-
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+Jari
