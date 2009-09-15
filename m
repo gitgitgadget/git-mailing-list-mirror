@@ -1,77 +1,73 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 4/4] bash: teach 'git checkout' options
-Date: Tue, 15 Sep 2009 12:21:46 +0200
-Message-ID: <7c8c4f6a4c581bcba101b8ca467d241738aa376e.1253009868.git.szeder@ira.uka.de>
-References: <e927e4d3bfe50d93e5e6d65c46821158332b37f9.1253009868.git.szeder@ira.uka.de>
-	<0d125e60b97ab58ad51fef170fd36b707a271a10.1253009868.git.szeder@ira.uka.de>
-	<ccf129a01115027ee7438ac47f1bc35631a1b2bb.1253009868.git.szeder@ira.uka.de>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Commited to wrong branch
+Date: Tue, 15 Sep 2009 11:31:07 +0100
+Message-ID: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 15 12:22:41 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 15 12:31:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnVBE-0004gi-VK
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 12:22:37 +0200
+	id 1MnVJc-0007Ai-MZ
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 12:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743AbZIOKWX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 06:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752738AbZIOKWX
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 06:22:23 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:61487 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752279AbZIOKWX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 06:22:23 -0400
-Received: from [127.0.1.1] (p5B131467.dip0.t-ipconnect.de [91.19.20.103])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MKt72-1MnVAr0Dnp-000gYc; Tue, 15 Sep 2009 12:22:14 +0200
-X-Mailer: git-send-email 1.6.5.rc1.92.gee3c1
-In-Reply-To: <ccf129a01115027ee7438ac47f1bc35631a1b2bb.1253009868.git.szeder@ira.uka.de>
-In-Reply-To: <e927e4d3bfe50d93e5e6d65c46821158332b37f9.1253009868.git.szeder@ira.uka.de>
-References: <e927e4d3bfe50d93e5e6d65c46821158332b37f9.1253009868.git.szeder@ira.uka.de>
-X-Provags-ID: V01U2FsdGVkX19ee+jYrhCJOrn/n4KA4eYbSeR5yvt+BNNT7tW
- AIaR4MrEN9lyz1qiubquZrBpmzKYwmsXrX8R6jlKJ+lGBA6PVb
- Zkks1MGbTQv+UX3/EkgiA==
+	id S1752663AbZIOKbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 06:31:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbZIOKbH
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 06:31:07 -0400
+Received: from mail-ew0-f206.google.com ([209.85.219.206]:36496 "EHLO
+	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752427AbZIOKbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 06:31:05 -0400
+Received: by ewy2 with SMTP id 2so312553ewy.17
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 03:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=SFGWWCLpN0X1HzRV44SpnyrgBHgRFBw43uJ6te5mPU0=;
+        b=tk3QUdKG1JHkpnoDjQZgExE/1EzBnpn6u3GKietOfRuIQ/rzRfcNFSW7a3U3y2Fx+n
+         7vMxAZXo+DPhBxDEq1/9rI8O6m1gmx5ABJjcPMpBPwfZe5YzQyfSm2Hl6ur/iNAObE4Y
+         rW849X4iO1VXR7w+3YaFdwkAB3MqIOaZVWgdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=adhbiKUYFepRM74fp9tdBasgk2RbZiFylrsc0QyelDFDkRBTm8WQNnJD16PqbGv4E3
+         7SKGBMemqr7npaU9tM2ZpKzSU3f/YSolKKoaXIuYiLO8wbaOImLbWI8T140gSTsEvxa1
+         sDLgIdNPjOIDINbbH7IdNDKRRPWLa9IS2uuWo=
+Received: by 10.216.53.8 with SMTP id f8mr1628264wec.171.1253010667792; Tue, 
+	15 Sep 2009 03:31:07 -0700 (PDT)
+X-Google-Sender-Auth: d60d3693d4bd3856
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128524>
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+Hi,
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 8c268a1..8e3cdbd 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -809,7 +809,18 @@ _git_checkout ()
- {
- 	__git_has_doubledash && return
-=20
--	__gitcomp "$(__git_refs)"
-+	local cur=3D"${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		__gitcomp "
-+			--quiet --ours --theirs --track --no-track --merge
-+			--conflict=3D --patch
-+			"
-+		;;
-+	*)
-+		__gitcomp "$(__git_refs)"
-+		;;
-+	esac
- }
-=20
- _git_cherry ()
---=20
-1.6.5.rc1.92.gee3c1
+I am resurrecting a discussion from a week or two back (been on
+holiday).  As follows...
+
+I had made some changes to some files and then done a commit. Only
+then did I realise that I had the wrong branch checked out. To make
+matters worse I then did a 'git reset HEAD^' which means that I can
+now no longer switch branches. I am stuck. I had some advice (thanks!)
+but it was not complete. I'd appreciate some more help.
+
+I was advised to do a 'git reflog --branchname--' (I don't
+know/understand what this command does) but it doesn't work. I just
+get 'usage: git reflog (expire | ...)'
+
+So basically I am no further forward. Just to reiterate I need to...
+
+* remove the commit from my current branch (it tracks a remote so I
+would prefer there to be no evidence to confuse other people after I
+push)
+* add the changes to the (other) branch they should have been added to.
+* not loose or break anything.
+
+Any (more) help appreciated.
