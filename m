@@ -1,73 +1,75 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Commited to wrong branch
-Date: Tue, 15 Sep 2009 11:31:07 +0100
-Message-ID: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH] Improve --patch option documentation in git-add (updated patch)
+Date: Tue, 15 Sep 2009 19:35:04 +0900
+Message-ID: <20090915193504.6117@nanako3.lavabit.com>
+References: <87ocpxb46g.fsf@jondo.cante.net>
+	<7vab1hdppb.fsf@alter.siamese.dyndns.org>
+	<87tyzp9da4.fsf@jondo.cante.net>
+	<7vskf954sr.fsf@alter.siamese.dyndns.org>
+	<87ab1gaol2.fsf@jondo.cante.net>
+	<7vbplw28js.fsf@alter.siamese.dyndns.org>
+	<87y6p08lz5.fsf@jondo.cante.net>
+	<7vmy5fy2hz.fsf@alter.siamese.dyndns.org>
+	<87ab0zny27.fsf_-_@jondo.cante.net>
+	<237967ef0909130648l36b592aft9c50ccff5d03d1b1@mail.gmail.com>
+	<87vdjnlywo.fsf@jondo.cante.net>
+	<BLU0-SMTP18292B09CCFD873F4A6DF6AEE40@phx.gbl>
+	<87fxaolqhd.fsf_-_@jondo.cante.net>
+	<20090915155208.6117@nanako3.lavabit.com>
+	<87tyz4k4eg.fsf@jondo.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 12:31:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Sean Estabrooks <seanlkml@sympatico.ca>,
+	Mikael Magnusson <mikachu@gmail.com>, git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Tue Sep 15 12:35:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnVJc-0007Ai-MZ
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 12:31:17 +0200
+	id 1MnVNR-0008E4-2x
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 12:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752663AbZIOKbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 06:31:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbZIOKbH
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 06:31:07 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:36496 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427AbZIOKbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 06:31:05 -0400
-Received: by ewy2 with SMTP id 2so312553ewy.17
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 03:31:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=SFGWWCLpN0X1HzRV44SpnyrgBHgRFBw43uJ6te5mPU0=;
-        b=tk3QUdKG1JHkpnoDjQZgExE/1EzBnpn6u3GKietOfRuIQ/rzRfcNFSW7a3U3y2Fx+n
-         7vMxAZXo+DPhBxDEq1/9rI8O6m1gmx5ABJjcPMpBPwfZe5YzQyfSm2Hl6ur/iNAObE4Y
-         rW849X4iO1VXR7w+3YaFdwkAB3MqIOaZVWgdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=adhbiKUYFepRM74fp9tdBasgk2RbZiFylrsc0QyelDFDkRBTm8WQNnJD16PqbGv4E3
-         7SKGBMemqr7npaU9tM2ZpKzSU3f/YSolKKoaXIuYiLO8wbaOImLbWI8T140gSTsEvxa1
-         sDLgIdNPjOIDINbbH7IdNDKRRPWLa9IS2uuWo=
-Received: by 10.216.53.8 with SMTP id f8mr1628264wec.171.1253010667792; Tue, 
-	15 Sep 2009 03:31:07 -0700 (PDT)
-X-Google-Sender-Auth: d60d3693d4bd3856
+	id S1752397AbZIOKfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 06:35:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752151AbZIOKfD
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 06:35:03 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:54654 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366AbZIOKfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 06:35:02 -0400
+Received: from h.earth.lavabit.com (h.earth.lavabit.com [192.168.111.17])
+	by karen.lavabit.com (Postfix) with ESMTP id 68C3811B8CC;
+	Tue, 15 Sep 2009 05:35:05 -0500 (CDT)
+Received: from 6103.lavabit.com (199.197.2.145)
+	by lavabit.com with ESMTP id HHSWQ4WTVLFG; Tue, 15 Sep 2009 05:35:05 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=O+iVnzRVgzvzVSfK6Haszx5DiPQ7k4k5GEvuiZRvhOoGs3kYz8fBrbBNs2m5A84glxWk7bWjeyGONQkgOLrNYxUkdG2QsPmssZxQpEBJ0LsdzcVY/MJIcsWKovZjCATBE0wl/LW+WqheHQB4JFQBodnJfl5ps5kWFt/EynUeosM=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <87tyz4k4eg.fsf@jondo.cante.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128525>
 
-Hi,
+Quoting Jari Aalto <jari.aalto@cante.net>
 
-I am resurrecting a discussion from a week or two back (been on
-holiday).  As follows...
+> Nanako Shiraishi <nanako3@lavabit.com> writes:
+>
+>> Sorry, but this patch doesn't seem to apply anywhere. Have you fetched recently?
+>
+> Junio merged the patch at 5f2b1e6
 
-I had made some changes to some files and then done a commit. Only
-then did I realise that I had the wrong branch checked out. To make
-matters worse I then did a 'git reset HEAD^' which means that I can
-now no longer switch branches. I am stuck. I had some advice (thanks!)
-but it was not complete. I'd appreciate some more help.
+Oh, I see.
 
-I was advised to do a 'git reflog --branchname--' (I don't
-know/understand what this command does) but it doesn't work. I just
-get 'usage: git reflog (expire | ...)'
+If so, could you rebase and resend?
 
-So basically I am no further forward. Just to reiterate I need to...
+It would also be nicer if you followed Documentation/SubmittingPatches when composing your message, writing any additional comments after the three dashes line.
 
-* remove the commit from my current branch (it tracks a remote so I
-would prefer there to be no evidence to confuse other people after I
-push)
-* add the changes to the (other) branch they should have been added to.
-* not loose or break anything.
+Thank you.
 
-Any (more) help appreciated.
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
