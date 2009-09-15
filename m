@@ -1,98 +1,71 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 1/2] Work around leftover temporary save file.
-Date: 15 Sep 2009 15:47:12 +0100
-Message-ID: <87tyz4b6z3.fsf@users.sourceforge.net>
-References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
-	<87ab0wcsyp.fsf@users.sourceforge.net>
-	<81b0412b0909150601j74d40181pc2308f4f63b4817e@mail.gmail.com>
+From: =?ISO-8859-1?Q?Alf_Kristian_St=F8yle?= <alf.kristian@gmail.com>
+Subject: git stash list shows timestamp in stead of "stash number", when 
+	setting date = local for log in config
+Date: Tue, 15 Sep 2009 16:56:41 +0200
+Message-ID: <49578b170909150756k3c19912dv28615053a6bd0f7d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alexy Borzenkov <snaury@gmail.com>,
-	Paul Mackerras <paulus@samba.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 16:47:27 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 15 16:57:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnZJX-0002La-7C
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:47:27 +0200
+	id 1MnZSx-0005YE-9f
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:57:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754516AbZIOOrO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 10:47:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754439AbZIOOrO
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:47:14 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:40854 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754370AbZIOOrN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 10:47:13 -0400
-Received: from [172.23.170.145] (helo=anti-virus03-08)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MnZJL-0006ZK-OI; Tue, 15 Sep 2009 15:47:15 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MnZJJ-0003Oy-HP; Tue, 15 Sep 2009 15:47:13 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id ECC5B51843; Tue, 15 Sep 2009 15:47:12 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <81b0412b0909150601j74d40181pc2308f4f63b4817e@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1754534AbZIOO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 10:57:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbZIOO5A
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:57:00 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:46269 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754518AbZIOO5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 10:57:00 -0400
+Received: by bwz19 with SMTP id 19so2851677bwz.37
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 07:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=ihFUOWmN0zLCXp5hQ2gzLolUxgh+qrVnN+Cm9hWbxng=;
+        b=Qi2H4z/XUsTFQYeN649dJiRjXygOePzd00LX2Rl9nWmILh583pJTWJLxV6BT0Sw0ak
+         HuRRpVLe0QtvOia3qx9M8dve7sU+CJIup1W4vWqwKoYXEBN1gKJdv+gKOuJBMCKSFXie
+         nDua9Pp1gBJJKGh+ZtKBPl66H3xkFA6onRKUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=EYmELdFZtTAUoNHblnMOdduAzRRIzV2tlo0QqqGCWbzT3dMdABUbfIcljK0274SZQH
+         wPm0F1xO33+4nGr920W/FatRW6JSeT+IesERm3RbPppkjnIl2ROzrBjiTT1/3q+7J6kE
+         iJnUy5/qE2sj1xxrDYlwUS4aWfZc+AK2eOvJU=
+Received: by 10.223.74.91 with SMTP id t27mr2633697faj.62.1253026622250; Tue, 
+	15 Sep 2009 07:57:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128569>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Hi. Searched the lists, but haven't found anyone reporting this problem.
 
->On Tue, Sep 15, 2009 at 11:26, Pat Thoyts
-><patthoyts@users.sourceforge.net> wrote:
->>
->> If a file exists and is hidden on Windows the Tcl open command will
->> fail as the attributes provided in the CREAT call fail to match thos=
-e
->> of the existing file. Forcing removal of the temporary file before w=
-e
->> begin solves any problems caused by previous failures to save the
->> application settings. An alternative would be to remove the hidden
->> attribute before calling 'open'.
->>
->> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
->> ---
->> =A0gitk | =A0 =A01 +
->> =A01 files changed, 1 insertions(+), 0 deletions(-)
->>
->> diff --git a/gitk b/gitk
->> index 1306178..a0214b7 100755
->> --- a/gitk
->> +++ b/gitk
->> @@ -2526,6 +2526,7 @@ proc savestuff {w} {
->> =A0 =A0 if {$stuffsaved} return
->> =A0 =A0 if {![winfo viewable .]} return
->> =A0 =A0 catch {
->> + =A0 =A0 =A0 if {[file exists ~/.gitk-new]} {file delete -force ~/.=
-gitk-new}
->
->maybe another gitk instance is writing it at exactly same moment
->in time? Writing is known to take a few moments. Especially on Windows=
-=2E
+When doing a "git stash list" I get this strange stash record:
+stash@{Tue Sep 15 16:28:12 2009}: WIP on master: 2262276 ...
 
-no - 'open $file w' is translated into O_WRONLY|O_CREAT|O_TRUNC
-internally and passed to the win32 layer to get converted to a call to =
-CreateFile with
-GENERIC_WRITE, CREATE_ALWAYS and FILE_ATTRIBUTE_NORMAL. The file has
-got FILE_ATTRIBUTE_HIDDEN though and as it exists and our attributes
-do not match we get failed.
-'open $file {O_WRONLY O_TRUNC}' would open it but we'd have to check
-for non-existence and redo with O_CREAT if it was not already present.
+I have a global config setting on log:
 
-See tclWinChan.c:TclpOpenFileChannel.
+[log]
+date = local
 
---=20
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+If setting the date config to default or removing the setting, the
+stash record looks correct:
+stash@{0}: WIP on master: 2262276 ...
+
+I might be missing something here, but I do find this a bit strange.
+Is this a bug or a feature, and is there a setting I can use (for
+stash) to always show the latter line? I kind of like having local
+timestamps in log.
+
+I am using git version 1.6.4.2 on the Mac.
+
+Thanks
+- Alf
