@@ -1,71 +1,82 @@
-From: =?ISO-8859-1?Q?Alf_Kristian_St=F8yle?= <alf.kristian@gmail.com>
-Subject: git stash list shows timestamp in stead of "stash number", when 
-	setting date = local for log in config
-Date: Tue, 15 Sep 2009 16:56:41 +0200
-Message-ID: <49578b170909150756k3c19912dv28615053a6bd0f7d@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Per-remote tracking branch
+Date: Tue, 15 Sep 2009 17:29:58 +0200
+Message-ID: <vpq4or48bux.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 16:57:17 2009
+X-From: git-owner@vger.kernel.org Tue Sep 15 17:30:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnZSx-0005YE-9f
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 16:57:11 +0200
+	id 1MnZyt-0000ur-Sg
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 17:30:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534AbZIOO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 10:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbZIOO5A
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 10:57:00 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:46269 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754518AbZIOO5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 10:57:00 -0400
-Received: by bwz19 with SMTP id 19so2851677bwz.37
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 07:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:from:date:message-id
-         :subject:to:content-type;
-        bh=ihFUOWmN0zLCXp5hQ2gzLolUxgh+qrVnN+Cm9hWbxng=;
-        b=Qi2H4z/XUsTFQYeN649dJiRjXygOePzd00LX2Rl9nWmILh583pJTWJLxV6BT0Sw0ak
-         HuRRpVLe0QtvOia3qx9M8dve7sU+CJIup1W4vWqwKoYXEBN1gKJdv+gKOuJBMCKSFXie
-         nDua9Pp1gBJJKGh+ZtKBPl66H3xkFA6onRKUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=EYmELdFZtTAUoNHblnMOdduAzRRIzV2tlo0QqqGCWbzT3dMdABUbfIcljK0274SZQH
-         wPm0F1xO33+4nGr920W/FatRW6JSeT+IesERm3RbPppkjnIl2ROzrBjiTT1/3q+7J6kE
-         iJnUy5/qE2sj1xxrDYlwUS4aWfZc+AK2eOvJU=
-Received: by 10.223.74.91 with SMTP id t27mr2633697faj.62.1253026622250; Tue, 
-	15 Sep 2009 07:57:02 -0700 (PDT)
+	id S1754723AbZIOPaB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 11:30:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754709AbZIOPaA
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 11:30:00 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43075 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754698AbZIOPaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 11:30:00 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8FFPqV5002502
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 15 Sep 2009 17:25:52 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MnZyg-00018A-5d; Tue, 15 Sep 2009 17:29:58 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MnZyg-0005zl-4C; Tue, 15 Sep 2009 17:29:58 +0200
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 15 Sep 2009 17:25:52 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8FFPqV5002502
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1253633153.33063@ncAZv/rkk2EKg3vy1d4gHA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128570>
 
-Hi. Searched the lists, but haven't found anyone reporting this problem.
+Hi,
 
-When doing a "git stash list" I get this strange stash record:
-stash@{Tue Sep 15 16:28:12 2009}: WIP on master: 2262276 ...
+Is there a way, with Git, to specify a tracking branch on a per-remote
+basis?
 
-I have a global config setting on log:
+At the moment, I can configure a tracking branch to let me just type
 
-[log]
-date = local
+$ git pull
 
-If setting the date config to default or removing the setting, the
-stash record looks correct:
-stash@{0}: WIP on master: 2262276 ...
+when I want to say
 
-I might be missing something here, but I do find this a bit strange.
-Is this a bug or a feature, and is there a setting I can use (for
-stash) to always show the latter line? I kind of like having local
-timestamps in log.
+$ git pull origin master
 
-I am using git version 1.6.4.2 on the Mac.
+Now, assume I have another remote "foo", I'd like to be able to just
+say
 
-Thanks
-- Alf
+$ git pull foo
+
+and put something in my .git/config so that Git knows I mean
+
+$ git pull foo master
+
+Is there a simple way to do that?
+
+
+(for the motivation: I mostly use Git with a 1-branch-per-repo setup,
+so in 99% of my use-cases, when I have to specify a branch, it's
+master).
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
