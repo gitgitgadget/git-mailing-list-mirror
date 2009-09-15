@@ -1,95 +1,96 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Commited to wrong branch
-Date: Wed, 16 Sep 2009 00:30:25 +0200
-Message-ID: <20090915223025.GB14652@atjola.homenet>
-References: <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>
- <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>
- <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>
- <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>
- <46a038f90909150546i508d3781id1dcd8e6c64942cf@mail.gmail.com>
- <26ae428a0909150558i508e5878q8a1ee7cb7311fc57@mail.gmail.com>
- <20090915130640.GC31846@atjola.homenet>
- <46a038f90909150654t73cab47ckfd02f8a2f4353722@mail.gmail.com>
- <20090915203948.GA14652@atjola.homenet>
- <46a038f90909151453u5ead2eb5nebb46930a8e7277@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git crashes on pull
+Date: Tue, 15 Sep 2009 15:54:19 -0700
+Message-ID: <7vzl8v4y5g.fsf@alter.siamese.dyndns.org>
+References: <alpine.LSU.2.01.0909152044450.10936@bianca.dialin.t-online.de>
+ <7vljkg57xs.fsf@alter.siamese.dyndns.org>
+ <alpine.LSU.2.01.0909160022430.24554@bianca.dialin.t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 00:30:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Guido Ostkamp <git@ostkamp.fastmail.fm>
+X-From: git-owner@vger.kernel.org Wed Sep 16 00:54:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MngXp-0004l8-K3
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 00:30:41 +0200
+	id 1Mngv4-0001zZ-JQ
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 00:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752463AbZIOWa0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 18:30:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752453AbZIOWaZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 18:30:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38878 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752375AbZIOWaZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 18:30:25 -0400
-Received: (qmail invoked by alias); 15 Sep 2009 22:30:27 -0000
-Received: from i59F56716.versanet.de (EHLO atjola.homenet) [89.245.103.22]
-  by mail.gmx.net (mp043) with SMTP; 16 Sep 2009 00:30:27 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19GrpcdfpFGxuTN0a9iq3N7/Rv32q0upuUEEHmox2
-	gVRJVJfN6mTcv4
-Content-Disposition: inline
-In-Reply-To: <46a038f90909151453u5ead2eb5nebb46930a8e7277@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1752664AbZIOWye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 18:54:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757498AbZIOWyb
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 18:54:31 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50428 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752919AbZIOWy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 18:54:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E519134911;
+	Tue, 15 Sep 2009 18:54:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tvsYkMzY3DB5o87onObKLWPaiz4=; b=bESw4Z
+	EH+pXn9UujZMBSevnuqcqvoalmy1tp0UmN4Rg1pBoAbCsZZZgoBkDkxSrIDDz2t/
+	6Ci3oM64oUuWb8T7YDytgeeDarAWu13IAnEk5OVyJ++KvHHw8xIKhXKo+vOJXzUr
+	LwWWWfhmSMWrpLdkgvC7UluSBA66fX34EOvDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nlfIbbIkDS2RfPxEuZ6EDNKjp6h6TCTY
+	nM8cVnPMdxjo2ZQ9WOaK2VCuS6u4AwGznyOrgVfHhqdgJd4rmMl/O417yIIexx90
+	+H5KyjlylE5B5R6DtZeI4xSI3HmVzN82dTZgML9/l+lt7ee4uIFHmjIz2Q060zLe
+	aVbW0ZilKUQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BCE9E34910;
+	Tue, 15 Sep 2009 18:54:24 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0ECDA3490B; Tue, 15 Sep
+ 2009 18:54:20 -0400 (EDT)
+In-Reply-To: <alpine.LSU.2.01.0909160022430.24554@bianca.dialin.t-online.de>
+ (Guido Ostkamp's message of "Wed\, 16 Sep 2009 00\:30\:16 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B6E59E0C-A24A-11DE-B243-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128593>
 
-On 2009.09.15 23:53:03 +0200, Martin Langhoff wrote:
-> 2009/9/15 Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>:
-> > Sooner or later you'll hit a merge conflict anyway, and conflict ma=
-rkers
-> > aren't that hard to understand, and IMHO are easier to handle than =
-=2Erej
-> > files, as you get to edit everything in-place.
->=20
-> When git's diff3 gets confused trying to use ancestry, the conflict
-> markers bring completely unrelated things that belong to the history
-> of the file and not to the patch at hand.
->=20
-> It's not about the conflict markers but somewhat nonsensical proposed
-> "sides" to the resolution.
+Guido Ostkamp <git@ostkamp.fastmail.fm> writes:
 
-That's not git getting confused trying to use the ancestry, but git
-being unable to make use of the history. It has to use a fake common
-ancestor, as using the true common ancestor would obviously mean that
-you do a real merge, not a cherry-pick. Under some circumstances that
-can lead to quite "interesting" conflicts, yeah, but IMHO still better
-to deal with than those .rej files, especially when you switch to diff3
-conflict marker mode (git checkout --conflict=3Ddiff3 -- file), which a=
-lso
-contains the version of the code that the "common ancestor" has.
+> On Tue, 15 Sep 2009, Junio C Hamano wrote:
+>
+>> Please try this patch, which I have been preparing for later pushout.
+>>
+>> From: Junio C Hamano <gitster@pobox.com>
+>> Date: Mon, 14 Sep 2009 14:48:15 -0700
+>> Subject: [PATCH] http.c: avoid freeing an uninitialized pointer
+>>
+>> An earlier 59b8d38 (http.c: remove verification of remote packs) left
+>> the variable "url" uninitialized; "goto cleanup" codepath can free it
+>> which is not very nice.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> Appears to be working ok now, thanks.
 
-> > Well, you likely shouldn't be using git-apply, which is plumbing, a=
-nd
-> > can't easily make use of the "index" information in git patches to =
-do a
-> > three-way merge instead of a "stupid" patch application. Instead us=
-e
-> > git-am --3way to make git perform a three-way merge, leading to
-> > conflicts instead of plain patch rejection.
->=20
-> Um, you got your internals wrong. git-apply is what git-am uses.
+Thanks.
 
-No, you didn't understand what I said. I said that _you_ shouldn't be
-using git-apply. That "git am" internally uses "git apply" is a totally
-different story. And with --3way, it doesn't even run just "git apply <
-patch", but uses "git apply" just to build a fake common ancestor and
-does a 3-way merge with git-merge-recursive.
+The sad part of the story was that this regression was introduced by a
+change to work around recent breakage observed when fetching from the http
+server github runs, and it was the primary purpose of pushing 1.6.4.3 out.
 
-Bj=F6rn
+Now we need to cut a 1.6.4.4 with this fix-on-fix soon, like tomorrow.
+
+> BTW: Is there any way to easily invoke GDB in case of such a problem
+> to get a real symbolic stack backtrace?
+>
+> I tried it on the 'git' binary, but of course this didn't work because
+> it invokes a git-pull script which again runs another git-remote-curl
+> binary.
+
+Not very easily.  The best you can do is to run with GIT_TRACE to see what
+command actually dies and run that binary directly.  gdb can choose to
+follow either parent or child across forks, but I do not know how to tell
+it to follow across execs into a different binary.
