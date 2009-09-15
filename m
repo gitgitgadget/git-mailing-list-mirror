@@ -1,85 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Pair Programming Workflow Suggestions
-Date: Tue, 15 Sep 2009 11:20:15 -0700 (PDT)
-Message-ID: <m3zl8w2hpf.fsf@localhost.localdomain>
-References: <c115fd3c0909151043v3216a147v35e18710fbead515@mail.gmail.com>
+From: Alexey Borzenkov <snaury@gmail.com>
+Subject: Re: [PATCH 04/14] Set _O_BINARY as default fmode for both MinGW and 
+	MSVC
+Date: Tue, 15 Sep 2009 22:40:33 +0400
+Message-ID: <e2480c70909151140i26a8e748wf978145724d3fd55@mail.gmail.com>
+References: <cover.1253021221.git.mstormo@gmail.com>
+	 <213f3c7799721c3f42ffa689498175f0495048eb.1253021728.git.mstormo@gmail.com>
+	 <26c067500d8adf17a2d75e2956e4d4a6cef27fc1.1253021728.git.mstormo@gmail.com>
+	 <cover.1253021728.git.mstormo@gmail.com>
+	 <6e6345fb3fbc19b1a2467e33e1633fe9025e547b.1253021728.git.mstormo@gmail.com>
+	 <badc5d24387c28c752a45f75e8aec6bce64f81fe.1253021728.git.mstormo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 15 20:21:35 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	git@vger.kernel.org, lznuaa@gmail.com, raa.lkml@gmail.com
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 15 20:40:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnceW-00077Q-Bx
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 20:21:20 +0200
+	id 1MncxH-0004hQ-C4
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 20:40:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754354AbZIOSUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 14:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbZIOSUS
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 14:20:18 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:40937 "EHLO
+	id S1758280AbZIOSkc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Sep 2009 14:40:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758274AbZIOSkb
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 14:40:31 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:56522 "EHLO
 	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754624AbZIOSUQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Sep 2009 14:20:16 -0400
-Received: by mail-fx0-f217.google.com with SMTP id 17so1772214fxm.37
-        for <git@vger.kernel.org>; Tue, 15 Sep 2009 11:20:19 -0700 (PDT)
+	with ESMTP id S1758248AbZIOSkb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Sep 2009 14:40:31 -0400
+Received: by fxm17 with SMTP id 17so1785874fxm.37
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 11:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=K3kMC7YMfF3/x3RAIdyUn6kj28Bu3JhA3CF+wc0arKI=;
-        b=XpgG6jmdRc1LQxLWrUWsdT1dX5nnCUOK2hqB3/d0jh1K8QH6nWK5otv2pVTqvmUr7X
-         sNcd3u81r96K8V/QKLQg1wbAHOuHwD4iYVNZBj6FTQLPXtnZqcucVR7WIjzA1LLS8Ktf
-         iAkkq7ouOLzTooXaTN+W5l8J+Y7aO6QWiXbBU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=ItohrWV7UWCobdjQGUnZy4/Zd6ioRfQsP2Rnj0s2mno=;
+        b=DZaH5q0DdaE3Y7cfYlA1UnJ1kMCnPjCxfLJj2xv1ixFYdf4t2YFuJMn8uUWSkjP2uT
+         v90IbT5RIJHufhtD55z5TluFN3Uh2LgAZ059l0Uq0FSU5ANbBd4Qx6s90xi5LkQoKNuK
+         culmCzKXQKJ8GwFVVkdIJuCromxyge4D9UpKw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=hzMJECgeEuA4LFwKerqzG+MpwagUTArMkbgHqtqKekh1EkXQOR+U065ZAF5bDGBcu0
-         J/hzIzmVK10BK6fpcaJHFRxwHE4vDXhzrcYsazcCYFH1xSgBp4VOzHwJchIBRUOWOQU9
-         ogLqhIOr8bipAS5HUJPQM5gI4/dl1dHzaL4oE=
-Received: by 10.204.143.151 with SMTP id v23mr6606524bku.169.1253038818783;
-        Tue, 15 Sep 2009 11:20:18 -0700 (PDT)
-Received: from localhost.localdomain (abwd220.neoplus.adsl.tpnet.pl [83.8.227.220])
-        by mx.google.com with ESMTPS id p9sm333790fkb.7.2009.09.15.11.20.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 15 Sep 2009 11:20:15 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8FIKDJq025003;
-	Tue, 15 Sep 2009 20:20:14 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8FIKDmc025000;
-	Tue, 15 Sep 2009 20:20:13 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <c115fd3c0909151043v3216a147v35e18710fbead515@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=adiHvI7b1pJ7EoWY3umxafTzfNpWYXfW6Gh/sWtIknLu77id2WuXkY6sWI2CBZNEQB
+         b+NuWWtvVXq8g05w4ll2nq+mw7bCORhlx5D6Y7JwaieVg/DsMlxJmGutyM+Yaq5Mtzrn
+         dTL5V9Ff1+Pt3QY3tCzwxF7JejaGw15egyA4k=
+Received: by 10.223.58.139 with SMTP id g11mr2837677fah.43.1253040033551; Tue, 
+	15 Sep 2009 11:40:33 -0700 (PDT)
+In-Reply-To: <badc5d24387c28c752a45f75e8aec6bce64f81fe.1253021728.git.mstormo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128578>
 
-Tim Visher <tim.visher@gmail.com> writes:
+On Tue, Sep 15, 2009 at 5:44 PM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+> +extern int _fmode;
 
-> I'm interested in hearing how people use Git for pair programming.
-> Specifically, how do you document that you are programming in pairs.
+Is it really needed? I might be wrong, but I thought _fmode needed a
+more complex declaration, at least on mingw, for which you are
+supposed to include stdlib.h. For example, for mingw, in stdlib.h, it
+is declared this way:
 
-[...]
+#if !defined (__DECLSPEC_SUPPORTED) || defined (__IN_MINGW_RUNTIME)
 
-> I did find Brian Helmkamp's script
-> http://www.brynary.com/2008/9/1/setting-the-git-commit-author-to-pair-programmers-names
-> but that's not really what I'm looking for. [...]
+#ifdef __MSVCRT__
+extern int* _imp___fmode;
+#define	_fmode	(*_imp___fmode)
+#else
+/* CRTDLL */
+extern int* _imp___fmode_dll;
+#define	_fmode	(*_imp___fmode_dll)
+#endif
 
-I'm not sure if this would help you, but take a look at "Pair
-Programming & git & github & Gravatar & You & You" blog post by Jon
-"Lark" Larkowski from May 30, 2009:
+#else /* __DECLSPEC_SUPPORTED */
 
-  http://blog.l4rk.com/2009/05/pair-programming-git-github-gravatar.html
+#ifdef __MSVCRT__
+__MINGW_IMPORT  int _fmode;
+#else /* ! __MSVCRT__ */
+__MINGW_IMPORT  int _fmode_dll;
+#define	_fmode	_fmode_dll
+#endif /* ! __MSVCRT__ */
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+#endif /* __DECLSPEC_SUPPORTED */
+
+As you can see it is a little more complex than a simple extern (e.g.
+it uses __declspec(dllimport) when it is supported, and a bit of
+manual dereferencing otherwise). So maybe you would just include
+stdlib.h and use definition from there?
