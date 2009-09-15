@@ -1,93 +1,140 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH 2/2] Fix the geometry when restoring from zoomed state.
-Date: Tue, 15 Sep 2009 10:37:51 +0100
-Message-ID: <8763bkcsxb.fsf@users.sourceforge.net>
-References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Re: Commited to wrong branch
+Date: Tue, 15 Sep 2009 13:10:07 +0100
+Message-ID: <26ae428a0909150510n56b1d4eg6565a6cca8c9b46c@mail.gmail.com>
+References: <26ae428a0909150331q391ed39ak622902d175b46d84@mail.gmail.com>
+	 <46a038f90909150355h20b39c71w4af7e2be2920fdbb@mail.gmail.com>
+	 <26ae428a0909150405v3087016fxee5ac98057868677@mail.gmail.com>
+	 <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alexy Borzenkov <snaury@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 15 14:08:59 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 15 14:10:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnWq9-0002OE-P2
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 14:08:58 +0200
+	id 1MnWrR-0002my-W1
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Sep 2009 14:10:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbZIOMHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Sep 2009 08:07:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753349AbZIOMHy
-	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 08:07:54 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:58630 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753315AbZIOMHx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2009 08:07:53 -0400
-Received: from [172.23.170.147] (helo=anti-virus03-10)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MnWp9-0005Qu-36; Tue, 15 Sep 2009 13:07:55 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out3.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MnWp8-0001vz-HL; Tue, 15 Sep 2009 13:07:54 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 2A76451843; Tue, 15 Sep 2009 13:07:45 +0100 (BST)
-Cc: Paul Mackerras <paulus@samba.org>
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1753403AbZIOMKI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Sep 2009 08:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbZIOMKH
+	(ORCPT <rfc822;git-outgoing>); Tue, 15 Sep 2009 08:10:07 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:28762 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753361AbZIOMKG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Sep 2009 08:10:06 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so602357eyf.5
+        for <git@vger.kernel.org>; Tue, 15 Sep 2009 05:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=271VWHcLhwgCu+42M/WhVSc2rKAxmPY4h99Yz9eB4/w=;
+        b=pdPTz1otpyZjZLEazOPwE3qVinC0xuzaOQW8uQfyk6VswgTUyPTTXL54pHCRHwr/zb
+         xW/i3D+SvJesbBElLoa5t563GA79YYKOyzJ9+Z/YHfqGHja1wOb4SpOHnTEwccZvlOhp
+         gU7hlZUISRqB7y10mN2PJVOY4EP6R5Ev6x4VM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=CBtpiAEF2/FzvJBwNnpJPpj9vj4UarAzz3A2DreGc47JTR/ElIk8j0tVdiHv76nBX/
+         ffwINcQPagkDifcmNdCwgpk4Vdcg8qp2MAkbvwlbJpVk2X1Hb0zQQm5Wb/cuXsN0znHv
+         XkQLULUgdiUjMklkTgDaeoeYBPRQRrgkolWqw=
+Received: by 10.216.89.138 with SMTP id c10mr1951393wef.47.1253016607990; Tue, 
+	15 Sep 2009 05:10:07 -0700 (PDT)
+In-Reply-To: <46a038f90909150416h60ea7d74xd2337fe50f603dcb@mail.gmail.com>
+X-Google-Sender-Auth: ee1616a64a7e039e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128534>
 
+Martin,
 
-The patch to handle the geometry of a restored gitk by Alexy Borzenkov
-causes the position of the columns to creep each time the application
-is restarted. This patch addresses this by remembering the application
-geometry for the normal state and saving that regardless of the actual
-state when the application is closed.
+Looked at gitk - yes there is definitely one more commit still on the
+current (wrong) branch.
 
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
- gitk |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+I deleted the offending file and have now successfully switched to the
+other (correct) branch.
 
-diff --git a/gitk b/gitk
-index a0214b7..67122c3 100755
---- a/gitk
-+++ b/gitk
-@@ -2251,6 +2251,8 @@ proc makewindow {} {
- 	    }
- 	    wm geometry . "${w}x$h"
- 	}
-+    } else {
-+	set geometry(main) [wm geometry .]
-     }
- 
-     if {[info exists geometry(state)] && $geometry(state) eq "zoomed"} {
-@@ -2265,6 +2267,11 @@ proc makewindow {} {
-         set ::BM "2"
-     }
- 
-+    bind . <Configure> {
-+	if {[winfo toplevel %W] eq "%W" && [wm state %W] eq "normal"} {
-+	    set ::geometry(main) %wx%h+%x+%y
-+	}
-+    }
-     bind .pwbottom <Configure> {resizecdetpanes %W %w}
-     pack .ctop -fill both -expand 1
-     bindall <1> {selcanvline %W %x %y}
-@@ -2556,7 +2563,7 @@ proc savestuff {w} {
- 	puts $f [list set extdifftool $extdifftool]
- 	puts $f [list set perfile_attrs $perfile_attrs]
- 
--	puts $f "set geometry(main) [wm geometry .]"
-+	puts $f "set geometry(main) $::geometry(main)"
- 	puts $f "set geometry(state) [wm state .]"
- 	puts $f "set geometry(topwidth) [winfo width .tf]"
- 	puts $f "set geometry(topheight) [winfo height .tf]"
--- 
-1.6.4.msysgit.0
+Howard
+
+2009/9/15 Martin Langhoff <martin.langhoff@gmail.com>:
+> On Tue, Sep 15, 2009 at 1:05 PM, Howard Miller
+> <howard@e-learndesign.co.uk> wrote:
+>> I'm pretty shocked how difficult this is... still...
+>
+> No prob. It's only hard at the beginning :-)
+>
+>> I'm finding git logs and reflogs pretty difficult to read and
+>> interpret (head melting) - in particular telling what happened on wh=
+at
+>> branch -
+>
+> I found gitk enormously helpful to visualise things. Try
+>
+> =A0gitk # will show you the current branch
+>
+> =A0gitk X Y # will show you both branches
+>
+> gitk is a ton easier to visualise. git log is pretty good but won't
+> show merges, so it's limited.
+>
+> git reflog is confusing, but it's mostly a tool to help when there's
+> been a mess and you want to diagnose WTH happened...
+>
+>>but looking at the reflog (which I assume is showing me the
+>> actions on the current branch, but I'm not sure)
+>
+> Don't worry about the reflog...
+>
+>> =A0I think I must have
+>> made two commits on the wrong branch so the reset has only 'popped'
+>> the top one. Other than that your interpretation is correct.
+>
+> Ok, so looking at gitk, there would still be one "wrong" commit. Can
+> you confirm?
+>
+>> I cannot currently change branches - it only complains about one fil=
+e.
+>
+> If you did follow my previous instructions (specially doing 'git rese=
+t
+> --hard'), then this should not happen. Except...
+>
+> Except when you have a file that git is not tracking, and it exists i=
+n
+> the "other" branch. The commit you undid earlier probably added that
+> file. So just rm that file, and change branches.
+>
+>> I'm a bit worried about that - I would like to understand why this i=
+s
+>> a problem but I don't.
+>
+> About the file? It was "new" in the commit you un-committed. So when
+> you do git reset --hard, git makes sure all the files it is
+> _currently_ tracking are "unchanged". If that file was new, it ignore=
+s
+> it. Just rm it and be happy.
+>
+>> So I am now a little hazy on how to deal with previous TWO commits.
+>
+> Just review gitk and confirm if there are more commits to unstich --
+> and we'll =A0work from there
+>
+>
+> m
+> --
+> =A0martin.langhoff@gmail.com
+> =A0martin@laptop.org -- School Server Architect
+> =A0- ask interesting questions
+> =A0- don't get distracted with shiny stuff =A0- working code first
+> =A0- http://wiki.laptop.org/go/User:Martinlanghoff
+>
