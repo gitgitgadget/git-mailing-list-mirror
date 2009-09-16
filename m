@@ -1,169 +1,63 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [RFC/PATCH 1/2] ref-dict: Add a set of functions for working with a
-	ref dictionary
-Date: Wed, 16 Sep 2009 08:53:02 +0100
-Message-ID: <20090916075304.58044.664.julian@quantumfyre.co.uk>
-References: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 09:58:08 2009
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: self contained executable
+Date: Wed, 16 Sep 2009 10:13:57 +0200
+Message-ID: <81b0412b0909160113t7edf9b4vdd7b79ca0dae762d@mail.gmail.com>
+References: <ED42F58A-A814-467B-A37D-B485B2E267ED@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Joel Saltzman <saltzmanjoelh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 10:14:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnpOx-0006uG-8R
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 09:58:08 +0200
+	id 1MnpeQ-0002fw-Mt
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 10:14:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755130AbZIPH55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 03:57:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755068AbZIPH54
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 03:57:56 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36069 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753610AbZIPH54 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Sep 2009 03:57:56 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id E0D9C33FA29
-	for <git@vger.kernel.org>; Wed, 16 Sep 2009 08:57:58 +0100 (BST)
-Received: (qmail 30299 invoked by uid 103); 16 Sep 2009 08:53:10 +0100
-Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.94.2/9808. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.041452 secs); 16 Sep 2009 07:53:10 -0000
-Received: from reaper.quantumfyre.co.uk (HELO rayne.quantumfyre.co.uk) (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 16 Sep 2009 08:53:10 +0100
-X-git-sha1: 7d4c76086c179bb140b2393b9b3b6aa5837282ab 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
+	id S1752656AbZIPIN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 04:13:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbZIPIN4
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 04:13:56 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:40045 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751238AbZIPINz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 04:13:55 -0400
+Received: by bwz19 with SMTP id 19so3316300bwz.37
+        for <git@vger.kernel.org>; Wed, 16 Sep 2009 01:13:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=fJ21nAoyOvO+LERhhGXD4muItN61a/2Gu2cy9aGbVdc=;
+        b=e+0pQ8GWtAEEEP7R4YVdj8/Yr9WO2hht9Qitzpj+qoCRSyKWOhbuu/c5/9iCdjvyy5
+         ORyLZxx4ygv9wmBbn0XcJNMoMKfGPpOFN7l+uBRbfdABwbZX4eGw+RLUTk+CpqLIG+dR
+         jXnB4Bi/Ourd08gU7AexkSXYRhcethZgLzTwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=GTDsEiuT2fT30xvL+CX1tXXJKGxcJ4lyusITPUOXkjEEguXxuwLM43/aE4rmwWTg/z
+         q6syNI5FFthPLMgaeghGfuOkgskAHpL3XrnioCpOV0XB52UarPZWHMa+thm6VDHe1eXY
+         UOoZWMiC7rpztIRT3V7heUt3ZQeRrnRXi6Mc8=
+Received: by 10.204.15.16 with SMTP id i16mr7130634bka.72.1253088837737; Wed, 
+	16 Sep 2009 01:13:57 -0700 (PDT)
+In-Reply-To: <ED42F58A-A814-467B-A37D-B485B2E267ED@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128615>
 
-These are a set of helper functions that use the generic hash table
-functions to provide a quick and easy mapping from ref name to sha1.
+On Wed, Sep 16, 2009 at 09:45, Joel Saltzman <saltzmanjoelh@gmail.com> wrote:
+> is it possible to compile git with all its dependencies so I can run it on a
+> server that does not have root access?
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
- Makefile   |    1 +
- ref-dict.c |   76 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- ref-dict.h |   13 ++++++++++
- 3 files changed, 90 insertions(+), 0 deletions(-)
- create mode 100644 ref-dict.c
- create mode 100644 ref-dict.h
-
-diff --git a/Makefile b/Makefile
-index d4958b8..815e4c9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -531,6 +531,7 @@ LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
- LIB_OBJS += reflog-walk.o
- LIB_OBJS += refs.o
-+LIB_OBJS += ref-dict.o
- LIB_OBJS += remote.o
- LIB_OBJS += replace_object.o
- LIB_OBJS += rerere.o
-diff --git a/ref-dict.c b/ref-dict.c
-new file mode 100644
-index 0000000..b9cab4b
---- /dev/null
-+++ b/ref-dict.c
-@@ -0,0 +1,76 @@
-+/*
-+ * ref-dict.c
-+ *
-+ * A Hash-based dictionary for storing name-sha1 data for refs.
-+ *
-+ * Copyright (C) 2009 Julian Phillips
-+ */
-+
-+#include "cache.h"
-+#include "hash.h"
-+#include "remote.h"
-+#include "ref-dict.h"
-+
-+/* hash_name based on the function of the same name in name-hash.c */
-+static unsigned int hash_name(const char *name)
-+{
-+	unsigned int hash = 0x123;
-+	int namelen = strlen(name);
-+
-+	do {
-+		unsigned char c = *name++;
-+		hash = hash*101 + c;
-+	} while (--namelen);
-+	return hash;
-+}
-+
-+/*
-+ * A convienience function for creating a ref_dict from a ref_list.
-+ */
-+void ref_dict_create(struct hash_table *dict, const struct ref *ref_list)
-+{
-+	struct ref *ref;
-+
-+	init_hash(dict);
-+
-+	for (ref = (struct ref *)ref_list; ref; ref = ref->next) {
-+		ref_dict_add(dict, ref->name, ref->old_sha1);
-+	}
-+}
-+
-+/*
-+ * Add an entry to the ref_dict, recording that name maps to sha1.
-+ */
-+void ref_dict_add(struct hash_table *dict, const char *name,
-+		const unsigned char *sha1)
-+{
-+	struct ref **ref;
-+	struct ref *new_ref = alloc_ref(name);
-+
-+	hashcpy(new_ref->old_sha1, sha1);
-+	
-+	ref = (struct ref **)insert_hash(hash_name(name), new_ref, dict);
-+	if (ref) {
-+		new_ref->next = *ref;
-+		*ref = new_ref;
-+	}
-+}
-+
-+/*
-+ * Find the sha1 for the given name.  Returns 1 if found and copies the sha1
-+ * into the space pointed to by sha1, returns 0 otherwise and sha1 is untouched.
-+ */
-+int ref_dict_get(const struct hash_table *dict, const char *name,
-+		unsigned char *sha1)
-+{
-+	struct ref *ref = lookup_hash(hash_name(name), dict);
-+
-+	for (; ref; ref = ref->next) {
-+		if (!strcmp(name, ref->name)) {
-+			hashcpy(sha1, ref->old_sha1);
-+			return 1;
-+		}
-+	}
-+
-+	return 0;
-+}
-diff --git a/ref-dict.h b/ref-dict.h
-new file mode 100644
-index 0000000..ca1e9a7
---- /dev/null
-+++ b/ref-dict.h
-@@ -0,0 +1,13 @@
-+#ifndef REF_DICT_H
-+#define REF_DICT_H
-+
-+#include "cache.h"
-+#include "hash.h"
-+
-+void ref_dict_create(struct hash_table *dict, const struct ref *ref_list);
-+void ref_dict_add(struct hash_table *dict, const char *name,
-+		const unsigned char *sha1);
-+int ref_dict_get(const struct hash_table *dict, const char *name,
-+		unsigned char *sha1);
-+
-+#endif /* REF_DICT_H */
--- 
-1.6.4.2
+This is kind of default configuration (the install prefix is $HOME/,
+and everthing gets
+installed into ~/bin, ~/share, etc). But if you don't have some of the
+libraries (libcurl
+for http, eventually openssl and iconv) you can always provide them locally and
+set the appropriate compile and linking flags in config.mak (but see
+the Makefile
+for the variables to set).
