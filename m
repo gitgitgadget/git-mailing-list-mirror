@@ -1,77 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [ANNOUNCE] Git User's Survey 2009 has been closed
-Date: Thu, 17 Sep 2009 01:13:55 +0200
-Message-ID: <200909170113.55497.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH v2] fetch: Speed up fetch by rewriting
+ find_non_local_tags
+Date: Wed, 16 Sep 2009 16:15:17 -0700
+Message-ID: <7veiq6wkfu.fsf@alter.siamese.dyndns.org>
+References: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
+ <7vbplb2pi7.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0909162141140.13697@reaper.quantumfyre.co.uk>
+ <20090916225350.45746.85139.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 01:13:51 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Thu Sep 17 01:15:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mo3h7-0005EC-UI
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 01:13:50 +0200
+	id 1Mo3ip-0005cD-9Y
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 01:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760256AbZIPXNk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 19:13:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757719AbZIPXNj
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 19:13:39 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:41898 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755425AbZIPXNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 19:13:38 -0400
-Received: by fxm17 with SMTP id 17so2639463fxm.37
-        for <multiple recipients>; Wed, 16 Sep 2009 16:13:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=zleneCFBNsxJWyDEhlRHoIkwOK397ye1brf58mEe1U8=;
-        b=IBBHH/ZA97YszD5pWElaT9UAyb5sUwKRpoC9yvPwXnsFshIWHdBCpZpbswSK4OJZMt
-         r458BmIW8Ak/C50E96pFsU0LdmW5j8pw5sysjLJWv8X4SpI1+cXJO2nofK75HnjV8fgB
-         GFrhp04TSGIUyDvLm8UKtoXf3wSgFjPGGscwY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=J6JPpwE6tQ6Vb0zUmt63uv5e5qUl8fi6tJ/CTdLY1aYy+jmSjVq+D0MB7c04GNXS3z
-         hGT2fEGm0JtAinSv6jouMTfvse+jwS97IWs9JaihCKuhR/IjD26q5ZjfvEkGqF01y2wH
-         3HgBNjaJy9WbHkTMljdJz/IF5QDWTewnD91hY=
-Received: by 10.86.8.36 with SMTP id 36mr7757041fgh.7.1253142820670;
-        Wed, 16 Sep 2009 16:13:40 -0700 (PDT)
-Received: from ?192.168.1.13? (abvy57.neoplus.adsl.tpnet.pl [83.8.222.57])
-        by mx.google.com with ESMTPS id l19sm919859fgb.12.2009.09.16.16.13.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Sep 2009 16:13:39 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1760262AbZIPXPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 19:15:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756990AbZIPXPX
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 19:15:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52249 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758161AbZIPXPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 19:15:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D5BC035B84;
+	Wed, 16 Sep 2009 19:15:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8RtCzt751oa/ADE1BrPg414xy4s=; b=LHC0Y8
+	Qo1+R2Be5J9XK2ccz710EhXiH1OB4Vq79RnQDsjyDvcxRWOx/mfSzXfjIBw3Q/4F
+	81fpXMDd4yYRdEDaYv8Hg6ydRu3RhzFD+TxP3iXhavMmL/6BDfb0k591rAOU3E0A
+	Cvq4KDtD7q6oshqn0Od4X1if1iojDyKHb4PBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JT5gHaQaHVlXaEtNTNIw1LgtmS2nOfOP
+	Gu81ASNuo653ZIPCaHs6/RY0iJAA+nvFBrL2LZziRcgRAKVYs9Uw1uZ8/Fx5i1N7
+	uqrvGycH2twHIfY4qRlAfF48UIPJjsZMlK6dggb3fDYmAnGDDLxL3fomiH1nsAW1
+	bNgyN9WX+UI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B703E35B7F;
+	Wed, 16 Sep 2009 19:15:22 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 03A5435B7E; Wed, 16 Sep
+ 2009 19:15:18 -0400 (EDT)
+In-Reply-To: <20090916225350.45746.85139.julian@quantumfyre.co.uk> (Julian
+ Phillips's message of "Wed\, 16 Sep 2009 23\:53\:49 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CF1D123A-A316-11DE-847D-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128693>
 
-Hi all,
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-Git User's Survey 2009 ended at the end of Wednesday, 16 October 2008,
-around 23:45 CEST (GMT+0200).  
+> When trying to get a list of remote tags to see if we need to fetch
+> any we were doing a linear search for the matching tag ref for the
+> tag^{} commit entries.  This proves to be incredibly slow for large
+> numbers of tags.  Rewrite the function so that we can do lookup in
+> string_lists instead.
+>
+> For a repository with 50000 tags (and just a single commit on a single
+> branch), a fetch that does nothing goes from ~ 1m50s to ~4.2s.
+>
+> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+> ---
+>
+> Not only does this not require a custom hash table, it is also slightly
+> faster than the last version (~4.2s vs ~4.5s).
 
-
-Beginnings of survey summary should be available soon at 
-  http://git.or.cz/gitwiki/GitSurvey2009
-
-Currently you can get there raw data (individual responses) in CSV and 
-XLS formats (compressed).  One can find there also link to online 
-analysis (on Survs.com) and beginnings of partial survey summaries 
-(send to git mailing list in the duration of the survey).
-
-Thanks to all who participated in this survey!
-
--- 
-Jakub Narebski
-Poland
+I am just curious.  How would a "just one item lookbehind" code perform
+compared to this one?
