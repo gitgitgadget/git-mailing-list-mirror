@@ -1,77 +1,104 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: Pair Programming Workflow Suggestions
-Date: Wed, 16 Sep 2009 16:17:30 +0200
-Message-ID: <20090916141730.GA24893@vidovic>
-References: <c115fd3c0909151043v3216a147v35e18710fbead515@mail.gmail.com> <BLU0-SMTP195165E447A0C42386D083AEE30@phx.gbl> <c115fd3c0909160635x4d7368aeg4370668d765fd242@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Direct ancestors from commit to HEAD
+Date: Wed, 16 Sep 2009 07:26:41 -0700 (PDT)
+Message-ID: <m3vdjj2ceq.fsf@localhost.localdomain>
+References: <4AB0EFC0.8020005@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sean Estabrooks <seanlkml@sympatico.ca>,
-	Git Mailing List <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Tim Visher <tim.visher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 16:17:45 2009
+Cc: git@vger.kernel.org
+To: Gonsolo <gonsolo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 16 16:26:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnvKJ-0000CL-6L
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 16:17:43 +0200
+	id 1MnvTB-0003Qh-3L
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 16:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441AbZIPORe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 10:17:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbZIPORd
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 10:17:33 -0400
-Received: from mail-ew0-f206.google.com ([209.85.219.206]:41149 "EHLO
-	mail-ew0-f206.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751998AbZIPORc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 10:17:32 -0400
-Received: by ewy2 with SMTP id 2so1457015ewy.17
-        for <git@vger.kernel.org>; Wed, 16 Sep 2009 07:17:35 -0700 (PDT)
+	id S1752260AbZIPO0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 10:26:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751991AbZIPO0n
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 10:26:43 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:61895 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418AbZIPO0m (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 10:26:42 -0400
+Received: by fxm17 with SMTP id 17so2315487fxm.37
+        for <git@vger.kernel.org>; Wed, 16 Sep 2009 07:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=1XttziCJx3P3s1R5hoc8QJSKIzpkMHOemHNW8T6s0sM=;
-        b=QDzSKacnl/ZPj64dV19YR/gnlFiKJQuVNfFSJGxgaaXKvVvncKoc0eJs3T3l92Ucww
-         6WjuP8xIirvuRUJ55imrFZ20KYbwEvbnzXi2/JE9mHsqhYSN711XZ91dev6wbfyywsLy
-         Buk7R+N40JeV7CmSCbPnZmxtvuixVhjayPBmg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=lGvrSlmFXjfIoIG11FZgStenJ/sTbKt2boZncKqSFVU=;
+        b=xZrWOFT4m8Pseb3bBZ+Juq769ATFMWLqTySaETF7MnG6d3E0Jr5dfeTgnJoPYUVRUk
+         KD+QjBip4Fv2V0rfWAr+qC7U6sQ6O539jDDpmyjG/P9Cu7AfAzBFZRb2A0UQxX2j2mhn
+         AvKMM0BUq/JnIM5j+1vnpHoEadNsiN57+fedc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=BtRonoEi2HJbYkF02PXhOj+u+ZrKJK1ZK7u0SF24pIdKiD0E37feudw+tE88j7PCrk
-         BUVZcfR3bq2O69afTyuJvXv2a8MLidx4aJfkz/jwkLH9+2qFj+HkdE4MRdzL0T7qR/OZ
-         TLIlfblP/E5QnLiHT37QnG5XR+iPsAAqCl+ls=
-Received: by 10.210.9.13 with SMTP id 13mr2412147ebi.3.1253110655450;
-        Wed, 16 Sep 2009 07:17:35 -0700 (PDT)
-Received: from @ (91-164-145-100.rev.libertysurf.net [91.164.145.100])
-        by mx.google.com with ESMTPS id 5sm2768087eyh.3.2009.09.16.07.17.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 16 Sep 2009 07:17:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <c115fd3c0909160635x4d7368aeg4370668d765fd242@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=t2zZCImygHu8VrnOS0LMcqXEn6YuqkD13EHeOkg+klrJojjPFVXq7ccblxfQSIvU/v
+         A4X09LYqdMjYHz3ZvgNJsEUIzZEz8LTuRp82xTXExCj9eI2eEm5P8YJRnxRNnOVYWY02
+         3hPZh3qg12Dp4wdBEsRCKNQ7VSs+YH9s3w5rY=
+Received: by 10.86.231.17 with SMTP id d17mr7490978fgh.46.1253111203690;
+        Wed, 16 Sep 2009 07:26:43 -0700 (PDT)
+Received: from localhost.localdomain (abvy57.neoplus.adsl.tpnet.pl [83.8.222.57])
+        by mx.google.com with ESMTPS id l19sm2453918fgb.2.2009.09.16.07.26.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 16 Sep 2009 07:26:41 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8GEQsd3007209;
+	Wed, 16 Sep 2009 16:26:55 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8GEQsp2007206;
+	Wed, 16 Sep 2009 16:26:54 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4AB0EFC0.8020005@googlemail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128657>
 
-The 16/09/09, Tim Visher wrote:
+Gonsolo <gonsolo@gmail.com> writes:
+
+> Is there a way to see only the direct line of (merge) ancestors from
+> patch to HEAD? Something like:
 > 
->                         Pairing, on the other hand, is much more
-> tightly integrated than that.  Just like in Brian's post, it's really
-> a situation of Dev1 _&_ Dev2 wrote this feature, but one of them
-> happened to be typing and doing most of the nitty-gritty developing.
-> Changing the authors between committs almost seems to introduce an
-> arbitrary level of distinction where it's no longer _both_ but _one
-> then the other_.  Does that make my question any clearer?
+> commit 0cb583fd2862f19ea88b02eb307d11c09e51e2f8
+> Merge: 723e9db... a2d1056...
+> Author: Linus Torvalds <torvalds@linux-foundation.org>
+> Date:   Tue Sep 15 10:01:16 2009 -0700
+> 
+> 	Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net-next-2.6
+> 
+> commit 88512935a24305fea7aecc9ba4d675869e97fc2a
+> Merge: 8a62bab... 6b26dea...
+> Author: David S. Miller <davem@davemloft.net>
+> Date:   Fri Aug 14 12:27:19 2009 -0700
+> 
+> 	Merge branch 'master' of
+> git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6
+> 
+> commit edd7fc7003f31da48d06e215a93ea966a22c2a03
+> Author: Nick Kossifidis <mick@madwifi-project.org>
+> Date:   Mon Aug 10 03:29:02 2009 +0300
+> 
+>      ath5k: Wakeup fixes
+> 
+> 
+> Here I can see exactly how the ath5k patch came to mainline and since
+> when it is there.
 
-FMPOV (and to follow the Pair Programming purpose), there isn't an "I"
-in "Pair".  So having the same author name and sign-off for each pair is
-what makes most sense. IMHO, "dev1_and_dev2" is actually the best
-option.
+I don't know whether --first-parent or --simplify-by-decoration, or
+perhaps --dense is what you want (you can also use --graph for better
+visualization).
+
+Or use git-show-branch... :-)
 
 -- 
-Nicolas Sebrecht
+Jakub Narebski
+Poland
+ShadeHawk on #git
