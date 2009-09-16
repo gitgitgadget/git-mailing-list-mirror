@@ -1,96 +1,73 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v2] Update the usage bundle string.
-Date: Wed, 16 Sep 2009 17:32:54 -0400
-Message-ID: <1253136774-13179-1-git-send-email-tfransosi@gmail.com>
-Cc: Thiago Farina <tfransosi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 23:33:42 2009
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: [StGit PATCH 4/5] Add the -p option to fold
+Date: Wed, 16 Sep 2009 22:41:10 +0100
+Message-ID: <20090916214110.6622.12748.stgit@toshiba-laptop>
+References: <20090916214049.6622.44662.stgit@toshiba-laptop>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 16 23:48:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mo28D-0007gt-VS
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 23:33:42 +0200
+	id 1Mo2Mk-0003lJ-K5
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 23:48:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754580AbZIPVdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 17:33:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753583AbZIPVdc
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 17:33:32 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:37961 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901AbZIPVdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 17:33:31 -0400
-Received: by qw-out-2122.google.com with SMTP id 9so1771425qwb.37
-        for <git@vger.kernel.org>; Wed, 16 Sep 2009 14:33:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=c3Wc2X+h5Z4Votzwen1p90FLwR0joahd1kNl8nfHo4Y=;
-        b=hxP+uR10o2L2peOUe6j0Ai9sA7qcR8hs4GXiMvG+5YE6pZxV4BRhh6V4yhVTaH7xOY
-         +nNBR4T3+ApIlhhOWoLjOe9lf5Qal0zxZSxc34Jp2xGal2+juxAjlNVvxzrWcUzoC7Wh
-         1fEW9Jv7g9e8Y6/QQSScDWwBzv2n4y1Wxd+e4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=WeiL7jNT1XfuXKgo1MZQDb/YCJdmgPtik8ZPKL4FTVaKNFITiA+xQZwBrZDMPoqKw7
-         6ntj1vywfbvteYWBzgNHfCUWa8ztKOGaR5aIaa2xUYnp/jBPTG/SlSlIRD3Wt8uGtk5j
-         +eAZ1w2ulhsB3TQLsGuvDA31qcsXpd5D3I+o4=
-Received: by 10.224.96.81 with SMTP id g17mr7872445qan.265.1253136815123;
-        Wed, 16 Sep 2009 14:33:35 -0700 (PDT)
-Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 5sm72234qwh.56.2009.09.16.14.33.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Sep 2009 14:33:34 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc0.dirty
+	id S1760174AbZIPVsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 17:48:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760170AbZIPVsa
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 17:48:30 -0400
+Received: from cpc3-cmbg12-0-0-cust617.cmbg.cable.ntl.com ([86.9.126.106]:47223
+	"EHLO toshiba-laptop" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1760160AbZIPVs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 17:48:28 -0400
+Received: by toshiba-laptop (Postfix, from userid 1000)
+	id CF13E1C07A0; Wed, 16 Sep 2009 22:41:10 +0100 (BST)
+In-Reply-To: <20090916214049.6622.44662.stgit@toshiba-laptop>
+User-Agent: StGit/0.15-rc3-5-g9f71
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128680>
 
-Currently the usage bundle string is not well formatted.
-Now it is formatted and the user can read the string much more easily.
+This option was added to import, so it makes sense for fold to have it
+as well.
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@gmail.com>
 ---
- builtin-bundle.c |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
+ stgit/commands/fold.py |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index 9b58152..9946592 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -9,7 +9,11 @@
-  * bundle supporting "fetch", "pull", and "ls-remote".
-  */
+diff --git a/stgit/commands/fold.py b/stgit/commands/fold.py
+index 28e824c..ce0459e 100644
+--- a/stgit/commands/fold.py
++++ b/stgit/commands/fold.py
+@@ -39,6 +39,8 @@ options = [
+         short = 'Perform a three-way merge with the current patch'),
+     opt('-b', '--base', args = [argparse.commit],
+         short = 'Use BASE instead of HEAD when applying the patch'),
++    opt('-p', '--strip', type = 'int', metavar = 'N',
++        short = 'Remove N leading slashes from diff paths (default 1)'),
+     opt('--reject', action = 'store_true',
+         short = 'Leave the rejected hunks in corresponding *.rej files')]
  
--static const char *bundle_usage="git bundle (create <bundle> <git rev-list args> | verify <bundle> | list-heads <bundle> [refname]... | unbundle <bundle> [refname]... )";
-+static const char builtin_bundle_usage[] = "\
-+  git bundle create <file> <git-rev-list args>\n\
-+  git bundle verify <file>\n\
-+  git bundle list-heads <file> [refname...]\n\
-+  git bundle unbundle <file> [refname...]";
+@@ -75,11 +77,13 @@ def func(parser, options, args):
+         crt_patch = crt_series.get_patch(current)
+         bottom = crt_patch.get_bottom()
+         git.apply_patch(filename = filename, base = bottom,
+-                        reject = options.reject)
++                        strip = options.strip, reject = options.reject)
+     elif options.base:
+         git.apply_patch(filename = filename, reject = options.reject,
++                        strip = options.strip,
+                         base = git_id(crt_series, options.base))
+     else:
+-        git.apply_patch(filename = filename, reject = options.reject)
++        git.apply_patch(filename = filename, strip = options.strip,
++                        reject = options.reject)
  
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
-@@ -19,8 +23,8 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 	int bundle_fd = -1;
- 	char buffer[PATH_MAX];
- 
--	if (argc < 3)
--		usage(bundle_usage);
-+  if (argc < 3)
-+		usage(builtin_bundle_usage);
- 
- 	cmd = argv[1];
- 	bundle_file = argv[2];
-@@ -59,5 +63,5 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		return !!unbundle(&header, bundle_fd) ||
- 			list_bundle_refs(&header, argc, argv);
- 	} else
--		usage(bundle_usage);
-+		usage(builtin_bundle_usage);
- }
--- 
-1.6.5.rc0.dirty
+     out.done()
