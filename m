@@ -1,58 +1,79 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Gource - new GL Visualisation for git repositories
-Date: Wed, 16 Sep 2009 08:40:28 +0200
-Message-ID: <20090916064028.GA9482@glandium.org>
-References: <4AB0858E.6040805@vilain.net>
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: git workflow for fully distributed mini-teams
+Date: Wed, 16 Sep 2009 13:05:05 +0530
+Message-ID: <f46c52560909160035o6b09800eh5219d49e7569cf23@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Sep 16 08:40:26 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 16 09:42:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnoBl-0001cb-J7
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 08:40:25 +0200
+	id 1Mnp9c-0002Ks-Qx
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 09:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200AbZIPGkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 02:40:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750736AbZIPGkQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 02:40:16 -0400
-Received: from vuizook.err.no ([85.19.221.46]:35808 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750727AbZIPGkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 02:40:15 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1MnoBU-0007aH-RB; Wed, 16 Sep 2009 08:40:12 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1MnoBo-0002Te-Tf; Wed, 16 Sep 2009 08:40:28 +0200
-Content-Disposition: inline
-In-Reply-To: <4AB0858E.6040805@vilain.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1752087AbZIPHmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 03:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbZIPHmH
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 03:42:07 -0400
+Received: from mail-px0-f176.google.com ([209.85.216.176]:53963 "EHLO
+	mail-px0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbZIPHmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 03:42:06 -0400
+Received: by pxi6 with SMTP id 6so3806152pxi.21
+        for <git@vger.kernel.org>; Wed, 16 Sep 2009 00:42:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=B5kS0P9/LW/Yl7KcDdL8z/JVhPmiDyQzNP1fWyINBIs=;
+        b=AZj4l0reQwIc1aYup67UhtQWLjB2lxbNDOe5JkaSvbEj3f3mQKQTi+nIh6kfhXd724
+         R2rrVBr8Rt4coM+svqjFScBKQH1uI22SJbT9NgdChNZERnV6ZsaPAzgN0GNOn6S52B9C
+         hjE1f62VXLYxfJTunc/Pdj7/sddgsuWzP4h2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=GaFWPcxHAJg99mEDHtJ/jz8iu8X8gD+KWWFOw5PLf28RZ3YUxPfChojC0SzG1eUriP
+         Vd44Dremgza4TLeaxzW/z6K0sKJP/hsmPf+S7kKGtIMNtLe2+WXo/mke1aRu+AsQK0ne
+         YKrjNpp08yU60dofNTRC3GSVBD8/x4y6kmyDA=
+Received: by 10.114.18.4 with SMTP id 4mr15647647war.137.1253086505495; Wed, 
+	16 Sep 2009 00:35:05 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128610>
 
-On Wed, Sep 16, 2009 at 06:28:30PM +1200, Sam Vilain wrote:
-> A little fun candy to be had here:
-> 
->   http://www.youtube.com/watch?v=GTMC3g2Xy8c
->   (HQ version coming, once processing completes...)
-> 
-> Gource is a visualizer written in C++ which shows you the development of
-> the source code over time graphically.  It's pretty neat.  Home page at
-> http://code.google.com/p/gource/
+I am trying to formulate (and understand) what it means to have a
+fully-distributed mini team workflow with git.
 
-Code swarm (http://vis.cs.ucdavis.edu/~ogawa/codeswarm/) gives nice
-results, too.
+By fully distributed I mean theres no central repo -- not for pushing
+or even pulling; all communication is by email.
+By mini-team I mean: Not more than 5 programmers.
 
-Mike
+Heres a typical scenario.
+
+There are 3 programmers A B and C who communicate by email who have
+started off from the same code base.
+
+A's branches: dev, master, B, C
+B's branches: dev, master, A, C
+C's branches: dev, master, A, B
+
+A's best practices (and invariants) are:
+I (ie A) develop on dev (or other topic branches).
+I only merge onto master; never commit.
+I never work on nor merge onto B and C.
+When B sends me patches I apply them to the B branch likewise for C.
+Thereafter I merge that branch onto dev or master.
+There are no tracking branches because there are no remotes -- no
+central repo. [not clear about this]
+
+B and C have corresponding practices/behavior.
+
+So the questions...
+
+Is there a better way of doing things?
+Can some of these practices/invariants be enforced by scripts/options etc?
+What about checkpointing and restoring from botches?
