@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/4] reset: add a few tests for "git reset --merge"
-Date: Wed, 16 Sep 2009 06:14:39 +0200
-Message-ID: <20090916041443.3737.86878.chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/4] reset: use "unpack_trees()" directly instead of "git
+	read-tree"
+Date: Wed, 16 Sep 2009 06:14:40 +0200
+Message-ID: <20090916041443.3737.91512.chriscool@tuxfamily.org>
 References: <20090916035131.3737.33020.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -16,121 +17,143 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mnm0W-0007HV-Uc
+	id 1Mnm0X-0007HV-FV
 	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 06:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751458AbZIPEUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 00:20:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZIPEUa
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 00:20:30 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:54679 "EHLO smtp3-g21.free.fr"
+	id S1751475AbZIPEUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 00:20:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZIPEUc
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 00:20:32 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:54689 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751127AbZIPEU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 00:20:28 -0400
+	id S1751194AbZIPEU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 00:20:29 -0400
 Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 9219E8180E5;
-	Wed, 16 Sep 2009 06:20:22 +0200 (CEST)
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 019118180F5;
+	Wed, 16 Sep 2009 06:20:23 +0200 (CEST)
 Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 83F668180D3;
+	by smtp3-g21.free.fr (Postfix) with ESMTP id E56168180D5;
 	Wed, 16 Sep 2009 06:20:20 +0200 (CEST)
-X-git-sha1: a262c25d56fb5b41bbda1c403517f593e8c76863 
+X-git-sha1: dd0f005757b34b162dc85bd6b780728850ba00ec 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20090916035131.3737.33020.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128605>
 
-Commit 9e8eceab ("Add 'merge' mode to 'git reset'", 2008-12-01),
-added the --merge option to git reset, but there were no test cases
-for it.
+From: Stephan Beyer <s-beyer@gmx.net>
 
-This was not a big problem because "git reset" was just forking and
-execing "git read-tree", but this will change in a following patch.
+This patch makes "reset_index_file()" call "unpack_trees()" directly
+instead of forking and execing "git read-tree". So the code is more
+efficient.
 
-So let's add a few test cases to make sure that there will be no
-regression.
+And it's also easier to see which unpack_tree() options will be used,
+as we don't need to follow "git read-tree"'s command line parsing
+which is quite complex.
 
+As Daniel Barkalow found, there is a difference between this new
+version and the old one. The old version gives an error for
+"git reset --merge" with unmerged entries and the new version does
+not. But this can be seen as a bug fix, because "--merge" was the
+only "git reset" option with this behavior and this behavior was
+not documented.
+
+The code comes from the sequencer GSoC project:
+
+git://repo.or.cz/git/sbeyer.git
+
+(at commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
+
+Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t7110-reset-merge.sh |   68 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 68 insertions(+), 0 deletions(-)
- create mode 100755 t/t7110-reset-merge.sh
+ builtin-reset.c |   51 ++++++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 40 insertions(+), 11 deletions(-)
 
-diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-new file mode 100755
-index 0000000..1ec32f9
---- /dev/null
-+++ b/t/t7110-reset-merge.sh
-@@ -0,0 +1,68 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2009 Christian Couder
-+#
+diff --git a/builtin-reset.c b/builtin-reset.c
+index 73e6022..ddb81f3 100644
+--- a/builtin-reset.c
++++ b/builtin-reset.c
+@@ -18,6 +18,8 @@
+ #include "tree.h"
+ #include "branch.h"
+ #include "parse-options.h"
++#include "unpack-trees.h"
++#include "cache-tree.h"
+ 
+ static const char * const git_reset_usage[] = {
+ 	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
+@@ -52,29 +54,56 @@ static inline int is_merge(void)
+ 	return !access(git_path("MERGE_HEAD"), F_OK);
+ }
+ 
++static int parse_and_init_tree_desc(const unsigned char *sha1,
++					     struct tree_desc *desc)
++{
++	struct tree *tree = parse_tree_indirect(sha1);
++	if (!tree)
++		return 1;
++	init_tree_desc(desc, tree->buffer, tree->size);
++	return 0;
++}
 +
-+test_description='Tests for "git reset --merge"'
+ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet)
+ {
+-	int i = 0;
+-	const char *args[6];
++	int nr = 1;
++	int newfd;
++	struct tree_desc desc[2];
++	struct unpack_trees_options opts;
++	struct lock_file *lock = xcalloc(1, sizeof(struct lock_file));
+ 
+-	args[i++] = "read-tree";
++	memset(&opts, 0, sizeof(opts));
++	opts.head_idx = 1;
++	opts.src_index = &the_index;
++	opts.dst_index = &the_index;
++	opts.fn = oneway_merge;
++	opts.merge = 1;
+ 	if (!quiet)
+-		args[i++] = "-v";
++		opts.verbose_update = 1;
+ 	switch (reset_type) {
+ 	case MERGE:
+-		args[i++] = "-u";
+-		args[i++] = "-m";
++		opts.update = 1;
+ 		break;
+ 	case HARD:
+-		args[i++] = "-u";
++		opts.update = 1;
+ 		/* fallthrough */
+ 	default:
+-		args[i++] = "--reset";
++		opts.reset = 1;
+ 	}
+-	args[i++] = sha1_to_hex(sha1);
+-	args[i] = NULL;
+ 
+-	return run_command_v_opt(args, RUN_GIT_CMD);
++	newfd = hold_locked_index(lock, 1);
 +
-+. ./test-lib.sh
++	read_cache_unmerged();
 +
-+test_expect_success 'creating initial files' '
-+     echo "line 1" >> file1 &&
-+     echo "line 2" >> file1 &&
-+     echo "line 3" >> file1 &&
-+     cp file1 file2 &&
-+     git add file1 file2 &&
-+     test_tick &&
-+     git commit -m "Initial commit"
-+'
++	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
++		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
++	if (unpack_trees(nr, desc, &opts))
++		return -1;
++	if (write_cache(newfd, active_cache, active_nr) ||
++	    commit_locked_index(lock))
++		return error("Could not write new index file.");
 +
-+test_expect_success 'reset --merge is ok with changes in file it does not touch' '
-+     echo "line 4" >> file1 &&
-+     echo "line 4" >> file2 &&
-+     test_tick &&
-+     git commit -m "add line 4" file1 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file1 &&
-+     grep 4 file2 &&
-+     git reset --merge HEAD@{1} &&
-+     grep 4 file1 &&
-+     grep 4 file2
-+'
-+
-+test_expect_success 'reset --merge discards changes added to index (1)' '
-+     echo "line 5" >> file1 &&
-+     git add file1 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file1 &&
-+     ! grep 5 file1 &&
-+     grep 4 file2 &&
-+     echo "line 5" >> file2 &&
-+     git add file2 &&
-+     git reset --merge HEAD@{1} &&
-+     ! grep 4 file2 &&
-+     ! grep 5 file1 &&
-+     grep 4 file1
-+'
-+
-+test_expect_success 'reset --merge discards changes added to index (2)' '
-+     echo "line 4" >> file2 &&
-+     git add file2 &&
-+     git reset --merge HEAD^ &&
-+     ! grep 4 file2 &&
-+     git reset --merge HEAD@{1} &&
-+     ! grep 4 file2 &&
-+     grep 4 file1
-+'
-+
-+test_expect_success 'reset --merge fails with changes in file it touches' '
-+     echo "line 6" >> file1 &&
-+     test_tick &&
-+     git commit -m "add line 6" file1 &&
-+     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
-+     mv file3 file1 &&
-+     test_must_fail git reset --merge HEAD^ 2>err.log &&
-+     grep file1 err.log | grep "not uptodate"
-+'
-+
-+test_done
++	return 0;
+ }
+ 
+ static void print_new_head_line(struct commit *commit)
 -- 
 1.6.5.rc0.150.g38fe6
