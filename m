@@ -1,95 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] push: Correctly initialize nonfastforward in do_push.
-Date: Wed, 16 Sep 2009 19:26:08 +0200
-Message-ID: <vpqfxamby33.fsf@bauges.imag.fr>
+Date: Wed, 16 Sep 2009 11:15:27 -0700
+Message-ID: <7vvdjizrgg.fsf@alter.siamese.dyndns.org>
 References: <1253119020-26547-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vpr9q24oa.fsf@alter.siamese.dyndns.org>
+ <7vpr9q24oa.fsf@alter.siamese.dyndns.org> <vpqfxamby33.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 19:29:20 2009
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 16 20:15:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnyJi-0005XK-0Q
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 19:29:18 +0200
+	id 1Mnz2e-0002l7-Q0
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 20:15:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758843AbZIPR3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 13:29:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758651AbZIPR3H
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 13:29:07 -0400
-Received: from imag.imag.fr ([129.88.30.1]:43398 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754635AbZIPR3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 13:29:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n8GHQ8GQ017272
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 16 Sep 2009 19:26:09 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MnyGe-0003NF-N1; Wed, 16 Sep 2009 19:26:08 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MnyGe-00088m-Lf; Wed, 16 Sep 2009 19:26:08 +0200
-In-Reply-To: <7vpr9q24oa.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 16 Sep 2009 10\:13\:57 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 16 Sep 2009 19:26:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1756534AbZIPSPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 14:15:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755954AbZIPSPe
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 14:15:34 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55512 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755741AbZIPSPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 14:15:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F0535354D;
+	Wed, 16 Sep 2009 14:15:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VUmLaW8ORCx1tkLTukfDH1r4y3U=; b=S9coGB
+	/XiFTRFTfbEmAzAeGHHikodgOOx5sqF+upkk1TFbHbFoDIisZKHBAWs+5R0Ibaob
+	/82KQRs0fx2DGUZixEoHPGEkLlXy0Yd8uNorzd4V//bBpU3/HYs6Cmhp6kleae+6
+	JP6+GXOzCKArBnpp5Ld/mbk2DjchJUiKfLspw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EcvcHYogzkxz4z5KNv407xhGOVyU3JKB
+	lDRJrbXrgs8c2xEUGZQo8URwHUVmYkmvbnDzshxDS0jNwaNpuwsuamhRjcg2a4RI
+	HigBzgwj+AGm2InAtveVERWZK6A5koy+xnQoqJG1ZUW2+L6Vl7okO677K2qITRau
+	7WyKFaXjvyo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 010975354C;
+	Wed, 16 Sep 2009 14:15:34 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AD96F53544; Wed, 16 Sep 2009
+ 14:15:28 -0400 (EDT)
+In-Reply-To: <vpqfxamby33.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Wed\, 16 Sep 2009 19\:26\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: ED93DFAC-A2EC-11DE-A30B-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128669>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> The variable is assigned unconditionally in print_push_status, but
->> print_push_status is not reached by all codepaths. In particular, this
->> fixes a bug where "git push ... nonexisting-branch" was complaining about
->> non-fast forward.
->
-> Hmm, the patch looks correct but I am scratching my head to see how this
-> is triggered.  "git push ... nonexisting-branch" seems to get:
+> Short answer: trust me, without the patch, you get the non-fast
+> forward (and valgrind tells you about conditional jump on
+> uninitialized value), with, you don't ;-).
 
-Short answer: trust me, without the patch, you get the non-fast
-forward (and valgrind tells you about conditional jump on
-uninitialized value), with, you don't ;-).
+I understand valgrind one; I can trace the codepath with eyeballs without
+it, and that is why I said it looks correct to begin with.
 
-Longer one:
+My puzzlement was that the following in the log message did not seem to
+reproduce for me:
 
-int transport_push(struct transport *transport,
-		   int refspec_nr, const char **refspec, int flags,
-		   int * nonfastforward)
-{
-[...]
-		if (match_refs(local_refs, &remote_refs,
-			       refspec_nr, refspec, match_flags)) {
-			return -1; /* <------------------------------ you stop here */
-		}
-[...]
-		if (!quiet || push_had_errors(remote_refs))
-			print_push_status(transport->url, remote_refs,
-					verbose | porcelain, porcelain,
-					nonfastforward); /* <----- you would have updated nonfastforward there */
-[...]
-}
+    ... where "git push ... nonexisting-branch" was complaining about
+    non-fast forward.
 
-Actually, my initial version probably had the condition of the second
-if too. And with the first "return" statement in transport_push.
-Writting this, I'm wondering if it wouldn't be a better coding style
-to initialize nonfastforward to 0 within transport_push (in case other
-callers to transport_push appear one day, they won't get the the same
-bug). Second version of the patch is comming.
+I would be eventually writing an entry in the Release Notes about this
+fix, and I do not want to say:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+    "git push $there no-such-ref" incorrectly said no-such-ref does not
+    fast forward; fixed.
+
+when I know that command line would produce something entirely different
+error.
