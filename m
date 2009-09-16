@@ -1,57 +1,104 @@
-From: Joel Saltzman <saltzmanjoelh@gmail.com>
-Subject: self contained executable
-Date: Wed, 16 Sep 2009 00:45:12 -0700
-Message-ID: <ED42F58A-A814-467B-A37D-B485B2E267ED@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [RFC/PATCH 2/2] fetch: Speed up fetch by using ref dictionary
+Date: Wed, 16 Sep 2009 08:53:03 +0100
+Message-ID: <20090916075304.58044.83034.julian@quantumfyre.co.uk>
+References: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 16 09:45:35 2009
+X-From: git-owner@vger.kernel.org Wed Sep 16 09:54:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MnpCj-0003Aq-7X
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 09:45:29 +0200
+	id 1MnpLt-0005wD-2O
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 09:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753925AbZIPHpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 03:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753688AbZIPHpP
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 03:45:15 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:33225 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753327AbZIPHpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 03:45:14 -0400
-Received: by yxe1 with SMTP id 1so6337741yxe.21
-        for <git@vger.kernel.org>; Wed, 16 Sep 2009 00:45:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to
-         :content-type:content-transfer-encoding:mime-version:subject:date
-         :x-mailer;
-        bh=sAmKIgYbjqN6MITVVgl9qucRU2m/RfW2pdprTsecmSQ=;
-        b=G8b5BODnkm5dCBoMrolgo9jSWwpwLB03KL7a3of2L3+hx7Asd2Kjpym7i/8VnvGL0f
-         EW86tH7Vch3JjWmh+SgltoMv3vle5GQCouoowCX6qik2NKxgcFPv+1kEdp+GH5sbkurJ
-         9ATBzho3rfcha8SELyDIwcgJMqJPWz1mW2I3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:content-type:content-transfer-encoding
-         :mime-version:subject:date:x-mailer;
-        b=v8sTHb9WoS40sF9f9prmh45f6p35DsyzJjYVpSSOiEnnR4DtWr/zcgDLgT6sar+BlW
-         j9sG5UadlxtSA8QursG79+PJlZlI6G5omexHQfOI2Dh/AERDUoq2is3Uo82eCUOHUVu1
-         ZBGoeJKCjuofbuoBD/HxszqaJrhyrHkhvlZE4=
-Received: by 10.90.58.29 with SMTP id g29mr5219556aga.44.1253087117689;
-        Wed, 16 Sep 2009 00:45:17 -0700 (PDT)
-Received: from ?10.0.253.229? (99-26-120-241.lightspeed.sndgca.sbcglobal.net [99.26.120.241])
-        by mx.google.com with ESMTPS id 18sm1183668agb.72.2009.09.16.00.45.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Sep 2009 00:45:17 -0700 (PDT)
-X-Mailer: Apple Mail (2.936)
+	id S1753415AbZIPHyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 03:54:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753714AbZIPHyg
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 03:54:36 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36065 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751585AbZIPHyf (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Sep 2009 03:54:35 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 1BF3633FA29
+	for <git@vger.kernel.org>; Wed, 16 Sep 2009 08:54:38 +0100 (BST)
+Received: (qmail 30309 invoked by uid 103); 16 Sep 2009 08:53:11 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9808. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.026665 secs); 16 Sep 2009 07:53:11 -0000
+Received: from reaper.quantumfyre.co.uk (HELO rayne.quantumfyre.co.uk) (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 16 Sep 2009 08:53:11 +0100
+X-git-sha1: 9f31c7f792b7b9da295ae4a48968dfac5e76cf57 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128612>
 
-is it possible to compile git with all its dependencies so I can run  
-it on a server that does not have root access?
+When trying to get a list of remote tags to see if we need to fetch
+any we were doing a linear search for the matching tag ref for the
+tag^{} commit entries.  This proves to be incredibly slow for large
+numbers of tags.
+
+For a repository with 50000 tags (and just a single commit on a single
+branch), a fetch that does nothing goes from ~ 1m50s to ~4.5s.
+
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
+ builtin-fetch.c |   19 +++++++++----------
+ 1 files changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cb48c57..16cfee6 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -11,6 +11,7 @@
+ #include "run-command.h"
+ #include "parse-options.h"
+ #include "sigchain.h"
++#include "ref-dict.h"
+ 
+ static const char * const builtin_fetch_usage[] = {
+ 	"git fetch [options] [<repository> <refspec>...]",
+@@ -513,12 +514,16 @@ static void find_non_local_tags(struct transport *transport,
+ 	char *ref_name;
+ 	int ref_name_len;
+ 	const unsigned char *ref_sha1;
+-	const struct ref *tag_ref;
++	unsigned char tag_sha1[40];
+ 	struct ref *rm = NULL;
+ 	const struct ref *ref;
++	struct hash_table dict;
++	const struct ref *remote_refs = transport_get_remote_refs(transport);
++
++	ref_dict_create(&dict, remote_refs);
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+-	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
++	for (ref = remote_refs; ref; ref = ref->next) {
+ 		if (prefixcmp(ref->name, "refs/tags"))
+ 			continue;
+ 
+@@ -528,14 +533,8 @@ static void find_non_local_tags(struct transport *transport,
+ 
+ 		if (!strcmp(ref_name + ref_name_len - 3, "^{}")) {
+ 			ref_name[ref_name_len - 3] = 0;
+-			tag_ref = transport_get_remote_refs(transport);
+-			while (tag_ref) {
+-				if (!strcmp(tag_ref->name, ref_name)) {
+-					ref_sha1 = tag_ref->old_sha1;
+-					break;
+-				}
+-				tag_ref = tag_ref->next;
+-			}
++			if (ref_dict_get(&dict, ref_name, tag_sha1))
++				ref_sha1 = tag_sha1;
+ 		}
+ 
+ 		if (!string_list_has_string(&existing_refs, ref_name) &&
+-- 
+1.6.4.2
