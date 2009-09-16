@@ -1,171 +1,135 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/4] reset: add option "--merge-safe" to "git reset"
-Date: Wed, 16 Sep 2009 06:14:41 +0200
-Message-ID: <20090916041443.3737.63217.chriscool@tuxfamily.org>
-References: <20090916035131.3737.33020.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Paolo Bonzini <bonzini@gnu.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 16 06:21:11 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [PATCH 13/14] Add README for MSVC build
+Date: Wed, 16 Sep 2009 07:26:40 +0200
+Message-ID: <4AB07710.4080604@gmail.com>
+References: <cover.1253021221.git.mstormo@gmail.com>	 <ffd7cfd6114f08c6502b21140d56d9bcd5d2a554.1253021728.git.mstormo@gmail.com>	 <4924c3de4fa490d1f41b75d18864f0a57fbd0eda.1253021728.git.mstormo@gmail.com>	 <88c817f030cfcc1e3b9e08f80d7ccfbcdfad7ecb.1253021728.git.mstormo@gmail.com>	 <8bcd4b022f59a5f55b63f87c9cf6a4dadc71cc44.1253021728.git.mstormo@gmail.com>	 <606db5a89cc49818fa225312a3bb6dbda18867a6.1253021728.git.mstormo@gmail.com>	 <65347d022ba857d57d3c081f28b239b9b665c587.1253021728.git.mstormo@gmail.com>	 <cover.1253021728.git.mstormo@gmail.com>	 <9fc49662e1ec00388adb3d50c41d20561ed58939.1253021728.git.mstormo@gmail.com>	 <22e0abb5a1e91c3ca95f8538d8396c167bb1028d.1253021728.git.mstormo@gmail.com> <a4c8a6d00909151822p6f9d8dffr9391d7e58077de2@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,  git@vger.kernel.org, lznuaa@gmail.com, raa.lkml@gmail.com,  snaury@gmail.com
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Sep 16 07:27:34 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yw0-f156.google.com ([209.85.211.156])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mnm0x-0007Oz-NH
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Sep 2009 06:21:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbZIPEUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 00:20:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751409AbZIPEUg
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 00:20:36 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:54699 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751227AbZIPEU3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 00:20:29 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id A1BDB8180FE;
-	Wed, 16 Sep 2009 06:20:24 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 549418180BC;
-	Wed, 16 Sep 2009 06:20:21 +0200 (CEST)
-X-git-sha1: b87908700d8b0d838e4c1ddb5cc208ac0b88d81c 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20090916035131.3737.33020.chriscool@tuxfamily.org>
-Sender: git-owner@vger.kernel.org
+	id 1Mnn3F-00034H-Lj
+	for gcvm-msysgit@m.gmane.org; Wed, 16 Sep 2009 07:27:33 +0200
+Received: by ywh28 with SMTP id 28so10841631ywh.14
+        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Sep 2009 22:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=5SG7hCuVh6Qyg//3JyedFn9kVHauei2Gc1yyku3bZes=;
+        b=sJPDGJSsPekpHRcsrQ0lQpF3VLkHoiQ0PhlZeeqXVT0imWKbb4UqCuxeulOtbEzhZu
+         DEbAI6WOd15RlGxMmjTiNCzexIfTgvjtNe0mR8gucC8BLKTOO8NcrWH52Piitit/FX/F
+         W8bvehtPTp2EYKpLtkXuNjtgk2BPn7QH+NZp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding:sender:precedence:x-google-loop
+         :mailing-list:list-id:list-post:list-help:list-unsubscribe
+         :x-beenthere-env:x-beenthere;
+        b=25znUXrNzd47kd3Z4XbXXaIfb0XoFHa+MDGBtWtKTYxBOiSoYbzYTs234AaVl0cxcx
+         4ZmXfHRnNKG+n7V538gZDJcdFyWqIG7qO2mk9PK3++wneCVIwzMlHZ5FXfNWqnIOcAyr
+         LpWr/42EM0ydcCuKaxlE0i4b7Hv0pSyeVb60I=
+Received: by 10.150.5.1 with SMTP id 1mr2494026ybe.18.1253078845738;
+        Tue, 15 Sep 2009 22:27:25 -0700 (PDT)
+Received: by 10.176.233.14 with SMTP id f14gr7030yqh.0;
+	Tue, 15 Sep 2009 22:27:10 -0700 (PDT)
+X-Sender: mstormo@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.210.9.6 with SMTP id 6mr1400686ebi.29.1253078829297; Tue, 15 Sep 2009 22:27:09 -0700 (PDT)
+Received: by 10.210.9.6 with SMTP id 6mr1400685ebi.29.1253078829276; Tue, 15 Sep 2009 22:27:09 -0700 (PDT)
+Received: from mail-ew0-f220.google.com (mail-ew0-f220.google.com [209.85.219.220]) by gmr-mx.google.com with ESMTP id 16si1651997ewy.3.2009.09.15.22.27.08; Tue, 15 Sep 2009 22:27:08 -0700 (PDT)
+Received-SPF: pass (google.com: domain of mstormo@gmail.com designates 209.85.219.220 as permitted sender) client-ip=209.85.219.220;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of mstormo@gmail.com designates 209.85.219.220 as permitted sender) smtp.mail=mstormo@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by ewy20 with SMTP id 20so4091074ewy.45 for <msysgit@googlegroups.com>; Tue, 15 Sep 2009 22:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from :user-agent:mime-version:to:cc:subject:references:in-reply-to :content-type:content-transfer-encoding; bh=227dag/9m9T8KaYJG377SRZ5wR5LTNsKhRKl2Gt38vc=; b=o+INHM4kRp8Fh3N+oEMdw3Hmz54T5FwrtwEL+O6n5vHdNq0CszFBC1y9dx+gIHohZ9 qG1O9A+5XNHKFtiIEgulzTDjl/LJTlMjopi90V809PSc+9cSmKdPdLz69L1utOoBAgGK CVIChlwP70I2HiyMqEi/zCDNKX7ySZt51OQ60=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:user-agent:mime-version:to:cc:subject :references:in-reply-to:content-type:content-transfer-encoding; b=Uup25YA/xarhQzfunDV0mvDk+JNWmSjXuj+WSEY2UcL4rESc4++J6YnyugTeiq1S7h w14qrS2j2UO6VEmZ5scYmLmq0kvEXYFVOg+tvfczCVYEeOwJdHiBr/+BKtwhGJwx5tS8 f0/ajZfIp8bTdEqiHctlYUuZ/kgrukXaweNCo=
+Received: by 10.211.144.7 with SMTP id w7mr9446667ebn.28.1253078828163; Tue, 15 Sep 2009 22:27:08 -0700 (PDT)
+Received: from ?172.24.90.95? ([62.70.27.104]) by mx.google.com with ESMTPS id 28sm8196619eyg.4.2009.09.15.22.27.06 (version=TLSv1/SSLv3 cipher=RC4-MD5); Tue, 15 Sep 2009 22:27:07 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <a4c8a6d00909151822p6f9d8dffr9391d7e58077de2@mail.gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128606>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128607>
 
-From: Stephan Beyer <s-beyer@gmx.net>
 
-This option is nearly like "--merge" except that it is
-safer. The table below show the differences between these
-options.
+Thiago Farina said the following on 16.09.2009 03:22:
+> On Tue, Sep 15, 2009 at 10:44 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+>> Based on original README patch from Frank Li
+>>
+>> Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
+>> ---
+>>  compat/vcbuild/README |   39 +++++++++++++++++++++++++++++++++++++++
+>>  1 files changed, 39 insertions(+), 0 deletions(-)
+>>  create mode 100644 compat/vcbuild/README
+>>
+>> diff --git a/compat/vcbuild/README b/compat/vcbuild/README
+>> new file mode 100644
+>> index 0000000..5d7a07a
+>> --- /dev/null
+>> +++ b/compat/vcbuild/README
+>> @@ -0,0 +1,39 @@
+>> +The Steps of Build Git with VS2008
+>> +
+>> +1. You need the build environment, which contains the Git dependencies
+>> +   to be able to compile, link and run Git with MSVC.
+>> +
+>> +   You can either use the binary repository:
+>> +
+>> +       WWW: http://repo.or.cz/w/msvcgit.git
+>> +       Git: git clone git://repo.or.cz/msvcgit.git
+>> +       Zip: http://repo.or.cz/w/msvcgit.git?a=snapshot;h=master;sf=zip
+>> +
+>> +   and call the setup_32bit_env.cmd batch script before compiling Git,
+>> +   (see repo/package README for details), or the source repository:
+>> +
+>> +       WWW: http://repo.or.cz/w/gitbuild.git
+>> +       Git: git clone git://repo.or.cz/gitbuild.git
+>> +       Zip: (None, as it's a project with submodules)
+>> +
+>> +   and build the support libs as instructed in that repo/package.
+>> +
+>> +2. Ensure you have the msysgit environment in your path, so you have
+>> +   GNU Make, bash and perl available.
+>> +
+>> +       WWW: http://repo.or.cz/w/msysgit.git
+>> +       Git: git clone git://repo.or.cz/msysgit.git
+>> +       Zip: http://repo.or.cz/w/msysgit.git?a=snapshot;h=master;sf=zip
+>> +
+>> +   This environment is also needed when you use the resulting
+>> +   executables, since Git might need to run scripts which are part of
+>> +   the git operations.
+>> +
+>> +4. Inside Git's directory run the command:
+> Shouldn't be 3.?
+>> +       make common-cmds.h
+>> +   to generate the common-cmds.h file needed to compile git.
+>> +
+>> +5. Then build Git with the GNU Make Makefile in the Git projects root
+> 4.?
 
-working index HEAD target         working index HEAD
-  B      B     A     A   --m-s      B      A     A
-                         --merge    A      A     A
-  B      B     A     C   --m-s       (disallowed)
-                         --merge    C      C     C
+Heh, you're right.. I've been modifying this file too much lately :-)
 
-In this table, A, B and C are some different states of
-a file. For example the first 2 lines of the table mean
-that if a file is in state B in the working tree and
-the index, and in a different state A in HEAD and in
-the target, then "git reset --merge-safe target" will
-put the file in state B in the working tree and in
-state A in the index and HEAD.
-
-So as can be seen in the table, "--merge" discards changes
-in the index, while "--merge-safe" does not.
-
-A following patch will add some test cases for
-"--merge-safe", where the differences between "--merge"
-and "--merge-safe" can also be seen.
-
-The "--merge-safe" option is implemented by doing a 2 way
-merge between HEAD and the reset target, and if this
-succeeds by doing a mixed reset to the target.
-
-The code comes from the sequencer GSoC project:
-
-git://repo.or.cz/git/sbeyer.git
-
-(at commit 5a78908b70ceb5a4ea9fd4b82f07ceba1f019079)
-
-But in the sequencer project the "reset" flag was set
-in the "struct unpack_trees_options" passed to
-"unpack_trees()". With this flag the changes in the
-working tree were discarded if the file was different
-between HEAD and the reset target.
-
-Mentored-by: Daniel Barkalow <barkalow@iabervon.org>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Stephan Beyer <s-beyer@gmx.net>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin-reset.c |   30 +++++++++++++++++++++++++-----
- 1 files changed, 25 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-reset.c b/builtin-reset.c
-index ddb81f3..78d42e6 100644
---- a/builtin-reset.c
-+++ b/builtin-reset.c
-@@ -22,13 +22,15 @@
- #include "cache-tree.h"
- 
- static const char * const git_reset_usage[] = {
--	"git reset [--mixed | --soft | --hard | --merge] [-q] [<commit>]",
-+	"git reset [--mixed | --soft | --hard | --merge | --merge-safe] [-q] [<commit>]",
- 	"git reset [--mixed] <commit> [--] <paths>...",
- 	NULL
- };
- 
--enum reset_type { MIXED, SOFT, HARD, MERGE, NONE };
--static const char *reset_type_names[] = { "mixed", "soft", "hard", "merge", NULL };
-+enum reset_type { MIXED, SOFT, HARD, MERGE, MERGE_SAFE, NONE };
-+static const char *reset_type_names[] = {
-+	"mixed", "soft", "hard", "merge", "merge_safe", NULL
-+};
- 
- static char *args_to_str(const char **argv)
- {
-@@ -81,6 +83,7 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 	if (!quiet)
- 		opts.verbose_update = 1;
- 	switch (reset_type) {
-+	case MERGE_SAFE:
- 	case MERGE:
- 		opts.update = 1;
- 		break;
-@@ -95,6 +98,16 @@ static int reset_index_file(const unsigned char *sha1, int reset_type, int quiet
- 
- 	read_cache_unmerged();
- 
-+	if (reset_type == MERGE_SAFE) {
-+		unsigned char *head_sha1;
-+		if (get_sha1("HEAD", head_sha1))
-+			return error("You do not have a valid HEAD.");
-+		if (parse_and_init_tree_desc(head_sha1, desc))
-+			return error("Failed to find tree of HEAD.");
-+		nr++;
-+		opts.fn = twoway_merge;
-+	}
-+
- 	if (parse_and_init_tree_desc(sha1, desc + nr - 1))
- 		return error("Failed to find tree of %s.", sha1_to_hex(sha1));
- 	if (unpack_trees(nr, desc, &opts))
-@@ -238,6 +251,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				"reset HEAD, index and working tree", HARD),
- 		OPT_SET_INT(0, "merge", &reset_type,
- 				"reset HEAD, index and working tree", MERGE),
-+		OPT_SET_INT(0, "merge-safe", &reset_type,
-+				"reset HEAD, index and working tree",
-+				MERGE_SAFE),
- 		OPT_BOOLEAN('q', NULL, &quiet,
- 				"disable showing new HEAD in hard reset and progress message"),
- 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
-@@ -324,9 +340,13 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (reset_type == SOFT) {
- 		if (is_merge() || read_cache() < 0 || unmerged_cache())
- 			die("Cannot do a soft reset in the middle of a merge.");
-+	} else {
-+		int err = reset_index_file(sha1, reset_type, quiet);
-+		if (reset_type == MERGE_SAFE)
-+			err = err || reset_index_file(sha1, MIXED, quiet);
-+		if (err)
-+			die("Could not reset index file to revision '%s'.", rev);
- 	}
--	else if (reset_index_file(sha1, reset_type, quiet))
--		die("Could not reset index file to revision '%s'.", rev);
- 
- 	/* Any resets update HEAD to the head being switched to,
- 	 * saving the previous head in ORIG_HEAD before. */
--- 
-1.6.5.rc0.150.g38fe6
+--
+.marius
