@@ -1,67 +1,65 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: Usability question
-Date: Thu, 17 Sep 2009 15:25:29 +0200
-Message-ID: <9accb4400909170625v35e112f6i66d79282d2433c49@mail.gmail.com>
-References: <513ca40e0909170301s2b09184akb27acde76975c09b@mail.gmail.com>
-	 <vpqy6odhn0d.fsf@bauges.imag.fr>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 04/15] Set _O_BINARY as default fmode for both MinGW and
+ 	MSVC
+Date: Thu, 17 Sep 2009 15:30:36 +0200
+Message-ID: <4AB239FC.9050302@viscovery.net>
+References: <cover.1253088099.git.mstormo@gmail.com>	 <4AB10F01.9010703@viscovery.net>	 <e2480c70909161300o3db4b416k8f33ccce2f987c55@mail.gmail.com>	 <4AB1E118.70504@viscovery.net> <4AB1E4C5.80102@gmail.com>	 <4AB1E6E4.1040100@viscovery.net> <4AB1EB02.2090308@gmail.com>	 <4AB1EF0E.5010600@viscovery.net>	 <e2480c70909170139x9580bb4pcc1ad8e1b93aef17@mail.gmail.com>	 <4AB1FB79.5070903@viscovery.net> <e2480c70909170602l6afc9842v7be2b91fde9ad498@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Rob Barrett <barrettboy@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 17 15:25:35 2009
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com,
+	raa.lkml@gmail.com,
+	Marius Storm-Olsen <marius.storm-olsen@nokia.com>
+To: Alexey Borzenkov <snaury@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 15:31:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoGzO-0001jL-K7
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:25:34 +0200
+	id 1MoH4V-0003VL-6U
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:30:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753038AbZIQNZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 09:25:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752438AbZIQNZ1
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:25:27 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:57668 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753025AbZIQNZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 09:25:26 -0400
-Received: by mail-fx0-f217.google.com with SMTP id 17so17863fxm.37
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 06:25:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=Ymvf1/aJqpwY7jEPxsN/9qX1dZpy20XH7mBk/7Auisc=;
-        b=u6eV1e1HuUNpAF6LnNzvAu0a0NEbmdh57jCCo18v1LLYqptYZeinGXuo4yCfxkPyW5
-         xmTbHpEy8WFFaymrWUSUDkIM3EJDBGwTOkpllpAPKjOHWXD7c180De5+Bsj6Ygo1GWsn
-         hwzbEIwV/tFp4dyij3f9SY79jbOHIfrTHWQDY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Vse9GHf7BWRt9xhzbnPsbm6j8XwUcyNQBaNwmVJx7VYwn2htGIb6E9PqfkjSCtBH4i
-         FauJ6QUKnBLA2loiq1VIJZndVK2t92PI7bKCZZnj6ur9TvSpjvF3Tmw8KFL23szmyrpc
-         dqycnsPjzKe7P9lwveaUmrQfvGd2o32SSygB4=
-Received: by 10.204.154.147 with SMTP id o19mr385240bkw.159.1253193929848; 
-	Thu, 17 Sep 2009 06:25:29 -0700 (PDT)
-In-Reply-To: <vpqy6odhn0d.fsf@bauges.imag.fr>
+	id S1753555AbZIQNaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 09:30:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbZIQNaj
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:30:39 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32670 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753354AbZIQNai (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 09:30:38 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MoH4H-0002Zf-9j; Thu, 17 Sep 2009 15:30:39 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D308ABC81; Thu, 17 Sep 2009 15:30:36 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <e2480c70909170602l6afc9842v7be2b91fde9ad498@mail.gmail.com>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128756>
 
-On Thu, Sep 17, 2009 at 12:01 PM, Rob Barrett <barrettboy@gmail.com> wrote:
-> When starting with git people almost always ask some variant of "how
-> do I know whether this option should be prefixed with dashes or not?"
-> i.e. git reset --hard vs. git stash save --patch, which coupled with
-> other path, sha and treeish args make things a bit more confusing.
+[for the archives: this is about intermittent failures of t3903-stash.sh
+with MinGW git]
 
-> And people stop asking the question after they get used to git - but
-> that's not the same as being usable.
+Alexey Borzenkov schrieb:
+> "after finding i_tree and i_commit" is immediately before calculating
+> w_tree. As you can see, "before git read-tree" is off by a second. I
+> think it's just a bug in msys, cp -p doesn't preserve mtime exactly.
+> :-/
 
-without speaking of usability I'll tell them to use autocompletion to
-see which command / options they have until
-they get used to them
+Ah, now I recall everything: git-stash.sh does "cp -p", and from the times
+where git-commit was still a shell script I know that this does not always
+preserve the timestamp correctly. Since this is a bug attributable to MSYS
+(and not MinGW git), I was satisfied by simply inserting 'sleep 1' in the
+test case to avoid the racily-clean situation. (Although today, I would
+modify the content to have a different size.)
 
-regards,
-Daniele
+-- Hannes
