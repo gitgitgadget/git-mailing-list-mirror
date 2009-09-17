@@ -1,63 +1,60 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: Usability question
-Date: Thu, 17 Sep 2009 14:13:28 +0200
-Message-ID: <20090917121328.GA21837@neumann>
-References: <513ca40e0909170301s2b09184akb27acde76975c09b@mail.gmail.com>
-	<vpqy6odhn0d.fsf@bauges.imag.fr>
+From: Rustom Mody <rustompmody@gmail.com>
+Subject: Re: git workflow for fully distributed mini-teams
+Date: Thu, 17 Sep 2009 18:08:20 +0530
+Message-ID: <f46c52560909170538q4d316d00jcccad8ec9f563574@mail.gmail.com>
+References: <f46c52560909160035o6b09800eh5219d49e7569cf23@mail.gmail.com>
+	 <20090916164356.GB24893@vidovic>
+	 <f46c52560909170003l61a2e1a3kf62c94ffd7ed9710@mail.gmail.com>
+	 <4AB1E514.9030501@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Rob Barrett <barrettboy@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 17 14:29:06 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 17 14:38:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoG6j-0008GO-6R
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 14:29:05 +0200
+	id 1MoGFo-0002dG-3X
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 14:38:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758137AbZIQM2k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 08:28:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbZIQM2j
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 08:28:39 -0400
-Received: from francis.fzi.de ([141.21.7.5]:44854 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754191AbZIQM2j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 08:28:39 -0400
-X-Greylist: delayed 911 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2009 08:28:39 EDT
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 17 Sep 2009 14:13:28 +0200
-Content-Disposition: inline
-In-Reply-To: <vpqy6odhn0d.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 17 Sep 2009 12:13:28.0214 (UTC) FILETIME=[43950B60:01CA3790]
+	id S1756537AbZIQMiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 08:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753555AbZIQMiS
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 08:38:18 -0400
+Received: from mail-pz0-f190.google.com ([209.85.222.190]:34723 "EHLO
+	mail-pz0-f190.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752750AbZIQMiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 08:38:17 -0400
+Received: by pzk28 with SMTP id 28so1277922pzk.5
+        for <git@vger.kernel.org>; Thu, 17 Sep 2009 05:38:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:content-type;
+        bh=qv6UfGBF+WNjqnkIfKRSTvdCoRNnMwHSbBpYi8PTPLA=;
+        b=l63c8VWhm3YAXiXipKWBnNPpiIi3O1YzIXjMBsu0XeociCpbJlrGazi435qRXDgkHg
+         GUqTZZssxu+cTulKoH2LVV957Q8FUW9/JbbIY8D31oh79noXKGIqJdf5Ko1dZNXv1VqC
+         FnhvQ+qazQ0iCUzrf7HvxQdsOYksbHrxp30AM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=bNFRcBjlpT2FVQw4jFhbT1flnD9i6AatevmlazC3zf4U+k/BR+OBHZ74WHvaeFKhYY
+         tZCIRzdbJis8hnVmiX8/x41tPdA9xDi4UlYjaVV5FoSAfDWsPmgEnolOStbU6RU2VMvc
+         csxZpuWvkZ9Zwmechq8R4UXx4P5V8hnp5SI98=
+Received: by 10.114.116.12 with SMTP id o12mr18550634wac.83.1253191100064; 
+	Thu, 17 Sep 2009 05:38:20 -0700 (PDT)
+In-Reply-To: <4AB1E514.9030501@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128749>
 
-Hi,
+On Thu, Sep 17, 2009 at 12:58 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> I think the most important thing would be that you send bundles around,
+> not patches, so that you all can work with and talk about unique object names.
+>
+> -- Hannes
 
-
-On Thu, Sep 17, 2009 at 12:41:06PM +0200, Matthieu Moy wrote:
-> Rob Barrett <barrettboy@gmail.com> writes:
-> > 1. What is the distinction that makes the 10% special enough to get
-> > non-prefixed options?
->=20
-> Prefixed and non-prefixed is what people usually call respectively
-> "options" and "subcommands". To me, the distinction is needed:
->=20
-> Options are flags that modify the behavior of a git command. For
-> example, "git reset" and "git reset --hard" do something similar, but
-> "git svn rebase" and "git svn dcommit" do something really, totally
-> different. It's not about doing the same thing in a different way,
-> it's really about different actions.
-
-I tend to aggree, but what about 'git rebase --abort' vs. 'git rebase
---continue'?  IMHO they are also doing something totally different.
-
-
-Best,
-G=E1bor
+Thats what we need -- thanks a  'bundle'!
