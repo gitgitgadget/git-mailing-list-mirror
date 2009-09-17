@@ -1,92 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 3/4] reset: add option "--merge-safe" to "git reset"
-Date: Thu, 17 Sep 2009 15:05:20 +0200
-Message-ID: <4AB23410.6080508@viscovery.net>
-References: <20090917040835.4048.51057.chriscool@tuxfamily.org>	 <20090917041440.4048.16353.chriscool@tuxfamily.org>	 <7vk4zykv7o.fsf@alter.siamese.dyndns.org>	 <4AB1D957.20902@viscovery.net>	 <7vr5u6jbgk.fsf@alter.siamese.dyndns.org>	 <4AB1E41F.6050304@viscovery.net> <c07716ae0909170512k3c2ec7m21e69e9acfdfd81f@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Usability question
+Date: Thu, 17 Sep 2009 15:09:25 +0200
+Message-ID: <vpqiqfhbtve.fsf@bauges.imag.fr>
+References: <513ca40e0909170301s2b09184akb27acde76975c09b@mail.gmail.com>
+	<vpqy6odhn0d.fsf@bauges.imag.fr> <20090917121328.GA21837@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 15:05:44 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Rob Barrett <barrettboy@gmail.com>, git@vger.kernel.org
+To: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Sep 17 15:09:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoGg2-0003bf-Vi
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:05:35 +0200
+	id 1MoGkC-0004yf-CK
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758357AbZIQNFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 09:05:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758211AbZIQNFX
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:05:23 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:19695 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757384AbZIQNFW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 09:05:22 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MoGfo-0001eS-Pm; Thu, 17 Sep 2009 15:05:20 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8438EBC81; Thu, 17 Sep 2009 15:05:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <c07716ae0909170512k3c2ec7m21e69e9acfdfd81f@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1758658AbZIQNJl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 09:09:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753532AbZIQNJk
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:09:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39072 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758562AbZIQNJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 09:09:38 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8HD6YMO010440
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 17 Sep 2009 15:06:34 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MoGjl-0004qq-7A; Thu, 17 Sep 2009 15:09:25 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MoGjl-0000d4-5i; Thu, 17 Sep 2009 15:09:25 +0200
+In-Reply-To: <20090917121328.GA21837@neumann> ("SZEDER =?iso-8859-1?Q?G=E1?=
+ =?iso-8859-1?Q?bor=22's?= message of "Thu\, 17 Sep 2009 14\:13\:28 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Sep 2009 15:06:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8HD6YMO010440
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1253797595.28594@HVFoZxQxBJE0bfLP4DgUQA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128752>
 
-Christian Couder schrieb:
-> On Thu, Sep 17, 2009 at 9:24 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> Junio C Hamano schrieb:
->>> Johannes Sixt <j.sixt@viscovery.net> writes:
->>  $ git stash
->>  $ git reset --hard $target
->>  $ git stash pop
->>
->>> I have _no_ idea what the intended use-case of --merge-safe is, and that
->>> was why I asked Christian for clarification in the previous round.  The
->>> answer was still not clear enough so I pointed out --merge-safe could be
->>> still doing a wrong thing even in _his_ use-case.
->> Reading Christian in 200909170554.49416.chriscool@tuxfamily.org, I think
->> this *is* his use-case? Christian?
-> 
-> Yes, I agree, it can be used instead of git stash.
+SZEDER G=E1bor <szeder@ira.uka.de> writes:
 
-It "can"? Do you say that you intend --merge-safe for something else in
-addition to the above stash + reset --hard + stash pop sequence? What?
+> I tend to aggree, but what about 'git rebase --abort' vs. 'git rebase
+> --continue'?  IMHO they are also doing something totally different.
 
-> By the way Linus, in his
-> patch that added the --merge option, said that --merge could be used like
-> that.
+If I were to rewrite it, I'd call them "git rebase abort" without
+dashes. Not sure renaming them to subcommands is worth it though.
 
-But that use-case has one important difference: You can't use stash right
-before the reset:
-
-   # work tree is dirty
-   $ git pull $there $topic  # assume we have conflicts
-
-   # investigate result ...
-   # oh no, that's crap, scratch it
-
-   $ git stash what? conflicted changes?
-   $ git reset what? --hard would remove my dirty state, too
-
-You are screwed. 'git reset --merge' comes to rescue.
-
-I'm pretty sure you don't mean --merge-safe to provide extra safety in
-*this* use-case, but that you have a very different use-case in mind.
-
--- Hannes
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
