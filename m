@@ -1,65 +1,61 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 04/15] Set _O_BINARY as default fmode for both MinGW and
- 	MSVC
-Date: Thu, 17 Sep 2009 15:30:36 +0200
-Message-ID: <4AB239FC.9050302@viscovery.net>
-References: <cover.1253088099.git.mstormo@gmail.com>	 <4AB10F01.9010703@viscovery.net>	 <e2480c70909161300o3db4b416k8f33ccce2f987c55@mail.gmail.com>	 <4AB1E118.70504@viscovery.net> <4AB1E4C5.80102@gmail.com>	 <4AB1E6E4.1040100@viscovery.net> <4AB1EB02.2090308@gmail.com>	 <4AB1EF0E.5010600@viscovery.net>	 <e2480c70909170139x9580bb4pcc1ad8e1b93aef17@mail.gmail.com>	 <4AB1FB79.5070903@viscovery.net> <e2480c70909170602l6afc9842v7be2b91fde9ad498@mail.gmail.com>
+From: Intland Software <intland.software@gmail.com>
+Subject: [ANNOUNCE] codeBeamer 5.4, ALM on top of Git
+Date: Thu, 17 Sep 2009 15:24:15 +0200
+Message-ID: <ffc57eec0909170624m1205cd3bw457d94e3e6629e27@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com,
-	raa.lkml@gmail.com,
-	Marius Storm-Olsen <marius.storm-olsen@nokia.com>
-To: Alexey Borzenkov <snaury@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 15:31:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 17 15:31:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoH4V-0003VL-6U
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:30:51 +0200
+	id 1MoH58-0003lj-3e
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 15:31:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555AbZIQNaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 09:30:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbZIQNaj
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:30:39 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:32670 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753354AbZIQNai (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 09:30:38 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MoH4H-0002Zf-9j; Thu, 17 Sep 2009 15:30:39 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D308ABC81; Thu, 17 Sep 2009 15:30:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <e2480c70909170602l6afc9842v7be2b91fde9ad498@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1756586AbZIQNbK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 09:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756014AbZIQNbI
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 09:31:08 -0400
+Received: from mail-fx0-f217.google.com ([209.85.220.217]:42074 "EHLO
+	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755941AbZIQNbF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 09:31:05 -0400
+Received: by fxm17 with SMTP id 17so22048fxm.37
+        for <git@vger.kernel.org>; Thu, 17 Sep 2009 06:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=FPpRwUg2U+nWK3DzOEoxmGor745ES7FXqZiWyA2PdIc=;
+        b=D8+4kHwl9clg5R3QQTuhRkUJJBQV6ZGYLKoPva6z8hFy1qlBfppbkNSQdbYtxSYiLB
+         Ak3XSwlyRUJK9VC5dofSn6jQ1gU9NIz/hjS+FsFwHhlXTaQEMjDhW6S6VPqz8JFfZBi7
+         wc84kIt9fPQODExF0f3T4mPfuR3z+RtMZ3C0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=RqOUOeFk+7OUWlxy7xRdGZhMmjcBeklJtZZCRA8af684aqOKfUweIfZ4YR0SAmwKYO
+         mRIkog6VY+aBU4+cPLNdye+OZ2MRfHIz/4cDQcGFY17PiOFpBUVND+5I4QScTfJpFKt8
+         rnrWZ70NLEZYK8RjPyBYR/pdwHFI+KsnNRIdo=
+Received: by 10.223.1.18 with SMTP id 18mr18640fad.90.1253193855229; Thu, 17 
+	Sep 2009 06:24:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128757>
 
-[for the archives: this is about intermittent failures of t3903-stash.sh
-with MinGW git]
+If you're using Git, and you need an issue tracker, wiki, doc
+management, project management that tightly integrates with your
+favourite git and somewhat resembles of GitHub-behind-a-firewall, then
+you might be interested in this. If not, then we apologize.
 
-Alexey Borzenkov schrieb:
-> "after finding i_tree and i_commit" is immediately before calculating
-> w_tree. As you can see, "before git read-tree" is off by a second. I
-> think it's just a bug in msys, cp -p doesn't preserve mtime exactly.
-> :-/
+codeBeamer 5.4 is the latest and greatest version of our collaborative
+Application Lifecycle Management software
+(http://www.intland.com/products/cb/overview.html).
 
-Ah, now I recall everything: git-stash.sh does "cp -p", and from the times
-where git-commit was still a shell script I know that this does not always
-preserve the timestamp correctly. Since this is a bug attributable to MSYS
-(and not MinGW git), I was satisfied by simply inserting 'sleep 1' in the
-test case to avoid the racily-clean situation. (Although today, I would
-modify the content to have a different size.)
-
--- Hannes
+Links:
+* Product homepage: http://www.intland.com/products/cb/overview.html
+* Download (no expiration!):
+http://www.intland.com/products/download.html#download
+* Hosted version: http://www.intland.com/products/download.html#trial
