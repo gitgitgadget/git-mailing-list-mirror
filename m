@@ -1,96 +1,179 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v2] Update the usage bundle string.
-Date: Wed, 16 Sep 2009 22:13:36 -0400
-Message-ID: <1253153616-10051-1-git-send-email-tfransosi@gmail.com>
-Cc: Thiago Farina <tfransosi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 04:15:06 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/4] reset: add option "--merge-safe" to "git reset"
+Date: Thu, 17 Sep 2009 05:54:48 +0200
+Message-ID: <200909170554.49416.chriscool@tuxfamily.org>
+References: <20090916035131.3737.33020.chriscool@tuxfamily.org> <20090916041443.3737.63217.chriscool@tuxfamily.org> <7vfxamzqga.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Paolo Bonzini <bonzini@gnu.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 05:53:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mo6WX-0005i3-KK
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 04:15:05 +0200
+	id 1Mo83v-000535-4e
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 05:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755047AbZIQCOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Sep 2009 22:14:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754624AbZIQCOx
-	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 22:14:53 -0400
-Received: from mail-qy0-f181.google.com ([209.85.221.181]:53012 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750941AbZIQCOx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Sep 2009 22:14:53 -0400
-Received: by qyk11 with SMTP id 11so4819553qyk.1
-        for <git@vger.kernel.org>; Wed, 16 Sep 2009 19:14:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=iROYY/vNbX2cA8ikWj4VYF1/ILesvVtM+S+a3pMo3fw=;
-        b=Zei5IhqT/6+rAfwTSRIyLZ5gQ5Sl/xnX9rz6GmxZgFlaMbr7x+DFUkRwSQUnk/2IaH
-         XYd3Sca9FWb/PqDyaJJEUcyspiAP6bDu0pEa1FUdHlfIn9/K0koBvlGDByeHf1BYKNqh
-         2zGGgXhvS4oyKbBEXQLy4PzpWdzoyiJYVJgPY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=GWHIFbCEyHs2OjhcC0WgVAIBH0AvUcsW20+/BtneJGpyK8kTgbcmWrKOhw1xzpUa1z
-         5RorBmthkRc0YcsNkN4YKzwUdHmG9lptTUWlxsvJzkKlthOUkXgxP4C4h2EuU4a1d9Od
-         9SHRbNz+64Wk5h54YgSqhBk15NK9r+zi1YXjQ=
-Received: by 10.224.16.131 with SMTP id o3mr7184561qaa.18.1253153696349;
-        Wed, 16 Sep 2009 19:14:56 -0700 (PDT)
-Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 5sm114086qwg.6.2009.09.16.19.14.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 16 Sep 2009 19:14:55 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc0.dirty
+	id S1760121AbZIQDx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Sep 2009 23:53:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760122AbZIQDx2
+	(ORCPT <rfc822;git-outgoing>); Wed, 16 Sep 2009 23:53:28 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:45177 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758415AbZIQDx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Sep 2009 23:53:26 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 4694D81808F;
+	Thu, 17 Sep 2009 05:53:20 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A7135818085;
+	Thu, 17 Sep 2009 05:53:17 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <7vfxamzqga.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128705>
 
-Currently the usage bundle string is not well formatted.
-Now it is formatted and the user can read the string much more easily.
+On Wednesday 16 September 2009, Junio C Hamano wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > From: Stephan Beyer <s-beyer@gmx.net>
+> >
+> > This option is nearly like "--merge" except that it is
+> > safer. The table below show the differences between these
+> > options.
+> >
+> > working index HEAD target         working index HEAD
+> >   B      B     A     A   --m-s      B      A     A
+> >                          --merge    A      A     A
+> >   B      B     A     C   --m-s       (disallowed)
+> >                          --merge    C      C     C
+> >
+> > In this table, A, B and C are some different states of
+> > a file. For example the first 2 lines of the table mean
+> > that if a file is in state B in the working tree and
+> > the index, and in a different state A in HEAD and in
+> > the target, then "git reset --merge-safe target" will
+> > put the file in state B in the working tree and in
+> > state A in the index and HEAD.
+>
+> At first, I had to spend a few minutes guessing what you meant by
+> "target" in the table.  All the other words are well known and do not
+> need to be explained, but you can make it even easier to understand by
+> updating the sentence before the table, perhaps like:
+>
+>     When running "git reset --option target" to reset the HEAD to another
+>     commit (as a special case "target" could be the same as HEAD), here
+>     is what happens to paths in various state.
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
- builtin-bundle.c |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
+Ok, I will update the sentence like this.
 
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index 9b58152..bade253 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -9,7 +9,11 @@
-  * bundle supporting "fetch", "pull", and "ls-remote".
-  */
- 
--static const char *bundle_usage="git bundle (create <bundle> <git rev-list args> | verify <bundle> | list-heads <bundle> [refname]... | unbundle <bundle> [refname]... )";
-+static const char builtin_bundle_usage[] = "\
-+  git bundle create <file> <git-rev-list args>\n\
-+         git bundle verify <file>\n\
-+         git bundle list-heads <file> [refname...]\n\
-+         git bundle unbundle <file> [refname...]";
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
-@@ -19,8 +23,8 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 	int bundle_fd = -1;
- 	char buffer[PATH_MAX];
- 
--	if (argc < 3)
--		usage(bundle_usage);
-+  if (argc < 3)
-+		usage(builtin_bundle_usage);
- 
- 	cmd = argv[1];
- 	bundle_file = argv[2];
-@@ -59,5 +63,5 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		return !!unbundle(&header, bundle_fd) ||
- 			list_bundle_refs(&header, argc, argv);
- 	} else
--		usage(bundle_usage);
-+		usage(builtin_bundle_usage);
- }
--- 
-1.6.5.rc0.dirty
+> As you mentioned in the proposed commit log message of the other entry,
+> you have a different behaviour for unmerged case.  Can you add that case
+> to the table as well?
+
+The behavior is not different between --merge and --merge-safe, the behavior 
+is different between --merge before patch 2/4 and --merge after patch 2/4.
+I will add a test case to show this.
+
+> The original use case of Linus's "reset --merge" was:
+>
+>     $ edit ... ;# you may have some local changes to the work tree
+>     $ git merge/pull ...
+>     ... (1) it merges cleanly;
+>     ... (2) you see conflicts and do not commit, or
+>     ... (3) you resolve conflicts and commit, while leaving the earlier
+>     ...     modified paths alone.
+>     ... In any of the three cases, you inspect the result, and say
+>     ... "ah, crap!"
+>     ... You want to go back to the state before the merge, i.e.
+>     ... target = HEAD^ in (1) or (3) above and target = HEAD in (2).
+>     $ git reset --merge $target
+
+I think that Daniel found out that the above "reset --merge" command did not 
+worked well in case (2) before patch 2/4.
+
+> Recall that "git merge/pull ..." step does not even touch anything if you
+> have a dirty index (i.e. "diff --cached" is non-empty), so any difference
+> between the index and HEAD to reset the failed merge away must come from
+> the merge itself
+>
+> Immediately before you run "reset --merge" in the above sequence, you can
+> categorize the paths in various states this way:
+>
+>   work   index  HEAD  how that path got into this state...
+>     A      A     A    not involved in this merge.
+>     B      A     A    not involved in this merge, originally modified.
+>     B      B     A    cleanly merged.
+>     B      B     B    cleanly merged (and committed if (1) or (3)).
+>     C      U     A    merge left conflicts
+>
+> where U denotes unmerged path in the index, and C is a file in the work
+> tree with conflict markers.  The path had content A in HEAD before the
+> start of the merge that you are resetting away.
+>
+> Note that the target is A in all cases in the above table.
+>
+> We would want to go back to HEAD == index == target for all of these
+> cases, and discarding B in "cleanly merged" entries is absolutely the
+> right thing to do.  Clearly, --merge-safe is _not_ designed to work in
+> this scenario.
+
+Yes.
+
+> Don't get me wrong.  I am not saying --merge-safe is unsafe nor useless.
+>
+> I am trying to show a way with an intended use-case (and the mechanical
+> notation you and Daniel wrote up, which is very nice to illustrate what
+> exactly happens) to explain how --merge works, and more importantly why
+> it works that way.
+>
+> That is because I would like to see an intended use case of this new
+> feature in a bigger picture.  With the table, I can see what it does (or
+> at least what you wanted it to do), but it does not clearly explain what
+> this new mode of operation is good for, in what context it is designed
+> to be used, and what problem it intends to solve.  I think you find it
+> very clear, by reading my explanation above, what Linus's --merge is
+> intended to solve:
+>
+> 	After a (possibly conflicted) merge modified my index and my work
+>         tree, "reset --hard" to the commit before I started the merge
+> will discard the local modifications I had in the work tree before the
+> merge.  "reset --merge" was invented to let me go back to the state
+> before the merge, without discarding such local changes I had before the
+> merge.
+>
+> I want to be able to explain to others what --merge-safe is for in a
+> similar way myself before I have it in my tree, and I can't (yet).
+
+I understand, and I think that Stephan designed the "allow_dirty" feature 
+(that became --merge-safe in this patch series) because he wanted to let 
+the user do a cherry-pick or an improved cherry-pick (or even run the 
+sequencer) with a dirty working tree or index without the risk of losing 
+some work.
+
+But I think that it can be usefull in case like:
+
+$ "hack something"
+$ git commit ...
+$ "hack something else"
+$ git add "some of the files"
+$ "find out previous commit was crap"
+$ git reset --merge-safe HEAD^
+
+Here using "--merge-safe" can be usefull because you don't want to lose 
+stuff in your current index and work tree.
+
+Best regards,
+Christian.
