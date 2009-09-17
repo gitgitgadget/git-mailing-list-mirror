@@ -1,96 +1,94 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v3] Update the usage bundle string.
-Date: Thu, 17 Sep 2009 13:20:53 -0400
-Message-ID: <1253208053-9732-1-git-send-email-tfransosi@gmail.com>
-Cc: Thiago Farina <tfransosi@gmail.com>
+From: "Murphy, John" <john.murphy@bankofamerica.com>
+Subject: Gitk --all error when there are more than 797 refs in a repository
+Date: Thu, 17 Sep 2009 15:07:33 -0400
+Message-ID: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 19:21:18 2009
+X-From: git-owner@vger.kernel.org Thu Sep 17 21:08:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoKfW-0007Sz-9O
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 19:21:18 +0200
+	id 1MoMKg-0007h3-SW
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 21:07:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753580AbZIQRVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 13:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753456AbZIQRVI
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 13:21:08 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:1246 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187AbZIQRVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 13:21:07 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so88187qwd.37
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 10:21:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=TI4DueE4PAWBiKUKXN75M5+xGHzLTt+jeGhv2GNhh4M=;
-        b=ITBEP+U+vb/RCRmsEMVkXFQENqMDd1HvcYI+0Pce8fEI+npK/gvEj2RF3I3GSNsRo3
-         Em8PsKYQF75bMCUQCUcKPHr6XzCIoWSc1aZJyokXoFnsvZruTXDqeCVA3UNmt3U2zI3x
-         EB9DshX29KZ0xuMkWxvsHyVeMiDsTAeqqFARY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=rmwmTT6cXzXyYjXg2grAsBWMi0r2GnmzTIzvPS7vyXDDIb9YHE3taI4CeVM7k1btAA
-         e3uYU47TGWbCf+vsDCGmw2vpOXDhIRHEZAzV/k1f/3PyZNO7zOYJ3U3FbpohxjwSIImm
-         YDBezZ+zBRbmzAdzhV3O2FQ4HDhe1eDVynlyM=
-Received: by 10.224.119.4 with SMTP id x4mr531155qaq.304.1253208070483;
-        Thu, 17 Sep 2009 10:21:10 -0700 (PDT)
-Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 6sm129519qwk.44.2009.09.17.10.21.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Sep 2009 10:21:09 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc0.dirty
+	id S1758619AbZIQTHk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 15:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751715AbZIQTHk
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 15:07:40 -0400
+Received: from vamx04.bankofamerica.com ([171.159.192.80]:46864 "EHLO
+	vadmzmailmx04.bankofamerica.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751360AbZIQTHj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 15:07:39 -0400
+Received: from vadmzmailmx03.bankofamerica.com ([171.182.200.79])
+	by vadmzmailmx04.bankofamerica.com (8.13.8/8.13.6) with ESMTP id n8HJ7gfs008858
+	for <git@vger.kernel.org>; Thu, 17 Sep 2009 19:07:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=bankofamerica.com;
+	s=corp1; t=1253212932;
+	bh=EZ8oTLBBhqnwwy2CLieWi38t38037Xhz46OVCXA+KRc=;
+	h=Date:From:Subject:To:Message-id:MIME-version:Content-type:
+	 Content-transfer-encoding;
+	b=ZCJG8v056yrFx5R1Qz8kKud4TU1vITuZrisuua2RsNmRdWeZDOTTCL2HlbJL8lwjX
+	 X6NSu+QMtZUWo/Mz5KFRABzxmzJPp68hoqcB0Bxc06tACQkz6ueDcQlMYkRKOulQdU
+	 jNAfqWXfxjcnJ8aBQ1GoolD7hAKIk2cza00YE4dA=
+Received: from memva2mta01.bankofamerica.com (memva2mta01.bankofamerica.com [171.186.140.73])
+	by vadmzmailmx03.bankofamerica.com (8.13.8/8.13.6) with ESMTP id n8HJ6mDJ028977
+	for <git@vger.kernel.org>; Thu, 17 Sep 2009 19:07:42 GMT
+X-MIMEOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+Thread-topic: Gitk --all error when there are more than 797 refs in a repository
+Thread-index: Aco3yhy4F3EWqGnnS0WdMd4ykkWPOw==
+x-cr-puzzleid: {9B26CD19-BD64-4032-9B80-51217346E630}
+x-cr-hashedpuzzle: BQH5 BSCI ByD8 B1lc CPco Chda D6te EPvg FI9L FR+n Gqr4 G/I2 Ifkt JeOW KYTN
+ LPnR;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwAuAA==;Sosha1_v1;7;{9B26CD19-BD64-4032-9B80-51217346E630};agBvAGgAbgAuAG0AdQByAHAAaAB5AEAAYgBhAG4AawBvAGYAYQBtAGUAcgBpAGMAYQAuAGMAbwBtAA==;Thu,
+ 17 Sep 2009 19:07:33
+ GMT;RwBpAHQAawAgAC0ALQBhAGwAbAAgAGUAcgByAG8AcgAgAHcAaABlAG4AIAB0AGgAZQByAGUAIABhAHIAZQAgAG0AbwByAGUAIAB0AGgAYQBuACAANwA5ADcAIAByAGUAZgBzACAAaQBuACAAYQAgAHIAZQBwAG8AcwBpAHQAbwByAHkA
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+X-OriginalArrivalTime: 17 Sep 2009 19:07:36.0482 (UTC) FILETIME=[1E4DD820:01CA37CA]
+X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2009-09-17_09:2009-09-17,2009-09-17,2009-09-17 signatures=0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128767>
 
-Currently the usage bundle string is not well formatted.
-Now it is formatted and the user can read the string much more easily.
-Also makes the output more consistent with the other usage strings that use
-usage_with_options to show the usage string.
+There is a error when running =A0gitk --all when there are more than 79=
+7 refs in a repository.
+We get an error message:
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
- builtin-bundle.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+Error reading commits: fatal ambiguous argument '3': unknown revision o=
+r path not in the working tree.
+Use '--' to separate paths from revisions.
 
-diff --git a/builtin-bundle.c b/builtin-bundle.c
-index 9b58152..2006cc5 100644
---- a/builtin-bundle.c
-+++ b/builtin-bundle.c
-@@ -9,7 +9,11 @@
-  * bundle supporting "fetch", "pull", and "ls-remote".
-  */
- 
--static const char *bundle_usage="git bundle (create <bundle> <git rev-list args> | verify <bundle> | list-heads <bundle> [refname]... | unbundle <bundle> [refname]... )";
-+static const char builtin_bundle_usage[] =
-+  "git bundle create <file> <git-rev-list args>\n"
-+  "   or: git bundle verify <file>\n"
-+  "   or: git bundle list-heads <file> [refname...]\n"
-+  "   or: git bundle unbundle <file> [refname...]";
- 
- int cmd_bundle(int argc, const char **argv, const char *prefix)
- {
-@@ -20,7 +24,7 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 	char buffer[PATH_MAX];
- 
- 	if (argc < 3)
--		usage(bundle_usage);
-+		usage(builtin_bundle_usage);
- 
- 	cmd = argv[1];
- 	bundle_file = argv[2];
-@@ -59,5 +63,5 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
- 		return !!unbundle(&header, bundle_fd) ||
- 			list_bundle_refs(&header, argc, argv);
- 	} else
--		usage(bundle_usage);
-+		usage(builtin_bundle_usage);
- }
--- 
-1.6.5.rc0.dirty
+I believe issue is with this line of the code in proc parseviewrevs:
+
+       if {[catch {set ids [eval exec git rev-parse "$revs"]} err]}
+
+When there are more than 797 refs the output of git rev-parse is too la=
+rge to fit into the string, ids.
+
+797 refs =3D 32,677 bytes.
+798 refs =3D 32,718 bytes my guess is a little too close for comfort to=
+ 32,768 bytes.
+
+As I was deleting refs locally the error message would change from '3' =
+to any char [A-Z,0-9].
+
+I am a novice tcl programmer but is seems like ids could be an array.
+There are also many other areas in the code where git rev-parse is call=
+ed and using array may also be necessary.
+
+We were using:
+git 1.6.3.2.314.ge3519
+
+and then I upgraded to test if there was a change:
+git 1.6.5.rc1.18.g401ce7
+
+We are also using:
+tcl 8.4.1
+cygwin 1.5.25-7
+Windows XP Pro SP3
