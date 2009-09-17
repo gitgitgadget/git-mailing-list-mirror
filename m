@@ -1,104 +1,87 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH JGIT] Circular references shouldn't be created
-Date: Thu, 17 Sep 2009 17:40:12 -0400
-Message-ID: <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
-References: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Sohn, Matthias" <matthias.sohn@sap.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 23:40:40 2009
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: [PATCH] Avoid the use of backslash-at-eol in pack-objects usage string.
+Date: Thu, 17 Sep 2009 17:51:40 -0400
+Message-ID: <1253224300-18017-1-git-send-email-tfransosi@gmail.com>
+Cc: Thiago Farina <tfransosi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 17 23:52:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoOiV-0002oc-AT
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 23:40:39 +0200
+	id 1MoOtr-0005uE-4m
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 23:52:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750787AbZIQVk3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 17:40:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbZIQVk3
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 17:40:29 -0400
-Received: from mail-yw0-f175.google.com ([209.85.211.175]:62411 "EHLO
-	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbZIQVk2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Sep 2009 17:40:28 -0400
-Received: by ywh5 with SMTP id 5so572794ywh.4
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 14:40:32 -0700 (PDT)
+	id S1751375AbZIQVwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 17:52:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751195AbZIQVwF
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 17:52:05 -0400
+Received: from qw-out-2122.google.com ([74.125.92.25]:24321 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751194AbZIQVwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 17:52:03 -0400
+Received: by qw-out-2122.google.com with SMTP id 5so175128qwd.37
+        for <git@vger.kernel.org>; Thu, 17 Sep 2009 14:52:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5DXDJuGJfT/Nzz/tc37jKugeiEzR6n/7tI96Pih2Dvo=;
-        b=ff/R5wq/ypBTBSRmkjen//ymw80qyef6z0THl7Q1nlBxIPmsdzTCWg4EUkQz980y33
-         veuTMJ+L+fYLBcGdoCTbIv6s+vN3Qz4/8J3mWl68aVDHSf6K601gKNcYFvlr4O8kMw87
-         4m5VlucenzDRQtkiZTUK2NPHhzRlOn5QTB294=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ii2JWupYtCDcBipsYzo3dPJYADfgPURsbwLW+Ct8Afo=;
+        b=SnviE97+r45VhWXuF0BRq+Li6vh4CUttx4zSPaCd9XOGGvCgDl3wuyNEFHADBfLwZd
+         t7SspJfGYLyin08ind7ybNUfV2WuSYY5XAubkEODZ7urCBjKH6vfMj+Ic9Wx/64l76wa
+         XMIuf78S0SSkuCfkOpBU+xkCLtOThCxiO8p2Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=tqy+IsR1/S0wP+MMutI1cRa4Thr0SWuun3si08FVWCNXQjTW1m1xeGMcqVjqZ09bAD
-         0WxddjjmKd7V2EjOMY9DyGOMXRLRX48KbG6kNUxSzcS3mq1TnAM2ovTtvSzsDWd6Kl9/
-         65BaPVfivEPDlAYfd75wujHCjkQo2NhIeAO8Q=
-Received: by 10.150.214.2 with SMTP id m2mr1985041ybg.235.1253223632123; Thu, 
-	17 Sep 2009 14:40:32 -0700 (PDT)
-In-Reply-To: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=S2ARqmijKQcQZpi9D6AkG89ft0Qlgmqydhd0YW3tkk1ypkyNRBvnUJfniozfpaZw+h
+         kCokvd3pY/eIa9YmO6goYskbzYumP35JUZ54BK4SLT33kAaT59wCb6AXFy7pxR3xpcIY
+         B6VsadYXwgUjTps+wlrfzm25WyEO7zPPaOHXU=
+Received: by 10.224.102.212 with SMTP id h20mr855836qao.40.1253224326829;
+        Thu, 17 Sep 2009 14:52:06 -0700 (PDT)
+Received: from localhost ([189.60.49.26])
+        by mx.google.com with ESMTPS id 6sm424169qwd.3.2009.09.17.14.52.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 17 Sep 2009 14:52:06 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.rc0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128774>
 
-On Thu, Sep 17, 2009 at 3:23 PM, Sohn, Matthias <matthias.sohn@sap.com>=
- wrote:
-> =A0 =A0 =A0 =A0void link(final String name, final String target) thro=
-ws IOException {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (name.equals(target))
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 throw new IllegalArgume=
-ntException(
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 "illegal circular reference : symref " + name
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 + " cannot refer to " + target=
-);
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ builtin-pack-objects.c |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-This isn't a very thorough fix.  It doesn't catch longer loops, like
-
-    HEAD -> chicken -> HEAD
-
-or
-
-   a -> b -> c -> d -> a
-
-Experimenting with original git.git's implementation, I see that this
-is allowed:
-
-   git symbolic-ref refs/heads/boink refs/heads/boink
-
-It succeeds and creates a file that looks like this:
-
-   ref: refs/heads/boink
-
-And "git show-ref refs/heads/boink" says: nothing (but returns an error=
- code).
-
-And "git log refs/heads/boink" says:
-
-   warning: ignoring dangling symref refs/heads/boink.
-   fatal: ambiguous argument 'refs/heads/boink': unknown revision or
-path not in the working tree.
-   Use '--' to separate paths from revisions
-
-Clearly, in git.git, symref loops are caught at ref read time, not
-write time.  This makes sense, since someone might foolishly twiddle
-the repository by hand and you don't want to get into an infinite loop
-in that case.  Also, it's potentially useful to allow people to set
-invalid symrefs *temporarily*, as part of a multi step process.
-
-Have fun,
-
-Avery
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 7a390e1..4494a68 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -22,15 +22,15 @@
+ #include <pthread.h>
+ #endif
+ 
+-static const char pack_usage[] = "\
+-git pack-objects [{ -q | --progress | --all-progress }] \n\
+-	[--max-pack-size=N] [--local] [--incremental] \n\
+-	[--window=N] [--window-memory=N] [--depth=N] \n\
+-	[--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n\
+-	[--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n\
+-	[--stdout | base-name] [--include-tag] \n\
+-	[--keep-unreachable | --unpack-unreachable] \n\
+-	[<ref-list | <object-list]";
++static const char pack_usage[] =
++  "git pack-objects [{ -q | --progress | --all-progress }] \n"
++  "        [--max-pack-size=N] [--local] [--incremental] \n"
++  "        [--window=N] [--window-memory=N] [--depth=N] \n"
++  "        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n"
++  "        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n"
++  "        [--stdout | base-name] [--include-tag] \n"
++  "        [--keep-unreachable | --unpack-unreachable] \n"
++  "        [<ref-list | <object-list]";
+ 
+ struct object_entry {
+ 	struct pack_idx_entry idx;
+-- 
+1.6.5.rc0.dirty
