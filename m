@@ -1,81 +1,53 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Behavior of 'git add \*.txt': bug or feature?
-Date: Thu, 17 Sep 2009 16:25:26 +0200
-Message-ID: <20090917142526.GA28878@localhost>
-References: <vpqljke7jv8.fsf@bauges.imag.fr> <7vbplazl7s.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git workflow for fully distributed mini-teams
+Date: Thu, 17 Sep 2009 16:47:34 +0200
+Message-ID: <4AB24C06.5030207@viscovery.net>
+References: <f46c52560909160035o6b09800eh5219d49e7569cf23@mail.gmail.com>	 <20090916164356.GB24893@vidovic>	 <f46c52560909170003l61a2e1a3kf62c94ffd7ed9710@mail.gmail.com>	 <4AB1E514.9030501@viscovery.net>	 <f46c52560909170538q4d316d00jcccad8ec9f563574@mail.gmail.com> <f46c52560909170652t54f68c31hfbb8ae6472190ac1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 16:25:50 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Rustom Mody <rustompmody@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 16:47:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoHvb-00061W-ST
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 16:25:44 +0200
+	id 1MoIGt-0004Yv-8m
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 16:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751923AbZIQOZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 10:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbZIQOZd
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 10:25:33 -0400
-Received: from mail-fx0-f217.google.com ([209.85.220.217]:41651 "EHLO
-	mail-fx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbZIQOZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 10:25:32 -0400
-Received: by fxm17 with SMTP id 17so62864fxm.37
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 07:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:bcc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=ed7UNA5k/ylSDimpKSiUJWY5ZE4umjDxfu6GU+l2Pq0=;
-        b=VnbSrWy3ZSnj0Uja8saVN+n2NdafG2gJR6GOfmNYCH8YbbVvkCmVoS3VPZY2PMeeKb
-         33sludT1foyyQRi69mDVXVH41u9agCi1BRwH6FKP5du+tFHp9aeiykDzoI3cO0K753I7
-         wV+h07dO6ygJUQeutjaNrwQMdZ2FRY813Ylnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=t6m1568dABFfg60fiyX4qMYzGe0XaCyVMCOYehvYePBaNoyYM8Hi5SKtBgifesZ/S1
-         3vRE3Mnj9KN+o1EiKBaDd8/CdiYcPt2069y1heaC07yPUCbaG6oMZPNq2FHdKUSeUkcO
-         QxaAk6f7XjXsmGkXVWUCYLh9QPqtIE9PKIsOA=
-Received: by 10.86.211.38 with SMTP id j38mr646700fgg.26.1253197535111;
-        Thu, 17 Sep 2009 07:25:35 -0700 (PDT)
-Received: from darc.lan (p549A4B63.dip.t-dialin.net [84.154.75.99])
-        by mx.google.com with ESMTPS id l12sm1517490fgb.17.2009.09.17.07.25.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Sep 2009 07:25:33 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MoHvK-0007Zw-Qv; Thu, 17 Sep 2009 16:25:26 +0200
-Content-Disposition: inline
-In-Reply-To: <7vbplazl7s.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752115AbZIQOre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 10:47:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbZIQOrd
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 10:47:33 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:29506 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752115AbZIQOrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 10:47:33 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MoIGk-0002t8-Td; Thu, 17 Sep 2009 16:47:35 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A0633BC81; Thu, 17 Sep 2009 16:47:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <f46c52560909170652t54f68c31hfbb8ae6472190ac1@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128760>
 
-On Wed, Sep 16, 2009 at 01:30:15PM -0700, Junio C Hamano wrote:
+[On this list, we reply to all, so that the Cc list remains]
 
-> I strongly suspect that it comes from the fact that we have two
-> definitions and three implementations of pathspec-aware tree traversal.
-> One family is unaware of shell-glob wildcards (they only do leading
-> directory path match) while the other know both leading directory path and
-> shell-glob.
+Rustom Mody schrieb:
+> I started looking at git bundle and find things like master\~10.
+> Whats the backslash doing?
 
-We had a discussion about this in January:
+It's intended as markup for the pipeline that generates the documentation
+from git-bundle.txt. Either the markup is incorrect, or there is a bug in
+the pipeline, because I only see it in the generated HTML. Ignore it.
 
-	Subject: Re: [PATCH 3/3] implement pattern matching in ce_path_match
-	Message-ID: <7vljtd20m6.fsf@gitster.siamese.dyndns.org>
-	http://article.gmane.org/gmane.comp.version-control.git/105679
-
-I was going to fix it, but motivation left me after the above discussion,
-since I don't really care about this feature.
-
-Clemens
+-- Hannes
