@@ -1,54 +1,195 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 04/15] Set _O_BINARY as default fmode for both MinGW and
- MSVC
-Date: Thu, 17 Sep 2009 09:36:04 +0200
-Message-ID: <4AB1E6E4.1040100@viscovery.net>
-References: <cover.1253088099.git.mstormo@gmail.com>	 <213f3c7799721c3f42ffa689498175f0495048eb.1253088099.git.mstormo@gmail.com>	 <26c067500d8adf17a2d75e2956e4d4a6cef27fc1.1253088099.git.mstormo@gmail.com>	 <6e6345fb3fbc19b1a2467e33e1633fe9025e547b.1253088099.git.mstormo@gmail.com>	 <929c5a34cd2621af24bcda7e47ff2e76b51c2e09.1253088099.git.mstormo@gmail.com>	 <4AB10F01.9010703@viscovery.net> <e2480c70909161300o3db4b416k8f33ccce2f987c55@mail.gmail.com> <4AB1E118.70504@viscovery.net> <4AB1E4C5.80102@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Alexey Borzenkov <snaury@gmail.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
-	gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com,
-	raa.lkml@gmail.com,
-	Marius Storm-Olsen <marius.storm-olsen@nokia.com>
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 09:36:16 2009
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [RFC/PATCH v3] fetch: Speed up fetch by rewriting find_non_local_tags
+Date: Thu, 17 Sep 2009 08:33:19 +0100
+Message-ID: <20090917073320.58452.41718.julian@quantumfyre.co.uk>
+References: <20090916074737.58044.42776.julian@quantumfyre.co.uk>
+	<alpine.LNX.2.00.0909170039410.14993@reaper.quantumfyre.co.uk>
+	<alpine.LNX.2.00.0909170227160.15719@reaper.quantumfyre.co.uk>
+	<200909170913.03639.johan@herland.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Sep 17 09:40:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoBXL-0005Uc-MU
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 09:36:16 +0200
+	id 1MoBb6-0006es-Re
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 09:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758386AbZIQHgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 03:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757118AbZIQHgF
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 03:36:05 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51500 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755854AbZIQHgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 03:36:04 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MoBXA-00034X-Mb; Thu, 17 Sep 2009 09:36:05 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 6D263BC81; Thu, 17 Sep 2009 09:36:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
-In-Reply-To: <4AB1E4C5.80102@gmail.com>
-X-Enigmail-Version: 0.95.5
-X-Spam-Score: -1.4 (-)
+	id S1758654AbZIQHj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 03:39:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758411AbZIQHj4
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 03:39:56 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:45071 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756973AbZIQHj4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Sep 2009 03:39:56 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id E9194341A48
+	for <git@vger.kernel.org>; Thu, 17 Sep 2009 08:39:58 +0100 (BST)
+Received: (qmail 9969 invoked by uid 103); 17 Sep 2009 08:35:28 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.94.2/9810. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025347 secs); 17 Sep 2009 07:35:28 -0000
+Received: from reaper.quantumfyre.co.uk (HELO rayne.quantumfyre.co.uk) (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 17 Sep 2009 08:35:28 +0100
+X-git-sha1: 5c9a553eba08e9a4359dbe8bdc7bd0b82c0f9390 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <200909170913.03639.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128727>
 
-Marius Storm-Olsen schrieb:
-> Yup, are you ok with squashing this hunk into the patch then?
+When trying to get a list of remote tags to see if we need to fetch
+any we were doing a linear search for the matching tag ref for the
+tag^{} commit entries.  This proves to be incredibly slow for large
+numbers of tags.  Rewrite the function so that we build up a
+string_list of refs to fetch and then process that instead.
 
-Of course; with some extra words in the commit message.
+As an extreme example, for a repository with 50000 tags (and just a
+single commit on a single branch), a fetch that does nothing goes from
+~1m50s to ~4.1s.
 
--- Hannes
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
+
+Ok, so here it is ...
+
+Sometimes I forget just much we git users value our time and resources.
+;)
+
+ builtin-fetch.c |   98 ++++++++++++++++++++++++++++++++++++------------------
+ 1 files changed, 65 insertions(+), 33 deletions(-)
+
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index cb48c57..acb08e4 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -504,57 +504,89 @@ static int will_fetch(struct ref **head, const unsigned char *sha1)
+ 	return 0;
+ }
+ 
++struct tag_data {
++	struct ref **head;
++	struct ref ***tail;
++};
++
++static int add_to_tail(struct string_list_item *item, void *cb_data)
++{
++	struct tag_data *data = (struct tag_data *)cb_data;
++	struct ref *rm = NULL;
++
++	/* We have already decided to ignore this item */
++	if (!item->util)
++		return 0;
++
++	rm = alloc_ref(item->string);
++	rm->peer_ref = alloc_ref(item->string);
++	hashcpy(rm->old_sha1, item->util);
++
++	**data->tail = rm;
++	*data->tail = &rm->next;
++
++	return 0;
++}
++
+ static void find_non_local_tags(struct transport *transport,
+ 			struct ref **head,
+ 			struct ref ***tail)
+ {
+ 	struct string_list existing_refs = { NULL, 0, 0, 0 };
+-	struct string_list new_refs = { NULL, 0, 0, 1 };
+-	char *ref_name;
+-	int ref_name_len;
+-	const unsigned char *ref_sha1;
+-	const struct ref *tag_ref;
+-	struct ref *rm = NULL;
++	struct string_list remote_refs = { NULL, 0, 0, 0 };
++	struct tag_data data = {head, tail};
+ 	const struct ref *ref;
++	struct string_list_item *item = NULL;
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+ 	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
+ 		if (prefixcmp(ref->name, "refs/tags"))
+ 			continue;
+ 
+-		ref_name = xstrdup(ref->name);
+-		ref_name_len = strlen(ref_name);
+-		ref_sha1 = ref->old_sha1;
+-
+-		if (!strcmp(ref_name + ref_name_len - 3, "^{}")) {
+-			ref_name[ref_name_len - 3] = 0;
+-			tag_ref = transport_get_remote_refs(transport);
+-			while (tag_ref) {
+-				if (!strcmp(tag_ref->name, ref_name)) {
+-					ref_sha1 = tag_ref->old_sha1;
+-					break;
+-				}
+-				tag_ref = tag_ref->next;
+-			}
++		/* the peeled ref always follows the matching base ref, so if we
++		 * see a peeled ref that we don't want to fetch then we can mark
++		 * the ref entry in the list as one to ignore by setting util to
++		 * NULL. */
++		if (!strcmp(ref->name + strlen(ref->name) - 3, "^{}")) {
++			if (item && !has_sha1_file(ref->old_sha1) &&
++			    !will_fetch(head, ref->old_sha1) &&
++			    !has_sha1_file(item->util) &&
++			    !will_fetch(head, item->util) )
++				item->util = NULL;
++			item = NULL;
++			continue;
+ 		}
+ 
+-		if (!string_list_has_string(&existing_refs, ref_name) &&
+-		    !string_list_has_string(&new_refs, ref_name) &&
+-		    (has_sha1_file(ref->old_sha1) ||
+-		     will_fetch(head, ref->old_sha1))) {
+-			string_list_insert(ref_name, &new_refs);
++		/* If item is non-NULL here, then we previously saw a ref not
++		 * followed by a peeled reference, so we need to check if it is
++		 * a lightweight tag that we want to fetch */
++		if (item && !has_sha1_file(item->util) &&
++		    !will_fetch(head, item->util) )
++			item->util = NULL;
+ 
+-			rm = alloc_ref(ref_name);
+-			rm->peer_ref = alloc_ref(ref_name);
+-			hashcpy(rm->old_sha1, ref_sha1);
++		item = NULL;
+ 
+-			**tail = rm;
+-			*tail = &rm->next;
+-		}
+-		free(ref_name);
++		/* skip duplicates and refs that we already have */
++		if (string_list_has_string(&remote_refs, ref->name) ||
++		    string_list_has_string(&existing_refs, ref->name))
++			continue;
++
++		item = string_list_insert(ref->name, &remote_refs);
++		item->util = (void *)ref->old_sha1;
+ 	}
+ 	string_list_clear(&existing_refs, 0);
+-	string_list_clear(&new_refs, 0);
++
++	/* We may have a final lightweight tag that needs to be checked to see
++	 * if it needs fetching. */
++	if (item && !has_sha1_file(item->util) &&
++	    !will_fetch(head, item->util) )
++		item->util = NULL;
++
++	/* For all the tags in the remote_refs string list, call add_to_tail to
++	 * add them to the list of refs to be fetched */
++	for_each_string_list(add_to_tail, &remote_refs, &data);
++
++	string_list_clear(&remote_refs, 0);
+ }
+ 
+ static void check_not_current_branch(struct ref *ref_map)
+-- 
+1.6.4.2
