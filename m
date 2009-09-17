@@ -1,95 +1,99 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCH] git-log --format: Add %B tag with %B(x) option
-Date: Fri, 18 Sep 2009 00:47:51 +0200
-Message-ID: <1253227671-20493-1-git-send-email-heipei@hackvalue.de>
-Cc: Johannes Gilger <heipei@hackvalue.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 18 00:47:34 2009
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH JGIT] Circular references shouldn't be created
+Date: Fri, 18 Sep 2009 00:51:47 +0200
+Message-ID: <200909180051.47794.robin.rosenberg@dewire.com>
+References: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp> <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Sohn, Matthias" <matthias.sohn@sap.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 00:51:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoPlE-0002tV-Im
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 00:47:32 +0200
+	id 1MoPpW-0004CV-9G
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 00:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbZIQWrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 18:47:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbZIQWrV
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 18:47:21 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:48411 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbZIQWrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 18:47:20 -0400
-Received: from u-6-161.vpn.rwth-aachen.de ([137.226.102.161]:44586 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1MoPl0-0006SJ-L5; Fri, 18 Sep 2009 00:47:18 +0200
-X-Mailer: git-send-email 1.6.5.rc1.20.geb7d9
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.102.161
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1752673AbZIQWvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 18:51:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbZIQWvs
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 18:51:48 -0400
+Received: from mail.dewire.com ([83.140.172.130]:13014 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751471AbZIQWvr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 18:51:47 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9F24B147DB2E;
+	Fri, 18 Sep 2009 00:51:49 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id B8Fbk1Rm6RfX; Fri, 18 Sep 2009 00:51:49 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id ED520147DB2B;
+	Fri, 18 Sep 2009 00:51:48 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128778>
 
-Since one can simply use spaces to indent any other --pretty field we
-should have an option to do that with the body too.
+torsdag 17 september 2009 23:40:12 skrev Avery Pennarun <apenwarr@gmail.com>:
+> On Thu, Sep 17, 2009 at 3:23 PM, Sohn, Matthias <matthias.sohn@sap.com> wrote:
+> >        void link(final String name, final String target) throws IOException {
+> > +               if (name.equals(target))
+> > +                       throw new IllegalArgumentException(
+> > +                                       "illegal circular reference : symref " + name
+> > +                                                       + " cannot refer to " + target);
+> 
+> This isn't a very thorough fix.  It doesn't catch longer loops, like
+> 
+>     HEAD -> chicken -> HEAD
+> 
+> or
+> 
+>    a -> b -> c -> d -> a
+> 
+> Experimenting with original git.git's implementation, I see that this
+> is allowed:
+> 
+>    git symbolic-ref refs/heads/boink refs/heads/boink
+> 
+> It succeeds and creates a file that looks like this:
+> 
+>    ref: refs/heads/boink
+> 
+> And "git show-ref refs/heads/boink" says: nothing (but returns an error code).
+> 
+> And "git log refs/heads/boink" says:
+> 
+>    warning: ignoring dangling symref refs/heads/boink.
+>    fatal: ambiguous argument 'refs/heads/boink': unknown revision or
+> path not in the working tree.
+>    Use '--' to separate paths from revisions
+> 
+> Clearly, in git.git, symref loops are caught at ref read time, not
+> write time.  This makes sense, since someone might foolishly twiddle
+> the repository by hand and you don't want to get into an infinite loop
+> in that case.  Also, it's potentially useful to allow people to set
+> invalid symrefs *temporarily*, as part of a multi step process.
 
-Also the %B flag strips the trailing newlines, to enable more compact
-display.
+I had already written a patch much like this when I decided we need to do much better.
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
----
-Hey list,
+I think we should do this in the UI by not allowing the user to make a
+choice that would result in a loop and fixing the way the UI resolves
+choices. When creating a new branch we should analyze the selected 
+ref and dereference it if it is a symbolic name like HEAD or if it is a tag, 
+and perhaps show it like "HEAD (refs/heads/master)" in the the dialog.
 
-in my never-ending quest to beautify my personal log output I just whipped this 
-up. Maybe you like it too or at least can tell me what's wrong with it ;)
+Using unresolvable refs as the base for a new branch should be disallowed.
 
-Please CC me as I'm not on the list anymore (but keep up through Gmane though).
-
- Documentation/pretty-formats.txt |    2 ++
- pretty.c                         |   13 +++++++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2a845b1..c04f118 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,6 +123,8 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%B': body without trailing newline
-+- '%B(x)': body indented with x spaces
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
-diff --git a/pretty.c b/pretty.c
-index f5983f8..6d530e1 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -735,6 +735,19 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	case 'b':	/* body */
- 		strbuf_addstr(sb, msg + c->body_off);
- 		return 1;
-+	case 'B':
-+		if (placeholder[1] == '(') {
-+			const char *body = msg + c->body_off;
-+			const char *end = strchr(placeholder + 2, ')');
-+			if(!end)
-+				return 0;
-+			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, atoi(placeholder + 2));
-+			strbuf_rtrim(sb);
-+			return end - placeholder + 1;
-+		}
-+		strbuf_addstr(sb, msg + c->body_off);
-+		strbuf_rtrim(sb);
-+		return 1;
- 	}
- 	return 0;	/* unknown placeholder */
- }
--- 
-1.6.5.rc1.20.geb7d9
+-- robin
