@@ -1,87 +1,76 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] cvs: initialize empty password
-Date: Thu, 17 Sep 2009 09:21:02 +0200
-Message-ID: <20090917072101.GA12769@localhost>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v3 3/4] reset: add option "--merge-safe" to "git reset"
+Date: Thu, 17 Sep 2009 09:24:15 +0200
+Message-ID: <4AB1E41F.6050304@viscovery.net>
+References: <20090917040835.4048.51057.chriscool@tuxfamily.org> <20090917041440.4048.16353.chriscool@tuxfamily.org> <7vk4zykv7o.fsf@alter.siamese.dyndns.org> <4AB1D957.20902@viscovery.net> <7vr5u6jbgk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Dirk =?iso-8859-1?Q?H=F6rner?= <dirker@gmail.com>,
-	Pascal Obry <pascal@obry.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 17 09:21:28 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Sep 17 09:24:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoBIu-0001SD-Bj
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 09:21:20 +0200
+	id 1MoBM4-0002HH-3U
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 09:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758481AbZIQHVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 03:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758348AbZIQHVJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 03:21:09 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:64810 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755910AbZIQHVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 03:21:08 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so1408486fge.1
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 00:21:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:bcc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=ydWqyLreO/gQnqaaj7zBd2u+kx64uFAyIbJf2vzYeTo=;
-        b=chjwe2CV41l8YuxhFs3ZaIfaygmhqZnkeS/i69PKKger9Lp+Hyuv5xugML2SfbMaac
-         AN9h9+jQWkaIVPS1ow/MQ0DlATuF499No98zw+Xjvu/uKWCgczmDjuMbPdw/UvZ+JFDB
-         JFbcVE7mbFQkF50unYl9RF4BNTJo46KCLhc8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        b=PVeI2DTk5ZkmEZKBb6jYMUltrjxst/akE9UOFWVTaSWz7/2GbzjY3zkb7JfBsJ0LWP
-         92CA/r8aUmWEt5l9k8QwhoH4j+s0io2WaU89gZWezPSV9F46IESL8gW9YDwJirwmPAq4
-         nB/ncmBRP3fx0SLzXdYrzDympn6CKT1dy8iQQ=
-Received: by 10.86.226.5 with SMTP id y5mr229228fgg.36.1253172071080;
-        Thu, 17 Sep 2009 00:21:11 -0700 (PDT)
-Received: from darc.lan (p549A4B63.dip.t-dialin.net [84.154.75.99])
-        by mx.google.com with ESMTPS id 12sm515650fgg.0.2009.09.17.00.21.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Sep 2009 00:21:09 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.69)
-	(envelope-from <drizzd@aon.at>)
-	id 1MoBIc-00067O-1O; Thu, 17 Sep 2009 09:21:02 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1759073AbZIQHYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 03:24:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758794AbZIQHYP
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 03:24:15 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:45514 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758202AbZIQHYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 03:24:14 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MoBLk-0002cL-AX; Thu, 17 Sep 2009 09:24:16 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0D500BC81; Thu, 17 Sep 2009 09:24:16 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+In-Reply-To: <7vr5u6jbgk.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128722>
 
-If we do not read a password from the command line, and there are no
-passwords stored in .cvspass, we have to initialize the password with
-just "A".
+Junio C Hamano schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+>> Junio C Hamano schrieb:
+>> (2) The intended use-case of --merge-safe is to point the branch head to a
+>> different commit, but to carry the changes that currently are in the index
+>> and wd over to the new commit, similar to checkout --merge.
 
-This fixes a regression introduced by 3fb9d582 (Do not scramble
-password read from .cvspass).
+This is actually an operation that I need quite often, but I can do it
+only by way of git stash.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- git-cvsimport.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Clarification: I did not say that I actually meant to carry *only* the
+index and wd changes to the new commit. That is, the operation I have in
+mind can roughly be done in terms of
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index d741115..1ad20ac 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -253,6 +253,7 @@ sub conn {
- 					}
- 				}
- 			};
-+			$pass = "A" unless $pass;
- 		}
- 
- 		my ($s, $rep);
--- 
-1.6.5.rc0
+  $ git stash
+  $ git reset --hard $target
+  $ git stash pop
+
+> I have _no_ idea what the intended use-case of --merge-safe is, and that
+> was why I asked Christian for clarification in the previous round.  The
+> answer was still not clear enough so I pointed out --merge-safe could be
+> still doing a wrong thing even in _his_ use-case.
+
+Reading Christian in 200909170554.49416.chriscool@tuxfamily.org, I think
+this *is* his use-case? Christian?
+
+-- Hannes
