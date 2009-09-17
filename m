@@ -1,71 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Avoid the use of backslash-at-eol in pack-objects usage
- string.
-Date: Thu, 17 Sep 2009 15:00:36 -0700
-Message-ID: <7vvdjhgrjv.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] Avoid the use of backslash-at-eol in pack-objects usage 
+	string.
+Date: Thu, 17 Sep 2009 19:06:41 -0300
+Message-ID: <a4c8a6d00909171506l6c4b6a49i22d7b337a0c6cfa2@mail.gmail.com>
 References: <1253224300-18017-1-git-send-email-tfransosi@gmail.com>
+	 <7vvdjhgrjv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 00:00:57 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 00:06:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoP23-000856-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 00:00:51 +0200
+	id 1MoP7p-0001HL-Hn
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 00:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751195AbZIQWAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 18:00:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbZIQWAm
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 18:00:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZIQWAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 18:00:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 55FAE362B0;
-	Thu, 17 Sep 2009 18:00:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0sO7qdQIFmOkHdtxdXd/iOm/fsw=; b=FpYoPr
-	NBIaviqvaKEEikFQRu7VZIS+dqmFcTf9yQJYjU7Dx9116FV1ipdKxwfEpZTVS945
-	JUYMXUg4nF8OuSbVTL/4k/mPNxOjqunVP1E3yFB1ZSqune5sDAtt/EjcSIE3OzIB
-	KwKUXVhVu9KicDZb0sT7i+Gn26eXuwe49weH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UIQmrm9xIGIhTTSHDgc6ja+QMIaZzwyE
-	6MJSTJFKwCtnHy4iiVU97misn82ABe5nwl/I6NiFfoKhxvygiDKFkTTtYrikN51N
-	ODU6vIWNEH2VyGEna64oqZ/NF63QJfyKF2PTLeb0dRNYWt4+ZiDkmYdO8FBRrWxH
-	b2vKNxiiAnA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39EB3362AF;
-	Thu, 17 Sep 2009 18:00:42 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9FFC4362AE; Thu, 17 Sep
- 2009 18:00:37 -0400 (EDT)
-In-Reply-To: <1253224300-18017-1-git-send-email-tfransosi@gmail.com> (Thiago
- Farina's message of "Thu\, 17 Sep 2009 17\:51\:40 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8AF0DF50-A3D5-11DE-B4E8-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751150AbZIQWGk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 18:06:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751003AbZIQWGj
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 18:06:39 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:36622 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbZIQWGj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Sep 2009 18:06:39 -0400
+Received: by yxe37 with SMTP id 37so274591yxe.33
+        for <git@vger.kernel.org>; Thu, 17 Sep 2009 15:06:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xGInW9DkOiZvWjSyxqqaVLx3xc74H45sxB5WtRFvrfE=;
+        b=Q8nHbFpct9T8Fv5QJy1AKVpVazpLYn89gibjrwU/rvBDHFP4MLWDm5mzccZbI16R1D
+         03wAw70ho01g418C03CbwC4DEXjr+6Zwo+v6hB5dEQmes9EIIQCB5nBiWgJ+yFMTz45s
+         ZZxi9mAWNiKaYB+2msawOk6a6kg0a3bQkCSPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qdXMN2em39EqIByfcYE7cEX7WW7Hg0Shq8Gx5TI9MqTrcVUmIiA0RddbxThhPhY6EZ
+         EWHMELwsnoWY5laH9v/2U6KGipiviLCd+F1RyQPOJcrmOd8zBpPs2kNMUyeKn+82Qst1
+         JpTmMfowE9Wit4CwlSaMg4pPh+szR/0CsDdUk=
+Received: by 10.101.27.20 with SMTP id e20mr689540anj.137.1253225202721; Thu, 
+	17 Sep 2009 15:06:42 -0700 (PDT)
+In-Reply-To: <7vvdjhgrjv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128776>
 
-Thiago Farina <tfransosi@gmail.com> writes:
-
-> +static const char pack_usage[] =
-> +  "git pack-objects [{ -q | --progress | --all-progress }] \n"
-> +  "        [--max-pack-size=N] [--local] [--incremental] \n"
-> +  "        [--window=N] [--window-memory=N] [--depth=N] \n"
-> +  "        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset] \n"
-> +  "        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*] [--reflog] \n"
-> +  "        [--stdout | base-name] [--include-tag] \n"
-> +  "        [--keep-unreachable | --unpack-unreachable] \n"
-> +  "        [<ref-list | <object-list]";
-
-Do you still want to keep the trailing whitespace on these lines?
+On Thu, Sep 17, 2009 at 7:00 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Thiago Farina <tfransosi@gmail.com> writes:
+>
+>> +static const char pack_usage[] =3D
+>> + =A0"git pack-objects [{ -q | --progress | --all-progress }] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--max-pack-size=3DN] [--local] [--incremental=
+] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--window=3DN] [--window-memory=3DN] [--depth=3D=
+N] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--no-reuse-delta] [--no-reuse-object] [--delt=
+a-base-offset] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--threads=3DN] [--non-empty] [--revs [--unpac=
+ked | --all]*] [--reflog] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--stdout | base-name] [--include-tag] \n"
+>> + =A0" =A0 =A0 =A0 =A0[--keep-unreachable | --unpack-unreachable] \n=
+"
+>> + =A0" =A0 =A0 =A0 =A0[<ref-list | <object-list]";
+>
+> Do you still want to keep the trailing whitespace on these lines?
+I did this to maintain the same output of the old string, but if you
+want I can change, what you suggest?
