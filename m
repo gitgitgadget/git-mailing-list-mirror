@@ -1,99 +1,110 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH JGIT] Circular references shouldn't be created
-Date: Fri, 18 Sep 2009 00:51:47 +0200
-Message-ID: <200909180051.47794.robin.rosenberg@dewire.com>
-References: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp> <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-log --format: Add %B tag with %B(x) option
+Date: Thu, 17 Sep 2009 16:27:45 -0700
+Message-ID: <7vk4zxgnim.fsf@alter.siamese.dyndns.org>
+References: <1253227671-20493-1-git-send-email-heipei@hackvalue.de>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Sohn, Matthias" <matthias.sohn@sap.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 00:51:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Fri Sep 18 01:28:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoPpW-0004CV-9G
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 00:51:58 +0200
+	id 1MoQOO-0003tG-AJ
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 01:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbZIQWvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 18:51:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752537AbZIQWvs
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 18:51:48 -0400
-Received: from mail.dewire.com ([83.140.172.130]:13014 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751471AbZIQWvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 18:51:47 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 9F24B147DB2E;
-	Fri, 18 Sep 2009 00:51:49 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id B8Fbk1Rm6RfX; Fri, 18 Sep 2009 00:51:49 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id ED520147DB2B;
-	Fri, 18 Sep 2009 00:51:48 +0200 (CEST)
-User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
-In-Reply-To: <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
-Content-Disposition: inline
+	id S1751749AbZIQX1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Sep 2009 19:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750911AbZIQX1v
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 19:27:51 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42457 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbZIQX1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Sep 2009 19:27:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 678FE54E54;
+	Thu, 17 Sep 2009 19:27:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=T8Z5QeaDj1tlD+MI+gV4t3PHvJc=; b=N0Sk9I
+	vgM/HuS3t8SjbhvkdiMVprn27JxXqMo3eprTscZHSG81yRn9f+f+siJ3WwKMMNSD
+	VlTsAZTkzidMCkTTA5QydMPjT7MZB53XlOXjCGMSsNoXqeFa8Hw3qQeYA1zYaD7x
+	vz53koFER6lB0ZJiDaHtU8Bm/nCJXvq4n6zsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UrNCBELKkECb01lcAckNgNJRHQnXyOiG
+	UcPbUGNR57rl87QJJEQ2ieRtgFUhiWsQYWS/rLCTtpQIfc46wHG68SHkhT3lZJ5B
+	Ei0H1izZCNrK1el8QGIngP0KnoGjW2nYXzl0scc94iYh8ym7DerjfX8oC2Xa2zTM
+	0N/7FLlMM4Q=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A31D54E53;
+	Thu, 17 Sep 2009 19:27:50 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0CD0854E52; Thu, 17 Sep 2009
+ 19:27:46 -0400 (EDT)
+In-Reply-To: <1253227671-20493-1-git-send-email-heipei@hackvalue.de>
+ (Johannes Gilger's message of "Fri\, 18 Sep 2009 00\:47\:51 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B719B55A-A3E1-11DE-8E90-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128779>
 
-torsdag 17 september 2009 23:40:12 skrev Avery Pennarun <apenwarr@gmail.com>:
-> On Thu, Sep 17, 2009 at 3:23 PM, Sohn, Matthias <matthias.sohn@sap.com> wrote:
-> >        void link(final String name, final String target) throws IOException {
-> > +               if (name.equals(target))
-> > +                       throw new IllegalArgumentException(
-> > +                                       "illegal circular reference : symref " + name
-> > +                                                       + " cannot refer to " + target);
-> 
-> This isn't a very thorough fix.  It doesn't catch longer loops, like
-> 
->     HEAD -> chicken -> HEAD
-> 
-> or
-> 
->    a -> b -> c -> d -> a
-> 
-> Experimenting with original git.git's implementation, I see that this
-> is allowed:
-> 
->    git symbolic-ref refs/heads/boink refs/heads/boink
-> 
-> It succeeds and creates a file that looks like this:
-> 
->    ref: refs/heads/boink
-> 
-> And "git show-ref refs/heads/boink" says: nothing (but returns an error code).
-> 
-> And "git log refs/heads/boink" says:
-> 
->    warning: ignoring dangling symref refs/heads/boink.
->    fatal: ambiguous argument 'refs/heads/boink': unknown revision or
-> path not in the working tree.
->    Use '--' to separate paths from revisions
-> 
-> Clearly, in git.git, symref loops are caught at ref read time, not
-> write time.  This makes sense, since someone might foolishly twiddle
-> the repository by hand and you don't want to get into an infinite loop
-> in that case.  Also, it's potentially useful to allow people to set
-> invalid symrefs *temporarily*, as part of a multi step process.
+Johannes Gilger <heipei@hackvalue.de> writes:
 
-I had already written a patch much like this when I decided we need to do much better.
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index 2a845b1..c04f118 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -123,6 +123,8 @@ The placeholders are:
+>  - '%s': subject
+>  - '%f': sanitized subject line, suitable for a filename
+>  - '%b': body
+> +- '%B': body without trailing newline
+> +- '%B(x)': body indented with x spaces
 
-I think we should do this in the UI by not allowing the user to make a
-choice that would result in a loop and fixing the way the UI resolves
-choices. When creating a new branch we should analyze the selected 
-ref and dereference it if it is a symbolic name like HEAD or if it is a tag, 
-and perhaps show it like "HEAD (refs/heads/master)" in the the dialog.
+First the design issues.
 
-Using unresolvable refs as the base for a new branch should be disallowed.
+Because this will set a precedent for possible future formatting features
+that take optional parameters, we need to pick the syntax carefully not
+only for this feature but for the later ones that we haven't invented yet.
 
--- robin
+Let's say that pair of parentheses is a good choice and if later features
+want to take more than one, it would be reasonable for them to use a
+comma-separated list, e.g. %Q(1,2,3).
+
+I wonder if it is reasonable to invoke print_wrapped_text(), not just
+limit this feature to indenting.
+
+Now, let's look at the implementation.
+
+> diff --git a/pretty.c b/pretty.c
+> index f5983f8..6d530e1 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -735,6 +735,19 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+>  	case 'b':	/* body */
+>  		strbuf_addstr(sb, msg + c->body_off);
+>  		return 1;
+> +	case 'B':
+> +		if (placeholder[1] == '(') {
+> +			const char *body = msg + c->body_off;
+> +			const char *end = strchr(placeholder + 2, ')');
+> +			if(!end)
+> +				return 0;
+
+Style: "if (!end)"
+
+I'd sleep better if the syntax checking is done as a separate phase way
+before this in the codepath.
+
+> +			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, atoi(placeholder + 2));
+
+What happens when atoi() fails, or %B(12Q) was given?
+
+We tend to use strto[u]l when parsing integers and check for errors.
