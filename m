@@ -1,98 +1,104 @@
-From: "Sohn, Matthias" <matthias.sohn@sap.com>
-Subject: [PATCH JGIT] Circular references shouldn't be created
-Date: Thu, 17 Sep 2009 21:23:13 +0200
-Message-ID: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [PATCH JGIT] Circular references shouldn't be created
+Date: Thu, 17 Sep 2009 17:40:12 -0400
+Message-ID: <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
+References: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Thu Sep 17 23:24:40 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Sohn, Matthias" <matthias.sohn@sap.com>
+X-From: git-owner@vger.kernel.org Thu Sep 17 23:40:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoOT2-0006jz-AI
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 23:24:40 +0200
+	id 1MoOiV-0002oc-AT
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Sep 2009 23:40:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754448AbZIQVY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Sep 2009 17:24:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbZIQVY3
-	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 17:24:29 -0400
-Received: from smtpde03.sap-ag.de ([155.56.68.140]:43687 "EHLO
-	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754223AbZIQVY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Sep 2009 17:24:28 -0400
-X-Greylist: delayed 7258 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Sep 2009 17:24:28 EDT
-Received: from mail.sap.corp
-	by smtpde03.sap-ag.de (26) with ESMTP id n8HJNTVU019129
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 17 Sep 2009 21:23:30 +0200 (MEST)
-Received: from DEWDFEHT01.wdf.sap.corp (dewdfeht01.wdf.sap.corp [10.21.23.100])
-	by mail.sap.corp (mail02-26) with ESMTP id n8HJNSjb007170
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL);
-	Thu, 17 Sep 2009 21:23:29 +0200 (MEST)
-Received: from DEWDFEHT04.wdf.sap.corp (10.21.23.103) by
- DEWDFEHT01.wdf.sap.corp (10.21.23.100) with Microsoft SMTP Server (TLS) id
- 8.1.393.1; Thu, 17 Sep 2009 21:23:28 +0200
-Received: from DEWDFECCR09.wdf.sap.corp ([fe80::5efe:10.21.23.18]) by
- DEWDFEHT04.wdf.sap.corp ([fe80::5efe:10.21.23.103%15]) with mapi; Thu, 17 Sep
- 2009 21:23:28 +0200
-Thread-Topic: [PATCH JGIT] Circular references shouldn't be created
-Thread-Index: Aco3zEyMOZdHwExhTk6TtC0uOAV35w==
-Accept-Language: en-US, de-DE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-cr-puzzleid: {44B14863-4DD9-4836-BBBC-AF9FA3FEC3E0}
-x-cr-hashedpuzzle: A0JF BtkE B0c4 DmCs DxEQ EMOT FPHw GcdV Is7d JZQP KCgC
- M+Ob VGK/ V19X bcjy
- frri;3;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA7AHIAbwBiAGkAbgAuAHIAbwBzAGUAbgBiAGUAcgBnAEAAZABlAHcAaQByAGUALgBjAG8AbQA7AHMAcABlAGEAcgBjAGUAQABzAHAAZQBhAHIAYwBlAC4AbwByAGcA;Sosha1_v1;7;{44B14863-4DD9-4836-BBBC-AF9FA3FEC3E0};bQBhAHQAdABoAGkAYQBzAC4AcwBvAGgAbgBAAHMAYQBwAC4AYwBvAG0A;Thu,
- 17 Sep 2009 19:23:13
- GMT;WwBQAEEAVABDAEgAIABKAEcASQBUAF0AIABDAGkAcgBjAHUAbABhAHIAIAByAGUAZgBlAHIAZQBuAGMAZQBzACAAcwBoAG8AdQBsAGQAbgAnAHQAIABiAGUAIABjAHIAZQBhAHQAZQBkAA==
-acceptlanguage: en-US, de-DE
-X-Scanner: Virus Scanner virwal03
-X-SAP: out
+	id S1750787AbZIQVk3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Sep 2009 17:40:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750761AbZIQVk3
+	(ORCPT <rfc822;git-outgoing>); Thu, 17 Sep 2009 17:40:29 -0400
+Received: from mail-yw0-f175.google.com ([209.85.211.175]:62411 "EHLO
+	mail-yw0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbZIQVk2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Sep 2009 17:40:28 -0400
+Received: by ywh5 with SMTP id 5so572794ywh.4
+        for <git@vger.kernel.org>; Thu, 17 Sep 2009 14:40:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5DXDJuGJfT/Nzz/tc37jKugeiEzR6n/7tI96Pih2Dvo=;
+        b=ff/R5wq/ypBTBSRmkjen//ymw80qyef6z0THl7Q1nlBxIPmsdzTCWg4EUkQz980y33
+         veuTMJ+L+fYLBcGdoCTbIv6s+vN3Qz4/8J3mWl68aVDHSf6K601gKNcYFvlr4O8kMw87
+         4m5VlucenzDRQtkiZTUK2NPHhzRlOn5QTB294=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=tqy+IsR1/S0wP+MMutI1cRa4Thr0SWuun3si08FVWCNXQjTW1m1xeGMcqVjqZ09bAD
+         0WxddjjmKd7V2EjOMY9DyGOMXRLRX48KbG6kNUxSzcS3mq1TnAM2ovTtvSzsDWd6Kl9/
+         65BaPVfivEPDlAYfd75wujHCjkQo2NhIeAO8Q=
+Received: by 10.150.214.2 with SMTP id m2mr1985041ybg.235.1253223632123; Thu, 
+	17 Sep 2009 14:40:32 -0700 (PDT)
+In-Reply-To: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128773>
 
-RnJvbTogTWF0dGhpYXMgU29obiA8bWF0dGhpYXMuc29obkBzYXAuY29tPg0KQ2lyY3VsYXIgcmVm
-ZXJlbmNlcyBzaG91bGRuJ3QgYmUgY3JlYXRlZA0KDQpGaXggZm9yIGJ1ZzogaHR0cHM6Ly9idWdz
-LmVjbGlwc2Uub3JnL2J1Z3Mvc2hvd19idWcuY2dpP2lkPTI4Njc0Mw0KDQpTaWduZWQtb2ZmLWJ5
-OiBNYXR0aGlhcyBTb2huIDxtYXR0aGlhcy5zb2huQHNhcC5jb20+DQotLS0NCiAuLi4vdHN0L29y
-Zy9zcGVhcmNlL2pnaXQvbGliL1JlZlRlc3QuamF2YSAgICAgICAgICB8ICAgIDkgKysrKysrKysr
-DQogLi4uL3NyYy9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9SZWZEYXRhYmFzZS5qYXZhICAgICAgfCAg
-ICA0ICsrKysNCiAyIGZpbGVzIGNoYW5nZWQsIDEzIGluc2VydGlvbnMoKyksIDAgZGVsZXRpb25z
-KC0pDQoNCmRpZmYgLS1naXQgYS9vcmcuc3BlYXJjZS5qZ2l0LnRlc3QvdHN0L29yZy9zcGVhcmNl
-L2pnaXQvbGliL1JlZlRlc3QuamF2YSBiL29yZy5zcGVhcmNlLmpnaXQudGVzdC90c3Qvb3JnL3Nw
-ZWFyY2UvamdpdC9saWIvUmVmVGVzdC5qYXZhDQppbmRleCBmYWJiZTdlLi5jZTYzMjhiIDEwMDY0
-NA0KLS0tIGEvb3JnLnNwZWFyY2UuamdpdC50ZXN0L3RzdC9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9S
-ZWZUZXN0LmphdmENCisrKyBiL29yZy5zcGVhcmNlLmpnaXQudGVzdC90c3Qvb3JnL3NwZWFyY2Uv
-amdpdC9saWIvUmVmVGVzdC5qYXZhDQpAQCAtMTU1LDQgKzE1NSwxMyBAQCBwdWJsaWMgdm9pZCB0
-ZXN0T3JpZ1Jlc29sdmVkTmFtZXNTeW1SZWYoKSB0aHJvd3MgSU9FeGNlcHRpb24gew0KIAkJYXNz
-ZXJ0RXF1YWxzKCJyZWZzL2hlYWRzL21hc3RlciIsIHJlZi5nZXROYW1lKCkpOw0KIAkJYXNzZXJ0
-RXF1YWxzKCJIRUFEIiwgcmVmLmdldE9yaWdOYW1lKCkpOw0KIAl9DQorCQ0KKwlwdWJsaWMgdm9p
-ZCB0ZXN0SWxsZWdhbENpcmN1bGFyUmVmKCkgdGhyb3dzIElPRXhjZXB0aW9uIHsNCisJCXRyeSB7
-DQorCQkJZGIud3JpdGVTeW1yZWYoIkhFQUQiLCAiSEVBRCIpOw0KKwkJCWZhaWwoImNyZWF0aW9u
-IG9mIGNpcmN1bGFyIHJlZmVyZW5jZSBzaG91bGQgZmFpbCIpOw0KKwkJfSBjYXRjaCAoSWxsZWdh
-bEFyZ3VtZW50RXhjZXB0aW9uIGV4cGVjdGVkKSB7DQorCQkJLy8gYXR0ZW1wdCB0byBjcmVhdGUg
-Y2lyY3VsYXIgcmVmZXJlbmNlIHNob3VsZCBmYWlsDQorCQl9DQorCX0NCiB9DQpkaWZmIC0tZ2l0
-IGEvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3NwZWFyY2UvamdpdC9saWIvUmVmRGF0YWJhc2Uu
-amF2YSBiL29yZy5zcGVhcmNlLmpnaXQvc3JjL29yZy9zcGVhcmNlL2pnaXQvbGliL1JlZkRhdGFi
-YXNlLmphdmENCmluZGV4IDA5Y2I5YmIuLjQ4M2IxZDAgMTAwNjQ0DQotLS0gYS9vcmcuc3BlYXJj
-ZS5qZ2l0L3NyYy9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9SZWZEYXRhYmFzZS5qYXZhDQorKysgYi9v
-cmcuc3BlYXJjZS5qZ2l0L3NyYy9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9SZWZEYXRhYmFzZS5qYXZh
-DQpAQCAtMTc0LDYgKzE3NCwxMCBAQCBSZWZSZW5hbWUgbmV3UmVuYW1lKFN0cmluZyBmcm9tUmVm
-LCBTdHJpbmcgdG9SZWYpIHRocm93cyBJT0V4Y2VwdGlvbiB7DQogCSAqIEB0aHJvd3MgSU9FeGNl
-cHRpb24NCiAJICovDQogCXZvaWQgbGluayhmaW5hbCBTdHJpbmcgbmFtZSwgZmluYWwgU3RyaW5n
-IHRhcmdldCkgdGhyb3dzIElPRXhjZXB0aW9uIHsNCisJCWlmIChuYW1lLmVxdWFscyh0YXJnZXQp
-KQ0KKwkJCXRocm93IG5ldyBJbGxlZ2FsQXJndW1lbnRFeGNlcHRpb24oDQorCQkJCQkiaWxsZWdh
-bCBjaXJjdWxhciByZWZlcmVuY2UgOiBzeW1yZWYgIiArIG5hbWUNCisJCQkJCQkJKyAiIGNhbm5v
-dCByZWZlciB0byAiICsgdGFyZ2V0KTsNCiAJCWZpbmFsIGJ5dGVbXSBjb250ZW50ID0gQ29uc3Rh
-bnRzLmVuY29kZSgicmVmOiAiICsgdGFyZ2V0ICsgIlxuIik7DQogCQlsb2NrQW5kV3JpdGVGaWxl
-KGZpbGVGb3JSZWYobmFtZSksIGNvbnRlbnQpOw0KIAkJc3luY2hyb25pemVkICh0aGlzKSB7DQot
-LSANCjEuNi40Lm1zeXNnaXQuMA0KDQo=
+On Thu, Sep 17, 2009 at 3:23 PM, Sohn, Matthias <matthias.sohn@sap.com>=
+ wrote:
+> =A0 =A0 =A0 =A0void link(final String name, final String target) thro=
+ws IOException {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (name.equals(target))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 throw new IllegalArgume=
+ntException(
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 "illegal circular reference : symref " + name
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 + " cannot refer to " + target=
+);
+
+This isn't a very thorough fix.  It doesn't catch longer loops, like
+
+    HEAD -> chicken -> HEAD
+
+or
+
+   a -> b -> c -> d -> a
+
+Experimenting with original git.git's implementation, I see that this
+is allowed:
+
+   git symbolic-ref refs/heads/boink refs/heads/boink
+
+It succeeds and creates a file that looks like this:
+
+   ref: refs/heads/boink
+
+And "git show-ref refs/heads/boink" says: nothing (but returns an error=
+ code).
+
+And "git log refs/heads/boink" says:
+
+   warning: ignoring dangling symref refs/heads/boink.
+   fatal: ambiguous argument 'refs/heads/boink': unknown revision or
+path not in the working tree.
+   Use '--' to separate paths from revisions
+
+Clearly, in git.git, symref loops are caught at ref read time, not
+write time.  This makes sense, since someone might foolishly twiddle
+the repository by hand and you don't want to get into an infinite loop
+in that case.  Also, it's potentially useful to allow people to set
+invalid symrefs *temporarily*, as part of a multi step process.
+
+Have fun,
+
+Avery
