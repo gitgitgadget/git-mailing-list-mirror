@@ -1,74 +1,149 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-push: add option --repo-all
-Date: Fri, 18 Sep 2009 09:42:49 -0700
-Message-ID: <7v8wgcb3w6.fsf@alter.siamese.dyndns.org>
-References: <1253258222-11475-1-git-send-email-catap@catap.ru>
- <m3r5u43a8h.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Kirill A. Korinskiy" <catap@catap.ru>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 18:43:18 2009
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: [PATCHv2] git-log --format: Add %B tag with %B(x) option
+Date: Fri, 18 Sep 2009 20:00:45 +0200
+Message-ID: <1253296845-17219-1-git-send-email-heipei@hackvalue.de>
+References: <7vk4zxgnim.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Gilger <heipei@hackvalue.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 18 20:00:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MogY6-0007nl-0A
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 18:43:06 +0200
+	id 1MohlA-0006FR-0E
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 20:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754536AbZIRQm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2009 12:42:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754018AbZIRQm4
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 12:42:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54977 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752217AbZIRQmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2009 12:42:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52E4337D3E;
-	Fri, 18 Sep 2009 12:42:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Nfj6uk9qitEhyrbafqmjQwpFJeI=; b=Fv7JFe
-	WvVDWep+lFwOghYMgli36wHLRZCGbxC0uEV+gsthMpm2XCwFGvdCoSLzCCvXDHOX
-	PC8hnbokgxa+N9yJZW7CV3X5WH30/sfq4gzQ9OZcUGW5J/PAdANNomlyUDbXzP5l
-	u762+NUWPWOmHA5VyttobivBNTkodvPxroyXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JMGcLToHi0+TroIYA8am/rDGnWfD6yq9
-	e+Vlu8GvXMJq8z6HvHH9DYF/sJlHGyvnP3ttwdXtsyefrsDfzyuyn+RvR2W0KMvv
-	SXsc2KHaAU/iBjV6Y2vZ5Zk04SKIL7Np5jx3zxmCretk58DEr2fB4qiB2zfpKQwp
-	Gj7DOHypKCc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 296AC37D3C;
-	Fri, 18 Sep 2009 12:42:55 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A8BD37D3B; Fri, 18 Sep
- 2009 12:42:51 -0400 (EDT)
-In-Reply-To: <m3r5u43a8h.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri\, 18 Sep 2009 01\:52\:49 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 507D847A-A472-11DE-8BE5-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757994AbZIRSA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 14:00:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757990AbZIRSA2
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 14:00:28 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:49529 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757978AbZIRSA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2009 14:00:27 -0400
+Received: from u-7-100.vpn.rwth-aachen.de ([137.226.103.100]:41649 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1Mohkn-0004iz-Io; Fri, 18 Sep 2009 20:00:17 +0200
+X-Mailer: git-send-email 1.6.5.rc1.20.geb7d9
+In-Reply-To: <7vk4zxgnim.fsf@alter.siamese.dyndns.org>
+X-Verified-Sender: yes
+X-SA-Exim-Connect-IP: 137.226.103.100
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128802>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Since one can simply use spaces to indent any other --pretty field we
+should have an option to do that with the body too.
 
-> I have created 'pushall' *alias* for that purpose, but I think that
-> such functionality would be better added to "git remote" rather than
-> to "git push".
+Also the %B flag strips the trailing newlines, to enable more compact
+display.
 
-Also Linus added a mystery feature that you can have more than one pushURL
-to a [remote "there"] section to push to multiple places quite a while
-ago, so use of it is another possibile solution for what Kirill wants to
-solve.
+Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
+---
+Hi again,
 
-I do not think it is such a useful command line option that can be used to
-only say "everything"; your suggestion to hook into the grouping mechanism
-"git remote" has sounds much nicer.
+I followed Junio's implementation-advice. Since we have two placeholders which 
+take () arguments I put the scanning for those at the top, to avoid repetition. 
+I used strtol in place of atoi and I also had to to add a check for ident > 0 
+since the indent determines the growth-size of the buffer, and negative values 
+produced nasty stuff (obviously).
 
-Thanks.
+As for general extendability: The current code deals with %B(42) as well as 
+%B(42,23[,...]), so even old versions could be used with "new" pretty-formats.  
+%B(c5) is simply no ident, while %B(5c) is 5 spaces indent. Don't know if this 
+is unwanted behaviour, but that's what strtol gives us.
+
+Dscho sent me a pointer to a patch [1], which not only adds indent but also 
+rewrapping. But since this is my second patch and Dscho's patch depended on two 
+other patches I didn't want to get in over my head by making his patches a 
+prerequisite.
+
+A last word on future formats: We can use (x,y,z) easily, another thing one 
+might think of (or at least I do) is using an %an[20] syntax, returning only 
+the first 20 chars of %an, so one can make onelined outputs nicely 
+column-aligned for fields like the author.
+
+Greetings,
+Jojo
+
+[1] - http://repo.or.cz/w/git/dscho.git?a=commit;h=ad48dfca58169c35e227e135638b4970fe4dc9a5
+
+ Documentation/pretty-formats.txt |    2 ++
+ pretty.c                         |   25 ++++++++++++++++++++-----
+ 2 files changed, 22 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 2a845b1..533bc5e 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -123,6 +123,8 @@ The placeholders are:
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+ - '%b': body
++- '%B': body without trailing newline
++- '%B(x)': body indented by x spaces
+ - '%Cred': switch color to red
+ - '%Cgreen': switch color to green
+ - '%Cblue': switch color to blue
+diff --git a/pretty.c b/pretty.c
+index f5983f8..7b88827 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -605,13 +605,17 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	int h1, h2;
+ 
+ 	/* these are independent of the commit */
++
++	const char *body = msg + c->body_off;
++	const char *end = NULL;
++	/* check if we have arguments to the placeholder */
++	if (placeholder[1] == '(')
++		end = strchr(placeholder + 2, ')');
++
+ 	switch (placeholder[0]) {
+ 	case 'C':
+-		if (placeholder[1] == '(') {
+-			const char *end = strchr(placeholder + 2, ')');
++		if (end) {
+ 			char color[COLOR_MAXLEN];
+-			if (!end)
+-				return 0;
+ 			color_parse_mem(placeholder + 2,
+ 					end - (placeholder + 2),
+ 					"--pretty format", color);
+@@ -733,7 +737,16 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 		format_sanitized_subject(sb, msg + c->subject_off);
+ 		return 1;
+ 	case 'b':	/* body */
+-		strbuf_addstr(sb, msg + c->body_off);
++		strbuf_addstr(sb, body);
++		return 1;
++	case 'B':	/* body without trailing newline */
++		if (end) {
++			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, strtol(placeholder + 2, NULL, 10));
++			strbuf_rtrim(sb);
++			return end - placeholder + 1;
++		}
++		strbuf_addstr(sb, body);
++		strbuf_rtrim(sb);
+ 		return 1;
+ 	}
+ 	return 0;	/* unknown placeholder */
+@@ -875,6 +888,8 @@ void pp_remainder(enum cmit_fmt fmt,
+ 		}
+ 		first = 0;
+ 
++		if (indent < 0)
++			indent = 0;
+ 		strbuf_grow(sb, linelen + indent + 20);
+ 		if (indent) {
+ 			memset(sb->buf + sb->len, ' ', indent);
+-- 
+1.6.5.rc1.20.geb7d9
