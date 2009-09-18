@@ -1,72 +1,116 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH 2/2] gitk: Fix the geometry when restoring from zoomed state
-Date: 18 Sep 2009 14:24:13 +0100
-Message-ID: <87d45obd36.fsf@users.sourceforge.net>
-References: <1252437756-81986-1-git-send-email-snaury@gmail.com>
-	<8763bkcsxb.fsf@users.sourceforge.net>
-	<19122.10359.725107.949551@cargo.ozlabs.ibm.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Git crashes on pull
+Date: Fri, 18 Sep 2009 21:39:48 +0800
+Message-ID: <20090918213948.4bb65f4e.rctay89@gmail.com>
+References: <7vzl8v4y5g.fsf@alter.siamese.dyndns.org>
+ <alpine.LSU.2.01.0909152044450.10936@bianca.dialin.t-online.de>
+ <7vljkg57xs.fsf@alter.siamese.dyndns.org>
+ <alpine.LSU.2.01.0909160022430.24554@bianca.dialin.t-online.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alexy Borzenkov <snaury@gmail.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Sep 18 15:24:58 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org,
+	Michael Wookey <michaelwookey@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 15:39:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ModSL-0001ZR-O7
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 15:24:58 +0200
+	id 1Modgc-0005uV-Nq
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 15:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755930AbZIRNYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2009 09:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755479AbZIRNYR
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 09:24:17 -0400
-Received: from smtp-out2.blueyonder.co.uk ([195.188.213.5]:38131 "EHLO
-	smtp-out2.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754836AbZIRNYQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Sep 2009 09:24:16 -0400
-Received: from [172.23.170.141] (helo=anti-virus02-08)
-	by smtp-out2.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1ModRi-00028q-Dq; Fri, 18 Sep 2009 14:24:18 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1ModRg-00076m-0c; Fri, 18 Sep 2009 14:24:16 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 1EA5D51843; Fri, 18 Sep 2009 14:24:14 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <19122.10359.725107.949551@cargo.ozlabs.ibm.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1752197AbZIRNjc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 09:39:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751512AbZIRNjc
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 09:39:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:23987 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195AbZIRNjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2009 09:39:32 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so496551fge.1
+        for <git@vger.kernel.org>; Fri, 18 Sep 2009 06:39:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:in-reply-to:references:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        bh=S9xA23oNbPQhQGhuI2NA6FxTpnE9YZQ6qwIDp8whocI=;
+        b=BvjcCaCgHtsY9XCi0FjSF6eOS31Wf1nNZvVXvoKUfeqfXbRFqP0nbbU40RZ3PHZARC
+         6K04CQBVIxLHgrMfsbg9YvjvED7g006WOMsqk6ZAf09yOpRDrRTRJ6cyYYyiIr+oL5v4
+         QGFu50uO66pw9PevJNYmAi399Af6nWlU8fdRs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        b=Q6GoCZErFwMFEHGkZkvQyNanhYYdaS4pg5xQ9qgTlqvqJYG6OJaEPvgqylzi3Kle96
+         I9T7Wpmwk2/tA2RlbrLeG+tuy0sO/xSY9IlgJhpooTN38MFJTyG28Rq7T6UBxk16NJOj
+         LavHUQ7U1S/nTS6FNaCiPVHlGMy/XiaMw1wX8=
+Received: by 10.86.192.34 with SMTP id p34mr1780770fgf.28.1253281174826;
+        Fri, 18 Sep 2009 06:39:34 -0700 (PDT)
+Received: from your-cukc5e3z5n (cm104.zeta152.maxonline.com.sg [116.87.152.104])
+        by mx.google.com with ESMTPS id e11sm441674fga.24.2009.09.18.06.39.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Sep 2009 06:39:33 -0700 (PDT)
+In-Reply-To: <7vzl8v4y5g.fsf@alter.siamese.dyndns.org>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128797>
 
-Paul Mackerras <paulus@samba.org> writes:
+Hi,
 
->Pat Thoyts writes:
+On Wed, Sep 16, 2009 at 6:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks.
 >
->> The patch to handle the geometry of a restored gitk by Alexy Borzenkov
->> causes the position of the columns to creep each time the application
->> is restarted.  This patch addresses this by remembering the application
->> geometry for the normal state and saving that regardless of the actual
->> state when the application is closed.
+> The sad part of the story was that this regression was introduced by a
+> change to work around recent breakage observed when fetching from the http
+> server github runs, and it was the primary purpose of pushing 1.6.4.3 out.
 >
->So this patch replaces Alexey's patch, then?  The context in your patch
->doesn't match the changes made in Alexey's patch AFAICS.
+> Now we need to cut a 1.6.4.4 with this fix-on-fix soon, like tomorrow.
 
-Correct. I posted a response to Alexy's patch saying I'd post an
-alternative as I had trouble with the columns resizing and creeping
-due to the assertion of 'wm state normal' during the settings save
-each time.
-See
- http://thread.gmane.org/gmane.comp.version-control.git/128026/focus=128652
-The context of mine should be the gitk repository master (was
-c21398be).
+sorry for all the trouble caused.
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Junio, do you think moving out the free() would be a better option? Setting it to NULL just so we can free() is rather contrived, I feel.
+
+-- >8 --
+
+Subject: [PATCH] http.c: move free() out of cleanup block
+
+Instead of initializing a variable (url) just so we can do a free() on
+it, as in b202514 (http.c: avoid freeing an uninitialized pointer), we
+move the free() out of cleanup block.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ http.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/http.c b/http.c
+index 23b2a19..a67f62e 100644
+--- a/http.c
++++ b/http.c
+@@ -866,7 +866,7 @@ static int fetch_pack_index(unsigned char *sha1, const char *base_url)
+ 	int ret = 0;
+ 	char *hex = xstrdup(sha1_to_hex(sha1));
+ 	char *filename;
+-	char *url = NULL;
++	char *url;
+ 	struct strbuf buf = STRBUF_INIT;
+
+ 	if (has_pack_index(sha1)) {
+@@ -885,9 +885,9 @@ static int fetch_pack_index(unsigned char *sha1, const char *base_url)
+ 	if (http_get_file(url, filename, 0) != HTTP_OK)
+ 		ret = error("Unable to get pack index %s\n", url);
+
++	free(url);
+ cleanup:
+ 	free(hex);
+-	free(url);
+ 	return ret;
+ }
+
+--
+1.6.4.2
