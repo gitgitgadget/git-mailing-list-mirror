@@ -1,122 +1,120 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] Avoid the use of backslash-at-eol in pack-objects usage 
-	string.
-Date: Fri, 18 Sep 2009 18:40:47 -0300
-Message-ID: <a4c8a6d00909181440l5c8b0193k4703af8d06dde9b0@mail.gmail.com>
-References: <1253224300-18017-1-git-send-email-tfransosi@gmail.com>
-	 <7vvdjhgrjv.fsf@alter.siamese.dyndns.org>
-	 <a4c8a6d00909171506l6c4b6a49i22d7b337a0c6cfa2@mail.gmail.com>
-	 <7vd45pgjhr.fsf@alter.siamese.dyndns.org>
-	 <a4c8a6d00909180802r713d7644mcb4e98ae4352a03a@mail.gmail.com>
-	 <7v1vm49ifb.fsf@alter.siamese.dyndns.org>
+From: "R. Tyler Ballance" <tyler@slide.com>
+Subject: Re: Big project, slow access!
+Date: Fri, 18 Sep 2009 14:32:16 -0700
+Message-ID: <20090918213216.GJ18785@starfruit.corp.slide.com>
+References: <ffb2c0280909181138r7fde8722n80be4bdf95864c37@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="72k7VsmfIboquFwl"
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 18 23:40:55 2009
+To: Toan Pham <tpham3783@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 23:56:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MolCI-0002kU-R4
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 23:40:55 +0200
+	id 1MolR7-0006fI-2g
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 23:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895AbZIRVkq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Sep 2009 17:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752669AbZIRVkp
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 17:40:45 -0400
-Received: from an-out-0708.google.com ([209.85.132.246]:32230 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbZIRVko convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Sep 2009 17:40:44 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1832212and.1
-        for <git@vger.kernel.org>; Fri, 18 Sep 2009 14:40:48 -0700 (PDT)
+	id S1751515AbZIRVzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 17:55:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751372AbZIRVzs
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 17:55:48 -0400
+Received: from mx0.slide.com ([208.76.69.78]:57935 "EHLO mx0.slide.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964AbZIRVzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2009 17:55:48 -0400
+X-Greylist: delayed 1416 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Sep 2009 17:55:48 EDT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TLoEQlZ6PYwepGkfK254dWtYH6uWPZuX/yIJFl3LYFQ=;
-        b=grIsE2WUHSsqOBKSnQxo6USP/8ky9VQhoo2Y529hnNO1z5y3j/RCTtOw3SBLy0iVeR
-         dx1InaJH7/PMdSss49VKSG/LgUl5u2yvA+lUVFqhdzYX+bGHZA80oWHeexcJ6HEET1WC
-         Yf2B451wfk2DgZUTJ/N5ZWsgChPUVAnhWuxrM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fbwZwOuEfVclkYY0PqZnbwoAIIciVI90VslMbsejy7LLKxqw4QjYtpfGmMsQC1VjrC
-         bIGu9cGILLdgeWNs3WOPXX3z4c592XPdhOLZ80Q/4SLZW9HR/JWEG7hojLtEobYH/cE/
-         3WElm342HhWdaFR1C2ykXfOb6oI/j0nqDv31s=
-Received: by 10.101.193.25 with SMTP id v25mr2028151anp.132.1253310048083; 
-	Fri, 18 Sep 2009 14:40:48 -0700 (PDT)
-In-Reply-To: <7v1vm49ifb.fsf@alter.siamese.dyndns.org>
+	d=slide.com; s=slideinc; h=Date:From:To:Subject:Message-ID; bh=y
+	ggU0gjGZOAnkeDKttrT9is0yAA1ARZDWjt/QV5tm9E=; b=q2eZjoOIQPN278r4m
+	+Wo8b5MAIkoTktSyk7p+ubK+sRpmduc0iM++sqzocQK4w4ipyVm9IyTTmdBvqkfv
+	WvjVlxtXhGV/jbtpRzwgeh7CSKA7fNCLGzPPO5JwzkUF4mKb3REAGHNNPnXpfGa3
+	hjnovWzpWDWe5Cj0WBmHf4zvzo=
+Received: from nat3.slide.com ([208.76.69.126]:51142 helo=calculon.corp.slide.com)
+	by mx0.slide.com with esmtp (Exim 4.69 #1)
+	id 1Mol3u-0001UR-Vu; Fri, 18 Sep 2009 14:32:15 -0700
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by calculon.corp.slide.com (Postfix) with ESMTP id ED2223898187;
+	Fri, 18 Sep 2009 14:32:14 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at calculon.corp.slide.com
+Received: from calculon.corp.slide.com ([127.0.0.1])
+	by localhost (calculon.corp.slide.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HhsWooDSZPm7; Fri, 18 Sep 2009 14:32:07 -0700 (PDT)
+Received: from starfruit.corp.slide.com (starfruit.corp.slide.com [10.10.10.45])
+	by calculon.corp.slide.com (Postfix) with ESMTP id 71B5138980B5;
+	Fri, 18 Sep 2009 14:32:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <ffb2c0280909181138r7fde8722n80be4bdf95864c37@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Content-Bypass: Bypassed by sending host IP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128814>
 
-On Fri, Sep 18, 2009 at 4:11 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Thiago Farina <tfransosi@gmail.com> writes:
->
->> This release candidate freeze is a period that no one can send patch=
-es?
->
-> No.
->
-> After -rc1, only fixes to regressions and severe bugs and trivially
-> correct documentation patches will be applied to my tree, but all oth=
-er
-> kinds of patches are still sent to the list for discussion, so that t=
-he
-> proposed changes can be discussed, polished and then become ready for=
- the
-> development cycle after the upcoming release.
->=A0I often even pick them up and queue them to 'pu' and possibly 'next=
-' as time permits.
-If you don't want to pick a patch this means that it was not accepted,
-right? I wrote others two trivial patches, one has comments, and I did
-the changes suggested, but I guess not will be done about it because
-it is just trivial.
->> And what did you mean with code churn?
->
-> A change primarily for the sake of change without urgency nor real be=
-nefit
-> in the longer term.
->
-> It bothers nobody if a long literal string is written as a string lit=
-eral
-> in a dq pair with LFs quoted with backslashes, or as a run of multipl=
-e
-> string literals, each of which ending with LF, to be concatenated by =
-the
-> compiler. =A0It however would bother somebody who actually wants to m=
-odify
-> these lines for a real change, and that is the best time for doing su=
-ch a
-> clean-up. =A0Reasons for such a real change vary; to fix earlier mist=
-akes
-> (e.g. one line being excessively longer than others, or an option is
-> misspelled), to add a new option, or to make the output of the progra=
-m
-> easier to read in general, etc.
-This means that trivial patches like this one I wrote are generally
-not accepted? Why is there this difficult (is it to maintain the high
-level of the patches)? I thought if it is trivial it can be merged
-after a review, into one of the integration branches. You write the
-comments (the people in mailing list), I make the changes, and then
-the patch is committed. But what I'm seeing here, this is not how the
-things are done here. It is much more complicated than that I guess.
 
-In a codereview tool I can send a patch for review, I can assign it to
-someone review, he will make comments, I will make the necessary
-changes, and when the patch is ready, it will be committed. What is
-the workflow? With an email I can't assign a patch to someone, with
-time it will be lost.
+--72k7VsmfIboquFwl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm just trying to understand what I have to do, to submit better
-patches. Another issue that I saw, is about *issues* or bugs, they are
-not tracked in a bug traker. It's just an email, so how can I work in
-a bug if I don't know about it, have I to find the bugs myself?
+
+On Fri, 18 Sep 2009, Toan Pham wrote:
+
+> Hi,
+>=20
+> I use git to maintain a project that is at least 8 gigs in size.
+> The project is a Linux from Scratch repository that includes source
+> codes to approximately 2000 open source projects,
+> gcc tool-chain, 1000+ configurations for different software packages,
+> source code for different kernel versions,
+> and many linux distributions/flavors resulted from this LFS build environ=
+ment.
+>=20
+> The git's object repository is now 4.6 gigs and consists of approx.
+> 610,000 files and folders.
+> The speed of git is now terribly slow.  Each time I use basic commands
+> like 'git status' or 'git diff',
+> it would take at least 5 minutes for git to give me back a result.
+> Again, the machine that i run git on is a P4 3.2 gig-hertz with HT.
+
+Howdy Toan, we have a similarly large repository ~405k files, the .git
+folder fully packed is ~6GB.=20
+
+The advise to fully-pack your repository is likely going to have the
+greatest impact on your performance in the short term, in the long term
+however you might want to consider using git-filter-branch(1) or other
+tools available to separate our the components of your current Git
+reposotory into a series of repos.
+
+The performance hit you're seeing likely has nothing to do with your
+processor speed either, but rather your disk search speed (i'm waiting
+for a new fancy SSD to help alleviate my issues ;))
+
+> would  someone please recommend on how i can optimize git's performance?
+> Git is so slow, are there better ways to manage a project like this?
+
+Rethink how your project is laid out, and whether certain binaries files
+need to sit in the tree, or can be build on a need-by-need basis.
+
+
+
+Cheers
+-R. Tyler Ballance
+Slide, Inc.
+
+--72k7VsmfIboquFwl
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkqz/GAACgkQFCbH3D9R4W+xEQCfWTIUFpwc1dyOIzE0UxFpRC7c
+W6AAoK4hqFe6tNSu5Ktd+U167V3OdG3E
+=7lqI
+-----END PGP SIGNATURE-----
+
+--72k7VsmfIboquFwl--
