@@ -1,60 +1,120 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: Add compiled date to git --version output?
-Date: Fri, 18 Sep 2009 14:04:28 +0800
-Message-ID: <544dda350909172304i2d603719ra44bef520389f024@mail.gmail.com>
-References: <544dda350909172117r44761577m11e7d30a1a5d0c91@mail.gmail.com>
-	 <7v8wgchmcc.fsf@alter.siamese.dyndns.org>
+From: "Sohn, Matthias" <matthias.sohn@sap.com>
+Subject: RE: [PATCH JGIT] Circular references shouldn't be created
+Date: Fri, 18 Sep 2009 07:37:56 +0100
+Message-ID: <C89280B882467443A695734861B942B28759DEAA@DEWDFECCR09.wdf.sap.corp>
+References: <C89280B882467443A695734861B942B28759DB95@DEWDFECCR09.wdf.sap.corp>
+ <32541b130909171440w1a6d2394t4acc6a2f791c143@mail.gmail.com>
+ <200909180051.47794.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 18 08:04:37 2009
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: 8BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 18 08:38:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoWaC-0002VU-GI
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 08:04:36 +0200
+	id 1MoX74-0000sd-J6
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 08:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751467AbZIRGE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2009 02:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbZIRGE0
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 02:04:26 -0400
-Received: from mail-px0-f194.google.com ([209.85.216.194]:46376 "EHLO
-	mail-px0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750997AbZIRGEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2009 02:04:25 -0400
-Received: by pxi32 with SMTP id 32so557756pxi.4
-        for <git@vger.kernel.org>; Thu, 17 Sep 2009 23:04:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=NqZQuCm7RyST/ij+4h5DWLybyrpFH4uVn63q7uMyPDQ=;
-        b=RiSLcPBnXD07LN1cusqpH5K1HJp4U8YnvWmnUeZlwjlwDkiwBvbg0FKZfagXUsReOr
-         7WSyvmFW73qgFSlqi57JyY/eHe+pB/Tcj7P7oW92isrlvLoRBAURg8iI/3zVlPd/cpvh
-         JfjqbVqk0SiQqB/MaXbgQFNEZAKFmqcTJL7NU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=XbUXAf2Gdrbs6ZbZa3t54DvAmf1pLsrAVFIH6n47HuY0e/WH8A5zmIdWcNAJe2zOYi
-         zGa5gEhqoxoWBAcmhstq3jXCoJ6omnGen0+imdsS3Dj7pkGy9zGXpTZxIq1V6tykkCr4
-         dAesdgSf6NI9M4/fO7KCfYCbSiXjI1grFDshE=
-Received: by 10.114.54.8 with SMTP id c8mr1738088waa.204.1253253868964; Thu, 
-	17 Sep 2009 23:04:28 -0700 (PDT)
-In-Reply-To: <7v8wgchmcc.fsf@alter.siamese.dyndns.org>
+	id S1753214AbZIRGiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 02:38:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753056AbZIRGiL
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 02:38:11 -0400
+Received: from smtpde01.sap-ag.de ([155.56.68.171]:47136 "EHLO
+	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751154AbZIRGiC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Sep 2009 02:38:02 -0400
+Received: from mail.sap.corp
+	by smtpde01.sap-ag.de (26) with ESMTP id n8I6c0wu009119
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 18 Sep 2009 08:38:00 +0200 (MEST)
+Thread-Topic: [PATCH JGIT] Circular references shouldn't be created
+Thread-Index: Aco36YWlwI9rr4WsSIyVUGkXb8bh7QAP1CsA
+In-Reply-To: <200909180051.47794.robin.rosenberg@dewire.com>
+Accept-Language: en-US, de-DE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, de-DE
+X-Scanner: Virus Scanner virwal06
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128786>
 
-Thanks for the input guys, I've come to the conclusion that the extra
-effort needed to properly implement this is not worth the benefit of
-the outcome.
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote on Freitag, 18. September 2009 00:52
+>torsdag 17 september 2009 23:40:12 skrev Avery Pennarun
+> <apenwarr@gmail.com>:
+> > On Thu, Sep 17, 2009 at 3:23 PM, Sohn, Matthias
+> <matthias.sohn@sap.com> wrote:
+> > >        void link(final String name, final String target) throws
+> IOException {
+> > > +               if (name.equals(target))
+> > > +                       throw new IllegalArgumentException(
+> > > +                                       "illegal circular reference
+> : symref " + name
+> > > +                                                       + " cannot
+> refer to " + target);
+> >
+> > This isn't a very thorough fix.  It doesn't catch longer loops, like
+> >
+> >     HEAD -> chicken -> HEAD
+> >
+> > or
+> >
+> >    a -> b -> c -> d -> a
+> >
+> > Experimenting with original git.git's implementation, I see that this
+> > is allowed:
+> >
+> >    git symbolic-ref refs/heads/boink refs/heads/boink
+> >
+> > It succeeds and creates a file that looks like this:
+> >
+> >    ref: refs/heads/boink
+> >
+> > And "git show-ref refs/heads/boink" says: nothing (but returns an
+> error code).
+> >
+> > And "git log refs/heads/boink" says:
+> >
+> >    warning: ignoring dangling symref refs/heads/boink.
+> >    fatal: ambiguous argument 'refs/heads/boink': unknown revision or
+> > path not in the working tree.
+> >    Use '--' to separate paths from revisions
+> >
+> > Clearly, in git.git, symref loops are caught at ref read time, not
+> > write time.  This makes sense, since someone might foolishly twiddle
+> > the repository by hand and you don't want to get into an infinite loop
+> > in that case.  Also, it's potentially useful to allow people to set
+> > invalid symrefs *temporarily*, as part of a multi step process.
 
-As some of you mentioned, ls -l `which git` is better suited for the
-purpose, and that can be done universally for all files where the
-filesystem stores the create timestamp of each.
+Looks like I was a bit short-sighted yesterday, I will try to cook a better
+solution.
 
-nazri.
+> 
+> I had already written a patch much like this when I decided we need to
+> do much better.
+> 
+> I think we should do this in the UI by not allowing the user to make a
+> choice that would result in a loop and fixing the way the UI resolves
+> choices. When creating a new branch we should analyze the selected
+> ref and dereference it if it is a symbolic name like HEAD or if it is a
+> tag,
+> and perhaps show it like "HEAD (refs/heads/master)" in the the dialog.
+> 
+> Using unresolvable refs as the base for a new branch should be
+> disallowed.
+> 
+
+If we would do it in the EGit UI how about catching such cases 
+in other applications using JGit ?
+
+--
+Matthias
