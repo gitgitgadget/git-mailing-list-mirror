@@ -1,203 +1,95 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] git-push: add option --repo-all
-Date: Fri, 18 Sep 2009 14:44:03 +0400
-Message-ID: <1253270643-20262-1-git-send-email-catap@catap.ru>
-References: <m3r5u43a8h.fsf@localhost.localdomain>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 18 12:45:04 2009
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-push: add option --repo-all
+Date: Fri, 18 Sep 2009 13:02:45 +0200
+Message-ID: <200909181302.49335.jnareb@gmail.com>
+References: <1253258222-11475-1-git-send-email-catap@catap.ru> <m3r5u43a8h.fsf@localhost.localdomain> <877hvwzkw7.wl%catap@catap.ru>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Kirill A. Korinskiy" <catap@catap.ru>
+X-From: git-owner@vger.kernel.org Fri Sep 18 13:03:07 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Moaxb-0003u4-Oi
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 12:45:04 +0200
+	id 1MobF0-0002ay-5j
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 13:03:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbZIRKoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2009 06:44:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbZIRKoi
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 06:44:38 -0400
-Received: from mx.catap.ru ([85.25.165.176]:55670 "EHLO mx.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751323AbZIRKoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2009 06:44:37 -0400
-Received: from ip43.125.dars-ip.ru ([79.132.125.43] helo=satellite.home.catap.ru)
-	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Moax7-0005cH-Fq; Fri, 18 Sep 2009 14:44:33 +0400
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1Moawd-0005HU-DY; Fri, 18 Sep 2009 14:44:03 +0400
-X-Mailer: git-send-email 1.6.2
-In-Reply-To: <m3r5u43a8h.fsf@localhost.localdomain>
+	id S1754395AbZIRLCv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 07:02:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751672AbZIRLCv
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 07:02:51 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:32701 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbZIRLCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2009 07:02:50 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so213172fge.1
+        for <git@vger.kernel.org>; Fri, 18 Sep 2009 04:02:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=wZ0voM2gbMeaqelRa6vZ2kUan8UpG8zukdgH25EmdC4=;
+        b=wwuehIqtNNk8+bzjzyM5cMJr/3thA5+P0AANEWbIE+z8YbpLHG1ImKqk02b8Pm7geg
+         n6qO+zBK1DZcvXshOjwUi0WeQuyrFUDiTZ3SKuLYIohmlWECZ5AwVeXpSpxlhIWNVT9Z
+         w7cuLBnu3ATS0x1ddQMLfwOkuxdOITo9c3Cwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=AiDzAD8MxwMDJmfmIKn3bOx1XphEAq8Gw1i+tSOaMz82RpKVyE+aBBebmyVsH2aXCd
+         dUjF0RzFHa1p1LrjUcxG63WiFy07vKW2TTWY1MrG5KHNBbUJDdk4A0qye1dYEttFyieS
+         qFw9Zne59N/cy7cfmeYoDbCTIg1D0zVr6vJFA=
+Received: by 10.86.170.4 with SMTP id s4mr1642506fge.9.1253271773054;
+        Fri, 18 Sep 2009 04:02:53 -0700 (PDT)
+Received: from ?192.168.1.13? (abvh88.neoplus.adsl.tpnet.pl [83.8.205.88])
+        by mx.google.com with ESMTPS id 3sm1394101fge.10.2009.09.18.04.02.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Sep 2009 04:02:52 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <877hvwzkw7.wl%catap@catap.ru>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128794>
 
-Example of usage: I write some software on my laptop and some time
-pushing to my home/private server for backup. Some time ago my
-software is done and I openin it on github, but I'm don't like kill my
-private repos. Now update a two remotes repo is'n sexy, because I'm
-need using a some shell wrapper:
+Kirill A. Korinskiy wrote:
+> At Fri, 18 Sep 2009 01:52:49 -0700 (PDT),
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> > "Kirill A. Korinskiy" <catap@catap.ru> writes:
 
-    git remote show | while read repo; do git push $repo; done
+> > > ---
+> > >  Documentation/git-push.txt |    4 ++-
+> > >  builtin-push.c             |   34 +++++++++++++++++++++-----------
+> > >  t/t5523-push-repo-all.sh   |   46 ++++++++++++++++++++++++++++++++++++++++++++
+> > >  3 files changed, 71 insertions(+), 13 deletions(-)
+> > >  create mode 100755 t/t5523-push-repo-all.sh
+> > 
+> > I have created 'pushall' *alias* for that purpose, but I think that
+> > such functionality would be better added to "git remote" rather than
+> > to "git push".
+> 
+> not sure, because git remote make interface for managment remotes
+> repos and push make interface for pushing to remote repo. I just add a
+> pushing to all repos.
+> 
+> I thought about pushing to some remotes repos, yes, but could not come
+> up with a good symantics.
 
-Signed-off-by: Kirill A. Korinskiy <catap@catap.ru>
----
- Documentation/git-push.txt |    3 ++
- builtin-push.c             |   34 +++++++++++++++++++++-----------
- t/t5523-push-repo-all.sh   |   46 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 71 insertions(+), 12 deletions(-)
- create mode 100755 t/t5523-push-repo-all.sh
+Well, git-remote has "git remote update" subcommand for fetching from
+a group of remote repositories, so it is not only about managing remotes.
+I think "git remote push" (or something like that) would fit in 
+git-remote area of competence.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index ba6a8a2..92e45c2 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -134,6 +134,9 @@ useful if you write an alias or script around 'git-push'.
- 	transfer spends extra cycles to minimize the number of
- 	objects to be sent and meant to be used on slower connection.
- 
-+--repo-all::
-+	Send changes to all remote repos.
-+
- -v::
- --verbose::
- 	Run verbosely.
-diff --git a/builtin-push.c b/builtin-push.c
-index 3cb1ee4..2b25293 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
- 
- static const char * const push_usage[] = {
--	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository> | --repo-all] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
- 
-@@ -88,19 +88,13 @@ static void setup_default_push_refspecs(void)
- 	}
- }
- 
--static int do_push(const char *repo, int flags)
-+static int do_push(struct remote *remote, void *priv)
- {
-+	int flags = *((int *)priv);
- 	int i, errs;
--	struct remote *remote = remote_get(repo);
- 	const char **url;
- 	int url_nr;
- 
--	if (!remote) {
--		if (repo)
--			die("bad repository '%s'", repo);
--		die("No destination configured to push to.");
--	}
--
- 	if (remote->mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
- 
-@@ -171,13 +165,16 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- {
- 	int flags = 0;
- 	int tags = 0;
-+	int repo_all = 0;
- 	int rc;
-+	struct remote *remote;
- 	const char *repo = NULL;	/* default repository */
- 
- 	struct option options[] = {
- 		OPT_BIT('q', "quiet", &flags, "be quiet", TRANSPORT_PUSH_QUIET),
- 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
- 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
-+		OPT_BOOLEAN( 0 , "repo-all", &repo_all, "push to all remote repos"),
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
-@@ -197,11 +194,24 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		add_refspec("refs/tags/*");
- 
- 	if (argc > 0) {
--		repo = argv[0];
--		set_refspecs(argv + 1, argc - 1);
-+		if (repo_all) {
-+			set_refspecs(argv, argc);
-+		} else {
-+			repo = argv[0];
-+			set_refspecs(argv + 1, argc - 1);
-+		}
- 	}
- 
--	rc = do_push(repo, flags);
-+	remote = remote_get(repo);
-+	if (!remote && !repo_all) {
-+		if (repo)
-+			die("bad repository '%s'", repo);
-+		die("No destination configured to push to.");
-+	}
-+
-+	rc = repo_all ?
-+		for_each_remote(do_push, &flags) : do_push(remote, &flags);
-+
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
- 	else
-diff --git a/t/t5523-push-repo-all.sh b/t/t5523-push-repo-all.sh
-new file mode 100755
-index 0000000..865b8a1
---- /dev/null
-+++ b/t/t5523-push-repo-all.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='pushing to all remote repos repository'
-+
-+. ./test-lib.sh
-+
-+mk_repos () {
-+	rm -rf maste mirror-1 mirror-2 &&
-+	mkdir mirror-1 &&
-+	(
-+		cd mirror-1 &&
-+		git init
-+	) &&
-+	mkdir mirror-2 &&
-+	(
-+		cd mirror-2 &&
-+		git init
-+	) &&
-+	mkdir master &&
-+	(
-+		cd master &&
-+		git init &&
-+		git remote add mirror-1 ../mirror-1
-+		git remote add mirror-2 ../mirror-2
-+	)
-+}
-+
-+
-+test_expect_success 'push to mirrors' '
-+
-+	mk_repos &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git remote show &&
-+		git push --all --repo-all -f
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_1_master=$(cd mirror-1 && git show-ref -s --verify refs/heads/master) &&
-+	mirror_2_master=$(cd mirror-2 && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_1_master" &&
-+	test "$master_master" = "$mirror_2_master"
-+
-+'
-+
-+test_done
+Besides git-remote understands groups of remote repositories for fetch
+(update), which would be (I think) a good idea also for push.
+
 -- 
-1.6.2
+Jakub Narebski
+Poland
