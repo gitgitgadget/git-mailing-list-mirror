@@ -1,207 +1,72 @@
-From: "Kirill A. Korinskiy" <catap@catap.ru>
-Subject: [PATCH] git-push: add option --repo-all
-Date: Fri, 18 Sep 2009 11:17:02 +0400
-Message-ID: <1253258222-11475-1-git-send-email-catap@catap.ru>
-Cc: git@vger.kernel.org, "Kirill A. Korinskiy" <catap@catap.ru>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 18 09:17:47 2009
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 14/15] Add scripts to generate projects for other buildsystems
+   (MSVC vcproj, QMake)
+Date: Fri, 18 Sep 2009 10:21:12 +0200
+Message-ID: <4AB342F8.7080504@viscovery.net>
+References: <cover.1253088099.git.mstormo@gmail.com> <260603a54845df34659d605fadaf663d0094c8cb.1253088099.git.mstormo@gmail.com> <aa80ad559c731ca73179956e34b2743d903fbbec.1253088099.git.mstormo@gmail.com> <200909172228.28174.j6t@kdbg.org> <4AB32FE2.1060604@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, msysgit@googlegroups.com,
+	lznuaa@gmail.com, raa.lkml@gmail.com, snaury@gmail.com
+To: Marius Storm-Olsen <mstormo@gmail.com>, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 18 10:21:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MoXj0-00038q-Bf
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 09:17:46 +0200
+	id 1MoYie-0006Ap-RL
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Sep 2009 10:21:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754523AbZIRHRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Sep 2009 03:17:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbZIRHRh
-	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 03:17:37 -0400
-Received: from mx.catap.ru ([85.25.165.176]:54709 "EHLO mx.catap.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753130AbZIRHRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Sep 2009 03:17:36 -0400
-Received: from ip43.125.dars-ip.ru ([79.132.125.43] helo=satellite.home.catap.ru)
-	by mx.catap.ru with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1MoXil-0004hd-8B; Fri, 18 Sep 2009 11:17:31 +0400
-Received: from catap by satellite.home.catap.ru with local (Exim 4.69)
-	(envelope-from <catap@satellite.home.catap.ru>)
-	id 1MoXiI-0002zg-VG; Fri, 18 Sep 2009 11:17:02 +0400
-X-Mailer: git-send-email 1.6.2
+	id S1751512AbZIRIVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Sep 2009 04:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbZIRIVT
+	(ORCPT <rfc822;git-outgoing>); Fri, 18 Sep 2009 04:21:19 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:15696 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbZIRIVR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Sep 2009 04:21:17 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MoYiQ-0002G7-Lq; Fri, 18 Sep 2009 10:21:14 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 6B2A04E9; Fri, 18 Sep 2009 10:21:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.21 (Windows/20090302)
+Newsgroups: gmane.comp.version-control.git,gmane.comp.version-control.msysgit
+In-Reply-To: <4AB32FE2.1060604@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128791>
 
-Example of usage: I write some software on my laptop and some time
-pushing to my home/private server for backup. Some time ago my
-software is done and I openin it on github, but I'm don't like kill my
-private repos. Now update a two remotes repo is'n sexy, because I'm
-need using a some shell wrapper:
+Marius Storm-Olsen schrieb:
+> Johannes Sixt said the following on 17.09.2009 22:28:
+>> why do
+>> you need entries for *.obj, *.idb, and *.pdb?
+> 
+> When using only the vcproj generator, you are correct. However, if you
+> use the qmake generator, and create vcprojs from those, the *.idb and
+> *.pdb files are located in the project directory itself, and not under
+> Debug/. I'm not too worried about this case though, so for me, the three
+> entries *.obj, *.idb and *.pdb can go.
 
-    git remote show | while read repo; do git push $repo; done
----
- Documentation/git-push.txt |    4 ++-
- builtin-push.c             |   34 +++++++++++++++++++++-----------
- t/t5523-push-repo-all.sh   |   46 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 71 insertions(+), 13 deletions(-)
- create mode 100755 t/t5523-push-repo-all.sh
+Fair enough.
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index ba6a8a2..734e745 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -10,7 +10,6 @@ SYNOPSIS
- --------
- [verse]
- 'git push' [--all | --mirror | --tags] [-n | --dry-run] [--receive-pack=<git-receive-pack>]
--	   [--repo=<repository>] [-f | --force] [-v | --verbose]
- 	   [<repository> <refspec>...]
- 
- DESCRIPTION
-@@ -134,6 +133,9 @@ useful if you write an alias or script around 'git-push'.
- 	transfer spends extra cycles to minimize the number of
- 	objects to be sent and meant to be used on slower connection.
- 
-+--repo-all::
-+	Send changes to all remote repos.
-+
- -v::
- --verbose::
- 	Run verbosely.
-diff --git a/builtin-push.c b/builtin-push.c
-index 3cb1ee4..2b25293 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
- 
- static const char * const push_usage[] = {
--	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository> | --repo-all] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
- 
-@@ -88,19 +88,13 @@ static void setup_default_push_refspecs(void)
- 	}
- }
- 
--static int do_push(const char *repo, int flags)
-+static int do_push(struct remote *remote, void *priv)
- {
-+	int flags = *((int *)priv);
- 	int i, errs;
--	struct remote *remote = remote_get(repo);
- 	const char **url;
- 	int url_nr;
- 
--	if (!remote) {
--		if (repo)
--			die("bad repository '%s'", repo);
--		die("No destination configured to push to.");
--	}
--
- 	if (remote->mirror)
- 		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
- 
-@@ -171,13 +165,16 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- {
- 	int flags = 0;
- 	int tags = 0;
-+	int repo_all = 0;
- 	int rc;
-+	struct remote *remote;
- 	const char *repo = NULL;	/* default repository */
- 
- 	struct option options[] = {
- 		OPT_BIT('q', "quiet", &flags, "be quiet", TRANSPORT_PUSH_QUIET),
- 		OPT_BIT('v', "verbose", &flags, "be verbose", TRANSPORT_PUSH_VERBOSE),
- 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
-+		OPT_BOOLEAN( 0 , "repo-all", &repo_all, "push to all remote repos"),
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
-@@ -197,11 +194,24 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		add_refspec("refs/tags/*");
- 
- 	if (argc > 0) {
--		repo = argv[0];
--		set_refspecs(argv + 1, argc - 1);
-+		if (repo_all) {
-+			set_refspecs(argv, argc);
-+		} else {
-+			repo = argv[0];
-+			set_refspecs(argv + 1, argc - 1);
-+		}
- 	}
- 
--	rc = do_push(repo, flags);
-+	remote = remote_get(repo);
-+	if (!remote && !repo_all) {
-+		if (repo)
-+			die("bad repository '%s'", repo);
-+		die("No destination configured to push to.");
-+	}
-+
-+	rc = repo_all ?
-+		for_each_remote(do_push, &flags) : do_push(remote, &flags);
-+
- 	if (rc == -1)
- 		usage_with_options(push_usage, options);
- 	else
-diff --git a/t/t5523-push-repo-all.sh b/t/t5523-push-repo-all.sh
-new file mode 100755
-index 0000000..865b8a1
---- /dev/null
-+++ b/t/t5523-push-repo-all.sh
-@@ -0,0 +1,46 @@
-+#!/bin/sh
-+
-+test_description='pushing to all remote repos repository'
-+
-+. ./test-lib.sh
-+
-+mk_repos () {
-+	rm -rf maste mirror-1 mirror-2 &&
-+	mkdir mirror-1 &&
-+	(
-+		cd mirror-1 &&
-+		git init
-+	) &&
-+	mkdir mirror-2 &&
-+	(
-+		cd mirror-2 &&
-+		git init
-+	) &&
-+	mkdir master &&
-+	(
-+		cd master &&
-+		git init &&
-+		git remote add mirror-1 ../mirror-1
-+		git remote add mirror-2 ../mirror-2
-+	)
-+}
-+
-+
-+test_expect_success 'push to mirrors' '
-+
-+	mk_repos &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git remote show &&
-+		git push --all --repo-all -f
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_1_master=$(cd mirror-1 && git show-ref -s --verify refs/heads/master) &&
-+	mirror_2_master=$(cd mirror-2 && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_1_master" &&
-+	test "$master_master" = "$mirror_2_master"
-+
-+'
-+
-+test_done
--- 
-1.6.2
+> Junio, you want me to push a new patch?
+
+That's not necessary. I just wanted to make sure that you added the
+entries deliberately.
+
+With these questions answered, and the most recent change to 04/15 that
+adjust test-genrandom.c, the MinGW aspect of this series is
+
+Acked-by: Johannes Sixt <j6t@kdbg.org>
+
+Thank you very much for your work and persistency!
+
+-- Hannes
