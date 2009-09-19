@@ -1,130 +1,134 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCHv3] git-log --format: Add %B tag with %B(x) option
-Date: Sat, 19 Sep 2009 11:58:24 +0200
-Message-ID: <1253354304-13117-1-git-send-email-heipei@hackvalue.de>
-References: <7vtyz083tk.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Gilger <heipei@hackvalue.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 19 11:58:30 2009
+From: Thomas Singer <thomas.singer@syntevo.com>
+Subject: Re: SmartGit, a new GUI front-end for Git
+Date: Sat, 19 Sep 2009 16:11:23 +0200
+Message-ID: <4AB4E68B.70101@syntevo.com>
+References: <4AB38D64.9010903@syntevo.com> <4AB48E25.8020504@syntevo.com> <e5e204700909190158y48b9c162ncea29f4b1635dc18@mail.gmail.com> <4AB4AA4A.4080801@syntevo.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 19 16:10:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mowi6-0006W7-C6
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 11:58:30 +0200
+	id 1Mp0eC-0003ZA-Vm
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 16:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668AbZISJ6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2009 05:58:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbZISJ6V
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 05:58:21 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:35310 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480AbZISJ6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2009 05:58:20 -0400
-Received: from u-7-100.vpn.rwth-aachen.de ([137.226.103.100]:48037 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1Mowht-0004UX-8s; Sat, 19 Sep 2009 11:58:17 +0200
-X-Mailer: git-send-email 1.6.5.rc1.20.geb7d9
-In-Reply-To: <7vtyz083tk.fsf@alter.siamese.dyndns.org>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.103.100
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1755107AbZISOKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 10:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755053AbZISOKQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 10:10:16 -0400
+Received: from syntevo.com ([85.214.39.145]:35698 "EHLO syntevo.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754305AbZISOKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 10:10:15 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id 41BA537CA4F
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4AB4AA4A.4080801@syntevo.com>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128825>
 
-Since one can simply use spaces to indent any other --pretty field we
-should have an option to do that with the body too.
+Hi all,
 
-Also the %B flag strips the trailing newlines, to enable more compact
-display.
+The new build is uploaded. The ~/.gitconfig file now should be kept and on
+Linux the splash screen hides before showing the initial dialog. Sorry for
+any inconveniences.
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
----
-Changes to PATCHv2:
-- Make %B() strict: Only nonnegative integers are allowed between the brackets, 
-  everything else yields the placemark itself as output to indicate a wrong 
-  argument. This also goes for an empty argument.
+--
+Best regards,
+Thomas Singer
+=============
+syntevo GmbH
+http://www.syntevo.com
+http://blog.syntevo.com
 
- Documentation/pretty-formats.txt |    2 ++
- pretty.c                         |   29 ++++++++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2a845b1..533bc5e 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,6 +123,8 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%B': body without trailing newline
-+- '%B(x)': body indented by x spaces
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
-diff --git a/pretty.c b/pretty.c
-index f5983f8..8970378 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -605,13 +605,17 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	int h1, h2;
- 
- 	/* these are independent of the commit */
-+
-+	const char *body = msg + c->body_off;
-+	const char *end = NULL;
-+	/* check if we have arguments to the placeholder */
-+	if (placeholder[1] == '(')
-+		end = strchr(placeholder + 2, ')');
-+
- 	switch (placeholder[0]) {
- 	case 'C':
--		if (placeholder[1] == '(') {
--			const char *end = strchr(placeholder + 2, ')');
-+		if (end) {
- 			char color[COLOR_MAXLEN];
--			if (!end)
--				return 0;
- 			color_parse_mem(placeholder + 2,
- 					end - (placeholder + 2),
- 					"--pretty format", color);
-@@ -733,7 +737,20 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 		format_sanitized_subject(sb, msg + c->subject_off);
- 		return 1;
- 	case 'b':	/* body */
--		strbuf_addstr(sb, msg + c->body_off);
-+		strbuf_addstr(sb, body);
-+		return 1;
-+	case 'B':	/* body without trailing newline */
-+		if (end) {
-+			char *endp = NULL;
-+			int indent = strtol(placeholder + 2, &endp, 10);
-+			if (placeholder + 2 == endp || *endp != ')' || indent < 0)
-+				return 0;
-+			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, indent);
-+			strbuf_rtrim(sb);
-+			return end - placeholder + 1;
-+		}
-+		strbuf_addstr(sb, body);
-+		strbuf_rtrim(sb);
- 		return 1;
- 	}
- 	return 0;	/* unknown placeholder */
-@@ -875,6 +892,8 @@ void pp_remainder(enum cmit_fmt fmt,
- 		}
- 		first = 0;
- 
-+		if (indent < 0)
-+			indent = 0;
- 		strbuf_grow(sb, linelen + indent + 20);
- 		if (indent) {
- 			memset(sb->buf + sb->len, ' ', indent);
--- 
-1.6.5.rc1.20.geb7d9
+Thomas Singer wrote:
+> Hi James,
+> 
+> Thanks for reporting this serious error. I will try to fix this in the next
+> hour and upload a new build.
+> 
+> --
+> Best regards,
+> Thomas Singer
+> =============
+> syntevo GmbH
+> http://www.syntevo.com
+> http://blog.syntevo.com
+> 
+> 
+> James Sadler wrote:
+>> Hi Thomas,
+>>
+>> I just launched SmartGit, and it ate my ~/.gitconfig.  Luckily I had a
+>> backup (full of my own aliases and colour settings etc.).
+>>
+>> SmartGit replaced mine with a ~/.gitconfig containing _only_ my name
+>> and email settings.  Not good.  I would bet that 99% of all people on
+>> this list have their own customized version of ~/.gitconfig and
+>> SmartGit is probably going to eat it.  If it helps, I am running OS X.
+>>
+>> James.
+>>
+>> 2009/9/19 Thomas Singer <thomas.singer@syntevo.com>:
+>>> Hi all,
+>>>
+>>> We would like to announce a new milestone build of our Git client "SmartGit"
+>>> (don't be offended by the name, it's historically based) which we feel is
+>>> ready now for a broader audience. SmartGit is quite stable and we want to
+>>> invite everyone who is interested in giving it a try:
+>>>
+>>>  http://www.syntevo.com/smartgit/index.html
+>>>
+>>> Please don't expect all Git features and options implemented. We have
+>>> tried to first concentrate on the most important ones - from our rather
+>>> novice Git perspective.
+>>>
+>>> SmartGit runs on all operating systems which support a full Java 1.5
+>>> implementation, including virtually all Linux versions, OS X 10.4 - 10.6 and
+>>> Windows 2000 or newer. It requires a Git installation, although a couple of
+>>> time-critical operations are handled by the JGit library.
+>>>
+>>> We appreciate your feed-back in our mailing list
+>>>
+>>>  http://www.syntevo.com/smartgit/community.html
+>>>
+>>> or directly to us (smartgit@syntevo.com). SmartGit 1.0 is planned to be
+>>> released free of charge for non-commercial use or to active members of the
+>>> Open Source community. Each pre-release build expires 3 months after the
+>>> build-date.
+>>>
+>>> At this occasion I would also like to express my appreciation to the
+>>> community for this great DVCS you have built. Approx. a 3/4 year ago I've
+>>> started to use Git. Although I had some starting problems with it using the
+>>> Git command line (mostly on Windows), I need to say that over time I really
+>>> fell in love with Git and its elaborate foundations and feature set.
+>>>
+>>> --
+>>> Best regards,
+>>> Thomas Singer
+>>> =============
+>>> syntevo GmbH
+>>> http://www.syntevo.com
+>>> http://blog.syntevo.com
+>>>
+>>>
+>>> --
+>>> To unsubscribe from this list: send the line "unsubscribe git" in
+>>> the body of a message to majordomo@vger.kernel.org
+>>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>>
+>>
+>>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
+> 
