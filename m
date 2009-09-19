@@ -1,131 +1,88 @@
-From: James Sadler <freshtonic@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: SmartGit, a new GUI front-end for Git
-Date: Sat, 19 Sep 2009 18:58:08 +1000
-Message-ID: <e5e204700909190158y48b9c162ncea29f4b1635dc18@mail.gmail.com>
+Date: Sat, 19 Sep 2009 01:54:56 -0700 (PDT)
+Message-ID: <m3my4r2u1v.fsf@localhost.localdomain>
 References: <4AB38D64.9010903@syntevo.com> <4AB48E25.8020504@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Sat Sep 19 10:58:28 2009
+X-From: git-owner@vger.kernel.org Sat Sep 19 11:02:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Movm0-0002hW-0v
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 10:58:28 +0200
+	id 1MovqD-0003az-Hn
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 11:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433AbZISI6H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Sep 2009 04:58:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753159AbZISI6G
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 04:58:06 -0400
-Received: from mail-px0-f189.google.com ([209.85.216.189]:63836 "EHLO
-	mail-px0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751833AbZISI6F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Sep 2009 04:58:05 -0400
-Received: by pxi27 with SMTP id 27so1124881pxi.22
-        for <git@vger.kernel.org>; Sat, 19 Sep 2009 01:58:09 -0700 (PDT)
+	id S1754860AbZISJCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 05:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZISJCh
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 05:02:37 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:35726 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752805AbZISJCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 05:02:36 -0400
+Received: by bwz6 with SMTP id 6so1119989bwz.37
+        for <git@vger.kernel.org>; Sat, 19 Sep 2009 02:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Dok5pat3y0+ieif4wzCma6bNS2z6McPsFk1bLQmKt8k=;
-        b=ZP+qoHq+CEdf47qfETXUk8hnCJT/0yoVE3lAeqKfpMmplFFDLNCG3VPx5XSrqb1BeU
-         V8a0xZR8H2ZLJrktbDxD6WsHkosqW38ShkfhqpusW+aStnomCVVhtHbyB1hUKl2oD9gT
-         2GIQvDTnR+WNfifQkFLMnGjt8SgRqjuvnRFoY=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=KJOl8Uweh/o1xw5TSxPUB8KzVwA5a44jOb0yBvm6gos=;
+        b=gnBIIgR/Q3ww3kwj3MIxZFR0PAGgsDP65Fjf0QSR0ZIVX6pa0L6MB1DD+dPx9uN5/M
+         ZVW5MEYoDiXr1uIEf9qQOeSY+ktY2wPtG4qg1yrVpsKOaGfzFdWEIjs4UUXZksekxpsK
+         g4h/uc7jeqMk5F4uaOfjJYvJdHzqNcWeU8368=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eUTtH0vF4SK4Lxe2T+IgdDmkEMNn6Pu93MyfZZQiHK6f9XEM7zJWPeBhtQ3jxm/Xbf
-         1LRlXG2FPWE0FBNKFB0UNtY0BlV4s0YD6TcChvU+kYQBW0dHUg7LI2OffMGj/fOCF9eO
-         Wdw1kwBw/FVcVUU4uPkN/6Y3+G7M+MdWRkjV4=
-Received: by 10.140.163.7 with SMTP id l7mr162733rve.166.1253350688949; Sat, 
-	19 Sep 2009 01:58:08 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=s8CN34P/+V6DSOoC2xu0PuHaif3WyAmfZTBeIYJES6+bpLwJYZlXPOyfoPueKOZS06
+         +tUlLCmvKxNeREM5DdAtbHmAfHskCrrVkAQhbTM+OEb3ffRnqqJ+Jbe5Yw2snqx9Sj1y
+         Luv8d5GCbOH9A377A2rzYppKwRUPi1i2R9uNQ=
+Received: by 10.204.154.85 with SMTP id n21mr2210103bkw.171.1253350497460;
+        Sat, 19 Sep 2009 01:54:57 -0700 (PDT)
+Received: from localhost.localdomain (abwd54.neoplus.adsl.tpnet.pl [83.8.227.54])
+        by mx.google.com with ESMTPS id 26sm2796438fks.31.2009.09.19.01.54.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 19 Sep 2009 01:54:56 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8J8sslT022677;
+	Sat, 19 Sep 2009 10:54:54 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8J8sqOL022674;
+	Sat, 19 Sep 2009 10:54:52 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <4AB48E25.8020504@syntevo.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128822>
 
-Hi Thomas,
+Thomas Singer <thomas.singer@syntevo.com> writes:
 
-I just launched SmartGit, and it ate my ~/.gitconfig.  Luckily I had a
-backup (full of my own aliases and colour settings etc.).
-
-SmartGit replaced mine with a ~/.gitconfig containing _only_ my name
-and email settings.  Not good.  I would bet that 99% of all people on
-this list have their own customized version of ~/.gitconfig and
-SmartGit is probably going to eat it.  If it helps, I am running OS X.
-
-James.
-
-2009/9/19 Thomas Singer <thomas.singer@syntevo.com>:
-> Hi all,
->
-> We would like to announce a new milestone build of our Git client "Sm=
-artGit"
-> (don't be offended by the name, it's historically based) which we fee=
-l is
-> ready now for a broader audience. SmartGit is quite stable and we wan=
-t to
+> We would like to announce a new milestone build of our Git client "SmartGit"
+> (don't be offended by the name, it's historically based) which we feel is
+> ready now for a broader audience. SmartGit is quite stable and we want to
 > invite everyone who is interested in giving it a try:
->
-> =C2=A0http://www.syntevo.com/smartgit/index.html
->
+> 
+>  http://www.syntevo.com/smartgit/index.html
+> 
 > Please don't expect all Git features and options implemented. We have
-> tried to first concentrate on the most important ones - from our rath=
-er
+> tried to first concentrate on the most important ones - from our rather
 > novice Git perspective.
->
-> SmartGit runs on all operating systems which support a full Java 1.5
-> implementation, including virtually all Linux versions, OS X 10.4 - 1=
-0.6 and
-> Windows 2000 or newer. It requires a Git installation, although a cou=
-ple of
-> time-critical operations are handled by the JGit library.
->
-> We appreciate your feed-back in our mailing list
->
-> =C2=A0http://www.syntevo.com/smartgit/community.html
->
-> or directly to us (smartgit@syntevo.com). SmartGit 1.0 is planned to =
-be
-> released free of charge for non-commercial use or to active members o=
-f the
-> Open Source community. Each pre-release build expires 3 months after =
-the
-> build-date.
->
-> At this occasion I would also like to express my appreciation to the
-> community for this great DVCS you have built. Approx. a 3/4 year ago =
-I've
-> started to use Git. Although I had some starting problems with it usi=
-ng the
-> Git command line (mostly on Windows), I need to say that over time I =
-really
-> fell in love with Git and its elaborate foundations and feature set.
->
-> --
-> Best regards,
-> Thomas Singer
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> syntevo GmbH
-> http://www.syntevo.com
-> http://blog.syntevo.com
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+[...]
 
+Could you please add information about this Git client (Git GUI?)
+to the http://git.or.cz/gitwiki/InterfacesFrontendsAndTools wiki
+page?  
 
+Thanks in advance.
 
---=20
-James
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
