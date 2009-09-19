@@ -1,88 +1,113 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Thomas Singer <thomas.singer@syntevo.com>
 Subject: Re: SmartGit, a new GUI front-end for Git
-Date: Sat, 19 Sep 2009 01:54:56 -0700 (PDT)
-Message-ID: <m3my4r2u1v.fsf@localhost.localdomain>
-References: <4AB38D64.9010903@syntevo.com> <4AB48E25.8020504@syntevo.com>
+Date: Sat, 19 Sep 2009 11:54:18 +0200
+Message-ID: <4AB4AA4A.4080801@syntevo.com>
+References: <4AB38D64.9010903@syntevo.com> <4AB48E25.8020504@syntevo.com> <e5e204700909190158y48b9c162ncea29f4b1635dc18@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Sat Sep 19 11:02:49 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 19 11:54:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MovqD-0003az-Hn
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 11:02:49 +0200
+	id 1Mowdo-0005TA-9p
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 11:54:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754860AbZISJCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2009 05:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbZISJCh
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 05:02:37 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:35726 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbZISJCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2009 05:02:36 -0400
-Received: by bwz6 with SMTP id 6so1119989bwz.37
-        for <git@vger.kernel.org>; Sat, 19 Sep 2009 02:02:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=KJOl8Uweh/o1xw5TSxPUB8KzVwA5a44jOb0yBvm6gos=;
-        b=gnBIIgR/Q3ww3kwj3MIxZFR0PAGgsDP65Fjf0QSR0ZIVX6pa0L6MB1DD+dPx9uN5/M
-         ZVW5MEYoDiXr1uIEf9qQOeSY+ktY2wPtG4qg1yrVpsKOaGfzFdWEIjs4UUXZksekxpsK
-         g4h/uc7jeqMk5F4uaOfjJYvJdHzqNcWeU8368=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=s8CN34P/+V6DSOoC2xu0PuHaif3WyAmfZTBeIYJES6+bpLwJYZlXPOyfoPueKOZS06
-         +tUlLCmvKxNeREM5DdAtbHmAfHskCrrVkAQhbTM+OEb3ffRnqqJ+Jbe5Yw2snqx9Sj1y
-         Luv8d5GCbOH9A377A2rzYppKwRUPi1i2R9uNQ=
-Received: by 10.204.154.85 with SMTP id n21mr2210103bkw.171.1253350497460;
-        Sat, 19 Sep 2009 01:54:57 -0700 (PDT)
-Received: from localhost.localdomain (abwd54.neoplus.adsl.tpnet.pl [83.8.227.54])
-        by mx.google.com with ESMTPS id 26sm2796438fks.31.2009.09.19.01.54.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 19 Sep 2009 01:54:56 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8J8sslT022677;
-	Sat, 19 Sep 2009 10:54:54 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8J8sqOL022674;
-	Sat, 19 Sep 2009 10:54:52 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4AB48E25.8020504@syntevo.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932173AbZISJxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 05:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932169AbZISJxR
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 05:53:17 -0400
+Received: from syntevo.com ([85.214.39.145]:44258 "EHLO syntevo.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932135AbZISJxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 05:53:14 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id F028437CA4F
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <e5e204700909190158y48b9c162ncea29f4b1635dc18@mail.gmail.com>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128823>
 
-Thomas Singer <thomas.singer@syntevo.com> writes:
+Hi James,
 
-> We would like to announce a new milestone build of our Git client "SmartGit"
-> (don't be offended by the name, it's historically based) which we feel is
-> ready now for a broader audience. SmartGit is quite stable and we want to
-> invite everyone who is interested in giving it a try:
+Thanks for reporting this serious error. I will try to fix this in the next
+hour and upload a new build.
+
+--
+Best regards,
+Thomas Singer
+=============
+syntevo GmbH
+http://www.syntevo.com
+http://blog.syntevo.com
+
+
+James Sadler wrote:
+> Hi Thomas,
 > 
->  http://www.syntevo.com/smartgit/index.html
+> I just launched SmartGit, and it ate my ~/.gitconfig.  Luckily I had a
+> backup (full of my own aliases and colour settings etc.).
 > 
-> Please don't expect all Git features and options implemented. We have
-> tried to first concentrate on the most important ones - from our rather
-> novice Git perspective.
-[...]
-
-Could you please add information about this Git client (Git GUI?)
-to the http://git.or.cz/gitwiki/InterfacesFrontendsAndTools wiki
-page?  
-
-Thanks in advance.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> SmartGit replaced mine with a ~/.gitconfig containing _only_ my name
+> and email settings.  Not good.  I would bet that 99% of all people on
+> this list have their own customized version of ~/.gitconfig and
+> SmartGit is probably going to eat it.  If it helps, I am running OS X.
+> 
+> James.
+> 
+> 2009/9/19 Thomas Singer <thomas.singer@syntevo.com>:
+>> Hi all,
+>>
+>> We would like to announce a new milestone build of our Git client "SmartGit"
+>> (don't be offended by the name, it's historically based) which we feel is
+>> ready now for a broader audience. SmartGit is quite stable and we want to
+>> invite everyone who is interested in giving it a try:
+>>
+>>  http://www.syntevo.com/smartgit/index.html
+>>
+>> Please don't expect all Git features and options implemented. We have
+>> tried to first concentrate on the most important ones - from our rather
+>> novice Git perspective.
+>>
+>> SmartGit runs on all operating systems which support a full Java 1.5
+>> implementation, including virtually all Linux versions, OS X 10.4 - 10.6 and
+>> Windows 2000 or newer. It requires a Git installation, although a couple of
+>> time-critical operations are handled by the JGit library.
+>>
+>> We appreciate your feed-back in our mailing list
+>>
+>>  http://www.syntevo.com/smartgit/community.html
+>>
+>> or directly to us (smartgit@syntevo.com). SmartGit 1.0 is planned to be
+>> released free of charge for non-commercial use or to active members of the
+>> Open Source community. Each pre-release build expires 3 months after the
+>> build-date.
+>>
+>> At this occasion I would also like to express my appreciation to the
+>> community for this great DVCS you have built. Approx. a 3/4 year ago I've
+>> started to use Git. Although I had some starting problems with it using the
+>> Git command line (mostly on Windows), I need to say that over time I really
+>> fell in love with Git and its elaborate foundations and feature set.
+>>
+>> --
+>> Best regards,
+>> Thomas Singer
+>> =============
+>> syntevo GmbH
+>> http://www.syntevo.com
+>> http://blog.syntevo.com
+>>
+>>
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>>
+> 
+> 
+> 
