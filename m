@@ -1,53 +1,59 @@
-From: Resul Cetin <Resul-Cetin@gmx.net>
-Subject: Re: shell commands in ReleaseNotes
-Date: Sun, 20 Sep 2009 00:40:49 +0200
-Message-ID: <200909200040.50009.Resul-Cetin@gmx.net>
-References: <200909192357.32369.Resul-Cetin@gmx.net> <7veiq27ekz.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Release candidate period
+Date: Sat, 19 Sep 2009 20:44:30 -0300
+Message-ID: <a4c8a6d00909191644n131667f2uc7e59d0d56749c42@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 20 00:43:31 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 20 01:48:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mp8eQ-00017j-P6
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 00:43:31 +0200
+	id 1Mp9fO-00056V-KV
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 01:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913AbZISWkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2009 18:40:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbZISWkw
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 18:40:52 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39279 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750755AbZISWkw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2009 18:40:52 -0400
-Received: (qmail invoked by alias); 19 Sep 2009 22:40:55 -0000
-Received: from unknown (EHLO resul-server) [89.246.210.205]
-  by mail.gmx.net (mp012) with SMTP; 20 Sep 2009 00:40:55 +0200
-X-Authenticated: #15668376
-X-Provags-ID: V01U2FsdGVkX1/bU0xegvvbC/AZqU8lh8KO+l5MkrPQ3P7pHDIAOc
-	8tiWdq68M2ukkp
-User-Agent: KMail/1.12.1 (Linux/2.6.31-rc5; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <7veiq27ekz.fsf@alter.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.72
+	id S1752756AbZISXo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 19:44:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbZISXo2
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 19:44:28 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:7653 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751442AbZISXo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 19:44:28 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so576135fge.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2009 16:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=FApsqj0DZ8wvRzBKvWc8a28PtxxUM75JNBBF9bJHLbQ=;
+        b=m7VWVr/tK8yV4wHnyes2oU9DoL1NyvnubgGCU882wQOXljK4zNhakSgrOiuDXExDzM
+         9+jWJqjsb8LhWGiWyOr8lL+mGLy3agTAfUi+/cMRLUY03MpDYK080BYPnAc1h9pIcWD0
+         edeBRy2TazCH6Yunz7/roh3D9QBGOQWN48mUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=rUxw5dzCS0SWZ864BJo78oghGEqlCHJ3ii7DYZIE/LDXQyG8LUXNivrd33YWvck5oB
+         zreGqfa81wt9HocRz6CEuLZz1CKy2ImvxxFi2Eh7qSukR/I8nuEw6yZuBFGCXny31pRU
+         Xrmz11zURYbJuMNnvOIX79VshLXym8gpxdJfc=
+Received: by 10.86.222.15 with SMTP id u15mr3094904fgg.33.1253403870919; Sat, 
+	19 Sep 2009 16:44:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128831>
 
-> Resul Cetin <Resul-Cetin@gmx.net> writes:
-> > Real nice idea to create an overview about changes in a repository for
-> > writing a releasenotes. But how is it real used by the maintainer?
-> 
-> Open the file, go to the beginning of the scriptlet and mark (\C-SP), go
-> to the end (\M->), feed it to shell (\M-| sh RET), open /var/tmp/1 and
-> read it over while cutting the updated definition of O=.
-> 
-> Everything done in Emacs, no need for any extra editor.
-Ah, thanks. Looks like a good workflow.
+Hi Junio, I saw that you committed two of my trivial patches with your changes.
+
+Thank you for committing my patches.
+
+I have one more trivial patch that I want to send, but we are in -rc
+freeze, when I can send it?
+The release candidate period is not defined, no? The period ends so
+when the mailing list reaches an agreement and agrees that the release
+candidate is ready?
+
+Thanks!
