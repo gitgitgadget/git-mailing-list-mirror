@@ -1,70 +1,67 @@
-From: Resul Cetin <Resul-Cetin@gmx.net>
-Subject: shell commands in ReleaseNotes
-Date: Sat, 19 Sep 2009 23:57:32 +0200
-Message-ID: <200909192357.32369.Resul-Cetin@gmx.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: shell commands in ReleaseNotes
+Date: Sat, 19 Sep 2009 15:30:04 -0700
+Message-ID: <7veiq27ekz.fsf@alter.siamese.dyndns.org>
+References: <200909192357.32369.Resul-Cetin@gmx.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 19 23:57:47 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Resul Cetin <Resul-Cetin@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Sep 20 00:30:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mp7w9-0008GN-KU
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Sep 2009 23:57:45 +0200
+	id 1Mp8Rh-0006vS-Vw
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 00:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbZISV5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2009 17:57:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752766AbZISV5e
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 17:57:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43329 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751455AbZISV5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2009 17:57:33 -0400
-Received: (qmail invoked by alias); 19 Sep 2009 21:57:35 -0000
-Received: from unknown (EHLO resul-server) [89.246.210.205]
-  by mail.gmx.net (mp008) with SMTP; 19 Sep 2009 23:57:35 +0200
-X-Authenticated: #15668376
-X-Provags-ID: V01U2FsdGVkX1/Xjn59Om3XDpZR1jkhUXjpOoMJ17Ulj6qJK6hRvx
-	2kO5hVdq838ogJ
-User-Agent: KMail/1.12.1 (Linux/2.6.31-rc5; KDE/4.3.1; x86_64; ; )
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1752968AbZISWaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 18:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752673AbZISWaI
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 18:30:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58257 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752590AbZISWaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 18:30:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 147DF38EFF;
+	Sat, 19 Sep 2009 18:30:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MrrZ04jpAo7ZuySx5dRPmT+muE0=; b=xW4pdz
+	m0s6Qhhh+dVD4DDjWtAqzkwM+9Fkvf/zZwqQXLyeAAQ4L3xlQXZA4WUt46rq5Cem
+	qMvlInCs4ps9m6+UWZsWR8Je1CgwmA7DK5rZzxDG9odA4mqQiSCPhjFFnLm75omZ
+	SQpKg11rim7sBRdTYlfdIkuP8r+F2kUmpW0bs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mn+W6pUbBJlYg9dUIeGa7oi9p4c5Nr+2
+	lAbET72gFkGRePIC6iZz3yunf6UP+D0M8bN7ym3XQm47+qv7PuhQW+aeQVeqH8SX
+	MdwRmGMC2nJ7eZh+yc/L19Rcn/kIEg6HYjVLoZnzt5qpu46vqknhQW10lfyy2emR
+	sElX+K4IVkw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ECC5D38EFD;
+	Sat, 19 Sep 2009 18:30:08 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 69FE338EFC; Sat, 19 Sep
+ 2009 18:30:06 -0400 (EDT)
+In-Reply-To: <200909192357.32369.Resul-Cetin@gmx.net> (Resul Cetin's message
+ of "Sat\, 19 Sep 2009 23\:57\:32 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FCD1811E-A56B-11DE-A04C-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128829>
 
-Hi,
-I noticed that there are small part of commands at the end of a not yet 
-released ReleaseNote-*.txt.
- ---
- exec >/var/tmp/1
- O=v1.6.4.1-266-g235db15
- echo O=$(git describe master)
- git shortlog --no-merges $O..master --not maint
+Resul Cetin <Resul-Cetin@gmx.net> writes:
 
-As far as I understand it means that the output is redirected to /var/tmp/1.
-Then there is O set to the last it which was used to generate a shortlog.
-Then the current desciption (tag+suffix) is printed which can then used to 
-replace the O= line in the small snipped. Then there will be created a 
-shortlog from the last point it was created until master without stuff in 
-maint (or reachable by maint? I am not sure about that one).
+> Real nice idea to create an overview about changes in a repository for writing 
+> a releasenotes. But how is it real used by the maintainer?
 
-Real nice idea to create an overview about changes in a repository for writing 
-a releasenotes. But how is it real used by the maintainer? My current idea 
-would be: Open the editor an copy the snipped. Open a terminal, switch to the 
-repository and go paste the snipped into it. After that the terminal has to be 
-closed as it isn't really useful anymore. An extra editor will be used to open 
-/var/tmp/1 and now the first step is to replace "O=v1.6.4.1-266-g235db15" with 
-a new id at the first line in /var/tmp/1. Now the maintainer has to order all 
-commits a little bit and write the release notes. After he finished it, he 
-just commits it to master and is finished for this period of time.
-Is this real how it is done in git.git or is there maybe something I don't see 
-right now?
+Open the file, go to the beginning of the scriptlet and mark (\C-SP), go
+to the end (\M->), feed it to shell (\M-| sh RET), open /var/tmp/1 and
+read it over while cutting the updated definition of O=.
 
-Best regards,
-	Resul Cetin
+Everything done in Emacs, no need for any extra editor.
