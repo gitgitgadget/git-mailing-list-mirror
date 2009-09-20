@@ -1,80 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Thiago Farina <tfransosi@gmail.com>
 Subject: Re: Release candidate period
-Date: Sat, 19 Sep 2009 18:17:37 -0700
-Message-ID: <7vab0q76tq.fsf@alter.siamese.dyndns.org>
+Date: Sat, 19 Sep 2009 22:31:15 -0300
+Message-ID: <a4c8a6d00909191831y4a9ac37dg85936cd01856ed37@mail.gmail.com>
 References: <a4c8a6d00909191644n131667f2uc7e59d0d56749c42@mail.gmail.com>
- <alpine.LFD.2.00.0909192043060.24133@xanadu.home>
+	 <alpine.LFD.2.00.0909192043060.24133@xanadu.home>
+	 <7vab0q76tq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sun Sep 20 03:18:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 20 03:49:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpB41-00042Q-BP
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 03:18:05 +0200
+	id 1MpBYj-0008Mx-So
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 03:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbZITBRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Sep 2009 21:17:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752944AbZITBRs
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 21:17:48 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65511 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752695AbZITBRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Sep 2009 21:17:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 738C0578DF;
-	Sat, 19 Sep 2009 21:17:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bHsjSqox/iDhOViL5GP9vJLv1kc=; b=GnBu7V
-	EIVYR1uk/2FzIxt4ZCEmJ+lw6RpdxZ79x0f299wzVjw5n35tofFX8shVhjrhRHWD
-	oqd/BM7fyjuj1NjnWkb8SnVO4UqyETFMG2ekt4dRmQKva9JTPCtQbnX3sVw78rmL
-	POfxYORQIcZJFB4HP9N7HoP4Itq8JHRLLqCtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e6NPMDFTfajX2RikOQfesos2QRgOUiyv
-	1FyzqoHbr2/2U9s11n4ZaA7jGeevz2NGuXXLR4IRvfVJcde3MVgPGx9sab5+TJ5i
-	ZpKu/vrsb+wjDoVb9PlWJMdQHQ+D8z3I1uEJO9sYt18oTn1qQ47shEHO6MCgqWnK
-	U6bIrwv6y48=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B6E3578DE;
-	Sat, 19 Sep 2009 21:17:47 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B583B578DD; Sat, 19 Sep 2009
- 21:17:39 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.0909192043060.24133@xanadu.home> (Nicolas
- Pitre's message of "Sat\, 19 Sep 2009 20\:56\:38 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 680C52F8-A583-11DE-91AF-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1753490AbZITBbN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Sep 2009 21:31:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753460AbZITBbN
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 21:31:13 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:37805 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458AbZITBbN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Sep 2009 21:31:13 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so829379fge.1
+        for <git@vger.kernel.org>; Sat, 19 Sep 2009 18:31:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=l2Ek8dHSr3kP7i5Oa1wG/SJQ1XkTQED/0+HoT++6z7Q=;
+        b=gfrw0ndUtObYH1INusAub05WD+d32XqiPW11YXCqaBCSu48mP3lbBy8qeKbB1HQgX/
+         bloA85xuekq2LpRLfpvss1NJwvHaYm5Xda9T0YXj3NMC3EkPmk1NFO6BSFM16CUt89DJ
+         pdQN2ckbj5OSzZte9/kux5qt8gUacQGCVYAps=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IIgH1p6B6bpki6cFbOU+VzNeC43Wjcy6kTqXn05XwYsjd8Hw+KaS/wuop6TuQAZOdO
+         cTOzQtsMy13CdvclLv022yPKMittkiU2bkgGZ4FMruudgqPC5mQk/4q0UeiS9RjI+m/u
+         EzLkJzT1gifg87Kil0iGG4AJRqMPBRQzNnvd0=
+Received: by 10.86.173.4 with SMTP id v4mr3140418fge.78.1253410275949; Sat, 19 
+	Sep 2009 18:31:15 -0700 (PDT)
+In-Reply-To: <7vab0q76tq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128834>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
-
-> On Sat, 19 Sep 2009, Thiago Farina wrote:
->
->> Hi Junio, I saw that you committed two of my trivial patches with your changes.
->> 
->> Thank you for committing my patches.
->> 
->> I have one more trivial patch that I want to send, but we are in -rc
->> freeze, when I can send it?
->> The release candidate period is not defined, no? The period ends so
->> when the mailing list reaches an agreement and agrees that the release
->> candidate is ready?
->
-> This is a benevolent dictatorship.  Junio sets the date.
-
-True.
-
-And Thiago, don't thank me.  It's not "hey I now have N commits in a high
-profile project" game.  We are all working together to make it better, and
-we thank you for your attention of detail.
+On Sat, Sep 19, 2009 at 10:17 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> And Thiago, don't thank me. =A0It's not "hey I now have N commits in =
+a high
+> profile project" game.
+OK, I will remember that.
