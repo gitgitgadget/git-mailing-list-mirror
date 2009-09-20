@@ -1,87 +1,75 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Documentation problems
-Date: Sun, 20 Sep 2009 20:45:00 +0200
-Message-ID: <vpqeiq1zc9f.fsf@bauges.imag.fr>
-References: <4AB66D4C.70301@gmail.com> <vpqvdjdzd6x.fsf@bauges.imag.fr>
-	<4AB67665.10402@gmail.com>
+From: Bruce Korb <bruce.korb@gmail.com>
+Subject: Next problem... (thank you in advance :)
+Date: Sun, 20 Sep 2009 11:53:22 -0700
+Message-ID: <4AB67A22.4010004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bruce Korb <bruce.korb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 20 20:45:13 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 20 20:53:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpRPN-0007i7-7P
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 20:45:13 +0200
+	id 1MpRXO-0001I6-Ml
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 20:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755426AbZITSpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Sep 2009 14:45:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbZITSpC
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 14:45:02 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35337 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754975AbZITSpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Sep 2009 14:45:01 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8KIecUJ013792
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 20 Sep 2009 20:40:38 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MpRPA-00050y-9c; Sun, 20 Sep 2009 20:45:00 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MpRPA-0003B3-8A; Sun, 20 Sep 2009 20:45:00 +0200
-In-Reply-To: <4AB67665.10402@gmail.com> (Bruce Korb's message of "Sun\, 20 Sep 2009 11\:37\:25 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 20 Sep 2009 20:40:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n8KIecUJ013792
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1254076838.94447@yZcZoyXfbpLtMkVzK3JW0g
+	id S1755543AbZITSxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2009 14:53:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755504AbZITSxV
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 14:53:21 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:48892 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755491AbZITSxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Sep 2009 14:53:20 -0400
+Received: by yxe37 with SMTP id 37so2442036yxe.33
+        for <git@vger.kernel.org>; Sun, 20 Sep 2009 11:53:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=YDdbj3xKIE96qSRYdNcHasu/wl6mqUrWJtT5Ds+pQrc=;
+        b=f4xlrHXhaLwN4Z0nMrguz+mYtExYE1oIreSY6Aw/EB6piRYcfBlf5RJN8KDRu7TaAk
+         sX4uP374JAz/Y/XvJumCyVr3ZlijGvef6DGXblisL2jH0y/2mxWVpQ22Wmvx2AgkiYVc
+         kMF69NmFryb4KmH6/6clQ3jrKS76dSUWKZN+M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=vMzbI+xyYorQ01fvhVBh63Vbs0rEoPpvNIn+4vaC980JW/0tiBbys3xhOGY4a5i/EX
+         tqlB/81oK9ISnozV6Ev5lgpGO4hGfkg40CqrI8VdSMUA/TfcohZtdmgKqKGGn2T/Z0+F
+         erJz5s4UA9/Oq3bXuqowhPexPnmi6lGO1dJ64=
+Received: by 10.91.144.16 with SMTP id w16mr2763819agn.21.1253472804305;
+        Sun, 20 Sep 2009 11:53:24 -0700 (PDT)
+Received: from ?10.10.1.101? (adsl-75-2-129-55.dsl.pltn13.sbcglobal.net [75.2.129.55])
+        by mx.google.com with ESMTPS id 11sm3804055aga.74.2009.09.20.11.53.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 20 Sep 2009 11:53:24 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090310)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128856>
 
-Bruce Korb <bruce.korb@gmail.com> writes:
+$ git push
+fatal: The remote end hung up unexpectedly
 
-> Since I haven't created any any branches (to my knowledge), it seems
-> that "master" is the magic branch name.
+Trying to push to Source Forge:
 
-I wouldn't say "magic", but surely the default ;-).
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git://autogen.git.sourceforge.net/gitroot/autogen/autogen
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
 
-> My goal was just to get a list of managed files.
-
-Just cd /where/your/repo/is
-git ls-files
-
-> Is "master" going to remain my "HEAD" now?
-
-Yes.
-
->> git-ls-tree is the old way to
->> refer to the command name. Normally, any reference to dashed names
->> should have been removed from the documentation by now (so most likely
->> you see it in your distro because it's an old enough version,
->> otherwise, it's a bug in the doc).
->
-> $ git --version
-> git version 1.6.0.2
->
-> I guess the man pages and installation were out of sync for that release.
-
-Well, actually, a few more instances of dashed commands were removed
-more recently. That said, to get the doc for "git foo", you still have
-to type "man git-foo" (or git foo --help indeed), but that's because
-"man git foo" means something different to man.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I did a fresh clone just to be certain that the .git/config file was
+formatted correctly.  Still "hangs up".  What is this trying to
+tell me?  Thanks again - Bruce
