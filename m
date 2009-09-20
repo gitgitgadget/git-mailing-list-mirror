@@ -1,83 +1,76 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH] Trivial fix: Display a more friendly message with git-shell.
-Date: Sun, 20 Sep 2009 13:11:12 -0400
-Message-ID: <1253466672-21051-1-git-send-email-tfransosi@gmail.com>
-Cc: Thiago Farina <tfransosi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 20 19:11:40 2009
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [(resend) PATCH] push: Correctly initialize nonfastforward in transport_push.
+Date: Sun, 20 Sep 2009 19:33:20 +0200
+Message-ID: <1253468000-11367-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Sep 20 19:33:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpPwo-0000Td-Ip
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 19:11:38 +0200
+	id 1MpQIH-0005xu-Rz
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 19:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754851AbZITRLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Sep 2009 13:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754683AbZITRLZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 13:11:25 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:7116 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754682AbZITRLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Sep 2009 13:11:25 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so780597qwd.37
-        for <git@vger.kernel.org>; Sun, 20 Sep 2009 10:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=i0hwkywrcHqVBAJaiDqwQOOxec0lmZ4S/BK3NDBMUsw=;
-        b=eJ0zzWmz6tHT9Eykidu35/j+1QFYIT0EQSV4vr9an49JuZ1ilKZEP/Dq/ykTA3t+zp
-         4rzjAUQB4dAYE6LGFOP9oMAX1YjlTU3WO4KBZcpzF/VKYzMOWug/YnX5+EIX3ZGMv5AR
-         FyIhuniVF7DwNKMYWO0r5lOVXm4M+5BT1SoHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=QYoUMzLHce+e9JaiWK3sba+0/irWQGQjQLtTaw61/TbBED3yBjrAUioUWjusvK4tvQ
-         7NnsuF3wDVqAoc3r0j+VVBbajcPjyy5fLPWZk+raDInMN7tWgcyM99xmrY9WYEA993A5
-         IGaf6lKVQRQAIBX4wEcrWE/vAbuHOvm1QChO4=
-Received: by 10.224.118.140 with SMTP id v12mr2793887qaq.360.1253466688795;
-        Sun, 20 Sep 2009 10:11:28 -0700 (PDT)
-Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 6sm5676760qwd.23.2009.09.20.10.11.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 20 Sep 2009 10:11:28 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc1.37.gf5c31.dirty
+	id S1754912AbZITRdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2009 13:33:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754742AbZITRdm
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 13:33:42 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41032 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754724AbZITRdm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Sep 2009 13:33:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8KHTF9o001316
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 20 Sep 2009 19:29:15 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MpQI4-00047V-QY; Sun, 20 Sep 2009 19:33:36 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MpQI4-0002y0-N7; Sun, 20 Sep 2009 19:33:36 +0200
+X-Mailer: git-send-email 1.6.5.rc1.11.g2d184.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 20 Sep 2009 19:29:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8KHTF9o001316
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1254072558.62537@W+46QvRXCpbfCs2pxEmxTA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128851>
 
-Instead of simply die without give a helpful message, displays the usage
-string that shows to the user how it can be used.
+The variable is assigned unconditionally in print_push_status, but
+print_push_status is not reached by all codepaths. In particular, this
+fixes a bug where "git push ... nonexisting-branch" was complaining about
+non-fast forward.
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- shell.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+Just making sure the patch hasn't been forgotten ... (and changed the
+subject from do_push to transport_push)
 
-diff --git a/shell.c b/shell.c
-index e4864e0..aa7f47e 100644
---- a/shell.c
-+++ b/shell.c
-@@ -3,6 +3,8 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
- 
-+static const char shell_usage[] = "git shell -c <command> <argument>";
-+
- static int do_generic_cmd(const char *me, char *arg)
+Regards,
+
+ transport.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index 4cb8077..18db3d3 100644
+--- a/transport.c
++++ b/transport.c
+@@ -871,6 +871,7 @@ int transport_push(struct transport *transport,
+ 		   int refspec_nr, const char **refspec, int flags,
+ 		   int * nonfastforward)
  {
- 	const char *my_argv[4];
-@@ -74,7 +76,7 @@ int main(int argc, char **argv)
- 	 * where "cmd" is a very limited subset of git commands.
- 	 */
- 	else if (argc != 3 || strcmp(argv[1], "-c"))
--		die("What do you think I am? A shell?");
-+		usage(shell_usage);
++	*nonfastforward = 0;
+ 	verify_remote_names(refspec_nr, refspec);
  
- 	prog = argv[2];
- 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
+ 	if (transport->push)
 -- 
-1.6.5.rc1.37.gf5c31.dirty
+1.6.5.rc1.11.g2d184.dirty
