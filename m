@@ -1,76 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [(resend) PATCH] push: Correctly initialize nonfastforward in transport_push.
-Date: Sun, 20 Sep 2009 19:33:20 +0200
-Message-ID: <1253468000-11367-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Sep 20 19:33:51 2009
+From: Bruce Korb <bruce.korb@gmail.com>
+Subject: Documentation problems
+Date: Sun, 20 Sep 2009 10:58:36 -0700
+Message-ID: <4AB66D4C.70301@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 20 19:58:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpQIH-0005xu-Rz
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 19:33:50 +0200
+	id 1MpQgc-0004hi-LU
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 19:58:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754912AbZITRdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Sep 2009 13:33:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754742AbZITRdm
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 13:33:42 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:41032 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724AbZITRdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Sep 2009 13:33:42 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8KHTF9o001316
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 20 Sep 2009 19:29:15 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MpQI4-00047V-QY; Sun, 20 Sep 2009 19:33:36 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MpQI4-0002y0-N7; Sun, 20 Sep 2009 19:33:36 +0200
-X-Mailer: git-send-email 1.6.5.rc1.11.g2d184.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 20 Sep 2009 19:29:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n8KHTF9o001316
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1254072558.62537@W+46QvRXCpbfCs2pxEmxTA
+	id S1753570AbZITR6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2009 13:58:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbZITR6f
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 13:58:35 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:47730 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751384AbZITR6f (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Sep 2009 13:58:35 -0400
+Received: by yxe37 with SMTP id 37so2417286yxe.33
+        for <git@vger.kernel.org>; Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=s12glvy2F6btNPTXe0SQgcYmNAGaQ/j2pExp/yQlFnI=;
+        b=TUy/dOVaRHe9ioItb0dcNFjlhkTtZMKEc/PYrBnjoEtcgnIR9GOWZ00vQWCLCbhydL
+         0laaj7jSwwE27VDuZE4ASd5WdyQF2cXEnOuXJrLtOFzEI6/NsHfG632ab8t7+I/98p5R
+         M/HxUhC4dw+wCbH1Dwvkw5O1RxEGTsHUv35xY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=gYWI5BqHSLmodAFdbUOp725R96bvnflJj0t593qGgKI2ILZHP+8XGIUdkVGxDNoA1e
+         JDJ7DVCTsi0yOMYDVOyE/b1KJ4ZvHk3gvkBiQde5CGDomkmxh/930fOIFr5FYKYIo7l1
+         kDkvcbGpSTUe+lcu8AFAVjBzh4YyIEnX3oIbQ=
+Received: by 10.100.75.15 with SMTP id x15mr3490232ana.58.1253469518568;
+        Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
+Received: from ?10.10.1.101? (adsl-75-2-129-55.dsl.pltn13.sbcglobal.net [75.2.129.55])
+        by mx.google.com with ESMTPS id d21sm1646493and.11.2009.09.20.10.58.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.21 (X11/20090310)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128852>
 
-The variable is assigned unconditionally in print_push_status, but
-print_push_status is not reached by all codepaths. In particular, this
-fixes a bug where "git push ... nonexisting-branch" was complaining about
-non-fast forward.
+Hi,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Just making sure the patch hasn't been forgotten ... (and changed the
-subject from do_push to transport_push)
+I'm trying to figure out what a ``tree-ish''.
+I cannot seem to use many of the commands until I know.
 
-Regards,
+<tree-ish>
+    Indicates a tree, commit or tag object name. A command that takes a
+    <tree-ish> argument ultimately wants to operate on a <tree> object
+    but automatically dereferences <commit> and <tag> objects that point at a <tree>.
 
- transport.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+I need a translation.  :(  Thank you.  Regards, Bruce
 
-diff --git a/transport.c b/transport.c
-index 4cb8077..18db3d3 100644
---- a/transport.c
-+++ b/transport.c
-@@ -871,6 +871,7 @@ int transport_push(struct transport *transport,
- 		   int refspec_nr, const char **refspec, int flags,
- 		   int * nonfastforward)
- {
-+	*nonfastforward = 0;
- 	verify_remote_names(refspec_nr, refspec);
- 
- 	if (transport->push)
--- 
-1.6.5.rc1.11.g2d184.dirty
+P.S. I have a SuSE installation with everything relating to GIT installed.
+The man pages reference commands like, "git-ls-tree --name-only" except
+that there isn't any such command.  Unless you reverse engineer the
+implementation of "git", discover the /usr/lib/git directory and add it
+to your path.  That hassle is rather inconvenient.  More hints about
+where the git commands get squirreled away would be useful.  Thank you.
