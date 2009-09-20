@@ -1,73 +1,94 @@
-From: Bruce Korb <bruce.korb@gmail.com>
-Subject: Documentation problems
-Date: Sun, 20 Sep 2009 10:58:36 -0700
-Message-ID: <4AB66D4C.70301@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Documentation problems
+Date: Sun, 20 Sep 2009 20:24:54 +0200
+Message-ID: <vpqvdjdzd6x.fsf@bauges.imag.fr>
+References: <4AB66D4C.70301@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 20 19:58:59 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruce Korb <bruce.korb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 20 20:25:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpQgc-0004hi-LU
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 19:58:59 +0200
+	id 1MpR5v-0002T1-N4
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 20:25:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbZITR6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Sep 2009 13:58:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752739AbZITR6f
-	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 13:58:35 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:47730 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbZITR6f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Sep 2009 13:58:35 -0400
-Received: by yxe37 with SMTP id 37so2417286yxe.33
-        for <git@vger.kernel.org>; Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=s12glvy2F6btNPTXe0SQgcYmNAGaQ/j2pExp/yQlFnI=;
-        b=TUy/dOVaRHe9ioItb0dcNFjlhkTtZMKEc/PYrBnjoEtcgnIR9GOWZ00vQWCLCbhydL
-         0laaj7jSwwE27VDuZE4ASd5WdyQF2cXEnOuXJrLtOFzEI6/NsHfG632ab8t7+I/98p5R
-         M/HxUhC4dw+wCbH1Dwvkw5O1RxEGTsHUv35xY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=gYWI5BqHSLmodAFdbUOp725R96bvnflJj0t593qGgKI2ILZHP+8XGIUdkVGxDNoA1e
-         JDJ7DVCTsi0yOMYDVOyE/b1KJ4ZvHk3gvkBiQde5CGDomkmxh/930fOIFr5FYKYIo7l1
-         kDkvcbGpSTUe+lcu8AFAVjBzh4YyIEnX3oIbQ=
-Received: by 10.100.75.15 with SMTP id x15mr3490232ana.58.1253469518568;
-        Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
-Received: from ?10.10.1.101? (adsl-75-2-129-55.dsl.pltn13.sbcglobal.net [75.2.129.55])
-        by mx.google.com with ESMTPS id d21sm1646493and.11.2009.09.20.10.58.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 20 Sep 2009 10:58:38 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.21 (X11/20090310)
+	id S1754944AbZITSY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Sep 2009 14:24:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754742AbZITSY6
+	(ORCPT <rfc822;git-outgoing>); Sun, 20 Sep 2009 14:24:58 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35194 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752782AbZITSY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Sep 2009 14:24:57 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8KILr41008789
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 20 Sep 2009 20:21:54 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MpR5i-0004dC-Hr; Sun, 20 Sep 2009 20:24:54 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1MpR5i-00034f-GU; Sun, 20 Sep 2009 20:24:54 +0200
+In-Reply-To: <4AB66D4C.70301@gmail.com> (Bruce Korb's message of "Sun\, 20 Sep 2009 10\:58\:36 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 20 Sep 2009 20:21:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8KILr41008789
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1254075715.83783@7jMHBscWuA5x4xxZfdCSRQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128853>
 
-Hi,
+Bruce Korb <bruce.korb@gmail.com> writes:
 
-I'm trying to figure out what a ``tree-ish''.
-I cannot seem to use many of the commands until I know.
+> Hi,
+>
+> I'm trying to figure out what a ``tree-ish''.
+> I cannot seem to use many of the commands until I know.
+>
+> <tree-ish>
+>     Indicates a tree, commit or tag object name. A command that takes a
+>     <tree-ish> argument ultimately wants to operate on a <tree> object
+>     but automatically dereferences <commit> and <tag> objects that point at a <tree>.
+>
+> I need a translation.  :(  Thank you.  Regards, Bruce
 
-<tree-ish>
-    Indicates a tree, commit or tag object name. A command that takes a
-    <tree-ish> argument ultimately wants to operate on a <tree> object
-    but automatically dereferences <commit> and <tag> objects that point at a <tree>.
+tree = directory (with its content).
 
-I need a translation.  :(  Thank you.  Regards, Bruce
+For example, the last commit in the current branch is a Git object of
+type "commit", which contains mostly a log message, a few headers, and
+a pointer to the tree object corresponding to the content of the
+directory in which you made the commit (modulo what you excluded from
+the commit of course). Therefore, the name of this commit, although
+not really a tree, is a tree-ish in that it talks about one and only
+one tree. You could name it HEAD, a sha1sum (like
+5a2abc12d64a5e00daa6aebbb673715f365a564a), the name of the branch
+(like "master"), ...
 
-P.S. I have a SuSE installation with everything relating to GIT installed.
-The man pages reference commands like, "git-ls-tree --name-only" except
-that there isn't any such command.  Unless you reverse engineer the
-implementation of "git", discover the /usr/lib/git directory and add it
-to your path.  That hassle is rather inconvenient.  More hints about
-where the git commands get squirreled away would be useful.  Thank you.
+> P.S. I have a SuSE installation with everything relating to GIT installed.
+> The man pages reference commands like, "git-ls-tree --name-only" except
+> that there isn't any such command.  Unless you reverse engineer the
+> implementation of "git", discover the /usr/lib/git directory and add it
+> to your path.  That hassle is rather inconvenient.  More hints about
+> where the git commands get squirreled away would be useful.  Thank
+> you.
+
+Just type "git ls-tree --name-only". git-ls-tree is the old way to
+refer to the command name. Normally, any reference to dashed names
+should have been removed from the documentation by now (so most likely
+you see it in your distro because it's an old enough version,
+otherwise, it's a bug in the doc).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
