@@ -1,61 +1,75 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: Release candidate period
-Date: Sat, 19 Sep 2009 22:31:15 -0300
-Message-ID: <a4c8a6d00909191831y4a9ac37dg85936cd01856ed37@mail.gmail.com>
-References: <a4c8a6d00909191644n131667f2uc7e59d0d56749c42@mail.gmail.com>
-	 <alpine.LFD.2.00.0909192043060.24133@xanadu.home>
-	 <7vab0q76tq.fsf@alter.siamese.dyndns.org>
+From: Rob Barrett <barrettboy@gmail.com>
+Subject: Re: Usability question
+Date: Sun, 20 Sep 2009 12:21:38 +1000
+Message-ID: <513ca40e0909191921k1b7b14b5j7cfd8734441397d9@mail.gmail.com>
+References: <513ca40e0909170301s2b09184akb27acde76975c09b@mail.gmail.com>
+	 <vpqy6odhn0d.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 20 03:49:50 2009
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Sep 20 04:22:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpBYj-0008Mx-So
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 03:49:50 +0200
+	id 1MpC4c-0004tx-7X
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Sep 2009 04:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753490AbZITBbN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Sep 2009 21:31:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753460AbZITBbN
-	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 21:31:13 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:37805 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753458AbZITBbN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Sep 2009 21:31:13 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so829379fge.1
-        for <git@vger.kernel.org>; Sat, 19 Sep 2009 18:31:16 -0700 (PDT)
+	id S1753589AbZITCVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Sep 2009 22:21:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753533AbZITCVg
+	(ORCPT <rfc822;git-outgoing>); Sat, 19 Sep 2009 22:21:36 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:33482 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753504AbZITCVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Sep 2009 22:21:35 -0400
+Received: by yxe37 with SMTP id 37so2119200yxe.33
+        for <git@vger.kernel.org>; Sat, 19 Sep 2009 19:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=l2Ek8dHSr3kP7i5Oa1wG/SJQ1XkTQED/0+HoT++6z7Q=;
-        b=gfrw0ndUtObYH1INusAub05WD+d32XqiPW11YXCqaBCSu48mP3lbBy8qeKbB1HQgX/
-         bloA85xuekq2LpRLfpvss1NJwvHaYm5Xda9T0YXj3NMC3EkPmk1NFO6BSFM16CUt89DJ
-         pdQN2ckbj5OSzZte9/kux5qt8gUacQGCVYAps=
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type;
+        bh=aflXP69280srIXzXzUM8bzPsu/Xh00HJ0j1G1PweBcY=;
+        b=Zv67YKrThzbVnbOwbD8TPtpi6VS/r+3hEznRKM6hvD8Tq2NTgS6YNl/5iXYo3W51CU
+         lO8zxnrsq/FKkIO3c9Dka3C+W6p9O2nb4WyWllwRDuis4xrgIjIETxEE9fIdiVYVgWP5
+         xk3Ot7CzpvylWeAL6IIjmv6mHWdb27woX2/TA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=IIgH1p6B6bpki6cFbOU+VzNeC43Wjcy6kTqXn05XwYsjd8Hw+KaS/wuop6TuQAZOdO
-         cTOzQtsMy13CdvclLv022yPKMittkiU2bkgGZ4FMruudgqPC5mQk/4q0UeiS9RjI+m/u
-         EzLkJzT1gifg87Kil0iGG4AJRqMPBRQzNnvd0=
-Received: by 10.86.173.4 with SMTP id v4mr3140418fge.78.1253410275949; Sat, 19 
-	Sep 2009 18:31:15 -0700 (PDT)
-In-Reply-To: <7vab0q76tq.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=rRPELm2hDy7qX15OjiEqJXcxI3gJ3o/5a0YTaicddFIxPz6Taww+uXcZxOVC4xh3jr
+         BTuJM/EO+jhUXcFtswKSOOJ2fWsY6qG4rOGlOflN0C5ZuTGPUBn7DYswOLrrWzLA43Mz
+         5R75glNBkWkifskr5umvkSXP9t8YDKWtelJdw=
+Received: by 10.150.128.18 with SMTP id a18mr5867737ybd.244.1253413298980; 
+	Sat, 19 Sep 2009 19:21:38 -0700 (PDT)
+In-Reply-To: <vpqy6odhn0d.fsf@bauges.imag.fr>
+X-Google-Sender-Auth: c2619d8699e4956d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128835>
 
-On Sat, Sep 19, 2009 at 10:17 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> And Thiago, don't thank me. =A0It's not "hey I now have N commits in =
-a high
-> profile project" game.
-OK, I will remember that.
+On Thu, Sep 17, 2009 at 8:41 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Well, if you want to get rid of subcommands, why not get rid of
+> commands, too?
+>
+> git --commit
+> git --status
+> git --svn --rebase
+>
+
+Well, granted, that's a sort of heavyweight consistency, but all we
+should need to do is to help reduce a _new_ user's confusion about
+when the word after a subcommand gets a '--' prefix and when it
+doesn't.
+
+And do it in a way that's backwards compatible so it doesn't affect
+the usage patterns of seasoned users, existing scripts, crons etc.
+
+Will patch and see how it looks..
+
+Rob
