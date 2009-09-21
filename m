@@ -1,79 +1,77 @@
-From: Craig Taylor <c@gryning.com>
-Subject: Re: install does not obey DESTDIR or --prefix for perl modules
-Date: Mon, 21 Sep 2009 20:19:43 +0100
-Message-ID: <20090921191943.GE8173@gryning.com>
-References: <20090921160551.GD8173@gryning.com> <Ow6bpZou9Vi0tKlyAN-qfjlAAtXvMqpXEAiG54zZ3C8fLI_6_Bt3oA@cipher.nrlssc.navy.mil> <7vskeguqmb.fsf@alter.siamese.dyndns.org>
-Reply-To: c@gryning.com
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH JGit 1/5] adding tests for ObjectDirectory
+Date: Mon, 21 Sep 2009 12:30:49 -0700
+Message-ID: <20090921193049.GL14660@spearce.org>
+References: <1253062116-13830-1-git-send-email-mr.gaffo@gmail.com> <1253062116-13830-2-git-send-email-mr.gaffo@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 21 21:20:05 2009
+Cc: git@vger.kernel.org, "mike.gaffney" <mike.gaffney@asolutions.com>
+To: mr.gaffo@gmail.com
+X-From: git-owner@vger.kernel.org Mon Sep 21 21:30:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpoQe-0003Uk-Gf
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 21:20:04 +0200
+	id 1Mpob9-00071z-Ci
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 21:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbZIUTTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 15:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753298AbZIUTTx
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 15:19:53 -0400
-Received: from 87-194-167-47.bethere.co.uk ([87.194.167.47]:51523 "EHLO
-	jolt.ukmail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753262AbZIUTTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 15:19:53 -0400
-Received: from craigt by jolt.ukmail.org with local (Exim 4.63)
-	(envelope-from <c@gryning.com>)
-	id 1MpoQJ-0006MQ-TH; Mon, 21 Sep 2009 20:19:43 +0100
+	id S1753490AbZIUTaq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2009 15:30:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbZIUTaq
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 15:30:46 -0400
+Received: from george.spearce.org ([209.20.77.23]:33943 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753476AbZIUTap (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2009 15:30:45 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id B2F58381FF; Mon, 21 Sep 2009 19:30:49 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vskeguqmb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <1253062116-13830-2-git-send-email-mr.gaffo@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128903>
 
-On Mon, Sep 21, 2009 at 10:58:20AM -0700, Junio C Hamano wrote:
-> Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
-> 
-> > Craig Taylor wrote:
-> >> Hi all
-> >> 
-> >> I'm compiling/installing git in a Solaris environment without root.
-> >> Using 'make DESTDIR=<some path> install' to stage an install to an
-> >> alternate location.
-> >> The perl module component of 'make DESTDIR=<some path> install' installs
-> >> into the system perl lib path without prepending the forced install
-> >> destination or my '--prefix'.
-> >> This seems counter intuitive and I would consider a bug.
-> >
-> > Try 'make prefix=<some path>'.
-> >
-> > btw, this is in the first paragraph of the INSTALL document.
-> 
-> But is that what Craig is trying to do?
-> 
-> I think he wants to build git to be installed in /usr/bin/git or whatever,
-> and he would say "prefix=/usr".  He however wants "make install" to write
-> into /var/tmp/g/usr/bin/git, not /usr/bin/git, so that he can for example
-> make a tarball with "cd /var/tmp/g && tar cf ../git.tar .", and extract it
-> as root under the real '/'.  "make DESTDIR=/var/tmp/g" is exactly for
-> that, and if it is not working I would say it is a bug.
+mr.gaffo@gmail.com wrote:
+> diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/ObjectDirectoryTest.java
+> +	private File testDir;
+> +
+> +	@Override
+> +	protected void setUp() throws Exception {
+> +		testDir = new File(new File(System.getProperty("java.io.tmpdir")), UUID.randomUUID().toString());
+> +	}
 
-Exactly as you describe here, different paths but same goal.
-All binaries follow the DESTDIR path except the perl modules.
+Can't we use the same logic we use in RepositoryTestCase to create
+the temporary directory for this test?  I would rather keep the
+temporary space under target/ when testing under Maven, as it
+makes it far easier to clean up the directory.  Plus we know we
+have sufficient write space there.
 
-To register this as a bug do I need to do more than send this email?
+> +	@Override
+> +	protected void tearDown() throws Exception {
+> +		if (testDir.exists()){
 
-Thanks
-CraigT
+Style nit: Space between ) and {
+
+> +	public void testExistsWithNonExistantDirectory() throws Exception {
+> +		assertFalse(new ObjectDirectory(new File("/some/nonexistant/file")).exists());
+
+Please create a path name below your testDir which you know won't
+exist.  I don't want this test to rely upon the fact that some
+absolute path doesn't exist that is outside of our namespace control.
+
+> +	private void createTestDir(){
+
+You use this method once, inline it inside
+testExistsWithExistingDirectory().
+
+Otherwise, the test case is OK, but is still quite sparse with
+regards to functionality of the class being tested.  Was it your
+intention to only cover the most basic parts at this time?  Its more
+coverage than we have now, so I'm happy, but just wanted to point
+out it certainly isn't complete (e.g. no pack support).
 
 -- 
-
-c^ [c%5e]
-
-No think. No Talk. Train.
+Shawn.
