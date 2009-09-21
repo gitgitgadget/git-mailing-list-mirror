@@ -1,64 +1,75 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] Trivial fix: Display a more friendly message with 
-	git-shell.
-Date: Mon, 21 Sep 2009 17:45:50 -0300
-Message-ID: <a4c8a6d00909211345q593e673bo4964204afa5ce807@mail.gmail.com>
-References: <1253466672-21051-1-git-send-email-tfransosi@gmail.com>
-	 <4AB71A76.5010509@viscovery.net> <vpqeiq0ssn7.fsf@bauges.imag.fr>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [msysGit] Issue 332 in msysgit: .gitattributes dir/ patterns
+	are not processed
+Date: Mon, 21 Sep 2009 23:39:24 +0200
+Message-ID: <20090921213916.GA47509@book.hvoigt.net>
+References: <001636d33903a05b960474181c0a@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Sep 21 22:51:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 21 23:39:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpprR-0000JE-1u
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 22:51:49 +0200
+	id 1Mpqbd-0006tN-0m
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 23:39:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753017AbZIUUvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 16:51:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752630AbZIUUvj
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 16:51:39 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:33328 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752610AbZIUUvi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 16:51:38 -0400
-Received: by fxm18 with SMTP id 18so350163fxm.17
-        for <git@vger.kernel.org>; Mon, 21 Sep 2009 13:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=rSheb8+bZGzPJnrmtoIge3Z9o3dZ+aZp7l+ic/9bFrk=;
-        b=u8mEJho+hMoyAc8qVA8zC+sWI0o1nP4mVWKdLY8GJZF3cRgJBVSmbRIjfCSlm1R56P
-         f+OoeXS2LkRu1otnOfMlcjlA10LAJIhqG/ElUBqw3ATG73JqCdPjgTeGqU/Bj8tJQbof
-         MC019jWDUPb2v7ejkbD23tLQ1RRhZbNr+F77s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=lqW8fzObr8T8pc5zPiTri0rsS3sXMyUiOzMGhAVrBua9DHZZ10GNCCSc1OIAO07VNe
-         lsN4EoAanqgyahRcSQbzeZLfGODPrRpLmZgNNvniAJHcHbLGJGFMBphig6rVj9iTg7yj
-         lpzSIxe+JUwj58m8Q+HMNhFS3j7dRQov9iKwg=
-Received: by 10.86.232.5 with SMTP id e5mr135687fgh.27.1253565950073; Mon, 21 
-	Sep 2009 13:45:50 -0700 (PDT)
-In-Reply-To: <vpqeiq0ssn7.fsf@bauges.imag.fr>
+	id S1751304AbZIUVjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2009 17:39:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751227AbZIUVjX
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 17:39:23 -0400
+Received: from darksea.de ([83.133.111.250]:54043 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751047AbZIUVjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2009 17:39:22 -0400
+Received: (qmail 29819 invoked from network); 21 Sep 2009 23:39:24 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 21 Sep 2009 23:39:24 +0200
+Content-Disposition: inline
+In-Reply-To: <001636d33903a05b960474181c0a@google.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128912>
 
-Hi Matthieu
-On Mon, Sep 21, 2009 at 3:45 AM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Perhaps one more line saying what 'man git-shell' says in addition
-> would help:
->
-> $ git-shell
-> git-shell: Restricted login shell for GIT-only SSH access
-> Usage: ...
-I added this line to the output usage, but would be good to show the
-commands that git-shell accept too?
+On Mon, Sep 21, 2009 at 03:26:55PM +0000, codesite-noreply@google.com wrote:
+> New issue 332 by vsuvo...@geolearning.com: .gitattributes dir/ patterns are  
+> not processed
+> http://code.google.com/p/msysgit/issues/detail?id=332
+> 
+> What steps will reproduce the problem?
+> 1. Create a project and initialize git:
+>     md foo
+>     cd foo
+>     git init
+> 
+> 2. create subdirectory and a file in it:
+>     md bar
+>     echo sample text >bar\testfile.txt
+> 
+> 3. create .gitatributes, add/commit it:
+>     echo bar/ binary >.gitattributes
+>     git add .gitattributes
+>     git commit -m "ground zero"
+> 
+> 4. check bar\testfile.txt
+>     git check-attr binary bar/testfile.txt
+> 
+> What is the expected output? What do you see instead?
+> expected output: "bar/testfile.txt": binary: set
+> see instead:     "bar/testfile.txt": binary: unspecified
+
+This issue came up on the msysgit bug tracker. So here is either the
+documentation wrong or the implementation.
+
+Because it does not make sense to specify any attributes to directories
+itself I would expect the contents of the directory to get the
+attributes.
+
+What do you think?
+
+cheers Heiko
