@@ -1,90 +1,94 @@
-From: Michael Gaffney <mr.gaffo@gmail.com>
-Subject: Re: [PATCH JGit 2/5] Create abstract method on ObjectDatabase for
- accessing the list of local pack files.
-Date: Mon, 21 Sep 2009 14:51:44 -0500
-Message-ID: <4AB7D950.9000600@gmail.com>
-References: <1253062116-13830-1-git-send-email-mr.gaffo@gmail.com> <1253062116-13830-2-git-send-email-mr.gaffo@gmail.com> <1253062116-13830-3-git-send-email-mr.gaffo@gmail.com> <20090921194035.GM14660@spearce.org>
+From: Craig Taylor <c@gryning.com>
+Subject: Re: install does not obey DESTDIR or --prefix for perl modules
+Date: Mon, 21 Sep 2009 20:54:07 +0100
+Message-ID: <20090921195407.GI8173@gryning.com>
+References: <20090921160551.GD8173@gryning.com> <Ow6bpZou9Vi0tKlyAN-qfjlAAtXvMqpXEAiG54zZ3C8fLI_6_Bt3oA@cipher.nrlssc.navy.mil> <7vskeguqmb.fsf@alter.siamese.dyndns.org> <20090921191943.GE8173@gryning.com> <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
+Reply-To: c@gryning.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Sep 21 21:51:52 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 21 21:54:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpovQ-0005zr-9S
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 21:51:52 +0200
+	id 1Mpoxq-0006kH-1b
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 21:54:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753578AbZIUTvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 15:51:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbZIUTvn
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 15:51:43 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:57139 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753419AbZIUTvm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 15:51:42 -0400
-Received: by yxe37 with SMTP id 37so3459710yxe.33
-        for <git@vger.kernel.org>; Mon, 21 Sep 2009 12:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=BhHqn25sGiJIcYrWTkw9qx4FjpdNPARxFtfVShklNEY=;
-        b=DIbgH1zPvXUEw/45E7x6kXGhJDwEte8668WXQNAJ9UxTXqQjSBXE6HccYElTjnozf8
-         BcbfukEAaYb9B9jeCQSubuSe6M4QSbBASgKD3CXPUWSqYNxF0o31oPOTJY1LxBZKopXu
-         SUUIF7AXCBavP9PV8qlAmVS4umKHBPV03u3oQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=odUvrGTmaOw+aNL4yI6uV4xgBKsUgvNLegEQ3DfpYtqJheMxzNYUO7gfqEGyCLY52E
-         /Bcv+h16MyVCCZO+sITox6TBCs5X9+xolL9ubwj0MpX1WDwn/zOD0zAb1NbvpCi+Z7w5
-         3ASzmCT9UmpiGJ3EZ8oWEAflUMyGpE/GfI+MI=
-Received: by 10.90.180.16 with SMTP id c16mr66055agf.15.1253562706481;
-        Mon, 21 Sep 2009 12:51:46 -0700 (PDT)
-Received: from ?192.168.11.102? (nat.asynchrony.com [66.236.120.131])
-        by mx.google.com with ESMTPS id 1sm27731agb.48.2009.09.21.12.51.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 21 Sep 2009 12:51:45 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <20090921194035.GM14660@spearce.org>
+	id S1753548AbZIUTyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2009 15:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753612AbZIUTyL
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 15:54:11 -0400
+Received: from 87-194-167-47.bethere.co.uk ([87.194.167.47]:59877 "EHLO
+	jolt.ukmail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752845AbZIUTyK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2009 15:54:10 -0400
+Received: from craigt by jolt.ukmail.org with local (Exim 4.63)
+	(envelope-from <c@gryning.com>)
+	id 1Mpoxb-0007Es-2a; Mon, 21 Sep 2009 20:54:07 +0100
+Content-Disposition: inline
+In-Reply-To: <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128908>
 
-Shawn O. Pearce wrote:
-> Why not allow the ObjectDirectory code to create the directory
-> before copying the pack into it?
-
-Good point, this was one of the first tests I did before I got to that 
-part of ObjectDirectory. Will fix.
-
-> Don't you mean the list of packs this object database contains?
-> An object database may not be a git repository.  Though yes, the
-> common case is that it is a repository.
-
-What's the difference in terminology? Not aruging, just wanting to know 
-what we're calling a repo and what we're not so that I use it correctly. 
-Will fix.
-
->> +	public abstract List<PackFile> listLocalPacks();
+On Mon, Sep 21, 2009 at 12:44:05PM -0700, Junio C Hamano wrote:
+> Craig Taylor <c@gryning.com> writes:
 > 
-> I think you should define this to be an unmodifiable list, not just
-> any list.  Its sad that the Java type system didn't support this
-> idea back when they added the new collections APIs.
+> > Exactly as you describe here, different paths but same goal.
+> > All binaries follow the DESTDIR path except the perl modules.
+> >
+> > To register this as a bug do I need to do more than send this email?
+> 
+> Do you use NO_PERL_MAKEMAKER in your build?
+> 
+> If not, we need to summon an expert on ExtUtils::MakeMaker to look into
+> this issue, but if you do, perhaps you can try this patch and report how
+> well it works for you.
+> 
+> ---
+>  perl/Makefile |    8 ++++----
+>  1 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/perl/Makefile b/perl/Makefile
+> index e3dd1a5..4ab21d6 100644
+> --- a/perl/Makefile
+> +++ b/perl/Makefile
+> @@ -29,11 +29,11 @@ $(makfile): ../GIT-CFLAGS Makefile
+>  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
+>  	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
+>  	echo install: >> $@
+> -	echo '	mkdir -p "$(instdir_SQ)"' >> $@
+> -	echo '	$(RM) "$(instdir_SQ)/Git.pm"; cp Git.pm "$(instdir_SQ)"' >> $@
+> -	echo '	$(RM) "$(instdir_SQ)/Error.pm"' >> $@
+> +	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)"' >> $@
+> +	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git.pm"; cp Git.pm "$$(DESTDIR)$(instdir_SQ)"' >> $@
+> +	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
+>  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
+> -	echo '	cp private-Error.pm "$(instdir_SQ)/Error.pm"' >> $@
+> +	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
+>  	echo instlibdir: >> $@
+>  	echo '	echo $(instdir_SQ)' >> $@
+>  else
 
-Should it be a collection as well instead of a list; what would you 
-specifically suggest?
+I have 2 perl environments available to me on the system (at home now so
+can't dig further).
+Both can pretty stripped which can make thing "challenging" it's
+possible ExtUtils::MakeMaker doesn't even exist.
 
-> Instead of copying, why not return an unmodifiableList wrapped
-> around the array?  PackList will never modify its internal array.
+Please everyone who is looking at this thread let it sleep for 24h and I
+shall test further/revive it tomorrow.
 
-Same as above
+Many thanks
+CraigT
 
+-- 
 
--Mike
+c^ [c%5e]
+
+Learn first whatever hardship you may have to endure is but temporary
