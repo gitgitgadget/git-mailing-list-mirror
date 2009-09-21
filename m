@@ -1,79 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-genrandom: ensure stdout is set to _O_BINARY on
- Windows
-Date: Mon, 21 Sep 2009 00:36:34 -0700
-Message-ID: <7vws3svjel.fsf@alter.siamese.dyndns.org>
-References: <4AB72CA2.1020808@viscovery.net>
+From: Dominic Rose <dominic@bioinf.uni-leipzig.de>
+Subject: error: insufficient permission
+Date: Mon, 21 Sep 2009 10:32:07 +0200
+Message-ID: <4AB73A07.3020703@bioinf.uni-leipzig.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <mstormo@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Li Frank <lznuaa@gmail.com>, msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 21 09:37:03 2009
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 21 10:40:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpdSI-0006Ra-OE
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 09:37:03 +0200
+	id 1MpeRM-0000Jg-Ep
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 10:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754679AbZIUHgt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 03:36:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754758AbZIUHgs
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 03:36:48 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38361 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754679AbZIUHgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 03:36:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 514AE3A7B3;
-	Mon, 21 Sep 2009 03:36:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QblWe5asW3ODPdh7SzQhToj5Xjs=; b=ewgNLd
-	r8m1FUWF1za1EuhgW/oQ2ht1NW3HfGoVsfTpHA0/YDBS3+IWoiDAdRHXLQRj97uU
-	l86/43oRAMUheoBlL1Rnu1eb0agil2lh7Tp5MG5kD+SJxPO5169s1svfDfaFLPB3
-	mE7pzUspgHlZoXTu77yLEvXS2Erz9sfNgFyZs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WHsindVChYEmLDlW9BORkKIM3reIPtod
-	04c2DxkisXE4NzNg1FfVll50Y2NEY/3kQpYBWw2/y7I9os4mZsYF+Ba21nLsCqEU
-	v1af4kTeIQ3GvKanTPYaey3plMMEUnPP7BUyjxzOBUhZ/1oqRHhgTikFqW5AduQg
-	EWJzO3rhz98=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FA9F3A7B1;
-	Mon, 21 Sep 2009 03:36:42 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3AFBE3A7AF; Mon, 21 Sep
- 2009 03:36:36 -0400 (EDT)
-In-Reply-To: <4AB72CA2.1020808@viscovery.net> (Johannes Sixt's message of
- "Mon\, 21 Sep 2009 09\:34\:58 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 81718CB4-A681-11DE-9AC1-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755292AbZIUIjr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Sep 2009 04:39:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755238AbZIUIjq
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 04:39:46 -0400
+Received: from v4.rz.uni-leipzig.de ([139.18.1.30]:46188 "EHLO
+	v4.rz.uni-leipzig.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755087AbZIUIjq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2009 04:39:46 -0400
+X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Mon, 21 Sep 2009 04:39:46 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by v4.rz.uni-leipzig.de (Postfix) with ESMTP id C9A42272
+	for <git@vger.kernel.org>; Mon, 21 Sep 2009 10:32:29 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at v4-ul
+Received: from v4.rz.uni-leipzig.de ([127.0.0.1])
+	by localhost (v4.rz.uni-leipzig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id safaGFE30x2o for <git@vger.kernel.org>;
+	Mon, 21 Sep 2009 10:32:29 +0200 (CEST)
+Received: from m1.rz.uni-leipzig.de (m1.rz.uni-leipzig.de [139.18.1.9])
+	by v4.rz.uni-leipzig.de (Postfix) with ESMTP id 9CCF026C
+	for <git@vger.kernel.org>; Mon, 21 Sep 2009 10:32:29 +0200 (CEST)
+Received: from bierdepot.bioinf.uni-leipzig.de (bierdepot.bioinf.uni-leipzig.de [139.18.75.68])
+	by m1.rz.uni-leipzig.de (Postfix) with ESMTP id 9E9283B
+	for <git@vger.kernel.org>; Mon, 21 Sep 2009 10:32:08 +0200 (CEST)
+Received: from rioja.bioinf.uni-leipzig.de (rioja.bioinf.uni-leipzig.de [139.18.75.86])
+	by bierdepot.bioinf.uni-leipzig.de (8.14.2/8.12.10) with ESMTP id n8L8W7iF031746
+	for <git@vger.kernel.org>; Mon, 21 Sep 2009 10:32:07 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090825)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128869>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hi,
 
-> From: Johannes Sixt <j6t@kdbg.org>
->
-> Commit a6ca8c62 (Set _O_BINARY as default fmode for both MinGW and MSVC)
-> removed the definition of _CRT_fmode from mingw.c. Before this commit,
-> since test-genrandom is linked against libgit.a, the MinGW process
-> initialization code would pick up that definition of _CRT_fmode, which was
-> initialized to _O_BINARY. After this commit, however, text mode is used
-> for std(in|out|err) because it is the default in absence of _CRT_fmode.
-> In order to fix that, we must use git-compat-util.h, which overrides
-> main() to set the mode to binary.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Unfortunately, this change in an updated patch 04/15 of the MSVC series
->  went to the Big Void. ;)
+may please somebody help me with the following issue. I try to checkin=20
+changes to a repository I created. Seems like I have some permission=20
+problems, but I can't figure out whats going wrong:
 
-Thanks.
+$ git commit -m 'test'
+Created commit 07b3a4a: test
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+$ git push
+Counting objects: 8, done.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 1.56 KiB, done.
+Total 6 (delta 4), reused 0 (delta 0)
+error: insufficient permission for adding an object to repository=20
+database ./objects
+
+fatal: failed to write object
+error: unpack failed: unpacker exited with error code
+To /homes/[...]
+ ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to '/homes/[...]'
+
+
+Thanks,
+Dominic
+
+--=20
+Dominic Rose
+Professur f=FCr Bioinformatik
+Institut f=FCr Informatik
+Universit=E4t Leipzig
+H=E4rtelstr. 16-18
+D-04107 Leipzig
+WWW    http://www.bioinf.uni-leipzig.de
+Phone: +49 341 97-16698
+=46ax:   +49 341 97-16679
