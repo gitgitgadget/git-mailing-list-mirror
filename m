@@ -1,91 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Remove '< >' from [<options>] since it's not necessary.
-Date: Mon, 21 Sep 2009 08:50:45 +0200
-Message-ID: <vpq7hvssse2.fsf@bauges.imag.fr>
-References: <1253476116-24284-1-git-send-email-tfransosi@gmail.com>
-	<auto-000020523806@sci.utah.edu>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] test-genrandom: ensure stdout is set to _O_BINARY on Windows
+Date: Mon, 21 Sep 2009 09:34:58 +0200
+Message-ID: <4AB72CA2.1020808@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thiago Farina <tfransosi@gmail.com>
-To: tom fogal <tfogal@alumni.unh.edu>
-X-From: git-owner@vger.kernel.org Mon Sep 21 08:51:07 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Marius Storm-Olsen <mstormo@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Li Frank <lznuaa@gmail.com>, msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 21 09:35:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mpcjq-0001Mm-Mg
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 08:51:07 +0200
+	id 1MpdQV-0005pb-Lw
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Sep 2009 09:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbZIUGu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 02:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZIUGu5
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 02:50:57 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53260 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752200AbZIUGu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 02:50:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8L6kMkk007585
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 21 Sep 2009 08:46:22 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MpcjV-0002vF-KF; Mon, 21 Sep 2009 08:50:45 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1MpcjV-0001Ud-Ix; Mon, 21 Sep 2009 08:50:45 +0200
-In-Reply-To: <auto-000020523806@sci.utah.edu> (tom fogal's message of "Sun\, 20 Sep 2009 14\:52\:26 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Sep 2009 08:46:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n8L6kMkk007585
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1254120384.97317@LGLdLVS3XHj1hljEM05rCA
+	id S1753790AbZIUHe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Sep 2009 03:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751928AbZIUHe7
+	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 03:34:59 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:46675 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512AbZIUHe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Sep 2009 03:34:58 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MpdQJ-00025J-8a; Mon, 21 Sep 2009 09:34:59 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F19326D9; Mon, 21 Sep 2009 09:34:58 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128867>
 
-tom fogal <tfogal@alumni.unh.edu> writes:
+From: Johannes Sixt <j6t@kdbg.org>
 
-> Thiago Farina <tfransosi@gmail.com> writes:
->> -	"git log [<options>] [<since>..<until>] [[--] <path>...]\n"
->> +	"git log [options] [<since>..<until>] [[--] <path>...]\n"
->>  	"   or: git show [options] <object>...";
->
-> To me, "<blah>" implies to me that the author meant, "something which
-> is sort-of `blah'-ish but is not actually the string literal, `blah'",
-> whereas `blah' means, "the string literal, `blah'."
+Commit a6ca8c62 (Set _O_BINARY as default fmode for both MinGW and MSVC)
+removed the definition of _CRT_fmode from mingw.c. Before this commit,
+since test-genrandom is linked against libgit.a, the MinGW process
+initialization code would pick up that definition of _CRT_fmode, which was
+initialized to _O_BINARY. After this commit, however, text mode is used
+for std(in|out|err) because it is the default in absence of _CRT_fmode.
+In order to fix that, we must use git-compat-util.h, which overrides
+main() to set the mode to binary.
 
-Strictly speaking, you're right, but in the particular case of
-[options], it's rather well established that it means "one or several
-options", and not the litteral "option". In any case, we should be
-consistant:
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ Unfortunately, this change in an updated patch 04/15 of the MSVC series
+ went to the Big Void. ;)
 
-Documentation$ grep -n '\[<options>\]' *.txt
-git-log.txt:11:'git log' [<options>] [<since>..<until>] [[\--] <path>...]
-git-stash.txt:11:'git stash' list [<options>]
-git-stash.txt:67:list [<options>]::
-Documentation$ grep -n '\[options\]' *.txt
-git-annotate.txt:10:'git annotate' [options] file [revision]
-gitcli.txt:84:usage: git-describe [options] <committish>*
-git-cvsserver.txt:25:'git cvsserver' [options] [pserver|server] [<directory> ...]
-git-fast-export.txt:11:'git fast-export [options]' | 'git fast-import'
-git-fast-import.txt:11:frontend | 'git fast-import' [options]
-git-rebase.txt:11:'git rebase' [-i | --interactive] [options] [--onto <newbase>]
-git-rebase.txt:13:'git rebase' [-i | --interactive] [options] --onto <newbase>
-git-rev-parse.txt:405:some-command [options] <args>...
-git-send-email.txt:11:'git send-email' [options] <file|directory|rev-list options>...
-git-show.txt:11:'git show' [options] <object>...
-git-svn.txt:10:'git svn' <command> [options] [arguments]
+ -- Hannes
 
-=> either get rid of the 3 occurences of [<options>], not just one, or
-get rid of all the [options]. My vote goes for the first.
+ test-genrandom.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
---
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/test-genrandom.c b/test-genrandom.c
+index 8ad276d..b3c28d9 100644
+--- a/test-genrandom.c
++++ b/test-genrandom.c
+@@ -4,8 +4,7 @@
+  * Copyright (C) 2007 by Nicolas Pitre, licensed under the GPL version 2.
+  */
+
+-#include <stdio.h>
+-#include <stdlib.h>
++#include "git-compat-util.h"
+
+ int main(int argc, char *argv[])
+ {
+-- 
+1.6.5.rc1.1051.gdc4fd
