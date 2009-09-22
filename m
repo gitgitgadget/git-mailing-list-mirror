@@ -1,71 +1,134 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH] Update usage string of git-request-pull to match with the version of man help.
-Date: Tue, 22 Sep 2009 16:52:19 -0400
-Message-ID: <1253652739-13531-1-git-send-email-tfransosi@gmail.com>
-Cc: Thiago Farina <tfransosi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 22 22:52:40 2009
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: [PATCHv4] git-log --format: Add %B tag with %B(n) option
+Date: Tue, 22 Sep 2009 23:30:38 +0200
+Message-ID: <1253655038-20335-1-git-send-email-heipei@hackvalue.de>
+References: <7vfxaercma.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Gilger <heipei@hackvalue.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 22 23:30:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqCLn-0000PA-Iw
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 22:52:39 +0200
+	id 1MqCwc-00063e-OD
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 23:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbZIVUwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 16:52:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751286AbZIVUwa
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 16:52:30 -0400
-Received: from qw-out-2122.google.com ([74.125.92.25]:31244 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311AbZIVUw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 16:52:29 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so46226qwd.37
-        for <git@vger.kernel.org>; Tue, 22 Sep 2009 13:52:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=38/I4U7+q7OJSyPEyawpDMKHze6Ostoj2KI4uBJdP7I=;
-        b=oE6ifYmYPX7YYY0yHx8t9AbXcQR9l43zCTqYtg1WG6+mrSqW8YgMh16k+3EwKeezEd
-         OAkr+53+8mvxto/2iBLvH0J9AvTlwBuDEEFrK7jCGLsyC56P3AwOJvWRlds+nM6d9V1b
-         Yq5yOSA+9NP7hL8ZytBBq2ZEqQBsXD+oibeTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=PAQpeID0RHogDx2XrjJ32I16cSX+7LOE8abbrtkN1Pg2r6cucHW01nzVz+A4nrrZye
-         kR4lU99XVDjqS1yg7A36hFHj8Fkc8xHfYfsayZE0ttKjnIDnmYPPwgSG6C2qMUrp3w5C
-         sicLC92wvMaYCW25LhS+i5UXTFR7moEvgMsAU=
-Received: by 10.224.82.202 with SMTP id c10mr1252315qal.173.1253652752999;
-        Tue, 22 Sep 2009 13:52:32 -0700 (PDT)
-Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 7sm114186qwb.24.2009.09.22.13.52.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Sep 2009 13:52:32 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc1.38.gddf44.dirty
+	id S1752891AbZIVVad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 17:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbZIVVac
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 17:30:32 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:40177 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752825AbZIVVac (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 17:30:32 -0400
+Received: from u-4-046.vpn.rwth-aachen.de ([137.226.100.46]:32967 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1MqCwP-0005mT-C8; Tue, 22 Sep 2009 23:30:29 +0200
+X-Mailer: git-send-email 1.6.5.rc1.38.g1fbd3
+In-Reply-To: <7vfxaercma.fsf@alter.siamese.dyndns.org>
+X-Verified-Sender: yes
+X-SA-Exim-Connect-IP: 137.226.100.46
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128959>
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+Since one can simply use spaces to indent any other --pretty field we
+should have an option to do that with the body too.
+
+Also the %B flag strips the trailing newlines, to enable more compact
+display.
+
+Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
 ---
- git-request-pull.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Hey,
 
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 630cedd..727c69e 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -8,7 +8,7 @@ USAGE='<start> <url> [<end>]'
- LONG_USAGE='Summarizes the changes between two commits to the standard output,
- and includes the given URL in the generated summary.'
- SUBDIRECTORY_OK='Yes'
--OPTIONS_SPEC='git request-pull [options] start url [end]
-+OPTIONS_SPEC='git request-pull [-p] <start> <url> [<end>]
- --
- p    show patch text as well
- '
+I moved the indent >= 0 check to the caller. Also changed the documentation, n 
+should indicate more strongly that n is supposed to be a natural number.
+
+You mentioned small style issues but I'm not sure what you meant. One thing 
+that could be made more compact is calling 
+pp_remainder(CMIT_FMT_MEDIUM, &body, sb, indent < 0 ? 0 : indent);
+and thereby saving two extra lines. I saw this at a lot of other spaces in 
+git.git, but saw no specific guideline in CodingGuidelines.
+
+Yet another option is aborting for negative indent values, issuing return 0;
+
+Greetings,
+Jojo
+
+ Documentation/pretty-formats.txt |    2 ++
+ pretty.c                         |   29 ++++++++++++++++++++++++-----
+ 2 files changed, 26 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 2a845b1..ca694c9 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -123,6 +123,8 @@ The placeholders are:
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+ - '%b': body
++- '%B': body without trailing newline
++- '%B(n)': %B indented by n spaces
+ - '%Cred': switch color to red
+ - '%Cgreen': switch color to green
+ - '%Cblue': switch color to blue
+diff --git a/pretty.c b/pretty.c
+index f5983f8..dafa8e0 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -605,13 +605,17 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	int h1, h2;
+ 
+ 	/* these are independent of the commit */
++
++	const char *body = msg + c->body_off;
++	const char *end = NULL;
++	/* check if we have arguments to the placeholder */
++	if (placeholder[1] == '(')
++		end = strchr(placeholder + 2, ')');
++
+ 	switch (placeholder[0]) {
+ 	case 'C':
+-		if (placeholder[1] == '(') {
+-			const char *end = strchr(placeholder + 2, ')');
++		if (end) {
+ 			char color[COLOR_MAXLEN];
+-			if (!end)
+-				return 0;
+ 			color_parse_mem(placeholder + 2,
+ 					end - (placeholder + 2),
+ 					"--pretty format", color);
+@@ -733,7 +737,22 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 		format_sanitized_subject(sb, msg + c->subject_off);
+ 		return 1;
+ 	case 'b':	/* body */
+-		strbuf_addstr(sb, msg + c->body_off);
++		strbuf_addstr(sb, body);
++		return 1;
++	case 'B':	/* body without trailing newline */
++		if (end) {
++			char *endp = NULL;
++			int indent = strtol(placeholder + 2, &endp, 10);
++			if (placeholder + 2 == endp || *endp != ')')
++				return 0;
++			if (indent < 0)
++				indent = 0;
++			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, indent);
++			strbuf_rtrim(sb);
++			return end - placeholder + 1;
++		}
++		strbuf_addstr(sb, body);
++		strbuf_rtrim(sb);
+ 		return 1;
+ 	}
+ 	return 0;	/* unknown placeholder */
 -- 
-1.6.5.rc1.38.gddf44.dirty
+1.6.5.rc1.38.g1fbd3
