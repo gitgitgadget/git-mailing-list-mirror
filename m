@@ -1,89 +1,66 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: Re: [PATCH] compat/mingw.c: MSVC build must use ANSI Win32 API's
-Date: Tue, 22 Sep 2009 19:54:34 +1000
-Message-ID: <d2e97e800909220254sc677abeia220c19f6ef5bd28@mail.gmail.com>
-References: <d2e97e800909212110w423e3b2fm85ac6f76439e0591@mail.gmail.com> 
-	<4AB869EE.1020200@viscovery.net> <4AB87B6B.1070808@gmail.com> 
-	<d2e97e800909220217y5bda4698pc286711a3535f87d@mail.gmail.com> 
-	<4AB89B7F.3050902@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: thoughts on a possible "pre-upload" hook
+Date: Tue, 22 Sep 2009 15:50:09 +0530
+Message-ID: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 11:55:03 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 22 12:20:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq25O-0002cA-7Z
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 11:55:02 +0200
+	id 1Mq2Tz-0001NI-PW
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 12:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755868AbZIVJyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 05:54:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755521AbZIVJyw
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 05:54:52 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:61161 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755548AbZIVJyv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 05:54:51 -0400
-Received: by yxe37 with SMTP id 37so4059643yxe.33
-        for <git@vger.kernel.org>; Tue, 22 Sep 2009 02:54:54 -0700 (PDT)
+	id S1755803AbZIVKUI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 06:20:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755339AbZIVKUI
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 06:20:08 -0400
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:36878 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755311AbZIVKUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 06:20:07 -0400
+Received: by iwn8 with SMTP id 8so2075528iwn.4
+        for <git@vger.kernel.org>; Tue, 22 Sep 2009 03:20:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=vYe99RXuz5frJQLevtUzX27l0odc+L1hmkcIT/wgCHw=;
-        b=aYozmH9Ol2ZW8cYlhcUCTOHYnvWPNw1Y7g0xzGjSgeAEfscTkn1+q0rlkFvnz4ux4r
-         TpuuYxkIEPghlzAfoGSyHgciT3KChpzovxvOI+RmWKN045s4BLFKmtNT4Re3Dx8zfBHJ
-         UbHoSqW1oNr1Dw4x16q92G+Edjnb9A/wV48uA=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=/aD56D8ba5Pr9zKHw64cXjut/AtNrLknTmhHyqbI1v0=;
+        b=c0w70tg4Zbsqt0Ua68wQD2tU9Lx/T5VB9lMsnsKlol7dMmKSP64qIjAhEB2cjNqilX
+         3rEeuEiht/mNcMoaUEK4e6hCKU7cSj5+w4S7JtJ9QNarfDdyxziwBQF7pVO/l1iIowJ8
+         CobzzFaeJCktC13lznpS8rZLR0iJnheuCi3X0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=woLIfyXZczsiFcqA6g1pocll9omV4ObVpCUgx9X9bhJVZI0l00qt5JrUQkuB1k1Xp8
-         z5RQYZMNnxUKyf9ITLTxa7+qBp+gfStuOFi0srz7Q3mrZMpHcGQUHdqN33dAnI2Kifld
-         psBUx6gN18hdn7+61GpZjFEtCfLdrFcjPnwvo=
-Received: by 10.100.75.15 with SMTP id x15mr736753ana.58.1253613294155; Tue, 
-	22 Sep 2009 02:54:54 -0700 (PDT)
-In-Reply-To: <4AB89B7F.3050902@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=E2M+O/M2cwixT4MGry1aIRLh75DJby8w6wIAsZdSNeq2Fiq4H9B6SXO8euU1UiJONc
+         HCEehIAImgR7lLvanGPscyyAygfMd49WW3/sLNiPQtvZd7DcqI2LTfur6R+Gt0XFXjMC
+         eht3HmzHWx2CCzKcmsusi1Hrn6QSIt+FVHl4k=
+Received: by 10.231.40.227 with SMTP id l35mr1615688ibe.28.1253614809760; Tue, 
+	22 Sep 2009 03:20:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128929>
 
-2009/9/22 Marius Storm-Olsen <mstormo@gmail.com>:
-> Michael Wookey said the following on 22.09.2009 11:17:
->>
->> 2009/9/22 Marius Storm-Olsen <mstormo@gmail.com>:
->>>
->>> Michael, how are you trying to compile git? With the IDE or the
->>> GNU Make? Which version of MSVC? If you use the IDE, can you make
->>> sure it doesn't contain the UNICODE define in the compiler
->>> section of the properties of the projects?
->>
->> I'm using the VS 2008 Professional IDE (the solution doesn't open
->> in VS 2005). I made no changes to the build settings. In the
->> Preprocessor section of the project, UNICODE is defined.
->
-> Were these projects generated with the Vcproj generator in
-> contrib/buildsystem, with the Qmake generator, or the projects from Frank's
-> repo?
+Hello,
 
-The project was generated from the vcproj generator in
-contrib/buildsystem from git.git/master.
+As git is used more and more in corporate-type environments, at some
+point it becomes convenient to have *branches* (or more accurately,
+refs) that are not readable.  The simplest way to do this (from git's
+point of view) is to allow a "pre-upload" hook, rather like the
+"pre-receive" hook or "update" hook.
 
->> On another note, I see *many* build warnings for things like
->> "signed/unsigned compares". I'd be willing to work through these warnings
->> and fix them. Thoughts?
->
-> Well, first find out why these are a problem with MSVC and not GCC. Are the
-> types different on these platforms? signed vs unsigned should show up with
-> GCC as well. We need to make sure that we don't fix signed/unsigned issues
-> on one platform, just to introduce it to another platform.
-> In any case, it would be good for someone to have a look at these, just so
-> we can determine the cause for most of them, and then we should figure out
-> on the list how to deal with them.
+I don't know the upload pack protocol enough to know whether this is a
+stupid idea or not; please tell me if so :-)  But things that were
+seemingly "impossible" in the early days are being talked about now
+and even being implemented so I felt brave enough to ask.
 
-Well, at warning level 4, MSVC is quite verbose. Perhaps the current
-gcc build flags are more forgiving?
+I'm afraid my C programming days are long gone, but if anything can be
+done in shell or perl, with a little git.guidance, I'll do whatever I
+can.
+
+-- 
+Sitaram
