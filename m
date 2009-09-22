@@ -1,7 +1,7 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
+From: Paul Mackerras <paulus@samba.org>
 Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs in a repository
-Date: 22 Sep 2009 23:48:59 +0100
-Message-ID: <87y6o6a944.fsf@users.sourceforge.net>
+Date: Wed, 23 Sep 2009 09:30:00 +1000
+Message-ID: <19129.24056.422939.880134@cargo.ozlabs.ibm.com>
 References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
 	<878wgcbb52.fsf@users.sourceforge.net>
 	<19124.8378.975976.347711@cargo.ozlabs.ibm.com>
@@ -10,90 +10,78 @@ References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
 	<6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
 	<4AB7A2E7.5000601@viscovery.net>
 	<874oqvc0n3.fsf@users.sourceforge.net>
-	<7v1vlzvjtg.fsf@alter.siamese.dyndns.org>
-	<7vws3ru4w8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	"Murphy\, John" <john.murphy@bankofamerica.com>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 00:50:26 2009
+	"Murphy, John" <john.murphy@bankofamerica.com>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Sep 23 01:30:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqEBk-0006GJ-5V
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 00:50:24 +0200
+	id 1MqEoJ-0000SG-IQ
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 01:30:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbZIVWtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 18:49:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZIVWtJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 18:49:09 -0400
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:33865 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751102AbZIVWtI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2009 18:49:08 -0400
-Received: from [172.23.170.137] (helo=anti-virus01-08)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1MqEAR-0007Hh-1J; Tue, 22 Sep 2009 23:49:03 +0100
-Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
-	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
-	id 1MqEAQ-0008Nk-Bt; Tue, 22 Sep 2009 23:49:02 +0100
-Received: by badger.patthoyts.tk (Postfix, from userid 1000)
-	id 6511C51843; Tue, 22 Sep 2009 23:49:01 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <7vws3ru4w8.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
+	id S1752972AbZIVXaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 19:30:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752968AbZIVXaE
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 19:30:04 -0400
+Received: from ozlabs.org ([203.10.76.45]:55336 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752897AbZIVXaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 19:30:03 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id CBABAB7B81; Wed, 23 Sep 2009 09:30:05 +1000 (EST)
+In-Reply-To: <874oqvc0n3.fsf@users.sourceforge.net>
+X-Mailer: VM 8.0.12 under 22.2.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128961>
 
-(nobody) writes:
+Pat Thoyts writes:
 
->Junio C Hamano <gitster@pobox.com> writes:
->
->> Pat Thoyts <patthoyts@users.sourceforge.net> writes:
->>
->> That looks like an ugly hack (aka sweeping the issue under the rug).
->>
->> What if there are many tags and the user used --tags?  Don't you have
->> exactly the same problem?  Likewise, what if $revs were "..master"?
->
->Sorry, I meant "--all --not master" to grab all the topics not merged to
->master yet.
->
->But my point still stands.
+> That script gives me a repository I can test against. thanks.
+> The start_rev_list function calls parseviewrevs and expands the
+> arguments into a list of appropriate revision ids. In this case --all
+> gets expanded to a list of 1000 sha1 ids. This is appended to any
+> other view arguments and passed to git log on the command line
+> yielding our error.
+> git log can accept a --all argument it seems so it looks like we can
+> just short-circuit the parseviewrevs function when --all is passed in
+> and return --all instead of expanding the list. The following seems to
+> work for me with this test repository.
 
-Not exactly. The problem is that the call to parseviewrevs will expand
---all into a tcl list containing all the revision ids. We can do some
-testing if we dig into this with the tcl console:
- % llength [set revs [parseviewrevs {} --all]]
- 1001
- % string length $revs
- 41040
-In start_rev-list this list gets added to the command line for git-log
-in the $args variable. This is always going to exceed windows'
-commandline limit (32k).
+What the code is trying to do here is to get git log to give us all
+the commits that the user asked for *except* any commits we have
+already received.  So, when gitk is first invoked, this means all the
+commits that the user asked for.  If the user presses F5 or does
+File->Update, then we do git log with some starting points removed
+(those that haven't changed since the last update) and some negative
+arguments added (to exclude the previous starting points).
 
-Some testing shows that a number of rev-parse arguments do not get
-expanded into a list of ids. All these can be ignored. But --all,
---tags and --branches do. Maybe --remotes as well.
-These arguments are accetable to git-log so it looks to me like they
-can be left as-is.
+To do that accurately, we need to know exactly what set of revisions
+we are asking git log to start from, and exactly what set of revisions
+we are asking git log to stop at.  The problem with just passing --all
+to git log, as your patch does, is that the list of revs might change
+between when gitk expands --all and when git log expands --all (due to
+commits getting added, heads getting reset etc.).  Then, if the user
+presses F5, some commits might get missed.
 
-The vposids and vnegids arrays are getting used for something
-though. So the patch is not complete. They appear to be caching the
-set of revisions present in the current view for use in updatecommits
-to do something.
+If git log had an argument to tell it to mark those commits that were
+a starting point or a finishing point, then I could simplify this
+logic enormously, plus we wouldn't have to pass a long parameter list
+to git log.  It may still turn out to be necessary to add a negative
+argument for each previous starting point, though, when refreshing the
+list.
 
-So - needs more work.
+I think the simplest fix for now is to arrange to take the
+non-optimized path on windows when the list of revs gets too long,
+i.e., set $vcanopt($view) to 0 and take that path.  That means that
+refreshing the view will be slow, but I think it's the best we can do
+at this point.
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Paul.
