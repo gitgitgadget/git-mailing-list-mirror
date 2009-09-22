@@ -1,121 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs
- in a repository
-Date: Mon, 21 Sep 2009 18:47:35 -0700
-Message-ID: <7vws3ru4w8.fsf@alter.siamese.dyndns.org>
-References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
- <878wgcbb52.fsf@users.sourceforge.net>
- <19124.8378.975976.347711@cargo.ozlabs.ibm.com>
- <6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
- <4AB78910.7010402@viscovery.net>
- <6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
- <4AB7A2E7.5000601@viscovery.net> <874oqvc0n3.fsf@users.sourceforge.net>
- <7v1vlzvjtg.fsf@alter.siamese.dyndns.org>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: [PATCH] compat/mingw.c: MSVC build must use ANSI Win32 API's
+Date: Tue, 22 Sep 2009 14:10:18 +1000
+Message-ID: <d2e97e800909212110w423e3b2fm85ac6f76439e0591@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Murphy\, John" <john.murphy@bankofamerica.com>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 03:48:03 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 22 06:10:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MpuU5-0003TX-9S
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 03:48:01 +0200
+	id 1MpwiD-0004QR-AH
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 06:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208AbZIVBrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Sep 2009 21:47:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbZIVBrq
-	(ORCPT <rfc822;git-outgoing>); Mon, 21 Sep 2009 21:47:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37503 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964AbZIVBrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Sep 2009 21:47:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E7A63B07D;
-	Mon, 21 Sep 2009 21:47:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EUW2arvsnng4ouyNORad71e9TRg=; b=IA5klM
-	A+uY589IubkQedlmgrWB8t2NCLK7OSnut5kpMR2umpHbILTfRlOHxMbg4Ohb0Dxb
-	2cqVRtB8bTQMdMFCCu+lLPK8frz/lVk9DJtuHZ9eWZUiLOz0VBJw16oaR3yiV6Wf
-	6NnOoH3wAfz9Vy3LDp0Z7eLxQsEBCUio814PI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xHQhVPNBgKLIRTJzitU0sAuqBu1PSawm
-	avzubGbRfV31mR6+V1buQ1r+COQ7KAziX286urntX8+hzU3YSs7c79FLqc9WojQ7
-	Wab7+dZh44YQ4OijuSF5CXti+6duyuHkqXh/Pqx1lZ0zEmmrbU0GUWsp3AD+jdqH
-	XEdVx5myET8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44D323B07B;
-	Mon, 21 Sep 2009 21:47:44 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EBAC33B06D; Mon, 21 Sep
- 2009 21:47:36 -0400 (EDT)
-In-Reply-To: <7v1vlzvjtg.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 21 Sep 2009 18\:39\:55 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EBF739B0-A719-11DE-AFE0-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751299AbZIVEKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 00:10:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751252AbZIVEKf
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 00:10:35 -0400
+Received: from an-out-0708.google.com ([209.85.132.242]:4803 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983AbZIVEKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 00:10:34 -0400
+Received: by an-out-0708.google.com with SMTP id d40so4717804and.1
+        for <git@vger.kernel.org>; Mon, 21 Sep 2009 21:10:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=HZEwdGE/rApmJemq7n3q6gtHU3shJd+rGO1u7SQPQIc=;
+        b=UJQpKalVlPF05FNk5LF4kEvIwZ2PTtF1YNpL8DvfozA9ES8I8ocSHC9DrLAj62YIA9
+         GLHVyKCe0mnZFlpu4RSrMezlu8/m/8Py40vf9touf0lxuTytyjb5dUUy3FtLg4j1pz3q
+         kX3AebRxd7PXCPSFbuI0ZferEGjZ53Kh24V8M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=JMmTmGZT/ylA+3TTbTv8zAXx+J/zVdG3p/GMSX4rg/C64xTqExZ+kJXxoDiqK2C0Wv
+         1i0eVYP9UeNKS2wTGnteeibA4nhLSVvixmwM92KXRE/9sHC8TQNkmO4uw4AkUQ/PP5e1
+         +sl91F7KI5SQyyT/HSJewag53bZ4hvwXmebts=
+Received: by 10.101.190.9 with SMTP id s9mr466388anp.198.1253592638083; Mon, 
+	21 Sep 2009 21:10:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128919>
 
-Junio C Hamano <gitster@pobox.com> writes:
+MSVC builds define UNICODE which results in the "WIDE" variation of
+Win32 API's being used.
 
-> Pat Thoyts <patthoyts@users.sourceforge.net> writes:
->
->> commit 7f289ca8370e5e2f9622a4fbc30b934eb97b984f
->> Author: Pat Thoyts <patthoyts@users.sourceforge.net>
->> Date:   Tue Sep 22 00:55:50 2009 +0100
->>
->>     Avoid expanding --all when passing arguments to git log.
->>     There is no need to expand --all into a list of all revisions as
->>     git log can accept --all as an argument. This avoids any
->>     command-line
->>     length limitations caused by expanding --all into a list of all
->>     revision ids.
->>
->>     Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
->>
->> diff --git a/gitk b/gitk
->> index a0214b7..635b97e 100755
->> --- a/gitk
->> +++ b/gitk
->> @@ -241,6 +241,8 @@ proc parseviewrevs {view revs} {
->>
->>      if {$revs eq {}} {
->>         set revs HEAD
->> +    } elseif {$revs eq "--all"} {
->> +        return $revs
->>      }
->
-> That looks like an ugly hack (aka sweeping the issue under the rug).
->
-> What if there are many tags and the user used --tags?  Don't you have
-> exactly the same problem?  Likewise, what if $revs were "..master"?
+Explicitly use the ANSI variation of the API's for compatibility with
+msysgit.
 
-Sorry, I meant "--all --not master" to grab all the topics not merged to
-master yet.
+Signed-off-by: Michael Wookey <michaelwookey@gmail.com>
+---
+ compat/mingw.c |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
 
-But my point still stands.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 6b5b5b2..39be42f 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -135,7 +135,7 @@ int mingw_open (const char *filename, int oflags, ...)
+ 	fd = open(filename, oflags, mode);
 
-I do not understand what computed values storedin vposids() and vnegids()
-arrays are being used in the other parts of the program that rely on this
-function to do what it was asked to do, but if this patch can ever be
-correct, a much simpler solution to make this function almost no-op and
-always return {} (empty array ret is initialized to) would be an equally
-valid fix, no?  And my gut feeling tells me that such a change to make
-this function a no-op  _can't_ be a valid fix.
+ 	if (fd < 0 && (oflags & O_CREAT) && errno == EACCES) {
+-		DWORD attrs = GetFileAttributes(filename);
++		DWORD attrs = GetFileAttributesA(filename);
+ 		if (attrs != INVALID_FILE_ATTRIBUTES && (attrs & FILE_ATTRIBUTE_DIRECTORY))
+ 			errno = EISDIR;
+ 	}
+@@ -607,7 +607,7 @@ static char *lookup_prog(const char *dir, const
+char *cmd, int isexe, int exe_on
+ 		return xstrdup(path);
+ 	path[strlen(path)-4] = '\0';
+ 	if ((!exe_only || isexe) && access(path, F_OK) == 0)
+-		if (!(GetFileAttributes(path) & FILE_ATTRIBUTE_DIRECTORY))
++		if (!(GetFileAttributesA(path) & FILE_ATTRIBUTE_DIRECTORY))
+ 			return xstrdup(path);
+ 	return NULL;
+ }
+@@ -641,14 +641,14 @@ static int env_compare(const void *a, const void *b)
+ static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
+ 			   int prepend_cmd)
+ {
+-	STARTUPINFO si;
++	STARTUPINFOA si;
+ 	PROCESS_INFORMATION pi;
+ 	struct strbuf envblk, args;
+ 	unsigned flags;
+ 	BOOL ret;
 
-> The right approach would be to understand what limit it is busting (it is
-> not likely to be the command line length limit for this particular "exec",
-> as it only gets "git" "rev-parse" "--all") first, and then fix that.
->
->>      if {[catch {set ids [eval exec git rev-parse $revs]} err]} {
->>         # we get stdout followed by stderr in $err
+ 	/* Determine whether or not we are associated to a console */
+-	HANDLE cons = CreateFile("CONOUT$", GENERIC_WRITE,
++	HANDLE cons = CreateFileA("CONOUT$", GENERIC_WRITE,
+ 			FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
+ 			FILE_ATTRIBUTE_NORMAL, NULL);
+ 	if (cons == INVALID_HANDLE_VALUE) {
+@@ -717,7 +717,7 @@ static pid_t mingw_spawnve(const char *cmd, const
+char **argv, char **env,
+ 	}
+
+ 	memset(&pi, 0, sizeof(pi));
+-	ret = CreateProcess(cmd, args.buf, NULL, NULL, TRUE, flags,
++	ret = CreateProcessA(cmd, args.buf, NULL, NULL, TRUE, flags,
+ 		env ? envblk.buf : NULL, NULL, &si, &pi);
+
+ 	if (env)
+@@ -965,23 +965,23 @@ int mingw_rename(const char *pold, const char *pnew)
+ 	if (errno != EEXIST)
+ 		return -1;
+ repeat:
+-	if (MoveFileEx(pold, pnew, MOVEFILE_REPLACE_EXISTING))
++	if (MoveFileExA(pold, pnew, MOVEFILE_REPLACE_EXISTING))
+ 		return 0;
+ 	/* TODO: translate more errors */
+ 	gle = GetLastError();
+ 	if (gle == ERROR_ACCESS_DENIED &&
+-	    (attrs = GetFileAttributes(pnew)) != INVALID_FILE_ATTRIBUTES) {
++	    (attrs = GetFileAttributesA(pnew)) != INVALID_FILE_ATTRIBUTES) {
+ 		if (attrs & FILE_ATTRIBUTE_DIRECTORY) {
+ 			errno = EISDIR;
+ 			return -1;
+ 		}
+ 		if ((attrs & FILE_ATTRIBUTE_READONLY) &&
+-		    SetFileAttributes(pnew, attrs & ~FILE_ATTRIBUTE_READONLY)) {
+-			if (MoveFileEx(pold, pnew, MOVEFILE_REPLACE_EXISTING))
++		    SetFileAttributesA(pnew, attrs & ~FILE_ATTRIBUTE_READONLY)) {
++			if (MoveFileExA(pold, pnew, MOVEFILE_REPLACE_EXISTING))
+ 				return 0;
+ 			gle = GetLastError();
+ 			/* revert file attributes on failure */
+-			SetFileAttributes(pnew, attrs);
++			SetFileAttributesA(pnew, attrs);
+ 		}
+ 	}
+ 	if (tries < ARRAY_SIZE(delay) && gle == ERROR_ACCESS_DENIED) {
+@@ -1006,7 +1006,7 @@ struct passwd *getpwuid(int uid)
+ 	static struct passwd p;
+
+ 	DWORD len = sizeof(user_name);
+-	if (!GetUserName(user_name, &len))
++	if (!GetUserNameA(user_name, &len))
+ 		return NULL;
+ 	p.pw_name = user_name;
+ 	p.pw_gecos = "unknown";
+@@ -1151,7 +1151,7 @@ void mingw_open_html(const char *unixpath)
+ {
+ 	const char *htmlpath = make_backslash_path(unixpath);
+ 	printf("Launching default browser to display HTML ...\n");
+-	ShellExecute(NULL, "open", htmlpath, NULL, "\\", 0);
++	ShellExecuteA(NULL, "open", htmlpath, NULL, "\\", 0);
+ }
+
+ int link(const char *oldpath, const char *newpath)
+@@ -1160,7 +1160,7 @@ int link(const char *oldpath, const char *newpath)
+ 	static T create_hard_link = NULL;
+ 	if (!create_hard_link) {
+ 		create_hard_link = (T) GetProcAddress(
+-			GetModuleHandle("kernel32.dll"), "CreateHardLinkA");
++			GetModuleHandleA("kernel32.dll"), "CreateHardLinkA");
+ 		if (!create_hard_link)
+ 			create_hard_link = (T)-1;
+ 	}
+-- 
+1.6.5.rc1.44.ga1675
