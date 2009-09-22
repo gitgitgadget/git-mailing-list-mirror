@@ -1,94 +1,83 @@
-From: David Holmer <dholmer@persistentsystems.com>
-Subject: gitk management of git diff-tree processes
-Date: Tue, 22 Sep 2009 11:10:04 -0400
-Organization: Persistent Systems
-Message-ID: <1253632204.8531.78.camel@blackbird>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: thoughts on a possible "pre-upload" hook
+Date: Tue, 22 Sep 2009 18:05:33 +0200
+Message-ID: <vpqd45jvub6.fsf@bauges.imag.fr>
+References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+	<867hvr2cms.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 22 18:05:50 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Tue Sep 22 18:09:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq7r1-0004rk-4a
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 18:04:35 +0200
+	id 1Mq7vK-0006nd-0y
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 18:09:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756522AbZIVQDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 12:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932288AbZIVQDl
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 12:03:41 -0400
-Received: from server18.pronicsolutions.com ([66.103.131.81]:52287 "EHLO
-	server18.pronicsolutions.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932287AbZIVQDi (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2009 12:03:38 -0400
-X-Greylist: delayed 3214 seconds by postgrey-1.27 at vger.kernel.org; Tue, 22 Sep 2009 12:03:38 EDT
-Received: from pool-71-167-226-15.nycmny.east.verizon.net ([71.167.226.15]:50854 helo=[192.168.1.154])
-	by server18.pronicsolutions.com with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <dholmer@persistentsystems.com>)
-	id 1Mq70I-0001ir-US
-	for git@vger.kernel.org; Tue, 22 Sep 2009 11:10:07 -0400
-X-Mailer: Evolution 2.26.1 
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server18.pronicsolutions.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - persistentsystems.com
+	id S932342AbZIVQIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 12:08:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756501AbZIVQIw
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 12:08:52 -0400
+Received: from imag.imag.fr ([129.88.30.1]:55773 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756069AbZIVQIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 12:08:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n8MG5YGJ007702
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 22 Sep 2009 18:05:34 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Mq7rx-0001LK-PH; Tue, 22 Sep 2009 18:05:33 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Mq7rx-0006kF-No; Tue, 22 Sep 2009 18:05:33 +0200
+In-Reply-To: <867hvr2cms.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Tue\, 22 Sep 2009 09\:00\:11 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 22 Sep 2009 18:05:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128945>
 
-I find that if I am in gitk browsing through commits, gitk seems to be
-spawning a git diff-tree process in order to display the changes and
-patch file list in the bottom panes.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-I have a certain commit that adds a very large amount of data to my
-repository (1.2 GB). Understandably, the git diff-tree process that
-tries to display the changes in this commit takes a VERY long time to
-run (e.g. churns indefinitely).
+>>>>>> "Sitaram" == Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+> Sitaram> Hello,
+> Sitaram> As git is used more and more in corporate-type environments, at some
+> Sitaram> point it becomes convenient to have *branches* (or more accurately,
+> Sitaram> refs) that are not readable.  The simplest way to do this (from git's
+> Sitaram> point of view) is to allow a "pre-upload" hook, rather like the
+> Sitaram> "pre-receive" hook or "update" hook.
+>
+> It would seem that you would need to do this even before the commit.  So
+> you're looking for the pre-commit hook.  Otherwise, the commit is invalid,
+> because it doesn't accurately represent everything it references.  And the
+> commit is the unit of transfer between repos.
 
-The issue is that I find that if I simply browse past this commit (e.g.
-using up/down arrows), gitk starts up a git diff-tree process and leaves
-it running. As many times as I pass the commit (e.g. while looking at
-changes before and after this commit), I end up with multiple processes
-all running and my CPUs quickly go to 100%. Furthermore, even if I exit
-gitk, all the git diff-tree processes keep running unless I manually
-kill them.
+I don't get the point. The OP's question is not about commiting, but
+about preventing a branch from being fetched. So, right before sending
+the commits in a branch, the server would execute a hook, and fail if
+it's not allowed.
 
-Perhaps gitk could kill the git diff-tree process it spawns if its
-output is no longer needed (e.g. user browses to a different commit, or
-gitk exits).
+But that alone would make it rather painfull for the user : "git
+clone" would fail if any branch in the repository is not readable, for
+example.
 
-Thank you,
-David
-
-$ ps -aF
-UID        PID  PPID  C    SZ   RSS PSR STIME TTY          TIME CMD
-david    23635     1 18 88365 102892  0 10:49 pts/1    00:01:11 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23640     1 18 88368 102908  1 10:49 pts/1    00:01:10 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23644     1 16 88368 102904  0 10:49 pts/1    00:01:04 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23646     1 16 88367 102916  0 10:49 pts/1    00:01:04 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23652     1 17 88365 102892  1 10:49 pts/1    00:01:07 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23656     1 17 88368 102920  1 10:49 pts/1    00:01:06 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23660     1 16 88369 102932  0 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23664     1 16 88368 102908  0 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23670     1 16 88368 102904  1 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23680     1 17 88365 102896  1 10:49 pts/1    00:01:05 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-david    23851 10444  0   692  1032   0 10:56 pts/1    00:00:00 ps -aF
-
-$ git version
-git version 1.6.4.4
+Also, don't forget that branches are just references, which means that
+if you prevent reference A from being uploaded, then another reference
+B may point to the same commits as A, and then you can bypass the
+safety hook on A by using B.
 
 -- 
-David G. Holmer, Ph.D.
-dholmer@persistentsystems.com
-CTO and Co-Founder
-Persistent Systems, LLC
-www.persistentsystems.com
-Office: 212-561-5895
-Mobile: 650-533-4964
-Fax: 212-202-3625
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
