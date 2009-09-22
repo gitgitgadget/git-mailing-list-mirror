@@ -1,60 +1,60 @@
 From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v2] Trivial fix: Make all the usage strings to use the same pattern.
-Date: Tue, 22 Sep 2009 12:51:40 -0400
-Message-ID: <1253638300-8666-1-git-send-email-tfransosi@gmail.com>
+Subject: [PATCH v3] Trivial fix: Make all the usage strings to use the same pattern.
+Date: Tue, 22 Sep 2009 13:08:50 -0400
+Message-ID: <1253639330-9185-1-git-send-email-tfransosi@gmail.com>
 Cc: Thiago Farina <tfransosi@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 22 18:52:22 2009
+X-From: git-owner@vger.kernel.org Tue Sep 22 19:10:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq8bE-0004d8-Uw
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 18:52:22 +0200
+	id 1Mq8rx-0002G0-Is
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 19:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755942AbZIVQwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 12:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755315AbZIVQwI
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 12:52:08 -0400
-Received: from mail-qy0-f173.google.com ([209.85.221.173]:50291 "EHLO
+	id S1751625AbZIVRJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 13:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752019AbZIVRJT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 13:09:19 -0400
+Received: from mail-qy0-f173.google.com ([209.85.221.173]:45751 "EHLO
 	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755913AbZIVQwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 12:52:03 -0400
-Received: by qyk3 with SMTP id 3so2957260qyk.4
-        for <git@vger.kernel.org>; Tue, 22 Sep 2009 09:52:05 -0700 (PDT)
+	with ESMTP id S1750901AbZIVRJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 13:09:09 -0400
+Received: by qyk3 with SMTP id 3so2971826qyk.4
+        for <git@vger.kernel.org>; Tue, 22 Sep 2009 10:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=80yEolbIhXxy4rk0qE2cT3s3vF8wtBVVoDMq9j/WBUQ=;
-        b=Iju0moT+1h5Uz+F4rUMADkJbvzg8yJTktdvY28+Xbs6WZmpOwP2JYgvqj2HROEJpuK
-         bOqVzvbHeArrYYh4s+foX49EyYKHbEKWfZb4nEn5b43VGXCmkz8T89Pk6uU3sNFp0965
-         pMk2FGC0QT5c8xZW31Gz+W2obAZ+KquJPChE8=
+        bh=DTIm6RTUNiQ4m1Z2aUfsb4HDgLUpIWrwNsmhqMf2SjU=;
+        b=aEHNvSwmiV+owxk+HBVjjQTDpaw6Ed2R4LEMtW5kQFiMgBwqOAUsQ6clmFIvF1mzGR
+         snkYZVNH84Un7jjfOUXnLE5og3e4/57BFkF1XuEsgetaSfaIP8H22gFi3rYIHtHQr1W9
+         4CxNoHkxBKtdPWFjV7Fah/O8C/oJgE2Cfc8ag=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=XW3cvxBuyiKDs+R18fC+tx1eC9c2UTOzmxVJHX9yp7BH/M5BMWyi925zFcd1mEX8sY
-         XQZLxHEX1ug6JjnogBw8c6k7i5yz9fTjXwsQk/UwICtSN9xiPYOpnrUliAgU5F5I1hw5
-         1rEBs1b58sQ9weRF6OnKYLYShDC0OGJFGjwYA=
-Received: by 10.224.22.85 with SMTP id m21mr920347qab.340.1253638325680;
-        Tue, 22 Sep 2009 09:52:05 -0700 (PDT)
+        b=woeOf2UVsK6jUy6WTkeJjga5VGBG2ZY6LimgbTlYiCuobD9d3BQr7rzu75zl2AQlHM
+         7Rh5wH0IeQWgwUl1MxYMMhRemp2suyS2ly/OZDmKfd/3CYQ7U9ddcck95/ZpGtltyFoq
+         ikJUn6V+70U40qaaUmL8Ky/HkZguPkvhRkzjQ=
+Received: by 10.224.105.31 with SMTP id r31mr934509qao.374.1253639352932;
+        Tue, 22 Sep 2009 10:09:12 -0700 (PDT)
 Received: from localhost ([189.60.49.26])
-        by mx.google.com with ESMTPS id 6sm48085qwd.2.2009.09.22.09.51.55
+        by mx.google.com with ESMTPS id 2sm135879qwi.50.2009.09.22.10.09.03
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Sep 2009 09:52:04 -0700 (PDT)
+        Tue, 22 Sep 2009 10:09:11 -0700 (PDT)
 X-Mailer: git-send-email 1.6.5.rc1.38.gddf44.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128951>
 
 They follow the below pattern:
 Git command: git command-name
 Usage string: git_command_name_usage
 
 Also changes "static char const * const" to "static const char * const" to
-match with the definition in api-builtin.txt.
+match with the definition in api-parse-options.txt.
 
 Signed-off-by: Thiago Farina <tfransosi@gmail.com>
 ---
