@@ -1,134 +1,99 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCHv4] git-log --format: Add %B tag with %B(n) option
-Date: Tue, 22 Sep 2009 23:30:38 +0200
-Message-ID: <1253655038-20335-1-git-send-email-heipei@hackvalue.de>
-References: <7vfxaercma.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Gilger <heipei@hackvalue.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 22 23:30:51 2009
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs in a repository
+Date: 22 Sep 2009 23:48:59 +0100
+Message-ID: <87y6o6a944.fsf@users.sourceforge.net>
+References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
+	<878wgcbb52.fsf@users.sourceforge.net>
+	<19124.8378.975976.347711@cargo.ozlabs.ibm.com>
+	<6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
+	<4AB78910.7010402@viscovery.net>
+	<6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
+	<4AB7A2E7.5000601@viscovery.net>
+	<874oqvc0n3.fsf@users.sourceforge.net>
+	<7v1vlzvjtg.fsf@alter.siamese.dyndns.org>
+	<7vws3ru4w8.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	"Murphy\, John" <john.murphy@bankofamerica.com>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 00:50:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqCwc-00063e-OD
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 23:30:43 +0200
+	id 1MqEBk-0006GJ-5V
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 00:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752891AbZIVVad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 17:30:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752861AbZIVVac
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 17:30:32 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:40177 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752825AbZIVVac (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 17:30:32 -0400
-Received: from u-4-046.vpn.rwth-aachen.de ([137.226.100.46]:32967 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1MqCwP-0005mT-C8; Tue, 22 Sep 2009 23:30:29 +0200
-X-Mailer: git-send-email 1.6.5.rc1.38.g1fbd3
-In-Reply-To: <7vfxaercma.fsf@alter.siamese.dyndns.org>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.100.46
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1751524AbZIVWtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 18:49:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751281AbZIVWtJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 18:49:09 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:33865 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751102AbZIVWtI (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2009 18:49:08 -0400
+Received: from [172.23.170.137] (helo=anti-virus01-08)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1MqEAR-0007Hh-1J; Tue, 22 Sep 2009 23:49:03 +0100
+Received: from [92.238.221.8] (helo=badger.patthoyts.tk)
+	by asmtp-out1.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1MqEAQ-0008Nk-Bt; Tue, 22 Sep 2009 23:49:02 +0100
+Received: by badger.patthoyts.tk (Postfix, from userid 1000)
+	id 6511C51843; Tue, 22 Sep 2009 23:49:01 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <7vws3ru4w8.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128960>
 
-Since one can simply use spaces to indent any other --pretty field we
-should have an option to do that with the body too.
+(nobody) writes:
 
-Also the %B flag strips the trailing newlines, to enable more compact
-display.
+>Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+>>
+>> That looks like an ugly hack (aka sweeping the issue under the rug).
+>>
+>> What if there are many tags and the user used --tags?  Don't you have
+>> exactly the same problem?  Likewise, what if $revs were "..master"?
+>
+>Sorry, I meant "--all --not master" to grab all the topics not merged to
+>master yet.
+>
+>But my point still stands.
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
----
-Hey,
+Not exactly. The problem is that the call to parseviewrevs will expand
+--all into a tcl list containing all the revision ids. We can do some
+testing if we dig into this with the tcl console:
+ % llength [set revs [parseviewrevs {} --all]]
+ 1001
+ % string length $revs
+ 41040
+In start_rev-list this list gets added to the command line for git-log
+in the $args variable. This is always going to exceed windows'
+commandline limit (32k).
 
-I moved the indent >= 0 check to the caller. Also changed the documentation, n 
-should indicate more strongly that n is supposed to be a natural number.
+Some testing shows that a number of rev-parse arguments do not get
+expanded into a list of ids. All these can be ignored. But --all,
+--tags and --branches do. Maybe --remotes as well.
+These arguments are accetable to git-log so it looks to me like they
+can be left as-is.
 
-You mentioned small style issues but I'm not sure what you meant. One thing 
-that could be made more compact is calling 
-pp_remainder(CMIT_FMT_MEDIUM, &body, sb, indent < 0 ? 0 : indent);
-and thereby saving two extra lines. I saw this at a lot of other spaces in 
-git.git, but saw no specific guideline in CodingGuidelines.
+The vposids and vnegids arrays are getting used for something
+though. So the patch is not complete. They appear to be caching the
+set of revisions present in the current view for use in updatecommits
+to do something.
 
-Yet another option is aborting for negative indent values, issuing return 0;
+So - needs more work.
 
-Greetings,
-Jojo
-
- Documentation/pretty-formats.txt |    2 ++
- pretty.c                         |   29 ++++++++++++++++++++++++-----
- 2 files changed, 26 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2a845b1..ca694c9 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,6 +123,8 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%B': body without trailing newline
-+- '%B(n)': %B indented by n spaces
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
-diff --git a/pretty.c b/pretty.c
-index f5983f8..dafa8e0 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -605,13 +605,17 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	int h1, h2;
- 
- 	/* these are independent of the commit */
-+
-+	const char *body = msg + c->body_off;
-+	const char *end = NULL;
-+	/* check if we have arguments to the placeholder */
-+	if (placeholder[1] == '(')
-+		end = strchr(placeholder + 2, ')');
-+
- 	switch (placeholder[0]) {
- 	case 'C':
--		if (placeholder[1] == '(') {
--			const char *end = strchr(placeholder + 2, ')');
-+		if (end) {
- 			char color[COLOR_MAXLEN];
--			if (!end)
--				return 0;
- 			color_parse_mem(placeholder + 2,
- 					end - (placeholder + 2),
- 					"--pretty format", color);
-@@ -733,7 +737,22 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 		format_sanitized_subject(sb, msg + c->subject_off);
- 		return 1;
- 	case 'b':	/* body */
--		strbuf_addstr(sb, msg + c->body_off);
-+		strbuf_addstr(sb, body);
-+		return 1;
-+	case 'B':	/* body without trailing newline */
-+		if (end) {
-+			char *endp = NULL;
-+			int indent = strtol(placeholder + 2, &endp, 10);
-+			if (placeholder + 2 == endp || *endp != ')')
-+				return 0;
-+			if (indent < 0)
-+				indent = 0;
-+			pp_remainder(CMIT_FMT_MEDIUM, &body, sb, indent);
-+			strbuf_rtrim(sb);
-+			return end - placeholder + 1;
-+		}
-+		strbuf_addstr(sb, body);
-+		strbuf_rtrim(sb);
- 		return 1;
- 	}
- 	return 0;	/* unknown placeholder */
 -- 
-1.6.5.rc1.38.g1fbd3
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
