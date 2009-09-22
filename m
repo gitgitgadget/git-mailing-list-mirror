@@ -1,89 +1,91 @@
-From: c^ <c@gryning.com>
-Subject: Re: install does not obey DESTDIR or --prefix for perl modules
-Date: Tue, 22 Sep 2009 12:55:42 +0100
-Message-ID: <20090922115542.GP8173@gryning.com>
-References: <20090921160551.GD8173@gryning.com> <Ow6bpZou9Vi0tKlyAN-qfjlAAtXvMqpXEAiG54zZ3C8fLI_6_Bt3oA@cipher.nrlssc.navy.mil> <7vskeguqmb.fsf@alter.siamese.dyndns.org> <20090921191943.GE8173@gryning.com> <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
-Reply-To: c@gryning.com
+From: Neil Roberts <bpeeluk@yahoo.co.uk>
+Subject: Re: [PATCH] builtin-mailinfo.c: Improve the regexp for cleaning up the subject
+Date: Tue, 22 Sep 2009 13:56:47 +0100
+Message-ID: <87pr9juohc.fsf_-_@janet.wally>
+References: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
+	<1246310220-16909-1-git-send-email-rleigh@debian.org>
+	<87hbuv5km2.fsf@janet.wally>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 22 13:56:03 2009
+X-From: git-owner@vger.kernel.org Tue Sep 22 14:57:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq3yR-0003rc-Q9
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 13:56:00 +0200
+	id 1Mq4vQ-0005gp-Bt
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 14:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756227AbZIVLzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 07:55:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756197AbZIVLzu
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 07:55:50 -0400
-Received: from 87-194-167-47.bethere.co.uk ([87.194.167.47]:50159 "EHLO
-	jolt.ukmail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756191AbZIVLzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 07:55:49 -0400
-Received: from craigt by jolt.ukmail.org with local (Exim 4.63)
-	(envelope-from <c@gryning.com>)
-	id 1Mq3yA-0008Tl-Mn
-	for git@vger.kernel.org; Tue, 22 Sep 2009 12:55:42 +0100
-Content-Disposition: inline
-In-Reply-To: <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756448AbZIVM4q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 08:56:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756398AbZIVM4p
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 08:56:45 -0400
+Received: from smtpout.karoo.kcom.com ([212.50.160.34]:4539 "EHLO
+	smtpout.karoo.kcom.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756350AbZIVM4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 08:56:45 -0400
+X-IronPort-AV: E=Sophos;i="4.44,431,1249254000"; 
+   d="scan'208";a="134265036"
+Received: from unknown (HELO localhost) ([91.84.60.59])
+  by smtpout.karoo.kcom.com with ESMTP; 22 Sep 2009 13:56:47 +0100
+In-Reply-To: <87hbuv5km2.fsf@janet.wally> (Neil Roberts's message of "Tue, 22
+	Sep 2009 11:39:33 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128934>
 
-On Mon, Sep 21, 2009 at 12:44:05PM -0700, Junio C Hamano wrote:
-> Craig Taylor <c@gryning.com> writes:
-> 
-> > Exactly as you describe here, different paths but same goal.
-> > All binaries follow the DESTDIR path except the perl modules.
-> >
-> > To register this as a bug do I need to do more than send this email?
-> 
-> Do you use NO_PERL_MAKEMAKER in your build?
-> 
-> If not, we need to summon an expert on ExtUtils::MakeMaker to look into
-> this issue, but if you do, perhaps you can try this patch and report how
-> well it works for you.
-> 
-> ---
->  perl/Makefile |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/perl/Makefile b/perl/Makefile
-> index e3dd1a5..4ab21d6 100644
-> --- a/perl/Makefile
-> +++ b/perl/Makefile
-> @@ -29,11 +29,11 @@ $(makfile): ../GIT-CFLAGS Makefile
->  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
->  	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
->  	echo install: >> $@
-> -	echo '	mkdir -p "$(instdir_SQ)"' >> $@
-> -	echo '	$(RM) "$(instdir_SQ)/Git.pm"; cp Git.pm "$(instdir_SQ)"' >> $@
-> -	echo '	$(RM) "$(instdir_SQ)/Error.pm"' >> $@
-> +	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)"' >> $@
-> +	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git.pm"; cp Git.pm "$$(DESTDIR)$(instdir_SQ)"' >> $@
-> +	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
->  	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
-> -	echo '	cp private-Error.pm "$(instdir_SQ)/Error.pm"' >> $@
-> +	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
->  	echo instlibdir: >> $@
->  	echo '	echo $(instdir_SQ)' >> $@
->  else
+Previously the regular expression would remove the first set of square
+brackets regardless of what came before it. If a patch with a summary
+such as 'Added a[0] to a line' was passed through git-format-patch
+with the -k option then the summary would be cropped to 'to a line'
+when applied with git-am.
 
-Frustratingly the last change forces the lib referenced in the perl
-scripts to include the DESTDIR.
-I will work around this for now, but would apprieciate it if someone
-more familair could fix for the future.
+The new regular expression also matches any number of 're:' prefixes
+which apparently can be generated by some old mail clients.
 
-CraigT
+The old regexp required that there be at least one set of square
+brackets before it would remove the 're:' and this is now fixed.
+---
+ builtin-mailinfo.c |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
+This patch is meant to apply on top of the two previous patches by
+Roger Leigh which are available here:
+
+http://marc.info/?l=git&m=124839483217718&w=2
+http://marc.info/?l=git&m=124839483317722&w=2
+
+It fixes some small problems as described above.
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 7098c90..f5799f1 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -227,7 +227,7 @@ static void cleanup_subject(struct strbuf *subject)
+ 	/* Strip off 'Re:' and/or the first text in square brackets, such as
+ 	   '[PATCH]' at the start of the mail Subject. */
+ 	status = regcomp(&regex,
+-			 "^([Rr]e:)?([^]]*\\[[^]]+\\])(.*)$",
++			 "^([Rr]e:[ \t]*)*(\\[[^]]+\\][ \t]*)?",
+ 			 REG_EXTENDED);
+ 
+ 	if (status) {
+@@ -248,10 +248,9 @@ static void cleanup_subject(struct strbuf *subject)
+ 	/* Store any matches in match. */
+ 	status = regexec(&regex, subject->buf, 4, match, 0);
+ 
+-	/* If there was a match for \3 in the regex, trim the subject
+-	   to this match. */
+-	if (!status && match[3].rm_so > 0) {
+-		strbuf_remove(subject, 0, match[3].rm_so);
++	/* If there was a match, remove it */
++	if (!status && match[0].rm_so >= 0) {
++		strbuf_remove(subject, 0, match[0].rm_eo);
+ 		strbuf_trim(subject);
+ 	}
+ 
 -- 
-
-c^ [c%5e]
-
-Failure is natural.
+1.6.0.4
