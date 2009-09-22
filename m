@@ -1,33 +1,32 @@
 From: Craig Taylor <c@gryning.com>
 Subject: Re: install does not obey DESTDIR or --prefix for perl modules
-Date: Tue, 22 Sep 2009 12:13:09 +0100
-Message-ID: <20090922111309.GN8173@gryning.com>
+Date: Tue, 22 Sep 2009 12:31:51 +0100
+Message-ID: <20090922113151.GO8173@gryning.com>
 References: <20090921160551.GD8173@gryning.com> <Ow6bpZou9Vi0tKlyAN-qfjlAAtXvMqpXEAiG54zZ3C8fLI_6_Bt3oA@cipher.nrlssc.navy.mil> <7vskeguqmb.fsf@alter.siamese.dyndns.org> <20090921191943.GE8173@gryning.com> <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
 Reply-To: c@gryning.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 22 13:13:34 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 22 13:33:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq3JO-0000VZ-23
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 13:13:34 +0200
+	id 1Mq3cY-0005sG-Qw
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 13:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755498AbZIVLNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 07:13:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754599AbZIVLNO
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 07:13:14 -0400
-Received: from 87-194-167-47.bethere.co.uk ([87.194.167.47]:54652 "EHLO
+	id S1756150AbZIVLbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 07:31:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756143AbZIVLbu
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 07:31:50 -0400
+Received: from 87-194-167-47.bethere.co.uk ([87.194.167.47]:50782 "EHLO
 	jolt.ukmail.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753266AbZIVLNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 07:13:14 -0400
+	with ESMTP id S1756141AbZIVLbt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 07:31:49 -0400
 Received: from craigt by jolt.ukmail.org with local (Exim 4.63)
 	(envelope-from <c@gryning.com>)
-	id 1Mq3Iz-0007RB-8J; Tue, 22 Sep 2009 12:13:09 +0100
+	id 1Mq3b5-0007sB-GA
+	for git@vger.kernel.org; Tue, 22 Sep 2009 12:31:51 +0100
 Content-Disposition: inline
 In-Reply-To: <7vocp4ulq2.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
@@ -35,7 +34,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128932>
 
 On Mon, Sep 21, 2009 at 12:44:05PM -0700, Junio C Hamano wrote:
 > Craig Taylor <c@gryning.com> writes:
@@ -76,27 +75,29 @@ On Mon, Sep 21, 2009 at 12:44:05PM -0700, Junio C Hamano wrote:
 >  	echo '	echo $(instdir_SQ)' >> $@
 >  else
 
-ExtUtils::MakeMaker is available and I am using it.
 
-The problem seems to be in the generated perl.mak.
+Further to my last email, modifying the perl.mak file as below resolves
+the problem for me to a satisfactory level.
+I will have to leave a more permanent solution to someone more familar with
+make/makemaker.
 
-On line 1652 of my git-1.6.4.3/Makefile
-   $(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+--- git-1.6.4.4/perl/perl.mak_to20090922        2009-09-22 12:07:18.000000000 +0100
++++ git-1.6.4.4/perl/perl.mak   2009-09-22 12:21:17.791887000 +0100
+@@ -57,7 +57,7 @@
+ INST_LIB = blib/lib
+ INST_ARCHLIB = blib/arch
+ INST_SCRIPT = blib/script
+-PREFIX = /usr/local/git-1.6.4.4
++PREFIX = $(DESTDIR)/usr/local/git-1.6.4.4
+ INSTALLDIRS = site
+ INSTALLPRIVLIB = $(PREFIX)/lib/5.6.1
+ INSTALLARCHLIB = $(PREFIX)/lib/5.6.1/sun4-solaris
 
-I see that it is passing DESTDIR to the makefile in git-1.6.4.3/perl.
-However, the DESTDIR variable is not seemingly included in perl/perl.mak for
-use by the perl/Makefile. It is all absolute paths which I think is the
-main cause.
-
-I have manually manipulated the perl.mak file and install works fine.
-I'm just updating my build area to 1.6.4.4 and then will try something
-more permanent. However I am moving outside my knowldge of 'make' now so
-may request assistance later ;)
-
+Many thanks...
 CraigT
 
 -- 
 
 c^ [c%5e]
 
-Never talk about your knowledge, it might make it disappear.
+Failure is natural.
