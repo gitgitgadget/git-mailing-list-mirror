@@ -1,90 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin-mailinfo.c: Trim only first pair of square
- brackets in subject
-Date: Tue, 22 Sep 2009 09:15:56 -0700
-Message-ID: <7vocp3t0oz.fsf@alter.siamese.dyndns.org>
-References: <7vfxdkez96.fsf@alter.siamese.dyndns.org>
- <1246310220-16909-1-git-send-email-rleigh@debian.org>
- <87hbuv5km2.fsf@janet.wally>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: thoughts on a possible "pre-upload" hook
+Date: Tue, 22 Sep 2009 09:17:25 -0700
+Message-ID: <20090922161725.GS14660@spearce.org>
+References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com> <867hvr2cms.fsf@blue.stonehenge.com> <vpqd45jvub6.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neil Roberts <bpeeluk@yahoo.co.uk>
-X-From: git-owner@vger.kernel.org Tue Sep 22 18:16:19 2009
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 22 18:17:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mq82F-0000ac-Gq
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 18:16:11 +0200
+	id 1Mq83V-0000zi-1w
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Sep 2009 18:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756783AbZIVQQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 12:16:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756107AbZIVQQA
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 12:16:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43250 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753598AbZIVQP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 12:15:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9A0463C290;
-	Tue, 22 Sep 2009 12:16:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rnAVoTJfDzvG1Ot4i/rV5mmBxTI=; b=vCmIzJ
-	2dkPiLjTnuMprpNBVYUDN+MQ+j0TZmqvin5JPFygBEoHMc48qLNJxBEHTlgCb38D
-	9esk0T3bCD1jGb8vXP9X11rauBqDsnLl/OMYeYcKvkpt9GTZccnwJ0uRugE0e3q4
-	T3zIfqtnlnjdASqffTjBsB8q+vCPGvjwrLixA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mHhBNbNTRC9duuc9mJofiRqnmn3oPFxy
-	xY/SCW9X/383EjqPJ8w7A7awsGBuIp7NHh6MW1MnkAYZMFgK9rsipVKQqE/OtL/z
-	DgBMMSx65wiM7uekypbDBDmOAsA8nKif6srQthF2vuwFT7nQwx3KomCDBBqMzBCR
-	L26R8qiPYwg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7D27B3C28E;
-	Tue, 22 Sep 2009 12:16:00 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2B603C28C; Tue, 22 Sep
- 2009 12:15:57 -0400 (EDT)
-In-Reply-To: <87hbuv5km2.fsf@janet.wally> (Neil Roberts's message of "Tue\,
- 22 Sep 2009 11\:39\:33 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 37BC2936-A793-11DE-86EB-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756859AbZIVQRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 12:17:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756807AbZIVQRT
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 12:17:19 -0400
+Received: from george.spearce.org ([209.20.77.23]:48960 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756790AbZIVQRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 12:17:19 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 841A938151; Tue, 22 Sep 2009 16:17:25 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <vpqd45jvub6.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128947>
 
-Neil Roberts <bpeeluk@yahoo.co.uk> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
+> >>>>>> "Sitaram" == Sitaram Chamarty <sitaramc@gmail.com> writes:
+> > Sitaram> As git is used more and more in corporate-type environments, at some
+> > Sitaram> point it becomes convenient to have *branches* (or more accurately,
+> > Sitaram> refs) that are not readable.
+> 
+> But that alone would make it rather painfull for the user : "git
+> clone" would fail if any branch in the repository is not readable, for
+> example.
 
-> Roger Leigh <rleigh@debian.org> writes:
->
->> Use a regular expression to match text after "Re:" or any text in the
->> first pair of square brackets such as "[PATCH n/m]".  This replaces
->> the complex hairy string munging with a simple single pattern match.
->
-> Is this patch going to get applied?
+No, what Sitaram is asking for is to have upload-pack not advertise
+the hidden branches.  By not advertising them, the client cannot
+send a "want" request for them, and they won't appear in the list
+that clone believes exists when it creates the new local repository.
+Thus, clone would succeed.
+ 
+> Also, don't forget that branches are just references, which means that
+> if you prevent reference A from being uploaded, then another reference
+> B may point to the same commits as A, and then you can bypass the
+> safety hook on A by using B.
 
-I do not think it is likely to happen for a patch without much comments
-nor progress after this long blank period, without a refresher discussion.
+Yes.  But this is no different than having two different git
+repositories, A.git and B.git.  Pushing commits from A.git into B.git
+allows someone to bypass A.git's filesystem read access control by
+instead reading those commits from B.git.
 
-It definitely won't be applied silently in its original form, especially
-because the final comment in the old discussion on the patch in question
-began with "One could _update_ ..." from the author of the patch, and then
-nothing happened.
+IOW, those who have access to the data must protect it.  You can't
+do it entirely in software, especially when you don't control the
+user's computer.
 
-    http://thread.gmane.org/gmane.comp.version-control.git/122418/focus=122466
-
-I actually liked the much simpler one by Andreas in the original thread,
-but if you really want to use a regexp (which we didn't have to) we should
-make it configurable.  See the neighbouring discussion here as well.
-
-    http://thread.gmane.org/gmane.comp.version-control.git/123322
-
-I think we all agree that the behaviour should be improved, but I think
-neither Roger's patch nor Andreas's one was the solution..  People who
-care need to carry discussions and proposed patches forward to help us
-agree on an acceptable solution.
+-- 
+Shawn.
