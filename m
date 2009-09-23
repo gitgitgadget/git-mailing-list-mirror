@@ -1,91 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Re: Gitk --all error when there are more than 797 refs
- in a repository
-Date: Tue, 22 Sep 2009 17:02:57 -0700
-Message-ID: <7vd45io7da.fsf@alter.siamese.dyndns.org>
-References: <6F87406399731F489FBACE5C5FFA04584BFA53@ex2k.bankofamerica.com>
- <878wgcbb52.fsf@users.sourceforge.net>
- <19124.8378.975976.347711@cargo.ozlabs.ibm.com>
- <6F87406399731F489FBACE5C5FFA0458518DE8@ex2k.bankofamerica.com>
- <4AB78910.7010402@viscovery.net>
- <6F87406399731F489FBACE5C5FFA0458518E11@ex2k.bankofamerica.com>
- <4AB7A2E7.5000601@viscovery.net> <874oqvc0n3.fsf@users.sourceforge.net>
- <19129.24056.422939.880134@cargo.ozlabs.ibm.com>
+Subject: Re: [PATCH] Documentation: Update the style of 'git-describe'
+ command.
+Date: Tue, 22 Sep 2009 17:07:46 -0700
+Message-ID: <7v3a6eo759.fsf@alter.siamese.dyndns.org>
+References: <1253663286-5919-1-git-send-email-tfransosi@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Murphy\, John" <john.murphy@bankofamerica.com>,
-	git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Sep 23 02:03:22 2009
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 02:08:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqFKL-0000kt-V8
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 02:03:22 +0200
+	id 1MqFOp-0001vN-3S
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 02:07:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbZIWADM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Sep 2009 20:03:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbZIWADL
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 20:03:11 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47924 "EHLO
+	id S1752968AbZIWAHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Sep 2009 20:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752790AbZIWAHu
+	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 20:07:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52206 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbZIWADL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Sep 2009 20:03:11 -0400
+	with ESMTP id S1752542AbZIWAHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Sep 2009 20:07:49 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3EBD55BC13;
-	Tue, 22 Sep 2009 20:03:14 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DA9F43CA0A;
+	Tue, 22 Sep 2009 20:07:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2senIzWDFEchbGL0xPDH3zkcatk=; b=qgNV5k
-	1Cnz6LAc+MiV6gOMrdmcDM6+jF62tZ+SDbm1++ggfQp7wEtrHnwRu6aClZqHD618
-	kZcrPjKCQo9nd+7xgumuFjT68QVTwuVk3rq0R2RWj2657nuhGhrIdK5fb6tYylq9
-	hurhj+0Vjkqu/JcV7Ys5X5EWMn0D0i5QEcHhk=
+	:content-type; s=sasl; bh=y7ktw+uqRRafNU1sFYJT0DO4OpU=; b=GNFfq3
+	vcKlUlK08Uo9kGWWA9EO9/2QRFugBT0It3v2IYRwBr9vWPQ015/o4dAA6FQGB158
+	E4yHmfHbPbnZJ4eRfyWft0n13bZcdtFShs+3N74tRh3oxUFU5fnS+bbB3Ak68W5/
+	Z3NK/M/Ll5wypV1ddHjPIGb61Qfj7/izRZcYM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bxq7EYj1oVYHmcNvKNyTjzN6vJudxhFQ
-	gG71uW+Q5msGNSFHjgGPkAEgQcAl2Ub0Loie7D0Cghj0bQJnQNvKLiROAprWAZ9A
-	Y6uCWieeuo8Kn5CreP5kkG5qAVRFI2JT1WvQyRM7zAuQIO5lE4UJVfVURFxE18Z4
-	rJRsj74RMqM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EF94E5BC12;
-	Tue, 22 Sep 2009 20:03:08 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=wiSxSTLj0dzYA8C2VCmHKb4mDu6R1aKh
+	h7zMChvqowqkQzwLZt7mKYeecMHjH3QszHj5jKNvsI7YWA9VqizpfMx45k8VkFXi
+	dlT6gC+4pqO5KF4vPEvkyWoGs9vGnm7lYWuK3EOlpLPtiklSb/ve/bCxFMT/Kg3f
+	KEqbR2KsuLM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BD06B3CA07;
+	Tue, 22 Sep 2009 20:07:50 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 39D655BC0E; Tue, 22 Sep 2009
- 20:02:58 -0400 (EDT)
-In-Reply-To: <19129.24056.422939.880134@cargo.ozlabs.ibm.com> (Paul
- Mackerras's message of "Wed\, 23 Sep 2009 09\:30\:00 +1000")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 350513CA06; Tue, 22 Sep
+ 2009 20:07:48 -0400 (EDT)
+In-Reply-To: <1253663286-5919-1-git-send-email-tfransosi@gmail.com> (Thiago
+ Farina's message of "Tue\, 22 Sep 2009 19\:48\:06 -0400")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 79FEDE1A-A7D4-11DE-965C-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 21F84E80-A7D5-11DE-AC55-A13518FFA523-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128964>
 
-Paul Mackerras <paulus@samba.org> writes:
+Thiago Farina <tfransosi@gmail.com> writes:
 
-> If git log had an argument to tell it to mark those commits that were
-> a starting point or a finishing point, then I could simplify this
-> logic enormously, plus we wouldn't have to pass a long parameter list
-> to git log.  It may still turn out to be necessary to add a negative
-> argument for each previous starting point, though, when refreshing the
-> list.
->
-> I think the simplest fix for now is to arrange to take the
-> non-optimized path on windows when the list of revs gets too long,
-> i.e., set $vcanopt($view) to 0 and take that path.  That means that
-> refreshing the view will be slow, but I think it's the best we can do
-> at this point.
+>  $ git describe -h
+> -usage: git-describe [options] <committish>*
+> +usage: git describe [options] <commit-ish>*
 
-Hmph.
+I think the first half of this line is correct but the other half is not.
 
-The negative ones you can learn by giving --boundary, but I do not think
-the set of starting points are something you can get out of log output.
+$ git grep --color -c -e committish -- Documentation/
+Documentation/git-describe.txt:6
+Documentation/git-fast-import.txt:8
+Documentation/git-name-rev.txt:1
+Documentation/git-shortlog.txt:1
+Documentation/gitcli.txt:1
+Documentation/howto/revert-branch-rebase.txt:1
 
-Even if you could, you would have the same issue giving them from the
-command line anyway.  The right solution would likely to be to give the
-same --stdin option as rev-list to "git log", I think.
+$ git grep --color -c -e commit-ish -- Documentation/
+Documentation/git-rebase.txt:1
+Documentation/git.txt:2
