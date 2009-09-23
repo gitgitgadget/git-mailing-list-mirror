@@ -1,80 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2009, #05; Wed, 23)
-Date: Wed, 23 Sep 2009 10:01:10 +0200
-Message-ID: <fabb9a1e0909230101x3a5415aehf8b0c3a13ca28d14@mail.gmail.com>
-References: <7vhbuui1ys.fsf@alter.siamese.dyndns.org>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: Feature Enhancement Idea.
+Date: Wed, 23 Sep 2009 10:26:49 +0200
+Message-ID: <c07716ae0909230126w36b3309fqe9ae8ccec0db49c3@mail.gmail.com>
+References: <5b5e291e0909222317q47ae36d4la470f17ec3902124@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 23 10:02:11 2009
+To: Deon George <deon.george@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 10:27:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqMnB-0002Le-H5
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 10:01:37 +0200
+	id 1MqNC3-0004D2-Og
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 10:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754391AbZIWIB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2009 04:01:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754362AbZIWIB2
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 04:01:28 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:6993 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754307AbZIWIB1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2009 04:01:27 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so108298eyd.19
-        for <git@vger.kernel.org>; Wed, 23 Sep 2009 01:01:30 -0700 (PDT)
+	id S1754566AbZIWI0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 04:26:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754506AbZIWI0w
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 04:26:52 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:64915 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754503AbZIWI0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 04:26:47 -0400
+Received: by bwz6 with SMTP id 6so356442bwz.37
+        for <git@vger.kernel.org>; Wed, 23 Sep 2009 01:26:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QmMR8yAJq/hLljBXklUBt4G5kWiNjtTPcqtMOyjbAuY=;
-        b=wwxaAKxF7xWDQ3shsrWvwLhZGu7tDN7rPceVfU2dr4KSki/wtxX80lzCq2jdvghmiH
-         duBx2XocY1psQLIks1N/Zh5yrChXmQwv0UhQr5sljCvFus/mIR2qvQxX3DirwlV/2pVp
-         UTGEJi8/Ibmh9krBvNZCzaMrRvGJXwFGKRD4I=
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=r396s6XcWiQMzl4veekQwz2Mpfhmw4WjcJTeZXmANJY=;
+        b=RyC2++K3cbcMT1owbhh+t1kJO6V5Pj3XanAn1X7UYZA5TrcpN2Ln7AEIaqbcIZ/Rhc
+         3UHYRVjKUDbVVZDIankOQKrupT86fkFoJFv79yY52OLqT1h5pZ7E9uFBJw0I6AZrO8Hd
+         gRFjp3naM28Xh03PEFy0G4YgdilbHxlpspvUU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=pssk1qpsNNew77fbcNb6PLm1Pm+ZLcLiFD9FkjtXlYMEm8ySh7kZ1ca2OqMlsV9WSJ
-         f1nXUGmJZdak+nBwRDmdLtz6mQY9GzI1fonBmaA2mB4GW6U21+pu0as179ZQy6ZolpQq
-         VwUx8evpWMzHTckMZdoECsjqR3zeun3Rio2mQ=
-Received: by 10.216.90.67 with SMTP id d45mr423978wef.42.1253692890176; Wed, 
-	23 Sep 2009 01:01:30 -0700 (PDT)
-In-Reply-To: <7vhbuui1ys.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=D9L7gyE9AP9ky4k9WPCM3ekTOXykNACR4NdMMFfEnvkWf05UdpYQByxpoSpgjjgj9J
+         Sih4YNYlbzZpkqG7ajMoPmfnHk2U7W5JGqQgwvLRfFoQBLGshyEUbcYwDxvdV1jILOGL
+         0C0yh1chAiHW+VFARpacVatEqJPKgNNNNM5M0=
+Received: by 10.103.76.5 with SMTP id d5mr830183mul.131.1253694409902; Wed, 23 
+	Sep 2009 01:26:49 -0700 (PDT)
+In-Reply-To: <5b5e291e0909222317q47ae36d4la470f17ec3902124@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128973>
 
-Heya,
+Hi,
 
-On Wed, Sep 23, 2009 at 08:56, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> * sr/gfi-options (2009-09-06) 6 commits
-> =A0(merged to 'next' on 2009-09-07 at 5f6b0ff)
-> =A0+ fast-import: test the new option command
-> =A0+ fast-import: add option command
-> =A0+ fast-import: test the new feature command
-> =A0+ fast-import: add feature command
-> =A0+ fast-import: put marks reading in it's own function
-> =A0+ fast-import: put option parsing code in separate functions
-> =A0(this branch is used by jh/notes.)
+On Wed, Sep 23, 2009 at 8:17 AM, Deon George <deon.george@gmail.com> wrote:
+> Hi,
 >
-> Ping?
+> I'm not sure if this is the right place, but I thought I'd post my
+> idea and maybe somebody will either redirect me to the right place, or
+> give me that "that wont happen".
+>
+> Im fairly new to GIT (wish I had discovered it long ago), and I really
+> like using it - great work guys/garls :)
+>
+> My idea is to enhance GIT to support (I'll call it) development
+> "layers". The current design of GIT is that the working repository and
+> working directory assume that all files belong together in the same
+> project. I would like to see GIT go 3D and support layers, so that
+> files (and/or file content) can belong to multiple repositories (or
+> considered unique projects), even though the working tree presents all
+> files as if they were one.
 
-Ping indeed, Shawn? Blocking on a reply to whether I should drop the
-option part and make location of the marks file a feature or not in
-general, and $128290 in specific [0].
+Perhaps you could have a look at "git replace" that is now in the master branch.
+It could be improved to provide different "views" of a single repository.
+I don't think that alone it would provide everything you want though.
 
-[0] http://article.gmane.org/gmane.comp.version-control.git/128290
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Best regards,
+Christian.
