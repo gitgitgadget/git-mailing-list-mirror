@@ -1,144 +1,72 @@
-From: "Halstrick, Christian" <christian.halstrick@sap.com>
-Subject: [JGIT PATCH 2/2] added some tests for config param logAllRefUpdates
-Date: Wed, 23 Sep 2009 17:45:28 +0100
-Message-ID: <D35B4A582834DC418CCF9AF41AB69B70016953F633@DEWDFECCR04.wdf.sap.corp>
+From: Reto Glauser <linux@blinkeye.ch>
+Subject: git-cvsimport: missing branches
+Date: Wed, 23 Sep 2009 19:35:24 +0200
+Message-ID: <4ABA5C5C.2060207@blinkeye.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 18:45:59 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthias Urlichs <smurf@smurf.noris.de>, mhagger@tigris.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 23 19:41:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqUyc-00016z-UH
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 18:45:59 +0200
+	id 1MqVqS-00059e-P1
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 19:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbZIWQps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 12:45:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbZIWQps
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 12:45:48 -0400
-Received: from smtpde03.sap-ag.de ([155.56.68.140]:60328 "EHLO
-	smtpde03.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685AbZIWQpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2009 12:45:47 -0400
-Received: from mail.sap.corp
-	by smtpde03.sap-ag.de (26) with ESMTP id n8NGjlXA019639
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 23 Sep 2009 18:45:47 +0200 (MEST)
-Thread-Topic: [JGIT PATCH 2/2] added some tests for config param
- logAllRefUpdates
-Thread-Index: Aco8bNdCSyB8lzEZTjGYCM5KjfOqBgAAAg7Q
-Accept-Language: en-US, de-DE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, de-DE
-X-Scanner: Virus Scanner virwal05
-X-SAP: out
+	id S1752896AbZIWRlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 13:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752710AbZIWRlU
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 13:41:20 -0400
+Received: from mail.blinkeye.ch ([78.46.102.7]:52134 "EHLO mail.blinkeye.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752641AbZIWRlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 13:41:18 -0400
+X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Sep 2009 13:41:17 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.blinkeye.ch (Postfix) with ESMTP id 4A8563F002;
+	Wed, 23 Sep 2009 19:35:25 +0200 (CEST)
+Received: from [10.10.10.2] (146-48.104-92.cust.bluewin.ch [92.104.48.146])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by mail.blinkeye.ch (Postfix) with ESMTPSA id 048423F004;
+	Wed, 23 Sep 2009 19:35:24 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128986>
 
-RnJvbTogQ2hyaXN0aWFuIEhhbHN0cmljayA8Y2hyaXN0aWFuLmhhbHN0cmlja0BzYXAuY29tPg0K
-DQpTaWduZWQtb2ZmLWJ5OiBDaHJpc3RpYW4gSGFsc3RyaWNrIDxjaHJpc3RpYW4uaGFsc3RyaWNr
-QHNhcC5jb20+DQpTaWduZWQtb2ZmLWJ5OiBNYXR0aGlhcyBTb2huIDxtYXR0aGlhcy5zb2huQHNh
-cC5jb20+DQotLS0NCiAuLi4vdHN0L29yZy9zcGVhcmNlL2pnaXQvbGliL1JlZmxvZ0NvbmZpZ1Rl
-c3QuamF2YSB8ICAxMTEgKysrKysrKysrKysrKysrKysrKysNCiAxIGZpbGVzIGNoYW5nZWQsIDEx
-MSBpbnNlcnRpb25zKCspLCAwIGRlbGV0aW9ucygtKQ0KIGNyZWF0ZSBtb2RlIDEwMDY0NCBvcmcu
-c3BlYXJjZS5qZ2l0LnRlc3QvdHN0L29yZy9zcGVhcmNlL2pnaXQvbGliL1JlZmxvZ0NvbmZpZ1Rl
-c3QuamF2YQ0KDQpkaWZmIC0tZ2l0IGEvb3JnLnNwZWFyY2UuamdpdC50ZXN0L3RzdC9vcmcvc3Bl
-YXJjZS9qZ2l0L2xpYi9SZWZsb2dDb25maWdUZXN0LmphdmEgYi9vcmcuc3BlYXJjZS5qZ2l0LnRl
-c3QvdHN0L29yZy9zcGVhcmNlL2pnaXQvbGliL1JlZmxvZ0NvbmZpZ1Rlc3QuamF2YQ0KbmV3IGZp
-bGUgbW9kZSAxMDA2NDQNCmluZGV4IDAwMDAwMDAuLjBlNjk2YTANCi0tLSAvZGV2L251bGwNCisr
-KyBiL29yZy5zcGVhcmNlLmpnaXQudGVzdC90c3Qvb3JnL3NwZWFyY2UvamdpdC9saWIvUmVmbG9n
-Q29uZmlnVGVzdC5qYXZhDQpAQCAtMCwwICsxLDExMSBAQA0KKy8qDQorICogQ29weXJpZ2h0IChD
-KSAyMDA5LCBDaHJpc3RpYW4gSGFsc3RyaWNrLCBNYXR0aGlhcyBTb2huLCBTQVAgQUcNCisgKg0K
-KyAqIEFsbCByaWdodHMgcmVzZXJ2ZWQuDQorICoNCisgKiBSZWRpc3RyaWJ1dGlvbiBhbmQgdXNl
-IGluIHNvdXJjZSBhbmQgYmluYXJ5IGZvcm1zLCB3aXRoIG9yDQorICogd2l0aG91dCBtb2RpZmlj
-YXRpb24sIGFyZSBwZXJtaXR0ZWQgcHJvdmlkZWQgdGhhdCB0aGUgZm9sbG93aW5nDQorICogY29u
-ZGl0aW9ucyBhcmUgbWV0Og0KKyAqDQorICogLSBSZWRpc3RyaWJ1dGlvbnMgb2Ygc291cmNlIGNv
-ZGUgbXVzdCByZXRhaW4gdGhlIGFib3ZlIGNvcHlyaWdodA0KKyAqICAgbm90aWNlLCB0aGlzIGxp
-c3Qgb2YgY29uZGl0aW9ucyBhbmQgdGhlIGZvbGxvd2luZyBkaXNjbGFpbWVyLg0KKyAqDQorICog
-LSBSZWRpc3RyaWJ1dGlvbnMgaW4gYmluYXJ5IGZvcm0gbXVzdCByZXByb2R1Y2UgdGhlIGFib3Zl
-DQorICogICBjb3B5cmlnaHQgbm90aWNlLCB0aGlzIGxpc3Qgb2YgY29uZGl0aW9ucyBhbmQgdGhl
-IGZvbGxvd2luZw0KKyAqICAgZGlzY2xhaW1lciBpbiB0aGUgZG9jdW1lbnRhdGlvbiBhbmQvb3Ig
-b3RoZXIgbWF0ZXJpYWxzIHByb3ZpZGVkDQorICogICB3aXRoIHRoZSBkaXN0cmlidXRpb24uDQor
-ICoNCisgKiAtIE5laXRoZXIgdGhlIG5hbWUgb2YgdGhlIEdpdCBEZXZlbG9wbWVudCBDb21tdW5p
-dHkgbm9yIHRoZQ0KKyAqICAgbmFtZXMgb2YgaXRzIGNvbnRyaWJ1dG9ycyBtYXkgYmUgdXNlZCB0
-byBlbmRvcnNlIG9yIHByb21vdGUNCisgKiAgIHByb2R1Y3RzIGRlcml2ZWQgZnJvbSB0aGlzIHNv
-ZnR3YXJlIHdpdGhvdXQgc3BlY2lmaWMgcHJpb3INCisgKiAgIHdyaXR0ZW4gcGVybWlzc2lvbi4N
-CisgKg0KKyAqIFRISVMgU09GVFdBUkUgSVMgUFJPVklERUQgQlkgVEhFIENPUFlSSUdIVCBIT0xE
-RVJTIEFORA0KKyAqIENPTlRSSUJVVE9SUyAiQVMgSVMiIEFORCBBTlkgRVhQUkVTUyBPUiBJTVBM
-SUVEIFdBUlJBTlRJRVMsDQorICogSU5DTFVESU5HLCBCVVQgTk9UIExJTUlURUQgVE8sIFRIRSBJ
-TVBMSUVEIFdBUlJBTlRJRVMNCisgKiBPRiBNRVJDSEFOVEFCSUxJVFkgQU5EIEZJVE5FU1MgRk9S
-IEEgUEFSVElDVUxBUiBQVVJQT1NFDQorICogQVJFIERJU0NMQUlNRUQuIElOIE5PIEVWRU5UIFNI
-QUxMIFRIRSBDT1BZUklHSFQgT1dORVIgT1INCisgKiBDT05UUklCVVRPUlMgQkUgTElBQkxFIEZP
-UiBBTlkgRElSRUNULCBJTkRJUkVDVCwgSU5DSURFTlRBTCwNCisgKiBTUEVDSUFMLCBFWEVNUExB
-UlksIE9SIENPTlNFUVVFTlRJQUwgREFNQUdFUyAoSU5DTFVESU5HLCBCVVQNCisgKiBOT1QgTElN
-SVRFRCBUTywgUFJPQ1VSRU1FTlQgT0YgU1VCU1RJVFVURSBHT09EUyBPUiBTRVJWSUNFUzsNCisg
-KiBMT1NTIE9GIFVTRSwgREFUQSwgT1IgUFJPRklUUzsgT1IgQlVTSU5FU1MgSU5URVJSVVBUSU9O
-KSBIT1dFVkVSDQorICogQ0FVU0VEIEFORCBPTiBBTlkgVEhFT1JZIE9GIExJQUJJTElUWSwgV0hF
-VEhFUiBJTiBDT05UUkFDVCwNCisgKiBTVFJJQ1QgTElBQklMSVRZLCBPUiBUT1JUIChJTkNMVURJ
-TkcgTkVHTElHRU5DRSBPUiBPVEhFUldJU0UpDQorICogQVJJU0lORyBJTiBBTlkgV0FZIE9VVCBP
-RiBUSEUgVVNFIE9GIFRISVMgU09GVFdBUkUsIEVWRU4gSUYNCisgKiBBRFZJU0VEIE9GIFRIRSBQ
-T1NTSUJJTElUWSBPRiBTVUNIIERBTUFHRS4NCisgKi8NCitwYWNrYWdlIG9yZy5zcGVhcmNlLmpn
-aXQubGliOw0KKw0KK2ltcG9ydCBqYXZhLmlvLklPRXhjZXB0aW9uOw0KKw0KK3B1YmxpYyBjbGFz
-cyBSZWZsb2dDb25maWdUZXN0IGV4dGVuZHMgUmVwb3NpdG9yeVRlc3RDYXNlIHsNCisJcHVibGlj
-IHZvaWQgdGVzdGxvZ0FsbFJlZlVwZGF0ZXMoKSB0aHJvd3MgRXhjZXB0aW9uIHsNCisJCWxvbmcg
-Y29tbWl0VGltZSA9IDExNTQyMzY0NDMwMDBMOw0KKwkJaW50IHR6ID0gLTQgKiA2MDsNCisJCWFz
-c2VydEZhbHNlKGRiLmdldENvbmZpZygpLmdldENvcmUoKS5pc0xvZ0FsbFJlZlVwZGF0ZXMoKSk7
-DQorCQlhc3NlcnRUcnVlKCJSZWZsb2cgZm9yIEhFQUQgc2hvdWxkIGJlIGVtcHR5IiwgZGIuZ2V0
-UmVmbG9nUmVhZGVyKA0KKwkJCQlDb25zdGFudHMuSEVBRCkuZ2V0UmV2ZXJzZUVudHJpZXMoKS5z
-aXplKCkgPT0gMCk7DQorDQorCQkvLyBkbyBvbmUgY29tbWl0IGFuZCBjaGVjayB0aGF0IHJlZmxv
-ZyBzaXplIGlzIDA6IG5vIHJlZmxvZ3Mgc2hvdWxkIGJlDQorCQkvLyB3cml0dGVuDQorCQlmaW5h
-bCBUcmVlIHQgPSBuZXcgVHJlZShkYik7DQorCQlhZGRGaWxlVG9UcmVlKHQsICJpLWFtLWEtZmls
-ZSIsICJhbmQgdGhpcyBpcyB0aGUgZGF0YSBpbiBtZVxuIik7DQorCQljb21taXQodCwgIkEgQ29t
-bWl0XG4iLCBuZXcgUGVyc29uSWRlbnQoamF1dGhvciwgY29tbWl0VGltZSwgdHopLA0KKwkJCQlu
-ZXcgUGVyc29uSWRlbnQoamNvbW1pdHRlciwgY29tbWl0VGltZSwgdHopKTsNCisJCWNvbW1pdFRp
-bWUgKz0gMTAwOw0KKwkJYXNzZXJ0VHJ1ZSgNCisJCQkJIlJlZmxvZyBmb3IgSEVBRCBzaG91bGQg
-Y29udGFpbiBvbmUgZW50cnkiLA0KKwkJCQlkYi5nZXRSZWZsb2dSZWFkZXIoQ29uc3RhbnRzLkhF
-QUQpLmdldFJldmVyc2VFbnRyaWVzKCkuc2l6ZSgpID09IDApOw0KKw0KKwkJLy8gc2V0IHRoZSBs
-b2dBbGxSZWZVcGRhdGVzIHBhcmFtZXRlciB0byB0cnVlIGFuZCBjaGVjayBpdA0KKwkJZGIuZ2V0
-Q29uZmlnKCkuc2V0Qm9vbGVhbigiY29yZSIsIG51bGwsICJsb2dBbGxSZWZVcGRhdGVzIiwgdHJ1
-ZSk7DQorCQlhc3NlcnRUcnVlKGRiLmdldENvbmZpZygpLmdldENvcmUoKS5pc0xvZ0FsbFJlZlVw
-ZGF0ZXMoKSk7DQorDQorCQkvLyBkbyBvbmUgY29tbWl0IGFuZCBjaGVjayB0aGF0IHJlZmxvZyBz
-aXplIGlzIDENCisJCWFkZEZpbGVUb1RyZWUodCwgImktYW0tYW5vdGhlci1maWxlIiwgImFuZCB0
-aGlzIGlzIG90aGVyIGRhdGEgaW4gbWVcbiIpOw0KKwkJY29tbWl0KHQsICJBIENvbW1pdFxuIiwg
-bmV3IFBlcnNvbklkZW50KGphdXRob3IsIGNvbW1pdFRpbWUsIHR6KSwNCisJCQkJbmV3IFBlcnNv
-bklkZW50KGpjb21taXR0ZXIsIGNvbW1pdFRpbWUsIHR6KSk7DQorCQljb21taXRUaW1lICs9IDEw
-MDsNCisJCWFzc2VydFRydWUoDQorCQkJCSJSZWZsb2cgZm9yIEhFQUQgc2hvdWxkIGNvbnRhaW4g
-b25lIGVudHJ5IiwNCisJCQkJZGIuZ2V0UmVmbG9nUmVhZGVyKENvbnN0YW50cy5IRUFEKS5nZXRS
-ZXZlcnNlRW50cmllcygpLnNpemUoKSA9PSAxKTsNCisNCisJCS8vIHNldCB0aGUgbG9nQWxsUmVm
-VXBkYXRlcyBwYXJhbWV0ZXIgdG8gZmFsc2UgYW5kIGNoZWNrIGl0DQorCQlkYi5nZXRDb25maWco
-KS5zZXRCb29sZWFuKCJjb3JlIiwgbnVsbCwgImxvZ0FsbFJlZlVwZGF0ZXMiLCBmYWxzZSk7DQor
-CQlhc3NlcnRGYWxzZShkYi5nZXRDb25maWcoKS5nZXRDb3JlKCkuaXNMb2dBbGxSZWZVcGRhdGVz
-KCkpOw0KKw0KKwkJLy8gZG8gb25lIGNvbW1pdCBhbmQgY2hlY2sgdGhhdCByZWZsb2cgc2l6ZSBp
-cyAyDQorCQlhZGRGaWxlVG9UcmVlKHQsICJpLWFtLWFub3RoZXJhbm90aGVyLWZpbGUiLA0KKwkJ
-CQkiYW5kIHRoaXMgaXMgb3RoZXIgb3RoZXIgZGF0YSBpbiBtZVxuIik7DQorCQljb21taXQodCwg
-IkEgQ29tbWl0XG4iLCBuZXcgUGVyc29uSWRlbnQoamF1dGhvciwgY29tbWl0VGltZSwgdHopLA0K
-KwkJCQluZXcgUGVyc29uSWRlbnQoamNvbW1pdHRlciwgY29tbWl0VGltZSwgdHopKTsNCisJCWFz
-c2VydFRydWUoDQorCQkJCSJSZWZsb2cgZm9yIEhFQUQgc2hvdWxkIGNvbnRhaW4gb25lIGVudHJ5
-IiwNCisJCQkJZGIuZ2V0UmVmbG9nUmVhZGVyKENvbnN0YW50cy5IRUFEKS5nZXRSZXZlcnNlRW50
-cmllcygpLnNpemUoKSA9PSAyKTsNCisJfQ0KKw0KKwlwcml2YXRlIHZvaWQgYWRkRmlsZVRvVHJl
-ZShmaW5hbCBUcmVlIHQsIFN0cmluZyBmaWxlbmFtZSwgU3RyaW5nIGNvbnRlbnQpDQorCQkJdGhy
-b3dzIElPRXhjZXB0aW9uIHsNCisJCUZpbGVUcmVlRW50cnkgZiA9IHQuYWRkRmlsZShmaWxlbmFt
-ZSk7DQorCQl3cml0ZVRyYXNoRmlsZShmLmdldE5hbWUoKSwgY29udGVudCk7DQorCQl0LmFjY2Vw
-dChuZXcgV3JpdGVUcmVlKHRyYXNoLCBkYiksIFRyZWVFbnRyeS5NT0RJRklFRF9PTkxZKTsNCisJ
-fQ0KKw0KKwlwcml2YXRlIHZvaWQgY29tbWl0KGZpbmFsIFRyZWUgdCwgU3RyaW5nIGNvbW1pdE1z
-ZywgUGVyc29uSWRlbnQgYXV0aG9yLA0KKwkJCVBlcnNvbklkZW50IGNvbW1pdHRlcikgdGhyb3dz
-IElPRXhjZXB0aW9uIHsNCisJCWZpbmFsIENvbW1pdCBjb21taXQgPSBuZXcgQ29tbWl0KGRiKTsN
-CisJCWNvbW1pdC5zZXRBdXRob3IoYXV0aG9yKTsNCisJCWNvbW1pdC5zZXRDb21taXR0ZXIoY29t
-bWl0dGVyKTsNCisJCWNvbW1pdC5zZXRNZXNzYWdlKGNvbW1pdE1zZyk7DQorCQljb21taXQuc2V0
-VHJlZSh0KTsNCisJCU9iamVjdFdyaXRlciB3cml0ZXIgPSBuZXcgT2JqZWN0V3JpdGVyKGRiKTsN
-CisJCWNvbW1pdC5zZXRDb21taXRJZCh3cml0ZXIud3JpdGVDb21taXQoY29tbWl0KSk7DQorDQor
-CQlpbnQgbmwgPSBjb21taXRNc2cuaW5kZXhPZignXG4nKTsNCisJCWZpbmFsIFJlZlVwZGF0ZSBy
-dSA9IGRiLnVwZGF0ZVJlZihDb25zdGFudHMuSEVBRCk7DQorCQlydS5zZXROZXdPYmplY3RJZChj
-b21taXQuZ2V0Q29tbWl0SWQoKSk7DQorCQlydS5zZXRSZWZMb2dNZXNzYWdlKCJjb21taXQgOiAi
-DQorCQkJCSsgKChubCA9PSAtMSkgPyBjb21taXRNc2cgOiBjb21taXRNc2cuc3Vic3RyaW5nKDAs
-IG5sKSksIGZhbHNlKTsNCisJCXJ1LmZvcmNlVXBkYXRlKCk7DQorCX0NCit9DQpcIE5vIG5ld2xp
-bmUgYXQgZW5kIG9mIGZpbGUNCi0tIA0KMS42LjQubXN5c2dpdC4wDQoNCg==
+Hello
+
+I need to use CVS with a history of about 20 years (someway back it was 
+converted from SCCS to CVS). I have to stay in sync with the CVS 
+repository to import changes from co-workers and to eventually commit 
+changes back. I do have access to the RCS ',v' files.
+
+So, git-cvsimport is exactly what I was looking for. Except, if I do a 
+git-cvsimport I have a couple of branches missing, and I don't know why.
+
+I see the branch names from cvsps in the output, but somehow 
+git-cvsimport skips them anyway. I tried to add a branch manually which 
+got mit a couple of years of history back, but then it stops anyway.
+
+I used cvs2git from http://cvs2svn.tigris.org which shows me these 
+missing branches.
+
+So, my questions are:
+
+- Is the problem in cvsps or git-cvsimport or in the CVS history?
+- Can I use the cvs2git import as a starting point and later use 
+git-cvsimport for incrementally update the git repository?
+- Can I somehow compare the result of git-cvsimport and cvs2git to see 
+differences?
+- Is there any other feasible workflow to stay in sync with a CVS 
+repository with a large history while still using git behind the scene?
+
+Any pointers appreciated.
+
+Regards,
+Reto
