@@ -1,79 +1,52 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] fix testsuite to not use any hooks possibly provided by
-	source
-Date: Wed, 23 Sep 2009 20:30:28 +0200
-Message-ID: <20090923183023.GA85456@book.hvoigt.net>
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: [BUG?] git-cvsimport: path to cvspsfile
+Date: Wed, 23 Sep 2009 20:27:56 +0200
+Message-ID: <20090923182756.GA12430@onyx.camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-2
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 23 20:30:44 2009
+X-From: git-owner@vger.kernel.org Wed Sep 23 20:37:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqWby-0005hY-1V
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 20:30:42 +0200
+	id 1MqWiQ-0007tv-F9
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 20:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753179AbZIWSa2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 14:30:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753161AbZIWSa1
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 14:30:27 -0400
-Received: from darksea.de ([83.133.111.250]:41417 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752962AbZIWSa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2009 14:30:27 -0400
-Received: (qmail 3050 invoked from network); 23 Sep 2009 20:30:29 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 23 Sep 2009 20:30:29 +0200
+	id S1753281AbZIWShO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 14:37:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752707AbZIWShN
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 14:37:13 -0400
+Received: from moat.camk.edu.pl ([148.81.175.50]:40534 "EHLO moat.camk.edu.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752353AbZIWShM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 14:37:12 -0400
+X-Greylist: delayed 558 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Sep 2009 14:37:12 EDT
+Received: by moat.camk.edu.pl (Postfix, from userid 99)
+	id 4652551002D; Wed, 23 Sep 2009 20:27:56 +0200 (CEST)
+Received: from onyx.camk.edu.pl (onyx.camk.edu.pl [192.168.1.167])
+	by moat.camk.edu.pl (Postfix) with SMTP id 3207951002C
+	for <git@vger.kernel.org>; Wed, 23 Sep 2009 20:27:56 +0200 (CEST)
+Received: (nullmailer pid 16026 invoked by uid 1293);
+	Wed, 23 Sep 2009 18:27:56 -0000
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128990>
 
-This is useful if you are using the testsuite with local changes that
-include activated default hooks suitable for your teams installation.
-In some cases the pre-commit or other hooks can prevent the testsuite
-from getting the expected result.
+Hi,
 
-Currently all example hooks in the main git repository are deactivated
-so it makes no difference when running the testsuite without any. In
-case a future testcase wants to test a default hooks behavior it should
-copy it locally.
+When I use:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-or would you say that we need hooks in the testsuite template?
+git cvs-import -C <dir> -P <cvspsfile>
 
- t/test-lib.sh |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+it looks for <cvpsfile> relative to <dir>, not the working directory.
+Is it a bug or a feature?
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2ca536..446ab57 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -626,7 +626,7 @@ else
- 	GIT_EXEC_PATH=$GIT_VALGRIND/bin
- 	export GIT_VALGRIND
- fi
--GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
-+GIT_TEMPLATE_DIR=$(pwd)/trash\ directory.templates
- unset GIT_CONFIG
- GIT_CONFIG_NOSYSTEM=1
- GIT_CONFIG_NOGLOBAL=1
-@@ -638,6 +638,11 @@ test -d ../templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
- 
-+test -d "$GIT_TEMPLATE_DIR" || {
-+	cp -r ../templates/blt "$GIT_TEMPLATE_DIR"
-+	rm -f "$GIT_TEMPLATE_DIR"/hooks/*
-+}
-+
- if ! test -x ../test-chmtime; then
- 	echo >&2 'You need to build test-chmtime:'
- 	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
+Best wishes,
 -- 
-1.6.5.rc1.12.gc72fe
+  Kacper
