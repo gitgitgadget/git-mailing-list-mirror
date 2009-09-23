@@ -1,131 +1,86 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/3] Add "%w" to pretty formats, which rewraps the commit
- message
-Date: Wed, 23 Sep 2009 22:34:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909232233590.4985@pacific.mpi-cbg.de>
-References: <7vfxaercma.fsf@alter.siamese.dyndns.org> <1253655038-20335-1-git-send-email-heipei@hackvalue.de> <alpine.DEB.1.00.0909232232050.4985@pacific.mpi-cbg.de> <alpine.DEB.1.00.0909232232560.4985@pacific.mpi-cbg.de>
- <alpine.DEB.1.00.0909232233330.4985@pacific.mpi-cbg.de>
+Subject: Re: Add scripts to generate projects for other buildsystems (MSVC 
+ vcproj, QMake)
+Date: Wed, 23 Sep 2009 22:37:34 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909232236490.4985@pacific.mpi-cbg.de>
+References: <cover.1253088099.git.mstormo@gmail.com> <aa80ad559c731ca73179956e34b2743d903fbbec.1253088099.git.mstormo@gmail.com> <72888219-5bab-4964-9faf-0d40b4770e2c@o35g2000vbi.googlegroups.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Gilger <heipei@hackvalue.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 23 22:33:12 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-93504439-1253738255=:4985"
+Cc: msysGit <msysgit@googlegroups.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com,
+	raa.lkml@gmail.com, snaury@gmail.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 22:35:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqYWT-0007OS-VQ
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 22:33:10 +0200
+	id 1MqYYw-0008H0-0q
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 22:35:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbZIWUc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 16:32:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752275AbZIWUcz
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 16:32:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37604 "HELO mail.gmx.net"
+	id S1752082AbZIWUfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 16:35:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbZIWUfc
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 16:35:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38217 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752246AbZIWUcz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2009 16:32:55 -0400
-Received: (qmail invoked by alias); 23 Sep 2009 20:32:57 -0000
+	id S1750992AbZIWUfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 16:35:31 -0400
+Received: (qmail invoked by alias); 23 Sep 2009 20:35:34 -0000
 Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp067) with SMTP; 23 Sep 2009 22:32:57 +0200
+  by mail.gmx.net (mp021) with SMTP; 23 Sep 2009 22:35:34 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/cGTJd7LzcYfkwJG1A6Le63k3v2I/uK/M2oCCrpU
-	uLXlHYN+f3F+SR
+X-Provags-ID: V01U2FsdGVkX1/5/hhH7Xf5LkzalktIOQVqCXk2Pjj5ZjBNJ5J2sl
+	MhIiubhQuWJXBY
 X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0909232233330.4985@pacific.mpi-cbg.de>
+In-Reply-To: <72888219-5bab-4964-9faf-0d40b4770e2c@o35g2000vbi.googlegroups.com>
 User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128998>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Some repositories contain commit messages that are insanely long.
-And not always is it an option to rewrite the commits with rewrapped
-commit messages; just think of cvsimports or some such.
+--8323328-93504439-1253738255=:4985
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Now here is a remedy.
+Hi,
 
-With "--pretty=format:%w(8,6,70)" you will get the commit messages
-reformatted to width 70 where the first line has indent 8 and the
-subsequent lines have indent 6.
+On Wed, 23 Sep 2009, Sebastian Schuberth wrote:
 
-The following command will output something similar to plain "git log
---color", except that the commit bodies will be rewrapped to fit inside
-80 columns:
+> On Sep 16, 10:20 am, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+> 
+> > These scripts generate projects for the MSVC IDE (.vcproj files) or
+> > QMake (.pro files), based on the output of a 'make -n MSVC=1 V=1' run.
+> >
+> > This enables us to simply do the necesarry changes in the Makefile, and you
+> > can update the other buildsystems by regenerating the files. Keeping the
+> > other buildsystems up-to-date with main development.
+> 
+> I know I'm a little late with my comments as this patch set has
+> already been merged to master. However, for future reference I'd like
+> to point out that something similar could be archived by using e.g.
+> CMake, and only maintaining the CMake project file. I'm not suggesting
+> to actually switch to CMake at this time, but I wanted to point out
+> that a guy called Pau Garcia i Quiles already seems to have created a
+> preliminary CMakeLists.txt file for Git [1], and also tried to build
+> Git for Windows using his CMake-generated MSVC project files.
+> 
+> [1] "CMake-ifying git", http://www.elpauer.org/?p=324
 
-	git log --pretty=format:'%C(yellow)commit %H%C(reset)
-	Author: %an <%ae>
-	Date: %ad
+We actually discussed this, and I challenged Pau to provide a recipe (a la 
+/src/openssl/release.sh) that builds, installs and commits CMake.
 
-	%w(4,4,80)'
+There was no response after that challenge.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/pretty-formats.txt |    1 +
- pretty.c                         |   27 +++++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 0 deletions(-)
+Ciao,
+Dscho
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2a845b1..d727995 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,6 +123,7 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%w(indent,indent2,width)': rewrapped subject and body
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
-diff --git a/pretty.c b/pretty.c
-index f5983f8..639469e 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -595,6 +595,30 @@ static void format_decoration(struct strbuf *sb, const struct commit *commit)
- 		strbuf_addch(sb, ')');
- }
- 
-+static int rewrap_text(struct strbuf *sb, const char *params, const char *text)
-+{
-+	int indent = 4, indent2 = 4, width = 80, pacmanned = 1;
-+
-+	if (params[0] == '(') {
-+		char *p;
-+
-+		indent = strtoul(params + 1, &p, 0);
-+		if (*p == ',') {
-+			indent2 = strtoul(p + 1, &p, 0);
-+			if (*p == ',')
-+				width = strtoul(p + 1, &p, 0);
-+		}
-+		if (*p != ')') {
-+			error ("Invalid parameters: %.*s",
-+					(int)(p - params), params);
-+			return 0;
-+		}
-+		pacmanned = p + 1 - params;
-+	}
-+	strbuf_add_wrapped_text(sb, text, indent, indent2, width);
-+	return pacmanned;
-+}
-+
- static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
-                                void *context)
- {
-@@ -735,6 +759,9 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	case 'b':	/* body */
- 		strbuf_addstr(sb, msg + c->body_off);
- 		return 1;
-+	case 'w':	/* re-wrapped body */
-+		return rewrap_text(sb, placeholder + 1,
-+				msg + c->subject_off) + 1;
- 	}
- 	return 0;	/* unknown placeholder */
- }
--- 
-1.6.4.297.gcb4cc
+--8323328-93504439-1253738255=:4985--
