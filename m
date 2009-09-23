@@ -1,90 +1,78 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] Documentation: Update the style of 'git-describe' 
-	command.
-Date: Tue, 22 Sep 2009 21:24:58 -0400
-Message-ID: <a4c8a6d00909221824u617a9812j11af45b39e06c6d5@mail.gmail.com>
-References: <1253663286-5919-1-git-send-email-tfransosi@gmail.com>
-	 <7v3a6eo759.fsf@alter.siamese.dyndns.org>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: Re: [PATCH] compat/mingw.c: MSVC build must use ANSI Win32 API's
+Date: Wed, 23 Sep 2009 14:43:31 +1000
+Message-ID: <d2e97e800909222143y2cb3b37bq7f6d018c06934ab8@mail.gmail.com>
+References: <d2e97e800909212110w423e3b2fm85ac6f76439e0591@mail.gmail.com> 
+	<4AB869EE.1020200@viscovery.net> <4AB87B6B.1070808@gmail.com> 
+	<d2e97e800909220217y5bda4698pc286711a3535f87d@mail.gmail.com> 
+	<4AB89B7F.3050902@gmail.com> <d2e97e800909220254sc677abeia220c19f6ef5bd28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 03:25:07 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 06:44:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqGbR-00015I-52
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 03:25:05 +0200
+	id 1MqJiO-0002oV-KV
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 06:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbZIWBY4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Sep 2009 21:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753380AbZIWBYz
-	(ORCPT <rfc822;git-outgoing>); Tue, 22 Sep 2009 21:24:55 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:53553 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753340AbZIWBYz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Sep 2009 21:24:55 -0400
-Received: by fxm18 with SMTP id 18so240913fxm.17
-        for <git@vger.kernel.org>; Tue, 22 Sep 2009 18:24:58 -0700 (PDT)
+	id S1751390AbZIWEns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 00:43:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbZIWEns
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 00:43:48 -0400
+Received: from an-out-0708.google.com ([209.85.132.245]:20484 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751244AbZIWEnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 00:43:47 -0400
+Received: by an-out-0708.google.com with SMTP id d40so386527and.1
+        for <git@vger.kernel.org>; Tue, 22 Sep 2009 21:43:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pAEPhYy0ryurz9SNlqAQrTxjG5oIwNA7WccdZkLtn0I=;
-        b=rcks4vh9XSh61IomS8J6IUpguLTyCl9RbQ60dpB+eGdyE9d7JW/sJcV2d0PKKGS5F5
-         3TYPYgfUAXBgZixTBa2531FvyPCD+aqsWRGFUORO8+s1uZlQpJm0KR0eJCsh7R2aHiN6
-         Eh/IV6MCPnbziIE1bEKqR/+HVHZo0tE4sC4d4=
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=n1bcl1aFToZ+sRR5pgpqI2ifOV1nbLYNiVqcISzDYf4=;
+        b=hfrVTh610qZkAV3ezLU9pSliT1D7a3UkIDASzFNwrqpast8NOcD+2YR/CvRfmX3yhX
+         wwBx4w5dODeeVaAG4uNGzbZn8IAKIU4bz9+A2KRvB4PmX5tfBDkO2ISyr5Pn7ts2Q8sA
+         31RId8FyyQx5np2yn9RcZmo9P28FNYIrF4Snc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=benPErAR1ZyDE7aAb28OajfGPWKVgRI2QEmLGG6IUB+wcpDia23dTR1Ic3QXhmhN0t
-         /PPxUIekjnZUz6cRhTCn2yEAhVbvYGhABRx0MKg4zHjJPTIOpZdzvum0bM4cSh7yQvuE
-         wHSi6dBanZDj/LHGj0sB/1KkOYoBgr5erk7Vs=
-Received: by 10.86.217.8 with SMTP id p8mr1477023fgg.73.1253669098401; Tue, 22 
-	Sep 2009 18:24:58 -0700 (PDT)
-In-Reply-To: <7v3a6eo759.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=fbYbq8HHK6RQvF64xbc5PEzkVDYu0DGBDf9Y1i15y6U0SDzZRphXEn4h8Kl8zNH0dq
+         mj6s2NFaeDc/mrqNvyg2k4k7I0SMtZWrRtSDZw1XLrmuQTR2SGZhXDP+C1GuYBMhhY02
+         LFStRw4cAPyraiDq2eJQL8Mx9RFxuu1p6umAA=
+Received: by 10.100.246.14 with SMTP id t14mr1941490anh.176.1253681031130; 
+	Tue, 22 Sep 2009 21:43:51 -0700 (PDT)
+In-Reply-To: <d2e97e800909220254sc677abeia220c19f6ef5bd28@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128967>
 
-On Tue, Sep 22, 2009 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Thiago Farina <tfransosi@gmail.com> writes:
+2009/9/22 Michael Wookey <michaelwookey@gmail.com>:
+> 2009/9/22 Marius Storm-Olsen <mstormo@gmail.com>:
+>>> On another note, I see *many* build warnings for things like
+>>> "signed/unsigned compares". I'd be willing to work through these warnings
+>>> and fix them. Thoughts?
+>>
+>> Well, first find out why these are a problem with MSVC and not GCC. Are the
+>> types different on these platforms? signed vs unsigned should show up with
+>> GCC as well. We need to make sure that we don't fix signed/unsigned issues
+>> on one platform, just to introduce it to another platform.
+>> In any case, it would be good for someone to have a look at these, just so
+>> we can determine the cause for most of them, and then we should figure out
+>> on the list how to deal with them.
 >
->> =A0$ git describe -h
->> -usage: git-describe [options] <committish>*
->> +usage: git describe [options] <commit-ish>*
->
-> I think the first half of this line is correct but the other half is =
-not.
->
-> $ git grep --color -c -e committish -- Documentation/
-> Documentation/git-describe.txt:6
-> Documentation/git-fast-import.txt:8
-> Documentation/git-name-rev.txt:1
-> Documentation/git-shortlog.txt:1
-> Documentation/gitcli.txt:1
-> Documentation/howto/revert-branch-rebase.txt:1
->
-> $ git grep --color -c -e commit-ish -- Documentation/
-> Documentation/git-rebase.txt:1
-> Documentation/git.txt:2
-I did this:
-git$ grep --color -n "commit-ish" *.c
-builtin-revert.c:29:	"git revert [options] <commit-ish>",
-builtin-revert.c:34:	"git cherry-pick [options] <commit-ish>",
-builtin-send-pack.c:368:		 * (3) if both new and old are commit-ish,
-and new is a
-remote.c:1388:	/* Both new and old must be commit-ish and new is descen=
-dant of
+> Well, at warning level 4, MSVC is quite verbose. Perhaps the current
+> gcc build flags are more forgiving?
 
-git$ grep --color -n "committish" *.c
-builtin-describe.c:13:	"git describe [options] <committish>*",
-builtin-merge.c:885:	 * committish that is the same as HEAD there inste=
-ad.
+Ah, gcc does produces similar warnings when "-Wextra" is added to the CFLAGS:
+
+  CFLAGS = -g -O2 -Wall -Wextra
+
+IMHO, warnings such as these should be worked through and fixed, or
+there may be some latent bug waiting to appear.
