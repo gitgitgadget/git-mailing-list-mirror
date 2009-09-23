@@ -1,80 +1,61 @@
 From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: Avoid declaration after statement
-Date: Wed, 23 Sep 2009 02:44:02 -0700 (PDT)
-Message-ID: <05f2bea5-0f74-4c89-9a84-d908a80bea20@h30g2000vbr.googlegroups.com>
-References: <cover.1253088099.git.mstormo@gmail.com> <213f3c7799721c3f42ffa689498175f0495048eb.1253088099.git.mstormo@gmail.com>
+Subject: Re: Add MinGW header files to build git with MSVC
+Date: Wed, 23 Sep 2009 03:03:35 -0700 (PDT)
+Message-ID: <a416a9d0-90f3-40b7-bd39-ea67ceb2e0b9@j19g2000vbp.googlegroups.com>
+References: <cover.1253088099.git.mstormo@gmail.com> <7afd55f9b2f0f7859f757c715034cc3520e07f0e.1253088099.git.mstormo@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org, Johannes.Schindelin@gmx.de,  gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com, raa.lkml@gmail.com,  snaury@gmail.com
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com, j6t@kdbg.org,
+	lznuaa@gmail.com, raa.lkml@gmail.com, snaury@gmail.com
 To: msysGit <msysgit@googlegroups.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Sep 23 11:44:18 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vw0-f153.google.com ([209.85.212.153])
+X-From: git-owner@vger.kernel.org Wed Sep 23 12:03:45 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqOOY-00077L-AP
-	for gcvm-msysgit@m.gmane.org; Wed, 23 Sep 2009 11:44:18 +0200
-Received: by vws17 with SMTP id 17so582834vws.25
-        for <gcvm-msysgit@m.gmane.org>; Wed, 23 Sep 2009 02:44:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :mime-version:received:date:in-reply-to:x-ip:references:user-agent
-         :x-http-useragent:message-id:subject:from:to:cc:content-type:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=/2FkcoagFM3SK+EwMOw4uQUzrOPx8gky00346nOGOqw=;
-        b=TIDyVB5lnwcstvTrtNp8lmBAAfUEnc8xpQFvjfHfGCdlciPunXi8ObgBeyGdMB6ZBW
-         5nyDmDq1JCbb5sxoj0HxUJL5ndF5CJKLaEuAT+jn6C1zaJEPofMr84qDMh0Fmvva6T0C
-         bFCrV4a3zxFpld/NYCVnnEYDW6jBBVKek3BAU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:mime-version:date:in-reply-to:x-ip
-         :references:user-agent:x-http-useragent:message-id:subject:from:to
-         :cc:content-type:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
-         :x-beenthere;
-        b=Y01y0e29ShjyjwRAOnkC42GUFfAzlsFvCnB6l2Xb0Zh9V0/tzPCiiLn+euTDcf6gWu
-         7cZawL9xAKhUKmohbi4LeYEKemqfxLm6tYEBRMHTpEDFfE8JIRZqrnzDpK1Lzkra1Xuv
-         2lLP4jpYU7Tw4d1/ddMBD81KxxW9CFiY9jdP4=
-Received: by 10.220.69.149 with SMTP id z21mr440864vci.29.1253699051335;
-        Wed, 23 Sep 2009 02:44:11 -0700 (PDT)
-Received: by 10.177.125.36 with SMTP id c36gr7140yqn.0;
-	Wed, 23 Sep 2009 02:44:03 -0700 (PDT)
-X-Sender: sschuberth@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.150.87.2 with SMTP id k2mr255696ybb.6.1253699042842; Wed, 23  Sep 2009 02:44:02 -0700 (PDT)
-In-Reply-To: <213f3c7799721c3f42ffa689498175f0495048eb.1253088099.git.mstormo@gmail.com>
+	id 1MqOhL-0005eH-An
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 12:03:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751210AbZIWKDe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2009 06:03:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbZIWKDd
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 06:03:33 -0400
+Received: from mail-yx0-f165.google.com ([209.85.210.165]:60917 "EHLO
+	mail-yx0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751189AbZIWKDd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2009 06:03:33 -0400
+X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Wed, 23 Sep 2009 06:03:33 EDT
+Received: by yxe37 with SMTP id 37so545051yxe.33
+        for <git@vger.kernel.org>; Wed, 23 Sep 2009 03:03:36 -0700 (PDT)
+Received: by 10.150.27.5 with SMTP id a5mr256131yba.16.1253700216564; Wed, 23 
+	Sep 2009 03:03:36 -0700 (PDT)
+In-Reply-To: <7afd55f9b2f0f7859f757c715034cc3520e07f0e.1253088099.git.mstormo@gmail.com>
 X-IP: 91.64.214.160
 User-Agent: G2/1.0
-X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.3)  Gecko/20090824 Firefox/3.5.3,gzip(gfe),gzip(gfe)
-Sender: msysgit@googlegroups.com
+X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.3) 
+	Gecko/20090824 Firefox/3.5.3,gzip(gfe),gzip(gfe)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128977>
-
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128978>
 
 > From: Frank Li <lznuaa@gmail.com>
 >
-> MSVC does not understand this C99 style
+> Added the header files dirent.h, unistd.h and utime.h
+> Add alloca.h, which simply includes malloc.h, which defines alloca
 >
 > Signed-off-by: Frank Li <lznuaa@gmail.com>
 > Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
 
-Indeed, even in recent Visual Studio versions the C compiler only
-understands C90, not C99. Would it make sense to just force MSVC to
-compile *.c files with the C++ compiler to fix this, rather than
-patching files (which might be necessary for future files, too)? See
-the "/TP" command line option to "CL".
+[...]
+
+> =A0create mode 100644 compat/vcbuild/include/sys/utime.h
+
+Have you considered simply including MSVC's sys/utime.h here? From a
+first glance, it seems as if it contains all required symbols.
 
 --
 Sebastian
