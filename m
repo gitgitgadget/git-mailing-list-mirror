@@ -1,71 +1,71 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2009, #05; Wed, 23)
-Date: Wed, 23 Sep 2009 22:48:30 +0100
-Message-ID: <c77435a80909231448l774ef841iba6e9e01d8239ff3@mail.gmail.com>
-References: <7vhbuui1ys.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: 'git am' doubt
+Date: Wed, 23 Sep 2009 19:20:53 -0300
+Message-ID: <a4c8a6d00909231520s53be6654ibf74d4430e7e82f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 23:48:37 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 24 00:21:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqZhU-0000R6-RT
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 23:48:37 +0200
+	id 1MqaCq-0001CO-Jq
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 00:21:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094AbZIWVs2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2009 17:48:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbZIWVs1
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 17:48:27 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:58079 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043AbZIWVs1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2009 17:48:27 -0400
-Received: by bwz6 with SMTP id 6so898364bwz.37
-        for <git@vger.kernel.org>; Wed, 23 Sep 2009 14:48:30 -0700 (PDT)
+	id S1751321AbZIWWUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 18:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbZIWWUu
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 18:20:50 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:45292 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397AbZIWWUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 18:20:50 -0400
+Received: by fxm18 with SMTP id 18so1002663fxm.17
+        for <git@vger.kernel.org>; Wed, 23 Sep 2009 15:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vYVkbA6zz6o93rnBheMKMb7/SsHiCGr29MAiyLJihuU=;
-        b=W7dAOJSOu+NbOc/9/GAOdz2g6MqE/5vz86JbOsp1nAz0A7+sCLnqkD7lACT1II41/R
-         dW3FQqw2HCWqmeaDCU5e54Rvp//oIiLsJ3514ATj5WPzhbza7jB9554C/1Ue6dXeojdI
-         cVHJl5DK6tNm9iNMtWGeNqc1jLbZbLv4qN1yU=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=9Y3Y3SQSfuewAZw2Ju8ZfDo1H66V6WT6R8zfLMmreNI=;
+        b=EacwiawMvCRJxKaxxrhgWwX7AbESYaabvkSYCLG2fh0urvJ7LEKtbT3b4B27Kg1095
+         LQmgkXdFSCB+5z7pvsHwra0a0Xnmhwf7R12FEa6d/nD4PkRTcWXBWDLDBL/EV2LAwgm4
+         hX8e732MEMfIpnRj4oPXzMn2iu2vCYqCkbjYo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bA5YrS2GWvI2514xnTv0TJ+C8vIDq10vBOFL4hb2TVMSH2VGP7eXNj1HqoEu/+x+Y2
-         tOEE+P9dDmZSWoW7YxgIvkVbg9NMRidAVEXVFnhqwiubPEeqkcSGkcozDfE6ju4ySdrG
-         fdeZC+3ACV/ZAR44obeGOevVbP5X3s60xPoRI=
-Received: by 10.204.175.80 with SMTP id w16mr2329982bkz.207.1253742510129; 
-	Wed, 23 Sep 2009 14:48:30 -0700 (PDT)
-In-Reply-To: <7vhbuui1ys.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=TNVja51wnt1OzMebmSPOMSRTNgNshafNFStgBYeo5yw+4/qF2pupRT4wXxrAHyFrw5
+         S0wtUVkgEP6l6rA2L1KnPcunls+A9LWMY6ssNb7Qm3NFUAcx+hR8yA00xfz8ca2ZeTIS
+         6TA2CSgc0b5n+sMNYMabvIDiR3CFaNSCy1LcQ=
+Received: by 10.103.76.37 with SMTP id d37mr1204248mul.99.1253744453356; Wed, 
+	23 Sep 2009 15:20:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129010>
 
-> * ne/rev-cache (2009-09-07) 7 commits
-> =A0- support for commit grafts, slight change to general mechanism
-> =A0- support for path name caching in rev-cache
-> =A0- full integration of rev-cache into git, completed test suite
-> =A0- administrative functions for rev-cache, start of integration int=
-o git
-> =A0- support for non-commit object caching in rev-cache
-> =A0- basic revision cache system, no integration or features
-> =A0- man page and technical discussion for rev-cache
->
-> Tonight's 'pu' ships with this and this series seems to break a few
-> tests. =A0I didn't debug.
+Hi,
 
-Ack, I see your hesitation now...  Sorry, so many tests are borked on
-cygwin I didn't catch it, and I hadn't gotten around to booting into
-*nix.  Will fix these soon.
+I'm trying to apply a patch from the mailing list using 'git am'.
 
- - Nick
+What I'm doing is:
+
+- In gmail:
+ - Save original, then I copied the content to a text editor.
+- In text editor:
+ - Remove the first empty line.
+ - Save the file in the same directory where I have the git source.
+- In git directory:
+ - $ git am -s ./filename.mbox
+
+Of course I'm doing something wrong here, but I don't know what.
+The error is:
+cat: /home/tfarina/git/.git/rebase-apply/next: No such file or directory
+previous rebase directory /home/tfarina/git/.git/rebase-apply still
+exists but mbox given.
+
+Sorry if this is already answered before in this mailing list, but I
+couldn't find it.
+
+Thanks anyway for the time and help.
