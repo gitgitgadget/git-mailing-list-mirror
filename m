@@ -1,124 +1,100 @@
-From: David Holmer <dholmer@persistentsystems.com>
-Subject: Re: gitk management of git diff-tree processes
-Date: Wed, 23 Sep 2009 12:05:59 -0400
-Organization: Persistent Systems
-Message-ID: <1253721959.8531.112.camel@blackbird>
-References: <1253632204.8531.78.camel@blackbird>
+From: "Halstrick, Christian" <christian.halstrick@sap.com>
+Subject: [JGIT PATCH 1/2] add support for core.logAllRefUpdates
+ configuration parameter
+Date: Wed, 23 Sep 2009 18:42:29 +0200
+Message-ID: <D35B4A582834DC418CCF9AF41AB69B70016953F62F@DEWDFECCR04.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 23 18:10:56 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 18:42:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqUMJ-0001Hx-HL
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 18:06:23 +0200
+	id 1MqUvU-0008IP-Q2
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 18:42:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbZIWQGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 12:06:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753447AbZIWQGC
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 12:06:02 -0400
-Received: from server18.pronicsolutions.com ([66.103.131.81]:49229 "EHLO
-	server18.pronicsolutions.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751277AbZIWQF7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2009 12:05:59 -0400
-Received: from pool-71-167-226-15.nycmny.east.verizon.net ([71.167.226.15]:50281 helo=[192.168.1.154])
-	by server18.pronicsolutions.com with esmtpsa (SSLv3:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <dholmer@persistentsystems.com>)
-	id 1MqULx-0006UN-5e
-	for git@vger.kernel.org; Wed, 23 Sep 2009 12:06:01 -0400
-In-Reply-To: <1253632204.8531.78.camel@blackbird>
-X-Mailer: Evolution 2.26.1 
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - server18.pronicsolutions.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - persistentsystems.com
+	id S1751811AbZIWQmf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 12:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbZIWQmf
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 12:42:35 -0400
+Received: from smtpde01.sap-ag.de ([155.56.68.171]:60204 "EHLO
+	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014AbZIWQme (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 12:42:34 -0400
+Received: from mail.sap.corp
+	by smtpde01.sap-ag.de (26) with ESMTP id n8NGgYAJ006396
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 23 Sep 2009 18:42:34 +0200 (MEST)
+Thread-Topic: [JGIT PATCH 1/2] add support for core.logAllRefUpdates
+ configuration parameter
+Thread-Index: Aco8bNdCSyB8lzEZTjGYCM5KjfOqBg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Scanner: Virus Scanner virwal06
+X-SAP: out
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128984>
 
-On Tue, 2009-09-22 at 11:10 -0400, David Holmer wrote: 
-> I find that if I am in gitk browsing through commits, gitk seems to be
-> spawning a git diff-tree process in order to display the changes and
-> patch file list in the bottom panes.
-> 
-> I have a certain commit that adds a very large amount of data to my
-> repository (1.2 GB). Understandably, the git diff-tree process that
-> tries to display the changes in this commit takes a VERY long time to
-> run (e.g. churns indefinitely).
-> 
-> The issue is that I find that if I simply browse past this commit (e.g.
-> using up/down arrows), gitk starts up a git diff-tree process and leaves
-> it running. As many times as I pass the commit (e.g. while looking at
-> changes before and after this commit), I end up with multiple processes
-> all running and my CPUs quickly go to 100%. Furthermore, even if I exit
-> gitk, all the git diff-tree processes keep running unless I manually
-> kill them.
-> 
-> Perhaps gitk could kill the git diff-tree process it spawns if its
-> output is no longer needed (e.g. user browses to a different commit, or
-> gitk exits).
-> 
-> Thank you,
-> David
-> 
-> $ ps -aF
-> UID        PID  PPID  C    SZ   RSS PSR STIME TTY          TIME CMD
-> david    23635     1 18 88365 102892  0 10:49 pts/1    00:01:11 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23640     1 18 88368 102908  1 10:49 pts/1    00:01:10 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23644     1 16 88368 102904  0 10:49 pts/1    00:01:04 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23646     1 16 88367 102916  0 10:49 pts/1    00:01:04 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23652     1 17 88365 102892  1 10:49 pts/1    00:01:07 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23656     1 17 88368 102920  1 10:49 pts/1    00:01:06 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23660     1 16 88369 102932  0 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23664     1 16 88368 102908  0 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23670     1 16 88368 102904  1 10:49 pts/1    00:01:03 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23680     1 17 88365 102896  1 10:49 pts/1    00:01:05 git diff-tree -r -p --textconv -C --cc --no-commit-id -U3 8df50645c4cadf26dc951540e0c713b0826247b8
-> david    23851 10444  0   692  1032   0 10:56 pts/1    00:00:00 ps -aF
-> 
-> $ git version
-> git version 1.6.4.4
-> 
-
-Looking at the code of gitk, I believe the git diff-tree process is
-spawned by proc getblobdiffs (gitk-git/gitk:7322). It sets up a command
-that matches all the arguments I see in the above ps -aF listing
-(gitk-git/gitk:7335):
-
-set cmd [diffcmd $ids "-p $textconv -C --cc --no-commit-id -U
-$diffcontext"]
-
-It then seems to setup this command to be run and the output processed
-via proc filerun (gitk-git/gitk:7352):
-
-filerun $bdf [list getblobdiffline $bdf $diffids]
-
-I am not very familiar with TCL. Is there a standard/correct way to
-pre-maturely halt this filerun processing? It seems to use the fileevent
-to know when there is more data to process.
-
-A Google search turned up a way to get the PID from $bfd and said that
-on unix systems you could run a kill, but that TCL had no built in kill
-mechanism. This seems a bit hackish/non-cross platform. Is there a
-better mechanism? Would something like closing the file descriptor cause
-the filerun processing to finish and the git diff-tree to terminate with
-a broken pipe?
-
-Thank you,
-David
-
--- 
-David G. Holmer, Ph.D.
-dholmer@persistentsystems.com
-CTO and Co-Founder
-Persistent Systems, LLC
-www.persistentsystems.com
-Office: 212-561-5895
-Mobile: 650-533-4964
-Fax: 212-202-3625
+RnJvbTogQ2hyaXN0aWFuIEhhbHN0cmljayA8Y2hyaXN0aWFuLmhhbHN0cmlja0BzYXAuY29tPg0K
+DQpKR2l0IHNob3VsZCB1bmRlcnN0YW5kIGNvbmZpZ3VyYXRpb24gcGFyYW1ldGVyIGxvZ0FsbFJl
+ZlVwZGF0ZXMgYW5kIHNob3VsZA0Kb25seSBsb2cgdXBkYXRlcyBvZiByZWZzIHdoZW4NCiAgZWl0
+aGVyIHRoZSBsb2cgZmlsZSBmb3IgdGhpcyByZWYgaXMgYWxyZWFkeSBwcmVzZW50DQogIG9yIHRo
+aXMgY29uZmlndXJhdGlvbiBwYXJhbWV0ZXIgaXMgc2V0IHRvIHRydWUNCkJlZm9yZSB0aGlzIGNv
+bW1pdCBKR2l0IHdhcyBhbHdheXMgd3JpdGluZyBsb2dzLCByZWdhcmRsZXNzIG9mIHRoaXMNCnBh
+cmFtZXRlciBvciBleGlzdGVuY2Ugb2YgbG9nZmlsZXMuDQoNClNpZ25lZC1vZmYtYnk6IENocmlz
+dGlhbiBIYWxzdHJpY2sgPGNocmlzdGlhbi5oYWxzdHJpY2tAc2FwLmNvbT4NClNpZ25lZC1vZmYt
+Ynk6IE1hdHRoaWFzIFNvaG4gPG1hdHRoaWFzLnNvaG5Ac2FwLmNvbT4NCi0tLQ0KIC4uLi9zcmMv
+b3JnL3NwZWFyY2UvamdpdC9saWIvQ29yZUNvbmZpZy5qYXZhICAgICAgIHwgICAxMCArKysrKysr
+KysrDQogLi4uL3NyYy9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9SZWZMb2dXcml0ZXIuamF2YSAgICAg
+fCAgIDE4ICsrKysrKysrKystLS0tLS0tLQ0KIDIgZmlsZXMgY2hhbmdlZCwgMjAgaW5zZXJ0aW9u
+cygrKSwgOCBkZWxldGlvbnMoLSkNCg0KZGlmZiAtLWdpdCBhL29yZy5zcGVhcmNlLmpnaXQvc3Jj
+L29yZy9zcGVhcmNlL2pnaXQvbGliL0NvcmVDb25maWcuamF2YSBiL29yZy5zcGVhcmNlLmpnaXQv
+c3JjL29yZy9zcGVhcmNlL2pnaXQvbGliL0NvcmVDb25maWcuamF2YQ0KaW5kZXggZWQzODI3Yi4u
+ZWNkOTU0NCAxMDA2NDQNCi0tLSBhL29yZy5zcGVhcmNlLmpnaXQvc3JjL29yZy9zcGVhcmNlL2pn
+aXQvbGliL0NvcmVDb25maWcuamF2YQ0KKysrIGIvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3Nw
+ZWFyY2UvamdpdC9saWIvQ29yZUNvbmZpZy5qYXZhDQpAQCAtNTYsMTAgKzU2LDEzIEBAIHB1Ymxp
+YyBDb3JlQ29uZmlnIHBhcnNlKGZpbmFsIENvbmZpZyBjZmcpIHsNCiAJcHJpdmF0ZSBmaW5hbCBp
+bnQgY29tcHJlc3Npb247DQogDQogCXByaXZhdGUgZmluYWwgaW50IHBhY2tJbmRleFZlcnNpb247
+DQorCQ0KKwlwcml2YXRlIGZpbmFsIGJvb2xlYW4gbG9nQWxsUmVmVXBkYXRlczsNCiANCiAJcHJp
+dmF0ZSBDb3JlQ29uZmlnKGZpbmFsIENvbmZpZyByYykgew0KIAkJY29tcHJlc3Npb24gPSByYy5n
+ZXRJbnQoImNvcmUiLCAiY29tcHJlc3Npb24iLCBERUZBVUxUX0NPTVBSRVNTSU9OKTsNCiAJCXBh
+Y2tJbmRleFZlcnNpb24gPSByYy5nZXRJbnQoInBhY2siLCAiaW5kZXh2ZXJzaW9uIiwgMik7DQor
+CQlsb2dBbGxSZWZVcGRhdGVzID0gcmMuZ2V0Qm9vbGVhbigiY29yZSIsICJsb2dBbGxSZWZVcGRh
+dGVzIiwgZmFsc2UpOw0KIAl9DQogDQogCS8qKg0KQEAgLTc3LDQgKzgwLDExIEBAIHB1YmxpYyBp
+bnQgZ2V0Q29tcHJlc3Npb24oKSB7DQogCXB1YmxpYyBpbnQgZ2V0UGFja0luZGV4VmVyc2lvbigp
+IHsNCiAJCXJldHVybiBwYWNrSW5kZXhWZXJzaW9uOw0KIAl9DQorCQ0KKwkvKioNCisJICogQHJl
+dHVybiB3aGV0aGVyIHRvIGxvZyBhbGwgcmVmVXBkYXRlcyANCisJICovDQorCXB1YmxpYyBib29s
+ZWFuIGlzTG9nQWxsUmVmVXBkYXRlcygpIHsNCisJCXJldHVybiBsb2dBbGxSZWZVcGRhdGVzOw0K
+Kwl9DQogfQ0KZGlmZiAtLWdpdCBhL29yZy5zcGVhcmNlLmpnaXQvc3JjL29yZy9zcGVhcmNlL2pn
+aXQvbGliL1JlZkxvZ1dyaXRlci5qYXZhIGIvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3NwZWFy
+Y2UvamdpdC9saWIvUmVmTG9nV3JpdGVyLmphdmENCmluZGV4IDRhYWQ4MDkuLjFlNTE1NWMgMTAw
+NjQ0DQotLS0gYS9vcmcuc3BlYXJjZS5qZ2l0L3NyYy9vcmcvc3BlYXJjZS9qZ2l0L2xpYi9SZWZM
+b2dXcml0ZXIuamF2YQ0KKysrIGIvb3JnLnNwZWFyY2UuamdpdC9zcmMvb3JnL3NwZWFyY2Uvamdp
+dC9saWIvUmVmTG9nV3JpdGVyLmphdmENCkBAIC0xMTIsMTYgKzExMiwxOCBAQCBwcml2YXRlIHN0
+YXRpYyB2b2lkIGFwcGVuZE9uZVJlY29yZChmaW5hbCBPYmplY3RJZCBvbGRJZCwNCiAJCWZpbmFs
+IGJ5dGVbXSByZWMgPSBDb25zdGFudHMuZW5jb2RlKHIudG9TdHJpbmcoKSk7DQogCQlmaW5hbCBG
+aWxlIGxvZ2RpciA9IG5ldyBGaWxlKGRiLmdldERpcmVjdG9yeSgpLCBDb25zdGFudHMuTE9HUyk7
+DQogCQlmaW5hbCBGaWxlIHJlZmxvZyA9IG5ldyBGaWxlKGxvZ2RpciwgcmVmTmFtZSk7DQotCQlm
+aW5hbCBGaWxlIHJlZmRpciA9IHJlZmxvZy5nZXRQYXJlbnRGaWxlKCk7DQorCQlpZiAocmVmbG9n
+LmV4aXN0cygpIHx8IGRiLmdldENvbmZpZygpLmdldENvcmUoKS5pc0xvZ0FsbFJlZlVwZGF0ZXMo
+KSkgew0KKwkJCWZpbmFsIEZpbGUgcmVmZGlyID0gcmVmbG9nLmdldFBhcmVudEZpbGUoKTsNCiAN
+Ci0JCWlmICghcmVmZGlyLmV4aXN0cygpICYmICFyZWZkaXIubWtkaXJzKCkpDQotCQkJdGhyb3cg
+bmV3IElPRXhjZXB0aW9uKCJDYW5ub3QgY3JlYXRlIGRpcmVjdG9yeSAiICsgcmVmZGlyKTsNCisJ
+CQlpZiAoIXJlZmRpci5leGlzdHMoKSAmJiAhcmVmZGlyLm1rZGlycygpKQ0KKwkJCQl0aHJvdyBu
+ZXcgSU9FeGNlcHRpb24oIkNhbm5vdCBjcmVhdGUgZGlyZWN0b3J5ICIgKyByZWZkaXIpOw0KIA0K
+LQkJZmluYWwgRmlsZU91dHB1dFN0cmVhbSBvdXQgPSBuZXcgRmlsZU91dHB1dFN0cmVhbShyZWZs
+b2csIHRydWUpOw0KLQkJdHJ5IHsNCi0JCQlvdXQud3JpdGUocmVjKTsNCi0JCX0gZmluYWxseSB7
+DQotCQkJb3V0LmNsb3NlKCk7DQorCQkJZmluYWwgRmlsZU91dHB1dFN0cmVhbSBvdXQgPSBuZXcg
+RmlsZU91dHB1dFN0cmVhbShyZWZsb2csIHRydWUpOw0KKwkJCXRyeSB7DQorCQkJCW91dC53cml0
+ZShyZWMpOw0KKwkJCX0gZmluYWxseSB7DQorCQkJCW91dC5jbG9zZSgpOw0KKwkJCX0NCiAJCX0N
+CiAJfQ0KIA0KLS0gDQoxLjYuNC5tc3lzZ2l0LjANCg==
