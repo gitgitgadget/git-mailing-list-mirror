@@ -1,118 +1,69 @@
-From: Johannes Gilger <heipei@hackvalue.de>
-Subject: [PATCH] Test for correct behaviour on %B(1) and %B(-1)
-Date: Wed, 23 Sep 2009 15:12:44 +0200
-Message-ID: <1253711564-17876-1-git-send-email-heipei@hackvalue.de>
-References: <7vmy4mo85b.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Gilger <heipei@hackvalue.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 23 15:13:47 2009
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: Add scripts to generate projects for other buildsystems (MSVC 
+	vcproj, QMake)
+Date: Wed, 23 Sep 2009 08:04:53 -0700 (PDT)
+Message-ID: <72888219-5bab-4964-9faf-0d40b4770e2c@o35g2000vbi.googlegroups.com>
+References: <cover.1253088099.git.mstormo@gmail.com> <aa80ad559c731ca73179956e34b2743d903fbbec.1253088099.git.mstormo@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com, j6t@kdbg.org,
+	lznuaa@gmail.com, raa.lkml@gmail.com, snaury@gmail.com
+To: msysGit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Wed Sep 23 17:05:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqRfF-0003fZ-BT
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 15:13:45 +0200
+	id 1MqTOw-0004QE-LV
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 17:05:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751450AbZIWNNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 09:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751382AbZIWNNf
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 09:13:35 -0400
-Received: from avalon.gnuzifer.de ([78.46.211.2]:33586 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbZIWNNe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2009 09:13:34 -0400
-Received: from u-6-181.vpn.rwth-aachen.de ([137.226.102.181]:37577 helo=localhost)
-	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1MqRew-0000DB-9I; Wed, 23 Sep 2009 15:13:26 +0200
-X-Mailer: git-send-email 1.6.5.rc1.38.g1fbd3
-In-Reply-To: <7vmy4mo85b.fsf@alter.siamese.dyndns.org>
-X-Verified-Sender: yes
-X-SA-Exim-Connect-IP: 137.226.102.181
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1752077AbZIWPEv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Sep 2009 11:04:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751311AbZIWPEu
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 11:04:50 -0400
+Received: from mail-yx0-f165.google.com ([209.85.210.165]:50317 "EHLO
+	mail-yx0-f165.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230AbZIWPEu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Sep 2009 11:04:50 -0400
+Received: by yxe37 with SMTP id 37so740116yxe.33
+        for <git@vger.kernel.org>; Wed, 23 Sep 2009 08:04:54 -0700 (PDT)
+Received: by 10.150.44.14 with SMTP id r14mr290431ybr.8.1253718293997; Wed, 23 
+	Sep 2009 08:04:53 -0700 (PDT)
+In-Reply-To: <aa80ad559c731ca73179956e34b2743d903fbbec.1253088099.git.mstormo@gmail.com>
+X-IP: 91.64.214.160
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.1.3) 
+	Gecko/20090824 Firefox/3.5.3,gzip(gfe),gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128982>
 
-Small test for correct indentation of the new %B tag (and whether
-negative values are ignored as an incorrect placeholder).
+On Sep 16, 10:20=A0am, Marius Storm-Olsen <mstormo@gmail.com> wrote:
 
-Signed-off-by: Johannes Gilger <heipei@hackvalue.de>
----
-Hi Junio,
+> These scripts generate projects for the MSVC IDE (.vcproj files) or
+> QMake (.pro files), based on the output of a 'make -n MSVC=3D1 V=3D1'=
+ run.
+>
+> This enables us to simply do the necesarry changes in the Makefile, a=
+nd you
+> can update the other buildsystems by regenerating the files. Keeping =
+the
+> other buildsystems up-to-date with main development.
 
-seeing as the %B-patch is in your pu you seem to be almost happy with it. It's 
-marked NEEDSWORK: tests, so I thought I give that a try too. Probably best to 
-be squashed with the other one.
+I know I'm a little late with my comments as this patch set has
+already been merged to master. However, for future reference I'd like
+to point out that something similar could be archived by using e.g.
+CMake, and only maintaining the CMake project file. I'm not suggesting
+to actually switch to CMake at this time, but I wanted to point out
+that a guy called Pau Garcia i Quiles already seems to have created a
+preliminary CMakeLists.txt file for Git [1], and also tried to build
+Git for Windows using his CMake-generated MSVC project files.
 
-Greetings,
-Jojo
+[1] "CMake-ifying git", http://www.elpauer.org/?p=3D324
 
- t/t4202-log.sh |   20 ++++++++++++++------
- 1 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 1e952ca..9b7825d 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -32,8 +32,9 @@ test_expect_success setup '
- 	git commit -m fifth  &&
- 
- 	git rm a/two &&
-+	echo -e "sixth\n\nlineone\nlinetwo" >sixth &&
- 	test_tick &&
--	git commit -m sixth
-+	git commit -F sixth
- 
- '
- 
-@@ -63,8 +64,15 @@ test_expect_success 'format' '
- 	test_cmp expect actual
- '
- 
-+printf "sixth\n\n lineone\n linetwo\n%%B(-1)\n" > expect
-+test_expect_success 'format (subject %s, body %B(1), %B(-1))' '
-+
-+	git log --format="%s%n%n%B(1)%n%B(-1)" 394ef78..5821e35 > actual &&
-+	test_cmp expect actual
-+'
-+
- cat > expect << EOF
--804a787 sixth
-+5821e35 sixth
- 394ef78 fifth
- 5d31159 fourth
- 2fbe8c0 third
-@@ -150,22 +158,22 @@ test_expect_success 'git log --follow' '
- '
- 
- cat > expect << EOF
--804a787 sixth
-+5821e35 sixth
- 394ef78 fifth
- 5d31159 fourth
- EOF
- test_expect_success 'git log --no-walk <commits> sorts by commit time' '
--	git log --no-walk --oneline 5d31159 804a787 394ef78 > actual &&
-+	git log --no-walk --oneline 5d31159 5821e35 394ef78 > actual &&
- 	test_cmp expect actual
- '
- 
- cat > expect << EOF
- 5d31159 fourth
--804a787 sixth
-+5821e35 sixth
- 394ef78 fifth
- EOF
- test_expect_success 'git show <commits> leaves list of commits as given' '
--	git show --oneline -s 5d31159 804a787 394ef78 > actual &&
-+	git show --oneline -s 5d31159 5821e35 394ef78 > actual &&
- 	test_cmp expect actual
- '
- 
--- 
-1.6.5.rc1.38.g1fbd3
+--
+Sebastian
