@@ -1,86 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Add scripts to generate projects for other buildsystems (MSVC 
- vcproj, QMake)
-Date: Wed, 23 Sep 2009 22:37:34 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909232236490.4985@pacific.mpi-cbg.de>
-References: <cover.1253088099.git.mstormo@gmail.com> <aa80ad559c731ca73179956e34b2743d903fbbec.1253088099.git.mstormo@gmail.com> <72888219-5bab-4964-9faf-0d40b4770e2c@o35g2000vbi.googlegroups.com>
+From: Johannes Gilger <heipei@hackvalue.de>
+Subject: Re: [PATCH 3/3] Add "%w" to pretty formats, which rewraps the
+ commit message
+Date: Wed, 23 Sep 2009 23:00:56 +0200
+Message-ID: <20090923210055.GA25197@dualtron.vpn.rwth-aachen.de>
+References: <7vfxaercma.fsf@alter.siamese.dyndns.org>
+ <1253655038-20335-1-git-send-email-heipei@hackvalue.de>
+ <alpine.DEB.1.00.0909232232050.4985@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909232232560.4985@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909232233330.4985@pacific.mpi-cbg.de>
+ <alpine.DEB.1.00.0909232233590.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-93504439-1253738255=:4985"
-Cc: msysGit <msysgit@googlegroups.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, j6t@kdbg.org, lznuaa@gmail.com,
-	raa.lkml@gmail.com, snaury@gmail.com
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 23 22:35:42 2009
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Gilger <heipei@hackvalue.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 23 23:01:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqYYw-0008H0-0q
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 22:35:42 +0200
+	id 1MqYxi-00083Y-AU
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Sep 2009 23:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbZIWUfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Sep 2009 16:35:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751555AbZIWUfc
-	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 16:35:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38217 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750992AbZIWUfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Sep 2009 16:35:31 -0400
-Received: (qmail invoked by alias); 23 Sep 2009 20:35:34 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp021) with SMTP; 23 Sep 2009 22:35:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/5/hhH7Xf5LkzalktIOQVqCXk2Pjj5ZjBNJ5J2sl
-	MhIiubhQuWJXBY
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <72888219-5bab-4964-9faf-0d40b4770e2c@o35g2000vbi.googlegroups.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1752445AbZIWVBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Sep 2009 17:01:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751983AbZIWVBG
+	(ORCPT <rfc822;git-outgoing>); Wed, 23 Sep 2009 17:01:06 -0400
+Received: from avalon.gnuzifer.de ([78.46.211.2]:50474 "EHLO
+	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbZIWVBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Sep 2009 17:01:06 -0400
+Received: from u-6-181.vpn.rwth-aachen.de ([137.226.102.181]:46458 helo=localhost)
+	by avalon.gnuzifer.de with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <heipei@hackvalue.de>)
+	id 1MqYxT-00067g-4N; Wed, 23 Sep 2009 23:01:03 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0909232233590.4985@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Verified-Sender: yes
+X-SA-Exim-Connect-IP: 137.226.102.181
+X-SA-Exim-Mail-From: heipei@hackvalue.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/128999>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 23/09/09 22:34, Johannes Schindelin wrote:
+> With "--pretty=format:%w(8,6,70)" you will get the commit messages
+> reformatted to width 70 where the first line has indent 8 and the
+> subsequent lines have indent 6.
 
---8323328-93504439-1253738255=:4985
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Hey Johannes,
 
-Hi,
+you sent me your patches earlier (and I really liked the idea and could 
+use it too, especially with svn-mindset people). One thing that bothers 
+me about the %w flag is that is includes subject and body, when we 
+already have atoms for both of these flags. So having a subject(x,y) and 
+body(x,y) tag (where x is indent and y is textwidth to be rewrapped) 
+would be nicer and more in the spirit of the existing format options 
+imho.
 
-On Wed, 23 Sep 2009, Sebastian Schuberth wrote:
+Having said that I also have to acknowledge a clear advantage of your 
+patch, which is that one doesn't need to clear trailing newlines when 
+the subject is < wrapwidth and the body is empty (and one used 
+%s(x,y)%n%n%b(x,y) as a format-tag). With my %B, %B(n) patch which is on 
+pu (and which you should probably consider in case it gets into next ;) 
+I do this by calling strbuf_rtrim after adding the body.
 
-> On Sep 16, 10:20 am, Marius Storm-Olsen <mstormo@gmail.com> wrote:
-> 
-> > These scripts generate projects for the MSVC IDE (.vcproj files) or
-> > QMake (.pro files), based on the output of a 'make -n MSVC=1 V=1' run.
-> >
-> > This enables us to simply do the necesarry changes in the Makefile, and you
-> > can update the other buildsystems by regenerating the files. Keeping the
-> > other buildsystems up-to-date with main development.
-> 
-> I know I'm a little late with my comments as this patch set has
-> already been merged to master. However, for future reference I'd like
-> to point out that something similar could be archived by using e.g.
-> CMake, and only maintaining the CMake project file. I'm not suggesting
-> to actually switch to CMake at this time, but I wanted to point out
-> that a guy called Pau Garcia i Quiles already seems to have created a
-> preliminary CMakeLists.txt file for Git [1], and also tried to build
-> Git for Windows using his CMake-generated MSVC project files.
-> 
-> [1] "CMake-ifying git", http://www.elpauer.org/?p=324
+Greetings,
+Jojo
 
-We actually discussed this, and I challenged Pau to provide a recipe (a la 
-/src/openssl/release.sh) that builds, installs and commits CMake.
-
-There was no response after that challenge.
-
-Ciao,
-Dscho
-
---8323328-93504439-1253738255=:4985--
+-- 
+Johannes Gilger <heipei@hackvalue.de>
+http://heipei.net
+GPG-Key: 0x42F6DE81
+GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
