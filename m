@@ -1,81 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Per-remote tracking branch
-Date: Thu, 24 Sep 2009 18:00:07 +0200
-Message-ID: <vpqskec5o54.fsf@bauges.imag.fr>
-References: <vpq4or48bux.fsf@bauges.imag.fr>
-	<20090924112550.GA6540@atjola.homenet>
-	<20090924113537.GA14113@atjola.homenet>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: Feature Enhancement Idea.
+Date: Thu, 24 Sep 2009 16:45:26 +0000 (UTC)
+Message-ID: <loom.20090924T184504-686@post.gmane.org>
+References: <5b5e291e0909222317q47ae36d4la470f17ec3902124@mail.gmail.com>  <m3bpl0c2cf.fsf@localhost.localdomain> <5b5e291e0909240225q49a202abk7cf1a0c8f715ad5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 24 18:00:40 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 24 18:46:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqqkJ-0007Q9-TU
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 18:00:40 +0200
+	id 1MqrSK-0005sq-8Q
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 18:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbZIXQAU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Sep 2009 12:00:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752570AbZIXQAS
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 12:00:18 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54138 "EHLO rominette.imag.fr"
+	id S1752408AbZIXQpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 12:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbZIXQpz
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 12:45:55 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38559 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752842AbZIXQAP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 12:00:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8OFuthN032213
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 24 Sep 2009 17:56:55 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mqqjn-0002Lu-7e; Thu, 24 Sep 2009 18:00:07 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mqqjn-0004mu-6L; Thu, 24 Sep 2009 18:00:07 +0200
-In-Reply-To: <20090924113537.GA14113@atjola.homenet> (=?iso-8859-1?Q?=22Bj?=
- =?iso-8859-1?Q?=F6rn?= Steinbrink"'s message of "Thu\, 24 Sep 2009
- 13\:35\:37 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 Sep 2009 17:56:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n8OFuthN032213
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1254412617.29208@hG0l93u//iTaKHmU4YypLQ
+	id S1751467AbZIXQpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2009 12:45:54 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MqrS6-0005nw-1q
+	for git@vger.kernel.org; Thu, 24 Sep 2009 18:45:56 +0200
+Received: from adsl-63-197-71-184.dsl.snfc21.pacbell.net ([63.197.71.184])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Sep 2009 18:45:54 +0200
+Received: from raible by adsl-63-197-71-184.dsl.snfc21.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 24 Sep 2009 18:45:54 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 63.197.71.184 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.21 Safari/532.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129048>
 
-Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+Deon George <deon.george <at> gmail.com> writes:
 
->> Setup "foo" so that it fetches "master" only, i.e. have
->> remote.foo.fetch =3D refs/heads/master:refs/remotes/foo/master
->>=20
->> You get that setup with: git remote add -t master foo git://...
->>=20
->> Then there's only one possible choice for "git pull", and it will ta=
-ke
->> that.
->
-> Ah, crap, spoke too soon. That works only when branch.<name>.merge is
-> not set. Though that's not that much of a problem. When your "primary=
-"
-> remote (the one set for branch.<name>.remote) also fetches just a sin=
-gle
-> branch, "git pull" will still work, even if branch.<name>.merge is no=
-t
-> set.
+> > Third, if the above isn't what you want, then you can manually
+> > intermingle working directories of different git repositories
+> > (probably requiring decouplig of bare git repository (git-dir)
+> > from working area (work-tree)).
+> 
+> Ahh, now this sounds like it might be what I want to do - I think I'll
+> explore this. I can see that it would provide file level autonomy
+> only, but as a starting point I think it will help heaps...
 
-Yes, that's it. Thanks for your anwser, it works.
+Proof of concept:
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+export GIT_WORK_TREE=.
+
+git --git-dir=.git1 init
+git --git-dir=.git1 add view1-file
+git --git-dir=.git1 commit -m"view1 initial"
+
+git --git-dir=.git2 init
+git --git-dir=.git2 add view1-file
+git --git-dir=.git2 commit -m"view2 initial"
+
+git --git-dir=.git1 log
+git --git-dir=.git2 log
