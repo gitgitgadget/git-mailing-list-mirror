@@ -1,69 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pre-commit.sample: don't use [...] around a tr range
-Date: Thu, 24 Sep 2009 01:55:18 -0400
-Message-ID: <20090924055518.GB24486@coredump.intra.peff.net>
-References: <871vm0k6jm.fsf@meyering.net>
- <81b0412b0909210243h58633509r7b427c69f62928fe@mail.gmail.com>
- <87ocp4imul.fsf@meyering.net>
- <20090921134427.GA20567@sigio.peff.net>
- <n2z47RdNjxVbPeRfgJuY54nJrfzDfn43bzv8HoH6cEuAzQ6fB1MaBg@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Feature Enhancement Idea.
+Date: Wed, 23 Sep 2009 22:56:52 -0700 (PDT)
+Message-ID: <m3bpl0c2cf.fsf@localhost.localdomain>
+References: <5b5e291e0909222317q47ae36d4la470f17ec3902124@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jim Meyering <jim@meyering.net>, Alex Riesen <raa.lkml@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Sep 24 07:55:22 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Deon George <deon.george@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 24 07:57:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqhIY-0005rT-9e
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 07:55:22 +0200
+	id 1MqhKA-0006CT-S9
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 07:57:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752438AbZIXFzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2009 01:55:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbZIXFzJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 01:55:09 -0400
-Received: from peff.net ([208.65.91.99]:44627 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751457AbZIXFzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 01:55:08 -0400
-Received: (qmail 2876 invoked by uid 107); 24 Sep 2009 05:58:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 24 Sep 2009 01:58:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2009 01:55:18 -0400
-Content-Disposition: inline
-In-Reply-To: <n2z47RdNjxVbPeRfgJuY54nJrfzDfn43bzv8HoH6cEuAzQ6fB1MaBg@cipher.nrlssc.navy.mil>
+	id S1752688AbZIXF4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 01:56:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbZIXF4x
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 01:56:53 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:55463 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492AbZIXF4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2009 01:56:52 -0400
+Received: by bwz6 with SMTP id 6so1059292bwz.37
+        for <git@vger.kernel.org>; Wed, 23 Sep 2009 22:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=MIHvEpeEfTM8zh5lWB1tLmimtdpqKiReJ4t75qkYO04=;
+        b=nHzH6576LETIH+zZFOdGJPvi/OyYb3WaSjoNobSng7m0lTC0DGNczkpEgLRAFDwDQO
+         A5y9g6hzwsYQKE8q/zxA0IUXLIXf7G2/Fy77nhFUpWG2fY2FXCRfNlIr2GzFJwNowuw+
+         ALd82rgk3ybm4icvIuqXIgCuoEiZNBnasxJsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=t0ctaw+GRMHh64ChLV+SyY+RnAG7KCyzLRTJ6MAFJ2FWDgboGro0iLGFoO4GEZInuv
+         FP+51EF3QY5CNoBgPF4qfUK0//vkBfwqtyMFQXE+pTa6iSzGOsz4kE/9KkddkSS5Lfyu
+         RzRAqnJ6cuo1pDgqNkR+XOP7ewXTwOWNQTEFg=
+Received: by 10.204.23.203 with SMTP id s11mr2676888bkb.17.1253771813608;
+        Wed, 23 Sep 2009 22:56:53 -0700 (PDT)
+Received: from localhost.localdomain (abvp218.neoplus.adsl.tpnet.pl [83.8.213.218])
+        by mx.google.com with ESMTPS id 2sm2481914fks.3.2009.09.23.22.56.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 23 Sep 2009 22:56:52 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8O5unxD006199;
+	Thu, 24 Sep 2009 07:56:50 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8O5umOV006196;
+	Thu, 24 Sep 2009 07:56:48 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <5b5e291e0909222317q47ae36d4la470f17ec3902124@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129019>
 
-On Mon, Sep 21, 2009 at 10:58:51AM -0500, Brandon Casey wrote:
+Deon George <deon.george@gmail.com> writes:
 
-> >> I had my doubts, but have just confirmed that Solaris 10's
-> >> /usr/bin/tr is still doing it the SYSV way:
-> >>
-> >>     $ echo foo | LC_ALL=C /usr/bin/tr a-z A-Z
-> >>     foo
-> >>
-> >> There, you have to use /usr/xpg4/bin/tr to get the expected behavior:
-> >>
-> >>     $ echo foo | LC_ALL=C /usr/xpg4/bin/tr a-z A-Z
-> >>     FOO
-> >>
-> >> So you're right.  Thanks!
+> I'm not sure if this is the right place, but I thought I'd post my
+> idea and maybe somebody will either redirect me to the right place, or
+> give me that "that won't happen".
 > 
-> By the way, modern git inserts /usr/xpg4/bin into PATH before /usr/bin on
-> Solaris.  So /usr/xpg4/bin/tr should always be used on that platform.
+> Im fairly new to GIT (wish I had discovered it long ago), and I really
+> like using it - great work guys/garls :)
+> 
+> My idea is to enhance GIT to support (I'll call it) development
+> "layers". The current design of GIT is that the working repository and
+> working directory assume that all files belong together in the same
+> project. I would like to see GIT go 3D and support layers, so that
+> files (and/or file content) can belong to multiple repositories (or
+> considered unique projects), even though the working tree presents all
+> files as if they were one.
 
-Ah, I forgot about that patch. So it may not matter on Solaris. Are
-there other platforms which want the brackets? Maybe HP-UX, but I no
-longer have access to a box and I've used deep hypnosis to suppress any
-memories of ever having used it.
+[cut very long description]
 
-Anyway, I think Jim's patch is the right fix if there are still
-platforms that want the brackets.
+> Could this be included as part of GITs functionality (or is it
+> possible already) ?
 
--Peff
+First, I assume there that you do not allow for the same file to
+belong to different repositories.
+
+Second, if all parts that you want to belong to other repository are
+in separate subdirectories, and all files in those subdirectories
+belong to this other repository, you can try either submodules 
+(git-submodule), or subtree (subtree merge, or third-party git-subtree
+helper).  Note also that this assume that you want to have 'master'
+repository which indirectly or directly has al the files.
+
+
+Third, if the above isn't what you want, then you can manually
+intermingle working directories of different git repositories
+(probably requiring decouplig of bare git repository (git-dir)
+from working area (work-tree)).  Git repository know what files
+it tracks, so you would only need to take care to ignore files
+that belong to other repositories.
+
+If it is to manual for you, and to error prone, you are welcome
+to come up with set of scripts implementing "layers" feature you
+want.  That is how initial version of submodule feature was done...
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
