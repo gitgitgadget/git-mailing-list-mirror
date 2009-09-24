@@ -1,64 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Per-remote tracking branch
-Date: Thu, 24 Sep 2009 02:29:12 -0400
-Message-ID: <20090924062911.GC24486@coredump.intra.peff.net>
-References: <vpq4or48bux.fsf@bauges.imag.fr>
+From: "Ferry Huberts" <ferry.huberts@pelagic.nl>
+Subject: Re: [JGIT PATCH 7/9] removing eclipse project files
+Date: Thu, 24 Sep 2009 08:29:59 +0200 (CEST)
+Message-ID: <20734.77.61.241.211.1253773799.squirrel@hupie.xs4all.nl>
+References: <1253740570-10718-1-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-2-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-3-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-4-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-5-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-6-git-send-email-struberg@yahoo.de>
+    <1253740570-10718-7-git-send-email-struberg@yahoo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 24 08:29:11 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: "Mark Struberg" <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Thu Sep 24 08:52:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqhpH-0005Ds-E2
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 08:29:11 +0200
+	id 1MqiBP-0002sl-TB
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 08:52:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752879AbZIXG3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2009 02:29:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752562AbZIXG3B
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 02:29:01 -0400
-Received: from peff.net ([208.65.91.99]:43259 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752811AbZIXG3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 02:29:00 -0400
-Received: (qmail 3137 invoked by uid 107); 24 Sep 2009 06:32:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 24 Sep 2009 02:32:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 24 Sep 2009 02:29:12 -0400
-Content-Disposition: inline
-In-Reply-To: <vpq4or48bux.fsf@bauges.imag.fr>
+	id S1751992AbZIXGvy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 02:51:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbZIXGvy
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 02:51:54 -0400
+Received: from hupie.xs4all.nl ([82.95.241.251]:60503 "EHLO
+	Lighthouse.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751537AbZIXGvy (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Sep 2009 02:51:54 -0400
+X-Greylist: delayed 1315 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Sep 2009 02:51:53 EDT
+Received: by Lighthouse.internal.Hupie.com (Postfix, from userid 48)
+	id AD0A558CFF5; Thu, 24 Sep 2009 08:30:00 +0200 (CEST)
+Received: from 77.61.241.211
+        (SquirrelMail authenticated user ferry.huberts@pelagic.nl)
+        by hupie.xs4all.nl with HTTP;
+        Thu, 24 Sep 2009 08:29:59 +0200 (CEST)
+User-Agent: SquirrelMail/1.4.8-5.el5.centos.7
+X-Priority: 3 (Normal)
+Importance: Normal
+In-Reply-To: <1253740570-10718-7-git-send-email-struberg@yahoo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129024>
 
-On Tue, Sep 15, 2009 at 05:29:58PM +0200, Matthieu Moy wrote:
+Mark Struberg wrote:
+> All information necessary to build jgit is already available in
+> the maven pom.xmls.
+>
 
-> Is there a way, with Git, to specify a tracking branch on a per-remote
-> basis?
-
-I don't think so, and I'm not sure there is an easy way to extend the
-current configuration scheme. Adding multiple config options like this:
-
-  [branch "master"]
-    remote = origin
-    merge = refs/heads/master
-    remote = alternate
-    merge = refs/heads/master
-
-looks a bit hack-ish to me, as there is an implicit correlation between
-the ordering of 'merge' entries and 'remote' entries.
-
-And it feels a little backwards. When I say "git pull foo", I would find
-it equally likely to discover the pulled branch under "remote.foo" as it
-would to find it under "branch.master". Of course, in either case, you
-have to combine the context (current branch _and_ selected remote)
-to come up with the actual information. So I guess either is "equally
-correct" in a sense.
-
-Anyway, mostly just my idle speculation.
-
--Peff
+just out of curiosity, why would you remove the eclipse files?
+I for one - and I think many others - use Eclipse to work on the code...
