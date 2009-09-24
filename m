@@ -1,75 +1,64 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH v2] perl/Makefile.PL: detect MakeMaker versions incompatible with DESTDIR
-Date: Thu, 24 Sep 2009 13:21:03 -0500
-Message-ID: <FE_WTi0YAHrCrSdGFemlb7ALatFkdSu5V7Yfb5CUgyoxfv3ZFXdFABKbT1boP7aeGWli-gJPcBA@cipher.nrlssc.navy.mil>
-References: <7wQSYSBJPoVtvyGI0lqsDW37w4byCpgpMaHiDKALwW_oJ9nHXddX9OBMnqXGZBVAo2U7Tc1BMxg@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, c@gryning.com,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 24 20:23:23 2009
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC] 'git cat-file' needs a better design on its option interface
+Date: Thu, 24 Sep 2009 21:21:39 +0200
+Message-ID: <vpqy6o4kv24.fsf@bauges.imag.fr>
+References: <3a3680030909240804w1399ed7fhd6367300544f34f@mail.gmail.com>
+	<alpine.LFD.2.01.0909241021120.3303@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Li Hong <lihong.hi@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Sep 24 21:22:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MqsxB-0006vN-EE
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 20:22:05 +0200
+	id 1Mqttj-0006Pd-Ed
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 21:22:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbZIXSV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2009 14:21:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbZIXSV0
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 14:21:26 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33920 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751319AbZIXSV0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 14:21:26 -0400
-Received: by mail.nrlssc.navy.mil id n8OILFkR001350; Thu, 24 Sep 2009 13:21:18 -0500
-In-Reply-To: <7wQSYSBJPoVtvyGI0lqsDW37w4byCpgpMaHiDKALwW_oJ9nHXddX9OBMnqXGZBVAo2U7Tc1BMxg@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 24 Sep 2009 18:21:15.0068 (UTC) FILETIME=[CD57FFC0:01CA3D43]
+	id S1752946AbZIXTWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 15:22:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZIXTWY
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 15:22:24 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56749 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751801AbZIXTWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2009 15:22:24 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8OJIRPQ009271
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 24 Sep 2009 21:18:30 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Mqtsp-0005nB-Ir; Thu, 24 Sep 2009 21:21:39 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Mqtsp-0006Pb-HT; Thu, 24 Sep 2009 21:21:39 +0200
+In-Reply-To: <alpine.LFD.2.01.0909241021120.3303@localhost.localdomain> (Linus Torvalds's message of "Thu\, 24 Sep 2009 10\:23\:52 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 Sep 2009 21:18:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8OJIRPQ009271
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1254424710.60885@9m2gxmNu+udcAyFAuFIgjw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129055>
 
-From: Brandon Casey <drafnel@gmail.com>
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-It appears that ExtUtils::MakeMaker versions older than 6.11 do not
-implement the DESTDIR mechanism.  So add a test to the generated perl.mak
-to detect when DESTDIR is used along with a too old ExtUtils::MakeMaker and
-abort with a message suggesting the use of NO_PERL_MAKEMAKER.
+> 'git cat-file' is really really low-level plumbing. Humans should 
+> generally never use it.
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+... except to understand Git better ;-). I enjoyed being able to to a
+'git cat-file' on a tree or commit object when I started with Git.
 
-
-This just reverses the logic in the test on $(MM_VERSION) so that the test
-will also fail if MM_VERSION is unset.  Who knows if ancient versions set
-it.  Sorry for the quick v2.
-
--brandon
-
-
- perl/Makefile.PL |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 320253e..0b9deca 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -5,6 +5,14 @@ sub MY::postamble {
- instlibdir:
- 	@echo '$(INSTALLSITELIB)'
- 
-+ifneq (,$(DESTDIR))
-+ifeq (0,$(shell expr '$(MM_VERSION)' '>' 6.10))
-+$(error ExtUtils::MakeMaker version "$(MM_VERSION)" is older than 6.11 and so \
-+	is likely incompatible with the DESTDIR mechanism.  Try setting \
-+	NO_PERL_MAKEMAKER=1 instead)
-+endif
-+endif
-+
- MAKE_FRAG
- }
- 
 -- 
-1.6.4.3
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
