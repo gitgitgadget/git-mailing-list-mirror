@@ -1,63 +1,103 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: How does gitosis know who the key belongs to
-Date: Thu, 24 Sep 2009 15:51:44 +0100
-Message-ID: <26ae428a0909240751k3a799750h121935a79439b389@mail.gmail.com>
+From: Li Hong <lihong.hi@gmail.com>
+Subject: [RFC] 'git cat-file' needs a better design on its option interface
+Date: Thu, 24 Sep 2009 23:04:31 +0800
+Message-ID: <3a3680030909240804w1399ed7fhd6367300544f34f@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 16:56:22 2009
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 24 17:06:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mqpjx-0008JO-JL
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 16:56:13 +0200
+	id 1Mqpt1-0003qW-5t
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 17:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753816AbZIXOzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2009 10:55:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753776AbZIXOzX
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 10:55:23 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:38047 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753643AbZIXOzX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 10:55:23 -0400
-Received: by an-out-0708.google.com with SMTP id d40so1491952and.1
-        for <git@vger.kernel.org>; Thu, 24 Sep 2009 07:55:27 -0700 (PDT)
+	id S1754027AbZIXPEa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 11:04:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754004AbZIXPEa
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 11:04:30 -0400
+Received: from mail-vw0-f203.google.com ([209.85.212.203]:43514 "EHLO
+	mail-vw0-f203.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753557AbZIXPE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2009 11:04:29 -0400
+Received: by vws41 with SMTP id 41so1124786vws.4
+        for <git@vger.kernel.org>; Thu, 24 Sep 2009 08:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=UyrvaQRZ6EhbSaMrl380Koa6WAdyqbKfMjdvgn34J/c=;
-        b=iRorftDggTA8Gyz1xhKeb/hQfBp/2vy1Fx+ykdI7hZfjILv7n+nuyXV7sjzctZE/k3
-         1qB5eZJq2ooz9e9AkrP9mSCiE0czhlHO8oZvFisWvEGcUVvAx4uGk/iL3TCu22GJ8rTD
-         O5BNczvAenMYwNiz2n3Ung/HsofaLurWJxiQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
          :from:to:content-type;
-        b=bLIsYj2McqNqfD9mUPkZHEqdgzW1/oKazHyCq3L0bo4+m/dwSVlhU3xqhaEVIr4I+O
-         Al5J6izp6uijSDTLrOMytpXovH7St5wbV47SWMQ73p6djregxUQ2ECA0UQdam4fPWead
-         JEfDKvMBgPowrawe/TWZ47GT40KpTY1pdU/Ro=
-Received: by 10.101.154.5 with SMTP id g5mr4345792ano.178.1253804065115; Thu, 
-	24 Sep 2009 07:54:25 -0700 (PDT)
-X-Google-Sender-Auth: e8bfcb2977615d59
+        bh=kpPwoEqY8vvSWW608ZIdeLEr+F4Pei+kk58TRFz0ZeY=;
+        b=QsSZ1ePb1gjVSIFzLtSlAGU+C8/qhg51hZ9z0YiijPC+EDnMbAjQWtZfLL7mTh/Rf6
+         PMLyTHrjoq99dYvxXR+m+s6CDpUVG49deqXaVWJVCKh+ae9uHIiWyazFUX2e5QfK36QI
+         d9PvTWKYBDwnApHDWTJozyXR0EpJmjPSz7++o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=W9si8QBNw1TG3mmEIUk2Ozybvs87kP8S9NWPmKDbZrnrHr8KFDldK/TQmD9usc9jdR
+         qJU8uK6KO1Asjo9hgteKz0EF/agkA/sQahDjgLAp60wjVDAGtxwuGQc2+ZM/JffVE1UZ
+         7psBvr14I2bEamtSrDFkSL4HnlLpFSoLhW42k=
+Received: by 10.142.152.6 with SMTP id z6mr290089wfd.138.1253804672082; Thu, 
+	24 Sep 2009 08:04:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129046>
 
-Hi,
+Hi All,
 
-This is probably another one of my stupid questions.
+When using 'git cat-file' recently, I find its option interface is somewhat
+inconvenient or mistakenly-designed.
 
-Gitosis obviously uses keypairs but the config file addresses the user
-by name/host. How does gitosis connect the two together? Is it any
-more complicated than the user detail at the end of the public key?
+	1. There is no default action. You have to use -p or <type> option,
+	even for a simple look at the content of an object. It is better if
+	we can provide a default action just like 'cat' does.
+	
+	2. Can't control the output. Several output options can't be used at
+	the same time. Can't control what to output and how to output. I
+	suggest here we use a simple format string to let the human being
+	and other batch scripts happy.
 
-The second part of my question then is is it possible to use the same
-private key on more than one host?
+	3. Batch mode is handled seperately and differently.
 
-Cheers,
+	4. <type> option has a mix meaning (raw print and object dereference)
+	and is also inconsistent with -x style option.
 
-Howard
+	  * for raw print, an format char such as 'r' should be a good choice.
+	  * for dereference, should use the uniform rev-naming. (e.g.
+	    v0.99.8^{commit})
+
+
+So I propose to amend the interface as follow:
+
+	git cat-file [-b] [-f <fmt>] [-e] <args> ...
+
+	-b	read more objects from stdin
+	-f	provide a output format string
+	-e	silent, exit with zero when there's no error
+
+	the default action is to pretty-print the content when there is no
+	other options except -b.
+
+A format string example can be formed as follow (this needs more discuss):
+
+	"blabla %t\s%s\t%h\n%p\n%r\n\n"
+
+	%t: type
+	%s: size
+	%h: sha1
+	%p: pretty-print
+	%r: raw-print
+
+However, this change will give a heavy impact on many documents and scripts
+depending on this command. There are 233 references in source code according
+to a trivial count 'grep -r "cat-file" * | wc -l', not to mention many
+private usage of this command.
+
+So this is just a RFC. If I can get a very positive feedback from the
+community, I may start to do the real code change.
+
+Any ideas?
+
+- Li Hong
