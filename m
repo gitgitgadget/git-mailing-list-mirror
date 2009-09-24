@@ -1,137 +1,63 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 2/2] Make just opening the generated MSVC solution file not
- modify it
-Date: Thu, 24 Sep 2009 16:42:42 +0200
-Message-ID: <4ABB8562.60104__48109.4558294446$1253803700$gmane$org@gmail.com>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: How does gitosis know who the key belongs to
+Date: Thu, 24 Sep 2009 15:49:04 +0100
+Message-ID: <26ae428a0909240749s7bafcc70m9bce93b28eebe36d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: mstormo@gmail.com
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 24 16:48:13 2009
+X-From: git-owner@vger.kernel.org Thu Sep 24 16:56:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mqpc4-0005TN-Rh
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 16:48:05 +0200
+	id 1Mqpjv-0008JO-VJ
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Sep 2009 16:56:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753919AbZIXOpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Sep 2009 10:45:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753906AbZIXOpG
-	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 10:45:06 -0400
-Received: from lo.gmane.org ([80.91.229.12]:43908 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753899AbZIXOpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Sep 2009 10:45:03 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1MqpZ9-0004WG-7T
-	for git@vger.kernel.org; Thu, 24 Sep 2009 16:45:03 +0200
-Received: from 91-64-214-160-dynip.superkabel.de ([91.64.214.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Sep 2009 16:45:03 +0200
-Received: from sschuberth by 91-64-214-160-dynip.superkabel.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 24 Sep 2009 16:45:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 91-64-214-160-dynip.superkabel.de
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+	id S1753998AbZIXOvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Sep 2009 10:51:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753589AbZIXOvl
+	(ORCPT <rfc822;git-outgoing>); Thu, 24 Sep 2009 10:51:41 -0400
+Received: from mail-ew0-f227.google.com ([209.85.219.227]:57001 "EHLO
+	mail-ew0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753996AbZIXOvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Sep 2009 10:51:40 -0400
+Received: by ewy27 with SMTP id 27so1838065ewy.40
+        for <git@vger.kernel.org>; Thu, 24 Sep 2009 07:51:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=UyrvaQRZ6EhbSaMrl380Koa6WAdyqbKfMjdvgn34J/c=;
+        b=cF+EMaOYYWiMTNgt6Fp1yuCL6Crm933GYwa52wXkz54EkFz1xgQKR++CzTAO3sDlbm
+         IdreCkEn7Mw1M02Fi7DXolLIKP5xfi6Fo5OgP0cE48d/dKMNhTJN3Ey3LYX3LsLrTga5
+         O8A4xofB48BN/ghTHf1fTpkB0h4DM9N2/utvA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=wQpBw4/1l6hjGmtGEIwIdYjHDaelmciEHNMSVUqC+MDb13ZRQ3/OODKwnBZFayxGfU
+         6El5hveiOEzosNGAp4JEBQlSJmLYXIxb4EKEoKYuEYZboOELA4wcCOz9PyrcQxXQvCD4
+         50SSA4Z0PY8w8NkOlCUmMDzEIeX9CNzSbHknY=
+Received: by 10.216.70.19 with SMTP id o19mr782436wed.125.1253803903518; Thu, 
+	24 Sep 2009 07:51:43 -0700 (PDT)
+X-Google-Sender-Auth: 5d20561d3d8dfaf1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129044>
 
- From 9a0d743e227872189b17afb0b5c69b15422a0eef Mon Sep 17 00:00:00 2001
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Date: Thu, 24 Sep 2009 16:26:59 +0200
-Subject: [PATCH 2/2] Make just opening the generated MSVC solution file not modify it
+Hi,
 
-The format of the generated MSVC solution file is fixed in a way that just
-opening it in Visual Studio and immediately closing it again without performing
-any modifications does not trigger a prompt to save the solution file. This
-behavior was caused by several minor incompatibilities between the generated
-file and what Visual Studio 2008 expected, so Visual Studio transparently fixed
-the file format, marking it internally as modified.
+This is probably another one of my stupid questions.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
-  contrib/buildsystems/Generators/Vcproj.pm |   42 +++++++---------------------
-  1 files changed, 11 insertions(+), 31 deletions(-)
+Gitosis obviously uses keypairs but the config file addresses the user
+by name/host. How does gitosis connect the two together? Is it any
+more complicated than the user detail at the end of the public key?
 
-diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
-index 50daa03..d53ff2c 100644
---- a/contrib/buildsystems/Generators/Vcproj.pm
-+++ b/contrib/buildsystems/Generators/Vcproj.pm
-@@ -571,45 +571,29 @@ sub createGlueProject {
-          print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uuid}\"";
-          print F "$SLN_POST";
-      }
-+    my $uuid_libgit = $build_structure{"LIBS_libgit_GUID"};
-+    my $uuid_xdiff_lib = $build_structure{"LIBS_xdiff_lib_GUID"};
-      foreach (@apps) {
-          my $appname = $_;
-          my $uuid = $build_structure{"APPS_${appname}_GUID"};
-          print F "$SLN_PRE";
--        print F "\"${appname}\", \"${appname}\\${appname}.vcproj\", \"${uuid}\"";
-+        print F "\"${appname}\", \"${appname}\\${appname}.vcproj\", \"${uuid}\"\n";
-+        print F "	ProjectSection(ProjectDependencies) = postProject\n";
-+        print F "		${uuid_libgit} = ${uuid_libgit}\n";
-+        print F "		${uuid_xdiff_lib} = ${uuid_xdiff_lib}\n";
-+        print F "	EndProjectSection";
-          print F "$SLN_POST";
-      }
-  
-      print F << "EOM";
-  Global
--	GlobalSection(SolutionConfiguration) = preSolution
--		ConfigName.0 = Debug|Win32
--		ConfigName.1 = Release|Win32
-+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-+		Debug|Win32 = Debug|Win32
-+		Release|Win32 = Release|Win32
-  	EndGlobalSection
--	GlobalSection(ProjectDependencies) = postSolution
-  EOM
--    foreach (@{$build_structure{"APPS"}}) {
--        my $appname = $_;
--        my $appname_clean = $_;
--        $appname_clean =~ s/\//_/g;
--        $appname_clean =~ s/\.exe//;
--
--        my $uuid = $build_structure{"APPS_${appname_clean}_GUID"};
--        my $dep_index = 0;
--        foreach(@{$build_structure{"APPS_${appname}_LIBS"}}) {
--            my $libname = $_;
--            $libname =~ s/\//_/g;
--            $libname =~ s/\.(a|lib)//;
--            my $libuuid = $build_structure{"LIBS_${libname}_GUID"};
--            if (defined $libuuid) {
--                print F "\t\t${uuid}.${dep_index} = ${libuuid}\n";
--                $dep_index += 1;
--            }
--        }
--    }
--
-      print F << "EOM";
--	EndGlobalSection
--	GlobalSection(ProjectConfiguration) = postSolution
-+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-  EOM
-      foreach (@libs) {
-          my $libname = $_;
-@@ -630,10 +614,6 @@ EOM
-  
-      print F << "EOM";
-  	EndGlobalSection
--	GlobalSection(ExtensibilityGlobals) = postSolution
--	EndGlobalSection
--	GlobalSection(ExtensibilityAddIns) = postSolution
--	EndGlobalSection
-  EndGlobal
-  EOM
-      close F;
--- 
-1.6.4.msysgit.0
+The second part of my question then is is it possible to use the same
+private key on more than one host?
+
+Cheers,
+
+Howard
