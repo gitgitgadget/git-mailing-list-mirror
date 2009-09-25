@@ -1,51 +1,53 @@
-From: Jason Merrill <jason@redhat.com>
-Subject: Re: git clone sending unneeded objects
-Date: Fri, 25 Sep 2009 19:17:15 -0400
-Message-ID: <4ABD4F7B.4030701@redhat.com>
-References: <m2tz0j154o.fsf@igel.home> <alpine.LFD.2.00.0908082246020.440@xanadu.home> <m2k51dzb39.fsf@linux-m68k.org> <4ABD0669.7050309@redhat.com> <vpqvdj6izt6.fsf@bauges.imag.fr> <alpine.LFD.2.00.0909251551290.4997@xanadu.home> <4ABD25FE.2040902@redhat.com> <alpine.LFD.2.00.0909251629330.4997@xanadu.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: how optparse can go horribly wrong
+Date: Fri, 25 Sep 2009 16:32:26 -0700
+Message-ID: <20090925233226.GC14660@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Hin-Tak Leung <hintak.leung@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Sep 26 01:17:29 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 26 01:32:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrK2a-0006QM-Pa
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 01:17:29 +0200
+	id 1MrKHC-0001Jz-R7
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 01:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752721AbZIYXRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2009 19:17:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752693AbZIYXRS
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 19:17:18 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:12190 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751945AbZIYXRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2009 19:17:18 -0400
-Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8PNHHOi003842;
-	Fri, 25 Sep 2009 19:17:17 -0400
-Received: from [IPv6:::1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
-	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8PNHGBU000481;
-	Fri, 25 Sep 2009 19:17:16 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.4pre) Gecko/20090924 Shredder/3.0pre
-In-Reply-To: <alpine.LFD.2.00.0909251629330.4997@xanadu.home>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
+	id S1751397AbZIYXcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 19:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbZIYXcW
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 19:32:22 -0400
+Received: from george.spearce.org ([209.20.77.23]:45030 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750946AbZIYXcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 19:32:22 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 8F69038151; Fri, 25 Sep 2009 23:32:26 +0000 (UTC)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129134>
 
-On 09/25/2009 04:47 PM, Nicolas Pitre wrote:
-> Do you have access to the remote machine?  Is it possible to have a
-> tarball of the gcc.git directory from there?
+*sigh*.  Someone just ran into this today:
 
-http://gcc.gnu.org/gcc-git.tar.gz
+  $ git commit -a -ammend
+  [work ce38944] mend
+   1 files changed, 2 insertions(+), 0 deletions(-)
 
-I'll leave it there for a few days.
+Omit one - and include an extra 'm', and instead of --amend you
+have -a -m mend.  Which isn't exactly what you wanted.
 
-Jason
+We do catch -amend with an error though:
+
+  $ git commit -amend
+  error: did you mean `--amend` (with two dashes ?)
+
+I wonder, should the -m flag on commit not allow cuddling its
+value against the switch when its combined in short form with
+other switches?
+
+-- 
+Shawn.
