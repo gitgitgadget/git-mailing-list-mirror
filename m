@@ -1,81 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Howard Miller <howard@e-learndesign.co.uk>
 Subject: Re: How does gitosis know who the key belongs to
-Date: Fri, 25 Sep 2009 10:20:23 +0200
-Message-ID: <vpqhburigfs.fsf@olympe.imag.fr>
+Date: Fri, 25 Sep 2009 09:31:46 +0100
+Message-ID: <26ae428a0909250131k5fb04637ndbe765dce5afcc63@mail.gmail.com>
 References: <26ae428a0909240751k3a799750h121935a79439b389@mail.gmail.com>
-	<20090924172610.GA31309@book.hvoigt.net>
-	<vpqskeckuto.fsf@bauges.imag.fr>
-	<26ae428a0909242310r259ccf5eya7c95b8f43fc5c23@mail.gmail.com>
-	<26ae428a0909242315x3cf1aafcue004a73f5c471450@mail.gmail.com>
+	 <20090924172610.GA31309@book.hvoigt.net>
+	 <vpqskeckuto.fsf@bauges.imag.fr>
+	 <26ae428a0909242310r259ccf5eya7c95b8f43fc5c23@mail.gmail.com>
+	 <26ae428a0909242315x3cf1aafcue004a73f5c471450@mail.gmail.com>
+	 <vpqhburigfs.fsf@olympe.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 25 10:21:11 2009
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 25 10:31:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mr63A-0001W8-JW
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 10:21:08 +0200
+	id 1Mr6Da-0004jz-3y
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 10:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752854AbZIYIU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2009 04:20:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbZIYIU6
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 04:20:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52684 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752835AbZIYIU5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2009 04:20:57 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8P8HAqr025012
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 25 Sep 2009 10:17:10 +0200
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Mr62R-00077j-OO; Fri, 25 Sep 2009 10:20:23 +0200
-Received: from moy by olympe.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Mr62R-0007mJ-Mn; Fri, 25 Sep 2009 10:20:23 +0200
-In-Reply-To: <26ae428a0909242315x3cf1aafcue004a73f5c471450@mail.gmail.com> (Howard Miller's message of "Fri\, 25 Sep 2009 07\:15\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Sep 2009 10:17:10 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n8P8HAqr025012
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1254471432.2598@1CRnlxfqm/zcY8Sj3AtBUw
+	id S1752602AbZIYIbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 04:31:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbZIYIbo
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 04:31:44 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:44409 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752540AbZIYIbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 04:31:43 -0400
+Received: by ewy7 with SMTP id 7so2362283ewy.17
+        for <git@vger.kernel.org>; Fri, 25 Sep 2009 01:31:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
+         :content-type;
+        bh=wSjQuzDjMMjbUOZ1qa9CVhSIKRhxDkLQtmbTFoX3OVw=;
+        b=EHcYMR12yhBwaPg7M0+wK7aLTm7/eu0DefFj9Eewxg/5gUx/3ULk/kzO4KcmepfmkF
+         0KjJXpGUoMHzA5Sq7e91pPqwBkS7lIHYTcGz8wmEwnF6tf57ZCM6tgZQot3LvwWDIVyL
+         PYX9z7WFF0C7wRDtX/Usrfvi1/RZKsQBddy2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=JIP4z/PbTLsfqTp4rlZfuG8J0+mnW61xXatUnctY5UzenLQ6OC1duwq/N9NNObDay8
+         RMGop5ljkbmH8p4ObCzHvu95KWHUwXpK1nRE3B2UaF6vlQS3pUuZjFyFi7/EGF6iNSLu
+         EMy4egKsGSFCyeNpn2Gw7GuBssyTqrgL+Ztqk=
+Received: by 10.216.87.140 with SMTP id y12mr1022549wee.4.1253867506789; Fri, 
+	25 Sep 2009 01:31:46 -0700 (PDT)
+In-Reply-To: <vpqhburigfs.fsf@olympe.imag.fr>
+X-Google-Sender-Auth: cb181281ba845aa0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129069>
 
-Howard Miller <howard@e-learndesign.co.uk> writes:
+>
+> If you're confused with "name", then just think about "filename
+> holding the key".
+>
+> If you want to name yourself "howard", then put your key in
+> keydir/howard and then use "howard" in the config file. gitosis will
+> add the relevant
+>
+> command="gitosis-server howard" ssh-whatever <your-key-here> <irrelevant-comment>
+>
+> to the ~git/.ssh/auhtorized_keys file.
+>
+> You chose your "name" by chosing the filename, then you use this name
+> in the config file, and then gitosis does the job.
 
-> Ahh... just read Heiko's post properly and actually looked at the
-> authorized_keys file. This is now starting to make some sense. So the
-> name in config has to match that sent to gitosis-server presumably. I
-> still don't quite see the cause and effect. If I don't like being
-> howard@x.y.z and would rather be just 'howard' what can I change? It
-> tells me not to edit that file!
+Ok... so is it completely ignoring the @host bit then? None of my
+public key files are called howard@host1.pub (for example).
 
-If you're confused with "name", then just think about "filename
-holding the key".
+Just so you don't think I'm completely crazy, I actually use three
+different machines for development and (of course) I'm 'howard' on all
+of them. I was trying to get my head around the best way to set it up.
+I wasn't clear if I could simply recycle the same public key or if I
+needed to be three different users in gitosis.
 
-If you want to name yourself "howard", then put your key in
-keydir/howard and then use "howard" in the config file. gitosis will
-add the relevant
-
-command="gitosis-server howard" ssh-whatever <your-key-here> <irrelevant-comment>
-
-to the ~git/.ssh/auhtorized_keys file.
-
-You chose your "name" by chosing the filename, then you use this name
-in the config file, and then gitosis does the job.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Cheers.... Howard
