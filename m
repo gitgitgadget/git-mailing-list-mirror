@@ -1,89 +1,95 @@
-From: Marco Costalba <mcostalba@gmail.com>
-Subject: Re: git log --pretty=format:%h prints (unrequired) abbreviated sha
-Date: Fri, 25 Sep 2009 16:13:37 +0100
-Message-ID: <e5bfff550909250813y27971c12m63d445272f674f1c@mail.gmail.com>
-References: <e5bfff550909250240q3351d39evbcf507af422fde43@mail.gmail.com>
-	 <e5bfff550909250246qed6f2ci4237bdaefd8a18a@mail.gmail.com>
-	 <4ABC9C5D.5030202@viscovery.net>
-	 <e5bfff550909250344y535a05edx7d30ad7e48a5f036@mail.gmail.com>
-	 <e5bfff550909250430x14b0d7f4w5e22467ddd66cc29@mail.gmail.com>
-	 <4ABCD6AF.8080407@gmail.com>
+From: Christian Himpel <chressie@googlemail.com>
+Subject: [PATCH 1/2] git-am: fixed patch_format detection according to
+ RFC2822
+Date: Fri, 25 Sep 2009 17:14:31 +0200
+Message-ID: <d7d039c304614d8d39fd2e7ad8d036a77121cc4f.1253891124.git.chressie@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: alexandrul <alexandrul.ct@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 25 17:13:53 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 25 17:14:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrCUT-0000Fi-9Z
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 17:13:45 +0200
+	id 1MrCVK-0000XR-OU
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 17:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752827AbZIYPNf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Sep 2009 11:13:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbZIYPNf
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 11:13:35 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:53123 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752715AbZIYPNe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Sep 2009 11:13:34 -0400
-Received: by ewy7 with SMTP id 7so2652937ewy.17
-        for <git@vger.kernel.org>; Fri, 25 Sep 2009 08:13:37 -0700 (PDT)
+	id S1752889AbZIYPOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 11:14:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbZIYPO3
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 11:14:29 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:33142 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752839AbZIYPO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 11:14:29 -0400
+Received: by fxm18 with SMTP id 18so2275850fxm.17
+        for <git@vger.kernel.org>; Fri, 25 Sep 2009 08:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fnpsUX/sfmSwp0H9Z+USkLYPsgCsMryVt8YbMLp0H/4=;
-        b=UH0JMfTBy5tDdyP2nVXQNwY3MJHw3n0TmsAKklylkBg4n8DFTPkOyl5DG0M0u1mYCW
-         UIfCaWPAdoUb/aGIUgxAwruBDyYEmNfVWgojR84tIwNxT0UXjmj/FKAqXhOpowTu3xKl
-         vkN1AZS2uOSyhHUWnFQC8YqrNTHL0Ti6oUjMM=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=9ITkT1Pdluu9O2SeYlzc4YBUS9HNtfxnrHjbdZ9hlqk=;
+        b=Y5fFsQwfovmVcyFOpeQ+digu7g7Ugbx6/TkWIo830ctElfWs2ilGHGNMD4rGiyLH9n
+         Lg44mPxZdAXUzvcxUt21/woFNZfh+sNOHpD2/CNSgAeVRjVkhgHPG52IZhKBqiPEMe8M
+         XsgcYdlGLsu2cXXLBWwZzGxtqWiwl9wdWcSCA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XNJVhzfmJnDRD9OJ5NYYc5//0ln3DjCIgTPK+mURO+tzLOTCNgOmxISSib6zLvTzce
-         sEVBdzMpp8cyfrHiBWYiTApnff2qZFiXXKULltw/+XML2w8lOYNZQphezWas/KfMclDV
-         HCmv1p9nc7MyJqzVM84F9teH4W0yPlJjia7CQ=
-Received: by 10.216.2.213 with SMTP id 63mr51232wef.207.1253891617523; Fri, 25 
-	Sep 2009 08:13:37 -0700 (PDT)
-In-Reply-To: <4ABCD6AF.8080407@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=W8gzWHtGwDyrCvhd6X4J08XOo9WJ/YfyqhPgVmogSvOUcz7n0T2tKQDWXG/AK5DWeW
+         IAZuJbqYnauLGKm8K9c1cjpTFAdGgusPUp2u0U0ypOHb65na29BJhig+GrmQY1MHIUda
+         UlwlpzJiIve8eGQ1Xizcu6/YmqPaZxRQOS2wY=
+Received: by 10.204.154.131 with SMTP id o3mr228083bkw.66.1253891672227;
+        Fri, 25 Sep 2009 08:14:32 -0700 (PDT)
+Received: from mrslave (HSI-KBW-078-043-091-043.hsi4.kabel-badenwuerttemberg.de [78.43.91.43])
+        by mx.google.com with ESMTPS id c28sm3596047fka.56.2009.09.25.08.14.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 25 Sep 2009 08:14:31 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129090>
 
-On Fri, Sep 25, 2009 at 15:41, alexandrul <alexandrul.ct@gmail.com> wro=
-te:
->
-> If nothing else works, you could try to uninstall your current versio=
-n of
-> git, clean up any traces left, and reinstall.
->
-> http://code.google.com/p/msysgit/issues/detail?id=3D336
->
-> Have a nice day,
-> =C2=A0A.
->
+RFC2822 specifies in paragraph 3.6.8, that optional header fields are
+made up of any printable US-ASCII character except ' ' (space) and ':'
+(colon).
 
-Thanks, I have tried but with no success.
+The pattern for the egrep command is changed to match all of these
+characters.
 
-Another info is that it seems git related, from msysgit bash shell:
+Signed-off-by: Christian Himpel <chressie@gmail.com>
+---
 
-$ ls -a
-=2E .. .git
+Hi,
 
-$ ls -A
-=2Egit
+I had a problem with applying a patch with 'git am', because the one
+header fields in the patch-e-mail contained numbers.  So I read the
+RFC2822 what they say about header fields.  Unbelievable but any
+printable character except space and colon are allowed in header fields.
+So I changed the egrep expression according to this rule.
 
-$ git --version
-git version 1.6.4.msysgit.0
+Regards,
+chressie
 
-$ git --VERSION
-git version 1.6.4.msysgit.0
 
-So only the git command seems to treat command line arguments in a
-case-insensitive way, while other commands do not.
+ git-am.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 26ffe70..0ddd80f 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -205,7 +205,7 @@ check_patch_format () {
+ 			# and see if it looks like that they all begin with the
+ 			# header field names...
+ 			sed -n -e '/^$/q' -e '/^[ 	]/d' -e p "$1" |
+-			egrep -v '^[A-Za-z]+(-[A-Za-z]+)*:' >/dev/null ||
++			egrep -v '^[!-9;-~]+:' >/dev/null ||
+ 			patch_format=mbox
+ 		fi
+ 	} < "$1" || clean_abort
+-- 
+1.6.4.4
