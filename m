@@ -1,92 +1,77 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 1/2] Make generated MSVC solution file open from Windows 
-	Explorer
-Date: Sat, 26 Sep 2009 00:41:01 +0200
-Message-ID: <bdca99240909251541h2e9932a3r67c1d8604e56a8df@mail.gmail.com>
-References: <4ABB84F4.7080403@gmail.com> <20090925220510.GY14660@spearce.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [JGIT PATCH 1/2] add support for core.logAllRefUpdates configuration parameter
+Date: Sat, 26 Sep 2009 00:45:20 +0200
+Message-ID: <200909260045.21171.robin.rosenberg@dewire.com>
+References: <D35B4A582834DC418CCF9AF41AB69B70016953F62F@DEWDFECCR04.wdf.sap.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, mstormo@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Sep 26 00:41:10 2009
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "Halstrick, Christian" <christian.halstrick@sap.com>
+X-From: git-owner@vger.kernel.org Sat Sep 26 00:45:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrJTQ-0006n7-JW
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 00:41:08 +0200
+	id 1MrJXk-0007fV-AD
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 00:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752654AbZIYWk7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Sep 2009 18:40:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752257AbZIYWk7
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 18:40:59 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:43268 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752175AbZIYWk6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Sep 2009 18:40:58 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so1017423fge.1
-        for <git@vger.kernel.org>; Fri, 25 Sep 2009 15:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NRd1xySGXMgU36XuuAAk12XFklyntpUlfHIQtXcr04Q=;
-        b=vuYX3rb8b+6dvDIVFshpvZKAsQy3qLXqPY2+IE431AG3KmYGHrfNnnzJDjswhBBYEs
-         RDIIuk7zcdUlNjW2btvpbj5DsKFj8p/fq4oiZqlcx3tap3law20tJQixGQyjlmB/L9za
-         2ouiWoaSRvU2QCRTyYW5Hr3cQzyMeY0iUHf0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PyKdS6TTMqvdFs+WSD5xKK4e+y38vjJfSX3rP8wU+jZNrtq6jweY8kfoxpE/G5JwIp
-         zh5eoV+s4ZiQzcWA4+1KIbOqR3XuGC6kPKBE+SB+aB5dm5Lq9xY7aHG+NlKRMbYEt6ZX
-         lQu+961dj/Vy6qCiQLpDTyHjTxqmYiVOtj9fw=
-Received: by 10.86.227.26 with SMTP id z26mr1358682fgg.76.1253918461305; Fri, 
-	25 Sep 2009 15:41:01 -0700 (PDT)
-In-Reply-To: <20090925220510.GY14660@spearce.org>
+	id S1751967AbZIYWpU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 18:45:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751816AbZIYWpU
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 18:45:20 -0400
+Received: from mail.dewire.com ([83.140.172.130]:16939 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750926AbZIYWpT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 18:45:19 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AD4D7147DB2B;
+	Sat, 26 Sep 2009 00:45:22 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Xkyyn9jiRGCH; Sat, 26 Sep 2009 00:45:22 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 078A0139D880;
+	Sat, 26 Sep 2009 00:45:21 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <D35B4A582834DC418CCF9AF41AB69B70016953F62F@DEWDFECCR04.wdf.sap.corp>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129129>
 
-On Sat, Sep 26, 2009 at 00:05, Shawn O. Pearce <spearce@spearce.org> wr=
-ote:
+onsdag 23 september 2009 18:42:29 skrev "Halstrick, Christian" <christian.halstrick@sap.com>:
+> From: Christian Halstrick <christian.halstrick@sap.com>
+> 
+> JGit should understand configuration parameter logAllRefUpdates and should
+> only log updates of refs when
+>   either the log file for this ref is already present
+>   or this configuration parameter is set to true
+> Before this commit JGit was always writing logs, regardless of this
+> parameter or existence of logfiles.
 
-> Sebastian Schuberth <sschuberth@gmail.com> wrote:
->> From c6d29a2d243647bb2877eb2114938ae20c8e56e5 Mon Sep 17 00:00:00 20=
-01
->> From: Sebastian Schuberth <sschuberth@gmail.com>
->> Date: Thu, 24 Sep 2009 15:52:25 +0200
->> Subject: [PATCH 1/2] Make generated MSVC solution file open from Win=
-dows Explorer
->>
->> In order to be able to open the generated solution file by double-cl=
-icking it
->> in Windows Explorer, all project files need to use DOS line-endings =
-and a
->> comment about the Visual Studio version needs to be added to the hea=
-der of the
->> solution file. This also fixes the icon that is displayed for the so=
-lution file
->> in Windows Explorer.
->> Note that opening the solution file from a running instance of Visua=
-l Studio
->> already worked before.
->
-> Something is wrong with both patches; neither applies. =C2=A0It looks
-> to be an issue with whitespace, like context lines are gaining an
-> extra space at the start of the line.
+A few minor things:
+Format the comment nicely and space betwee paragraphs.
+Start the comment with a capital letter
+A cover letter for multiple patches is nice, though in this case you could
+actually just squash there patches into one patch.
 
-Hmm, the patches apply fine onto master for me.
+and one major.
+RefUpdateTest broke.
 
-As a side note, I've never liked sending patches via mail. It just
-feels like writing a text on a computer just to print it out, scan in
-the sheet again, and then sending the scanned image as an attachment
-via email. Isn't there a better way to contribute patches to Git, like
-pushing to a mob branch as for the msysGit project?
+Probably because of this.
+> +		logAllRefUpdates = rc.getBoolean("core", "logAllRefUpdates", false);
 
---=20
-Sebastian Schuberth
+According to the git-config man page logAllRefUpdates is true by default for non-bare
+repos and false for bare repos.
+
+I had some trouble applying these patches as git-am did not like them. Apparently
+git-am doesn't like base64. Could you set your mailer to use a more plain-ish format
+or use git-send-email. 
+
+-- robin
