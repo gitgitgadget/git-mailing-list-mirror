@@ -1,72 +1,72 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: How does gitosis know who the key belongs to
-Date: Fri, 25 Sep 2009 17:31:58 +0530
-Message-ID: <2e24e5b90909250501m3ba1a1f3kc83ba66db8dfb489@mail.gmail.com>
-References: <26ae428a0909240751k3a799750h121935a79439b389@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: thoughts on a possible "pre-upload" hook
+Date: Fri, 25 Sep 2009 14:29:47 +0200
+Message-ID: <vpqab0j1a2s.fsf@bauges.imag.fr>
+References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+	<867hvr2cms.fsf@blue.stonehenge.com> <vpqd45jvub6.fsf@bauges.imag.fr>
+	<20090922161725.GS14660@spearce.org>
+	<2e24e5b90909250454s7ed35b9ch10b954b0b1a40cfe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Fri Sep 25 14:02:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 25 14:30:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mr9V4-0000DX-Fp
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 14:02:10 +0200
+	id 1Mr9w7-0000RA-6c
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Sep 2009 14:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752426AbZIYMB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2009 08:01:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752374AbZIYMBz
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 08:01:55 -0400
-Received: from mail-iw0-f178.google.com ([209.85.223.178]:41524 "EHLO
-	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069AbZIYMBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2009 08:01:55 -0400
-Received: by iwn8 with SMTP id 8so1498116iwn.33
-        for <git@vger.kernel.org>; Fri, 25 Sep 2009 05:01:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=//ql7yQqZnI26bpT5avmFylGTmR42qdB2wv8orQ36es=;
-        b=fDEgHMl7YgzYe5CSpssKfeNN9n2CgupMsG8N9AH5Baggh5YoTvzGm5lN5YEf6jpmlh
-         mYXjgehux/sSnCpU84piIJbA6q1q/lZ1xeYEYmiRob4COiEJsqxZwmjUURc9smsxcg9H
-         BHsNu3mv3wfbC7k4wt+8eW/+yYqiF+jiZUCeg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=owlvcuc7fVDAOVV6bpdkaCQQnG4Z41frYaLXYJ6A1nr3pNulXmtE8wPbqkOv30OjvC
-         1Qn+fBJoaIJ8skKNZLvPEmo4hOj9p5C1xQW6ox2kyDFrQfImM36Ln9vW3m9W+0l/qkqi
-         FgLS7kRn1T+Qm9M+xdNzyGoEK58OFQnCQlMTE=
-Received: by 10.231.6.87 with SMTP id 23mr132321iby.19.1253880118795; Fri, 25 
-	Sep 2009 05:01:58 -0700 (PDT)
-In-Reply-To: <26ae428a0909240751k3a799750h121935a79439b389@mail.gmail.com>
+	id S1752530AbZIYM35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 08:29:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbZIYM35
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 08:29:57 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:58933 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752374AbZIYM34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 08:29:56 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id n8PCQYVH005495
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 25 Sep 2009 14:26:34 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Mr9vo-00058X-8T; Fri, 25 Sep 2009 14:29:48 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Mr9vn-0002Wa-7g; Fri, 25 Sep 2009 14:29:47 +0200
+In-Reply-To: <2e24e5b90909250454s7ed35b9ch10b954b0b1a40cfe@mail.gmail.com> (Sitaram Chamarty's message of "Fri\, 25 Sep 2009 17\:24\:36 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Sep 2009 14:26:34 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8PCQYVH005495
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1254486397.28693@+jZQmVS4WHVT02AAHjPoRw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129079>
 
-On Thu, Sep 24, 2009 at 8:21 PM, Howard Miller
-<howard@e-learndesign.co.uk> wrote:
-> Hi,
->
-> This is probably another one of my stupid questions.
->
-> Gitosis obviously uses keypairs but the config file addresses the user
-> by name/host. How does gitosis connect the two together? Is it any
-> more complicated than the user detail at the end of the public key?
->
-> The second part of my question then is is it possible to use the same
-> private key on more than one host?
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-Everything you ever wanted to know about how gitosis and ssh work
-together: http://sitaramc.github.com/0-installing/9-gitosis-server-install.html
+> yes indeed -- if someone were to foolishly merge a "secret" branch
+> into a "normal" branch, so that it is now reachable from a "normal"
+> branch, that's his problem -- that cannot be within the scope of this
+> check.
 
-Very verbose.  (I've even been told it is too verbose but I chose to
-ignore him ;-)
+Merging is not the only scenario. Adding a tag could make secret
+things become visible too. I'm not saying the approach isn't viable,
+but if it gets implemented, it should be done with care to make sure
+there's no easy mis-use that would lead to reveal a secret (typically,
+I'd do that with a whitelist and not a black-list, so that new
+references are secret by default).
 
 -- 
-Sitaram
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
