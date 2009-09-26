@@ -1,79 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] make shallow repository deepening more network
- efficient
-Date: Sat, 26 Sep 2009 15:26:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909261524490.4985@pacific.mpi-cbg.de>
-References: <alpine.LFD.2.00.0909031847520.6044@xanadu.home> <7vmy58r72b.fsf@alter.siamese.dyndns.org>
+From: Jason Merrill <jason@redhat.com>
+Subject: Re: git clone sending unneeded objects
+Date: Sat, 26 Sep 2009 09:33:12 -0400
+Message-ID: <4ABE1818.6010007@redhat.com>
+References: <m2tz0j154o.fsf@igel.home> <alpine.LFD.2.00.0908082246020.440@xanadu.home> <m2k51dzb39.fsf@linux-m68k.org> <4ABD0669.7050309@redhat.com> <vpqvdj6izt6.fsf@bauges.imag.fr> <alpine.LFD.2.00.0909251551290.4997@xanadu.home> <4ABD25FE.2040902@redhat.com> <alpine.LFD.2.00.0909251629330.4997@xanadu.home> <4ABD4F7B.4030701@redhat.com> <4ABD9C2C.60800@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 26 15:29:25 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Hin-Tak Leung <hintak.leung@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Sep 26 15:33:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrXL1-0007hj-JQ
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 15:29:23 +0200
+	id 1MrXOu-0000Hr-5p
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 15:33:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbZIZNYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Sep 2009 09:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752194AbZIZNYH
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 09:24:07 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52589 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752175AbZIZNYG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Sep 2009 09:24:06 -0400
-Received: (qmail invoked by alias); 26 Sep 2009 13:24:09 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp069) with SMTP; 26 Sep 2009 15:24:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hcnpT7IwhUs/l+8e4Tjm9bouLsRMgxkG9VHcT0l
-	bejC/RGLpDnwVY
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vmy58r72b.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.62
+	id S1752134AbZIZNdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Sep 2009 09:33:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbZIZNdO
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 09:33:14 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:7365 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751952AbZIZNdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Sep 2009 09:33:14 -0400
+Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id n8QDXDX6020419;
+	Sat, 26 Sep 2009 09:33:13 -0400
+Received: from [IPv6:::1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
+	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id n8QDXCb0025578;
+	Sat, 26 Sep 2009 09:33:12 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.4pre) Gecko/20090924 Shredder/3.0pre
+In-Reply-To: <4ABD9C2C.60800@redhat.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129153>
 
-Hi,
+On 09/26/2009 12:44 AM, Jason Merrill wrote:
+> git config remote.origin.fetch 'refs/remotes/*:refs/remotes/origin/*'
+> git fetch
 
-On Sat, 5 Sep 2009, Junio C Hamano wrote:
+git count-objects -v before:
 
-> Nicolas Pitre <nico@cam.org> writes:
-> 
-> > First of all, I can't find any reason why thin pack generation is 
-> > explicitly disabled when dealing with a shallow repository.  The 
-> > possible delta base objects are collected from the edge commits which 
-> > are always obtained through history walking with the same shallow refs 
-> > as the client, Therefore the client is always going to have those base 
-> > objects available. So let's remove that restriction.
-> >
-> > Then we can make shallow repository deepening much more efficient by 
-> > using the remote's unshallowed commits as edge commits to get preferred 
-> > base objects for thin pack generation.  On git.git, this makes the data 
-> > transfer for the deepening of a shallow repository from depth 1 to depth 2
-> > around 134 KB instead of 3.68 MB.
-> >
-> > Signed-off-by: Nicolas Pitre <nico@cam.org>
-> 
-> Dscho, this is your code from around ed09aef (support fetching into a
-> shallow repository, 2006-10-30) and f53514b (allow deepening of a shallow
-> repository, 2006-10-30).  The latter disables thin pack transfer but the
-> log does not attempt to justify the change.
-> 
-> Have any comments?
+count: 44
+size: 1768
+in-pack: 1399509
+packs: 1
+size-pack: 600456
+prune-packable: 0
+garbage: 0
 
-Unfortunately, I do not have any.  I tried to remember, then I tried to 
-find some documentation, but stopped when I found out that I developed 
-the code on an iBook which died early Nov 2006.
+and after (transferred 278MB):
 
-So no, I do not remember why the change.
+count: 44
+size: 1768
+in-pack: 1947339
+packs: 2
+size-pack: 1178408
+prune-packable: 8
+garbage: 0
 
-Sorry,
-Dscho
+and then after git gc --prune=now:
+
+count: 0
+size: 0
+in-pack: 1399613
+packs: 1
+size-pack: 839900
+prune-packable: 0
+garbage: 0
+
+So I only actually needed 104 more objects, but fetch wasn't clever 
+enough to see that, and my new pack is much less efficient.
+
+I've run into the same issue using alternates to set up multiple working 
+directories for different branches; if the alternate directory isn't 
+completely up-to-date, fetch wants to pull down lots of data again 
+rather than use what I have and only fetch the last one or two commits.
+
+Jason
