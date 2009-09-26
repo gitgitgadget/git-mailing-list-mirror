@@ -1,57 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: how optparse can go horribly wrong
-Date: Sat, 26 Sep 2009 12:25:27 -0700
-Message-ID: <20090926192527.GF14660@spearce.org>
-References: <20090925233226.GC14660@spearce.org> <20090926015127.GA12994@vidovic> <fabb9a1e0909260644w781d3c3h4fca22e3b7d97768@mail.gmail.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Remove various dead assignments and dead increments found
+  by the clang static analyzer
+Date: Sat, 26 Sep 2009 21:28:42 +0200
+Message-ID: <4ABE6B6A.4000400@lsrfire.ath.cx>
+References: <87ab0hepcn.fsf@master.homenet>	<alpine.DEB.1.00.0909261756510.4985@pacific.mpi-cbg.de>	<871vltefdj.fsf@master.homenet>	<fabb9a1e0909261134qd90dba1n9637fe4adc253fc1@mail.gmail.com> <87ske9cya9.fsf@master.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 26 21:25:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Giuseppe Scrivano <gscrivano@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Sep 26 21:29:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mrcti-0004eF-5l
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 21:25:34 +0200
+	id 1Mrcx8-0005WW-6H
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 21:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752566AbZIZTZY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Sep 2009 15:25:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752519AbZIZTZY
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 15:25:24 -0400
-Received: from george.spearce.org ([209.20.77.23]:49609 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752427AbZIZTZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Sep 2009 15:25:23 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id C256B38151; Sat, 26 Sep 2009 19:25:27 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <fabb9a1e0909260644w781d3c3h4fca22e3b7d97768@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752431AbZIZT2x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Sep 2009 15:28:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752409AbZIZT2w
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 15:28:52 -0400
+Received: from india601.server4you.de ([85.25.151.105]:51865 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752284AbZIZT2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Sep 2009 15:28:52 -0400
+Received: from [10.0.1.101] (p57B7CED9.dip.t-dialin.net [87.183.206.217])
+	by india601.server4you.de (Postfix) with ESMTPSA id E42A82F805B;
+	Sat, 26 Sep 2009 21:28:52 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <87ske9cya9.fsf@master.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129169>
 
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Sat, Sep 26, 2009 at 03:51, Nicolas Sebrecht <nicolas.s.dev@gmx.fr> wrote:
-> > Doing this only to -m flag would break consistency. That said, I don't
-> > have any opinion in disallowing the sticked form for _all_ short
-> > options.
-> 
-> Perhaps instead disallow it for short options that do not take a
-> one-symbol argument, that is -n4 makes a lot of sense to me, but -m"my
-> commit message here" not so much.
+> diff --git a/diff.c b/diff.c
+> index e1be189..e75f58e 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -901,7 +901,7 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+> =20
+>  	/* Find the longest filename and max number of changes */
+>  	reset =3D diff_get_color_opt(options, DIFF_RESET);
+> -	set   =3D diff_get_color_opt(options, DIFF_PLAIN);
+> +	diff_get_color_opt(options, DIFF_PLAIN);
+>  	add_c =3D diff_get_color_opt(options, DIFF_FILE_NEW);
+>  	del_c =3D diff_get_color_opt(options, DIFF_FILE_OLD);
 
--1 on that, because long, long, long ago when I worked on -m support
-for commit I remember insisting that -mfoo and -m foo should be
-the same.  I often do `git commit -a -mwip` or something to save my
-branch state and come back later.
+diff_get_color_opt() has no side-effects; the changed line is a no-op.
 
-What I think we should do is not allow cuddling of short options
-when the final option takes more than 1 character worth of argument.
-Thus `git commit -a -mfoo` is OK, but `git commit -amfoo` is not.
-
--- 
-Shawn.
+Ren=E9
