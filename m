@@ -1,65 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] Make generated MSVC solution file open from
-	Windows Explorer
-Date: Fri, 25 Sep 2009 17:05:00 -0700
-Message-ID: <20090926000500.GE14660@spearce.org>
-References: <4ABB84F4.7080403@gmail.com> <20090925220510.GY14660@spearce.org> <bdca99240909251541h2e9932a3r67c1d8604e56a8df@mail.gmail.com> <20090925225940.GB14660@spearce.org> <bdca99240909251658q395a62b6r8d5998382ac3fc7b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mstormo@gmail.com
-To: Sebastian Schuberth <sschuberth@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 26 02:07:42 2009
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git branch -D: give a better error message when lockfile creation fails
+Date: Sat, 26 Sep 2009 02:06:42 +0200
+Message-ID: <1253923602-17818-1-git-send-email-vmiklos@frugalware.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 26 02:17:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrKp7-0001bz-E8
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 02:07:37 +0200
+	id 1MrKyx-0004B4-E6
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 02:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbZIZAE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Sep 2009 20:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752114AbZIZAE5
-	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 20:04:57 -0400
-Received: from george.spearce.org ([209.20.77.23]:46939 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751803AbZIZAE5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Sep 2009 20:04:57 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id E9F5638151; Sat, 26 Sep 2009 00:05:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <bdca99240909251658q395a62b6r8d5998382ac3fc7b@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1752750AbZIZAQV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Sep 2009 20:16:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbZIZAQV
+	(ORCPT <rfc822;git-outgoing>); Fri, 25 Sep 2009 20:16:21 -0400
+Received: from yugo.dsd.sztaki.hu ([195.111.2.114]:49962 "EHLO
+	yugo.frugalware.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752564AbZIZAQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Sep 2009 20:16:21 -0400
+X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Fri, 25 Sep 2009 20:16:20 EDT
+Received: from vmobile.example.net (catv-89-134-193-228.catv.broadband.hu [89.134.193.228])
+	by yugo.frugalware.org (Postfix) with ESMTPA id 7DDBE1A40E
+	for <git@vger.kernel.org>; Sat, 26 Sep 2009 02:06:17 +0200 (CEST)
+Received: by vmobile.example.net (Postfix, from userid 1003)
+	id D072C183FAB; Sat, 26 Sep 2009 02:06:42 +0200 (CEST)
+X-Mailer: git-send-email 1.6.5.rc1.44.ga1675.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129137>
 
-Sebastian Schuberth <sschuberth@gmail.com> wrote:
-> On Sat, Sep 26, 2009 at 00:59, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Sebastian Schuberth <sschuberth@gmail.com> wrote:
-> >> On Sat, Sep 26, 2009 at 00:05, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >> > Something is wrong with both patches; neither applies.
-> >>
-> >> Hmm, the patches apply fine onto master for me.
-> >
-> > After going through your client and the GMane email gateway?
-> > Or before you pasted it into the message?
-> 
-> Both. As a test for the first, I've copied & pasted my mail as it
-> appears for me in gmane.comp.version-control.git to a new file and
-> successfully applied that file via "git apply". I had to do it this
-> way, as on Windows I cannot really use "git am" with Thunderbird.
+Previously the old error message just told the user that it was not
+possible to delete the ref from the packed-refs file. Give instructions
+on how to resolve the problem.
 
-Odd.  If I copy and paste from Thunderbird, its fine.  But if I
-save the body out as an attachment from mutt, it fails.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ refs.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-I wonder if it has to do with the From header appearing in the top
-of the body; this header has to be escaped with a leading space in
-mbox format.  It looks like Thunderbird might be doing some magic to
-remove that leading space from the context lines, while mutt isn't.
-
-Next time, don't include the first From line?
-
+diff --git a/refs.c b/refs.c
+index 24865cf..221d49c 100644
+--- a/refs.c
++++ b/refs.c
+@@ -972,8 +972,10 @@ static int repack_without_ref(const char *refname)
+ 	if (!found)
+ 		return 0;
+ 	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
+-	if (fd < 0)
++	if (fd < 0) {
++		unable_to_lock_index_die(git_path("packed-refs"), errno);
+ 		return error("cannot delete '%s' from packed refs", refname);
++	}
+ 
+ 	for (list = packed_ref_list; list; list = list->next) {
+ 		char line[PATH_MAX + 100];
 -- 
-Shawn.
+1.6.5.rc1.44.ga1675.dirty
