@@ -1,74 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git branch -D: give a better error message when lockfile creation fails
-Date: Sat, 26 Sep 2009 22:12:55 +0200
-Message-ID: <vpqr5tt5ut4.fsf@bauges.imag.fr>
-References: <1253972051-31980-1-git-send-email-vmiklos@frugalware.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Remove various dead assignments and dead increments
+ found  by the clang static analyzer
+Date: Sat, 26 Sep 2009 22:39:32 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909262235010.4985@pacific.mpi-cbg.de>
+References: <87ab0hepcn.fsf@master.homenet> <alpine.DEB.1.00.0909261756510.4985@pacific.mpi-cbg.de> <871vltefdj.fsf@master.homenet> <fabb9a1e0909261134qd90dba1n9637fe4adc253fc1@mail.gmail.com> <87ske9cya9.fsf@master.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sat Sep 26 22:16:00 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Giuseppe Scrivano <gscrivano@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Sep 26 22:39:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrdgV-0003eT-HA
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 22:15:59 +0200
+	id 1Mre3D-0002Nw-53
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Sep 2009 22:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752513AbZIZUPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Sep 2009 16:15:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752123AbZIZUPt
-	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 16:15:49 -0400
-Received: from imag.imag.fr ([129.88.30.1]:64238 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750795AbZIZUPt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Sep 2009 16:15:49 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n8QKCt0E000633
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 26 Sep 2009 22:12:55 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1MrddX-0000cq-9D; Sat, 26 Sep 2009 22:12:55 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1MrddX-00063K-7p; Sat, 26 Sep 2009 22:12:55 +0200
-In-Reply-To: <1253972051-31980-1-git-send-email-vmiklos@frugalware.org> (Miklos Vajna's message of "Sat\, 26 Sep 2009 15\:34\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 26 Sep 2009 22:12:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752519AbZIZUhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Sep 2009 16:37:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbZIZUhX
+	(ORCPT <rfc822;git-outgoing>); Sat, 26 Sep 2009 16:37:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54508 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751800AbZIZUhX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Sep 2009 16:37:23 -0400
+Received: (qmail invoked by alias); 26 Sep 2009 20:37:25 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp032) with SMTP; 26 Sep 2009 22:37:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Y0rkp6ChYMrIHVPyDsxCTXcXy0LTX53gXQflstI
+	u50PErDax9If88
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <87ske9cya9.fsf@master.homenet>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129177>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
+Hi,
 
-> diff --git a/refs.c b/refs.c
-> index 24865cf..4eb4fc7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -972,8 +972,10 @@ static int repack_without_ref(const char *refname)
->  	if (!found)
->  		return 0;
->  	fd = hold_lock_file_for_update(&packlock, git_path("packed-refs"), 0);
-> -	if (fd < 0)
-> +	if (fd < 0) {
-> +		unable_to_lock_index(git_path("packed-refs"), errno, 0);
->  		return error("cannot delete '%s' from packed refs", refname);
-> +	}
+On Sat, 26 Sep 2009, Giuseppe Scrivano wrote:
 
-If unable_to_lock_index is called for something other that the index,
-it should probably be renamed.
+> diff --git a/builtin-commit.c b/builtin-commit.c
+> index 200ffda..331d2a0 100644
+> --- a/builtin-commit.c
+> +++ b/builtin-commit.c
+> @@ -1035,7 +1035,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>  			parents = reduce_heads(parents);
+>  	} else {
+>  		reflog_msg = "commit";
+> -		pptr = &commit_list_insert(lookup_commit(head_sha1), pptr)->next;
+> +		commit_list_insert(lookup_commit(head_sha1), pptr);
+>  	}
 
-Other than that, I like what the patch does (I'm the one who wrote the
-message for the index ;-) ).
+Sorry, but from the context it seems as if the same remark I had for argc 
+applies here, too.  There are exactly three other similar-looking 
+assignments and it is too easy IMO to mess up when one want to rearrange 
+things there.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+In other words, I deem the removal of this assignment worse than what we 
+have now -- at least in terms of how easy it is to modify the code safely.
+
+I just looked further 3 hunks and had exactly the same impression there, 
+so I stopped looking.
+
+Sorry,
+Dscho
