@@ -1,153 +1,72 @@
-From: Alexey Nezhdanov <snakeru@gmail.com>
-Subject: Re: cgit suggestion
-Date: Sun, 27 Sep 2009 23:02:30 +0400
-Message-ID: <200909272302.30742.snakeru@gmail.com>
-References: <e95c2db40909252314t12abb6e2w9b6e9c34c7a724a5@mail.gmail.com>
+From: Anteru <newsgroups@catchall.shelter13.net>
+Subject: Re: Deciding between Git/Mercurial
+Date: Sun, 27 Sep 2009 21:18:49 +0200
+Message-ID: <h9odqq$ig9$1@ger.gmane.org>
+References: <81b0412b0909271144o26743e05uac3132cdc5b530b@mail.gmail.com> <585748.13758.qm@web27802.mail.ukl.yahoo.com>
+Reply-To: newsgroups@catchall.shelter13.net
 Mime-Version: 1.0
-Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_Gb7vKb10ucHniRY"
-Cc: git@vger.kernel.org
-To: hjemli@gmail.com
-X-From: git-owner@vger.kernel.org Sun Sep 27 21:02:43 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 27 21:19:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mrz17-0004pV-Rc
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 21:02:42 +0200
+	id 1MrzHF-0000zp-Hx
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 21:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730AbZI0TCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 15:02:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752330AbZI0TCc
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 15:02:32 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:51333 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751191AbZI0TCb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 15:02:31 -0400
-Received: by ewy7 with SMTP id 7so3875932ewy.17
-        for <git@vger.kernel.org>; Sun, 27 Sep 2009 12:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :message-id;
-        bh=UzEmfk0hzwUgTYIcQSPiydEbca4YQMC2ewA5AQfVyes=;
-        b=EPY3Ip0qOuBg8EVAdmeHhOtRsIFtXuzLtY+HGGkOg9I6hDHGjehoCSI4By4R43DdH/
-         t925hEoFr9qisFOcryxZS+jnPWudDw1SoiCUTfuezhkC4vZpkwD5W6cFQzxCqjlClWHd
-         z8nwljug8jZvDca63rFfseNVAmCVVyW14ROcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:message-id;
-        b=kWhS7qrheGNcMdoAQTyThDE1benH9xkhN+Ac0Hos/vw6V2dMn/ybxsHILPOIYEq05j
-         GN2uuFUAoJo6Kshi7qxl0O2IRom3r+1ZkWN2lqJHerQKSaab3bRxBrk33H0HQ0ohwRf6
-         BgNVJc8F30hDg/kP737/CMU/29SFnHWCstYKw=
-Received: by 10.211.155.20 with SMTP id h20mr2138830ebo.44.1254078153405;
-        Sun, 27 Sep 2009 12:02:33 -0700 (PDT)
-Received: from ?192.168.1.3? ([77.108.242.222])
-        by mx.google.com with ESMTPS id 7sm189290eyb.28.2009.09.27.12.02.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 27 Sep 2009 12:02:32 -0700 (PDT)
-User-Agent: KMail/1.9.10
-In-Reply-To: <e95c2db40909252314t12abb6e2w9b6e9c34c7a724a5@mail.gmail.com>
+	id S1752098AbZI0TTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Sep 2009 15:19:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbZI0TTM
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 15:19:12 -0400
+Received: from lo.gmane.org ([80.91.229.12]:37133 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751383AbZI0TTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Sep 2009 15:19:11 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MrzH7-0000yP-PI
+	for git@vger.kernel.org; Sun, 27 Sep 2009 21:19:13 +0200
+Received: from lmontsouris-156-26-18-33.w80-14.abo.wanadoo.fr ([80.14.177.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 27 Sep 2009 21:19:13 +0200
+Received: from newsgroups by lmontsouris-156-26-18-33.w80-14.abo.wanadoo.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 27 Sep 2009 21:19:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: lmontsouris-156-26-18-33.w80-14.abo.wanadoo.fr
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <585748.13758.qm@web27802.mail.ukl.yahoo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129216>
 
---Boundary-00=_Gb7vKb10ucHniRY
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Mark Struberg schrieb:
+> Another thing to consider: For what kind of project/language do you need git? What build tools are you using and how good is the integration into both git and hg?
+The project is running on Windows/Linux (Windows being the primary
+development platform, and we also expect most users to run Windows.)
 
-Hello Lars.
-Here is the diff. It adds feature of downloading 'named' tarball from the tag 
-description page.
+For tooling, we use Trac at the moment (good integration with SVN), but
+we're evaluating GitTrac, Trac/Mercurial and Redmine now (+ possible
+migration paths.) For our build system, it's a non-issue anyway, as
+git/mercurial have command line clients, and that's all we need.
 
-On Saturday 26 September 2009 10:14:19 Alexey Nezhdanov wrote:
-> Hello Lars.
-> Discovered a cgit for myself throught the LWN article:
-> http://lwn.net/Articles/351798/
->
-> Great thing! I'm impressed, will use it instead of gitweb (when I'll need a
-> web interface anyway ;-P).
-> Came upon a thing though that I consider to be an inconvenience.
->
-> When I click on a tag, for instance:
-> http://hjemli.net/git/cgit/tag/?id=v0.8.2.2
-> there is no download link of assotiated object. And if I click on a 'tagged
-> object' I get download links, but they are referenced by SHA-1 format.
-> So they can not be used as a .orig.tar.gz package or even just stored 'for
-> a future use' since SHA-1 is not human readable.
-> So I propose putting download links onto tag page for the objects of type
-> 'tree' and 'commit'.
-> If you want me to write a patch - I'll do.
->
-> Regards
-> Alexey Nezhdanov.
+Don't get me wrong with Git+msysgit on Windows, the point is simply if
+we switch to git, can we expect that Windows will be supported for the
+foreseeable future or is it possible that git may simply drop Windows
+support completely? For Mercurial, this is a non-issue, as it is written
+in Python, and Python will support both Windows and Linux.
 
+As I said, I'm happy with using msysgit, but I cannot find any roadmap
+etc. which helps me to determine how git and Windows is going to
+continue (for instance, I can find some complaints that git's
+performance is bad on Windows due to cygwin's fork()/exec(), is this
+likely to get ever "fixed"? I guess git# will solve this as soon as it's
+ready?)
 
-
--- 
-Sincerely yours
-Alexey Nezhdanov
-
---Boundary-00=_Gb7vKb10ucHniRY
-Content-Type: text/x-diff;
-  charset="iso 8859-1";
-  name="0001-Ad-hoc-tarball-downloads-from-the-tag-description-pa.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
-	filename="0001-Ad-hoc-tarball-downloads-from-the-tag-description-pa.patch"
-
-=46rom b70365dfab8bb9ade733ea8387880b2b2cf4baa4 Mon Sep 17 00:00:00 2001
-=46rom: Alexey Nezhdanov <snakeru@gmail.com>
-Date: Sun, 27 Sep 2009 23:00:29 +0400
-Subject: [PATCH] Ad-hoc tarball downloads from the tag description page.
-
-Signed-off-by: Alexey Nezhdanov <snakeru@gmail.com>
-=2D--
- ui-tag.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
-
-diff --git a/ui-tag.c b/ui-tag.c
-index c2d72af..da93b7a 100644
-=2D-- a/ui-tag.c
-+++ b/ui-tag.c
-@@ -76,6 +76,12 @@ void cgit_print_tag(char *revname)
- 		html("<tr><td>Tagged object</td><td>");
- 		cgit_object_link(tag->tagged);
- 		html("</td></tr>\n");
-+                if (ctx.repo->snapshots) {
-+                        html("<tr><th>download</th><td class=3D'sha1'>");
-+                        cgit_print_snapshot_links(ctx.qry.repo, ctx.qry.he=
-ad,
-+                                                  revname, ctx.repo->snaps=
-hots);
-+                        html("</td></tr>");
-+                }
- 		html("</table>\n");
- 		print_tag_content(info->msg);
- 	} else {
-@@ -86,6 +92,12 @@ void cgit_print_tag(char *revname)
- 		html("<tr><td>Tagged object</td><td>");
- 		cgit_object_link(obj);
- 		html("</td></tr>\n");
-+                if (ctx.repo->snapshots) {
-+                        html("<tr><th>download</th><td class=3D'sha1'>");
-+                        cgit_print_snapshot_links(ctx.qry.repo, ctx.qry.he=
-ad,
-+                                                  revname, ctx.repo->snaps=
-hots);
-+                        html("</td></tr>");
-+                }
- 		html("</table>\n");
-         }
- 	return;
-=2D-=20
-1.5.6.3
-
-
---Boundary-00=_Gb7vKb10ucHniRY--
+Cheers,
+  Anteru
