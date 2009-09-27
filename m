@@ -1,91 +1,104 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Deciding between Git/Mercurial
-Date: Sun, 27 Sep 2009 21:34:54 +0200
-Message-ID: <40aa078e0909271234l227e9d27i71fcdc788a78c850@mail.gmail.com>
-References: <81b0412b0909271144o26743e05uac3132cdc5b530b@mail.gmail.com>
-	 <585748.13758.qm@web27802.mail.ukl.yahoo.com>
-	 <h9odqq$ig9$1@ger.gmane.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 7/9] removing eclipse project files
+Date: Sun, 27 Sep 2009 21:52:32 +0200
+Message-ID: <200909272152.33224.robin.rosenberg.lists@dewire.com>
+References: <892492.1652.qm@web27801.mail.ukl.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: newsgroups@catchall.shelter13.net
-X-From: git-owner@vger.kernel.org Sun Sep 27 21:36:39 2009
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: MatthiasSohn <matthias.sohn@sap.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"spearce@spearce.org" <spearce@spearce.org>
+To: Mark Struberg <struberg@yahoo.de>
+X-From: git-owner@vger.kernel.org Sun Sep 27 21:52:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrzXx-0006I9-9M
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 21:36:37 +0200
+	id 1Mrznd-0005MW-OP
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 21:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107AbZI0Tew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 15:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750999AbZI0Tew
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 15:34:52 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:59875 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbZI0Tev (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 15:34:51 -0400
-Received: by bwz6 with SMTP id 6so886317bwz.37
-        for <git@vger.kernel.org>; Sun, 27 Sep 2009 12:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=6LjxzDxidxZXb0hEeSyAPnLvTO+XFOcTjo+UZ5/DLeo=;
-        b=W9m1WVPiI1xoEx9L50OOuOLnJ9FJVfCOG3KpCGPLDd7plsVsNAMjORoU2uyjT1ftHh
-         cH798mEcHI1y6dh+TMSJziO7pXwL1yDVTzZpT36Bs4s01SzXxZihtsPr9ygzzsKjyVbQ
-         pzmhrg2d8jP5p4VuMaiT0RybH3k98Anz6W64o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ayHZM5e3KnWazkkSx88bIX/kQwOOP3CUu0PkNfKsK/aE77IWSaLErlZyezEvKNRMZb
-         AqrpeQ7DRxxbP7/Yr1bL0lvntf+FSobSoarkotcLdvVvmQv+/1r7FjmqO1RuVTEiWOQo
-         eLuh0dDrIlSWQBE7cQFHragMwe7GYWIETzbys=
-Received: by 10.204.19.145 with SMTP id a17mr2295169bkb.64.1254080094220; Sun, 
-	27 Sep 2009 12:34:54 -0700 (PDT)
-In-Reply-To: <h9odqq$ig9$1@ger.gmane.org>
+	id S1752293AbZI0Twd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Sep 2009 15:52:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbZI0Twd
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 15:52:33 -0400
+Received: from mail.dewire.com ([83.140.172.130]:19772 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751610AbZI0Twc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Sep 2009 15:52:32 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 08600147D583;
+	Sun, 27 Sep 2009 21:52:34 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 5ug157d9abM7; Sun, 27 Sep 2009 21:52:34 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 46666147D521;
+	Sun, 27 Sep 2009 21:52:34 +0200 (CEST)
+User-Agent: KMail/1.11.2 (Linux/2.6.28-11-generic; KDE/4.2.2; i686; ; )
+In-Reply-To: <892492.1652.qm@web27801.mail.ukl.yahoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129219>
 
-On Sun, Sep 27, 2009 at 9:18 PM, Anteru
-<newsgroups@catchall.shelter13.net> wrote:
-> Don't get me wrong with Git+msysgit on Windows, the point is simply if
-> we switch to git, can we expect that Windows will be supported for the
-> foreseeable future or is it possible that git may simply drop Windows
-> support completely? For Mercurial, this is a non-issue, as it is written
-> in Python, and Python will support both Windows and Linux.
+l=F6rdag 26 september 2009 22:10:16 skrev Mark Struberg <struberg@yahoo=
+=2Ede>:
+>=20
+> As you already pointed to: we have to clearly separate between settin=
+gs stored in the project itself and settings stored in the workspace. T=
+he first are by far not all settings needed, the 2nd are not checked in=
+ to git anyway. Maybe I didn't  find it yet, but is there an ability to=
+ set formatter settings for XML (e.g. Tabs vs spaces policy)? I was onl=
+y able to specify this for the whole workspace and not on a per project=
+ basis.
 
-The chance of Windows support being dropped from git is very unlikely
-- there's way too many people depending on git for Windows already for
-that to happen. Besides, git is open source, so you can always fix
-Windows issues yourself.
+Those are workspace settings in the 3.4, not checked 3.,5 yet. You coul=
+d add
+it to bugzilla as a feature request. All settings should be available a=
+s project settings I think.
 
-As for Mercurial, Python programs aren't automatically portable to
-Windows either. But I expect that they have the same very close to
-zero chance of having Windows support dropped as git has.
+> And there is a lot more which imho cannot be set for a project. So ch=
+ecking in the xml sounds like it is way more powerful isn't? And we wou=
+ld have this=20
 
-> As I said, I'm happy with using msysgit, but I cannot find any roadmap
-> etc. which helps me to determine how git and Windows is going to
-> continue (for instance, I can find some complaints that git's
-> performance is bad on Windows due to cygwin's fork()/exec(), is this
-> likely to get ever "fixed"? I guess git# will solve this as soon as it's
-> ready?)
+=46or JGit, not really. Everything that is not project settings should =
+be left as the default. The only reason is tool constraints. I'm not we=
+ll versed
+enough to tell what neatbeans does here.
 
-Git (neither mainline nor msysgit) doesn't have any official roadmap
-as far as I know. People just hack away on what they feel is
-important. If you want to make sure something gets done, chip in the
-development-time yourself.
+> feature for a lot non-Eclipse users too (e.g. for Jonas who hacks the=
+ nbgit NetBeans plugin based on JGit (again: EGit is a different story!=
+)).
 
-As for the fork()-performance, this is only an issue for some tools
-(if any at all - I don't think this issue exists in msysgit). In my
-experience, git on Windows is faster than any other VCS I've ever used
-on Windows.
+I'm not sure keeping netbeans settings would be a problem, but that is
+about how much we could do
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+>=20
+> >=20
+> > We use 3.3 (well I think the last user dropped it
+> > recently), 3.4 and 3.5. I often have to fix up new projects
+> > but that is typically a one-time per eclipse project
+> > problem. (typically the JRE gets bound to a specific install
+> > location).
+> >=20
+> > The .launch files is another story since they change format
+> > all the time.
+>=20
+> And the profiler settings, and and and. It's sad, but the list is lon=
+g :(
+
+Yep...
+
+> We can also let the eclipse settings files checked in currently if yo=
+u like. But I'd be happy if we continue collecting information and then=
+ make a decision.
+
+I definitely think we should keep them until we find an alternate solut=
+ion. The
+projects settings are way too useful to be thrown out.
+
+-- robin
