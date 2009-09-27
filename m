@@ -1,90 +1,82 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] gitweb: fix spelling errors in comments
-Date: Sun, 27 Sep 2009 10:54:12 +0200
-Message-ID: <20090927085412.GS32702@genesis.frugalware.org>
-References: <1254007953-1961-1-git-send-email-vmiklos@frugalware.org>
- <20090927083507.GA25891@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Interim maintainer tree
+Date: Sun, 27 Sep 2009 04:54:37 -0400
+Message-ID: <20090927085437.GA10828@coredump.intra.peff.net>
+References: <20090925160504.GW14660@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PsEZZJjWpOB92CxQ"
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Sep 27 10:54:36 2009
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Sep 27 10:54:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrpWc-0004wU-NN
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 10:54:35 +0200
+	id 1MrpWz-000544-PY
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 10:54:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712AbZI0IyO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 04:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753702AbZI0IyM
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 04:54:12 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:39745 "EHLO virgo.iok.hu"
+	id S1753665AbZI0Iyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Sep 2009 04:54:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753439AbZI0Iyg
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 04:54:36 -0400
+Received: from peff.net ([208.65.91.99]:36510 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753533AbZI0IyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 04:54:09 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id DE3105808B;
-	Sun, 27 Sep 2009 10:54:12 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id CAD7844906;
-	Sun, 27 Sep 2009 10:54:12 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CED5911F0028; Sun, 27 Sep 2009 10:54:12 +0200 (CEST)
+	id S1753534AbZI0Iyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Sep 2009 04:54:36 -0400
+Received: (qmail 19131 invoked by uid 107); 27 Sep 2009 08:58:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 27 Sep 2009 04:58:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Sep 2009 04:54:37 -0400
 Content-Disposition: inline
-In-Reply-To: <20090927083507.GA25891@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20090925160504.GW14660@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129205>
 
+On Fri, Sep 25, 2009 at 09:05:04AM -0700, Shawn O. Pearce wrote:
 
---PsEZZJjWpOB92CxQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Junio is on vaction for the next week.  In his absence Peff and I
+> are trying to keep up with current patches in my fork:
+> 
+>   git://repo.or.cz/git/spearce.git
+>   http://repo.or.cz/r/git/spearce.git
 
-On Sun, Sep 27, 2009 at 04:35:07AM -0400, Jeff King <peff@peff.net> wrote:
-> > The plural form of "id" is "ids", not "id's", right?
->=20
-> It is a matter of some debate, actually. As an abbreviation, it should
-> rightly be "ID", and therefore "IDs". Most style manuals indicate that
-> no apostrophe should be used these days, unless it is an abbreviation
-> separated by dots (e.g., "I.D.'s").
->=20
-> Some disagree, and some indicate that you should use an apostrophe where
-> it may be visually more clear (for example, in single-letter
-> abbreviations like "A's").
->=20
-> There is a nice summary of some style guides here:
->=20
->   http://answers.google.com/answers/threadview?id=3D499296
->=20
-> Honestly, for such an informal bit of text as a code comment, I'm not
-> sure it is worth nit-picking the grammar (e.g., we should be
-> writing SHA-1 everywhere, and we obviously don't). I'll let Shawn decide
-> whether he wants to apply or not.
+I've collected a few more topics in my repo:
 
-As a non-native I did not know to resolve "id's" to "id is" or "id has",
-and once I figured it out, I thought about sending a patch.
+  git://github.com/peff/git.git
 
-Though, if that helps, I can resend it with "Blobs defined by
-non-textual hash IDs can be cached" to be more readable.
+Rather than cook my own, slightly different 'next', I'm just publishing
+the tips of the topics themselves. Which means they are subject to
+rewinding until you merge them into 'next', at which point I will leave
+them stable.
 
---PsEZZJjWpOB92CxQ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+What's in there now is:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+  as/parseopt-ambiguous
+    Fix for "git branch --no-merge" with my test added. Should be ready
+    for next.
 
-iEYEARECAAYFAkq/KDQACgkQe81tAgORUJZIwgCfRbRHMkbOqnqvdwdZsz1qiosN
-7aUAni9LE8Q7ZsHGoz+IYT74rqFQpuaS
-=462u
------END PGP SIGNATURE-----
+  jk/reflog-date
+    My reflog fix. Should be ready for next.
 
---PsEZZJjWpOB92CxQ--
+  mr/gitweb-snapshot
+    v5, replacing what Junio had in pu. Should probably stay in pu until
+    we hear from Jakub.
+
+  mr/instaweb
+    Looked OK to me, but I have no capacity to actually test it.
+    Unlikely to break anything else, though, so probably ready to cook
+    in next.
+
+  mv/lock-error
+    My tweaked version, which got the OK from Miklos. Ready for next, I
+    think.
+
+  np/clone-smaller
+    Nico's fix to stop copying unnecessary objects during clone. Patch
+    looks sane, I confirmed that it fixes the issue, and it doesn't seem
+    to break normal clones. Ready to cook in next, I think.
+
+-Peff
