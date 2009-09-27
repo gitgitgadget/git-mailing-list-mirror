@@ -1,65 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitweb: fix spelling errors in comments
-Date: Sun, 27 Sep 2009 04:35:07 -0400
-Message-ID: <20090927083507.GA25891@coredump.intra.peff.net>
-References: <1254007953-1961-1-git-send-email-vmiklos@frugalware.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git branch -D: give a better error message when
+ lockfile creation fails
+Date: Sun, 27 Sep 2009 10:49:06 +0200
+Message-ID: <20090927084906.GR32702@genesis.frugalware.org>
+References: <vpqy6o15v6m.fsf@bauges.imag.fr>
+ <1254006909-1862-1-git-send-email-vmiklos@frugalware.org>
+ <20090927082123.GD15393@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Sun Sep 27 10:35:29 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yQrIXZbGokyKU1X6"
+Cc: Matthieu.Moy@grenoble-inp.fr, spearce@spearce.org,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Sep 27 10:49:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MrpE8-0000ef-G9
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 10:35:28 +0200
+	id 1MrpRU-0003T8-7F
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Sep 2009 10:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753591AbZI0IfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 04:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753576AbZI0IfI
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 04:35:08 -0400
-Received: from peff.net ([208.65.91.99]:38722 "EHLO peff.net"
+	id S1753612AbZI0ItF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Sep 2009 04:49:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753593AbZI0ItF
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 04:49:05 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:42765 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753571AbZI0IfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 04:35:06 -0400
-Received: (qmail 18953 invoked by uid 107); 27 Sep 2009 08:38:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 27 Sep 2009 04:38:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 27 Sep 2009 04:35:07 -0400
+	id S1753529AbZI0ItE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Sep 2009 04:49:04 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id CCEC058089;
+	Sun, 27 Sep 2009 10:49:06 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 5B02844906;
+	Sun, 27 Sep 2009 10:49:06 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 40EAC11F0028; Sun, 27 Sep 2009 10:49:06 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1254007953-1961-1-git-send-email-vmiklos@frugalware.org>
+In-Reply-To: <20090927082123.GD15393@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129203>
 
-On Sun, Sep 27, 2009 at 01:32:33AM +0200, Miklos Vajna wrote:
 
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
-> ---
->  gitweb/gitweb.perl |   10 +++++-----
->  1 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> The plural form of "id" is "ids", not "id's", right?
+--yQrIXZbGokyKU1X6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-It is a matter of some debate, actually. As an abbreviation, it should
-rightly be "ID", and therefore "IDs". Most style manuals indicate that
-no apostrophe should be used these days, unless it is an abbreviation
-separated by dots (e.g., "I.D.'s").
+On Sun, Sep 27, 2009 at 04:21:23AM -0400, Jeff King <peff@peff.net> wrote:
+> Maybe it is just me, but that extra die() that should never be reached
+> is terribly ugly. I would do it with two functions, one that dies and
+> one that doesn't, with a helper to format the message. IOW, this:
 
-Some disagree, and some indicate that you should use an apostrophe where
-it may be visually more clear (for example, in single-letter
-abbreviations like "A's").
+Okay, that's fine with me - thanks for providing a patch as well.
 
-There is a nice summary of some style guides here:
+--yQrIXZbGokyKU1X6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-  http://answers.google.com/answers/threadview?id=499296
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Honestly, for such an informal bit of text as a code comment, I'm not
-sure it is worth nit-picking the grammar (e.g., we should be
-writing SHA-1 everywhere, and we obviously don't). I'll let Shawn decide
-whether he wants to apply or not.
+iEYEARECAAYFAkq/JwIACgkQe81tAgORUJYriQCfZLS5ldLlxrDNNCN9MrkJRWa8
+KIwAn3Os1AMMldgUBJR851KP5RCdLR5j
+=g9qn
+-----END PGP SIGNATURE-----
 
--Peff
+--yQrIXZbGokyKU1X6--
