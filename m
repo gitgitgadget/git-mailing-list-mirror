@@ -1,97 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-am: force egrep to use correct characters set
-Date: Mon, 28 Sep 2009 10:12:47 +0200
-Message-ID: <4AC06FFF.20008@viscovery.net>
-References: <215cc4f241162377b9249c2b3d74050cc77bac16.1253893253.git.chressie@gmail.com> <f0bd48168975c3b2328cf26f9a37a0f54b898473.1253896646.git.chressie@gmail.com> <20090927074015.GB15393@coredump.intra.peff.net>
+From: Frederik Schwarzer <schwarzerf@gmail.com>
+Subject: [PATCH] typo in hook template
+Date: Mon, 28 Sep 2009 10:30:19 +0200
+Message-ID: <200909281030.19949.schwarzerf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Himpel <chressie@googlemail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Sep 28 10:12:57 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 28 10:32:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsBLt-0005f4-E5
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 10:12:57 +0200
+	id 1MsBeV-0002RE-8J
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 10:32:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752423AbZI1IMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 04:12:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbZI1IMs
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 04:12:48 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:16282 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751136AbZI1IMr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 04:12:47 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MsBLk-0008LL-0j; Mon, 28 Sep 2009 10:12:50 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 9D977A4A1; Mon, 28 Sep 2009 10:12:47 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20090927074015.GB15393@coredump.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+	id S1752321AbZI1IcA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 04:32:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbZI1IcA
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 04:32:00 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:45991 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbZI1Ib7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 04:31:59 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so677021fge.1
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 01:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:mime-version:content-type:content-transfer-encoding
+         :message-id;
+        bh=NhGt97lqqM0rt7WLLpr8kWhj4Rpdp7kC0kc6jD0mGaA=;
+        b=TX/aGVbaM3a9qt0oa5QBrPZUgtErNkPgeISmMRwEj7BWN3gn96gdN9kYWiFZ4PhLSY
+         WrpY6s90FsiOYPAyuCBi+UPKNcYTSaES28I59BEChhqqyaoSiLW6wQvzVw5X1o47nkzN
+         DMfYmo9rpkyPUIFCSsM89a4cLMHZdDkCk94WE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        b=xENSBN7fBQyfJXPunzJoYosDYwQYmnZY+mM3CKs4YNp2nm0/r2JRKpSoJmKxwRJ9WC
+         oA+GdkZTx5SGCHH/6M87ZZNYUBKIuP3Bo1pM7jNPtbJhTMzxXqGBe1PEfJ9aYQF1UnpI
+         vl9Y611OZWICRZ2kTVRoudmCnF9oBFwnlwyvE=
+Received: by 10.86.242.15 with SMTP id p15mr3129439fgh.14.1254126722823;
+        Mon, 28 Sep 2009 01:32:02 -0700 (PDT)
+Received: from tamaki.localnet (f055015034.adsl.alicedsl.de [78.55.15.34])
+        by mx.google.com with ESMTPS id d4sm5187381fga.2.2009.09.28.01.32.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 28 Sep 2009 01:32:02 -0700 (PDT)
+User-Agent: KMail/1.12.1 (Linux/2.6.30-fs; KDE/4.3.1; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129236>
 
-Jeff King schrieb:
-> On Fri, Sep 25, 2009 at 06:43:20PM +0200, Christian Himpel wrote:
->=20
->> According to egrep(1) the US-ASCII table is used when LC_ALL=3DC is =
-set.
->> We do not rely here on the LC_ALL value we get from the environment.
->=20
-> Hmm. Probably makes sense here, as it is a wide enough range that it =
-may
-> pick up other stray non-ascii characters in other charsets (though as
-> the manpage notes, the likely thing is to pick up A-Z along with a-z,
-> which is OK here as we encompass both in our range).
->=20
-> There are two other calls to egrep with brackets (both in
-> git-submodule.sh), but they are just [0-7], which is presumably OK in
-> just about any charset.
->=20
-> Do you happen to know a charset in which this is a problem, just for
-> reference?
+=46rom b4bcd971e3d6358b3381280609e1c0859bee3db8 Mon Sep 17 00:00:00 200=
+1
+=46rom: Frederik Schwarzer <schwarzerf@gmail.com>
+Date: Mon, 28 Sep 2009 10:25:55 +0200
+Subject: [PATCH] typo in hook template
 
-It's not so much about charsets than about languages:
+---
+ templates/hooks--post-receive.sample |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-       Within a bracket expression, a range expression consists
-       of two characters separated by a hyphen.  It matches any
-       single character that sorts between the two  characters,
-       inclusive,  using  the  locale's  collating sequence and
-       character set.  For example, in the  default  C  locale,
-       [a-d]  is equivalent to [abcd].  Many locales sort char-
-       acters in dictionary order, and in these  locales  [a-d]
-       is  typically  not  equivalent  to  [abcd];  it might be
-       equivalent to [aBbCcDd], for  example.   To  obtain  the
-       traditional  interpretation  of bracket expressions, you
-       can use the C locale by setting the  LC_ALL  environment
-       variable to the value C.
-
-=46or example, in locale de_DE.UTF-8, GNU grep '[a-z]' matches lowercas=
-e
-letters, uppercase letters (!), and umlauts (!!) because in dictionary
-order, 'A' and 'a' are equivalent and '=C3=84' sorts after 'A'. (The in=
-put must
-be UTF-8, of course.)
-
-Given that this applies not only to egrep, but to grep in general (and
-perhaps even to other tools that support ranges, like sed), it may be
-necessary to audit all range expressions.
-
-The case identified by Christian is certainly important because it is
-applied to a file whose contents can be anything, and the purpose of th=
-e
-check is to identify the text as an mbox file, whose header section can=
- be
-only US-ASCII by definition. So, I think it has merit to apply the patc=
-h.
-
--- Hannes
+diff --git a/templates/hooks--post-receive.sample b/templates/hooks--po=
+st-
+receive.sample
+index 18d2e0f..7a83e17 100755
+--- a/templates/hooks--post-receive.sample
++++ b/templates/hooks--post-receive.sample
+@@ -9,7 +9,7 @@
+ # For example:
+ #  aa453216d1b3e49e7f6f98441fa56946ddcd6a20=20
+68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
+ #
+-# see contrib/hooks/ for an sample, or uncomment the next line and
++# see contrib/hooks/ for a sample, or uncomment the next line and
+ # rename the file to "post-receive".
+=C2=B7
+ #. /usr/share/doc/git-core/contrib/hooks/post-receive-email
+--=C2=B7
+1.6.4.3
