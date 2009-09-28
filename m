@@ -1,74 +1,75 @@
-From: Vietor Liu <vietor.liu@gmail.com>
-Subject: [PATCH] git-gui: add small screen compatibility
-Date: Mon, 28 Sep 2009 10:38:52 +0800
-Message-ID: <1254105532-5342-1-git-send-email-vietor.liu@gmail.com>
-Cc: git@vger.kernel.org, Vietor Liu <vietor.liu@gmail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Mon Sep 28 04:36:17 2009
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: thoughts on a possible "pre-upload" hook
+Date: Mon, 28 Sep 2009 08:32:17 +0530
+Message-ID: <2e24e5b90909272002r53b0a82dw9cb52bdc7bbd477@mail.gmail.com>
+References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+	 <c376da900909271901q1667ecacw730ba5180a558f3b@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 05:10:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ms664-0004Mp-KO
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 04:36:16 +0200
+	id 1Ms6cq-00042W-Q5
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 05:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752537AbZI1CgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 22:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752466AbZI1CgF
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 22:36:05 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:64662 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752397AbZI1CgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 22:36:03 -0400
-Received: by yxe37 with SMTP id 37so4824861yxe.33
-        for <git@vger.kernel.org>; Sun, 27 Sep 2009 19:36:07 -0700 (PDT)
+	id S1752656AbZI1DJ6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Sep 2009 23:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbZI1DJ6
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 23:09:58 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:51307 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752291AbZI1DJ5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Sep 2009 23:09:57 -0400
+X-Greylist: delayed 464 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Sep 2009 23:09:57 EDT
+Received: by iwn10 with SMTP id 10so2378941iwn.4
+        for <git@vger.kernel.org>; Sun, 27 Sep 2009 20:10:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=i1o29Dtwi1FYUOJvPgAx0YxuShMo8cy/lat8z1yLDOE=;
-        b=jG/d8mePMAdq6asjQgxRdGlRIdxyBnveNrYFWiOslDs4xH2HP8NO0h8Ur9ScGiBZ3S
-         TAi9C/mlePCvJQENVto3HdzBUqmOGTw/6AnXku0itJVtrNDnI66EdKoQYEGCfNhl7Iqz
-         2GIbtRJEJYxIrcBiB3igUz/RxZ2O1gFACyCE4=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nGQwcflzFvLMSA3/LTiHYnU8e64XOsbHSVzdBBxzhJI=;
+        b=buSIDgtKyOPPaI4f6DlIL2Waw3m+Y70etxsaWELSbEv15oOq2vHydl+CtLt+h3uhuk
+         jZp+tbEKUdq4gELqxbpG9DPYj2+6VACj84onhCWtRXHqewMp+TL8kkBQ05uDQ6SqwY6s
+         Lbf0P/WT5XqITtWEiyNtE5AXA3Yme7YzJcSg8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=UXhphvNnwhtJnDL9bsi9pVg/vjLd+lBVfWQ2CK11aJpwGA4dfFuanSceUciEVCuPtF
-         ebnBAXKGld7qdSP0mf9R4eGdsw5mVl7VwxKhog/Fdw1LRLLoS0n7zgx1t68E7H2d0jZb
-         iTl+F2kGQ9Xqm8ABm3c/j9Old8F0ecokk06M0=
-Received: by 10.91.46.7 with SMTP id y7mr2607487agj.58.1254105367760;
-        Sun, 27 Sep 2009 19:36:07 -0700 (PDT)
-Received: from localhost.localdomain ([221.218.175.89])
-        by mx.google.com with ESMTPS id 20sm5700816agd.24.2009.09.27.19.36.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 27 Sep 2009 19:36:06 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc2.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sMAp2NFwsTof5vqSZbL3zbztjT73fiYTw0ix31oTpsP2PZuP7ESx8kAlWn4csIakAG
+         gbHQEGTv8TM19simj5pGc1RDUSUc3gLyVleytbn1/iqY28IA0F58pZzAepdOBabf0441
+         3vubjstQFtrp/E63+Td/c2uMqS7M/RxwhqDMM=
+Received: by 10.231.121.69 with SMTP id g5mr5107565ibr.44.1254106937629; Sun, 
+	27 Sep 2009 20:02:17 -0700 (PDT)
+In-Reply-To: <c376da900909271901q1667ecacw730ba5180a558f3b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129225>
 
-The Netbook screen likes 800*480 1024*600. The git-gui's display
-should be hide some buttons(ie 'Commit','Push') and 'Status bar'.
+On Mon, Sep 28, 2009 at 7:31 AM, Adam Brewster <adambrewster@gmail.com>=
+ wrote:
+>> As git is used more and more in corporate-type environments, at some
+>> point it becomes convenient to have *branches* (or more accurately,
+>> refs) that are not readable. =A0The simplest way to do this (from gi=
+t's
+>> point of view) is to allow a "pre-upload" hook, rather like the
+>> "pre-receive" hook or "update" hook.
+>>
+>
+> What's the benefit of this over using multiple repositories?
 
-Signed-off-by: Vietor Liu <vietor.liu@gmail.com>
----
- git-gui/git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Over a long pm chat over irc with Ilari, I have come to the same
+conclusion.  I was hoping there would be some administrative
+convenience or workflow convenience to doing this, but whether there
+is or not is debatable, and even if there is, there are enough failure
+modes to make this have a lot of caveats.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 14b92ba..6af9db2 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3054,7 +3054,7 @@ frame .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
- text $ui_diff -background white -foreground black \
- 	-borderwidth 0 \
--	-width 80 -height 15 -wrap none \
-+	-width 80 -height 0 -wrap none \
- 	-font font_diff \
- 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
- 	-yscrollcommand {.vpane.lower.diff.body.sby set} \
--- 
-1.6.5.rc2.dirty
+--=20
+Sitaram
