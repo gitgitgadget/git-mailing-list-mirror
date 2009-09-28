@@ -1,70 +1,65 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: git clone sending unneeded objects
-Date: Mon, 28 Sep 2009 00:18:07 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0909280009250.4997@xanadu.home>
-References: <alpine.LFD.2.00.0908082246020.440@xanadu.home>
- <m2k51dzb39.fsf@linux-m68k.org> <4ABD0669.7050309@redhat.com>
- <vpqvdj6izt6.fsf@bauges.imag.fr>
- <alpine.LFD.2.00.0909251551290.4997@xanadu.home> <4ABD25FE.2040902@redhat.com>
- <alpine.LFD.2.00.0909251629330.4997@xanadu.home> <4ABD4F7B.4030701@redhat.com>
- <4ABD9C2C.60800@redhat.com> <alpine.LFD.2.00.0909262059520.4997@xanadu.home>
- <20090927020409.GK14660@spearce.org> <4ABEEB92.1020307@redhat.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [JGIT PATCH 7/9] removing eclipse project files
+Date: Mon, 28 Sep 2009 08:34:44 +0200
+Message-ID: <200909280834.45360.robin.rosenberg.lists@dewire.com>
+References: <892492.1652.qm@web27801.mail.ukl.yahoo.com> <200909272152.33224.robin.rosenberg.lists@dewire.com> <2c6b72b30909271921y4b191f1fo42b1ffb5f08d3468@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Hin-Tak Leung <hintak.leung@gmail.com>
-To: Jason Merrill <jason@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 06:18:42 2009
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mark Struberg <struberg@yahoo.de>,
+	MatthiasSohn <matthias.sohn@sap.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"spearce@spearce.org" <spearce@spearce.org>
+To: Jonas Fonseca <jonas.fonseca@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 08:35:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ms7hA-00013S-Qi
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 06:18:41 +0200
+	id 1Ms9pQ-0005fH-UM
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 08:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbZI1ESa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 00:18:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750931AbZI1ESa
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 00:18:30 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25483 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858AbZI1ES3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 00:18:29 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KQN00MKMYM7ZIE0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 28 Sep 2009 00:18:07 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4ABEEB92.1020307@redhat.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751989AbZI1Gez convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 02:34:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751959AbZI1Gey
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 02:34:54 -0400
+Received: from pne-smtpout2-sn1.fre.skanova.net ([81.228.11.159]:48271 "EHLO
+	pne-smtpout2-sn1.fre.skanova.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751877AbZI1Gey convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 02:34:54 -0400
+Received: from sleipner.localnet (90.232.156.220) by pne-smtpout2-sn1.fre.skanova.net (7.3.140.3)
+        id 4A2D61FD00AD7FEF; Mon, 28 Sep 2009 08:34:47 +0200
+User-Agent: KMail/1.11.4 (Linux/2.6.28-11-generic; KDE/4.2.4; i686; ; )
+In-Reply-To: <2c6b72b30909271921y4b191f1fo42b1ffb5f08d3468@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129227>
 
-On Sun, 27 Sep 2009, Jason Merrill wrote:
+m=C3=A5ndag 28 september 2009 04:21:36 skrev Jonas Fonseca <jonas.fonse=
+ca@gmail.com>:
+> On Sun, Sep 27, 2009 at 15:52, Robin Rosenberg
+> <robin.rosenberg.lists@dewire.com> wrote:
+> > l=C3=B6rdag 26 september 2009 22:10:16 skrev Mark Struberg <struber=
+g@yahoo.de>:
+> >> And there is a lot more which imho cannot be set for a project. So=
+ checking in the xml sounds like it is way more powerful isn't? And we =
+would have this
+> >
+> > For JGit, not really. Everything that is not project settings shoul=
+d be left as the default. The only reason is tool constraints. I'm not =
+well versed
+> > enough to tell what neatbeans does here.
+>=20
+> It is my impression that NetBeans has far better integration with
+> maven. In terms of code formatting NetBeans supports
+> exporting/importing project specific settings, but I have never
+> personally used that.
 
-> On 09/26/2009 10:04 PM, Shawn O. Pearce wrote:
-> > Actually, if those refs have not changed, quickfetch should kick in
-> > and realize that all 410610 objects are reachable locally without
-> > errors, permitting the client to avoid the object transfer.
-> > 
-> > However, if *ANY* of those refs were to change to something you
-> > don't actually have, quickfetch would fail, and we would need to
-> > fetch all 410610 objects.
-> 
-> Right.  That seems unfortunate to me; couldn't fetch do a bit more checking
-> before it decides to download the whole world again?
+I was thinking of (project) settings for controlling warnings/errors an=
+d formatting.
 
-The quickfetch test could be turned into a filter so refs that are 
-already available locally could simply not be fetched on a per ref 
-basis.  But that would be a rather expensive test which couldn't keep 
-its "quick" qualifier anymore, and so for a case that shouldn't have 
-happened normally anyway if git didn't have a bug with its clone 
-operation as I've explained already.
-
-
-Nicolas
+-- robin
