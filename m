@@ -1,49 +1,72 @@
-From: Editor HjemmePC <press@hjemmepc.no>
-Subject: Press request
-Date: Mon, 28 Sep 2009 11:32:33 +0200
-Message-ID: <20090928113233.KOUHQXVSQQEOVI@hjemmepc.no>
-Reply-To: press@hjemmepc.no
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Deciding between Git/Mercurial
+Date: Mon, 28 Sep 2009 12:08:22 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0909281059180.4985@pacific.mpi-cbg.de>
+References: <h9nlhj$heq$1@ger.gmane.org> <94a0d4530909280136s1ff65004q1733bd4ef78bdc07@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 28 12:03:10 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: newsgroups@catchall.shelter13.net, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 12:07:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsD4W-0002WI-DL
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:03:08 +0200
+	id 1MsD7c-00042y-So
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbZI1KC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 06:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751107AbZI1KC6
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:02:58 -0400
-Received: from wanda.d.ipeer.se ([213.180.94.180]:3720 "EHLO wanda"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751093AbZI1KC5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 06:02:57 -0400
-X-Greylist: delayed 1823 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Sep 2009 06:02:57 EDT
-Received: from [213.180.94.180] ([213.180.94.180])
-	by wanda (Kerio MailServer 6.4.0)
-	for git@vger.kernel.org;
-	Mon, 28 Sep 2009 11:32:33 +0200
+	id S1751755AbZI1KGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 06:06:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbZI1KGK
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:06:10 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59698 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751596AbZI1KGK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 06:06:10 -0400
+Received: (qmail invoked by alias); 28 Sep 2009 10:06:12 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp007) with SMTP; 28 Sep 2009 12:06:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18uZccKg9Iukag6cCatCExGfB1XwzEqnbTPLJptWd
+	VHMi0Q9l10dqCu
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <94a0d4530909280136s1ff65004q1733bd4ef78bdc07@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129244>
 
-Hi, I am a edtitor for the norwegian computer magazine called "HjemmePC"
-Each month I am collecting good software to be included in our magazine. Sometimes we also ask about full version covermount, which means we are given an old full version of you program, with upgrade offer to the latest for our readers. I am excited to ask if this is something that could be of interest for you. You will off course be given editorial review and space in both our magazine and our software section on web. I hope to hear from you soon
+Hi,
 
-Best Regards
-Kent Kjernes
-Editor of Computer Magazine "HjemmePC"
-press@hjemmepc.no
-Fax: +47 67 21 40 83
-About the magazine
-HjemmePC is published by HM Nordic
-(http://www.hm-media.no/eway/?pid=196) and covers the increasingly active and growing home market. Using easily understandable language, HjemmePC increases its readers' knowledge of computers and the latest innovations in computers and computer products.
-Internet: www.hjemmepc.no
+I tried to refrain from commenting in this thread, because I do not want 
+to encourage people just to use msysGit and never even attempt to fix 
+their own issues.
+
+But I cannot let this go uncommented:
+
+On Mon, 28 Sep 2009, Felipe Contreras wrote:
+
+> IMO the key difference between hg and git is the storage model: hg 
+> stores deltas, while git stores snapshots. That would mean that certain 
+> operations are theoretically faster in git (e.g. checkout, diff) while 
+> others faster in hg, although with git's packed format I guess there's 
+> no operation faster in hg. This means that it doesn't matter how much 
+> hg's python code improves, or if they even re-write parts in C, they 
+> will never be able to match git's performance (unless they change the 
+> storage model, which essentially means changing the whole design -- 
+> won't happen).
+
+That is wrong.  "git log -- <file>" will always be slightly faster in 
+Mercurial, for all the reasons you mentioned.
+
+In addition, Mercurial _has_ parts re-written in C for performance, which 
+renders it not-exactly more portable if you ask me.  Last time I checked, 
+there was no way to compile a Python module with MinGW (or for that 
+matter, Python itself), but you needed MSVC...
+
+Ciao,
+Dscho
