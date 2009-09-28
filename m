@@ -1,68 +1,59 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Deciding between Git/Mercurial
-Date: Mon, 28 Sep 2009 23:33:30 +0200
-Message-ID: <fabb9a1e0909281433l461086e3k93a138ad4b9b86c6@mail.gmail.com>
-References: <h9nlhj$heq$1@ger.gmane.org> <20090928205458.GA2669@brouette> 
-	<f488382f0909281409n1c1f7e5ex64a10147a14e39a@mail.gmail.com>
+From: Nasser Grainawi <nasser@codeaurora.org>
+Subject: [JGIT] patch-id
+Date: Mon, 28 Sep 2009 16:21:00 -0600
+Organization: Code Aurora Forum
+Message-ID: <4AC136CC.8040300@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Damien Wyart <damien.wyart@gmail.com>,
-	Anteru <newsgroups@catchall.shelter13.net>, git@vger.kernel.org
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Mon Sep 28 23:33:58 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Sep 29 00:21:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsNr3-0005bx-27
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 23:33:57 +0200
+	id 1MsOah-00021M-Lu
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 00:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188AbZI1Vdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 17:33:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753109AbZI1Vdr
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 17:33:47 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:34676 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752578AbZI1Vdq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 17:33:46 -0400
-Received: by ewy7 with SMTP id 7so4859540ewy.17
-        for <git@vger.kernel.org>; Mon, 28 Sep 2009 14:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=bu/qmwRQ+XeC9IAuKbtLdfvhxwThhVih32/mxAOMePc=;
-        b=H6Vnd7N41kCqS0AUJzC0tz4qy8nHNpOm4RcyyGt9/RGaSlgNIXWpweqpwksSF3F0sL
-         WZgmu37t2Ijptn+Kd2POFhSo5AxfhmGAsaGC4fWt+NnHfwa/Ehzr6IVkgxEI+HdDE5C0
-         5SX1gJy1D/rk9HLdjbNxk5Ucdd1E8RxEo419I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=RcKMAfwxjVeXnYwVDisDqeFLPFbg6TdyoLFObA3q2h038LVqnvGKZANfS7RgIZa0Ta
-         /iLXrgSmmOaUx9qZC7hy27p9D4XrZlf+OH/TUany8Qbbl3CQzx41kM4ETYGQzmKd4Zj3
-         EsZgMZHkIoiAairFG3GU+ztOGZGPtOc8FlkuM=
-Received: by 10.216.88.21 with SMTP id z21mr904967wee.60.1254173630103; Mon, 
-	28 Sep 2009 14:33:50 -0700 (PDT)
-In-Reply-To: <f488382f0909281409n1c1f7e5ex64a10147a14e39a@mail.gmail.com>
+	id S1753338AbZI1WU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 18:20:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbZI1WU5
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 18:20:57 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:6346 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753189AbZI1WU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 18:20:57 -0400
+X-IronPort-AV: E=McAfee;i="5300,2777,5755"; a="24257499"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 28 Sep 2009 15:21:01 -0700
+Received: from [129.46.10.111] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id D9DBE10004DB;
+	Mon, 28 Sep 2009 15:23:47 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129275>
 
-Heya,
+Hello again,
 
-On Mon, Sep 28, 2009 at 23:09, Steven Noonan <steven@uplinklabs.net> wrote:
-> The interface looks very similar to Google Code's. I wonder, is this
-> the same thing that Google is using, or is it just mimicking the
-> interface?
+I'm trying to add a public getPatchId method to the jgit Patch class and I
+came up with some questions. Shawn previously mentioned that Patch already
+does the parsing of the patch; however, I can't quite wrap my head around
+how/where/if data from that parsing is stored.
 
-Whow, it _does_ look a lot like Google Code, I doubt it's the same
-code as I don't think Google Code's verison is open source, pretty
-good copy either way.
+It seems Patch does some statistical number gathering, but at no point does
+it store a 'slimmed-down' version of a patch. I had the idea to just iterate
+over the FileHeader's and get the byte buffer of each, but I don't think
+those buffers have the parsed data.
 
--- 
-Cheers,
+If I've mis-read the code (quite possible), someone please let me know.
+Short of that, suggestions for how to go about acquiring/storing a parsed
+representation of the data with maximal existing code re-use would be
+appreciated.
 
-Sverre Rabbelier
+Thanks,
+Nasser
