@@ -1,65 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Getting a list of last commit's files and piping them..
-Date: Mon, 28 Sep 2009 16:01:04 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909281559001.16710@intel-tinevez-2-302>
-References: <4f302eef91c72cd4583e0aa4707ab4c0@ahmednuaman.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
+Date: Mon, 28 Sep 2009 16:13:03 +0200
+Message-ID: <4AC0C46F.6090605@drmicha.warpmail.net>
+References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de> <3af572ac0909251429n3d002b58y9815711a258a2b90@mail.gmail.com> <200909260003.05041.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Ahmed Nuaman, Freelance Designer and Developer" 
-	<ahmed@ahmednuaman.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 16:02:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 28 16:13:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsGnj-00033w-Cz
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 16:02:03 +0200
+	id 1MsGye-0006kJ-Qq
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 16:13:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752082AbZI1OBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 10:01:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752078AbZI1OBM
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 10:01:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57615 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752067AbZI1OBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 10:01:11 -0400
-Received: (qmail invoked by alias); 28 Sep 2009 14:01:13 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp042) with SMTP; 28 Sep 2009 16:01:13 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18Kd6EMXDAKHztbtzX5tfnL5YKzXun7y/uxmJV2Oz
-	jCqAt+9QG+pPij
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <4f302eef91c72cd4583e0aa4707ab4c0@ahmednuaman.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.71
+	id S1752025AbZI1ONL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 10:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbZI1ONK
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 10:13:10 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49853 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751134AbZI1ONK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 10:13:10 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 893D279C91;
+	Mon, 28 Sep 2009 10:13:13 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 28 Sep 2009 10:13:13 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=JSDMm5Rtlx/bSx00PY2Iw5tGWqg=; b=V75iXEjM68uDehMVoGNovnQqA0Y4c+EK4wRc/JZ+frea7tMrbbRG3X6zMiQ1YzZpYBVHbu+XKmnv5ToM3a69/jpCcNvzRR6tPi+dR5FFGB+R90BXnsYa4JxFj97wj8+7mTCf9DLVPP52PxAijrx4DQTZmmaCzfrsoWHyStY4wyQ=
+X-Sasl-enc: Ebq8LV+fuPWc7IkD420RgpfX11ghLma0V2X0c5Iz1D61 1254147193
+Received: from localhost.localdomain (p5DCC1850.dip0.t-ipconnect.de [93.204.24.80])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C4BF3175B2;
+	Mon, 28 Sep 2009 10:13:12 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20090925 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <200909260003.05041.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129264>
 
-Hi,
+Robin Rosenberg venit, vidit, dixit 26.09.2009 00:03:
+> fredag 25 september 2009 23:29:37 skrev Pau Garcia i Quiles <pgquiles@elpauer.org>:
+>> Hello,
+>>
+>> Sorry if I'm asking something obvious but, what's the
+>> "offical"language of Gittogether Europe ? English ? German ?
+> 
+> Something that ends with -ish seems natural, doesn't it?
 
-On Mon, 28 Sep 2009, Ahmed Nuaman, Freelance Designer and Developer wrote:
+So, Germish it is...
 
-> I use git for a local versioning system and was wondering if there was a 
-> way that I could write a bash script that would get the paths of the 
-> files from the latest commit and then pipe them to ftp or ssh for 
-> deployment.
-
-If you mean all the files that were touched by the last commit:
-
-	git diff --name-only HEAD^..
-
-If you mean all the files of the latest revision:
-
-	git ls-tree --name-only -r HEAD
-
-Both commands take -z options in which case they delimit the names with 
-NULs for better parsability.
-
-Hth,
-Dscho
+Cheers,
+Michael
