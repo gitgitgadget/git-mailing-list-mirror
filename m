@@ -1,78 +1,87 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 0/2] MSVC generator fixups
-Date: Mon, 28 Sep 2009 15:01:30 +0200
-Message-ID: <bdca99240909280601r296d66efi78a6092282ffc256@mail.gmail.com>
-References: <4ABB84F4.7080403@gmail.com> <cover.1254137149.git.mstormo@gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: how optparse can go horribly wrong
+Date: Mon, 28 Sep 2009 15:37:07 +0200
+Message-ID: <20090928133707.GA3343@localhost>
+References: <20090925233226.GC14660@spearce.org> <20090926015127.GA12994@vidovic> <fabb9a1e0909260644w781d3c3h4fca22e3b7d97768@mail.gmail.com> <20090926192527.GF14660@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, spearce@spearce.org, msysgit@googlegroups.com
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Sep 28 15:02:05 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qy0-f141.google.com ([209.85.221.141])
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Sep 28 15:37:35 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsFrW-0007mo-RH
-	for gcvm-msysgit@m.gmane.org; Mon, 28 Sep 2009 15:01:54 +0200
-Received: by mail-qy0-f141.google.com with SMTP id 5so3889258qyk.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Sep 2009 06:01:54 -0700 (PDT)
+	id 1MsGPx-0003QZ-DD
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 15:37:30 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751289AbZI1NhR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 09:37:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751202AbZI1NhR
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 09:37:17 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:60927 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751075AbZI1NhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 09:37:16 -0400
+Received: by bwz6 with SMTP id 6so1257225bwz.37
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 06:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=B0ZcHtL0eGyZ4+I4ksHmdsIGd6B4mONbfbIWl7aElqY=;
-        b=ngjN2Um8pTFVIjHcluBv3EGY0yi4Arcodp8Nhg10zZnfEkWj99LVBzLoXCLimab6CR
-         gwxcRmx0E+o62YsuzDLM/3zw/6wegzDKGvElCNg9kFSDJGQNlU9hyre2Szdd49HYxbE8
-         GfwzS8aUtgVBI5zkehqzya99+63ynfM7N6Fbk=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=4Xn02pv2r/FUDRvKosgLkyd4tduhgexoBiUn4Kr3t1I=;
+        b=YvSzTHSem0qI1ht2y6YiC11L/VRUSCL0/9QarTptm+RiSFoFG3RsvSSVedE/yHMxfk
+         OdQ7tx1CdK4O5yfbCYoDSpW2f8qCjrw3bLfc3I2RvawswlBM8XMNb+rD+otNeMipOo3G
+         GKGT0I4uejZi1NeT1vhpXfSX9FIGpAIpS8WvE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=jMOulBaFh/fmfl474lRNpQBEiuY5T7IYnb8Z5zdXHSUpCWK0NxbzjQF5xcI2iczQ79
-         Ka7roeUxnd64EHawM8uiiBf2BaHdCzrNCPJWn8gGyOYlYVeiA8wGCYKQEZ8Kk3fsEPa1
-         +/NRBx0YUTMS7mTHMXqf4UpQAJChW8/FcC4gE=
-Received: by 10.229.114.218 with SMTP id f26mr217481qcq.17.1254142908476;
-        Mon, 28 Sep 2009 06:01:48 -0700 (PDT)
-Received: by 10.177.125.36 with SMTP id c36gr7170yqn.0;
-	Mon, 28 Sep 2009 06:01:35 -0700 (PDT)
-X-Sender: sschuberth@gmail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.86.192.36 with SMTP id p36mr79692fgf.20.1254142893429; Mon, 28 Sep 2009 06:01:33 -0700 (PDT)
-Received: by 10.86.192.36 with SMTP id p36mr79690fgf.20.1254142892022; Mon, 28 Sep 2009 06:01:32 -0700 (PDT)
-Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.157]) by gmr-mx.google.com with ESMTP id e3si402587fga.16.2009.09.28.06.01.30; Mon, 28 Sep 2009 06:01:31 -0700 (PDT)
-Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 72.14.220.157 as permitted sender) client-ip=72.14.220.157;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of sschuberth@gmail.com designates 72.14.220.157 as permitted sender) smtp.mail=sschuberth@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by fg-out-1718.google.com with SMTP id d23so1322218fga.11 for <msysgit@googlegroups.com>; Mon, 28 Sep 2009 06:01:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type; bh=R7wvP+IHkI/LuHUrUOrm8i2xl/KlPR9HW+INB5JX15c=; b=lvTW0cWfK4/3YhJUYzWV3LKxZuNs37k+Bf3POSRrYv0IlL04W3+eWf06li8yE3xDZE tuHWqItqDjHYS/xEzKkX4fMAF0qA8LAZZ8sElKFYnOGFqYz/Z3UuPP+HQhti0XNZzJuC HqSlNuSPMgf5QftB1B9fSG544v0cNnAMZPN/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type; b=gdCROFbR8FgmgnmGIxXs3rBtrdmMDNXb8UHG+t5VdyrzXkX771GNHpJ8SXSYxu9qpc M6m6x6JWdDD+sT0D7hz4L+2bQC2aeOAc0zNlUfbVRGHe0fb5xFOL68b+Hz0AqlSNuQ79 fMHlXCiFF65HUrIHMqac2fT3j2QBv5k7/lTMs=
-Received: by 10.86.173.4 with SMTP id v4mr3266271fge.78.1254142890836; Mon, 28  Sep 2009 06:01:30 -0700 (PDT)
-In-Reply-To: <cover.1254137149.git.mstormo@gmail.com>
-Sender: msysgit@googlegroups.com
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=gtb9/2ncs6T9WVq8Ilfbd1mJYkjrWwTURwqU9MXbN+NDRnKnpcJZqBkiedjNV536ck
+         Q+Cpp5/Njs5+2y+USw/NDd5weOWeKo7vfUhZDuXsQci0MjXlaO8mNLkQJ+BtZ4OyLesE
+         XU5XjHLmow/KwkK4t+QG3wUHEA1G8T0DV7Q7I=
+Received: by 10.204.25.15 with SMTP id x15mr3060672bkb.47.1254145039129;
+        Mon, 28 Sep 2009 06:37:19 -0700 (PDT)
+Received: from darc.lan (p549A37E8.dip.t-dialin.net [84.154.55.232])
+        by mx.google.com with ESMTPS id 22sm22393270bwz.38.2009.09.28.06.37.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Sep 2009 06:37:17 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.69)
+	(envelope-from <drizzd@aon.at>)
+	id 1MsGPb-00013w-Vk; Mon, 28 Sep 2009 15:37:07 +0200
+Content-Disposition: inline
+In-Reply-To: <20090926192527.GF14660@spearce.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129259>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129260>
 
+On Sat, Sep 26, 2009 at 12:25:27PM -0700, Shawn O. Pearce wrote:
 
-> The two patches didn't apply for me in the way they were sent. I
-> manually applied them ontop of master, and added an Acked-by.
+> What I think we should do is not allow cuddling of short options
+> when the final option takes more than 1 character worth of argument.
+> Thus `git commit -a -mfoo` is OK, but `git commit -amfoo` is not.
 
-Thanks for fixing my patches, Marius!
+I also think that would be the most sensible solution.
 
--- 
-Sebastian Schuberth
+A little experimentation with git-log reveals that it does not behave very
+well either.
+
+ git log -n1asdf	-> asdf is ignored
+ git log -pn1		-> error
+ git log -p1		-> error
+ git log -1p		-> p is ignored
+
+So I think this should instead behave just like you described above.
+
+ git log -n1asdf	-> error: unknown option(s) -asdf
+ git log -pn1		-> git log -p -n1
+ git log -p1		-> git log -p -n1
+ git log -1p		-> git log -p -n1
+
+Clemens
