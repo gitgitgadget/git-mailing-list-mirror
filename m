@@ -1,72 +1,80 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Deciding between Git/Mercurial
-Date: Mon, 28 Sep 2009 12:08:22 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0909281059180.4985@pacific.mpi-cbg.de>
-References: <h9nlhj$heq$1@ger.gmane.org> <94a0d4530909280136s1ff65004q1733bd4ef78bdc07@mail.gmail.com>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [PATCH] compat/mingw.c: MSVC build must use ANSI Win32 API's
+Date: Mon, 28 Sep 2009 12:21:57 +0200
+Message-ID: <4AC08E45.8010707@gmail.com>
+References: <d2e97e800909212110w423e3b2fm85ac6f76439e0591@mail.gmail.com> 	<4AB869EE.1020200@viscovery.net> <4AB87B6B.1070808@gmail.com> 	<d2e97e800909220217y5bda4698pc286711a3535f87d@mail.gmail.com> 	<4AB89B7F.3050902@gmail.com> <d2e97e800909220254sc677abeia220c19f6ef5bd28@mail.gmail.com> 	<4AC05BA5.4050106@viscovery.net> <d2e97e800909280047l5da52ffdxd86589cda4542f46@mail.gmail.com> 	<4AC06F65.1020301@viscovery.net> <d2e97e800909280250j4e432deeo230cbc622b6e690a@mail.gmail.com> <d2e97e800909280255h70e4c006m98cde895b95fef29@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: newsgroups@catchall.shelter13.net, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 12:07:46 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Michael Wookey <michaelwookey@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 12:22:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsD7c-00042y-So
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:06:21 +0200
+	id 1MsDN2-0002SQ-A5
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbZI1KGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 06:06:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbZI1KGK
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:06:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59698 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751596AbZI1KGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 06:06:10 -0400
-Received: (qmail invoked by alias); 28 Sep 2009 10:06:12 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp007) with SMTP; 28 Sep 2009 12:06:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18uZccKg9Iukag6cCatCExGfB1XwzEqnbTPLJptWd
-	VHMi0Q9l10dqCu
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <94a0d4530909280136s1ff65004q1733bd4ef78bdc07@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.65
+	id S1751407AbZI1KWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 06:22:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbZI1KWF
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:22:05 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:16297 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbZI1KWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 06:22:03 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so46312eyf.19
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=ufbe3Dwlpnskd7/OlBevozF8os3hoeSArGIIA30QNtU=;
+        b=Of9gkgWdH7qWR7cpOt3mtyVunFFCkIGNaPoPeznymcDd6j3kuW020wN0hR2VwDsw/S
+         QMt3nD+e++VpBXeqcY16BcmfLcTxvrGP9oXxhPNoOIrKLW/mmDdub3Q5sPKV/xfm9x8T
+         x61CAVO7C6TMtps5dwnIlJIfww1nu8UIOTI2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=kJHFNb/749/vodRF3p076Oo/riPajS53jkTMX+NqNIeQnlaGFHY7RhNzYBrvjn0wAn
+         BTwJ5ACl+sMMjlv/HmEOHKmVYiLbP8PXsH9Yp7OkqOd+wCBYOW+6VPk0DX4k/DWeytmr
+         lnBXxCJH0znv+64SN+Ahnsx/6x4z9Fs3iTxAY=
+Received: by 10.210.96.23 with SMTP id t23mr2928384ebb.11.1254133326924;
+        Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
+Received: from ?172.24.90.95? ([62.70.27.104])
+        by mx.google.com with ESMTPS id 10sm136101eyd.21.2009.09.28.03.22.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <d2e97e800909280255h70e4c006m98cde895b95fef29@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129245>
 
-Hi,
+Michael Wookey said the following on 28.09.2009 11:55:
+>> It seems that the project file that is generated by Vcproj.pm
+>> (inadvertently?) defines UNICODE. Perhaps the patch below is better
+>> than my original workaround. If you think so, I'll create a formal
+>> patch.
+>>
+>> [ sorry if the patch wraps ]
+>>
+> 
+> scrub the previous patch... there were more instances of UNICODE
+> defined (for release and debug builds). The patch below takes care of
+> them all.
 
-I tried to refrain from commenting in this thread, because I do not want 
-to encourage people just to use msysGit and never even attempt to fix 
-their own issues.
+Yup, IMO this is the correct patch, since it will follow the Makefile 
+more closely. So, if we then decide to add UNICODE in the Makefile, 
+the generated files will follow.
 
-But I cannot let this go uncommented:
+Make it into a proper patch, and I'll ack.
 
-On Mon, 28 Sep 2009, Felipe Contreras wrote:
-
-> IMO the key difference between hg and git is the storage model: hg 
-> stores deltas, while git stores snapshots. That would mean that certain 
-> operations are theoretically faster in git (e.g. checkout, diff) while 
-> others faster in hg, although with git's packed format I guess there's 
-> no operation faster in hg. This means that it doesn't matter how much 
-> hg's python code improves, or if they even re-write parts in C, they 
-> will never be able to match git's performance (unless they change the 
-> storage model, which essentially means changing the whole design -- 
-> won't happen).
-
-That is wrong.  "git log -- <file>" will always be slightly faster in 
-Mercurial, for all the reasons you mentioned.
-
-In addition, Mercurial _has_ parts re-written in C for performance, which 
-renders it not-exactly more portable if you ask me.  Last time I checked, 
-there was no way to compile a Python module with MinGW (or for that 
-matter, Python itself), but you needed MSVC...
-
-Ciao,
-Dscho
+--
+.marius
