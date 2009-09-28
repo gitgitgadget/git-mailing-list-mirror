@@ -1,69 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-am: force egrep to use correct characters set
-Date: Mon, 28 Sep 2009 03:16:09 -0400
-Message-ID: <20090928071609.GB20483@coredump.intra.peff.net>
-References: <215cc4f241162377b9249c2b3d74050cc77bac16.1253893253.git.chressie@gmail.com>
- <f0bd48168975c3b2328cf26f9a37a0f54b898473.1253896646.git.chressie@gmail.com>
- <20090927074015.GB15393@coredump.intra.peff.net>
- <20090928065519.GA24773@lamagra.informatik.uni-ulm.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: gitweb atom feeds broken (on repo.or.cz only?)
+Date: Mon, 28 Sep 2009 15:23:10 +0800
+Message-ID: <be6fef0d0909280023x46522d91oc786feef23cb226a@mail.gmail.com>
+References: <4ABFA258.8020301@hartwork.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Christian Himpel <chressie@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 09:16:19 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Petr Baudis <pasky@suse.cz>,
+	Robert Buchholz <rbu@gentoo.org>
+To: Sebastian Pipping <webmaster@hartwork.org>
+X-From: git-owner@vger.kernel.org Mon Sep 28 09:23:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsAT5-0007Gs-HE
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 09:16:19 +0200
+	id 1MsAZr-0000bT-A8
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 09:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752321AbZI1HQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 03:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752032AbZI1HQJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 03:16:09 -0400
-Received: from peff.net ([208.65.91.99]:35912 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751546AbZI1HQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 03:16:08 -0400
-Received: (qmail 24178 invoked by uid 107); 28 Sep 2009 07:19:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 28 Sep 2009 03:19:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Sep 2009 03:16:09 -0400
-Content-Disposition: inline
-In-Reply-To: <20090928065519.GA24773@lamagra.informatik.uni-ulm.de>
+	id S1752177AbZI1HXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 03:23:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbZI1HXI
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 03:23:08 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:33397 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302AbZI1HXH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 03:23:07 -0400
+Received: by iwn10 with SMTP id 10so2433441iwn.4
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 00:23:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=w/IN17IltpbYHDnOAc6DNejY8OPDCXTbRW+oVjw4Wso=;
+        b=qlNFSGOpgJqJORgE1ll+jDlBGVeThXzpNJ8/VJuQqBY6sPegQYqkKRr+Ugb0I6+5la
+         Pe/W+n35q0RhlmhCWq0nqmrIqfghnkYzrRY5E6VLsmk+rkYhM0Fh/PiniN6SAbDa7Evj
+         TxAQr/3uZIzPeeJhlYWvyaIgbqYFTCYi2iktE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=v36+oYKsFHf6sPp6Mfobvmfh5sN5G/UTpr4Lj2o5+Trq/5HyAnlLAhbx/prKwCwfAa
+         /HXc0K0DfaLuMDKhznm5S/aqYKrwaYDOogXCPyTO4OJiWwzis/O09zxS21aeDhEaT6EI
+         bKs0AkvyojJJiaMP6kpgMQTcTv6GUSjWurIP4=
+Received: by 10.231.124.227 with SMTP id v35mr5495074ibr.18.1254122590204; 
+	Mon, 28 Sep 2009 00:23:10 -0700 (PDT)
+In-Reply-To: <4ABFA258.8020301@hartwork.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129232>
 
-On Mon, Sep 28, 2009 at 08:55:19AM +0200, Christian Himpel wrote:
+Hi,
 
-> > Do you happen to know a charset in which this is a problem, just for
-> > reference?
-> 
-> No, I don't know any charset with stray ascii-chars.  I just listened
-> attentively, when I read the part about the mixed alphabet characters in
-> the grep(1) manpage.
-> 
-> I did some quick checks just now.  It seems the characters (' ' to '~')
-> are in any locale, offered by glibc, at the same place.
-> 
-> Maybe, we can just leave the charset as it is and ignore this patch,
-> until someone complains.
+On Mon, Sep 28, 2009 at 1:35 AM, Sebastian Pipping
+<webmaster@hartwork.org> wrote:
+> i noticed that the atom feeds generated by repo.or.cz's gitweb (e.g.
+> [1]) show no content in firefox 3.5.2. =A0this seems to be due to inv=
+alid
+> xml in it as shown by running [1] through feedvalidator, results at [=
+2].
 
-Thanks for looking into it. My question was more of a "how bad is this,
-and should we be fixing these other callsites, too". But I think 0-7 is
-probably a pretty safe range in any charset.
+it's a case of a misspelled tag. In the <author> tag <B> is closed by a=
+ </b>.
 
-Usually with portability issues, I am inclined to say "wait for a
-problem", as we try to code to match actual reality instead of
-documentation or standards. But in this case, we are unlikely to test
-with strange charsets (or even know which strange charsets exist;
-checking what's in glibc is reasonable, but I have no idea what else is
-out there in other countries), and that the resulting bug would be
-subtle and hard to find, it probably makes sense to be a little
-defensive.
-
--Peff
+--=20
+Cheers,
+Ray Chuan
