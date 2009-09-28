@@ -1,78 +1,76 @@
-From: Adam Brewster <adambrewster@gmail.com>
-Subject: Re: thoughts on a possible "pre-upload" hook
-Date: Sun, 27 Sep 2009 22:01:09 -0400
-Message-ID: <c376da900909271901q1667ecacw730ba5180a558f3b@mail.gmail.com>
-References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: [JGIT PATCH 7/9] removing eclipse project files
+Date: Sun, 27 Sep 2009 22:21:36 -0400
+Message-ID: <2c6b72b30909271921y4b191f1fo42b1ffb5f08d3468@mail.gmail.com>
+References: <892492.1652.qm@web27801.mail.ukl.yahoo.com> <200909272152.33224.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 04:01:18 2009
+Cc: Mark Struberg <struberg@yahoo.de>,
+	MatthiasSohn <matthias.sohn@sap.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"spearce@spearce.org" <spearce@spearce.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 04:22:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ms5YD-00049O-Vq
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 04:01:18 +0200
+	id 1Ms5sc-0000Fe-UG
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 04:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485AbZI1CBH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Sep 2009 22:01:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZI1CBH
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 22:01:07 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:44071 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098AbZI1CBG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Sep 2009 22:01:06 -0400
-Received: by ewy7 with SMTP id 7so4049680ewy.17
-        for <git@vger.kernel.org>; Sun, 27 Sep 2009 19:01:09 -0700 (PDT)
+	id S1752412AbZI1CVy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Sep 2009 22:21:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752689AbZI1CVy
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 22:21:54 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:42746 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752242AbZI1CVx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Sep 2009 22:21:53 -0400
+Received: by iwn10 with SMTP id 10so2365691iwn.4
+        for <git@vger.kernel.org>; Sun, 27 Sep 2009 19:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=5izBxRztl8p6Skq60RT7tQY3Oj5B3phwXJvB9eUvP/Y=;
-        b=FUN0BhwEkkRQcn7wLm7y4fGoCL7UWe0LeOiIOCvWRqDSv1bnJ0A9pZcP/eapU87RDW
-         Dbz8u7BJcVy9QhPDPQ2exHt35IIbuCpK0Lg6UcVOA/ftGzUYauFWAg7fZdkk4a8HGakO
-         zZaVBsHaodIgl2bHC/sAgr5wrkdVqeR55OO9Q=
+        bh=Rvw3LrV6++EvbksRBwTNHGO479Fw7aQ3mvUeSd2qaYo=;
+        b=AipSko4E4+6Ek8qZz0ho64Tm2k4dHwKKouHZWlJegcjLT/pj+X9zVc/MMiaGYQ10GV
+         H/xj7RYhFn1KxpzRBYJcA4OYFKcldFsMbzSemgPwlsFlLmCbUYI7XXsnvGlSrHqi/6Dy
+         Nje2BgmlRo2w1cp6MgDpUEqk6gWclwa0su3l8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=Y1v2VZZR1hMRln6MJNOOyrGgL1Oj3Cyk1OdJItd45XU11PuUzyh9qqxdzGF4Jj2xX1
-         69RYQDQfTTbYHvoC8gwcG/QbWqK+iC71RHT4PUSiqCGxhyv5Yw0sgH940Xm8UOIaMFt5
-         WFJ++frqPo7RxEO+668pbW6N+jOhvXEFfUcF0=
-Received: by 10.216.91.73 with SMTP id g51mr639832wef.68.1254103269251; Sun, 
-	27 Sep 2009 19:01:09 -0700 (PDT)
-In-Reply-To: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+        b=HrQbjaBVSTcgVaVrU7/W8KpQIZMZjPv90j7hOm+sM+o0EybWlRf67OndGj7d6Ogavi
+         Wf/0NyUdSsZBcuFEKoQB5LTkOTJseWCNXPsmoQOZ8hiTst9U5sZJ8tZOonXGfVnXRbyB
+         zXGnbRS23AROkZLdqePt+V2WRXQuGQP7KPqdU=
+Received: by 10.231.6.87 with SMTP id 23mr5145182iby.19.1254104517332; Sun, 27 
+	Sep 2009 19:21:57 -0700 (PDT)
+In-Reply-To: <200909272152.33224.robin.rosenberg.lists@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129223>
 
-> As git is used more and more in corporate-type environments, at some
-> point it becomes convenient to have *branches* (or more accurately,
-> refs) that are not readable. =A0The simplest way to do this (from git=
-'s
-> point of view) is to allow a "pre-upload" hook, rather like the
-> "pre-receive" hook or "update" hook.
+On Sun, Sep 27, 2009 at 15:52, Robin Rosenberg
+<robin.rosenberg.lists@dewire.com> wrote:
+> l=C3=B6rdag 26 september 2009 22:10:16 skrev Mark Struberg <struberg@=
+yahoo.de>:
+>> And there is a lot more which imho cannot be set for a project. So c=
+hecking in the xml sounds like it is way more powerful isn't? And we wo=
+uld have this
 >
+> For JGit, not really. Everything that is not project settings should =
+be left as the default. The only reason is tool constraints. I'm not we=
+ll versed
+> enough to tell what neatbeans does here.
 
-What's the benefit of this over using multiple repositories?
+It is my impression that NetBeans has far better integration with
+maven. In terms of code formatting NetBeans supports
+exporting/importing project specific settings, but I have never
+personally used that.
 
-=46or a simple case where you have public branches and private branches=
-,
-you use public.git and private.git.  A post-update hook in private.git
-can automatically push the appropriate branches to public.git (in
-which case they don't worry about public.git at all) or they can do it
-themselves.
-
-=46or more complex access control, give each sub-unit that needs to
-share work a repository that's only readable by the members of that
-unit.  Each developer works in his own repo.  When something is ready
-for a wider audience, he pushes it to a team repo.  When a team leader
-has something that's ready to move up, he pushes to a group repo, etc.
-
---
-Adam
+--=20
+Jonas Fonseca
