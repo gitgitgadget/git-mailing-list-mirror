@@ -1,83 +1,78 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: Distribution size
-Date: Mon, 28 Sep 2009 14:48:08 +0200
-Message-ID: <4AC0B088.9090101@gmail.com>
-References: <1253962653-sup-1882@nixos> <alpine.DEB.1.00.0909261320370.4985@pacific.mpi-cbg.de> <4ABE3091.5040600@syntevo.com>
+From: Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH 0/2] MSVC generator fixups
+Date: Mon, 28 Sep 2009 15:01:30 +0200
+Message-ID: <bdca99240909280601r296d66efi78a6092282ffc256@mail.gmail.com>
+References: <4ABB84F4.7080403@gmail.com> <cover.1254137149.git.mstormo@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marc Weber <marco-oweber@gmx.de>
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 14:48:39 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, spearce@spearce.org, msysgit@googlegroups.com
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Sep 28 15:02:05 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f141.google.com ([209.85.221.141])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsFec-0003KY-FF
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 14:48:34 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbZI1MsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 08:48:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbZI1MsO
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 08:48:14 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:50117 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752281AbZI1MsN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 08:48:13 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so68764eyf.19
-        for <git@vger.kernel.org>; Mon, 28 Sep 2009 05:48:17 -0700 (PDT)
+	id 1MsFrW-0007mo-RH
+	for gcvm-msysgit@m.gmane.org; Mon, 28 Sep 2009 15:01:54 +0200
+Received: by mail-qy0-f141.google.com with SMTP id 5so3889258qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 28 Sep 2009 06:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=PenEw+k9Qb6yV3pXeqK2hX1QbBXSoVHFYB2j+FvIX+M=;
-        b=DybVAau89GGqnaOcherTcZrnsIzI0m9P8SEfHMH/0g+hbz9sRy0SvvYKDPz0S0Mkp4
-         GXPVLavLyfPn95mkk0vOxReM2m1DVzjM+PYXnMgl4KKzxE1dLq2tD5hKCUPBrrxiyB2m
-         QbSQGKal5p/WLWjbEcBQofUNtWR/9xWrKSAsY=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=B0ZcHtL0eGyZ4+I4ksHmdsIGd6B4mONbfbIWl7aElqY=;
+        b=ngjN2Um8pTFVIjHcluBv3EGY0yi4Arcodp8Nhg10zZnfEkWj99LVBzLoXCLimab6CR
+         gwxcRmx0E+o62YsuzDLM/3zw/6wegzDKGvElCNg9kFSDJGQNlU9hyre2Szdd49HYxbE8
+         GfwzS8aUtgVBI5zkehqzya99+63ynfM7N6Fbk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=QtDSPS8hgnD5DsMEVV/o06NZZZk5HGOKd2FcuChlvHV5XOwGhwWxzYCS7g1H+K+GHS
-         jdPnWd6tkB4WQxFO2r2LwKTIQkCpXwU+zeG2XdMi1ov6F4ZfJbeTXdvhqyM/IC15SRoy
-         onlr1i5d0lwVShcL++mY7BiP99ZWBjL2d5l0k=
-Received: by 10.210.101.1 with SMTP id y1mr3657854ebb.67.1254142097042;
-        Mon, 28 Sep 2009 05:48:17 -0700 (PDT)
-Received: from ?172.24.90.95? ([62.70.27.104])
-        by mx.google.com with ESMTPS id 10sm562868eyd.37.2009.09.28.05.48.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Sep 2009 05:48:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <4ABE3091.5040600@syntevo.com>
-Sender: git-owner@vger.kernel.org
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=jMOulBaFh/fmfl474lRNpQBEiuY5T7IYnb8Z5zdXHSUpCWK0NxbzjQF5xcI2iczQ79
+         Ka7roeUxnd64EHawM8uiiBf2BaHdCzrNCPJWn8gGyOYlYVeiA8wGCYKQEZ8Kk3fsEPa1
+         +/NRBx0YUTMS7mTHMXqf4UpQAJChW8/FcC4gE=
+Received: by 10.229.114.218 with SMTP id f26mr217481qcq.17.1254142908476;
+        Mon, 28 Sep 2009 06:01:48 -0700 (PDT)
+Received: by 10.177.125.36 with SMTP id c36gr7170yqn.0;
+	Mon, 28 Sep 2009 06:01:35 -0700 (PDT)
+X-Sender: sschuberth@gmail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.86.192.36 with SMTP id p36mr79692fgf.20.1254142893429; Mon, 28 Sep 2009 06:01:33 -0700 (PDT)
+Received: by 10.86.192.36 with SMTP id p36mr79690fgf.20.1254142892022; Mon, 28 Sep 2009 06:01:32 -0700 (PDT)
+Received: from fg-out-1718.google.com (fg-out-1718.google.com [72.14.220.157]) by gmr-mx.google.com with ESMTP id e3si402587fga.16.2009.09.28.06.01.30; Mon, 28 Sep 2009 06:01:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of sschuberth@gmail.com designates 72.14.220.157 as permitted sender) client-ip=72.14.220.157;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of sschuberth@gmail.com designates 72.14.220.157 as permitted sender) smtp.mail=sschuberth@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Received: by fg-out-1718.google.com with SMTP id d23so1322218fga.11 for <msysgit@googlegroups.com>; Mon, 28 Sep 2009 06:01:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type; bh=R7wvP+IHkI/LuHUrUOrm8i2xl/KlPR9HW+INB5JX15c=; b=lvTW0cWfK4/3YhJUYzWV3LKxZuNs37k+Bf3POSRrYv0IlL04W3+eWf06li8yE3xDZE tuHWqItqDjHYS/xEzKkX4fMAF0qA8LAZZ8sElKFYnOGFqYz/Z3UuPP+HQhti0XNZzJuC HqSlNuSPMgf5QftB1B9fSG544v0cNnAMZPN/I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type; b=gdCROFbR8FgmgnmGIxXs3rBtrdmMDNXb8UHG+t5VdyrzXkX771GNHpJ8SXSYxu9qpc M6m6x6JWdDD+sT0D7hz4L+2bQC2aeOAc0zNlUfbVRGHe0fb5xFOL68b+Hz0AqlSNuQ79 fMHlXCiFF65HUrIHMqac2fT3j2QBv5k7/lTMs=
+Received: by 10.86.173.4 with SMTP id v4mr3266271fge.78.1254142890836; Mon, 28  Sep 2009 06:01:30 -0700 (PDT)
+In-Reply-To: <cover.1254137149.git.mstormo@gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129258>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129259>
 
-Thomas Singer said the following on 26.09.2009 17:17:
->> Funny.  Git for Windows is less than 12MB [*1*].
-> 
-> Well, the portable Git bundle compressed with 7zip is approx. 11MB,
-> the Git installer (maybe also using 7zip internally) is at approx.
-> the same size. Unpacked/installed on disk they are at 138MB/131MB.
-> If you try to compress it with zip, it will reduce to approx. 70MB
-> which still is quite large.
-> 
-> We are interested, too, in having a small(er) bundle, because we
-> want to distribute Git binaries with our Git GUI front-end,
-> SmartGit, so the user will (have the option to) get an
-> all-inclusive-bundle.
 
-[Please, never ever top-post on the Git mailing list, thanks]
+> The two patches didn't apply for me in the way they were sent. I
+> manually applied them ontop of master, and added an Acked-by.
 
-Most of the git-*.exe are identical duplicates, so most of that can be 
-nuked. Also, you don't need everything in msysgit to distribute, only 
-for development. You should be able to make a fairly small 
-distribution for usage only.
+Thanks for fixing my patches, Marius!
 
---
-.marius
+-- 
+Sebastian Schuberth
