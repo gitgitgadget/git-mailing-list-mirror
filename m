@@ -1,80 +1,107 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: [PATCH] compat/mingw.c: MSVC build must use ANSI Win32 API's
-Date: Mon, 28 Sep 2009 12:21:57 +0200
-Message-ID: <4AC08E45.8010707@gmail.com>
-References: <d2e97e800909212110w423e3b2fm85ac6f76439e0591@mail.gmail.com> 	<4AB869EE.1020200@viscovery.net> <4AB87B6B.1070808@gmail.com> 	<d2e97e800909220217y5bda4698pc286711a3535f87d@mail.gmail.com> 	<4AB89B7F.3050902@gmail.com> <d2e97e800909220254sc677abeia220c19f6ef5bd28@mail.gmail.com> 	<4AC05BA5.4050106@viscovery.net> <d2e97e800909280047l5da52ffdxd86589cda4542f46@mail.gmail.com> 	<4AC06F65.1020301@viscovery.net> <d2e97e800909280250j4e432deeo230cbc622b6e690a@mail.gmail.com> <d2e97e800909280255h70e4c006m98cde895b95fef29@mail.gmail.com>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: [PATCH 1/2] Make generated MSVC solution file open from Windows 
+	Explorer
+Date: Mon, 28 Sep 2009 11:36:54 +0100
+Message-ID: <2faad3050909280336r61e11b20nb52629a8fe95b0c0@mail.gmail.com>
+References: <4ABB84F4.7080403@gmail.com> <20090925220510.GY14660@spearce.org>
+	 <bdca99240909251541h2e9932a3r67c1d8604e56a8df@mail.gmail.com>
+	 <20090925225940.GB14660@spearce.org>
+	 <bdca99240909251658q395a62b6r8d5998382ac3fc7b@mail.gmail.com>
+	 <20090926000500.GE14660@spearce.org>
+	 <bdca99240909260245i6ba10dd4j1b2ee9e74ea5282d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Michael Wookey <michaelwookey@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 12:22:44 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	mstormo@gmail.com
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 12:43:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsDN2-0002SQ-A5
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:22:16 +0200
+	id 1MsDhG-0000y6-4N
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 12:43:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbZI1KWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 06:22:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751210AbZI1KWF
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:22:05 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:16297 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107AbZI1KWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 06:22:03 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so46312eyf.19
-        for <git@vger.kernel.org>; Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
+	id S1752034AbZI1Kgw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 06:36:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbZI1Kgw
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 06:36:52 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:55632 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751858AbZI1Kgv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 06:36:51 -0400
+Received: by ewy7 with SMTP id 7so4285699ewy.17
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 03:36:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=ufbe3Dwlpnskd7/OlBevozF8os3hoeSArGIIA30QNtU=;
-        b=Of9gkgWdH7qWR7cpOt3mtyVunFFCkIGNaPoPeznymcDd6j3kuW020wN0hR2VwDsw/S
-         QMt3nD+e++VpBXeqcY16BcmfLcTxvrGP9oXxhPNoOIrKLW/mmDdub3Q5sPKV/xfm9x8T
-         x61CAVO7C6TMtps5dwnIlJIfww1nu8UIOTI2E=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JNOotdpxG9AqMpYpWit9Bl1nzuTWbStZVYCAKQe8ppY=;
+        b=ePV3ES0ZwnIq17Vhfj+hdBkOlat5gYVHwub9fFZsaF1ddYQGn5cIujyyzPLdir08zy
+         ursMeCCh2ZnM7gUWUESW5GV94vaIVNcZZkNa7o65U6a9pzCQ+03I5H6dYl+JgqA4RSWd
+         6Xz+WydJv7D0WUKKB4icjShELj/J3ccmM7eJI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=kJHFNb/749/vodRF3p076Oo/riPajS53jkTMX+NqNIeQnlaGFHY7RhNzYBrvjn0wAn
-         BTwJ5ACl+sMMjlv/HmEOHKmVYiLbP8PXsH9Yp7OkqOd+wCBYOW+6VPk0DX4k/DWeytmr
-         lnBXxCJH0znv+64SN+Ahnsx/6x4z9Fs3iTxAY=
-Received: by 10.210.96.23 with SMTP id t23mr2928384ebb.11.1254133326924;
-        Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
-Received: from ?172.24.90.95? ([62.70.27.104])
-        by mx.google.com with ESMTPS id 10sm136101eyd.21.2009.09.28.03.22.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Sep 2009 03:22:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <d2e97e800909280255h70e4c006m98cde895b95fef29@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ozvV8gpCqiJA9vqfs1fI7u1wQa9Cr1f4ikmetIK6dbUer6Ae+2eiK6M4t/N/m4nLjw
+         QcsEW7sI6N5DW2Q8MKMLS7m9kRXbY/Gr/byZYGKQiV5Dog2XRlA9YvmEciLrvDJ13lQe
+         VDwCH2z2ip32dkrZycBWwehYcXmcW0+vUzq7I=
+Received: by 10.216.72.19 with SMTP id s19mr725807wed.45.1254134214187; Mon, 
+	28 Sep 2009 03:36:54 -0700 (PDT)
+In-Reply-To: <bdca99240909260245i6ba10dd4j1b2ee9e74ea5282d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129246>
 
-Michael Wookey said the following on 28.09.2009 11:55:
->> It seems that the project file that is generated by Vcproj.pm
->> (inadvertently?) defines UNICODE. Perhaps the patch below is better
->> than my original workaround. If you think so, I'll create a formal
->> patch.
+2009/9/26 Sebastian Schuberth <sschuberth@gmail.com>:
+> On Sat, Sep 26, 2009 at 02:05, Shawn O. Pearce <spearce@spearce.org> =
+wrote:
+>
+>> Odd. =C2=A0If I copy and paste from Thunderbird, its fine. =C2=A0But=
+ if I
+>> save the body out as an attachment from mutt, it fails.
 >>
->> [ sorry if the patch wraps ]
+>> I wonder if it has to do with the From header appearing in the top
+>> of the body; this header has to be escaped with a leading space in
+>> mbox format. =C2=A0It looks like Thunderbird might be doing some mag=
+ic to
+>> remove that leading space from the context lines, while mutt isn't.
+
+=46YI: the Thunderbird version included this header:
+Content-Type:  text/plain; charset=3DISO-8859-1; format=3Dflowed
+
+The format=3Dflowed part shows that Thunderbird is reformatting
+whitespace. You can disable that:
+http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird#Completely_pl=
+ain_email
+
+'flowed' is a lossy transformation of text, so git won't attempt to
+fix patches that have  been mangled that way. There's a longer
+explanation from Junio here:
+http://kerneltrap.org/mailarchive/git/2008/2/15/867294
+
+Hope this helps,
+Baz
+
 >>
-> 
-> scrub the previous patch... there were more instances of UNICODE
-> defined (for release and debug builds). The patch below takes care of
-> them all.
-
-Yup, IMO this is the correct patch, since it will follow the Makefile 
-more closely. So, if we then decide to add UNICODE in the Makefile, 
-the generated files will follow.
-
-Make it into a proper patch, and I'll ack.
-
---
-.marius
+>> Next time, don't include the first From line?
+>
+> Will try. So what about these two patches? Should I re-send them with
+> the first "From" stripped?
+>
+> Or will *.patch files that are attached to emails, instead of sending
+> the patch inline, be accepted?
+>
+> --
+> Sebastian Schuberth
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
