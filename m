@@ -1,76 +1,73 @@
-From: Christian Himpel <chressie@googlemail.com>
-Subject: Re: Getting a list of last commit's files and piping them..
-Date: Mon, 28 Sep 2009 16:13:12 +0200
-Message-ID: <20090928141312.GA4564@mrslave>
-References: <4f302eef91c72cd4583e0aa4707ab4c0@ahmednuaman.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
+Date: Mon, 28 Sep 2009 16:53:07 +0200
+Message-ID: <fabb9a1e0909280753l6bd52c99p106f76cf005423e7@mail.gmail.com>
+References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de> 
+	<3af572ac0909251429n3d002b58y9815711a258a2b90@mail.gmail.com> 
+	<200909260003.05041.robin.rosenberg.lists@dewire.com> <4AC0C46F.6090605@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Ahmed Nuaman, Freelance Designer and Developer" 
-	<ahmed@ahmednuaman.com>
-X-From: git-owner@vger.kernel.org Mon Sep 28 16:13:26 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Sep 28 16:53:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsGyf-0006kJ-BZ
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 16:13:21 +0200
+	id 1MsHbc-000424-T5
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 16:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752067AbZI1ONO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Sep 2009 10:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752050AbZI1ONO
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 10:13:14 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:37709 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677AbZI1ONN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Sep 2009 10:13:13 -0400
-Received: by bwz6 with SMTP id 6so1283749bwz.37
-        for <git@vger.kernel.org>; Mon, 28 Sep 2009 07:13:16 -0700 (PDT)
+	id S1751949AbZI1Ox0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 10:53:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbZI1Ox0
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 10:53:26 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:59014 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751575AbZI1OxZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 10:53:25 -0400
+Received: by ewy7 with SMTP id 7so4499967ewy.17
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 07:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=2RiNBG3Lg6bhFTaULyvFfrU5OUKiX2qQwZ5cUICmUQU=;
-        b=FiqC8aKKFyVprK8hH+U0VjqsGEoXSzQo0ugK3qIZTArfLDj0Oi6n5IGYdhUK4ITHg1
-         lWVrajbiZX10Jhyhv78XbEvHWvodEpzxY7KGXhzYkH4ErVNB9vtD8t/Aj2YpI7U1ijtF
-         tH3oHs4QJRM1kKtCR/idqWXp9T+zn5JeyxU9Y=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9qrerCNcrGiNRSOiv48OyEzzoKDajKugWIPWSiFjGdw=;
+        b=t8qw+vL46RtvJ/e36dGUr6zqh3ZFdDlyik+cu0S4IR4fYRT5JhftcTPudPYGDtlN9q
+         5UWEav+UtQr58i7+SwyeWur9RaUGTOt/PhhT+6zeNOKc18oaYfTP89pJPJpcqutl/X5/
+         t+Jht4QdkalGbXk+gdEcc/xQs/gKe/CTDW020=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vBjWToGKr2El9fMahD+kb5LbAS+S2rJcbGWVq8Mqv9725FCDc+Xh1TWFJioqyu6Y6l
-         9Jkzh7uxvYWJvTkF/6uzef9E7CQFpi88fNjTryHP5g9Cu2RQITlflUzIwFljhNPRwDTm
-         suU4Xxg7dkq/wz8QIvYC0ma7hvsq0luhSnZKk=
-Received: by 10.204.154.213 with SMTP id p21mr2842640bkw.163.1254147196676;
-        Mon, 28 Sep 2009 07:13:16 -0700 (PDT)
-Received: from mrslave (HSI-KBW-078-043-091-043.hsi4.kabel-badenwuerttemberg.de [78.43.91.43])
-        by mx.google.com with ESMTPS id z10sm4829932fka.49.2009.09.28.07.13.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Sep 2009 07:13:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4f302eef91c72cd4583e0aa4707ab4c0@ahmednuaman.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wnxWC8mKLeITUUYjbyGQJuQO89nS58RLhDC8svmH1mYfePuROf3mWhH6aNx1cSn614
+         WXdccuRPmbw+vNFkJKBNiJvfbnI+TMmodGMouJEiaPkWm2d90nLy6MzF/+OwflwfVOxz
+         vbm2E2fKcyQgV5kC2cF4yfyEuEDLkFQwvPgV0=
+Received: by 10.216.46.132 with SMTP id r4mr808181web.46.1254149607583; Mon, 
+	28 Sep 2009 07:53:27 -0700 (PDT)
+In-Reply-To: <4AC0C46F.6090605@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129266>
 
-On Mon, Sep 28, 2009 at 02:02:52PM +0100, Ahmed Nuaman, Freelance Designer and Developer wrote:
-> I use git for a local versioning system and was wondering if there was a
-> way that I could write a bash script that would get the paths of the files
-> from the latest commit and then pipe them to ftp or ssh for deployment.
+Heya,
 
-For example, to scp a complete file list from branch `topic' to
-`user@server', you could use `rsync' and do something like:
+On Mon, Sep 28, 2009 at 16:13, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Robin Rosenberg venit, vidit, dixit 26.09.2009 00:03:
+>> Something that ends with -ish seems natural, doesn't it?
+>
+> So, Germish it is...
 
-git checkout topic &&
-git ls-tree -r --name-only |
-rsync -a -e ssh --files-from=- user@server:/path/to/dest
+=BFQu=E9 hay de espa=F1ol?
 
-Note, that this is completely untested.  Use at your own risk.
+(Google translate don't fail me now)
 
+--=20
+Cheers,
 
-Regards,
-chressie
+Sverre Rabbelier
