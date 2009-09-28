@@ -1,81 +1,78 @@
-From: Christian Jaeger <chrjae@gmail.com>
-Subject: [PATCH] gitk: Refresh the index
-Date: Sun, 27 Sep 2009 19:43:11 -0400
-Message-ID: <b53c9c0e96f4967935f6c36cd4b2655d22de7cef.1254093602.git.chrjae@gmail.com>
-Cc: Christian Jaeger <chrjae@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 28 01:44:04 2009
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: Re: thoughts on a possible "pre-upload" hook
+Date: Sun, 27 Sep 2009 22:01:09 -0400
+Message-ID: <c376da900909271901q1667ecacw730ba5180a558f3b@mail.gmail.com>
+References: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 28 04:01:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ms3PP-0003eq-2i
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 01:44:03 +0200
+	id 1Ms5YD-00049O-Vq
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Sep 2009 04:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbZI0Xnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Sep 2009 19:43:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbZI0Xni
-	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 19:43:38 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:55737 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750803AbZI0Xni (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Sep 2009 19:43:38 -0400
-Received: by qw-out-2122.google.com with SMTP id 5so1432757qwd.37
-        for <git@vger.kernel.org>; Sun, 27 Sep 2009 16:43:42 -0700 (PDT)
+	id S1752485AbZI1CBH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Sep 2009 22:01:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbZI1CBH
+	(ORCPT <rfc822;git-outgoing>); Sun, 27 Sep 2009 22:01:07 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:44071 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752098AbZI1CBG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Sep 2009 22:01:06 -0400
+Received: by ewy7 with SMTP id 7so4049680ewy.17
+        for <git@vger.kernel.org>; Sun, 27 Sep 2009 19:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=6FkpUtiC/d9ro3MDn8k/1W/TyDOlO2PltCUFGETUznY=;
-        b=JhLcI7IoOmrhqyVHpNUMDYVodVr7CM9p1L2hR0DoMqcAsuy9nmUM9mVlttEjVNfQ3b
-         r/dsiNkYAS3aIz2jq4dDQezxj57xsdkx0U8bXz1pqsXlk+vnygcYeVmy+fQNW5b+//Xr
-         pRT/CNHmqtpeUnZtbHrRQVmC/KLitlJ7iPAK8=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5izBxRztl8p6Skq60RT7tQY3Oj5B3phwXJvB9eUvP/Y=;
+        b=FUN0BhwEkkRQcn7wLm7y4fGoCL7UWe0LeOiIOCvWRqDSv1bnJ0A9pZcP/eapU87RDW
+         Dbz8u7BJcVy9QhPDPQ2exHt35IIbuCpK0Lg6UcVOA/ftGzUYauFWAg7fZdkk4a8HGakO
+         zZaVBsHaodIgl2bHC/sAgr5wrkdVqeR55OO9Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=rnQfF8v5EhCXqer7rU3gAIhfR8Dv7O/yoW1G6hQ1fVM82fax394oek1oSiToqq4boQ
-         LLEdCHYp3CNIlQm81NeWhS3xz3fr6nOD+Jlxcy0mKzVMo3/76QVY2Cu5zSHSXxAKOXHj
-         VaqJ2cJbhnkZYwF+0Ok/FfpQ4nwyV2X/Dci6s=
-Received: by 10.224.70.133 with SMTP id d5mr2126526qaj.211.1254095021951;
-        Sun, 27 Sep 2009 16:43:41 -0700 (PDT)
-Received: from localhost.localdomain (69-196-152-229.dsl.teksavvy.com [69.196.152.229])
-        by mx.google.com with ESMTPS id 26sm6975784qwa.9.2009.09.27.16.43.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 27 Sep 2009 16:43:41 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Y1v2VZZR1hMRln6MJNOOyrGgL1Oj3Cyk1OdJItd45XU11PuUzyh9qqxdzGF4Jj2xX1
+         69RYQDQfTTbYHvoC8gwcG/QbWqK+iC71RHT4PUSiqCGxhyv5Yw0sgH940Xm8UOIaMFt5
+         WFJ++frqPo7RxEO+668pbW6N+jOhvXEFfUcF0=
+Received: by 10.216.91.73 with SMTP id g51mr639832wef.68.1254103269251; Sun, 
+	27 Sep 2009 19:01:09 -0700 (PDT)
+In-Reply-To: <2e24e5b90909220320rbd5fd1l40c7898656445232@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129222>
 
-If one or more tracked files changed non-tracked metadata like mtime,
-gitk would report it as "Local uncommitted changes, not checked in to
-index" even if no actual changes have been made. (Clicking on the
-"Local uncommitted changes.." entry would show the file but without
-any diff.)
+> As git is used more and more in corporate-type environments, at some
+> point it becomes convenient to have *branches* (or more accurately,
+> refs) that are not readable. =A0The simplest way to do this (from git=
+'s
+> point of view) is to allow a "pre-upload" hook, rather like the
+> "pre-receive" hook or "update" hook.
+>
 
-This refreshes the index in readdiffindex to avoid this and make gitk
-behave more like "git status" instead.
+What's the benefit of this over using multiple repositories?
 
-Signed-off-by: Christian Jaeger <chrjae@gmail.com>
----
- gitk |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+=46or a simple case where you have public branches and private branches=
+,
+you use public.git and private.git.  A post-update hook in private.git
+can automatically push the appropriate branches to public.git (in
+which case they don't worry about public.git at all) or they can do it
+themselves.
 
- * NOTE: I'm not subscribed to the mailing list. *
+=46or more complex access control, give each sub-unit that needs to
+share work a repository that's only readable by the members of that
+unit.  Each developer works in his own repo.  When something is ready
+for a wider audience, he pushes it to a team repo.  When a team leader
+has something that's ready to move up, he pushes to a group repo, etc.
 
-diff --git a/gitk b/gitk
-index a0214b7..bb0e8e1 100755
---- a/gitk
-+++ b/gitk
-@@ -4898,6 +4898,7 @@ proc readdiffindex {fd serial inst} {
-     }
- 
-     # now see if there are any local changes not checked in to the index
-+    exec git update-index -q --refresh
-     set cmd "|git diff-files"
-     if {$vfilelimit($curview) ne {}} {
- 	set cmd [concat $cmd -- $vfilelimit($curview)]
--- 
-1.6.4.4
+--
+Adam
