@@ -1,66 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: Re: git-diff/git-diff-files: Turn off copy-detection?
-Date: Tue, 29 Sep 2009 15:40:07 +0200
-Message-ID: <4AC20E37.3090204@viscovery.net>
+Date: Tue, 29 Sep 2009 15:42:41 +0200
+Message-ID: <20090929134241.GL32702@genesis.frugalware.org>
 References: <4AC20286.6020108@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CZI63rpYmK/igF6U"
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 29 15:40:23 2009
+X-From: git-owner@vger.kernel.org Tue Sep 29 15:42:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MscwF-0000XB-VU
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 15:40:20 +0200
+	id 1Mscye-0001Kt-FQ
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 15:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752080AbZI2NkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Sep 2009 09:40:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752003AbZI2NkI
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 09:40:08 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:64085 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751999AbZI2NkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2009 09:40:07 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mscw4-0005I6-D0; Tue, 29 Sep 2009 15:40:08 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 22FD8BC81; Tue, 29 Sep 2009 15:40:08 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+	id S1751779AbZI2Nmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2009 09:42:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbZI2Nmj
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 09:42:39 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:38774 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751434AbZI2Nmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2009 09:42:39 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id CFA5E5808B;
+	Tue, 29 Sep 2009 15:42:41 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 92B684490F;
+	Tue, 29 Sep 2009 15:42:41 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id B2DDF11F0028; Tue, 29 Sep 2009 15:42:41 +0200 (CEST)
+Content-Disposition: inline
 In-Reply-To: <4AC20286.6020108@gmail.com>
-X-Spam-Score: -1.4 (-)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129301>
 
-Marius Storm-Olsen schrieb:
-> I'm trying to diff the header files between two version of a repo, to do
-> an ABI review, but get too many diffs from 'similar copy', which makes
-> the review hard. These are generally unrelated files, but due to large
-> copyright header, and spaces, the actual changes are not large enough to
-> be detected as new files. I'd therefore like to turn off copy detection
-> completely, or at least set some kind of threshold before a file is
-> considered a copy in the diff.
-> 
-> Doing a 'git diff origin/4.5..origin/4.6 -- src/corelib' gives me this
-> excerpt:
-> 
-> diff --git origin/4.5/src/corelib/tools/qtimeline.h
-> origin/4.6/src/corelib/animation/qabstractanimation.h
-> similarity index 58%
-> ...
 
-You must have the config variable diff.renames set. But I would not expect
-that this setting applies to 'git diff-files', only to 'git diff'.
+--CZI63rpYmK/igF6U
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You can also try 'git diff -C99 -M99' if you don't want to unset the
-config variable.
+On Tue, Sep 29, 2009 at 02:50:14PM +0200, Marius Storm-Olsen <mstormo@gmail=
+=2Ecom> wrote:
+> So, not even related. They should really had shown up as new files,=20
+> IMO. (I guess git stores the creation of the file as a delta of the=20
+> indicated 'copy', but in this case I don't care about that :)
 
--- Hannes
+No, it does not (as long as we are not talking about packfiles). AFAIK
+copy detection is disabled by default, so probably you have a setting
+that enables it for you and you forgot about it. Are you sure you don't
+have any settings like diff.renames =3D copies?
+
+--CZI63rpYmK/igF6U
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkrCDtEACgkQe81tAgORUJa+pACdHQBU1P6eAlC/KDiOHDho9eLB
+GfIAoIAZeWC1ZcFtrizOnpOHaFDgRgIa
+=SCKc
+-----END PGP SIGNATURE-----
+
+--CZI63rpYmK/igF6U--
