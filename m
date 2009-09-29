@@ -1,77 +1,77 @@
-From: Mike Ralphson <mike.ralphson@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Deciding between Git/Mercurial
-Date: Tue, 29 Sep 2009 08:44:58 +0100
-Message-ID: <e2b179460909290044q25c4b68fs3797764ae09ef2cb@mail.gmail.com>
+Date: Tue, 29 Sep 2009 10:21:16 +0200
+Message-ID: <vpqljjykvpf.fsf@bauges.imag.fr>
 References: <h9nlhj$heq$1@ger.gmane.org> <20090928205458.GA2669@brouette>
-	 <f488382f0909281409n1c1f7e5ex64a10147a14e39a@mail.gmail.com>
-	 <fabb9a1e0909281433l461086e3k93a138ad4b9b86c6@mail.gmail.com>
-	 <86iqf2r5ch.fsf@blue.stonehenge.com>
+	<f488382f0909281409n1c1f7e5ex64a10147a14e39a@mail.gmail.com>
+	<fabb9a1e0909281433l461086e3k93a138ad4b9b86c6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Steven Noonan <steven@uplinklabs.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Steven Noonan <steven@uplinklabs.net>,
 	Damien Wyart <damien.wyart@gmail.com>,
 	Anteru <newsgroups@catchall.shelter13.net>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>, loic@ceondo.com
-X-From: git-owner@vger.kernel.org Tue Sep 29 09:45:06 2009
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 29 10:21:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsXOT-0007vD-UK
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 09:45:06 +0200
+	id 1MsXxv-00028G-H9
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 10:21:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbZI2Ho4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Sep 2009 03:44:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbZI2Ho4
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 03:44:56 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:49847 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752235AbZI2Hoz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Sep 2009 03:44:55 -0400
-Received: by bwz6 with SMTP id 6so1798801bwz.37
-        for <git@vger.kernel.org>; Tue, 29 Sep 2009 00:44:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kcOGroWqM7MT59NGrwL4JiDpmiX1OEfXGbm2er6AMAA=;
-        b=mzwmwl0m7ZO7DBcHfy4XS7Ue/UCDddHd7H8NrINEiF8Jq8Q25gaNuIORWfIv4ma7E8
-         zzAlIfagvkAqRXuOl4rN01YaeDyucLF1L8tmq2IpVyieyeMdbedYizK1lIYGKlnbnUA+
-         xuvRKyXLPRTYfroqvUHoX0FO9vRT3HwayYCpk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=squaAfhOvlsjWlObY0oY/b3uJEEiwEuttM0yHd7p11DsQ8b/A6e4oXV825k2+t0lh0
-         w+q9QZDCMbE4ymX1eZCUDDHafH+MxR5MgvN0oQN96mw3aSOt+ON213Z8IyoN+0P7mK/k
-         jSIxk05W9/M+84UsX8ZvuDWBXEttKnurzXKzQ=
-Received: by 10.223.144.204 with SMTP id a12mr1036285fav.49.1254210298446; 
-	Tue, 29 Sep 2009 00:44:58 -0700 (PDT)
-In-Reply-To: <86iqf2r5ch.fsf@blue.stonehenge.com>
+	id S1753579AbZI2IVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2009 04:21:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753347AbZI2IVU
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 04:21:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:49720 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753262AbZI2IVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2009 04:21:20 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n8T8GTt9007136
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 29 Sep 2009 10:16:29 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1MsXxU-0007XF-4q; Tue, 29 Sep 2009 10:21:16 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1MsXxU-0003XO-1f; Tue, 29 Sep 2009 10:21:16 +0200
+In-Reply-To: <fabb9a1e0909281433l461086e3k93a138ad4b9b86c6@mail.gmail.com> (Sverre Rabbelier's message of "Mon\, 28 Sep 2009 23\:33\:30 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 29 Sep 2009 10:16:29 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n8T8GTt9007136
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1254816990.81493@QG4ckIMNTeMfG55rRJmaGg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129287>
 
-2009/9/29 Randal L. Schwartz <merlyn@stonehenge.com>:
->>>>>> "Sverre" =3D=3D Sverre Rabbelier <srabbelier@gmail.com> writes:
+Sverre Rabbelier <srabbelier@gmail.com> writes:
+
+> Heya,
 >
-> Sverre> Whow, it _does_ look a lot like Google Code, I doubt it's the=
- same
-> Sverre> code as I don't think Google Code's verison is open source, p=
-retty
-> Sverre> good copy either way.
+> On Mon, Sep 28, 2009 at 23:09, Steven Noonan <steven@uplinklabs.net> wrote:
+>> The interface looks very similar to Google Code's. I wonder, is this
+>> the same thing that Google is using, or is it just mimicking the
+>> interface?
 >
-> I gotta get these guys on FLOSS Weekly. =C2=A0Is anyone here a member=
- of
-> the team?
+> Whow, it _does_ look a lot like Google Code, I doubt it's the same
+> code as I don't think Google Code's verison is open source, pretty
+> good copy either way.
 
-Not a member of the team, just a user (and bug reporter!), but I
-believe Indefero is almost all the work of one pretty amazing guy, Dr
-Lo=C3=AFc d'Anterroches, cc'd above.
+Indefero is a clone of Google code.
 
-Mike
+  http://www.google.com/search?q=indefero+clone+google+code
+
+(most links are in French, but this is what they say)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
