@@ -1,108 +1,64 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: git-diff/git-diff-files: Turn off copy-detection?
-Date: Tue, 29 Sep 2009 14:50:14 +0200
-Message-ID: <4AC20286.6020108@gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
+Date: Tue, 29 Sep 2009 14:51:59 +0200
+Message-ID: <40aa078e0909290551j4098d745tfa39597824163ebe@mail.gmail.com>
+References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de>
+	 <D35B4A582834DC418CCF9AF41AB69B70016967F825@DEWDFECCR04.wdf.sap.corp>
+	 <alpine.DEB.1.00.0909282019160.4985@pacific.mpi-cbg.de>
+	 <loom.20090929T111919-714@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 29 14:50:35 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Christian Halstrick <christian.halstrick@sap.com>
+X-From: git-owner@vger.kernel.org Tue Sep 29 14:52:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MscA6-0007ID-Ga
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 14:50:34 +0200
+	id 1MscBZ-0007kl-Jh
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 14:52:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754113AbZI2MuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Sep 2009 08:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754083AbZI2MuY
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 08:50:24 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:50147 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754041AbZI2MuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2009 08:50:23 -0400
-Received: by ewy7 with SMTP id 7so5367473ewy.17
-        for <git@vger.kernel.org>; Tue, 29 Sep 2009 05:50:26 -0700 (PDT)
+	id S1754114AbZI2Mv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2009 08:51:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754099AbZI2Mv4
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 08:51:56 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:54145 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754085AbZI2Mv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2009 08:51:56 -0400
+Received: by bwz6 with SMTP id 6so1964903bwz.37
+        for <git@vger.kernel.org>; Tue, 29 Sep 2009 05:51:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=SB/cVfh8GZB9OVgkDSCLIPK1PLa3ufaQ15P2Qr1hQxs=;
-        b=BFG16l1hG7zTJemO5KiNPDooYXIhOD/0hc+NLIutnpG2574UkvPZfsImw/X6mcew2h
-         yyUIJ2gOBsaSW5aYO4IYopv/4Ac9K/UYmHqHXS7C7FeY9o5F8B3Jx/dMX67RFvuh55Wh
-         wFwLBG+2dOMzm8FcsNNMVFFilVNGMNONZXuj4=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=ylNiYMu9MJDOqiFpuuiXXLj3s7+nT0kcevrUOCWZb7o=;
+        b=nZEOkDJRQWQfD1ybjTFYQdpSbE3Im0b+C0HANShs+QMnV0B06kNkvlprJNO3iaQatO
+         B2rIox8auYUjOTflieBwyup1XMofSy0Ta5eemISGi9/xN53qQYlAQlUWm3zc0LH3OjrY
+         sF34PVc9a5dPrCmuhlb4owAZsqNQSDUS4CTW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=dIm2ht+qVAFl9tOO6w8HNJFuLXWqA4w4jX5ckqYC7C8BZ9L9Z0qaypP1ASo503IAYM
-         wvD7n/8LxGR+oZp1wu+Pg428fNEesexHnBkgYHwFB6QjcnrUAnHml+TD0TQ4Twdh3Wxa
-         tpUBQEMefhFNoyEd4pKva+t53fbcndOzolpEs=
-Received: by 10.211.173.11 with SMTP id a11mr5159526ebp.42.1254228624657;
-        Tue, 29 Sep 2009 05:50:24 -0700 (PDT)
-Received: from ?172.24.90.95? ([62.70.27.104])
-        by mx.google.com with ESMTPS id 5sm144eyh.24.2009.09.29.05.50.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Sep 2009 05:50:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=UHMAhasJcuJe/CZ9JqP4Z+dB7z6ysGMbnQnFji6rOVxqI7uTs6mJwecYx8YVxiS91L
+         p8CoCHu4uD64+H+dw6PwB/pSGLCf3i4QEDAa/D5482HtbUG1Cdiao34tzeZ4J7y+LgTI
+         bz5ocbrzcwYlzzFzz5qIHxGEpNfjZ3Tx2nBGM=
+Received: by 10.204.160.65 with SMTP id m1mr4163180bkx.193.1254228719388; Tue, 
+	29 Sep 2009 05:51:59 -0700 (PDT)
+In-Reply-To: <loom.20090929T111919-714@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129299>
 
-Hi,
+On Tue, Sep 29, 2009 at 11:30 AM, Christian Halstrick
+<christian.halstrick@sap.com> wrote:
+> Thank god msysgit has learned git send-email.
 
-I'm trying to diff the header files between two version of a repo, to 
-do an ABI review, but get too many diffs from 'similar copy', which 
-makes the review hard. These are generally unrelated files, but due to 
-large copyright header, and spaces, the actual changes are not large 
-enough to be detected as new files. I'd therefore like to turn off 
-copy detection completely, or at least set some kind of threshold 
-before a file is considered a copy in the diff.
+You're welcome ;)
 
-Doing a 'git diff origin/4.5..origin/4.6 -- src/corelib' gives me this 
-excerpt:
-
-diff --git origin/4.5/src/corelib/tools/qtimeline.h 
-origin/4.6/src/corelib/animation/qabstractanimation.h
-similarity index 58%
-...
-diff --git origin/4.5/src/corelib/kernel/qsystemsemaphore.h 
-origin/4.6/src/corelib/animation/qanimationgroup.h
-similarity index 63%
-...
-diff --git origin/4.5/src/corelib/kernel/qsystemsemaphore.h 
-origin/4.6/src/corelib/animation/qparallelanimationgroup.h
-similarity index 63%
-...
-diff --git origin/4.5/src/corelib/io/qresource_iterator_p.h 
-origin/4.6/src/corelib/animation/qpauseanimation.h
-similarity index 68%
-...
-diff --git origin/4.5/src/corelib/kernel/qsystemsemaphore.h 
-origin/4.6/src/corelib/animation/qpropertyanimation.h
-similarity index 60%
-...
-diff --git origin/4.5/src/corelib/kernel/qsystemsemaphore.h 
-origin/4.6/src/corelib/animation/qsequentialanimationgroup.h
-similarity index 55%
-...
-diff --git origin/4.5/src/corelib/animation/qvariantanimation.h 
-origin/4.6/src/corelib/animation/qvariantanimation.h
-new file mode 100644
-...
-diff --git origin/4.5/src/corelib/arch/qatomic_arch.h 
-origin/4.6/src/corelib/arch/qatomic_arch.h
-index 52ab101..548a5e9 100644
-
-So, not even related. They should really had shown up as new files, 
-IMO. (I guess git stores the creation of the file as a delta of the 
-indicated 'copy', but in this case I don't care about that :)
-
-Thanks!
-
---
-.marius
+-- 
+Erik "kusma" Faye-Lund
+kusmabite@gmail.com
+(+47) 986 59 656
