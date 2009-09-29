@@ -1,72 +1,94 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Deciding between Git/Mercurial
-Date: Tue, 29 Sep 2009 02:01:58 +0200
-Message-ID: <fabb9a1e0909281701j2d04a26dk43048133e85cd495@mail.gmail.com>
-References: <h9nlhj$heq$1@ger.gmane.org> <20090928205458.GA2669@brouette> 
-	<f488382f0909281409n1c1f7e5ex64a10147a14e39a@mail.gmail.com> 
-	<fabb9a1e0909281433l461086e3k93a138ad4b9b86c6@mail.gmail.com> 
-	<86iqf2r5ch.fsf@blue.stonehenge.com>
+Date: Mon, 28 Sep 2009 17:32:24 -0700 (PDT)
+Message-ID: <m3y6nya8vo.fsf@localhost.localdomain>
+References: <h9nlhj$heq$1@ger.gmane.org>
+	<m33a66br69.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Noonan <steven@uplinklabs.net>,
-	Damien Wyart <damien.wyart@gmail.com>,
-	Anteru <newsgroups@catchall.shelter13.net>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Tue Sep 29 02:02:27 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anteru <newsgroups@catchall.shelter13.net>
+X-From: git-owner@vger.kernel.org Tue Sep 29 02:32:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsQAk-0002Go-N5
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 02:02:27 +0200
+	id 1MsQeG-0000zl-0V
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 02:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753637AbZI2ACP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Sep 2009 20:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753620AbZI2ACP
-	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 20:02:15 -0400
-Received: from mail-ew0-f211.google.com ([209.85.219.211]:33786 "EHLO
-	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753598AbZI2ACP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Sep 2009 20:02:15 -0400
-Received: by ewy7 with SMTP id 7so4946718ewy.17
-        for <git@vger.kernel.org>; Mon, 28 Sep 2009 17:02:18 -0700 (PDT)
+	id S1753650AbZI2AcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Sep 2009 20:32:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753568AbZI2AcY
+	(ORCPT <rfc822;git-outgoing>); Mon, 28 Sep 2009 20:32:24 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:38276 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753649AbZI2AcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Sep 2009 20:32:23 -0400
+Received: by fxm18 with SMTP id 18so4106239fxm.17
+        for <git@vger.kernel.org>; Mon, 28 Sep 2009 17:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZYwwnag8gYzXD5lfEiE9UKNBpQqsxVmpOAljrE3qiBI=;
-        b=M437QM3QSkfFI9/LdoqRxrs548JlZFntw5Jx/F4tF6scvD4WqIDYf5MO2t98IVVLGV
-         1jj99akAXdRwPBVYgRyIwvbwwxVInBR3S+P2fagIMiRHT7qcXmg7pDSBWiC36bsGQ7gQ
-         F8oJ0itnWisNSGeGorXvUX4unRam2Y4IHmQ88=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=SV6M2hvWWfcJO/IgSpDguMSePCDTaDRwAaRHHHwgZgw=;
+        b=RJJJKXK2MW4xy39d15ATcUNZXrfCtjWIv0UJPoeiBzkGEuIf/9noXuZP40n9Ltfqun
+         wFZS0/RsR0luJ1GfNj8K8ZiHqLrvhVHzXhL9PK/WeOtsKofLT2sAvR863fug/GZe0xOC
+         9gqqR/q/sb0tUXob21MPKt2T0u9WQu5WngGE0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=bEPw9o8LdHZb4DuiEAW3iY41n55ijrRKIBeB38WQ0f571vgZx0/aRz+pqxnIS/BNr1
-         OMM9+zjUN6AQBN96sJYA7zB5lP2pNLqpZBrvhijPEUpkNledsUKs67PD0e9l9+jAOshy
-         t/EyxVHy9l8KwMaEMa7xyi3xkv8cgm9oID3P0=
-Received: by 10.216.46.132 with SMTP id r4mr942884web.46.1254182538105; Mon, 
-	28 Sep 2009 17:02:18 -0700 (PDT)
-In-Reply-To: <86iqf2r5ch.fsf@blue.stonehenge.com>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=mFNcy3W4kfA8BiWIZ5c8Ful0XQb4B1x6JJZF03fjEmJRk/bCuCPRbRdj8n0nBNDJey
+         gTfyfrqHCg6EYrX+OL0Wl9ADYZl671m85KC+KD3GbloS5aUDNj+f8vp3S0GpFFLVvm8e
+         XyphmqltO9ZNFpvCsH8Mp8ktiqJPPTXklf0TU=
+Received: by 10.86.251.40 with SMTP id y40mr3786432fgh.57.1254184346741;
+        Mon, 28 Sep 2009 17:32:26 -0700 (PDT)
+Received: from localhost.localdomain (abvk246.neoplus.adsl.tpnet.pl [83.8.208.246])
+        by mx.google.com with ESMTPS id l12sm3692fgb.5.2009.09.28.17.32.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Sep 2009 17:32:24 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8T0WIjX020565;
+	Tue, 29 Sep 2009 02:32:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n8T0WH7m020562;
+	Tue, 29 Sep 2009 02:32:17 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <m33a66br69.fsf@localhost.localdomain>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129279>
 
-Heya,
+Jakub Narebski <jnareb@gmail.com> writes:
 
-On Tue, Sep 29, 2009 at 01:56, Randal L. Schwartz <merlyn@stonehenge.co=
-m> wrote:
-> I gotta get these guys on FLOSS Weekly. =A0Is anyone here a member of
-> the team?
+> Anteru <newsgroups@catchall.shelter13.net> writes:
+> 
+> > I'm currently evaluating DVCS for a project, and we're at a point where
+> > it comes down to either Mercurial or Git. Right now, I'm advocating for
+> > Git, while my co-workers like Mercurial, so I'd like to provide some
+> > good arguments in favor of git. Unfortunately, I'm not a git expert, so
+> > I hope I can get some help here ...
+[...]
 
-There is of course the possiblity that the codesite team liked their
-design so much that they based theirs off of the Indefero thing :P.
+> > So far, my key arguments are that git is more robust (more projects
+> > using it, larger developer base), of course git's excellent performance
+> > and the much better support for SVN, which is important for us as we can
+> > slowly migrate from SVN->Git, while hgmercurial is still in the making
+> > (and Python's SVN->Hg switch is for instance waiting for it).
+> 
+> hgmercurial? or hgsubversion?
+> 
+> There is also fact that git has superior support for multi-branch
+> development, which I think is the workflow most suited for distributed
+> development.
 
---=20
-Cheers,
+See also http://whygitisbetterthanx.com/#hg
 
-Sverre Rabbelier
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
