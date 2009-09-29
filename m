@@ -1,61 +1,52 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git-blame.el: Change how blame information is shown.
-Date: Tue, 29 Sep 2009 15:39:21 +0200
-Message-ID: <87ab0dj2eu.fsf@lysator.liu.se>
-References: <1254230666-18283-1-git-send-email-davidk@lysator.liu.se>
+From: Ben Bennett <benbennett@gmail.com>
+Subject: clone from url with email address as username?(escaping @ symbol)
+Date: Tue, 29 Sep 2009 09:20:34 -0500
+Message-ID: <970bc7c80909290720i1c5566fer1c1a3db744edc609@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 29 15:59:58 2009
+X-From: git-owner@vger.kernel.org Tue Sep 29 16:21:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsdFF-0006ZO-MI
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 15:59:58 +0200
+	id 1MsdZJ-0006xM-Pm
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 16:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751999AbZI2N7r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Sep 2009 09:59:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbZI2N7r
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 09:59:47 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:54896 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751689AbZI2N7r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2009 09:59:47 -0400
-X-Greylist: delayed 1228 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Sep 2009 09:59:46 EDT
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 692344005A;
-	Tue, 29 Sep 2009 15:38:37 +0200 (CEST)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 5BD1A40072; Tue, 29 Sep 2009 15:38:37 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.3 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [62.20.90.206])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 1B3EF4005A;
-	Tue, 29 Sep 2009 15:38:37 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id 6829060E08; Tue, 29 Sep 2009 15:39:21 +0200 (CEST)
-In-Reply-To: <1254230666-18283-1-git-send-email-davidk@lysator.liu.se>
-	(David@krank.kagedal.org's message of "Tue, 29 Sep 2009 15:24:26
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1752531AbZI2OUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2009 10:20:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbZI2OUc
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 10:20:32 -0400
+Received: from mail-px0-f194.google.com ([209.85.216.194]:54116 "EHLO
+	mail-px0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751689AbZI2OUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2009 10:20:31 -0400
+Received: by pxi32 with SMTP id 32so4344545pxi.4
+        for <git@vger.kernel.org>; Tue, 29 Sep 2009 07:20:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=9GMpdYg4NZXPJmjxiQv2lVfUd83KNpuPeQFTEFNqw9I=;
+        b=Tra/o5kufdVIHr66rW6Q3unpbgz6GGGVpQEaFODfwDE+6COl+425iblZeEXVBsxhWq
+         8wKyqPl06rPsQ5JVPj3JMcrjni4vlAi/HAZ7vIcs6Q2fp0nd5jUcEznwQ7wsh85ce+Cu
+         mGoT3j/8vt2WLK/2CAq6zN/B9ZRD4/zVVoN3k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=QQjiBYeVU5Ewi/Zvv3hmp03Ec+2yasitip45VTsM6NrqwL7FkzrV5oxrEpS+K7dUrf
+         PTpytH9IbkkLOW8y/v5/zniV0uGsIH64QtFPkEpa6CT9EDIv3H7IYu02Wx/pVNQgNswj
+         rNLfqBlq83bmcdf3UEXEF9zWIO9kZ20yAklhk=
+Received: by 10.140.225.2 with SMTP id x2mr173307rvg.263.1254234034771; Tue, 
+	29 Sep 2009 07:20:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129303>
 
->From: David@krank.kagedal.org, K=C3=A5gedal@krank.kagedal.org, davidk@=
-lysator.liu.se
+Is there any escape sequence for the @ symbol when cloning?
 
-Sorry about the broken from address.
 
---=20
-David K=C3=A5gedal
+Thanks,
+Ben
