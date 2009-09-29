@@ -1,74 +1,80 @@
-From: Dilip M <dilipm79@gmail.com>
-Subject: Re: Deciding between Git/Mercurial
-Date: Tue, 29 Sep 2009 14:24:33 +0530
-Message-ID: <c94f8e120909290154y5edc666ap22d261e7b4201a89@mail.gmail.com>
-References: <h9nlhj$heq$1@ger.gmane.org> <9accb4400909290144t1363b5c6t8886bfa01e486c94@mail.gmail.com>
+From: Thomas Singer <thomas.singer@syntevo.com>
+Subject: Re: Distribution size
+Date: Tue, 29 Sep 2009 11:06:26 +0200
+Message-ID: <4AC1CE12.8040406@syntevo.com>
+References: <1253962653-sup-1882@nixos> <alpine.DEB.1.00.0909261320370.4985@pacific.mpi-cbg.de> <4ABE3091.5040600@syntevo.com> <4AC0B088.9090101@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: newsgroups@catchall.shelter13.net, git@vger.kernel.org
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 29 11:01:21 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marc Weber <marco-oweber@gmx.de>
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 29 11:06:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MsYZX-0007JA-7I
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 11:00:35 +0200
+	id 1MsYfJ-0001xc-Op
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Sep 2009 11:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbZI2JA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Sep 2009 05:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbZI2JAZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 05:00:25 -0400
-Received: from mail-yw0-f199.google.com ([209.85.211.199]:39279 "EHLO
-	mail-yw0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753405AbZI2JAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Sep 2009 05:00:25 -0400
-X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Sep 2009 05:00:25 EDT
-Received: by ywh37 with SMTP id 37so5276027ywh.4
-        for <git@vger.kernel.org>; Tue, 29 Sep 2009 02:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=WEKXtdHJGBGqEoUm1mqNrmRaX+I3vv1uU3kM9hv2VFM=;
-        b=MpCAPwgStRwfuWGrNrbjleBkzEdw/GC4NPq6pvdpECQ3DoBEW3dyBB7W/wFQyWXrop
-         +mTcc8/gA3eV0uKIvm1vJoa7/jitzK11tkEXaYIIIOkJ3dpOymbZtQIteqtpcnB0UXU7
-         1gwmIIc7bkldmL4JoZnkPIAilK1hGh9d3gm/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=RdmjTa7Ln7jmCya+pm4vhJrJDr/9eqUUS5KWAUUDm0ohFK9FkDuYaNcNv0i+r/ChIM
-         9mVl40aKo69fDXo/XD4seQDXcFERN9GIMZyC1iRA6FslIdhaNz06EDgjX/QrcNnkiovf
-         l6/cS7RCnNB2BIJtZod86BsQ5e49zO1eXO1xQ=
-Received: by 10.150.164.4 with SMTP id m4mr9715238ybe.140.1254214493109; Tue, 
-	29 Sep 2009 01:54:53 -0700 (PDT)
-In-Reply-To: <9accb4400909290144t1363b5c6t8886bfa01e486c94@mail.gmail.com>
+	id S1753462AbZI2JGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Sep 2009 05:06:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753222AbZI2JGX
+	(ORCPT <rfc822;git-outgoing>); Tue, 29 Sep 2009 05:06:23 -0400
+Received: from syntevo.com ([85.214.39.145]:41334 "EHLO syntevo.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751316AbZI2JGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Sep 2009 05:06:23 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTP id 3180337CB5F
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4AC0B088.9090101@gmail.com>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129291>
 
-On Tue, Sep 29, 2009 at 2:14 PM, Daniele Segato <daniele.bilug@gmail.com> wrote:
-> Can I propose to make this discussion cross-mailing list adding the hg
-> mailing list to the CC?  I think it would be a good discussion if we don't
-> end up flaming.  Let me know what you think about it
+Hi Marius,
 
-We will probably end in flames. Its same as comparing Vim and Emacs, Python
-and Perl...
+> Also, you don't need everything in msysgit to distribute, only for development.
 
-...this comparison is all ver web. Checkout!
+How should I find out what is required to *run* all git commands, except of
+trying it myself? Is there a document available somewhere?
 
-http://importantshock.wordpress.com/2008/08/07/git-vs-mercurial/
-
-My *personnel*  opinion is, If it is for project _only_ on UNIX, than GIT and
-repo tool from Google will be killing combination.
-
-If project is on both Windows & UNIX (But consider where do you compile your
-code), than hg doesn't have matching!
+--
+Best regards,
+Thomas Singer
+=============
+syntevo GmbH
+http://www.syntevo.com
+http://blog.syntevo.com
 
 
-
--- 
-Dilip
+Marius Storm-Olsen wrote:
+> Thomas Singer said the following on 26.09.2009 17:17:
+>>> Funny.  Git for Windows is less than 12MB [*1*].
+>>
+>> Well, the portable Git bundle compressed with 7zip is approx. 11MB,
+>> the Git installer (maybe also using 7zip internally) is at approx.
+>> the same size. Unpacked/installed on disk they are at 138MB/131MB.
+>> If you try to compress it with zip, it will reduce to approx. 70MB
+>> which still is quite large.
+>>
+>> We are interested, too, in having a small(er) bundle, because we
+>> want to distribute Git binaries with our Git GUI front-end,
+>> SmartGit, so the user will (have the option to) get an
+>> all-inclusive-bundle.
+> 
+> [Please, never ever top-post on the Git mailing list, thanks]
+> 
+> Most of the git-*.exe are identical duplicates, so most of that can be
+> nuked. Also, you don't need everything in msysgit to distribute, only
+> for development. You should be able to make a fairly small distribution
+> for usage only.
+> 
+> -- 
+> .marius
+> 
+> 
