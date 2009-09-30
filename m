@@ -1,87 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Do not show 'patch' link in 'commit' view for merges
-Date: Wed, 30 Sep 2009 22:21:53 +0200
-Message-ID: <20090930201953.22301.73887.stgit@localhost.localdomain>
+From: lsorense@csclub.uwaterloo.ca (Lennart Sorensen)
+Subject: Re: How can I download a git commit as a diff patch?
+Date: Wed, 30 Sep 2009 16:25:27 -0400
+Message-ID: <20090930202527.GB22159@csclub.uwaterloo.ca>
+References: <20090930154410.GA31502@thumper2> <20090930085500.a5856301.rdunlap@xenotime.net> <20090930190014.GA22161@csclub.uwaterloo.ca> <20090930213809.71c2a8e8@varda> <m3tyyk9ost.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 30 22:22:34 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Alejandro Riveira =?utf-8?Q?Fern=C3=A1ndez?= <ariveira@gmail.com>,
+	Randy Dunlap <rdunlap@xenotime.net>,
+	Andy <genanr@emsphone.com>, linux-kernel@vger.kernel.org,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753194AbZI3UZZ@vger.kernel.org Wed Sep 30 22:25:42 2009
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1753194AbZI3UZZ@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mt5h3-0004HZ-3C
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 22:22:33 +0200
+	id 1Mt5k5-0005Fd-L3
+	for glk-linux-kernel-3@lo.gmane.org; Wed, 30 Sep 2009 22:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286AbZI3UWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2009 16:22:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752612AbZI3UWU
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 16:22:20 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:54815 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752204AbZI3UWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2009 16:22:20 -0400
-Received: by fxm18 with SMTP id 18so5659314fxm.17
-        for <git@vger.kernel.org>; Wed, 30 Sep 2009 13:22:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:date
-         :message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=xEdJnZS+n6Uu/j/Uu/yFZwWumwUagT0ryzQWrp/l55k=;
-        b=ufpPq8B7NoF7+qZhH9xI7uCYvmYdj3L4oFhhwk7WiNiVFxWnaiAYd0Dzk5Dp9GkpiE
-         gTTuFlOplySHDDBLcPIb7FjafnC17ldthqu4FlC1Q/wDgap+/qCWxBJazhT+Wu4dhjkg
-         oqlXUORnqzdqMd+Vs/OaptqEOLhuLP4fvDRss=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=C601xzbAl7GGcZy/WIjtXbL5MKAGr2nC/mkXb79sKE9QAPtl+miDzQ8hQPKo0VHjOf
-         tgie98g2D+8STQ9F7nBGMarCOfOavZ/+60Zr21/f+Xn+MA9GAO5UougvNpjMXoEiEPLg
-         yLHoumM3g6oURbC09/UICJMk97kNxTW3uUV1Y=
-Received: by 10.86.226.5 with SMTP id y5mr386861fgg.36.1254342143233;
-        Wed, 30 Sep 2009 13:22:23 -0700 (PDT)
-Received: from localhost.localdomain (abvd215.neoplus.adsl.tpnet.pl [83.8.201.215])
-        by mx.google.com with ESMTPS id 12sm93182fgg.8.2009.09.30.13.22.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Sep 2009 13:22:22 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n8UKLrlu022360
-	for <git@vger.kernel.org>; Wed, 30 Sep 2009 22:22:04 +0200
-User-Agent: StGIT/0.14.3
-Sender: git-owner@vger.kernel.org
+	id S1753194AbZI3UZZ (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 30 Sep 2009 16:25:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751939AbZI3UZZ
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Wed, 30 Sep 2009 16:25:25 -0400
+Received: from caffeine.csclub.uwaterloo.ca ([129.97.134.17]:35615 "EHLO
+	caffeine.csclub.uwaterloo.ca" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751629AbZI3UZY (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 30 Sep 2009 16:25:24 -0400
+Received: from caffeine.csclub.uwaterloo.ca (localhost [127.0.0.1])
+	by caffeine.csclub.uwaterloo.ca (Postfix) with ESMTP id 3945D73F70;
+	Wed, 30 Sep 2009 16:25:28 -0400 (EDT)
+Received: by caffeine.csclub.uwaterloo.ca (Postfix, from userid 20367)
+	id DB4BC73F77; Wed, 30 Sep 2009 16:25:27 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <m3tyyk9ost.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Virus-Scanned: ClamAV using ClamSMTP
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129354>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129355>
 
-Show 'patch' link in the 'commit' view only for commits which have
-exactly one parent, otherwise call to git-format-patch would fail for
-the hyperlinked 'patch' action.
+On Wed, Sep 30, 2009 at 01:10:51PM -0700, Jakub Narebski wrote:
+> Or better yet, if given installation of gitweb supports it, on the
+> 'patch' link just on the right of 'raw' view.  Such patch can be
+> applied better by git-am (but both should work for GNU patch or
+> git-apply).
+> 
+> Yes, by default for merges the 'commitdiff' view (and the 'raw'
+> version, i.e. 'commitdiff_plain' view) shows **combined** diff of
+> changes brought by merge (see git-diff manpage for details on this
+> format).
+> 
+> For merge commit you have to choose which of parents you want to have
+> diff from.  Go to 'commit' view, there in the header would be two or
+> more parents.  Click on the 'diff' link beside chosen parent, check if
+> it is the diff you want to get, and then click on 'patch' (or 'raw')
+> link.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Just noticed this issue, thanks indirectly to 
-"Re: How can I download a git commit as a diff patch?"
-thread.
+Is there a git command to show me a diff I can use with patch if I want to
+select a given patch as long as I can tell it which tree I want to follow?
+I don't care to use gitweb if I can do it with the command line git.
 
-This is conservative change: perhaps we could extend 'patch' view to
-work also for root commit...
+git show obviously shows the git combined diff format, at least by default.
 
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Or is the idea of trying to use the diff from the merge commit just
+silly in the first place?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 24b2193..fb045a1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5328,7 +5328,7 @@ sub git_commit {
- 			} @$parents ) .
- 			')';
- 	}
--	if (gitweb_check_feature('patches')) {
-+	if (gitweb_check_feature('patches') && @$parents == 1) {
- 		$formats_nav .= " | " .
- 			$cgi->a({-href => href(action=>"patch", -replay=>1)},
- 				"patch");
+-- 
+Len Sorensen
