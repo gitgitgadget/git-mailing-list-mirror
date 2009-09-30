@@ -1,64 +1,50 @@
-From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Re: Compact view of history in gitk
-Date: Wed, 30 Sep 2009 20:41:08 +0200
-Message-ID: <4AC3A644.9030407@dirk.my1.cc>
-References: <4AC1F435.4030802@ubicom.com> <4AC1F88E.7080802@viscovery.net> <46a038f90909290821g4bb9cecewace8c8a516b74c78@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
+Date: Wed, 30 Sep 2009 21:08:09 +0200
+Message-ID: <20090930190809.GF567@book.hvoigt.net>
+References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Yakup Akbay <yakbay@ubicom.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 20:51:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 30 21:08:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mt4Gp-0006n8-56
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 20:51:23 +0200
+	id 1Mt4XD-00043J-7D
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 21:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754651AbZI3SvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2009 14:51:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752361AbZI3SvM
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 14:51:12 -0400
-Received: from smtprelay09.ispgateway.de ([80.67.29.23]:34307 "EHLO
-	smtprelay09.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012AbZI3SvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2009 14:51:12 -0400
-X-Greylist: delayed 605 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Sep 2009 14:51:12 EDT
-Received: from [84.176.88.234] (helo=[192.168.2.100])
-	by smtprelay09.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1Mt49H-0000B1-LK; Wed, 30 Sep 2009 20:43:36 +0200
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <46a038f90909290821g4bb9cecewace8c8a516b74c78@mail.gmail.com>
-X-Df-Sender: 757646
+	id S1754686AbZI3TII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2009 15:08:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbZI3TII
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 15:08:08 -0400
+Received: from darksea.de ([83.133.111.250]:48420 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751629AbZI3TIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2009 15:08:07 -0400
+Received: (qmail 24660 invoked from network); 30 Sep 2009 21:08:10 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 30 Sep 2009 21:08:10 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129350>
 
-Am 29.09.2009 17:21 schrieb Martin Langhoff:
-> On Tue, Sep 29, 2009 at 2:07 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
->> I think, --simplify-by-decoration comes close, even though it may not be
->> 100% what you describe.
-> 
-> That is awesome.
-> 
-> Awesomer would be teaching gitk to expand (un-simplify) parts of it.
-> Probably a pig of a project to do though :-/
-> 
-> 
-> 
-> m
+Hello,
 
-I'm proud to tell that one might also use gitk's
-dialog 'View -> Edit view... (F4)' and then activate
-the 'Simple history' checkbox. :-)
+On Fri, Sep 25, 2009 at 08:19:44AM +0200, Johannes Schindelin wrote:
+> as some of you already know, I will be unable to Git Together with other 
+> Gits in California this year.  So the only version of such a Git Together 
+> I will have this year is the Berlin one.
 
-Gitk knows about that since Git v1.6.4-rc0.
+Just announcing that Jens Lehmann and me will also come. Just added
+us to the wiki page. What about important stuff like coffee during the
+day? Is there access to such things nearby or is it better to bring
+everything needed?
 
-However, it doesn't do the awesomer part.
-
-Dirk
+cheers Heiko
