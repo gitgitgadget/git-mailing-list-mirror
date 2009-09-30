@@ -1,170 +1,80 @@
-From: "Sasa Zivkov" <sasa.zivkov@sap.com>
-Subject: [JGIT PATCH] Include description for missing prereqs
-Date: Wed, 30 Sep 2009 16:41:52 +0200
-Message-ID: <1254321712-1936-1-git-send-email-sasa.zivkov@sap.com>
-Cc: git@vger.kernel.org, Sasa Zivkov <sasa.zivkov@sap.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 16:42:13 2009
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [PATCH v2] send-email: fix mutt regex for grouped aliases
+Date: Wed, 30 Sep 2009 17:49:36 +0300
+Message-ID: <1254322176-4561-1-git-send-email-felipe.contreras@gmail.com>
+References: <20090930112833.GA4984@sigio.peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 30 16:49:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mt0NZ-0007yB-OT
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 16:42:06 +0200
+	id 1Mt0V3-0002P6-D2
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 16:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754334AbZI3Olz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2009 10:41:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753304AbZI3Olz
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 10:41:55 -0400
-Received: from smtpde01.sap-ag.de ([155.56.68.171]:48026 "EHLO
-	smtpde01.sap-ag.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863AbZI3Oly (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2009 10:41:54 -0400
-Received: from mail.sap.corp
-	by smtpde01.sap-ag.de (26) with ESMTP id n8UEfrOG019788
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 30 Sep 2009 16:41:54 +0200 (MEST)
-X-Mailer: git-send-email 1.6.4.msysgit.0
-X-Scanner: Virus Scanner virwal05
-X-SAP: out
+	id S1754593AbZI3Otj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2009 10:49:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754585AbZI3Otj
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 10:49:39 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:56488 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754580AbZI3Otj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2009 10:49:39 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so500025eyf.19
+        for <git@vger.kernel.org>; Wed, 30 Sep 2009 07:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=e75KYR6p77WJy99LZ+2z8tUhxb1Yu2VdNL2uN5W2xH8=;
+        b=vNIcyxEhFNrjTSCy0NS34tRhQrewzgbyTi/buL687QfItayly36itbX+Vz82lYkBJT
+         2vwUGzVRITQa0/KwNp34QzWM6ArkkeYX37t3oKzSX8myZsTNxoF+i9DCea0zVaxkIKLB
+         ch6cyqA4IznmLjPLaZFziAb+OYlRgG2RVsCEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=oFnCVW99csCwEKGtjYinAEL+hBCYyodhwxTOuPsxXar6lCOVz0+gnn1/QVtxOVPJMI
+         1NEbxdhgXmfAu7lcQcEGDUmmtYfjPm5emIgQoCSF4sq+0DxdaLeRd59EnXFOE1qUQ+Jr
+         Bahc8rNoKAwqrr+um7a8dlCjQKcavVQX9vCyQ=
+Received: by 10.211.139.16 with SMTP id r16mr6871845ebn.89.1254322181826;
+        Wed, 30 Sep 2009 07:49:41 -0700 (PDT)
+Received: from localhost (gw3.cosmicparrot.net [217.152.255.6])
+        by mx.google.com with ESMTPS id 7sm31461eyb.4.2009.09.30.07.49.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 30 Sep 2009 07:49:40 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.rc2.1.g9071
+In-Reply-To: <20090930112833.GA4984@sigio.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129344>
 
-From: Sasa Zivkov <sasa.zivkov@sap.com>
+For example:
+alias -group friends foo Foo Bar <foo@bar.com>
 
-When throwing MissingBundlePrerequisiteException we
-also include the short description, if available, of
-each missing object.
+Comments by Jeff King.
 
-This is the fix for the following issue:
-http://code.google.com/p/egit/issues/detail?id=25
-
-Signed-off-by: Sasa Zivkov <sasa.zivkov@sap.com>
+Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
 ---
- .../errors/MissingBundlePrerequisiteException.java |   19 +++++++++++--------
- .../jgit/transport/BundleFetchConnection.java      |   20 +++++++++++++-------
- 2 files changed, 24 insertions(+), 15 deletions(-)
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/org.eclipse.jgit/src/org/eclipse/jgit/errors/MissingBundlePrerequisiteException.java b/org.eclipse.jgit/src/org/eclipse/jgit/errors/MissingBundlePrerequisiteException.java
-index cc7b34b..b91f3cd 100644
---- a/org.eclipse.jgit/src/org/eclipse/jgit/errors/MissingBundlePrerequisiteException.java
-+++ b/org.eclipse.jgit/src/org/eclipse/jgit/errors/MissingBundlePrerequisiteException.java
-@@ -37,7 +37,7 @@
- 
- package org.eclipse.jgit.errors;
- 
--import java.util.Collection;
-+import java.util.Map;
- 
- import org.eclipse.jgit.lib.ObjectId;
- import org.eclipse.jgit.transport.URIish;
-@@ -48,12 +48,14 @@
- public class MissingBundlePrerequisiteException extends TransportException {
- 	private static final long serialVersionUID = 1L;
- 
--	private static String format(final Collection<ObjectId> ids) {
-+	private static String format(final Map<ObjectId, String> missingCommits) {
- 		final StringBuilder r = new StringBuilder();
- 		r.append("missing prerequisite commits:");
--		for (final ObjectId p : ids) {
-+		for (final Map.Entry<ObjectId, String> e : missingCommits.entrySet()) {
- 			r.append("\n  ");
--			r.append(p.name());
-+			r.append(e.getKey().name());
-+			if (e.getValue() != null)
-+				r.append(" ").append(e.getValue());
- 		}
- 		return r.toString();
- 	}
-@@ -63,11 +65,12 @@ private static String format(final Collection<ObjectId> ids) {
- 	 *
- 	 * @param uri
- 	 *            URI used for transport
--	 * @param ids
--	 *            the ids of the base/common object(s) we don't have.
-+	 * @param missingCommits
-+	 *            the Map of the base/common object(s) we don't have. Keys are
-+	 *            ids of the missing objects and values are short descriptions.
- 	 */
- 	public MissingBundlePrerequisiteException(final URIish uri,
--			final Collection<ObjectId> ids) {
--		super(uri, format(ids));
-+			final Map<ObjectId, String> missingCommits) {
-+		super(uri, format(missingCommits));
- 	}
- }
-diff --git a/org.eclipse.jgit/src/org/eclipse/jgit/transport/BundleFetchConnection.java b/org.eclipse.jgit/src/org/eclipse/jgit/transport/BundleFetchConnection.java
-index 42888cf..ceb51d9 100644
---- a/org.eclipse.jgit/src/org/eclipse/jgit/transport/BundleFetchConnection.java
-+++ b/org.eclipse.jgit/src/org/eclipse/jgit/transport/BundleFetchConnection.java
-@@ -44,9 +44,10 @@
- import java.util.ArrayList;
- import java.util.Collection;
- import java.util.Collections;
--import java.util.HashSet;
-+import java.util.HashMap;
- import java.util.LinkedHashMap;
- import java.util.List;
-+import java.util.Map;
- import java.util.Set;
- 
- import org.eclipse.jgit.errors.MissingBundlePrerequisiteException;
-@@ -75,7 +76,7 @@
- 
- 	InputStream bin;
- 
--	final Set<ObjectId> prereqs = new HashSet<ObjectId>();
-+	final Map<ObjectId, String> prereqs = new HashMap<ObjectId, String>();
- 
- 	private String lockMessage;
- 
-@@ -120,7 +121,11 @@ private void readBundleV2() throws IOException {
- 				break;
- 
- 			if (line.charAt(0) == '-') {
--				prereqs.add(ObjectId.fromString(line.substring(1, 41)));
-+				ObjectId id = ObjectId.fromString(line.substring(1, 41));
-+				String shortDesc = null;
-+				if (line.length() > 42)
-+					shortDesc = line.substring(42);
-+				prereqs.put(id, shortDesc);
- 				continue;
- 			}
- 
-@@ -199,9 +204,10 @@ private void verifyPrerequisites() throws TransportException {
- 		final RevFlag PREREQ = rw.newFlag("PREREQ");
- 		final RevFlag SEEN = rw.newFlag("SEEN");
- 
--		final List<ObjectId> missing = new ArrayList<ObjectId>();
-+		final Map<ObjectId, String> missing = new HashMap<ObjectId, String>();
- 		final List<RevObject> commits = new ArrayList<RevObject>();
--		for (final ObjectId p : prereqs) {
-+		for (final Map.Entry<ObjectId, String> e : prereqs.entrySet()) {
-+			ObjectId p = e.getKey();
- 			try {
- 				final RevCommit c = rw.parseCommit(p);
- 				if (!c.has(PREREQ)) {
-@@ -209,7 +215,7 @@ private void verifyPrerequisites() throws TransportException {
- 					commits.add(c);
- 				}
- 			} catch (MissingObjectException notFound) {
--				missing.add(p);
-+				missing.put(p, e.getValue());
- 			} catch (IOException err) {
- 				throw new TransportException(transport.uri, "Cannot read commit "
- 						+ p.name(), err);
-@@ -243,7 +249,7 @@ private void verifyPrerequisites() throws TransportException {
- 		if (remaining > 0) {
- 			for (final RevObject o : commits) {
- 				if (!o.has(SEEN))
--					missing.add(o);
-+					missing.put(o, prereqs.get(o));
- 			}
- 			throw new MissingBundlePrerequisiteException(transport.uri, missing);
- 		}
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 0700d80..93b7ed2 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -401,7 +401,7 @@ my %aliases;
+ my %parse_alias = (
+ 	# multiline formats can be supported in the future
+ 	mutt => sub { my $fh = shift; while (<$fh>) {
+-		if (/^\s*alias\s+(\S+)\s+(.*)$/) {
++		if (/^\s*alias\s+(?:-group\s+\S+\s+)*(\S+)\s+(.*)$/) {
+ 			my ($alias, $addr) = ($1, $2);
+ 			$addr =~ s/#.*$//; # mutt allows # comments
+ 			 # commas delimit multiple addresses
 -- 
-1.6.4.msysgit.0
+1.6.5.rc2.1.g9071
