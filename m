@@ -1,111 +1,102 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Deciding between Git/Mercurial
-Date: Wed, 30 Sep 2009 08:28:16 +0200
-Message-ID: <20090930062816.GA27901@atjola.homenet>
-References: <h9nlhj$heq$1@ger.gmane.org>
- <m33a66br69.fsf@localhost.localdomain>
- <ee2a733e0909291144g4b99ab7ay9e63bfac935013aa@mail.gmail.com>
- <200909292058.53045.jnareb@gmail.com>
- <ee2a733e0909291749s71801b29ufa827cab715d0abb@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Anteru <newsgroups@catchall.shelter13.net>, git@vger.kernel.org
-To: Leo Razoumov <slonik.az@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 30 08:28:30 2009
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: Re: [PATCH 5/6 (v4)] full integration of rev-cache into git,
+ completed test suite
+Date: Wed, 30 Sep 2009 02:53:49 -0500
+Message-ID: <1254297229-14806-1-git-send-email-chris_johnsen@pobox.com>
+References: <op.uzv4covmtdk399@sirnot.private>
+Cc: Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org,
+	Sam Vilain <sam@vilain.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>
+To: Nick Edelen <sirnot@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 30 09:56:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mssft-0005or-SJ
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 08:28:30 +0200
+	id 1Msu2y-00075p-CJ
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Sep 2009 09:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752898AbZI3G2T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Sep 2009 02:28:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbZI3G2T
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 02:28:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42623 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751987AbZI3G2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2009 02:28:18 -0400
-Received: (qmail invoked by alias); 30 Sep 2009 06:28:20 -0000
-Received: from i59F574C1.versanet.de (EHLO atjola.homenet) [89.245.116.193]
-  by mail.gmx.net (mp053) with SMTP; 30 Sep 2009 08:28:20 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19MQRA3MzdMBc8aec+n6ectV9gWTUCbf9VarsNTFI
-	a/U/cyE149MXdJ
-Content-Disposition: inline
-In-Reply-To: <ee2a733e0909291749s71801b29ufa827cab715d0abb@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1753389AbZI3H4O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2009 03:56:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbZI3H4O
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 03:56:14 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49639 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752913AbZI3H4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2009 03:56:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 235EC648AA;
+	Wed, 30 Sep 2009 03:56:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=A0dz
+	OzSQyf3ehEbKL6QHOkNLrNw=; b=pyebNrxEEsaV7oDEGu63ea6yIp6O/cNVjCzD
+	ON5Tx+8+axFNfUASz3YtNrz351rUAJ3QHf4hp505UGYJrCC4f1fub5rW+Ov3JVdG
+	Y3ySbX0t+yxUmfU4Je4edaFKe6UDzo06vYZqFsNKjndsAizBjyzbx+qQ1kpe8DB4
+	vecByyw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+	i9wcyLuJn68czAyY8a2gsaVxM9LTg23VTcGGp6MjKs/aGMCjCPh+XRutPsnPrxlg
+	oyH9uGexiWEFFRfgMz6ldEOI/Qu3/sbiZrYVD5VFe0NI7Yg24Yo3gXATQDfrPpZK
+	DBqbQkF+XXAAc8fLncOzUNM0WYEaO54xMpnVQEcQ19U=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 842F5648A9;
+	Wed, 30 Sep 2009 03:56:05 -0400 (EDT)
+Received: from localhost.localdomain (unknown [75.53.42.120]) (using TLSv1
+ with cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate
+ requested) by a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0AAFF648A7;
+ Wed, 30 Sep 2009 03:55:49 -0400 (EDT)
+X-Mailer: git-send-email 1.6.5.rc1.183.g23fa6
+In-Reply-To: <op.uzv4covmtdk399@sirnot.private>
+X-Pobox-Relay-ID: B4A250CA-AD96-11DE-BFCE-8B19076EA04E-07245699!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129332>
 
-On 2009.09.29 20:49:52 -0400, Leo Razoumov wrote:
-> On 2009-09-29, Jakub Narebski <jnareb@gmail.com> wrote:
-> > On Tue, 29 Sep 2009, Leo Razoumov wrote:
-> >  > On 2009-09-28, Jakub Narebski <jnareb@gmail.com> wrote:
-> >  > > [..snip..]
-> >  > >  Besides with nonlinear history with
-> >  > >  revision numbers such as 12678 and 12687 you know that 12678 =
-is older
-> >  > >  than 12687 if and only if 12678 and 12687 are on the same lin=
-e of
-> >  > >  development.
-> >  >
-> >  > The statement above is incorrect!! In a Mercurial repo local rev=
-ision
-> >  > numbers are strictly ordered in commit time. 12678 < 12687 means=
- that
-> >  > 12678 was committed prior to 12687. But these two commits could =
-belong
-> >  > to two completely unrelated lines of development.
-> >
-> > This is impossible with distributed development.  If the second bra=
-nch
-> >  comes from other repository, with commits _created_ (in that repos=
-itory)
-> >  earlier than commits in current repository, but commits in first
-> >  branch (from current repository) were created earlier than _fetchi=
-ng_
-> >  those commits in second branch:
-> >
-> >   .---.---.---.---x---1---2---3---M---.
-> >                    \             /
-> >                     \-A---B---C-/             <-- from repository B
-> >
-> >
-> >  Either you would have to change commits numbers, and therefore the=
-y would
-> >  be not stable, or you would have to change commit time to mean 'ti=
-me this
-> >  commit got into current repository', which would kill performance =
-for sure.
-> >
->=20
-> Jakub,
-> in Mercurial sequential commit numbers are local to a repo and are no=
-t
-> unique between the clones. Unique ID is SHA1 as in git. So mercurial
-> commit 127:aaf123453dfgdfgddd...
-> means commit number 127 in this repo with SHA1 "aaf123453dfgdfgddd...=
-"
-> In another clone commit 127 might mean completely different thing.
-> Sequential commit numbers are strictly for "local convenience".
+(The Cc list of the parent message was truncated.
+ The Cc list of this message was adopted from later messages.)
 
-To quote his first mail:
-	First, you have to remember that this 'number of commit' thingy
-	is *local* to your repository, so you cannot use commit numbers
-	to communicate with other developers.
+I needed something like the following to get the tests to pass.
+If you like it, squash it into 5/6.
 
-With the above example, he has just shown that even with those local
-commit numbers, you can't tell that commit X is older than commit Y jus=
-t
-because X < Y.
+-->8--
+Subject: [PATCH] t6017: use 'tr -d' to strip spaces from 'wc -c' output
 
-Bj=F6rn
+The previous use of 'grep -o "[0-9]*"' was producing an empty string
+(GNU grep 2.5.1 on Mac OS X 10.4.11). Additionally, since 'wc' echos
+its filename arguments when stdin is not the source, the 'grep -o'
+might have also extracted additional decimal strings embedded in the
+filename (a SHA-1 hash value).
+
+This 'tr -d' style is used in git-filter-branch.sh, and t6003.
+Another alternative (in t1006) is to use 'sed' to strip off the
+leading spaces.
+
+Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+---
+ t/t6017-rev-cache-list.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t6017-rev-cache-list.sh b/t/t6017-rev-cache-list.sh
+index 6ada7ac..3f49cb3 100755
+--- a/t/t6017-rev-cache-list.sh
++++ b/t/t6017-rev-cache-list.sh
+@@ -246,7 +246,7 @@ test_expect_success 'make fragmented slices' '
+ 	test `grep "final return value: 0" output.err | wc -l` -eq 3
+ '
+ 
+-cache_size=`wc -c .git/rev-cache/$cache_sha1 | grep -o "[0-9]*"`
++cache_size=`wc -c < .git/rev-cache/$cache_sha1 | tr -d ' '`
+ test_expect_success 'test --ignore-size function in fuse' '
+ 	git-rev-cache fuse --ignore-size=$cache_size 2>output.err &&
+ 	grep "final return value: 0" output.err &&
+-- 
+1.6.5.rc1.183.g23fa6
