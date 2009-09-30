@@ -1,173 +1,70 @@
-From: Jason van Zyl <jason@sonatype.com>
-Subject: Re: [JGIT PATCH 1/9] mavenizing step 1: moved over the initial poms  from Jasons branch Signed-off-by: Mark Struberg <struberg@yahoo.de>
-Date: Wed, 30 Sep 2009 16:16:01 -0700
-Message-ID: <7BE83B1E-200A-4E19-979D-7A53CE582468@sonatype.com>
-References: <949779.47404.qm@web27804.mail.ukl.yahoo.com>
-Mime-Version: 1.0 (Apple Message framework v1076)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Jonas Fonseca <jonas.fonseca@gmail.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Mark Struberg <struberg@yahoo.de>
-X-From: git-owner@vger.kernel.org Thu Oct 01 01:22:57 2009
+From: David Brown <davidb@quicinc.com>
+Subject: Re: Git push over git protocol for corporate environment
+Date: Wed, 30 Sep 2009 16:23:09 -0700
+Message-ID: <20090930232309.GA20409@huya.quicinc.com>
+References: <76c5b8580909301613m283c4bfdne8de449ca0fd0987@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 01 01:23:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mt8Vb-0002C3-M2
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 01:22:56 +0200
+	id 1Mt8W7-0002IZ-Aa
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 01:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810AbZI3XWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Sep 2009 19:22:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754777AbZI3XWk
-	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 19:22:40 -0400
-Received: from 63-246-20-110.contegix.com ([63.246.20.110]:60978 "EHLO
-	sonatype01.sonatype.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754709AbZI3XWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Sep 2009 19:22:40 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 30 Sep 2009 19:22:40 EDT
-Received: (qmail 25227 invoked by uid 89); 30 Sep 2009 23:16:03 -0000
-Received: from unknown (HELO ?10.0.1.201?) (jason@maven.org@98.248.33.49)
-  by 63-246-20-110.contegix.com with ESMTPA; 30 Sep 2009 23:16:03 -0000
-In-Reply-To: <949779.47404.qm@web27804.mail.ukl.yahoo.com>
-X-Mailer: Apple Mail (2.1076)
+	id S1754868AbZI3XXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Sep 2009 19:23:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754808AbZI3XXH
+	(ORCPT <rfc822;git-outgoing>); Wed, 30 Sep 2009 19:23:07 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:13318 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754867AbZI3XXF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Sep 2009 19:23:05 -0400
+X-IronPort-AV: E=McAfee;i="5300,2777,5757"; a="24392654"
+Received: from pdmz-ns-mip.qualcomm.com (HELO numenor.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 30 Sep 2009 16:23:09 -0700
+Received: from msgtransport02.qualcomm.com (msgtransport02.qualcomm.com [129.46.61.151])
+	by numenor.qualcomm.com (8.14.2/8.14.2/1.0) with ESMTP id n8UNN9PV008295
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
+	Wed, 30 Sep 2009 16:23:09 -0700
+Received: from huya (huya.qualcomm.com [10.46.166.122])
+	by msgtransport02.qualcomm.com (8.14.2/8.14.2/1.0) with ESMTP id n8UNN9hC028895;
+	Wed, 30 Sep 2009 16:23:09 -0700
+Content-Disposition: inline
+In-Reply-To: <76c5b8580909301613m283c4bfdne8de449ca0fd0987@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129367>
 
+On Wed, Sep 30, 2009 at 04:13:23PM -0700, Eugene Sajine wrote:
 
-On 2009-09-30, at 4:13 PM, Mark Struberg wrote:
+> As I understand the best solution here is git protocol (one port only
+> on dedicated server and no security as we are in trusted network) with
+> read and write access configured for all repos on a dedicated server.
+> What do you think I should do? How to enable push over git protocol?
 
-> Hi!
->
-> I now squashed all my changes into 2 commits and omitted the eclipse  
-> parts. They are available at
->
-> http://github.com/sonatype/JGit/commits/mavenize2
->
-> As Shawn pointed out on IRC, the next step would be to migrate this  
-> patch over to the eclipe.org-post branch which I will do tomorrow  
-> evening.
->
+You can pass --enable=receive-pack but it probably isn't what you
+want.  Anybody can write anything, anywhere with that, and more
+importantly, anybody can delete anything.
 
-I also have a Tycho build for the EGIT part, and I have bundle  
-creation working for the JGIT part. I've already integrated these two  
-builds into our product so it all works. I can put it somewhere as  
-you're ready to absorb it if you want it.
+When we started with git, we had a single machine that housed the
+repos.  It ran a read-only git server, and people used ssh to
+push to it.  It doesn't require accounts on the machine, but you
+can use git-shell to restrict access.  This is probably a good
+way to start out.
 
-> LieGrue,
-> strub
->
-> --- On Wed, 9/30/09, Shawn O. Pearce <spearce@spearce.org> wrote:
->
->> From: Shawn O. Pearce <spearce@spearce.org>
->> Subject: Re: [JGIT PATCH 1/9] mavenizing step 1: moved over the  
->> initial poms  from Jasons branch Signed-off-by: Mark Struberg  
->> <struberg@yahoo..de>
->> To: "Mark Struberg" <struberg@yahoo.de>
->> Cc: "Jonas Fonseca" <jonas.fonseca@gmail.com>, "Robin Rosenberg" <robin.rosenberg.lists@dewire.com 
->> >, git@vger.kernel.org, "Jason van Zyl" <jvanzyl@sonatype.com>
->> Date: Wednesday, September 30, 2009, 11:16 PM
->> Mark Struberg <struberg@yahoo.de>
->> wrote:
->>>> From: Jonas Fonseca <jonas.fonseca@gmail.com>
->>>> actually
->>>> removes features (by not keeping the JGit
->> specific
->>>> settings), which
->>>> you then try to amend later in the patch series.
->>>
->>> I'm not sure what JGit specific settings you speak
->> about?
->>
->> I think he's talking about the Eclipse settings
->> files?  Or is it
->> something else?
->>
->>>> In terms of making the patch series more
->> manageable for
->>>> you, I think
->>>> the best approach is to start with the patches
->> not relevant
->>>> to the
->>>> mavenizing (renaming PathSuffixTestCase).
->>>
->>> In fact the fix of the PathSuffixTestCase came a few
->> days later
->>> after I found the reason why I miss a few tests. This
->> should be
->>> fixed in the current master anyway and has not so much
->> todo with
->>> the mavenization itself.
->>
->> But it should be earlier in the series because its easier
->> to apply.
->> Use rebase -i to swap the order of the patches.
->>
->>> I had the following in mind: every single commit
->> should be
->>>   compileable and working. So it's not easily
->> manageable to move the
->>> directory structure in one patch and apply all the
->> changes into
->>> the poms in another commit.
->>
->> Well, you need to edit the pom to change the source
->> directory and do
->> the move in one commit, and then edit the pom further in
->> another,
->> possibly removing the source directory directories once it
->> is the
->> standard maven layout.
->>
->>> We could for sure squash the later few commits, but I
->> didn't
->>> liked to rebase and push since there have been a few
->> forks of the
->>> mavenize branch and I hoped I could pull back a few
->> commits from
->>> others and later do a rebase -i.
->>
->> True.
->>
->> At this point we need to rebase the patches on the new
->> history in
->> the eclipse.org-post branch, which contains a massive
->> rename of
->> org.spearce to org.eclipse.  That may make the tree
->> reorg patch in
->> your Maven series harder to bring over to the new history,
->> sorry.
->>
->> Worse, we now have to start following the Eclipse IP
->> process[1]
->> for submissions to JGit...
->>
->> [1] http://www.eclipse.org/projects/dev_process/ip-process-in-cartoons.php
->>
->> -- 
->> Shawn.
->> --
->> To unsubscribe from this list: send the line "unsubscribe
->> git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>
->
->
->
->
+Eventually, it's possible to realize that there doesn't need to
+be _the_ central server.  There can be several, and different
+people in charge of different parts.  Here at least, people never
+really adapted to this model.
 
-Thanks,
+We're now primarily using Gerrit, but that's a larger step from
+process change from CVS.
 
-Jason
-
-----------------------------------------------------------
-Jason van Zyl
-Founder,  Apache Maven
-http://twitter.com/jvanzyl
-----------------------------------------------------------
+David Brown
