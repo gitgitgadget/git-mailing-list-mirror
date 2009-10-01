@@ -1,62 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] add NORETURN_PTR for function pointers
-Date: Thu, 1 Oct 2009 04:17:10 -0400
-Message-ID: <20091001081710.GC13436@coredump.intra.peff.net>
-References: <1254333950-2440-1-git-send-email-kusmabite@gmail.com>
- <1254333950-2440-2-git-send-email-kusmabite@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Do not show 'patch' link in 'commit' view for merges
+Date: Thu, 1 Oct 2009 11:18:01 +0200
+Message-ID: <200910011118.02875.jnareb@gmail.com>
+References: <20090930201953.22301.73887.stgit@localhost.localdomain> <200910010936.24789.jnareb@gmail.com> <20091001075540.GA13436@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	msysgit@googlegroups.com, gitster@pobox.com,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Erik Faye-Lund <kusmabite@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 01 10:17:37 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 01 11:18:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtGqy-00084r-9s
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 10:17:32 +0200
+	id 1MtHnk-00077p-D7
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 11:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755842AbZJAIRP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 04:17:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755855AbZJAIRP
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 04:17:15 -0400
-Received: from peff.net ([208.65.91.99]:47789 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755832AbZJAIRO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 04:17:14 -0400
-Received: (qmail 13999 invoked by uid 107); 1 Oct 2009 08:20:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 01 Oct 2009 04:20:42 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Oct 2009 04:17:10 -0400
+	id S1755871AbZJAJSF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Oct 2009 05:18:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751629AbZJAJSF
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 05:18:05 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:50683 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751969AbZJAJSE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 05:18:04 -0400
+Received: by fxm18 with SMTP id 18so6017101fxm.17
+        for <git@vger.kernel.org>; Thu, 01 Oct 2009 02:18:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=YBqJN2xu71/aawWm2qmBO4y5FAxajKPH4VTluYX2zcA=;
+        b=s3wbGXS/KpQNknHjKrPGk+Z5s7i4Eg/xpV4DY5HlvtOdGqUTgeMspkQI+AJp+retA5
+         fdVgXYD/tif5sg3FFJ2l/slg8IkrOMYyEz7S68ot/srEGJn5M7DjfmeyubxxgI/0iPH8
+         zGhnueeinnwIGq/ML1xNBISDq5CcH210iXznI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YZgJV5geerY259mXUC+cfZAuQci6JcyGezRFyyz5PA4MBBONBQ8bLJ36KmBmOdKJcs
+         Zn0U9BfZq7MSFXss3XKL4bbv9q8osTwc58Q5vVAcZQs/ccaFA6WYZetyFjM7ljKXYRKB
+         NTmNPEspwX2OLfu76ImUNM353JpeUJ/U9atp8=
+Received: by 10.204.34.70 with SMTP id k6mr732285bkd.178.1254388687356;
+        Thu, 01 Oct 2009 02:18:07 -0700 (PDT)
+Received: from ?192.168.1.13? (abvd215.neoplus.adsl.tpnet.pl [83.8.201.215])
+        by mx.google.com with ESMTPS id b17sm4383873fka.43.2009.10.01.02.18.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Oct 2009 02:18:06 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20091001075540.GA13436@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <1254333950-2440-2-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129384>
 
-On Wed, Sep 30, 2009 at 06:05:50PM +0000, Erik Faye-Lund wrote:
+Dnia czwartek 1. pa=C5=BAdziernika 2009 09:55, Jeff King napisa=C5=82:
+> On Thu, Oct 01, 2009 at 09:36:23AM +0200, Jakub Narebski wrote:
+>=20
+> > From the point of view of code, 'patch' view is handled by git_patc=
+h()
+> > subroutine, which in turn calls git_commitdiff(-format =3D> 'patch'=
+, -single=3D> 1);
+> > git_commitdiff checks if 'patch' view is enabled feature, and then=20
+> > composes and calls the following command (I have skipped --git-dir=3D=
+=2E..):
+> >=20
+> >   git format-patch --encoding=3Dutf8 --stdout -1 --root <commit-id>
+> >=20
+> > And git-format-patch produces no output for merge commit.  Then=20
+> > git_commitdiff dumps output of git-format-patch
+>=20
+> Ah, OK, I see the code path you are talking about now. My first thoug=
+ht
+> was "shouldn't it be handling the merge case?" but that really doesn'=
+t
+> make any sense. The "patch" view is just about something that can be
+> given to "git am", and it doesn't understand merges anyway. And the
+> "commitdiff" and "html" formats already handle it appropriately.
+>=20
+> So I think your patch is the right thing to do. Thanks for the
+> explanation.
 
-> Some compilers (including at least MSVC and ARM RVDS) supports
-> NORETURN on function declarations, but not on function pointers.
-> 
-> This patch makes it possible to define NORETURN for these compilers,
-> by splitting the NORETURN macro into two - one for function
-> declarations and one for function pointers.
+I'll enhance commit message to talk about issues touched here (that
+'patch' is for git-am and doesn't make sense for merges, regardless
+of possible bug in 'patch' view when used for merge commits), and
+check if this correction isn't needed also elsewhere.
 
-Thanks, this version and (your 1/2) both look sane to me. The only thing
-missing are some Makefile knobs to tweak this, but I will assume that
-will come as part of a later MSVC-compatibility series.
+I'll send v2 of this patch in a bit.
 
-Shawn, this can go straight to 'next', if not 'master'. The changes
-should be a no-op for most platforms. The only danger would be if there
-is some platform that doesn't like their NORETURN magic at the front of
-the function declaration. But we only define it by default for __GNUC__,
-so I suspect we're safe.
-
-In my tree as ef/msvc-noreturn.
-
--Peff
+--=20
+Jakub Narebski
+Poland
