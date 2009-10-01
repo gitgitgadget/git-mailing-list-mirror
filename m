@@ -1,63 +1,62 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] Documentation - pt-BR.
-Date: Thu, 1 Oct 2009 19:35:51 -0300
-Message-ID: <a4c8a6d00910011535q3d49f6c0l9248edd7bab6bdf8@mail.gmail.com>
-References: <1253730339-11146-1-git-send-email-tfransosi@gmail.com>
-	 <a4c8a6d00909301518v43784d7ah6364be0134a6e7d@mail.gmail.com>
-	 <20091001080206.GB13436@coredump.intra.peff.net>
-	 <20091001115846.GA5583@Pilar.aei.mpg.de>
-	 <20091001120711.GB5583@Pilar.aei.mpg.de>
-	 <20091001122252.GA31919@sigill.intra.peff.net>
+From: Jon Smirl <jonsmirl@gmail.com>
+Subject: stgit, rebasing with 100 patches
+Date: Thu, 1 Oct 2009 19:04:14 -0400
+Message-ID: <9e4733910910011604w68cdca86l2baa2f2fe4db4a32@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "Carlos R. Mafra" <crmafra2@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 02 00:43:01 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 02 01:04:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtUMV-0003E3-QO
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 00:43:00 +0200
+	id 1MtUhE-0001Fx-5k
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 01:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbZJAWmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 18:42:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753560AbZJAWmt
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 18:42:49 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:60206 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752146AbZJAWmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 18:42:49 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so250438fge.1
-        for <git@vger.kernel.org>; Thu, 01 Oct 2009 15:42:52 -0700 (PDT)
+	id S1753459AbZJAXEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 19:04:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752934AbZJAXEL
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 19:04:11 -0400
+Received: from mail-qy0-f173.google.com ([209.85.221.173]:36144 "EHLO
+	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752174AbZJAXEL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 19:04:11 -0400
+Received: by qyk3 with SMTP id 3so508330qyk.4
+        for <git@vger.kernel.org>; Thu, 01 Oct 2009 16:04:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=mwg1fA9riW+pbgu+OdJwnzIs+FD05uSHgrWYxo4XUI0=;
-        b=BUEiyM4YMiSjwunyvSxyn3LRuokktkAXDLqcKKDFNgSfrdkumG/h3iT2CrkHrB4LXY
-         apyzDz/r4RsXSu/TXUZ3tOvQV5SMBginun/2yPKXvm/Mf9uzqtp8OObMi2jfXbdzeuxv
-         YL81F557W/NwWlH7VQhe0KnhZO1USFVMOnrXM=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=HtxLHVtCpWJRrJ85RZ610lq1nzt45fgD/2PUat+bYNg=;
+        b=NsrlWVAo/FCqzxn2FxRPzhU7IInVpO0Fee0nejjtd+my7kBxodkObavjTN2hNLb2hD
+         LN15V7tZBUZp/5WJaBmnH1RngrS1p7deRF4Ek07O1Wg10Yt2BELQQVQfTofB19/rbcxy
+         7G3WwJt4ZbUVnuQkuW+QsIZrRKXPyfliCZN9A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sMZ0s64uHcq86I8mwbaVP1EhUU/j4F5WTjjGqNxXQ2Pg1KZ6iNpkZiqxLGXgIqMHEJ
-         1/PC61u35D5GGDCWT/FPcvNtx7zn6b6VItM/8T5q2YQCP0Sb2omljfyGZ8Xzg49SSuEq
-         mTZmFfhlZcIDgafctzO5tWhKSTGdXkevKx9m4=
-Received: by 10.86.232.33 with SMTP id e33mr1652837fgh.71.1254436551376; Thu, 
-	01 Oct 2009 15:35:51 -0700 (PDT)
-In-Reply-To: <20091001122252.GA31919@sigill.intra.peff.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=NgKPODDJ6HKikHESf/Qs2DHEk9cym9VcxG7DflJjbyDBPiFD+RfgqTQDRm/Cx6xMgy
+         UgPalfQnbgoVKdj9s2EBxCde9jNrsk7zcYSYEV3B26h5nu5eVuW1OL+SkyP4rZoMwTGQ
+         VC6tPtHP70fZeafvdoSEVHJE+vW0hJe/8nLJ4=
+Received: by 10.229.44.2 with SMTP id y2mr2389029qce.76.1254438254703; Thu, 01 
+	Oct 2009 16:04:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129416>
 
-Hi,
+I have 100 patches loaded into in stgit. My tree is at 2.6.30. Now I
+want to rebase to 2.6.31-rc1. About 30 of these hundred patches got
+committed in this interval.
 
-Thanks Jeff to care about my patch and for the review :)
-Thanks Carlos for the review too.
+If I rebase directly to 2.6.31-rc1 I end up with a bunch of merge
+conflicts as the patches are applied. That's because patches 'a,b,c'
+got applied in the merge window. When I push 'a' back down it sees the
+combination of 'a,b,c' not just 'a'. It is unable to figure out that
+'a' was applied and then 'b' and 'c' applied on top of it.
 
--Thiago
+Is there a better way to locate the patches the got applied?
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
