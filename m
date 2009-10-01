@@ -1,97 +1,64 @@
-From: Peter <vmail@mycircuit.org>
-Subject: Re: gitignore: how to exclude a directory tree from being ignored
-Date: Thu, 01 Oct 2009 16:48:05 +0200
-Message-ID: <4AC4C125.10609@mycircuit.org>
-References: <4AC48D5F.6060401@mycircuit.org> <4AC4A310.8000507@viscovery.net> <4AC4A7EF.9030002@mycircuit.org> <4AC4AD25.5010708@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
+Date: Thu, 1 Oct 2009 17:20:41 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910011719450.23027@intel-tinevez-2-302>
+References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de> <20090930190809.GF567@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 01 16:48:19 2009
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Oct 01 17:21:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtMx9-0002x7-Bx
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 16:48:19 +0200
+	id 1MtNSf-0005q9-44
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 17:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932679AbZJAOsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 10:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932655AbZJAOsF
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 10:48:05 -0400
-Received: from mailfe15.tele2.ch ([212.247.155.200]:47167 "EHLO swip.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932639AbZJAOsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 10:48:04 -0400
-X-Cloudmark-Score: 0.000000 []
-X-Cloudmark-Analysis: v=1.0 c=1 a=L3Mu2x56dNAA:10 a=vWKxTcPCt1ggqAQrsOHYvw==:17 a=MBpIpUXns03lCyNLSFMA:9 a=udQ_Q4gWd26S0puaJcgA:7 a=9mS96L1BBEvjfqxoX52f-L5o2lMA:4 a=WWxEoZngsMS8IGK7:21 a=Tfu0JG40XsO_ovg4:21
-Received: from mail.mycircuit.org (account cxu-8g8-ypb@tele2.ch [188.155.226.135] verified)
-  by mailfe15.swip.net (CommuniGate Pro SMTP 5.2.16)
-  with ESMTPA id 570556611; Thu, 01 Oct 2009 16:48:06 +0200
-Received-SPF: none
- receiver=mailfe15.swip.net; client-ip=188.155.226.135; envelope-from=vmail@mycircuit.org
-Received: from [192.168.1.193] (unknown [192.168.1.193])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "p_email", Issuer "192.168.2.2" (verified OK))
-	by mail.mycircuit.org (Postfix) with ESMTP id 1B33ACFA43;
-	Thu,  1 Oct 2009 16:48:06 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.22 (X11/20090605)
-In-Reply-To: <4AC4AD25.5010708@viscovery.net>
+	id S1753294AbZJAPUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 11:20:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbZJAPUm
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 11:20:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60314 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752269AbZJAPUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 11:20:42 -0400
+Received: (qmail invoked by alias); 01 Oct 2009 15:20:44 -0000
+Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
+  by mail.gmx.net (mp009) with SMTP; 01 Oct 2009 17:20:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1831/FLG/A3E9A7tXSa1rkLBp7iCacXQ+ZfjIU51N
+	ypPmAIrcrlqXz6
+X-X-Sender: schindel@intel-tinevez-2-302
+In-Reply-To: <20090930190809.GF567@book.hvoigt.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129396>
 
+Hi,
 
->> 1) I can't have just one .gitignore file in the root dir, if I want to
->> _recursively_ inverse the exclude pattern for a sub dir tree.
->>     
->
-> No, it's not the inversion of the pattern, but the slash (if it is not at
-> the end) that makes the pattern non-recursive.
->
->   
-from the gitignore manpage:
- >> If the pattern ends with a slash, it is removed for the purpose of 
-the following description, but it would only find a match with a 
-directory. In other words, foo/ will match a directory foo and paths 
-underneath it, but will not match a regular file or a symbolic link foo 
-(this is consistent with the way how pathspec works in general in git). <<
+On Wed, 30 Sep 2009, Heiko Voigt wrote:
 
-Doesn't this mean, that if I say:
-vendor/
-matches the directory and ( recursively ) the paths underneath it.?
-And, consequently:
-!vendor/
-inverse the exclusion for vendor ( that is: include ) and everything 
-that is contained in it ? ( This is obviously not the case, but this is 
-what I would expect )
+> On Fri, Sep 25, 2009 at 08:19:44AM +0200, Johannes Schindelin wrote:
+> > as some of you already know, I will be unable to Git Together with 
+> > other Gits in California this year.  So the only version of such a Git 
+> > Together I will have this year is the Berlin one.
+> 
+> Just announcing that Jens Lehmann and me will also come. Just added us 
+> to the wiki page. What about important stuff like coffee during the day? 
+> Is there access to such things nearby or is it better to bring 
+> everything needed?
 
->> In this case, I have to put individual .gitignore files in the sub trees
->> I want to re-include.
->>     
->
-> If you have only the directory vendor/ with no further interesting
-> subdirectories, then you can use my first suggestion. But if you have your
-> *.exe and *.o distributed over several directories of different depths
-> below vendor/, then it might be easier to have a separate
-> vendor/.gitignore with recursive patterns (i.e. that do not contain a slash).
->
->   
-This works for me ( I have indeed distributed them over several dirs )
->> 2) In order to see what will be staged, I have to use the :
->> git ls-files -o --exclude-standard
->> instead of :
->> git ls-files -o -i --exclude-from=.gitignore
->> because the latter won't consider .gitignore patterns in subtree
->>     
->
-> After reading the documentation, I don't know, and I won't try now ;-)
->
->   
-At least it seams to work here ..
-> -- Hannes
->   
-Thanks !
+Steffen said that he'll take care of the coffee, I'll make sure there is 
+some beer.
+
+Feel free to bring whatever you feel is missing, but beware: this Saturday 
+is a German holiday ;-)
+
+Ciao,
+Dscho
