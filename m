@@ -1,78 +1,118 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git svn's performance on cloning mono's branches/tags...
-Date: Thu, 1 Oct 2009 00:17:26 -0700
-Message-ID: <20091001071726.GA11370@dcvr.yhbt.net>
-References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com> <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com> <4A44A9A9.6030008@op5.se> <3ace41890906260644t3eddb2d2sb4ddbcb6499801@mail.gmail.com> <3ace41890906261817y523c9321xd621fb3130941d91@mail.gmail.com> <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com> <20090702081615.GB11119@dcvr.yhbt.net> <3ace41890909301504w633323b9ybec1f42c1c169225@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Do not show 'patch' link in 'commit' view for merges
+Date: Thu, 1 Oct 2009 09:36:23 +0200
+Message-ID: <200910010936.24789.jnareb@gmail.com>
+References: <20090930201953.22301.73887.stgit@localhost.localdomain> <20091001031140.GA30094@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Hin-Tak Leung <hintak.leung@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 01 09:17:36 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 01 09:36:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtFuy-0008Te-4u
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 09:17:36 +0200
+	id 1MtGDM-000586-PJ
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 09:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755575AbZJAHR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 03:17:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbZJAHRZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 03:17:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:52386 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754922AbZJAHRZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 03:17:25 -0400
-Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by dcvr.yhbt.net (Postfix) with ESMTPSA id A05541F78F;
-	Thu,  1 Oct 2009 07:17:27 +0000 (UTC)
+	id S1755669AbZJAHg1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Oct 2009 03:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755653AbZJAHg0
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 03:36:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:30808 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755651AbZJAHg0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Oct 2009 03:36:26 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so2367210fge.1
+        for <git@vger.kernel.org>; Thu, 01 Oct 2009 00:36:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=iVyCJSCHhc1lAiGJPYMyfVes+VFkB8bPjLMNgRA9wmk=;
+        b=uRltb7PsAYjvgIYhzYPDfmkIEzWG0uv8hnkzlEEZCTROCa00WfRAMPzskBWBjdvl2B
+         hGL8g60pRrMp4EzVSLzmyoKryq1bhupJXJVPOBfzOvXcVvhXaMs/gm6EbxtJPXpeeg54
+         nxAPy0JMItoBxX8fGgWTbmzWlIVdbMsg8A47g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=u3yiuAqYtY6PuI1TWGedb9mSxJPvFe9UjK3FkFlXqrF/GvSQOqzcZHnrJu1K839NL0
+         zE09SzE1+6WpAuA77cnVtoHtIH2Ypue6CXhJ/Slz9gUr0jQ0PmxjUXJK/GLk8mq/UiKl
+         pcm94LCJnWp8oAdaTcyyrhHV57E2EblyiuqeI=
+Received: by 10.86.227.26 with SMTP id z26mr823061fgg.76.1254382589009;
+        Thu, 01 Oct 2009 00:36:29 -0700 (PDT)
+Received: from ?192.168.1.13? (abvd215.neoplus.adsl.tpnet.pl [83.8.201.215])
+        by mx.google.com with ESMTPS id l12sm905242fgb.20.2009.10.01.00.36.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Oct 2009 00:36:28 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20091001031140.GA30094@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <3ace41890909301504w633323b9ybec1f42c1c169225@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129378>
 
-Hin-Tak Leung <hintak.leung@gmail.com> wrote:
-> Hmm, I am having another problem with git-svn going back and download
-> everything over and over with this:
-> 
-> git svn clone -s https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper
-> 
-> I am going to do two-step init -s then fetch --all now to see if it helps.
-> 
-> (it is probably not entirely standard layout with the extra CVSROOT?)
+Dnia czwartek 1. pa=C5=BAdziernika 2009 05:11, Jeff King napisa=C5=82:
+> On Wed, Sep 30, 2009 at 10:21:53PM +0200, Jakub Narebski wrote:
+>=20
+> > Show 'patch' link in the 'commit' view only for commits which have
+> > exactly one parent, otherwise call to git-format-patch would fail f=
+or
+> > the hyperlinked 'patch' action.
+>=20
+> Fail in what way? From my cursory reading of the code, it looks like =
+the
+> 'patch' action calls into git_commitdiff, which handles the multi-par=
+ent
+> case.
+>=20
+> I assume I'm reading wrong, since you obviously know gitweb much bett=
+er
+> than I do. :) But can you expand a little on the nature of the proble=
+m
+> in the commit message?
 
-Hi,
+Well, from the point of view of behavior, 'patch' link in 'commit' view
+for a merge commit, e.g.
+  gitweb.cgi/git.git/commit/833423ae071ffedb7fbca39789f14f9a45a3d1c4
+leads to the 'patch' view
+  git.git/patch/833423ae071ffedb7fbca39789f14f9a45a3d1c4
+which leads to 'text/plain' output with the following contents:
 
-The ndiswrapper layout looks to be *almost* standard, the CVSROOT can
-probably safely be ignored, and you should be able to _mostly_ track it
-with the following config:
+  Reading git-format-patch failed
 
-[svn-remote "svn"]
-        url = https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper
-        fetch = trunk/ndiswrapper:refs/remotes/trunk
-        branches = branches/*/ndiswrapper:refs/remotes/*
-        tags = tags/*/ndiswrapper:refs/remotes/tags/*
 
-Notice how the glob can appear in the middle of the branches and tags
-configs on the remote side: foo/*/bar
+=46rom the point of view of code, 'patch' view is handled by git_patch(=
+)
+subroutine, which in turn calls git_commitdiff(-format =3D> 'patch', -s=
+ingle=3D> 1);
+git_commitdiff checks if 'patch' view is enabled feature, and then=20
+composes and calls the following command (I have skipped --git-dir=3D..=
+=2E):
 
-Unfortunately, some of the tags seem to be inconsistently tagged and
-some had tags/TAGNAME/README whereas others had
-tags/TAGNAME/ndiswrapper/README (I'm using "README" to designate where
-the logical top-level working directory would be).
+  git format-patch --encoding=3Dutf8 --stdout -1 --root <commit-id>
 
-"svn log -v https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper/tags"
-should help find the ones that are tagged at the wrong depth:
+And git-format-patch produces no output for merge commit.  Then=20
+git_commitdiff dumps output of git-format-patch
 
-VERSION_1_24 for example:
+	local $/ =3D undef;
+	print <$fd>;
 
-	fetch = tags/VERSION_1_24:refs/remotes/tags/VERSION_1_24
+and somehow fails on closing filehandle
 
--- 
-Eric Wong
+	close $fd
+		or print "Reading git-format-patch failed\n";
+
+Even if 'patch' view didn't fail, it is not a good idea to have link
+to an empty page (or page with only error message).  Though probably
+git_commitdiff could check if it is used for a merge commit...
+
+--=20
+Jakub Narebski
+Poland
