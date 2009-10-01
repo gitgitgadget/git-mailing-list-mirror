@@ -1,75 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation - pt-BR.
-Date: Thu, 1 Oct 2009 08:22:52 -0400
-Message-ID: <20091001122252.GA31919@sigill.intra.peff.net>
-References: <1253730339-11146-1-git-send-email-tfransosi@gmail.com>
- <a4c8a6d00909301518v43784d7ah6364be0134a6e7d@mail.gmail.com>
- <20091001080206.GB13436@coredump.intra.peff.net>
- <20091001115846.GA5583@Pilar.aei.mpg.de>
- <20091001120711.GB5583@Pilar.aei.mpg.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: gitignore: how to exclude a directory tree from being ignored
+Date: Thu, 01 Oct 2009 14:39:44 +0200
+Message-ID: <4AC4A310.8000507@viscovery.net>
+References: <4AC48D5F.6060401@mycircuit.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thiago Farina <tfransosi@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Carlos R. Mafra" <crmafra2@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 01 14:23:03 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Peter <vmail@mycircuit.org>
+X-From: git-owner@vger.kernel.org Thu Oct 01 14:43:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtKgZ-0005fK-73
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 14:23:03 +0200
+	id 1MtKwr-0003OT-8y
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 14:39:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756539AbZJAMWw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Oct 2009 08:22:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756534AbZJAMWw
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 08:22:52 -0400
-Received: from peff.net ([208.65.91.99]:55828 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756533AbZJAMWv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 08:22:51 -0400
-Received: (qmail 16389 invoked by uid 107); 1 Oct 2009 12:26:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 01 Oct 2009 08:26:19 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Oct 2009 08:22:53 -0400
-Content-Disposition: inline
-In-Reply-To: <20091001120711.GB5583@Pilar.aei.mpg.de>
+	id S932187AbZJAMjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 08:39:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756544AbZJAMjn
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 08:39:43 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32020 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756543AbZJAMjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 08:39:43 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MtKwj-0006MB-0l; Thu, 01 Oct 2009 14:39:45 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B6BDC9614; Thu,  1 Oct 2009 14:39:44 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4AC48D5F.6060401@mycircuit.org>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129390>
 
-On Thu, Oct 01, 2009 at 02:07:11PM +0200, Carlos R. Mafra wrote:
+Peter schrieb:
+> Hi
+> I want to exclude binaries except in a dir tree that I do not control.
+> 
+> In .gitignore  I have:
+> 
+> 
+> I would expect that all *.exe and *.o are ignored except those somewhere
+> in the vendor dir tree.
+> However, the *.exe and *.o in the vendor dir tree are also ignored.
 
-> On Thu  1.Oct'09 at 13:58:46 +0200, Carlos R. Mafra wrote:
-> > I read the patch. The changes are correct and improve the quality
-> > of the text.
->=20
-> From the Portuguese point of view the change below is
-> correct,
->=20
-> -cabe=C3=A7alho Subject: e o resto no corpo.
-> +cabe=C3=A7alho "Assunto:", e o resto no corpo.
->=20
-> but I don't know if "Subject:" should be translated in
-> this context. Does git-am accept "Assunto:" instead
-> of "Subject:" if one is using a Portuguese locale?
+This works for me:
 
-No, it doesn't. It must be in English as it is an rfc2822 header. It is
-probably best for it to remain in English here, then, as we are
-specifically referring to the literal "Subject" mail header, as opposed
-to the more abstract concept of a subject. I think putting it in quotes
-makes sense, though, to indicate clearly that it is a literal technical
-term. I.e.:
+ *.exe
+ *.o
+ !vendor/*.exe
+ !vendor/*.o
 
--cabe=C3=A7alho Subject: e o resto no corpo.
-+cabe=C3=A7alho "Subject:" e o resto no corpo.
+Note that git-status does not descend into directories from which no files
+are tracked. Therefore, this will work only after you have git-added at
+least one file from vendor/.
 
-The patch in my tree has been updated in this way.
+git ls-files -o --exclude-standard does descend into the directory.
 
-Thanks, Carlos, for the review.
+Furthermore, the !vendor/*.exe patterns are not recursive. Perhaps it is
+easier for you to have a separate vendor/.gitignore that has:
 
--Peff
+ !*.exe
+ !*.o
+
+These _are_ recursive.
+
+-- Hannes
