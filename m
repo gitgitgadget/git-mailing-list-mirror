@@ -1,77 +1,78 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: Git push over git protocol for corporate environment
-Date: Thu, 01 Oct 2009 08:29:41 +0200
-Message-ID: <4AC44C55.6080807@gmail.com>
-References: <76c5b8580909301613m283c4bfdne8de449ca0fd0987@mail.gmail.com> <873a64gfa6.fsf@sanosuke.troilus.org> <20091001000620.GN14660@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn's performance on cloning mono's branches/tags...
+Date: Thu, 1 Oct 2009 00:17:26 -0700
+Message-ID: <20091001071726.GA11370@dcvr.yhbt.net>
+References: <3ace41890906251739r45b3eae9oe1b7e32886defc0f@mail.gmail.com> <4A445959.6090403@op5.se> <3ace41890906260259o3be005fq6be9d0e2c3f9af66@mail.gmail.com> <4A44A9A9.6030008@op5.se> <3ace41890906260644t3eddb2d2sb4ddbcb6499801@mail.gmail.com> <3ace41890906261817y523c9321xd621fb3130941d91@mail.gmail.com> <3ace41890906272008t96bfb04q7218e95055897900@mail.gmail.com> <20090702081615.GB11119@dcvr.yhbt.net> <3ace41890909301504w633323b9ybec1f42c1c169225@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Michael Poole <mdpoole@troilus.org>,
-	Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 01 08:30:14 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Hin-Tak Leung <hintak.leung@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 01 09:17:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtFB7-0002Ei-Je
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 08:30:13 +0200
+	id 1MtFuy-0008Te-4u
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 09:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818AbZJAG3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 02:29:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbZJAG3v
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 02:29:51 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:11404 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752122AbZJAG3v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 02:29:51 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so625996eyf.19
-        for <git@vger.kernel.org>; Wed, 30 Sep 2009 23:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=75yFmCb2G3mNEho3EN4SKZIWaHIhO3kWSTzXEt0P1Rc=;
-        b=t7/vtIudQJkqsVrFHKV1GE8v07WgRQdR0+oPttk4ua0jhFfHFYnt+T48LVx38kzCtj
-         /v2Nw2n2+W+IIHCq1Gb6UnLm6/tvCAX5y7bG0AmxrafyhqHdmi+oPhy5te9xL2z+9hCU
-         0yEx5sBfHVkxPi0S2CIuNOu4wOIC+U0Q7oM8E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=uSw2U+NGI36QLX9Per5ozN/4Vy1JOIRSPDXzSJs0snsBMY5T4qdDhFzAcTtwn8kl2g
-         pqZ6fVahTtKWPbzXuwMCIwz2RyCm09nUHWGzR6wYWkjon1d0NHLm+VF67xNudKPoClrJ
-         uBxVi74fxwTObNo+te0u+rgDQ4NkuEQ6oYbIA=
-Received: by 10.211.171.19 with SMTP id y19mr6113315ebo.95.1254378592778;
-        Wed, 30 Sep 2009 23:29:52 -0700 (PDT)
-Received: from ?172.24.90.95? ([62.70.27.104])
-        by mx.google.com with ESMTPS id 7sm1265341eyg.41.2009.09.30.23.29.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Sep 2009 23:29:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
-In-Reply-To: <20091001000620.GN14660@spearce.org>
+	id S1755575AbZJAHR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 03:17:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755543AbZJAHRZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 03:17:25 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:52386 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754922AbZJAHRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 03:17:25 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id A05541F78F;
+	Thu,  1 Oct 2009 07:17:27 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <3ace41890909301504w633323b9ybec1f42c1c169225@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129377>
 
-Shawn O. Pearce said the following on 01.10.2009 02:06:
-> Michael Poole <mdpoole@troilus.org> wrote:
->> (Others have mentioned Gerrit.  I use that at work, and my only
->> major wish is that it had per-branch rather than per-project
->> access controls.  It is a vast improvement over the Subversion
->> system we had before.)
+Hin-Tak Leung <hintak.leung@gmail.com> wrote:
+> Hmm, I am having another problem with git-svn going back and download
+> everything over and over with this:
 > 
-> You'll be happy to hear _everyone_ is demanding per-branch
-> controls, I have to do it before the end of the year, maybe even
-> before the end of the month...
+> git svn clone -s https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper
+> 
+> I am going to do two-step init -s then fetch --all now to see if it helps.
+> 
+> (it is probably not entirely standard layout with the extra CVSROOT?)
 
-Ugh, any pointers on this one? Does this mean that you're planning to 
-add this sort of control in git itself, or just some way to facilitate 
-the setting of owner/group on individual ref files? What about packed 
-refs?
+Hi,
 
---
-.marius
+The ndiswrapper layout looks to be *almost* standard, the CVSROOT can
+probably safely be ignored, and you should be able to _mostly_ track it
+with the following config:
+
+[svn-remote "svn"]
+        url = https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper
+        fetch = trunk/ndiswrapper:refs/remotes/trunk
+        branches = branches/*/ndiswrapper:refs/remotes/*
+        tags = tags/*/ndiswrapper:refs/remotes/tags/*
+
+Notice how the glob can appear in the middle of the branches and tags
+configs on the remote side: foo/*/bar
+
+Unfortunately, some of the tags seem to be inconsistently tagged and
+some had tags/TAGNAME/README whereas others had
+tags/TAGNAME/ndiswrapper/README (I'm using "README" to designate where
+the logical top-level working directory would be).
+
+"svn log -v https://ndiswrapper.svn.sourceforge.net/svnroot/ndiswrapper/tags"
+should help find the ones that are tagged at the wrong depth:
+
+VERSION_1_24 for example:
+
+	fetch = tags/VERSION_1_24:refs/remotes/tags/VERSION_1_24
+
+-- 
+Eric Wong
