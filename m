@@ -1,87 +1,259 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH 2/2] add NORETURN_PTR for function pointers
-Date: Thu, 1 Oct 2009 09:57:12 -0700
-Message-ID: <40aa078e0910010957q4daf104cja218af3aa5424637@mail.gmail.com>
-References: <1254333950-2440-1-git-send-email-kusmabite@gmail.com> <1254333950-2440-2-git-send-email-kusmabite@gmail.com> <20091001081710.GC13436@coredump.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: MSVC build broken (on cygwin)
+Date: Thu, 01 Oct 2009 18:11:30 +0100
+Message-ID: <4AC4E2C2.6030509@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org, msysgit@googlegroups.com,  gitster@pobox.com, Erik Faye-Lund <kusmabite@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Oct 01 18:57:36 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f137.google.com ([209.85.210.137])
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: mstormo@gmail.com
+X-From: git-owner@vger.kernel.org Thu Oct 01 19:16:25 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtOy6-00078U-SO
-	for gcvm-msysgit@m.gmane.org; Thu, 01 Oct 2009 18:57:27 +0200
-Received: by yxe1 with SMTP id 1so269533yxe.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 01 Oct 2009 09:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=eK9oEmW84age3jl4DvztiRTfQXc9b7vGdXbbsoPG7HM=;
-        b=GwH1GQMSfIn1x5z84VRByTqX55EqdVrOy0tY53ELsfEz8RZfJSHfdbQGqjK13f7wdX
-         oBWrnEpy3PhCu3LBiN2OtJlqcVl0doh6Dso/3kf3spXb5rbETxKHjY9VyhmhqicpHbgX
-         3wB2C8Pt7cTjTF8IzifzqdVfrf0ZXg36R7n5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=lIRnJQZdI8s8o28UkL+bxU7UGhZZIO/2dW8t1c14qlmRtJCcgNp43DTut/RHQ+OHOk
-         zQ/6jnTkT9+PIRPNTkf6zbmfK9TEO3TRKhEWFobf72tzq/Grp3IYIq9kKb6XWdW/qSry
-         kBDvWVOX7o7fQB+u3GwIQ6ARcO3/haLntX9Vs=
-Received: by 10.150.5.5 with SMTP id 5mr176194ybe.17.1254416238637;
-        Thu, 01 Oct 2009 09:57:18 -0700 (PDT)
-Received: by 10.176.133.2 with SMTP id g2gr7203yqd.0;
-	Thu, 01 Oct 2009 09:57:15 -0700 (PDT)
-X-Sender: kusmabite@googlemail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.204.23.6 with SMTP id p6mr39495bkb.34.1254416234656; Thu, 01 Oct 2009 09:57:14 -0700 (PDT)
-Received: by 10.204.23.6 with SMTP id p6mr39494bkb.34.1254416234586; Thu, 01 Oct 2009 09:57:14 -0700 (PDT)
-Received: from mail-fx0-f222.google.com (mail-fx0-f222.google.com [209.85.220.222]) by gmr-mx.google.com with ESMTP id 16si47635fxm.6.2009.10.01.09.57.13; Thu, 01 Oct 2009 09:57:13 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.222 as permitted sender) client-ip=209.85.220.222;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.222 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
-Received: by mail-fx0-f222.google.com with SMTP id 22so334069fxm.36 for <msysgit@googlegroups.com>; Thu, 01 Oct 2009 09:57:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type; bh=LpH8h1SJeaMAdfObB2XfLB78RFY/vrq7bayWY1t38RU=; b=fGfkyx7mrdaEYb2a6kk8iVjhYnANs+SGAKAjSI/i2xkYZGCEAHfoMCc8cQ7WKjUJfM FlTWvvX/3sswXvUD0csNefz6OThiMzvpxwjXEnO2/sHX6Z219VA2ZuuVVw+lGKBRvgA5 I6QyyLnGpjv41faP7BsIYzwVCHmaUjZKv3p2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type; b=WYXaAoBIVrgDeAs4HJPJSdhLPWjmN7SbWhiV2qkJ1kDb+anM+CYLuSVeARFgmfguwT AivNm2U6uj2yY5yn/gcV+2+MmV6NIjEy5zaULQXAH9Se/km5TbJ86oElhabZoSlgtg+T 2Z9xZwENOHkZ59lW8mhEzoexlWc7VZz2kkNLM=
-Received: by 10.204.160.86 with SMTP id m22mr190393bkx.82.1254416232978; Thu,  01 Oct 2009 09:57:12 -0700 (PDT)
-In-Reply-To: <20091001081710.GC13436@coredump.intra.peff.net>
-Sender: msysgit@googlegroups.com
+	id 1MtPGQ-00057G-Ty
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 19:16:23 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755891AbZJARQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 13:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755866AbZJARQF
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 13:16:05 -0400
+Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:63527 "EHLO
+	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755885AbZJARQE (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Oct 2009 13:16:04 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1MtPG8-0003aa-lH; Thu, 01 Oct 2009 17:16:07 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129402>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129403>
+
+Hi Marius,
+
+I know that I'm somewhat late to comment on your recent MSVC
+build patches, but I was busy at the time; better late than
+never... maybe ;-)
+
+While the patches were traversing the list, I was feeling
+somewhat nervous about the effect of the patches on the
+cygwin build; in fact I remember thinking that they had
+*probably* broken the build. But I was busy...
+
+Well I finally found time, yesterday, to take a closer look.
+I spent 10-15 minutes squinting at the code in order to
+convince myself that you had in fact *not* broken the cygwin
+build. :)
+
+(which I already suspected, since they were committed some time 
+ago and nobody else had screamed!)
+
+[Note: I was mainly concerned about commit 435bdf8 and, to a
+lesser degree, commit 71064e3]
+
+I'm sure you are probably aware of the following, but for the
+benefit of others, the following session on cygwin may help to
+explain my nervousness:
+
+    $ cat -n hello.c
+         1	#include <stdio.h>
+         2	
+         3	#ifdef IW_H
+         4	# include <windows.h>
+         5	#endif
+         6	
+         7	int main(int argc, char *argv[])
+         8	{
+         9	
+        10	#ifdef __CYGWIN__
+        11		printf("__CYGWIN__\n");
+        12	#endif
+        13	#ifdef __MINGW32__
+        14		printf("__MINGW32__\n");
+        15	#endif
+        16	#ifdef _WIN32
+        17		printf("_WIN32\n");
+        18	#endif
+        19	#ifdef WIN32
+        20		printf("WIN32\n");
+        21	#endif
+        22		printf("Hello world\n");
+        23		return 0;
+        24	}
+        25	
+    $ 
+
+    $ gcc hello.c
+    $ ./a.exe
+    __CYGWIN__
+    Hello world
+    $ 
+
+    $ gcc -DIW_H hello.c
+    $ ./a.exe
+    __CYGWIN__
+    _WIN32
+    WIN32
+    Hello world
+    $ 
+
+    $ gcc -mno-cygwin hello.c
+    $ ./a.exe
+    __MINGW32__
+    _WIN32
+    WIN32
+    Hello world
+    $ 
+[Note: I don't know if the above is exactly equivalent to an
+MSYS/Mingw-gcc installation, but it does, at least, not link with
+the cygwin dll]
+
+However, while squinting at the code, I noticed what I think is a
+problem with the MSVC build on cygwin. Viz:
+
+    $ cl hello.c
+    [...compiler output snipped...]
+    $ ./hello.exe
+    _WIN32
+    Hello world
+    $ 
+
+    $ cl -DIW_H hello.c
+    [...compiler output snipped...]
+    $ ./hello.exe
+    _WIN32
+    WIN32
+    Hello world
+    $ 
+
+    $ cl -DWIN32-D_CONSOLE hello.c
+    [...compiler output snipped...]
+    $ ./hello.exe
+    _WIN32
+    Hello world
+    $ 
+
+Note the last compiler command line above. As part of commit 164a5e3,
+the Makefile (on line 917) sets the BASIC_CFLAGS macro to contain the
+above string. I had expected the compiler to complain about this
+malformed -Define (gcc does), but it remains quiet and seems to be
+ignoring the parameter entirely. So I tried upping the warning level:
+
+    $ cl -W4 -DWIN32-D_CONSOLE hello.c
+    Microsoft (R) 32-bit C/C++ Optimizing Compiler Version 15.00.30729.01 for 80x86
+    Copyright (C) Microsoft Corporation.  All rights reserved.
+
+    hello.c
+    hello.c(7) : warning C4100: 'argv' : unreferenced formal parameter
+    hello.c(7) : warning C4100: 'argc' : unreferenced formal parameter
+    Microsoft (R) Incremental Linker Version 9.00.30729.01
+    Copyright (C) Microsoft Corporation.  All rights reserved.
+
+    /out:hello.exe 
+    hello.obj 
+    $ ./hello.exe
+    _WIN32
+    Hello world
+    $ 
+
+[Note: I also tried the above using the "Visual Studio 2008 command
+prompt" with exactly the same result]
+
+So, at least on cygwin with the version of msvc I'm using (see above),
+the build should be broken; as a quick check I made the following
+change (on top of commit f5c3178):
+
+-- >8 --
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8d6e29c..72275a3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -69,6 +69,8 @@
+ #define WIN32_LEAN_AND_MEAN  /* stops windows.h including winsock.h */
+ #include <winsock2.h>
+ #include <windows.h>
++#else
++#error "WIN32 *not* defined in MSVC build"
+ #endif
+ 
+ #include <unistd.h>
+-- >8 --
+
+and then tried to build using msvc, thus:
+
+    $ make MSVC=1
+    GIT_VERSION = 1.6.5.rc1.37.gf5c31.dirty
+        * new build flags or prefix
+        CC fast-import.o
+    fast-import.c
+    c:\cygwin\home\ramsay\git\git-compat-util.h(73) : fatal error C1189: #error :  "WIN32 *not* defined in MSVC build"
+    [...lots of similar output (940 lines) snipped...]
+    $ 
+
+Finally, I removed the above change and applied the patch given below.
+Now, I didn't expect this to work because I don't have all of the
+dependencies installed, and those that I do have installed are not
+where the Makefile expects them to be (eg zlib is at C:\zlib).
+However, the build does at least compile all of the C source files, but
+then all of the link's fail since it can't find zlib.lib.
+
+[Note: I was a little surprised that it got that far, since I didn't
+expect it to find the zlib header files. However, I have set the
+INCLUDE environment variable which msvc is respecting! yeah, a bit old
+fashioned!  Having also set the LIB environment variable, I was then
+a bit surprised that the linker didn't find the library; until I
+noticed that my library is called libz.lib *not* zlib.lib!]
+
+Note that the patch below includes some line-wrapping which you can
+ignore if you like, it just makes the Makefile easier to read.
+The only change that matters is inserting a space between -DWIN32 and
+-D_CONSOLE.
+
+Anyway, the point is *not* to get the msvc build to work for me; rather
+it is to understand why the build *works* for you. ;-)
+
+ATB,
+Ramsay Jones
+
+-- >8 --
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Date: Wed, 30 Sep 2009 20:08:41 +0100
+Subject: [PATCH] Fix the MSVC build on cygwin
 
 
-On Thu, Oct 1, 2009 at 1:17 AM, Jeff King <peff@peff.net> wrote:
-> Thanks, this version and (your 1/2) both look sane to me. The only thing
-> missing are some Makefile knobs to tweak this, but I will assume that
-> will come as part of a later MSVC-compatibility series.
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ Makefile |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-Thanks for reviewing :)
-
-I sent an additional patch to the msysgit mailing-list that defines
-NORETURN for MSVC, but I think it's better to keep it out of git.git
-for a little while. There's no Makefile-knobs, it checks for _MSC_VER
-(similar to what's done for GCC).
-
+diff --git a/Makefile b/Makefile
+index 12defd4..e6ec8ed 100644
+--- a/Makefile
++++ b/Makefile
+@@ -914,10 +914,17 @@ ifdef MSVC
+ 	CC = compat/vcbuild/scripts/clink.pl
+ 	AR = compat/vcbuild/scripts/lib.pl
+ 	CFLAGS =
+-	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild -Icompat/vcbuild/include -DWIN32-D_CONSOLE -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_DEPRECATE
++	BASIC_CFLAGS = -nologo -I. -I../zlib -Icompat/vcbuild \
++		       -Icompat/vcbuild/include -DWIN32 -D_CONSOLE \
++		       -DHAVE_STRING_H -D_CRT_SECURE_NO_WARNINGS \
++		       -D_CRT_NONSTDC_NO_DEPRECATE
+ 	COMPAT_OBJS = compat/msvc.o compat/fnmatch/fnmatch.o compat/winansi.o
+-	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch -Icompat/regex -Icompat/fnmatch -DSTRIP_EXTENSION=\".exe\"
+-	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
++	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H \
++			-DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch \
++			-Icompat/regex -Icompat/fnmatch \
++			-DSTRIP_EXTENSION=\".exe\"
++	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE \
++			-NODEFAULTLIB:MSVCRT.lib
+ 	EXTLIBS = advapi32.lib shell32.lib wininet.lib ws2_32.lib
+ 	lib =
+ ifndef DEBUG
 -- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+1.6.4
