@@ -1,64 +1,125 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Alles wird Git, Berlin, Oct 3rd, 2009
-Date: Thu, 1 Oct 2009 17:20:41 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910011719450.23027@intel-tinevez-2-302>
-References: <alpine.DEB.1.00.0909250810270.4985@pacific.mpi-cbg.de> <20090930190809.GF567@book.hvoigt.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: gitignore: how to exclude a directory tree from being ignored
+Date: Thu, 01 Oct 2009 17:25:15 +0200
+Message-ID: <4AC4C9DB.2090907@viscovery.net>
+References: <4AC48D5F.6060401@mycircuit.org> <4AC4A310.8000507@viscovery.net> <4AC4A7EF.9030002@mycircuit.org> <4AC4AD25.5010708@viscovery.net> <4AC4C125.10609@mycircuit.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Thu Oct 01 17:21:01 2009
+To: Peter <vmail@mycircuit.org>
+X-From: git-owner@vger.kernel.org Thu Oct 01 17:25:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtNSf-0005q9-44
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 17:20:53 +0200
+	id 1MtNX4-0007GD-O8
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Oct 2009 17:25:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294AbZJAPUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Oct 2009 11:20:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbZJAPUm
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 11:20:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60314 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752269AbZJAPUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Oct 2009 11:20:42 -0400
-Received: (qmail invoked by alias); 01 Oct 2009 15:20:44 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp009) with SMTP; 01 Oct 2009 17:20:44 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1831/FLG/A3E9A7tXSa1rkLBp7iCacXQ+ZfjIU51N
-	ypPmAIrcrlqXz6
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20090930190809.GF567@book.hvoigt.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1754090AbZJAPZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Oct 2009 11:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753998AbZJAPZP
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Oct 2009 11:25:15 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:36313 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753549AbZJAPZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Oct 2009 11:25:14 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MtNWt-000347-OF; Thu, 01 Oct 2009 17:25:16 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 773749614; Thu,  1 Oct 2009 17:25:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <4AC4C125.10609@mycircuit.org>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129397>
 
-Hi,
-
-On Wed, 30 Sep 2009, Heiko Voigt wrote:
-
-> On Fri, Sep 25, 2009 at 08:19:44AM +0200, Johannes Schindelin wrote:
-> > as some of you already know, I will be unable to Git Together with 
-> > other Gits in California this year.  So the only version of such a Git 
-> > Together I will have this year is the Berlin one.
+Peter schrieb:
+>>> 1) I can't have just one .gitignore file in the root dir, if I want to
+>>> _recursively_ inverse the exclude pattern for a sub dir tree.
+>>>     
+>>
+>> No, it's not the inversion of the pattern, but the slash (if it is not at
+>> the end) that makes the pattern non-recursive.
+>>
+>>   
+> from the gitignore manpage:
+>>> If the pattern ends with a slash, it is removed for the purpose of
+> the following description, but it would only find a match with a
+> directory. In other words, foo/ will match a directory foo and paths
+> underneath it, but will not match a regular file or a symbolic link foo
+> (this is consistent with the way how pathspec works in general in git). <<
 > 
-> Just announcing that Jens Lehmann and me will also come. Just added us 
-> to the wiki page. What about important stuff like coffee during the day? 
-> Is there access to such things nearby or is it better to bring 
-> everything needed?
+> Doesn't this mean, that if I say:
+> vendor/
+> matches the directory and ( recursively ) the paths underneath it.?
 
-Steffen said that he'll take care of the coffee, I'll make sure there is 
-some beer.
+The paragraph you are citing is talking about *what* the pattern matches,
+but it says nothing about *where* the pattern matches.
 
-Feel free to bring whatever you feel is missing, but beware: this Saturday 
-is a German holiday ;-)
+When I was saying "recursively", then I was refering to the "where"
+aspect, not the "what" aspect.
 
-Ciao,
-Dscho
+If you have directories
+
+   src/bar/vendor/
+   src/foo/bar/vendor/
+   src/vendor/
+
+and you have the file src/.gitignore with the single pattern
+
+   vendor/
+
+then it applies to recursively ("where") these directories:
+
+   src/bar/vendor/
+   src/foo/bar/vendor/
+   src/vendor/
+
+and everything ("what") below them.
+
+But if the same src/.gitignore has only this pattern:
+
+   bar/vendor/
+
+then it will not match ("where") recursively and only apply to
+
+   src/bar/vendor/
+
+and everything ("what") below it, but will not apply to
+
+   src/foo/bar/vendor/
+
+> And, consequently:
+> !vendor/
+> inverse the exclusion for vendor ( that is: include ) and everything
+> that is contained in it ? ( This is obviously not the case, but this is
+> what I would expect )
+
+You should update your expectations. ;-)
+
+You think that git starts with the .gitignore files, and somehow applies
+the rules that it finds to all files (perhaps recursively).
+
+But it does not work like this; rather it is in the oppsite direction: git
+starts with a file name, and then checks the rules in the .gitignore files
+that it has available.
+
+For example, take the path "src/vendor/foo.exe". git finds the file
+src/.gitignore and there it sees the pattern "*.exe". The pattern matches,
+and so git obeys the rule (ignores the file). But the pattern "!vendor/"
+does not match (because the path ends with "foo.exe", not "vendor").
+
+Before git had seen the path "src/vendor/foo.exe", it had already seen
+"src/vendor". This time the pattern "!vendor/" did match (because the name
+is identical *and* it is a directory, as per the cited paragraph) and git
+obeyed the rule (which was not to ignore the directory).
+
+-- Hannes
