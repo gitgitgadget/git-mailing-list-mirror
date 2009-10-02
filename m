@@ -1,59 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: "Not currently on any branch"
-Date: Fri, 2 Oct 2009 23:46:53 +0200
-Message-ID: <81b0412b0910021446nb07e7e9l465f588168297fe9@mail.gmail.com>
-References: <loom.20091002T215942-663@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] MSVC: fix build warnings
+Date: Fri, 02 Oct 2009 15:05:04 -0700
+Message-ID: <7v7hvd4flb.fsf@alter.siamese.dyndns.org>
+References: <d2e97e800910021440q46bd46c4y8a5af987620ffc5c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tim <timothyjwashington@yahoo.ca>
-X-From: git-owner@vger.kernel.org Fri Oct 02 23:47:09 2009
+To: Michael Wookey <michaelwookey@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 03 00:05:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mtpxs-0003K5-7x
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 23:47:00 +0200
+	id 1MtqFd-0000Ib-6W
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 00:05:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754647AbZJBVqx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2009 17:46:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754618AbZJBVqw
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 17:46:52 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:43725 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754556AbZJBVqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2009 17:46:50 -0400
-Received: by bwz6 with SMTP id 6so1375208bwz.37
-        for <git@vger.kernel.org>; Fri, 02 Oct 2009 14:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=u19EyPdrR67q9+PbnP5TD1cWcZGVkAb/qJieDylIxZw=;
-        b=lzzrMl4ftYUOyX0xzY/v4rAbzgD2G4xX6XVRFapdVONhBi4578+mF0Gs2MnOeNKMYA
-         8PE69tGlcD/bDIfoRcSGjpTrfH9Hl6x9EeqZXYcacJMMOZBE2Q6APuDvEEwJmbDQskvI
-         fp90Dbemiw4w5hJz3wgdo1A17hkS/6SyyzYFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=rQ8ETczyG/ZkrY0/9Wqu0LJzk4Vv3MmJKB94x+0Q7MckCaOfZFsbO0JpiNzqcf4hhe
-         vE25fI6+70EXpF8TBlgshDyZIuQl68fAqJAWinjpJ0Vkvn9rpZGRMvZ8qwVaPbfeBWgG
-         GKVc/AT7k3YickQaAXfVI3vw4r/Q7MSnapyzM=
-Received: by 10.204.36.210 with SMTP id u18mr1591931bkd.19.1254520013938; Fri, 
-	02 Oct 2009 14:46:53 -0700 (PDT)
-In-Reply-To: <loom.20091002T215942-663@post.gmane.org>
+	id S1755160AbZJBWFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2009 18:05:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754930AbZJBWFJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 18:05:09 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36556 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754823AbZJBWFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2009 18:05:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2576949540;
+	Fri,  2 Oct 2009 18:05:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nL3iQXUnXJ/g+7dpczgsFRcfES0=; b=EbnCWN
+	CibLvHoFbCl1jb46U9nP0dAePzfM6fxOkdlamXZ0FLritJ7wpXjdWUenAooE9J43
+	MwEuoIBwvCFpst4BG1HDJe+Ds3ZsZ5FMBec2RL2HbG9VohDo62bLq/2HtW6LpUIU
+	MperERC3AUy0IWo7WlOH/9Ykv+I/CPqO+rkTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rjHdSE/eLKI/9t2sFtJCEiP21+d7AQJ2
+	ttpFlz/nhi5yrZtaY8tEZ2VgrD0ElDbbPtJ2tuh8mPw90iht/d4PQSxJseLlJPN5
+	vF3kKVIPsyDX68NJP9RXYYc7ANhc+lBVbCDhmNC1z9ZBDjRsUROzt7CSfdb1YyNg
+	17/+jL6u/jI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 080DE4953F;
+	Fri,  2 Oct 2009 18:05:09 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 738AE4953E; Fri,  2 Oct
+ 2009 18:05:06 -0400 (EDT)
+In-Reply-To: <d2e97e800910021440q46bd46c4y8a5af987620ffc5c@mail.gmail.com>
+ (Michael Wookey's message of "Sat\, 3 Oct 2009 07\:40\:08 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A628EA26-AF9F-11DE-9C72-92E639D9C332-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129462>
 
-On Fri, Oct 2, 2009 at 22:08, Tim <timothyjwashington@yahoo.ca> wrote:
-> What's the most straightforward & cleanest way to merge my changes in the
-> headless branch to my 'ui-integration' branch?
+Michael Wookey <michaelwookey@gmail.com> writes:
 
-Assuming you use a Bourne shell:
+> diff --git a/builtin-branch.c b/builtin-branch.c
+> index 9f57992..cf6a9ca 100644
+> --- a/builtin-branch.c
+> +++ b/builtin-branch.c
+> @@ -93,7 +93,7 @@ static const char *branch_get_color(enum color_branch ix)
+>
+>  static int delete_branches(int argc, const char **argv, int force, int kinds)
+>  {
+> -	struct commit *rev, *head_rev = head_rev;
 
-$ prev=$(git rev-parse HEAD)
-$ git checkout ui-integration && git merge $prev
+I haven't tried, but the patch may break build with "gcc -Werror".
+
+This is a common and unfortunate idiom to tell the readers of the code
+that this initialization is unnecessary, gcc is not clever enough to
+notice and gives warnings, and we are squelching it, knowing what we are
+doing.
