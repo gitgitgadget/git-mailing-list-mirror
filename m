@@ -1,90 +1,60 @@
-From: Nils Homer <nilshomer@gmail.com>
-Subject: Re: How to delete large files
-Date: Fri, 02 Oct 2009 12:20:58 -0700
-Message-ID: <C6EBA0AA.D7D3%nilshomer@gmail.com>
-References: <4AC6031A.2070409@viscovery.net>
+From: Tim <timothyjwashington@yahoo.ca>
+Subject: "Not currently on any branch"
+Date: Fri, 2 Oct 2009 20:08:52 +0000 (UTC)
+Message-ID: <loom.20091002T215942-663@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 02 21:21:14 2009
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 02 22:21:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mtngo-0001gw-ET
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 21:21:14 +0200
+	id 1Mtocu-0003Lg-8o
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 22:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685AbZJBTVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2009 15:21:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753111AbZJBTVE
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 15:21:04 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:15230 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753359AbZJBTVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2009 15:21:03 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so2238120fge.1
-        for <git@vger.kernel.org>; Fri, 02 Oct 2009 12:21:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:user-agent:date:subject:from
-         :to:message-id:thread-topic:thread-index:in-reply-to:mime-version
-         :content-type:content-transfer-encoding;
-        bh=VPW6IqRLyiG03zpYSDcD5ksLTNcEjD35agt1Mv2aSxI=;
-        b=QxMCqfjy7eHK+p91vJZVnQnwTkcySDdrHSsLswwFu1IVephGuBZSXAwbLf2IIwJqV5
-         5lXh7LbWPwdp9jWNlOKjJWtImx68WhB9QlrsCN4dQ4RKAdTgRjT4nJhvrkPhOHtT5C1u
-         3YESZ9WTRH0Ah7PxZAINxGg53//ge8LGXvjKQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=user-agent:date:subject:from:to:message-id:thread-topic
-         :thread-index:in-reply-to:mime-version:content-type
-         :content-transfer-encoding;
-        b=jcGqE2T/Opoh0csI6a+fQ7TrnqCnorON5OS4/9kBfrEwPfrfpkAickM4LXaVQs6qqR
-         86jyZNG9IwsISzutXcEEu5EudoP5c/C6GpRIKpZDszXpC52OmRJNozdHsHGKb1E5sguu
-         Zz7j6YUExsUvZthgbJ3t1M5iosiLmq6JCx6UI=
-Received: by 10.86.242.15 with SMTP id p15mr2728212fgh.14.1254511266087;
-        Fri, 02 Oct 2009 12:21:06 -0700 (PDT)
-Received: from ?192.168.1.100? (cpe-76-172-154-28.socal.res.rr.com [76.172.154.28])
-        by mx.google.com with ESMTPS id e11sm277651fga.23.2009.10.02.12.21.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 02 Oct 2009 12:21:05 -0700 (PDT)
-User-Agent: Microsoft-Entourage/12.20.0.090605
-Thread-Topic: How to delete large files
-Thread-Index: AcpDlXg+V6zM6nDps06XIQcLoYinlw==
-In-Reply-To: <4AC6031A.2070409@viscovery.net>
+	id S1758131AbZJBUUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2009 16:20:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756969AbZJBUUF
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 16:20:05 -0400
+Received: from lo.gmane.org ([80.91.229.12]:50495 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758131AbZJBUUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2009 16:20:03 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1Mtobl-0002zP-PU
+	for git@vger.kernel.org; Fri, 02 Oct 2009 22:20:05 +0200
+Received: from CPE001601277554-CM0014f8c5a80e.cpe.net.cable.rogers.com ([173.33.212.254])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Oct 2009 22:20:05 +0200
+Received: from timothyjwashington by CPE001601277554-CM0014f8c5a80e.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Oct 2009 22:20:05 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 173.33.212.254 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129458>
 
-Thank-you for all of your insightful help. Combining all the advice, the
-commands that worked are:
+I have some code in a git repo that is "Not currently on any branch". Now,
+there's the master branch and another branch 'ui-integration' that I'm using in
+this project. I don't know how the project got into this headless state, but I
+need to be using the 'ui-integration' branch. 
 
-git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch
-$files" --tag-name-filter cat -- --all
+I tried looking around the blogosphere for a solution, and tried what I found
+here. But it seems like only my last commit (not the previous 10 I made) shows
+up in the master branch (not ui-integration ).  
+http://blog.kortina.net/post/71935540/fix-git-not-currently-on-any-branch-problem
 
-git -rf .git/refs/original
+What's the most straightforward & cleanest way to merge my changes in the
+headless branch to my 'ui-integration' branch? 
 
-git reflog expire --expire=now
-
-git gc --prune=now
-
-I then cloned the repository to a different location and replaced my
-centralized version with the cloned copy.
-
-Thanks,
-
-Nils
-
-
-On 10/2/09 6:41 AM, "Johannes Sixt" <j.sixt@viscovery.net> wrote:
-
-> Mikael Magnusson schrieb:
->> Well, you just gave "HEAD" to git filter-branch to rewrite, i think
->> you want --all to rewrite all refs you have.
-> 
-> ... and '--tag-filter cat' to rewrite tags as well.
-> 
-> -- Hannes
+Thanks in advance
+Tim
