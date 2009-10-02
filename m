@@ -1,91 +1,169 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Re: Git push over git protocol for corporate environment
-Date: Fri, 2 Oct 2009 11:58:59 -0400
-Message-ID: <76c5b8580910020858t16804f5cg96ebb067e3a69e82@mail.gmail.com>
-References: <m3pr989eyt.fsf@localhost.localdomain>
-	 <00163623ac5d75929b0474e66b96@google.com>
-	 <76c5b8580910020741p2024f6c0w70be53338924e7e8@mail.gmail.com>
-	 <20091002144727.GZ14660@spearce.org>
+From: Scott Wiersdorf <scott@perlcode.org>
+Subject: git as a versioned filesystem
+Date: Fri, 2 Oct 2009 10:49:29 -0600
+Message-ID: <20091002164929.GA12725@perlcode.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eugene Sajine <euguess@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 02 17:59:07 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 02 19:16:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MtkXC-0007Vu-1d
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 17:59:06 +0200
+	id 1MtljX-0001Mh-EH
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 19:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552AbZJBP64 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Oct 2009 11:58:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755206AbZJBP64
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 11:58:56 -0400
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:51289 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753615AbZJBP6z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Oct 2009 11:58:55 -0400
-Received: by ywh6 with SMTP id 6so621576ywh.4
-        for <git@vger.kernel.org>; Fri, 02 Oct 2009 08:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VFfJugNVAOhpY3t3UPgcY+YwE138yJ0ZP/ZYqXQ28wE=;
-        b=HfBaVcOGo54+LjsvTj+ySmyG6R10Me+sbwfvdfDFqJqufV2xQw6gDbbZj9sCldI/x3
-         O96Hl2H5njANz/8rCED8N182uuLVeQXnUqMOgwTxnUqTXWAzGYpuJS6PqPQiLqHLRdeZ
-         QVFLRwL8YtfqC/3ZePXsduI7gvaMFI/vMtml0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RkeLqsEOzYiBBOrTtm/DWf41v7Zl45vdmbwp/6Bf2fwLtpZnDaqBiomSi31Nj+p55q
-         1hB050A63MkCz8sdZ7+4rT96zJsYTyKi4R3ejryT+znJpa8gbKe0H9nY2xLqYss5R4jQ
-         jOVHOXYwodnfIZTKxpGMMkXVn+fif7sEeysU0=
-Received: by 10.91.97.9 with SMTP id z9mr1543440agl.46.1254499139192; Fri, 02 
-	Oct 2009 08:58:59 -0700 (PDT)
-In-Reply-To: <20091002144727.GZ14660@spearce.org>
+	id S1757263AbZJBRPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2009 13:15:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755882AbZJBRPp
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 13:15:45 -0400
+Received: from deep2.securesites.net ([198.65.247.173]:3904 "EHLO
+	deep2.securesites.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753071AbZJBRPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2009 13:15:45 -0400
+X-Greylist: delayed 1577 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Oct 2009 13:15:44 EDT
+Received: from deep2.securesites.net (localhost [127.0.0.1])
+	by deep2.securesites.net (8.13.6.20060614/8.13.6) with ESMTP id n92GnVON066079
+	for <git@vger.kernel.org>; Fri, 2 Oct 2009 10:49:31 -0600 (MDT)
+Received: (from scott@localhost)
+	by deep2.securesites.net (8.13.6.20060614/8.13.6/Submit) id n92GnV3l066075
+	for git@vger.kernel.org; Fri, 2 Oct 2009 10:49:31 -0600 (MDT)
+Mail-Followup-To: Scott Wiersdorf <scott@perlcode.org>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (deep2.securesites.net [127.0.0.1]); Fri, 02 Oct 2009 10:49:31 -0600 (MDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129449>
 
-Thanks Shawn!
+Hi all,
 
-I saw info about Scumd and Gerrit in previous emails, but
-unfortunately haven't enough time to spend with those tools yet.
-Reading about Gerrit right now.
+First off, I'm *not* using git as a typical VCS on the front-end; I'm
+using it for dist control on the back-end. I'm also fairly new to git
+(about a week and a half into it).
 
+The Scene
+=========
 
-On Fri, Oct 2, 2009 at 10:47 AM, Shawn O. Pearce <spearce@spearce.org> =
-wrote:
-> Eugene Sajine <euguess@gmail.com> wrote:
->> Gitorious is even better!! for corporate use, i think, because of it=
-s
->> team oriented approach, but... man... I would kill for java
->> implementation or anything as simple as that!!
->
-> If you want a Java based server, look at either:
->
-> * SCuMD =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 http://githu=
-b.com/gaffo/scumd
-> * Gerrit Code Review =C2=A0http://code.google.com/p/gerrit/
->
-> I think SCuMD might be easier to install, I don't think it depends
-> upon a database or a servlet container like Gerrit does. =C2=A0But bo=
-th
-> are a SSH+Git implementation with some access control capabilities,
-> and are implemented in Java.
->
-> I don't think either is (yet) as easy to install as Hudson CI.
-> Both projects have a much smaller team of developers behind them,
-> and are still focusing on basic functionality rather than ease of
-> new system setup.
->
-> --
-> Shawn.
->
+For source control, we're using CVS (migrating off of it, btw--I only
+have limited influence around here). We build our software, etc,
+etc. and then we have the developers scp/rsync/untar their builds on a
+*master disk image*.
+
+This master disk image is disted via rsync to a few thousand servers
+to keep them all up to date and in sync, etc. This works mostly fine
+and I can't really change this system.
+
+The Problem
+===========
+
+Our problem has been that occasionally bad stuff gets put in the
+master image and we have no easy way to revert it or to allow the QA
+team to cherry-pick/revert changes to that master image.
+
+The Solution
+============
+
+Git seems like the perfect tool for this, but I'm still not sure how
+to adapt it to our situation. I'm building a tool that uses git to let
+the developers commit their binary changes to this master image into
+the git repository, which hopefully will allow me to offer the QA team
+some ability to cherry-pick updates or revert regressions and make a
+clean dist image from week to week.
+
+The Question
+============
+
+What I need to know from y'all is: is there a better way, a more
+git-like way, to accomplish this. Here's the model I *want* to follow:
+
+-----a----b--T1-------c--------d-e---f------g [master]
+               \   (a)  \
+                ----|----c'---                [B1]
+
+Here is branch B1 created from the master at some point in time T1. On
+branch B1, I revert commit (a) and cherry-pick commit (c):
+
+  git checkout master
+  git branch B1
+  git checkout B1
+  git revert a
+  git cherry-pick c
+
+At this point, B1 is our "perfect image" and we're ready to dist it. I
+check it out elsewhere and rsync it, etc. Wonderful.
+
+But now it's a few weeks later and we're ready to do another
+dist. What I *want* to do is create a *copy* of branch B1 to give the
+release manager a reference point for him to bring things up to
+date. What is the best way to do that?
+
+If I branch off of B1, now I have the burden of doing a whole lot of
+cherry-picks and having a challenging time getting things back in sync:
+
+-----a----b--T1-------c--------d-e---f------g [master]
+               \   (a)  \         \   \
+                ----|----c'---     \   \      [B1]
+                               \    \   \
+                                -----e'--f'---[B2]
+
+Ugh. Now B2 is kind of a mess. If I rebase it on master, I'll get (d)
+and maybe (a) again, which I don't want. [side question: unless
+there's a way to rebase on master but still exclude
+commits... possible?]. B3 and B4 are going to look even worse and the
+risk of drifting so far away from the master is unappealing.
+
+Ideally I'd want each week's release to come directly from the master,
+kind of the flying-fish approach:
+
+                               ----e'--f'---  [B2]
+                             /    /   /
+-----a----b--T1-------c--------d-e---f------g [master]
+               \   (a)  \
+                ----|----c'---                [B1]
+
+The problem with this is that now B2 contains (a), so I'll have to
+revert that again--which I can do happily--but I just wonder if
+there's a better way. If it's possible to simply *copy* branch B1 to
+B2 without making B2 a branch off of B1.
+
+In the absence of a git-branch-copy, is there something that would
+help me do set intersection and subtraction between branches?
+Something like this:
+
+  git log B1
+  ... bunch of commit ids ...
+  git log B2
+  ... bunch of commit ids ...
+
+  ## find the intersection(B1, B2)
+
+  ## revert all the things missing in B1 from B2
+
+  ## now B2 is the same as B1--assuming git is idempotent (is it?)
+
+  ## is there way besides rebase to clean out a revert as if it never
+  ## happened? I suppose I could branch again and repeat this as
+  ## needed.
+
+Am I even thinking about this correctly?
+
+Keep in mind that these commits are not source code commits; they're
+file system changes of all kinds: updated binaries and libraries, new
+directory trees, removed directory trees, etc. It's much closer to a
+package manager in spirit than a VCS.
+
+I feel like I'm missing something grand in git-rev-list or git-log or
+git-bisect some other tool that will make all my troubles
+disappear. I've read an awful lot of the man pages, but am still very
+new to git and I'm certain I've missed some subtleties.
+
+Any ideas? I'm not even sure I'm asking the right questions. I'll
+accept any advice on this subject.
+
+Scott
+-- 
+Scott Wiersdorf
+<scott@perlcode.org>
