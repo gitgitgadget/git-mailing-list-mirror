@@ -1,96 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] filter-branch: add --prune-empty to option summary
-Date: Fri, 2 Oct 2009 03:45:37 -0400
-Message-ID: <20091002074537.GA27664@coredump.intra.peff.net>
-References: <c376da900910011747i894404dne1ea60dae5e3990b@mail.gmail.com>
- <1254444731-6852-1-git-send-email-adambrewster@gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 1/2] do not mangle short options which take arguments
+Date: Fri, 02 Oct 2009 09:46:11 +0200
+Message-ID: <4AC5AFC3.7000706@gnu.org>
+References: <20090925233226.GC14660@spearce.org> <20091001201648.GA12175@localhost> <20091002061159.GA24892@coredump.intra.peff.net> <20091002073628.GA9444@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Adam Brewster <adambrewster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 02 09:45:51 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Fri Oct 02 09:46:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mtcpq-0002Ge-MG
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 09:45:51 +0200
+	id 1MtcqK-0002My-PK
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 09:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753869AbZJBHpl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2009 03:45:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZJBHpl
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 03:45:41 -0400
-Received: from peff.net ([208.65.91.99]:34587 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753329AbZJBHpk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2009 03:45:40 -0400
-Received: (qmail 26283 invoked by uid 107); 2 Oct 2009 07:49:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 02 Oct 2009 03:49:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 02 Oct 2009 03:45:37 -0400
-Content-Disposition: inline
-In-Reply-To: <1254444731-6852-1-git-send-email-adambrewster@gmail.com>
+	id S1754601AbZJBHqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Oct 2009 03:46:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbZJBHqL
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 03:46:11 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:35141 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754395AbZJBHqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Oct 2009 03:46:10 -0400
+Received: by ewy7 with SMTP id 7so893313ewy.17
+        for <git@vger.kernel.org>; Fri, 02 Oct 2009 00:46:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=wTg7mReLwrhCK4vq8CXWkV8MD9EbqH/Jm1i7Lc64yR0=;
+        b=knQy69hO8Jprkc+0r5Og4eMrOxPauGfnIhtCPeyTrK7gVBcvsx58hgmorLfaSr2wBx
+         jk0pBQFhVTA9UBlCHBm8J8XRBQH+36aNy04NE5PvPEE/DO1dCALIK+ebfLusI4g3j/38
+         8GvQEVEoHobfermd2v4Wut1/lKmbKEhY2PrYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=lw3n9cMAGpbRYLJUaCYf9FCQX9kRl2Ng0sZMCHVCaKVi09SuO+k5+Yu0FczPcUmv2y
+         dx3/3xh/SFBrdKGzpQsV015c8fTkYKzefmvEAWZyyk5J3wVsnGpfrfZ6Chm0zyhBN4p2
+         wtB4L/1cVVk7y1tC1ILRfxdesGAc0Eh6fUPiY=
+Received: by 10.210.95.3 with SMTP id s3mr2642226ebb.47.1254469573694;
+        Fri, 02 Oct 2009 00:46:13 -0700 (PDT)
+Received: from yakj.usersys.redhat.com ([85.93.118.17])
+        by mx.google.com with ESMTPS id 28sm1578100eyg.20.2009.10.02.00.46.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 02 Oct 2009 00:46:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Lightning/1.0pre Thunderbird/3.0b3
+In-Reply-To: <20091002073628.GA9444@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129425>
 
-On Thu, Oct 01, 2009 at 08:52:11PM -0400, Adam Brewster wrote:
+On 10/02/2009 09:36 AM, Clemens Buchacher wrote:
+> Well, an error message is a lot safer than executing something you did not
+> intend.
 
-> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-> index 451950b..2cc3bd8 100644
-> --- a/Documentation/git-filter-branch.txt
-> +++ b/Documentation/git-filter-branch.txt
-> @@ -12,6 +12,7 @@ SYNOPSIS
->  	[--index-filter <command>] [--parent-filter <command>]
->  	[--msg-filter <command>] [--commit-filter <command>]
->  	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
-> +	[--prune-empty]
->  	[--original <namespace>] [-d <directory>] [-f | --force]
->  	[--] [<rev-list options>...]
+If this is just for double --amend typos I don't see the need.  What you 
+intended is just one "git rebase -i HEAD^^" away.
 
-Thanks. This makes sense given the existing structure, though I have to
-wonder how useful some of these gigantic synopses really are. Do we
-really need to list all of the options here in a cluttered, annoyingly
-wrapped format, when we are just going to list them in a nice
-easy-to-read format with their descriptions later on in the page?
+Notice that in Shawn's original example the guy actually passed -a too, 
+so he would not even have the problem of overwriting the index due to -a.
 
-And this is really not so much to do with your patch as a meta-rant, so
-feel free to stop reading.
+If you have bouncy fingers, you can just make an alias
 
-What should the synopsis really be communicating? In something like
-git-cat-file(1), the synopsis nicely shows a few key facts:
+    ammend-fix = git reset --soft HEAD^ && git gui citool
 
-  1. There are two "modes" if invocation.
-
-  2. In one mode, you give an action and an object on the command line.
-
-  3. In the other mode, you give --batch and feed some stuff over stdin.
-
-Those are all useful pieces of information, and they are communicated
-more quickly than they would be by forcing me to read the
-paragraph-formatted text of the description section.
-
-But look at the 18-line synopsis for git-grep or the 17-line one for
-git-format-patch. Are they really helping anyone? (And it is not just
-the line count. The 18-line synopsis for git-config is actually useful,
-because there really are 18 modes of operation).
-
-Non-git programs seem to take a more sparse approach. For example, some
-one-line synopses from my system:
-
-       sed [OPTION]... {script-only-if-no-other-script} [input-file]...
-       ls [OPTION]... [FILE]...
-
-or even this longer one:
-
-       vim [options] [file ..]
-       vim [options] -
-       vim [options] -t tag
-       vim [options] -q [errorfile]
-
-Those all communicate some useful information (how to generally invoke
-the program) cluttering it with redundant information.
-
--Peff
+Paolo
