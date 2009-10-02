@@ -1,64 +1,116 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] do not mangle short options which take arguments
-Date: Fri, 2 Oct 2009 11:04:24 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910021104060.18640@intel-tinevez-2-302>
-References: <20090925233226.GC14660@spearce.org> <20091001201648.GA12175@localhost> <20091002061159.GA24892@coredump.intra.peff.net> <20091002073628.GA9444@localhost> <alpine.DEB.1.00.0910021042110.18640@intel-tinevez-2-302>
- <20091002084359.GA8878@coredump.intra.peff.net>
+From: Nils Homer <nilshomer@gmail.com>
+Subject: How to delete large files
+Date: Fri, 02 Oct 2009 03:03:44 -0700
+Message-ID: <C6EB1E10.D7AB%nilshomer@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 02 11:04:43 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 02 12:06:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mte47-0005sZ-Bz
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 11:04:39 +0200
+	id 1MtezX-0001ol-9y
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Oct 2009 12:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805AbZJBJE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Oct 2009 05:04:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753518AbZJBJE0
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 05:04:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43243 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753439AbZJBJEZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Oct 2009 05:04:25 -0400
-Received: (qmail invoked by alias); 02 Oct 2009 09:04:28 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp056) with SMTP; 02 Oct 2009 11:04:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18O1w1Qq/UOh8lC00zMlcAGC7+jb7MD3EdrcHCdiJ
-	fSld8sk1xJu+Pz
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <20091002084359.GA8878@coredump.intra.peff.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.59
+	id S1757504AbZJBKDs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Oct 2009 06:03:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757487AbZJBKDs
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Oct 2009 06:03:48 -0400
+Received: from mail-qy0-f174.google.com ([209.85.221.174]:33006 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757461AbZJBKDr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Oct 2009 06:03:47 -0400
+Received: by qyk4 with SMTP id 4so808900qyk.33
+        for <git@vger.kernel.org>; Fri, 02 Oct 2009 03:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:user-agent:date:subject:from
+         :to:message-id:thread-topic:thread-index:mime-version:content-type
+         :content-transfer-encoding;
+        bh=FfyJQ0YZ3m51x35Mbc5q+JEMkxiASdfoerXg4VLlaMg=;
+        b=BClSCrO9buJGzfnbnEAgivnYJeZZI6emEksrIuPjWllnljg6wbbRps2XUQ80dXidso
+         +9rANLRtLh2okyMPG7IHOELIS0YlcCwfut2MweXJVofZAuRgoZnQQOKeKRP0NZOJ/i0z
+         hLBh2roZeXGzuH364hc1Kki7lhhCjRuK+ht5U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=user-agent:date:subject:from:to:message-id:thread-topic
+         :thread-index:mime-version:content-type:content-transfer-encoding;
+        b=c082ORXrRff3w1n/nMXeIIUoYFAWtgIh8EC4WKeTcS8mWyClZjkjccPeXERNghJx4l
+         VLLg2q7jnjOkMxC873ssgc4f+p9HeLpZJLdEzsXeMZtukTqJTgsaWm6KDp9jMD+X9Dra
+         HVHzWqr2WcKMpPcvdZXYxePW2UGS/p0DV//zY=
+Received: by 10.224.103.12 with SMTP id i12mr740351qao.120.1254477831004;
+        Fri, 02 Oct 2009 03:03:51 -0700 (PDT)
+Received: from ?192.168.1.100? (cpe-76-172-154-28.socal.res.rr.com [76.172.154.28])
+        by mx.google.com with ESMTPS id 8sm841062qwj.34.2009.10.02.03.03.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 02 Oct 2009 03:03:50 -0700 (PDT)
+User-Agent: Microsoft-Entourage/12.20.0.090605
+Thread-Topic: How to delete large files
+Thread-Index: AcpDR6AGFNwAaUrpmkaexEDPe7ADCg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129438>
 
-Hi,
+I wish to delete some large offending files (10MB to >100MB each) from =
+my
+git repository (git://bfast.git.sourceforge.net/gitroot/bfast/bfast).  =
+The
+current size of the repo is 656MB.
 
-On Fri, 2 Oct 2009, Jeff King wrote:
+I created a backup of my repository and then searched for such offendin=
+g
+files using a script found here:
+http://stubbisms.wordpress.com/2009/07/10/git-script-to-show-largest-pa=
+ck-ob
+jects-and-trim-your-waist-line/
+where I modified the script to output in MB instead of KB.
 
-> On Fri, Oct 02, 2009 at 10:42:36AM +0200, Johannes Schindelin wrote:
-> 
-> > > Yes, we deliberately allow users to shoot themselves in the foot. But 
-> > > they should have to use at least a long option to do it.
-> > 
-> > Something like this?
-> > [...]
-> > +		} else if (!strcmp(cmd, "--shoot-me-in-the-foot")) {
-> > +			warning ("Bang, bang!");
-> 
-> Doh! Now I have to come up with a new joke patch for the GitTogether!
+This gave me a list of files that I wanted to delete:
+-e   size  pack                                      SHA
+location
+113  113   f9f2faab597d4f8ccbfac2864347dbc256353fbf
+tests.long/save/save.tar.gz
+113  113   926b1ba880a26354c4a6b9391985f57fbc9a1174
+tests.long/save/save.tar.gz
+113  113   e568480bcb8239e6d1ed8d2da86c309c0d3d101b
+tests.long/save/save.tar.gz
+113  113   e3c0ee53f20e8ebfb60eaefcd7b405168c26a565
+tests.long/save/save.tar.gz
+103  103   ee2ee50c5075d05d29764c8d4b9acc2acedda919
+tests.long/save/save.tar.gz
+35   35    319c75945c27096093dbab5a0bf6a9a08089bc2d
+tests.long/data/data.tar.gz
+11   11    805193c74ceeffca9da3a2788545e701d77e1caf  tests/save/save.ta=
+r.gz
+11   11    658e4a78c1028875ab597d6bde5823cd6a1694b9  tests/save/save.ta=
+r.gz
 
-Don't make me envious :-(
+So I decided to remove these files using:
+git filter-branch --index-filter "git rm -rf --cached --ignore-unmatch
+tests.long/save/save.tar.gz tests.long/data/data.tar.gz
+tests/save/save.tar.gz" HEAD
 
-Ciao,
-Dscho
+I then ran:
+rm -rf .git/refs/original
+git reflog expire --expire=3Dnow =8Ball
+git gc --prune=3Dnow
+
+Still (using du =ADh) the repository is 656MB and I can see the above f=
+iles in
+the revision list:
+git rev-list --all --objects | grep tests.long/save/save.tar.gz
+ee2ee50c5075d05d29764c8d4b9acc2acedda919 tests.long/save/save.tar.gz
+e568480bcb8239e6d1ed8d2da86c309c0d3d101b tests.long/save/save.tar.gz
+f9f2faab597d4f8ccbfac2864347dbc256353fbf tests.long/save/save.tar.gz
+926b1ba880a26354c4a6b9391985f57fbc9a1174 tests.long/save/save.tar.gz
+e3c0ee53f20e8ebfb60eaefcd7b405168c26a565 tests.long/save/save.tar.gz
+
+Could this be because of tags that I had previously created?
+
+I am running git version 1.6.3.3.  I appreciate any help in advance,
+
+Nils Homer
