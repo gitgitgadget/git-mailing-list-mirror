@@ -1,64 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fix '--relative-date'
-Date: Sat, 3 Oct 2009 06:06:15 -0400
-Message-ID: <20091003100615.GC17873@coredump.intra.peff.net>
-References: <1254543618-3772-1-git-send-email-j416@1616.se>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Automatic merge of local modifications in submodules?
+Date: Sat, 3 Oct 2009 13:30:02 +0200
+Message-ID: <20091003113002.GA29831@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johan Sageryd <j416@1616.se>
-X-From: git-owner@vger.kernel.org Sat Oct 03 12:06:28 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 03 13:30:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mu1VU-0003Gp-6m
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 12:06:28 +0200
+	id 1Mu2od-0004ux-42
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 13:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430AbZJCKGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2009 06:06:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751390AbZJCKGS
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 06:06:18 -0400
-Received: from peff.net ([208.65.91.99]:49067 "EHLO peff.net"
+	id S1753833AbZJCLaH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2009 07:30:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753799AbZJCLaH
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 07:30:07 -0400
+Received: from quechua.inka.de ([193.197.184.2]:37695 "EHLO mail.inka.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751349AbZJCKGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2009 06:06:18 -0400
-Received: (qmail 2843 invoked by uid 107); 3 Oct 2009 10:09:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 03 Oct 2009 06:09:48 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 03 Oct 2009 06:06:15 -0400
+	id S1753714AbZJCLaG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2009 07:30:06 -0400
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1Mu2oT-0001ye-0m; Sat, 03 Oct 2009 13:30:09 +0200
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 192EA2CC00; Sat,  3 Oct 2009 13:30:03 +0200 (CEST)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1254543618-3772-1-git-send-email-j416@1616.se>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129483>
 
-On Sat, Oct 03, 2009 at 01:20:18PM +0900, Johan Sageryd wrote:
+Hello,
 
-> This fixes '--relative-date' so that it does not give '0 year, 12
-> months', for the interval 360 <= diff < 365.
+I am trying to explore gti's submodule functionality. Since I'm used to
+svn:externals, I am missing the automatic merge of local modifications.
+So I'd like to do something like:
 
-Thanks. I think this was a regression introduced recently when we fixed
-the rounding on how years are printed (it used to just say "1 year"
-because we were close, but now we always round down, so our boundary for
-"1 year" must match exactly).
+  (cd submodule; git stash)
+  git submodule update
+  (cd submodule; git stash pop)
 
-I've picked up your patch in my tree with the following test squashed
-in:
+The problem with this command sequence is that it is not atomic. So if it
+is automatically executed from a script (e.g cron or post-update-hook), it
+will cause damage.
 
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index a4d8fa8..75b02af 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -24,6 +24,7 @@ check_show 13000000 '5 months ago'
- check_show 37500000 '1 year, 2 months ago'
- check_show 55188000 '1 year, 9 months ago'
- check_show 630000000 '20 years ago'
-+check_show 31449600 '12 months ago'
- 
- check_parse() {
- 	echo "$1 -> $2" >expect
-
--Peff
+Any ideas how to properly auto-merge local modifications on submodule
+update? git-submodule don't seem to have an option to do that.
