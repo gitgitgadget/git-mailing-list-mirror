@@ -1,84 +1,105 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH] MSVC: Enable OpenSSL, and translate -lcrypto
-Date: Sat, 3 Oct 2009 13:17:48 -0700
-Message-ID: <40aa078e0910031317p4b76b0ci4f5b1f8eeb4a905e@mail.gmail.com>
-References: <18cd41840910031300i32c74b15t74eb9eee23ff8469@mail.gmail.com> <40aa078e0910031305u38cfaf4aua72d4c7af2a470b2@mail.gmail.com> <4AC7AF58.1090603@gmail.com>
+From: Marius Storm-Olsen <marius@storm-olsen.com>
+Subject: Re: MSVC build broken (on cygwin)
+Date: Sat, 03 Oct 2009 22:29:31 +0200
+Message-ID: <4AC7B42B.8020506@gmail.com>
+References: <4AC4E2C2.6030509@ramsay1.demon.co.uk> <4AC5B4AE.5070307@gmail.com> <81b0412b0910020123j13c74497w874e301c38cddec9@mail.gmail.com> <4AC5BEA6.5000102@gmail.com> <4AC7AEB9.3030404@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Marius Storm-Olsen <marius@storm-olsen.com>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Sat Oct 03 22:18:07 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f137.google.com ([209.85.210.137])
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Oct 03 22:32:00 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuB3P-0002T0-0E
-	for gcvm-msysgit@m.gmane.org; Sat, 03 Oct 2009 22:18:07 +0200
-Received: by yxe1 with SMTP id 1so2419452yxe.3
-        for <gcvm-msysgit@m.gmane.org>; Sat, 03 Oct 2009 13:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type:sender:precedence
-         :x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=1b5gEjxAZYauIYf1FiBVMqtsECsHstdPEYYBJXrvd2k=;
-        b=0FMVa4McyVRs4DXY6+JL369vjh6z8l4W7VFXqzVzivxIsjv49s0T6P8mAflHeMWfNj
-         fdgacHQkrvdP5W9mMt1sG/7bYuEr+rMCG+Nj/0Ua/4RFSlgPA9yt0ZtcufWnT/xt08pU
-         7RUm7OxR7U0bA4WzrlWrXV9hDXbMpAFhs+NQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=vEoOyxgMig2z1UGSllFrYoZ0f2x6PYYxQmhlsdWOAFtIa2M/U0b8Gq5uDtP7VhktcE
-         ZeOnilhNVDqA7PKb0iX9tLBjiusZ4tGKsYzNHGsCPNgPW2yP2Xd3tbtWe/abTT6HZKgW
-         ythXP+e1uVE403h/59eveshRMS+XXYEs3WKrk=
-Received: by 10.91.100.9 with SMTP id c9mr242966agm.31.1254601079597;
-        Sat, 03 Oct 2009 13:17:59 -0700 (PDT)
-Received: by 10.176.133.2 with SMTP id g2gr7247yqd.0;
-	Sat, 03 Oct 2009 13:17:51 -0700 (PDT)
-X-Sender: kusmabite@googlemail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.204.0.66 with SMTP id 2mr110017bka.27.1254601069707; Sat, 03 Oct 2009 13:17:49 -0700 (PDT)
-Received: by 10.204.0.66 with SMTP id 2mr110016bka.27.1254601069673; Sat, 03 Oct 2009 13:17:49 -0700 (PDT)
-Received: from mail-bw0-f206.google.com (mail-bw0-f206.google.com [209.85.218.206]) by gmr-mx.google.com with ESMTP id 16si413545fxm.2.2009.10.03.13.17.48; Sat, 03 Oct 2009 13:17:48 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.218.206 as permitted sender) client-ip=209.85.218.206;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.218.206 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
-Received: by bwz2 with SMTP id 2so1537463bwz.47 for <msysgit@googlegroups.com>; Sat, 03 Oct 2009 13:17:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:in-reply-to:references :date:message-id:subject:from:to:cc:content-type; bh=M+LmDUVHYMRvCAFQ4yVswdRuHkqVSdLGX/GMegC3Yi4=; b=tWedFhcFfI0bdc1ApbX3WPrncu6aJSygpYkGn9A722WNqFPKjUi+oU67hBODyneDKp 4rZPpRATkYr9Q5wE0A47Ma88Dv1rDugKN/LIeKi12qNwdzI/M1tMKpzfqV9g0pmYvawh mP7ugzBpDRxBXIxjh1WdWpzf26iK8VSN+KiA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:in-reply-to:references:date:message-id:subject:from:to :cc:content-type; b=lKS0xDdn/WjjqMGy8mEbAmcvdoI9t1sSNFnDz2xlMFuVDZYtBMA3BvOEqZ4T4TrJar FFJasCF8fanzlg9WMedim9S8qTrAkoDn+kIcbKtA9shSrPIiH4rc9unTTfHtvlpBunbD IFsCQL/u/YmxWyvlr6Q2Jf70UbVQkQLL37aFA=
-Received: by 10.204.11.18 with SMTP id r18mr2454952bkr.15.1254601068458; Sat,  03 Oct 2009 13:17:48 -0700 (PDT)
-In-Reply-To: <4AC7AF58.1090603@gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1MuBGn-0005Pg-Sl
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 22:31:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755531AbZJCUap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2009 16:30:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbZJCUao
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 16:30:44 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:43695 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753212AbZJCUao (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2009 16:30:44 -0400
+Received: by ewy7 with SMTP id 7so2343385ewy.17
+        for <git@vger.kernel.org>; Sat, 03 Oct 2009 13:29:31 -0700 (PDT)
+Received: by 10.211.130.19 with SMTP id h19mr5054868ebn.54.1254601771462;
+        Sat, 03 Oct 2009 13:29:31 -0700 (PDT)
+Received: from ?192.168.0.198? (cm-84.215.55.206.getinternet.no [84.215.55.206])
+        by mx.google.com with ESMTPS id 10sm1217314eyd.10.2009.10.03.13.29.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 03 Oct 2009 13:29:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.8.1.23) Gecko/20090812 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <4AC7AEB9.3030404@ramsay1.demon.co.uk>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129501>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129502>
+
+Ramsay Jones said the following on 03.10.2009 22:06:
+> Marius Storm-Olsen wrote:
+>> So, something like this maybe, in git-compat-util.h:
+>>
+>> #if defined(__MINGW32__) || defined(_MSC_VER)
+>> #  defined API_WIN32
+>> #  defined OS_WINDOWS
+>> #elif defined(__CYGWIN__)
+>> #  defined API_POSIX
+>> #  defined OS_WINDOWS
+>> #else
+>> #  defined API_POSIX
+>> #endif
+> 
+> This is a much better idea.
+
+OK, I'll write up a patch, tomorrow or Monday.
+
+...
+> So, I think something like this in git-compat-util.h:
+> 
+> #if defined(_WIN32) && !defined(__CYGWIN__)
+> # define WIN32_API
+> # define WIN32_LEAN_AND_MEAN
+> # include <winsock2.h>
+> # include <windows.h>
+> #endif
+
+I agree with this one. Send a patch, and I'll ack.
 
 
-On Sat, Oct 3, 2009 at 1:08 PM, Marius Storm-Olsen
-<marius@storm-olsen.com> wrote:
->> Didn't my 7/7 already do this hunk?
->
-> Not for MSVC. It has it's own section above the MinGW part. Besides, the
-> -lcrypto 'translation' is critical for it to link.
+> and replace all #if(n)def WIN32|_WIN32 with #if(n)def WIN32_API.
 
-Ahh, thanks for the clarification :)
+Ok, I might look into that too then.
 
--- 
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+
+> The only use of the <windows.h> header by cygwin can be moved
+> into compat/cygwin.c. (I don't much like cygwin using the
+> Win32 API anyway!)
+
+I don't have Cygwin installed, so I won't touch this one.
+
+
+>> So, then we can use #ifdef API_WIN32 when using the Win32 API is the 
+>> only option/preferred for MinGW or MSVC; and use #ifdef OS_WINDOWS 
+>> when there are things that affect all the Windows builds.
+>>
+>> Opinions?
+> 
+> see above. I don't think OS_WINDOWS is necessary.
+
+Well, it was mostly intended where we'd have code/algorithms which are 
+platform specific, and not really compiler specific; such as the *stat() 
+optimizations. They could probably be joined into an OS_WINDOWS section, 
+with a POSIX_API hunk for the Cygwin fallbacks.
+
+Not really important though. Hopefully there won't be too much platform 
+specific stuff anyways.
+
+--
+.marius
