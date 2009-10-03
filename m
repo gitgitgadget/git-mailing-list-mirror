@@ -1,167 +1,181 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 Subject: Re: MSVC build broken (on cygwin)
-Date: Sat, 03 Oct 2009 21:06:17 +0100
-Message-ID: <4AC7AEB9.3030404@ramsay1.demon.co.uk>
-References: <4AC4E2C2.6030509@ramsay1.demon.co.uk> <4AC5B4AE.5070307@gmail.com> <81b0412b0910020123j13c74497w874e301c38cddec9@mail.gmail.com> <4AC5BEA6.5000102@gmail.com>
+Date: Sat, 03 Oct 2009 20:36:28 +0100
+Message-ID: <4AC7A7BC.5070608@ramsay1.demon.co.uk>
+References: <4AC4E2C2.6030509@ramsay1.demon.co.uk> <4AC5B4AE.5070307@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
+Cc: GIT Mailing-list <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 03 22:15:20 2009
+X-From: git-owner@vger.kernel.org Sat Oct 03 22:15:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuB0i-0001sL-8x
+	id 1MuB0h-0001sL-OC
 	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 22:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757141AbZJCUKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2009 16:10:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757134AbZJCUKM
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 16:10:12 -0400
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:62010 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757118AbZJCUKL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Oct 2009 16:10:11 -0400
+	id S1757102AbZJCUKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2009 16:10:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757032AbZJCUKF
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 16:10:05 -0400
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:58498 "EHLO
+	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757012AbZJCUKE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Oct 2009 16:10:04 -0400
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1MuAv2-0004X9-ie; Sat, 03 Oct 2009 20:09:29 +0000
+	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1MuAuu-0002EV-pV; Sat, 03 Oct 2009 20:09:22 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <4AC5BEA6.5000102@gmail.com>
+In-Reply-To: <4AC5B4AE.5070307@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129500>
 
 Marius Storm-Olsen wrote:
-> Apparently, nothing is broken in neither Cygwin, MinGW or MSVC after 
-> Ramsays whitespace fix, but I'm sure it might get hairy later, if/when 
-> we get more Windows contributions. Keeping the guards right could get 
-> tricky.
+> ...
+> Clone the git://repo.or.cz/msvcgit.git, and run the 
+> setup_32bit_env.cmd script in there, and you should have everything 
+> you need to both compile and link Git with MSVC.
 > 
 
-Right! Thus my earlier nervousness. :P
+Hmm, I'm trying to avoid YASORD (Yet Another Set Of Redundant
+Dependencies ;-)  On my laptop, I currently have 4 zlib installations,
+5 openssl installations, 3 iconv's ...
 
-> So, something like this maybe, in git-compat-util.h:
+As I said earlier (see below), I'm not so interested in getting the
+msvc build to work for me, rather than understand why it works for you,
+since it should not work!
+
+Having said that, I *may* try to get it working on my cygwin
+installation. However, I'm much more likely to make some changes to
+the build/Makefile to allow the dependent libraries to be installed
+in different locations :) There is nothing wrong with my zlib at
+C:\zlib.
+
+>> Anyway, the point is *not* to get the msvc build to work for me; rather
+>> it is to understand why the build *works* for you. ;-)
 > 
-> #if defined(__MINGW32__) || defined(_MSC_VER)
-> #  defined API_WIN32
-> #  defined OS_WINDOWS
-> #elif defined(__CYGWIN__)
-> #  defined API_POSIX
-> #  defined OS_WINDOWS
-> #else
-> #  defined API_POSIX
-> #endif
+> First of all, thanks for the thorough report! :)
+
+You're welcome.
+
+> Second, I just recompiled, and it magically works for me. Why is a 
+> good question, since I also think it shouldn't at this point. The
+
+Oh, you *really* don't want "magic" to be the answer... :P
+
+> So, obviously, some magic in there is making it work for me. I have a 
+> hard time locating the magic in question though. :-/
+
+Which shell are you using? MSYS-bash?
+Which make are you using? MSYS-GNU?
+Which Perl are you using? ActiveState? MSYS?
+
+I'm using cygwin 1.5.22, along with the cygwin versions of
+bash 3.2, GNU make 3.81, perl 5.8.7
+
+I noticed that the clink.pl script was not returning the correct exit
+code to the Makefile, which is why I ended up snipping 940 lines of
+output from the earlier #error demonstration; the Makefile does not
+notice when the compile exits with an error.
+
+In order to fix this issue for me, I made the following change:
+
+-- >8 --
+diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
+index 0ffd59f..3e4e501 100644
+--- a/compat/vcbuild/scripts/clink.pl
++++ b/compat/vcbuild/scripts/clink.pl
+@@ -45,4 +45,18 @@ if ($is_linking) {
+ 	push(@args, @cflags);
+ }
+ #printf("**** @args\n");
+-exit system(@args);
++
++system(@args);
++
++if ($? == -1) {
++	print "clink.pl: failed to execute: $!\n";
++	exit 1;
++}
++elsif ($? & 127) {
++	printf "clink.pl: child died with signal %d%s\n",
++		($? & 127), ($? & 128) ? ', coredump.' : '.';
++	exit 1;
++}
++
++exit $? >> 8;
++
+-- >8 --
+
+See "perldoc -f system" for more explanation of the above. This is
+how it works on unix and unix-alike systems, so this may not work
+too well on (say) ActiveState Perl; Dunno. Also, according to this
+documentation, the form of the call to system() should result in a
+call to an exec function, rather than using a shell; this may or
+may not be true on other platforms.
+
+Having fixed that problem, I modified clink.pl again so that it
+would run args.exe rather than cl.exe; this allowed me to see,
+using: make -> perl -> "system()" -> args.exe, just what will be
+passed to the compiler.
+
+Just in case you can't guess, create args.exe from:
+
+    $ cat -n args.c
+         1	#include <stdio.h>
+         2	
+         3	int main(int argc, char *argv[])
+         4	{
+         5		int i;
+         6	
+         7		for (i=0; i< argc; i++) {
+         8			printf("argv[%d] = '%s'\n", i, argv[i]);
+         9		}
+        10		exit(1);
+        11	}
+        12	
+    $ 
+
+and put it somewhere in your path (~/bin for me).
+
+    $ make MSVC=1
+    GIT_VERSION = 1.6.5.rc1.38.gb4f27.dirty
+        * new build flags or prefix
+        CC fast-import.o
+    argv[0] = 'args'
+    argv[1] = '-Fofast-import.o'
+    argv[2] = '-c'
+    argv[3] = '-nologo'
+    argv[4] = 'fast-import.c'
+    argv[5] = '-I.'
+    argv[6] = '-I../zlib'
+    argv[7] = '-Icompat/vcbuild'
+    argv[8] = '-Icompat/vcbuild/include'
+    argv[9] = '-DWIN32-D_CONSOLE'
+    [...snipped...]
+    argv[56] = '-Icompat/regex'
+    make: *** [fast-import.o] Error 1
+
+Perhaps you could try a similar exercise?
+
+Hmm, do you have any funny environment variables set which msvc is
+picking up? 
+Oh, what about the CL variable?
+
+> That being said, does adding the space between the defines fix the 
+> MSVC compilation using Cygwin's GNU Make? It's none-the-less a correct 
+> patch, so you get an ack from me. Thanks!
+> 
+> Acked-by: Marius Storm-Olsen <mstormo@gmail.com>
 > 
 
-This is a much better idea.
-
-Note that I also have Digital-Mars C/C++ 8.50, Open Watcom C/C++ 1.8
-and lcc 4.2 installed. So, lets add to our previous tests:
-
-Digital-Mars:
-
-    $ dmc hello.c
-    link hello,,,user32+kernel32/noi;
-
-    $ ./hello.exe
-    _WIN32
-    WIN32
-    Hello world
-    $ 
-
-    $ dmc -DIW_H hello.c
-    link hello,,,user32+kernel32/noi;
-
-    $ ./hello.exe
-    _WIN32
-    WIN32
-    Hello world
-    $ 
-
-    $ dmc -DWIN32-D_CONSOLE hello.c
-    Command line error: bad -D switch, need '=' after macro name--- errorlevel 1
-    $ 
-
-Open Watcom:
-
-    $ wcl386 hello.c
-    [...compiler output snipped...]
-    $ ./hello.exe
-    _WIN32
-    Hello world
-    $ 
-
-    $ wcl386 -DIW_H hello.c
-    [...compiler output snipped...]
-    $ ./hello.exe
-    _WIN32
-    Hello world
-    $ 
-
-    $ wcl386 -DWIN32-D_CONSOLE hello.c
-    Open Watcom C/C++32 Compile and Link Utility Version 1.8
-    Portions Copyright (c) 1988-2002 Sybase, Inc. All Rights Reserved.
-    Source code is available under the Sybase Open Watcom Public License.
-    See http://www.openwatcom.org/ for details.
-           wcc386 hello.c  -DWIN32 -D_CONSOLE
-    Open Watcom C32 Optimizing Compiler Version 1.8
-    Portions Copyright (c) 1984-2002 Sybase, Inc. All Rights Reserved.
-    Source code is available under the Sybase Open Watcom Public License.
-    See http://www.openwatcom.org/ for details.
-    hello.c: 25 lines, included 757, 0 warnings, 0 errors
-    Code size: 52
-           wlink @__wcl__.lnk
-    Open Watcom Linker Version 1.8
-    Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-    Source code is available under the Sybase Open Watcom Public License.
-    See http://www.openwatcom.org/ for details.
-    loading object files
-    searching libraries
-    creating a Windows NT character-mode executable
-    $ ./hello.exe
-    _WIN32
-    WIN32
-    Hello world
-    $ 
-[Note: I didn't snip the compiler output here so that you could see that
-the Watcom driver program had "fixed" the malformed -Define and passed
-it as two separate parameters to the compiler proper!]
-
-Also note that Open Watcom is currently being ported to Linux, I *think*
-Digital-Mars already has a Linux version and lcc does have a Linux
-version. However, I think it's reasonably safe to assume we won't see a
-Linux version of msvc.
-
-So, I think something like this in git-compat-util.h:
-
-#if defined(_WIN32) && !defined(__CYGWIN__)
-# define WIN32_API
-# define WIN32_LEAN_AND_MEAN
-# include <winsock2.h>
-# include <windows.h>
-#endif
-
-and replace all #if(n)def WIN32|_WIN32 with #if(n)def WIN32_API.
-
-The only use of the <windows.h> header by cygwin can be moved
-into compat/cygwin.c. (I don't much like cygwin using the
-Win32 API anyway!)
-
-> So, then we can use #ifdef API_WIN32 when using the Win32 API is the 
-> only option/preferred for MinGW or MSVC; and use #ifdef OS_WINDOWS 
-> when there are things that affect all the Windows builds.
-> 
-> Opinions?
-
-see above. I don't think OS_WINDOWS is necessary.
-
-Anyway, *something* like this would be an improvement.
+Thanks!
 
 ATB,
 Ramsay Jones
