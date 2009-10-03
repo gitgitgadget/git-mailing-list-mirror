@@ -1,181 +1,149 @@
 From: =?UTF-8?q?Herv=C3=A9=20Cauwelier?= <herve@itaapy.com>
-Subject: [PATCH 1/6] Open the pack file and keep a map on it.
-Date: Sat,  3 Oct 2009 20:09:56 +0200
-Message-ID: <1254593401-18801-2-git-send-email-herve@itaapy.com>
+Subject: [PATCH 4/6] Inflate an object from a pack file
+Date: Sat,  3 Oct 2009 20:09:59 +0200
+Message-ID: <1254593401-18801-5-git-send-email-herve@itaapy.com>
 References: <1254593401-18801-1-git-send-email-herve@itaapy.com>
+ <1254593401-18801-2-git-send-email-herve@itaapy.com>
+ <1254593401-18801-3-git-send-email-herve@itaapy.com>
+ <1254593401-18801-4-git-send-email-herve@itaapy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Herv=C3=A9=20Cauwelier?= <herve@itaapy.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 03 20:13:18 2009
+X-From: git-owner@vger.kernel.org Sat Oct 03 20:13:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mu96b-0004eY-R1
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 20:13:18 +0200
+	id 1Mu96c-0004eY-Tf
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 20:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716AbZJCSJ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2009 14:09:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756711AbZJCSJ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 14:09:28 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:54121 "EHLO smtp2-g21.free.fr"
+	id S1756772AbZJCSJc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Oct 2009 14:09:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756720AbZJCSJb
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 14:09:31 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:54143 "EHLO smtp2-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756437AbZJCSJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2009 14:09:27 -0400
+	id S1756704AbZJCSJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2009 14:09:29 -0400
 Received: from smtp2-g21.free.fr (localhost [127.0.0.1])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id F39034B0184;
-	Sat,  3 Oct 2009 20:08:45 +0200 (CEST)
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 86F154B016F;
+	Sat,  3 Oct 2009 20:08:47 +0200 (CEST)
 Received: from localhost.localdomain (mon75-11-82-242-92-33.fbx.proxad.net [82.242.92.33])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id EFC854B007A;
-	Sat,  3 Oct 2009 20:08:42 +0200 (CEST)
+	by smtp2-g21.free.fr (Postfix) with ESMTP id 8CD1C4B015F;
+	Sat,  3 Oct 2009 20:08:45 +0200 (CEST)
 X-Mailer: git-send-email 1.6.4.4
-In-Reply-To: <1254593401-18801-1-git-send-email-herve@itaapy.com>
+In-Reply-To: <1254593401-18801-4-git-send-email-herve@itaapy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129487>
 
-On the same model than the idx file.
+Support delta objects too.
 
 Signed-off-by: Herv=C3=A9 Cauwelier <herve@itaapy.com>
 ---
- src/odb.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++-
- src/odb.h |    5 ++-
- 2 files changed, 68 insertions(+), 4 deletions(-)
+ src/odb.c |   69 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++-
+ 1 files changed, 68 insertions(+), 1 deletions(-)
 
 diff --git a/src/odb.c b/src/odb.c
-index 6d646a4..a562a19 100644
+index 89ee1f2..bc26cf7 100644
 --- a/src/odb.c
 +++ b/src/odb.c
-@@ -64,6 +64,10 @@ struct git_pack {
+@@ -28,6 +28,7 @@
+ #include "git/zlib.h"
+ #include "fileops.h"
+ #include "hash.h"
++#include "delta-apply.h"
+ #include "odb.h"
 =20
- 	/** Name of the pack file(s), without extension ("pack-abc"). */
- 	char pack_name[GIT_PACK_NAME_MAX];
-+
-+	/** The .pack file, mapped into memory. */
-+	git_file pack_fd;
-+	git_map pack_map;
- };
- typedef struct git_pack git_pack;
+ #define GIT_PACK_NAME_MAX (5 + 40 + 1)
+@@ -232,7 +233,7 @@ static int is_zlib_compressed_data(unsigned char *d=
+ata)
+ 	unsigned int w;
 =20
-@@ -782,7 +786,7 @@ static int pack_openidx(git_pack *p)
- 			goto invalid_fail;
- 		data =3D p->idx_map.data;
-=20
--		if (decode32(&data[0]) =3D=3D PACK_TOC) {
-+		if (decode32(&data[0]) =3D=3D IDX_TOC) {
- 			switch (decode32(&data[1])) {
- 			case 2:
- 				if (pack_openidx_v2(p))
-@@ -809,6 +813,59 @@ unlock_fail:
- 	return GIT_ERROR;
+ 	w =3D ((unsigned int)(data[0]) << 8) + data[1];
+-	return data[0] =3D=3D 0x78 && !(w %31);
++	return data[0] =3D=3D 0x78 && !(w % 31);
  }
 =20
-+static int pack_openpack_map(git_pack *p)
+ static size_t get_binary_object_header(obj_hdr *hdr, gitfo_buf *obj)
+@@ -1192,6 +1193,72 @@ int git_odb__read_loose(git_obj *out, git_odb *d=
+b, const git_oid *id)
+ 	return GIT_SUCCESS;
+ }
+=20
++static int inflate_pack_obj(git_obj *out, git_pack *p, off_t offset)
 +{
-+	char pb[GIT_PATH_MAX];
-+	off_t len;
++	obj_hdr hdr;
++	gitfo_buf buf;
++	size_t used;
++	void *data;
++	git_obj base;
 +
-+	if (git__fmt(pb, sizeof(pb), "%s/pack/%s.pack",
-+			p->db->objects_dir,
-+			p->pack_name) < 0)
++	/* Cast the map to a gitfo_buf */
++	buf.data =3D (unsigned char *)p->pack_map.data + offset;
++	buf.len =3D p->pack_map.len - offset;
++
++	/*
++	 * Read the object header, which is an (uncompressed)
++	 * binary encoding of the object type and size.
++	 */
++	if (!(used =3D get_binary_object_header(&hdr, &buf)))
 +		return GIT_ERROR;
 +
-+	if ((p->pack_fd =3D gitfo_open(pb, O_RDONLY)) < 0)
-+		return GIT_ERROR;
++	/*
++	 * Read the object data as a zlib compressed data
++	 */
++	buf.data +=3D used;
++	buf.len -=3D used;
++	assert(is_zlib_compressed_data(buf.data));
 +
-+	if ((len =3D gitfo_size(p->pack_fd)) < 0
-+			|| !git__is_sizet(len)
-+			|| gitfo_map_ro(&p->pack_map, p->pack_fd, 0, (size_t)len)) {
-+		gitfo_close(p->pack_fd);
++	if (!(data =3D git__malloc(hdr.size + 1)))
 +		return GIT_ERROR;
++	if (inflate_buffer(buf.data, buf.len, data, hdr.size))
++		goto inflate_fail;
++
++	switch (hdr.type) {
++		case GIT_OBJ_COMMIT:
++		case GIT_OBJ_TREE:
++		case GIT_OBJ_BLOB:
++		case GIT_OBJ_TAG:
++			out->data =3D data;
++			out->len =3D hdr.size;
++			out->type =3D hdr.type;
++			return GIT_SUCCESS;
++		case GIT_OBJ_OFS_DELTA:
++			offset -=3D hdr.base_offset;
++			if (inflate_pack_obj(&base, p, offset))
++				goto inflate_fail;
++			if (git__delta_apply(out, base.data, base.len, data, hdr.size))
++				goto inflate_fail;
++			out->type =3D base.type;
++			return GIT_SUCCESS;
++		case GIT_OBJ_REF_DELTA:
++			if (p->idx_search(&offset, p, &hdr.base_name))
++				goto inflate_fail;
++			if (inflate_pack_obj(&base, p, offset))
++				goto inflate_fail;
++			if (git__delta_apply(out, base.data, base.len, data, hdr.size))
++				goto inflate_fail;
++			out->type =3D base.type;
++			return GIT_SUCCESS;
++		default:
++			goto inflate_fail;
 +	}
 +
-+	return GIT_SUCCESS;
-+}
-+
-+static int pack_openpack(git_pack *p)
-+{
-+	gitlck_lock(&p->lock);
-+	if (p->invalid)
-+		goto unlock_fail;
-+	if (p->pack_fd < 0) {
-+		uint32_t *data;
-+
-+		if (pack_openpack_map(p))
-+			goto invalid_fail;
-+		data =3D p->pack_map.data;
-+
-+		if (decode32(&data[0]) !=3D PACK_TOC)
-+			goto unmap_fail;
-+	}
-+	gitlck_unlock(&p->lock);
-+	return GIT_SUCCESS;
-+
-+unmap_fail:
-+	gitfo_free_map(&p->pack_map);
-+
-+invalid_fail:
-+	p->invalid =3D 1;
-+	p->pack_fd =3D -1;
-+
-+unlock_fail:
-+	gitlck_unlock(&p->lock);
++inflate_fail:
++	free(data);
 +	return GIT_ERROR;
 +}
 +
- static void pack_decidx(git_pack *p)
+ static int read_packed(git_obj *out, git_pack *p, const git_oid *id)
  {
- 	gitlck_lock(&p->lock);
-@@ -830,6 +887,11 @@ static void pack_dec(git_pack *p)
- 			gitfo_close(p->idx_fd);
- 			free(p->im_fanout);
- 		}
-+		if (p->pack_fd >=3D 0) {
-+			gitfo_free_map(&p->pack_map);
-+			gitfo_close(p->pack_fd);
-+			p->pack_fd =3D -1;
-+		}
-=20
- 		gitlck_free(&p->lock);
- 		free(p);
-@@ -861,6 +923,7 @@ static git_pack *alloc_pack(const char *pack_name)
- 	gitlck_init(&p->lock);
- 	strcpy(p->pack_name, pack_name);
- 	p->refcnt =3D 1;
-+	p->pack_fd =3D -1;
- 	return p;
- }
-=20
-@@ -895,7 +958,7 @@ static int scan_one_pack(void *state, char *name)
-=20
- 	r->next =3D *ret;
- 	*ret =3D r;
--	return 0;
-+	return GIT_SUCCESS;
- }
-=20
- static git_packlist* scan_packs(git_odb *db)
-diff --git a/src/odb.h b/src/odb.h
-index 2f205b2..0311d78 100644
---- a/src/odb.h
-+++ b/src/odb.h
-@@ -11,9 +11,10 @@
-  *   uint32_t *fanout =3D ... the file data at offset 0 ...
-  *   ntohl(fanout[0]) < ntohl(fanout[1])
-  *
-- * The value chosen here for PACK_TOC is such that the above
-+ * The value chosen here for IDX_TOC is such that the above
-  * cannot be true for an idx v1 file.
-  */
--#define PACK_TOC 0xff744f63 /* -1tOc */
-+#define IDX_TOC 0xff744f63 /* -1tOc */
-+#define PACK_TOC 0x5041434b /* PACK */
-=20
- #endif
+ 	off_t pos;
 --=20
 1.6.4.4
