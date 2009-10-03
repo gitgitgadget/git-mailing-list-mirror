@@ -1,60 +1,66 @@
-From: Johan Sageryd <j416@1616.se>
-Subject: Re: [PATCH] Fix '--relative-date'
-Date: Sat, 03 Oct 2009 20:18:39 +0900
-Message-ID: <4AC7330F.3070502@1616.se>
-References: <1254543618-3772-1-git-send-email-j416@1616.se> <20091003100615.GC17873@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 03 13:40:44 2009
+From: Petter Urkedal <urkedal@nbi.dk>
+Subject: [PATCH] Reserve a slot for argv[0] in default_arg.
+Date: Sat,  3 Oct 2009 15:29:31 +0200
+Message-ID: <1254576571-29274-1-git-send-email-urkedal@nbi.dk>
+Cc: Petter Urkedal <urkedal@nbi.dk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 03 15:37:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mu2yh-0007qZ-Sy
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 13:40:44 +0200
+	id 1Mu4nh-0000Tt-Ed
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Oct 2009 15:37:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755270AbZJCLke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2009 07:40:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755245AbZJCLke
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 07:40:34 -0400
-Received: from mail1.asahi-net.or.jp ([202.224.39.197]:29310 "EHLO
-	mail1.asahi-net.or.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755219AbZJCLkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2009 07:40:33 -0400
-X-Greylist: delayed 1316 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Oct 2009 07:40:33 EDT
-Received: from mail.1616.se (attsi1-src.asahi-net.or.jp [220.157.253.2])
-	by mail1.asahi-net.or.jp (Postfix) with ESMTP id A12AF724F2;
-	Sat,  3 Oct 2009 20:18:40 +0900 (JST)
-Received: from j.local (unknown [10.0.1.1])
-	by mail.1616.se (Postfix) with ESMTP id E9CD71A7BE20;
-	Sat,  3 Oct 2009 20:18:40 +0900 (JST)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
-In-Reply-To: <20091003100615.GC17873@coredump.intra.peff.net>
+	id S1756306AbZJCNgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Oct 2009 09:36:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756226AbZJCNgy
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 09:36:54 -0400
+Received: from 79.142.225.158.static.router1.bolignet.dk ([79.142.225.158]:59377
+	"EHLO eideticdew.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756166AbZJCNgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Oct 2009 09:36:54 -0400
+X-Greylist: delayed 425 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Oct 2009 09:36:54 EDT
+Received: by eideticdew.org (Postfix, from userid 502)
+	id 2A951AD466; Sat,  3 Oct 2009 15:29:52 +0200 (CEST)
+X-Mailer: git-send-email 1.6.4.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129485>
 
-> I've picked up your patch in my tree with the following test squashed
-> in:
-> 
-> diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-> index a4d8fa8..75b02af 100755
-> --- a/t/t0006-date.sh
-> +++ b/t/t0006-date.sh
-> @@ -24,6 +24,7 @@ check_show 13000000 '5 months ago'
->  check_show 37500000 '1 year, 2 months ago'
->  check_show 55188000 '1 year, 9 months ago'
->  check_show 630000000 '20 years ago'
-> +check_show 31449600 '12 months ago'
->  
->  check_parse() {
->  	echo "$1 -> $2" >expect
+Setting "av" to one slot before the allocated "default_arg" array causes
+glibc abort with "free(): invalid next size (normal)" in some
+configurations (Gentoo, glibc-2.9_p20081201-r2, gcc-5.3.2 with PIE).
+---
+ builtin-show-branch.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-Thank you!
-
-/Johan
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 3510a86..3ab72b7 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -568,6 +568,9 @@ static int git_show_branch_config(const char *var, const char *value, void *cb)
+ 		if (default_alloc <= default_num + 1) {
+ 			default_alloc = default_alloc * 3 / 2 + 20;
+ 			default_arg = xrealloc(default_arg, sizeof *default_arg * default_alloc);
++			if (!default_num)
++			    /* One unused position for argv[0]. */
++			    default_arg[default_num++] = NULL;
+ 		}
+ 		default_arg[default_num++] = xstrdup(value);
+ 		default_arg[default_num] = NULL;
+@@ -692,8 +695,8 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 
+ 	/* If nothing is specified, try the default first */
+ 	if (ac == 1 && default_num) {
+-		ac = default_num + 1;
+-		av = default_arg - 1; /* ick; we would not address av[0] */
++		ac = default_num;
++		av = default_arg;
+ 	}
+ 
+ 	ac = parse_options(ac, av, prefix, builtin_show_branch_options,
+-- 
+1.6.4.4
