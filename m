@@ -1,69 +1,63 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-Received: (qmail 10891 invoked by uid 107); 4 Oct 2009 13:24:07 -0000
+X-Spam-Status: No, score=-0.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+Received: (qmail 11097 invoked by uid 107); 4 Oct 2009 13:49:44 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 04 Oct 2009 09:24:06 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 04 Oct 2009 09:49:42 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756765AbZJDNUZ (ORCPT <rfc822;peff@peff.net>);
-	Sun, 4 Oct 2009 09:20:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756672AbZJDNUZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 09:20:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756645AbZJDNUZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 09:20:25 -0400
-Received: (qmail invoked by alias); 04 Oct 2009 13:19:37 -0000
-Received: from i59F574C2.versanet.de (EHLO atjola.homenet) [89.245.116.194]
-  by mail.gmx.net (mp071) with SMTP; 04 Oct 2009 15:19:37 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/OkplanAjO7lqbKMj4XWQIeAuHf+Jrk1Gf4CUxlA
-	MLsRLJa9VRpboL
-Date:	Sun, 4 Oct 2009 15:19:33 +0200
-From:	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To:	Pascal Obry <pascal@obry.net>
-Cc:	git list <git@vger.kernel.org>
-Subject: Re: A bug or a feature (git diff --author + --grep)
-Message-ID: <20091004131933.GA32000@atjola.homenet>
-References: <4AC87837.2010004@obry.net>
+	id S1756833AbZJDNpN (ORCPT <rfc822;peff@peff.net>);
+	Sun, 4 Oct 2009 09:45:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbZJDNpM
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 09:45:12 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:35871 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752078AbZJDNpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2009 09:45:12 -0400
+Received: by ewy7 with SMTP id 7so2745961ewy.17
+        for <git@vger.kernel.org>; Sun, 04 Oct 2009 06:44:34 -0700 (PDT)
+Received: by 10.216.37.10 with SMTP id x10mr804892wea.31.1254663871950;
+        Sun, 04 Oct 2009 06:44:31 -0700 (PDT)
+Received: from ?192.168.97.11? ([80.10.46.73])
+        by mx.google.com with ESMTPS id i6sm9584942gve.2.2009.10.04.06.44.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 04 Oct 2009 06:44:31 -0700 (PDT)
+Message-ID: <4AC8A6C1.9060905@obry.net>
+Date:	Sun, 04 Oct 2009 15:44:33 +0200
+From:	Pascal Obry <pascal@obry.net>
+Reply-To: pascal@obry.net
+Organization: Home - http://www.obry.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+To:	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+CC:	git list <git@vger.kernel.org>
+Subject: Re: A bug or a feature (git diff --author + --grep)
+References: <4AC87837.2010004@obry.net> <20091004131933.GA32000@atjola.homenet>
+In-Reply-To: <20091004131933.GA32000@atjola.homenet>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4AC87837.2010004@obry.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.67
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-On 2009.10.04 12:25:59 +0200, Pascal Obry wrote:
-> 
-> I would have expected the --author and --grep option to work as
-> pipeline filters. The first on the command line being applied first.
-> 
-> In other word I would have expected:
-> 
->    --author AND --grep
-> 
-> But it turn out that the result are maching either --author or --grep:
-> 
->    --author OR --grep
-> 
-> For example on the Git project:
-> 
->    $ git log --author=obry --grep=Cygwin
-> 
-> Returns commit from obry and commit having Cygwin in their log.
-> 
-> Is this a bug or a feature?
+Björn,
 
-Feature. There's --all-match to switch on AND-mode.
+> Feature. There's --all-match to switch on AND-mode.
 
-Björn
+Thanks for the quick answer, I missed the --all-macth option.
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+
