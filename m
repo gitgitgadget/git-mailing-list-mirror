@@ -1,170 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Add the utterly important 'mispel' command
-Date: Sun, 4 Oct 2009 00:41:55 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910040040180.4985@pacific.mpi-cbg.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Interim maintainer tree
+Date: Sat, 03 Oct 2009 23:06:30 -0700
+Message-ID: <7viqevu1zt.fsf@alter.siamese.dyndns.org>
+References: <20090925160504.GW14660@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: spearce@spearce.org, peff@peff.net, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 04 00:41:57 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Oct 04 08:17:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuDIa-0003Om-Of
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 00:41:57 +0200
+	id 1MuKPJ-0007uH-Bj
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 08:17:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753094AbZJCWkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Oct 2009 18:40:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbZJCWkY
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Oct 2009 18:40:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752747AbZJCWkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Oct 2009 18:40:23 -0400
-Received: (qmail invoked by alias); 03 Oct 2009 22:39:35 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp061) with SMTP; 04 Oct 2009 00:39:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+J3NBW8ruJoEJvi78F7rz6Am+oap1na9DTaaKm8o
-	nd333Nje3quN6f
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.43
+	id S1751845AbZJDGHs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2009 02:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbZJDGHs
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 02:07:48 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56909 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751649AbZJDGHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2009 02:07:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 563E86AC12;
+	Sun,  4 Oct 2009 02:06:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bozTYlw7pPqc3WAPr9MBoNdvx1E=; b=V6izIS
+	Sy0YhsSQ3ivNciYwRxaaJIpwr8W4i/VOBmIyc3QYgUbmL1nY0eP56MgUx+YFcFPQ
+	Jf5wvd3+Xw61c+asyFJdHlvxsDCuSbyFPR16QSPIxQ0qn7lcT8ZAIqAea3Brvz1Z
+	U5EtDG9HJU3jlfsJnXPq6Why1lq4hJofWq3C0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Q1sDQHLptyKA3n/yHkWgXSmAyOpKG9GI
+	kNX6zkFsIAlo+Ld1B1I6nddMkT+OHr/toM1x034hY5Rg1B2BcU+gRVNKfwAx1eX5
+	dWMc+nQGys/OdjsEp1U5jTQniyyDCnXu+Rl++76c5OofCpCvbUNA+XueLdQJiyeW
+	oPtl81TZL/I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D4A86AC11;
+	Sun,  4 Oct 2009 02:06:37 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BDFBA6AC10; Sun,  4 Oct 2009
+ 02:06:31 -0400 (EDT)
+In-Reply-To: <20090925160504.GW14660@spearce.org> (Shawn O. Pearce's message
+ of "Fri\, 25 Sep 2009 09\:05\:04 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 133E3B72-B0AC-11DE-9C39-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129508>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-If you do not remember how to mispel a command, you need some help.
+> Junio is on vaction for the next week.  In his absence Peff and I
+> are trying to keep up with current patches in my fork:
+>
+>   git://repo.or.cz/git/spearce.git
+>   http://repo.or.cz/r/git/spearce.git
+>
+> Right now the tree matches Junio's last push, I'll try to pick up
+> the patches since then and push later today.
 
-Provide it.
+Thanks, both.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: A Large Angry SCM <gitzilla@gmail.com>
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
-Signed-off-by: Christian Halstrick <christian.halstrick@sap.com>
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-Signed-off-by: Sverre Rabbelier <srabbelier@gmail.com>
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-Acked-By: <paisleyklm@gmail.com>
----
+I've fetched, but haven't fully examined "log ..spearce/*" nor "log ..peff/*"
+yet.
 
-	Please apply.
+I noticed that some topics in 'pu' have been rebased (not complaining, but
+just making sure I am not hallucinating).
 
- Makefile         |    1 +
- builtin-mispel.c |   11 +++++++++++
- builtin.h        |    2 ++
- git.c            |    1 +
- help.c           |   31 +++++++++++++++++++++++++++++++
- 5 files changed, 46 insertions(+), 0 deletions(-)
- create mode 100644 builtin-mispel.c
-
-diff --git a/Makefile b/Makefile
-index 690ac55..0b48b3b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -610,6 +610,7 @@ BUILTIN_OBJS += builtin-merge-file.o
- BUILTIN_OBJS += builtin-merge-ours.o
- BUILTIN_OBJS += builtin-merge-recursive.o
- BUILTIN_OBJS += builtin-mktree.o
-+BUILTIN_OBJS += builtin-mispel.o
- BUILTIN_OBJS += builtin-mv.o
- BUILTIN_OBJS += builtin-name-rev.o
- BUILTIN_OBJS += builtin-pack-objects.o
-diff --git a/builtin-mispel.c b/builtin-mispel.c
-new file mode 100644
-index 0000000..e685f91
---- /dev/null
-+++ b/builtin-mispel.c
-@@ -0,0 +1,11 @@
-+#include "cache.h"
-+#include "builtin.h"
-+
-+int cmd_mispel(int argc, const char **argv, const char *prefix)
-+{
-+	if (argc < 2)
-+		die ("What command do you want to mispel?");
-+	error("You probably meant %s", help_mispeld_comd(argv[1]));
-+	return 0;
-+
-+}
-diff --git a/builtin.h b/builtin.h
-index 20427d2..2973d90 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -12,6 +12,7 @@ extern const char git_more_info_string[];
- 
- extern void list_common_cmds_help(void);
- extern const char *help_unknown_cmd(const char *cmd);
-+const char *help_mispeld_comd(const char *cmd);
- extern void prune_packed_objects(int);
- extern int read_line_with_nul(char *buf, int size, FILE *file);
- extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
-@@ -73,6 +74,7 @@ extern int cmd_merge_ours(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_file(int argc, const char **argv, const char *prefix);
- extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
- extern int cmd_mktree(int argc, const char **argv, const char *prefix);
-+extern int cmd_mispel(int argc, const char **argv, const char *prefix);
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 807d875..2caca54 100644
---- a/git.c
-+++ b/git.c
-@@ -327,6 +327,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
- 		{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
- 		{ "mktree", cmd_mktree, RUN_SETUP },
-+		{ "mispel", cmd_mispel },
- 		{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
- 		{ "name-rev", cmd_name_rev, RUN_SETUP },
- 		{ "pack-objects", cmd_pack_objects, RUN_SETUP },
-diff --git a/help.c b/help.c
-index 6c46d8b..97f0f22 100644
---- a/help.c
-+++ b/help.c
-@@ -296,6 +296,37 @@ static void add_cmd_list(struct cmdnames *cmds, struct cmdnames *old)
- 	old->names = NULL;
- }
- 
-+const char *help_mispeld_comd(const char *cmd)
-+{
-+	struct cmdnames main_cmds, other_cmds;
-+	int i;
-+
-+	memset(&main_cmds, 0, sizeof(main_cmds));
-+	memset(&other_cmds, 0, sizeof(main_cmds));
-+	git_config(git_unknown_cmd_config, NULL);
-+
-+	load_command_list("git-", &main_cmds, &other_cmds);
-+
-+	add_cmd_list(&main_cmds, &aliases);
-+	add_cmd_list(&main_cmds, &other_cmds);
-+	qsort(main_cmds.names, main_cmds.cnt,
-+	      sizeof(main_cmds.names), cmdname_compare);
-+	uniq(&main_cmds);
-+
-+	/* This reuses cmdname->len for similarity index */
-+	for (i = 0; i < main_cmds.cnt; ++i)
-+		main_cmds.names[i]->len =
-+			levenshtein(cmd, main_cmds.names[i]->name, 0, 2, 1, 4);
-+
-+	qsort(main_cmds.names, main_cmds.cnt,
-+	      sizeof(*main_cmds.names), levenshtein_compare);
-+
-+	if (main_cmds.cnt< 2)
-+		die ("Uh oh. Your system reports no Git commands at all.");
-+
-+	return main_cmds.names[1]->name;
-+}
-+
- const char *help_unknown_cmd(const char *cmd)
- {
- 	int i, n, best_similarity = 0;
--- 
-1.6.4.msysgit.0.1.g2dcf.dirty
+Do you have preferences/suggestions as to how to proceed?  Should I just
+take the tips over at this point, or do you have some more patches you
+were polishing but haven't pushed out that I should wait for?
