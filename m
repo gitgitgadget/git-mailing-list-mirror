@@ -1,182 +1,91 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD,STOX_REPLY_TYPE,
-	STOX_REPLY_TYPE_WITHOUT_QUOTES,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=1.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
-Received: (qmail 10651 invoked by uid 107); 4 Oct 2009 12:28:23 -0000
+Received: (qmail 10874 invoked by uid 107); 4 Oct 2009 13:24:06 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 04 Oct 2009 08:28:20 -0400
+    by peff.net (qpsmtpd/0.40) with ESMTP; Sun, 04 Oct 2009 09:24:04 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919AbZJDMWW (ORCPT <rfc822;peff@peff.net>);
-	Sun, 4 Oct 2009 08:22:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbZJDMWW
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 08:22:22 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:62932 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754398AbZJDMWV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 08:22:21 -0400
-Received: by bwz6 with SMTP id 6so1935291bwz.37
-        for <git@vger.kernel.org>; Sun, 04 Oct 2009 05:21:43 -0700 (PDT)
-DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:from:to:subject
-         :date:mime-version:content-type:content-transfer-encoding:x-priority
-         :x-msmail-priority:x-mailer:x-mimeole;
-        bh=4sYDJZDMQcKlQHTORPajhHD4r2KsV1WjMTG4d4K5DoM=;
-        b=PfAwxKIbsTtfOuKEIkrpfVKI4cDEpfYeMAgBuCkGe0VCk4CVNxWcSHmCHTmRiZNR2a
-         fiZjebZ+oKdfMAiw+BJX9kAywNhi/phYbEvzW8beYd232Yv0J/WD2tauAP6hHJnjviTf
-         UukHmOyd7khHwmc+JR1sLwUL9iUWRxgZqkZ+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:from:to:subject:date:mime-version:content-type
-         :content-transfer-encoding:x-priority:x-msmail-priority:x-mailer
-         :x-mimeole;
-        b=o4pAMzH3Rscwlh9Tdgx+ve8crzIEpiZi47FCrRzuwrB99kxVk2pT8Bqdf8jrj6jjc5
-         uOxgqjpWr8kC/RITMBjFfJl/1rALcwG+ceo39QDfxso61mGn8y5KEj9Y3/v4zIoD6+AK
-         +WhRNBWLGgZHIZ5cI16M0maXhNLjKcomOhRAI=
-Received: by 10.204.162.143 with SMTP id v15mr3013789bkx.50.1254658903616;
-        Sun, 04 Oct 2009 05:21:43 -0700 (PDT)
-Received: from teddy ([81.180.162.194])
-        by mx.google.com with ESMTPS id g28sm2360659fkg.15.2009.10.04.05.21.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 04 Oct 2009 05:21:43 -0700 (PDT)
-Message-ID: <98300251CB1D46A0B635B4495138C3A7@teddy>
-From:	=?utf-8?B?T2N0YXZpYW4gUsOixZ9uacWjxIM=?= <orasnita@gmail.com>
-To:	<git@vger.kernel.org>
-Subject: reset doesn't reset a revert?
-Date:	Sun, 4 Oct 2009 15:18:36 +0300
-MIME-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
+	id S1756525AbZJDNTI (ORCPT <rfc822;peff@peff.net>);
+	Sun, 4 Oct 2009 09:19:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753257AbZJDNTI
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 09:19:08 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:48407 "EHLO
+	psyche.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751263AbZJDNTH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2009 09:19:07 -0400
+Received: from [10.5.26.28] (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
+	(authenticated bits=0)
+	by psyche.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n94DIKH4006986
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 4 Oct 2009 09:18:23 -0400
+Subject: Re: [PATCH] tests: make all test files executable
+Mime-Version: 1.0 (Apple Message framework v1076)
+Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+From:	Mark Rada <marada@uwaterloo.ca>
+In-Reply-To: <20091002083946.GA8627@coredump.intra.peff.net>
+Date:	Sun, 4 Oct 2009 09:18:20 -0400
+Cc:	Mark A Rada <marada@uwaterloo.ca>, git@vger.kernel.org
 Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5843
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5579
+Message-Id: <1762B430-2DC0-48F5-8C34-8428F9145A1E@mailservices.uwaterloo.ca>
+References: <4AC55E78.7010109@mailservices.uwaterloo.ca> <20091002080134.GD27664@coredump.intra.peff.net> <20091002083946.GA8627@coredump.intra.peff.net>
+To:	Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.1076)
+X-UUID:	c7a9e85f-ebf9-47e3-82de-9d1686c81e4a
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
-Hi,
+On 2009-10-02, at 4:39 AM, Jeff King wrote:
 
-Under Windows XP, using git version 1.6.4.msysgit.0, I have tried:
+> On Fri, Oct 02, 2009 at 04:01:34AM -0400, Jeff King wrote:
+>
+>>> 0 files changed, 0 insertions(+), 0 deletions(-)
+>>> mode change 100644 => 100755 t/t5531-deep-submodule-push.sh
+>>> mode change 100644 => 100755 t/t9501-gitweb-standalone-http- 
+>>> status.sh
+>>>
+>>> diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep- 
+>>> submodule-push.sh
+>>> old mode 100644
+>>> new mode 100755
+>>> diff --git a/t/t9501-gitweb-standalone-http-status.sh
+>>> b/t/t9501-gitweb-standalone-http-status.sh
+>>> old mode 100644
+>>> new mode 100755
+>>
+>> When applying via "am", I only got the first change in my tree.  
+>> I'll see
+>> if I can confirm and make a test case.
+>
+> Ah, nevermind. The problem is that your patch was word-wrapped, making
+> the second "diff --git" line bogus. It would have been nice to have it
+> print a warning instead of silently ignoring that bit of the patch.
+>
 
-E:\lucru\git\k>echo foo > file.txt
-E:\lucru\git\k>echo bar >> file.txt
-E:\lucru\git\k>git init
-Initialized empty Git repository in E:/lucru/git/k/.git/
-E:\lucru\git\k>git add .
-warning: CRLF will be replaced by LF in file.txt.
-E:\lucru\git\k>git commit -a
-[master (root-commit) e969cd5] First commit
-warning: CRLF will be replaced by LF in file.txt.
-1 files changed, 2 insertions(+), 0 deletions(-)
-create mode 100644 file.txt
-E:\lucru\git\k>echo baz >> file.txt
-E:\lucru\git\k>git commit -a
-warning: CRLF will be replaced by LF in file.txt.
-warning: CRLF will be replaced by LF in file.txt.
-[master warning: CRLF will be replaced by LF in file.txt.
-fabd2f2] Added baz to file.txt
-1 files changed, 1 insertions(+), 0 deletions(-)
-E:\lucru\git\k>type file.txt
-foo
-bar
-baz
+I didn't have format=flowed buggering things up this time, so I don't
+quite understand the problem; could you please explain with more  
+details?
 
-#Until here, everything's OK.
+When I try to apply the patch from a saved copy of the e-mail, I get
+the following error:
 
-E:\lucru\git\k>git  revert HEAD~
-fatal: Cannot revert a root commit
+	# git am ~/Downloads/\[PATCH\]\ tests_\ make\ all\ test\ files\  
+executable.eml
+	Patch format detection failed.
+	zsh: exit 1     git am
 
-#Does anyone know what does this mean? So I've tried with HEAD^ instead.
+The difference between the patch created by format-patch and the saved
+e-mail is just some e-mail header information. Is that a different error
+than what you were getting? I'm not sure what I'm doing wrong here, help
+would be appreciated.
 
-E:\lucru\git\k>git  revert HEAD^
-More?
-More?
-Finished one revert.
-[master 1beba20] Revert "Added baz to file.txt"
-1 files changed, 0 insertions(+), 1 deletions(-)
+--
+Mark Rada (ferrous26)
+marada@uwaterloo.ca
 
-# What should I respond to the questions More?
-#I've seen that no matter what I type, it adds to the "HEAD" and tells that 
-that commit can't be found, so I just pressed enter.
-
-E:\lucru\git\k>git status
-# On branch master
-nothing to commit (working directory clean)
-E:\lucru\git\k>git log --pretty=format:"%s %h"
-WARNING: terminal is not fully functional
-Revert "Added baz to file.txt" 1beba20
-Added baz to file.txt fabd2f2
-First commit e969cd5
-(END)
-
-#It seems that the revert commit was added successfully.
-
-E:\lucru\git\k>type file.txt
-foo
-bar
-
-#And it seems that not only the repository was changed, but the working 
-directory also. Is it correct?
-
-#Well, now let's say I discovered that this new commit was an error and I 
-want to reset it.
-#And I used HEAD^ because HEAD~ didn't work with revert.
-
-E:\lucru\git\k>git reset HEAD^
-More?
-More?
-E:\lucru\git\k>git log --pretty=format:"%s %h"
-WARNING: terminal is not fully functional
-Revert "Added baz to file.txt" 1beba20
-Added baz to file.txt fabd2f2
-First commit e969cd5
-(END)
-
-#Well, git reset didn't reset the latest commit.
-#Does anyone know why or what I am doing wrong?
-
-E:\lucru\git\k>git status
-# On branch master
-nothing to commit (working directory clean)
-E:\lucru\git\k>git reset HEAD~
-file.txt: locally modified
-E:\lucru\git\k>git log --pretty=format:"%s %h"
-WARNING: terminal is not fully functional
-Added baz to file.txt fabd2f2
-First commit e969cd5
-(END)
-
-#This time git reset resetted the latest HEAD.
-#It seems that git reset wants the HEAD~ commit, while git revert wants the 
-HEAD^ commit. Do you know why (or can I find an explanation for this 
-somewhere)?
-
-E:\lucru\git\k>type file.txt
-foo
-bar
-
-#However, git reset modified just the repository and not the working 
-directory.
-
-I added the line baz in the file file.txt, commited this change and then 
-reverted to the previous commit. This has also deleted the line "baz" from 
-the file.
-Then I resetted the last commit (the revert), however the line "baz" didn't 
-appear in the file.
-
-Is this something normal I should expect, or I am doing something wrong?
-
-Thank you very much.
-
-Octavian
 
