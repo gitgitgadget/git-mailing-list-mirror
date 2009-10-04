@@ -1,77 +1,102 @@
-From: "Vincent Riggs" <skiing@ies.net>
-Subject: Office 2003 for 50 bucks
-Date: Sun, 16 May 2004 21:40:10 -0500
-Sender: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org
-Message-ID: <00e201c43bb8$458b6100$d742fad3@IFCEDBHAH>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH RESEND] git submodule add: make the <path> parameter optional
+Date: Sun, 04 Oct 2009 19:51:36 +0200
+Message-ID: <4AC8E0A8.4000901@web.de>
+References: <4AB8E8D4.40105@web.de> <7vbpl2srw9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============0269226237=="
-X-From: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org Mon May 17 04:55:18 2004
-Return-path: <help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org>
-Received: from monty-python.gnu.org ([199.232.76.173])
-	by deer.gmane.org with esmtp (Exim 3.35 #1 (Debian))
-	id 1BPYHe-0007PF-00
-	for <gnu-help-mcsim@m.gmane.org>; Mon, 17 May 2004 04:55:18 +0200
-Received: from localhost ([127.0.0.1] helo=monty-python.gnu.org)
-	by monty-python.gnu.org with esmtp (Exim 4.34)
-	id 1BPYHD-00006N-Qz
-	for gnu-help-mcsim@m.gmane.org; Sun, 16 May 2004 22:54:51 -0400
-Received: from list by monty-python.gnu.org with tmda-scanned (Exim 4.34)
-	id 1BPYH3-0008UB-SJ
-	for help-mcsim@gnu.org; Sun, 16 May 2004 22:54:42 -0400
-Received: from mail by monty-python.gnu.org with spam-scanned (Exim 4.34)
-	id 1BPYGW-0008NM-C3
-	for help-mcsim@gnu.org; Sun, 16 May 2004 22:54:39 -0400
-Received: from [211.99.103.32] (helo=211.99.103.32)
-	by monty-python.gnu.org with smtp (Exim 4.34) id 1BPY4m-0006b9-DG
-	for help-mcsim@gnu.org; Sun, 16 May 2004 22:42:02 -0400
-Received: from unknown (HELO IFCEDBHAH) (192.168.78.54)
-	by 211.99.103.32 with SMTP; Sun, 16 May 2004 21:40:39 -0500
-To: "Inez Arias" <help-mcsim@gnu.org>
-X-Priority: 3
-X-BeenThere: help-mcsim@gnu.org
-X-Mailman-Version: 2.1.4
-Precedence: list
-List-Id: Users list for the GNU MCSim modeling and simulation program
-	<help-mcsim.gnu.org>
-List-Unsubscribe: <http://mail.gnu.org/mailman/listinfo/help-mcsim>,
-	<mailto:help-mcsim-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://mail.gnu.org/pipermail/help-mcsim>
-List-Post: <mailto:help-mcsim@gnu.org>
-List-Help: <mailto:help-mcsim-request@gnu.org?subject=help>
-List-Subscribe: <http://mail.gnu.org/mailman/listinfo/help-mcsim>,
-	<mailto:help-mcsim-request@gnu.org?subject=subscribe>
-Mime-version: 1.0
-Errors-To: help-mcsim-bounces+gnu-help-mcsim=m.gmane.org@gnu.org
-X-Spam-Report: 8.9 points;
-  *  4.0 RCVD_NUMERIC_HELO Received: contains a numeric HELO
-  *  1.0 RCVD_BY_IP Received by mail server with no name
-  *  0.3 HTML_FONT_BIG BODY: HTML has a big font
-  *  0.0 BAYES_50 BODY: Bayesian spam probability is 50 to 56%
-  *      [score: 0.5000]
-  *  0.1 HTML_FONTCOLOR_RED BODY: HTML font color is red
-  *  1.0 HTML_FONT_TINY BODY: HTML has a tiny font
-  *  0.1 HTML_50_60 BODY: Message is 50% to 60% HTML
-  *  0.1 HTML_MESSAGE BODY: HTML included in message
-  *  0.0 HTML_FONTCOLOR_GRAY BODY: HTML font color is gray
-  *  0.1 RCVD_IN_RFCI RBL: Sent via a relay in ipwhois.rfc-ignorant.org
-  *      [$ has inaccurate or missing WHOIS data at the]
-  [RIR]
-  *  1.0 MSGID_DOLLARS Message-Id has pattern used in spam
-  *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
-Archived-At: <http://permalink.gmane.org/gmane.comp.gnu.mcsim/175>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 04 20:19:18 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1MuVI2-0005Up-CT
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 19:54:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756821AbZJDRwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2009 13:52:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755487AbZJDRwP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 13:52:15 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:52536 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753110AbZJDRwO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2009 13:52:14 -0400
+Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 88C58124D6756;
+	Sun,  4 Oct 2009 19:51:37 +0200 (CEST)
+Received: from [80.128.94.206] (helo=[192.168.178.26])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1MuVFA-0002T0-00; Sun, 04 Oct 2009 19:51:36 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <7vbpl2srw9.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+XwLtsuog8R8p0rquBhqo8iFGTXxTxIMFvcTdC
+	7mFD+kqOSRz7DJSngEohJDuqea3c67wdCPAdrQ3A4rPmgAoeSK
+	/GYur6o/wz659t7zJ83A==
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129512>
 
-This is a multi-part message in MIME format.
+Junio C Hamano schrieb:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> When <path> is not given, use the "humanish" part of the source repository
+>> instead.
+>>
+>> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+>> ---
+>>
+>> With this patch, git submodule add behaves like git clone in this respect.
+>>
+>> Didn't get a response the last weeks, so here is a resend.
+>>
+>>
+>>  Documentation/git-submodule.txt |    8 ++++++--
+>>  git-submodule.sh                |    7 ++++++-
+>>  t/t7400-submodule-basic.sh      |   16 ++++++++++++++++
+>>  3 files changed, 28 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+>> index 5ccdd18..4ef70c4 100644
+>> --- a/Documentation/git-submodule.txt
+>> +++ b/Documentation/git-submodule.txt
+>> @@ -10,7 +10,7 @@ SYNOPSIS
+>>  --------
+>>  [verse]
+>>  'git submodule' [--quiet] add [-b branch]
+>> -	      [--reference <repository>] [--] <repository> <path>
+>> +	      [--reference <repository>] [--] <repository> [<path>]
+>>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+>>  'git submodule' [--quiet] init [--] [<path>...]
+>>  'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+>> @@ -69,7 +69,11 @@ add::
+>>  	to the changeset to be committed next to the current
+>>  	project: the current project is termed the "superproject".
+>>  +
+>> -This requires two arguments: <repository> and <path>.
+>> +This requires at least one argument: <repository>. The optional
+>> +argument <path> is the relative location for the cloned submodule
+>> +to exist in the superproject. If <path> is not given, the
+>> +"humanish" part of the source repository is used ("repo" for
+>> +"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
+> 
+> I do not know if this is useful in practice nor even desired.  Comments?
 
---===============0269226237==
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_00DF_01C43BBB.B2532B30"
+As nobody commented until now, i'll explain my motivation for this patch.
 
-This is a multi-part message in MIME format.
+When adding submodules i was surprised to find that i had to explicitly
+provide the pathname even though it could be easily generated from the
+reponame as git clone does it. And i see git clone and git submodule add
+as related commands from a users perspective, they both connect a remote
+repo to a working directory.
 
-------=_NextPart_000_00DF_01C43BBB.B2532B30
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+IMHO this patch makes the ui more consistent and doesn't break existing
+setups or scripts. And it is really useful because i don't do typos in
+the pathname anymore ;-)
 
-High birth is an accident, not a virtue.
-If they want peace, nations should avoid the pin-pric
+Jens
