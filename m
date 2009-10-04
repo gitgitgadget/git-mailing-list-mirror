@@ -1,76 +1,114 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] Reserve a slot for argv[0] in default_arg.
-Date: Sun, 04 Oct 2009 13:02:21 -0700
-Message-ID: <1254686541.507.9.camel@swboyd-laptop>
-References: <1254576571-29274-1-git-send-email-urkedal@nbi.dk>
-	 <20091004133333.GA13894@sigill.intra.peff.net>
-	 <20091004141355.GA15783@eideticdew.org>
-	 <20091004182746.GA22995@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH RESEND] git submodule add: make the <path> parameter
+ optional
+Date: Sun, 4 Oct 2009 23:05:35 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910042304060.4985@pacific.mpi-cbg.de>
+References: <4AB8E8D4.40105@web.de> <7vbpl2srw9.fsf@alter.siamese.dyndns.org> <4AC8E0A8.4000901@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Petter Urkedal <urkedal@nbi.dk>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 04 22:07:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Oct 04 23:06:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuXLx-0004Pn-E9
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 22:06:45 +0200
+	id 1MuYHQ-0006tZ-M6
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 23:06:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757873AbZJDUDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2009 16:03:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757869AbZJDUDg
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 16:03:36 -0400
-Received: from qw-out-2122.google.com ([74.125.92.24]:38416 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757751AbZJDUDf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 16:03:35 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so889802qwe.37
-        for <git@vger.kernel.org>; Sun, 04 Oct 2009 13:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=sRn52+TnYhjf6Btz8TA5qZQrw1XN2U4l5mUYEvI0Beo=;
-        b=NoT8SKt1oZGLFN2ooWxiEKDL+naNlzJ4TauX6KyA3oEqmow8hIkwNFmh1eDGkBlYWO
-         wMIscVh8+QUt1f2WBT9j1TmezipgVdskdZaG64j2L1vv5EFyhvjr37efBditfqtEPZDC
-         avJZSa+tcA0GegBE2FWzE5ymEuPg0eZ+WGJCo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=AZCnGJ7r5C8YjNMfquuppD3KQX8T5gyTa5TKE5XidgcQsulJ1Hm44gWdzMbvfA7N7n
-         Z9pliQlblq6W0JrasVls81hG0oeQWU5iAMYn2wCPxhp09OmXntmXAZ6uo2tP3Q68disU
-         qtUO5ZODmUENvZeAwSKUJfpEfu82Jfnk2sCVI=
-Received: by 10.224.70.202 with SMTP id e10mr2707791qaj.16.1254686548901;
-        Sun, 04 Oct 2009 13:02:28 -0700 (PDT)
-Received: from ?192.168.1.6? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 5sm60409qwg.3.2009.10.04.13.02.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 04 Oct 2009 13:02:27 -0700 (PDT)
-In-Reply-To: <20091004182746.GA22995@coredump.intra.peff.net>
-X-Mailer: Evolution 2.28.0 
+	id S1758086AbZJDVED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Oct 2009 17:04:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758069AbZJDVED
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 17:04:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40429 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758049AbZJDVEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Oct 2009 17:04:01 -0400
+Received: (qmail invoked by alias); 04 Oct 2009 21:03:13 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp032) with SMTP; 04 Oct 2009 23:03:13 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/u9DgOZDvuTJZwoEJUX8kPQjVfw6cacEWlyuPJeC
+	uzBbHlv5uMQiKv
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4AC8E0A8.4000901@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129518>
 
-On Sun, 2009-10-04 at 14:27 -0400, Jeff King wrote:
+Hi,
+
+On Sun, 4 Oct 2009, Jens Lehmann wrote:
+
+> Junio C Hamano schrieb:
+> > Jens Lehmann <Jens.Lehmann@web.de> writes:
+> > 
+> >> When <path> is not given, use the "humanish" part of the source repository
+> >> instead.
+> >>
+> >> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> >> ---
+> >>
+> >> With this patch, git submodule add behaves like git clone in this respect.
+> >>
+> >> Didn't get a response the last weeks, so here is a resend.
+> >>
+> >>
+> >>  Documentation/git-submodule.txt |    8 ++++++--
+> >>  git-submodule.sh                |    7 ++++++-
+> >>  t/t7400-submodule-basic.sh      |   16 ++++++++++++++++
+> >>  3 files changed, 28 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> >> index 5ccdd18..4ef70c4 100644
+> >> --- a/Documentation/git-submodule.txt
+> >> +++ b/Documentation/git-submodule.txt
+> >> @@ -10,7 +10,7 @@ SYNOPSIS
+> >>  --------
+> >>  [verse]
+> >>  'git submodule' [--quiet] add [-b branch]
+> >> -	      [--reference <repository>] [--] <repository> <path>
+> >> +	      [--reference <repository>] [--] <repository> [<path>]
+> >>  'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+> >>  'git submodule' [--quiet] init [--] [<path>...]
+> >>  'git submodule' [--quiet] update [--init] [-N|--no-fetch] [--rebase]
+> >> @@ -69,7 +69,11 @@ add::
+> >>  	to the changeset to be committed next to the current
+> >>  	project: the current project is termed the "superproject".
+> >>  +
+> >> -This requires two arguments: <repository> and <path>.
+> >> +This requires at least one argument: <repository>. The optional
+> >> +argument <path> is the relative location for the cloned submodule
+> >> +to exist in the superproject. If <path> is not given, the
+> >> +"humanish" part of the source repository is used ("repo" for
+> >> +"/path/to/repo.git" and "foo" for "host.xz:foo/.git").
+> > 
+> > I do not know if this is useful in practice nor even desired.  Comments?
 > 
-> Ah, thanks, for some reason I wasn't able to produce it before, but I
-> can easily replicate it here. I think it's a regression from converting
-> show-branch to use parse_options, which happened in May, but I didn't
-> actually bisect it. I'm not sure showbranch.default has worked at all
-> since then (which I guess goes to show how many people are actually
-> using it).
+> As nobody commented until now, i'll explain my motivation for this patch.
+> 
+> When adding submodules i was surprised to find that i had to explicitly
+> provide the pathname even though it could be easily generated from the
+> reponame as git clone does it. And i see git clone and git submodule add
+> as related commands from a users perspective, they both connect a remote
+> repo to a working directory.
+> 
+> IMHO this patch makes the ui more consistent and doesn't break existing
+> setups or scripts. And it is really useful because i don't do typos in
+> the pathname anymore ;-)
 
-Correct. Junio sent a patch to fix this problem in June[1]. I guess he
-must have dropped his own patch, or he wasn't satisfied with how parse
-options clobbers things.
+So far, I started submodules by cloning them, doing everything in the 
+other files needed to integrate, and then actually wondered why "git 
+submodule add" could not simply take the (relative) path to the 
+checked-out submodule and deduce the URL from the corresponding config?
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/121142
+So I would actually vote for making the <repository> parameter optional...
+
+Ciao,
+Dscho
