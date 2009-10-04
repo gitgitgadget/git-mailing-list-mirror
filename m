@@ -1,112 +1,167 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Reserve a slot for argv[0] in default_arg.
-Date: Sun, 4 Oct 2009 14:27:46 -0400
-Message-ID: <20091004182746.GA22995@coredump.intra.peff.net>
-References: <1254576571-29274-1-git-send-email-urkedal@nbi.dk>
- <20091004133333.GA13894@sigill.intra.peff.net>
- <20091004141355.GA15783@eideticdew.org>
+From: Adam Brewster <adambrewster@gmail.com>
+Subject: Re: reset doesn't reset a revert?
+Date: Sun, 4 Oct 2009 14:37:55 -0400
+Message-ID: <c376da900910041137v6766de4u1419a8209751dcb9@mail.gmail.com>
+References: <98300251CB1D46A0B635B4495138C3A7@teddy>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Petter Urkedal <urkedal@nbi.dk>
-X-From: git-owner@vger.kernel.org Sun Oct 04 20:29:25 2009
+To: =?ISO-8859-2?B?T2N0YXZpYW4gUuK6bmn+4w==?= <orasnita@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 04 20:39:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuVpV-0000ZX-Fp
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 20:29:09 +0200
+	id 1MuVzj-0006aH-6n
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Oct 2009 20:39:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756877AbZJDS2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Oct 2009 14:28:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756834AbZJDS2c
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 14:28:32 -0400
-Received: from peff.net ([208.65.91.99]:51408 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752360AbZJDS2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Oct 2009 14:28:32 -0400
-Received: (qmail 12293 invoked by uid 107); 4 Oct 2009 18:31:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 04 Oct 2009 14:31:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 04 Oct 2009 14:27:46 -0400
-Content-Disposition: inline
-In-Reply-To: <20091004141355.GA15783@eideticdew.org>
+	id S1757568AbZJDSie convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Oct 2009 14:38:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757440AbZJDSie
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Oct 2009 14:38:34 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:51439 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757431AbZJDSid convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Oct 2009 14:38:33 -0400
+Received: by ewy7 with SMTP id 7so2891117ewy.17
+        for <git@vger.kernel.org>; Sun, 04 Oct 2009 11:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=cuy3+zn21UkCPTUWzCWo/URoQ2ZOSMGb7xweQoi2ruM=;
+        b=FhPrTCefF1pfpUGQCwPmYq8FtlvSJdJ0ruhrF5pK5eSfa90b2CI9cvuCk7wl5X8Gee
+         yVNyrTwZM2cqzgeGJ5YhJ661mCEmTRot6GykidpX9e/pYjYxiefU/Y9Mir+DyeyDLmsi
+         AZDNCORjssGR4DMBEKwSa5cUrSPf08Kokf0os=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HItLAeIY+ABcB3+rbltMza2T5j5Qw7JZA2xgttBn/8OHt3IkldHz4pUMAwibBgSwVo
+         exLh9R5jqFojra2LCzMQwR93k2/QVCAwufHhRGkpEn4gqu7BTqI1d4Y5zt/GYmBX3+rc
+         yKBFPTP8frU/uH4PDtSAb8yVqtx6r09MB6hkc=
+Received: by 10.216.85.213 with SMTP id u63mr872197wee.15.1254681475648; Sun, 
+	04 Oct 2009 11:37:55 -0700 (PDT)
+In-Reply-To: <98300251CB1D46A0B635B4495138C3A7@teddy>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129514>
 
-On Sun, Oct 04, 2009 at 04:13:55PM +0200, Petter Urkedal wrote:
+>
+> E:\lucru\git\k>git =A0revert HEAD~
+> fatal: Cannot revert a root commit
+>
+> #Does anyone know what does this mean? So I've tried with HEAD^ inste=
+ad.
+>
 
-> I was wondering myself.  I tried to switch off optimisation, but that
-> had no effect.  I'm suspecting PIE, but it could be some other
-> configuration implied by the Gentoo "hardened" use-flag.
+Git revert isn't like svn revert.  GIt revert creates a new commit off
+of the HEAD that introduces a change that's the opposite of the change
+introduced in the commit you specify.  The first commit in a
+repository doesn't introduce any change because there's no previous
+commit.
 
-Nope, it's just a plain old git bug...
+Like it says, you can't revert the first commit in the history.
 
-> I can reproduce it on my machine with
-> 
->     mkdir test-repo; cd test-repo
->     /path/to/git init
->     /path/to/git config showbranch.default --topo-order
->     /path/to/git show-branch
+> E:\lucru\git\k>git =A0revert HEAD^
+> More?
+> More?
+> Finished one revert.
+> [master 1beba20] Revert "Added baz to file.txt"
+> 1 files changed, 0 insertions(+), 1 deletions(-)
+>
+> # What should I respond to the questions More?
+> #I've seen that no matter what I type, it adds to the "HEAD" and tell=
+s that
+> that commit can't be found, so I just pressed enter.
+>
+>
 
-Ah, thanks, for some reason I wasn't able to produce it before, but I
-can easily replicate it here. I think it's a regression from converting
-show-branch to use parse_options, which happened in May, but I didn't
-actually bisect it. I'm not sure showbranch.default has worked at all
-since then (which I guess goes to show how many people are actually
-using it).
+It seems the caret is special to the windows command prompt.  I don't
+know what it does, but a line of nonsense that ends in ^ causes the
+More? More? response you described.  Try quoting the argument so your
+shell doesn't mangle it.
 
-So your fix is definitely right, and the test case below (which can be
-squashed in) fails reliably without it.
+>
+> #And it seems that not only the repository was changed, but the worki=
+ng
+> directory also. Is it correct?
+>
 
-t3202 is maybe a bit of weird place to put it, but we don't seem to test
-show-branch anywhere else. It could probably use a "check that
-show-branch works at all" set of tests, but I am not volunteering to
-write such a thing. I have always found its output to be one step above
-line noise.
+That's how revert usually works,
 
-I also looked at putting it in t1200-tutorial.sh near the show-branch
-call, but that script is an utter mess. Most of the tests don't actually
-check the exit status of commands, and there is a random "test_done"
-halfway through the script which skips all of the later tests (including
-the show-branch test!). Removing that to enable the later tests reveals
-that they are broken, with such obviously non-working crap as
+> #Well, now let's say I discovered that this new commit was an error a=
+nd I
+> want to reset it.
+> #And I used HEAD^ because HEAD~ didn't work with revert.
+>
+> E:\lucru\git\k>git reset HEAD^
+> More?
+> More?
+> E:\lucru\git\k>git log --pretty=3Dformat:"%s %h"
+> WARNING: terminal is not fully functional
+> Revert "Added baz to file.txt" 1beba20
+> Added baz to file.txt fabd2f2
+> First commit e969cd5
+> (END)
+>
+> #Well, git reset didn't reset the latest commit.
+> #Does anyone know why or what I am doing wrong?
+>
 
-  git merge -s "Merge upstream changes." master
+I don't know what the ^ means, but I'm guessing it's not getting
+passed to git.  I'm guessing what you really did is `git reset HEAD`
+which clears the index but doesn't undo any commits.
 
-which is clearly bogus. I wonder if we should just remove that script
-altogether; at best it just seems redundant with other tests, and it is
-full of obvious errors.
+> E:\lucru\git\k>git status
+> # On branch master
+> nothing to commit (working directory clean)
+> E:\lucru\git\k>git reset HEAD~
+> file.txt: locally modified
+> E:\lucru\git\k>git log --pretty=3Dformat:"%s %h"
+> WARNING: terminal is not fully functional
+> Added baz to file.txt fabd2f2
+> First commit e969cd5
+> (END)
+>
+> #This time git reset resetted the latest HEAD.
+> #It seems that git reset wants the HEAD~ commit, while git revert wan=
+ts the
+> HEAD^ commit. Do you know why (or can I find an explanation for this
+> somewhere)?
+>
 
-> Comment's are treated as whitespace, but I'll adjust it for readability.
-> Maybe worse: I missed the 8-column indentation.  So, here is the patch
-> again (attached, I hope Git can extract it).
+Windows' command shell sucks.  I don't use it.  I don't recommend it.
+Try Cygwin.  Or PuTTYcyg.
 
-Thanks, that looks better (I actually didn't even notice the indent
-problem the first time, but yes, it should be 8 columns).
+> E:\lucru\git\k>type file.txt
+> foo
+> bar
+>
+> #However, git reset modified just the repository and not the working
+> directory.
+>
 
-Squashable test case is below.
+git reset has three modes.  --hard, --soft, and --mixed.  If you
+weren't using windows' shell you could type man git-reset to find out
+about them.  Try googling git reset.  Basically git reset doesn't mess
+with your working copy files unless you ask it to.
 
--Peff
+> I added the line baz in the file file.txt, commited this change and t=
+hen
+> reverted to the previous commit. This has also deleted the line "baz"=
+ from
+> the file.
+> Then I resetted the last commit (the revert), however the line "baz" =
+didn't
+> appear in the file.
+>
 
----
-diff --git a/t/t3202-show-branch-octopus.sh b/t/t3202-show-branch-octopus.sh
-index 7fe4a6e..0a5d5e6 100755
---- a/t/t3202-show-branch-octopus.sh
-+++ b/t/t3202-show-branch-octopus.sh
-@@ -56,4 +56,12 @@ test_expect_success 'show-branch with more than 8 branches' '
- 
- '
- 
-+test_expect_success 'show-branch with showbranch.default' '
-+	for i in $numbers; do
-+		git config --add showbranch.default branch$i
-+	done &&
-+	git show-branch >out &&
-+	test_cmp expect out
-+'
-+
- test_done
+Reset and revert are very different commands.  Make sure you
+understand the difference.
+
+Adam
