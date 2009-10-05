@@ -1,161 +1,115 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
- family
-Date: Mon, 05 Oct 2009 13:22:19 +0200
-Message-ID: <4AC9D6EB.8090002@web.de>
-References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Confusing git pull error message
+Date: Mon, 05 Oct 2009 13:32:34 +0200
+Message-ID: <4AC9D952.3050108@viscovery.net>
+References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com> <20090912211119.GA30966@coredump.intra.peff.net> <7v1vmar353.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 13:30:09 2009
+Cc: Jeff King <peff@peff.net>, John Tapsell <johnflux@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 13:38:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MullZ-000620-E4
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 13:30:09 +0200
+	id 1Mult8-00024n-OZ
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 13:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758761AbZJELX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 07:23:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752528AbZJELX4
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 07:23:56 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:48154 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758742AbZJELX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 07:23:56 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 590A812977B9C;
-	Mon,  5 Oct 2009 13:22:20 +0200 (CEST)
-Received: from [80.128.124.99] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1Mule0-0007W3-00; Mon, 05 Oct 2009 13:22:20 +0200
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-In-Reply-To: <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+RiZBchhh7wU8HxN3yIhetntQ55hcpGEbRP3Yc
-	YDpVO8rutgOjKr1DyFBQSX7+B04Gt+TEhhMyixfFrPi3R0G6E9
-	87YluHmh+5gJqwvbctUQ==
+	id S1754187AbZJELdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 07:33:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbZJELdX
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 07:33:23 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:3677 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752713AbZJELdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 07:33:22 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Mulnu-0003jd-U4; Mon, 05 Oct 2009 13:32:42 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A12B2BC81; Mon,  5 Oct 2009 13:32:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7v1vmar353.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129554>
 
-First: I already coded a test and am using this patch in git gui and
-gitk (there was no way git submodule summary would have worked for
-gitk, now it does). Looking really good, will post when this patch
-solidifies ...
+Junio C Hamano schrieb:
+> Jeff King <peff@peff.net> writes:
+>> I think it is enough for git-pull to just check whether the config
+>> exists, and if so, guess that the ref was simply not fetched. IOW,
+>> this:
+> 
+> Thanks.
+> 
+> I saw some discussion on improving the wording.  Here is what I plan to
+> commit.
+> 
+> diff --git a/git-pull.sh b/git-pull.sh
+> index 0bbd5bf..2c2fa79 100755
+> --- a/git-pull.sh
+> +++ b/git-pull.sh
+> @@ -89,6 +89,8 @@ error_on_no_merge_candidates () {
+>  	done
+>  
+>  	curr_branch=${curr_branch#refs/heads/}
+> +	upstream=$(git config "branch.$curr_branch.merge" ||
+> +			git config "branch.$curr_branch.rebase")
+>  
+>  	if [ -z "$curr_branch" ]; then
+>  		echo "You are not currently on a branch, so I cannot use any"
+> @@ -96,7 +98,7 @@ error_on_no_merge_candidates () {
+>  		echo "Please specify which branch you want to merge on the command"
+>  		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+>  		echo "See git-pull(1) for details."
+> -	else
+> +	elif [ -z "$upstream" ]; then
+>  		echo "You asked me to pull without telling me which branch you"
+>  		echo "want to merge with, and 'branch.${curr_branch}.merge' in"
+>  		echo "your configuration file does not tell me either.	Please"
+> @@ -114,6 +116,10 @@ error_on_no_merge_candidates () {
+>  		echo "    remote.<nickname>.fetch = <refspec>"
+>  		echo
+>  		echo "See git-config(1) for details."
+> +	else
+> +		echo "Your configuration specifies to merge the ref"
+> +		echo "'${upstream#refs/heads/}' from the remote, but no such ref"
+> +		echo "was fetched."
+>  	fi
+>  	exit 1
+>  }
 
-Johannes Schindelin schrieb:
-> That's something I will gladly do after I adjusted the format to look a 
-> bit more like "git submodule summary" (Jens noticed 4 differences), and 
-> after Jens patched git-submodule.sh to use the diff mode instead.
+Unfortunately, this is not water-tight. See what I just observed:
 
-Actually there are two more and Junio pointed out #7: submodule summary
-uses --first-parent and we don't (My testcases don't contain merges, so
-i didn't notice).
+  $ git pull hk
+  From /exports/repos/hk/viscovery
+     9455552..6429037  master     -> hk/master
+  Your configuration specifies to merge the ref
+  'master' from the remote, but no such ref
+  was fetched.
 
-The difference that is most obvious and was unintended is that the
-shortlog is indented by four spaces instead of two. I appended an
-interdiff to fix that.
+The message is confusing when it says "'master' was not fetched" when
+clearly master _was_ fetched.
 
-As with the other six, i am not really sure if we should just copy the
-behaviour of git submodule summary.
+More importantly, the message is wrong to say that "Your configuration
+specifies to merge the ref 'master' from the remote", because I have this
+configuration:
 
+  $ git config -l | egrep '^(remote|branch)'
+  remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+  remote.origin.url=/exports/repos/js/viscovery
+  branch.master.remote=origin
+  branch.master.merge=refs/heads/master
+  remote.hk.url=/exports/repos/hk/viscovery
+  remote.hk.fetch=+refs/heads/*:refs/remotes/hk/*
 
-> IOW in hindsight I would like to add the prefix "RFC/RFH" to the subject.
+i.e. while on master, I merge master from "origin", not from "hk".
 
-FullAck.
-
-First some examples for the current behaviour (with the patch below
-applied):
-
-$ git diff --submodule-summary
-Submodule sub 5431f52..3f35670:
-  > sub3
-$ git submodule summary --files
-* sub 5431f52...3f35670 (1):
-  > sub3
-
-$ git diff-index --submodule-summary HEAD -p
-Submodule sub 81d7059..3f35670:
-  > sub3
-  > sub2
-$ git submodule summary
-* sub 81d7059...3f35670 (2):
-  > sub3
-  > sub2
-
-[$ git diff --cached --submodule-summary HEAD
-Submodule sub 81d7059..5431f52:
-  > sub2
-$ git submodule summary --cached
-* sub 81d7059...5431f52 (1):
-  > sub2
-
-$
-
-So the differences are:
-
-1) Dscho replaced the leading '*' with the more explicit "Submodule"
-   I like the explicit version.
-
-2) submodule summary prints out how many shortlog entries are following
-3) submodule summary adds a newline after the shortlog
-4) submodule summary uses --first-parent
-   No idea about the intention here. Lars?
-
-5) submodule summary always prints three '.' between the hashes
-   Seems like submodule summary didn't do the hassle for performance
-   reasons. But for consistency i would prefer the new version as we
-   use it all over the place, no?
-
-6) submodule summary can limit the number of shortlog lines
-   Hm, i want to see them all. Any users of that -n option?
-
-
-To take this a bit further: It might be a good idea to let git diff
-generate output for submodules that is consistent with that for regular
-files. So instead of:
-
-git diff --cached --submodule-summary HEAD -p
-Submodule sub 81d7059..5431f52:
-    > sub2
-
-we could produce:
-
-diff --git a/sub b/sub
-index 81d7059..3f35670 160000
---- a/sub
-+++ b/sub
-@@ -1 +1 @@
--Subproject commit 81d70590e6aaf9f995ebf4d6d284a7ebb355398d
-+Subproject commit 3f356705649b5d566d97ff843cf193359229a453
-  > sub2
-
-(This is the output of a git diff without the --submodule-summary option
-with an appended shortlog)
-
-I like the second variant (mainly because of consistency). Opinions?
-
-
-
-And here the promised indentation depth fix interdiff:
-------------------8<-----------------
-diff --git a/submodule.c b/submodule.c
-index 3f2590d..11fce7d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -42,7 +42,7 @@ void show_submodule_summary(FILE *f, const char *path,
-        struct commit_list *merge_bases, *list;
-        const char *message = NULL;
-        struct strbuf sb = STRBUF_INIT;
--       static const char *format = "    %m %s";
-+       static const char *format = "  %m %s";
-        int fast_forward = 0, fast_backward = 0;
-
-        if (add_submodule_odb(path))
+-- Hannes
