@@ -1,105 +1,96 @@
-From: Johan Herland <johan@herland.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: [RFCv4 3/5] 2/2: Add Python support library for CVS remote helper
-Date: Mon, 5 Oct 2009 16:41:42 +0200
-Message-ID: <200910051641.43136.johan@herland.net>
-References: <1250480161-21933-1-git-send-email-johan@herland.net> <1250480161-21933-4-git-send-email-johan@herland.net> <fabb9a1e0910050631j73bf7288w65da92806332d051@mail.gmail.com>
+Date: Mon, 5 Oct 2009 16:50:40 +0200
+Message-ID: <fabb9a1e0910050750q195bdafv5511915fe5d26c02@mail.gmail.com>
+References: <1250480161-21933-1-git-send-email-johan@herland.net> 
+	<1250480161-21933-4-git-send-email-johan@herland.net> <fabb9a1e0910050631j73bf7288w65da92806332d051@mail.gmail.com> 
+	<200910051641.43136.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	David Aguilar <davvid@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 16:50:17 2009
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 16:59:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muot6-00063W-Nu
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 16:50:09 +0200
+	id 1Mup2b-0004Ov-VU
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 16:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752427AbZJEOrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 10:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751077AbZJEOrm
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 10:47:42 -0400
-Received: from sam.opera.com ([213.236.208.81]:50466 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751090AbZJEOrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 10:47:41 -0400
-Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id n95Efh8a028632
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 5 Oct 2009 14:41:48 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <fabb9a1e0910050631j73bf7288w65da92806332d051@mail.gmail.com>
-Content-Disposition: inline
+	id S1752848AbZJEOwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 10:52:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbZJEOwJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 10:52:09 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:50944 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752686AbZJEOwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 10:52:08 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so592337eyf.19
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 07:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=SjSnnaaEznYAYhRZ732/Sgmb6c2uXPt2MnPDD7ZUZtw=;
+        b=aLKq++PCVkZhG9b4EaUZ/HwTi0AFDv4QkhIOIWWoiLBXC5AhIJmSDktWhhsgmHfPTo
+         7vJLk8xqtaZLRCe9TmnD5i5S8FjUNpZ4NCVyxO5G7MxnIzteMX3ZG1UvOCmqhhWJrHzy
+         s/ov60a407lIIM4qI0+IioyeRSJLNhEQd2Gwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=YU9r5mZcTPIQUZermevi9a1isDK4ZqtWV2q4tyhoovJJZ4OtqfWo/AypWKAqs0Fdog
+         Fg3P+PigAhGIIhv88g4VjiU+xrbNMOEkn+Whq8mA+ne+K1MMT3Xi3DlBOsD/DobI5UWh
+         d1FBSvAr5/l/4Sr6h3C/pC9pxodrNzg0xQggc=
+Received: by 10.216.89.195 with SMTP id c45mr24602wef.38.1254754260235; Mon, 
+	05 Oct 2009 07:51:00 -0700 (PDT)
+In-Reply-To: <200910051641.43136.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129564>
 
-On Monday 05 October 2009, Sverre Rabbelier wrote:
-> On Mon, Aug 17, 2009, Johan Herland <johan@herland.net> wrote:
-> > This patch introduces the rest of a Python package called
-> > "git_remote_cvs" containing the building blocks of the CVS remote
-> > helper. The CVS remote helper itself is NOT part of this patch.
+Heya,
+
+On Mon, Oct 5, 2009 at 16:41, Johan Herland <johan@herland.net> wrote:
+> - Are you planning to share directory structure only, or some of the
+> Python code as well? From the above structure it seems like you want to
+> make use of e.g. util.py and git.py. I'd be delighted if the code is
+> reusable by other remote helpers.
+
+Yes, the main reason I suggested this was because I want to reuse
+util.py and git.py :). Of course, it'd probably be cleaner to move the
+little CVS-specific code that is in git.py atm out of it.
+
+> - Do you plan to put the remote helpers into this structure as well, or
+> keep them separate? (currently the cvs remote helper lives separately
+> in git-remote-cvs.py in the project root directory)
+
+I think it's good where it is right now, and I've also placed
+git-remote-hg.py in the root directory.
+
+>> I'm willing to spend some time to do the needed refactoring, but IIUC
+>> Daniel said that you need to reroll the cvs series anyway?
 >
-> Might I suggest that we pool our efforts and instead create a
-> structure like:
->
-> git_remote_helpers/
-> git_remote_helpers/__init__.py
-> git_remote_helpers/Makefile
-> git_remote_helpers/setup.py
-> git_remote_helpers/util.py
-> git_remote_helpers/git
-> git_remote_helpers/git/__init__.py
-> git_remote_helpers/git/
-> git_remote_helpers/cvs
-> git_remote_helpers/cvs/__init__.py
-> git_remote_helpers/cvs/changeset.py
-> git_remote_helpers/cvs/commit_states.py
-> git_remote_helpers/cvs/cvs.py
-> git_remote_helpers/cvs/revision_map.py
-> git_remote_helpers/cvs/symbol_cache.py
-> git_remote_helpers/hg
-> git_remote_helpers/hg/__init__.py
-> git_remote_helpers/hg/hg.py
-> git_remote_helpers/hg/export.py
+> Yeah, a re-roll was planned once the sr/gfi-options work was finalized.
+> (right now I'm mostly focused on the jh/notes work). Feel free to post
+> the hg-specific and/or common parts as a separate patch, and I can
+> rebase the CVS series on top of that before I submit the next
+> iteration.
 
-I like this. One couple of questions (for now):
+Yeah, I'm waiting on Shawn to decide what should be done with the
+whole options thing before I resubmit sr/gfi-options.
 
-- Are you planning to share directory structure only, or some of the 
-Python code as well? From the above structure it seems like you want to 
-make use of e.g. util.py and git.py. I'd be delighted if the code is 
-reusable by other remote helpers.
+> Nice to see people starting to pick up the foreign-vcs work. :)
 
-- Do you plan to put the remote helpers into this structure as well, or 
-keep them separate? (currently the cvs remote helper lives separately 
-in git-remote-cvs.py in the project root directory)
-
-
-> I'm willing to spend some time to do the needed refactoring, but IIUC
-> Daniel said that you need to reroll the cvs series anyway?
-
-Yeah, a re-roll was planned once the sr/gfi-options work was finalized. 
-(right now I'm mostly focused on the jh/notes work). Feel free to post 
-the hg-specific and/or common parts as a separate patch, and I can 
-rebase the CVS series on top of that before I submit the next 
-iteration.
-
-Nice to see people starting to pick up the foreign-vcs work. :)
-
-
-Have fun! :)
-
-...Johan
+Now if only we could bribe Eric to write a svn helper :).
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Cheers,
+
+Sverre Rabbelier
