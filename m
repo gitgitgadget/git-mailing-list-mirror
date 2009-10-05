@@ -1,75 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Confusing git pull error message
-Date: Mon, 5 Oct 2009 15:12:57 -0400
-Message-ID: <20091005191257.GA24305@coredump.intra.peff.net>
-References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
- <20090912211119.GA30966@coredump.intra.peff.net>
- <7v1vmar353.fsf@alter.siamese.dyndns.org>
- <4AC9D952.3050108@viscovery.net>
- <20091005115308.GA2122@coredump.intra.peff.net>
- <7vljjpacax.fsf@alter.siamese.dyndns.org>
+From: Ted Pavlic <ted@tedpavlic.com>
+Subject: Re: [PATCH] Speedup bash completion loading
+Date: Mon, 5 Oct 2009 15:18:48 -0400
+Message-ID: <4e0a90ed0910051218oaa64b94jd12a6678934523ac@mail.gmail.com>
+References: <1254737039-10404-1-git-send-email-kirr@mns.spb.ru> 
+	<20091005152504.GE9261@spearce.org> <20091005165802.GA24402@tugrik.mns.mnsspb.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	John Tapsell <johnflux@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 21:18:52 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Kirill Smelkov <kirr@mns.spb.ru>
+X-From: git-owner@vger.kernel.org Mon Oct 05 21:29:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mut59-0001Ef-Cd
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 21:18:51 +0200
+	id 1MutFL-0007dx-Eb
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 21:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753737AbZJETNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 15:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753643AbZJETNn
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 15:13:43 -0400
-Received: from peff.net ([208.65.91.99]:43039 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753519AbZJETNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 15:13:42 -0400
-Received: (qmail 19530 invoked by uid 107); 5 Oct 2009 19:16:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 05 Oct 2009 15:16:33 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Oct 2009 15:12:57 -0400
-Content-Disposition: inline
-In-Reply-To: <7vljjpacax.fsf@alter.siamese.dyndns.org>
+	id S1754384AbZJETTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 15:19:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754336AbZJETTl
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 15:19:41 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:50153 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753609AbZJETTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 15:19:41 -0400
+Received: by bwz6 with SMTP id 6so2744949bwz.37
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 12:19:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=a9YPi+ozL/A4H6SkZPHuKc03TrUyjzwckZ2HIyn0i+c=;
+        b=mEC5LFK1exjX0aEIjlO8x5NtMuiwE1OzwJ9Pkpu3zfASu69sLUMvkrz6CQOeDjlgik
+         5PD6+4nFLdZGDWzRUZe4xAZi8ejZujWqsYj77QOCEMc72RbsaufGjQPiz6hNgc3aQxNu
+         uF9UQyhxniBP0Jm/XyWz1/uAehZrQalJaEzrg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=krUdaVLllASLKMl/74S0NUfxjwgxJRuOitY0I/rzao9NcbobTViBWkaer7ijIcZg1r
+         7BFmknT4mrGWaab0uhqhZeNIs0qO86M2qbu6ckaUXMdFBTExqn30xrz65V6W2FThP9al
+         qe4LomRRuGoPahuCvFuoZtullbgFBn+eHK1Ig=
+Received: by 10.223.23.74 with SMTP id q10mr211714fab.14.1254770343558; Mon, 
+	05 Oct 2009 12:19:03 -0700 (PDT)
+In-Reply-To: <20091005165802.GA24402@tugrik.mns.mnsspb.ru>
+X-Google-Sender-Auth: 546e3e3bb76bfacd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129580>
 
-On Mon, Oct 05, 2009 at 12:08:38PM -0700, Junio C Hamano wrote:
+> The other possibility is to pregenerate all these lists at git build time, but
+> are we going to do it for things under contrib/ ?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > So I think we need something like this. I wasn't able to figure out a
-> > test case to trigger the first code path below, though. It may not be
-> > possible; if we give a refspec on the command line, either it will be a
-> > candidate for merging or, if it does not exist, fetch will barf. So it
-> > may be that we can just collapse it down to a single case.
-> 
-> I think you are right.
+IIRC, that's what StGIT does with its completion script. As a
+consequence, StGIT completion is substantially faster than git
+completion.
 
-Nope, I'm not. I figured out one more case that it needs to handle.
-Revised patch coming up in a few minutes.
+--Ted
 
-> By the way, I think the other case arms in the case statement that has the
-> sole caller of this function are never reached, no?
-> 
-> Back when you added the check in a74b170 (git-pull: disallow implicit
-> merging to detached HEAD, 2007-01-15), $? referred to the error status of
-> reading HEAD as a symbolic-ref so the check did make sense, but cd67e4d
-> (Teach 'git pull' about --rebase, 2007-11-28) made a stupid mistake that
-> nobody noticed.
-
-Hmm. I'm not sure. I don't see how $? could not be zero, though, because
-the last thing we run is a subshell with sed and tr. But beyond that, we
-actually handle the detached case in error_on_no_merge_candidates
-already. So I think that case statement can simply be collapsed to the
-first case.
-
--Peff
+-- 
+Ted Pavlic <ted@tedpavlic.com>
