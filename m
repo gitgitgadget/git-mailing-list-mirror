@@ -1,88 +1,90 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Documentation - pt-BR.
-Date: Mon, 5 Oct 2009 09:18:06 +0200
-Message-ID: <20091005071806.GT32702@genesis.frugalware.org>
-References: <1253730339-11146-1-git-send-email-tfransosi@gmail.com>
- <7vhbuek3ma.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add the --submodule-summary option to the diff option 
+  family
+Date: Mon, 5 Oct 2009 11:00:38 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910051057350.4985@pacific.mpi-cbg.de>
+References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <4AC98FC8.3090202@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hzXMyaO2bax00huC"
-Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 09:27:36 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 11:00:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muhyj-0006JI-RO
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 09:27:30 +0200
+	id 1MujQj-0000q0-Vb
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 11:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758172AbZJEHSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 03:18:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757152AbZJEHSo
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 03:18:44 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:41631 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753110AbZJEHSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 03:18:44 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 8BB915809D;
-	Mon,  5 Oct 2009 09:18:06 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 3E5F144908;
-	Mon,  5 Oct 2009 09:18:06 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3CE2911F0028; Mon,  5 Oct 2009 09:18:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <7vhbuek3ma.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932297AbZJEI7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 04:59:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932292AbZJEI7F
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 04:59:05 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35816 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932206AbZJEI7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 04:59:04 -0400
+Received: (qmail invoked by alias); 05 Oct 2009 08:58:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp007) with SMTP; 05 Oct 2009 10:58:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0+OADcuC0nDR1zzsJUIKPptFP4kR8syDOXMBOxN
+	hoQiR66TTZvVFk
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4AC98FC8.3090202@viscovery.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129538>
 
+Hi,
 
---hzXMyaO2bax00huC
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 5 Oct 2009, Johannes Sixt wrote:
 
-On Sun, Oct 04, 2009 at 06:53:49PM -0700, Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > -NAME
-> > +NOME
-> >  ----
-> >  gittutorial - Um tutorial de introdu=E7??o ao git (para vers??o 1.5.1 =
-ou mais nova)
-> > =20
-> > -SYNOPSIS
-> > +SINOPSE
-> >  --------
-> >  git *
-> > =20
-> > -DESCRIPTION
-> > +DESCRI=C7??O
-> >  -----------
->=20
-> Not reading Portuguese, I have two comments.
->=20
->  - How well does AsciiDoc and its manpage backend work with these standard
->    section names localized?
+> Junio C Hamano schrieb:
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >> +	fwrite(sb.buf, sb.len, 1, f);
+> >> +
+> >> +	if (!message) {
+> >> +		while ((commit = get_revision(&rev))) {
+> >> +			strbuf_setlen(&sb, 0);
+> >> +			if (del)
+> >> +				strbuf_addstr(&sb, commit->object.flags &
+> >> +						SYMMETRIC_LEFT ? del : add);
+> >> +			format_commit_message(commit, format, &sb,
+> >> +					rev.date_mode);
+> >> +			if (del)
+> >> +				strbuf_addstr(&sb, reset);
+> > 
+> >  - In the "ANSI-terminal only" world view, adding colors to strbuf and
+> >    writing it out together with the actual strings is an easy thing to do.
+> >    Don't Windows folks have trouble converting this kind of code to their
+> >    color control call that is separate from writing strings out?  If it is
+> >    not a problem, I do not have any objection to it, but otherwise I'd
+> >    suggest not to add any more code that stores color escape sequence in
+> >    strbuf, so that we would not make later conversion by Windows folks
+> >    harder than necessary.
+> 
+> Thanks for noticing this! To store color escapes in strbuf is not a
+> problem as long as the string is finally written using printf, fprintf, or
+> fputs.
+> 
+> >> +			strbuf_addch(&sb, '\n');
+> >> +			fwrite(sb.buf, sb.len, 1, f);
+> 
+> Outch! fwrite doesn't interpret color escapes. AFAICS, this sequence is
+> easy to change such that it uses fprintf().
 
-As long as the correct -a lang=3Dfoo option is passed to asciidoc, the
-generated docbook XML will be valid.
+Good point.  I changed it to
 
---hzXMyaO2bax00huC
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+                        fprintf(f, "%s", sb.buf);
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+BTW we probably need to remove the "TODO: write" from compat/winansi.c...
 
-iEYEARECAAYFAkrJna4ACgkQe81tAgORUJaSMACcCQxJYxZ70IUqa6hsGh3E8mPi
-8PIAoJfAEWRZHXzM9U48RVZxdazsRnLU
-=0WZ3
------END PGP SIGNATURE-----
-
---hzXMyaO2bax00huC--
+Ciao,
+Dscho
