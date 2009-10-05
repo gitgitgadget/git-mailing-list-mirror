@@ -1,70 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: Interim maintainer tree
-Date: Mon, 5 Oct 2009 07:56:15 -0700
-Message-ID: <20091005145615.GA9261@spearce.org>
-References: <20090925160504.GW14660@spearce.org> <7viqevu1zt.fsf@alter.siamese.dyndns.org>
+Date: Mon, 5 Oct 2009 11:05:47 -0400
+Message-ID: <20091005150546.GA18460@coredump.intra.peff.net>
+References: <20090925160504.GW14660@spearce.org>
+ <7viqevu1zt.fsf@alter.siamese.dyndns.org>
+ <20091005145615.GA9261@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 17:00:02 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Oct 05 17:11:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mup2f-0004Ov-BI
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 17:00:01 +0200
+	id 1MupD8-0002YD-1R
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 17:10:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191AbZJEO4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 10:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752884AbZJEO4w
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 10:56:52 -0400
-Received: from george.spearce.org ([209.20.77.23]:42846 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752615AbZJEO4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 10:56:52 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id D62D3381FE; Mon,  5 Oct 2009 14:56:15 +0000 (UTC)
+	id S1753341AbZJEPGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 11:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753332AbZJEPGd
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 11:06:33 -0400
+Received: from peff.net ([208.65.91.99]:49727 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753313AbZJEPGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 11:06:33 -0400
+Received: (qmail 18233 invoked by uid 107); 5 Oct 2009 15:09:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 05 Oct 2009 11:09:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Oct 2009 11:05:47 -0400
 Content-Disposition: inline
-In-Reply-To: <7viqevu1zt.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20091005145615.GA9261@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129566>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > Junio is on vaction for the next week.  In his absence Peff and I
-> > are trying to keep up with current patches in my fork:
-> >
-> >   git://repo.or.cz/git/spearce.git
-> >   http://repo.or.cz/r/git/spearce.git
-> >
-> > Right now the tree matches Junio's last push, I'll try to pick up
-> > the patches since then and push later today.
-> 
-> Thanks, both.
-> 
-> I've fetched, but haven't fully examined "log ..spearce/*" nor "log ..peff/*"
-> yet.
+On Mon, Oct 05, 2009 at 07:56:15AM -0700, Shawn O. Pearce wrote:
 
-Sorry, I proved to be a very poor interim maintainer this cycle.
-I just didn't have the time to keep up with integration each day,
-and then dropped the ball on Thursday and Friday and failed to pull
-anything from Peff or the list.  Peff, thanks for keeping up a bit
-and at least having some tips for Junio to pick up from.
- 
-> I noticed that some topics in 'pu' have been rebased (not complaining, but
-> just making sure I am not hallucinating).
+> Sorry, I proved to be a very poor interim maintainer this cycle.
+> I just didn't have the time to keep up with integration each day,
+> and then dropped the ball on Thursday and Friday and failed to pull
+> anything from Peff or the list.  Peff, thanks for keeping up a bit
+> and at least having some tips for Junio to pick up from.
 
-Yes, some topics in 'pu' got rebased.  Wednesday I ran RB
-after preparing a new master, and then rebuilt pu around it.
-Unfortunately I somehow lost a patch on Nick's rev-list series,
-not sure how I managed to do that, but I guess I did, sorry.
+It was an interesting experience this time, having two people doing it.
+I think the communication overhead may have overwhelmed any help we were
+giving each other. Perhaps if there had been more, larger series, it
+might have made sense to assign somebody to track a topic and its
+iterations, and then finally sign off on it being ready. But being -rc
+period, things seem to have settled down, and most patches were one-off
+bugfixes all over the place.
 
-Were you no longer in the habit of running RB when you rebuilt pu?
- 
--- 
-Shawn.
+-Peff
