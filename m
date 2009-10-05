@@ -1,114 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "Not currently on any branch"
-Date: Sun, 04 Oct 2009 21:19:09 -0700
-Message-ID: <7vd452iibm.fsf@alter.siamese.dyndns.org>
-References: <106990.92203.qm@web111508.mail.gq1.yahoo.com>
+From: Michael Wookey <michaelwookey@gmail.com>
+Subject: Re: [PATCH] MSVC: fix build warnings
+Date: Mon, 5 Oct 2009 16:38:03 +1100
+Message-ID: <d2e97e800910042238t3ba02d59ud4e7f5b3b2b11183@mail.gmail.com>
+References: <d2e97e800910021440q46bd46c4y8a5af987620ffc5c@mail.gmail.com> 
+	<7v7hvd4flb.fsf@alter.siamese.dyndns.org> <d2e97e800910021628t13bba313he119ba59babdecee@mail.gmail.com> 
+	<7v7hvak1ec.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Timothy Washington <timothyjwashington@yahoo.ca>
-X-From: git-owner@vger.kernel.org Mon Oct 05 06:24:26 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 07:41:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muf7Y-0008WH-T1
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 06:24:25 +0200
+	id 1MugKN-0007KA-TU
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 07:41:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751148AbZJEET7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 00:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750980AbZJEET7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 00:19:59 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43391 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750842AbZJEET6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 00:19:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 522D36B4C8;
-	Mon,  5 Oct 2009 00:19:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9KCdYR820QLpVXQnVIOwPt/LnUc=; b=ebio1p
-	a2w4ydrfzGy6610gpoJwDj25aRpWIn8m+ApiZS5VfzrCjWNNU+e0km+Oh3VjYGzK
-	enFikFG9fadUwkpYKch83Ko+NGctr0nZswBz6JTG8qlzrvH22XFrIlZ1G/EQJb9A
-	tf0lTJpa/j4kf4nSVmOWpfZsg0E7Rhhj7KQ3I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yZ9il8VAw5aJbwrg0D/TaYIdj+8ayfuQ
-	5WILTua777a1kmWPX01rsxzL5glYgYkAnDS91h6fG+O8rNm3gE2yvSipSt+JSPhM
-	LF4sUsdyveWHCiMUIUF3LQD+U67JlAQxFIQED7sTUMbChgw1sun6bo3eIg5DDsxI
-	ByfwfWtZ+7U=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 332C06B4C7;
-	Mon,  5 Oct 2009 00:19:14 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F3F356B4C6; Mon,  5 Oct 2009
- 00:19:10 -0400 (EDT)
-In-Reply-To: <106990.92203.qm@web111508.mail.gq1.yahoo.com> (Timothy
- Washington's message of "Sun\, 4 Oct 2009 21\:01\:20 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D578E62-B166-11DE-AFB3-8B19076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751248AbZJEFjA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 01:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbZJEFjA
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 01:39:00 -0400
+Received: from mail-yx0-f199.google.com ([209.85.210.199]:51065 "EHLO
+	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750845AbZJEFi7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 01:38:59 -0400
+Received: by yxe37 with SMTP id 37so2735608yxe.33
+        for <git@vger.kernel.org>; Sun, 04 Oct 2009 22:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Mp55IK9dYYo9GeLNRBra7XhC7IK0i5P8wwrZximbfoA=;
+        b=Y45Mjzzf+hzy2hn55R4RJ/Z9pmHLyIY2mNfbMtAQ3dlGDnLLYqVAlhD+K3pG2AKZzO
+         HF59wqbgevUeh7MLP0Z7Azz6Ubk9kJNmOzMl7roHB20EiJNRopPiv5eXdWSZCtn8zyaL
+         6UR06Xt1wmEdH999Go2UQtBo2c9zits/YUiDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=B/BKjTFqeUjZuBTMNBixepfUPlO4Ol0UVfOnHb/G9nMutMjUgGRNL+ZO8qeYIFctUd
+         Hkc3GFQ61gL5MWEv0J++Rw8EXU5jDD33MtlBFyIb089DX7ixHnIb7b+B/tkfHm5lsJXc
+         sjuAYFvBgydPOj2QnmVpZzPkh+kRAap39mIQA=
+Received: by 10.100.78.16 with SMTP id a16mr4615763anb.180.1254721103064; Sun, 
+	04 Oct 2009 22:38:23 -0700 (PDT)
+In-Reply-To: <7v7hvak1ec.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129529>
 
-Timothy Washington <timothyjwashington@yahoo.ca> writes:
-
-> Thanks for all the responses so far. But if you take a look at my repo
-> (http://repo.or.cz/w/Bookkeeping.git), at the bottom of the page,
-> there's clearly a 'ui-integration' branch. But if I try to go to my
-> ui-integration branch, I get the message below. So I'm just clueless as
-> to where it went. If use the -b option, then I'll create a new
-> branch. But I don't want that. I want to keep all the data that was in
-> my original 'ui-integration' branch.
+2009/10/5 Junio C Hamano <gitster@pobox.com>:
+> Michael Wookey <michaelwookey@gmail.com> writes:
 >
-> [timothyw] ~/Projects/Bookkeeping.4 $ git checkout ui-integration
-> error: pathspec 'ui-integration' did not match any file(s) known to git.
+>> I can't build with -Werror on Ubuntu 9.04 (gcc 4.3.3) because of the=
+ following:
+>>
+>> =C2=A0 http://article.gmane.org/gmane.comp.version-control.git/12747=
+7
+>
+> I think that has been fixed already while I was away ;-)
 
-I do not think it has anything to do with "Not currently on any branch",
-but judging from this
+I still get the warning with the current git.git:master (dbc1b1f7) and
+git.git:next (8ea19b84). Would you consider taking the original patch
+to fix the build warning? Perhaps I should resend the patch as a
+"partial revert" of eb3a9dd which introduced this warning as described
+here:
 
-> [remote "origin"]
->     url = http://repo.or.cz/r/Bookkeeping.git
->     fetch = +refs/heads/*:refs/remotes/origin/*
+  http://article.gmane.org/gmane.comp.version-control.git/127519
 
-one possibility to see the above error message is to do this:
-
-    $ git clone http://repo.or.cz/r/Bookkeeping.git
-    $ cd Bookkeeping
-    $ git checkout ui-integration
-    error: pathspec 'ui-integration' did not match any file(s) known to git.
-
-In a clone, your local branch namespace is not cluttered with all the
-different branches your upstream repository has.  To wit:
-
-    $ git branch
-    * master
-    $ git branch -a
-    * master
-      remotes/origin/HEAD -> origin/master
-      remotes/origin/master
-      remotes/origin/ui-integration
-
-If you want to further work on the ui-integration topic, you would do
-something like:
-
-    $ git checkout -b ui-integration origin/ui-integration
-    Branch ui-integration set up to track remote branch ui-integration from origin.
-    Switched to a new branch 'ui-integration'
-    $ git branch
-      master
-    * ui-integration
-
-On the other hand, if you are not interested in working on that topic but
-just want to look at it, e.g. merge it to your master:
-
-    $ git branch
-    * master
-    $ git merge origin/ui-integration
-
-without creating a local ui-integration branch at all (iow, skip that
-"checkout -b" step above altogether).
+What do you think?
