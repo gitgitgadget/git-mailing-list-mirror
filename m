@@ -1,87 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
- family
-Date: Mon, 5 Oct 2009 11:21:56 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910051120430.4985@pacific.mpi-cbg.de>
-References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Teach 'rebase -i' the command "amend"
+Date: Mon, 5 Oct 2009 11:39:56 +0200
+Message-ID: <fabb9a1e0910050239h614118cfw8a5055e4ed966dd1@mail.gmail.com>
+References: <4AC8F22F.5070101@gmail.com> <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de> 
+	<6672d0160910042308v7280dcadyff97b977bcfe12c3@mail.gmail.com> 
+	<alpine.DEB.1.00.0910051116480.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 11:28:05 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 05 11:45:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MujpT-0007U7-GG
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 11:26:03 +0200
+	id 1Muk81-0002HY-U7
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 11:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbZJEJUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 05:20:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbZJEJUV
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 05:20:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58268 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932304AbZJEJUU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 05:20:20 -0400
-Received: (qmail invoked by alias); 05 Oct 2009 09:19:33 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp065) with SMTP; 05 Oct 2009 11:19:33 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19o9J9DCPBoEB2stywx/3Vq7vau94N8YDRu6U8F1+
-	iMMXTOnxROf8yw
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+	id S1758746AbZJEJkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 05:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758722AbZJEJkz
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 05:40:55 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:38167 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758750AbZJEJky (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 05:40:54 -0400
+Received: by ewy7 with SMTP id 7so3296956ewy.17
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 02:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=xLNPXHm7WnCP/D55zmp2AMUXOA1fcCqTBO70xmai/Mg=;
+        b=HFZlkALq8Fa9WrU2npbYvZc/S9w2d2ecysh2knLgLjBFoZg6+xVRsOxjlDdwPY0BdW
+         5Jkn/H+jSCOcGudiNxFyeC2GzOY3UqkDtTa/sh0oqCtKLzrhHycpcHuVMRPlwpn89Kwu
+         KWIDjaWBTO5dh9NDq27Ew8H+HJ50yd3zHaVb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=akBcF/SjQ9aG++GbN84PM3hl7pajwUJ+jSiCYEvg/IlUifIYmyr6EdJEBjO7A5YV3g
+         V+HrKBnrsnv9YxoyuTcFypn8CqVhQptmTBlu5OyMYvLxlVyZ7ToX5agX88dd4oRhcThT
+         BPQ7aetJ5fypeV6DaGgYxclu7csBaXLCV9MNM=
+Received: by 10.216.8.5 with SMTP id 5mr671511weq.181.1254735616127; Mon, 05 
+	Oct 2009 02:40:16 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0910051116480.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129544>
 
-Hi,
+Heya,
 
-On Mon, 5 Oct 2009, Johannes Schindelin wrote:
+2009/10/5 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> My objection was that the "upcoming" (yeah, Sverre, I am imitating Duke
+> Nukem Forever here) "merge" command would clash with "msgedit", which was
+> why I suggested "rephrase" (but would be okay with "reword" Junio
+> mentions).
 
-> On Sun, 4 Oct 2009, Junio C Hamano wrote:
-> 
-> >  - Checking "del" to decide if you want to say "reset" feels funny.
-> 
-> Right.  But I wanted to avoid checking for del, add and reset 
-> separately.
-> 
-> So I was wrong, and will fix.
+I also dislike 'msgedit' because it's abbrev-ed, I would prefer
+"reword" for that reason.
 
-This is the current interdiff:
+-- 
+Cheers,
 
--- snipsnap --
-diff --git a/submodule.c b/submodule.c
-index 3f2590d..b441ea1 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -92,15 +92,18 @@ void show_submodule_summary(FILE *f, const char *path,
- 	if (!message) {
- 		while ((commit = get_revision(&rev))) {
- 			strbuf_setlen(&sb, 0);
--			if (del)
--				strbuf_addstr(&sb, commit->object.flags &
--						SYMMETRIC_LEFT ? del : add);
-+			if (commit->object.flags & SYMMETRIC_LEFT) {
-+				if (del)
-+					strbuf_addstr(&sb, del);
-+			}
-+			else if (add)
-+				strbuf_addstr(&sb, add);
- 			format_commit_message(commit, format, &sb,
- 					rev.date_mode);
--			if (del)
-+			if (reset)
- 				strbuf_addstr(&sb, reset);
- 			strbuf_addch(&sb, '\n');
--			fwrite(sb.buf, sb.len, 1, f);
-+			fprintf(f, "%s", sb.buf);
- 		}
- 		clear_commit_marks(left, ~0);
- 		clear_commit_marks(right, ~0);
+Sverre Rabbelier
