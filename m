@@ -1,75 +1,84 @@
-From: Michael Wookey <michaelwookey@gmail.com>
-Subject: Re: [PATCH] MSVC: fix build warnings
-Date: Mon, 5 Oct 2009 16:38:03 +1100
-Message-ID: <d2e97e800910042238t3ba02d59ud4e7f5b3b2b11183@mail.gmail.com>
-References: <d2e97e800910021440q46bd46c4y8a5af987620ffc5c@mail.gmail.com> 
-	<7v7hvd4flb.fsf@alter.siamese.dyndns.org> <d2e97e800910021628t13bba313he119ba59babdecee@mail.gmail.com> 
-	<7v7hvak1ec.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH] Teach 'rebase -i' the command "amend"
+Date: Mon, 5 Oct 2009 08:08:49 +0200
+Message-ID: <6672d0160910042308v7280dcadyff97b977bcfe12c3@mail.gmail.com>
+References: <4AC8F22F.5070101@gmail.com>
+	 <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 07:41:45 2009
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 05 08:18:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MugKN-0007KA-TU
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 07:41:44 +0200
+	id 1MuguE-0008F8-GU
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 08:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248AbZJEFjA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 01:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751045AbZJEFjA
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 01:39:00 -0400
-Received: from mail-yx0-f199.google.com ([209.85.210.199]:51065 "EHLO
-	mail-yx0-f199.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750845AbZJEFi7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 01:38:59 -0400
-Received: by yxe37 with SMTP id 37so2735608yxe.33
-        for <git@vger.kernel.org>; Sun, 04 Oct 2009 22:38:23 -0700 (PDT)
+	id S1752274AbZJEGJ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 02:09:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbZJEGJ3
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 02:09:29 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:54704 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752247AbZJEGJ3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 02:09:29 -0400
+Received: by bwz6 with SMTP id 6so2238395bwz.37
+        for <git@vger.kernel.org>; Sun, 04 Oct 2009 23:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
+         :date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Mp55IK9dYYo9GeLNRBra7XhC7IK0i5P8wwrZximbfoA=;
-        b=Y45Mjzzf+hzy2hn55R4RJ/Z9pmHLyIY2mNfbMtAQ3dlGDnLLYqVAlhD+K3pG2AKZzO
-         HF59wqbgevUeh7MLP0Z7Azz6Ubk9kJNmOzMl7roHB20EiJNRopPiv5eXdWSZCtn8zyaL
-         6UR06Xt1wmEdH999Go2UQtBo2c9zits/YUiDY=
+        bh=BAei1hLPlfSKeLw0L8RDuepv2E/F3tRl+TmDYF14jAY=;
+        b=a7nh5zPtJl8FuGWdVjq2vzee72l0bGxqZ8tZ+d9FsyPpRJVXuFlzFiTJIuLJwqZQSj
+         Q1z3rADrBlSA1vnDZwLE36X67Hq1NTc7ILKKbZzCHvPs0/c8rvbZBK0ovBpPY4abS0+v
+         Nb+tRA2hNOt/bwvZxo5f7rxy6bA1thuagT4GQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=B/BKjTFqeUjZuBTMNBixepfUPlO4Ol0UVfOnHb/G9nMutMjUgGRNL+ZO8qeYIFctUd
-         Hkc3GFQ61gL5MWEv0J++Rw8EXU5jDD33MtlBFyIb089DX7ixHnIb7b+B/tkfHm5lsJXc
-         sjuAYFvBgydPOj2QnmVpZzPkh+kRAap39mIQA=
-Received: by 10.100.78.16 with SMTP id a16mr4615763anb.180.1254721103064; Sun, 
-	04 Oct 2009 22:38:23 -0700 (PDT)
-In-Reply-To: <7v7hvak1ec.fsf@alter.siamese.dyndns.org>
+        b=CU0pbAwHlu93d/cEdg0Uo0lP983MIbIo6A0aRDutFfYml2k+/oahjuKlntuqqnkDE/
+         XifnfqkC2AelW3pSVgB2+z4syS1YdT/wwCT62WcR4I8gT3VKlLlPEe9JbpeSHxFR4ak8
+         6zd4JGoGZA2zWU3U2vkahv5I17d8kO6MQgQqs=
+Received: by 10.204.34.75 with SMTP id k11mr3687276bkd.105.1254722930893; Sun, 
+	04 Oct 2009 23:08:50 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129530>
 
-2009/10/5 Junio C Hamano <gitster@pobox.com>:
-> Michael Wookey <michaelwookey@gmail.com> writes:
->
->> I can't build with -Werror on Ubuntu 9.04 (gcc 4.3.3) because of the=
- following:
->>
->> =C2=A0 http://article.gmane.org/gmane.comp.version-control.git/12747=
-7
->
-> I think that has been fixed already while I was away ;-)
+2009/10/4 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> I thought that we had a discussion about this and that the consensus =
+was
+> that "amend" would be misleading. =C2=A0Maybe you can find that threa=
+d in
+> GMane?
 
-I still get the warning with the current git.git:master (dbc1b1f7) and
-git.git:next (8ea19b84). Would you consider taking the original patch
-to fix the build warning? Perhaps I should resend the patch as a
-"partial revert" of eb3a9dd which introduced this warning as described
-here:
+I found this thread from January 2009:
 
-  http://article.gmane.org/gmane.comp.version-control.git/127519
+http://thread.gmane.org/gmane.comp.version-control.git/105738
 
-What do you think?
+Having read the thread, I agree that "amend" would be misleading.
+
+There were several suggestions for alternate command names
+in that thread, for example:
+
+"msg", "msgedit", "message", "reword", "rephrase"
+
+It think that "msgedit" was suggested by several people. ("editmsg"
+was also suggested, but it is not possible as the abbreviation "e" woul=
+d
+become ambiguous.)
+
+Would the patch have a chance to be accepted if I renamed
+the new command to "msgedit"?
+
+/Bj=C3=B6rn
+
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
