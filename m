@@ -1,95 +1,135 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: previous references
-Date: Mon, 05 Oct 2009 23:11:07 +0200
-Message-ID: <1254777067.26111.105.camel@localhost>
-References: <8E72DAAF9F8E4024BB819F3F83CCFC79@teddy>
-	 <200910041127.29588.johan@herland.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
+ family
+Date: Mon, 5 Oct 2009 23:08:24 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910052251190.4985@pacific.mpi-cbg.de>
+References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
+ <7vr5thacb4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Octavian =?UTF-8?Q?R=C3=A2=C5=9Fni=C5=A3=C4=83?= 
-	<orasnita@gmail.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Oct 05 23:13:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 23:13:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muuri-0006cn-2a
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 23:13:06 +0200
+	id 1Muure-0006cn-BH
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 23:13:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754816AbZJEVMQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 17:12:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753917AbZJEVMQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 17:12:16 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:41025 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754810AbZJEVMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 17:12:15 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so668415eyf.19
-        for <git@vger.kernel.org>; Mon, 05 Oct 2009 14:11:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=afV4BgpwvFYPuLyA8tQ6rTc54CwzSBnyEuDb+5UQtt8=;
-        b=hNV5hluSOmsGuEi3IA0/dUEBNHkZSLfD1kAtZb01N17wPdfHfAQwNo63VtyV+OqVhx
-         44+grG2R+ta1m8Pjwy6DKs43OtkN5lrKjY9WUS0mMxHgIHRY5/6kr9VUr53t+yT0C1wP
-         +m5OQBLeHWbqQ4UbPNNGCPpW2o8w7M7joASJ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=ScHrdj09hOeast0terJviOTBMydIpMbYN3nYSfXQhgeHlZl9xl4aYCo1bzSHBVzkBc
-         kGhrO484YVtaDYUeIaJs4sTVVdovHOyLLsnb+8FGtPIAEqg069cnCo4BVWjn66mb0Wzx
-         p1L9N58j93dC/GWIfK/TZlhfS3TQEJX2jvmaU=
-Received: by 10.210.93.27 with SMTP id q27mr3859641ebb.6.1254777066144;
-        Mon, 05 Oct 2009 14:11:06 -0700 (PDT)
-Received: from ?192.168.1.2? (host33-1-dynamic.50-82-r.retail.telecomitalia.it [82.50.1.33])
-        by mx.google.com with ESMTPS id 24sm65573eyx.33.2009.10.05.14.11.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Oct 2009 14:11:04 -0700 (PDT)
-In-Reply-To: <200910041127.29588.johan@herland.net>
-X-Mailer: Evolution 2.26.3 
+	id S1752879AbZJEVGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 17:06:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbZJEVGs
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 17:06:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54960 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751035AbZJEVGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 17:06:47 -0400
+Received: (qmail invoked by alias); 05 Oct 2009 21:05:59 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp031) with SMTP; 05 Oct 2009 23:05:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+//uh9Qji/YgTE1XAPxyRMpbTB/I1VRoJdah7c2Z
+	6lCADifSmURuGC
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vr5thacb4.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.53
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129591>
 
-Il giorno dom, 04/10/2009 alle 11.27 +0200, Johan Herland ha scritto:
-> On Sunday 04 October 2009, Octavian R=C3=A2=C5=9Fni=C5=A3=C4=83 wrote=
-:
-> > Are the following commands specifying the same reference?
-> >=20
-> > prompt> git log -1 HEAD^^^ ... log entry ...
-> > prompt> git log -1 HEAD^~2 ... log entry ...
-> > prompt> git log -1 HEAD~1^^ ... log entry ...
-> > prompt> git log -1 HEAD~3 ... log entry ...
->=20
-> Yes
+Hi,
 
-the ~ is used to select the first parent of a commit and their
-grand-parents
+On Mon, 5 Oct 2009, Junio C Hamano wrote:
 
-HEAD~ means the parent of the current head
-HEAD~2 means the grand-parent
-HEAD~3 the grand-grand-parent..
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > +		if (prepare_revision_walk(&rev))
+> >> > +			message = "(revision walker failed)";
+> >> 
+> >> If prepare_revision_walk() failed for whatever reason, can we trust
+> >> fast_forward/fast_backward at this point?
+> >
+> > No, but it is not used in that case, either, because message is not NULL 
+> > anymore.
+> 
+> It is used in that case a few lines below to decide if you add the third
+> dot.  That's why I asked.
 
-the ^ is used to select a direct parent of a commit
-HEAD^ is the same as HEAD~
-HEAD^^ is the same as HEAD~2 (parent of the parent)
-HEAD^2 is NOT the same of HEAD~2, it means the "second parent" of HEAD:
-this make sense only if HEAD has at least two parents (because it is a
-merge commit) if it hasn't you'll get:
+Well, fair enough.
 
-fatal: ambiguous argument 'HEAD^2': unknown revision or path not in the
-working tree.
-Use '--' to separate paths from revisions
+The answer is: yes, we can still trust fast_forward/fast_backward, as 
+there is no question that if the first merge base (which must be the only 
+merge base by definition, in this case) is either "left" or "right", it is 
+fast_forward or fast_backward, respectively.
 
+So: no worries.
 
-you can read the same here: http://progit.org/book/ch6-1.html
+> > I have no idea why "submodule --summary" uses --first-parent, but 
+> > personally, I would _hate_ it not to see the merged commits in the 
+> > diff.
+> >
+> > For a summary, you might get away with seeing
+> >
+> > 	> Merge bla
+> > 	> Merge blub
+> > 	> Merge this
+> > 	> Merge that
+> >
+> > but in a diff that does not cut it at all.
+> 
+> As long as bla/blub/this/that are descriptive enough, I do not see at all
+> why you think "summary" is Ok and "diff" is not.  If your response were
+> "it is just a matter of taste; to some people (or project) --first-parent
+> is useful and for others it is not", I would understand it, and it would
+> make sense to use (or not use) --first-parent consistently between this
+> codepath and "submodule --summary", though.
 
-regards,
-Daniele
+You may be used to git.git's quality of naming the branches you merge.
+
+Sadly, this is not the common case.
+
+> > In any case, just to safe-guard against sick minds, I can add a check that 
+> > says that left, right, and all the merge bases _cannot_ have any flags 
+> > set, otherwise we output "(you should visit a psychiatrist)" or some such.
+> 
+> I wouldn't suggest adding such a kludge.  Being insulting to the user when
+> we hit a corner case _we_ cannot handle does not help anybody, does it?
+
+Well, I was a little exasperated when I wrote that that you want to handle 
+that case.
+
+But of course, I should heed Postel's law, and handle the case. Maybe say 
+something like "(uses superproject's commits)".
+
+> I see two saner options.  Doing this list walking in a subprocess so that
+> you wouldn't have to worry about object flags at all in this case would
+> certainly be easier; the other option obviously is to have a separate
+> object pool ala libgit2, but that would be a much larger change.
+
+The reason why I insist avoiding a subprocess is performance.  The same 
+reason holds for a separate object pool: it would just impede the speed, 
+AFAICT.
+
+Besides, I vividly remember what happened to a patch I posted to be able 
+to just clear the current object pool.  And I cannot imagine a patch 
+introducing a second pool to be any less complicated.
+
+If you really want the case I illustrated (that the submodule actually 
+contains commits that already have been shown in the superproject) to be 
+handled showing the correct submodule summary (and with --first-parent, I 
+think you will agree that it is a summary, even if it is embedded in a 
+diff), I could imagine calling a subprocess (for simplicity reasons) _iff_ 
+left, right, or any of the merge bases has a flag set.
+
+But I really, really, really want to avoid a fork() in the common case.  I 
+do have some users on Windows, and I do have a few submodules in that 
+project.  Having too many fork() calls there would just give Git a bad 
+reputation.  And it has enough of that, it does not need more.
+
+Ciao,
+Dscho
