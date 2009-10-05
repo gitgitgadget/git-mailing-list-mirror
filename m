@@ -1,113 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Teach 'rebase -i' the command "amend"
-Date: Mon, 05 Oct 2009 14:07:10 -0700
-Message-ID: <7vbpkl8s8x.fsf@alter.siamese.dyndns.org>
-References: <4AC8F22F.5070101@gmail.com>
- <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
- <6672d0160910042308v7280dcadyff97b977bcfe12c3@mail.gmail.com>
- <alpine.DEB.1.00.0910051116480.4985@pacific.mpi-cbg.de>
- <fabb9a1e0910050239h614118cfw8a5055e4ed966dd1@mail.gmail.com>
- <6672d0160910050910x3a9aa6a3w742c09e7f2f42187@mail.gmail.com>
- <87ab05r5hg.fsf@dylle.kalibalik.dk>
- <alpine.DEB.1.00.0910052248500.4985@pacific.mpi-cbg.de>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: previous references
+Date: Mon, 05 Oct 2009 23:11:07 +0200
+Message-ID: <1254777067.26111.105.camel@localhost>
+References: <8E72DAAF9F8E4024BB819F3F83CCFC79@teddy>
+	 <200910041127.29588.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anders Melchiorsen <mail@spoon.kalibalik.dk>,
-	=?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 05 23:13:04 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Octavian =?UTF-8?Q?R=C3=A2=C5=9Fni=C5=A3=C4=83?= 
+	<orasnita@gmail.com>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 05 23:13:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muurg-0006cn-Fb
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 23:13:04 +0200
+	id 1Muuri-0006cn-2a
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 23:13:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbZJEVIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 17:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754799AbZJEVIJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 17:08:09 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754718AbZJEVII (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 17:08:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D00784D708;
-	Mon,  5 Oct 2009 17:07:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=av6l0GDmqCIdNZdFUeNP7CepxpQ=; b=Mvw23F
-	n8UCMd9Hc48tLhdDJFWCX//0+mfPx7boo8NxMls2q1u/qFLBAKccdz0Ee/v43A6y
-	6oHh1Ijky3ICgVLPYEi4uJVGsA440QLcRSf1AQDwPhQVUNk8LaROx5doWaKb6xKu
-	7qdT7YfR0hTFTZa6fSprS0/essOaT4J8LiroM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XGCM/yW7i5MHr7pcr12LFHYIH2uzorY1
-	3wCqegqrZqieLU28B+sHLcOdzYFCwW6Jgcu9SWe5C0DPOZqg30iK+lqii7SCXpRQ
-	A5rsgmHygAnKG6CYlhcGuwDDqRK+X9y/rwnbptNJjhfmkFwTmeCgCVsVqQ/ux7X6
-	X7jojG4YB5Y=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C1694D702;
-	Mon,  5 Oct 2009 17:07:19 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 433DC4D6FD; Mon,  5 Oct
- 2009 17:07:12 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0910052248500.4985@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Mon\, 5 Oct 2009 22\:50\:05 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 115BD3D0-B1F3-11DE-B2F4-92E639D9C332-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754816AbZJEVMQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 17:12:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753917AbZJEVMQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 17:12:16 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:41025 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754810AbZJEVMP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 17:12:15 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so668415eyf.19
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 14:11:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=afV4BgpwvFYPuLyA8tQ6rTc54CwzSBnyEuDb+5UQtt8=;
+        b=hNV5hluSOmsGuEi3IA0/dUEBNHkZSLfD1kAtZb01N17wPdfHfAQwNo63VtyV+OqVhx
+         44+grG2R+ta1m8Pjwy6DKs43OtkN5lrKjY9WUS0mMxHgIHRY5/6kr9VUr53t+yT0C1wP
+         +m5OQBLeHWbqQ4UbPNNGCPpW2o8w7M7joASJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=ScHrdj09hOeast0terJviOTBMydIpMbYN3nYSfXQhgeHlZl9xl4aYCo1bzSHBVzkBc
+         kGhrO484YVtaDYUeIaJs4sTVVdovHOyLLsnb+8FGtPIAEqg069cnCo4BVWjn66mb0Wzx
+         p1L9N58j93dC/GWIfK/TZlhfS3TQEJX2jvmaU=
+Received: by 10.210.93.27 with SMTP id q27mr3859641ebb.6.1254777066144;
+        Mon, 05 Oct 2009 14:11:06 -0700 (PDT)
+Received: from ?192.168.1.2? (host33-1-dynamic.50-82-r.retail.telecomitalia.it [82.50.1.33])
+        by mx.google.com with ESMTPS id 24sm65573eyx.33.2009.10.05.14.11.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 05 Oct 2009 14:11:04 -0700 (PDT)
+In-Reply-To: <200910041127.29588.johan@herland.net>
+X-Mailer: Evolution 2.26.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129590>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Il giorno dom, 04/10/2009 alle 11.27 +0200, Johan Herland ha scritto:
+> On Sunday 04 October 2009, Octavian R=C3=A2=C5=9Fni=C5=A3=C4=83 wrote=
+:
+> > Are the following commands specifying the same reference?
+> >=20
+> > prompt> git log -1 HEAD^^^ ... log entry ...
+> > prompt> git log -1 HEAD^~2 ... log entry ...
+> > prompt> git log -1 HEAD~1^^ ... log entry ...
+> > prompt> git log -1 HEAD~3 ... log entry ...
+>=20
+> Yes
 
->> Being in an editor but still not able to fix typos is a nuisance.
->
-> NAK.
->
-> Supporting that would be totally out of line with the way rebase -i is 
-> supposed to work.
+the ~ is used to select the first parent of a commit and their
+grand-parents
 
-If the rebase insn sheet were richer, and had a way to show the full
-message, like this:
+HEAD~ means the parent of the current head
+HEAD~2 means the grand-parent
+HEAD~3 the grand-grand-parent..
 
-pick 4973aa2 git-pull: dead code removal
-    Back when a74b170 (git-pull: disallow implicit merging to detached HEAD,
-    2007-01-15) added this check, $? referred to the error status of reading
-    HEAD as a symbolic-ref; but cd67e4d (Teach 'git pull' about --rebase,
-    2007-11-28) moved the command away from where the check is, and nobody
-    noticed the breakage.  Ever since, $? has always been 0 (tr at the end of
-    the pipe to find merge_head never fails) and other case arms were never
-    reached.
-    
-    These days, error_on_no_merge_candidates function is prepared to handle a
-    detached HEAD case, which was what the code this patch removes used to
-    handle.
-    
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+the ^ is used to select a direct parent of a commit
+HEAD^ is the same as HEAD~
+HEAD^^ is the same as HEAD~2 (parent of the parent)
+HEAD^2 is NOT the same of HEAD~2, it means the "second parent" of HEAD:
+this make sense only if HEAD has at least two parents (because it is a
+merge commit) if it hasn't you'll get:
 
-I do not see why we shouldn't allow people to edit any part of the above
-to reword.
+fatal: ambiguous argument 'HEAD^2': unknown revision or path not in the
+working tree.
+Use '--' to separate paths from revisions
 
-I would even understand (but not necessarily agree) if somebody wants to
-give the patch text and let users edit to reapply.
 
-So I do not agree with your "totally out of line" at all.
+you can read the same here: http://progit.org/book/ch6-1.html
 
-> Besides, if you already have typos in the commit subject, you _better_ 
-> check the whole commit message, so: double NAK.
-
-That sounds a bit too dogmatic.
-
-But I tend to agree with you that we would be better off not accepting
-such a "retitle" patch, as it strongly encourages single-liner commit log
-messages.
-
-Oh, there was no patch?  Then nevermind...
+regards,
+Daniele
