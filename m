@@ -1,68 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Confusing git pull error message
-Date: Mon, 5 Oct 2009 18:00:32 -0400
-Message-ID: <20091005220032.GA29113@coredump.intra.peff.net>
-References: <43d8ce650909121301i4450489dhf475ff6894394a5f@mail.gmail.com>
- <20090912211119.GA30966@coredump.intra.peff.net>
- <7v1vmar353.fsf@alter.siamese.dyndns.org>
- <4AC9D952.3050108@viscovery.net>
- <20091005115308.GA2122@coredump.intra.peff.net>
- <7vljjpacax.fsf@alter.siamese.dyndns.org>
- <20091005191257.GA24305@coredump.intra.peff.net>
- <7vd451ab16.fsf@alter.siamese.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when 
+	appropriate to do so
+Date: Mon, 5 Oct 2009 18:00:05 -0400
+Message-ID: <76718490910051500m32878c7dgcc86489933cb2309@mail.gmail.com>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+	 <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	John Tapsell <johnflux@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 00:08:23 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 06 00:08:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuvjA-0003XD-8C
+	id 1Muvj9-0003XD-M3
 	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 00:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754977AbZJEWBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 18:01:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754902AbZJEWBT
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 18:01:19 -0400
-Received: from peff.net ([208.65.91.99]:37021 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754849AbZJEWBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 18:01:18 -0400
-Received: (qmail 20669 invoked by uid 107); 5 Oct 2009 22:04:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 05 Oct 2009 18:04:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Oct 2009 18:00:32 -0400
-Content-Disposition: inline
-In-Reply-To: <7vd451ab16.fsf@alter.siamese.dyndns.org>
+	id S1754887AbZJEWAo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 18:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754849AbZJEWAo
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 18:00:44 -0400
+Received: from mail-iw0-f178.google.com ([209.85.223.178]:55494 "EHLO
+	mail-iw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754827AbZJEWAn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 18:00:43 -0400
+Received: by iwn8 with SMTP id 8so1953650iwn.33
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 15:00:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6gtCW3IIQ6l3Ub5aiC+qJ1t/ikLAgSVa9bvOpb/meBk=;
+        b=enhEjrXt8AWpzsnVJCU/rxt5MD0ln81ZB/+MXGYgH91Nl3g2EUpsLwvjrLR5anCmKq
+         rv9Bc908COmUkOp+1sYczpCLZ6RRCSvbIztIsykcg/Mc3ieFryIQxRZZalh9ggf5+j9g
+         a08I4dffDEFSeI7LVyHKpq0MW8PIB/ToDEy08=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WYniUl4cSbL2ZDa+MH5gHCMxpuFE/ta1NLj9eqhlDVRWKygSrW0g8rzcWOOf4p7Sie
+         oVAn3zwsrVE3AydPulSH4eLNhmDktvqgd/Ie+edDB6pibCgZc17+b7tbM1o9IrS1hlnE
+         BlFcY+50QIGsV2sWyZPXjXpiCIhbAL0ECJR8E=
+Received: by 10.231.26.131 with SMTP id e3mr1070469ibc.0.1254780006020; Mon, 
+	05 Oct 2009 15:00:06 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129599>
 
-On Mon, Oct 05, 2009 at 12:36:05PM -0700, Junio C Hamano wrote:
+On Mon, Oct 5, 2009 at 5:17 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Actually, we should really think long and hard why we should not
+> automatically check out the local branch "next" in that case. =C2=A0I=
+ mean,
+> really long and hard, and making sure to take user-friendliness into
+> account at least as much as simplicity of implementation.
 
-> -- >8 --
-> Subject: [PATCH] git-pull: dead code removal
-> 
-> Back when a74b170 (git-pull: disallow implicit merging to detached HEAD,
-> 2007-01-15) added this check, $? referred to the error status of reading
-> HEAD as a symbolic-ref; but cd67e4d (Teach 'git pull' about --rebase,
-> 2007-11-28) moved the command away from where the check is, and nobody
-> noticed the breakage.  Ever since, $? has always been 0 (tr at the end of
-> the pipe to find merge_head never fails) and other case arms were never
-> reached.
-> 
-> These days, error_on_no_merge_candidates function is prepared to handle a
-> detached HEAD case, which was what the code this patch removes used to
-> handle.
+Sure, why not? Are you asking for a patch, or just soliciting conversat=
+ion?
 
-Looks good to me.
-
-Acked-by: Jeff King <peff@peff.net>
-
--Peff
+j.
