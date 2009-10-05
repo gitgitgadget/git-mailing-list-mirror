@@ -1,97 +1,124 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH] Speedup bash completion loading
-Date: Mon,  5 Oct 2009 14:03:59 +0400
-Message-ID: <1254737039-10404-1-git-send-email-kirr@mns.spb.ru>
-Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 05 12:28:23 2009
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH RESEND] git submodule add: make the <path> parameter optional
+Date: Mon, 05 Oct 2009 12:28:29 +0200
+Message-ID: <4AC9CA4D.7020909@web.de>
+References: <4AB8E8D4.40105@web.de> <7vbpl2srw9.fsf@alter.siamese.dyndns.org> <4AC8E0A8.4000901@web.de> <alpine.DEB.1.00.0910042304060.4985@pacific.mpi-cbg.de> <7vtyyek4nz.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 12:35:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuklL-00024T-HA
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 12:25:51 +0200
+	id 1Mukv4-0000TH-2m
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 12:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758589AbZJEKWs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 06:22:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758557AbZJEKWs
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 06:22:48 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:55445 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751986AbZJEKWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 06:22:47 -0400
-X-Greylist: delayed 1010 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2009 06:22:47 EDT
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1MukRH-0000m7-If; Mon, 05 Oct 2009 14:05:07 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1MukQd-0002iL-2s; Mon, 05 Oct 2009 14:04:27 +0400
-X-Mailer: git-send-email 1.6.5.rc2.17.gdbc1b
+	id S932387AbZJEK3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 06:29:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758622AbZJEK3P
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 06:29:15 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:40284 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758694AbZJEK3O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 06:29:14 -0400
+Received: from smtp06.web.de (fmsmtp06.dlan.cinetic.de [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id DEDBF1251ACE8;
+	Mon,  5 Oct 2009 12:28:36 +0200 (CEST)
+Received: from [80.128.124.99] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Muko0-0000xo-00; Mon, 05 Oct 2009 12:28:36 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <7vtyyek4nz.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18pJngWBsTy3sg6mg01CeYAxAZIC8VsGmduVoyc
+	sW0qPAl4wjU7IY3uuQdTi01pjVtQipzBV/WM1HZT3oVNYrNcNE
+	D+tzzytpBgHItrDliz+g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129551>
 
-On my slow laptop (P3 700MHz), system-wide bash completions take too
-much time to load (> 1s), and significant fraction of this time is spent
-loading git-completion.bash:
+Junio C Hamano schrieb:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> So far, I started submodules by cloning them, doing everything in the 
+>> other files needed to integrate, and then actually wondered why "git 
+>> submodule add" could not simply take the (relative) path to the 
+>> checked-out submodule and deduce the URL from the corresponding config?
+> 
+> Let me try to rephrase the above to see if I understand what you are
+> doing.  When building a top-level superproject that uses two submodules
+> from other places, you would do:
+> 
+> 	$ git init toplevel
+>         $ cd toplevel
+>         $ git clone $overthere submodule1
+>         $ git clone $elsewhere submodule2
+>         $ edit Makefile common.h
+>         $ git add Makefile common.h submodule1 submodule2
+> 
+> and by "the corresponding config", you mean "submodule1/.git/config
+> already records that it came from $overthere, and there is no reason to
+> say it again in 'git submodule add $overthere submodule1'".
 
-    $ time bash -c '. git-completion.bash'  # before this patch
+Right, no reason to use git submodule add here. But in this example
+submodule1 & submodule2 aren't real submodules, because the .gitmodules
+file is not created. Or am i missing something?
 
-    real    0m0.317s
-    user    0m0.250s
-    sys     0m0.060s
 
-I've tracked down that the most time is spent warming up merge_strategy,
-all_command & porcelain_command caches.
+> If that is the case, I think it is a very sane argument.  It also makes me
+> wonder why we need "git submodule add" as a separate step to begin with
+> (i.e. "git add" Porcelain could do that behind the scene), but that is
+> probably a separate topic.
 
-Since git is not used in each and every interactive xterm, I think it
-would be perfectly ok to load completion support with cold caches, and
-then load needed thing lazily.
+I think we need git submodule add because it is doing much more than
+a plain git add. It also does the clone and creates the .gitmodules
+file needed later.
 
-As __git_merge_stratiegies(), __git_all_commands() &
-__git_porcelain_command() already cache their results, we can safely
-remove associated cache initialization code and be done with it:
+My everyday use case looks different. When i start a new project where
+i want to use two of libraries living in their own git repo, i do:
 
-    $ time bash -c '. git-completion.bash'  # after this patch
+   $ git init toplevel
+   $ cd toplevel
+   $ git submodule add git://mygitserver/submodule1.git submodule1
+   $ git submodule add git://mygitserver/submodule2.git submodule2
+   $ git commit -m 'Initial setup with submodule1 & submodule2'
 
-    real    0m0.069s
-    user    0m0.050s
-    sys     0m0.020s
+After the submodule add submodule1, submodule2 and .gitmodules are
+added to the index and the two repositories are cloned, so i just
+have to do a commit when ready.
 
-Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
----
- contrib/completion/git-completion.bash |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
+And with my patch the two submodule add lines read:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2c2a0d4..4c09d41 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -340,7 +340,6 @@ __git_merge_strategies ()
- 	}'
- }
- __git_merge_strategylist=
--__git_merge_strategylist=$(__git_merge_strategies 2>/dev/null)
- 
- __git_complete_file ()
- {
-@@ -505,7 +504,6 @@ __git_all_commands ()
- 	done
- }
- __git_all_commandlist=
--__git_all_commandlist="$(__git_all_commands 2>/dev/null)"
- 
- __git_porcelain_commands ()
- {
-@@ -596,7 +594,6 @@ __git_porcelain_commands ()
- 	done
- }
- __git_porcelain_commandlist=
--__git_porcelain_commandlist="$(__git_porcelain_commands 2>/dev/null)"
- 
- __git_aliases ()
- {
--- 
-1.6.5.rc2.17.gdbc1b
+   $ git submodule add git://mygitserver/submodule1.git
+   $ git submodule add git://mygitserver/submodule2.git
+
+Which then resembles the command i would use when i want to clone them
+on their own:
+
+   $ git clone git://mygitserver/submodule1.git
+
+
+>> So I would actually vote for making the <repository> parameter optional...
+> 
+> In your "git submodule add submodule1", it would be quite clear that it is
+> a local path and <repository> is being omitted.  On the other hand, if you
+> said "git submodule add $overthere" without submodule1, because $overthere
+> is not likely to be an in-tree path, it also would be clear that it is
+> omitting the path.  IOW, these two typesavers are not mutually exclusive.
+> 
+> In real life, it is very likely $overthere does _not_ end with submodule1,
+> and your suggestion would probably be more useful than the patch under
+> discussion, I think.
+
+Actually, for me $overthere is _always_ a treeish path (e.g. ends with
+submodule1 or submodule1.git). And almost always i have no reason to
+name the local directory different than the repo.
+
+
+Jens
