@@ -1,174 +1,111 @@
-From: =?UTF-8?B?QmrDtnJuIEd1c3RhdnNzb24=?= <bgustavsson@gmail.com>
-Subject: [PATCH] Teach 'rebase -i' the command "reword"
-Date: Mon, 05 Oct 2009 18:16:17 +0200
-Message-ID: <4ACA1BD1.6050905@gmail.com>
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH] git-send-email.perl: Fold long header lines to 78 chars
+Date: Mon, 05 Oct 2009 09:24:58 -0700
+Message-ID: <1254759898.1799.449.camel@Joe-Laptop.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 05 18:25:30 2009
+X-From: git-owner@vger.kernel.org Mon Oct 05 18:32:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuqNH-0002tv-W8
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 18:25:24 +0200
+	id 1MuqUO-0007D8-6f
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 18:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462AbZJEQR3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 12:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbZJEQR2
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 12:17:28 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:1474 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751975AbZJEQR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 12:17:28 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so610254eyf.19
-        for <git@vger.kernel.org>; Mon, 05 Oct 2009 09:16:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:content-type
-         :content-transfer-encoding;
-        bh=IBxucI3opiqEvvpvI1UfxrgBKe/XX+qH9rBKQP0SblI=;
-        b=gQGRFf4z/6kQ15yCDNIUD0mIkSUY+O5mdR6K6bRKShFUZyXRFjHO7nGpidByAbTVS+
-         QWD5SrgovYwYD1ZdFUUiL4js7TdUDsyz8qrFletv46+CZF7RAiM/kVXXZ4cI+J+NrmcD
-         ua8hqNeNvuxOoVTb7425duBEFzXX4VMhDEqzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        b=hs9CbW4iwWYkVpT+F13cpFfWROAuXS+JojEizGHEOTyzMH3DxM7Ey2AoKTsDxXQunR
-         UTvJ+HFskGMHu+XZBGzA5bzY5GFtlaEq4PBkpxDBmmvruXXMEirL4eOj1HK1ZIsalzS0
-         +9DVHsqUAXxzG1DF52l8mWsue/BuwHPjI9RCQ=
-Received: by 10.210.3.21 with SMTP id 21mr223020ebc.40.1254759379838;
-        Mon, 05 Oct 2009 09:16:19 -0700 (PDT)
-Received: from bitis.local (81-234-150-173-no94.tbcn.telia.com [81.234.150.173])
-        by mx.google.com with ESMTPS id 10sm71805eyd.5.2009.10.05.09.16.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 05 Oct 2009 09:16:18 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (Macintosh/20090812)
+	id S1753838AbZJEQZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 12:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbZJEQZg
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 12:25:36 -0400
+Received: from mail.perches.com ([173.55.12.10]:1847 "EHLO mail.perches.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753136AbZJEQZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 12:25:36 -0400
+Received: from [192.168.1.151] (Joe-Laptop.home [192.168.1.151])
+	by mail.perches.com (Postfix) with ESMTP id 399D924368;
+	Mon,  5 Oct 2009 09:24:50 -0700 (PDT)
+X-Mailer: Evolution 2.28.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129572>
 
-Make it easier to edit just the commit message for a commit
-using 'git rebase -i' by introducing the "reword" command.
+Some MTAs reject or filter long header lines which can
+be generated if the cc list is only a few entries.
 
-Signed-off-by: Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com>
----
+Fold long header lines to 78 chars to be more rfc compliant.
 
-Here is the re-roll of my previous patch.
+Signed-off-by: Joe Perches <joe@perches.com>
 
-The only difference is that "amend" (which would be mis-leading)
-has been replaced with "reword".
-
- Documentation/git-rebase.txt  |    3 +++
- git-rebase--interactive.sh    |    9 +++++++++
- t/lib-rebase.sh               |    6 +++---
- t/t3404-rebase-interactive.sh |   14 ++++++++++++++
- 4 files changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
-t
-index 0aefc34..52af656 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -368,6 +368,9 @@ By replacing the command "pick" with the command "e=
-dit", you can tell
- the files and/or the commit message, amend the commit, and continue
- rebasing.
-=20
-+If you just want to edit the commit message for a commit, you can repl=
-ace
-+the command "pick" with the command "reword".
+diff --git a/git-send-email.perl b/git-send-email.perl
+index dd821f7..cb8b48b 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -814,6 +814,41 @@ sub sanitize_address
+ 
+ }
+ 
++# Fold header lines to 78 chars if possible for better RFC 2822 compliance
++# Does not terminate last line with newline
++sub fold_header
++{
++    my ($folded_line, $separator, @entries) = @_;
++    my $folded_header = "";
++    my $count = 0;
++    my $trim_sep = $separator;
 +
- If you want to fold two or more commits into one, replace the command
- "pick" with "squash" for the second and subsequent commit.  If the
- commits had different authors, it will attribute the squashed commit t=
-o
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 23ded48..30c2f62 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -340,6 +340,14 @@ do_next () {
- 		pick_one $sha1 ||
- 			die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		;;
-+	reword|r)
-+		comment_for_reflog reword
++    $trim_sep =~ s/\s+$//;
 +
-+		mark_action_done
-+		pick_one $sha1 ||
-+			die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		output git commit --amend
-+		;;
- 	edit|e)
- 		comment_for_reflog edit
-=20
-@@ -752,6 +760,7 @@ first and then run 'git rebase --continue' again."
- #
- # Commands:
- #  p, pick =3D use commit
-+#  r, reword =3D use commit, but allow editing of the commit message
- #  e, edit =3D use commit, but stop for amending
- #  s, squash =3D use commit, but meld into previous commit
- #
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 260a231..62f452c 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -9,8 +9,8 @@
- #
- #	"[<lineno1>] [<lineno2>]..."
- #
--#   If a line number is prefixed with "squash" or "edit", the respecti=
-ve line's
--#   command will be replaced with the specified one.
-+#   If a line number is prefixed with "squash", "edit", or "reword", t=
-he
-+#   respective line's command will be replaced with the specified one.
-=20
- set_fake_editor () {
- 	echo "#!$SHELL_PATH" >fake-editor.sh
-@@ -32,7 +32,7 @@ cat "$1".tmp
- action=3Dpick
- for line in $FAKE_LINES; do
- 	case $line in
--	squash|edit)
-+	squash|edit|reword)
- 		action=3D"$line";;
- 	*)
- 		echo sed -n "${line}s/^pick/$action/p"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
-=2Esh
-index 4cae019..3a37793 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -470,4 +470,18 @@ test_expect_success 'avoid unnecessary reset' '
- 	test 123456789 =3D $MTIME
- '
-=20
-+test_expect_success 'reword' '
-+	git checkout -b reword-branch master &&
-+	FAKE_LINES=3D"1 2 3 reword 4" FAKE_COMMIT_MESSAGE=3D"E changed" git r=
-ebase -i A &&
-+	git show HEAD | grep "E changed" &&
-+	test $(git rev-parse master) !=3D $(git rev-parse HEAD) &&
-+	test $(git rev-parse master^) =3D $(git rev-parse HEAD^) &&
-+	FAKE_LINES=3D"1 2 reword 3 4" FAKE_COMMIT_MESSAGE=3D"D changed" git r=
-ebase -i A &&
-+	git show HEAD^ | grep "D changed" &&
-+	FAKE_LINES=3D"reword 1 2 3 4" FAKE_COMMIT_MESSAGE=3D"B changed" git r=
-ebase -i A &&
-+	git show HEAD~3 | grep "B changed" &&
-+	FAKE_LINES=3D"1 reword 2 3 4" FAKE_COMMIT_MESSAGE=3D"C changed" git r=
-ebase -i A &&
-+	git show HEAD~2 | grep "C changed"
-+'
++    foreach my $entry (@entries) {
++	if ($count == 0) {
++	    $folded_line = "$folded_line$entry";
++	} elsif ((length($folded_line) + length($entry)) > 78) {
++	    if ($folded_header ne "") {
++		$folded_header = "$folded_header$trim_sep\n";
++	    }
++	    $folded_header = "$folded_header$folded_line";
++	    $folded_line = " $entry";
++	} else {
++	    $folded_line = "$folded_line$separator$entry";
++	}
++	$count++;
++    }
 +
- test_done
---=20
-1.6.5.rc2.18.g020de
++    if ($count == 0) {
++	$folded_header = "$folded_line";
++    } else {
++	$folded_header = "$folded_header$trim_sep\n$folded_line";
++    }
++
++    return "$folded_header";
++}
++
+ # Returns 1 if the message was sent, and 0 otherwise.
+ # In actuality, the whole program dies when there
+ # is an error sending a message.
+@@ -835,10 +870,10 @@ sub send_message
+ 	    $gitversion = Git::version();
+ 	}
+ 
+-	my $cc = join(", ", unique_email_list(@cc));
++	@cc = unique_email_list(@cc);
+ 	my $ccline = "";
+-	if ($cc ne '') {
+-		$ccline = "\nCc: $cc";
++	if (@cc gt 0) {
++		$ccline = fold_header("\nCc: ", ", ", @cc);
+ 	}
+ 	my $sanitized_sender = sanitize_address($sender);
+ 	make_message_id() unless defined($message_id);
+@@ -976,7 +1011,7 @@ X-Mailer: git-send-email $gitversion
+ 		if ($smtp_server !~ m#^/#) {
+ 			print "Server: $smtp_server\n";
+ 			print "MAIL FROM:<$raw_from>\n";
+-			print "RCPT TO:".join(',',(map { "<$_>" } @recipients))."\n";
++			print fold_header("RCPT TO:", ",", map { "<$_>" } @recipients)."\n";
+ 		} else {
+ 			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
+ 		}
