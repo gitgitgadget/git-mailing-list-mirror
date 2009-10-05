@@ -1,75 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tests: make all test files executable
-Date: Mon, 5 Oct 2009 05:59:12 -0400
-Message-ID: <20091005095912.GA31426@coredump.intra.peff.net>
-References: <4AC55E78.7010109@mailservices.uwaterloo.ca>
- <20091002080134.GD27664@coredump.intra.peff.net>
- <20091002083946.GA8627@coredump.intra.peff.net>
- <1762B430-2DC0-48F5-8C34-8428F9145A1E@mailservices.uwaterloo.ca>
- <20091004134022.GA14209@sigill.intra.peff.net>
- <4AC94B07.4000803@mailservices.uwaterloo.ca>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [PATCH] Make the MSVC projects use PDB/IDB files named after
+ the project
+Date: Mon, 05 Oct 2009 12:08:21 +0200
+Message-ID: <4AC9C595.7040209@gmail.com>
+References: <hacfq0$g9k$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Mark Rada <marada@uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Mon Oct 05 12:01:17 2009
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 12:11:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MukNP-0002pN-Hf
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 12:01:07 +0200
+	id 1MukVx-000861-7W
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 12:09:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758738AbZJEJ75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 05:59:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbZJEJ75
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 05:59:57 -0400
-Received: from peff.net ([208.65.91.99]:33075 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758657AbZJEJ74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 05:59:56 -0400
-Received: (qmail 16122 invoked by uid 107); 5 Oct 2009 10:02:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 05 Oct 2009 06:02:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Oct 2009 05:59:12 -0400
-Content-Disposition: inline
-In-Reply-To: <4AC94B07.4000803@mailservices.uwaterloo.ca>
+	id S932495AbZJEKJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 06:09:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932491AbZJEKJH
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 06:09:07 -0400
+Received: from mail-ew0-f211.google.com ([209.85.219.211]:54797 "EHLO
+	mail-ew0-f211.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932477AbZJEKJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 06:09:06 -0400
+Received: by ewy7 with SMTP id 7so3315979ewy.17
+        for <git@vger.kernel.org>; Mon, 05 Oct 2009 03:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=lxkxtUB5Nfm5N08HYoP2mw7rJJbwGk6+ZrvgeJwwesA=;
+        b=XCUs5MqHJVGvKnoweLZ5XRXGeP3iNr+EmkwWPO80qskpKmsm4VtBi2UB9YaN8sido3
+         NZ0P3yPQ57InidW+1j4fBYkawJ+Rue4d20Gth4dwjDIY9EVlgOiBqKFHNzwA049QjCm3
+         Qiy9E3n1B6kP+LpdGrj3NLDznTlcVo8mzJzb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=LNw27mzgOTu8CPrqJ8ua8EhlPguqL71klf8pU7VPPjrv9O72CpYiBU7oIbyK29xktd
+         S07XKWwZkna3uJ2V/AeoftzdT0EKcAIYfIJAwpbUV9sCysd1gCnuCSWb3zOYSRSHOg2Q
+         b7JUvkCCUurX4CXrEXJG9/M3MbDbaU+Z81vGw=
+Received: by 10.210.95.26 with SMTP id s26mr3143322ebb.7.1254737308355;
+        Mon, 05 Oct 2009 03:08:28 -0700 (PDT)
+Received: from ?172.24.90.95? ([62.70.27.104])
+        by mx.google.com with ESMTPS id 7sm1971304eyg.27.2009.10.05.03.08.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 05 Oct 2009 03:08:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.23) Gecko/20090812 Lightning/0.9 Thunderbird/2.0.0.23 ThunderGit/0.1a Mnenhy/0.7.6.666
+In-Reply-To: <hacfq0$g9k$1@ger.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129547>
 
-On Sun, Oct 04, 2009 at 09:25:27PM -0400, Mark Rada wrote:
-
-> > It looks like you send with Thunderbird. How do you get the diff content
-> > into the email? Is it possible that it wraps the content after you have
-> > gotten it there?
+Sebastian Schuberth said the following on 05.10.2009 11:54:
+> Instead of having all PDB files for all projects named "vc90.pdb", name them
+> after the respective project to make the relation more clear (and to avoid name
+> clashes when copying files around).
 > 
-> I don't think so, I have plug-in that disables wrapping and has worked
-> just fine for the last couple of patches I sent, so I'm not sure what
-> was going on there.
+> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
 
-I don't know, then. I'm pretty sure it wasn't wrapped up on my end, as
-it is also wrapped in gmane:
+Acked-by: Marius Storm-Olsen <mstormo@gmail.com>
 
-  http://article.gmane.org/gmane.comp.version-control.git/129420
-
-Maybe some hints are here:
-
-  http://kb.mozillazine.org/Plain_text_e-mail_-_Thunderbird
-
-> > an mbox from mutt, which "git am" understands just fine. I'd have to see
-> > what was in your .eml file to know why "git am" couldn't figure it out
-> > (and it might be a good test case, as "git am" has recently learned to
-> > accept more mailbox formats).
-> 
-> I've attached a copy of the .eml file.
-
-Hmm. The .eml format appears to be some kind of inscrutable binary
-format. "git am" certainly won't understand it. I'm not sure how you
-created it, but you need to convince Thunderbird to export as an 'mbox'
-format (which it clearly understands, as that is its native local
-format). I have no idea how to do that, though.
-
--Peff
+--
+.marius
