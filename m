@@ -1,84 +1,79 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: Re: [PATCH] Teach 'rebase -i' the command "amend"
-Date: Mon, 5 Oct 2009 08:08:49 +0200
-Message-ID: <6672d0160910042308v7280dcadyff97b977bcfe12c3@mail.gmail.com>
-References: <4AC8F22F.5070101@gmail.com>
-	 <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
+   family
+Date: Mon, 05 Oct 2009 08:18:48 +0200
+Message-ID: <4AC98FC8.3090202@viscovery.net>
+References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 05 08:18:47 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 08:20:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MuguE-0008F8-GU
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 08:18:46 +0200
+	id 1Mugvu-0000fc-IW
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 08:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbZJEGJ3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 02:09:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752263AbZJEGJ3
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 02:09:29 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:54704 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752247AbZJEGJ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 02:09:29 -0400
-Received: by bwz6 with SMTP id 6so2238395bwz.37
-        for <git@vger.kernel.org>; Sun, 04 Oct 2009 23:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BAei1hLPlfSKeLw0L8RDuepv2E/F3tRl+TmDYF14jAY=;
-        b=a7nh5zPtJl8FuGWdVjq2vzee72l0bGxqZ8tZ+d9FsyPpRJVXuFlzFiTJIuLJwqZQSj
-         Q1z3rADrBlSA1vnDZwLE36X67Hq1NTc7ILKKbZzCHvPs0/c8rvbZBK0ovBpPY4abS0+v
-         Nb+tRA2hNOt/bwvZxo5f7rxy6bA1thuagT4GQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CU0pbAwHlu93d/cEdg0Uo0lP983MIbIo6A0aRDutFfYml2k+/oahjuKlntuqqnkDE/
-         XifnfqkC2AelW3pSVgB2+z4syS1YdT/wwCT62WcR4I8gT3VKlLlPEe9JbpeSHxFR4ak8
-         6zd4JGoGZA2zWU3U2vkahv5I17d8kO6MQgQqs=
-Received: by 10.204.34.75 with SMTP id k11mr3687276bkd.105.1254722930893; Sun, 
-	04 Oct 2009 23:08:50 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
+	id S1752392AbZJEGTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 02:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752196AbZJEGTd
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 02:19:33 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:57318 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097AbZJEGTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 02:19:32 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MuguH-0001xs-39; Mon, 05 Oct 2009 08:18:49 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C5AFCBC81; Mon,  5 Oct 2009 08:18:48 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <7vbpkmn6oi.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129531>
 
-2009/10/4 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> I thought that we had a discussion about this and that the consensus =
-was
-> that "amend" would be misleading. =C2=A0Maybe you can find that threa=
-d in
-> GMane?
+Junio C Hamano schrieb:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> +	fwrite(sb.buf, sb.len, 1, f);
+>> +
+>> +	if (!message) {
+>> +		while ((commit = get_revision(&rev))) {
+>> +			strbuf_setlen(&sb, 0);
+>> +			if (del)
+>> +				strbuf_addstr(&sb, commit->object.flags &
+>> +						SYMMETRIC_LEFT ? del : add);
+>> +			format_commit_message(commit, format, &sb,
+>> +					rev.date_mode);
+>> +			if (del)
+>> +				strbuf_addstr(&sb, reset);
+> 
+>  - In the "ANSI-terminal only" world view, adding colors to strbuf and
+>    writing it out together with the actual strings is an easy thing to do.
+>    Don't Windows folks have trouble converting this kind of code to their
+>    color control call that is separate from writing strings out?  If it is
+>    not a problem, I do not have any objection to it, but otherwise I'd
+>    suggest not to add any more code that stores color escape sequence in
+>    strbuf, so that we would not make later conversion by Windows folks
+>    harder than necessary.
 
-I found this thread from January 2009:
+Thanks for noticing this! To store color escapes in strbuf is not a
+problem as long as the string is finally written using printf, fprintf, or
+fputs.
 
-http://thread.gmane.org/gmane.comp.version-control.git/105738
+>> +			strbuf_addch(&sb, '\n');
+>> +			fwrite(sb.buf, sb.len, 1, f);
 
-Having read the thread, I agree that "amend" would be misleading.
+Outch! fwrite doesn't interpret color escapes. AFAICS, this sequence is
+easy to change such that it uses fprintf().
 
-There were several suggestions for alternate command names
-in that thread, for example:
-
-"msg", "msgedit", "message", "reword", "rephrase"
-
-It think that "msgedit" was suggested by several people. ("editmsg"
-was also suggested, but it is not possible as the abbreviation "e" woul=
-d
-become ambiguous.)
-
-Would the patch have a chance to be accepted if I renamed
-the new command to "msgedit"?
-
-/Bj=C3=B6rn
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+-- Hannes
