@@ -1,63 +1,63 @@
-From: Anders Melchiorsen <mail@spoon.kalibalik.dk>
-Subject: Re: [PATCH] Teach 'rebase -i' the command "amend"
-Date: Mon, 05 Oct 2009 21:43:55 +0200
-Message-ID: <87ab05r5hg.fsf@dylle.kalibalik.dk>
-References: <4AC8F22F.5070101@gmail.com>
-	<alpine.DEB.1.00.0910042308200.4985@pacific.mpi-cbg.de>
-	<6672d0160910042308v7280dcadyff97b977bcfe12c3@mail.gmail.com>
-	<alpine.DEB.1.00.0910051116480.4985@pacific.mpi-cbg.de>
-	<fabb9a1e0910050239h614118cfw8a5055e4ed966dd1@mail.gmail.com>
-	<6672d0160910050910x3a9aa6a3w742c09e7f2f42187@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach 'rebase -i' the command "reword"
+Date: Mon, 5 Oct 2009 22:38:07 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910052236050.4985@pacific.mpi-cbg.de>
+References: <4ACA1BD1.6050905@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: =?utf-8?Q?Bj=C3=B6rn?= Gustavsson <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 05 21:56:52 2009
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-27300312-1254775087=:4985"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: =?ISO-8859-15?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 05 22:38:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mutft-0006HR-HT
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 21:56:49 +0200
+	id 1MuuJw-000491-Ss
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Oct 2009 22:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbZJETzq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 15:55:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751774AbZJETzq
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 15:55:46 -0400
-Received: from mail.hotelhot.dk ([97.107.140.94]:53998 "EHLO mail.hotelhot.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751708AbZJETzp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 15:55:45 -0400
-X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Oct 2009 15:55:45 EDT
-Received: from dylle.kalibalik.dk (unknown [77.75.167.238])
-	by mail.hotelhot.dk (Postfix) with ESMTPSA id ECF956C0B2;
-	Mon,  5 Oct 2009 21:43:56 +0200 (CEST)
-Received: from dylle.kalibalik.dk (localhost [127.0.0.1])
-	by dylle.kalibalik.dk (Postfix) with ESMTP id 725136E5;
-	Mon,  5 Oct 2009 21:43:55 +0200 (CEST)
-In-Reply-To: <6672d0160910050910x3a9aa6a3w742c09e7f2f42187@mail.gmail.com>
- (=?utf-8?Q?=22Bj=C3=B6rn?= Gustavsson"'s message of "Mon\, 5 Oct 2009
- 18\:10\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1753311AbZJEUgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Oct 2009 16:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbZJEUgb
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 16:36:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38786 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752206AbZJEUgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Oct 2009 16:36:31 -0400
+Received: (qmail invoked by alias); 05 Oct 2009 20:35:43 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 05 Oct 2009 22:35:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/MIiMSSpTM5hRZp0gtzoZZb0PmfMKefWxAgv1uNe
+	wu5Nmf4xk2+Nwr
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4ACA1BD1.6050905@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.67
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129584>
 
-Bj=C3=B6rn Gustavsson <bgustavsson@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Thanks for the comments. "reword" it will be then. I'll send a new pa=
-tch soon.
+--8323328-27300312-1254775087=:4985
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-If you could also make it possible to edit the commit summary line
-right in the git-rebase-todo buffer, that would be great.
+Hi,
 
-Being in an editor but still not able to fix typos is a nuisance.
+On Mon, 5 Oct 2009, Björn Gustavsson wrote:
 
+> Make it easier to edit just the commit message for a commit
+> using 'git rebase -i' by introducing the "reword" command.
+> 
+> Signed-off-by: Björn Gustavsson <bgustavsson@gmail.com>
 
-Cheers,
-Anders.
+ACK!
+
+Thanks,
+Dscho
+--8323328-27300312-1254775087=:4985--
