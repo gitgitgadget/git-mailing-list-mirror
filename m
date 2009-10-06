@@ -1,83 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Teach 'rebase -i' the command "reword"
-Date: Tue, 06 Oct 2009 09:23:41 +0200
-Message-ID: <4ACAF07D.2030604@viscovery.net>
-References: <4ACA1BD1.6050905@gmail.com> <4ACAACAB.3020707@gmail.com> <4ACAEBBA.9000806@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when appropriate to do so
+Date: Tue, 6 Oct 2009 09:32:22 +0200
+Message-ID: <200910060932.24377.trast@student.ethz.ch>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com> <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de> <20091005225611.GB29335@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: =?ISO-8859-1?Q?Bj=F6rn_Gustavsson?= <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 09:25:42 2009
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 06 09:39:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mv4QY-0007Jd-4E
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 09:25:42 +0200
+	id 1Mv4dq-0006Vd-OV
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 09:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755471AbZJFHYi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2009 03:24:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755454AbZJFHYi
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 03:24:38 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:44128 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754752AbZJFHYi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Oct 2009 03:24:38 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mv4Ob-00045M-Lf; Tue, 06 Oct 2009 09:23:41 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 5B1E24E4; Tue,  6 Oct 2009 09:23:41 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4ACAEBBA.9000806@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1754522AbZJFHeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2009 03:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754246AbZJFHeI
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 03:34:08 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:34603 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753635AbZJFHeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2009 03:34:07 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 6 Oct
+ 2009 09:33:21 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 6 Oct
+ 2009 09:32:57 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <20091005225611.GB29335@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129609>
 
-Bj=F6rn Gustavsson schrieb:
-> @@ -368,17 +368,17 @@ By replacing the command "pick" with the comman=
-d "edit", you can tell
->  the files and/or the commit message, amend the commit, and continue
->  rebasing.
-> =20
-> -If you just want to edit the commit message for a commit, you can re=
-place
-> -the command "pick" with the command "reword".
-> +If you just want to edit the commit message for a commit, replace th=
-e
-> +command "pick" with the command "reword".
-> =20
->  If you want to fold two or more commits into one, replace the comman=
-d
->  "pick" with "squash" for the second and subsequent commit.  If the
->  commits had different authors, it will attribute the squashed commit=
- to
->  the author of the first commit.
-> =20
-> -In both cases, or when a "pick" does not succeed (because of merge
-> -errors), the loop will stop to let you fix things, and you can conti=
-nue
-> -the loop with `git rebase --continue`.
-> +When "pick" has been replaced with "edit" or when a "pick" does not
-> +succeed (because of merge errors), the loop will stop to let you fix
-> +things, and you can continue the loop with `git rebase --continue`.
+Jeff King wrote:
+> On Mon, Oct 05, 2009 at 11:17:09PM +0200, Johannes Schindelin wrote:
+> 
+> > > $ git checkout next
+> > > error: pathspec 'next' did not match any file(s) known to git.
+> > 
+> > Actually, we should really think long and hard why we should not 
+> > automatically check out the local branch "next" in that case.  I mean, 
+> > really long and hard, and making sure to take user-friendliness into 
+> > account at least as much as simplicity of implementation.
+> 
+> Some devil's advocate questions:
+> 
+>   1. How do we find "origin/next" given "next"? What are the exact
+>      lookup rules? Do they cover every case? Do they avoid surprising
+>      the user?
+> 
+>   2. What do we do if our lookup is ambiguous (e.g., "origin/next" and
+>      "foobar/next" both exist)?
+> 
+>   3. If our lookup does have ambiguities or corner cases, is it better
+>      to simply be suggesting to the user, rather than proceeding with an
+>      action?
 
-Since "reword" is "pick" + editor, it can fail due to conflicts as well=
-=2E
-Perhaps:
+If I may add another:
 
-'git-rebase' will stop after an edit command or when a command failed
-(due to merge errors). When you are done with your edits or with resolv=
-ing
-merge conflicts, continue with `git rebase --continue`.
+4. Are there any (scripted?) use-cases where git-checkout should fail
+   because it was given an invalid branch name?
 
-(I'm unsure about the mark-up.)
+The following gives a hint, though they could of course be fixed and
+the ^0 case doesn't really count:
 
--- Hannes
+  $ git grep 'git checkout .*||' -- "*.sh"
+  git-bisect.sh:          git checkout "$start_head" -- || exit
+  git-rebase--interactive.sh:                     output git checkout $first_parent 2> /dev/null ||
+  git-rebase--interactive.sh:                     output git checkout "$1" ||
+  git-rebase.sh:git checkout -q "$onto^0" || die "could not detach HEAD"
+  t/t2007-checkout-symlink.sh:git checkout -f master || exit
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
