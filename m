@@ -1,98 +1,97 @@
-From: "Rolf Bjarne Kvinge" <RKvinge@novell.com>
-Subject: git rev-list --pretty=raw strips empty lines
-Date: Tue, 06 Oct 2009 14:33:37 +0200
-Organization: Novell
-Message-ID: <op.u1do6bq5k71drc@linux.lacasa>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] Documentation - pt-BR.
+Date: Tue, 6 Oct 2009 12:20:00 -0300
+Message-ID: <a4c8a6d00910060820se973fcci31c94c42937c7eb2@mail.gmail.com>
+References: <1253730339-11146-1-git-send-email-tfransosi@gmail.com>
+	 <7vhbuek3ma.fsf@alter.siamese.dyndns.org>
+	 <20091005100910.GA866@coredump.intra.peff.net>
+	 <20091006094701.GG32702@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=----------xu0yrybMEnvK0oPaOtGF17
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 06 14:55:48 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Oct 06 17:22:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mv9Zs-0004dc-Nc
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 14:55:41 +0200
+	id 1MvBrO-00024N-Nt
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 17:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757208AbZJFMxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2009 08:53:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757190AbZJFMxe
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 08:53:34 -0400
-Received: from vpn.id2.novell.com ([195.33.99.129]:51955 "EHLO
-	gwia-smtp.id2.novell.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757186AbZJFMxd (ORCPT
-	<rfc822;groupwise-RKvinge@novell.com;0:0>);
-	Tue, 6 Oct 2009 08:53:33 -0400
-X-Greylist: delayed 1260 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Oct 2009 08:53:33 EDT
-Received: from linux.lacasa ([::ffff:149.44.117.251])
-	by gwia-smtp.id2.novell.com with ESMTP; Tue, 06 Oct 2009 14:17:02 +0100
-User-Agent: Opera Mail/10.00 (Linux)
+	id S1755129AbZJFPUj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Oct 2009 11:20:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754168AbZJFPUj
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 11:20:39 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:42009 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbZJFPUi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Oct 2009 11:20:38 -0400
+Received: by bwz6 with SMTP id 6so3340723bwz.37
+        for <git@vger.kernel.org>; Tue, 06 Oct 2009 08:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NNfeq8KaRw8ONv6bzrjan3zegsc2A5sbLDcN4cY9p6Y=;
+        b=N2nTaGrJzYCoChyS0iqCgDJaEUb1XZBBThSAp899s/RaGMWhlWtk5iDkfRV54f71eN
+         qSL142mjUqxQUQ2ELX4BP5Qzmn94jA0GnWADUz9LTzf8W6jrrvqIgUIuHTTBr1Il/OTb
+         ukGmfnOXwVok3cCVWEx+3QwMIG5s4vKsZopx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rtgyUOkRY20o8N1O0mMiJJtn4IfNy5LNrm9Ikbl88lwQpa5DOK1VYoDGXt7V38UG3r
+         ZvqnRrRFjwZdXumAKP89ZhPEKH2jLq7RRSw1EBfeJubfKzGhpOGeBiPd04PQbQ/EI3Oo
+         UlTkGKIZ05oqy9gAy80KzIr/fS+nSKsbaKNqs=
+Received: by 10.204.21.4 with SMTP id h4mr4882926bkb.58.1254842400701; Tue, 06 
+	Oct 2009 08:20:00 -0700 (PDT)
+In-Reply-To: <20091006094701.GG32702@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129629>
 
-------------xu0yrybMEnvK0oPaOtGF17
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8bit
-
-Hi,
-
-It seems like the --pretty=raw format strips off empty newlines from the beginning of log messages, while I'd expect the raw format to not do any transformations (just as the documentation says: "The 'raw' format shows the entire commit exactly as stored in the commit object").
-
-I've attached a test script that I can use to reproduce with current master (dbc1b1f71052c0)
-
-The below changes works for me, not sure if I'm right about this though (my first time here ;-)
-
-Rolf
-
-diff --git a/pretty.c b/pretty.c
-index f5983f8..1037700 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -868,7 +868,7 @@ void pp_remainder(enum cmit_fmt fmt,
-                         break;
-
-                 if (is_empty_line(line, &linelen)) {
--                       if (first)
-+                       if (first && fmt != CMIT_FMT_RAW)
-                                 continue;
-                         if (fmt == CMIT_FMT_SHORT)
-                                 break;
-@@ -952,7 +952,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
-         }
-
-         /* Skip excess blank lines at the beginning of body, if any... */
--       msg = skip_empty_lines(msg);
-+       if (fmt != CMIT_FMT_RAW)
-+               msg = skip_empty_lines(msg);
-
-         /* These formats treat the title line specially. */
-         if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
-
-
-
--- 
-Using Opera's revolutionary e-mail client: http://www.opera.com/mail/
-------------xu0yrybMEnvK0oPaOtGF17
-Content-Disposition: attachment; filename=test.sh
-Content-Type: application/octet-stream; name=test.sh
-Content-Transfer-Encoding: Base64
-
-IyEvYmluL2Jhc2ggLWUKCmNhdCA+IG1zZyA8PCBFT0YKCgoKZmlyc3QgbGluZQoK
-RU9GCgojIHRoZSBmb2xsb3dpbmcgZXhwb3J0cyBhcmUganVzdCB0byBtYWtlIHRo
-ZSBzaXplIG9mIHRoZSByZXYtbGlzdCBvdXRwdXQgb25seSBkZXBlbmRlbnQgb24g
-dGhlIHNpemUgb2YgdGhlIGxvZyBtZXNzYWdlCmV4cG9ydCBHSVRfQ09NTUlUVEVS
-X05BTUU9QmFyCmV4cG9ydCBHSVRfQ09NTUlUVEVSX0VNQUlMPSJiYXJAZm9vLmNv
-bSIKZXhwb3J0IEdJVF9DT01NSVRURVJfREFURT0iMjAwMC8wMS8wMSAwMDowMCIK
-ZXhwb3J0IEdJVF9BVVRIT1JfTkFNRT1Gb28KZXhwb3J0IEdJVF9BVVRIT1JfRU1B
-SUw9ImZvb0BiYXIuY29tIgpleHBvcnQgR0lUX0FVVEhPUl9EQVRFPSIyMDAwLzAx
-LzAxIDAwOjAwIgoKZ2l0IGFkZCBtc2cKZ2l0IGNvbW1pdCAtRiBtc2cgLS1jbGVh
-bnVwPXZlcmJhdGltCmdpdCByZXYtbGlzdCAtLXByZXR0eT1yYXcgLTEgSEVBRCB8
-IHRlZSBtc2cudG1wClNJWkU9YGNhdCBtc2cudG1wIHwgd2MgLWNgCiMgY3VycmVu
-dCBtYXN0ZXIgZ2l2ZXMgYSBtZXNzYWdlIGxlbmd0aCBvZiAyNDQKZWNobyBFeHBl
-Y3RlZCBtZXNzYWdlIGxlbmd0aDogMjU5LCBnb3QgbWVzc2FnZSBsZW5ndGg6ICRT
-SVpFCmdpdCByZXNldCBIRUFEXiAtLWhhcmQKCg==
-
-------------xu0yrybMEnvK0oPaOtGF17--
+Hi Miklos,
+On Tue, Oct 6, 2009 at 6:47 AM, Miklos Vajna <vmiklos@frugalware.org> w=
+rote:
+> On Mon, Oct 05, 2009 at 06:09:10AM -0400, Jeff King <peff@peff.net> w=
+rote:
+>> > Has anybody actually tried to format this document, either before =
+or after
+>> > your patch?
+>>
+>> No, I didn't, and I should have when I picked up the patch in the fi=
+rst
+>> place. You are right, asciidoc barfs (both for html and xml generati=
+on):
+>>
+>> =C2=A0 ERROR: gittutorial.txt: line 5: first section must be named N=
+AME
+>> =C2=A0 ERROR: gittutorial.txt: line 9: second section must be named =
+SYNOPSIS
+>
+> Ah, there is no language config for pt_BR.
+>
+> $ ls -1 /etc/asciidoc/lang-*
+> /etc/asciidoc/lang-de.conf
+> /etc/asciidoc/lang-en.conf
+> /etc/asciidoc/lang-es.conf
+> /etc/asciidoc/lang-fr.conf
+> /etc/asciidoc/lang-hu.conf
+> /etc/asciidoc/lang-ru.conf
+In my system I only have installed lang-es.conf, how I could install th=
+e others?
+>
+> Once asciidoc will have a lang-pt_BR.conf, we could just use -a
+> lang=3Dpt_BR and it would happily accept this input.
+>
+> Thiago, could you make a lang-pt_BR.conf? It's less than 100 lines, s=
+o
+> it should be easy for you. (If you can send it to the asciidoc list
+> directly, it's even better.)
+Sure, I made the lang-pt-BR.conf, and I sent it to asciidoc@googlegroup=
+s.com.
