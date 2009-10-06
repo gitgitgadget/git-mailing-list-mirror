@@ -1,98 +1,89 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH] bash completion: complete refs for git-grep
-Date: Tue, 6 Oct 2009 12:08:12 +0200
-Message-ID: <14ac499280c9b17f862ab13201b48c64b4827713.1254823328.git.trast@student.ethz.ch>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
+ family
+Date: Tue, 06 Oct 2009 12:58:49 +0200
+Message-ID: <4ACB22E9.3010001@web.de>
+References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de> <7vr5thacb4.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910052251190.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 06 12:11:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 06 13:01:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mv703-0000Qd-Oo
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 12:10:32 +0200
+	id 1Mv7nO-0007Wg-2n
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 13:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756892AbZJFKJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2009 06:09:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756855AbZJFKJ4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 06:09:56 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:4587 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756842AbZJFKJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2009 06:09:55 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 6 Oct
- 2009 12:09:08 +0200
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Tue, 6 Oct
- 2009 12:08:46 +0200
-X-Mailer: git-send-email 1.6.5.rc2.251.g34f85
+	id S932113AbZJFK71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2009 06:59:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932099AbZJFK71
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 06:59:27 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:41910 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932098AbZJFK71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2009 06:59:27 -0400
+Received: from smtp07.web.de (fmsmtp07.dlan.cinetic.de [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id C5D54125822A4;
+	Tue,  6 Oct 2009 12:58:49 +0200 (CEST)
+Received: from [80.128.52.8] (helo=[192.168.178.26])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Mv7kn-0007Wq-00; Tue, 06 Oct 2009 12:58:49 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <alpine.DEB.1.00.0910052251190.4985@pacific.mpi-cbg.de>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+R5E4uWill/dGDHzGBh7oQcSsgLv/3KVH55mtD
+	fJKXQzshkQ6X0TLZEWL+ptip7m/9MRLPQBH+pkGw/dBYOyYZpu
+	aRm9WTiz87A9AkDHGOAw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129621>
 
-Attempt ref completion once we have seen a regular expression, to help
-the user with entering the <treeish> arguments.
+Johannes Schindelin schrieb:
+>>> I have no idea why "submodule --summary" uses --first-parent, but 
+>>> personally, I would _hate_ it not to see the merged commits in the 
+>>> diff.
+>>>
+>>> For a summary, you might get away with seeing
+>>>
+>>> 	> Merge bla
+>>> 	> Merge blub
+>>> 	> Merge this
+>>> 	> Merge that
+>>>
+>>> but in a diff that does not cut it at all.
+>> As long as bla/blub/this/that are descriptive enough, I do not see at all
+>> why you think "summary" is Ok and "diff" is not.  If your response were
+>> "it is just a matter of taste; to some people (or project) --first-parent
+>> is useful and for others it is not", I would understand it, and it would
+>> make sense to use (or not use) --first-parent consistently between this
+>> codepath and "submodule --summary", though.
+> 
+> You may be used to git.git's quality of naming the branches you merge.
+> 
+> Sadly, this is not the common case.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+IMHO both arguments are valid, using --first-parent really is a matter of
+taste *and* it is dependent on the quality of branch naming whether it is
+useful or not.
 
-The use-case for this is actually a bit protracted but came up on IRC
-yesterday: pasky asked if there was a simple way to grep through a
-certain file in all refs.
-
-Turns out git-grep already has half the required support: when given a
-series of refs, it prefixes the matches with the ref, so the output is
-already in a useful format.
-
-Sadly it does not appear to support --all, --branches or similar
-(which would be material for a separate patch).  But bash completion
-can step in here: with M-*, it can expand all possible completions for
-the current word onto the command line.
-
-This is still RFC because, as you can see in the code below, I tried
-to avoid completing at all while the user still needs to supply a
-regex.  Sadly, bash turns the COMPREPLY=() into filename completion
-anyway.  Is there a way to prevent this?  Otherwise the regex
-complication should probably just go away and we can complete refs
-always.
+But when both commands shall produce the same output, i think we have to
+use --first-parent as default, no? And maybe we could add another option
+to diff which can change that behaviour according to users taste?
 
 
- contrib/completion/git-completion.bash |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+> But I really, really, really want to avoid a fork() in the common case.  I 
+> do have some users on Windows, and I do have a few submodules in that 
+> project.  Having too many fork() calls there would just give Git a bad 
+> reputation.  And it has enough of that, it does not need more.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 6fd7e1d..c8cced6 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1048,6 +1048,24 @@ _git_grep ()
- 		return
- 		;;
- 	esac
-+
-+	local i c=1 have_regex=""
-+	while [ $c -lt $COMP_CWORD ]; do
-+		i="${COMP_WORDS[c]}"
-+		case "$i" in
-+		-e) ;;
-+		-e*) have_regex="$c" ; break ;;
-+		-*) ;;
-+		*) have_regex="$c"; break ;;
-+		esac
-+		c=$((++c))
-+	done
-+
-+	if [ -n "$have_regex" ]; then
-+		__gitcomp "$(__git_refs)"
-+		return
-+	fi
-+
- 	COMPREPLY=()
- }
- 
--- 
-1.6.5.rc2.251.g34f85
+Me too thinks performance matters here. We do have a repo at my dayjob
+with more than a handful of submodules and its main target platform is
+windows ... so having that perform nicely is a win for us.
+
+
+Jens
