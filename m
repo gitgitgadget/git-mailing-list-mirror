@@ -1,69 +1,77 @@
-From: Philip Herron <herron.philip@googlemail.com>
-Subject: Code reuse
-Date: Tue, 6 Oct 2009 20:18:35 +0100
-Message-ID: <ac07bcaf0910061218x148374d0u66b36fae1466ea98@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
+ appropriate to do so
+Date: Tue, 06 Oct 2009 13:09:07 -0700
+Message-ID: <7viqesz3mk.fsf@alter.siamese.dyndns.org>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+ <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
+ <20091005225611.GB29335@coredump.intra.peff.net>
+ <200910060932.24377.trast@student.ethz.ch>
+ <alpine.DEB.1.00.0910061112570.4985@pacific.mpi-cbg.de>
+ <7vvdis21qk.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0910061359560.4686@intel-tinevez-2-302>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 06 21:25:56 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 06 22:14:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvFfU-0002dy-LC
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 21:25:53 +0200
+	id 1MvGQ6-0000ap-4Z
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 22:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932672AbZJFTTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2009 15:19:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932492AbZJFTTN
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 15:19:13 -0400
-Received: from mail-vw0-f192.google.com ([209.85.212.192]:59156 "EHLO
-	mail-vw0-f192.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932373AbZJFTTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2009 15:19:13 -0400
-Received: by vws30 with SMTP id 30so2602687vws.21
-        for <git@vger.kernel.org>; Tue, 06 Oct 2009 12:18:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=XW1yEhCZQjV6xiZJJwAUFxumBks1RpX9s/TI83/Bmo4=;
-        b=Q5E/5+XmJLcCMEe72fC1cuyyodhII27zbz6yjgAM8PmgtyVCvSdxZjBm+IgbRXaqhi
-         ZvNlAT7lCIuqHCf0Ha3NRsNjVaoK8GOFp8sGjbVPdA3yYwzWwA+Yu1pXA/nhnWpTsjEP
-         D3pIsfHbwUR2uv4SOh8RWJFiHuVJA8uifidWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=tNueeF3ofEBv1pK7WwtFRI5FDz9s7jh9OQdozjYZFJchIuMkXTD4CETv8x8giDEr0r
-         jU0Dl11RyyIUEBrgqZABK9b1fZNfk5yCpUhLH0YFvvkRGc1GtnorDLqt19Mg9/v6q+o7
-         FYzqJ/YoOeFs/9VIAEkFusvQZ5Yr5S6eSTS8k=
-Received: by 10.220.109.41 with SMTP id h41mr2991655vcp.54.1254856715507; Tue, 
-	06 Oct 2009 12:18:35 -0700 (PDT)
+	id S933140AbZJFUKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2009 16:10:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932951AbZJFUKF
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 16:10:05 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64426 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933048AbZJFUKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Oct 2009 16:10:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 368F44E812;
+	Tue,  6 Oct 2009 16:09:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TH8ENklHsCE0Vtwg0R8TQUy0b+k=; b=TtVCuM
+	0bCp7LgBHTZ5jzPR7dYGDu+tBRNZbqTO3yrJWWrS54VB4c7aC9dWQPXlF9fCYu8r
+	rmMY2WMXvOjsuk0Fq1Mh2uupLL2PbVSzRlexI24xRkFmOSEhAcpfrvtr3kQRuu7g
+	eJ0kTSPnApxAm68oGFT20S8Emue6Pq1IUdHmU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=R3HMDMHANwsD5spJ1icaDMKKJ7Bi/Et+
+	+Q2xkgQYGTSrjQqzij6UPuKq88cUkHNHXR20sxGxx9S8SejEOQVWSc0md2uVNGMg
+	3cJJ4pUoJH0ob1Y3DoyjjfmdgsweSdsM9cpEoVw2uv21xCMiu7AMmWh8AOHDXzFV
+	5dwYJuXrsxc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E6C2C4E810;
+	Tue,  6 Oct 2009 16:09:14 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 13CC64E80F; Tue,  6 Oct
+ 2009 16:09:08 -0400 (EDT)
+In-Reply-To: <alpine.DEB.1.00.0910061359560.4686@intel-tinevez-2-302>
+ (Johannes Schindelin's message of "Tue\, 6 Oct 2009 14\:02\:41 +0200
+ \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1ED9EA8A-B2B4-11DE-B6BE-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129634>
 
-Hey guys
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I am not sure if this is the right place to ask this question, but
-I've been working on a personal project a programming language
-interpreter for some time now, but i took 2 code snippets from
-git-core namely:
+> So I'll stop wasting my time with this discussion.
 
-static struct hash_table_entry *lookup_hash_entry(unsigned int hash,
-const struct hash_table *table)
+I do not think it was a waste of time; earlier you said that you were not
+proposing to include a patch that does that DWIMery, and we need to
+discuss the downsides and upsides until we can figure out if it does more
+good than harm.
 
-function from hash.c and the alloc_nr.
-
-I've changed it a good bit (probably doesn't resemble much of what it
-was) to fit in with the way my stuff works but is there anything i
-need to like put in my source code to say hey this is based of
-git-core, so far is just a comment to say 'based of git-core hash.c'.
-Its an open source (GPL) program but i haven't released or made much
-noise about it yet because i want to work on it more myself.
-
-Anyways thanks,
-
---Phil
+And I think we reasonably established that this does more harm than good,
+so I am Ok if you want to stop here.
