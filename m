@@ -1,84 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
- family
-Date: Tue, 6 Oct 2009 14:10:43 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910061409440.4686@intel-tinevez-2-302>
-References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
- <7vr5thacb4.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910052251190.4985@pacific.mpi-cbg.de> <4ACB22E9.3010001@web.de> <7vocok21pw.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910061344070.4686@intel-tinevez-2-302> <4ACB2F2D.8010503@web.de>
+From: "Rolf Bjarne Kvinge" <RKvinge@novell.com>
+Subject: git rev-list --pretty=raw strips empty lines
+Date: Tue, 06 Oct 2009 14:33:37 +0200
+Organization: Novell
+Message-ID: <op.u1do6bq5k71drc@linux.lacasa>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 06 14:14:05 2009
+Content-Type: multipart/mixed; boundary=----------xu0yrybMEnvK0oPaOtGF17
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 06 14:55:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mv8vV-0002QS-Lj
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 14:13:58 +0200
+	id 1Mv9Zs-0004dc-Nc
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 14:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256AbZJFMLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Oct 2009 08:11:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932224AbZJFMLg
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 08:11:36 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40599 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932217AbZJFMLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Oct 2009 08:11:36 -0400
-Received: (qmail invoked by alias); 06 Oct 2009 12:10:47 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO intel-tinevez-2-302.mpi-cbg.de) [141.5.11.5]
-  by mail.gmx.net (mp009) with SMTP; 06 Oct 2009 14:10:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/gIlFTkufgijuMmrTKj3ADqbQfzx5KyQkCvKxjBT
-	1lfmkBfNXytMzw
-X-X-Sender: schindel@intel-tinevez-2-302
-In-Reply-To: <4ACB2F2D.8010503@web.de>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.64
+	id S1757208AbZJFMxe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Oct 2009 08:53:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757190AbZJFMxe
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Oct 2009 08:53:34 -0400
+Received: from vpn.id2.novell.com ([195.33.99.129]:51955 "EHLO
+	gwia-smtp.id2.novell.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757186AbZJFMxd (ORCPT
+	<rfc822;groupwise-RKvinge@novell.com;0:0>);
+	Tue, 6 Oct 2009 08:53:33 -0400
+X-Greylist: delayed 1260 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Oct 2009 08:53:33 EDT
+Received: from linux.lacasa ([::ffff:149.44.117.251])
+	by gwia-smtp.id2.novell.com with ESMTP; Tue, 06 Oct 2009 14:17:02 +0100
+User-Agent: Opera Mail/10.00 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129628>
+
+------------xu0yrybMEnvK0oPaOtGF17
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 8bit
 
 Hi,
 
-On Tue, 6 Oct 2009, Jens Lehmann wrote:
+It seems like the --pretty=raw format strips off empty newlines from the beginning of log messages, while I'd expect the raw format to not do any transformations (just as the documentation says: "The 'raw' format shows the entire commit exactly as stored in the commit object").
 
-> Johannes Schindelin schrieb:
-> > Hi,
-> > 
-> > On Tue, 6 Oct 2009, Junio C Hamano wrote:
-> > 
-> >> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> >>
-> >>>> But I really, really, really want to avoid a fork() in the common case.  I 
-> >>>> do have some users on Windows, and I do have a few submodules in that 
-> >>>> project.  Having too many fork() calls there would just give Git a bad 
-> >>>> reputation.  And it has enough of that, it does not need more.
-> >>> Me too thinks performance matters here. We do have a repo at my dayjob
-> >>> with more than a handful of submodules and its main target platform is
-> >>> windows ... so having that perform nicely is a win for us.
-> >> Numbers?
-> >>
-> >> I'd prefer to avoid kludges that favors unsubstantiated performance
-> >> argument over correctness.
-> > 
-> > Well, having worked with msysGit for such a long time, I just _know_ that 
-> > a subprocess costs a substantial amount of time.
-> > 
-> > But as you don't trust my words, maybe Jens could be so kind as to perform 
-> > some benchmarks?  I am short on Git time budget, but I will make a commit 
-> > on my submodule-summary branch that allows to start a subprocess always.
-> 
-> Sure, will do.
+I've attached a test script that I can use to reproduce with current master (dbc1b1f71052c0)
 
-Okay, it is there.  It is quick and dirty, so you don't even want to look 
-at the commit message.
+The below changes works for me, not sure if I'm right about this though (my first time here ;-)
 
-Could you please run something like "time git diff --submodule-summary 
---all" with and without this patch?
+Rolf
 
-Thanks,
-Dscho
+diff --git a/pretty.c b/pretty.c
+index f5983f8..1037700 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -868,7 +868,7 @@ void pp_remainder(enum cmit_fmt fmt,
+                         break;
+
+                 if (is_empty_line(line, &linelen)) {
+-                       if (first)
++                       if (first && fmt != CMIT_FMT_RAW)
+                                 continue;
+                         if (fmt == CMIT_FMT_SHORT)
+                                 break;
+@@ -952,7 +952,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+         }
+
+         /* Skip excess blank lines at the beginning of body, if any... */
+-       msg = skip_empty_lines(msg);
++       if (fmt != CMIT_FMT_RAW)
++               msg = skip_empty_lines(msg);
+
+         /* These formats treat the title line specially. */
+         if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
+
+
+
+-- 
+Using Opera's revolutionary e-mail client: http://www.opera.com/mail/
+------------xu0yrybMEnvK0oPaOtGF17
+Content-Disposition: attachment; filename=test.sh
+Content-Type: application/octet-stream; name=test.sh
+Content-Transfer-Encoding: Base64
+
+IyEvYmluL2Jhc2ggLWUKCmNhdCA+IG1zZyA8PCBFT0YKCgoKZmlyc3QgbGluZQoK
+RU9GCgojIHRoZSBmb2xsb3dpbmcgZXhwb3J0cyBhcmUganVzdCB0byBtYWtlIHRo
+ZSBzaXplIG9mIHRoZSByZXYtbGlzdCBvdXRwdXQgb25seSBkZXBlbmRlbnQgb24g
+dGhlIHNpemUgb2YgdGhlIGxvZyBtZXNzYWdlCmV4cG9ydCBHSVRfQ09NTUlUVEVS
+X05BTUU9QmFyCmV4cG9ydCBHSVRfQ09NTUlUVEVSX0VNQUlMPSJiYXJAZm9vLmNv
+bSIKZXhwb3J0IEdJVF9DT01NSVRURVJfREFURT0iMjAwMC8wMS8wMSAwMDowMCIK
+ZXhwb3J0IEdJVF9BVVRIT1JfTkFNRT1Gb28KZXhwb3J0IEdJVF9BVVRIT1JfRU1B
+SUw9ImZvb0BiYXIuY29tIgpleHBvcnQgR0lUX0FVVEhPUl9EQVRFPSIyMDAwLzAx
+LzAxIDAwOjAwIgoKZ2l0IGFkZCBtc2cKZ2l0IGNvbW1pdCAtRiBtc2cgLS1jbGVh
+bnVwPXZlcmJhdGltCmdpdCByZXYtbGlzdCAtLXByZXR0eT1yYXcgLTEgSEVBRCB8
+IHRlZSBtc2cudG1wClNJWkU9YGNhdCBtc2cudG1wIHwgd2MgLWNgCiMgY3VycmVu
+dCBtYXN0ZXIgZ2l2ZXMgYSBtZXNzYWdlIGxlbmd0aCBvZiAyNDQKZWNobyBFeHBl
+Y3RlZCBtZXNzYWdlIGxlbmd0aDogMjU5LCBnb3QgbWVzc2FnZSBsZW5ndGg6ICRT
+SVpFCmdpdCByZXNldCBIRUFEXiAtLWhhcmQKCg==
+
+------------xu0yrybMEnvK0oPaOtGF17--
