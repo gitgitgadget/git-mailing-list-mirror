@@ -1,85 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch
- when appropriate to do so
-Date: Mon, 5 Oct 2009 18:52:40 -0400
-Message-ID: <20091005225240.GA29335@coredump.intra.peff.net>
-References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+From: Mark Rada <marada@uwaterloo.ca>
+Subject: [PATCH] tests: make all test files executable
+Date: Mon, 05 Oct 2009 21:46:06 -0400
+Message-ID: <4ACAA15E.6090403@mailservices.uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 06 01:08:06 2009
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 06 03:48:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Muwej-0006PR-Bm
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 01:07:49 +0200
+	id 1MuzAR-00063M-Ca
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Oct 2009 03:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755161AbZJEWzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Oct 2009 18:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755126AbZJEWzH
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 18:55:07 -0400
-Received: from peff.net ([208.65.91.99]:39244 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755395AbZJEWx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Oct 2009 18:53:26 -0400
-Received: (qmail 21027 invoked by uid 107); 5 Oct 2009 22:56:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 05 Oct 2009 18:56:16 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Oct 2009 18:52:40 -0400
-Content-Disposition: inline
-In-Reply-To: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+	id S1755614AbZJFBqy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Oct 2009 21:46:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754941AbZJFBqy
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Oct 2009 21:46:54 -0400
+Received: from mailservices.uwaterloo.ca ([129.97.128.141]:60423 "EHLO
+	mailchk-m02.uwaterloo.ca" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1754702AbZJFBqy (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Oct 2009 21:46:54 -0400
+Received: from karakura.local (CPE000e0c6492b0-CM001692fb78dc.cpe.net.cable.rogers.com [99.236.79.58])
+	(authenticated bits=0)
+	by mailchk-m02.uwaterloo.ca (8.13.1/8.13.1) with ESMTP id n961k62Q006623
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 5 Oct 2009 21:46:10 -0400
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.4pre) Gecko/20090915 Thunderbird/3.0b4
+X-UUID: c825cc48-307a-462f-8f4a-de3811097504
+X-Miltered: at mailchk-m02 with ID 4ACAA15E.006 by Joe's j-chkmail (http://j-chkmail.ensmp.fr)!
+X-Virus-Scanned: clamav-milter 0.95.1 at mailchk-m02
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH authentication, not delayed by milter-greylist-3.0 (mailchk-m02.uwaterloo.ca [129.97.128.141]); Mon, 05 Oct 2009 21:46:11 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129603>
 
-On Mon, Oct 05, 2009 at 04:46:23PM -0400, Jay Soffian wrote:
+=46or consistency with the rest of the test files.
 
-> +static int suggest_new_branch_name_compare(struct remote *remote, void *priv)
-> +{
-> +	struct suggest_new_branch_name_data *data = priv;
-> +	unsigned char sha1[20];
-> +	struct strbuf buf = STRBUF_INIT;
-> +	strbuf_addf(&buf, "refs/remotes/%s/%s", remote->name, data->name);
-> +	if (resolve_ref(buf.buf, sha1, 1, NULL)) {
-> +		data->matches++;
-> +		if (data->found)
-> +			strbuf_release(&buf);
-> +		else
-> +			data->found = strbuf_detach(&buf, NULL);
-> +	}
-> +	return 0;
-> +}
+Signed-off-by: Mark Rada <marada@uwaterloo.ca>
+---
 
-This assumes that remote X always has its tracking branches in
-refs/remotes/X/*. But that is really dependent on how the fetch refspec
-is set up. True, it will be like that for remotes set up by "git remote"
-or "git clone", but it isn't universal (and we have tried not to make
-that assumption elsewhere, like when finding upstream branches to merge
-from).  Doing it right would mean interpreting the refspecs in
-remote.*.fetch.
+	No changes, just a resend. This should work; I assume
+	the problem last time was a human error (me :(), or
+	something weird that happens with saving e-mail drafts
+	between	Apple Mail and Thunderbird (they share).
 
-But this is not necessarily about actual remotes, I don't think. It is
-really about the names of refs we have, and that you could reference,
-but that are not actual tracking branches. It's just that refs/remotes
-is the obvious hierarchy there.
+	If this version is also messed up, then I give up.
 
-But I wonder if what you should do instead is to iterate through each
-ref, removing refs/heads/* and refs/tags/* (which are uninteresting, as
-they are already part of the normal ref lookup), and then suffix-match.
-So looking for "next" would find "refs/remotes/origin/next", or even
-"refs/foobar/next" if you had some "foobar" hierarchy.
+	Jeff, please explain what you meant by `inscrutable
+	binary'? It is an ASCII text file according to file.
+	=AF\(=B0_o)/=AF
 
-It would also match "foo" to "refs/remotes/origin/jk/foo". I'm not sure
-if that is a feature or a bug, though.
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100644 =3D> 100755 t/t5531-deep-submodule-push.sh
+ mode change 100644 =3D> 100755 t/t9501-gitweb-standalone-http-status.s=
+h
 
-
-Aside from that, I can't think of anything wrong with the idea.
-Personally I find it more chatty than I would want, because I know what
-I'm doing. So I would suggest adding an advice.suggestBranchName config
-option to voluntarily suppress it.
-
--Peff
+diff --git a/t/t5531-deep-submodule-push.sh b/t/t5531-deep-submodule-pu=
+sh.sh
+old mode 100644
+new mode 100755
+diff --git a/t/t9501-gitweb-standalone-http-status.sh b/t/t9501-gitweb-=
+standalone-http-status.sh
+old mode 100644
+new mode 100755
+--
+1.6.5.rc2
