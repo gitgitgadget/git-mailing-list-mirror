@@ -1,64 +1,65 @@
-From: Phil Lawrence <prlawrence@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Alles wurde Git
-Date: Wed, 07 Oct 2009 16:26:03 -0500
-Message-ID: <4ACD076B.3000902@gmail.com>
-References: <alpine.DEB.1.00.0910041310520.4985@pacific.mpi-cbg.de>
+Date: Thu, 8 Oct 2009 00:15:13 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910080014060.4985@pacific.mpi-cbg.de>
+References: <alpine.DEB.1.00.0910041310520.4985@pacific.mpi-cbg.de> <4ACD076B.3000902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Oct 07 23:26:27 2009
+To: Phil Lawrence <prlawrence@gmail.com>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Thu Oct 08 00:12:58 2009
 Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-gx0-f204.google.com ([209.85.217.204])
+Received: from mail-yx0-f141.google.com ([209.85.210.141])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mve1h-0004iE-Ac
-	for gcvm-msysgit@m.gmane.org; Wed, 07 Oct 2009 23:26:25 +0200
-Received: by gxk28 with SMTP id 28so1680gxk.6
-        for <gcvm-msysgit@m.gmane.org>; Wed, 07 Oct 2009 14:26:23 -0700 (PDT)
+	id 1Mvekj-0008Kf-82
+	for gcvm-msysgit@m.gmane.org; Thu, 08 Oct 2009 00:12:57 +0200
+Received: by mail-yx0-f141.google.com with SMTP id 5so6233140yxe.24
+        for <gcvm-msysgit@m.gmane.org>; Wed, 07 Oct 2009 15:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding:sender:precedence
+         :received:received:received:received-spf:received:received
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
          :x-google-loop:mailing-list:list-id:list-post:list-help
          :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=kDdG+/gmfTDumhLXJ6gBRIaDwOg0e5jtj1TqgmsVjxE=;
-        b=BIVtUwgaZQVfX10++IxIJppjy0qCpLCd6s3o/2qa5MuQ14toVC4/KF4LTThBjyeNSf
-         ICPDJzXo67uMXNGt5cFaduEvAaqbNksRfjg8Gbdp4kj8OIiSv1hp5ryhPsCNWrLtcPSh
-         aKKTJWuDjKdwFRsrowrtaxuLxydAE6PCnzA/0=
+        bh=MImIWv2h5G4+HGTv1nYN8T56H/2Z/5A4M2Pq/sGpaPg=;
+        b=nqwawZH1YRoTMUmH0hbjXV0hzQ3S8+rRvRJCd6Qz9v5/HyumNKwSygvY/Ata7oEhn4
+         KKj7QUziwkNiBPIEGunKbc0iNQQphv9HCwinSN/e9azvgKcSxXrxFZthsBLg7rGZUdIF
+         nGk3YbsrxnTX1NWKtFa+FrUvcyrmJpfku0MEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:message-id:date:from:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding:sender:precedence:x-google-loop
-         :mailing-list:list-id:list-post:list-help:list-unsubscribe
-         :x-beenthere-env:x-beenthere;
-        b=ZmRNn6/7SO+D/a/rv9wc3L/aCh/PmNcH4sC4mKJhWs6iY/rqE0tE8hQOHUPqFV4dpD
-         lmqCfj0XWXs2yuN+sO0bCG6GJN/AiTXopwqzNYqtebn02immXDonEFJJSGAzyiWBTett
-         ZlQtmrB0jvoX7myUV2rLDZ+wOifnnZqgY2Vn8=
-Received: by 10.150.87.2 with SMTP id k2mr47084ybb.26.1254950777230;
-        Wed, 07 Oct 2009 14:26:17 -0700 (PDT)
-Received: by 10.177.108.35 with SMTP id k35gr7339yqm.0;
-	Wed, 07 Oct 2009 14:26:10 -0700 (PDT)
-X-Sender: prlawrence@gmail.com
+         :x-authenticated:x-provags-id:date:from:x-x-sender:to:cc:subject
+         :in-reply-to:message-id:references:user-agent:mime-version
+         :content-type:x-y-gmx-trusted:x-fuhafi:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=trz61Ct1VVmpV0aPskzUdd0BmiaHFSw/aXFFixDebmdI4Yz9IEd4sWxFRc6kt0cxCp
+         TfZz4/NbCcqn0jl/9uEpyUO5N3SHjNiK76S7JanXjR2KycwWQXAecsjMPvg9Y5z72CGW
+         U9E7sJqf7Y2aBuExUjPmmsEJGUKiw5N+Sdwc8=
+Received: by 10.100.199.19 with SMTP id w19mr40675anf.13.1254953570714;
+        Wed, 07 Oct 2009 15:12:50 -0700 (PDT)
+Received: by 10.177.108.35 with SMTP id k35gr7342yqm.0;
+	Wed, 07 Oct 2009 15:12:47 -0700 (PDT)
+X-Sender: Johannes.Schindelin@gmx.de
 X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.223.98.206 with SMTP id r14mr8251fan.19.1254950768170; Wed, 07 Oct 2009 14:26:08 -0700 (PDT)
-Received: by 10.223.98.206 with SMTP id r14mr8250fan.19.1254950768151; Wed, 07 Oct 2009 14:26:08 -0700 (PDT)
-Received: from mail-fx0-f224.google.com (mail-fx0-f224.google.com [209.85.220.224]) by gmr-mx.google.com with ESMTP id 14si1076311fxm.3.2009.10.07.14.26.07; Wed, 07 Oct 2009 14:26:07 -0700 (PDT)
-Received-SPF: pass (google.com: domain of prlawrence@gmail.com designates 209.85.220.224 as permitted sender) client-ip=209.85.220.224;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of prlawrence@gmail.com designates 209.85.220.224 as permitted sender) smtp.mail=prlawrence@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Received: by fxm24 with SMTP id 24so4452827fxm.11 for <msysgit@googlegroups.com>; Wed, 07 Oct 2009 14:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=gamma; h=domainkey-signature:received:received:message-id:date:from :user-agent:mime-version:to:cc:subject:references:in-reply-to :content-type:content-transfer-encoding; bh=jT4i2WSrddwzEXh3VnKm1iJymIP60Seudd4IyXDTnJM=; b=q2liNgNN+TefGbI5iAo26JXz00TSNpWExiJgHvqQHI74jw6BUZafQqVEIGQ2T4Zb9z 2u11OwoldpnUCJy/ufkn3AnnZH8yQJ2javx0yvsy98RG8mieEO/GLSyFooNJKqCtXaVu pNAIvrLmU0Bw/uXHWDT9iGjVrlhgL3dpLiUGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=gmail.com; s=gamma; h=message-id:date:from:user-agent:mime-version:to:cc:subject :references:in-reply-to:content-type:content-transfer-encoding; b=iai/V3o33F4bJnmOYOCkjD1LtI87iWolU/VS2hjQCWUvXt/At5LfkpUI8Vm+OvT0qA M67ilFrZroRWeq9IC22xSARzjBS+A8V4uCohCUAYcO9/fQ4U579VO0bc/xLpvXDDM8Gm j17unaO44N56UoI5+yEoLWa5LKh662axNMHBw=
-Received: by 10.103.81.2 with SMTP id i2mr168265mul.81.1254950767047; Wed, 07 Oct 2009 14:26:07 -0700 (PDT)
-Received: from ?IPv6:::1? (ppp-70-252-138-103.dsl.ksc2mo.swbell.net [70.252.138.103]) by mx.google.com with ESMTPS id w5sm300919mue.7.2009.10.07.14.26.05 (version=TLSv1/SSLv3 cipher=RC4-MD5); Wed, 07 Oct 2009 14:26:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.4pre) Gecko/20090915 Thunderbird/3.0b4
-In-Reply-To: <alpine.DEB.1.00.0910041310520.4985@pacific.mpi-cbg.de>
+Received: by 10.204.1.141 with SMTP id 13mr9194bkf.29.1254953566208; Wed, 07 Oct 2009 15:12:46 -0700 (PDT)
+Received: by 10.204.1.141 with SMTP id 13mr9193bkf.29.1254953566172; Wed, 07 Oct 2009 15:12:46 -0700 (PDT)
+Received: from mail.gmx.net (mail.gmx.net [213.165.64.20]) by gmr-mx.google.com with SMTP id 14si1081539fxm.3.2009.10.07.15.12.46; Wed, 07 Oct 2009 15:12:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) client-ip=213.165.64.20;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of Johannes.Schindelin@gmx.de designates 213.165.64.20 as permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Received: (qmail invoked by alias); 07 Oct 2009 22:12:45 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38] by mail.gmx.net (mp011) with SMTP; 08 Oct 2009 00:12:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/nen9doG/nmjOR89cZbga3hmoF2KixexPtfcE/fo WNcgZxOoP7c2VP
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <4ACD076B.3000902@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: msysgit@googlegroups.com
 Precedence: bulk
 X-Google-Loop: groups
@@ -71,20 +72,28 @@ List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
 	<mailto:msysgit+unsubscribe@googlegroups.com>
 X-BeenThere-Env: msysgit@googlegroups.com
 X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129661>
 
 
-On 10/04/2009 07:09 AM, Johannes Schindelin wrote:
->
-> ...Steffen also described some of the issues with
-> working on a large number of topic branches that need to be
-> integrated/cleaned up/rebased:  Git lacks good tools for working
-> collaboratively with topic branches that need to be rebased frequently.
-> He also showed a rather complicated script that is necessary to coordinate
-> work between 3 different maintainers (at 3 different locations).
-> ...
+Hi,
 
-Steffen, any chance you would share that script with the list?  It 
-sounds very interesting.
+On Wed, 7 Oct 2009, Phil Lawrence wrote:
 
-Phil Lawrence
+> On 10/04/2009 07:09 AM, Johannes Schindelin wrote:
+> >
+> > ...Steffen also described some of the issues with working on a large 
+> > number of topic branches that need to be integrated/cleaned 
+> > up/rebased:  Git lacks good tools for working collaboratively with 
+> > topic branches that need to be rebased frequently. He also showed a 
+> > rather complicated script that is necessary to coordinate work between 
+> > 3 different maintainers (at 3 different locations). ...
+> 
+> Steffen, any chance you would share that script with the list?  It 
+> sounds very interesting.
+
+I fear that the script is rather specific to the company's environment, 
+and I fear further that Steffen might not be allowed to share it due to IP 
+issues.
+
+Ciao,
+Dscho
