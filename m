@@ -1,88 +1,77 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add the --submodule-summary option to the diff option
- family
-Date: Thu, 8 Oct 2009 00:28:14 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910080027270.4985@pacific.mpi-cbg.de>
-References: <cover.1254668669u.git.johannes.schindelin@gmx.de> <67a884457aeaead275612be10902a80726b2a7db.1254668669u.git.johannes.schindelin@gmx.de> <7vbpkmn6oi.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910051027010.4985@pacific.mpi-cbg.de>
- <7vr5thacb4.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.0910052251190.4985@pacific.mpi-cbg.de> <4ACB22E9.3010001@web.de> <7vocok21pw.fsf@alter.siamese.dyndns.org> <4ACCECE6.1030508@web.de> <7vd44zt1nf.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] completion: add dirstat and friends to diff options
+Date: Wed, 07 Oct 2009 16:07:19 -0700
+Message-ID: <7vmy42pzvc.fsf@alter.siamese.dyndns.org>
+References: <1254905331-29516-1-git-send-email-bebarino@gmail.com>
+ <1254905331-29516-2-git-send-email-bebarino@gmail.com>
+ <1254905331-29516-3-git-send-email-bebarino@gmail.com>
+ <20091007205059.GA16235@neumann>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 00:34:00 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Oct 08 01:11:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mvf55-00011l-KF
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 00:33:59 +0200
+	id 1MvffN-0000TL-9Q
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 01:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754027AbZJGW0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2009 18:26:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753873AbZJGW0e
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 18:26:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56257 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753552AbZJGW0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2009 18:26:33 -0400
-Received: (qmail invoked by alias); 07 Oct 2009 22:25:46 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp066) with SMTP; 08 Oct 2009 00:25:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Avkd90SOAmrPKWBx92zx9G7oMY9FzDJr+bC8OHJ
-	fYriezeFHF2YuT
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <7vd44zt1nf.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1755021AbZJGXIP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Oct 2009 19:08:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754793AbZJGXIP
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 19:08:15 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48090 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754766AbZJGXIO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Oct 2009 19:08:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B50326FA2F;
+	Wed,  7 Oct 2009 19:07:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9tHfPRuhVhB+
+	6r7bTP1SYgB88I0=; b=nljLurfd75bSyW6uKQG/kD/+IV6rUeiDnATo1rPUtux1
+	Y3JZ4zqwnn8yyCKjwd0pMl2+uSvmdKsNX+CRM63rYSLuqYKoyvsVimnRvosgCSak
+	vtIu4lqZrBasmFqUBELxPYA0HNfKJdJRHX5jAzvKKr9xnf7yQFnH4V4EgEsvNfA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=HVX/W1
+	sYgAuWBWegFnzMetS417s4JU8GfjTYOWHA8pJXowRyQQU5N1ajA4SQI8exv1jgkt
+	1UeAUfK49vBbfMljTNSgSl1NgxP1F+C4CM8Aj0S6WAvTa3eY+rg2E6cCVKg/KbIw
+	ywxP7/dZW6emw0hi7Rw7esvZUhQ4/mj15eGLg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7E6196FA2D;
+	Wed,  7 Oct 2009 19:07:28 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CBE916FA29; Wed,  7 Oct 2009
+ 19:07:21 -0400 (EDT)
+In-Reply-To: <20091007205059.GA16235@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bo?=
+ =?utf-8?Q?r=22's?= message of "Wed\, 7 Oct 2009 22\:50\:59 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 2F1F6978-B396-11DE-92C0-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129663>
 
-Hi,
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-On Wed, 7 Oct 2009, Junio C Hamano wrote:
+> On Wed, Oct 07, 2009 at 01:48:51AM -0700, Stephen Boyd wrote:
+>> +                     --dirstat --dirstat=3D --dirstat-by-file
+>> +                     --dirstat-by-file=3D --cumulative
+>
+> I'm a bit puzzled by having both --dirstat and --dirstat=3D, and
+> --dirstat-by-file and --dirstat-by-file=3D.  How do we complete simil=
+ar
+> long options, where an argument and hence the =3D char is optional?
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
-> > So i took a live repo from my dayjob containing 8 submodules. In each
-> > submodule i did a "git checkout HEAD^" to simulate one change.
-> 
-> It appears that your "simulation" is to have changes in all submodules 
-> and nowhere else in the tree.  I have to wonder how common would that 
-> be.  If I have been working in the subprojects without changing the 
-> superproject at all, I would likely to be in one of the subproject 
-> directories and my "git diff" would not even have to trigger this 
-> codepath.  If we have on the other hand changes in the superproject, 
-> showing them would cost us equally in both approaches.
-> 
-> > then i got:
-> >
-> >   without fork : real	0m0.203s
-> >   with fork    : real	0m0.453s
-> >
-> > This is a degradation of more than 120% because of the fork()s. And
-> > just for fun i ran the scripted submodule summary too:
-> >
-> >   scripted     : real	0m3.437s
-> >
-> > So the forked version outperforms the scripted version by a factor of
-> > 7, while the speedup from Dscho's original proposal is almost 17fold.
-> 
-> Thanks.  I was worried if the forking to ensure correctness may sactifice
-> performance so much to be unusable, but it does not seem to be the case,
-> given the above comparision.
-> 
-> I didn't look at the code but presumably it uses the run_command()
-> interface and cleanly written?
-
-You seem to be rather unconvinced by rather convincing numbers.
-
-Therefore, I will continue working on the --submodule-summary stuff in 
-4msysgit.git.
-
-Ciao,
-Dscho
+A similar example in "git init" completion (--shared vs --shared=3D) al=
+ready
+exists, no?
