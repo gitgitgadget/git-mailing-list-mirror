@@ -1,105 +1,78 @@
 From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 2/3] completion: update am, commit, and log
-Date: Wed,  7 Oct 2009 01:48:50 -0700
-Message-ID: <1254905331-29516-2-git-send-email-bebarino@gmail.com>
+Subject: [PATCH 3/3] completion: add dirstat and friends to diff options
+Date: Wed,  7 Oct 2009 01:48:51 -0700
+Message-ID: <1254905331-29516-3-git-send-email-bebarino@gmail.com>
 References: <1254905331-29516-1-git-send-email-bebarino@gmail.com>
+ <1254905331-29516-2-git-send-email-bebarino@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 07 10:56:51 2009
+X-From: git-owner@vger.kernel.org Wed Oct 07 10:56:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvSKI-0004jY-0I
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 10:56:50 +0200
+	id 1MvSKH-0004jY-Dg
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 10:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934138AbZJGIrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2009 04:47:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934121AbZJGIrz
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 04:47:55 -0400
-Received: from qw-out-2122.google.com ([74.125.92.26]:33174 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934087AbZJGIrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2009 04:47:53 -0400
-Received: by qw-out-2122.google.com with SMTP id 3so1778410qwe.37
-        for <git@vger.kernel.org>; Wed, 07 Oct 2009 01:46:47 -0700 (PDT)
+	id S934114AbZJGIr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2009 04:47:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934010AbZJGIr2
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 04:47:28 -0400
+Received: from mail-qy0-f173.google.com ([209.85.221.173]:41960 "EHLO
+	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934033AbZJGIr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2009 04:47:27 -0400
+Received: by qyk3 with SMTP id 3so4151253qyk.4
+        for <git@vger.kernel.org>; Wed, 07 Oct 2009 01:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=i2BC/E90Cge4kZD/EvzBP8LOKTyWkGaE4h9kUvE/oW0=;
-        b=fwulDezR8LJKMxRlS2nK+bX6+nQRgjg17ELDF8QmQUVIufOX7ySQBSL2L/kLwAP/GR
-         gf2xkNB1Zx4N/Afu2yt+blNfC2gVpMUthhCoMq4BfDKsWOI+13WDgcxRbsOPIGkpckSG
-         9PxapLT9CUaMxHeDSHEEcaud1p2AG0NxAUYq8=
+        bh=iW0cDhTVBz9/nhv7auQUUJRVj06eJVt6e0IeEK0j+ho=;
+        b=DVdR3C1LrG8TX2g3irbxFuigyhlSmW9woqgAMH0JdT1VA+7O9jjWDp4ratEkFhKw60
+         A2uK4T/hzC+4PNJqow8pDBFalpYpWl1zGO+sEX9Y67e+7vdKq9+dVSusYK3wrRNI4AEW
+         49EOWGyR2Gfs8ZHKl3OJ+3r9zsqlGEBgtRUb0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=V9PXLfkYhl1v65HrTdQRkI9r8AhK4x0ixWCYDNTmxHhHizL1zCJl6Tswh3GUCG1opU
-         NsnrCZW99524KfP97mP6zWb1w/8QCJq2ya8KiyQsMs3IoV66Mamwe1YPWCbnpZcoJFR9
-         7LXyKQ/qPjhNJbVzTQRTz/D1A0DPus82dedOc=
-Received: by 10.224.100.148 with SMTP id y20mr2231192qan.365.1254905206957;
-        Wed, 07 Oct 2009 01:46:46 -0700 (PDT)
+        b=V6E+vOQTi+ug6HE1a0roG55cf6WiG9SxyOoloezsFpDuxfBkdfs7V8U1rQtnlLcRJi
+         KW758fC9qvxGeGnPrwAKN2BOxno07G9wVMcilzaeQS6/oHusJxLBKPAoFwI4cvcTapvE
+         JM80+JUMTUvlK4XI4ugFFxWJcfHZKg899c9nk=
+Received: by 10.224.60.9 with SMTP id n9mr2303618qah.31.1254905211173;
+        Wed, 07 Oct 2009 01:46:51 -0700 (PDT)
 Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 5sm849002qwg.23.2009.10.07.01.46.44
+        by mx.google.com with ESMTPS id 22sm369316qyk.10.2009.10.07.01.46.48
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Oct 2009 01:46:46 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 07 Oct 2009 01:48:55 -0700
+        Wed, 07 Oct 2009 01:46:50 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Wed, 07 Oct 2009 01:48:59 -0700
 X-Mailer: git-send-email 1.6.5.rc2.17.gdbc1b
-In-Reply-To: <1254905331-29516-1-git-send-email-bebarino@gmail.com>
+In-Reply-To: <1254905331-29516-2-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129639>
-
-git am learned --scissors, git commit learned --dry-run and git log
-learned --decorate=long|short recently.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129640>
 
 Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- contrib/completion/git-completion.bash |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+
+I sent this a while back, no response. If no response again I'll drop.
+
+ contrib/completion/git-completion.bash |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 332be99..2ab8c5e 100755
+index 2ab8c5e..a5fe1df 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -668,7 +668,7 @@ _git_am ()
- 			--3way --committer-date-is-author-date --ignore-date
- 			--ignore-whitespace --ignore-space-change
- 			--interactive --keep --no-utf8 --signoff --utf8
--			--whitespace=
-+			--whitespace= --scissors
- 			"
- 		return
- 	esac
-@@ -894,6 +894,7 @@ _git_commit ()
- 		__gitcomp "
- 			--all --author= --signoff --verify --no-verify
- 			--edit --amend --include --only --interactive
-+			--dry-run
- 			"
- 		return
- 	esac
-@@ -1179,6 +1180,10 @@ _git_log ()
- 		__gitcomp "$__git_log_date_formats" "" "${cur##--date=}"
- 		return
- 		;;
-+	--decorate=*)
-+		__gitcomp "long short" "" "${cur##--decorate=}"
-+		return
-+		;;
- 	--*)
- 		__gitcomp "
- 			$__git_log_common_options
-@@ -1191,7 +1196,7 @@ _git_log ()
- 			--pretty= --format= --oneline
- 			--cherry-pick
- 			--graph
--			--decorate
-+			--decorate --decorate=
- 			--walk-reflogs
- 			--parents --children
- 			$merge
+@@ -927,6 +927,8 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--inter-hunk-context=
+ 			--patience
+ 			--raw
++			--dirstat --dirstat= --dirstat-by-file
++			--dirstat-by-file= --cumulative
+ "
+ 
+ _git_diff ()
 -- 
 1.6.5.rc2.17.gdbc1b
