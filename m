@@ -1,81 +1,98 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH] bash completion: complete refs for git-grep
-Date: Wed, 7 Oct 2009 17:27:49 +0200
-Message-ID: <200910071727.50770.trast@student.ethz.ch>
-References: <14ac499280c9b17f862ab13201b48c64b4827713.1254823328.git.trast@student.ethz.ch> <20091006154555.GN9261@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 07 17:35:44 2009
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: [JGIT PATCH] The default encoding for reading commits is UTF-8 rather than system default
+Date: Wed,  7 Oct 2009 19:44:33 +0400
+Message-ID: <1254930273-1796-1-git-send-email-constantine.plotnikov@gmail.com>
+Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 07 17:54:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvYY2-00022w-Ve
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 17:35:27 +0200
+	id 1MvYqO-0004ix-95
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 17:54:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932548AbZJGPaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2009 11:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932380AbZJGPaE
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 11:30:04 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:15698 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932361AbZJGPaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2009 11:30:03 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 7 Oct
- 2009 17:29:14 +0200
-Received: from thomas.localnet (129.132.210.172) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Wed, 7 Oct
- 2009 17:29:29 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <20091006154555.GN9261@spearce.org>
+	id S1759436AbZJGPvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2009 11:51:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759229AbZJGPvx
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 11:51:53 -0400
+Received: from mail.intellij.net ([213.182.181.98]:40479 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759144AbZJGPvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2009 11:51:52 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 07 Oct 2009 11:51:51 EDT
+Received: (qmail 28501 invoked by uid 89); 7 Oct 2009 15:44:33 -0000
+Received: by simscan 1.1.0 ppid: 28404, pid: 28486, t: 0.0098s
+         scanners: regex: 1.1.0
+Received: from unknown (HELO localhost.localdomain) (Constantine.Plotnikov@jetbrains.com@172.26.240.76)
+  by mail.intellij.net with ESMTPA; 7 Oct 2009 15:44:33 -0000
+X-Mailer: git-send-email 1.6.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129648>
 
-Shawn O. Pearce wrote:
-> 
-> Thomas Rast <trast@student.ethz.ch> wrote:
-> > +	local i c=1 have_regex=""
-> > +	while [ $c -lt $COMP_CWORD ]; do
-> > +		i="${COMP_WORDS[c]}"
-> > +		case "$i" in
-> > +		-e) ;;
-> > +		-e*) have_regex="$c" ; break ;;
-> > +		-*) ;;
-> > +		*) have_regex="$c"; break ;;
-> > +		esac
-> > +		c=$((++c))
-> > +	done
-> 
-> What happens with `git grep -e a -e b`?  Do we trigger into ref
-> completion too early when we should still be doing the regex
-> completion?
+When reading commits the system default encoding was used if no encoding
+was specified in the commit. The patch modifies test to add a check that 
+commit message was encoded correctly (the test fails on old implementation 
+if system encoding is not UTF-8) and fixes Commit.decode() method to use 
+UTF-8 is encoding is not specified in the commit object.
 
-Hmm, true, I would also have to check for the last argument (before
-completion) being -e.
+Signed-off-by: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+---
 
-However, that is kind of moot because we currently complete filenames
-anyway, and you said I can't stop that:
+See man git-commit (the section "DISCUSSION"), for justification why 
+UTF-8 should be used. Note that this was already correctly implemented 
+in ObjectWriter.writeCommit(...) method. But Commit.decode() was not
+implemented in the same way for some reason.
+ 
+ .../tst/org/spearce/jgit/lib/T0003_Basic.java      |    3 +++
+ .../src/org/spearce/jgit/lib/Commit.java           |   18 +++++++-----------
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-> > This is still RFC because, as you can see in the code below, I tried
-> > to avoid completing at all while the user still needs to supply a
-> > regex.  Sadly, bash turns the COMPREPLY=() into filename completion
-> > anyway.  Is there a way to prevent this?
-> 
-> Not that I know of.  You can turn off default filename completion
-> when you register the completion function, but that then breaks
-> like every other git command for completion support because a lot
-> of them do want to complete filenames.
-
-So I'll roll a simpler patch that just always (before --) completes
-refs instead, if that's ok.
-
+diff --git a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0003_Basic.java b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0003_Basic.java
+index c2b1b91..4702aaf 100644
+--- a/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0003_Basic.java
++++ b/org.spearce.jgit.test/tst/org/spearce/jgit/lib/T0003_Basic.java
+@@ -348,6 +348,9 @@ public void test023_createCommitNonAnullii() throws IOException {
+ 		commit.setMessage("\u00dcbergeeks");
+ 		ObjectId cid = new ObjectWriter(db).writeCommit(commit);
+ 		assertEquals("4680908112778718f37e686cbebcc912730b3154", cid.name());
++		Commit loadedCommit = db.mapCommit(cid);
++		assertNotSame(loadedCommit, commit);
++		assertEquals(commit.getMessage(), loadedCommit.getMessage());
+ 	}
+ 
+ 	public void test024_createCommitNonAscii() throws IOException {
+diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
+index 030d4a4..933b929 100644
+--- a/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
++++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Commit.java
+@@ -299,17 +299,13 @@ private void decode() {
+ 				br.read(readBuf);
+ 				int msgstart = readBuf.length != 0 ? ( readBuf[0] == '\n' ? 1 : 0 ) : 0;
+ 
+-				if (encoding != null) {
+-					// TODO: this isn't reliable so we need to guess the encoding from the actual content
+-					author = new PersonIdent(new String(rawAuthor.getBytes(),encoding.name()));
+-					committer = new PersonIdent(new String(rawCommitter.getBytes(),encoding.name()));
+-					message = new String(readBuf,msgstart, readBuf.length-msgstart, encoding.name());
+-				} else {
+-					// TODO: use config setting / platform / ascii / iso-latin
+-					author = new PersonIdent(new String(rawAuthor.getBytes()));
+-					committer = new PersonIdent(new String(rawCommitter.getBytes()));
+-					message = new String(readBuf, msgstart, readBuf.length-msgstart);
+-				}
++				// If encoding is not specified, the default for commit is UTF-8
++				if (encoding == null) encoding = Constants.CHARSET;
++
++				// TODO: this isn't reliable so we need to guess the encoding from the actual content
++				author = new PersonIdent(new String(rawAuthor.getBytes(),encoding.name()));
++				committer = new PersonIdent(new String(rawCommitter.getBytes(),encoding.name()));
++				message = new String(readBuf,msgstart, readBuf.length-msgstart, encoding.name());
+ 			} catch (IOException e) {
+ 				e.printStackTrace();
+ 			} finally {
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.6.1.2
