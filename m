@@ -1,132 +1,85 @@
-From: Lars Rasmusson <Lars.Rasmusson@sics.se>
-Subject: gitweb calls the project ".git"
-Date: Wed, 7 Oct 2009 18:31:48 +0200
-Message-ID: <E66B0797-4EF0-49FC-AA01-8FD4C884A7E9@sics.se>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: multipart/signed; boundary=Apple-Mail-24--399482135; micalg=sha1; protocol="application/pkcs7-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 07 18:37:31 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/3] completion: fix alias listings with newlines
+Date: Wed, 07 Oct 2009 11:55:19 -0700
+Message-ID: <4ACCE417.5080907@gmail.com>
+References: <1254905331-29516-1-git-send-email-bebarino@gmail.com> <4ACC6055.1070204@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 07 20:59:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvZW4-0003r7-2V
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 18:37:28 +0200
+	id 1MvbjQ-0000yA-Mx
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 20:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934311AbZJGQc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2009 12:32:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934308AbZJGQc7
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 12:32:59 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:2132 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934309AbZJGQc6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2009 12:32:58 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so1062414eyf.19
-        for <git@vger.kernel.org>; Wed, 07 Oct 2009 09:31:50 -0700 (PDT)
+	id S1759715AbZJGSxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2009 14:53:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758079AbZJGSxu
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 14:53:50 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:59762 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753318AbZJGSxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2009 14:53:49 -0400
+Received: by fxm27 with SMTP id 27so4908931fxm.17
+        for <git@vger.kernel.org>; Wed, 07 Oct 2009 11:53:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:from:to
-         :content-type:mime-version:subject:date:x-mailer;
-        bh=mJEQY6JFLY8xcutS+HhXUUqDE2mwR45n7KQPvWAgnZU=;
-        b=LwCABvU36OtmF0s3rTdCbXcF3Dxqa0G2EDv0txUBMI8HBlxmILzr2+3B/wSdEYwLY1
-         XeI0pmeAlbjjv50ni7voRnWIfSE9E2ThESrUdDChp1bHun9TFEq6Eq14LkhXE3uZXKvQ
-         AMsn0+yvKSYGas6dE48UHI+gKmqqxSjd40tIs=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=a5/+89ppC0ogQgTzLz5P2rVtUbc7kTuXF4RI05daxws=;
+        b=UYS8t4q65r42nlG+yzy9Oz+Hk8iHjUnlmQLVPKH1iwHGAOMoc7sYDa73HEHADhGH+L
+         yZJxN2BnB19OHaoflSvz5DHk8GEZGpBxIh3Vk+Vhf4YcDgsE+djQkMaJrlpZCpMQxOFn
+         wBWWLL+uVtFG2gVSW31hjaAz+2wcLzNyMT9kU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:from:to:content-type:mime-version:subject:date
-         :x-mailer;
-        b=f6A0C2c10QriaUXHnO/r99mG1HpQZO4MKcDlLGDSTxxxQoxrqLycrdOurXSlvHGMpx
-         GRiFACGwuX6qKgGLtL7cnPnHeZxKA1KQoq4pbkDgwVuGbDs48+uNMDj/rfKHeFIZaHaO
-         g0sfBBjRoJHr/pr5WTA6ADBZhZe56sNEyS010=
-Received: by 10.216.86.195 with SMTP id w45mr38507wee.82.1254933110802;
-        Wed, 07 Oct 2009 09:31:50 -0700 (PDT)
-Received: from stolichnaya.sics.se (stolichnaya.sics.se [193.10.67.151])
-        by mx.google.com with ESMTPS id 5sm446897eyh.24.2009.10.07.09.31.49
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=SKGSh9s/WUeAGgkipbuucVxm0UbwSkVB5zpKqUyvqCXPk/P5ukzOYAQT0V6rXGD6jy
+         dLABVKIcmeAtbCj0Xi6xBsQnTn9IS1Sp1sYYNJ8HouyfPmxhHRCaCMsXbXKsH5pq9Urq
+         RxBSIHgg42JMcYWn1OaI2yIw6Cw6SF2dxMVEg=
+Received: by 10.86.231.13 with SMTP id d13mr281352fgh.41.1254941591903;
+        Wed, 07 Oct 2009 11:53:11 -0700 (PDT)
+Received: from ?192.168.1.2? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id l12sm177996fgb.16.2009.10.07.11.53.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Oct 2009 09:31:50 -0700 (PDT)
-X-Mailer: Apple Mail (2.936)
+        Wed, 07 Oct 2009 11:53:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090827)
+In-Reply-To: <4ACC6055.1070204@viscovery.net>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129651>
 
+Johannes Sixt wrote:
+> Is it necessary to change the body of the loop? Your version spawns two
+> processes on each iteration, while the original spawned no processes.
+>
+> You can avoid the pipeline (i.e. yet another process) using a "here-string":
+>
+> 	local i aliases=$(git --git-dir="$(__gitdir)" config -z \
+> 				--get-regexp "alias\..*" 2>/dev/null)
+> 	while IFS= read -rd '' i; do
+> 		i="${i#alias.}"
+> 		echo "${i/ */}"	# could be: echo "${i%% *}"
+>   	done <<< "$aliases"
+>
+> but I don't know how well bash handles variable values with embedded NULs.
 
---Apple-Mail-24--399482135
-Content-Type: text/plain;
-	charset=US-ASCII;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
+I can't get the above snippet to work, but maybe I'm doing something wrong.
 
-Hi, I am serving a repository with "git instaweb".
+I had a problem with the newline between the key and the value. bash
+gives me the whole line in the loop, but when I try to trim it $i is
+treated as two values. I couldn't figure out any other way to do it,
+besides piping $i to cut or tr.
 
-In the web browser, the name in the Project column is only ".git", and  
-not the "myrepo.git"
-which I would like to have, and as it is on http://repo.or.cz/ (which  
-is a site that also uses gitweb).
-
-How do I configure it to serve the project directory (or even better,  
-all the repos in a directory), and name them appropriately?
-
-(Is it possible to do with instaweb, or can it only be done with a  
-more heavy approach like using apache?)
-
-Thanks for any quick ideas, cheers,
-/Lars
-
-
-
-
---Apple-Mail-24--399482135
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGLTCCAuYw
-ggJPoAMCAQICEHxQzrd/wmpu5XNt+Exr06AwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA5MDUyMTIxMDk1N1oXDTEwMDUyMTIxMDk1
-N1owSDEfMB0GA1UEAxMWVGhhd3RlIEZyZWVtYWlsIE1lbWJlcjElMCMGCSqGSIb3DQEJARYWTGFy
-cy5SYXNtdXNzb25Ac2ljcy5zZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALbaCI0C
-5h6nNrpxTiHL0a3o4jnTDqIgqSek24kZWnWtvJ2pEDLilPFfMdAn/gHWj85nqZIBrFbsO335Jk2w
-1a1eB50F79uH4SQI15nPH5vYHf/4oE7xWcryaQOApaNbx/R50AKpKdk8XoctpoyTHdeIyv0VyTbw
-caVP8Y+w1zxBJrGA0rScLIlYNiOh997SSiFbGTea+IIK44P2+1/AfqkGc+B2V5nQZiyuG5uRUB3o
-ea7KD6Wd/LwuSHQT8AEb91KVYMqH+bJVgcNJ0SS8jZ5KCRp0z/xuYs2xaqdV22mZgaZzhkorixKW
-mGgioBGPfXtme6sXT3IelWXSAO26/KkCAwEAAaMzMDEwIQYDVR0RBBowGIEWTGFycy5SYXNtdXNz
-b25Ac2ljcy5zZTAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBBQUAA4GBAGww2079DNWT6Hfz32jV
-oO4P9hYYayvfdxHlSqz0tw7cu+ce67C4Pxm5HAb+NkS6FQkmrlzylXAU/wVArJ+w1aQJy/DFeUaa
-HgameI6Zct4uklxapU61m65CIML3WIBADprmZ1EXwRtc/btUrQsTup1rvXt1pwdCii5+4oltLkby
-MIIDPzCCAqigAwIBAgIBDTANBgkqhkiG9w0BAQUFADCB0TELMAkGA1UEBhMCWkExFTATBgNVBAgT
-DFdlc3Rlcm4gQ2FwZTESMBAGA1UEBxMJQ2FwZSBUb3duMRowGAYDVQQKExFUaGF3dGUgQ29uc3Vs
-dGluZzEoMCYGA1UECxMfQ2VydGlmaWNhdGlvbiBTZXJ2aWNlcyBEaXZpc2lvbjEkMCIGA1UEAxMb
-VGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIENBMSswKQYJKoZIhvcNAQkBFhxwZXJzb25hbC1mcmVl
-bWFpbEB0aGF3dGUuY29tMB4XDTAzMDcxNzAwMDAwMFoXDTEzMDcxNjIzNTk1OVowYjELMAkGA1UE
-BhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1Ro
-YXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCB
-iQKBgQDEpjxVc1X7TrnKmVoeaMB1BHCd3+n/ox7svc31W/Iadr1/DDph8r9RzgHU5VAKMNcCY1os
-iRVwjt3J8CuFWqo/cVbLrzwLB+fxH5E2JCoTzyvV84J3PQO+K/67GD4Hv0CAAmTXp6a7n2XRxSpU
-hQ9IBH+nttE8YQRAHmQZcmC3+wIDAQABo4GUMIGRMBIGA1UdEwEB/wQIMAYBAf8CAQAwQwYDVR0f
-BDwwOjA4oDagNIYyaHR0cDovL2NybC50aGF3dGUuY29tL1RoYXd0ZVBlcnNvbmFsRnJlZW1haWxD
-QS5jcmwwCwYDVR0PBAQDAgEGMCkGA1UdEQQiMCCkHjAcMRowGAYDVQQDExFQcml2YXRlTGFiZWwy
-LTEzODANBgkqhkiG9w0BAQUFAAOBgQBIjNFQg+oLLswNo2asZw9/r6y+whehQ5aUnX9MIbj4Nh+q
-LZ82L8D0HFAgk3A8/a3hYWLD2ToZfoSxmRsAxRoLgnSeJVCUYsfbJ3FXJY3dqZw5jowgT2Vfldr3
-94fWxghOrvbqNOUQGls1TXfjViF4gtwhGTXeJLHTHUb/XV9lTzGCAxAwggMMAgEBMHYwYjELMAkG
-A1UEBhMCWkExJTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMT
-I1RoYXd0ZSBQZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBAhB8UM63f8JqbuVzbfhMa9OgMAkG
-BSsOAwIaBQCgggFvMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkFMQ8XDTA5
-MTAwNzE2MzE0OFowIwYJKoZIhvcNAQkEMRYEFGXJMaRsVJw/4MyN5C0YF0XDUQjbMIGFBgkrBgEE
-AYI3EAQxeDB2MGIxCzAJBgNVBAYTAlpBMSUwIwYDVQQKExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5
-KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVyc29uYWwgRnJlZW1haWwgSXNzdWluZyBDQQIQfFDO
-t3/Cam7lc234TGvToDCBhwYLKoZIhvcNAQkQAgsxeKB2MGIxCzAJBgNVBAYTAlpBMSUwIwYDVQQK
-ExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVyc29uYWwg
-RnJlZW1haWwgSXNzdWluZyBDQQIQfFDOt3/Cam7lc234TGvToDANBgkqhkiG9w0BAQEFAASCAQBB
-L+0CVW5VATLjAUSleyvl7t8cgNL53fqsaFme4Ww1uxDqwDk2MccLnHh7qGHRpjPk+IM6GKUQK0Go
-gr4WYmte2f5baUQeeqbjjCEsONZVVlGJ5RBxky+4g2JnTuQ629k2KVLHCN7duCHzaTemg/NqqbVj
-1w23XU81yiROrUS4YcaOCBKC02n8c87uUnBhfuP5TV9p/s/j+ntywxVRmfu34SleIYEL3Wot4pOE
-mDmWyQ0YIg9ITth69DX/6JewJIVAF2NcGVejxkqnZDFp9ZuFCABzGJX2a/8Cq7soTMZ4Q+v8mFN+
-A7a+yxIwxdpFeA5JDfo4BaL4XD+GhVNBKsECAAAAAAAA
-
---Apple-Mail-24--399482135--
+Maybe a better solution would be to add --keys-only or something to
+git-config?
