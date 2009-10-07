@@ -1,94 +1,68 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCH 1/3] completion: fix alias listings with newlines
-Date: Wed,  7 Oct 2009 01:48:49 -0700
-Message-ID: <1254905331-29516-1-git-send-email-bebarino@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 07 10:57:01 2009
+From: Michael Harbeck <michael_harbeck@arcor.de>
+Subject: Question: Odd merging behaviour with copied/moved files
+Date: Wed, 7 Oct 2009 08:52:43 +0000 (UTC)
+Message-ID: <loom.20091007T104139-315@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 07 11:27:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvSKG-0004jY-Ry
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 10:56:49 +0200
+	id 1MvSnz-0004pM-K4
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Oct 2009 11:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933148AbZJGIrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Oct 2009 04:47:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932938AbZJGIrW
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 04:47:22 -0400
-Received: from mail-qy0-f173.google.com ([209.85.221.173]:43829 "EHLO
-	mail-qy0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932394AbZJGIrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Oct 2009 04:47:20 -0400
-Received: by qyk3 with SMTP id 3so4151212qyk.4
-        for <git@vger.kernel.org>; Wed, 07 Oct 2009 01:46:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=8e5qVLaGsEj+yFwpGgkjCQZtKO7b8tglSyMhHsNF6z8=;
-        b=xds1mGCpyLy5/z2hiZQdpIaP8GM+ZcvZpCr96sNRiRSUVQOhexURyyjlKxdTQ1wVa1
-         ds6s9ebUwr8QsA7roRJk+k3TMqzBOFpykaOGgV+rmi9efm9stBuZfiSzGaoMTx1YU18w
-         6I8Sk7B6hEbgOf0gIGFyHKIKLj23/0BCrwi+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=G7IBMpOAmOD0BinL9Y4nT3Oo88kV9HUq/+B0C09GsYTZvfUoRX8wr4Op6XyB17LifQ
-         icCT4+U5TX8DEk6DFE62iSGgyHGmDzKJqBJro6eI5nm6YLrnn773oxQtB9DLrXaLbdcD
-         X4LjPklBPBc0OpP1DnQ0kcvkfAnU6YL/jtX38=
-Received: by 10.224.54.206 with SMTP id r14mr2268618qag.204.1254905203203;
-        Wed, 07 Oct 2009 01:46:43 -0700 (PDT)
-Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id 26sm1011791qwa.50.2009.10.07.01.46.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Oct 2009 01:46:42 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 07 Oct 2009 01:48:51 -0700
-X-Mailer: git-send-email 1.6.5.rc2.17.gdbc1b
+	id S1757197AbZJGJZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Oct 2009 05:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757101AbZJGJZy
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Oct 2009 05:25:54 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56829 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756694AbZJGJZx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Oct 2009 05:25:53 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MvSlc-0003Zz-LK
+	for git@vger.kernel.org; Wed, 07 Oct 2009 11:25:04 +0200
+Received: from dslb-088-064-253-218.pools.arcor-ip.net ([88.64.253.218])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Oct 2009 11:25:04 +0200
+Received: from michael_harbeck by dslb-088-064-253-218.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Oct 2009 11:25:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 88.64.253.218 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090910 Ubuntu/9.04 (jaunty) Shiretoko/3.5.3 GTB5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129642>
 
-Since commit 518ef8f (completion: Replace config --list with
---get-regexp, 2009-09-11) an alias config value containing a newline
-would break the completion of aliases. Instead of setting the IFS to the
-newline, use git-config's null termination to separate aliases with the
-null character.
+Hello,
 
-An example .gitconfig causing the breakage.
+I'd just had the following situation:
+A repository with a file: File1
 
-[alias]
-	whowhat = "log -1 --pretty='format:%an <%ae>\n%s'"
-	wont-complete = ...
+A clone of this repository.
+I made some changes to File1 in this repository and checked them in
 
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
----
+Now someone decide to to rename and copy the File1 in the first repository and
+checked those changes in. Now there is no File1 any more in the first repository.
 
-This is the best I can come up with. I'm not sure about using the
-d option of read though.
+After a while I pulled from this first repository. My changes are only merged in
+one file! I think this behavior is strange.
 
- contrib/completion/git-completion.bash |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+In the second case its also strange, that if there is a copy in the first
+repository, after a pull my changes in the copied file are also missing.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2c2a0d4..332be99 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -600,10 +600,10 @@ __git_porcelain_commandlist="$(__git_porcelain_commands 2>/dev/null)"
- 
- __git_aliases ()
- {
--	local i IFS=$'\n'
--	for i in $(git --git-dir="$(__gitdir)" config --get-regexp "alias\..*" 2>/dev/null); do
--		i="${i#alias.}"
--		echo "${i/ */}"
-+	local i
-+	git --git-dir="$(__gitdir)" config -z --get-regexp "alias\..*" 2>/dev/null |
-+	while IFS= read -rd '' i; do
-+		echo ${i#alias.} | cut -d' ' -f1
- 	done
- }
- 
--- 
-1.6.5.rc2.17.gdbc1b
+Is there a possibility to get warned about these situations, or better is there
+an automatic way to merge my changes to both pulled files?
+
+Thanks,
+
+Michael
