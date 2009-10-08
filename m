@@ -1,77 +1,76 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH v2] perl/Makefile.PL: detect MakeMaker versions incompatible
- with DESTDIR
-Date: Thu, 08 Oct 2009 08:34:34 -0500
-Message-ID: <unyNhuV9VB06SYvOR8ONK47yVKPtJfgRVKs-sKMFc-8rKMQBz7DPnw@cipher.nrlssc.navy.mil>
-References: <7wQSYSBJPoVtvyGI0lqsDW37w4byCpgpMaHiDKALwW_oJ9nHXddX9OBMnqXGZBVAo2U7Tc1BMxg@cipher.nrlssc.navy.mil> <FE_WTi0YAHrCrSdGFemlb7ALatFkdSu5V7Yfb5CUgyoxfv3ZFXdFABKbT1boP7aeGWli-gJPcBA@cipher.nrlssc.navy.mil> <4ACDE76C.4040307@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, c@gryning.com,
-	Brandon Casey <drafnel@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 08 15:44:20 2009
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: [PATCH] ls-files: make option parser keep argv[0]
+Date: Thu,  8 Oct 2009 10:20:28 -0400
+Message-ID: <1255011628-31841-1-git-send-email-bwalton@artsci.utoronto.ca>
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 08 16:21:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvtG5-0002zr-1V
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 15:42:17 +0200
+	id 1MvtsQ-0001Im-OG
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 16:21:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758310AbZJHNfb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 09:35:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758287AbZJHNfb
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 09:35:31 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39887 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758262AbZJHNfa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 09:35:30 -0400
-Received: by mail.nrlssc.navy.mil id n98DYZ4A011309; Thu, 8 Oct 2009 08:34:36 -0500
-In-Reply-To: <4ACDE76C.4040307@viscovery.net>
-X-OriginalArrivalTime: 08 Oct 2009 13:34:35.0204 (UTC) FILETIME=[13358840:01CA481C]
+	id S1758025AbZJHOVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 10:21:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757360AbZJHOVo
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 10:21:44 -0400
+Received: from www.cquest.utoronto.ca ([192.82.128.5]:54799 "EHLO
+	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757302AbZJHOVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 10:21:43 -0400
+Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:57437 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1Mvtre-0006x1-1H; Thu, 08 Oct 2009 10:21:06 -0400
+Received: from localhost
+	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
+	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1Mvtrd-0008Kp-V4; Thu, 08 Oct 2009 10:21:06 -0400
+Received: (from bwalton@localhost)
+	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n98EL5wf032039;
+	Thu, 8 Oct 2009 10:21:05 -0400
+X-Mailer: git-send-email 1.6.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129693>
 
-Johannes Sixt wrote:
-> Brandon Casey schrieb:
->> From: Brandon Casey <drafnel@gmail.com>
->>
->> It appears that ExtUtils::MakeMaker versions older than 6.11 do not
->> implement the DESTDIR mechanism.  So add a test to the generated perl.mak
->> to detect when DESTDIR is used along with a too old ExtUtils::MakeMaker and
->> abort with a message suggesting the use of NO_PERL_MAKEMAKER.
->>
->> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
->> ---
->>
->>
->> This just reverses the logic in the test on $(MM_VERSION) so that the test
->> will also fail if MM_VERSION is unset.  Who knows if ancient versions set
->> it.  Sorry for the quick v2.
->>
->> -brandon
->>
->>
->>  perl/Makefile.PL |    8 ++++++++
->>  1 files changed, 8 insertions(+), 0 deletions(-)
->>
->> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
->> index 320253e..0b9deca 100644
->> --- a/perl/Makefile.PL
->> +++ b/perl/Makefile.PL
->> @@ -5,6 +5,14 @@ sub MY::postamble {
->>  instlibdir:
->>  	@echo '$(INSTALLSITELIB)'
->>  
->> +ifneq (,$(DESTDIR))
->> +ifeq (0,$(shell expr '$(MM_VERSION)' '>' 6.10))
-> 
-> I don't think the test works as intended, because 6.2 *is* greater than
-> 6.10 (aka 6.1).
+The ls-files built-in was not asking the option parser to maintain
+argv[0].  This led to the possibility of fprintf(stderr, "...", NULL).
+On Solaris, this was causing a segfault.  On glibc systems, printed
+error messages didn't contain proper strings, but rather, "(null)":...
 
-Hmm... I think you're right.
+A trigger for this bug was: `git ls-files -i`
 
--brandon
+Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+---
+ builtin-ls-files.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index f473220..9a3705a 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -482,7 +482,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+-			ls_files_usage, 0);
++			ls_files_usage, PARSE_OPT_KEEP_ARGV0);
+ 	if (show_tag || show_valid_bit) {
+ 		tag_cached = "H ";
+ 		tag_unmerged = "M ";
+@@ -505,7 +505,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 	if (require_work_tree && !is_inside_work_tree())
+ 		setup_work_tree();
+ 
+-	pathspec = get_pathspec(prefix, argv);
++	pathspec = get_pathspec(prefix, argv + 1);
+ 
+ 	/* be nice with submodule paths ending in a slash */
+ 	read_cache();
+-- 
+1.6.4.4
