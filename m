@@ -1,107 +1,105 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT] patch-id
-Date: Thu, 8 Oct 2009 09:28:05 -0700
-Message-ID: <20091008162805.GE9261@spearce.org>
-References: <4AC136CC.8040300@codeaurora.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Git archive and trailing "/" in prefix
+Date: Thu, 08 Oct 2009 18:46:54 +0200
+Message-ID: <4ACE177E.209@lsrfire.ath.cx>
+References: <loom.20091008T172303-658@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nasser Grainawi <nasser@codeaurora.org>
-X-From: git-owner@vger.kernel.org Thu Oct 08 18:33:25 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 18:56:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvvvA-0000vI-FX
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 18:32:52 +0200
+	id 1MvwHh-0005sz-Kt
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 18:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932608AbZJHQ2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 12:28:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758550AbZJHQ2n
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 12:28:43 -0400
-Received: from george.spearce.org ([209.20.77.23]:51870 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbZJHQ2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 12:28:42 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id A75B2381FE; Thu,  8 Oct 2009 16:28:05 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4AC136CC.8040300@codeaurora.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758718AbZJHQrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 12:47:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755834AbZJHQrw
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 12:47:52 -0400
+Received: from india601.server4you.de ([85.25.151.105]:38672 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755334AbZJHQrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 12:47:51 -0400
+Received: from [10.0.1.101] (p57B7CC44.dip.t-dialin.net [87.183.204.68])
+	by india601.server4you.de (Postfix) with ESMTPSA id 445992F806A;
+	Thu,  8 Oct 2009 18:47:14 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <loom.20091008T172303-658@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129700>
 
-Nasser Grainawi <nasser@codeaurora.org> wrote:
-> I'm trying to add a public getPatchId method to the jgit Patch class [...]
->
-> It seems Patch does some statistical number gathering, but at no point does
-> it store a 'slimmed-down' version of a patch.
+Sergio Callegari schrieb:
+> Hi!
+> 
+> The git-archive man page indicates that if the --prefix option is passed to
+> git-archive, it is compulsory to end the prefix with a "/"
+> 
+>  git archive [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>] ...
+> 
+> As a matter of fact, the archiver behaves quite strangely if that slash is
+> missing. Files in the root of the working dir are added to the archive with
+> their own name modified by the prefix and the same happens for working dir
+> sub-directories. However, no file present in the sub-directories, nor
+> sub-sub-directories are added.
 
-It parses the patch to create FileHeader objects, one for each
-file mentioned in the script.  Within each FileHeader there is a
-HunkHeader object, one for each hunk present in the patch.  Within
-each HunkHeader there is an EditList composed of Edit instances;
-each Edit instance denotes a contiguous line range within that hunk.
+The latter is a bug.
 
-Edit instances come in one of 3 forms:
+> I would like to know if there some reason why a trailing "/" is not added
+> automatically to the prefix when it is missing and the prefix is not empty.
+> Would that break anything?
 
-  INSERT:  a run of + lines with no - lines
-  DELETE:  a run of - lines with no + lines
-  REPLACE: a mixture of - and + lines
+The --prefix option is intended to add a string to the beginning (i.e. "to
+prefix") of the name of the archive entries.  I'm not sure if there's a use
+case for anything else than adding a fake directory for all entries to live
+in (thus requiring a trailing slash), but I also don't see why we should
+disallow it.
 
-and their type is actually determined by the line numbers attached
-to them.  A INSERT has the same starting and ending line number on
-the A side, but on the B side the ending line number is at least
-one higher than the starting number.  DELETE is the reverse, and
-REPLACE has both ending numbers higher than the starting number.
+The following patch fixes handling of prefixes without trailing slashes by
+taking it out of the hands of get_pathspec() and read_tree_recursive() --
+which can only handle prefixes that are path components -- and adding the
+prefix later, in write_archive_entry().  
 
-IIRC Edit uses 0 based offsets, so line 3 is actually position 2.
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ archive.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-These HunkHeader and Edit instances are only available on a text
-patch, binary patches use a different representation for the
-binary delta.  Combined diff patches (--cc format) also lack these
-HunkHeader/Edit instances as we don't have a generic n-way patch
-parser yet.
-
-> I had the idea to just iterate
-> over the FileHeader's and get the byte buffer of each, but I don't think
-> those buffers have the parsed data.
-
-The HunkHeader and Edit instances really don't have the actual
-line data available to them, they only have the line numbers.
-To generate a patch ID you'd need to get the line data too.
-
-Worse, IIRC the patch ID generation in C git favors a 3 line context.
-
-In theory you could modify FileHeader or HunkHeader to produce
-a RawText that uses the underlying byte[] returned by getBuffer()
-as the backing store, but create a specialized IntList which has the
-actual file line numbers mapped to the positions in the patch script.
-To do that you'd need to re-walk the patch, like the toEditList()
-method in HunkHeader does.
-
-Given that RawText you could feed it through something like
-DiffFormatter to create a patch with 3 lines of context, and hash
-the relevant bits.
-
-But... that seems like a lot of work.
-
-Also, there is a class in Gerrit Code Review called EditList (not
-to be confused with JGit's EditList class!) that really should be
-moved back over to JGit.  It has some useful routines for walking
-through a patch as a series of iterations.
-
-> Short of that, suggestions for how to go about acquiring/storing a parsed
-> representation of the data with maximal existing code re-use would be
-> appreciated.
-
-I'm coming up short on suggestions right now.  I'm not seeing an
-easy path to this without writing a bit of code.  I think you really
-just need to walk the patch... :-\
-
--- 
-Shawn.
+diff --git a/archive.c b/archive.c
+index 73b8e8a..0cc79d2 100644
+--- a/archive.c
++++ b/archive.c
+@@ -115,6 +115,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
+ 
+ 	strbuf_reset(&path);
+ 	strbuf_grow(&path, PATH_MAX);
++	strbuf_add(&path, args->base, args->baselen);
+ 	strbuf_add(&path, base, baselen);
+ 	strbuf_addstr(&path, filename);
+ 	path_without_prefix = path.buf + args->baselen;
+@@ -187,8 +188,8 @@ int write_archive_entries(struct archiver_args *args,
+ 		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
+ 	}
+ 
+-	err =  read_tree_recursive(args->tree, args->base, args->baselen, 0,
+-			args->pathspec, write_archive_entry, &context);
++	err = read_tree_recursive(args->tree, "", 0, 0, args->pathspec,
++				  write_archive_entry, &context);
+ 	if (err == READ_TREE_RECURSIVE)
+ 		err = 0;
+ 	return err;
+@@ -211,7 +212,7 @@ static const struct archiver *lookup_archiver(const char *name)
+ static void parse_pathspec_arg(const char **pathspec,
+ 		struct archiver_args *ar_args)
+ {
+-	ar_args->pathspec = get_pathspec(ar_args->base, pathspec);
++	ar_args->pathspec = get_pathspec("", pathspec);
+ }
+ 
+ static void parse_treeish_arg(const char **argv,
