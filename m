@@ -1,76 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git archive and trailing "/" in prefix
-Date: Thu, 08 Oct 2009 09:26:59 -0700
-Message-ID: <7v4oq9j1gs.fsf@alter.siamese.dyndns.org>
-References: <loom.20091008T172303-658@post.gmane.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [JGIT] patch-id
+Date: Thu, 8 Oct 2009 09:28:05 -0700
+Message-ID: <20091008162805.GE9261@spearce.org>
+References: <4AC136CC.8040300@codeaurora.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 18:33:19 2009
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nasser Grainawi <nasser@codeaurora.org>
+X-From: git-owner@vger.kernel.org Thu Oct 08 18:33:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mvvv9-0000vI-Td
+	id 1MvvvA-0000vI-FX
 	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 18:32:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663AbZJHQ2Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 12:28:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932658AbZJHQ2Q
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 12:28:16 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48870 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932559AbZJHQ2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 12:28:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 50B9270DE8;
-	Thu,  8 Oct 2009 12:27:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=xBDWPLTOGUrT0TxXjhQd7zi0w6A=; b=HkWjX3FD7Ab+Yygv+0RpMT8
-	o9hnsOITXjL2nmLoY/IYW9uyqO6D4MIX9rmpiMRFEWajD0RwcbZtVhk6MIOAZZvk
-	RTehyd8yUaFSnpMWcVCpT8f2fUd1VnHeAo+ZBSt71imjpCQk3TREKw8xmWHQKAl2
-	a/d2iNgNYK3BDsjrcJA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=WAAEDuMbI5rFRaXh6pfM9gV6A1xNVg0Uhgr9sm9cKnVXJXmEt
-	cLOCVUgXUwHUPU/Hcs+K3cn/XROTDGMU+Qb0XNLpWw4NIf1ut8sYktFz8b6ZAXxL
-	cuOywJOuTFWVjN3YD91h806rlr72QF5qIiqaMP11dpwWUoOBJ2cKwr0i4I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 331D270DE7;
-	Thu,  8 Oct 2009 12:27:04 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 391FE70DE6; Thu,  8 Oct 2009
- 12:27:00 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 69EE9EE8-B427-11DE-A812-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S932608AbZJHQ2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 12:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758550AbZJHQ2n
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 12:28:43 -0400
+Received: from george.spearce.org ([209.20.77.23]:51870 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509AbZJHQ2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 12:28:42 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id A75B2381FE; Thu,  8 Oct 2009 16:28:05 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4AC136CC.8040300@codeaurora.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129699>
 
-Sergio Callegari <sergio.callegari@gmail.com> writes:
+Nasser Grainawi <nasser@codeaurora.org> wrote:
+> I'm trying to add a public getPatchId method to the jgit Patch class [...]
+>
+> It seems Patch does some statistical number gathering, but at no point does
+> it store a 'slimmed-down' version of a patch.
 
-> The git-archive man page indicates that if the --prefix option is passed to
-> git-archive, it is compulsory to end the prefix with a "/"
+It parses the patch to create FileHeader objects, one for each
+file mentioned in the script.  Within each FileHeader there is a
+HunkHeader object, one for each hunk present in the patch.  Within
+each HunkHeader there is an EditList composed of Edit instances;
+each Edit instance denotes a contiguous line range within that hunk.
 
-No, it does not have to.
+Edit instances come in one of 3 forms:
 
-	$ git archive --prefix=v1.6.0- v1.6.0 Makefile | tar xf -
-	$ make -f v1.6.0-Makefile
+  INSERT:  a run of + lines with no - lines
+  DELETE:  a run of - lines with no + lines
+  REPLACE: a mixture of - and + lines
 
-This is consistent with the way the same --prefix option can be used with
-checkout-index.  e.g. to swap Makefile in work tree and in the index:
+and their type is actually determined by the line numbers attached
+to them.  A INSERT has the same starting and ending line number on
+the A side, but on the B side the ending line number is at least
+one higher than the starting number.  DELETE is the reverse, and
+REPLACE has both ending numbers higher than the starting number.
 
-	$ edit Makefile
-	$ git checkout-index --prefix=old- Makefile
-	$ git update-index Makefile
-        $ mv old-Makefile Makefile
+IIRC Edit uses 0 based offsets, so line 3 is actually position 2.
 
-These may or may not be useful examples, but this feature has been with us
-for a long time.  I wouldn't be surprised if removing the ability to
-archive or checkout with filename prefix (not leading directory path
-prefix) causes grief to existing scripts of people.
+These HunkHeader and Edit instances are only available on a text
+patch, binary patches use a different representation for the
+binary delta.  Combined diff patches (--cc format) also lack these
+HunkHeader/Edit instances as we don't have a generic n-way patch
+parser yet.
+
+> I had the idea to just iterate
+> over the FileHeader's and get the byte buffer of each, but I don't think
+> those buffers have the parsed data.
+
+The HunkHeader and Edit instances really don't have the actual
+line data available to them, they only have the line numbers.
+To generate a patch ID you'd need to get the line data too.
+
+Worse, IIRC the patch ID generation in C git favors a 3 line context.
+
+In theory you could modify FileHeader or HunkHeader to produce
+a RawText that uses the underlying byte[] returned by getBuffer()
+as the backing store, but create a specialized IntList which has the
+actual file line numbers mapped to the positions in the patch script.
+To do that you'd need to re-walk the patch, like the toEditList()
+method in HunkHeader does.
+
+Given that RawText you could feed it through something like
+DiffFormatter to create a patch with 3 lines of context, and hash
+the relevant bits.
+
+But... that seems like a lot of work.
+
+Also, there is a class in Gerrit Code Review called EditList (not
+to be confused with JGit's EditList class!) that really should be
+moved back over to JGit.  It has some useful routines for walking
+through a patch as a series of iterations.
+
+> Short of that, suggestions for how to go about acquiring/storing a parsed
+> representation of the data with maximal existing code re-use would be
+> appreciated.
+
+I'm coming up short on suggestions right now.  I'm not seeing an
+easy path to this without writing a bit of code.  I think you really
+just need to walk the patch... :-\
+
+-- 
+Shawn.
