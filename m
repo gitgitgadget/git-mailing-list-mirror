@@ -1,78 +1,64 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: What's cooking in git.git (Oct 2009, #01; Wed, 07)
-Date: Thu, 8 Oct 2009 20:15:58 +0200
-Message-ID: <40aa078e0910081115q1bf924e8s22f3ee11dbe7c8b7@mail.gmail.com>
-References: <7viqeqjsx6.fsf@alter.siamese.dyndns.org>
-	 <4ACD8D8E.3060606@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git log -S not finding all commits?
+Date: Thu, 08 Oct 2009 20:23:45 +0200
+Message-ID: <vpqiqepeocu.fsf@bauges.imag.fr>
+References: <7ae12651.522df17b.4acda0f5.21a31@o2.pl>
+	<362436ca.6b5d0fc3.4acdc7e1.41b23@o2.pl>
+	<vpqbpkixgea.fsf@bauges.imag.fr> <vpq63aqxflu.fsf@bauges.imag.fr>
+	<49efcded.58cfa30b.4acddff5.4d773@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Marius Storm-Olsen <mstormo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 20:22:58 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Daniel <mjucde@o2.pl>
+X-From: git-owner@vger.kernel.org Thu Oct 08 20:33:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvxdZ-0000lw-GP
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 20:22:49 +0200
+	id 1Mvxo4-00065h-PW
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 20:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932504AbZJHSQg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2009 14:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759169AbZJHSQg
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 14:16:36 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:36955 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759159AbZJHSQf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2009 14:16:35 -0400
-Received: by bwz6 with SMTP id 6so1029210bwz.37
-        for <git@vger.kernel.org>; Thu, 08 Oct 2009 11:15:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sMO8IraN5Kgb/Y9NUn4AwoRUfaL//7QFFyTYyY9V+Tg=;
-        b=gki9L5Q0cXG+PmnAG3IuBdQEm2i6sEwrH8NM0kNSHnnaLMgU9JSmhIkiTKFGHMkb8n
-         RQKBPlp05V4UXhL5/GOZUGOnno35SolrloxQ1KOB877MuYXoMw/gYFdERKbluvMM69my
-         IDP2uUEEztle4ltFuM29o5YHQKZnJ1P5lkhLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=al4h7OW5eNSfUHmdcK2m/Tmzq6FtyPwpCYn50RTyVTRwZiy5AMaHqTXheW7k4fz09s
-         ygGboxRtImcvYyEnFx2gD1iAVlPTifgDV0fC3aYayLtSppp+/0+lnAFQnKgkaBGhpudR
-         ntKdp8XJkb9mCBKSkU1Wn1ffLbOmrja/rPvQs=
-Received: by 10.204.26.134 with SMTP id e6mr1320422bkc.87.1255025758418; Thu, 
-	08 Oct 2009 11:15:58 -0700 (PDT)
-In-Reply-To: <4ACD8D8E.3060606@gmail.com>
+	id S1756736AbZJHS1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 14:27:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755722AbZJHS1j
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 14:27:39 -0400
+Received: from imag.imag.fr ([129.88.30.1]:35274 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754791AbZJHS1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 14:27:38 -0400
+Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id n98INkPu022993
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 8 Oct 2009 20:23:46 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by archeboc.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1MvxeT-0007Dw-LB; Thu, 08 Oct 2009 20:23:45 +0200
+In-Reply-To: <49efcded.58cfa30b.4acddff5.4d773@o2.pl> (Daniel's message of "Thu\, 08 Oct 2009 14\:49\:57 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 08 Oct 2009 20:23:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129711>
 
-On Thu, Oct 8, 2009 at 8:58 AM, Marius Storm-Olsen <mstormo@gmail.com> =
-wrote:
-> Junio C Hamano said the following on 08.10.2009 08:33:
->>
->> * ef/msys-imap (2009-10-03) 7 commits
->> =A0- mingw: enable OpenSSL
->> =A0- mingw: wrap SSL_set_(w|r)fd to call _get_osfhandle
->> =A0- imap-send: provide fall-back random-source
->> =A0- imap-send: build imap-send on Windows
->> =A0- imap-send: fix compilation-error on Windows
->> =A0- imap-send: use run-command API for tunneling
->> =A0- imap-send: use separate read and write fds
+Daniel <mjucde@o2.pl> writes:
+
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
 >
-> Don't forget about the MSVC patch ontop of this series:
-> Message-ID: <18cd41840910031300i32c74b15t74eb9eee23ff8469@mail.gmail.=
-com>
-> Subject: [PATCH] MSVC: Enable OpenSSL, and translate -lcrypto
+> > git log -p -z  | perl -0 -ne 'print if(/whatever-you-search/);'
+>
+> Thanks, it's practically what I was looking for.
 
-I will include it in the next round I send out (unless someone objects)
+http://git.or.cz/gitwiki/GitFaq#A.22gitlog-S.22doesnotshowallcommits
 
---=20
-Erik "kusma" Faye-Lund
-kusmabite@gmail.com
-(+47) 986 59 656
+Feel free to improve.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
