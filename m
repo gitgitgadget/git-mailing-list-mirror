@@ -1,105 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-send-email.perl: Fold long header lines to 78 chars
-Date: Wed, 07 Oct 2009 22:02:28 -0700
-Message-ID: <7vd44yo4uz.fsf@alter.siamese.dyndns.org>
-References: <1254759898.1799.449.camel@Joe-Laptop.home>
+From: "J.H." <warthog9@kernel.org>
+Subject: [Gitweb-caching][RFC] Major updates - kernel.org updated
+Date: Wed, 07 Oct 2009 21:51:57 -0700
+Message-ID: <4ACD6FED.4080308@kernel.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 07:03:46 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 08 07:24:23 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvlAD-000056-FA
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 07:03:41 +0200
+	id 1MvlUF-0006FQ-9x
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 07:24:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbZJHFDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 01:03:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbZJHFDV
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 01:03:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56122 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752226AbZJHFDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 01:03:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8C9C850787;
-	Thu,  8 Oct 2009 01:02:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0nXvLUka85c01qi9TJUKsiEhHzM=; b=Eqc93z
-	QwgYu7sf1TqVr+NLPTh2AsQoGx9eDMOfzZQcW0cYaGsNjqktmyeQMFDMz8Rc5FKc
-	fhDzOtUgPzqxgZjucGn3Hg52urqiVEXTzC/J337y5U8s/RU+Kj2D/huVbvLecs2M
-	DQqC8GARpPWWDogU7RIdb3pQPDxQ81//O92xc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ko3ssSdvQRdENd8dmmXvLRhm2WZ+zscK
-	ROSMia8yOfxk3iHT/d+cJTXWalnydcl/GMNuhT58GYYsELv4rvhAJ2ly1yGbvzwQ
-	MY5myf4TVfLXtxsO1cKuV9+0bNj/5I5eWAJH2fZSD3VNqbgJpQ8Xd81bqeZiOh8E
-	J4+kj1xBL74=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C5C950786;
-	Thu,  8 Oct 2009 01:02:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8306250785; Thu,  8 Oct
- 2009 01:02:30 -0400 (EDT)
-In-Reply-To: <1254759898.1799.449.camel@Joe-Laptop.home> (Joe Perches's
- message of "Mon\, 05 Oct 2009 09\:24\:58 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CA6A2FAE-B3C7-11DE-867D-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752880AbZJHFU3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 01:20:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752350AbZJHFU3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 01:20:29 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:40953 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410AbZJHFU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 01:20:28 -0400
+X-Greylist: delayed 1675 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Oct 2009 01:20:28 EDT
+Received: from voot-cruiser.eaglescrag.net (c-71-202-189-206.hsd1.ca.comcast.net [71.202.189.206])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.1/8.14.1) with ESMTP id n984pviV006730
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 7 Oct 2009 21:51:57 -0700
+User-Agent: Thunderbird 2.0.0.21 (X11/20090320)
+X-Enigmail-Version: 0.95.6
+X-Virus-Scanned: ClamAV 0.88.7/9873/Wed Oct  7 14:05:47 2009 on shards.monkeyblade.net
+X-Virus-Status: Clean
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.1.1 (shards.monkeyblade.net [198.137.202.13]); Wed, 07 Oct 2009 21:51:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129673>
 
-Joe Perches <joe@perches.com> writes:
+Evening everyone,
 
-> Some MTAs reject or filter long header lines which can
-> be generated if the cc list is only a few entries.
->
-> Fold long header lines to 78 chars to be more rfc compliant.
->
-> Signed-off-by: Joe Perches <joe@perches.com>
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index dd821f7..cb8b48b 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -835,10 +870,10 @@ sub send_message
->  	    $gitversion = Git::version();
->  	}
->  
-> -	my $cc = join(", ", unique_email_list(@cc));
-> +	@cc = unique_email_list(@cc);
->  	my $ccline = "";
-> -	if ($cc ne '') {
-> -		$ccline = "\nCc: $cc";
-> +	if (@cc gt 0) {
+Thought I'd give a heads up that I finally sat down and did some major 
+updates to my version of the gitweb caching code (as opposed to Lea's, 
+which I still have plans to integrate with mine in the near future).
 
-"gt"?  I think you meant (@cc > 0) but you can also say "if (@cc) {" which
-would most clearly convey what you want to say..
+That said this brings the base up to mainline, which is about a 2 or 3 
+year jump in code, it updates a number of elements in the caching engine 
+  itself and I went ahead and ripped out the file breakout that I had 
+done initially.
 
-> +		$ccline = fold_header("\nCc: ", ", ", @cc);
->  	}
->  	my $sanitized_sender = sanitize_address($sender);
->  	make_message_id() unless defined($message_id);
-> @@ -976,7 +1011,7 @@ X-Mailer: git-send-email $gitversion
->  		if ($smtp_server !~ m#^/#) {
->  			print "Server: $smtp_server\n";
->  			print "MAIL FROM:<$raw_from>\n";
-> -			print "RCPT TO:".join(',',(map { "<$_>" } @recipients))."\n";
-> +			print fold_header("RCPT TO:", ",", map { "<$_>" } @recipients)."\n";
-I do not think this hunk is correct.
+New things known to work:
+	- Snapshots are fully working, and passing through the caching
+	  engine
+	- Binary files now output correctly when your using blob_plain,
+	  this is also passing correctly through the caching engine.
 
-Shouldn't we be rather repeating "RCPT TO: " for each recipient, as
-RFC2821 4.1.1.3 says (this is an issue with the original code)?  I do not
-think SMTP's "RCPT TO" command has the notion of continuation line used
-for the payload (i.e. RFC 2822 Internet Message Format), and folding the
-line is a new bug this patch introduces.
+I'm sure there is a plethora of other things that have been fixed or broken.
 
->  		} else {
->  			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
->  		}
+So I'm going to re-open the can of worms over caching again, and see 
+what it would take to get this merged into mainline.  Obviously a patch 
+clean-up (my tree is a lot more organic than mainline) is needed, but I 
+thought I'd try and get an idea of where I need to start steering all of 
+this.
+
+- John 'Warthog9' Hawley
