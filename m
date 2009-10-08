@@ -1,57 +1,79 @@
-From: Kris Shannon <kris@shannon.id.au>
-Subject: Re: [Gitweb-caching][RFC] Major updates - kernel.org updated
-Date: Thu, 8 Oct 2009 19:26:40 +1100
-Message-ID: <e51f4f550910080126s5885e5d6jc91e3b3ec0f4fe3e@mail.gmail.com>
-References: <4ACD6FED.4080308@kernel.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git log -S not finding all commits?
+Date: Thu, 08 Oct 2009 11:12:06 +0200
+Message-ID: <4ACDACE6.9060509@op5.se>
+References: <7ae12651.522df17b.4acda0f5.21a31@o2.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 08 10:30:14 2009
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Daniel <mjucde@o2.pl>
+X-From: git-owner@vger.kernel.org Thu Oct 08 11:16:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvoO5-0005M1-ID
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 10:30:13 +0200
+	id 1Mvp6y-0003ZS-HB
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 11:16:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755482AbZJHI1S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2009 04:27:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755393AbZJHI1R
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 04:27:17 -0400
-Received: from mail-px0-f179.google.com ([209.85.216.179]:51852 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755299AbZJHI1Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2009 04:27:16 -0400
-Received: by pxi9 with SMTP id 9so5596307pxi.4
-        for <git@vger.kernel.org>; Thu, 08 Oct 2009 01:26:40 -0700 (PDT)
-Received: by 10.114.7.39 with SMTP id 39mr1765696wag.188.1254990400289; Thu, 
-	08 Oct 2009 01:26:40 -0700 (PDT)
-In-Reply-To: <4ACD6FED.4080308@kernel.org>
+	id S1756209AbZJHJMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 05:12:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756038AbZJHJMs
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 05:12:48 -0400
+Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:59158 "HELO
+	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751879AbZJHJMs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2009 05:12:48 -0400
+Received: from source ([209.85.219.220]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKSs2s6gZUvv74NU9Q+t4bpcknGTaJZebI@postini.com; Thu, 08 Oct 2009 02:12:52 PDT
+Received: by ewy20 with SMTP id 20so1466453ewy.16
+        for <git@vger.kernel.org>; Thu, 08 Oct 2009 02:12:10 -0700 (PDT)
+Received: by 10.216.85.13 with SMTP id t13mr300076wee.127.1254993130215;
+        Thu, 08 Oct 2009 02:12:10 -0700 (PDT)
+Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
+        by mx.google.com with ESMTPS id 7sm179878eyb.29.2009.10.08.02.12.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 08 Oct 2009 02:12:09 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.1) Gecko/20090814 Fedora/3.0-2.6.b3.fc11 Thunderbird/3.0b3 ThunderGit/0.1a
+In-Reply-To: <7ae12651.522df17b.4acda0f5.21a31@o2.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129685>
 
-2009/10/8 J.H. <warthog9@kernel.org>:
-> So I'm going to re-open the can of worms over caching again, and see =
-what it
-> would take to get this merged into mainline. =C2=A0Obviously a patch =
-clean-up (my
-> tree is a lot more organic than mainline) is needed, but I thought I'=
-d try
-> and get an idea of where I need to start steering all of this.
+On 10/08/2009 10:21 AM, Daniel wrote:
+> Hi,
 >
-> - John 'Warthog9' Hawley
+> I did:
+>
+> $ git version
+> git version 1.6.4.4
+> $ mkdir a&&  cd a&&  git init
+> $ echo "Free data">  a
+> $ git add a
+> $ git commit -m1
+> $ echo "Free data allocated by other function">  a
+> $ git commit -a -m2
+> $ PAGER=cat git log -S'Free' --oneline
+> 2f34241 1
+>
+> I would expect "git log" to show both 1 and 2 commit, but it prints only 1.
+>
+> Is it the correct behavior?
+>
 
-=46or everyone playing at home, I found J.H.'s tree at:
+Yes, it's the correct behaviour. -S finds only lines where what you search
+for was added or deleted. It counts the number of occurrences of what you
+specify in each resulting tree and only shows the commits where that number
+changed. In your case, searching for "Free data " would have printed both
+commits, since you first introduce that entire string and then remove it.
 
-git://git.kernel.org/pub/scm/git/warthog9/gitweb.git
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-or Gitweb interface :)
-
-http://git.kernel.org/?p=3Dgit/warthog9/gitweb.git
-
-- Kris
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
