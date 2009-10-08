@@ -1,55 +1,64 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: git log -S not finding all commits?
-Date: Thu, 08 Oct 2009 15:52:55 -0700
-Message-ID: <86tyy9qz08.fsf@blue.stonehenge.com>
-References: <7ae12651.522df17b.4acda0f5.21a31@o2.pl> <4ACDACE6.9060509@op5.se>
-	<362436ca.6b5d0fc3.4acdc7e1.41b23@o2.pl>
-	<vpqbpkixgea.fsf@bauges.imag.fr> <vpq63aqxflu.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel <mjucde@o2.pl>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 09 00:55:01 2009
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] Makefile: enable THREADED_DELTA_SEARCH on IRIX and IRIX64
+Date: Thu,  8 Oct 2009 18:07:41 -0500
+Message-ID: <Zyq66vleW7YI5l2liyEIAK1O_rnknZ4_xci4KmS3Proua7JfnWyaAyyk1ww9sknBMukmwGErv7slPEl71tr1Lg@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Oct 09 01:12:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw1sy-0003fg-14
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 00:55:00 +0200
+	id 1Mw29f-0001wZ-Ma
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 01:12:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbZJHWxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 18:53:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756543AbZJHWxc
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 18:53:32 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:31886 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755075AbZJHWxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 18:53:32 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 6FB5A1DE3AE; Thu,  8 Oct 2009 15:52:55 -0700 (PDT)
-x-mayan-date: Long count = 12.19.16.13.10; tzolkin = 4 Oc; haab = 8 Yax
-In-Reply-To: <vpq63aqxflu.fsf@bauges.imag.fr> (Matthieu Moy's message of "Thu, 08 Oct 2009 13:57:49 +0200")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S932975AbZJHXIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 19:08:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932699AbZJHXIq
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 19:08:46 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41002 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932326AbZJHXIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 19:08:46 -0400
+Received: by mail.nrlssc.navy.mil id n98N7tFV023295; Thu, 8 Oct 2009 18:07:55 -0500
+X-OriginalArrivalTime: 08 Oct 2009 23:07:55.0331 (UTC) FILETIME=[2B485930:01CA486C]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129721>
 
->>>>> "Matthieu" == Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+From: Brandon Casey <drafnel@gmail.com>
 
-Matthieu> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->> git log -p --format="%s\n%x00"  | perl -0 -ne 'print if(/whatever-you-search/);'
+Since commit dcda3614 removed the use of a variable length array from
+builtin-pack-objects.c, it is now safe to compile with the threaded delta
+search feature enabled.  Formerly, the MIPSpro 7.4.4m compiler warned that
+variable length arrays should not be used with pthreads.
 
-That "if" is noisier than it needs to be:
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-  perl -0 -ne 'print if /this/'
-
-suffices.
-
+diff --git a/Makefile b/Makefile
+index dd3d520..c956ce9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -846,6 +846,7 @@ ifeq ($(uname_S),IRIX)
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	SHELL_PATH = /usr/gnu/bin/bash
+ 	NEEDS_LIBGEN = YesPlease
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),IRIX64)
+ 	NO_SETENV=YesPlease
+@@ -859,6 +860,7 @@ ifeq ($(uname_S),IRIX64)
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+ 	NEEDS_LIBGEN = YesPlease
++	THREADED_DELTA_SEARCH = YesPlease
+ endif
+ ifeq ($(uname_S),HP-UX)
+ 	NO_IPV6=YesPlease
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
-See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
+1.6.5.rc2.17.gdbc1b
