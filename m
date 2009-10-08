@@ -1,62 +1,56 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGIT PATCH] The default encoding for reading commits is UTF-8
-	rather than system default
-Date: Wed, 7 Oct 2009 21:16:10 -0700
-Message-ID: <20091008041609.GV9261@spearce.org>
-References: <1254930273-1796-1-git-send-email-constantine.plotnikov@gmail.com>
+Subject: Re: [PATCH 1/3] completion: fix alias listings with newlines
+Date: Wed, 7 Oct 2009 21:29:17 -0700
+Message-ID: <20091008042917.GX9261@spearce.org>
+References: <1254905331-29516-1-git-send-email-bebarino@gmail.com> <4ACC6055.1070204@viscovery.net> <4ACCE417.5080907@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 06:17:59 2009
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 06:31:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvkRy-00040v-Mo
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 06:17:59 +0200
+	id 1Mvkef-0007a9-Me
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 06:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750832AbZJHEQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 00:16:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750937AbZJHEQq
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 00:16:46 -0400
-Received: from george.spearce.org ([209.20.77.23]:34694 "EHLO
+	id S1751355AbZJHE3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 00:29:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751318AbZJHE3y
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 00:29:54 -0400
+Received: from george.spearce.org ([209.20.77.23]:40500 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750796AbZJHEQq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 00:16:46 -0400
+	with ESMTP id S1751058AbZJHE3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 00:29:54 -0400
 Received: by george.spearce.org (Postfix, from userid 1001)
-	id 16F7C381FE; Thu,  8 Oct 2009 04:16:10 +0000 (UTC)
+	id C9906381FE; Thu,  8 Oct 2009 04:29:17 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <1254930273-1796-1-git-send-email-constantine.plotnikov@gmail.com>
+In-Reply-To: <4ACCE417.5080907@gmail.com>
 User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129670>
 
-Constantine Plotnikov <constantine.plotnikov@gmail.com> wrote:
-> See man git-commit (the section "DISCUSSION"), for justification why 
-> UTF-8 should be used. Note that this was already correctly implemented 
-> in ObjectWriter.writeCommit(...) method. But Commit.decode() was not
-> implemented in the same way for some reason.
+Stephen Boyd <bebarino@gmail.com> wrote:
+> Johannes Sixt wrote:
+> > Is it necessary to change the body of the loop? Your version spawns two
+> > processes on each iteration, while the original spawned no processes.
 
-Commit predates that encoding code in ObjectWriter.writeCommit and
-it looks like we just forgot to go back and fix it.  A very old bug.
+Yes, we should try to avoid spawning a process here, it fires on
+each completion attempt if I recall.
 
-Since our move to the Eclipse Foundation we really need to follow
-their IP process, which for non-committers means creating a new bug
-in their Bugzilla system:
+> Maybe a better solution would be to add --keys-only or something to
+> git-config?
 
-  https://bugs.eclipse.org/bugs/enter_bug.cgi?product=EGit
+Or a format string with a language based escape like for-each-ref
+supports?  Might make it easier to use git config in scripts if we
+can write things like:
 
-See also:
-
-  http://wiki.eclipse.org/EGit/Contributor_Guide#Contributing_Patches
-  
->  .../tst/org/spearce/jgit/lib/T0003_Basic.java      |    3 +++
->  .../src/org/spearce/jgit/lib/Commit.java           |   18 +++++++-----------
->  2 files changed, 10 insertions(+), 11 deletions(-)
+  git config --format='$data{%(key)}=%(value);' --perl
 
 -- 
 Shawn.
