@@ -1,105 +1,70 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Git archive and trailing "/" in prefix
-Date: Thu, 08 Oct 2009 18:46:54 +0200
-Message-ID: <4ACE177E.209@lsrfire.ath.cx>
-References: <loom.20091008T172303-658@post.gmane.org>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH v2] perl/Makefile.PL: detect MakeMaker versions incompatible
+ with DESTDIR
+Date: Thu, 08 Oct 2009 11:58:57 -0500
+Message-ID: <F3v6_n7wtTFWz8nzE5EpqB8ZsobXLax0nn_ghA5foHOvOJEMjHl0Qw@cipher.nrlssc.navy.mil>
+References: <7wQSYSBJPoVtvyGI0lqsDW37w4byCpgpMaHiDKALwW_oJ9nHXddX9OBMnqXGZBVAo2U7Tc1BMxg@cipher.nrlssc.navy.mil> <FE_WTi0YAHrCrSdGFemlb7ALatFkdSu5V7Yfb5CUgyoxfv3ZFXdFABKbT1boP7aeGWli-gJPcBA@cipher.nrlssc.navy.mil> <4ACDE76C.4040307@viscovery.net> <unyNhuV9VB06SYvOR8ONK47yVKPtJfgRVKs-sKMFc-8rKMQBz7DPnw@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 08 18:56:45 2009
+Cc: gitster@pobox.com, git@vger.kernel.org, c@gryning.com,
+	Brandon Casey <drafnel@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 08 19:05:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvwHh-0005sz-Kt
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 18:56:09 +0200
+	id 1MvwQN-0002bc-SM
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 19:05:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758718AbZJHQrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 12:47:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755834AbZJHQrw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 12:47:52 -0400
-Received: from india601.server4you.de ([85.25.151.105]:38672 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755334AbZJHQrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 12:47:51 -0400
-Received: from [10.0.1.101] (p57B7CC44.dip.t-dialin.net [87.183.204.68])
-	by india601.server4you.de (Postfix) with ESMTPSA id 445992F806A;
-	Thu,  8 Oct 2009 18:47:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <loom.20091008T172303-658@post.gmane.org>
+	id S932411AbZJHRAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 13:00:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932282AbZJHRAW
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 13:00:22 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:40422 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932200AbZJHRAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 13:00:21 -0400
+Received: by mail.nrlssc.navy.mil id n98GwwWC029613; Thu, 8 Oct 2009 11:59:00 -0500
+In-Reply-To: <unyNhuV9VB06SYvOR8ONK47yVKPtJfgRVKs-sKMFc-8rKMQBz7DPnw@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 08 Oct 2009 16:58:57.0908 (UTC) FILETIME=[A059AB40:01CA4838]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129701>
 
-Sergio Callegari schrieb:
-> Hi!
+Brandon Casey wrote:
+> Johannes Sixt wrote:
+>> Brandon Casey schrieb:
+
+>>> diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+>>> index 320253e..0b9deca 100644
+>>> --- a/perl/Makefile.PL
+>>> +++ b/perl/Makefile.PL
+>>> @@ -5,6 +5,14 @@ sub MY::postamble {
+>>>  instlibdir:
+>>>  	@echo '$(INSTALLSITELIB)'
+>>>  
+>>> +ifneq (,$(DESTDIR))
+>>> +ifeq (0,$(shell expr '$(MM_VERSION)' '>' 6.10))
+>> I don't think the test works as intended, because 6.2 *is* greater than
+>> 6.10 (aka 6.1).
 > 
-> The git-archive man page indicates that if the --prefix option is passed to
-> git-archive, it is compulsory to end the prefix with a "/"
-> 
->  git archive [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>] ...
-> 
-> As a matter of fact, the archiver behaves quite strangely if that slash is
-> missing. Files in the root of the working dir are added to the archive with
-> their own name modified by the prefix and the same happens for working dir
-> sub-directories. However, no file present in the sub-directories, nor
-> sub-sub-directories are added.
+> Hmm... I think you're right.
 
-The latter is a bug.
+I think we're safe.  Looks like the MakeMaker folks have always used two
+digits for the minor number.  So version 6.2 was written like 6.02.
 
-> I would like to know if there some reason why a trailing "/" is not added
-> automatically to the prefix when it is missing and the prefix is not empty.
-> Would that break anything?
+Here's their repo:
 
-The --prefix option is intended to add a string to the beginning (i.e. "to
-prefix") of the name of the archive entries.  I'm not sure if there's a use
-case for anything else than adding a fake directory for all entries to live
-in (thus requiring a trailing slash), but I also don't see why we should
-disallow it.
+   git://github.com/schwern/extutils-makemaker.git
 
-The following patch fixes handling of prefixes without trailing slashes by
-taking it out of the hands of get_pathspec() and read_tree_recursive() --
-which can only handle prefixes that are path components -- and adding the
-prefix later, in write_archive_entry().  
+git log -p -- lib/ExtUtils/MakeMaker.pm | grep -- '$VERSION = ' | less
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- archive.c |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+I didn't search exhaustively, but I think all of 6.X has two digit minor
+numbers, which means all versions should compare correctly since 5.X will
+always compare less than 6.X and 7.X will be greater, etc.
 
-diff --git a/archive.c b/archive.c
-index 73b8e8a..0cc79d2 100644
---- a/archive.c
-+++ b/archive.c
-@@ -115,6 +115,7 @@ static int write_archive_entry(const unsigned char *sha1, const char *base,
- 
- 	strbuf_reset(&path);
- 	strbuf_grow(&path, PATH_MAX);
-+	strbuf_add(&path, args->base, args->baselen);
- 	strbuf_add(&path, base, baselen);
- 	strbuf_addstr(&path, filename);
- 	path_without_prefix = path.buf + args->baselen;
-@@ -187,8 +188,8 @@ int write_archive_entries(struct archiver_args *args,
- 		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
- 	}
- 
--	err =  read_tree_recursive(args->tree, args->base, args->baselen, 0,
--			args->pathspec, write_archive_entry, &context);
-+	err = read_tree_recursive(args->tree, "", 0, 0, args->pathspec,
-+				  write_archive_entry, &context);
- 	if (err == READ_TREE_RECURSIVE)
- 		err = 0;
- 	return err;
-@@ -211,7 +212,7 @@ static const struct archiver *lookup_archiver(const char *name)
- static void parse_pathspec_arg(const char **pathspec,
- 		struct archiver_args *ar_args)
- {
--	ar_args->pathspec = get_pathspec(ar_args->base, pathspec);
-+	ar_args->pathspec = get_pathspec("", pathspec);
- }
- 
- static void parse_treeish_arg(const char **argv,
+-brandon
