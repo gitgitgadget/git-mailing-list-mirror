@@ -1,73 +1,79 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix the exit code of MSVC build scripts on cygwin
-Date: Thu, 8 Oct 2009 22:13:18 +0200
-Message-ID: <81b0412b0910081313x31f72916p6fddd1a23df154df@mail.gmail.com>
-References: <4ACE064B.5020909@ramsay1.demon.co.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git archive and trailing "/" in prefix
+Date: Thu, 8 Oct 2009 13:35:25 -0700 (PDT)
+Message-ID: <alpine.LFD.2.01.0910081329570.3432@localhost.localdomain>
+References: <loom.20091008T172303-658@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, mstormo@gmail.com,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Oct 08 22:17:04 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sergio Callegari <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 08 22:43:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MvzQ0-0002kA-Ib
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 22:16:56 +0200
+	id 1MvzoM-0007UM-Ng
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Oct 2009 22:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756811AbZJHUN4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Oct 2009 16:13:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756139AbZJHUN4
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 16:13:56 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:48240 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754351AbZJHUNz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2009 16:13:55 -0400
-Received: by fxm27 with SMTP id 27so5881559fxm.17
-        for <git@vger.kernel.org>; Thu, 08 Oct 2009 13:13:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8eao0GHxeoVPa22Qgk4y3ynnZVTAtApbZVbfwOHpgt4=;
-        b=BbIOnFl6vnQdVnmbm5cM7oV83kDKf6Rc2VMnulHIBhZguZZbrvNpbu1NqW8nFKZiz7
-         Ua5ldBgdOFTJ+5CK+L97PAUzDY+j6bKziZGJ+koIgT+b4tlVG9jFZfOfTg53copOq7OQ
-         YzxrZFCUIy4+swXxel58MHQkERFc3vZCXY83I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=W7rWFjJ7VVbUBNH/CsZAzlImUDXPwXc6XjmtvXbQYfWJf2yParq1U8msdPazpyHHfl
-         +MVuhubIXUwCU8RzL9QdOYmDms3sfrXhXVPKEva1HiMlBMPiRdy1xaqQIftLkgjuF6wq
-         Iiakfodh1E+vAHp+shml7/aNweLmOkKRvk7FU=
-Received: by 10.204.34.65 with SMTP id k1mr103176bkd.111.1255032798460; Thu, 
-	08 Oct 2009 13:13:18 -0700 (PDT)
-In-Reply-To: <4ACE064B.5020909@ramsay1.demon.co.uk>
+	id S1760003AbZJHUgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 16:36:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760017AbZJHUgf
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 16:36:35 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:40182 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757141AbZJHUgf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Oct 2009 16:36:35 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id n98KZPs5015064
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 8 Oct 2009 13:35:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id n98KZPqt032677;
+	Thu, 8 Oct 2009 13:35:25 -0700
+X-X-Sender: torvalds@localhost.localdomain
+In-Reply-To: <loom.20091008T172303-658@post.gmane.org>
+User-Agent: Alpine 2.01 (LFD 1184 2008-12-16)
+X-Spam-Status: No, hits=-3.463 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129715>
 
-On Thu, Oct 8, 2009 at 17:33, Ramsay Jones <ramsay@ramsay1.demon.co.uk>=
- wrote:
-> diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts=
-/clink.pl
-> index 0ffd59f..26aec61 100644
-> --- a/compat/vcbuild/scripts/clink.pl
-> +++ b/compat/vcbuild/scripts/clink.pl
-> @@ -45,4 +45,6 @@ if ($is_linking) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0push(@args, @cflags);
-> =C2=A0}
-> =C2=A0#printf("**** @args\n");
-> -exit system(@args);
-> +system(@args) =3D=3D 0
-> + =C2=A0 =C2=A0 =C2=A0 or exit 1;
-> +exit 0;
 
-exit(system(@args) !=3D 0);
 
-Yours looks a little verbose...
+On Thu, 8 Oct 2009, Sergio Callegari wrote:
+> 
+> The git-archive man page indicates that if the --prefix option is passed to
+> git-archive, it is compulsory to end the prefix with a "/"
+
+Yeah, that part is intentional. And:
+
+> As a matter of fact, the archiver behaves quite strangely if that slash is
+> missing. Files in the root of the working dir are added to the archive with
+> their own name modified by the prefix and the same happens for working dir
+> sub-directories.
+
+So far so good. But
+
+> However, no file present in the sub-directories, nor sub-sub-directories 
+> are added.
+
+Ok, that is a bug. It's supposed to just add the prefix to everything, and 
+it sounds like it's simply broken. I wonder how long it's been broken? 
+Perhaps forever. 
+
+> I would like to know if there some reason why a trailing "/" is not added
+> automatically to the prefix when it is missing and the prefix is not empty.
+> Would that break anything?
+
+It really was meant to be useful to prefix things without forcing a 
+directory structure. IOW, being able to use "--prefix=compat-" and just 
+have everything unpack with their own names, but with the prefix.
+
+Whether anybody uses that, and whether it's worth it, I can't say.
+
+			Linus
