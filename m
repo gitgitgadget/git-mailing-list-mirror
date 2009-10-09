@@ -1,75 +1,70 @@
-From: Sean Estabrooks <seanlkml@sympatico.ca>
-Subject: Re: [PATCH 7/9] Documentation: clarify branch creation
-Date: Fri, 9 Oct 2009 09:21:51 -0700
-Message-ID: <BLU0-SMTP425A9541141B09D790814EAECB0@phx.gbl>
-References: <20091009101400.GA16549@progeny.tock>
-	<20091009101940.GG16558@progeny.tock>
+From: eduard stefan <eduard.stefan@gmail.com>
+Subject: Git 1.6.5-rc git clone unhandled exception using http protocol
+Date: Fri, 09 Oct 2009 20:27:50 +0300
+Message-ID: <4ACF7296.3010809@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 18:25:56 2009
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 09 19:29:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwIHp-0006Nt-8p
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 18:25:45 +0200
+	id 1MwJHT-0006hY-Bl
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 19:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933826AbZJIQXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 12:23:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933751AbZJIQXR
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 12:23:17 -0400
-Received: from blu0-omc3-s36.blu0.hotmail.com ([65.55.116.111]:48544 "EHLO
-	blu0-omc3-s36.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760992AbZJIQXQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 12:23:16 -0400
-Received: from BLU0-SMTP42 ([65.55.116.73]) by blu0-omc3-s36.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 9 Oct 2009 09:21:55 -0700
-X-Originating-IP: [66.183.105.58]
-X-Originating-Email: [seanlkml@sympatico.ca]
-Received: from localhost ([66.183.105.58]) by BLU0-SMTP42.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 9 Oct 2009 09:21:54 -0700
-In-Reply-To: <20091009101940.GG16558@progeny.tock>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.6; i586-redhat-linux-gnu)
-X-OriginalArrivalTime: 09 Oct 2009 16:21:54.0385 (UTC) FILETIME=[9D70BC10:01CA48FC]
+	id S932476AbZJIR2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 13:28:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932095AbZJIR2f
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 13:28:35 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:37977 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761212AbZJIR2f (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 13:28:35 -0400
+Received: by fxm27 with SMTP id 27so6601929fxm.17
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 10:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=nmf3Vr9MimAQTf2Q+33sZi71YQ66Br2Y5fgMF6tshMI=;
+        b=t3u4wZA8QxNPDfBSHeB/khNX8gwmiUg9o2YSBBhmkQZ8gKSVyPpH2rj84XnZTRGm5z
+         HcdKrA5v8dfaWhklz6x3EzfYIKy3v0mbjHp6BOxG9zpaZ/Lh7T1mB4GkPUvfEf73W4yV
+         NXDPVZqOWbKZat4ualCV1NwVGkpmN7LeXKYCM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=o2LGMh4cFHjve84l7baV5smVzh08S+cpbPhlX2Xt6M49oZ4bCs0qlNE3+kGmLRZV2T
+         sJJSQK3cjy+S2vPnQUSrY+xG7zkKezUpLkX5vBnvLp2FicUDOAVdbA6EhTAuuPV/EYKC
+         nN5d8DfxMs5CR9uCubtVgxNVYEzMMGFq2hWws=
+Received: by 10.86.184.35 with SMTP id h35mr2635939fgf.18.1255109277677;
+        Fri, 09 Oct 2009 10:27:57 -0700 (PDT)
+Received: from ?192.168.2.8? ([89.136.114.133])
+        by mx.google.com with ESMTPS id e20sm602330fga.15.2009.10.09.10.27.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Oct 2009 10:27:57 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129825>
 
-On Fri, 9 Oct 2009 05:19:40 -0500
-Jonathan Nieder <jrnieder@gmail.com> wrote:
+I've tried Git 1.6.5 release candidates (rc1, rc2, rc3) with msysGit,
+and "git clone git://github.com/loudej/spark.git" it's working,
+but "git clone http://github.com/loudej/spark.git" crashes
+with an Win32 unhandled exception.
+  I have tried to create an empty repository and run both
+"git remote-curl http://github.com/loudej/spark.git"
+and "git remote-curl" , but it crashes with the same error.
+  How can I obtain more information about the error?
 
-> +In the command's second form, creates a new branch named <branchname>.
-> +The branch will start out with head pointing to the commit
-> +<start-point>.  If no <start-point> is given, the branch will start
-> +out with head pointing to the tip of the currently checked out branch,
-> +or the currently checked out commit if no branch is checked out.
+BTW, Git 1.6.4.4 is working over both protocols,
+on Windows Server 2008 SP2 x86, using the same msysGit
+(msysGit-fullinstall-1.6.4-preview20090729.exe).
 
-The first sentence here doesn't quite work, perhaps drop the "In".  But
-the whole thing is a bit verbose, what about just:
-
-The command's second form creates a new branch named <branchname> which
-points to the current HEAD or <start-point> if given.
-
->  <start-point>::
-> -	The new branch will be created with a HEAD equal to this.  It may
-> -	be given as a branch name, a commit-id, or a tag.  If this option
-> -	is omitted, the current branch is assumed.
-> +	The new branch head will point to this commit.  It may be
-> +	given as a branch name, a commit-id, or a tag.  If this
-> +	option is omitted, the currently checked out branch head
-> +	is used, or the current commit if no branch is checked
-> +	out.
-
-Maybe it's not worth worrying about, but couldn't the last sentence
-be just:
-
-   If this option is omitted, the current HEAD will be used instead.
-
-Sean
-
-P.S.  Patches 3 and 4 in this series would be better as a single patch.
+Have a nice day,
+  A.
