@@ -1,73 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Oct 2009, #01; Wed, 07)
-Date: Thu, 08 Oct 2009 23:47:09 -0700
-Message-ID: <7v7hv56p3m.fsf@alter.siamese.dyndns.org>
-References: <7viqeqjsx6.fsf@alter.siamese.dyndns.org>
- <4ACD8D8E.3060606@gmail.com>
- <40aa078e0910081115q1bf924e8s22f3ee11dbe7c8b7@mail.gmail.com>
+Subject: Re: [PATCH] Fix MSVC build on cygwin
+Date: Thu, 08 Oct 2009 23:48:28 -0700
+Message-ID: <7v3a5t6p1f.fsf@alter.siamese.dyndns.org>
+References: <4ACE0388.6070706@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@googlemail.com>
+Cc: mstormo@gmail.com, GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 X-From: git-owner@vger.kernel.org Fri Oct 09 08:51:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw9Jh-0005Ea-I6
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:51:05 +0200
+	id 1Mw9Ji-0005Ea-45
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:51:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756139AbZJIGsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 02:48:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755994AbZJIGsA
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:48:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49343 "EHLO
+	id S932512AbZJIGtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 02:49:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756858AbZJIGtS
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:49:18 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48265 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755787AbZJIGr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 02:47:59 -0400
+	with ESMTP id S1756565AbZJIGtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 02:49:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EA17051AF8;
-	Fri,  9 Oct 2009 02:47:17 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAA8B70444;
+	Fri,  9 Oct 2009 02:48:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eCfhFYAV8JkNuzyFNphJn6qsfKU=; b=mZCpbf
-	dGa/1K0DX4xEad9VKbhnseC3sP87Xy88FSq0qrnLLmGn33PMaPDc7/83QqtE56Va
-	vtfGUTFyisHww8vgoYtRjNarxOIxB2XZZDnUF/nXGlM/ofY+azmGkqr1PwK1KQks
-	iLkXMhyoaDSzMa6Djr5IC0ekjFXG+l4dNisok=
+	:content-type; s=sasl; bh=F1a0ftfEGyGOm1RXt1lFqISc8x8=; b=DnYryG
+	TPWqtpiTjLTLwsNlaImGqwDPHglcTp7it+1fdgeM3xiK9azIkFI5KSmP9VY9dnYT
+	VbFWEWmrh34cYlKUTUq16tXSW6NJ50t97YK9RtmO4SqdJ6drez4xExO/y90KfsIt
+	bFFu2q1aUgoTPEusmXcNTHOxFgAfCpcFkJcfQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hMz0ZEd5mAwE5+klEgxTTjRuWAIb6FGT
-	5AWYZz2/K7+gLaxRkjDaru6I/sWKeGXBupmjcpneW6q1rSk6CebCfkEPeuunxAFY
-	aWC4p8Ull87LEC6X2AS3HAMSDiTS7V0H/OMND9U2Ts+cAtNUCMqmWdq7bfbrVScI
-	+I2yI9iqszY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC87F51AF7;
-	Fri,  9 Oct 2009 02:47:14 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=ROjbdlX/ZLtpEkr7OHT2Y0RrsecbdLI5
+	5b2t8pE66MYaess5lxADXiPiEfMbtbYv/LpsBrTAilS29+aE3fO+Or3KJAavx0N9
+	YHpMixs0v1D+H9i0GYoTwDwM5lTAzCqlwrP3eQ5x1lCP6tZBIrM9hGtoEAqe7t8J
+	qcJazPjvly8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B261C70443;
+	Fri,  9 Oct 2009 02:48:33 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 236CB51AF6; Fri,  9 Oct
- 2009 02:47:11 -0400 (EDT)
-In-Reply-To: <40aa078e0910081115q1bf924e8s22f3ee11dbe7c8b7@mail.gmail.com>
- (Erik Faye-Lund's message of "Thu\, 8 Oct 2009 20\:15\:58 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8FA7770442; Fri,  9 Oct 2009
+ 02:48:29 -0400 (EDT)
+In-Reply-To: <4ACE0388.6070706@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Thu\, 08 Oct 2009 16\:21\:44 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 943B7E96-B49F-11DE-AC09-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C349BF22-B49F-11DE-B3EC-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129741>
 
-Erik Faye-Lund <kusmabite@googlemail.com> writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> On Thu, Oct 8, 2009 at 8:58 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
->> Junio C Hamano said the following on 08.10.2009 08:33:
->>>
->>> * ef/msys-imap (2009-10-03) 7 commits
->> ...
->> Don't forget about the MSVC patch ontop of this series:
->> Message-ID: <18cd41840910031300i32c74b15t74eb9eee23ff8469@mail.gmail.com>
->> Subject: [PATCH] MSVC: Enable OpenSSL, and translate -lcrypto
+> In the MSVC section of the Makefile, BASIC_CFLAGS is set to a
+> value which contains the string "-DWIN32-D_CONSOLE". This results
+> in a (single) malformed -Define being passed to the compiler.
+> At least on my cygwin installation, the msvc compiler seems to
+> ignore this parameter, without issuing an error or warning, and
+> results in the WIN32 and _CONSOLE macros being undefined. This
+> breaks the build.
 >
-> I will include it in the next round I send out (unless someone objects)
+> In order to fix the build, we simply insert a space between the
+> two -Define parameters, "-DWIN32" and "-D_CONSOLE", as originally
+> intended.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 
-Thanks.
+Thanks; that's quite a detailed description to explain why -DFOO-DBAR is
+bad when -DFOO -DBAR was wanted ;-)
