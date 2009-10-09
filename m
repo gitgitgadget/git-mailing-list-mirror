@@ -1,42 +1,42 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 21/22] Refactor notes concatenation into a flexible
- interface for combining notes
-Date: Fri, 09 Oct 2009 12:22:17 +0200
-Message-ID: <1255083738-23263-23-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 02/22] Add a script to edit/inspect notes
+Date: Fri, 09 Oct 2009 12:21:58 +0200
+Message-ID: <1255083738-23263-4-git-send-email-johan@herland.net>
 References: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com, johan@herland.net, Johannes.Schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org, sam@vilain.net
+	spearce@spearce.org, sam@vilain.net,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Oct 09 12:32:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClY-0004PL-AT
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:32:04 +0200
+	id 1MwClP-0004PL-PT
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760652AbZJIKZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 06:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760634AbZJIKZ2
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:25:28 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:54694 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753793AbZJIKZ1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:25:27 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1760675AbZJIKXj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 06:23:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760667AbZJIKXi
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:38 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:58515 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1760671AbZJIKXg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:36 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BTVSUN9320@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:23:11 +0200 (MEST)
+ with ESMTP id <0KR800BPRSTJ8I20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:31 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:23:11 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:31 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,331 +45,344 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129778>
 
-When adding a note to an object that already has an existing note, the
-current solution is to concatenate the contents of the two notes. However,
-the caller may instead wish to _overwrite_ the existing note with the new
-note, or maybe even _ignore_ the new note, and keep the existing one. There
-might also be other ways of combining notes that are only known to the
-caller.
+=46rom: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Therefore, instead of unconditionally concatenating notes, we let the caller
-specify how to combine notes, by passing in a pointer to a function for
-combining notes. The caller may choose to implement its own function for
-notes combining, but normally one of the following three conveniently
-supplied notes combination functions will be sufficient:
+The script 'git notes' allows you to edit and show commit notes, by
+calling either
 
-- combine_notes_concatenate() combines the two notes by appending the
-  contents of the new note to the contents of the existing note.
+	git notes show <commit>
 
-- combine_notes_overwrite() replaces the existing note with the new note.
+or
 
-- combine_notes_ignore() keeps the existing note, and ignores the new note.
+	git notes edit <commit>
 
-A combine_notes function can be passed to init_notes() to choose a default
-combine_notes function for that notes tree. If NULL is given, the notes tree
-falls back to combine_notes_concatenate() as the ultimate default.
+This patch has been improved by the following contributions:
+- Tor Arne Vestb=C3=B8: fix printing of multi-line notes
+- Michael J Gruber: test and handle empty notes gracefully
+- Thomas Rast:
+  - only clean up message file when editing
+  - use GIT_EDITOR and core.editor over VISUAL/EDITOR
+  - t3301: fix confusing quoting in test for valid notes ref
+  - t3301: use test_must_fail instead of !
+  - refuse to edit notes outside refs/notes/
+- Junio C Hamano: tests: fix "export var=3Dval"
+- Christian Couder: documentation: fix 'linkgit' macro in "git-notes.tx=
+t"
+- Johan Herland: minor cleanup and bugfixing in git-notes.sh (v2)
 
-A combine_notes function can also be passed directly to add_note(), to
-control the notes combining behaviour for a note addition in particular.
-If NULL is passed, the combine_notes function registered for the given
-notes tree is used.
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Tor Arne Vestb=C3=B8 <tavestbo@trolltech.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Johan Herland <johan@herland.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- notes.c |  132 +++++++++++++++++++++++++++++++++++---------------------------
- notes.h |   34 +++++++++++++++-
- 2 files changed, 106 insertions(+), 60 deletions(-)
+ .gitignore                  |    1 +
+ Documentation/git-notes.txt |   46 +++++++++++++++++
+ Makefile                    |    1 +
+ command-list.txt            |    1 +
+ git-notes.sh                |   73 +++++++++++++++++++++++++++
+ t/t3301-notes.sh            |  114 +++++++++++++++++++++++++++++++++++=
+++++++++
+ 6 files changed, 236 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-notes.txt
+ create mode 100755 git-notes.sh
+ create mode 100755 t/t3301-notes.sh
 
-diff --git a/notes.c b/notes.c
-index a5d9736..19ae492 100644
---- a/notes.c
-+++ b/notes.c
-@@ -127,55 +127,12 @@ static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
- 	return NULL;
- }
- 
--/* Create a new blob object by concatenating the two given blob objects */
--static int concatenate_notes(unsigned char *cur_sha1,
--		const unsigned char *new_sha1)
--{
--	char *cur_msg, *new_msg, *buf;
--	unsigned long cur_len, new_len, buf_len;
--	enum object_type cur_type, new_type;
--	int ret;
--
--	/* read in both note blob objects */
--	new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
--	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
--		free(new_msg);
--		return 0;
--	}
--	cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
--	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
--		free(cur_msg);
--		free(new_msg);
--		hashcpy(cur_sha1, new_sha1);
--		return 0;
--	}
--
--	/* we will separate the notes by a newline anyway */
--	if (cur_msg[cur_len - 1] == '\n')
--		cur_len--;
--
--	/* concatenate cur_msg and new_msg into buf */
--	buf_len = cur_len + 1 + new_len;
--	buf = (char *) xmalloc(buf_len);
--	memcpy(buf, cur_msg, cur_len);
--	buf[cur_len] = '\n';
--	memcpy(buf + cur_len + 1, new_msg, new_len);
--
--	free(cur_msg);
--	free(new_msg);
--
--	/* create a new blob object from buf */
--	ret = write_sha1_file(buf, buf_len, "blob", cur_sha1);
--	free(buf);
--	return ret;
--}
--
- /*
-  * To insert a leaf_node:
-  * Search to the tree location appropriate for the given leaf_node's key:
-  * - If location is unused (NULL), store the tweaked pointer directly there
-  * - If location holds a note entry that matches the note-to-be-inserted, then
-- *   concatenate the two notes.
-+ *   combine the two notes (by calling the given combine_notes function).
-  * - If location holds a note entry that matches the subtree-to-be-inserted,
-  *   then unpack the subtree-to-be-inserted into the location.
-  * - If location holds a matching subtree entry, unpack the subtree at that
-@@ -184,7 +141,8 @@ static int concatenate_notes(unsigned char *cur_sha1,
-  *   node-to-be-inserted, and store the new int_node into the location.
-  */
- static void note_tree_insert(struct int_node *tree, unsigned char n,
--		struct leaf_node *entry, unsigned char type)
-+		struct leaf_node *entry, unsigned char type,
-+		combine_notes_fn combine_notes)
- {
- 	struct int_node *new_node;
- 	struct leaf_node *l;
-@@ -205,12 +163,11 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 				if (!hashcmp(l->val_sha1, entry->val_sha1))
- 					return;
- 
--				if (concatenate_notes(l->val_sha1,
--						entry->val_sha1))
--					die("failed to concatenate note %s "
--					    "into note %s for object %s",
--					    sha1_to_hex(entry->val_sha1),
-+				if (combine_notes(l->val_sha1, entry->val_sha1))
-+					die("failed to combine notes %s and %s"
-+					    " for object %s",
- 					    sha1_to_hex(l->val_sha1),
-+					    sha1_to_hex(entry->val_sha1),
- 					    sha1_to_hex(l->key_sha1));
- 				free(entry);
- 				return;
-@@ -233,7 +190,7 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 			*p = NULL;
- 			load_subtree(l, tree, n);
- 			free(l);
--			note_tree_insert(tree, n, entry, type);
-+			note_tree_insert(tree, n, entry, type, combine_notes);
- 			return;
- 		}
- 		break;
-@@ -243,9 +200,9 @@ static void note_tree_insert(struct int_node *tree, unsigned char n,
- 	assert(GET_PTR_TYPE(*p) == PTR_TYPE_NOTE ||
- 	       GET_PTR_TYPE(*p) == PTR_TYPE_SUBTREE);
- 	new_node = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
--	note_tree_insert(new_node, n + 1, l, GET_PTR_TYPE(*p));
-+	note_tree_insert(new_node, n + 1, l, GET_PTR_TYPE(*p), combine_notes);
- 	*p = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
--	note_tree_insert(new_node, n + 1, entry, type);
-+	note_tree_insert(new_node, n + 1, entry, type, combine_notes);
- }
- 
- /* Free the entire notes data contained in the given tree */
-@@ -331,7 +288,8 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 				l->key_sha1[19] = (unsigned char) len;
- 				type = PTR_TYPE_SUBTREE;
- 			}
--			note_tree_insert(node, n, l, type);
-+			note_tree_insert(node, n, l, type,
-+					combine_notes_concatenate);
- 		}
- 	}
- 	free(buf);
-@@ -432,7 +390,59 @@ redo:
- 	return 0;
- }
- 
--void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
-+int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1)
-+{
-+	char *cur_msg, *new_msg, *buf;
-+	unsigned long cur_len, new_len, buf_len;
-+	enum object_type cur_type, new_type;
-+	int ret;
+diff --git a/.gitignore b/.gitignore
+index 51a37b1..cbafa64 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -86,6 +86,7 @@ git-mktag
+ git-mktree
+ git-name-rev
+ git-mv
++git-notes
+ git-pack-redundant
+ git-pack-objects
+ git-pack-refs
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+new file mode 100644
+index 0000000..7136016
+--- /dev/null
++++ b/Documentation/git-notes.txt
+@@ -0,0 +1,46 @@
++git-notes(1)
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 +
-+	/* read in both note blob objects */
-+	new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
-+	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
-+		free(new_msg);
-+		return 0;
-+	}
-+	cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
-+	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
-+		free(cur_msg);
-+		free(new_msg);
-+		hashcpy(cur_sha1, new_sha1);
-+		return 0;
-+	}
++NAME
++----
++git-notes - Add/inspect commit notes
 +
-+	/* we will separate the notes by a newline anyway */
-+	if (cur_msg[cur_len - 1] == '\n')
-+		cur_len--;
++SYNOPSIS
++--------
++[verse]
++'git-notes' (edit | show) [commit]
 +
-+	/* concatenate cur_msg and new_msg into buf */
-+	buf_len = cur_len + 1 + new_len;
-+	buf = (char *) xmalloc(buf_len);
-+	memcpy(buf, cur_msg, cur_len);
-+	buf[cur_len] = '\n';
-+	memcpy(buf + cur_len + 1, new_msg, new_len);
-+	free(cur_msg);
-+	free(new_msg);
++DESCRIPTION
++-----------
++This command allows you to add notes to commit messages, without
++changing the commit.  To discern these notes from the message stored
++in the commit object, the notes are indented like the message, after
++an unindented line saying "Notes:".
 +
-+	/* create a new blob object from buf */
-+	ret = write_sha1_file(buf, buf_len, "blob", cur_sha1);
-+	free(buf);
-+	return ret;
-+}
++To disable commit notes, you have to set the config variable
++core.notesRef to the empty string.  Alternatively, you can set it
++to a different ref, something like "refs/notes/bugzilla".  This settin=
+g
++can be overridden by the environment variable "GIT_NOTES_REF".
 +
-+int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1)
-+{
-+	hashcpy(cur_sha1, new_sha1);
-+	return 0;
-+}
 +
-+int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1)
-+{
-+	return 0;
-+}
++SUBCOMMANDS
++-----------
 +
-+void init_notes(struct notes_tree *t, const char *notes_ref,
-+		combine_notes_fn combine_notes, int flags)
- {
- 	unsigned char sha1[20], object_sha1[20];
- 	unsigned mode;
-@@ -450,8 +460,12 @@ void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
- 			notes_ref = GIT_NOTES_DEFAULT_REF;
- 	}
- 
-+	if (!combine_notes)
-+		combine_notes = combine_notes_concatenate;
++edit::
++	Edit the notes for a given commit (defaults to HEAD).
 +
- 	t->root = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
- 	t->ref = notes_ref ? xstrdup(notes_ref) : NULL;
-+	t->combine_notes = combine_notes;
- 	t->initialized = 1;
- 
- 	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
-@@ -465,17 +479,19 @@ void init_notes(struct notes_tree *t, const char *notes_ref, int flags)
- }
- 
- void add_note(struct notes_tree *t, const unsigned char *object_sha1,
--		const unsigned char *note_sha1)
-+		const unsigned char *note_sha1, combine_notes_fn combine_notes)
- {
- 	struct leaf_node *l;
- 
- 	if (!t)
- 		t = &default_tree;
- 	assert(t->initialized);
-+	if (!combine_notes)
-+		combine_notes = t->combine_notes;
- 	l = (struct leaf_node *) xmalloc(sizeof(struct leaf_node));
- 	hashcpy(l->key_sha1, object_sha1);
- 	hashcpy(l->val_sha1, note_sha1);
--	note_tree_insert(t->root, 0, l, PTR_TYPE_NOTE);
-+	note_tree_insert(t->root, 0, l, PTR_TYPE_NOTE, combine_notes);
- }
- 
- const unsigned char *get_note(struct notes_tree *t,
-@@ -521,7 +537,7 @@ void format_note(struct notes_tree *t, const unsigned char *object_sha1,
- 	if (!t)
- 		t = &default_tree;
- 	if (!t->initialized)
--		init_notes(t, NULL, 0);
-+		init_notes(t, NULL, NULL, 0);
- 
- 	sha1 = get_note(t, object_sha1);
- 	if (!sha1)
-diff --git a/notes.h b/notes.h
-index 181c3d6..f5d4ccd 100644
---- a/notes.h
-+++ b/notes.h
-@@ -2,6 +2,30 @@
- #define NOTES_H
- 
- /*
-+ * Function type for combining two notes annotating the same object.
-+ *
-+ * When adding a new note annotating the same object as an existing note, it is
-+ * up to the caller to decide how to combine the two notes. The decision is
-+ * made by passing in a function of the following form. The function accepts
-+ * two SHA1s -- of the existing note and the new note, respectively. The
-+ * function then combines the notes in whatever way it sees fit, and writes the
-+ * resulting SHA1 into the first SHA1 argument (cur_sha1). A non-zero return
-+ * value indicates failure.
-+ *
-+ * The two given SHA1s are guaranteed to be non-NULL and different.
-+ *
-+ * The default combine_notes function (you get this when passing NULL) is
-+ * combine_notes_concatenate(), which appends the contents of the new note to
-+ * the contents of the existing note.
-+ */
-+typedef int combine_notes_fn(unsigned char *cur_sha1, const unsigned char *new_sha1);
++show::
++	Show the notes for a given commit (defaults to HEAD).
 +
-+/* Common notes combinators */
-+int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1);
 +
-+/*
-  * Notes tree object
-  *
-  * Encapsulates the internal notes tree structure associated with a notes ref.
-@@ -13,6 +37,7 @@
- struct notes_tree {
- 	struct int_node *root;
- 	char *ref;
-+	combine_notes_fn *combine_notes;
- 	int initialized;
- };
- 
-@@ -36,14 +61,19 @@ struct notes_tree {
-  *
-  * If you pass t == NULL, the default internal notes_tree will be initialized.
-  *
-+ * The combine_notes function that is passed becomes the default combine_notes
-+ * function for the given notes_tree. If NULL is passed, the default
-+ * combine_notes function is combine_notes_concatenate().
-+ *
-  * Precondition: The notes_tree structure is zeroed (this can be achieved with
-  * memset(t, 0, sizeof(struct notes_tree)))
-  */
--void init_notes(struct notes_tree *t, const char *notes_ref, int flags);
-+void init_notes(struct notes_tree *t, const char *notes_ref,
-+		combine_notes_fn combine_notes, int flags);
- 
- /* Add the given note object to the given notes_tree structure */
- void add_note(struct notes_tree *t, const unsigned char *object_sha1,
--		const unsigned char *note_sha1);
-+		const unsigned char *note_sha1, combine_notes_fn combine_notes);
- 
- /* Get the note object SHA1 containing the note data for the given object */
- const unsigned char *get_note(struct notes_tree *t,
--- 
++Author
++------
++Written by Johannes Schindelin <johannes.schindelin@gmx.de>
++
++Documentation
++-------------
++Documentation by Johannes Schindelin
++
++GIT
++---
++Part of the linkgit:git[7] suite
+diff --git a/Makefile b/Makefile
+index 9e414db..dadd814 100644
+--- a/Makefile
++++ b/Makefile
+@@ -318,6 +318,7 @@ SCRIPT_SH +=3D git-merge-one-file.sh
+ SCRIPT_SH +=3D git-merge-resolve.sh
+ SCRIPT_SH +=3D git-mergetool.sh
+ SCRIPT_SH +=3D git-mergetool--lib.sh
++SCRIPT_SH +=3D git-notes.sh
+ SCRIPT_SH +=3D git-parse-remote.sh
+ SCRIPT_SH +=3D git-pull.sh
+ SCRIPT_SH +=3D git-quiltimport.sh
+diff --git a/command-list.txt b/command-list.txt
+index fb03a2e..4296941 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -74,6 +74,7 @@ git-mktag                               plumbingmanip=
+ulators
+ git-mktree                              plumbingmanipulators
+ git-mv                                  mainporcelain common
+ git-name-rev                            plumbinginterrogators
++git-notes                               mainporcelain
+ git-pack-objects                        plumbingmanipulators
+ git-pack-redundant                      plumbinginterrogators
+ git-pack-refs                           ancillarymanipulators
+diff --git a/git-notes.sh b/git-notes.sh
+new file mode 100755
+index 0000000..f06c254
+--- /dev/null
++++ b/git-notes.sh
+@@ -0,0 +1,73 @@
++#!/bin/sh
++
++USAGE=3D"(edit | show) [commit]"
++. git-sh-setup
++
++test -n "$3" && usage
++
++test -z "$1" && usage
++ACTION=3D"$1"; shift
++
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"$(git config core.notesre=
+f)"
++test -z "$GIT_NOTES_REF" && GIT_NOTES_REF=3D"refs/notes/commits"
++
++COMMIT=3D$(git rev-parse --verify --default HEAD "$@") ||
++die "Invalid commit: $@"
++
++case "$ACTION" in
++edit)
++	if [ "${GIT_NOTES_REF#refs/notes/}" =3D "$GIT_NOTES_REF" ]; then
++		die "Refusing to edit notes in $GIT_NOTES_REF (outside of refs/notes=
+/)"
++	fi
++
++	MSG_FILE=3D"$GIT_DIR/new-notes-$COMMIT"
++	GIT_INDEX_FILE=3D"$MSG_FILE.idx"
++	export GIT_INDEX_FILE
++
++	trap '
++		test -f "$MSG_FILE" && rm "$MSG_FILE"
++		test -f "$GIT_INDEX_FILE" && rm "$GIT_INDEX_FILE"
++	' 0
++
++	GIT_NOTES_REF=3D git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
++
++	CURRENT_HEAD=3D$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
++	if [ -z "$CURRENT_HEAD" ]; then
++		PARENT=3D
++	else
++		PARENT=3D"-p $CURRENT_HEAD"
++		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
++		git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
++	fi
++
++	core_editor=3D"$(git config core.editor)"
++	${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
++
++	grep -v ^# < "$MSG_FILE" | git stripspace > "$MSG_FILE".processed
++	mv "$MSG_FILE".processed "$MSG_FILE"
++	if [ -s "$MSG_FILE" ]; then
++		BLOB=3D$(git hash-object -w "$MSG_FILE") ||
++			die "Could not write into object database"
++		git update-index --add --cacheinfo 0644 $BLOB $COMMIT ||
++			die "Could not write index"
++	else
++		test -z "$CURRENT_HEAD" &&
++			die "Will not initialise with empty tree"
++		git update-index --force-remove $COMMIT ||
++			die "Could not update index"
++	fi
++
++	TREE=3D$(git write-tree) || die "Could not write tree"
++	NEW_HEAD=3D$(echo Annotate $COMMIT | git commit-tree $TREE $PARENT) |=
+|
++		die "Could not annotate"
++	git update-ref -m "Annotate $COMMIT" \
++		"$GIT_NOTES_REF" $NEW_HEAD $CURRENT_HEAD
++;;
++show)
++	git rev-parse -q --verify "$GIT_NOTES_REF":$COMMIT > /dev/null ||
++		die "No note for commit $COMMIT."
++	git show "$GIT_NOTES_REF":$COMMIT
++;;
++*)
++	usage
++esac
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+new file mode 100755
+index 0000000..73e53be
+--- /dev/null
++++ b/t/t3301-notes.sh
+@@ -0,0 +1,114 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Johannes E. Schindelin
++#
++
++test_description=3D'Test commit notes'
++
++. ./test-lib.sh
++
++cat > fake_editor.sh << \EOF
++echo "$MSG" > "$1"
++echo "$MSG" >& 2
++EOF
++chmod a+x fake_editor.sh
++VISUAL=3D./fake_editor.sh
++export VISUAL
++
++test_expect_success 'cannot annotate non-existing HEAD' '
++	(MSG=3D3 && export MSG && test_must_fail git notes edit)
++'
++
++test_expect_success setup '
++	: > a1 &&
++	git add a1 &&
++	test_tick &&
++	git commit -m 1st &&
++	: > a2 &&
++	git add a2 &&
++	test_tick &&
++	git commit -m 2nd
++'
++
++test_expect_success 'need valid notes ref' '
++	(MSG=3D1 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
++	 test_must_fail git notes edit) &&
++	(MSG=3D2 GIT_NOTES_REF=3D/ && export MSG GIT_NOTES_REF &&
++	 test_must_fail git notes show)
++'
++
++test_expect_success 'refusing to edit in refs/heads/' '
++	(MSG=3D1 GIT_NOTES_REF=3Drefs/heads/bogus &&
++	 export MSG GIT_NOTES_REF &&
++	 test_must_fail git notes edit)
++'
++
++test_expect_success 'refusing to edit in refs/remotes/' '
++	(MSG=3D1 GIT_NOTES_REF=3Drefs/remotes/bogus &&
++	 export MSG GIT_NOTES_REF &&
++	 test_must_fail git notes edit)
++'
++
++# 1 indicates caught gracefully by die, 128 means git-show barked
++test_expect_success 'handle empty notes gracefully' '
++	git notes show ; test 1 =3D $?
++'
++
++test_expect_success 'create notes' '
++	git config core.notesRef refs/notes/commits &&
++	MSG=3Db1 git notes edit &&
++	test ! -f .git/new-notes &&
++	test 1 =3D $(git ls-tree refs/notes/commits | wc -l) &&
++	test b1 =3D $(git notes show) &&
++	git show HEAD^ &&
++	test_must_fail git notes show HEAD^
++'
++
++cat > expect << EOF
++commit 268048bfb8a1fb38e703baceb8ab235421bf80c5
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:14:13 2005 -0700
++
++    2nd
++
++Notes:
++    b1
++EOF
++
++test_expect_success 'show notes' '
++	! (git cat-file commit HEAD | grep b1) &&
++	git log -1 > output &&
++	test_cmp expect output
++'
++test_expect_success 'create multi-line notes (setup)' '
++	: > a3 &&
++	git add a3 &&
++	test_tick &&
++	git commit -m 3rd &&
++	MSG=3D"b3
++c3c3c3c3
++d3d3d3" git notes edit
++'
++
++cat > expect-multiline << EOF
++commit 1584215f1d29c65e99c6c6848626553fdd07fd75
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:15:13 2005 -0700
++
++    3rd
++
++Notes:
++    b3
++    c3c3c3c3
++    d3d3d3
++EOF
++
++printf "\n" >> expect-multiline
++cat expect >> expect-multiline
++
++test_expect_success 'show multi-line notes' '
++	git log -2 > output &&
++	test_cmp expect-multiline output
++'
++
++test_done
+--=20
 1.6.4.304.g1365c.dirty
