@@ -1,354 +1,595 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH 2/4] Git-aware CGI to provide dumb HTTP transport
-Date: Thu,  8 Oct 2009 22:22:46 -0700
-Message-ID: <1255065768-10428-3-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH 1/4] Document the HTTP transport protocol
+Date: Thu,  8 Oct 2009 22:22:45 -0700
+Message-ID: <1255065768-10428-2-git-send-email-spearce@spearce.org>
 References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
- <1255065768-10428-2-git-send-email-spearce@spearce.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Oct 09 07:26:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw80D-0001sK-Si
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 07:26:54 +0200
+	id 1Mw80D-0001sK-58
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 07:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752189AbZJIFXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 01:23:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbZJIFXb
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 01:23:31 -0400
-Received: from george.spearce.org ([209.20.77.23]:37232 "EHLO
+	id S1751879AbZJIFXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 01:23:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751734AbZJIFX3
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 01:23:29 -0400
+Received: from george.spearce.org ([209.20.77.23]:37230 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751384AbZJIFX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 01:23:28 -0400
+	with ESMTP id S1751590AbZJIFX1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 01:23:27 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 51BBB3821F; Fri,  9 Oct 2009 05:22:52 +0000 (UTC)
+	id 9981938221; Fri,  9 Oct 2009 05:22:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+X-Spam-Status: No, score=-3.7 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_05
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 63C3D381FF
+	by george.spearce.org (Postfix) with ESMTP id 138A8381FE
 	for <git@vger.kernel.org>; Fri,  9 Oct 2009 05:22:49 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.rc3.193.gdf7a
-In-Reply-To: <1255065768-10428-2-git-send-email-spearce@spearce.org>
+In-Reply-To: <1255065768-10428-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129733>
-
-The git-http-backend CGI can be configured into any Apache server
-using ScriptAlias, such as with the following configuration:
-
-  LoadModule cgi_module /usr/libexec/apache2/mod_cgi.so
-  LoadModule alias_module /usr/libexec/apache2/mod_alias.so
-  ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
-
-Repositories are accessed via the translated PATH_INFO.
-
-The CGI is backwards compatible with the dumb client, allowing all
-older HTTP clients to continue to download repositories which are
-managed by the CGI.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129734>
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .gitignore     |    1 +
- Makefile       |    1 +
- http-backend.c |  261 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 263 insertions(+), 0 deletions(-)
- create mode 100644 http-backend.c
+ Documentation/technical/http-protocol.txt |  542 +++++++++++++++++++++++++++++
+ 1 files changed, 542 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/technical/http-protocol.txt
 
-diff --git a/.gitignore b/.gitignore
-index 51a37b1..353d22f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -55,6 +55,7 @@ git-get-tar-commit-id
- git-grep
- git-hash-object
- git-help
-+git-http-backend
- git-http-fetch
- git-http-push
- git-imap-send
-diff --git a/Makefile b/Makefile
-index dd3d520..c80fb56 100644
---- a/Makefile
-+++ b/Makefile
-@@ -361,6 +361,7 @@ PROGRAMS += git-show-index$X
- PROGRAMS += git-unpack-file$X
- PROGRAMS += git-upload-pack$X
- PROGRAMS += git-var$X
-+PROGRAMS += git-http-backend$X
- 
- # List built-in command $C whose implementation cmd_$C() is not in
- # builtin-$C.o but is linked in as part of some other command.
-diff --git a/http-backend.c b/http-backend.c
+diff --git a/Documentation/technical/http-protocol.txt b/Documentation/technical/http-protocol.txt
 new file mode 100644
-index 0000000..39cfd25
+index 0000000..316d9b6
 --- /dev/null
-+++ b/http-backend.c
-@@ -0,0 +1,261 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "pkt-line.h"
-+#include "object.h"
-+#include "tag.h"
-+#include "exec_cmd.h"
-+#include "run-command.h"
++++ b/Documentation/technical/http-protocol.txt
+@@ -0,0 +1,542 @@
++HTTP transfer protocols
++=======================
 +
-+static const char content_type[] = "Content-Type";
-+static const char content_length[] = "Content-Length";
++Git supports two HTTP based transfer protocols.  A "dumb" protocol
++which requires only a standard HTTP server on the server end of the
++connection, and a "smart" protocol which requires a Git aware CGI
++(or server module).  This document describes both protocols.
 +
-+static char buffer[1024];
++As a design feature smart clients can automatically upgrade "dumb"
++protocol URLs to smart URLs.  This permits all users to have the
++same published URL, and the peers automatically select the most
++efficient transport available to them.
 +
-+static const char *http_date(unsigned long time)
-+{
-+	return show_date(time, 0, DATE_RFC2822);
-+}
 +
-+static void format_write(const char *fmt, ...)
-+{
-+	va_list args;
-+	unsigned n;
++URL Format
++----------
 +
-+	va_start(args, fmt);
-+	n = vsnprintf(buffer, sizeof(buffer), fmt, args);
-+	va_end(args);
-+	if (n >= sizeof(buffer))
-+		die("protocol error: impossibly long line");
++URLs for Git repositories accessed by HTTP use the standard HTTP
++URL syntax documented by RFC 1738, so they are of the form:
 +
-+	safe_write(1, buffer, n);
-+}
++  http://<host>:<port>/<path>
 +
-+static void write_status(unsigned code, const char *msg)
-+{
-+	format_write("Status: %u %s\r\n", code, msg);
-+}
++Within this documentation the placeholder $GIT_URL will stand for
++the http:// repository URL entered by the end-user.
 +
-+static void write_header(const char *name, const char *value)
-+{
-+	format_write("%s: %s\r\n", name, value);
-+}
++Both the "smart" and "dumb" HTTP protocols used by Git operate
++by appending additional path components onto the end of the user
++supplied $GIT_URL string.
 +
-+static void end_headers(void)
-+{
-+	safe_write(1, "\r\n", 2);
-+}
++Clients MUST strip a trailing '/', if present, from the user supplied
++$GIT_URL string to prevent empty path tokens ('//') from appearing
++in any URL sent to a server.  Compatible clients must expand
++'$GIT_URL/info/refs' as 'foo/info/refs' and not 'foo//info/refs'.
 +
-+static void write_nocache(void)
-+{
-+	write_header("Expires", "Fri, 01 Jan 1980 00:00:00 GMT");
-+	write_header("Pragma", "no-cache");
-+	write_header("Cache-Control", "no-cache, max-age=0, must-revalidate");
-+}
 +
-+static void write_cache_forever(void)
-+{
-+	unsigned long now = time(NULL);
-+	write_header("Date", http_date(now));
-+	write_header("Expires", http_date(now + 31536000));
-+	write_header("Cache-Control", "public, max-age=31536000");
-+}
++Authentication
++--------------
 +
-+static NORETURN void not_found(const char *err, ...)
-+{
-+	va_list params;
++Standard HTTP authentication is used if authentication is required
++to access a repository, and MAY be configured and enforced by the
++HTTP server software.
 +
-+	write_status(404, "Not Found");
-+	write_nocache();
-+	end_headers();
++Because Git repositories are accessed by standard path components
++server administrators MAY use directory based permissions within
++their HTTP server to control repository access.
 +
-+	va_start(params, err);
-+	if (err && *err) {
-+		vsnprintf(buffer, sizeof(buffer), err, params);
-+		fprintf(stderr, "%s\n", buffer);
-+	}
-+	va_end(params);
-+	exit(0);
-+}
++Clients SHOULD support Basic authentication as described by RFC 2616.
++Servers SHOULD support Basic authentication by relying upon the
++HTTP server placed in front of the Git server software.
 +
-+static void write_file(const char *the_type, const char *name)
-+{
-+	const char *p = git_path("%s", name);
-+	int fd;
-+	struct stat sb;
-+	uintmax_t remaining;
++Servers MUST NOT require HTTP cookies for the purposes of
++authentication or access control.
 +
-+	fd = open(p, O_RDONLY);
-+	if (fd < 0)
-+		not_found("Cannot open '%s': %s", p, strerror(errno));
-+	if (fstat(fd, &sb) < 0)
-+		die_errno("Cannot stat '%s'", p);
-+	remaining = (uintmax_t)sb.st_size;
++Clients and servers MAY support other common forms of HTTP based
++authentication, such as Digest authentication.
 +
-+	write_header(content_type, the_type);
-+	write_header("Last-Modified", http_date(sb.st_mtime));
-+	format_write("Content-Length: %" PRIuMAX "\r\n", remaining);
-+	end_headers();
 +
-+	while (remaining) {
-+		ssize_t n = xread(fd, buffer, sizeof(buffer));
-+		if (n < 0)
-+			die_errno("Cannot read '%s'", p);
-+		n = safe_write(1, buffer, n);
-+		if (n <= 0)
-+			break;
-+	}
-+	close(fd);
-+}
++SSL
++---
 +
-+static void get_text_file(char *name)
-+{
-+	write_nocache();
-+	write_file("text/plain; charset=utf-8", name);
-+}
++Clients and servers SHOULD support SSL, particularly to protect
++passwords when relying on Basic HTTP authentication.
 +
-+static void get_loose_object(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-loose-object", name);
-+}
 +
-+static void get_pack_file(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-packed-objects", name);
-+}
++Session State
++-------------
 +
-+static void get_idx_file(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-packed-objects-toc", name);
-+}
++The Git over HTTP protocol (much like HTTP itself) is stateless
++from the perspective of the HTTP server side.  All state must be
++retained and managed by the client process.  This permits simple
++round-robin load-balancing on the server side, without needing to
++worry about state mangement.
 +
-+static int show_text_ref(const char *name, const unsigned char *sha1,
-+	int flag, void *cb_data)
-+{
-+	struct object *o = parse_object(sha1);
-+	if (!o)
-+		return 0;
++Clients MUST NOT require state management on the server side in
++order to function correctly.
 +
-+	format_write("%s\t%s\n", sha1_to_hex(sha1), name);
-+	if (o->type == OBJ_TAG) {
-+		o = deref_tag(o, name, 0);
-+		if (!o)
-+			return 0;
-+		format_write("%s\t%s^{}\n", sha1_to_hex(o->sha1), name);
-+	}
++Servers MUST NOT require HTTP cookies in order to function correctly.
++Clients MAY store and forward HTTP cookies during request processing
++as described by RFC 2616 (HTTP/1.1).  Servers SHOULD ignore any
++cookies sent by a client.
 +
-+	return 0;
-+}
 +
-+static void get_info_refs(char *arg)
-+{
-+	write_nocache();
-+	write_header(content_type, "text/plain; charset=utf-8");
-+	end_headers();
++pkt-line Format
++---------------
 +
-+	for_each_ref(show_text_ref, NULL);
-+}
++Much (but not all) of the payload is described around pkt-lines.
 +
-+static void get_info_packs(char *arg)
-+{
-+	size_t objdirlen = strlen(get_object_directory());
-+	struct packed_git *p;
++A pkt-line is a variable length binary string.  The first four bytes
++of the line indicates the total length of the line, in hexadecimal.
++The total length includes the 4 bytes used to denote the length.
++A line SHOULD BE terminated by an LF, which if present MUST be
++included in the total length.
 +
-+	write_nocache();
-+	write_header(content_type, "text/plain; charset=utf-8");
-+	end_headers();
++A pkt-line MAY contain binary data, so implementors MUST ensure all
++pkt-line parsing/formatting routines are 8-bit clean.  The maximum
++length of a pkt-line's data is 65532 bytes (65536 - 4).
 +
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next) {
-+		if (!p->pack_local)
-+			continue;
-+		format_write("P %s\n", p->pack_name + objdirlen + 6);
-+	}
-+	safe_write(1, "\n", 1);
-+}
++Examples (as C-style strings):
 +
-+static NORETURN void die_webcgi(const char *err, va_list params)
-+{
-+	write_status(500, "Internal Server Error");
-+	write_nocache();
-+	end_headers();
++  pkt-line          actual value
++  ---------------------------------
++  "0006a\n"         "a\n"
++  "0005a"           "a"
++  "000bfoobar\n"    "foobar\n"
++  "0004"            ""
 +
-+	vsnprintf(buffer, sizeof(buffer), err, params);
-+	fprintf(stderr, "fatal: %s\n", buffer);
-+	exit(0);
-+}
++A pkt-line with a length of 0 ("0000") is a special case and MUST
++be treated as a message break or terminator in the payload.
 +
-+static struct service_cmd {
-+	const char *method;
-+	const char *pattern;
-+	void (*imp)(char *);
-+} services[] = {
-+	{"GET", "/HEAD$", get_text_file},
-+	{"GET", "/info/refs$", get_info_refs},
-+	{"GET", "/objects/info/packs$", get_info_packs},
-+	{"GET", "/objects/info/[^/]*$", get_text_file},
-+	{"GET", "/objects/[0-9a-f]{2}/[0-9a-f]{38}$", get_loose_object},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.pack$", get_pack_file},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file}
-+};
 +
-+int main(int argc, char **argv)
-+{
-+	char *dir = getenv("PATH_TRANSLATED");
-+	char *input_method = getenv("REQUEST_METHOD");
-+	struct service_cmd *cmd = NULL;
-+	char *cmd_arg = NULL;
-+	int i;
++General Request Processing
++--------------------------
 +
-+	set_die_routine(die_webcgi);
++Except where noted, all standard HTTP behavior SHOULD be assumed
++by both client and server.  This includes (but is not necessarily
++limited to):
 +
-+	if (!dir)
-+		die("No PATH_TRANSLATED from server");
-+	if (!input_method)
-+		die("No REQUEST_METHOD from server");
-+	if (!strcmp(input_method, "HEAD"))
-+		input_method = "GET";
++If there is no repository at $GIT_URL, the server MUST respond with
++the '404 Not Found' HTTP status code.
 +
-+	for (i = 0; i < ARRAY_SIZE(services); i++) {
-+		struct service_cmd *c = &services[i];
-+		regex_t re;
-+		regmatch_t out[1];
++If there is a repository at $GIT_URL, but access is not currently
++permitted, the server MUST respond with the '403 Forbidden' HTTP
++status code.
 +
-+		if (regcomp(&re, c->pattern, REG_EXTENDED))
-+			die("Bogus regex in service table: %s", c->pattern);
-+		if (!regexec(&re, dir, 1, out, 0)) {
-+			size_t n = out[0].rm_eo - out[0].rm_so;
++Servers SHOULD support both HTTP 1.0 and HTTP 1.1.
++Servers SHOULD support chunked encoding for both
++request and response bodies.
 +
-+			if (strcmp(input_method, c->method)) {
-+				const char *proto = getenv("SERVER_PROTOCOL");
-+				if (proto && !strcmp(proto, "HTTP/1.1"))
-+					write_status(405, "Method Not Allowed");
-+				else
-+					write_status(400, "Bad Request");
-+				write_nocache();
-+				end_headers();
-+				return 0;
-+			}
++Clients SHOULD support both HTTP 1.0 and HTTP 1.1.
++Clients SHOULD support chunked encoding for both
++request and response bodies.
 +
-+			cmd = c;
-+			cmd_arg = xmalloc(n);
-+			strncpy(cmd_arg, dir + out[0].rm_so + 1, n);
-+			cmd_arg[n] = '\0';
-+			dir[out[0].rm_so] = 0;
-+			break;
-+		}
-+		regfree(&re);
-+	}
++Servers MAY return ETag and/or Last-Modified headers.
 +
-+	if (!cmd)
-+		not_found("Request not supported: '%s'", dir);
++Clients MAY revalidate cached entities by including If-Modified-Since
++and/or If-None-Match request headers.
 +
-+	setup_path();
-+	if (!enter_repo(dir, 0))
-+		not_found("Not a git repository: '%s'", dir);
++Servers MAY return '304 Not Modified' if the relevant headers appear
++in the request and the entity has not changed.  Clients MUST treat
++'304 Not Modified' identical to '200 OK' by reusing the cached entity.
 +
-+	cmd->imp(cmd_arg);
-+	return 0;
-+}
++Clients MAY reuse a cached entity without revalidation if the
++Cache-Control and/or Expires header permits caching.  Clients and
++servers MUST follow RFC 2616 for cache controls.
++
++
++Discovering References
++----------------------
++
++All HTTP clients MUST begin either a fetch or a push exchange by
++discovering the references available on the remote repository.
++
++Dumb Clients
++~~~~~~~~~~~~
++
++HTTP clients that only support the "dumb" protocol MUST discover
++references by making a request for the special info/refs file of
++the repository.
++
++Dumb HTTP clients MUST NOT include search/query parameters when
++fetching the info/refs file.  (That is, '?' must not appear in the
++requested URL.)
++
++	C: GET $GIT_URL/info/refs HTTP/1.0
++
++	S: 200 OK
++	S:
++	S: 95dcfa3633004da0049d3d0fa03f80589cbcaf31	refs/heads/maint
++	S: d049f6c27a2244e12041955e262a404c7faba355	refs/heads/master
++	S: 2cb58b79488a98d2721cea644875a8dd0026b115	refs/tags/v1.0
++	S: a3c2e2402b99163d1d59756e5f207ae21cccba4c	refs/tags/v1.0^{}
++
++The Content-Type of the returned info/refs entity SHOULD be
++"text/plain; charset=utf-8", but MAY be any content type.
++Clients MUST NOT attempt to validate the returned Content-Type.
++Dumb servers MUST NOT return a return type starting with
++"application/x-git-".
++
++Cache-Control headers MAY be returned to disable caching of the
++returned entity.
++
++When examining the response clients SHOULD only examine the HTTP
++status code.  Valid responses are '200 OK', or '304 Not Modified'.
++
++The returned content is a UNIX formatted text file describing
++each ref and its known value.  The file SHOULD be sorted by name
++according to the C locale ordering.  The file SHOULD NOT include
++the default ref named 'HEAD'.
++
++	info_refs     = *( ref_record )
++	ref_record    = any_ref | peeled_ref
++
++	any_ref       = id HT name LF
++	peeled_ref    = id HT name LF
++	                id HT name "^{}" LF
++	id            = 40*HEX
++
++	HEX           = "0".."9" | "a".."f"
++	LF            = <US-ASCII LF, linefeed (10)>
++	HT            = <US-ASCII HT, horizontal-tab (9)>
++
++Smart Clients
++~~~~~~~~~~~~~
++
++HTTP clients that support the "smart" protocol (or both the
++"smart" and "dumb" protocols) MUST discover references by making
++a paramterized request for the info/refs file of the repository.
++
++The request MUST contain exactly one query parameter,
++'service=$servicename', where $servicename MUST be the service
++name the client wishes to contact to complete the operation.
++The request MUST NOT contain additional query parameters.
++
++	C: GET $GIT_URL/info/refs?service=git-upload-pack HTTP/1.0
++
++	dumb server reply:
++	S: 200 OK
++	S:
++	S: 95dcfa3633004da0049d3d0fa03f80589cbcaf31	refs/heads/maint
++	S: d049f6c27a2244e12041955e262a404c7faba355	refs/heads/master
++	S: 2cb58b79488a98d2721cea644875a8dd0026b115	refs/tags/v1.0
++	S: a3c2e2402b99163d1d59756e5f207ae21cccba4c	refs/tags/v1.0^{}
++
++	smart server reply:
++	S: 200 OK
++	S: Content-Type: application/x-git-upload-pack-advertisement
++	S: Cache-Control: no-cache
++	S:
++	S: ....# service=git-upload-pack
++	S: ....95dcfa3633004da0049d3d0fa03f80589cbcaf31 refs/heads/maint\0 multi_ack
++	S: ....d049f6c27a2244e12041955e262a404c7faba355 refs/heads/master
++	S: ....2cb58b79488a98d2721cea644875a8dd0026b115 refs/tags/v1.0
++	S: ....a3c2e2402b99163d1d59756e5f207ae21cccba4c refs/tags/v1.0^{}
++
++Dumb Server Response
++^^^^^^^^^^^^^^^^^^^^
++Dumb servers MUST respond with the dumb server reply format.
++
++See the prior section under dumb clients for a more detailed
++description of the dumb server response.
++
++Smart Server Response
++^^^^^^^^^^^^^^^^^^^^^
++Smart servers MUST respond with the smart server reply format.
++
++If the server does not recognize the requested service name, or the
++requested service name has been disabled by the server administrator,
++the server MUST respond with the '403 Forbidden' HTTP status code.
++
++Cache-Control headers SHOULD be used to disable caching of the
++returned entity.
++
++The Content-Type MUST be 'application/x-$servicename-advertisement'.
++Clients SHOULD fall back to the dumb protocol if another content
++type is returned.  When falling back to the dumb protocol clients
++SHOULD NOT make an additional request to $GIT_URL/info/refs, but
++instead SHOULD use the response already in hand.  Clients MUST NOT
++continue if they do not support the dumb protocol.
++
++Clients MUST validate the status code is either '200 OK' or
++'304 Not Modified'.
++
++Clients MUST validate the first five bytes of the response entity
++matches the regex "^[0-9a-f]{4}#".  If this test fails, clients
++MUST NOT continue.
++
++Clients MUST parse the entire response as a sequence of pkt-line
++records.
++
++Clients MUST verify the first pkt-line is "# service=$servicename".
++Servers MUST set $servicename to be the request parameter value.
++Servers SHOULD include an LF at the end of this line.
++Clients MUST ignore an LF at the end of the line.
++
++Servers MUST terminate the response with the magic "0000" end
++pkt-line marker.
++
++The returned response is a pkt-line stream describing each ref and
++its known value.  The stream SHOULD be sorted by name according to
++the C locale ordering.  The stream SHOULD include the default ref
++named 'HEAD' as the first ref.  The stream MUST include capability
++declarations behind a NUL on the first ref.
++
++	smart_reply    = PKT-LINE("# service=$servicename" LF)
++	                 ref_list
++	                 "0000"
++	ref_list       = empty_list | populated_list
++
++	empty_list     = PKT-LINE(id SP "capabilities^{}" NUL cap_list LF)
++
++	non_empty_list = PKT-LINE(id SP name NUL cap_list LF)
++	                 *ref_record
++
++	cap_list      = *(SP capability) SP
++	ref_record    = any_ref | peeled_ref
++
++	any_ref       = PKT-LINE(id SP name LF)
++	peeled_ref    = PKT-LINE(id SP name LF)
++	                PKT-LINE(id SP name "^{}" LF
++	id            = 40*HEX
++
++	HEX           = "0".."9" | "a".."f"
++	NL            = <US-ASCII NUL, null (0)>
++	LF            = <US-ASCII LF,  linefeed (10)>
++	SP            = <US-ASCII SP,  horizontal-tab (9)>
++
++
++Smart Service git-upload-pack
++------------------------------
++This service reads from the remote repository.
++
++Clients MUST first perform ref discovery with
++'$GIT_URL/info/refs?service=git-upload-pack'.
++
++	C: POST $GIT_URL/git-upload-pack HTTP/1.0
++	C: Content-Type: application/x-git-upload-pack-request
++	C:
++	C: ....want 0a53e9ddeaddad63ad106860237bbf53411d11a7
++	C: ....have 441b40d833fdfa93eb2908e52742248faf0ee993
++	C: 0000
++
++	S: 200 OK
++	S: Content-Type: application/x-git-upload-pack-result
++	S: Cache-Control: no-cache
++	S:
++	S: ....ACK %s, continue
++	S: ....NAK
++
++Clients MUST NOT reuse or revalidate a cached reponse.
++Servers MUST include sufficient Cache-Control headers
++to prevent caching of the response.
++
++Servers SHOULD support all capabilities defined here.
++
++Clients MUST send at least one 'want' command in the request body.
++Clients MUST NOT reference an id in a 'want' command which did not
++appear in the response obtained through ref discovery.
++
++	compute_request   = want_list
++	                    have_list
++	                    request_end
++	request_end       = "0000" | "done"
++
++	want_list         = PKT-LINE(want NUL cap_list LF)
++	                    *(want_pkt)
++	want_pkt          = PKT-LINE(want LF)
++	want              = "want" SP id
++	cap_list          = *(SP capability) SP
++
++	have_list         = *PKT-LINE("have" SP id LF)
++
++	command           = create | delete | update
++	create            = 40*"0" SP new_id SP name
++	delete            = old_id SP 40*"0" SP name
++	update            = old_id SP new_id SP name
++
++TODO: Document this further.
++TODO: Don't use uppercase for variable names below.
++
++Capability include-tag
++~~~~~~~~~~~~~~~~~~~~~~
++
++When packing an object that an annotated tag points at, include the
++tag object too.  Clients can request this if they want to fetch
++tags, but don't know which tags they will need until after they
++receive the branch data.  By enabling include-tag an entire call
++to upload-pack can be avoided.
++
++Capability thin-pack
++~~~~~~~~~~~~~~~~~~~~
++
++When packing a deltified object the base is not included if the base
++is reachable from an object listed in the COMMON set by the client.
++This reduces the bandwidth required to transfer, but it does slightly
++increase processing time for the client to save the pack to disk.
++
++The Negotiation Algorithm
++~~~~~~~~~~~~~~~~~~~~~~~~~
++The computation to select the minimal pack proceeds as follows
++(c = client, s = server):
++
++ init step:
++ (c) Use ref discovery to obtain the advertised refs.
++ (c) Place any object seen into set ADVERTISED.
++
++ (c) Build an empty set, COMMON, to hold the objects that are later
++     determined to be on both ends.
++ (c) Build a set, WANT, of the objects from ADVERTISED the client
++     wants to fetch, based on what it saw during ref discovery.
++
++ (c) Start a queue, C_PENDING, ordered by commit time (popping newest
++     first).  Add all client refs.  When a commit is popped from
++     the queue its parents should be automatically inserted back.
++     Commits MUST only enter the queue once.
++
++ one compute step:
++ (c) Send one $GIT_URL/git-upload-pack request:
++
++	C: 0032want <WANT #1>...............................
++	C: 0032want <WANT #2>...............................
++	....
++	C: 0032have <COMMON #1>.............................
++	C: 0032have <COMMON #2>.............................
++	....
++	C: 0032have <HAVE #1>...............................
++	C: 0032have <HAVE #2>...............................
++	....
++	C: 0000
++
++     The stream is organized into "commands", with each command
++     appearing by itself in a pkt-line.  Within a command line
++     the text leading up to the first space is the command name,
++     and the remainder of the line to the first LF is the value.
++     Command lines are terminated with an LF as the last byte of
++     the pkt-line value.
++
++     Commands MUST appear in the following order, if they appear
++     at all in the request stream:
++
++       * want
++       * have
++
++     The stream is terminated by a pkt-line flush ("0000").
++
++     A single "want" or "have" command MUST have one hex formatted
++     SHA-1 as its value.  Multiple SHA-1s MUST be sent by sending
++     multiple commands.
++
++     The HAVE list is created by popping the first 32 commits
++     from C_PENDING.  Less can be supplied if C_PENDING empties.
++
++     If the client has sent 256 HAVE commits and has not yet
++     received one of those back from S_COMMON, or the client has
++     emptied C_PENDING it should include a "done" command to let
++     the server know it won't proceed:
++
++	C: 0009done
++
++  (s) Parse the git-upload-pack request:
++
++      Verify all objects in WANT are directly reachable from refs.
++
++	  The server MAY walk backwards through history or through
++      the reflog to permit slightly stale requests.
++
++      If no WANT objects are received, send an error:
++
++TODO: Define error if no want lines are requested.
++
++      If any WANT object is not reachable, send an error:
++
++TODO: Define error if an invalid want is requested.
++
++     Create an empty list, S_COMMON.
++
++     If 'have' was sent:
++
++     Loop through the objects in the order supplied by the client.
++     For each object, if the server has the object reachable from
++     a ref, add it to S_COMMON.  If a commit is added to S_COMMON,
++     do not add any ancestors, even if they also appear in HAVE.
++
++  (s) Send the git-upload-pack response:
++
++     If the server has found a closed set of objects to pack or the
++     request ends with "done", it replies with the pack.
++
++TODO: Document the pack based response
++	S: PACK...
++
++     The returned stream is the side-band-64k protocol supported
++     by the git-upload-pack service, and the pack is embedded into
++     stream 1.  Progress messages from the server side may appear
++     in stream 2.
++
++     Here a "closed set of objects" is defined to have at least
++     one path from every WANT to at least one COMMON object.
++
++     If the server needs more information, it replies with a
++     status continue response:
++
++TODO: Document the non-pack response
++
++  (c) Parse the upload-pack response:
++
++TODO: Document parsing response
++
++      Do another compute step.
++
++
++Smart Service git-receive-pack
++------------------------------
++This service modifies the remote repository.
++
++Clients MUST first perform ref discovery with
++'$GIT_URL/info/refs?service=git-receive-pack'.
++
++	C: POST $GIT_URL/git-receive-pack HTTP/1.0
++	C: Content-Type: application/x-git-receive-pack-request
++	C:
++	C: ....0a53e9ddeaddad63ad106860237bbf53411d11a7 441b40d833fdfa93eb2908e52742248faf0ee993 refs/heads/maint\0 report-status
++	C: 0000
++	C: PACK....
++
++	S: 200 OK
++	S: Content-Type: application/x-git-receive-pack-result
++	S: Cache-Control: no-cache
++	S:
++	S: ....
++
++Clients MUST NOT reuse or revalidate a cached reponse.
++Servers MUST include sufficient Cache-Control headers
++to prevent caching of the response.
++
++Servers SHOULD support all capabilities defined here.
++
++Clients MUST send at least one command in the request body.
++Within the command portion of the request body clients SHOULD send
++the id obtained through ref discovery as old_id.
++
++	update_request    = command_list
++	                    "PACK" <binary data>
++
++	command_list      = PKT-LINE(command NUL cap_list LF)
++	                    *(command_pkt)
++	command_pkt       = PKT-LINE(command LF)
++	cap_list          = *(SP capability) SP
++
++	command           = create | delete | update
++	create            = 40*"0" SP new_id SP name
++	delete            = old_id SP 40*"0" SP name
++	update            = old_id SP new_id SP name
++
++TODO: Document this further.
++
++
++References
++----------
++
++link:http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
++link:http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
++
 -- 
 1.6.5.rc3.193.gdf7a
