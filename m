@@ -1,86 +1,71 @@
-From: Alex Blewitt <Alex.Blewitt@gmail.com>
-Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
-Date: Fri, 9 Oct 2009 08:54:17 +0000 (UTC)
-Message-ID: <loom.20091009T104530-586@post.gmane.org>
-References: <1255065768-10428-1-git-send-email-spearce@spearce.org> <1255065768-10428-2-git-send-email-spearce@spearce.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git log -S not finding all commits?
+Date: Fri, 09 Oct 2009 10:55:38 +0200
+Message-ID: <vpq1vldx7xx.fsf@bauges.imag.fr>
+References: <7ae12651.522df17b.4acda0f5.21a31@o2.pl> <4ACDACE6.9060509@op5.se>
+	<362436ca.6b5d0fc3.4acdc7e1.41b23@o2.pl>
+	<vpqbpkixgea.fsf@bauges.imag.fr> <vpq63aqxflu.fsf@bauges.imag.fr>
+	<86tyy9qz08.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 10:57:12 2009
+Cc: Daniel <mjucde@o2.pl>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Fri Oct 09 10:57:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwBHj-0006ah-3j
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 10:57:11 +0200
+	id 1MwBHk-0006ah-5Q
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 10:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760282AbZJIIzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 04:55:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759785AbZJIIzb
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 04:55:31 -0400
-Received: from lo.gmane.org ([80.91.229.12]:40576 "EHLO lo.gmane.org"
+	id S1760339AbZJII4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 04:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759348AbZJII4f
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 04:56:35 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57558 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750715AbZJIIz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 04:55:28 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1MwBFS-0005YA-KJ
-	for git@vger.kernel.org; Fri, 09 Oct 2009 10:54:50 +0200
-Received: from 80.187.211.123 ([80.187.211.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 10:54:50 +0200
-Received: from Alex.Blewitt by 80.187.211.123 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 10:54:50 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 80.187.211.123 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_5_8; en-gb) AppleWebKit/531.9 (KHTML, like Gecko) Version/4.0.3 Safari/531.9)
+	id S1758108AbZJII4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 04:56:34 -0400
+Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n998tcVN025677
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 9 Oct 2009 10:55:38 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by archeboc.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1MwBGF-0000nu-9B; Fri, 09 Oct 2009 10:55:39 +0200
+In-Reply-To: <86tyy9qz08.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Thu\, 08 Oct 2009 15\:52\:55 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Oct 2009 10:55:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n998tcVN025677
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1255683339.25853@Wes1W5ZKyLItnV7Xdaq+pQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129755>
 
-Shawn O. Pearce <spearce <at> spearce.org> writes:
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-> +URL Format
-> +----------
-> +
-> +URLs for Git repositories accessed by HTTP use the standard HTTP
-> +URL syntax documented by RFC 1738, so they are of the form:
-> +
-> +  http://<host>:<port>/<path>
-> +
-> +Within this documentation the placeholder $GIT_URL will stand for
-> +the http:// repository URL entered by the end-user.
+>>>>>> "Matthieu" == Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+> Matthieu> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>>> git log -p --format="%s\n%x00"  | perl -0 -ne 'print if(/whatever-you-search/);'
+>
+> That "if" is noisier than it needs to be:
+>
+>   perl -0 -ne 'print if /this/'
 
-It's worth making clear here that $GIT_URL will be the path to the repository,
-rather than necessarily just the host upon which the server sits. Perhaps
-including an example, like http://example:8080/repos/example.git
-would make it clearer that there can be a path (and so leading to
-a request like http://example:8080/repos/example.git/info/refs?service=...
+Thanks,
 
-It's also worth clarifying, therefore, that multiple repositories can be served
-by the same process (as with the git server today) by using different path(s).
-And for those that are interested in submodules, it's worth confirming that
-http://example/repos/master.git/child.git/info/refs?service= will ensure 
-that the repository is the 'child' git rather than anything else.
+Also, this seems to actually print the \0 character. Perhaps a perl
+guru can give a simple solution to replace the \0 by a \n?
 
-> HEX = [0-9a-f]
-
-Is there any reason not to support A-F as well in the hex spec, even if they
-SHOULD use a-f? This may limit the appeal for some case-insensitive systems.
-
-It would also be good to document, like with the git daemon, whether all
-repositories under a path are exported or only those that have the magic
-setting in the config like git-daemon-export-ok.
-
-Lastly, it would be good to clarify when the result of this GET/POST exchange
-is a text-based (and encoded in UTF-8) vs when binary data is returned; we 
-don't want to get into the state where we're returning binary data and 
-pretending that it's UTF-8.
-
-Alex
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
