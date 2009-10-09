@@ -1,84 +1,190 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: [PATCH] ls-files: die instead of fprintf/exit in -i error
-Date: Thu,  8 Oct 2009 21:53:35 -0400
-Message-ID: <1255053215-14059-1-git-send-email-bwalton@artsci.utoronto.ca>
-References: <4ACE4C72.4050400@gmail.com>
-Cc: git@vger.kernel.org, Ben Walton <bwalton@artsci.utoronto.ca>
-To: bebarino@gmail.com, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Oct 09 03:58:18 2009
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [RFC PATCH 3/4] Add smart-http options to upload-pack, receive-pack
+Date: Thu,  8 Oct 2009 22:22:47 -0700
+Message-ID: <1255065768-10428-4-git-send-email-spearce@spearce.org>
+References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
+ <1255065768-10428-2-git-send-email-spearce@spearce.org>
+ <1255065768-10428-3-git-send-email-spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 09 07:26:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw4kM-0008Pp-12
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 03:58:18 +0200
+	id 1Mw80E-0001sK-UP
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 07:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760166AbZJIBzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 21:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760129AbZJIBzF
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 21:55:05 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:57128 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758446AbZJIBzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 21:55:04 -0400
-Received: from ntdws12.chass.utoronto.ca ([128.100.160.253]:53928 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1Mw4gc-0000td-M1; Thu, 08 Oct 2009 21:54:26 -0400
-Received: from localhost
-	([127.0.0.1] helo=ntdws12.chass.utoronto.ca ident=505)
-	by ntdws12.chass.utoronto.ca with esmtp (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1Mw4gc-0003gF-JX; Thu, 08 Oct 2009 21:54:26 -0400
-Received: (from bwalton@localhost)
-	by ntdws12.chass.utoronto.ca (8.13.8/8.13.8/Submit) id n991sQ6P014147;
-	Thu, 8 Oct 2009 21:54:26 -0400
-X-Mailer: git-send-email 1.6.4
-In-Reply-To: <4ACE4C72.4050400@gmail.com>
+	id S1752362AbZJIFXf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 01:23:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbZJIFXd
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 01:23:33 -0400
+Received: from george.spearce.org ([209.20.77.23]:37234 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbZJIFXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 01:23:30 -0400
+Received: by george.spearce.org (Postfix, from userid 1000)
+	id 3BDFC381FF; Fri,  9 Oct 2009 05:22:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.4
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by george.spearce.org (Postfix) with ESMTP id 9EA2B3811F
+	for <git@vger.kernel.org>; Fri,  9 Oct 2009 05:22:49 +0000 (UTC)
+X-Mailer: git-send-email 1.6.5.rc3.193.gdf7a
+In-Reply-To: <1255065768-10428-3-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129730>
 
-When ls-files was called with -i but no exclude pattern, it was
-calling fprintf(stderr, "...", NULL) and then exiting.  On Solaris,
-passing NULL into fprintf was causing a segfault.  On glibc systems,
-it was simply producing incorrect output (eg: "(null)": ...).  The
-NULL pointer was a result of argv[0] not being preserved by the option
-parser.  Instead of requesting that the option parser preserve
-argv[0], use die() with a constant string.
+When --smart-http is passed as a command line parameter to
+upload-pack or receive-pack the programs now assume they may
+perform only a single read-write cycle with stdin and stdout.
+This fits with the HTTP POST request processing model where a
+program may read the request, write a response, and must exit.
 
-A trigger for this bug was: `git ls-files -i`
+When --advertise-refs is passed as a command line parameter only
+the initial ref advertisement is output, and the program exits
+immediately.  This fits with the HTTP GET request model, where
+no request content is received but a response must be produced.
 
-Signed-off-by: Ben Walton <bwalton@artsci.utoronto.ca>
+HTTP headers and/or environment are not processed here, but
+instead are assumed to be handled by the program invoking
+either service backend.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
-This is the alternate solution to this bug as proposed earlier today.
-I don't have a preference either way for which solution is better or
-more inline with the 'git way,' so please choose the most appropriate.
+ builtin-receive-pack.c |   26 ++++++++++++++++++++------
+ upload-pack.c          |   40 ++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 56 insertions(+), 10 deletions(-)
 
-I've run the test suite with both patches on Linux and Solaris
-and everything passes.
-
- builtin-ls-files.c |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index f473220..2c95ca6 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -524,11 +524,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		ps_matched = xcalloc(1, num);
- 	}
+diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
+index b771fe9..a075785 100644
+--- a/builtin-receive-pack.c
++++ b/builtin-receive-pack.c
+@@ -615,6 +615,8 @@ static void add_alternate_refs(void)
  
--	if ((dir.flags & DIR_SHOW_IGNORED) && !exc_given) {
--		fprintf(stderr, "%s: --ignored needs some exclude pattern\n",
--			argv[0]);
--		exit(1);
--	}
-+	if ((dir.flags & DIR_SHOW_IGNORED) && !exc_given)
-+		die("ls-files --ignored needs some exclude pattern");
+ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ {
++	int advertise_refs = 0;
++	int smart_http = 0;
+ 	int i;
+ 	char *dir = NULL;
  
- 	/* With no flags, we default to showing the cached files */
- 	if (!(show_stage | show_deleted | show_others | show_unmerged |
+@@ -623,7 +625,15 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		const char *arg = *argv++;
+ 
+ 		if (*arg == '-') {
+-			/* Do flag handling here */
++			if (!strcmp(arg, "--advertise-refs")) {
++				advertise_refs = 1;
++				continue;
++			}
++			if (!strcmp(arg, "--smart-http")) {
++				smart_http = 1;
++				continue;
++			}
++
+ 			usage(receive_pack_usage);
+ 		}
+ 		if (dir)
+@@ -652,12 +662,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		" report-status delete-refs ofs-delta " :
+ 		" report-status delete-refs ";
+ 
+-	add_alternate_refs();
+-	write_head_info();
+-	clear_extra_refs();
++	if (advertise_refs || !smart_http) {
++		add_alternate_refs();
++		write_head_info();
++		clear_extra_refs();
+ 
+-	/* EOF */
+-	packet_flush(1);
++		/* EOF */
++		packet_flush(1);
++	}
++	if (advertise_refs)
++		return 0;
+ 
+ 	read_head_info();
+ 	if (commands) {
+diff --git a/upload-pack.c b/upload-pack.c
+index 38ddac2..ae67039 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -39,6 +39,8 @@ static unsigned int timeout;
+  */
+ static int use_sideband;
+ static int debug_fd;
++static int advertise_refs;
++static int smart_http;
+ 
+ static void reset_timeout(void)
+ {
+@@ -509,6 +511,8 @@ static int get_common_commits(void)
+ 		if (!len) {
+ 			if (have_obj.nr == 0 || multi_ack)
+ 				packet_write(1, "NAK\n");
++			if (smart_http)
++				exit(0);
+ 			continue;
+ 		}
+ 		strip(line, len);
+@@ -705,12 +709,32 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
+ 	return 0;
+ }
+ 
++static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
++{
++	struct object *o = parse_object(sha1);
++	if (!o)
++		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
++	if (!(o->flags & OUR_REF)) {
++		o->flags |= OUR_REF;
++		nr_our_refs++;
++	}
++	return 0;
++}
++
+ static void upload_pack(void)
+ {
+-	reset_timeout();
+-	head_ref(send_ref, NULL);
+-	for_each_ref(send_ref, NULL);
+-	packet_flush(1);
++	if (advertise_refs || !smart_http) {
++		reset_timeout();
++		head_ref(send_ref, NULL);
++		for_each_ref(send_ref, NULL);
++		packet_flush(1);
++	} else {
++		head_ref(mark_our_ref, NULL);
++		for_each_ref(mark_our_ref, NULL);
++	}
++	if (advertise_refs)
++		return;
++
+ 	receive_needs();
+ 	if (want_obj.nr) {
+ 		get_common_commits();
+@@ -732,6 +756,14 @@ int main(int argc, char **argv)
+ 
+ 		if (arg[0] != '-')
+ 			break;
++		if (!strcmp(arg, "--advertise-refs")) {
++			advertise_refs = 1;
++			continue;
++		}
++		if (!strcmp(arg, "--smart-http")) {
++			smart_http = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--strict")) {
+ 			strict = 1;
+ 			continue;
 -- 
-1.6.4.4
+1.6.5.rc3.193.gdf7a
