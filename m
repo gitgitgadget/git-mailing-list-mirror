@@ -1,47 +1,60 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Git archive and trailing "/" in prefix
-Date: Fri, 09 Oct 2009 14:49:47 +0200
-Message-ID: <4ACF316B.5090807@lsrfire.ath.cx>
-References: <loom.20091008T172303-658@post.gmane.org> <7v4oq9j1gs.fsf@alter.siamese.dyndns.org> <4ACE62B1.8070801@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] import-tars: Add missing closing bracket
+Date: Fri, 9 Oct 2009 13:52:08 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0910091351030.7840@ds9.cixit.se>
+References: <1255090111-32612-1-git-send-email-ingmar@exherbo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 14:54:26 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ingmar Vanhassel <ingmar@exherbo.org>
+X-From: git-owner@vger.kernel.org Fri Oct 09 15:03:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwEzI-0007kQ-Lh
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 14:54:25 +0200
+	id 1MwF7j-0003wK-AD
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 15:03:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758686AbZJIMup convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 08:50:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756398AbZJIMup
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 08:50:45 -0400
-Received: from india601.server4you.de ([85.25.151.105]:47353 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755422AbZJIMuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 08:50:44 -0400
-Received: from [10.0.1.101] (p57B7CC44.dip.t-dialin.net [87.183.204.68])
-	by india601.server4you.de (Postfix) with ESMTPSA id 792832F806A;
-	Fri,  9 Oct 2009 14:50:07 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <4ACE62B1.8070801@gmail.com>
+	id S1758799AbZJINCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 09:02:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758045AbZJINCa
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 09:02:30 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:58499 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756544AbZJINC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 09:02:29 -0400
+X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Oct 2009 09:02:29 EDT
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n99Cq8Eq027874
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 9 Oct 2009 14:52:08 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n99Cq8Av027870;
+	Fri, 9 Oct 2009 14:52:08 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1255090111-32612-1-git-send-email-ingmar@exherbo.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 09 Oct 2009 14:52:08 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129799>
 
-Sergio Callegari schrieb:
-> I guess the bug in using --prefix on a worktree with subdirs without
-> specifying a path is not specific to git archive, then.
+Ingmar Vanhassel:
 
-The bug should be limited to archive; after my patch all calls to
-read_tree_recursive() specify an empty base parameter (except in tree.c=
-,
-where the function itself lives).
+> This fixes an obvious syntax error that snuck in commit 7e787953:
 
-Ren=E9
+Now, that is embarrassing... :-/ Sorry.
+
+> Signed-off-by: Ingmar Vanhassel <ingmar@exherbo.org>
+
+Tested-by: Peter Krefting <peter@softwolves.pp.se>
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
