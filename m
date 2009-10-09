@@ -1,89 +1,87 @@
-From: Alexander Gavrilov <angavrilov@gmail.com>
-Subject: [PATCH] git-svn: Avoid spurious errors when rewriteRoot is used.
-Date: Fri, 9 Oct 2009 11:01:04 +0400
-Organization: HOME
-Message-ID: <200910091101.04116.angavrilov@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: combine git repo historically
+Date: Fri, 9 Oct 2009 09:40:47 +0200
+Message-ID: <c07716ae0910090040j4868edf4x12eea330416b8ccb@mail.gmail.com>
+References: <20091009012254.GA3980@debian.b2j> <4ACED204.3000907@viscovery.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Oct 09 09:04:00 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 09 09:43:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw9Vy-0001y6-BP
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 09:03:46 +0200
+	id 1MwA8t-0004jG-IR
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 09:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933015AbZJIHC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 03:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933022AbZJIHC2
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 03:02:28 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:33725 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932999AbZJIHC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 03:02:27 -0400
-Received: by fg-out-1718.google.com with SMTP id 22so211622fge.1
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 00:00:39 -0700 (PDT)
+	id S1752427AbZJIHlZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 03:41:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752009AbZJIHlY
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 03:41:24 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:51889 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbZJIHlY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 03:41:24 -0400
+Received: by fxm27 with SMTP id 27so6172232fxm.17
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 00:40:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:organization:to:subject
-         :date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=ZBpJk5OgpcvFf0Vxar/kCie/2s1rRtW5rXK1wj6JG5k=;
-        b=LEQffRz/Oq82099AD23QplEie4tqjr83VfMYKs7gOj0+tfwoXQa94nlb2Rr/IxqECG
-         p7hm4Y0Bgz3z+mc5PqWZVDuGpglQ2nWo7QKUUY/Ec8d7gUjg9dlkufhRhDJkOflerq1F
-         spNhb0EXN7CCjx+/YHOPtzIBwEuyldNrFa9UU=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=F7NfbsymxMzffNY5Y3fdAjpDDrluVd6fajqfQT0x2ZI=;
+        b=LMhWzEHTul+1HBxM8Kw7FLKF2PqsnNl4j93pGiE9moT+dC2bwvyq68+xLT0OLtIDn9
+         2a2h8caLYsofs1p5gWCNjmcHO362Le2bu90C/XVpAMTgGFRNY2m2+TK3flslQexw3BGs
+         vBvwwZenJYfN1mNaojGeX8+ckcuOuir0PrY1A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:organization:to:subject:date:user-agent:cc:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        b=iePYaARAErmT4mc385e07958pXaRuZUuwlIoWnoR5B+A4KRDBloMvD49VqO1/XOJE3
-         W/6xWwBqkxW14POWzFXtHryrafGlYcDs84bfukHttugGPrEK5dxkFSPz+8hjdQvYrDbX
-         sZE4jeaoopxZMWal1hp29vyDRGjjb2ST+JAyw=
-Received: by 10.86.227.27 with SMTP id z27mr2035955fgg.66.1255071639620;
-        Fri, 09 Oct 2009 00:00:39 -0700 (PDT)
-Received: from keydesk.localnet ([92.255.85.78])
-        by mx.google.com with ESMTPS id l12sm1466945fgb.16.2009.10.09.00.00.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 09 Oct 2009 00:00:39 -0700 (PDT)
-User-Agent: KMail/1.12.1 (Linux/2.6.30.8-64.fc11.i586; KDE/4.3.1; i686; ; )
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jakMDSUBuxgrIme0O4huA3Qy5J6YEsEznn6CP6CTWcc8uNyTkg1Q0H2X39otPf2jOS
+         BzKy3rEr/avWQHM975jWaGmxBlx5X5JAL3y+r04rid/IYex/yA6dTrJ746M5lhzWHsoc
+         KspZOwn7Crvdo551tFMXoPMRYF7fRcD4VoFsk=
+Received: by 10.103.84.12 with SMTP id m12mr928064mul.79.1255074047197; Fri, 
+	09 Oct 2009 00:40:47 -0700 (PDT)
+In-Reply-To: <4ACED204.3000907@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129749>
 
-After doing a rebase, git-svn checks that the SVN URL
-is what it expects. However, it does not account for
-rewriteRoot, which is a legitimate way for the URL
-to change. This produces a lot of spurious errors.
+On Fri, Oct 9, 2009 at 8:02 AM, Johannes Sixt <j.sixt@viscovery.net> wr=
+ote:
+> bill lam schrieb:
+>> I have two git repos, no branches.
+>>
+>> repo 1.
+>> =A0 emptyrootcommit -- A ... M
+>>
+>> repo 2.
+>> =A0 emptyrootcommit -- N ... Z
+>>
+>> N was evolved from M but the time gap is large, how can I combine th=
+em
+>> into one repo
+>>
+>> emptyrootcommit -- A ... M -- N ... Z
+>>
+>> so that snapshots N .. Z will not be changed.
+>
+> $ echo $(git rev-parse N) $(git rev-parse M) >> .git/info/grafts
+> $ git filter-branch --tag-name-filter cat -- --all --not M
+>
+> i.e. you graft the older history right before the younger history, th=
+en
+> you use git filter-branch to rewrite the parentship of the younger co=
+mmits.
 
-Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
----
- git-svn.perl |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+If you cannot create a new history, using "git replace" could be
+better than using grafts.
+("git replace" is in the "master" branch in the git repository. It
+will be in git 1.6.5 that should be released soon.)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index e0ec258..e9030ff 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -603,8 +603,12 @@ sub cmd_dcommit {
- 					  "\nBefore dcommitting";
- 				}
- 				if ($url_ ne $expect_url) {
--					fatal "URL mismatch after rebase: ",
--					      "$url_ != $expect_url";
-+					if ($url_ eq $gs->metadata_url) {
-+						print "Accepting rewritten URL: $url_\n";
-+					} else {
-+						fatal "URL mismatch after rebase: ",
-+						      "$url_ != $expect_url";
-+					}
- 				}
- 				if ($uuid_ ne $uuid) {
- 					fatal "uuid mismatch after rebase: ",
--- 
-1.6.3.2.13.g94af7
+Regards,
+Christian
