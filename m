@@ -1,220 +1,95 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 00/22] git notes
-Date: Fri, 09 Oct 2009 12:21:55 +0200
-Message-ID: <1255083738-23263-1-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 10/22] Teach notes code to free its internal data
+ structures on request
+Date: Fri, 09 Oct 2009 12:22:06 +0200
+Message-ID: <1255083738-23263-12-git-send-email-johan@herland.net>
+References: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: gitster@pobox.com, johan@herland.net, Johannes.Schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
 	spearce@spearce.org, sam@vilain.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:57 2009
+X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClM-0004PL-L1
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:52 +0200
+	id 1MwClR-0004PL-SQ
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760658AbZJIKXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 06:23:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760656AbZJIKXD
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:03 -0400
+	id S1760689AbZJIKYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 06:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760686AbZJIKYH
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:24:07 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:58012 "EHLO
 	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760654AbZJIKXB (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:01 -0400
+	by vger.kernel.org with ESMTP id S1760685AbZJIKYG (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:24:06 -0400
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BORSTB8I20@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:23 +0200 (MEST)
+ with ESMTP id <0KR800BSDSTZ8I20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:47 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:23 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:47 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
+In-reply-to: <1255083738-23263-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129771>
 
-Hi,
+There's no need to be rude to memory-concious callers...
 
-(Feel free to put this on hold until v1.6.5 is released. In any case,
-I'm going to Berlin for the weekend, and don't expect to read much
-email...)
+This patch has been improved by the following contributions:
+- Junio C Hamano: avoid old-style declaration
 
-Here is the 7th iteration of the git-notes series. Changes in this
-iteration are as follows:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Johan Herland <johan@herland.net>
+---
+ notes.c |    7 +++++++
+ notes.h |    3 +++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
 
-- Rebased onto current 'next'
+diff --git a/notes.c b/notes.c
+index b7d79e1..a5d888d 100644
+--- a/notes.c
++++ b/notes.c
+@@ -105,6 +105,13 @@ static unsigned char *lookup_notes(const unsigned char *commit_sha1)
+ 	return hash_map.entries[index].notes_sha1;
+ }
 
-- Patch 1: Include minor leak fix
++void free_notes(void)
++{
++	free(hash_map.entries);
++	memset(&hash_map, 0, sizeof(struct hash_map));
++	initialized = 0;
++}
++
+ void get_commit_notes(const struct commit *commit, struct strbuf *sb,
+ 		const char *output_encoding, int flags)
+ {
+diff --git a/notes.h b/notes.h
+index 7f3eed4..a1421e3 100644
+--- a/notes.h
++++ b/notes.h
+@@ -1,6 +1,9 @@
+ #ifndef NOTES_H
+ #define NOTES_H
 
-- Patch 10: Rename free_commit_notes() to free_notes() (Notes are
-  no longer bound to commits only, see patch 15 for details)
++/* Free (and de-initialize) the internal notes tree structure */
++void free_notes(void);
++
+ #define NOTES_SHOW_HEADER 1
+ #define NOTES_INDENT 2
 
-- Patch 12: Remove tests that are invalidated by concatenation code
-  in patch 13.
-
-Overall, I consider the 12 first patches fairly stable at this point.
-There's also a slew of new patches, that has more of an RFC status:
-
-- Patches 13-14: Concatenation of multiple notes annotating the same
-  commit/object. This was originally suggested by mugwump many months
-  ago, and the suggestion was re-iterated by Dscho. This change has a
-  minor perfomance impact (see [1]), but I still think it's worth it.
-
-- Patch 15: Allow notes to be attached to any object (not just commits).
-  Rename get_commit_notes() to format_note() to reflect this change.
-
-- Patch 16-19: Expand notes API in preparation for querying and
-  manipulating notes from elsewhere in Git (see patch 22 for examples).
-
-- Patch 20: Add a new notes_tree struct, and use it as the first
-  parameter to all functions in the notes API. This allows API users to
-  maintain their own (multiple, concurrent) notes trees (see patch 22
-  for an example). We still have a default notes tree in notes.c as a
-  fallback (when NULL is passed as to an API function).
-
-- Patch 21: The default behaviour when there are multiple notes for a
-  given object is to concatenate them. However, some callers (see patch
-  22) want to tweak this behaviour. This patch defines a new function
-  type: combine_notes_fn, for combining two notes that reference the
-  same object. The notes API is then expanded to allow the caller to
-  specify a suitable combine_notes_fn. For convenience, three simple
-  combine_notes functions are available in the notes API:
-  - combine_notes_concatenate(): Concatenates the contents of the two
-    notes. (This is the default behaviour)
-  - combine_notes_overwrite(): Overwrite the existing note with the
-    new note.
-  - combine_notes_ignore(): Keep the existing note, and ignore the new
-    note.
-
-- Patch 22: This teaches fast-import to use the new notes API when
-  adding note objects to a commit. Since adding a note to a notes tree
-  might cause restructuring of that notes tree, the note objects must
-  be handled differently from regular blobs.
-  There are some testcases for the new behaviour in this patch, but not
-  enough. These will be added later.
-  This patch is still very much in RFC mode...
-
-
-Although this iteration brings the jh/notes topic towards feature-
-completion, there are still some things left to do before I consider
-the git notes feature fully complete:
-
-- Builtin-ify git-notes shell script to take advantage of notes API
-
-- Garbage-collect notes whose referenced objects are unreachable
-
-- Handle note objects that are not blobs, but trees (e.g.
-  refs/notes/<topic>:<commit>/<subtopic>)
-
-- Add a simple notation for referring to an object's note (e.g.
-  "<object>^{note}")
-
-- Probably more that I haven't thought of yet...
-
-However, It might be a good idea to consider merging the early/stable
-parts of jh/notes, instead of waiting for everything to complete.
-
-
-Have fun! :)
-
-...Johan
-
-
-[1] Performance impact of the concatenation rewrite.
-
-In order to concatenate notes correctly, the tree traversal code must be
-changed to more proactively unpack subtree entries (so that we can safely
-determine whether there are multiple notes for a given key).
-
-As before, the test case is as follows:
-Linux kernel repo with 157101 commits, 1 note per commit, organized into
-various fanout schemes. Hardware is Intel Core 2 Quad with 4GB RAM.
-
-
-Algorithm / Notes tree   git log -n10 (x100)   git log --all
-
-next / no-notes                 4.78s             63.90s
-
-before / no-notes               4.77s             63.61s
-before / no-fanout             56.59s             65.19s
-
-16tree / no-notes               4.73s             63.80s
-16tree / no-fanout             30.21s             65.11s
-16tree / 2_38                   5.53s             65.24s
-16tree / 2_2_36                 5.15s             65.12s
-
-concat / no-notes               4.80s             64.21s
-concat / no-fanout             30.66s             65.35s
-concat / 2_38                   5.64s             65.87s
-concat / 2_2_36                 5.23s             66.44s
-
-Conclusion: There is a small, but measurable impact (about .1s or so in
-the 100 x 'git log -n10' case), but I think this is small enough to be
-acceptable.
-
-
-Johan Herland (17):
-  Teach "-m <msg>" and "-F <file>" to "git notes edit"
-  fast-import: Add support for importing commit notes
-  t3302-notes-index-expensive: Speed up create_repo()
-  Add flags to get_commit_notes() to control the format of the note string
-  Teach notes code to free its internal data structures on request
-  Teach the notes lookup code to parse notes trees with various fanout schemes
-  Add selftests verifying that we can parse notes trees with various fanouts
-  Refactor notes code to concatenate multiple notes annotating the same object
-  Add selftests verifying concatenation of multiple notes for the same commit
-  Notes API: get_commit_notes() -> format_note() + remove the commit restriction
-  Notes API: init_notes(): Initialize the notes tree from the given notes ref
-  Notes API: add_note(): Add note objects to the internal notes tree structure
-  Notes API: get_note(): Return the note annotating the given object
-  Notes API: for_each_note(): Traverse the entire notes tree with a callback
-  Notes API: Allow multiple concurrent notes trees with new struct notes_tree
-  Refactor notes concatenation into a flexible interface for combining notes
-  fast-import: Proper notes tree manipulation using the notes API
-
-Johannes Schindelin (5):
-  Introduce commit notes
-  Add a script to edit/inspect notes
-  Speed up git notes lookup
-  Add an expensive test for git-notes
-  Add '%N'-format for pretty-printing commit notes
-
- .gitignore                        |    1 +
- Documentation/config.txt          |   13 +
- Documentation/git-fast-import.txt |   45 +++-
- Documentation/git-notes.txt       |   60 ++++
- Documentation/pretty-formats.txt  |    1 +
- Makefile                          |    3 +
- cache.h                           |    4 +
- command-list.txt                  |    1 +
- commit.c                          |    1 +
- config.c                          |    5 +
- environment.c                     |    1 +
- fast-import.c                     |  176 +++++++++++-
- git-notes.sh                      |  121 ++++++++
- notes.c                           |  579 +++++++++++++++++++++++++++++++++++++
- notes.h                           |  113 +++++++
- pretty.c                          |   10 +
- t/t3301-notes.sh                  |  150 ++++++++++
- t/t3302-notes-index-expensive.sh  |  118 ++++++++
- t/t3303-notes-subtrees.sh         |  188 ++++++++++++
- t/t9300-fast-import.sh            |  296 +++++++++++++++++++
- 20 files changed, 1875 insertions(+), 11 deletions(-)
- create mode 100644 Documentation/git-notes.txt
- create mode 100755 git-notes.sh
- create mode 100644 notes.c
- create mode 100644 notes.h
- create mode 100755 t/t3301-notes.sh
- create mode 100755 t/t3302-notes-index-expensive.sh
- create mode 100755 t/t3303-notes-subtrees.sh
+--
+1.6.4.304.g1365c.dirty
