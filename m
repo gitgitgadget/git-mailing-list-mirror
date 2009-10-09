@@ -1,65 +1,110 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: combine git repo historically
-Date: Fri, 09 Oct 2009 08:02:44 +0200
-Message-ID: <4ACED204.3000907@viscovery.net>
-References: <20091009012254.GA3980@debian.b2j>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 08:08:36 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCHv2 2/2] completion: fix alias listings with newlines
+Date: Thu,  8 Oct 2009 23:21:44 -0700
+Message-ID: <1255069304-8953-2-git-send-email-bebarino@gmail.com>
+References: <1255069304-8953-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 09 08:23:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw8eZ-0006G9-Kd
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:08:35 +0200
+	id 1Mw8sg-0002i1-DF
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754964AbZJIGD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 02:03:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754912AbZJIGD0
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:03:26 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:43746 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbZJIGDZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 02:03:25 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mw8Yu-0007gn-IT; Fri, 09 Oct 2009 08:02:45 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 2B6A26D9; Fri,  9 Oct 2009 08:02:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <20091009012254.GA3980@debian.b2j>
-X-Spam-Score: -1.4 (-)
+	id S1756282AbZJIGUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 02:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756156AbZJIGUn
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:20:43 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:41885 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754663AbZJIGUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 02:20:43 -0400
+Received: by qw-out-2122.google.com with SMTP id 3so2488341qwe.37
+        for <git@vger.kernel.org>; Thu, 08 Oct 2009 23:19:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=R8h1hLLigERTy9eiP7J+5IPZzC4rtwyQSeZTe514cS8=;
+        b=xjEmwqubET2pvAzNmOxirIabRBI3eYk3FT0pxqj5KDvN0jWZ7skZzSZAd1H3n2i799
+         jf35GYIKrBY2xacvX0Rnvii3//TKEaBSzWge7xllfkOC69QAP0lBA5c6bxaaDkNiAOuh
+         6iDWuLAi4LC3ZybeboIOzkvnvO4ghixpbaiL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ba1GBMz97HoKOMOrNiv8imHi7FI6ry2Po+imXOTpTfJpMm74r0PM/kRL1AMOjoyzKB
+         tmyyqQewSAYtsgwAMe8nv1udUtnVNgcR5KBveQK6ibWM/Z6f7NwObcWsx3YeL6jGQVH3
+         P4IFXz8mu/cf6w1hNLVEQGIfLAcX8ChRS2TOg=
+Received: by 10.224.111.12 with SMTP id q12mr2111913qap.330.1255069176138;
+        Thu, 08 Oct 2009 23:19:36 -0700 (PDT)
+Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 6sm523099qwk.6.2009.10.08.23.19.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 08 Oct 2009 23:19:35 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Thu, 08 Oct 2009 23:21:48 -0700
+X-Mailer: git-send-email 1.6.5.rc3
+In-Reply-To: <1255069304-8953-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129737>
 
-bill lam schrieb:
-> I have two git repos, no branches.
-> 
-> repo 1.
->   emptyrootcommit -- A ... M 
-> 
-> repo 2.
->   emptyrootcommit -- N ... Z
-> 
-> N was evolved from M but the time gap is large, how can I combine them
-> into one repo
-> 
-> emptyrootcommit -- A ... M -- N ... Z
-> 
-> so that snapshots N .. Z will not be changed.
+Aliases with newlines have been a problem since commit 56fc25f (Bash
+completion support for remotes in .git/config., 2006-11-05). The chance
+of the problem occurring has been slim at best, until commit 518ef8f
+(completion: Replace config --list with --get-regexp, 2009-09-11)
+removed the case statement introduced by commit 56fc25f. Before removing
+the case statement, most aliases with newlines would work unless they
+were specially crafted as follows
 
-$ echo $(git rev-parse N) $(git rev-parse M) >> .git/info/grafts
-$ git filter-branch --tag-name-filter cat -- --all --not M
+[alias]
+	foo = "log -1 --pretty='format:%s\nalias.error=broken'"
 
-i.e. you graft the older history right before the younger history, then
-you use git filter-branch to rewrite the parentship of the younger commits.
+After removing the case statement, a more benign alias like
 
--- Hannes
+[alias]
+	whowhat = "log -1 --pretty='format:%an <%ae>\n%s'"
+	wont-complete = ...
+
+would cause the completion to break badly.
+
+For now, revert the removal of the case statement until someone comes up
+with a better way to get keys from git-config.
+
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
+
+This is an alternate fix to my previous 1/3 patch.
+
+Hannes has convinced me to go this route. I don't really see a problem, it
+basically reverts to broken behavior that nobody's complained about in 3
+years. At least it's less broken?
+
+ contrib/completion/git-completion.bash |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 652a47c..e482c8d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -602,8 +602,12 @@ __git_aliases ()
+ {
+ 	local i IFS=$'\n'
+ 	for i in $(git --git-dir="$(__gitdir)" config --get-regexp "alias\..*" 2>/dev/null); do
+-		i="${i#alias.}"
+-		echo "${i/ */}"
++		case "$i" in
++		alias.*)
++			i="${i#alias.}"
++			echo "${i/ */}"
++			;;
++		esac
+ 	done
+ }
+ 
+-- 
+1.6.5.rc3
