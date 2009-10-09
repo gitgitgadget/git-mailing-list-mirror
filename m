@@ -1,91 +1,82 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Merging non-git releases of a project
-Date: Fri, 9 Oct 2009 17:27:23 -0400
-Message-ID: <32541b130910091427i7c8a2426hb69a9914aabde8bc@mail.gmail.com>
-References: <26ae428a0910091411i39a03650o51163f794b984524@mail.gmail.com>
+From: Auguste Mome <augustmome@gmail.com>
+Subject: can't create a branch on remote
+Date: Fri, 9 Oct 2009 23:35:03 +0200
+Message-ID: <17cb70ee0910091435l4c4d1736hf4d403a2fe6331a2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Fri Oct 09 23:34:03 2009
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 09 23:46:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwN5z-00081o-GH
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 23:33:51 +0200
+	id 1MwNID-0004vf-L6
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 23:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934431AbZJIV2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 17:28:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934276AbZJIV2W
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 17:28:22 -0400
-Received: from mail-gx0-f212.google.com ([209.85.217.212]:52257 "EHLO
-	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934285AbZJIV2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 17:28:21 -0400
-Received: by gxk4 with SMTP id 4so8305092gxk.8
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 14:27:44 -0700 (PDT)
+	id S1761480AbZJIVgN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 17:36:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761478AbZJIVgM
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 17:36:12 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:12345 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761477AbZJIVgL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 17:36:11 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so1560843eyf.19
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 14:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=4XKuMTJ/ir8iRlFz+J8lB/dxJvuISm0uGDKji1DN4Wc=;
-        b=HYrXMYbwySduIHQLC81qvixd1RWbwUk2mFjTA+TqK4VGFxil5eqTmVMj9Grqmw5Bgj
-         TyUiI3braEfOON92Yd36zHHc2P1C18Gz4P5viKd+l9VUnQz6G7wXWtA8I8Qqrx4ZV1f4
-         /1rlXp5MRzjYJ3F20A+yr8ekUCqCIbP50z+b8=
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=wsnACvy3T5lpl0LAhb0VY0gQMEJgW4wEg3eNdJhJTQk=;
+        b=F0p9a4IOUktQjWCvJ7m1xllfPkHxZSkRUAFww0ZYf4upFmzWa+hrD7KhN0D8YTdl6i
+         dULBXgpb2u6Nbt6TTSFTLgBuumhMjzQIHfKBtcCCT+GEZzjzVXK4ynKZ+m7Nc+VoC6c8
+         9P/75gLAQPaDDDwEGJl98FFzprMpTgTmbfRNg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=WUaPt+/vKgWIWQx/FQ9/pBIA6I9hs8AamIN5wvNoD19dXCK2m9zW8WNMQmyeyJE2kL
-         gCvZElz/wy+ag5vI6P/S35USZXUg9Mu+OF/zj1PGeETFqYq7xD3oLRZRAA557SdF9R9Q
-         gcUvW/FTdJokyfD18pFQwtHI2ExhMiBq+yJxY=
-Received: by 10.151.4.5 with SMTP id g5mr5582739ybi.159.1255123663958; Fri, 09 
-	Oct 2009 14:27:43 -0700 (PDT)
-In-Reply-To: <26ae428a0910091411i39a03650o51163f794b984524@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=Y3grMmfjKm4W+G4iagCRsNQvdt4TU1tNMFkyGMlfLxkYWqYYLD5EKSKM0U2j/4fYxv
+         RHpLVCl7uytF/yRc7yJUyQO+2RxwynPezv9uMgNSoBXmpncbzx5Mt3bq6ZCYCJFmuT6H
+         Wo0WZ9T8oe1m0NK5t1yuqfgZ1L6RzTHzmlAcE=
+Received: by 10.216.86.74 with SMTP id v52mr1083520wee.124.1255124103953; Fri, 
+	09 Oct 2009 14:35:03 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129844>
 
-On Fri, Oct 9, 2009 at 5:11 PM, Howard Miller
-<howard@e-learndesign.co.uk> wrote:
-> Here's my dilemma.... I've used git extensively to track modifications
-> made to a reasonably large source tree. I do not have access to the
-> repository for that project, just a given release. I have now acquired
-> the latest version of that project and I want to 'merge' (not sure
-> that's the right word in this case) my changes into the new version.
-> Then I need to carry on using git for further changes. I think it
-> should be simple but I can't get my head around the best way to do
-> this.
+Hi,
+I have two repositories=A0 /home/user/linux and /home/user/dev/linux,
+same user on same machine.
+Here is how I create a local branch at v2.6.21.7 in /home/user/dev/linu=
+x,
+#pwd
+/home/user/dev/linux
+# git remote add l2621
+git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.21.y.git
+# git fetch l2621
+# git branch mylocal26217=A0 v2.6.21.7
 
-Find out the commitid of the first commit when you checked in the
-upstream project into git, and call it C1.
+Now I would like to do the same from the other repository /home/user/li=
+nux:
+# pwd
+/home/user/linux
+# git remote add other /home/guerin/dev/git/linux-2.6
+# git fetch other
+# git push /home/user/dev/git/linux-2.6
+=A0=A0=A0 v2.6.21.7:refs/heads/new_feature_name26217
+Total 0 (delta 0), reused 0 (delta 0)
+error: Trying to write non-commit object
+170684ef0557d4b711a86595d31dcbebcb9d4ba2 to branch
+refs/heads/new_feature_name26217
+To /home/user/dev/git/linux-2.6
+=A0! [remote rejected] v2.6.21.7 -> new_feature_name26217 (failed to wr=
+ite)
+error: failed to push some refs to '/home/user/dev/git/linux-2.6'
 
-  git checkout -b vendor C1
+Maybe something to configure to authorize the creation of branch?
 
-(replacing C1 with the commitid).  This creates a branch called
-'vendor' which is for checking in *only* the pristine code provided by
-the vendor.  It also checks out this new branch.
-
-Next, import the new upstream version of the project and commit it to
-the 'vendor' branch.
-
-Now, switch back to your branch and merge in the vendor changes:
-
-  git checkout master
-  git merge vendor
-
-Or, if you want to produce a clean set of patches on top of the vendor
-version (ie. for submitting the individual patches upstream), you
-might want something like this instead:
-
-  git rebase vendor
-
-But be careful, rebasing can make a mess of your history and you
-shouldn't do it unless you have a good reason.
-
-Good luck.
-
-Avery
+Thanks,
+Auguste.
