@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 16/22] Notes API: init_notes(): Initialize the notes tree
- from the given notes ref
-Date: Fri, 09 Oct 2009 12:22:12 +0200
-Message-ID: <1255083738-23263-18-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 14/22] Add selftests verifying concatenation of multiple
+ notes for the same commit
+Date: Fri, 09 Oct 2009 12:22:10 +0200
+Message-ID: <1255083738-23263-16-git-send-email-johan@herland.net>
 References: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -17,26 +17,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClV-0004PL-3l
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:32:01 +0200
+	id 1MwClU-0004PL-JB
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760706AbZJIKYj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 06:24:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760704AbZJIKYj
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:24:39 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:58012 "EHLO
+	id S1760702AbZJIKY0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 06:24:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760695AbZJIKY0
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:24:26 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:58515 "EHLO
 	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760695AbZJIKYi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:24:38 -0400
+	by vger.kernel.org with ESMTP id S1760698AbZJIKYZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:24:25 -0400
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BU7SUC8I20@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:23:00 +0200 (MEST)
+ with ESMTP id <0KR800BTLSU88I20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:56 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:23:00 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:56 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,103 +45,108 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129775>
 
-Created by a simple refactoring of initialize_notes().
-
-Also add a new 'flags' parameter, which is a bitwise combination of notes
-initialization flags. For now, there is only one flag - NOTES_INIT_EMPTY -
-which indicates that the notes tree should not auto-load the contents of
-the given (or default) notes ref, but rather should leave the notes tree
-initialized to an empty state. This will become useful in the future when
-manipulating the notes tree through the notes API.
+Also verify that multiple references to the _same_ note blob are _not_
+concatenated.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |   27 ++++++++++++++++-----------
- notes.h |   20 ++++++++++++++++++++
- 2 files changed, 36 insertions(+), 11 deletions(-)
+ t/t3303-notes-subtrees.sh |   84 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 84 insertions(+), 0 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index 0f7082f..f2bacbb 100644
---- a/notes.c
-+++ b/notes.c
-@@ -339,13 +339,25 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 	free(buf);
- }
+diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
+index cbb9d35..edc4bc8 100755
+--- a/t/t3303-notes-subtrees.sh
++++ b/t/t3303-notes-subtrees.sh
+@@ -101,4 +101,88 @@ test_expect_success 'verify notes in 4/36-fanout' 'verify_notes'
+ test_expect_success 'test notes in 2/2/36-fanout' 'test_sha1_based "s|^\(..\)\(..\)|\1/\2/|"'
+ test_expect_success 'verify notes in 2/2/36-fanout' 'verify_notes'
  
--static void initialize_notes(const char *notes_ref_name)
-+void init_notes(const char *notes_ref, int flags)
- {
- 	unsigned char sha1[20], object_sha1[20];
- 	unsigned mode;
- 	struct leaf_node root_tree;
- 
--	if (!notes_ref_name || read_ref(notes_ref_name, object_sha1) ||
-+	assert(!initialized);
-+	initialized = 1;
++test_same_notes () {
++	(
++		start_note_commit &&
++		nr=$number_of_commits &&
++		git rev-list refs/heads/master |
++		while read sha1; do
++			first_note_path=$(echo "$sha1" | sed "$1")
++			second_note_path=$(echo "$sha1" | sed "$2")
++			cat <<INPUT_END &&
++M 100644 inline $second_note_path
++data <<EOF
++note for commit #$nr
++EOF
 +
-+	if (!notes_ref) {
-+		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		if (env)
-+			notes_ref = getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		else
-+			notes_ref = GIT_NOTES_DEFAULT_REF;
-+	}
++M 100644 inline $first_note_path
++data <<EOF
++note for commit #$nr
++EOF
 +
-+	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
-+	    read_ref(notes_ref, object_sha1) ||
- 	    get_tree_entry(object_sha1, "", sha1, &mode))
- 		return;
- 
-@@ -378,15 +390,8 @@ void format_note(const unsigned char *object_sha1, struct strbuf *sb,
- 	unsigned long linelen, msglen;
- 	enum object_type type;
- 
--	if (!initialized) {
--		const char *env = getenv(GIT_NOTES_REF_ENVIRONMENT);
--		if (env)
--			notes_ref_name = getenv(GIT_NOTES_REF_ENVIRONMENT);
--		else if (!notes_ref_name)
--			notes_ref_name = GIT_NOTES_DEFAULT_REF;
--		initialize_notes(notes_ref_name);
--		initialized = 1;
--	}
-+	if (!initialized)
-+		init_notes(NULL, 0);
- 
- 	sha1 = lookup_notes(object_sha1);
- 	if (!sha1)
-diff --git a/notes.h b/notes.h
-index d745ed1..6b52799 100644
---- a/notes.h
-+++ b/notes.h
-@@ -1,6 +1,26 @@
- #ifndef NOTES_H
- #define NOTES_H
- 
-+/*
-+ * Flags controlling behaviour of notes tree initialization
-+ *
-+ * Default behaviour is to initialize the notes tree from the tree object
-+ * specified by the given (or default) notes ref.
-+ */
-+#define NOTES_INIT_EMPTY 1
++INPUT_END
 +
-+/*
-+ * Initialize internal notes tree structure with the notes tree at the given
-+ * ref. If given ref is NULL, the value of the $GIT_NOTES_REF environment
-+ * variable is used, and if that is missing, the default notes ref is used
-+ * ("refs/notes/commits").
-+ *
-+ * If you need to re-intialize the internal notes tree structure (e.g. loading
-+ * from a different notes ref), please first de-initialize the current notes
-+ * tree by calling free_notes().
-+ */
-+void init_notes(const char *notes_ref, int flags);
++			nr=$(($nr-1))
++		done
++	) |
++	git fast-import --quiet
++}
 +
- /* Free (and de-initialize) the internal notes tree structure */
- void free_notes(void);
- 
++test_expect_success 'test same notes in 4/36-fanout and 2/38-fanout' 'test_same_notes "s|^..|&/|" "s|^....|&/|"'
++test_expect_success 'verify same notes in 4/36-fanout and 2/38-fanout' 'verify_notes'
++
++test_expect_success 'test same notes in 2/38-fanout and 2/2/36-fanout' 'test_same_notes "s|^\(..\)\(..\)|\1/\2/|" "s|^..|&/|"'
++test_expect_success 'verify same notes in 2/38-fanout and 2/2/36-fanout' 'verify_notes'
++
++test_expect_success 'test same notes in 4/36-fanout and 2/2/36-fanout' 'test_same_notes "s|^\(..\)\(..\)|\1/\2/|" "s|^....|&/|"'
++test_expect_success 'verify same notes in 4/36-fanout and 2/2/36-fanout' 'verify_notes'
++
++test_concatenated_notes () {
++	(
++		start_note_commit &&
++		nr=$number_of_commits &&
++		git rev-list refs/heads/master |
++		while read sha1; do
++			first_note_path=$(echo "$sha1" | sed "$1")
++			second_note_path=$(echo "$sha1" | sed "$2")
++			cat <<INPUT_END &&
++M 100644 inline $second_note_path
++data <<EOF
++second note for commit #$nr
++EOF
++
++M 100644 inline $first_note_path
++data <<EOF
++first note for commit #$nr
++EOF
++
++INPUT_END
++
++			nr=$(($nr-1))
++		done
++	) |
++	git fast-import --quiet
++}
++
++verify_concatenated_notes () {
++    git log | grep "^    " > output &&
++    i=$number_of_commits &&
++    while [ $i -gt 0 ]; do
++        echo "    commit #$i" &&
++        echo "    first note for commit #$i" &&
++        echo "    second note for commit #$i" &&
++        i=$(($i-1));
++    done > expect &&
++    test_cmp expect output
++}
++
++test_expect_success 'test notes in 4/36-fanout concatenated with 2/38-fanout' 'test_concatenated_notes "s|^..|&/|" "s|^....|&/|"'
++test_expect_success 'verify notes in 4/36-fanout concatenated with 2/38-fanout' 'verify_concatenated_notes'
++
++test_expect_success 'test notes in 2/38-fanout concatenated with 2/2/36-fanout' 'test_concatenated_notes "s|^\(..\)\(..\)|\1/\2/|" "s|^..|&/|"'
++test_expect_success 'verify notes in 2/38-fanout concatenated with 2/2/36-fanout' 'verify_concatenated_notes'
++
++test_expect_success 'test notes in 4/36-fanout concatenated with 2/2/36-fanout' 'test_concatenated_notes "s|^\(..\)\(..\)|\1/\2/|" "s|^....|&/|"'
++test_expect_success 'verify notes in 4/36-fanout concatenated with 2/2/36-fanout' 'verify_concatenated_notes'
++
+ test_done
 -- 
 1.6.4.304.g1365c.dirty
