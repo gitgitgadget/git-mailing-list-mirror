@@ -1,86 +1,77 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: gitweb - bare repos integration - owner info in description file
-Date: Fri, 9 Oct 2009 18:32:25 -0400
-Message-ID: <76c5b8580910091532yd6c6fc4ib942a29c827f3a6c@mail.gmail.com>
-References: <76c5b8580910091350o5cd90d3dobe2a21c18fa56dfd@mail.gmail.com>
-	 <m3ab00gr25.fsf@localhost.localdomain>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Merging non-git releases of a project
+Date: Fri, 9 Oct 2009 18:43:50 -0400
+Message-ID: <32541b130910091543x19b3b46an109f90be5c5bfaa2@mail.gmail.com>
+References: <26ae428a0910091411i39a03650o51163f794b984524@mail.gmail.com> 
+	<32541b130910091427i7c8a2426hb69a9914aabde8bc@mail.gmail.com> 
+	<26ae428a0910091433v2c959a70g9bfc6c54382f370d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 10 00:34:24 2009
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Sat Oct 10 00:47:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwO2N-0007CT-T0
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 00:34:12 +0200
+	id 1MwOFc-0003it-D5
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 00:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934673AbZJIWdE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 18:33:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934539AbZJIWdD
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 18:33:03 -0400
-Received: from mail-gx0-f212.google.com ([209.85.217.212]:37311 "EHLO
-	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934274AbZJIWdC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 18:33:02 -0400
-Received: by gxk4 with SMTP id 4so8347693gxk.8
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 15:32:25 -0700 (PDT)
+	id S934547AbZJIWor convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 18:44:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934454AbZJIWor
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 18:44:47 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:38731 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934439AbZJIWoq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 18:44:46 -0400
+Received: by yxe17 with SMTP id 17so998416yxe.33
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 15:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
+         :from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=zhj0S9W0Ms2Og0Qmr1Hvbv/QSgPC2NmqqfhXlwdkJFY=;
-        b=V6KDug2xLba9olD8eLp0Yyy/GvVvqWb4rz2OdPY7X2FEfUCi9fOnBaC7w4qNswLaGl
-         IcaeQb63I0Q2ANOmenaAsXijNWRg3FHkHEx54ovnxt8sIkzXC5jGD9nT70CQu/w6BXzm
-         xqcUz3mUU6AJS1IZpjrsDcuBNLCF5Mk8naPnU=
+        bh=wUbniwGgh+vsIY8OiQdY6vPjNRJf5XywXCpFsSCacp4=;
+        b=jNjJuacZyc1J6nzGQS5fgYfxg49LeTxNLgyF8LyYt+odwDPst4a5tIa1P7cvJYfaPK
+         biKawwcuTa+dk1AWbZstVWvDMnnNd9COb3BiIR+SokcFRX77m4VqutdlYFGPOgPgMSM3
+         go0ok7wo42fwRccAl7MvR0wOam/CDRJqhyips=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=rEi1ijEQu7UqSvGncuwxW7cfZw728S8fNaMp15XT/rWiWxED7oX06AKgdtiixjJckE
-         Y6AJZF4ZLEDHNZK2XrmWrDUsZmyhAqFYFeUH6Rh5GARIC4QxsItTW0LyWTGVBzS2BZP7
-         Le4Q/mUbXIP5cML82Mz7d7v3S6V6Tys1Z9siA=
-Received: by 10.90.10.1 with SMTP id 1mr1696659agj.62.1255127545318; Fri, 09 
-	Oct 2009 15:32:25 -0700 (PDT)
-In-Reply-To: <m3ab00gr25.fsf@localhost.localdomain>
+        b=Kmtu5jtgbjVvbB01BVMFNIRyws3prQy5ISPJJW9apYiNfhP65yu4KBi79jBhD1Rpak
+         i7/o4UxOy1hEpMGtKCnfQmfJ6fdf4aiCL6uSn2qqEftr01O0q+kNsstDOglj17Yat8Fs
+         85GoU0ieYMSIOQohPd/zTYB3NNyJ0gs/I9MDA=
+Received: by 10.151.4.5 with SMTP id g5mr5712754ybi.159.1255128250240; Fri, 09 
+	Oct 2009 15:44:10 -0700 (PDT)
+In-Reply-To: <26ae428a0910091433v2c959a70g9bfc6c54382f370d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129854>
 
+On Fri, Oct 9, 2009 at 5:33 PM, Howard Miller
+<howard@e-learndesign.co.uk> wrote:
+> I'm missing the point here though. Where/when =A0do I actually add th=
+e
+> new pristine code? If I checkout, as you suggest, my initial commit I
+> just have (say) v1.0 of the vendor's code. I can't just copy (say)
+> version 1.2 on top as the files probably won't match one-one.
 >
-> RTFM (in this case gitweb/README). =C2=A0gitweb.owner and gitweb.desc=
-ription
-> configuration variables in per-repository config.
->
+> Sorry - I'm probably completely failing to understand.
 
-Ok, my bad, didn't get there;)It is good to know there are places
-where to keep the info. But it is not the point. The point is to
-integrate gitweb with bare repo creation more than it is right now by
-providing keys which will help filling out this info at the bare repo
-creation stage.
+Try this:
 
-shortly i'm talking about command like this (the key names are for samp=
-le only):
+   cd mygitproject
+   git rm -rf .
+   cp -a /tmp/wherever/vendor-1.2/. .
+   git add .
+   git commit
 
-$ git clone --bare repo repo.git -desc "description" -gwowner
-"gitwebowner@server.com" -cloneurl "git://host/repo.git"
+Don't worry, git won't double-store files that are identical between
+the old 1.0 and new 1.2 versions.
 
-seems to me quite comfy, and no headache...
-
-
-> %
-> "To be fair, there are uses for XML. On Halloween, for example."
->
-> =C2=A0 =C2=A0 - Johannes Schindelin, on git@vger.kernel.org
-> %
-
-yeah, to show kids xml print outs as an answer to "trick or treat!".
-Can save on candies;)
-
-Thanks,
-Eugene
+Avery
