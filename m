@@ -1,68 +1,57 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
-Date: Fri, 9 Oct 2009 10:09:22 +0200
-Message-ID: <fabb9a1e0910090109o3ea0c08eo7991fbab34311381@mail.gmail.com>
-References: <1255065768-10428-1-git-send-email-spearce@spearce.org> 
-	<1255065768-10428-2-git-send-email-spearce@spearce.org> <fabb9a1e0910090101g2de58824p6cfdea86c98e0191@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: Avoid spurious errors when rewriteRoot is
+	used.
+Date: Fri, 9 Oct 2009 01:34:44 -0700
+Message-ID: <20091009083444.GA31594@dcvr.yhbt.net>
+References: <200910091101.04116.angavrilov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 09 10:15:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alexander Gavrilov <angavrilov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 09 10:38:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwAaW-0001XR-6R
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 10:12:32 +0200
+	id 1MwAzI-0006VN-Q5
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 10:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756582AbZJIIKV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 04:10:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754822AbZJIIKV
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 04:10:21 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:54018 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754044AbZJIIKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 04:10:19 -0400
-Received: by ewy4 with SMTP id 4so391397ewy.37
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 01:09:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=DSptchd7Oz9+smnWprhg3GNZfOh/JJqQUJ5rvkO7cCY=;
-        b=RYTfqEDlBWvpjA6WOanlZ8gPhEaIEbMM9eRJKDYfpoFKaccac2Dej7dD8lh5Z6+XR1
-         Cbbc0ukcbJ6VCQnvamglYO+yRUGMw2jQ0BxnyVlT1iq3QlvW7TuN0beAAuRRFDYB6ZNG
-         3X7OXLe59DCcSnHIsv0zk6oNMHSnQpA+UcWrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=tuI6ZgYpmd/ippenVjOHXjt98w0G4yeZx+H6CnoohgcU/XjUiashoXYFxjTozTB4fs
-         ZVjXQ+rwz+iooCvs8G9dCONLXOpIv4BNT/UhD3S3QX2J/UorUFBw1MjSz5qpJdg9Ucol
-         ccm4UUd7AZEDw0X+/Lr46k6m+DmPdGZR8dIr4=
-Received: by 10.216.89.139 with SMTP id c11mr820035wef.198.1255075782126; Fri, 
-	09 Oct 2009 01:09:42 -0700 (PDT)
-In-Reply-To: <fabb9a1e0910090101g2de58824p6cfdea86c98e0191@mail.gmail.com>
+	id S1758077AbZJIIfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 04:35:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755129AbZJIIfY
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 04:35:24 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:38704 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754203AbZJIIfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 04:35:24 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 5B9F01F7A1;
+	Fri,  9 Oct 2009 08:34:45 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <200910091101.04116.angavrilov@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129753>
 
-Heya,
+Alexander Gavrilov <angavrilov@gmail.com> wrote:
+> After doing a rebase, git-svn checks that the SVN URL
+> is what it expects. However, it does not account for
+> rewriteRoot, which is a legitimate way for the URL
+> to change. This produces a lot of spurious errors.
+> 
+> Signed-off-by: Alexander Gavrilov <angavrilov@gmail.com>
 
-On Fri, Oct 9, 2009 at 10:01, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> + (c) Send one $GIT_URL/git-upload-pack request:
->
-> I don't think you documented what $GIT_URL/git-upload-pack means.
+Thanks Alexander,
 
-Ah, I didn't realize until I read 4/4 that this is just a regular
-request to the 'http://<host>:<port>/git-upload-pack' url, I was
-confused by the need to query
-"http://<host>:<port>/info/refs?service=git-upload-pack".
+Acked-by: Eric Wong <normalperson@yhbt.net>
+
+Fixed some line wrapping and pushed out to
+  git://git.bogomips.org/git-svn
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Eric Wong
