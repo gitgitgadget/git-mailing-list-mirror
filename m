@@ -1,75 +1,74 @@
-From: Vietor Liu <vietor.liu@gmail.com>
-Subject: [PATCH] git-gui: Fixed compatibility for screen height equal 600 px
-Date: Fri,  9 Oct 2009 08:32:56 +0800
-Message-ID: <1255048376-6009-1-git-send-email-vietor.liu@gmail.com>
-Cc: git@vger.kernel.org, Vietor Liu <vietor.liu@gmail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 02:31:58 2009
+From: bill lam <cbill.lam@gmail.com>
+Subject: combine git repo historically
+Date: Fri, 9 Oct 2009 09:22:54 +0800
+Message-ID: <20091009012254.GA3980@debian.b2j>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 09 03:27:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw3On-0004BL-8K
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 02:31:57 +0200
+	id 1Mw4GC-0006h8-7A
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 03:27:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757475AbZJIAaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Oct 2009 20:30:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757291AbZJIAaa
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 20:30:30 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:49785 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756791AbZJIAa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Oct 2009 20:30:29 -0400
-Received: by ewy4 with SMTP id 4so187597ewy.37
-        for <git@vger.kernel.org>; Thu, 08 Oct 2009 17:29:52 -0700 (PDT)
+	id S1757158AbZJIBXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Oct 2009 21:23:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756103AbZJIBXh
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Oct 2009 21:23:37 -0400
+Received: from mail-qy0-f172.google.com ([209.85.221.172]:43950 "EHLO
+	mail-qy0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751590AbZJIBXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Oct 2009 21:23:36 -0400
+Received: by qyk2 with SMTP id 2so6152632qyk.21
+        for <git@vger.kernel.org>; Thu, 08 Oct 2009 18:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=k4dcydUJwj99i8SfVBQmVu/RanpQKMO6pDP4Kk2k45Y=;
-        b=NVhJHnlLzWoIUhmPzbFtdHqGLQUFMHLmJBUGyEP53sO1hFyZHfl24t7T0RxtJV33/T
-         Xe67WayDEEfcCncvBQ92+z38sCi5c/AQ1WO4sMonD2cKPJ9fJ0TG1cC5eI2rLR3QSpGH
-         8KoFzaW5s9+pFurtjT02kjcTaJEbqe1Pz7EXo=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=NOd0Z70ZNDyzD9zBnHMnjQKEjWbczfhXVVrGPsm5Qvg=;
+        b=ntLp9a2V7TARIgwV3lm4hjckC0Kd4NsRjMHvYpTX1wrow++Ap9AG2LUnquXlURTgGh
+         GoRSLUMlvFxOxZTNJxz4SBD22id7hk+O7ZgwXeGGalH3oI/Yv39xTnGJYROcQa4f0Vka
+         AthF0c8BValdEYkPsBH5rVuT2fD6lR8K1lVao=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=mZKcGk6PVahk4g+GZeinI8X/U59JyCSwRfiNG8kfmvLzycHW/8f3LkTaaCZ+QRWs9e
-         9VnspvDdCDf6tZLlEgQBafEmwaUEMWkpQMSPBFDihe4yxJi4ZeQsDGuxTg6qGmDZvs9D
-         /rvbNDeYKxpFLzHDQDa8dClLEC9fVLdVpgi9g=
-Received: by 10.216.90.14 with SMTP id d14mr716261wef.30.1255048192543;
-        Thu, 08 Oct 2009 17:29:52 -0700 (PDT)
-Received: from localhost.localdomain ([222.131.235.191])
-        by mx.google.com with ESMTPS id 5sm1595363eyh.0.2009.10.08.17.29.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 08 Oct 2009 17:29:51 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc3
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=sNbWAqm/w+IBJJqkohpCINzegmWLFLdovO6jYK26mB18vJ2mOXX1L20cc+vR2081sz
+         f3iBWdMUI5LwsSGCp+NBEWqo+Fz7ZAlxMXbuAPRQ1em+R0F5uqfIyujq3fn1ggcaKxBx
+         uY8ZmgOoj/mkhW3a3/VDQPB3TvIeIqKTf6g/M=
+Received: by 10.224.113.153 with SMTP id a25mr1963184qaq.154.1255051380481;
+        Thu, 08 Oct 2009 18:23:00 -0700 (PDT)
+Received: from localhost (n219077027017.netvigator.com [219.77.27.17])
+        by mx.google.com with ESMTPS id 8sm31044qwj.34.2009.10.08.18.22.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 08 Oct 2009 18:22:59 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129727>
 
-When the screen height equal 600 px, The Main Window should be hide
-the Push button and Status bar. This patch support screen height
-equal 600 (e.g. 800*600 1024*600).
+I have two git repos, no branches.
 
-Signed-off-by: Vietor Liu <vietor.liu@gmail.com>
----
- git-gui.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+repo 1.
+  emptyrootcommit -- A ... M 
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 09b2720..037a1f2 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3083,7 +3083,7 @@ frame .vpane.lower.diff.body
- set ui_diff .vpane.lower.diff.body.t
- text $ui_diff -background white -foreground black \
- 	-borderwidth 0 \
--	-width 80 -height 15 -wrap none \
-+	-width 80 -height 5 -wrap none \
- 	-font font_diff \
- 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
- 	-yscrollcommand {.vpane.lower.diff.body.sby set} \
+repo 2.
+  emptyrootcommit -- N ... Z
+
+N was evolved from M but the time gap is large, how can I combine them
+into one repo
+
+emptyrootcommit -- A ... M -- N ... Z
+
+so that snapshots N .. Z will not be changed.
+
 -- 
-1.6.5.rc3
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
