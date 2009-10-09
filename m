@@ -1,125 +1,117 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: Re: [PATCH 1/2] t/test-lib.sh: support Korn shell by converting 
-	GIT_EXIT_OK to GIT_EXIT_CODE
-Date: Fri, 9 Oct 2009 17:37:23 -0500
-Message-ID: <ee63ef30910091537i40a8cc68y2513f07c91fb35b@mail.gmail.com>
-References: <1eweIwf5YoFwmLPWwEFN69a2f-EUnj_kgiagVJoVQYfNQeLjlpm12U84RKxhzjh0NJv36SqO12lAX2c_x0WSgA@cipher.nrlssc.navy.mil>
-	 <7vhbu8s151.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 5/9 v2] Documentation: clone: clarify discussion of initial
+ branch
+Date: Fri, 9 Oct 2009 18:07:39 -0500
+Message-ID: <20091009230739.GC4605@progeny.tock>
+References: <20091009101400.GA16549@progeny.tock>
+ <20091009101825.GE16558@progeny.tock>
+ <7vskdsqlvh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	drizzd@aon.at, peff@peff.net
-X-From: git-owner@vger.kernel.org Sat Oct 10 00:47:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 10 01:02:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwOFd-0003it-QQ
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 00:47:54 +0200
+	id 1MwOU8-00010e-ML
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 01:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761521AbZJIWo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 18:44:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756535AbZJIWo6
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 18:44:58 -0400
-Received: from mail-vw0-f203.google.com ([209.85.212.203]:34263 "EHLO
-	mail-vw0-f203.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934533AbZJIWo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 18:44:57 -0400
-Received: by vws41 with SMTP id 41so4007996vws.4
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 15:44:20 -0700 (PDT)
+	id S933537AbZJIXAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 19:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757121AbZJIXAE
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 19:00:04 -0400
+Received: from mail-qy0-f172.google.com ([209.85.221.172]:40949 "EHLO
+	mail-qy0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752532AbZJIXAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 19:00:03 -0400
+Received: by qyk2 with SMTP id 2so6927272qyk.21
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 15:59:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:content-type;
-        bh=FWGcVRNl2QJr04A+qfBzk1Sin1nUqnkE+HQuKZwEip0=;
-        b=gAewKOKLxOHKZSJ+R5nwAXxjhBV1zDWOwYumskOT3P6bM8LcknK+/wRADUK1aMW5pp
-         93EjhQ4lLHrxIN8RClySbXIXo2Rvbf3UZaEkehkPQtZgvI0g+0nNE85PBx9YWR0FRC58
-         14dUqKDdivQnvJq7vawC3a40hzqrwOujgwYqU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=q9+A8OdMoFLOO+QQZHkHS6GEAYn9ycwripj7LtFZOQc=;
+        b=Phf1jRok3viS4G9REZKVjr1b9iqLDs0UQDhFmhZw1zur1CamP3qZuvfq7CETN2LIww
+         HqL0UN5b2A67t4RT9DaEMHsQvjN3V1CQt3isOEfwLEOIE4+j2GPwu1G+p3r+Gudr8G51
+         Oi/7vyz/uRVQnnQxxoFUcHYaNKAfcJfe046Hc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=p0WoqN927rEHbdh6vvYowpraVkeevoVTpdYp67oxzsRY79xxyS9fuNYlwUva8xko8r
-         P5dKcSBQHKJhh1tygpxIlo2OVgmknFLytwl6qTrQfB0kjkBOpQ1cyGwximCB8P63W92e
-         3UDTtqG6keSLE5kiatZN7FwBwTBSo66SBGIUU=
-Received: by 10.220.15.71 with SMTP id j7mr4924148vca.79.1255127843974; Fri, 
-	09 Oct 2009 15:37:23 -0700 (PDT)
-In-Reply-To: <7vhbu8s151.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=BRosfiLCCiJ+UVxTu+xbb0cflg29QpPj0p/cP+Uq1+Qd2wENf4ZJl1aI1fJ6Br9Y1E
+         qFv3hveiuQy7eSlnz7eLenxKIF/l7q2s/I0iWzq/YKHuV2WEzg3cJXK5f7J5HzTWzWxD
+         g+vggNlnr1vm2EfKpmPI+N+w+cQ5q2jVpaFbU=
+Received: by 10.224.13.66 with SMTP id b2mr3162384qaa.370.1255129166071;
+        Fri, 09 Oct 2009 15:59:26 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 4sm11000qwe.38.2009.10.09.15.59.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 09 Oct 2009 15:59:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vskdsqlvh.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129856>
 
-I'm away from a computer right now. Junio, if gmail is showing me the
-entirety of your workaround, then no, I don't think that will work.
-Your code will always exit non-zero, but there are cases where 'exit
-0' is called and a '0' exit status is desired. e.g. when test_done is
-called.
+When saying the initial branch is equal to the currently active
+remote branch, it is probably intended that the branch heads
+point to the same commit.  Maybe it would be more useful to a
+new user to emphasize that the tree contents and history are the
+same.
 
-I'll look more closely at the suggestions when I get back to a computer.
+More important, probably, is that this new branch is set up so
+that "git pull" merges changes from the corresponding remote
+branch.  The next paragraph addresses that directly.  What the
+reader needs to know to begin with is that (1) the initial branch
+is your own; if you do not pull, it won't get updated, and that
+(2) the initial branch starts out at the same commit as the
+upstream.
 
--brandon
+Thanks to Junio C Hamano for the wording.
 
-On 10/9/09, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Casey <casey@nrlssc.navy.mil> writes:
->
->> From: Brandon Casey <drafnel@gmail.com>
->>
->> Commit 6e7b5aaf introduced the concept of GIT_EXIT_OK as a way to indicate
->> to die(), the exit handler, whether the exit was initiated by the test
->> harness, or whether it was unexpected.  die() expects $? to contain the
->> value passed to exit(), and when GIT_EXIT_OK is set, die() calls exit with
->> the value in $?.  This works as expected when using the Bash shell.  For
->> the Korn shell, $? has the value of the last executed statement _before_
->> the call to exit.  If that statement completed successfully, then die()
->> would incorrectly exit with a successful status when GIT_EXIT_OK is set.
->
-> That's somewhat unexpected, as I did not think this was an anomaly in
-> bash.  FWIW, dash seems to behave the same way.
->
->     The environment in which the shell executes a trap on EXIT shall be
->     identical to the environment immediately after the last command executed
->     before the trap on EXIT was taken.
->
-> If the trap action was triggered because somebody called "exit 13", $? is
-> expected to contain that value, because that is the last command executed
-> before the trap on EXIT was taken, no?
->
->> So, rather than relying on the behavior of Bash in order to get the exit
->> code from $? inside die(), change GIT_EXIT_OK into GIT_EXIT_CODE, and set
->> it to the code that we want to exit with.  This allows the test suite to
->> be run with the Korn shell.
->
-> I wonder if the attached is a more clear and contained workaround for this
-> issue.
->
-> ---
->  t/test-lib.sh |    9 ++++++++-
->  1 files changed, 8 insertions(+), 1 deletions(-)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index f2ca536..c47a295 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -185,7 +185,14 @@ die () {
->  	code=$?
->  	if test -n "$GIT_EXIT_OK"
->  	then
-> -		exit $code
-> +		# Korn does not update $? when "exit 47" triggers
-> +		# the EXIT trap.
-> +		if test $code = 0
-> +		then
-> +			exit 1
-> +		else
-> +			exit $code
-> +		fi
->  	else
->  		echo >&5 "FATAL: Unexpected exit with code $code"
->  		exit 1
->
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
 
+> Perhaps
+> 
+>     ... creates and checks out an initial branch that is forked from the
+>     cloned repository's currently active branch.
+> 
+> would convey that (1) the initial branch is your own; if you do not pull,
+> you won't get updated, and that (2) the initial branch starts out at the
+> same commit as the upstream.
+
+That does work better.  Explanation stolen for the commit message ---
+I hope you don't mind.
+
+Thanks,
+Jonathan
+
+ Documentation/git-clone.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index aacf4fd..5ebcba1 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -19,8 +19,9 @@ DESCRIPTION
+ 
+ Clones a repository into a newly created directory, creates
+ remote-tracking branches for each branch in the cloned repository
+-(visible using `git branch -r`), and creates and checks out an initial
+-branch equal to the cloned repository's currently active branch.
++(visible using `git branch -r`), and creates and checks out an
++initial branch that is forked from the cloned repository's
++currently active branch.
+ 
+ After the clone, a plain `git fetch` without arguments will update
+ all the remote-tracking branches, and a `git pull` without
 -- 
-Sent from my mobile device
+1.6.5.rc1.199.g596ec
