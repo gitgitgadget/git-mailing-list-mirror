@@ -1,121 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: What's cooking in git.git (Oct 2009, #01; Wed, 07)
-Date: Thu, 08 Oct 2009 23:46:10 -0700
-Message-ID: <7vk4z56p59.fsf@alter.siamese.dyndns.org>
+Date: Thu, 08 Oct 2009 23:47:09 -0700
+Message-ID: <7v7hv56p3m.fsf@alter.siamese.dyndns.org>
 References: <7viqeqjsx6.fsf@alter.siamese.dyndns.org>
- <m3iqepgxcc.fsf@localhost.localdomain>
+ <4ACD8D8E.3060606@gmail.com>
+ <40aa078e0910081115q1bf924e8s22f3ee11dbe7c8b7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 08:47:22 2009
+Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 09 08:51:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mw9G4-0003ce-Td
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:47:21 +0200
+	id 1Mw9Jh-0005Ea-I6
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 08:51:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279AbZJIGrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 02:47:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752917AbZJIGrB
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:47:01 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47916 "EHLO
+	id S1756139AbZJIGsA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 02:48:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755994AbZJIGsA
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 02:48:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49343 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbZJIGrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 02:47:00 -0400
+	with ESMTP id S1755787AbZJIGr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 02:47:59 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EE4C470423;
-	Fri,  9 Oct 2009 02:46:16 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EA17051AF8;
+	Fri,  9 Oct 2009 02:47:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MQpEsiox4sgPUSKBFJUdnbyMkjI=; b=tA9gJT
-	UP/Gy8zgvTypdFPcNR2KpAqX9Fb/+1Ag74izdNktkcG04YFVjCAdUteBr5BYVqtF
-	fr4+0hY3S50qAF1QTr97rjV6lLc0UdgV4NTdeYqYb6cdAm2aPzWD+HuQ9JooZBrj
-	DDi/E9Kd4W7cklYJU6OjfaLCnvZapMPgk/Bxw=
+	:content-type; s=sasl; bh=eCfhFYAV8JkNuzyFNphJn6qsfKU=; b=mZCpbf
+	dGa/1K0DX4xEad9VKbhnseC3sP87Xy88FSq0qrnLLmGn33PMaPDc7/83QqtE56Va
+	vtfGUTFyisHww8vgoYtRjNarxOIxB2XZZDnUF/nXGlM/ofY+azmGkqr1PwK1KQks
+	iLkXMhyoaDSzMa6Djr5IC0ekjFXG+l4dNisok=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S17HgD0PCOnYinccc+2bFphCrEo3HUQv
-	sYV4ZVkfmG7S35Fg+lq8YXAJZ7xapUl/cJES27BUqgGQHXvf/3+DdSSRBiGWEjRJ
-	ko21T200zQMRI3zVwD8sXl7vSLbHfa3X8bRr65oqi9i+7PtKndxj6zaqfoqKM99V
-	FCPKOJkFMgk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D0C5F70422;
-	Fri,  9 Oct 2009 02:46:14 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=hMz0ZEd5mAwE5+klEgxTTjRuWAIb6FGT
+	5AWYZz2/K7+gLaxRkjDaru6I/sWKeGXBupmjcpneW6q1rSk6CebCfkEPeuunxAFY
+	aWC4p8Ull87LEC6X2AS3HAMSDiTS7V0H/OMND9U2Ts+cAtNUCMqmWdq7bfbrVScI
+	+I2yI9iqszY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC87F51AF7;
+	Fri,  9 Oct 2009 02:47:14 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BD2A670421; Fri,  9 Oct 2009
- 02:46:11 -0400 (EDT)
-In-Reply-To: <m3iqepgxcc.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Thu\, 08 Oct 2009 18\:38\:48 -0700 \(PDT\)")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 236CB51AF6; Fri,  9 Oct
+ 2009 02:47:11 -0400 (EDT)
+In-Reply-To: <40aa078e0910081115q1bf924e8s22f3ee11dbe7c8b7@mail.gmail.com>
+ (Erik Faye-Lund's message of "Thu\, 8 Oct 2009 20\:15\:58 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7082F8DA-B49F-11DE-8D60-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 943B7E96-B49F-11DE-AC09-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129740>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Erik Faye-Lund <kusmabite@googlemail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> --------------------------------------------------
->> [New Topics]
->
->> * jn/gitweb-patch (2009-09-30) 1 commit
->>  - gitweb: Do not show 'patch' link in 'commit' view for merges
->> 
->> jk: After some comments with Jakub, I think the code is right but he
->> promised a re-roll with more in the commit message.
->
-> Not only better commit message, but a more complete patch as well.
-
-Ok; I'll wait.
-
->> * mr/gitweb-snapshot (2009-09-26) 2 commits
->>  - gitweb: append short hash ids to snapshot files
->>  - gitweb: check given hash before trying to create snapshot
->> 
->> jk: He posted a v5 of his series. I didn't look at it closely, but Jakub
->> ack'd it.
-> ...
-> In short: first patch is a go, second needs more work.
-
-Ok; I'll merge fdb0c36 (gitweb: check given hash before trying to create
-snapshot, 2009-09-26) to 'next'.
-
->> * jc/pretty-lf (2009-10-04) 1 commit
->>  - Pretty-format: %[+-]x to tweak inter-item newlines
->> 
->> I am not happy with this one yet.  I am contemplating to introduce a new
->> syntax "%[magic(param)<anything>%]" to generalize expressions of this and
->> line wrapping features in an extensible way.
+> On Thu, Oct 8, 2009 at 8:58 AM, Marius Storm-Olsen <mstormo@gmail.com> wrote:
+>> Junio C Hamano said the following on 08.10.2009 08:33:
+>>>
+>>> * ef/msys-imap (2009-10-03) 7 commits
 >> ...
-> So... it is magic %[...%] or %{...} or %{...%}?
-
-The escape does not matter. %() is fine, too.  It is non-essential for the
-purpose of the upcoming release so I have backburnered coming up with and
-thinking the details through.
-
->> --------------------------------------------------
->> [Cooking]
+>> Don't forget about the MSVC patch ontop of this series:
+>> Message-ID: <18cd41840910031300i32c74b15t74eb9eee23ff8469@mail.gmail.com>
+>> Subject: [PATCH] MSVC: Enable OpenSSL, and translate -lcrypto
 >
->> * jn/gitweb-show-size (2009-09-07) 1 commit
->>  - gitweb: Add 'show-sizes' feature to show blob sizes in tree view
->
-> What this one requires (beside better name for a feature)?
-
-Name before 'next', and then the usual cooking, I guess.
-
->> * jn/gitweb-blame (2009-09-01) 5 commits
->> ...
->> Ajax-y blame.
->
-> I reordered patches so JSMIN one is first (as it is less
-> controversial), but the 'create blame_incremental links' one needs
-> more work.
-
-Ok; I'll wait.
+> I will include it in the next round I send out (unless someone objects)
 
 Thanks.
