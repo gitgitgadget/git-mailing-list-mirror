@@ -1,58 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCHv2 2/2] completion: fix alias listings with newlines
-Date: Fri, 9 Oct 2009 07:29:50 -0700
-Message-ID: <20091009142950.GS9261@spearce.org>
-References: <1255069304-8953-1-git-send-email-bebarino@gmail.com> <1255069304-8953-2-git-send-email-bebarino@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git log -S not finding all commits?
+Date: Fri, 09 Oct 2009 16:26:25 +0200
+Message-ID: <vpq4oq8prse.fsf@bauges.imag.fr>
+References: <7ae12651.522df17b.4acda0f5.21a31@o2.pl> <4ACDACE6.9060509@op5.se>
+	<362436ca.6b5d0fc3.4acdc7e1.41b23@o2.pl>
+	<vpqbpkixgea.fsf@bauges.imag.fr> <vpq63aqxflu.fsf@bauges.imag.fr>
+	<86tyy9qz08.fsf@blue.stonehenge.com> <vpq1vldx7xx.fsf@bauges.imag.fr>
+	<864oq8r795.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 09 16:40:31 2009
+Cc: Daniel <mjucde@o2.pl>, Andreas Ericsson <ae@op5.se>,
+	git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Fri Oct 09 16:40:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwGdd-0007iK-GJ
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 16:40:09 +0200
+	id 1MwGdb-0007iK-Ts
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 16:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760949AbZJIOa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 10:30:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756503AbZJIOa1
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 10:30:27 -0400
-Received: from george.spearce.org ([209.20.77.23]:56463 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751882AbZJIOa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 10:30:27 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id B5B65381FF; Fri,  9 Oct 2009 14:29:50 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1255069304-8953-2-git-send-email-bebarino@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1760933AbZJIO1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 10:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760906AbZJIO1Y
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 10:27:24 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39004 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760852AbZJIO1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 10:27:23 -0400
+Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n99EQOVP020543
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 9 Oct 2009 16:26:24 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by archeboc.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1MwGQL-0001sF-Sf; Fri, 09 Oct 2009 16:26:25 +0200
+In-Reply-To: <864oq8r795.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Fri\, 09 Oct 2009 07\:07\:02 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 09 Oct 2009 16:26:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n99EQOVP020543
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1255703184.28451@kAVHnHkpp8Yue0F4n3fZ4g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129806>
 
-Stephen Boyd <bebarino@gmail.com> wrote:
-> Aliases with newlines have been a problem since commit 56fc25f (Bash
-> completion support for remotes in .git/config., 2006-11-05). The chance
-> of the problem occurring has been slim at best, until commit 518ef8f
-> (completion: Replace config --list with --get-regexp, 2009-09-11)
-> removed the case statement introduced by commit 56fc25f. Before removing
-> the case statement, most aliases with newlines would work unless they
-> were specially crafted as follows
-...
-> Hannes has convinced me to go this route. I don't really see a problem, it
-> basically reverts to broken behavior that nobody's complained about in 3
-> years. At least it's less broken?
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-Yay.  Given that we have no better solution easily available,
-I like the idea of just reverting to the behavior we have had
-for the past 3 years.  Thanks.
+>   .. | perl -ln0e 'print if /this/'
 
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
- 
+Ah, good. I would have done this with 3 lines of code, glad to see a
+solution with a single more character ;-).
+
+Just updated the FAQ.
+
 -- 
-Shawn.
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
