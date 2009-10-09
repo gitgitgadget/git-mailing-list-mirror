@@ -1,119 +1,119 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] t/test-lib.sh: support Korn shell by converting
- GIT_EXIT_OK to GIT_EXIT_CODE
-Date: Fri, 9 Oct 2009 14:28:12 -0500
-Message-ID: <20091009192812.GA4122@progeny.tock>
-References: <1eweIwf5YoFwmLPWwEFN69a2f-EUnj_kgiagVJoVQYfNQeLjlpm12U84RKxhzjh0NJv36SqO12lAX2c_x0WSgA@cipher.nrlssc.navy.mil>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
+Date: Fri, 09 Oct 2009 12:27:35 -0700 (PDT)
+Message-ID: <m3eipcgyfv.fsf@localhost.localdomain>
+References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
+	<1255065768-10428-2-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, drizzd@aon.at, peff@peff.net,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Oct 09 21:22:48 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 09 21:31:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwL39-0004IG-JM
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 21:22:47 +0200
+	id 1MwLB9-0008De-Oc
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 21:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761088AbZJITUl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 15:20:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760877AbZJITUl
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 15:20:41 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:37700 "EHLO
+	id S933728AbZJIT2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 15:28:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761341AbZJIT2P
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 15:28:15 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:52128 "EHLO
 	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758847AbZJITUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 15:20:40 -0400
-Received: by bwz6 with SMTP id 6so1839556bwz.37
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 12:20:02 -0700 (PDT)
+	with ESMTP id S1761326AbZJIT2O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 15:28:14 -0400
+Received: by bwz6 with SMTP id 6so1844524bwz.37
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 12:27:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=7XA4CJ3tGs6/8cynEL4bZX5N1FRBqcml6VOGS1NaAH8=;
-        b=pZ+rcAC70sKZL7h3JFFs4BPRf8TaJ4aF5bqpXSQ4fStMdhYwUTE9CtFDsW/AEjJ+j7
-         jt2Itfk593qhE5n/H/s+nJgW2l1um3XCuVSAlO0HWmq/5b6nZp+kuv1MYxFSbF/x6YnG
-         p+B5Wj4VaJWUSXH/3J/QlE1GlDoeNmS32Pm8E=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=kgfFz9WHSX4/7rfREx3I3qXeRviBQFN5q16DcloZKhY=;
+        b=K5Rls+kZjxj8lsvtaJ7IA3m0GG+1ZvnJuTrx1hBU8XrNoT5/RtYgCXHlopeFhWCi1x
+         neU6nyOwTE5Sn2ZRxMje31C29PQqJtjI9qDz0fBilW5ksHvpOwWJ84nUSJNrJXGDLQHe
+         +OiL3AY/Sz6BXaslasAyb1XDCtjnkn22Wx6Gw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=djRqSAE4iJuespuv0Im9NimWsS02JUxenoAmWPZ7IeDqk+NN/mX479EWc8QAJVOI3d
-         TR0riVQsRzGlXNCTShqiDjCiiWAYKDH7oRFF6Ps1u/k6j4ZYfo+ZX4Dzwh6RQGDeoyq2
-         bWcGR2PxlvfJ0wVnLFUjkpaYBTY+4jI8vvp7U=
-Received: by 10.103.87.26 with SMTP id p26mr1268705mul.44.1255116002820;
-        Fri, 09 Oct 2009 12:20:02 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id e9sm120033muf.39.2009.10.09.12.19.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 09 Oct 2009 12:20:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1eweIwf5YoFwmLPWwEFN69a2f-EUnj_kgiagVJoVQYfNQeLjlpm12U84RKxhzjh0NJv36SqO12lAX2c_x0WSgA@cipher.nrlssc.navy.mil>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=WCL8xwZ/xdnnM9VCCdV/qpiYNDZlAyuL59ujgIjRPucq6Sl0wgRKSrbUXDjKWp0Q9r
+         0Tp8EHer1UdYHf1h1nwB9qP0jg5ccy3AGdQzdwVXe7HGTqA6DvftSHIRuiWY3mWsBL++
+         e0TUx+jil/gPojI9cGH116WtpCYQb/pu4q4/o=
+Received: by 10.102.211.35 with SMTP id j35mr1269744mug.35.1255116456774;
+        Fri, 09 Oct 2009 12:27:36 -0700 (PDT)
+Received: from localhost.localdomain (abve46.neoplus.adsl.tpnet.pl [83.8.202.46])
+        by mx.google.com with ESMTPS id y6sm781561mug.10.2009.10.09.12.27.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Oct 2009 12:27:35 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n99JRXgY009026;
+	Fri, 9 Oct 2009 21:27:34 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id n99JRWSD009022;
+	Fri, 9 Oct 2009 21:27:32 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1255065768-10428-2-git-send-email-spearce@spearce.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129835>
 
-Brandon Casey wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> So, rather than relying on the behavior of Bash in order to get the e=
-xit
-> code from $? inside die(), change GIT_EXIT_OK into GIT_EXIT_CODE, and=
- set
-> it to the code that we want to exit with.  This allows the test suite=
- to
-> be run with the Korn shell.
->=20
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> +	empty_list     = PKT-LINE(id SP "capabilities^{}" NUL cap_list LF)
+> +
+> +	non_empty_list = PKT-LINE(id SP name NUL cap_list LF)
+> +	                 *ref_record
+> +
+> +	cap_list      = *(SP capability) SP
 
-Sounds like a good idea.  A few thoughts:
+Errr... are you sure?  Because from examples it looks like cap_list
+(capabilities list) is a list of space *separated* capabilities, while
+the above requires also both leading and trailing space.  Shouldn't it
+be
 
-start_httpd() from lib-httpd.sh uses a similar pattern:
+	cap_list      = capability *(SP capability)
 
-lib-httpd.sh:96:        trap 'code=3D$?; stop_httpd; (exit $code); die'=
- EXIT
+Also the format for capability is not defined; I guess only 
+a-z, 0-9, '-' and '_' are allowed in capability name.
 
-It is probably worth changing that, too, unless GIT_TEST_HTTPD would no=
-t
-work on these platforms for some other reason.
 
-"GIT_EXIT_CODE=3D1; exit 1" sounds repetitive to my ear.  It=E2=80=99s =
-probably just
-me, but if not, it might be worth adding a function like
+BTW. is it possible to not have capability list?
 
-	expected_exit() {
-		GIT_EXIT_CODE=3D$1
-		exit "$1"
-	}
+> +	HEX           = "0".."9" | "a".."f"
 
-I=E2=80=99m not sure.
+Do you plan allowing also upper case letters, while server and client
+SHOULD use lowercase?  Because if you do, then RFC 5234 which defines
+ABNF you seem to be using here has HEXDIG defined.
 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index f2ca536..64e793a 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-[...]
-> @@ -183,16 +183,16 @@ test_success=3D0
-> =20
->  die () {
->  	code=3D$?
-> -	if test -n "$GIT_EXIT_OK"
-> +	if test -n "$GIT_EXIT_CODE"
->  	then
-> -		exit $code
-> +		exit $GIT_EXIT_CODE
->  	else
->  		echo >&5 "FATAL: Unexpected exit with code $code"
->  		exit 1
->  	fi
->  }
+> +	NL            = <US-ASCII NUL, null (0)>
 
-$code can be removed now, right?
+Why not NUL?
 
-Jonathan
+> +	LF            = <US-ASCII LF,  linefeed (10)>
+> +	SP            = <US-ASCII SP,  horizontal-tab (9)>
+                                       ^^^^^^^^^^^^^^-- o'rly?
+
+Those are pre-defined in ABNF, e.g.
+
+	SP             =  %x20
+
+> +References
+> +----------
+> +
+> +link:http://www.ietf.org/rfc/rfc1738.txt[RFC 1738: Uniform Resource Locators (URL)]
+> +link:http://www.ietf.org/rfc/rfc2616.txt[RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1]
+
+You should also reference the following RFCs:
+ * "RFC 5234: Augmented BNF for Syntax Specifications: ABNF"
+ * "RFC 2119: Key words for use in RFCs to Indicate Requirement Levels"
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
