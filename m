@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 13/22] Refactor notes code to concatenate multiple notes
- annotating the same object
-Date: Fri, 09 Oct 2009 12:22:09 +0200
-Message-ID: <1255083738-23263-15-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 05/22] Teach "-m <msg>" and "-F <file>" to
+ "git notes edit"
+Date: Fri, 09 Oct 2009 12:22:01 +0200
+Message-ID: <1255083738-23263-7-git-send-email-johan@herland.net>
 References: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -17,26 +17,26 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClT-0004PL-Hs
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:59 +0200
+	id 1MwClQ-0004PL-Qt
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760697AbZJIKYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 06:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760695AbZJIKYX
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:24:23 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:58012 "EHLO
-	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760688AbZJIKYW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:24:22 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
+	id S1760681AbZJIKXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 06:23:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760676AbZJIKXw
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:52 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:54694 "EHLO
+	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1760678AbZJIKXu (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:50 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BTBSU68I20@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:54 +0200 (MEST)
+ with ESMTP id <0KR800BOUSTP9320@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:37 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:54 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:37 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,327 +45,209 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129784>
 
-Currently, having multiple notes referring to the same commit from various
-locations in the notes tree is strongly discouraged, since only one of those
-notes will be parsed and shown.
+The "-m" and "-F" options are already the established method
+(in both git-commit and git-tag) to specify a commit/tag message
+without invoking the editor. This patch teaches "git notes edit"
+to respect the same options for specifying a notes message without
+invoking the editor.
 
-This patch teaches the notes code to _concatenate_ multiple notes that
-annotate the same commit. Notes are concatenated by creating a new blob
-object containing the concatenation of the notes in question, and
-replacing them with the concatenated note in the internal notes tree
-structure.
+Multiple "-m" and/or "-F" options are concatenated as separate
+paragraphs.
 
-Getting the concatenation right requires being more proactive in unpacking
-subtree entries in the internal notes tree structure, so that we don't return
-a note prematurely (i.e. before having found all other notes that annotate
-the same object). As such, this patch may incur a small performance penalty.
+The patch also updates the "git notes" documentation and adds
+selftests for the new functionality. Unfortunately, the added
+selftests include a couple of lines with trailing whitespace
+(without these the test will fail). This may cause git to warn
+about "whitespace errors".
 
-Suggested-by: Sam Vilain <sam@vilain.net>
-Re-suggested-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+This patch has been improved by the following contributions:
+- Thomas Rast: fix trailing whitespace in t3301
+
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |  243 +++++++++++++++++++++++++++++++++++++++++---------------------
- 1 files changed, 161 insertions(+), 82 deletions(-)
+ Documentation/git-notes.txt |   16 ++++++++++-
+ git-notes.sh                |   64 +++++++++++++++++++++++++++++++++++++-----
+ t/t3301-notes.sh            |   36 ++++++++++++++++++++++++
+ 3 files changed, 107 insertions(+), 9 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index 210c4b2..50a4672 100644
---- a/notes.c
-+++ b/notes.c
-@@ -59,115 +59,196 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 		unsigned int n);
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 7136016..94cceb1 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -8,7 +8,7 @@ git-notes - Add/inspect commit notes
+ SYNOPSIS
+ --------
+ [verse]
+-'git-notes' (edit | show) [commit]
++'git-notes' (edit [-F <file> | -m <msg>] | show) [commit]
  
- /*
-- * To find a leaf_node:
-+ * Search the tree until the appropriate location for the given key is found:
-  * 1. Start at the root node, with n = 0
-- * 2. Use the nth nibble of the key as an index into a:
-- *    - If a[n] is an int_node, recurse into that node and increment n
-- *    - If a leaf_node with matching key, return leaf_node (assert note entry)
-+ * 2. If a[0] at the current level is a matching subtree entry, unpack that
-+ *    subtree entry and remove it; restart search at the current level.
-+ * 3. Use the nth nibble of the key as an index into a:
-+ *    - If a[n] is an int_node, recurse from #2 into that node and increment n
-  *    - If a matching subtree entry, unpack that subtree entry (and remove it);
-  *      restart search at the current level.
-- *    - Otherwise, we end up at a NULL pointer, or a non-matching leaf_node.
-- *      Backtrack out of the recursion, one level at a time and check a[0]:
-- *      - If a[0] at the current level is a matching subtree entry, unpack that
-- *        subtree entry (and remove it); restart search at the current level.
-+ *    - Otherwise, we have found one of the following:
-+ *      - a subtree entry which does not match the key
-+ *      - a note entry which may or may not match the key
-+ *      - an unused leaf node (NULL)
-+ *      In any case, set *tree and *n, and return pointer to the tree location.
-  */
--static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
--		const unsigned char *key_sha1)
-+static void **note_tree_search(struct int_node **tree,
-+		unsigned char *n, const unsigned char *key_sha1)
- {
- 	struct leaf_node *l;
--	unsigned char i = GET_NIBBLE(n, key_sha1);
--	void *p = tree->a[i];
-+	unsigned char i;
-+	void *p = (*tree)->a[0];
+ DESCRIPTION
+ -----------
+@@ -33,6 +33,20 @@ show::
+ 	Show the notes for a given commit (defaults to HEAD).
  
-+	if (GET_PTR_TYPE(p) == PTR_TYPE_SUBTREE) {
-+		l = (struct leaf_node *) CLR_PTR_TYPE(p);
-+		if (!SUBTREE_SHA1_PREFIXCMP(key_sha1, l->key_sha1)) {
-+			/* unpack tree and resume search */
-+			(*tree)->a[0] = NULL;
-+			load_subtree(l, *tree, *n);
-+			free(l);
-+			return note_tree_search(tree, n, key_sha1);
-+		}
-+	}
-+
-+	i = GET_NIBBLE(*n, key_sha1);
-+	p = (*tree)->a[i];
- 	switch(GET_PTR_TYPE(p)) {
- 	case PTR_TYPE_INTERNAL:
--		l = note_tree_find(CLR_PTR_TYPE(p), n + 1, key_sha1);
--		if (l)
--			return l;
--		break;
--	case PTR_TYPE_NOTE:
--		l = (struct leaf_node *) CLR_PTR_TYPE(p);
--		if (!hashcmp(key_sha1, l->key_sha1))
--			return l; /* return note object matching given key */
--		break;
-+		*tree = CLR_PTR_TYPE(p);
-+		(*n)++;
-+		return note_tree_search(tree, n, key_sha1);
- 	case PTR_TYPE_SUBTREE:
- 		l = (struct leaf_node *) CLR_PTR_TYPE(p);
- 		if (!SUBTREE_SHA1_PREFIXCMP(key_sha1, l->key_sha1)) {
- 			/* unpack tree and resume search */
--			tree->a[i] = NULL;
--			load_subtree(l, tree, n);
-+			(*tree)->a[i] = NULL;
-+			load_subtree(l, *tree, *n);
- 			free(l);
--			return note_tree_find(tree, n, key_sha1);
-+			return note_tree_search(tree, n, key_sha1);
- 		}
--		break;
--	case PTR_TYPE_NULL:
-+		/* fall through */
- 	default:
--		assert(!p);
--		break;
-+		return &((*tree)->a[i]);
- 	}
-+}
  
--	/*
--	 * Did not find key at this (or any lower) level.
--	 * Check if there's a matching subtree entry in tree->a[0].
--	 * If so, unpack tree and resume search.
--	 */
--	p = tree->a[0];
--	if (GET_PTR_TYPE(p) != PTR_TYPE_SUBTREE)
--		return NULL;
--	l = (struct leaf_node *) CLR_PTR_TYPE(p);
--	if (!SUBTREE_SHA1_PREFIXCMP(key_sha1, l->key_sha1)) {
--		/* unpack tree and resume search */
--		tree->a[0] = NULL;
--		load_subtree(l, tree, n);
--		free(l);
--		return note_tree_find(tree, n, key_sha1);
-+/*
-+ * To find a leaf_node:
-+ * Search to the tree location appropriate for the given key:
-+ * If a note entry with matching key, return the note entry, else return NULL.
-+ */
-+static struct leaf_node *note_tree_find(struct int_node *tree, unsigned char n,
-+		const unsigned char *key_sha1)
-+{
-+	void **p = note_tree_search(&tree, &n, key_sha1);
-+	if (GET_PTR_TYPE(*p) == PTR_TYPE_NOTE) {
-+		struct leaf_node *l = (struct leaf_node *) CLR_PTR_TYPE(*p);
-+		if (!hashcmp(key_sha1, l->key_sha1))
-+			return l;
- 	}
- 	return NULL;
- }
++OPTIONS
++-------
++-m <msg>::
++	Use the given note message (instead of prompting).
++	If multiple `-m` (or `-F`) options are given, their
++	values are concatenated as separate paragraphs.
++
++-F <file>::
++	Take the note message from the given file.  Use '-' to
++	read the note message from the standard input.
++	If multiple `-F` (or `-m`) options are given, their
++	values are concatenated as separate paragraphs.
++
++
+ Author
+ ------
+ Written by Johannes Schindelin <johannes.schindelin@gmx.de>
+diff --git a/git-notes.sh b/git-notes.sh
+index f06c254..e642e47 100755
+--- a/git-notes.sh
++++ b/git-notes.sh
+@@ -1,16 +1,59 @@
+ #!/bin/sh
  
-+/* Create a new blob object by concatenating the two given blob objects */
-+static int concatenate_notes(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
-+{
-+	char *cur_msg, *new_msg, *buf;
-+	unsigned long cur_len, new_len, buf_len;
-+	enum object_type cur_type, new_type;
-+	int ret;
-+
-+	/* read in both note blob objects */
-+	new_msg = read_sha1_file(new_sha1, &new_type, &new_len);
-+	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
-+		free(new_msg);
-+		return 0;
-+	}
-+	cur_msg = read_sha1_file(cur_sha1, &cur_type, &cur_len);
-+	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
-+		free(cur_msg);
-+		free(new_msg);
-+		hashcpy(cur_sha1, new_sha1);
-+		return 0;
-+	}
-+
-+	/* we will separate the notes by a newline anyway */
-+	if (cur_msg[cur_len - 1] == '\n')
-+		cur_len--;
-+
-+	/* concatenate cur_msg and new_msg into buf */
-+	buf_len = cur_len + 1 + new_len;
-+	buf = (char *) xmalloc(buf_len);
-+	memcpy(buf, cur_msg, cur_len);
-+	buf[cur_len] = '\n';
-+	memcpy(buf + cur_len + 1, new_msg, new_len);
-+
-+	free(cur_msg);
-+	free(new_msg);
-+
-+	/* create a new blob object from buf */
-+	ret = write_sha1_file(buf, buf_len, "blob", cur_sha1);
-+	free(buf);
-+	return ret;
-+}
-+
- /*
-  * To insert a leaf_node:
-- * 1. Start at the root node, with n = 0
-- * 2. Use the nth nibble of the key as an index into a:
-- *    - If a[n] is NULL, store the tweaked pointer directly into a[n]
-- *    - If a[n] is an int_node, recurse into that node and increment n
-- *    - If a[n] is a leaf_node:
-- *      1. Check if they're equal, and handle that (abort? overwrite?)
-- *      2. Create a new int_node, and store both leaf_nodes there
-- *      3. Store the new int_node into a[n].
-+ * Search to the tree location appropriate for the given leaf_node's key:
-+ * - If location is unused (NULL), store the tweaked pointer directly there
-+ * - If location holds a note entry that matches the note-to-be-inserted, then
-+ *   concatenate the two notes.
-+ * - If location holds a note entry that matches the subtree-to-be-inserted,
-+ *   then unpack the subtree-to-be-inserted into the location.
-+ * - If location holds a matching subtree entry, unpack the subtree at that
-+ *   location, and restart the insert operation from that level.
-+ * - Else, create a new int_node, holding both the node-at-location and the
-+ *   node-to-be-inserted, and store the new int_node into the location.
-  */
--static int note_tree_insert(struct int_node *tree, unsigned char n,
--		const struct leaf_node *entry, unsigned char type)
-+static void note_tree_insert(struct int_node *tree, unsigned char n,
-+		struct leaf_node *entry, unsigned char type)
- {
- 	struct int_node *new_node;
--	const struct leaf_node *l;
--	int ret;
--	unsigned char i = GET_NIBBLE(n, entry->key_sha1);
--	void *p = tree->a[i];
--	assert(GET_PTR_TYPE(entry) == PTR_TYPE_NULL);
--	switch(GET_PTR_TYPE(p)) {
-+	struct leaf_node *l;
-+	void **p = note_tree_search(&tree, &n, entry->key_sha1);
-+
-+	assert(GET_PTR_TYPE(entry) == 0); /* no type bits set */
-+	l = (struct leaf_node *) CLR_PTR_TYPE(*p);
-+	switch(GET_PTR_TYPE(*p)) {
- 	case PTR_TYPE_NULL:
--		assert(!p);
--		tree->a[i] = SET_PTR_TYPE(entry, type);
--		return 0;
--	case PTR_TYPE_INTERNAL:
--		return note_tree_insert(CLR_PTR_TYPE(p), n + 1, entry, type);
--	default:
--		assert(GET_PTR_TYPE(p) == PTR_TYPE_NOTE ||
--			GET_PTR_TYPE(p) == PTR_TYPE_SUBTREE);
--		l = (const struct leaf_node *) CLR_PTR_TYPE(p);
--		if (!hashcmp(entry->key_sha1, l->key_sha1))
--			return -1; /* abort insert on matching key */
--		new_node = (struct int_node *)
--			xcalloc(sizeof(struct int_node), 1);
--		ret = note_tree_insert(new_node, n + 1,
--			CLR_PTR_TYPE(p), GET_PTR_TYPE(p));
--		if (ret) {
--			free(new_node);
--			return -1;
-+		assert(!*p);
-+		*p = SET_PTR_TYPE(entry, type);
-+		return;
-+	case PTR_TYPE_NOTE:
-+		switch (type) {
-+		case PTR_TYPE_NOTE:
-+			if (!hashcmp(l->key_sha1, entry->key_sha1)) {
-+				/* skip concatenation if l == entry */
-+				if (!hashcmp(l->val_sha1, entry->val_sha1))
-+					return;
-+
-+				if (concatenate_notes(l->val_sha1,
-+						entry->val_sha1))
-+					die("failed to concatenate note %s "
-+					    "into note %s for commit %s",
-+					    sha1_to_hex(entry->val_sha1),
-+					    sha1_to_hex(l->val_sha1),
-+					    sha1_to_hex(l->key_sha1));
-+				free(entry);
-+				return;
-+			}
-+			break;
-+		case PTR_TYPE_SUBTREE:
-+			if (!SUBTREE_SHA1_PREFIXCMP(l->key_sha1,
-+						    entry->key_sha1)) {
-+				/* unpack 'entry' */
-+				load_subtree(entry, tree, n);
-+				free(entry);
-+				return;
-+			}
-+			break;
-+		}
-+		break;
-+	case PTR_TYPE_SUBTREE:
-+		if (!SUBTREE_SHA1_PREFIXCMP(entry->key_sha1, l->key_sha1)) {
-+			/* unpack 'l' and restart insert */
-+			*p = NULL;
-+			load_subtree(l, tree, n);
-+			free(l);
-+			note_tree_insert(tree, n, entry, type);
-+			return;
- 		}
--		tree->a[i] = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
--		return note_tree_insert(new_node, n + 1, entry, type);
-+		break;
- 	}
-+
-+	/* non-matching leaf_node */
-+	assert(GET_PTR_TYPE(*p) == PTR_TYPE_NOTE ||
-+	       GET_PTR_TYPE(*p) == PTR_TYPE_SUBTREE);
-+	new_node = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
-+	note_tree_insert(new_node, n + 1, l, GET_PTR_TYPE(*p));
-+	*p = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
-+	note_tree_insert(new_node, n + 1, entry, type);
- }
+-USAGE="(edit | show) [commit]"
++USAGE="(edit [-F <file> | -m <msg>] | show) [commit]"
+ . git-sh-setup
  
- /* Free the entire notes data contained in the given tree */
-@@ -220,7 +301,6 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- {
- 	unsigned char commit_sha1[20];
- 	unsigned int prefix_len;
--	int status;
- 	void *buf;
- 	struct tree_desc desc;
- 	struct name_entry entry;
-@@ -254,8 +334,7 @@ static void load_subtree(struct leaf_node *subtree, struct int_node *node,
- 				l->key_sha1[19] = (unsigned char) len;
- 				type = PTR_TYPE_SUBTREE;
- 			}
--			status = note_tree_insert(node, n, l, type);
--			assert(!status);
-+			note_tree_insert(node, n, l, type);
- 		}
- 	}
- 	free(buf);
+-test -n "$3" && usage
+-
+ test -z "$1" && usage
+ ACTION="$1"; shift
+ 
+ test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="$(git config core.notesref)"
+ test -z "$GIT_NOTES_REF" && GIT_NOTES_REF="refs/notes/commits"
+ 
++MESSAGE=
++while test $# != 0
++do
++	case "$1" in
++	-m)
++		test "$ACTION" = "edit" || usage
++		shift
++		if test "$#" = "0"; then
++			die "error: option -m needs an argument"
++		else
++			if [ -z "$MESSAGE" ]; then
++				MESSAGE="$1"
++			else
++				MESSAGE="$MESSAGE
++
++$1"
++			fi
++			shift
++		fi
++		;;
++	-F)
++		test "$ACTION" = "edit" || usage
++		shift
++		if test "$#" = "0"; then
++			die "error: option -F needs an argument"
++		else
++			if [ -z "$MESSAGE" ]; then
++				MESSAGE="$(cat "$1")"
++			else
++				MESSAGE="$MESSAGE
++
++$(cat "$1")"
++			fi
++			shift
++		fi
++		;;
++	-*)
++		usage
++		;;
++	*)
++		break
++		;;
++	esac
++done
++
+ COMMIT=$(git rev-parse --verify --default HEAD "$@") ||
+ die "Invalid commit: $@"
+ 
+@@ -29,19 +72,24 @@ edit)
+ 		test -f "$GIT_INDEX_FILE" && rm "$GIT_INDEX_FILE"
+ 	' 0
+ 
+-	GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
+-
+ 	CURRENT_HEAD=$(git show-ref "$GIT_NOTES_REF" | cut -f 1 -d ' ')
+ 	if [ -z "$CURRENT_HEAD" ]; then
+ 		PARENT=
+ 	else
+ 		PARENT="-p $CURRENT_HEAD"
+ 		git read-tree "$GIT_NOTES_REF" || die "Could not read index"
+-		git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
+ 	fi
+ 
+-	core_editor="$(git config core.editor)"
+-	${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
++	if [ -z "$MESSAGE" ]; then
++		GIT_NOTES_REF= git log -1 $COMMIT | sed "s/^/#/" > "$MSG_FILE"
++		if [ ! -z "$CURRENT_HEAD" ]; then
++			git cat-file blob :$COMMIT >> "$MSG_FILE" 2> /dev/null
++		fi
++		core_editor="$(git config core.editor)"
++		${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
++	else
++		echo "$MESSAGE" > "$MSG_FILE"
++	fi
+ 
+ 	grep -v ^# < "$MSG_FILE" | git stripspace > "$MSG_FILE".processed
+ 	mv "$MSG_FILE".processed "$MSG_FILE"
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 73e53be..1e34f48 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -110,5 +110,41 @@ test_expect_success 'show multi-line notes' '
+ 	git log -2 > output &&
+ 	test_cmp expect-multiline output
+ '
++test_expect_success 'create -m and -F notes (setup)' '
++	: > a4 &&
++	git add a4 &&
++	test_tick &&
++	git commit -m 4th &&
++	echo "xyzzy" > note5 &&
++	git notes edit -m spam -F note5 -m "foo
++bar
++baz"
++'
++
++whitespace="    "
++cat > expect-m-and-F << EOF
++commit 15023535574ded8b1a89052b32673f84cf9582b8
++Author: A U Thor <author@example.com>
++Date:   Thu Apr 7 15:16:13 2005 -0700
++
++    4th
++
++Notes:
++    spam
++$whitespace
++    xyzzy
++$whitespace
++    foo
++    bar
++    baz
++EOF
++
++printf "\n" >> expect-m-and-F
++cat expect-multiline >> expect-m-and-F
++
++test_expect_success 'show -m and -F notes' '
++	git log -3 > output &&
++	test_cmp expect-m-and-F output
++'
+ 
+ test_done
 -- 
 1.6.4.304.g1365c.dirty
