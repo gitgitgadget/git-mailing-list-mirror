@@ -1,100 +1,59 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: gitweb - bare repos integration - owner info in description file
-Date: Fri, 9 Oct 2009 16:50:00 -0400
-Message-ID: <76c5b8580910091350o5cd90d3dobe2a21c18fa56dfd@mail.gmail.com>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Merging non-git releases of a project
+Date: Fri, 9 Oct 2009 22:11:19 +0100
+Message-ID: <26ae428a0910091411i39a03650o51163f794b984524@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 22:51:56 2009
+X-From: git-owner@vger.kernel.org Fri Oct 09 23:14:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwMRC-0006uo-Hf
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 22:51:42 +0200
+	id 1MwMmk-0008Ft-IP
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 23:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932883AbZJIUui convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 16:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761344AbZJIUui
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 16:50:38 -0400
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:36587 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761399AbZJIUuh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 16:50:37 -0400
-Received: by ywh6 with SMTP id 6so6532250ywh.4
-        for <git@vger.kernel.org>; Fri, 09 Oct 2009 13:50:00 -0700 (PDT)
+	id S934270AbZJIVL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 17:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934264AbZJIVL7
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 17:11:59 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:55461 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934255AbZJIVL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 17:11:58 -0400
+Received: by ewy4 with SMTP id 4so1001733ewy.37
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 14:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=13AYMZFkCMQ9aJnBT/UU3Wf6khMzfTjm8cq0SzLO4sg=;
-        b=bM5VyQVQBl90p50TaXSAGbvoSyjuA1kuBg2W6y2esfx00VfBNK10Kw/0t4UyG9aUMZ
-         LbPqdpXMFBOAkX2ywqxJjgXWIegvsOHym7OeyUkRF3gYANEiNQnUYuqYFfh0+CcwjgLe
-         mdXC4R6jjk3aiHb1KX5jMunMTRJHwBdsLHDXw=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=A85UNb6hMvS8BF3aCxB7jQ/+rAhzMW625DJiQcBYkDA=;
+        b=v65WeyzjXIW4yR8obgj2fHO5haAtOa1o6v189cODl+Nt8wZ2breqD4oCjxx7wkxdFb
+         YZxJjEqt5lW4r4UqQVrH82wk+jLBQ04G/LwPkKygijhC2eQsEI9ipvWeijtn8pv7fIl9
+         UxHV54pezKPvHbCKxhpjru56JvQsHjQUHGrgg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=TI7sz1Q2ZjfdYqnvbDvZW/MVvYnk1oYk3+/czNlaysFrJOHP/dnZIii4GY51LMcFfO
-         Ct6BEsmQ1Ov43Yrm/bKLZDfbABGKH89OqKdb+tMTR2HGu02J6WMMhqMTgQtdA8Ekby6t
-         5xPlpqBlBBgmrhASYk1i3ZidtyBUu7VG3e7MI=
-Received: by 10.90.42.27 with SMTP id p27mr1111463agp.9.1255121400682; Fri, 09 
-	Oct 2009 13:50:00 -0700 (PDT)
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=r+de5GdcFpMM/aWZoc8dyu722FSV0ABfis5mEUw2ePV/RYIfyrlo9priXb0a+WUN3B
+         1pF4C+9DTsgfalr1h991lU3DaKiq/aLxfdnD2bh0mIyERUq4EfG9GVgJ4Mqn9/NzkQYA
+         udIMQyvr5Uq54ep/0Mbh8np7/G603P4rcNNTg=
+Received: by 10.216.90.13 with SMTP id d13mr994323wef.130.1255122679937; Fri, 
+	09 Oct 2009 14:11:19 -0700 (PDT)
+X-Google-Sender-Auth: e49896664fc2e477
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129842>
 
-Hi,
+Here's my dilemma.... I've used git extensively to track modifications
+made to a reasonably large source tree. I do not have access to the
+repository for that project, just a given release. I have now acquired
+the latest version of that project and I want to 'merge' (not sure
+that's the right word in this case) my changes into the new version.
+Then I need to carry on using git for further changes. I think it
+should be simple but I can't get my head around the best way to do
+this.
 
-Here is another issue with gitweb integration which i think might be
-considered as a feature proposal:
-
-I have a central place where bare repos are. They're owned by the user
-under which we are serving them, let's say =E2=80=9Cgit=E2=80=9D. So, g=
-itweb is going
-to show me
-
-Repo1 owner git etc=E2=80=A6
-
-In order to show a real owner I have to rebuild gitweb.cgi, to tell it
-to use the file for GITWEB_LIST and edit the file=E2=80=A6 In fact I th=
-ink
-gitweb shouldn=E2=80=99t carry this info, but bare repos should.
-
-So my idea is:
-
-Either provide a key to
-$ git clone =E2=80=93bare =E2=80=93u =E2=80=9Cowner/email=E2=80=9D
-
-or take the user.email parameter from .gitconfig.
-
-in both cases the info can go to description file of bare repo, so it
-can look like:
-
-$owner=3Downer@server.com
-
-$description=3D=E2=80=9Dvery long description=E2=80=9D
-
-Or in xml form=E2=80=A6
-
-
-Yes, description file might become a bit more complicated in its
-layout. But, the benefits are obvious:
-
-- No need to support multiple lists/files
-- Bare repo carries all info about itself (together with =E2=80=93d fea=
-ture I
-described earlier).
-
-I this circumstances gitweb=E2=80=99s GITWEB_LIST will be only filter (=
-only
-repo path is necessary to show/not show), and it seems that narrowed
-functionality here is a good thing...
-
-Your thoughts?
-
-Thanks,
-Eugene
+Any pointers appreciated!
