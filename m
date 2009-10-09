@@ -1,452 +1,220 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 06/22] fast-import: Add support for importing commit notes
-Date: Fri, 09 Oct 2009 12:22:02 +0200
-Message-ID: <1255083738-23263-8-git-send-email-johan@herland.net>
-References: <1255083738-23263-1-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 00/22] git notes
+Date: Fri, 09 Oct 2009 12:21:55 +0200
+Message-ID: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7BIT
 Cc: gitster@pobox.com, johan@herland.net, Johannes.Schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
 	spearce@spearce.org, sam@vilain.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:56 2009
+X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClO-0004PL-No
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:55 +0200
+	id 1MwClM-0004PL-L1
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760670AbZJIKXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 06:23:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760667AbZJIKXe
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:34 -0400
+	id S1760658AbZJIKXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 06:23:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760656AbZJIKXD
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:03 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:58012 "EHLO
 	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760664AbZJIKXd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:33 -0400
+	by vger.kernel.org with ESMTP id S1760654AbZJIKXB (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:01 -0400
 Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BR5STS8I20@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:40 +0200 (MEST)
+ with ESMTP id <0KR800BORSTB8I20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:23 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:40 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:23 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
-In-reply-to: <1255083738-23263-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129770>
 
-Introduce a 'notemodify' subcommand of the 'commit' command. This subcommand
-is similar to 'filemodify', except that no mode is supplied (all notes have
-mode 0644), and the path is set to the hex SHA1 of the given "comittish".
+Hi,
 
-This enables fast import of note objects along with their associated commits,
-since the notes can now be named using the mark references of their
-corresponding commits.
+(Feel free to put this on hold until v1.6.5 is released. In any case,
+I'm going to Berlin for the weekend, and don't expect to read much
+email...)
 
-The patch also includes a test case of the added functionality.
+Here is the 7th iteration of the git-notes series. Changes in this
+iteration are as follows:
 
-Signed-off-by: Johan Herland <johan@herland.net>
-Acked-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/git-fast-import.txt |   45 +++++++++--
- fast-import.c                     |   88 +++++++++++++++++++-
- t/t9300-fast-import.sh            |  166 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 289 insertions(+), 10 deletions(-)
+- Rebased onto current 'next'
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index f1c94b4..bb198c2 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -325,7 +325,7 @@ change to the project.
- 	data
- 	('from' SP <committish> LF)?
- 	('merge' SP <committish> LF)?
--	(filemodify | filedelete | filecopy | filerename | filedeleteall)*
-+	(filemodify | filedelete | filecopy | filerename | filedeleteall | notemodify)*
- 	LF?
- ....
- 
-@@ -348,14 +348,13 @@ commit message use a 0 length data.  Commit messages are free-form
- and are not interpreted by Git.  Currently they must be encoded in
- UTF-8, as fast-import does not permit other encodings to be specified.
- 
--Zero or more `filemodify`, `filedelete`, `filecopy`, `filerename`
--and `filedeleteall` commands
-+Zero or more `filemodify`, `filedelete`, `filecopy`, `filerename`,
-+`filedeleteall` and `notemodify` commands
- may be included to update the contents of the branch prior to
- creating the commit.  These commands may be supplied in any order.
- However it is recommended that a `filedeleteall` command precede
--all `filemodify`, `filecopy` and `filerename` commands in the same
--commit, as `filedeleteall`
--wipes the branch clean (see below).
-+all `filemodify`, `filecopy`, `filerename` and `notemodify` commands in
-+the same commit, as `filedeleteall` wipes the branch clean (see below).
- 
- The `LF` after the command is optional (it used to be required).
- 
-@@ -604,6 +603,40 @@ more memory per active branch (less than 1 MiB for even most large
- projects); so frontends that can easily obtain only the affected
- paths for a commit are encouraged to do so.
- 
-+`notemodify`
-+^^^^^^^^^^^^
-+Included in a `commit` command to add a new note (annotating a given
-+commit) or change the content of an existing note.  This command has
-+two different means of specifying the content of the note.
-+
-+External data format::
-+	The data content for the note was already supplied by a prior
-+	`blob` command.  The frontend just needs to connect it to the
-+	commit that is to be annotated.
-++
-+....
-+	'N' SP <dataref> SP <committish> LF
-+....
-++
-+Here `<dataref>` can be either a mark reference (`:<idnum>`)
-+set by a prior `blob` command, or a full 40-byte SHA-1 of an
-+existing Git blob object.
-+
-+Inline data format::
-+	The data content for the note has not been supplied yet.
-+	The frontend wants to supply it as part of this modify
-+	command.
-++
-+....
-+	'N' SP 'inline' SP <committish> LF
-+	data
-+....
-++
-+See below for a detailed description of the `data` command.
-+
-+In both formats `<committish>` is any of the commit specification
-+expressions also accepted by `from` (see above).
-+
- `mark`
- ~~~~~~
- Arranges for fast-import to save a reference to the current object, allowing
-diff --git a/fast-import.c b/fast-import.c
-index 992220e..fcdcfaa 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -22,8 +22,8 @@ Format of STDIN stream:
-     ('author' sp name sp '<' email '>' sp when lf)?
-     'committer' sp name sp '<' email '>' sp when lf
-     commit_msg
--    ('from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)?
--    ('merge' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)*
-+    ('from' sp committish lf)?
-+    ('merge' sp committish lf)*
-     file_change*
-     lf?;
-   commit_msg ::= data;
-@@ -41,15 +41,18 @@ Format of STDIN stream:
-   file_obm ::= 'M' sp mode sp (hexsha1 | idnum) sp path_str lf;
-   file_inm ::= 'M' sp mode sp 'inline' sp path_str lf
-     data;
-+  note_obm ::= 'N' sp (hexsha1 | idnum) sp committish lf;
-+  note_inm ::= 'N' sp 'inline' sp committish lf
-+    data;
- 
-   new_tag ::= 'tag' sp tag_str lf
--    'from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf
-+    'from' sp committish lf
-     ('tagger' sp name sp '<' email '>' sp when lf)?
-     tag_msg;
-   tag_msg ::= data;
- 
-   reset_branch ::= 'reset' sp ref_str lf
--    ('from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)?
-+    ('from' sp committish lf)?
-     lf?;
- 
-   checkpoint ::= 'checkpoint' lf
-@@ -88,6 +91,7 @@ Format of STDIN stream:
-      # stream formatting is: \, " and LF.  Otherwise these values
-      # are UTF8.
-      #
-+  committish  ::= (ref_str | hexsha1 | sha1exp_str | idnum);
-   ref_str     ::= ref;
-   sha1exp_str ::= sha1exp;
-   tag_str     ::= tag;
-@@ -2056,6 +2060,80 @@ static void file_change_cr(struct branch *b, int rename)
- 		leaf.tree);
- }
- 
-+static void note_change_n(struct branch *b)
-+{
-+	const char *p = command_buf.buf + 2;
-+	static struct strbuf uq = STRBUF_INIT;
-+	struct object_entry *oe = oe;
-+	struct branch *s;
-+	unsigned char sha1[20], commit_sha1[20];
-+	uint16_t inline_data = 0;
-+
-+	/* <dataref> or 'inline' */
-+	if (*p == ':') {
-+		char *x;
-+		oe = find_mark(strtoumax(p + 1, &x, 10));
-+		hashcpy(sha1, oe->sha1);
-+		p = x;
-+	} else if (!prefixcmp(p, "inline")) {
-+		inline_data = 1;
-+		p += 6;
-+	} else {
-+		if (get_sha1_hex(p, sha1))
-+			die("Invalid SHA1: %s", command_buf.buf);
-+		oe = find_object(sha1);
-+		p += 40;
-+	}
-+	if (*p++ != ' ')
-+		die("Missing space after SHA1: %s", command_buf.buf);
-+
-+	/* <committish> */
-+	s = lookup_branch(p);
-+	if (s) {
-+		hashcpy(commit_sha1, s->sha1);
-+	} else if (*p == ':') {
-+		uintmax_t commit_mark = strtoumax(p + 1, NULL, 10);
-+		struct object_entry *commit_oe = find_mark(commit_mark);
-+		if (commit_oe->type != OBJ_COMMIT)
-+			die("Mark :%" PRIuMAX " not a commit", commit_mark);
-+		hashcpy(commit_sha1, commit_oe->sha1);
-+	} else if (!get_sha1(p, commit_sha1)) {
-+		unsigned long size;
-+		char *buf = read_object_with_reference(commit_sha1,
-+			commit_type, &size, commit_sha1);
-+		if (!buf || size < 46)
-+			die("Not a valid commit: %s", p);
-+		free(buf);
-+	} else
-+		die("Invalid ref name or SHA1 expression: %s", p);
-+
-+	if (inline_data) {
-+		static struct strbuf buf = STRBUF_INIT;
-+
-+		if (p != uq.buf) {
-+			strbuf_addstr(&uq, p);
-+			p = uq.buf;
-+		}
-+		read_next_command();
-+		parse_data(&buf);
-+		store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0);
-+	} else if (oe) {
-+		if (oe->type != OBJ_BLOB)
-+			die("Not a blob (actually a %s): %s",
-+				typename(oe->type), command_buf.buf);
-+	} else {
-+		enum object_type type = sha1_object_info(sha1, NULL);
-+		if (type < 0)
-+			die("Blob not found: %s", command_buf.buf);
-+		if (type != OBJ_BLOB)
-+			die("Not a blob (actually a %s): %s",
-+			    typename(type), command_buf.buf);
-+	}
-+
-+	tree_content_set(&b->branch_tree, sha1_to_hex(commit_sha1), sha1,
-+		S_IFREG | 0644, NULL);
-+}
-+
- static void file_change_deleteall(struct branch *b)
- {
- 	release_tree_content_recursive(b->branch_tree.tree);
-@@ -2225,6 +2303,8 @@ static void parse_new_commit(void)
- 			file_change_cr(b, 1);
- 		else if (!prefixcmp(command_buf.buf, "C "))
- 			file_change_cr(b, 0);
-+		else if (!prefixcmp(command_buf.buf, "N "))
-+			note_change_n(b);
- 		else if (!strcmp("deleteall", command_buf.buf))
- 			file_change_deleteall(b);
- 		else {
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index d33fc55..2f5c323 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1089,6 +1089,172 @@ test_expect_success 'P: fail on blob mark in gitlink' '
-     test_must_fail git fast-import <input'
- 
- ###
-+### series Q (notes)
-+###
-+
-+note1_data="Note for the first commit"
-+note2_data="Note for the second commit"
-+note3_data="Note for the third commit"
-+
-+test_tick
-+cat >input <<INPUT_END
-+blob
-+mark :2
-+data <<EOF
-+$file2_data
-+EOF
-+
-+commit refs/heads/notes-test
-+mark :3
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+first (:3)
-+COMMIT
-+
-+M 644 :2 file2
-+
-+blob
-+mark :4
-+data $file4_len
-+$file4_data
-+commit refs/heads/notes-test
-+mark :5
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+second (:5)
-+COMMIT
-+
-+M 644 :4 file4
-+
-+commit refs/heads/notes-test
-+mark :6
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+third (:6)
-+COMMIT
-+
-+M 644 inline file5
-+data <<EOF
-+$file5_data
-+EOF
-+
-+M 755 inline file6
-+data <<EOF
-+$file6_data
-+EOF
-+
-+blob
-+mark :7
-+data <<EOF
-+$note1_data
-+EOF
-+
-+blob
-+mark :8
-+data <<EOF
-+$note2_data
-+EOF
-+
-+commit refs/notes/foobar
-+mark :9
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+data <<COMMIT
-+notes (:9)
-+COMMIT
-+
-+N :7 :3
-+N :8 :5
-+N inline :6
-+data <<EOF
-+$note3_data
-+EOF
-+
-+INPUT_END
-+test_expect_success \
-+	'Q: commit notes' \
-+	'git fast-import <input &&
-+	 git whatchanged notes-test'
-+test_expect_success \
-+	'Q: verify pack' \
-+	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
-+
-+commit1=$(git rev-parse notes-test~2)
-+commit2=$(git rev-parse notes-test^)
-+commit3=$(git rev-parse notes-test)
-+
-+cat >expect <<EOF
-+author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+
-+first (:3)
-+EOF
-+test_expect_success \
-+	'Q: verify first commit' \
-+	'git cat-file commit notes-test~2 | sed 1d >actual &&
-+	test_cmp expect actual'
-+
-+cat >expect <<EOF
-+parent $commit1
-+author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+
-+second (:5)
-+EOF
-+test_expect_success \
-+	'Q: verify second commit' \
-+	'git cat-file commit notes-test^ | sed 1d >actual &&
-+	test_cmp expect actual'
-+
-+cat >expect <<EOF
-+parent $commit2
-+author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+
-+third (:6)
-+EOF
-+test_expect_success \
-+	'Q: verify third commit' \
-+	'git cat-file commit notes-test | sed 1d >actual &&
-+	test_cmp expect actual'
-+
-+cat >expect <<EOF
-+author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-+
-+notes (:9)
-+EOF
-+test_expect_success \
-+	'Q: verify notes commit' \
-+	'git cat-file commit refs/notes/foobar | sed 1d >actual &&
-+	test_cmp expect actual'
-+
-+cat >expect.unsorted <<EOF
-+100644 blob $commit1
-+100644 blob $commit2
-+100644 blob $commit3
-+EOF
-+cat expect.unsorted | sort >expect
-+test_expect_success \
-+	'Q: verify notes tree' \
-+	'git cat-file -p refs/notes/foobar^{tree} | sed "s/ [0-9a-f]*	/ /" >actual &&
-+	 test_cmp expect actual'
-+
-+echo "$note1_data" >expect
-+test_expect_success \
-+	'Q: verify note for first commit' \
-+	'git cat-file blob refs/notes/foobar:$commit1 >actual && test_cmp expect actual'
-+
-+echo "$note2_data" >expect
-+test_expect_success \
-+	'Q: verify note for second commit' \
-+	'git cat-file blob refs/notes/foobar:$commit2 >actual && test_cmp expect actual'
-+
-+echo "$note3_data" >expect
-+test_expect_success \
-+	'Q: verify note for third commit' \
-+	'git cat-file blob refs/notes/foobar:$commit3 >actual && test_cmp expect actual'
-+
-+###
- ### series R (feature and option)
- ###
- 
--- 
-1.6.4.304.g1365c.dirty
+- Patch 1: Include minor leak fix
+
+- Patch 10: Rename free_commit_notes() to free_notes() (Notes are
+  no longer bound to commits only, see patch 15 for details)
+
+- Patch 12: Remove tests that are invalidated by concatenation code
+  in patch 13.
+
+Overall, I consider the 12 first patches fairly stable at this point.
+There's also a slew of new patches, that has more of an RFC status:
+
+- Patches 13-14: Concatenation of multiple notes annotating the same
+  commit/object. This was originally suggested by mugwump many months
+  ago, and the suggestion was re-iterated by Dscho. This change has a
+  minor perfomance impact (see [1]), but I still think it's worth it.
+
+- Patch 15: Allow notes to be attached to any object (not just commits).
+  Rename get_commit_notes() to format_note() to reflect this change.
+
+- Patch 16-19: Expand notes API in preparation for querying and
+  manipulating notes from elsewhere in Git (see patch 22 for examples).
+
+- Patch 20: Add a new notes_tree struct, and use it as the first
+  parameter to all functions in the notes API. This allows API users to
+  maintain their own (multiple, concurrent) notes trees (see patch 22
+  for an example). We still have a default notes tree in notes.c as a
+  fallback (when NULL is passed as to an API function).
+
+- Patch 21: The default behaviour when there are multiple notes for a
+  given object is to concatenate them. However, some callers (see patch
+  22) want to tweak this behaviour. This patch defines a new function
+  type: combine_notes_fn, for combining two notes that reference the
+  same object. The notes API is then expanded to allow the caller to
+  specify a suitable combine_notes_fn. For convenience, three simple
+  combine_notes functions are available in the notes API:
+  - combine_notes_concatenate(): Concatenates the contents of the two
+    notes. (This is the default behaviour)
+  - combine_notes_overwrite(): Overwrite the existing note with the
+    new note.
+  - combine_notes_ignore(): Keep the existing note, and ignore the new
+    note.
+
+- Patch 22: This teaches fast-import to use the new notes API when
+  adding note objects to a commit. Since adding a note to a notes tree
+  might cause restructuring of that notes tree, the note objects must
+  be handled differently from regular blobs.
+  There are some testcases for the new behaviour in this patch, but not
+  enough. These will be added later.
+  This patch is still very much in RFC mode...
+
+
+Although this iteration brings the jh/notes topic towards feature-
+completion, there are still some things left to do before I consider
+the git notes feature fully complete:
+
+- Builtin-ify git-notes shell script to take advantage of notes API
+
+- Garbage-collect notes whose referenced objects are unreachable
+
+- Handle note objects that are not blobs, but trees (e.g.
+  refs/notes/<topic>:<commit>/<subtopic>)
+
+- Add a simple notation for referring to an object's note (e.g.
+  "<object>^{note}")
+
+- Probably more that I haven't thought of yet...
+
+However, It might be a good idea to consider merging the early/stable
+parts of jh/notes, instead of waiting for everything to complete.
+
+
+Have fun! :)
+
+...Johan
+
+
+[1] Performance impact of the concatenation rewrite.
+
+In order to concatenate notes correctly, the tree traversal code must be
+changed to more proactively unpack subtree entries (so that we can safely
+determine whether there are multiple notes for a given key).
+
+As before, the test case is as follows:
+Linux kernel repo with 157101 commits, 1 note per commit, organized into
+various fanout schemes. Hardware is Intel Core 2 Quad with 4GB RAM.
+
+
+Algorithm / Notes tree   git log -n10 (x100)   git log --all
+
+next / no-notes                 4.78s             63.90s
+
+before / no-notes               4.77s             63.61s
+before / no-fanout             56.59s             65.19s
+
+16tree / no-notes               4.73s             63.80s
+16tree / no-fanout             30.21s             65.11s
+16tree / 2_38                   5.53s             65.24s
+16tree / 2_2_36                 5.15s             65.12s
+
+concat / no-notes               4.80s             64.21s
+concat / no-fanout             30.66s             65.35s
+concat / 2_38                   5.64s             65.87s
+concat / 2_2_36                 5.23s             66.44s
+
+Conclusion: There is a small, but measurable impact (about .1s or so in
+the 100 x 'git log -n10' case), but I think this is small enough to be
+acceptable.
+
+
+Johan Herland (17):
+  Teach "-m <msg>" and "-F <file>" to "git notes edit"
+  fast-import: Add support for importing commit notes
+  t3302-notes-index-expensive: Speed up create_repo()
+  Add flags to get_commit_notes() to control the format of the note string
+  Teach notes code to free its internal data structures on request
+  Teach the notes lookup code to parse notes trees with various fanout schemes
+  Add selftests verifying that we can parse notes trees with various fanouts
+  Refactor notes code to concatenate multiple notes annotating the same object
+  Add selftests verifying concatenation of multiple notes for the same commit
+  Notes API: get_commit_notes() -> format_note() + remove the commit restriction
+  Notes API: init_notes(): Initialize the notes tree from the given notes ref
+  Notes API: add_note(): Add note objects to the internal notes tree structure
+  Notes API: get_note(): Return the note annotating the given object
+  Notes API: for_each_note(): Traverse the entire notes tree with a callback
+  Notes API: Allow multiple concurrent notes trees with new struct notes_tree
+  Refactor notes concatenation into a flexible interface for combining notes
+  fast-import: Proper notes tree manipulation using the notes API
+
+Johannes Schindelin (5):
+  Introduce commit notes
+  Add a script to edit/inspect notes
+  Speed up git notes lookup
+  Add an expensive test for git-notes
+  Add '%N'-format for pretty-printing commit notes
+
+ .gitignore                        |    1 +
+ Documentation/config.txt          |   13 +
+ Documentation/git-fast-import.txt |   45 +++-
+ Documentation/git-notes.txt       |   60 ++++
+ Documentation/pretty-formats.txt  |    1 +
+ Makefile                          |    3 +
+ cache.h                           |    4 +
+ command-list.txt                  |    1 +
+ commit.c                          |    1 +
+ config.c                          |    5 +
+ environment.c                     |    1 +
+ fast-import.c                     |  176 +++++++++++-
+ git-notes.sh                      |  121 ++++++++
+ notes.c                           |  579 +++++++++++++++++++++++++++++++++++++
+ notes.h                           |  113 +++++++
+ pretty.c                          |   10 +
+ t/t3301-notes.sh                  |  150 ++++++++++
+ t/t3302-notes-index-expensive.sh  |  118 ++++++++
+ t/t3303-notes-subtrees.sh         |  188 ++++++++++++
+ t/t9300-fast-import.sh            |  296 +++++++++++++++++++
+ 20 files changed, 1875 insertions(+), 11 deletions(-)
+ create mode 100644 Documentation/git-notes.txt
+ create mode 100755 git-notes.sh
+ create mode 100644 notes.c
+ create mode 100644 notes.h
+ create mode 100755 t/t3301-notes.sh
+ create mode 100755 t/t3302-notes-index-expensive.sh
+ create mode 100755 t/t3303-notes-subtrees.sh
