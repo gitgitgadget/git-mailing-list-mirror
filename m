@@ -1,124 +1,106 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 1/2] t/test-lib.sh: support Korn shell by converting GIT_EXIT_OK to GIT_EXIT_CODE
-Date: Fri,  9 Oct 2009 13:39:56 -0500
-Message-ID: <1eweIwf5YoFwmLPWwEFN69a2f-EUnj_kgiagVJoVQYfNQeLjlpm12U84RKxhzjh0NJv36SqO12lAX2c_x0WSgA@cipher.nrlssc.navy.mil>
-Cc: drizzd@aon.at, peff@peff.net, Brandon Casey <drafnel@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 20:47:18 2009
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 3-4/9 v2] Documentation: clarify mergeoptions description
+Date: Fri, 9 Oct 2009 13:51:14 -0500
+Message-ID: <20091009185114.GA3610@progeny.tock>
+References: <20091009101400.GA16549@progeny.tock>
+ <20091009101743.GD16558@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sean Estabrooks <seanlkml@sympatico.ca>
+X-From: git-owner@vger.kernel.org Fri Oct 09 20:47:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwKUm-0003JE-8K
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 20:47:16 +0200
+	id 1MwKUp-0003JE-Eb
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 20:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934087AbZJISlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 14:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934094AbZJISlI
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 14:41:08 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33579 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932914AbZJISlI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 14:41:08 -0400
-Received: by mail.nrlssc.navy.mil id n99IeEpr011991; Fri, 9 Oct 2009 13:40:14 -0500
-X-OriginalArrivalTime: 09 Oct 2009 18:40:14.0227 (UTC) FILETIME=[F0881E30:01CA490F]
+	id S1758725AbZJISoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 14:44:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753129AbZJISox
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 14:44:53 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:26043 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810AbZJISox (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 14:44:53 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so403876fge.1
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 11:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=c1xl7aqLmvv7wPG/r2AM6ookD8jZJ5XOa86026gRteM=;
+        b=FKQepwrEf1sLRGAPoQlAohoy0GOue4IdgCmOE5+MCX4Zu7gkZMiTAn1J0xE8RDlkVG
+         MmtNtxh6+ggK3MPE1PSpPsiVE2xX+8avmzXMvmenOOFxzDkjqYpz4HBppfQxhsv73Gud
+         DUywkdtg3WZP+OjqUWKyFEB2r07RGLeL5o4/0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=wiyUQgSZMm+uII9Ih0T9px6YlmLc9c01U4h343fkspEtm7hFpE1TY8hQgjIKLob38F
+         iNukJpKhrAG15phrl9muBWSzgtNpjHEBfZ3jPVGOaQgsZO4TluFqmQnANdoXQgraocv3
+         xDmnQrfNolXl4NKoUoBdBcm705jsUQYodVrKk=
+Received: by 10.86.17.27 with SMTP id 27mr2700612fgq.31.1255113784868;
+        Fri, 09 Oct 2009 11:43:04 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id e20sm262051fga.0.2009.10.09.11.43.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 09 Oct 2009 11:43:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20091009101743.GD16558@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129832>
 
-From: Brandon Casey <drafnel@gmail.com>
+Sounds better this way, at least to my ears.  ("The syntax and
+supported options of git merge" is a plural noun.  "the same"
+instead of "equal" sounds less technical and seems to convey
+the meaning better here.)
 
-Commit 6e7b5aaf introduced the concept of GIT_EXIT_OK as a way to indicate
-to die(), the exit handler, whether the exit was initiated by the test
-harness, or whether it was unexpected.  die() expects $? to contain the
-value passed to exit(), and when GIT_EXIT_OK is set, die() calls exit with
-the value in $?.  This works as expected when using the Bash shell.  For
-the Korn shell, $? has the value of the last executed statement _before_
-the call to exit.  If that statement completed successfully, then die()
-would incorrectly exit with a successful status when GIT_EXIT_OK is set.
-
-So, rather than relying on the behavior of Bash in order to get the exit
-code from $? inside die(), change GIT_EXIT_OK into GIT_EXIT_CODE, and set
-it to the code that we want to exit with.  This allows the test suite to
-be run with the Korn shell.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/test-lib.sh |   15 ++++++++-------
- 1 files changed, 8 insertions(+), 7 deletions(-)
+Sean Estabrooks wrote:
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f2ca536..64e793a 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -150,7 +150,7 @@ fi
+> P.S.  Patches 3 and 4 in this series would be better as a single patch.
+
+Good idea.  Here's a squashed version.
+
+ Documentation/config.txt    |    2 +-
+ Documentation/git-merge.txt |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index be0b8ca..cd17814 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -539,7 +539,7 @@ branch.<name>.merge::
  
- error () {
- 	say_color error "error: $*"
--	GIT_EXIT_OK=t
-+	GIT_EXIT_CODE=1
- 	exit 1
- }
+ branch.<name>.mergeoptions::
+ 	Sets default options for merging into branch <name>. The syntax and
+-	supported options are equal to that of linkgit:git-merge[1], but
++	supported options are the same as those of linkgit:git-merge[1], but
+ 	option values containing whitespace characters are currently not
+ 	supported.
  
-@@ -183,16 +183,16 @@ test_success=0
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 354e9d9..6ffd4b0 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -50,8 +50,8 @@ include::merge-config.txt[]
  
- die () {
- 	code=$?
--	if test -n "$GIT_EXIT_OK"
-+	if test -n "$GIT_EXIT_CODE"
- 	then
--		exit $code
-+		exit $GIT_EXIT_CODE
- 	else
- 		echo >&5 "FATAL: Unexpected exit with code $code"
- 		exit 1
- 	fi
- }
+ branch.<name>.mergeoptions::
+ 	Sets default options for merging into branch <name>. The syntax and
+-	supported options are equal to that of 'git-merge', but option values
+-	containing whitespace characters are currently not supported.
++	supported options are the same as those of 'git-merge', but option
++	values containing whitespace characters are currently not supported.
  
--GIT_EXIT_OK=
-+GIT_EXIT_CODE=
- trap 'die' EXIT
- 
- # The semantics of the editor variables are that of invoking
-@@ -295,7 +295,7 @@ test_failure_ () {
- 	say_color error "FAIL $test_count: $1"
- 	shift
- 	echo "$@" | sed -e 's/^/	/'
--	test "$immediate" = "" || { GIT_EXIT_OK=t; exit 1; }
-+	test "$immediate" = "" || { GIT_EXIT_CODE=1; exit 1; }
- }
- 
- test_known_broken_ok_ () {
-@@ -508,7 +508,6 @@ test_create_repo () {
- }
- 
- test_done () {
--	GIT_EXIT_OK=t
- 	test_results_dir="$TEST_DIRECTORY/test-results"
- 	mkdir -p "$test_results_dir"
- 	test_results_path="$test_results_dir/${0%.sh}-$$"
-@@ -539,9 +538,11 @@ test_done () {
- 		cd "$(dirname "$remove_trash")" &&
- 		rm -rf "$(basename "$remove_trash")"
- 
-+		GIT_EXIT_CODE=0
- 		exit 0 ;;
- 
- 	*)
-+		GIT_EXIT_CODE=1
- 		say_color error "failed $test_failure among $msg"
- 		exit 1 ;;
- 
-@@ -655,7 +656,7 @@ case "$test" in
- esac
- test ! -z "$debug" || remove_trash=$TRASH_DIRECTORY
- rm -fr "$test" || {
--	GIT_EXIT_OK=t
-+	GIT_EXIT_CODE=1
- 	echo >&5 "FATAL: Cannot prepare test area"
- 	exit 1
- }
+ HOW MERGE WORKS
+ ---------------
 -- 
-1.6.5.rc3
+1.6.5.rc1.199.g596ec
