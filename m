@@ -1,42 +1,41 @@
 From: Johan Herland <johan@herland.net>
-Subject: [RFC/PATCHv7 01/22] Introduce commit notes
-Date: Fri, 09 Oct 2009 12:21:57 +0200
-Message-ID: <1255083738-23263-3-git-send-email-johan@herland.net>
+Subject: [RFC/PATCHv7 06/22] fast-import: Add support for importing commit notes
+Date: Fri, 09 Oct 2009 12:22:02 +0200
+Message-ID: <1255083738-23263-8-git-send-email-johan@herland.net>
 References: <1255083738-23263-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
 Cc: gitster@pobox.com, johan@herland.net, Johannes.Schindelin@gmx.de,
 	trast@student.ethz.ch, tavestbo@trolltech.com,
 	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
-	spearce@spearce.org, sam@vilain.net,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+	spearce@spearce.org, sam@vilain.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:55 2009
+X-From: git-owner@vger.kernel.org Fri Oct 09 12:31:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwClO-0004PL-72
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:54 +0200
+	id 1MwClO-0004PL-No
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Oct 2009 12:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760666AbZJIKXU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Oct 2009 06:23:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760664AbZJIKXU
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:20 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:54694 "EHLO
-	get-mta-out02.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1760661AbZJIKXS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:18 -0400
-Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out02.get.basefarm.net
+	id S1760670AbZJIKXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 06:23:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760667AbZJIKXe
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 06:23:34 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:58012 "EHLO
+	get-mta-out01.get.basefarm.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1760664AbZJIKXd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Oct 2009 06:23:33 -0400
+Received: from smtp.getmail.no ([10.5.16.4]) by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0KR800BNDSTG9320@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:28 +0200 (MEST)
+ with ESMTP id <0KR800BR5STS8I20@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:40 +0200 (MEST)
 Received: from localhost.localdomain ([84.215.102.95])
  by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0KR800IEJST91V00@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Fri, 09 Oct 2009 12:22:28 +0200 (MEST)
+ git@vger.kernel.org; Fri, 09 Oct 2009 12:22:40 +0200 (MEST)
 X-PMX-Version: 5.5.3.366731, Antispam-Engine: 2.7.0.366912,
  Antispam-Data: 2009.10.9.101220
 X-Mailer: git-send-email 1.6.4.304.g1365c.dirty
@@ -45,279 +44,409 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129769>
 
-=46rom: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Introduce a 'notemodify' subcommand of the 'commit' command. This subcommand
+is similar to 'filemodify', except that no mode is supplied (all notes have
+mode 0644), and the path is set to the hex SHA1 of the given "comittish".
 
-Commit notes are blobs which are shown together with the commit
-message.  These blobs are taken from the notes ref, which you can
-configure by the config variable core.notesRef, which in turn can
-be overridden by the environment variable GIT_NOTES_REF.
+This enables fast import of note objects along with their associated commits,
+since the notes can now be named using the mark references of their
+corresponding commits.
 
-The notes ref is a branch which contains "files" whose names are
-the names of the corresponding commits (i.e. the SHA-1).
+The patch also includes a test case of the added functionality.
 
-The rationale for putting this information into a ref is this: we
-want to be able to fetch and possibly union-merge the notes,
-maybe even look at the date when a note was introduced, and we
-want to store them efficiently together with the other objects.
-
-This patch has been improved by the following contributions:
-- Thomas Rast: fix core.notesRef documentation
-- Tor Arne Vestb=C3=B8: fix printing of multi-line notes
-- Alex Riesen: Using char array instead of char pointer costs less BSS
-- Johan Herland: Plug leak when msg is good, but msglen or type causes =
-return
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Tor Arne Vestb=C3=B8 <tavestbo@trolltech.com>
 Signed-off-by: Johan Herland <johan@herland.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-get_commit_notes(): Plug memory leak when 'if' triggers, but not becaus=
-e of read_sha1_file() failure
+Acked-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- Documentation/config.txt |   13 ++++++++
- Makefile                 |    2 +
- cache.h                  |    4 ++
- commit.c                 |    1 +
- config.c                 |    5 +++
- environment.c            |    1 +
- notes.c                  |   70 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- notes.h                  |    7 ++++
- pretty.c                 |    5 +++
- 9 files changed, 108 insertions(+), 0 deletions(-)
- create mode 100644 notes.c
- create mode 100644 notes.h
+ Documentation/git-fast-import.txt |   45 +++++++++--
+ fast-import.c                     |   88 +++++++++++++++++++-
+ t/t9300-fast-import.sh            |  166 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 289 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index cc156b8..32b0cdf 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -458,6 +458,19 @@ On some file system/operating system combinations,=
- this is unreliable.
- Set this config setting to 'rename' there; However, This will remove t=
-he
- check that makes sure that existing object files will not get overwrit=
-ten.
-=20
-+core.notesRef::
-+	When showing commit messages, also show notes which are stored in
-+	the given ref.  This ref is expected to contain files named
-+	after the full SHA-1 of the commit they annotate.
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index f1c94b4..bb198c2 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -325,7 +325,7 @@ change to the project.
+ 	data
+ 	('from' SP <committish> LF)?
+ 	('merge' SP <committish> LF)?
+-	(filemodify | filedelete | filecopy | filerename | filedeleteall)*
++	(filemodify | filedelete | filecopy | filerename | filedeleteall | notemodify)*
+ 	LF?
+ ....
+ 
+@@ -348,14 +348,13 @@ commit message use a 0 length data.  Commit messages are free-form
+ and are not interpreted by Git.  Currently they must be encoded in
+ UTF-8, as fast-import does not permit other encodings to be specified.
+ 
+-Zero or more `filemodify`, `filedelete`, `filecopy`, `filerename`
+-and `filedeleteall` commands
++Zero or more `filemodify`, `filedelete`, `filecopy`, `filerename`,
++`filedeleteall` and `notemodify` commands
+ may be included to update the contents of the branch prior to
+ creating the commit.  These commands may be supplied in any order.
+ However it is recommended that a `filedeleteall` command precede
+-all `filemodify`, `filecopy` and `filerename` commands in the same
+-commit, as `filedeleteall`
+-wipes the branch clean (see below).
++all `filemodify`, `filecopy`, `filerename` and `notemodify` commands in
++the same commit, as `filedeleteall` wipes the branch clean (see below).
+ 
+ The `LF` after the command is optional (it used to be required).
+ 
+@@ -604,6 +603,40 @@ more memory per active branch (less than 1 MiB for even most large
+ projects); so frontends that can easily obtain only the affected
+ paths for a commit are encouraged to do so.
+ 
++`notemodify`
++^^^^^^^^^^^^
++Included in a `commit` command to add a new note (annotating a given
++commit) or change the content of an existing note.  This command has
++two different means of specifying the content of the note.
++
++External data format::
++	The data content for the note was already supplied by a prior
++	`blob` command.  The frontend just needs to connect it to the
++	commit that is to be annotated.
 ++
-+If such a file exists in the given ref, the referenced blob is read, a=
-nd
-+appended to the commit message, separated by a "Notes:" line.  If the
-+given ref itself does not exist, it is not an error, but means that no
-+notes should be printed.
++....
++	'N' SP <dataref> SP <committish> LF
++....
 ++
-+This setting defaults to "refs/notes/commits", and can be overridden b=
-y
-+the `GIT_NOTES_REF` environment variable.
++Here `<dataref>` can be either a mark reference (`:<idnum>`)
++set by a prior `blob` command, or a full 40-byte SHA-1 of an
++existing Git blob object.
 +
- add.ignore-errors::
- 	Tells 'git-add' to continue adding files when some files cannot be
- 	added due to indexing errors. Equivalent to the '--ignore-errors'
-diff --git a/Makefile b/Makefile
-index 8925b1d..9e414db 100644
---- a/Makefile
-+++ b/Makefile
-@@ -429,6 +429,7 @@ LIB_H +=3D ll-merge.h
- LIB_H +=3D log-tree.h
- LIB_H +=3D mailmap.h
- LIB_H +=3D merge-recursive.h
-+LIB_H +=3D notes.h
- LIB_H +=3D object.h
- LIB_H +=3D pack.h
- LIB_H +=3D pack-refs.h
-@@ -513,6 +514,7 @@ LIB_OBJS +=3D match-trees.o
- LIB_OBJS +=3D merge-file.o
- LIB_OBJS +=3D merge-recursive.o
- LIB_OBJS +=3D name-hash.o
-+LIB_OBJS +=3D notes.o
- LIB_OBJS +=3D object.o
- LIB_OBJS +=3D pack-check.o
- LIB_OBJS +=3D pack-refs.o
-diff --git a/cache.h b/cache.h
-index 96840c7..0343e8e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -372,6 +372,8 @@ static inline enum object_type object_type(unsigned=
- int mode)
- #define GITATTRIBUTES_FILE ".gitattributes"
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
-+#define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
-+#define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
-=20
- extern int is_bare_repository_cfg;
- extern int is_bare_repository(void);
-@@ -567,6 +569,8 @@ enum object_creation_mode {
-=20
- extern enum object_creation_mode object_creation_mode;
-=20
-+extern char *notes_ref_name;
++Inline data format::
++	The data content for the note has not been supplied yet.
++	The frontend wants to supply it as part of this modify
++	command.
+++
++....
++	'N' SP 'inline' SP <committish> LF
++	data
++....
+++
++See below for a detailed description of the `data` command.
 +
- extern int grafts_replace_parents;
-=20
- #define GIT_REPO_VERSION 0
-diff --git a/commit.c b/commit.c
-index fedbd5e..5ade8ed 100644
---- a/commit.c
-+++ b/commit.c
-@@ -5,6 +5,7 @@
- #include "utf8.h"
- #include "diff.h"
- #include "revision.h"
-+#include "notes.h"
-=20
- int save_commit_buffer =3D 1;
-=20
-diff --git a/config.c b/config.c
-index c644061..51f2208 100644
---- a/config.c
-+++ b/config.c
-@@ -467,6 +467,11 @@ static int git_default_core_config(const char *var=
-, const char *value)
- 		return 0;
- 	}
-=20
-+	if (!strcmp(var, "core.notesref")) {
-+		notes_ref_name =3D xstrdup(value);
-+		return 0;
-+	}
++In both formats `<committish>` is any of the commit specification
++expressions also accepted by `from` (see above).
 +
- 	if (!strcmp(var, "core.pager"))
- 		return git_config_string(&pager_program, var, value);
-=20
-diff --git a/environment.c b/environment.c
-index 5de6837..571ab56 100644
---- a/environment.c
-+++ b/environment.c
-@@ -49,6 +49,7 @@ enum push_default_type push_default =3D PUSH_DEFAULT_=
-MATCHING;
- #define OBJECT_CREATION_MODE OBJECT_CREATION_USES_HARDLINKS
- #endif
- enum object_creation_mode object_creation_mode =3D OBJECT_CREATION_MOD=
-E;
-+char *notes_ref_name;
- int grafts_replace_parents =3D 1;
-=20
- /* Parallel index stat data preload? */
-diff --git a/notes.c b/notes.c
-new file mode 100644
-index 0000000..66379ff
---- /dev/null
-+++ b/notes.c
-@@ -0,0 +1,70 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "notes.h"
-+#include "refs.h"
-+#include "utf8.h"
-+#include "strbuf.h"
-+
-+static int initialized;
-+
-+void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+		const char *output_encoding)
-+{
-+	static const char utf8[] =3D "utf-8";
-+	struct strbuf name =3D STRBUF_INIT;
-+	unsigned char sha1[20];
-+	char *msg, *msg_p;
-+	unsigned long linelen, msglen;
-+	enum object_type type;
-+
-+	if (!initialized) {
-+		const char *env =3D getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		if (env)
-+			notes_ref_name =3D getenv(GIT_NOTES_REF_ENVIRONMENT);
-+		else if (!notes_ref_name)
-+			notes_ref_name =3D GIT_NOTES_DEFAULT_REF;
-+		if (notes_ref_name && read_ref(notes_ref_name, sha1))
-+			notes_ref_name =3D NULL;
-+		initialized =3D 1;
-+	}
-+
-+	if (!notes_ref_name)
-+		return;
-+
-+	strbuf_addf(&name, "%s:%s", notes_ref_name,
-+			sha1_to_hex(commit->object.sha1));
-+	if (get_sha1(name.buf, sha1))
-+		return;
-+
-+	if (!(msg =3D read_sha1_file(sha1, &type, &msglen)) || !msglen ||
-+			type !=3D OBJ_BLOB) {
-+		free(msg);
-+		return;
-+	}
-+
-+	if (output_encoding && *output_encoding &&
-+			strcmp(utf8, output_encoding)) {
-+		char *reencoded =3D reencode_string(msg, output_encoding, utf8);
-+		if (reencoded) {
-+			free(msg);
-+			msg =3D reencoded;
-+			msglen =3D strlen(msg);
-+		}
-+	}
-+
-+	/* we will end the annotation by a newline anyway */
-+	if (msglen && msg[msglen - 1] =3D=3D '\n')
-+		msglen--;
-+
-+	strbuf_addstr(sb, "\nNotes:\n");
-+
-+	for (msg_p =3D msg; msg_p < msg + msglen; msg_p +=3D linelen + 1) {
-+		linelen =3D strchrnul(msg_p, '\n') - msg_p;
-+
-+		strbuf_addstr(sb, "    ");
-+		strbuf_add(sb, msg_p, linelen);
-+		strbuf_addch(sb, '\n');
-+	}
-+
-+	free(msg);
-+}
-diff --git a/notes.h b/notes.h
-new file mode 100644
-index 0000000..79d21b6
---- /dev/null
-+++ b/notes.h
-@@ -0,0 +1,7 @@
-+#ifndef NOTES_H
-+#define NOTES_H
-+
-+void get_commit_notes(const struct commit *commit, struct strbuf *sb,
-+		const char *output_encoding);
-+
-+#endif
-diff --git a/pretty.c b/pretty.c
-index f5983f8..e25db81 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -6,6 +6,7 @@
- #include "string-list.h"
- #include "mailmap.h"
- #include "log-tree.h"
-+#include "notes.h"
- #include "color.h"
-=20
- static char *user_format;
-@@ -975,5 +976,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const s=
-truct commit *commit,
- 	 */
- 	if (fmt =3D=3D CMIT_FMT_EMAIL && sb->len <=3D beginning_of_body)
- 		strbuf_addch(sb, '\n');
-+
-+	if (fmt !=3D CMIT_FMT_ONELINE)
-+		get_commit_notes(commit, sb, encoding);
-+
- 	free(reencoded);
+ `mark`
+ ~~~~~~
+ Arranges for fast-import to save a reference to the current object, allowing
+diff --git a/fast-import.c b/fast-import.c
+index 992220e..fcdcfaa 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -22,8 +22,8 @@ Format of STDIN stream:
+     ('author' sp name sp '<' email '>' sp when lf)?
+     'committer' sp name sp '<' email '>' sp when lf
+     commit_msg
+-    ('from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)?
+-    ('merge' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)*
++    ('from' sp committish lf)?
++    ('merge' sp committish lf)*
+     file_change*
+     lf?;
+   commit_msg ::= data;
+@@ -41,15 +41,18 @@ Format of STDIN stream:
+   file_obm ::= 'M' sp mode sp (hexsha1 | idnum) sp path_str lf;
+   file_inm ::= 'M' sp mode sp 'inline' sp path_str lf
+     data;
++  note_obm ::= 'N' sp (hexsha1 | idnum) sp committish lf;
++  note_inm ::= 'N' sp 'inline' sp committish lf
++    data;
+ 
+   new_tag ::= 'tag' sp tag_str lf
+-    'from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf
++    'from' sp committish lf
+     ('tagger' sp name sp '<' email '>' sp when lf)?
+     tag_msg;
+   tag_msg ::= data;
+ 
+   reset_branch ::= 'reset' sp ref_str lf
+-    ('from' sp (ref_str | hexsha1 | sha1exp_str | idnum) lf)?
++    ('from' sp committish lf)?
+     lf?;
+ 
+   checkpoint ::= 'checkpoint' lf
+@@ -88,6 +91,7 @@ Format of STDIN stream:
+      # stream formatting is: \, " and LF.  Otherwise these values
+      # are UTF8.
+      #
++  committish  ::= (ref_str | hexsha1 | sha1exp_str | idnum);
+   ref_str     ::= ref;
+   sha1exp_str ::= sha1exp;
+   tag_str     ::= tag;
+@@ -2056,6 +2060,80 @@ static void file_change_cr(struct branch *b, int rename)
+ 		leaf.tree);
  }
---=20
+ 
++static void note_change_n(struct branch *b)
++{
++	const char *p = command_buf.buf + 2;
++	static struct strbuf uq = STRBUF_INIT;
++	struct object_entry *oe = oe;
++	struct branch *s;
++	unsigned char sha1[20], commit_sha1[20];
++	uint16_t inline_data = 0;
++
++	/* <dataref> or 'inline' */
++	if (*p == ':') {
++		char *x;
++		oe = find_mark(strtoumax(p + 1, &x, 10));
++		hashcpy(sha1, oe->sha1);
++		p = x;
++	} else if (!prefixcmp(p, "inline")) {
++		inline_data = 1;
++		p += 6;
++	} else {
++		if (get_sha1_hex(p, sha1))
++			die("Invalid SHA1: %s", command_buf.buf);
++		oe = find_object(sha1);
++		p += 40;
++	}
++	if (*p++ != ' ')
++		die("Missing space after SHA1: %s", command_buf.buf);
++
++	/* <committish> */
++	s = lookup_branch(p);
++	if (s) {
++		hashcpy(commit_sha1, s->sha1);
++	} else if (*p == ':') {
++		uintmax_t commit_mark = strtoumax(p + 1, NULL, 10);
++		struct object_entry *commit_oe = find_mark(commit_mark);
++		if (commit_oe->type != OBJ_COMMIT)
++			die("Mark :%" PRIuMAX " not a commit", commit_mark);
++		hashcpy(commit_sha1, commit_oe->sha1);
++	} else if (!get_sha1(p, commit_sha1)) {
++		unsigned long size;
++		char *buf = read_object_with_reference(commit_sha1,
++			commit_type, &size, commit_sha1);
++		if (!buf || size < 46)
++			die("Not a valid commit: %s", p);
++		free(buf);
++	} else
++		die("Invalid ref name or SHA1 expression: %s", p);
++
++	if (inline_data) {
++		static struct strbuf buf = STRBUF_INIT;
++
++		if (p != uq.buf) {
++			strbuf_addstr(&uq, p);
++			p = uq.buf;
++		}
++		read_next_command();
++		parse_data(&buf);
++		store_object(OBJ_BLOB, &buf, &last_blob, sha1, 0);
++	} else if (oe) {
++		if (oe->type != OBJ_BLOB)
++			die("Not a blob (actually a %s): %s",
++				typename(oe->type), command_buf.buf);
++	} else {
++		enum object_type type = sha1_object_info(sha1, NULL);
++		if (type < 0)
++			die("Blob not found: %s", command_buf.buf);
++		if (type != OBJ_BLOB)
++			die("Not a blob (actually a %s): %s",
++			    typename(type), command_buf.buf);
++	}
++
++	tree_content_set(&b->branch_tree, sha1_to_hex(commit_sha1), sha1,
++		S_IFREG | 0644, NULL);
++}
++
+ static void file_change_deleteall(struct branch *b)
+ {
+ 	release_tree_content_recursive(b->branch_tree.tree);
+@@ -2225,6 +2303,8 @@ static void parse_new_commit(void)
+ 			file_change_cr(b, 1);
+ 		else if (!prefixcmp(command_buf.buf, "C "))
+ 			file_change_cr(b, 0);
++		else if (!prefixcmp(command_buf.buf, "N "))
++			note_change_n(b);
+ 		else if (!strcmp("deleteall", command_buf.buf))
+ 			file_change_deleteall(b);
+ 		else {
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index d33fc55..2f5c323 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1089,6 +1089,172 @@ test_expect_success 'P: fail on blob mark in gitlink' '
+     test_must_fail git fast-import <input'
+ 
+ ###
++### series Q (notes)
++###
++
++note1_data="Note for the first commit"
++note2_data="Note for the second commit"
++note3_data="Note for the third commit"
++
++test_tick
++cat >input <<INPUT_END
++blob
++mark :2
++data <<EOF
++$file2_data
++EOF
++
++commit refs/heads/notes-test
++mark :3
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++first (:3)
++COMMIT
++
++M 644 :2 file2
++
++blob
++mark :4
++data $file4_len
++$file4_data
++commit refs/heads/notes-test
++mark :5
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++second (:5)
++COMMIT
++
++M 644 :4 file4
++
++commit refs/heads/notes-test
++mark :6
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++third (:6)
++COMMIT
++
++M 644 inline file5
++data <<EOF
++$file5_data
++EOF
++
++M 755 inline file6
++data <<EOF
++$file6_data
++EOF
++
++blob
++mark :7
++data <<EOF
++$note1_data
++EOF
++
++blob
++mark :8
++data <<EOF
++$note2_data
++EOF
++
++commit refs/notes/foobar
++mark :9
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++notes (:9)
++COMMIT
++
++N :7 :3
++N :8 :5
++N inline :6
++data <<EOF
++$note3_data
++EOF
++
++INPUT_END
++test_expect_success \
++	'Q: commit notes' \
++	'git fast-import <input &&
++	 git whatchanged notes-test'
++test_expect_success \
++	'Q: verify pack' \
++	'for p in .git/objects/pack/*.pack;do git verify-pack $p||exit;done'
++
++commit1=$(git rev-parse notes-test~2)
++commit2=$(git rev-parse notes-test^)
++commit3=$(git rev-parse notes-test)
++
++cat >expect <<EOF
++author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++
++first (:3)
++EOF
++test_expect_success \
++	'Q: verify first commit' \
++	'git cat-file commit notes-test~2 | sed 1d >actual &&
++	test_cmp expect actual'
++
++cat >expect <<EOF
++parent $commit1
++author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++
++second (:5)
++EOF
++test_expect_success \
++	'Q: verify second commit' \
++	'git cat-file commit notes-test^ | sed 1d >actual &&
++	test_cmp expect actual'
++
++cat >expect <<EOF
++parent $commit2
++author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++
++third (:6)
++EOF
++test_expect_success \
++	'Q: verify third commit' \
++	'git cat-file commit notes-test | sed 1d >actual &&
++	test_cmp expect actual'
++
++cat >expect <<EOF
++author $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++
++notes (:9)
++EOF
++test_expect_success \
++	'Q: verify notes commit' \
++	'git cat-file commit refs/notes/foobar | sed 1d >actual &&
++	test_cmp expect actual'
++
++cat >expect.unsorted <<EOF
++100644 blob $commit1
++100644 blob $commit2
++100644 blob $commit3
++EOF
++cat expect.unsorted | sort >expect
++test_expect_success \
++	'Q: verify notes tree' \
++	'git cat-file -p refs/notes/foobar^{tree} | sed "s/ [0-9a-f]*	/ /" >actual &&
++	 test_cmp expect actual'
++
++echo "$note1_data" >expect
++test_expect_success \
++	'Q: verify note for first commit' \
++	'git cat-file blob refs/notes/foobar:$commit1 >actual && test_cmp expect actual'
++
++echo "$note2_data" >expect
++test_expect_success \
++	'Q: verify note for second commit' \
++	'git cat-file blob refs/notes/foobar:$commit2 >actual && test_cmp expect actual'
++
++echo "$note3_data" >expect
++test_expect_success \
++	'Q: verify note for third commit' \
++	'git cat-file blob refs/notes/foobar:$commit3 >actual && test_cmp expect actual'
++
++###
+ ### series R (feature and option)
+ ###
+ 
+-- 
 1.6.4.304.g1365c.dirty
