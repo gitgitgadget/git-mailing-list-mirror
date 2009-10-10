@@ -1,60 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 9/9] racy-git.txt: explain nsec problem in more detail
-Date: Fri, 09 Oct 2009 17:56:53 -0700
-Message-ID: <7vmy40f4mi.fsf@alter.siamese.dyndns.org>
-References: <20091009101400.GA16549@progeny.tock>
- <20091009102554.GI16558@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Vietor Liu <vietor.liu@gmail.com>
+Subject: [PATCH] git-gui: Fixed _main window_ for screen height equal 600 px
+Date: Sat, 10 Oct 2009 08:59:43 +0800
+Message-ID: <1255136383-6623-1-git-send-email-vietor.liu@gmail.com>
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 10 03:02:13 2009
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sat Oct 10 03:02:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwQLc-0005GI-Ib
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 03:02:12 +0200
+	id 1MwQLd-0005GI-31
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 03:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934540AbZJJA5o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Oct 2009 20:57:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933867AbZJJA5o
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 20:57:44 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61917 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759153AbZJJA5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Oct 2009 20:57:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DB56071E3D;
-	Fri,  9 Oct 2009 20:56:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=AAN47nCVKuohklBELmFHorlk+u0=; b=MLiaEYLspKMjJ8d0ioJp7tK
-	VACKIkfhFZWKSeJwH3ZJPKccEAe0zdWvzKNk7wc8pTQ+YaYdh9xftm0GZydqSnSS
-	wHA4/EcZRvYhIaeHIF3pIwEYKCyDj3Nx/NApGbrSAWI8wxRaopU9RsbbTqqoNFEJ
-	bOQrKoMb0X4VNGWaP2po=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=RY7Lg/tiHx6By/WsQ95fuhVjOsRBysa91fwhKCge901t+3aG1
-	aB1EtcXmihOnkfGx0hPwYySfmUzb0311puP0sxUPGlux+U22+seiRr7T/ebnBFUq
-	1Fr60s93JjLDVq4CO2VCuvBLGgStlrUKKWgZQoIbJvTHObR1oEl17gv3HE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BF8FC71E3A;
-	Fri,  9 Oct 2009 20:56:57 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CEE1871E39; Fri,  9 Oct 2009
- 20:56:54 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CF898054-B537-11DE-B55A-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S934730AbZJJA5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Oct 2009 20:57:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933867AbZJJA5w
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Oct 2009 20:57:52 -0400
+Received: from qw-out-2122.google.com ([74.125.92.27]:46936 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933405AbZJJA5v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Oct 2009 20:57:51 -0400
+Received: by qw-out-2122.google.com with SMTP id 9so118011qwb.37
+        for <git@vger.kernel.org>; Fri, 09 Oct 2009 17:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=gzqzifs6tadYNMxSe5WV5iSaIZcvB1rG65h6SVFwko8=;
+        b=xW0sW8PcxKrvshLbc9Ri7LnYZBBVUmkDoRrtkcVLgZFEiaFziXnft8KXTHrw1w/CiN
+         xiNpzDTY6t4xv/A9hu93DlWh3dPeXuJpDvy20haVt8tPrxk512r95zhw4AIID+K3RZ6f
+         LdRgRmrtTeqnJbKE/4/LpUm/tyA/6BbPmvszc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=dR+A/rrPtPfpO1clj0kguWcWGdr9KLoyS3t7WIqsfi/IrPvzXySIDZX7/8AkssDsP4
+         8LkjUNhNdm76sng1KmjvUmNdhL1OXeTa2zliPggonlkEaS9TDG/I/jygO1yUbqAVMVyb
+         oj+v2uhIyNaE4Fsw6/eKW8IW7ZHK9GWOGGdZ0=
+Received: by 10.224.96.207 with SMTP id i15mr3275907qan.179.1255136203356;
+        Fri, 09 Oct 2009 17:56:43 -0700 (PDT)
+Received: from localhost.localdomain ([222.131.235.191])
+        by mx.google.com with ESMTPS id 5sm437852qwh.22.2009.10.09.17.56.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 09 Oct 2009 17:56:42 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5.rc3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129859>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+When the screen height equal 600 px(e.g. Asus EeePC 1024x600), The
+_main window_ should be hide the _Push button_ and _Status bar_.
 
-> Am I understanding the problem here correctly?
+Signed-off-by: Vietor Liu <vietor.liu@gmail.com>
+---
+ git-gui.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I think so ;-).
+diff --git a/git-gui.sh b/git-gui.sh
+index 09b2720..037a1f2 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3083,7 +3083,7 @@ frame .vpane.lower.diff.body
+ set ui_diff .vpane.lower.diff.body.t
+ text $ui_diff -background white -foreground black \
+ 	-borderwidth 0 \
+-	-width 80 -height 15 -wrap none \
++	-width 80 -height 5 -wrap none \
+ 	-font font_diff \
+ 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
+ 	-yscrollcommand {.vpane.lower.diff.body.sby set} \
+-- 
+1.6.5.rc3
