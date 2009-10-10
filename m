@@ -1,86 +1,75 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
+From: eduard stefan <eduard.stefan@gmail.com>
 Subject: Re: Git 1.6.5-rc git clone unhandled exception using http protocol
-Date: Sun, 11 Oct 2009 00:07:23 +0800
-Message-ID: <be6fef0d0910100907t61ea922bqf117e6c025e94ce7@mail.gmail.com>
-References: <4ACF7296.3010809@gmail.com>
-	 <be6fef0d0910100355v41de0771m30c153f413a46d2e@mail.gmail.com>
-	 <4AD09F5E.9090304@gmail.com>
-	 <be6fef0d0910100811l325d3df1jdf8d3d9dd51e3385@mail.gmail.com>
-	 <4AD0AE84.1070500@gmail.com>
+Date: Sat, 10 Oct 2009 19:52:27 +0300
+Message-ID: <4AD0BBCB.8000306@gmail.com>
+References: <4ACF7296.3010809@gmail.com>	 <be6fef0d0910100355v41de0771m30c153f413a46d2e@mail.gmail.com>	 <4AD09F5E.9090304@gmail.com>	 <be6fef0d0910100811l325d3df1jdf8d3d9dd51e3385@mail.gmail.com>	 <4AD0AE84.1070500@gmail.com> <be6fef0d0910100907t61ea922bqf117e6c025e94ce7@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>
-To: eduard stefan <eduard.stefan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 10 18:12:37 2009
+Content-Transfer-Encoding: 7bit
+To: Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 10 18:55:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MweYe-0003ft-Ue
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 18:12:37 +0200
+	id 1MwfEO-0004ui-Mr
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 18:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761693AbZJJQIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Oct 2009 12:08:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757115AbZJJQIA
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 12:08:00 -0400
-Received: from mail-iw0-f180.google.com ([209.85.223.180]:40896 "EHLO
-	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752990AbZJJQIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Oct 2009 12:08:00 -0400
-Received: by iwn10 with SMTP id 10so1649963iwn.4
-        for <git@vger.kernel.org>; Sat, 10 Oct 2009 09:07:23 -0700 (PDT)
+	id S934680AbZJJQxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Oct 2009 12:53:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934671AbZJJQxq
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 12:53:46 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:10234 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934667AbZJJQxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Oct 2009 12:53:45 -0400
+Received: by qw-out-2122.google.com with SMTP id 9so234300qwb.37
+        for <git@vger.kernel.org>; Sat, 10 Oct 2009 09:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=WEhYfZzYBnBT7LHOiYyoju5QC546Ru9jkR0y9ZsnAoY=;
-        b=KSMMJM3sRDHOTC7X0fSQZANDgn8dPdTsHBvWS/WyOop2tpOYY7RRA+VOkIagairtQC
-         mdWIkUtAeRISlN2LKfZalpIfxUJEkSTH4ALYzRDgvE51zXmTdRbBoFjlc+Aj+9qNpNBw
-         BcTiPlwUjxG6sWFdfXDM9tCuiIe3GgD/JnN5Y=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=q+gnOoJnNoVbg2rB94cdZ2OAK/qkSL5XuRcgcFiG6Hg=;
+        b=IjZh8UEPRgobtn0ljdOcUd/0P/rh3apEPthJ1Yj+R3HR5w8tEFWunIzRS9A4UeQ6Vd
+         7SpCxUFbhJX7GPe3pw2v658bFlSbsm7xUbMuo6iiMjVDyCKFgw/+oytfPp1dm9D4voAD
+         /q2evVkJzE8S63SyQ/MLBuqyaAuJdCFUR5n6s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Kl/k0pQDpR8p3XUcccBe+WbNWWKEf+8Q6xc4NpNUmpINivL97OmN3tvxXq9gnxkLdn
-         gDjRUCsqwAH1L6IiX9v+C903wULbZNLpBWSsptuUifBRV7xU1Jl6MsvqzYHDvETUtXb/
-         jfI1BIIdI5sQmvVh6QUUubIgWMNOcq06BbHCU=
-Received: by 10.231.1.22 with SMTP id 22mr7775892ibd.56.1255190843685; Sat, 10 
-	Oct 2009 09:07:23 -0700 (PDT)
-In-Reply-To: <4AD0AE84.1070500@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        b=h2HvVFYtW4p4jGeA22PQy5KfQG1d03QLejftEaNXIX5oVRe5Xcb0UQe1T9AP9kTycs
+         AwHhqWbhP0DzSxjq8LuGdKap/gxSkwf6yVgUcpjIMSA3tXcPQR5+vTxnKyBsENwdX/d8
+         NiWQ63zebw5fLjbNeWbiabiGrhL7x9S1VxQGg=
+Received: by 10.224.70.202 with SMTP id e10mr3689620qaj.16.1255193558238;
+        Sat, 10 Oct 2009 09:52:38 -0700 (PDT)
+Received: from ?192.168.2.8? ([89.136.114.133])
+        by mx.google.com with ESMTPS id 2sm1663704qwi.39.2009.10.10.09.52.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Oct 2009 09:52:37 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <be6fef0d0910100907t61ea922bqf117e6c025e94ce7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129891>
 
-Hi,
+Tay Ray Chuan wrote:
+> I suspect, as you do, it's got to do with remote-curl.
+> 
+> Could you try this command?
+> 
+>   echo list | git remote-curl http://github.com/loudej/spark.git
 
-On Sat, Oct 10, 2009 at 11:55 PM, eduard stefan <eduard.stefan@gmail.com> wrote:
-> I was just trying to point that the URL used is not relevant,
-> as long as the protocol used is URL, then it crashes.
+Inside an empty repository it crashes the same way,
+without any additional information.
+"git remote-curl" crashes in the same way,
+but "git remote-curl --help" tries to launch the browser.
 
-ok.
+Is there any way to obtain more information from this crash?
+Some debug mode?
 
-I suspect, as you do, it's got to do with remote-curl.
-
-Could you try this command?
-
-  echo list | git remote-curl http://github.com/loudej/spark.git
-
-On my machine, I get
-
-  @refs/heads/master HEAD
-  f192d3de483f2e7f38eebf84c8f1bbc8c4b5f185 refs/heads/gh-pages
-  2a0cd31d8706ec2d8cc5d7b49873cc24621b20af refs/heads/installers
-  10526926014eb2d89c2b449f1e29f4df7ab620bd refs/heads/master
-  7f36b2caf2f01566bd58f9304d6ad5c36ae280ce refs/heads/mono
-  80fc2424ebf082265c66bd6e0637c74744742b49 refs/heads/spark-1.1
-  62d62d5c183dd22cdf9491999291047add05c722 refs/heads/spike-1.1
-  d85abb61563e7f4f372c7e0418da0f20c49baf48 refs/tags/v1.0.39890-RC1
-  db9d3380c39284695added69edab46c2ddab2f48 refs/tags/v1.0.39917-RC2
-  70c418dd806a4eb7f32fa6fe710c9a5967ddef32 refs/tags/v1.0.39935
-
-
--- 
-Cheers,
-Ray Chuan
+Have a nice day,
+  A.
