@@ -1,90 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] disallow refs containing successive slashes
-Date: Sat, 10 Oct 2009 14:50:18 -0700
-Message-ID: <7vws327wbp.fsf@alter.siamese.dyndns.org>
-References: <4AD0C93C.6050306@web.de>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Git 1.6.5-rc git clone unhandled exception using http protocol
+Date: Sun, 11 Oct 2009 06:54:07 +0800
+Message-ID: <be6fef0d0910101554p53d5532cp17768d2c95e9dbf@mail.gmail.com>
+References: <4ACF7296.3010809@gmail.com>
+	 <be6fef0d0910100355v41de0771m30c153f413a46d2e@mail.gmail.com>
+	 <4AD09F5E.9090304@gmail.com>
+	 <be6fef0d0910100811l325d3df1jdf8d3d9dd51e3385@mail.gmail.com>
+	 <4AD0AE84.1070500@gmail.com>
+	 <be6fef0d0910100907t61ea922bqf117e6c025e94ce7@mail.gmail.com>
+	 <4AD0BBCB.8000306@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sat Oct 10 23:52:44 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, msysgit@googlegroups.com
+To: eduard stefan <eduard.stefan@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 00:58:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwjrn-0007yS-QR
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 23:52:44 +0200
+	id 1MwktA-0008DQ-MR
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 00:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756861AbZJJVvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Oct 2009 17:51:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756029AbZJJVvI
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 17:51:08 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56883 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751503AbZJJVvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Oct 2009 17:51:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9D1B53163;
-	Sat, 10 Oct 2009 17:50:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+kLAoZn7fFZKrDVH5be7eOTyUXU=; b=cjtnjF
-	j66ifb9ZKhwQy0i7RbAKr0hm5ewXzVZkNGh7Wjlb14qCLfew6uueiNopBSXWPeQj
-	Pjli5YSDHrGVQM5WdUXSbYRMFdwJzdZPla5ecEXtiO9Dq2JTHJuvszWLq4xKEGxp
-	qCLUwqyllwR3zh3W20YYJ8SHlgC1+PMcf7Xxo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dzxPY32LWLG1wx9nVLCEBeohK0eSVsbJ
-	akuoPU5oFYp+pLqvGrqd3wCrFIWDCNSD4vUTf51y6O/UJovKSs1JgKPNbhVfOaTk
-	5LdlImNZ1UugHhs90FN+TblscEpfywlyIasxx8qkJMVG6hO1YTPbTSZxrCoG0iuU
-	UwhXKBu73Rw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AA5D653162;
-	Sat, 10 Oct 2009 17:50:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 119605315F; Sat, 10 Oct
- 2009 17:50:19 -0400 (EDT)
-In-Reply-To: <4AD0C93C.6050306@web.de> (Jens Lehmann's message of "Sat\, 10
- Oct 2009 19\:49\:48 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E92A511E-B5E6-11DE-865F-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754962AbZJJWyq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Oct 2009 18:54:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754939AbZJJWyp
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 18:54:45 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:40087 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754930AbZJJWyp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Oct 2009 18:54:45 -0400
+Received: by iwn10 with SMTP id 10so1735307iwn.4
+        for <git@vger.kernel.org>; Sat, 10 Oct 2009 15:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bQTP+GSH9/EVqJAxSTgq9TgfCZpbQuzTvTRYVPORBx8=;
+        b=Wnv5Vs97WWFz4/UmHp39lvE6z7s0vPtG6XmnTjX307dlP+8VoqOkt+k1jx0uRCJcyx
+         IT68JsLKQsAq2cR6gm1bS77bzMXYvOhz/eFKT/eJX/r1GPybaQMbTjqMzlYf2zMFY4eY
+         RxCnK0eW+LdXQ/XTvB1CMIQJ1p6b1ntUX54j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VT1vMA7UkPeeUYA7BCGXgLJHVOdlqIqT911D+u1+ZyNPvD+2ezE413VolY+6HUTgK7
+         jcfKdB+2/2tmrFAUrd5u6m4QXSt11TkW6XpLbkyrp7QABTHaekeck68PKdFkoqfeLYMn
+         3FMMgEJJvIzLeIRWD5vHr4CqQ7v4pwcMXOoXU=
+Received: by 10.231.6.164 with SMTP id 36mr3773073ibz.39.1255215247782; Sat, 
+	10 Oct 2009 15:54:07 -0700 (PDT)
+In-Reply-To: <4AD0BBCB.8000306@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129898>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Hi,
 
-> When creating branches using names starting with '/' or containing a '//',
-> a leading slash would just vanish and successive slashes were 'compressed'
-> into just one slash.
-
-Hmm.  We already do that without your patch.
-
-    $ git branch /foo//bar
-    $ git for-each-ref --format='%(refname)'
-    refs/heads/foo/bar
-    refs/heads/master
-    $ git branch -d /foo//bar
-    Deleted branch /foo//bar (was deadbeef)
-    $ git for-each-ref --format='%(refname)'
-    refs/heads/master
-
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
+On Sun, Oct 11, 2009 at 12:52 AM, eduard stefan <eduard.stefan@gmail.co=
+m> wrote:
+> Tay Ray Chuan wrote:
+>> I suspect, as you do, it's got to do with remote-curl.
+>>
+>> Could you try this command?
+>>
+>> =A0 echo list | git remote-curl http://github.com/loudej/spark.git
 >
-> I became aware of this issue while looking into problems occuring
-> when a user created a branch starting with a '/' in git gui (e.g.
-> "/foo"). Strange things happen, while git gui shows the current
-> branch as "/foo" under the hood a branch "foo" (without the slash)
-> had been created. But then you can't delete "/foo" from git gui,
-> because a branch of that name doesn't exist.
+> Inside an empty repository it crashes the same way,
+> without any additional information.
+> "git remote-curl" crashes in the same way,
+> but "git remote-curl --help" tries to launch the browser.
 
-Perhaps an interface to give a cleaned-up version, e.g.
+just to check, running
 
-    $ git check-ref-format --print refs/heads//foo/bar
-    refs/heads/foo/bar
+  echo list | git remote-curl http://github.com/loudej/spark.git
 
-is what you want in order to fix git-gui?  I dunno.
+and
+
+  git clone http://github.com/loudej/spark.git
+
+both gives the same error message:
+
+  An unhandled win32 exception occurred in git-remote-curl.exe [5820].
+  Just-In-Time debugging this exception failed with the following
+  error: No installed debugger has Just-In-Time debugging enabled. In
+  Visual Studio, Just-In-Time debugging can be enabled from
+  Tools/Options/Debugging/Just-In-Time.
+
+  Check the documentation index for 'Just-in-time debugging, errors'
+  for more information.
+
+in a dialog?
+
+> Is there any way to obtain more information from this crash?
+> Some debug mode?
+
+I'm assuming you're using the Microsoft Visual Studio development
+tools to compile git from the source. I'm cc'ing this to the msysgit
+mailing list, perhaps someone familiar with them can advise you
+further.
+
+--=20
+Cheers,
+Ray Chuan
