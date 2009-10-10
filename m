@@ -1,101 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb - bare repos integration - owner info in description file
-Date: Sat, 10 Oct 2009 20:45:11 +0200
-Message-ID: <200910102045.13374.jnareb@gmail.com>
-References: <76c5b8580910091350o5cd90d3dobe2a21c18fa56dfd@mail.gmail.com> <m3ab00gr25.fsf@localhost.localdomain> <76c5b8580910091532yd6c6fc4ib942a29c827f3a6c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] disallow refs containing successive slashes
+Date: Sat, 10 Oct 2009 14:50:18 -0700
+Message-ID: <7vws327wbp.fsf@alter.siamese.dyndns.org>
+References: <4AD0C93C.6050306@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 10 20:49:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Oct 10 23:52:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwh0L-0003dG-RR
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 20:49:22 +0200
+	id 1Mwjrn-0007yS-QR
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 23:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762018AbZJJSrL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Oct 2009 14:47:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754870AbZJJSrK
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 14:47:10 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:15316 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754613AbZJJSrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Oct 2009 14:47:09 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so93360fga.1
-        for <git@vger.kernel.org>; Sat, 10 Oct 2009 11:45:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=qbU+IPWhyyt8xUZl/R3UQYthoQRNCbFd1eRrSbr17Gc=;
-        b=X9BcqW14cqDjkBSQh7w51cqhgpZTA7J1XxB2wll4+lRU0tqSh8su1loAtqX3OX0LVZ
-         VajXN+Bz82sixMDetcSKW2vhkrJqqfraqO9GUqenoUc4lJTcQsEQYDh3oN2TA2TCtgo5
-         ddRGTq7iTvOei2/E4VSTkfRe+qJhrrwB2lI0U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KBsmJDhI2/ur50hx83TraMEZ+jNveTqPS20HeCEXC4G7yM+S+0H3O3gEiY1ZTfjxw5
-         ch97IksxOF3DXGIN7LX1Y2iHMtnrrkrbXH70V0RrOiKIW0issfBrroA0IpD9oye4eji2
-         5DHnSY79f2Ueu6xeeXVwpEuZouwSwm6P8f2K0=
-Received: by 10.86.222.15 with SMTP id u15mr3726109fgg.33.1255200321116;
-        Sat, 10 Oct 2009 11:45:21 -0700 (PDT)
-Received: from ?192.168.1.13? (abwa37.neoplus.adsl.tpnet.pl [83.8.224.37])
-        by mx.google.com with ESMTPS id 3sm3759362fge.21.2009.10.10.11.45.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Oct 2009 11:45:19 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <76c5b8580910091532yd6c6fc4ib942a29c827f3a6c@mail.gmail.com>
-Content-Disposition: inline
+	id S1756861AbZJJVvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Oct 2009 17:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756029AbZJJVvI
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 17:51:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56883 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751503AbZJJVvH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Oct 2009 17:51:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9D1B53163;
+	Sat, 10 Oct 2009 17:50:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+kLAoZn7fFZKrDVH5be7eOTyUXU=; b=cjtnjF
+	j66ifb9ZKhwQy0i7RbAKr0hm5ewXzVZkNGh7Wjlb14qCLfew6uueiNopBSXWPeQj
+	Pjli5YSDHrGVQM5WdUXSbYRMFdwJzdZPla5ecEXtiO9Dq2JTHJuvszWLq4xKEGxp
+	qCLUwqyllwR3zh3W20YYJ8SHlgC1+PMcf7Xxo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dzxPY32LWLG1wx9nVLCEBeohK0eSVsbJ
+	akuoPU5oFYp+pLqvGrqd3wCrFIWDCNSD4vUTf51y6O/UJovKSs1JgKPNbhVfOaTk
+	5LdlImNZ1UugHhs90FN+TblscEpfywlyIasxx8qkJMVG6hO1YTPbTSZxrCoG0iuU
+	UwhXKBu73Rw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AA5D653162;
+	Sat, 10 Oct 2009 17:50:22 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 119605315F; Sat, 10 Oct
+ 2009 17:50:19 -0400 (EDT)
+In-Reply-To: <4AD0C93C.6050306@web.de> (Jens Lehmann's message of "Sat\, 10
+ Oct 2009 19\:49\:48 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E92A511E-B5E6-11DE-865F-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129897>
 
-On Sat, 10 Oct 2009, Eugene Sajine wrote:
-> >
-> > RTFM (in this case gitweb/README). =C2=A0gitweb.owner and gitweb.de=
-scription
-> > configuration variables in per-repository config.
->=20
-> Ok, my bad, didn't get there;) It is good to know there are places
-> where to keep the info. But it is not the point. The point is to
-> integrate gitweb with bare repo creation more than it is right now by
-> providing keys which will help filling out this info at the bare repo
-> creation stage.
->=20
-> shortly i'm talking about command like this (the key names are for sa=
-mple only):
->=20
-> $ git clone --bare repo repo.git -desc "description" -gwowner
-> "gitwebowner@server.com" -cloneurl "git://host/repo.git"
->=20
-> seems to me quite comfy, and no headache...
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-The project description, project owner and (clone) url are used by=20
-gitweb only, so I don't see why git-clone has to feature-creep to
-set them.
+> When creating branches using names starting with '/' or containing a '//',
+> a leading slash would just vanish and successive slashes were 'compressed'
+> into just one slash.
 
-[cut off part about using XML for all of gitweb config: description,
- owner, cloneurl]
-> > %
-> > "To be fair, there are uses for XML. On Halloween, for example."
-> >
-> > =C2=A0 =C2=A0 - Johannes Schindelin, on git@vger.kernel.org
-> > %
->=20
-> yeah, to show kids xml print outs as an answer to "trick or treat!".
-> Can save on candies;)
+Hmm.  We already do that without your patch.
 
-Err, I think Dscho meant here that XML is so *scary*... Isn't it?
+    $ git branch /foo//bar
+    $ git for-each-ref --format='%(refname)'
+    refs/heads/foo/bar
+    refs/heads/master
+    $ git branch -d /foo//bar
+    Deleted branch /foo//bar (was deadbeef)
+    $ git for-each-ref --format='%(refname)'
+    refs/heads/master
 
---=20
-Jakub Narebski
-Poland
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
+>
+> I became aware of this issue while looking into problems occuring
+> when a user created a branch starting with a '/' in git gui (e.g.
+> "/foo"). Strange things happen, while git gui shows the current
+> branch as "/foo" under the hood a branch "foo" (without the slash)
+> had been created. But then you can't delete "/foo" from git gui,
+> because a branch of that name doesn't exist.
+
+Perhaps an interface to give a cleaned-up version, e.g.
+
+    $ git check-ref-format --print refs/heads//foo/bar
+    refs/heads/foo/bar
+
+is what you want in order to fix git-gui?  I dunno.
