@@ -1,69 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-svn: hide find_parent_branch output in double quiet
- mode
-Date: Sat, 10 Oct 2009 00:02:32 -0700
-Message-ID: <7vy6njafzr.fsf@alter.siamese.dyndns.org>
-References: <b01cac406b93d5c67e3ae2e9a7aaa498a52dd9fc@8b5064a13e22126c1b9329f0dc35b8915774b7c3.invalid> <20091010010843.GA30258@dcvr.yhbt.net>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: Merging non-git releases of a project
+Date: Sat, 10 Oct 2009 10:47:42 +0200
+Message-ID: <20091010084742.GB17220@m62s10.vlinux.de>
+References: <26ae428a0910091411i39a03650o51163f794b984524@mail.gmail.com> <32541b130910091427i7c8a2426hb69a9914aabde8bc@mail.gmail.com> <26ae428a0910091433v2c959a70g9bfc6c54382f370d@mail.gmail.com> <32541b130910091543x19b3b46an109f90be5c5bfaa2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Simon Arlott <simon@fire.lp0.eu>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Oct 10 09:05:03 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 10 10:49:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwW0i-0005Sz-UV
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 09:05:01 +0200
+	id 1MwXeE-0005Pw-17
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Oct 2009 10:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753580AbZJJHDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Oct 2009 03:03:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbZJJHDu
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 03:03:50 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53247 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753461AbZJJHDt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Oct 2009 03:03:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D6F997225D;
-	Sat, 10 Oct 2009 03:02:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XH0vTOkTN5MNJjn0EzBnPSLaR9Q=; b=Yqo5Tx
-	FMpzfNAsaSo4bGbSsmnViBRnw+kajvV+NFh+SvI+TMTNVliLUVWMClPnNuwszXsm
-	toGMRLnmi0gnf0RrG3uHdvBqcKRgQQgSNYcMJY0myCYT8wivplO1+hw7JhQCNidv
-	fMVYR88w5j5rPjrsVwlr0vDq0LXo8nO7i0Ceo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gdJ+C/4fXOG4rGHKcPLodbrfILzrriEv
-	4EoxuuMDQWMov7Gzj6z5nsUhTp606fVY2gfEBo+gshAUdgPg3psrcdEBR4lY3ACX
-	oSdD3xF0JZvT6zVnF24HzbBBrAegS78r+rWxW0DT+LUqOZyFCtyoK/rl0M8RQWVb
-	WGIpJu2hFWU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ADE1172258;
-	Sat, 10 Oct 2009 03:02:38 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8070C72257; Sat, 10 Oct 2009
- 03:02:34 -0400 (EDT)
-In-Reply-To: <20091010010843.GA30258@dcvr.yhbt.net> (Eric Wong's message of
- "Fri\, 9 Oct 2009 18\:08\:43 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E5567076-B56A-11DE-9F96-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1755854AbZJJIsd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Oct 2009 04:48:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755680AbZJJIsd
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Oct 2009 04:48:33 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46515 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755567AbZJJIsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Oct 2009 04:48:32 -0400
+Received: (qmail invoked by alias); 10 Oct 2009 08:47:44 -0000
+Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
+  by mail.gmx.net (mp052) with SMTP; 10 Oct 2009 10:47:44 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX18zLKkmz9szvCV6wbjMAE7SeAZAmnrbAfpaBeAVOi
+	ztCBBQm7oyMRHG
+Received: by m62s10.vlinux.de (Postfix, from userid 1000)
+	id 505C61BC07; Sat, 10 Oct 2009 10:47:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <32541b130910091543x19b3b46an109f90be5c5bfaa2@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129872>
 
-Eric Wong <normalperson@yhbt.net> writes:
+On Fri, Oct 09, 2009 at 06:43:50PM -0400, Avery Pennarun wrote:
+> On Fri, Oct 9, 2009 at 5:33 PM, Howard Miller
+> <howard@e-learndesign.co.uk> wrote:
+> > I'm missing the point here though. Where/when =A0do I actually add =
+the
+> > new pristine code? If I checkout, as you suggest, my initial commit=
+ I
+> > just have (say) v1.0 of the vendor's code. I can't just copy (say)
+> > version 1.2 on top as the files probably won't match one-one.
+> >
+> > Sorry - I'm probably completely failing to understand.
+>=20
+> Try this:
+>=20
+>    cd mygitproject
+>    git rm -rf .
+>    cp -a /tmp/wherever/vendor-1.2/. .
+>    git add .
 
-> Thanks Simon,
->
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->
-> and pushed out to git://git.bogomips.org/git-svn
+This won't commit deleted files from v1.0 - v1.2. Use git add -A to sta=
+ge all
+modified and deleted files for the next commit.
 
-Thanks; you seem to have rebased the history in this repository, and
-merging from you will duplicate Alexander's "Avoid spurious errors", which
-I already pulled, so I'll cherry pick this one from your tree.
+>    git commit
+>=20
+> Don't worry, git won't double-store files that are identical between
+> the old 1.0 and new 1.2 versions.
