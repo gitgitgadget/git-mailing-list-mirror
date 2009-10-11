@@ -1,78 +1,66 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: combine git repo historically
-Date: Sun, 11 Oct 2009 11:34:48 +0200
-Message-ID: <m2bpkes287.fsf@igel.home>
-References: <20091009012254.GA3980@debian.b2j>
-	<4ACED204.3000907@viscovery.net> <20091010140358.GA3924@debian.b2j>
-	<200910110436.52653.chriscool@tuxfamily.org>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: git-svn very slow on fetch (shared git-svn repo)
+Date: Sun, 11 Oct 2009 11:37:36 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4AD1A760.9060006@obry.net>
+References: <4AD04F95.7050603@obry.net> <20091011070136.GB16264@dcvr.yhbt.net> <4AD19E9F.8010302@obry.net> <20091011090338.GA27480@dcvr.yhbt.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bill lam <cbill.lam@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	git <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Oct 11 11:37:33 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Oct 11 11:39:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwurO-0003HU-Cx
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 11:37:02 +0200
+	id 1Mwutx-0004Pi-Mb
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 11:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827AbZJKJfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 05:35:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754427AbZJKJfj
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 05:35:39 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:52015 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZJKJfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 05:35:38 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 973B71C15497;
-	Sun, 11 Oct 2009 11:34:50 +0200 (CEST)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id 79E4D901B7;
-	Sun, 11 Oct 2009 11:34:50 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id YiYclCw1zuiK; Sun, 11 Oct 2009 11:34:49 +0200 (CEST)
-Received: from igel.home (DSL01.83.171.184.49.ip-pool.NEFkom.net [83.171.184.49])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sun, 11 Oct 2009 11:34:49 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id DF9C110C5C0; Sun, 11 Oct 2009 11:34:48 +0200 (CEST)
-X-Yow: HAIR TONICS, please!!
-In-Reply-To: <200910110436.52653.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Sun, 11 Oct 2009 04:36:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1755443AbZJKJha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 05:37:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754427AbZJKJha
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 05:37:30 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:51821 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbZJKJh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 05:37:29 -0400
+Received: by ewy4 with SMTP id 4so1733236ewy.37
+        for <git@vger.kernel.org>; Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
+Received: by 10.216.89.12 with SMTP id b12mr1556256wef.93.1255253812554;
+        Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
+Received: from ?192.168.0.100? (AVelizy-154-1-79-118.w86-205.abo.wanadoo.fr [86.205.109.118])
+        by mx.google.com with ESMTPS id 5sm5163558eyh.0.2009.10.11.02.36.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <20091011090338.GA27480@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129911>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Eric,
 
-> You want N' to have the same content as N but to have M as parent. So you 
-> could do something like the following:
->
-> (We suppose that commits A to M are in branch1 and that you are in the root 
-> directory of your repo2 working directory.)
->
-> $ git checkout -b repo1-branch1 remote/repo1/branch1
-> $ git checkout N -- .
-> $ export GIT_AUTHOR_NAME=<author name of commit N>
-> $ export GIT_AUTHOR_EMAIL=<author email of commit N>
-> $ export GIT_AUTHOR_DATE=<date of commit N>
-> $ git commit -a
+> Yes, copying .metadata should be enough.
 
-Isn't that what git cherry-pick does?
+I've put this in place. Works fine.
 
-Andreas.
+ > The .rev_map rebuild should be fast.
+
+Yep. Thanks for your quick reply.
+
+Pascal.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
