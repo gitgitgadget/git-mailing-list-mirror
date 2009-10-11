@@ -1,66 +1,70 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git-svn very slow on fetch (shared git-svn repo)
-Date: Sun, 11 Oct 2009 11:37:36 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <4AD1A760.9060006@obry.net>
-References: <4AD04F95.7050603@obry.net> <20091011070136.GB16264@dcvr.yhbt.net> <4AD19E9F.8010302@obry.net> <20091011090338.GA27480@dcvr.yhbt.net>
-Reply-To: pascal@obry.net
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: meaning of HEAD in context of filter-branch
+Date: Sun, 11 Oct 2009 11:38:16 +0200
+Message-ID: <m27hv2s22f.fsf@igel.home>
+References: <20091011024357.GA9021@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Oct 11 11:39:42 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 11:39:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwutx-0004Pi-Mb
+	id 1Mwuty-0004Pi-7I
 	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 11:39:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755443AbZJKJha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 05:37:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754427AbZJKJha
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 05:37:30 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:51821 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZJKJh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 05:37:29 -0400
-Received: by ewy4 with SMTP id 4so1733236ewy.37
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
-Received: by 10.216.89.12 with SMTP id b12mr1556256wef.93.1255253812554;
-        Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
-Received: from ?192.168.0.100? (AVelizy-154-1-79-118.w86-205.abo.wanadoo.fr [86.205.109.118])
-        by mx.google.com with ESMTPS id 5sm5163558eyh.0.2009.10.11.02.36.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Oct 2009 02:36:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <20091011090338.GA27480@dcvr.yhbt.net>
+	id S1752611AbZJKJjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 05:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbZJKJjG
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 05:39:06 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:52607 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751900AbZJKJjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 05:39:04 -0400
+Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
+	by mail-out.m-online.net (Postfix) with ESMTP id EDF1E1C156AF;
+	Sun, 11 Oct 2009 11:38:17 +0200 (CEST)
+Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
+	by mail.m-online.net (Postfix) with ESMTP id D0FE390168;
+	Sun, 11 Oct 2009 11:38:17 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.3.149])
+	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
+	with ESMTP id VQSTUf+Ops9q; Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
+Received: from igel.home (DSL01.83.171.184.49.ip-pool.NEFkom.net [83.171.184.49])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id AB66B10C5C0; Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
+X-Yow: I'm ZIPPY!!  Are we having FUN yet??
+In-Reply-To: <20091011024357.GA9021@debian.b2j> (bill lam's message of "Sun,
+	11 Oct 2009 10:43:57 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129912>
 
-Eric,
+bill lam <cbill.lam@gmail.com> writes:
 
-> Yes, copying .metadata should be enough.
+> how to get the HEAD during filter-branch or other workaround?
 
-I've put this in place. Works fine.
+>From git-filter-index(1):
 
- > The .rev_map rebuild should be fast.
+   Filters
+       The filters are applied in the order as listed below. The <command>
+       argument is always evaluated in the shell context using the eval
+       command (with the notable exception of the commit filter, for technical
+       reasons). Prior to that, the $GIT_COMMIT environment variable will be
+                                    ^^^^^^^^^^^
+       set to contain the id of the commit being rewritten.
 
-Yep. Thanks for your quick reply.
-
-Pascal.
+Andreas.
 
 -- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|    http://www.obry.net  -  http://v2p.fr.eu.org
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
