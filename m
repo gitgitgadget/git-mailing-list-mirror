@@ -1,65 +1,63 @@
-From: Bruce Korb <bkorb@gnu.org>
-Subject: ident pattern match is incorrect
-Date: Sun, 11 Oct 2009 09:52:11 -0700
-Message-ID: <668c430c0910110952p3abe2d1cl82c2d979f12e5a2f@mail.gmail.com>
+From: Dilip M <dilipm79@gmail.com>
+Subject: git log --graph
+Date: Sun, 11 Oct 2009 23:57:33 +0530
+Message-ID: <c94f8e120910111127q102aa6a1qc3c0850f8a8a1509@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Bruce Korb <bkorb@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 11 18:58:43 2009
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 11 20:36:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mx1kn-00025O-7w
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 18:58:41 +0200
+	id 1Mx3Hk-0002dt-PT
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 20:36:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756575AbZJKQws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 12:52:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756167AbZJKQws
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 12:52:48 -0400
-Received: from mail-gx0-f212.google.com ([209.85.217.212]:52608 "EHLO
-	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756140AbZJKQwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 12:52:47 -0400
-Received: by gxk4 with SMTP id 4so9392984gxk.8
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 09:52:11 -0700 (PDT)
+	id S1753964AbZJKS2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 14:28:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753840AbZJKS2b
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 14:28:31 -0400
+Received: from mail-pz0-f194.google.com ([209.85.222.194]:38614 "EHLO
+	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751047AbZJKS2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 14:28:30 -0400
+X-Greylist: delayed 6573 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Oct 2009 14:28:29 EDT
+Received: by pzk32 with SMTP id 32so8397996pzk.21
+        for <git@vger.kernel.org>; Sun, 11 Oct 2009 11:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=jRpxyTj8x+8YkbL2LgOlDiCODgNpSW59+wx2zDPD148=;
-        b=dN9F3U3MnrTGAs1427QFO/hytaM+paUYJsmJQeVfV/rYYyR8n48OG8YoUPJhQfXVyn
-         kbpTIyvbgtYm7L3qPXe370u1PGpVr0P9LB9/toShJ30WcSrhR32xRJiLshxG5mYPQh+g
-         whYDMfZWgP3/NiVpu2k7CO3z4TH4gacjM6TmQ=
+        h=domainkey-signature:mime-version:received:from:date:message-id
+         :subject:to:content-type;
+        bh=UYnFGVNiIMFkNu5+FahppxmAma0rkcPEg9HZYPGZiEo=;
+        b=GAPttW1zESzwzUUcjRXnv8QlkDeAIL3FWfEL/6Zggz9aa9cQlL23WwAkcATAGzzSHT
+         vGiFBcnrrU+i2Jk7B+nPaqj8O0+olkbAwbogswhuhwxY7wO87JDxytIgfYa36qSqPaD5
+         eQTwPdtliKWd57C4zA4zcLVQHgg9Ykk3sKezU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        b=IlJmSq5M13y33iMUzhYolaKA9P/1nJ3d3jjvJfTA9YxZMqae2zL2XtUD8mujDXw7W0
-         JOZ2R804wIiKe/We9gnbUZMm8bR6qywFxmDP2dbLYCMzLNueNK0WDzVDugPjibUorBqL
-         WNSgrXr+tK7QBPUEnQZY+VJ3+uwvs372Y17NE=
-Received: by 10.101.56.11 with SMTP id i11mr4847297ank.5.1255279931100; Sun, 
-	11 Oct 2009 09:52:11 -0700 (PDT)
-X-Google-Sender-Auth: 2ed391cc1344e010
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=tlaBVCEl1lQhdoCggNoo/eK8xDwb3T0vKPKkf0XPFssRmx7cWSHoWGZaP2fel8zbS9
+         5wdaYSDc9EZhN814+ZDG8dlActBTdJ1WQ1IcRQVZVW5kGlDKSGHem9Ute1NDii/el4Zh
+         KHf2BWvqhgqdlVcmbfRspBn38VZ72eFSEPPvQ=
+Received: by 10.140.165.7 with SMTP id n7mr333324rve.270.1255285673065; Sun, 
+	11 Oct 2009 11:27:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129939>
 
-The git attribute "ident" fails here:
+I am using: git version 1.6.3.2
 
-  sed '2,/and the template file/d
-      /\$Id:/d
-      /Last template edit:/d' getopt-test_${testname}.c
+Somehow not getting text graph as mentioned in
+http://www.gitready.com/intermediate/2009/01/26/text-based-graph.html
 
-The pattern match for ident should be (shell syntax):
+Any hints would really help..
 
-   $'\$Id(:[^$\n]+\$|\$)'
+I am trying git log --graph. (has commits in two branches...). But
+always see one line :(
 
-In other words, it is not a multi-line pattern.
-I was looking for a bugzilla entry here:
-   http://git-scm.com/
 
-but I did not see a bug reporting method.
+
+
+-- 
+Dilip
