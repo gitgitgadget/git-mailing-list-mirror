@@ -1,80 +1,62 @@
-From: Fabian Molder <fm122@arcor.de>
-Subject: Re: git svn with non-standard svn layout
-Date: Sun, 11 Oct 2009 19:00:19 +0000 (UTC)
-Message-ID: <loom.20091011T205226-197@post.gmane.org>
-References: <loom.20091010T001433-536@post.gmane.org> <20091011070937.GC16264@dcvr.yhbt.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add--interactive: never skip files included in
+ index
+Date: Sun, 11 Oct 2009 15:14:40 -0400
+Message-ID: <20091011191440.GA2532@coredump.intra.peff.net>
+References: <1255189906-16049-1-git-send-email-pav@iki.fi>
+ <7viqelwyp1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 11 21:06:16 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Pauli Virtanen <pav@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 21:16:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mx3jv-0006U7-Kn
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 21:05:56 +0200
+	id 1Mx3uF-0003Lv-6T
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 21:16:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452AbZJKTBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 15:01:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbZJKTBX
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 15:01:23 -0400
-Received: from lo.gmane.org ([80.91.229.12]:34452 "EHLO lo.gmane.org"
+	id S1751845AbZJKTPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 15:15:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751002AbZJKTPR
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 15:15:17 -0400
+Received: from peff.net ([208.65.91.99]:35614 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751430AbZJKTBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 15:01:22 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1Mx3ev-0004WD-FT
-	for git@vger.kernel.org; Sun, 11 Oct 2009 21:00:45 +0200
-Received: from p579FC859.dip.t-dialin.net ([87.159.200.89])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 21:00:45 +0200
-Received: from fm122 by p579FC859.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 21:00:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 87.159.200.89 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.3) Gecko/20090909 Fedora/3.5.3-1.fc11 Firefox/3.5.3)
+	id S1750943AbZJKTPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 15:15:17 -0400
+Received: (qmail 31189 invoked by uid 107); 11 Oct 2009 19:18:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Oct 2009 15:18:10 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Oct 2009 15:14:40 -0400
+Content-Disposition: inline
+In-Reply-To: <7viqelwyp1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129947>
 
-Eric Wong <normalperson <at> yhbt.net> writes:
+On Sun, Oct 11, 2009 at 11:52:10AM -0700, Junio C Hamano wrote:
 
-...
+> Thanks.
 > 
-> Hi Fabian,
-> 
-> Since you don't want to track the entire repo and these seem like
-> unrelated (history-wise) trees, you probably want the simplest cases:
-> 
->   git svn clone svn://example.com/path/to/xapplication2
->   git svn clone svn://example.com/path/to/aa/bb/cc/xapplication1
-> 
-> These commands are like doing the following with plain old svn:
-> 
->   svn co svn://example.com/path/to/xapplication2
->   svn co svn://example.com/path/to/aa/bb/cc/xapplication1
-> 
-> > I tried to use "git config svn-remote.svn.branches" to do this,
-> >  please see in function "do_git_svn" in bash-script - but no success
-> 
-> svn-remote.svn.branches and tags are really only for repos with
-> standard layouts.
-> 
+> The change looks innocent enough and I do not expect to see any unexpected
+> regressions from it, but it is a bit too late for 1.6.5 cycle, so let's
+> queue this fix and aim for 1.6.5.1.
 
-Hello Eric,
-  hmm, understand,
-  but this just does an checkout to the working dir
+I think this patch is good to apply, as there is no conceivable reason
+to even look at excludes when listing modified files.
 
-  the reason for using git is:
-    - work offline, with (at least read) access to all the svn branches
-    - have some more (privat, not commit back to svn) branches for experiments
-    - all the nice git stuff ..
-regards,
-Fabian
+But this triggered my spider sense; shouldn't --exclude-standard simply
+be a no-op for ls-files when we are not listing untracked files? And
+bisecting, it seems that it is a very old regression caused by 63d285c
+(per-directory-exclude: lazily read .gitignore files, 2007-11-29).
+
+I don't know if it is worth fixing now or not. It does seem a bit
+inconsistent to me (since everything else is very clear that .gitignore
+is only about untracked files), but nobody seems to have been
+complaining for the last two years (and they may have, in fact, been
+coding to the new behavior).
+
+-Peff
