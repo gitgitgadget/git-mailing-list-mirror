@@ -1,95 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.5
-Date: Sun, 11 Oct 2009 11:47:19 -0700
-Message-ID: <7vfx9pydhk.fsf@alter.siamese.dyndns.org>
-References: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
- <f488382f0910110930u1af92299ld5d72dbb31ed1914@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Sun Oct 11 20:49:11 2009
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH] git: add --no-replace option to disable replacing
+Date: Sun, 11 Oct 2009 17:32:26 +0200
+Message-ID: <20091011153227.8487.81803.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	bill lam <cbill.lam@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 20:49:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mx3Th-0007eK-0x
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 20:49:09 +0200
+	id 1Mx3Tg-0007eK-F0
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 20:49:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750787AbZJKSsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 14:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbZJKSsJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 14:48:09 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61547 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730AbZJKSsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 14:48:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E50E05515E;
-	Sun, 11 Oct 2009 14:47:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Htc+VCTp7gXitJyfonM3kp3DIFQ=; b=Zmv3H3
-	U1M4ZyriBdRNRJ0chIgVqUUkFRPllwgDg3W1gBo54oKSMrkjwJNkfeszgBcP+ZNh
-	IC9HIEUIWHkWzOIhxRo5pUv8ckyfQ6E0AlPjXJNskt+ZY4i2bQi3y/lNJdrNniNA
-	DR82gXd5KeOmeVXRGrCA+dQ7Sanvq2zSB7FOs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s/Gtv9uvKl9vzCp8YMqjgIBamflWrEfo
-	28TlVOEvysndZTraOl97980H0thUIDOGo9ZQqdU0AoEagvNA/nv/EcCp9EHmxDT/
-	6Gm/JYVq9SVwgbqwQ0q1lUU6EOY5sXOwERlC1Pby1HmyThPgmBi5xovfazNkYRya
-	CzEEU9zC1kI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C788A5515D;
-	Sun, 11 Oct 2009 14:47:23 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 38AE95515C; Sun, 11 Oct
- 2009 14:47:21 -0400 (EDT)
-In-Reply-To: <f488382f0910110930u1af92299ld5d72dbb31ed1914@mail.gmail.com>
- (Steven Noonan's message of "Sun\, 11 Oct 2009 09\:30\:13 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 83A8854E-B696-11DE-AEE8-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750878AbZJKSpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 14:45:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750862AbZJKSpk
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 14:45:40 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:48426 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750854AbZJKSpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 14:45:39 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A624F8180C2;
+	Sun, 11 Oct 2009 20:44:55 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 19A14818173;
+	Sun, 11 Oct 2009 20:44:52 +0200 (CEST)
+X-git-sha1: 31b537b7e093b6a319a8c9918608cc5af7ed6d5c 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129942>
 
-Steven Noonan <steven@uplinklabs.net> writes:
+Commit dae556b (environment: add global variable to disable replacement)
+adds a variable to enable/disable replacement, and it is enabled by
+default for most commands.
 
-> Uh-oh.
->
-> Alcarin:crisscross steven$ git remote update
-> Updating origin
-> fatal: 'git@github.com/tycho/crisscross.git' does not appear to be a
-> git repository
-> fatal: The remote end hung up unexpectedly
-> error: Could not fetch origin
+So there is no way to disable it for some commands, which is annoying
+when we want to get information about a commit that has been replaced.
 
-Try user@site:path/to/repo.git with a colon.  As you mentioned already,
-you could also use ssh://user@site/full/path/to/repo.git
+For example:
 
-> The 'ssh://' part is omitted in numerous places on github.com. I
-> realize github.com isn't the final authority on the syntax of the URI,
+$ git cat-file -p N
 
-What do you mean by "final authority"?
+would output information about the replacement commit if commit N is
+replaced.
 
-Your misconfigured URL is diagnosed by the local client on your end and I
-do not think it has anything to do with github.  Do you mean github.com
-documentation primarily uses scp syntax (i.e. [user@]site:path/to/repo)
-instead of the fake URI syntax (i.e. ssh://user@site/full/path/to/repo),
-*but* misspells the former without colon (i.e. [user@]site/path/to/repo)?
+With the "--no-replace" option that this patch adds it is possible to
+get information about the original commit using:
 
-If that is the case, it is something github folks need to fix, but I doubt
-they have such a breakage.
+$ git --no-replace cat-file -p N
 
-> but was this an intentional change or a regression?
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-I do not think older clients ever allowed your colon-less scp syntax.  Do
-you really see any *change*?  IOW, not the difference between the ssh://
-syntax and a misspelled scp syntax, but a difference between versions of
-git working and not working with a misspelled scp syntax?
+	Jakub Narebski wrote:
 
-Which version of git worked with "git@github.com/tycho/crisscross.git" for
-you?
+	> Wouldn't it be better for this option to be option for git
+	> wrapper, i.e.
+	>
+	>  $ git --no-replace cat-file -p N
+	>
+	> and not
+	>
+	>  $ git cat-file --no-replace -p N
+
+	You mean something like this patch?
+
+	This is untested yet. I will add some tests and documentation
+	later if it's ok to add this option.
+
+
+diff --git a/git.c b/git.c
+index 9883009..cfef7ac 100644
+--- a/git.c
++++ b/git.c
+@@ -6,7 +6,7 @@
+ 
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [--html-path]\n"
+-	"           [-p|--paginate|--no-pager]\n"
++	"           [-p|--paginate|--no-pager] [--no-replace]\n"
+ 	"           [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE]\n"
+ 	"           [--help] COMMAND [ARGS]";
+ 
+@@ -87,6 +87,8 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			use_pager = 0;
+ 			if (envchanged)
+ 				*envchanged = 1;
++		} else if (!strcmp(cmd, "--no-replace")) {
++			read_replace_refs = 0;
+ 		} else if (!strcmp(cmd, "--git-dir")) {
+ 			if (*argc < 2) {
+ 				fprintf(stderr, "No directory given for --git-dir.\n" );
+-- 
+1.6.5.1.g31b53
