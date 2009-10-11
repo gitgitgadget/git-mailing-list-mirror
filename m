@@ -1,393 +1,93 @@
 From: imyousuf@gmail.com
-Subject: [JGit-io-RFC-PATCH v2 4/4] Add locking capability to the IO SPI based on Java Concurrency Lock API
-Date: Sun, 11 Oct 2009 21:07:53 +0700
-Message-ID: <1255270073-14205-4-git-send-email-imyousuf@gmail.com>
+Subject: [JGit-io-RFC-PATCH v2 2/4] Add JGit IO SPI and default implementation
+Date: Sun, 11 Oct 2009 21:07:51 +0700
+Message-ID: <1255270073-14205-2-git-send-email-imyousuf@gmail.com>
 References: <1255270073-14205-1-git-send-email-imyousuf@gmail.com>
- <1255270073-14205-2-git-send-email-imyousuf@gmail.com>
- <1255270073-14205-3-git-send-email-imyousuf@gmail.com>
 Cc: spearce@spearce.org, egit-dev@eclipse.org,
 	Imran M Yousuf <imyousuf@smartitengineering.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 11 16:10:15 2009
+X-From: git-owner@vger.kernel.org Sun Oct 11 16:10:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwz7l-0008An-D4
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 16:10:13 +0200
+	id 1Mwz7k-0008An-B5
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 16:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755035AbZJKOJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 10:09:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754960AbZJKOJv
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 10:09:51 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:31194 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753568AbZJKOJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 10:09:49 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so1759660eyf.19
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 07:08:41 -0700 (PDT)
+	id S1754883AbZJKOJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 10:09:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754778AbZJKOJC
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 10:09:02 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:40147 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754730AbZJKOJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 10:09:00 -0400
+Received: by ewy4 with SMTP id 4so1831396ewy.37
+        for <git@vger.kernel.org>; Sun, 11 Oct 2009 07:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=JjQzYO/FgBKUgXHcigblsCo+poBd3S99z8BKA/RkXOA=;
-        b=cBfyaG8KrYWUGWkXXE6qjMC6cLn1DC9QyKk85OVnXmeUZfsBrieYGJ02eekB526XvG
-         J/0miLAKj7KE5sTEEpIKiL5I587NvBVIRwIFWDfQyEm8jU+psYE0cBlAA7yt/mMsFxpk
-         Ygi7J9I/QVbk7QjEEQwR6LaNjGqCHipgbM/rU=
+        bh=H9oARRFGZ1qfjkSNYbAaus0NI3FNi8Kx0D/YeePw6L8=;
+        b=mQ2t7r9nsyiBqnBCoWB8eos6FcbPoxd36roWNmd79wk4sh2dFiDUN7RFy4cWCx96P9
+         lWdYj67tec0fe+P5K9i5xq+czlvSEcxpkHhN89LwhuPFx8m2jQXc8pqYnHz9PaKR+p2B
+         ewqWKpAAYmvJZmP2T6XYpe2mFOOQ/l/pTfraY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=QlFwYvCPyQqQirI0BqZCDjdrZfygx4oTAcpcNPriBsFKE0djKojKquQkF25YIdpNqR
-         d5HC6LHdfRS+G7nWPLpL7BKUTPTJJImb6WdZYY8kdSToLmFBwRCNqxKqEp5m7MVRHsis
-         FTpXn1p53O1+7BR8RvpB2VH4AiaF8wsb7Wjhc=
-Received: by 10.211.128.15 with SMTP id f15mr5904810ebn.84.1255270120223;
-        Sun, 11 Oct 2009 07:08:40 -0700 (PDT)
+        b=oqgfIAbq4lfFHm6j2SzkjtDJHvyko4WtFoxjp7cozSW5EZk0oPlxXLMIj7/f2hkZxp
+         JM+buhBZnbcbK+r1l6TAsJfvtA0BNR/WtzhWsenv8q5l8wALyRkFoVv9nJVcoD/b/K3y
+         nWj08EXC10HL6EejvpEtYNzDV0bEhHcvIGXjg=
+Received: by 10.211.130.6 with SMTP id h6mr5803599ebn.97.1255270102044;
+        Sun, 11 Oct 2009 07:08:22 -0700 (PDT)
 Received: from localhost.localdomain ([119.30.36.8])
-        by mx.google.com with ESMTPS id 23sm2698205eya.42.2009.10.11.07.08.30
+        by mx.google.com with ESMTPS id 23sm2698205eya.42.2009.10.11.07.08.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Oct 2009 07:08:39 -0700 (PDT)
+        Sun, 11 Oct 2009 07:08:21 -0700 (PDT)
 X-Mailer: git-send-email 1.6.2.1
-In-Reply-To: <1255270073-14205-3-git-send-email-imyousuf@gmail.com>
+In-Reply-To: <1255270073-14205-1-git-send-email-imyousuf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129929>
 
 From: Imran M Yousuf <imyousuf@smartitengineering.com>
 
-The lock implementation for local FS has 2 layer for locking, first JVM
-level using the Java Concurrency API and second level is in local FS and
-its Git specific *.lock files.
+The SPI mainly focus's in providing an API to JGit to be able to perform
+similar operations to that of java.io.File. All direct I/O is based on the
+java.io.Input/OutputStream classes.
 
-This change basically replaces the LockFile implementation in JGit Lib.
+Different JGit IO SPI provider is designed to be URI scheme based and thus
+the default implementation is that of "file" scheme. SPI provider will be
+integrated by their respective users in a manner similar to that of JDBC
+driver registration. There is a SystemStorageManager that has similar
+registration capabilities and the system storage providers should be
+registered with the manager in one of the provided ways.
+
+This SPI is based on the initial requirements for switching to it and thus
+this SPI will change as required during full migration to it.
 
 Signed-off-by: Imran M Yousuf <imyousuf@smartitengineering.com>
 ---
- .../src/org/eclipse/jgit/io/Entry.java             |   44 ++++-
- .../eclipse/jgit/io/localfs/LocalFileEntry.java    |  177 +++++++++++++++++-
- .../org/eclipse/jgit/io/lock/AbstractLockable.java |  199 ++++++++++++++++++++
- .../{StorageSystem.java => lock/LockManager.java}  |   96 ++++++----
- .../src/org/eclipse/jgit/io/lock/Lockable.java     |   26 ++--
- 5 files changed, 486 insertions(+), 56 deletions(-)
- create mode 100644 org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/AbstractLockable.java
- copy org.eclipse.jgit.io/src/org/eclipse/jgit/io/{StorageSystem.java => lock/LockManager.java} (53%)
- copy org.eclipse.jgit/src/org/eclipse/jgit/lib/RepositoryAdapter.java => org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/Lockable.java (77%)
+ .../src/org/eclipse/jgit/io/Entry.java             |  148 +++++++++++++
+ .../src/org/eclipse/jgit/io/StorageSystem.java     |   57 +++---
+ .../org/eclipse/jgit/io/StorageSystemManager.java  |  154 ++++++++++++++
+ .../eclipse/jgit/io/localfs/LocalFileEntry.java    |  219 ++++++++++++++++++++
+ .../eclipse/jgit/io/localfs/LocalFileSystem.java   |   51 +++--
+ 5 files changed, 577 insertions(+), 52 deletions(-)
+ create mode 100644 org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java
+ copy org.eclipse.jgit.test/tst/org/eclipse/jgit/util/JGitTestUtil.java => org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java (62%)
+ create mode 100644 org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystemManager.java
+ create mode 100644 org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
+ copy org.eclipse.jgit.pgm/src/org/eclipse/jgit/pgm/Init.java => org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileSystem.java (65%)
 
 diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java
-index 5256815..4c264db 100644
---- a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java
-+++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java
-@@ -36,6 +36,7 @@
-  */
- package org.eclipse.jgit.io;
- 
-+import org.eclipse.jgit.io.lock.Lockable;
- import java.io.IOException;
- import java.io.InputStream;
- import java.io.OutputStream;
-@@ -50,7 +51,8 @@
-  * @author Imran M Yousuf (imyousuf at smartitengineering.com)
-  * @since 0.6
-  */
--public interface Entry {
-+public interface Entry
-+        extends Lockable {
- 
-   /**
-    * Retrieves the name of the entry
-@@ -138,12 +140,26 @@ public InputStream getInputStream()
-           throws IOException;
- 
-   /**
--   * Retrieves the OutputStream for writing content into the entry. It can be
--   * opened to either overwrite it or append to it.
-+   * Retrieves a locked channeled output stream. When the output stream is closed
-+   * the channel is released automatically.
-+   * @param overwrite False if to write in append mode else true
-+   * @param lock Whether to attain lock or not
-+   * @return Output stream to write content to
-+   * @throws IOException If no such entry exists in append mode or there is any
-+   *                     error in retrieving it or retrieving the lock.
-+   */
-+  public OutputStream getOutputStream(boolean overwrite,
-+                                      boolean lock)
-+          throws IOException;
-+
-+  /**
-+   * Behaves in as if {@link Entry#getOutputStream(boolean, boolean)} is called
-+   * with lock param as false.
-    * @param overwrite False if to write in append mode else true
-    * @return Output stream to write content to
-    * @throws IOException If no such entry exists in append mode or there is any
-    *                     error in retrieving it.
-+   * @see Entry#getOutputStream(boolean, boolean) 
-    */
-   public OutputStream getOutputStream(boolean overwrite)
-           throws IOException;
-@@ -171,6 +187,28 @@ public OutputStream getOutputStream(boolean overwrite)
-   public Entry getParent();
- 
-   /**
-+   * Create this entry in the underlying system storage.
-+   * @return True if created else false
-+   * @throws IOException If any I/O during creation
-+   */
-+  public boolean createNew()
-+          throws IOException;
-+
-+  /**
-+   * Delete current entry
-+   * @return True if deleted successfully else false
-+   * @throws IOException If any error during writing
-+   */
-+  public boolean delete()
-+          throws IOException;
-+
-+  /**
-+   * Retrieve the entry for lock file
-+   * @return Null if lock is attained else null
-+   */
-+  public Entry getLockEntry();
-+
-+  /**
-    * Retrieve the storage system this entry either is from or will be
-    * persisted to.
-    * @return Storage system of the entry, will never be NULL.
-diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
-index 4ef3076..f6c84c1 100644
---- a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
-+++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
-@@ -45,9 +45,13 @@
- import java.io.OutputStream;
- import java.lang.reflect.InvocationTargetException;
- import java.net.URI;
-+import java.nio.channels.FileLock;
-+import java.nio.channels.OverlappingFileLockException;
-+import java.util.concurrent.TimeUnit;
- import org.eclipse.jgit.io.Entry;
- import org.eclipse.jgit.io.StorageSystem;
- import org.eclipse.jgit.io.StorageSystemManager;
-+import org.eclipse.jgit.io.lock.AbstractLockable;
- 
- /**
-  * Entry implementation for local file system. This class should not be
-@@ -58,10 +62,15 @@
-  * @since 0.6
-  */
- public class LocalFileEntry
-+        extends AbstractLockable
-         implements Entry {
- 
-+  public static final String LOCK_FILE_EXT = ".lock";
-+  public static final long DEFAULT_WAIT_TIME_MS = 200;
-   private File localFile;
-   private LocalFileSystem storageSystem;
-+  private File localLockFile;
-+  private String lockFileName;
- 
-   /**
-    * Contructs an entry based of on the local file system storage and a file
-@@ -152,25 +161,86 @@ public InputStream getInputStream()
-     }
-   }
- 
--  public OutputStream getOutputStream(boolean overwrite)
-+  public OutputStream getOutputStream(boolean overwrite,
-+                                      boolean lock)
-           throws IOException {
-+    final FileOutputStream fileOutputStream;
-     try {
-       if (!isExists()) {
--
--        return new FileOutputStream(getLocalFile());
-+        fileOutputStream = new FileOutputStream(getLocalFile());
-       }
-       else {
-         if (overwrite) {
--          return new FileOutputStream(getLocalFile());
-+          fileOutputStream = new FileOutputStream(getLocalFile());
-         }
-         else {
--          return new FileOutputStream(getLocalFile(), true);
-+          fileOutputStream = new FileOutputStream(getLocalFile(), true);
-+        }
-+      }
-+      if (lock) {
-+        final FileLock fileLock;
-+        try {
-+          fileLock = fileOutputStream.getChannel().lock();
-+        }
-+        catch (IOException ex) {
-+          fileOutputStream.close();
-+          throw ex;
-+        }
-+        catch (Exception ex) {
-+          fileOutputStream.close();
-+          throw new IOException(ex);
-+        }
-+        if (fileLock == null) {
-+          fileOutputStream.close();
-+          throw new OverlappingFileLockException();
-         }
-+        return new OutputStream() {
-+
-+          @Override
-+          public void write(int b)
-+                  throws IOException {
-+            fileOutputStream.write(b);
-+          }
-+
-+          @Override
-+          public void close()
-+                  throws IOException {
-+            fileLock.release();
-+            fileOutputStream.close();
-+          }
-+
-+          @Override
-+          public void flush()
-+                  throws IOException {
-+            fileOutputStream.flush();
-+          }
-+
-+          @Override
-+          public void write(byte[] b)
-+                  throws IOException {
-+            fileOutputStream.write(b);
-+          }
-+
-+          @Override
-+          public void write(byte[] b,
-+                            int off,
-+                            int len)
-+                  throws IOException {
-+            fileOutputStream.write(b, off, len);
-+          }
-+        };
-       }
-+      return fileOutputStream;
-     }
-     catch (FileNotFoundException ex) {
-       throw ex;
-     }
-+
-+  }
-+
-+  public OutputStream getOutputStream(boolean overwrite)
-+          throws IOException {
-+    return getOutputStream(overwrite, false);
-   }
- 
-   public Entry[] getChildren() {
-@@ -262,4 +332,101 @@ public boolean setExecutable(boolean executable) {
-       throw new Error(e);
-     }
-   }
-+
-+  public boolean createNew()
-+          throws IOException {
-+    return getLocalFile().createNewFile();
-+  }
-+
-+  public boolean delete()
-+          throws IOException {
-+    return getLocalFile().delete();
-+  }
-+
-+  public Entry getLockEntry() {
-+    if (localLockFile == null) {
-+      return null;
-+    }
-+    else {
-+      return getStorageSystem().getEntry(localLockFile.toURI());
-+    }
-+  }
-+
-+  @Override
-+  protected void performLock()
-+          throws Exception {
-+    boolean lock = performTryLock(Long.MAX_VALUE, TimeUnit.MILLISECONDS);
-+    if (!lock) {
-+      throw new IOException("Could not attain lock!");
-+    }
-+  }
-+
-+  @Override
-+  protected boolean performTryLock(long time,
-+                                   TimeUnit unit) {
-+    final long milliSecTime = TimeUnit.MILLISECONDS.convert(time, unit);
-+    long waitLeft = milliSecTime;
-+    boolean tryAgain = true;
-+    do {
-+      long nextWaitDuration = Math.min(waitLeft, DEFAULT_WAIT_TIME_MS);
-+      waitLeft = waitLeft - nextWaitDuration;
-+      boolean success = performTryLock();
-+      if (success) {
-+        return success;
-+      }
-+      else {
-+        if (nextWaitDuration > 0) {
-+          try {
-+            Thread.sleep(nextWaitDuration);
-+          }
-+          catch (InterruptedException ex) {
-+          }
-+        }
-+        else {
-+          tryAgain = false;
-+        }
-+      }
-+    }
-+    while (tryAgain);
-+    return false;
-+  }
-+
-+  @Override
-+  protected boolean performTryLock() {
-+    StringBuilder lockFileNameBuilder = new StringBuilder();
-+    if (this.lockFileName == null) {
-+      lockFileNameBuilder.append(getLocalFile().getName());
-+      lockFileNameBuilder.append(LOCK_FILE_EXT);
-+      this.lockFileName = lockFileNameBuilder.toString();
-+    }
-+    final File parent = getLocalFile().getParentFile();
-+    if (parent != null) {
-+      parent.mkdirs();
-+    }
-+    localLockFile = new File(parent, this.lockFileName);
-+    if (localLockFile.exists()) {
-+      localLockFile = null;
-+      return false;
-+    }
-+    else {
-+      boolean createNewFile;
-+      try {
-+        createNewFile = localLockFile.createNewFile();
-+      }
-+      catch (IOException ex) {
-+        createNewFile = false;
-+      }
-+      if (!createNewFile) {
-+        localLockFile = null;
-+      }
-+      return createNewFile;
-+    }
-+  }
-+
-+  @Override
-+  protected void performUnlock() {
-+    if (localLockFile != null) {
-+      localLockFile.delete();
-+    }
-+  }
- }
-diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/AbstractLockable.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/AbstractLockable.java
 new file mode 100644
-index 0000000..1e95494
+index 0000000..cd69172
 --- /dev/null
-+++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/AbstractLockable.java
-@@ -0,0 +1,199 @@
++++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/Entry.java
+@@ -0,0 +1,148 @@
 +/*
 + * Copyright (C) 2009, Imran M Yousuf <imyousuf@smartitengineering.com>
 + *
@@ -424,336 +124,655 @@ index 0000000..1e95494
 + * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 + * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + */
-+package org.eclipse.jgit.io.lock;
++package org.eclipse.jgit.io;
 +
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.OutputStream;
 +import java.net.URI;
-+import java.util.concurrent.TimeUnit;
-+import java.util.concurrent.locks.Condition;
-+import java.util.concurrent.locks.ReentrantLock;
 +
 +/**
-+ * Abstract implementation of lockable
++ * Represents each entry in a storage system. For example, in a local filesystem
++ * storage it would represent {@link java.io.File}. Here the storage system
++ * mainly refers to where repository meta data such as git objects, ref logs,
++ * packs are stored; for example a '.git' directory and all its contents in a
++ * clone repo would correspond to an entry.
 + * @author Imran M Yousuf (imyousuf at smartitengineering.com)
 + * @since 0.6
 + */
-+public abstract class AbstractLockable
-+        implements Lockable {
-+
-+  private ReentrantLock lock;
-+  private boolean attainedCompleteLock;
-+
-+  protected AbstractLockable() {
-+  }
-+
-+  @Override
-+  protected void finalize()
-+          throws Throwable {
-+    LockManager.getInstance().unregister(getURI());
-+    super.finalize();
-+  }
++public interface Entry {
 +
 +  /**
-+   * Retrieve the URI of this instance.
-+   * @return The URI to identify this instance. Should never be NULL
++   * Retrieves the name of the entry
++   * @return Name of the entry
 +   */
-+  public abstract URI getURI();
-+
-+  protected boolean isInternalLockHeldOnly() {
-+    return getLock().isHeldByCurrentThread();
-+  }
-+
-+  public boolean isHeldByCurrentThread() {
-+    return isInternalLockHeldOnly() && attainedCompleteLock;
-+  }
-+
-+  public void lock() {
-+    getLock().lock();
-+    childLock();
-+  }
-+
-+  public void lockInterruptibly()
-+          throws InterruptedException {
-+    getLock().lockInterruptibly();
-+    childLock();
-+  }
-+
-+  public Condition newCondition() {
-+    return getLock().newCondition();
-+  }
-+
-+  public boolean tryLock() {
-+    if (isHeldByCurrentThread()) {
-+      return true;
-+    }
-+    final boolean tryLock = getLock().tryLock();
-+    if (tryLock) {
-+      final boolean performTryLock = performTryLock();
-+      if (!performTryLock) {
-+        unlock();
-+      }
-+      else {
-+        attainedCompleteLock = true;
-+      }
-+    }
-+    return tryLock;
-+  }
-+
-+  public boolean tryLock(long time,
-+                         TimeUnit unit)
-+          throws InterruptedException {
-+    if (isHeldByCurrentThread()) {
-+      return true;
-+    }
-+    final boolean tryLock;
-+    long currentTime = System.currentTimeMillis();
-+    tryLock = getLock().tryLock(time, unit);
-+    long duration = unit.convert(System.currentTimeMillis() - currentTime,
-+            TimeUnit.MILLISECONDS);
-+    if (tryLock) {
-+      final boolean performTryLock = performTryLock(duration, unit);
-+      if (!performTryLock) {
-+        unlock();
-+      }
-+      else {
-+        attainedCompleteLock = true;
-+      }
-+      return performTryLock;
-+    }
-+    return tryLock;
-+  }
-+
-+  public void unlock() {
-+    if (isInternalLockHeldOnly()) {
-+      if (attainedCompleteLock) {
-+        performUnlock();
-+      }
-+      attainedCompleteLock = false;
-+      getLock().unlock();
-+    }
-+  }
++  public String getName();
 +
 +  /**
-+   * Retrieves the {@link ReentrantLock lock} based on this instances URI. It is
-+   * to be noted that all instances of this URI will share the same lock.
-+   * @return The lock for this lockable instance
++   * Retrieves the absolute path of the entry.
++   * @return Absoluth path
 +   */
-+  protected ReentrantLock getLock() {
-+    if (lock == null) {
-+      lock = LockManager.getInstance().register(getURI());
-+    }
-+    return lock;
-+  }
++  public String getAbsolutePath();
 +
 +  /**
-+   * Performs additional lock operations if required by children. It will wait
-+   * until it can avail for lock, but it will not wait for ever and will then
-+   * throw and exception.
-+   * @throws Exception If lock could be attained
++   * Retrieves whether the entry represents a directory or not
++   * @return True if represents a directory else false
 +   */
-+  protected abstract void performLock()
-+          throws Exception;
++  public boolean isDirectory();
 +
 +  /**
-+   * Performs additional lock operations if required by children, but it will
-+   * not wait for lock until beyond the time unit specified.
-+   * @param time Number to wait for lock
-+   * @param unit Unit of the time number
-+   * @return True if lock was attained else false
++   * Signifies whether the entry is a new one or being read from the
++   * persistent storage
++   * @return True if being read form storage else false
 +   */
-+  protected abstract boolean performTryLock(long time,
-+                                            TimeUnit unit);
++  public boolean isExists();
 +
 +  /**
-+   * Performs additional lock operations if required by children, but it will
-+   * not wait for lock at all.
-+   * @return True if lock was attained else false
++   * Make directories upto the entry represented by this instance, provided
++   * that this instance itself is a directory.
++   * @return True if directories were created.
 +   */
-+  protected abstract boolean performTryLock();
++  public boolean mkdirs();
 +
 +  /**
-+   * Performs additional unlock operations if required by children.
++   * Retrieves the URI of this entry. URI in this case acts as a primary key
++   * to identify an entry.
++   * @return URI to identify this entry instance
 +   */
-+  protected abstract void performUnlock();
++  public URI getURI();
 +
-+  private void childLock() {
-+    try {
-+      performLock();
-+      attainedCompleteLock = true;
-+    }
-+    catch (Exception ex) {
-+      unlock();
-+      attainedCompleteLock = false;
-+      throw new RuntimeException("Could not attain lock!", ex);
-+    }
-+  }
++  /**
++   * Retrieves the length of the entry if its predictable.
++   * @return < 0 if the length is unpredictable else the length of the entry's
++   *         content
++   */
++  public long length();
++
++  /**
++   * Retrieves the InputStream for reading the content of the entry
++   * @return Input stream to read entry content
++   * @throws IOException If no such file exists or there is any other error
++   */
++  public InputStream getInputStream()
++          throws IOException;
++
++  /**
++   * Retrieves the OutputStream for writing content into the entry. It can be
++   * opened to either overwrite it or append to it.
++   * @param overwrite False if to write in append mode else true
++   * @return Output stream to write content to
++   * @throws IOException If no such file exists in append mode or there is any
++   *                     error in retrieving it.
++   */
++  public OutputStream getOutputStream(boolean overwrite)
++          throws IOException;
++
++  /**
++   * Retrieve all the child entries of this entries if its a directory.
++   * @return If not a directory then a empty array else array of sub-entries.
++   */
++  public Entry[] getChildren();
++
++  /**
++   * Retrieve a specific child of an entry. It will basically match
++   * {@link Entry#getName() name} of the children to find and that too only
++   * the direct children.
++   * @param name Name of the child to find
++   * @return If child is not found then NULL or else the child specified by
++   *         the name
++   */
++  public Entry getChild(String name);
++
++  /**
++   * Retrieve the parent entry of the current entry.
++   * @return NULL if no parent or else the direct parent of the current entry
++   */
++  public Entry getParent();
++
++  /**
++   * Retrieve the storage system this entry either is from or will be
++   * persisted to.
++   * @return Storage system of the entry, will never be NULL.
++   */
++  public StorageSystem getStorageSystem();
 +}
-diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/LockManager.java
-similarity index 53%
-copy from org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java
-copy to org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/LockManager.java
-index 15af614..dfdcf21 100644
---- a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java
-+++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/LockManager.java
-@@ -34,51 +34,77 @@
-  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  */
--package org.eclipse.jgit.io;
-+package org.eclipse.jgit.io.lock;
- 
- import java.net.URI;
-+import java.util.Hashtable;
-+import java.util.Map;
-+import java.util.concurrent.locks.ReentrantLock;
- 
- /**
-- * SPI providing access to the underlying storage system. Each provider is
-- * differentiated using their {@link StorageSystem#getURIProtocol() URI Protocol}.
-+ * Manages reentrant lock per URI
-  * @author Imran M Yousuf (imyousuf at smartitengineering.com)
-  * @since 0.6
-  */
--public interface StorageSystem {
-+public final class LockManager {
- 
--  /**
--   * Returns the supported scheme of this storage system.
--   * @return Scheme supported by this storage system.
--   * @see {@link http://tr.im/BiQ0 URI Scheme}
--   */
--  public String getURIScheme();
-+  private static LockManager lockManager;
- 
--  /**
--   * Retrieve an entry using its URI
--   * @param uri URI to retrieve the entry for.
--   * @return Entry representing the URI
--   */
--  public Entry getEntry(URI uri);
-+  public static LockManager getInstance() {
-+    if (lockManager == null) {
-+      lockManager = new LockManager();
-+    }
-+    return lockManager;
-+  }
-+  private final Map<URI, LockProvider> locks;
- 
--  /**
--   * Retrieve the current working directory from the file system if any.
--   * @return Entry for current working directory.
--   */
--  public Entry getWorkingDirectory();
-+  private LockManager() {
-+    locks = new Hashtable<URI, LockProvider>();
-+  }
- 
--  /**
--   * Retrieve the home directory of the current user
--   * @return Home directory
--   */
--  public Entry getHomeDirectory();
-+  public synchronized ReentrantLock register(URI key) {
-+    if (!locks.containsKey(key)) {
-+      locks.put(key, new LockProvider(
-+              new ReentrantLock()));
-+    }
-+    return locks.get(key).get();
-+  }
- 
--  /**
--   * Resolve relative path with respect to a path and return the absolute
--   * entry representing the relative path.
--   * @param entry The point of reference for the relative path
--   * @param path The relative path
--   * @return The absolute entry representing the relative path entry
--   */
--  public Entry resolve(Entry entry,
--                       String path);
-+  public synchronized void unregister(URI key) {
-+    if (locks.containsKey(key)) {
-+      LockProvider provider = locks.get(key);
-+      if (provider != null) {
-+        provider.decreateCount();
-+        if (provider.getRegisterCount() < 1) {
-+          locks.remove(key);
-+        }
-+      }
-+    }
-+  }
-+
-+  private static class LockProvider {
-+
-+    private int registerCount = 0;
-+    private ReentrantLock lock;
-+
-+    public LockProvider(ReentrantLock lock) {
-+      this.lock = lock;
-+    }
-+
-+    public ReentrantLock get() {
-+      registerCount += 1;
-+      return lock;
-+    }
-+
-+    public void decreateCount() {
-+      if (lock.isHeldByCurrentThread()) {
-+        lock.unlock();
-+      }
-+      registerCount -= 1;
-+    }
-+
-+    public int getRegisterCount() {
-+      return registerCount;
-+    }
-+  }
- }
-diff --git a/org.eclipse.jgit/src/org/eclipse/jgit/lib/RepositoryAdapter.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/Lockable.java
-similarity index 77%
-copy from org.eclipse.jgit/src/org/eclipse/jgit/lib/RepositoryAdapter.java
-copy to org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/Lockable.java
-index 008fef8..d2bb039 100644
---- a/org.eclipse.jgit/src/org/eclipse/jgit/lib/RepositoryAdapter.java
-+++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/lock/Lockable.java
+diff --git a/org.eclipse.jgit.test/tst/org/eclipse/jgit/util/JGitTestUtil.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java
+similarity index 62%
+copy from org.eclipse.jgit.test/tst/org/eclipse/jgit/util/JGitTestUtil.java
+copy to org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java
+index b259185..9f45cb3 100644
+--- a/org.eclipse.jgit.test/tst/org/eclipse/jgit/util/JGitTestUtil.java
++++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystem.java
 @@ -1,5 +1,5 @@
  /*
-- * Copyright (C) 2008, Robin Rosenberg <robin.rosenberg@dewire.com>
+- * Copyright (C) 2008, Imran M Yousuf <imyousuf@smartitengineering.com>
 + * Copyright (C) 2009, Imran M Yousuf <imyousuf@smartitengineering.com>
   *
   * All rights reserved.
   *
-@@ -34,21 +34,21 @@
+@@ -34,38 +34,35 @@
   * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
   * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
-+package org.eclipse.jgit.io.lock;
++package org.eclipse.jgit.io;
  
--package org.eclipse.jgit.lib;
-+import java.util.concurrent.locks.Lock;
+-package org.eclipse.jgit.util;
++import java.net.URI;
  
- /**
-- * A default {@link RepositoryListener} that does nothing except invoke an
-- * optional general method for any repository change.
-+ * For objects wanting to make themselves lockable.
+-import java.io.File;
+-import java.net.URISyntaxException;
+-import java.net.URL;
+-
+-public abstract class JGitTestUtil {
+-	public static final String CLASSPATH_TO_RESOURCES = "org/eclipse/jgit/test/resources/";
++/**
++ * SPI providing access to the underlying storage system. Each provider is
++ * differentiated using their {@link StorageSystem#getURIProtocol() URI Protocol}.
 + * @author Imran M Yousuf (imyousuf at smartitengineering.com)
 + * @since 0.6
-  */
--public class RepositoryAdapter implements RepositoryListener {
--
--	public void indexChanged(final IndexChangedEvent e) {
--		// Empty
--	}
--
--	public void refsChanged(final RefsChangedEvent e) {
--		// Empty
--	}
-+public interface Lockable
-+        extends Lock {
++ */
++public interface StorageSystem {
  
+-	private JGitTestUtil() {
+-		throw new UnsupportedOperationException();
+-	}
 +  /**
-+   * Retrieves whether the current thread owns the object lock or not.
-+   * @return
++   * Returns the supported scheme of this storage system.
++   * @return Scheme supported by this storage system.
++   * @see {@link http://tr.im/BiQ0 URI Scheme}
 +   */
-+  public boolean isHeldByCurrentThread();
++  public String getURIScheme();
+ 
+-	public static File getTestResourceFile(final String fileName) {
+-		if (fileName == null || fileName.length() <= 0) {
+-			return null;
+-		}
+-		final URL url = cl().getResource(CLASSPATH_TO_RESOURCES + fileName);
+-		if (url == null) {
+-			// If URL is null then try to load it as it was being
+-			// loaded previously
+-			return new File("tst", fileName);
+-		}
+-		try {
+-			return new File(url.toURI());
+-		} catch(URISyntaxException e) {
+-			return new File(url.getPath());
+-		}
+-	}
++  /**
++   * Retrieve an entry using its URI
++   * @param uri URI to retrieve the entry for.
++   * @return Entry representing the URI
++   */
++  public Entry getEntry(URI uri);
+ 
+-	private static ClassLoader cl() {
+-		return JGitTestUtil.class.getClassLoader();
+-	}
++  /**
++   * Retrieve the current working directory from the file system if any.
++   * @return Entry for current working directory.
++   */
++  public Entry getWorkingDirectory();
+ }
+diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystemManager.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystemManager.java
+new file mode 100644
+index 0000000..999122e
+--- /dev/null
++++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/StorageSystemManager.java
+@@ -0,0 +1,154 @@
++/*
++ * Copyright (C) 2009, Imran M Yousuf <imyousuf@smartitengineering.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Eclipse Foundation, Inc. nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++package org.eclipse.jgit.io;
++
++import java.io.IOException;
++import java.net.URI;
++import java.util.Hashtable;
++import java.util.Map;
++import org.eclipse.jgit.io.localfs.LocalFileSystem;
++
++/**
++ * Manager that registers different storage system for different {@link URI}
++ * schemes and serves users with {@link Entry} or {@link StorageSystem} as URI
++ * schemes request.
++ * @author Imran M Yousuf (imyousuf at smartitengineering.com)
++ * @since 0.6
++ */
++public class StorageSystemManager {
++
++  /**
++   * Map to act as registrar for all registered schemes
++   */
++  private static Map<String, StorageSystem> storageSystemMap;
++
++  /**
++   * Initialize the registrar and and load the instance for default storage,
++   * i.e. the local file system.
++   */
++  static {
++    storageSystemMap = new Hashtable<String, StorageSystem>();
++    try {
++      register(LocalFileSystem.class);
++    }
++    catch (Exception ex) {
++      ex.printStackTrace();
++    }
++  }
++
++  /**
++   * Retrieves the storage system for a given scheme from the registrar.
++   * @param scheme Scheme to retrieve; it should never be null
++   * @return Storage system representing the scheme.
++   * @throws IOException If scheme is null or scheme does not exist.
++   */
++  public static StorageSystem getStorageSystem(String scheme)
++          throws IOException {
++    if (scheme != null && storageSystemMap.containsKey(scheme)) {
++      return storageSystemMap.get(scheme);
++    }
++    else {
++      throw new IOException("Scheme ( " + scheme +
++                            " ) not registered with manager!");
++    }
++  }
++
++  /**
++   * Load an storage system entry using its respective URI.
++   * @param uri URI to retrieve the storage system entity for
++   * @return The entry in the storage system for the requested URI
++   * @throws IOException If scheme does not exist.
++   * @throws NullPointerException If uri is null
++   */
++  public static Entry getEntry(URI uri)
++          throws IOException,
++                 NullPointerException {
++    String scheme = uri.getScheme();
++    return getStorageSystem(scheme).getEntry(uri);
++  }
++
++  /**
++   * Registers a {@link StorageSystem} implementaiton against its schema into
++   * the registrar using the implementions fully qualified class name and its
++   * non-args constructor.
++   * @param storageSystemClassName The class names representation is string.
++   * @throws ClassNotFoundException If no class is found with the name specified
++   * @throws InstantiationException If there is any exception during
++   *                                initialization
++   * @throws IllegalAccessException If the class dpes not have a public
++   *                                non-args constructor
++   * @throws ClassCastException If the class does implement {@link StorageSystem}
++   */
++  public static void register(String storageSystemClassName)
++          throws ClassNotFoundException,
++                 InstantiationException,
++                 IllegalAccessException,
++                 ClassCastException {
++    register((Class<? extends StorageSystem>) Class.forName(
++            storageSystemClassName));
++  }
++
++  /**
++   * Registers a {@link StorageSystem} implementaiton against its schema into
++   * the registrar using the implemention class name and its non-args constructor.
++   * @param storageSystemClassName The class names representation is string.
++   * @throws InstantiationException If there is any exception during
++   *                                initialization
++   * @throws IllegalAccessException If the class dpes not have a public
++   *                                non-args constructor
++   */
++  public static void register(
++          Class<? extends StorageSystem> storageSystemClass)
++          throws InstantiationException,
++                 IllegalAccessException {
++    if (storageSystemClass != null) {
++      StorageSystem system = storageSystemClass.newInstance();
++      register(system);
++    }
++  }
++
++  /**
++   * Registers a {@link StorageSystem} instance into the reigstrar. It would be
++   * particularly useful if system does not have a non-args constructor.
++   * @param system System to register in the manager
++   */
++  public static void register(StorageSystem system) {
++    if (system != null) {
++      storageSystemMap.put(system.getURIScheme(), system);
++    }
++  }
++}
+diff --git a/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
+new file mode 100644
+index 0000000..99df831
+--- /dev/null
++++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileEntry.java
+@@ -0,0 +1,219 @@
++/*
++ * Copyright (C) 2009, Imran M Yousuf <imyousuf@smartitengineering.com>
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or
++ * without modification, are permitted provided that the following
++ * conditions are met:
++ *
++ * - Redistributions of source code must retain the above copyright
++ *   notice, this list of conditions and the following disclaimer.
++ *
++ * - Redistributions in binary form must reproduce the above
++ *   copyright notice, this list of conditions and the following
++ *   disclaimer in the documentation and/or other materials provided
++ *   with the distribution.
++ *
++ * - Neither the name of the Eclipse Foundation, Inc. nor the
++ *   names of its contributors may be used to endorse or promote
++ *   products derived from this software without specific prior
++ *   written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
++ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
++ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
++ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
++ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
++ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
++ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++package org.eclipse.jgit.io.localfs;
++
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.FileOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.OutputStream;
++import java.net.URI;
++import org.eclipse.jgit.io.Entry;
++import org.eclipse.jgit.io.StorageSystem;
++import org.eclipse.jgit.io.StorageSystemManager;
++
++/**
++ * Entry implementation for local file system. This class should not be
++ * initialized directly unless its a {@link LocalFileSystem}. SPI users should
++ * use {@link StorageSystemManager#getEntry(java.net.URI)} to get the first
++ * {@link Entry} and then traverse from there onwards.
++ * @author Imran M Yousuf (imyousuf at smartitengineering.com)
++ * @since 0.6
++ */
++public class LocalFileEntry
++        implements Entry {
++
++  private File localFile;
++  private StorageSystem storageSystem;
++
++  /**
++   * Contructs an entry based of on the local file system storage and a file
++   * that will be represented by this entry.
++   * @param localFile File represented by this entry
++   * @param storageSystem Storage system of the entry
++   * @throws IllegalArgumentException If either argument is NULL
++   */
++  protected LocalFileEntry(File localFile,
++                           StorageSystem storageSystem)
++          throws IllegalArgumentException {
++    setLocalFile(localFile);
++    setStorageSystem(storageSystem);
++  }
++
++  /**
++   * Sets the storage system instance for this entry.
++   * @param storageSystem Storage system
++   * @throws IllegalArgumentException IF storageSystem is null
++   */
++  protected void setStorageSystem(StorageSystem storageSystem)
++          throws IllegalArgumentException {
++    if (storageSystem == null) {
++      throw new IllegalArgumentException("Storage system can't be NULL!");
++    }
++    this.storageSystem = storageSystem;
++  }
++
++  /**
++   * Retrieves the file being adapted by this entry.
++   * @return File being adapted
++   */
++  public File getLocalFile() {
++    return localFile;
++  }
++
++  /**
++   * Sets the file which is to be used as adapt from this instance by this
++   * implementation
++   * @param localFile Local file being adapted by this instance
++   * @throws IllegalArgumentException If localFile is null
++   */
++  protected void setLocalFile(File localFile)
++          throws IllegalArgumentException {
++    if (localFile == null) {
++      throw new IllegalArgumentException(
++              "Local file to be set can't be NULL");
++    }
++    this.localFile = localFile;
++  }
++
++  public String getName() {
++    return getLocalFile().getName();
++  }
++
++  public String getAbsolutePath() {
++    return getLocalFile().getAbsolutePath();
++  }
++
++  public boolean isDirectory() {
++    return getLocalFile().isDirectory();
++  }
++
++  public boolean isExists() {
++    return getLocalFile().exists();
++  }
++
++  public boolean mkdirs() {
++    return getLocalFile().mkdirs();
++  }
++
++  public URI getURI() {
++    return getLocalFile().toURI();
++  }
++
++  public InputStream getInputStream()
++          throws IOException {
++    if (getLocalFile().exists()) {
++      try {
++        return new FileInputStream(getLocalFile());
++      }
++      catch (FileNotFoundException ex) {
++        throw ex;
++      }
++    }
++    else {
++      throw new FileNotFoundException("File does not exists!");
++    }
++  }
++
++  public OutputStream getOutputStream(boolean overwrite)
++          throws IOException {
++    try {
++      if (!isExists()) {
++
++        return new FileOutputStream(getLocalFile());
++      }
++      else {
++        if (overwrite) {
++          return new FileOutputStream(getLocalFile());
++        }
++        else {
++          return new FileOutputStream(getLocalFile(), true);
++        }
++      }
++    }
++    catch (FileNotFoundException ex) {
++      throw ex;
++    }
++  }
++
++  public Entry[] getChildren() {
++    File[] children = getLocalFile().listFiles();
++    if (children == null || children.length == 0) {
++      return new Entry[0];
++    }
++    else {
++      Entry[] entries = new Entry[children.length];
++      for (int i = 0; i < children.length; ++i) {
++        entries[i] = getStorageSystem().getEntry(children[i].toURI());
++      }
++      return entries;
++    }
++  }
++
++  public Entry getChild(String name) {
++    if (name == null || name.length() == 0) {
++      return null;
++    }
++    Entry[] children = getChildren();
++    for (Entry entry : children) {
++      if (name.equals(entry.getName())) {
++        return entry;
++      }
++    }
++    return null;
++  }
++
++  public Entry getParent() {
++    File parent = getLocalFile().getParentFile();
++    if (parent == null) {
++      return null;
++    }
++    else {
++      return getStorageSystem().getEntry(parent.toURI());
++    }
++  }
++
++  public StorageSystem getStorageSystem() {
++    return storageSystem;
++  }
++
++  public long length() {
++    return getLocalFile().length();
++  }
++}
+diff --git a/org.eclipse.jgit.pgm/src/org/eclipse/jgit/pgm/Init.java b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileSystem.java
+similarity index 65%
+copy from org.eclipse.jgit.pgm/src/org/eclipse/jgit/pgm/Init.java
+copy to org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileSystem.java
+index 49aa418..d0cb536 100644
+--- a/org.eclipse.jgit.pgm/src/org/eclipse/jgit/pgm/Init.java
++++ b/org.eclipse.jgit.io/src/org/eclipse/jgit/io/localfs/LocalFileSystem.java
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright (C) 2008, Google Inc.
++ * Copyright (C) 2009, Imran M Yousuf <imyousuf@smartitengineering.com>
+  *
+  * All rights reserved.
+  *
+@@ -34,31 +34,38 @@
+  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+-
+-package org.eclipse.jgit.pgm;
++package org.eclipse.jgit.io.localfs;
+ 
+ import java.io.File;
++import java.net.URI;
++import org.eclipse.jgit.io.Entry;
++import org.eclipse.jgit.io.StorageSystem;
++
++/**
++ * Implementation of storage system for the local file system.
++ * @author Imran M Yousuf (imyousuf at smartitengineering.com)
++ * @since 0.6
++ */
++public class LocalFileSystem
++        implements StorageSystem {
+ 
+-import org.kohsuke.args4j.Option;
+-import org.eclipse.jgit.lib.Repository;
++  public static final String PROTOCOL_FILE = "file";
+ 
+-@Command(common = true, usage = "Create an empty git repository")
+-class Init extends TextBuiltin {
+-	@Option(name = "--bare", usage = "Create a bare repository")
+-	private boolean bare;
++  public String getURIScheme() {
++    return PROTOCOL_FILE;
++  }
+ 
+-	@Override
+-	protected final boolean requiresRepository() {
+-		return false;
+-	}
++  public Entry getEntry(URI uri) {
++    if (uri == null) {
++      return null;
++    }
++    else {
++      return new LocalFileEntry(new File(uri), this);
++    }
++  }
+ 
+-	@Override
+-	protected void run() throws Exception {
+-		if (gitdir == null)
+-			gitdir = new File(bare ? "." : ".git");
+-		db = new Repository(gitdir);
+-		db.create(bare);
+-		out.println("Initialized empty Git repository in "
+-				+ gitdir.getAbsolutePath());
+-	}
++  public Entry getWorkingDirectory() {
++    String curDir = System.getProperty("user.dir");
++    return new LocalFileEntry(new File(curDir), this);
++  }
  }
 -- 
 1.6.2.1
