@@ -1,100 +1,131 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb - bare repos integration - owner info in description file
-Date: Sun, 11 Oct 2009 12:39:14 +0200
-Message-ID: <200910111239.15403.jnareb@gmail.com>
-References: <76c5b8580910091350o5cd90d3dobe2a21c18fa56dfd@mail.gmail.com> <200910102045.13374.jnareb@gmail.com> <76c5b8580910101845h43a607f0sd4184da302a19963@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] disallow refs containing successive slashes
+Date: Sun, 11 Oct 2009 12:42:44 +0200
+Message-ID: <4AD1B6A4.8060405@web.de>
+References: <4AD0C93C.6050306@web.de> <7vws327wbp.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 11 12:41:57 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 11 12:50:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MwvsC-0004jP-QD
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 12:41:57 +0200
+	id 1Mww09-0007Xs-2U
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 12:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760019AbZJKKi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 06:38:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759764AbZJKKiz
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 06:38:55 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:55775 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759002AbZJKKix (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 06:38:53 -0400
-Received: by fxm27 with SMTP id 27so7973951fxm.17
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 03:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=8avj11GeuacCtgMCF4FBE/YALofwto2FNXdr8yFVdzE=;
-        b=FdE0P/2A4BphMMCZJmyNdivmtmO4nWVwaR5fssvmh3tyYpsusvDA9Z7JOAVSbxVVJH
-         KTtZRstx/iSxgVt12QKrJxmLKPU+V4dzrFFh+sKAnshZu6wn3o4ovCFkosfL68Tt964E
-         ajFNNMt9kRpHn0JlhlsD2Tqu4BnZ31/rN3HpY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=PXkFKtfqSd1XdFUD1BHEknU6ICpJK0x6LmDUqQvu/MlfN292txXbfPj3JbfvBCiL3q
-         8H88DvF7kSSejWAXm9BK9TPKgAsoJ6JUfTPvvhJG9mrnoHZffEMsVoc25lHcF6zgSXyp
-         XryZbbJ5t+LRCeCDZiHEP2X+Pzzs7W3CRDLes=
-Received: by 10.103.78.38 with SMTP id f38mr1916843mul.72.1255257496889;
-        Sun, 11 Oct 2009 03:38:16 -0700 (PDT)
-Received: from ?192.168.1.13? (abwa37.neoplus.adsl.tpnet.pl [83.8.224.37])
-        by mx.google.com with ESMTPS id y2sm6503553mug.49.2009.10.11.03.38.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Oct 2009 03:38:15 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <76c5b8580910101845h43a607f0sd4184da302a19963@mail.gmail.com>
-Content-Disposition: inline
+	id S1756655AbZJKKss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 06:48:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756352AbZJKKsr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 06:48:47 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:48609 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755229AbZJKKsq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 06:48:46 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id F35AB12D582B0;
+	Sun, 11 Oct 2009 12:42:49 +0200 (CEST)
+Received: from [80.128.51.209] (helo=[192.168.178.26])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1Mwvt3-0002rw-00; Sun, 11 Oct 2009 12:42:49 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <7vws327wbp.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/P3TzyCqf+7nEezTR0mY56dUOWgQdPKgZ0S/rA
+	tvoAT937mwqsekWXuCrvs/H8sGi4bKv0cmYxgmtR+JcoWTefJ2
+	y2pP400W/JmCoS5nkcMw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129915>
 
-On Sun, 11 Oct 2009, Eugene Sajine wrote:
-> >
-> > The project description, project owner and (clone) url are used by
-> > gitweb only, so I don't see why git-clone has to feature-creep to
-> > set them.
+Junio C Hamano schrieb:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 > 
-> Well my logic is simple. Gitweb is a part of git bundle. If you don't
-> want to use gitweb you're free to use git clone as you want. I don't
-> see  why not to provide some usability features to it. For me it is
-> quite obvious that it will be more comfortable to setup gitweb if this
-> would be in  place. Instead of putting info in few different places
-> manually, why not to give people a possibilty to do that using one
-> command?
+>> When creating branches using names starting with '/' or containing a '//',
+>> a leading slash would just vanish and successive slashes were 'compressed'
+>> into just one slash.
 > 
-> This is usability feature, but i feel that for me as a person who will
-> support big ceantral bare repo hosting server, this would save huge
-> time and efforts...
+> Hmm.  We already do that without your patch.
+> 
+>     $ git branch /foo//bar
+>     $ git for-each-ref --format='%(refname)'
+>     refs/heads/foo/bar
+>     refs/heads/master
+>     $ git branch -d /foo//bar
+>     Deleted branch /foo//bar (was deadbeef)
+>     $ git for-each-ref --format='%(refname)'
+>     refs/heads/master
 
-And this would be best left for a custom script creating repositories
-and their git hosting related configuration.  Such script of necessity
-would have to be site-specific, or at least contain site-specific 
-configuration, like:
- * whether to use gitweb.owner or filesystem uid + GECOS is enough
- * whether to use gitweb.description or description file
- * whether to use gitweb.url, cloneurl file, or let gitweb autogenerate
-   clone / fetch URL from base URL
- * gitosis / gitlite configuration, if needed, or setup of public keys
-   for SSH authentication
- * project README.html file, if used
-etc. 
+Yes, but git changes the name silently from '/foo//bar' to 'foo/bar'!
 
-git-clone is not a dumping ground (also, code speak louder than words).
+The automagical removal of some slashes leads to strange behaviour when
+using such names:
 
-I even think it might be mistake to have default 'description' file in 
-templates...
+    $ git checkout -b foo/bar
+    Switched to a new branch 'foo/bar'
+    $ git checkout -b /foo//bar
+    fatal: A branch named '/foo//bar' already exists.
+    $ git for-each-ref --format='%(refname)'
+    refs/heads/foo/bar
+    refs/heads/master
 
--- 
-Jakub Narebski
-Poland
+git claims wrongly that "A branch named '/foo//bar' already exists.".
+
+And that same happens to tag and repo names, leading to other strange
+effects:
+
+    $ git tag /foo//bar
+    $ git tag
+    foo/bar
+
+That is not the tagname the user provided.
+
+    $ git remote add /foo//bar git://git.kernel.org/pub/scm/git/git.git
+    $ git remote show
+    warning: Config remote shorthand cannot begin with '/': /foo//bar.url
+    warning: Config remote shorthand cannot begin with '/': /foo//bar.fetch
+    $ git fetch /foo//bar
+    warning: Config remote shorthand cannot begin with '/': /foo//bar.url
+    warning: Config remote shorthand cannot begin with '/': /foo//bar.fetch
+    fatal: 'foo/bar' does not appear to be a git repository
+    fatal: The remote end hung up unexpectedly
+
+Note: git fetch uses both versions of the remote name in its output.
+
+
+>> I became aware of this issue while looking into problems occuring
+>> when a user created a branch starting with a '/' in git gui (e.g.
+>> "/foo"). Strange things happen, while git gui shows the current
+>> branch as "/foo" under the hood a branch "foo" (without the slash)
+>> had been created. But then you can't delete "/foo" from git gui,
+>> because a branch of that name doesn't exist.
+> 
+> Perhaps an interface to give a cleaned-up version, e.g.
+> 
+>     $ git check-ref-format --print refs/heads//foo/bar
+>     refs/heads/foo/bar
+> 
+> is what you want in order to fix git-gui?  I dunno.
+
+Yes, one solution could be to fix every application handling branch, tag
+or repo names to mimic the namechange done in the bowels of git. But i
+think it is not worth the hassle. Every application i tested (git gui,
+gitk and a handful of git commands) just assumes - and i think rightfully
+so - that refnames will not change while they are being created (And they
+do call "git check-ref-format" or strbuf_check_branch_ref() and friends
+to make sure they have a valid refname, but it gets changed nonetheless).
+
+With this patch you get an error every time you try to create such a
+refname in the first place and the strange effects and the ambiguity
+of refnames ('/foo//bar' is a synonym for 'foo/bar' right now) just
+go away.
+
+The motivation for this patch was a confused user at my dayjob. IMHO
+most people don't use '/foo//bar' on purpose but the extra slashes get
+there through typos, copy & paste errors and such. Then generating an
+error might just be the Right Thing to do to avoid the problems with
+the changed refname afterwards.
