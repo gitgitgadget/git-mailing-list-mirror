@@ -1,97 +1,106 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: combine git repo historically
-Date: Sun, 11 Oct 2009 12:06:59 +0800
-Message-ID: <20091011040659.GB9021@debian.b2j>
-References: <20091009012254.GA3980@debian.b2j>
- <4ACED204.3000907@viscovery.net>
- <20091010140358.GA3924@debian.b2j>
- <200910110436.52653.chriscool@tuxfamily.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn very slow on fetch (shared git-svn repo)
+Date: Sun, 11 Oct 2009 00:01:36 -0700
+Message-ID: <20091011070136.GB16264@dcvr.yhbt.net>
+References: <4AD04F95.7050603@obry.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Oct 11 06:30:03 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Sun Oct 11 09:04:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwq4H-0000DF-2e
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 06:30:01 +0200
+	id 1MwsU9-0001da-Fx
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 09:04:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbZJKEHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 00:07:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750766AbZJKEHn
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 00:07:43 -0400
-Received: from mail-px0-f179.google.com ([209.85.216.179]:61948 "EHLO
-	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbZJKEHm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 00:07:42 -0400
-Received: by pxi9 with SMTP id 9so7783124pxi.4
-        for <git@vger.kernel.org>; Sat, 10 Oct 2009 21:07:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=MBAty+vdFPclmmx3X4iWizUfXNVThHveG6R0acejz3Y=;
-        b=Kh2FUtiVhUSIBFb122JsL9pOnqPbqTiubhohfOYy0LEYSKaxmf4l43BLcafJUQqVHY
-         mh8BdrCNlrAeDQZ3Ij+iHp7067J3md5zrZrnFo7gOReHcEmnTQiX/zFCKFwbIYNqD/gt
-         +RQ8c2bBc1wfuW57S9eYzCeDgkz9+m+06qCiY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nv/uWlt1STJYfn0yindw6dy58gv/sSuwUgmA9tHbvXuurOkd38qfazU0Dm+ZAh+XjG
-         GFZtNKatk+FEG8XN/y2x4DRLdbD7rZFTw2uxGDghuje0DIQsaSXaI8gJh2PAhQ/sZlVe
-         FxqfrGe4tJV4FKyxb/i7e8LoAud8bQtqIsGBI=
-Received: by 10.114.69.19 with SMTP id r19mr54388waa.117.1255234026018;
-        Sat, 10 Oct 2009 21:07:06 -0700 (PDT)
-Received: from localhost (pcd632137.netvigator.com [218.102.164.137])
-        by mx.google.com with ESMTPS id 22sm682901pzk.14.2009.10.10.21.07.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Oct 2009 21:07:04 -0700 (PDT)
+	id S1751232AbZJKHCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 03:02:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751140AbZJKHCO
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 03:02:14 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:41102 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751102AbZJKHCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 03:02:13 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 387BC1F7BA;
+	Sun, 11 Oct 2009 07:01:37 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <200910110436.52653.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-08-17)
+In-Reply-To: <4AD04F95.7050603@obry.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129904>
 
-On Sun, 11 Oct 2009, Christian Couder wrote:
-> $ git checkout -b repo1-branch1 remote/repo1/branch1
-> $ git checkout N -- .
-> ...
-> If everything is ok then you can use:
-> 
-> $ git replace N HEAD
+Pascal Obry <pascal@obry.net> wrote:
+> Here is the problem.
+>
+> Doing a:
+>
+>    $ git svn fetch
+>
+> Takes age to update the repository. The long story is that I'm trying to  
+> have shared git-svn repositories.
+>
+> I'm cloning the repository on a server using a standard "git svn clone".  
+> I then let users cloning this repository using the procedure described  
+> in git-svn help. Copy/paste here:
+>
+> <<
+>        # Do the initial import on a server
+>                ssh server "cd /pub && git svn clone  
+> http://svn.example.com/project
+>        # Clone locally - make sure the refs/remotes/ space matches the  
+> server
+>                mkdir project
+>                cd project
+>                git init
+>                git remote add origin server:/pub/project
+>                git config --add remote.origin.fetch  
+> '+refs/remotes/*:refs/remotes/*'
+>                git fetch
+>        # Create a local branch from one of the branches just fetched
+>                git checkout -b master FETCH_HEAD
+>        # Initialize 'git svn' locally (be sure to use the same URL and  
+> -T/-b/-t options as were used on server)
+>                git svn init http://svn.example.com/project
+>        # Pull the latest changes from Subversion
+>                git svn rebase
+> >>
+>
+> If you do a "git svn fetch" (to get new branches) it takes age if you  
+> have imported branches that are not used since a long time.
+>
+> I've traced this down to the Perl fetch_all procedure. It seems that the  
+> fetch is looking at the older version in all branches and then read the  
+> remote repository starting from this revision. As some branches are  
+> unused since a very long it it re-read most of the history. In my  
+> example it start at rev 8200 whereas the last revision on trunk is  
+> 150000 (I put trace in git-svn Perl script).
+>
+> I have observed that this happen only the first time.
+>
+> This can be confirmed by the fact that if you break git-svn fetch  
+> process and restart it it will start to a later revision. So it seems  
+> that git-svn is keeping some kind of data about what has already been  
+> fetched but those data are not properly copied by the procedure above.
+>
+> Is there a workaround that? Where are those data stored?
 
-Thanks for detail instruction, I tested it ok except that when trying
-to checkout it reported an error
+Hi Pascal,
 
-  $ git checkout -b repo1-branch1 remote/oldjproject/master
-  fatal: git checkout: updating paths is incompatible with switching branches. 
-  Did you intend to checkout 'remote/oldjproject/master' which can not
-  be resolved as commit?
+For globs (branches and tags) the $GIT_DIR/svn/.metadata
+config file, under the svn-remote.svn.{branches,tags}-maxRev keys.
 
-but it ran ok by omitting that 'remote/'
-$ git checkout -b repo1-branch1 oldjproject/master
-
-Does it need to purge the file system tree before
-  git checkout N -- .
-
-so that there will be no artifact leaved by M?
-
-I found that it is necessary to do a 
-   git reset --hard (original HEAD)
-
-to complete the story. Is it correct?
-
-git version 1.6.5.rc3.35.g3340
+For explicitly specified refs (e.g. "trunk"), then it's in the last
+record of the corresponding rev_map (e.g.
+$GIT_DIR/svn/trunk/.rev_map.$UUID) as a 4-byte revision number + 20
+bytes of zeroes.
 
 -- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+Eric Wong
