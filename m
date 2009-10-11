@@ -1,70 +1,93 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: meaning of HEAD in context of filter-branch
-Date: Sun, 11 Oct 2009 11:38:16 +0200
-Message-ID: <m27hv2s22f.fsf@igel.home>
-References: <20091011024357.GA9021@debian.b2j>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: combine git repo historically
+Date: Sun, 11 Oct 2009 12:11:55 +0200
+Message-ID: <200910111211.56011.chriscool@tuxfamily.org>
+References: <20091009012254.GA3980@debian.b2j> <200910110436.52653.chriscool@tuxfamily.org> <20091011040659.GB9021@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git <git@vger.kernel.org>
 To: bill lam <cbill.lam@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 11 11:39:43 2009
+X-From: git-owner@vger.kernel.org Sun Oct 11 12:13:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mwuty-0004Pi-7I
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 11:39:42 +0200
+	id 1MwvR3-0004fo-Ob
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Oct 2009 12:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752611AbZJKJjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 05:39:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751904AbZJKJjG
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 05:39:06 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:52607 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751900AbZJKJjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 05:39:04 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id EDF1E1C156AF;
-	Sun, 11 Oct 2009 11:38:17 +0200 (CEST)
-Received: from localhost (dynscan2.mnet-online.de [192.168.1.215])
-	by mail.m-online.net (Postfix) with ESMTP id D0FE390168;
-	Sun, 11 Oct 2009 11:38:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.3.149])
-	by localhost (dynscan2.mnet-online.de [192.168.1.215]) (amavisd-new, port 10024)
-	with ESMTP id VQSTUf+Ops9q; Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
-Received: from igel.home (DSL01.83.171.184.49.ip-pool.NEFkom.net [83.171.184.49])
-	by mail.mnet-online.de (Postfix) with ESMTP;
-	Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id AB66B10C5C0; Sun, 11 Oct 2009 11:38:16 +0200 (CEST)
-X-Yow: I'm ZIPPY!!  Are we having FUN yet??
-In-Reply-To: <20091011024357.GA9021@debian.b2j> (bill lam's message of "Sun,
-	11 Oct 2009 10:43:57 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1756324AbZJKKKt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 06:10:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756212AbZJKKKt
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 06:10:49 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:50491 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756177AbZJKKKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 06:10:48 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A11F98180D5;
+	Sun, 11 Oct 2009 12:10:06 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id B6CF981813C;
+	Sun, 11 Oct 2009 12:10:03 +0200 (CEST)
+User-Agent: KMail/1.9.9
+In-Reply-To: <20091011040659.GB9021@debian.b2j>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129913>
 
-bill lam <cbill.lam@gmail.com> writes:
+On Sunday 11 October 2009, bill lam wrote:
+> On Sun, 11 Oct 2009, Christian Couder wrote:
+> > $ git checkout -b repo1-branch1 remote/repo1/branch1
+> > $ git checkout N -- .
+> > ...
+> > If everything is ok then you can use:
+> >
+> > $ git replace N HEAD
+>
+> Thanks for detail instruction, I tested it ok except that when trying
+> to checkout it reported an error
+>
+>   $ git checkout -b repo1-branch1 remote/oldjproject/master
+>   fatal: git checkout: updating paths is incompatible with switching
+> branches. Did you intend to checkout 'remote/oldjproject/master' which
+> can not be resolved as commit?
+>
+> but it ran ok by omitting that 'remote/'
+> $ git checkout -b repo1-branch1 oldjproject/master
+>
+> Does it need to purge the file system tree before
+>   git checkout N -- .
+>
+> so that there will be no artifact leaved by M?
 
-> how to get the HEAD during filter-branch or other workaround?
+Yeah, perhaps, I forgot that there could be some files added and other files 
+removed between M and N.
 
->From git-filter-index(1):
+If you remove everything (except the .git directory of course), then doing:
 
-   Filters
-       The filters are applied in the order as listed below. The <command>
-       argument is always evaluated in the shell context using the eval
-       command (with the notable exception of the commit filter, for technical
-       reasons). Prior to that, the $GIT_COMMIT environment variable will be
-                                    ^^^^^^^^^^^
-       set to contain the id of the commit being rewritten.
+$ git checkout N -- .
+$ git add .
+$ export GIT_AUTHOR_NAME=<author name of commit N>
+$ export GIT_AUTHOR_EMAIL=<author email of commit N>
+$ export GIT_AUTHOR_DATE=<date of commit N>
+$ git commit
 
-Andreas.
+should do the trick if I am not missing something which may very well be the 
+case.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+So perhaps it is easier to use Jakub's suggestion instead.
+
+> I found that it is necessary to do a
+>    git reset --hard (original HEAD)
+>
+> to complete the story. Is it correct?
+
+Yes, you should go back to your orginal branch at the end.
+
+Regards,
+Christian.
