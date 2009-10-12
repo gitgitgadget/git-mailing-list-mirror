@@ -1,74 +1,74 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 3/3] user-manual: use 'fast-forward'
-Date: Mon, 12 Oct 2009 13:05:04 +0300
-Message-ID: <94a0d4530910120305o49ed7c74sf6a03097b1098a5f@mail.gmail.com>
-References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>
-	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>
-	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>
-	 <1255293973-17444-4-git-send-email-felipe.contreras@gmail.com>
-	 <7veip9jj6z.fsf@alter.siamese.dyndns.org>
+From: bill lam <cbill.lam@gmail.com>
+Subject: quote in help code example
+Date: Mon, 12 Oct 2009 18:29:26 +0800
+Message-ID: <20091012102926.GA3937@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 12:14:40 2009
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 12 12:39:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxHvA-0002ZV-Do
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 12:14:28 +0200
+	id 1MxIIu-0005tf-Gs
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 12:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754446AbZJLKGy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 06:06:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753695AbZJLKGy
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 06:06:54 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:35055 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753549AbZJLKGx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 06:06:53 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so396604fgg.1
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 03:05:05 -0700 (PDT)
+	id S1755122AbZJLKaJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 06:30:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754995AbZJLKaJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 06:30:09 -0400
+Received: from mail-px0-f179.google.com ([209.85.216.179]:54090 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754846AbZJLKaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 06:30:08 -0400
+Received: by pxi9 with SMTP id 9so8490792pxi.4
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 03:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Onz3RFqgX7qY6vYAn8qg/kFxpPBwLJdBr3aX+o3iN78=;
-        b=ECsv3r83WdzflISjCkjfBPoBRmb73+AiIPYNaWmKWOHc9QpbZZsmiqA9W52S80qEOY
-         WxNjseFYUPGLPEb4fFePUucmTsUwqUK2WH4eA9WdOXMLtGSz83EclLEqcEQRFG2Et2YJ
-         9mxzNpK2Pb6n+ahodT8Osz6VSL1O8br8P8BxU=
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=ERrXuvpJAVE+syx3tvEG+KcTx/RYqKSw68/evwWjgEc=;
+        b=JjLoC+/1uIYWTSsEO4coZVGezwUmMiyMzJoIHqffLIT2Tv455HjL6YYm0jycOjFyXE
+         lEF/O16Wu2TRsSaglziMokNzHwvsH8BDguEihCXcFN/6G99P0BX0W58XhSQj+KWy/+BR
+         SM0Mn6nZYeDBnczBTkmvHj9g2HXyckfQbuKvo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Un6bWYRpU11XjaumYl8K/SsamHKcAIetjP3i4/uHI97bPWWKN2N763t6qiOsjlKml6
-         KogU/+FMB0yYNcBzWs/Amq4q6jTHn5sRgd8atelmBIWZS4053JIkB1rY4Crkit0enbUi
-         ZjU4nONN1tqqf3MdmE3tDhf4ByRAUEjJppNCc=
-Received: by 10.86.225.38 with SMTP id x38mr5083064fgg.59.1255341904930; Mon, 
-	12 Oct 2009 03:05:04 -0700 (PDT)
-In-Reply-To: <7veip9jj6z.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=ZXm4fi8hIianPJLa/CijWxntn61m2ZYk+Xs3pt88+owJaIAyVFjZKRGd5CJk8AdemL
+         xKiJSbwSc6tKEpnJyZPBaMaunqhQd37Lsxw7P+V9RMFMw925hfetw7LdE7z350ufxYCf
+         Q0qpMZrkg5XGdoIvWpIgreFRTPLtysZ8F7gXo=
+Received: by 10.115.66.13 with SMTP id t13mr9619941wak.176.1255343371679;
+        Mon, 12 Oct 2009 03:29:31 -0700 (PDT)
+Received: from localhost (pcd632137.netvigator.com [218.102.164.137])
+        by mx.google.com with ESMTPS id 21sm991367pzk.15.2009.10.12.03.29.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Oct 2009 03:29:30 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130001>
 
-On Mon, Oct 12, 2009 at 8:05 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> It's a compound word.
->
-> Thanks.
->
-> This removes 7 out of 37 "fast forward" in Documentation/ directory. =
-=C2=A0Are
-> we going to convert the remaining ones, too?
+In git man, eg. git help filter-branch
+The code examples for command line or shell scripts inside .ft pairs
+use (smart?) quote instead of single quotes, like
 
-Sure. Once I finish pushing the patches I have for user-manual, which
-is the one I'm interested right now.
+  .ft C
+   git filter-branch --tree-filter =B4rm filename=B4 HEAD
+   .ft
+
+Is this intentional or just some configuration problem during
+compiling.
 
 --=20
-=46elipe Contreras
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
