@@ -1,187 +1,66 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Questions about the new
-Date: Mon, 12 Oct 2009 23:54:18 +0200
-Message-ID: <200910122354.18318.chriscool@tuxfamily.org>
-References: <loom.20091012T115746-719@post.gmane.org> <4AD31EBF.6090307@viscovery.net> <4AD3619C.6010808@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Mon, 12 Oct 2009 17:57:25 -0400
+Message-ID: <32541b130910121457x632fc8b1xc58eca9d8b646500@mail.gmail.com>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca> 
+	<1255383459.15646.10.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 00:08:37 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:08:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxT3q-0004FJ-NM
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:08:11 +0200
+	id 1MxT40-0004FJ-M7
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932725AbZJLVxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 17:53:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932560AbZJLVxL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:53:11 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:46009 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932658AbZJLVxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:53:10 -0400
-Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id F37E58183E0;
-	Mon, 12 Oct 2009 23:52:27 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 0C3A1818A16;
-	Mon, 12 Oct 2009 23:52:25 +0200 (CEST)
-User-Agent: KMail/1.9.9
-In-Reply-To: <4AD3619C.6010808@gmail.com>
-Content-Disposition: inline
+	id S933371AbZJLV6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 17:58:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933369AbZJLV6X
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:58:23 -0400
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:48819 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933368AbZJLV6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:58:22 -0400
+Received: by gxk4 with SMTP id 4so10362252gxk.8
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 14:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=RWWGLa+WDcYU++Jy/gts5JO1hcx4I94KM9T751L1OHw=;
+        b=kgLI9y4VlvBCk1vEwc9ni00b4+R/R+bTH6U6khx7toduZ5pNqSbtl69UO9PzGKB8Do
+         jW7R3R8FNhU/FRtGMyZ/A4d43D2gbu80lgo62eGZub5FPt6J4KG5toQLPHnyfCXUn6q8
+         p2xim0jNZaA3lcF7YnLRKs5bsxVpdglBaSOB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=f/7i/4P0863lkMWR7qw0kdEZaYj7TCFB2e8A/Zu4Ow5VuT9u++13ZmPMBaRF2/XGCF
+         +IghldghFFu7FYDwsObzLhpGjEBVVZbXgjMQzVTaoa1eVyrxnYAPCPgnpbmuigypOpxS
+         uQHH4JOP5wWhPdDt9MvEZxVF/u4aq7pClXLco=
+Received: by 10.150.63.13 with SMTP id l13mr11096388yba.5.1255384665058; Mon, 
+	12 Oct 2009 14:57:45 -0700 (PDT)
+In-Reply-To: <1255383459.15646.10.camel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130085>
 
-On Monday 12 October 2009, Sergio Callegari wrote:
-> Thanks Johannes for all the detailed explanations
+On Mon, Oct 12, 2009 at 5:37 PM, Daniele Segato <daniele.bilug@gmail.com> wrote:
+> can I have a git report of $HOME/.* (without . and ..)? (all user
+> setting)
 >
-> Johannes Sixt <j.sixt <at> viscovery.net> writes:
+> Or better: provide a list of directory under $HOME I want to track
+>
+> Instead of providing the list of directory I want to ignore i would like
+> to provide the list of the directory and files I want to track :)
 
-[...]
+You can probably do pretty much anything you want by twiddling with
+options in .gitignore.  You should be able to add "don't ignore" names
+by starting them with !, iirc.
 
->  > With grafts you can only change parenthood; with replace entries you
->  > can change parenthood *and* all other aspects of a commit (message,
->  > author, committer, dates).
->  >
->  > Hence, replace entries are more general than grafts.
->
-> Limiting the discussion to commit objects, I think there are two
-> possible scenarios.
->
-> 1) You create new commits objects as needed
-> 2) You do not.
->
-> If you follow 1), I believe grafts and replace entries have exactly the
-> same flexibility.
->
-> If I happen not to like commit B in A---B---C and I want A---B'---C
-> where B' has
-> completely different aspects from B I can either replace B by B' or
-> graft away
-> B, pretending that the parent of A is B
-
-You mean "pretending that the parent of C is A", right?
-
-> But there are many things that can be done with grafts merely adding a
-> graft (e.g. cutting away a part of history, joining history),  that
-> cannot be done with replace entries without creating new commits objects.
-
-Yes, but when you create a graft, you add a new line in the graft file. You 
-don't get the grafts for free.
-
-> I was asking because I was wandering whether replace entries were first
-> or later
-> meant to make grafts deprecated. I hope not, because for a few things
-> working on
-> arcs seems still nice.
-
-I don't think they will be deprecated soon. And anyway there will probably 
-be a warning when a graft is used if it is deprecated.
-
-[...]
-
->  > > Conversely, I guess
->  > > you can always simulate a replace entry with the graft mechanism,
->
-> without the
->
->  > > need to add any extra commit object. Am I overlooking something?
->  >
->  > You cannot; see above.
->
-> Well, I meant for what regards commit objects only.
->
-> If I want to replace some commit X by some commit X' I merely need to
-> modify the
-> parent information of all the commits that are child of X so that they
-> pretend
-> to be child of X', or am I missing something?
-
-If you use git replace you just need to create commit X' and then use "git 
-replace X X'". If you use grafts, yes, you have to modify the parent 
-information of all the commits that are child of X.
-
->  > You can even replace tree objects and blob objects
->  > using replace entries, IIUC, but you cannot do that with grafts.
->
-> Definitely right!
->
->  > > 2) Is it currently possible to use a replace entry to replace a
->
-> commit object
->
->  > > with nothing? Namely if B has A as its sole parent, is it possible
->
-> to have a
->
->  > > replace entry such as A-sha1 becomes null, to pretend that B is a
->
-> hierarchy
->
->  > > root?
->  >
->  > Sure. Just make a commit object that does not have parents.
->
-> OK, you need to create a new commit object. At the beginning for some
-> reason I
-> thought that you could replace an object
-> with "nothing" or 00000000000000000000000000000000000000000000
->
->  > > 3) If I remember correctly, there was a reason why grafts were not
->
-> considered
->
->  > > suitable for transferring across repos. Can someone remind me about
->
-> it? How
->
->  > > does the replace mechanism address this issue?
->  >
->  > The problem with grafts was that, for example, git-pack-objects
->
-> obeyed the
->
->  > graft, and could create a broken repository by removing grafted-away
->  > objects. And since git-fsck also obeyed the graft, it did not notice
->  > the breakage.
->  >
->  > OTOH, history walkers (upload-pack, send-pack, pack-objects) and fsck
->  > never obey replace entries in the history. But they do keep track of
->  > them (and the history that they reference) because they are referenced
->
-> from the
->
->  > refs/replace namespace.
->
-> Thanks for the explanation. Can this be made possible for grafts too?
-> Wouldn't
-> it be a matter of having history walkers never obey grafts but keep track
-> of them (i.e. of the history of the parenthood they reference)?
-
-The problem is that grafts are special, so all the history walking commands 
-should be changed to deal with them specially. With the replace mechanism, 
-commits and refs are used, and all the commands already know how to deal 
-with them.
-
-> Like we have "annotated" or heavyweight tags living as objects in the
-> database,
-> would it be possible or make sense to have annotated grafts or replace
-> entries,
-> so that one can express why, by whom and when history was changed?
-
-There is a patch series about "notes" floating around that deals with 
-annotating any commit. So it could be used for that.
-
-And anyway when you create the replacement commit, you can state in the 
-commit message that it is a replacement commit, who created it, etc.
-
-Regards,
-Christian.
+Avery
