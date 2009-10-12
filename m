@@ -1,61 +1,115 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Git: "No you can't handle my root!" (?)
-Date: Mon, 12 Oct 2009 20:15:04 +0200
-Message-ID: <81b0412b0910121115s26c6c08s1ea54c28851faf05@mail.gmail.com>
-References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
-	 <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
-	 <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Filesystem has no item: Working copy path [...] does not exist
+	in repository at /usr/bin/git-svn line 3856
+Date: Mon, 12 Oct 2009 11:20:18 -0700
+Message-ID: <20091012182018.GA14143@dcvr.yhbt.net>
+References: <9accb4400910120848n6a1e4036l5e45ce3882deb5aa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: sylvain@demarque.qc.ca, git@vger.kernel.org
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 20:16:18 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 20:25:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxPR7-0007Z0-C1
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:15:57 +0200
+	id 1MxPaW-0004KI-RP
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:25:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757202AbZJLSPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 14:15:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755043AbZJLSPm
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:15:42 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:33969 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754846AbZJLSPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 14:15:42 -0400
-Received: by bwz6 with SMTP id 6so3316973bwz.37
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:15:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=QUf3m+PrjUwdRCckl5K1s7JzO1jlyXcXLAbJU9DeoSk=;
-        b=USo4rtqF3JVXj0zc12bVVtEKSQhp8GxAWjX8KQVTUaaU2LYAH31dLHcXsaq6Hn+B31
-         ANDScrLAVv8u7csZXSVbY3IB8Xs0EoDX4ol0TlfJVVja3/W07Fcqk2FyYs8r24SjJmZP
-         Z8oyeMrygeBlPgEyF/v7RTUdUVGhPpu5FxPuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=GY2RCWRCGLnE/fqYcne+gJTgQWeBlPdd598KQ+PxlEmUWt3DMruWXM7O8LMxUTF9Ix
-         6yhMudpMvGnDjaedNXfaBie3Ff78P8DXwrB893We8hXKa89kLW26mLcSmC7diyyQbdUg
-         ffTgQRCWb6duuvOd0dNGWz2fo8OKMsrNnerTA=
-Received: by 10.204.32.16 with SMTP id a16mr5325390bkd.190.1255371304957; Mon, 
-	12 Oct 2009 11:15:04 -0700 (PDT)
-In-Reply-To: <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
+	id S1757340AbZJLSU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 14:20:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756160AbZJLSU4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:20:56 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33956 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754767AbZJLSUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 14:20:55 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 7AA2C1F78E;
+	Mon, 12 Oct 2009 18:20:19 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <9accb4400910120848n6a1e4036l5e45ce3882deb5aa@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130043>
 
-On Mon, Oct 12, 2009 at 20:06, Steven Noonan <steven@uplinklabs.net> wrote:
-> I've had this problem too, but I eventually realized it was git's way
-> of telling me I shouldn't do that. But even so, it'd be good if we
-> _could_.
+Daniele Segato <daniele.bilug@gmail.com> wrote:
+> Hi,
+> i'm trying to clone a public SVN repo (user = guest, password is
+> empty/blank/not neeeded)
+> 
+> this was my steps:
+> 
+> $ git --version
+> git version 1.5.6.5
 
-It's more of "a note to the future generation of developers": "Hey guys,
-we didn't need that working, but if you have a night to spare could you
-please finish that?"
+Hi Daniele,
+
+First I thought this was a problem fixed in
+83c2fcff214fe89649fcd88e095d9961a36b53dd (git v1.6.2 or later),
+but then I tried running it just to make sure.
+
+> $ mkdir plugins
+> $ cd plugins
+> $ git svn init http://svn.liferay.com/repos/public/plugins -T trunk -b
+> branches # doesn't have tags
+> $ git svn fetch
+> [...]
+> # it takes hours.....
+> [...]
+> r25355 = ee13a19e656e6f96b1ebb562b10ee7fa688921df (svn/trunk)
+> Filesystem has no item: Working copy path 'plugins/branches/trunk'
+> does not exist in repository at /usr/bin/git-svn line 3856
+> 
+> 
+> after that revision it give me that error... and then stops.
+> if I issue again the git svn fetch it keep telling me the error and I
+> can't complete the cloning.
+
+This is a namespace conflict, the "trunk" ref is conflicting with a
+(what seems to be a miscreated) branch named "trunk".  I anticipated
+this problem originally but figured it was rare/uncommon enough that I
+didn't want to burden users by prefixing all branches with something:
+
+  ------------------------------------------------------------------------
+  r25364 | michael.hashimoto | 2009-01-21 14:06:53 -0800 (Wed, 21 Jan 2009) | 1 line
+  Changed paths:
+     A /plugins/branches/trunk
+
+  Created directory 'plugins/branches/trunk'.
+  ------------------------------------------------------------------------
+  r25365 | michael.hashimoto | 2009-01-21 14:07:15 -0800 (Wed, 21 Jan 2009) | 1 line
+  Changed paths:
+     D /plugins/branches/trunk
+
+  Removed plugins/branches/trunk
+
+Since it looks pretty obvious that "trunk" was miscreated here from the
+revision history, you can skip these two revisions in your import by
+recontinuing the clone with "git svn fetch -r25365:HEAD"
+
+If you encounter this problem further in a non-workaroundable way,
+you can prefix the local branches refs:
+
+Replace:
+  [svn-remote "svn"]
+    branches = plugins/branches/*:refs/remotes/svn/*
+
+With:
+
+  [svn-remote "svn"]
+    branches = plugins/branches/*:refs/remotes/svn/branches/*
+
+I didn't do this by default since I figured very few people would create
+a branch named "trunk" (and those who did, did it accidentally as it
+seems to be the case here).
+
+Hope that helps.
+
+-- 
+Eric Wong
