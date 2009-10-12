@@ -1,60 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 2/3] git config: clarify bool types
-Date: Mon, 12 Oct 2009 14:30:35 +0200
-Message-ID: <4AD3216B.7030507@drmicha.warpmail.net>
-References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>	 <7v7hv1kxyg.fsf@alter.siamese.dyndns.org> <94a0d4530910120303y205e6cfeg80ba0dfd6ed5a045@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git refuses to work with gvim
+Date: Mon, 12 Oct 2009 14:43:50 +0200
+Message-ID: <vpq8wfgg4u1.fsf@bauges.imag.fr>
+References: <20091012134312.236d250e@gzip.coli.uni-saarland.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 14:38:43 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: sebastian@CoLi.Uni-SB.DE
+X-From: git-owner@vger.kernel.org Mon Oct 12 14:49:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxKAa-0003nL-Ii
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:38:32 +0200
+	id 1MxKKc-0000Uz-Gq
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755662AbZJLMbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 08:31:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754736AbZJLMbU
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 08:31:20 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43230 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755072AbZJLMbU (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 08:31:20 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0931AA398C;
-	Mon, 12 Oct 2009 08:30:44 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 12 Oct 2009 08:30:44 -0400
-X-Sasl-enc: TtihhFqpuNqNUeCoKjxQJApaA+8qlNpPfGCzjVg2FEtI 1255350643
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 431A869863;
-	Mon, 12 Oct 2009 08:30:43 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091012 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <94a0d4530910120303y205e6cfeg80ba0dfd6ed5a045@mail.gmail.com>
+	id S1755497AbZJLMop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 08:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755394AbZJLMop
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 08:44:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39285 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754588AbZJLMoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 08:44:44 -0400
+Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n9CChelB001715
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 12 Oct 2009 14:43:40 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by archeboc.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1MxKFi-0000Fo-S9; Mon, 12 Oct 2009 14:43:50 +0200
+In-Reply-To: <20091012134312.236d250e@gzip.coli.uni-saarland.de> (sebastian@coli.uni-sb.de's message of "Mon\, 12 Oct 2009 13\:43\:12 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 12 Oct 2009 14:43:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n9CChelB001715
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1255956221.53763@FXzpohtdj4GsQsy+GVALUw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130009>
 
-Felipe Contreras venit, vidit, dixit 12.10.2009 12:03:
-> On Mon, Oct 12, 2009 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>
->>> The value is what it is, the --bool and --bool-or-int options don't
->>> specify the value type, just how it is interpreted. For example: a value
->>> of '1' can be interpreted as 'true'.
->>
->> It is not really about "interpreting", but about showing, isn't it?
-> 
-> Unless you are setting it, instead of reading it.
-> 
+sebastian@CoLi.Uni-SB.DE writes:
 
-I'd still suggest fixing the typo ("interpreted") and spelling out
-"boolean".
+> # git commit something
+> fatal: no commit message?  aborting commit.
+> #
 
-Michael
+The problem is that gvim returns immediately, and lets the window
+opened (try it in a terminal, "gvim foo.txt" returns immediately). Git
+expects the commit message to be written and saved when $EDITOR
+returns.
+
+A quick search for "wait" in the man pages tells me that
+
+  GIT_EDITOR='gvim -f' git commit 
+
+works.
+
+(BTW, this is in no way specific to Git, 99% applications calling
+$EDITOR will expect the same behavior)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
