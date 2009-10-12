@@ -1,97 +1,101 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Filesystem has no item: Working copy path [...] does not exist in 
-	repository at /usr/bin/git-svn line 3856
-Date: Mon, 12 Oct 2009 17:48:46 +0200
-Message-ID: <9accb4400910120848n6a1e4036l5e45ce3882deb5aa@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Supressing sorting of trees
+Date: Mon, 12 Oct 2009 18:05:06 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de>
+References: <loom.20091012T152113-874@post.gmane.org> <20091012142032.GG9261@spearce.org> <loom.20091012T171550-239@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Wong <normalperson@yhbt.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 12 17:58:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Sal Mangano <smangano@into-technology.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 18:08:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxNHN-0003Ws-Qz
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 17:57:46 +0200
+	id 1MxNRn-0000ex-UY
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 18:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932584AbZJLPtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 11:49:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932258AbZJLPtZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 11:49:25 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:41382 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932420AbZJLPtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 11:49:23 -0400
-Received: by bwz6 with SMTP id 6so3205431bwz.37
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 08:48:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=b5NKELZdMHbKhJLOYvTtIbUY3EcqpSpo9/F9fxXi69Y=;
-        b=iXcsLAyhHG1pTgcHJCfdCKdLSCz7rxt6QgNqDK/LIdzowg2L7euQtmZBGYKEjF0yGP
-         Ec/9Oe4IvvCnG4dHslTiXnhy22MaYxheAgFxR8AeHcWityRmCTdp00ZIOC9M2mKr+dkV
-         opvAy5wFMp0wANzJA0qVgy+wboL22OWO8vtKI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=vUbi/nRzkIhJrdf6EKogAq3/Zo6XcbmFB034V5C1yoL6poQ3NmhB5+h2adg4TcEa1/
-         ThYUZPMUHoC+ZLkwMsdkW2PuZLXLNjnTddPRcFE0ZqXPj0ts8DIHo3+6wcDG0GPSYYNq
-         yhT9vmGr3T6/uNQiYC6RCiG2tMY4+vLsdBHeU=
-Received: by 10.204.162.143 with SMTP id v15mr5191795bkx.50.1255362526511; 
-	Mon, 12 Oct 2009 08:48:46 -0700 (PDT)
+	id S932712AbZJLQDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 12:03:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932695AbZJLQDR
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 12:03:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40021 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932733AbZJLQDR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 12:03:17 -0400
+Received: (qmail invoked by alias); 12 Oct 2009 16:02:29 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp031) with SMTP; 12 Oct 2009 18:02:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+yNIdouFGy0FyAX9OjxLAluMgeFA7XOoXFGnlNJF
+	Ub+IcaXs7REVTV
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <loom.20091012T171550-239@post.gmane.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130030>
 
 Hi,
-i'm trying to clone a public SVN repo (user = guest, password is
-empty/blank/not neeeded)
 
-this was my steps:
+On Mon, 12 Oct 2009, Sal Mangano wrote:
 
-$ git --version
-git version 1.5.6.5
-$ mkdir plugins
-$ cd plugins
-$ git svn init http://svn.liferay.com/repos/public/plugins -T trunk -b
-branches # doesn't have tags
-$ git svn fetch
-[...]
-# it takes hours.....
-[...]
-r25355 = ee13a19e656e6f96b1ebb562b10ee7fa688921df (svn/trunk)
-Filesystem has no item: Working copy path 'plugins/branches/trunk'
-does not exist in repository at /usr/bin/git-svn line 3856
+> Shawn O. Pearce <spearce <at> spearce.org> writes:
+> 
+> > 
+> > Sal Mangano <smangano <at> into-technology.com> wrote:
+> > > I am using Git in a non-standard way and need to make a few twaeks 
+> > > in my custom build. I have added a --nosort option to git mktree 
+> > > which will suppress the qsort of the tree.
+> > > 
+> > > Will this break any other git functions? Are there any commands that 
+> > > assume trees are always sorted?
+> > 
+> > _YES IT BREAKS GIT_.
+> > 
+> > You cannot do this.
+> > 
+> > A Git repository whose trees are not sorted according to the Git 
+> > specific sort ordering is severly broken and most tools will fail 
+> > horribly on it.
+> > 
+> > Almost all code which reads trees assumes the names are sorted in a 
+> > specific order.  These tools perform sorted merges against other tree 
+> > like structures.  If the names are out of order the merge will fail. 
+> > `git fsck` will complain that the tree is not sorted properly. Tools 
+> > like `git log -- foo.c` will fail randomly because they break out of 
+> > the entry lookup as soon as they find a name that is after foo.c, as 
+> > they assume the tree is sorted.
+> > 
+> > I could go on.  But there is no point.
+> > 
+> > Oh, and trust me when I say this, the tree sorting matters.  Long ago 
+> > JGit had a bug where it didn't sort trees correctly all of the time 
+> > and we had a devil of a time tracking down that corruption.
+> > 
+> 
+> Thanks Shawn. I get the picture. 
+> 
+> Now, let's assume I am stubborn, crazy or both :-)
+> 
+> I can modify fsck to ignore unsorted and at the moment I don't care 
+> about merging trees. If I hunt down all usage of base_name_compare will 
+> that identify all code with the sort assumption or is there other places 
+> as well? I can go > through the entire source to figure this out myself 
+> but I need to get something hacked up very quickly and would appreciate 
+> help even if you think I am nuts!
 
+Look, one of the most trusted Git contributors just told you that you are 
+asking for trouble.
 
-after that revision it give me that error... and then stops.
-if I issue again the git svn fetch it keep telling me the error and I
-can't complete the cloning.
+It has nothing to do with being stubborn if you insist on doing it now.
 
-I've edited my .git/config between git svn init and git svn fetch
-adding "svn" to the target branch and url name
+But I smell an XY problem.  Why don't you just reveil _what_ you want to 
+do (as opposed to _how_ you think you should do it)?
 
-[core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
-[svn-remote "svn"]
-	url = http://svn.liferay.com/repos/public
-	fetch = plugins/trunk:refs/remotes/svn/trunk
-	branches = plugins/branches/*:refs/remotes/svn/*
-
-you can use
-git svn fetch --revision 25255:HEAD
-
-to make it take less time (hours anyway)...
-
-Any help will be appreciated,
-
-thanks,
-regards,
-Daniele
+Ciao,
+Dscho
