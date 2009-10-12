@@ -1,83 +1,80 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just
- a branch
-Date: Mon, 12 Oct 2009 17:31:03 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu>
-References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when appropriate to do so
+Date: Mon, 12 Oct 2009 23:40:11 +0200
+Message-ID: <200910122340.13366.trast@student.ethz.ch>
+References: <0016e68fd0123a175304754694b4@google.com> <alpine.DEB.1.00.0910120941150.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:36:38 2009
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: <Euguess@gmail.com>, Mikael Magnusson <mikachu@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
+	<git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:07:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxSYU-0004he-O4
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 23:35:47 +0200
+	id 1MxT3P-0004FJ-Ji
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758469AbZJLVbq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 17:31:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758464AbZJLVbp
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:31:45 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61302 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758451AbZJLVbn convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:31:43 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9CLV0Y4004156;
-	Mon, 12 Oct 2009 17:31:01 -0400 (EDT)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9CLV4PN009115;
-	Mon, 12 Oct 2009 17:31:04 -0400 (EDT)
-In-Reply-To: <7vr5t8coex.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S933282AbZJLVlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 17:41:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933274AbZJLVlh
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:41:37 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:18738 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933273AbZJLVlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:41:36 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 12 Oct
+ 2009 23:40:50 +0200
+Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 12 Oct
+ 2009 23:40:50 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <alpine.DEB.1.00.0910120941150.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130079>
 
-On Mon, 12 Oct 2009, Junio C Hamano wrote:
-> I offhand do not see a good rationale for such a shortcut to finish=20
-> bisect and switch to another branch (IOW, I understand "it is shorter=
- to=20
-> type", but I do not see "it is often done and very useful"), but I am=
-=20
-> open to be enlightened by a workflow where such a shortcut is useful.
+Johannes Schindelin wrote:
+> On Tue, 6 Oct 2009, Euguess@gmail.com wrote:
+> > in case if you didn't do that and you try to checkout you will end up 
+> > having detached HEAD which is quite scary;) for non-experienced user and 
+> > as i see might lead to some unnecessary questions in this list or on IRC 
+> > channel...
+[...]
+> One thing one might add for the technically inclined folks (i.e. those who 
+> need to implement, and to see that Git is in dear need of some 
+> user-friendliness first): "git checkout" is a porcelain (i.e. a program 
+> meant for end-user consumption), and as such should not have a problem to 
+> react to isatty(0) (i.e. "is the input coming directly from the 
+> console?").
 
-I agree that =E2=80=98git bisect reset <branch>=E2=80=99 is a confusing=
- shortcut.  It only=20
-really made sense before Git supported detached HEADs, and you needed t=
-o=20
-be on a branch all the time.  I think that lifting the arbitrary=20
-restriction to branch names makes it less confusing, but if you want to=
-=20
-remove the argument altogether, that would eliminate the confusion=20
-entirely.
+Sadly git-checkout seems to be stuck between being declared a
+porcelain, but at the same time being an extremely important command
+for scripts all over.  (There are probably others in the same place:
+reset comes to mind.)
 
-I had in mind only one case where =E2=80=98git bisect reset <commit>=E2=
-=80=99 would be=20
-useful.  I often don=E2=80=99t even remember what commit I was on befor=
-e I started=20
-a bisect, much less believe that I want to immediately switch back to i=
-t. =20
-I would prefer to be able to clean the bisection state without checking=
-=20
-out another commit at all, because that takes forever and invalidates m=
-y=20
-compiled tree.  This is what =E2=80=98git bisect reset HEAD=E2=80=99 wo=
-uld do if it=20
-worked.
+Your idea is also a backwards incompatible change, so we can just as
+well implement the original suggestion and force scripts (or us) to
+use some other means when they want to detach.  Say, why not just
+invent an option along the lines of
 
-Perhaps it makes sense to add a command that just clears the bisection=20
-state.  =E2=80=98git bisect stop=E2=80=99?
+  git checkout {-d|--detach} $ref
 
-Anders
+to make it explicit.  We have to resort to more arcane means to
+*reliably* detach anyway, like 'git checkout master^0'.  Then in some
+future release, git-checkout will start making DWIM branches if the -d
+is not given.
+
+And while we're there, --attach would be a nice complement to force
+refs/heads/foo to attach.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
