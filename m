@@ -1,91 +1,61 @@
-From: Steven Noonan <steven@uplinklabs.net>
+From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: Git: "No you can't handle my root!" (?)
-Date: Mon, 12 Oct 2009 11:06:44 -0700
-Message-ID: <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
+Date: Mon, 12 Oct 2009 20:15:04 +0200
+Message-ID: <81b0412b0910121115s26c6c08s1ea54c28851faf05@mail.gmail.com>
 References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
 	 <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
+	 <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: sylvain@demarque.qc.ca
-X-From: git-owner@vger.kernel.org Mon Oct 12 20:16:11 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: sylvain@demarque.qc.ca, git@vger.kernel.org
+To: Steven Noonan <steven@uplinklabs.net>
+X-From: git-owner@vger.kernel.org Mon Oct 12 20:16:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxPQz-0007Z0-8I
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:15:49 +0200
+	id 1MxPR7-0007Z0-C1
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:15:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933005AbZJLSHX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 14:07:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757463AbZJLSHW
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:07:22 -0400
-Received: from mail-pz0-f188.google.com ([209.85.222.188]:65441 "EHLO
-	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757452AbZJLSHV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 14:07:21 -0400
-Received: by pzk26 with SMTP id 26so8254277pzk.4
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:06:45 -0700 (PDT)
-Received: by 10.142.151.16 with SMTP id y16mr473470wfd.46.1255370804937; Mon, 
-	12 Oct 2009 11:06:44 -0700 (PDT)
-In-Reply-To: <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
+	id S1757202AbZJLSPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 14:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755043AbZJLSPm
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:15:42 -0400
+Received: from mail-bw0-f210.google.com ([209.85.218.210]:33969 "EHLO
+	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754846AbZJLSPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 14:15:42 -0400
+Received: by bwz6 with SMTP id 6so3316973bwz.37
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=QUf3m+PrjUwdRCckl5K1s7JzO1jlyXcXLAbJU9DeoSk=;
+        b=USo4rtqF3JVXj0zc12bVVtEKSQhp8GxAWjX8KQVTUaaU2LYAH31dLHcXsaq6Hn+B31
+         ANDScrLAVv8u7csZXSVbY3IB8Xs0EoDX4ol0TlfJVVja3/W07Fcqk2FyYs8r24SjJmZP
+         Z8oyeMrygeBlPgEyF/v7RTUdUVGhPpu5FxPuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=GY2RCWRCGLnE/fqYcne+gJTgQWeBlPdd598KQ+PxlEmUWt3DMruWXM7O8LMxUTF9Ix
+         6yhMudpMvGnDjaedNXfaBie3Ff78P8DXwrB893We8hXKa89kLW26mLcSmC7diyyQbdUg
+         ffTgQRCWb6duuvOd0dNGWz2fo8OKMsrNnerTA=
+Received: by 10.204.32.16 with SMTP id a16mr5325390bkd.190.1255371304957; Mon, 
+	12 Oct 2009 11:15:04 -0700 (PDT)
+In-Reply-To: <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130042>
 
-I've had this problem too, but I eventually realized it was git's way
-of telling me I shouldn't do that. But even so, it'd be good if we
-_could_.
+On Mon, Oct 12, 2009 at 20:06, Steven Noonan <steven@uplinklabs.net> wrote:
+> I've had this problem too, but I eventually realized it was git's way
+> of telling me I shouldn't do that. But even so, it'd be good if we
+> _could_.
 
-- Steven
-
-On Mon, Oct 12, 2009 at 10:59 AM,  <sylvain@demarque.qc.ca> wrote:
-> Hello there. I know I was being goofy, but here is the real down to
-> earth question :
->
-> Is there a known bug/feature that prevents Git from being used at "/"=
-?
-> It seems that there is a problem either at "git init" or "git add"
-> when the repository is located at "/.git". (Git 1.6.4.4, see example
-> below)
->
-> Thank you!
->
-> Quoting sylvain@demarque.qc.ca:
->
->> Git is good, Git is great! All praise the Git! :-D
->>
->> What do you people think about this strange phenomena?
->>
->> localhost / # git --version
->> git version 1.6.4.4
->>
->> localhost / # git init
->> Initialized empty Git repository in //.git/
->>
->> localhost / # cd etc
->> localhost etc # git add X11/xorg.conf
->> fatal: pathspec 'etc/X11/xorg.conf' did not match any files
->>
->> Aside from the obvious question of why would I want to Git the whole
->> tree ("But all files deserve the Holy Presence of the Git!"), why do=
-es
->> Git refuse the love offering from "/etc/X11/xorg.conf"? Is it becaus=
-e
->> it contains font directory configurations?
->>
->> Commit and [ENTER] to all,
->>
->> S! :-)
->> --
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+It's more of "a note to the future generation of developers": "Hey guys,
+we didn't need that working, but if you have a night to spare could you
+please finish that?"
