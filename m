@@ -1,108 +1,91 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Merge (or maybe rebase) question
-Date: Mon, 12 Oct 2009 20:13:12 +0200
-Message-ID: <81b0412b0910121113l7d084618o6d34fb4a0389421c@mail.gmail.com>
-References: <26ae428a0910120455k7ab5aa5ag8d701050e7acec5f@mail.gmail.com>
+From: Steven Noonan <steven@uplinklabs.net>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Mon, 12 Oct 2009 11:06:44 -0700
+Message-ID: <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+	 <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Howard Miller <howard@e-learndesign.co.uk>
-X-From: git-owner@vger.kernel.org Mon Oct 12 20:16:10 2009
+To: sylvain@demarque.qc.ca
+X-From: git-owner@vger.kernel.org Mon Oct 12 20:16:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxPR6-0007Z0-RL
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:15:57 +0200
+	id 1MxPQz-0007Z0-8I
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757473AbZJLSNv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 14:13:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756452AbZJLSNv
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:13:51 -0400
-Received: from mail-bw0-f210.google.com ([209.85.218.210]:59871 "EHLO
-	mail-bw0-f210.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756062AbZJLSNu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 14:13:50 -0400
-Received: by bwz6 with SMTP id 6so3315543bwz.37
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:13:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=QtvAEscj9FqsDNXimYLBIlQJoiMCPNfm5SyTxQqvr5I=;
-        b=THstHUdvSDGxIin9+HKI3wzTDdcSE9ZSoWDjb1ogtFTbHFhqNvyvoodm5L/AumYpUE
-         97TR+yAJSmr+oOoslXijkTce2MONb3rzYhDxmNGG/rPYNx1di2/UWqPa+qSZhU32EOeh
-         jIMate1hdYKyWwhCfhwKIQ9gwtOc1gLzh3AYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=TO89e/Q4t5UclZPwXjs/wcCaf6n/oDzoWuqx1gUoC3mAfjni7C13OnnkTbRGs7jkTR
-         /4wB11SdItfdY7JF++xVGKimXTB91hd5TG2LtAsx/xiyu2f7Z21go82/xz/IR9ZJ0HdQ
-         fhrxJcWixWXOnoObE9IWSAml2MFVW4cQ/P3MA=
-Received: by 10.204.153.220 with SMTP id l28mr5364184bkw.86.1255371192770; 
-	Mon, 12 Oct 2009 11:13:12 -0700 (PDT)
-In-Reply-To: <26ae428a0910120455k7ab5aa5ag8d701050e7acec5f@mail.gmail.com>
+	id S933005AbZJLSHX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 14:07:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757463AbZJLSHW
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:07:22 -0400
+Received: from mail-pz0-f188.google.com ([209.85.222.188]:65441 "EHLO
+	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757452AbZJLSHV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 14:07:21 -0400
+Received: by pzk26 with SMTP id 26so8254277pzk.4
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:06:45 -0700 (PDT)
+Received: by 10.142.151.16 with SMTP id y16mr473470wfd.46.1255370804937; Mon, 
+	12 Oct 2009 11:06:44 -0700 (PDT)
+In-Reply-To: <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130041>
 
-On Mon, Oct 12, 2009 at 13:55, Howard Miller <howard@e-learndesign.co.uk> wrote:
-> Another how best to do this.
+I've had this problem too, but I eventually realized it was git's way
+of telling me I shouldn't do that. But even so, it'd be good if we
+_could_.
+
+- Steven
+
+On Mon, Oct 12, 2009 at 10:59 AM,  <sylvain@demarque.qc.ca> wrote:
+> Hello there. I know I was being goofy, but here is the real down to
+> earth question :
 >
-> - I have my project all nicely in git with all the different releases
-> and versions in there going back years. Happy :-)
+> Is there a known bug/feature that prevents Git from being used at "/"=
+?
+> It seems that there is a problem either at "git init" or "git add"
+> when the repository is located at "/.git". (Git 1.6.4.4, see example
+> below)
 >
-> - I have a customer who has heaviliy modified an oldish version of the
-> software.
+> Thank you!
 >
-> - I have identified the version that they modified and created a
-> branch in my git repo based on that version (i.e. what they would have
-> started with before modifying it)
-
-That's the branch where you should apply their changes. Let name it "theirs".
-And I assume your normal branch is called master.
-
-> - Their changes where applied to a simple download - no version
-> control, no nothing.
+> Quoting sylvain@demarque.qc.ca:
 >
-> I now need to update them to the latest version of the software - can
-> git help me here or is it all a disaster?
-
-You can have it with both merge and rebase.
-Merge:
-
-   $ git checkout master
-   $ git merge theirs
-
-Now your master contains a tree where their and your changes
-are mixed. Exactly how they are mixed (IOW, how you resolved
-conflicts, what exactly have you taken from their tree, etc) is
-recorded in the merge commit. You can't export this information out
-of Git repo (so it is readily and simply usable without Git, that is).
-That's usually not a problem.
-
-Rebase:
-
-   $ git checkout theirs^0
-   $ git rebase master
-
-The rebase can cause conflicts.
-
-   $ git branch new-theirs
-   $ git checkout new-theirs
-
-Now you are on a branch which contains their changes on top of your
-current development branch. The software as "they" had it is in "theirs".
-You can export their changes to your *current* tree to anyone as patches.
-No one can tell anything about where the changes were created in the
-first place (the "base"), though. That's the major downside of the approach.
-
-> PS. To make matters worse - their original is full of expanced CVS
-> $Id:$ tags so it will look to git like every single file has changed.
-
-You can filter them out using you favorite editor or scripting language
-and commit the filtered tree. Gits merge considers only the final
-states of the branches it merges.
+>> Git is good, Git is great! All praise the Git! :-D
+>>
+>> What do you people think about this strange phenomena?
+>>
+>> localhost / # git --version
+>> git version 1.6.4.4
+>>
+>> localhost / # git init
+>> Initialized empty Git repository in //.git/
+>>
+>> localhost / # cd etc
+>> localhost etc # git add X11/xorg.conf
+>> fatal: pathspec 'etc/X11/xorg.conf' did not match any files
+>>
+>> Aside from the obvious question of why would I want to Git the whole
+>> tree ("But all files deserve the Holy Presence of the Git!"), why do=
+es
+>> Git refuse the love offering from "/etc/X11/xorg.conf"? Is it becaus=
+e
+>> it contains font directory configurations?
+>>
+>> Commit and [ENTER] to all,
+>>
+>> S! :-)
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
