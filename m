@@ -1,83 +1,67 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: Supressing sorting of trees
-Date: Mon, 12 Oct 2009 21:36:59 +0200
-Message-ID: <46a038f90910121236x6bbe258bwa3bc3fdcc54de524@mail.gmail.com>
-References: <loom.20091012T152113-874@post.gmane.org>
-	 <20091012142032.GG9261@spearce.org>
-	 <loom.20091012T171550-239@post.gmane.org>
-	 <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de>
-	 <loom.20091012T182258-9@post.gmane.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] git-stash documentation: mention default options for 'list'
+Date: Mon, 12 Oct 2009 21:37:39 +0200
+Message-ID: <20091012193739.GR23777@genesis.frugalware.org>
+References: <havj2n$d85$1@ger.gmane.org>
+ <20091012175201.GA10263@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Sal Mangano <smangano@into-technology.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 21:39:24 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jef Driesen <jefdriesen@hotmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 12 21:39:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxQjm-0007U8-OC
+	id 1MxQjn-0007U8-AA
 	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 21:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933186AbZJLTiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 15:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933180AbZJLTiI
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:38:08 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:55724 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933166AbZJLTiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 15:38:07 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so1986886eyf.19
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 12:36:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=ZYMaDWWk0uflx2zCw4vV+clvL8Wm9Xpgjq42LjLjp5I=;
-        b=A+eO1uK108CLw8c6OuaJ8o4LR/riTRfZczZYX3J2zcgUARL4jXh1/LSJRFdHoEUnlR
-         mwS286UyIyGRSEFXtM+TrxDu7l+HYgOFKJF1gYjH8VH7iGb6gtwLFXLASHQy3DwuiE1K
-         9VlN5EPntUbmVvh21nKgYwhFe5U0pJpROKoYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=fn537Ngi4tBAf+GLSI25qkdZQyjfYA/wDGWuHZ93R1RyCcq5ImhQKq3PHobrhLiiS3
-         XhjEJWybbaCqIc0R1GeuTLb14Ajati3g2vdXe+XSXwncdq+K1PyTyj4FVWWDEEveobzT
-         3nqC1j6XaMXQ8dI6xQf3r1XoclIuXK6NeNjcA=
-Received: by 10.210.7.21 with SMTP id 21mr7529097ebg.75.1255376219243; Mon, 12 
-	Oct 2009 12:36:59 -0700 (PDT)
-In-Reply-To: <loom.20091012T182258-9@post.gmane.org>
+	id S933197AbZJLTiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 15:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933187AbZJLTiU
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:38:20 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:41303 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933180AbZJLTiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 15:38:19 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 8A7C7580B5;
+	Mon, 12 Oct 2009 21:37:39 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 28F1044906;
+	Mon, 12 Oct 2009 21:37:39 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3C66A11F0028; Mon, 12 Oct 2009 21:37:39 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20091012175201.GA10263@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130056>
 
-On Mon, Oct 12, 2009 at 6:51 PM, Sal Mangano
-<smangano@into-technology.com> wrote:
-> 2) I can use Git unchanged but preserve order by storing some information in
-> each sub tree (e.g. an extra blob) which retains the real order. I can also
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-This #2 is your best bet by far. An extra blob in each subdir is just
-one option, you can handle this "extra metadata" in a number of ways
--- maybe external to git, on a separate history will work best.
+I just noticed this was not mentioned in the manpage.
 
-The downsides of messing with internal tree handling of git are so
-staggering that you'd do better to throw git away.
+ Documentation/git-stash.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-(this is from experience of abusing git to various purposes that have
-little to do with version control :-) )
-
-In other words: Shaun and Dscho are right, so right that it hurts.
-
-hth,
-
-
-
-m
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 3f14b72..fafe728 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -78,7 +78,8 @@ stash@{1}: On master: 9cc0589... Add git-stash
+ ----------------------------------------------------------------
+ +
+ The command takes options applicable to the 'git-log'
+-command to control what is shown and how. See linkgit:git-log[1].
++command to control what is shown and how. If no options are set, the
++default is `-n 10`. See linkgit:git-log[1].
+ 
+ show [<stash>]::
+ 
 -- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+1.6.4
