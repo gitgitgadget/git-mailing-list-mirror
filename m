@@ -1,69 +1,106 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-gui: Fixed _main window_ for screen height equal
-	600 px
-Date: Mon, 12 Oct 2009 07:34:18 -0700
-Message-ID: <20091012143418.GK9261@spearce.org>
-References: <1255329194-2757-1-git-send-email-vietor@vxwo.org> <alpine.DEB.1.00.0910120934420.4985@pacific.mpi-cbg.de> <1255335812.2326.20.camel@localhost.localdomain>
+From: Israel Garcia <igalvarez@gmail.com>
+Subject: Re: backup git repo on every commit
+Date: Mon, 12 Oct 2009 09:39:24 -0500
+Message-ID: <194a2c240910120739j58cc1ec0o629b0df7d31e3fdd@mail.gmail.com>
+References: <194a2c240910120641sccf0e55xef4226269df78864@mail.gmail.com>
+	 <20091012141544.GF9261@spearce.org>
+	 <194a2c240910120725u72cdb588p3c66bc730e6953d@mail.gmail.com>
+	 <20091012143043.GJ9261@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Vietor Liu <vietor@vxwo.org>
-X-From: git-owner@vger.kernel.org Mon Oct 12 16:40:22 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Oct 12 16:40:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxM4T-0002uT-38
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 16:40:21 +0200
+	id 1MxM4V-0002uT-Of
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 16:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757001AbZJLOe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 10:34:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756999AbZJLOe4
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 10:34:56 -0400
-Received: from george.spearce.org ([209.20.77.23]:40035 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756991AbZJLOe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 10:34:56 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 534ED381FF; Mon, 12 Oct 2009 14:34:18 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1255335812.2326.20.camel@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S932261AbZJLOkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 10:40:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932266AbZJLOkE
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 10:40:04 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:48845 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932208AbZJLOkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 10:40:02 -0400
+Received: by fxm27 with SMTP id 27so9259489fxm.17
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 07:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=d1U5/Zu9VRqz2IjWAG7sjTaTuTf2zBPrHKPwvfmAT6I=;
+        b=kwwp6tOiGOIPbjYzE5YTu/Bzc8TC84fmcFQMUx43lmieYt1gL0IyNzDk6vkQwhnz5+
+         9Fu+e+1x8jFBNGWuTBhHZMaDsjm2xF5xq/7f/nipz6V8+yig/UgoG2L41+kyy3Isf+zk
+         IbDX3HBonWfjY6Zv7I82wkX9Xlth7zDY10iR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VMSO0yfzrDXFwiZno3bo01RjICQqoc0tZGveal5BfXdks/A2QsAXM/y7MdNyPNj/+j
+         SLCfUPSSsmB1s462q6/eXcxaEAJL06CTluB8kZIsk3eQheSYtfq6bocBKTDCTcXBnClV
+         6euw/ix/rOEvve69s4YyF6B72PgvKoe1TRfIY=
+Received: by 10.204.25.152 with SMTP id z24mr5190232bkb.44.1255358364955; Mon, 
+	12 Oct 2009 07:39:24 -0700 (PDT)
+In-Reply-To: <20091012143043.GJ9261@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130022>
 
-Vietor Liu <vietor@vxwo.org> wrote:
-> On Mon, 2009-10-12 at 09:35 +0200, Johannes Schindelin wrote:
-> >  
-> > So what you _actually_ do is reduce the space for the diff, no?
+On 10/12/09, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Israel Garcia <igalvarez@gmail.com> wrote:
+>> That's OK, but I want to backup my git repo locally
+>
+> Just change the path of the backup remote (that final argument to
+> git remote add) to point to the local directory.
+>
+> Though I guess you would also need to run git init there, e.g.:
+>
+>   git --git-dir=/backup/project.git init
+>   git remote add --mirror backup /backup/project.git
+>
+>   # and create the hook as below
+Nice..:-)
 
-Dscho, I think what's happening is he is shrinking the minimum height
-of the diff pane.  By allowing it to be shorter he is trading diff
-pane space in order to make room for the fixed height commit message
-area below it.
- 
-> Yes. 
-> The _main window_ support auto resize. I was tested some way, only
-> modify _diff body_ space could work. The _diff body_ is part of _main
-> window_. 
-> 
-> Whether modify the commit message? 
+>
+> Of course, backup to another folder on the same disk isn't a backup
+> at all, the disk can still fail and lose both repositories.
+Yeap, but I use rsync to backup /backup folder on a remote server
+every night. /backup folder other apps backups.
 
-Yes, please modify the commit message.  The message does not clearly
-state what is occurring here, which is why Dsco had an issue.
+thanks Shawn.
 
-Really you are trying to adjust the minimum height of the diff
-pane, which is resizable, so that it can use less vertical height,
-allowing the overall window to be shorter and still display the
-entire commit pane.
+regards
 
-Also, I find your use of underscores around widget names to be
-very difficult to read.  I don't see a reason for it in the commit
-message.
+Israel.
+
+>
+>> On 10/12/09, Shawn O. Pearce <spearce@spearce.org> wrote:
+>> > Israel Garcia <igalvarez@gmail.com> wrote:
+>> >> Which is the simplest  way to backup a git repository after every
+>> >> commit?
+>> >
+>> > Add a commit hook to push to another location, e.g.:
+>> >
+>> >   git remote add --mirror backup you@another.host:path/to/backup.git
+>> >
+>> >   cat >.git/hooks/post-commit
+>> >   #!/bin/sh
+>> >   git push backup
+>> >   ^D
+>> >
+>> >   chmod a+x .git/hooks/post-commit
+>
+> --
+> Shawn.
+>
+
 
 -- 
-Shawn.
+Regards;
+Israel Garcia
