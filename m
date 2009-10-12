@@ -1,103 +1,144 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] disallow refs containing successive slashes
-Date: Sun, 11 Oct 2009 19:31:15 -0500
-Message-ID: <20091012003115.GA5782@progeny.tock>
-References: <4AD0C93C.6050306@web.de>
- <7vws327wbp.fsf@alter.siamese.dyndns.org>
- <4AD1B6A4.8060405@web.de>
- <7vbpkdwyo2.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add--interactive: never skip files included in
+ index
+Date: Sun, 11 Oct 2009 21:40:07 -0400
+Message-ID: <20091012014007.GA7674@coredump.intra.peff.net>
+References: <1255189906-16049-1-git-send-email-pav@iki.fi>
+ <7viqelwyp1.fsf@alter.siamese.dyndns.org>
+ <20091011191440.GA2532@coredump.intra.peff.net>
+ <7vpr8tr2pe.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Pauli Virtanen <pav@iki.fi>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 02:30:07 2009
+X-From: git-owner@vger.kernel.org Mon Oct 12 03:45:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mx8nb-0005L9-M2
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 02:30:04 +0200
+	id 1Mx9ym-0008NM-Q9
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 03:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515AbZJLAXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Oct 2009 20:23:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbZJLAX3
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 20:23:29 -0400
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:54803 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298AbZJLAX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Oct 2009 20:23:29 -0400
-Received: by ywh6 with SMTP id 6so7758012ywh.4
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 17:22:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7AW/bCDFNJ1Og6WI+EjuxfuwRDj9FGU6L1KcQ2YgQqk=;
-        b=PF07Ss39tJEPk8bo+4MztFMfmy/P4fCwFOFSx/Lz6IHF1AMXpjAUVyHydAUWZEh/vl
-         5+9i2mHE02DwfrY35qE8UJ74whbqPKQ0bSgf1AElT1dLuS3nsiwSgEDHKHXkLdClQuJ5
-         V6ABjlkv7xtXJiVpVgGQmCm+TrXkKZ4wQlzUs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bb8mEuAf3dngYFWf3lFnj7aKpjdpO0sxv5rB/HsZafH35sqLShzxWAdRo1R0N1l7Q0
-         n5T+P2t2T7SkEyeM3AWwS5vN+KBD8Ek/QdZQxrVM+LHEQHwGohFP6JF+Y41Ag3YK/Y01
-         cDdKWExXL6PWzIz8A7KFLz7QigNpZzRCcPERo=
-Received: by 10.151.28.10 with SMTP id f10mr8882798ybj.323.1255306972857;
-        Sun, 11 Oct 2009 17:22:52 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 16sm257783gxk.3.2009.10.11.17.22.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 11 Oct 2009 17:22:52 -0700 (PDT)
+	id S1752558AbZJLBkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Oct 2009 21:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752531AbZJLBkp
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Oct 2009 21:40:45 -0400
+Received: from peff.net ([208.65.91.99]:51686 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752372AbZJLBkp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Oct 2009 21:40:45 -0400
+Received: (qmail 32632 invoked by uid 107); 12 Oct 2009 01:43:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 11 Oct 2009 21:43:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Oct 2009 21:40:07 -0400
 Content-Disposition: inline
-In-Reply-To: <7vbpkdwyo2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vpr8tr2pe.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129967>
 
-Junio C Hamano wrote:
- 
-> When the users make typoes (e.g. /foo//bar) you can accept the only sane
-> correction (e.g. foo/bar) instead of rejecting, since the only thing the
-> user can do after getting such a rejection is to correct it to that
-> corrected name (e.g. foo/bar) himself and re-issue the command anyway.
-> You can push the "hassle" down to the user, or you can fix the tool to
-> remove the hassle from the user.
+On Sun, Oct 11, 2009 at 03:22:05PM -0700, Junio C Hamano wrote:
 
-Yes, making check-ref-format stricter without changing its users to
-massage their input would be a regression.
+> > I don't know if it is worth fixing now or not. It does seem a bit
+> > inconsistent to me (since everything else is very clear that .gitignore
+> > is only about untracked files), but nobody seems to have been
+> > complaining for the last two years (and they may have, in fact, been
+> > coding to the new behavior).
+> 
+> This is one of those moments when I feel very blessed to have competent
+> and diligent people around me ;-)
 
-The problem Jens described is a git-gui bug.  In lib/branch_delete.tcl,
-line 57, the list of deletable branches is populated as follows:
+Well, I have to do _something_ to make up for all the brown paper bag
+bugs. ;)
 
-	foreach h [load_all_heads] {
-		if {$h ne $current_branch} {
-			$w_heads insert end $h
-		}
-	}
+> I think you are right; that we shouldn't filter the output with gitignore
+> entries when showing what is _in_ the index.
 
-Since slashes coalesce, a user-supplied new branch name is not canonical
-and checking "$h eq $current_branch" does not actually check if they are
-the same branch.  git-gui should be using the branch name as output by
-"git check-ref-format --branch" after the branch is created.
+So being the diligent and competent soul that I am, I started to prepare
+a patch for this, which is included below. But the plot thickens.
 
-But what about other scripts that assume each branch has only one
-possible name?  Maybe they could be forced to fix up the name early on
-by making check-ref-format reject names with "//" in them and providing
-a "git check-ref-format --print" to help.
+I bisected the change of behavior to 63d285c, as I mentioned. But when I
+found the code that needed to be tweaked, it actually git-blames to a
+much earlier date in "git show-files", which later became ls-files.  See
+9ff768e.
 
-Upside: scripts would complain loudly instead of failing subtly on input
-with extra slashes if they forget to use "git check-ref-format --print"
-when appropriate.  Downside: users, including the 22 callers of
-check_ref_format() in git, would have to be checked and probably changed
-to avoid regressions.
+So now I am doubly confused. Did this feature exist, and was broken, and
+you actually fixed it in 63d285c, creating what looked like a regression
+but was actually intentional?
 
-Never having made that typo, I find it hard to consider such a change
-worth the trouble, but it sounds doable.
+And more importantly, what do you want to do with it now?
 
-Regards,
-Jonathan
+---
+ builtin-ls-files.c          |    8 --------
+ t/t3003-ls-files-exclude.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3003-ls-files-exclude.sh
+
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 2c95ca6..c5c0407 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -170,10 +170,6 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 	if (show_cached | show_stage) {
+ 		for (i = 0; i < active_nr; i++) {
+ 			struct cache_entry *ce = active_cache[i];
+-			int dtype = ce_to_dtype(ce);
+-			if (excluded(dir, ce->name, &dtype) !=
+-					!!(dir->flags & DIR_SHOW_IGNORED))
+-				continue;
+ 			if (show_unmerged && !ce_stage(ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+@@ -186,10 +182,6 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 			struct cache_entry *ce = active_cache[i];
+ 			struct stat st;
+ 			int err;
+-			int dtype = ce_to_dtype(ce);
+-			if (excluded(dir, ce->name, &dtype) !=
+-					!!(dir->flags & DIR_SHOW_IGNORED))
+-				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+ 			err = lstat(ce->name, &st);
+diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
+new file mode 100755
+index 0000000..fc1e379
+--- /dev/null
++++ b/t/t3003-ls-files-exclude.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++
++test_description='ls-files --exclude does not affect index files'
++. ./test-lib.sh
++
++test_expect_success 'create repo with file' '
++	echo content >file &&
++	git add file &&
++	git commit -m file &&
++	echo modification >file
++'
++
++check_output() {
++test_expect_success "ls-files output contains file ($1)" "
++	echo '$2' >expect &&
++	git ls-files --exclude-standard --$1 >output &&
++	test_cmp expect output
++"
++}
++
++check_all_output() {
++	check_output 'cached' 'file'
++	check_output 'modified' 'file'
++}
++
++check_all_output
++test_expect_success 'add file to gitignore' '
++	echo file >.gitignore
++'
++check_all_output
++
++test_done
+-- 
+1.6.5.rc3.240.g77692
