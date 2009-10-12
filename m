@@ -1,86 +1,67 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Questions about the new
-Date: Mon, 12 Oct 2009 23:03:47 +0400
-Message-ID: <20091012190347.GA26977@dpotapov.dyndns.org>
-References: <loom.20091012T115746-719@post.gmane.org> <4AD31EBF.6090307@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Mon, 12 Oct 2009 21:02:08 +0200
+Message-ID: <vpqfx9oxwpb.fsf@bauges.imag.fr>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 21:09:58 2009
+Cc: git@vger.kernel.org
+To: sylvain@demarque.qc.ca
+X-From: git-owner@vger.kernel.org Mon Oct 12 21:09:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxQHN-0001BQ-NB
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 21:09:58 +0200
+	id 1MxQHL-0001BQ-Uo
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 21:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757394AbZJLTEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 15:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757367AbZJLTEe
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:04:34 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:48414 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756934AbZJLTEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 15:04:33 -0400
-Received: by fxm27 with SMTP id 27so9527129fxm.17
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 12:03:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=dZFnxnkkpWxSqsVRystkp+z1rYQJc2jhnAsj2hWg1eA=;
-        b=rD3pXCEGNQnz+tYyGpnWL4UwV+VyNbkLItFy7mjqCipPpWUH2UlwE3kPUFRetnWQXe
-         9X2yJX2r+TzTelr7TXE6Zhc+xDTGNf0IjRg1wa17kMRGQk7uoyKEOveHeLUFZcYE1tJt
-         B2v2Etor2JRO5y7MWpeQwppv+mOgZmjj0Xz3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=DZj8YDB38ioHFLdnFoTt6gdWptVA2RlslmMU+MePKjQImwPZr1PtmXdGt6+ywkAyX+
-         OU0P5kSZNmXn8XCrrL10knJdvRhZedfJSG40JlEuL6taeJ3B5YBS8uxNVyA98hFZoKLo
-         hXRpmS4kr2ig0t2OELHoL8UhpTrDoWyPyfF6M=
-Received: by 10.86.169.3 with SMTP id r3mr5507345fge.15.1255374236895;
-        Mon, 12 Oct 2009 12:03:56 -0700 (PDT)
-Received: from localhost ([91.78.50.208])
-        by mx.google.com with ESMTPS id 4sm219483fge.7.2009.10.12.12.03.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 12:03:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4AD31EBF.6090307@viscovery.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1757360AbZJLTCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 15:02:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757282AbZJLTCy
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:02:54 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:57505 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756563AbZJLTCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 15:02:53 -0400
+Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n9CJ1v4d002497
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 12 Oct 2009 21:01:57 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by archeboc.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1MxQ9o-0001ST-GH; Mon, 12 Oct 2009 21:02:08 +0200
+In-Reply-To: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca> (sylvain@demarque.qc.ca's message of "Mon\, 12 Oct 2009 01\:28\:26 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 12 Oct 2009 21:01:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: n9CJ1v4d002497
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1255978918.77573@bb98UzwLcsrssPcr3UvcnA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130053>
 
-On Mon, Oct 12, 2009 at 02:19:11PM +0200, Johannes Sixt wrote:
-> 
-> With grafts you can only change parenthood; with replace entries you can
-> change parenthood *and* all other aspects of a commit (message, author,
-> committer, dates).
+sylvain@demarque.qc.ca writes:
 
-Actually, you can. I have written a script that did exactly this. It
-required to modify parents to point to the new commit. The tricky part
-was that modification could be on top of other modifications, but I was
-able to handle this case too. Yet, my script was so hackish that I have
-never dared to share it with someone (and I used it only couple times
-during CVS to Git conversion).
+> localhost / # cd etc
+> localhost etc # git add X11/xorg.conf
+> fatal: pathspec 'etc/X11/xorg.conf' did not match any files
 
-> 
-> Hence, replace entries are more general than grafts.
+cd ..
+git add etc/X11/xorg.conf
 
-I think both mechanism are theoretically equivalent, but with grafts,
-it was rather difficult to replace objects (but not impossible!).
+works. I don't know why the other doesn't (just tested adding from an
+untracked directory in another project, it does work).
 
-> The problem with grafts was that, for example, git-pack-objects obeyed the
-> graft, and could create a broken repository by removing grafted-away
-> objects. And since git-fsck also obeyed the graft, it did not notice the
-> breakage.
+If you want to version a large directory like /, I'd advise putting
+"*" in /.gitignore to make sure Git never tries to traverse the whole
+filesystem.
 
-Moreover, grafted-away objects could be removed by the garbage collector...
-
-
-Dmitry
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
