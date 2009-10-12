@@ -1,75 +1,83 @@
-From: sylvain@demarque.qc.ca
-Subject: Re: Git: "No you can't handle my root!" (?)
-Date: Mon, 12 Oct 2009 15:08:26 -0400
-Message-ID: <20091012150826.p1v0gnnvokg0oggg@webmail.demarque.qc.ca>
-References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
-	<20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
-	<f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
-	<81b0412b0910121115s26c6c08s1ea54c28851faf05@mail.gmail.com>
-	<20091012142017.vrs4v2cc8wgws8g4@webmail.demarque.qc.ca>
-	<20091012183519.GA10686@coredump.intra.peff.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: Supressing sorting of trees
+Date: Mon, 12 Oct 2009 21:36:59 +0200
+Message-ID: <46a038f90910121236x6bbe258bwa3bc3fdcc54de524@mail.gmail.com>
+References: <loom.20091012T152113-874@post.gmane.org>
+	 <20091012142032.GG9261@spearce.org>
+	 <loom.20091012T171550-239@post.gmane.org>
+	 <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de>
+	 <loom.20091012T182258-9@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Steven Noonan <steven@uplinklabs.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 21:10:08 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Sal Mangano <smangano@into-technology.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 21:39:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxQHT-0001BQ-RQ
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 21:10:04 +0200
+	id 1MxQjm-0007U8-OC
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 21:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757945AbZJLTJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 15:09:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757917AbZJLTJK
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:09:10 -0400
-Received: from secure01.megaquebec.net ([199.202.64.88]:37289 "EHLO
-	mqplesk1l.megaquebec.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757918AbZJLTJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 15:09:09 -0400
-Received: (qmail 8133 invoked by uid 48); 12 Oct 2009 15:08:26 -0400
-Received: from modemcable009.10-130-66.mc.videotron.ca
-	(modemcable009.10-130-66.mc.videotron.ca [66.130.10.9]) by
-	webmail.demarque.qc.ca (Horde MIME library) with HTTP; Mon, 12 Oct 2009
-	15:08:26 -0400
-In-Reply-To: <20091012183519.GA10686@coredump.intra.peff.net>
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.6)
+	id S933186AbZJLTiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 15:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933180AbZJLTiI
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 15:38:08 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:55724 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933166AbZJLTiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 15:38:07 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so1986886eyf.19
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 12:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=ZYMaDWWk0uflx2zCw4vV+clvL8Wm9Xpgjq42LjLjp5I=;
+        b=A+eO1uK108CLw8c6OuaJ8o4LR/riTRfZczZYX3J2zcgUARL4jXh1/LSJRFdHoEUnlR
+         mwS286UyIyGRSEFXtM+TrxDu7l+HYgOFKJF1gYjH8VH7iGb6gtwLFXLASHQy3DwuiE1K
+         9VlN5EPntUbmVvh21nKgYwhFe5U0pJpROKoYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=fn537Ngi4tBAf+GLSI25qkdZQyjfYA/wDGWuHZ93R1RyCcq5ImhQKq3PHobrhLiiS3
+         XhjEJWybbaCqIc0R1GeuTLb14Ajati3g2vdXe+XSXwncdq+K1PyTyj4FVWWDEEveobzT
+         3nqC1j6XaMXQ8dI6xQf3r1XoclIuXK6NeNjcA=
+Received: by 10.210.7.21 with SMTP id 21mr7529097ebg.75.1255376219243; Mon, 12 
+	Oct 2009 12:36:59 -0700 (PDT)
+In-Reply-To: <loom.20091012T182258-9@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130055>
 
-Quoting Jeff King <peff@peff.net>:
+On Mon, Oct 12, 2009 at 6:51 PM, Sal Mangano
+<smangano@into-technology.com> wrote:
+> 2) I can use Git unchanged but preserve order by storing some information in
+> each sub tree (e.g. an extra blob) which retains the real order. I can also
 
-> On Mon, Oct 12, 2009 at 02:20:17PM -0400, sylvain@demarque.qc.ca wrote:
->
-> I think that it sort of works, actually. It seems to do OK if you do
-> something like:
->
->   $ GIT_DIR=/path/to/store/repo; export GIT_DIR
->   $ GIT_WORK_TREE=/; export GIT_WORK_TREE
->   $ git init
->   $ cd /etc/whatever
->   $ git add .
->
-> So probably the bug is in detecting the location of the work tree when
-> it is not explicitly given. You can use the explicit style as a
-> workaround for now.
->
-> -Peff
+This #2 is your best bet by far. An extra blob in each subdir is just
+one option, you can handle this "extra metadata" in a number of ways
+-- maybe external to git, on a separate history will work best.
 
-Thank you! Great idea!
+The downsides of messing with internal tree handling of git are so
+staggering that you'd do better to throw git away.
 
-export GIT_DIR=/root/.git
-export GIT_WORK_TREE=/
-echo "*" >> /root/.git/info/exclude
+(this is from experience of abusing git to various purposes that have
+little to do with version control :-) )
 
-The Golden Solution of the Gods! :-D
+In other words: Shaun and Dscho are right, so right that it hurts.
+
+hth,
+
+
+
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
