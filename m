@@ -1,73 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH 0/5] Pretty formats for reflog data
-Date: Mon, 12 Oct 2009 17:37:56 -0400
-Message-ID: <20091012213756.GA12166@coredump.intra.peff.net>
-References: <20091012175201.GA10263@coredump.intra.peff.net>
- <cover.1255380039.git.trast@student.ethz.ch>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: gitweb - bare repos integration - owner info in description file
+Date: Mon, 12 Oct 2009 17:48:14 -0400
+Message-ID: <76c5b8580910121448q67edd935wb189c8a6f9af2f2e@mail.gmail.com>
+References: <76c5b8580910091350o5cd90d3dobe2a21c18fa56dfd@mail.gmail.com>
+	 <m3ab00gr25.fsf@localhost.localdomain>
+	 <76c5b8580910091532yd6c6fc4ib942a29c827f3a6c@mail.gmail.com>
+	 <200910102045.13374.jnareb@gmail.com>
+	 <alpine.DEB.1.00.0910120201350.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jef Driesen <jefdriesen@hotmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Oct 13 00:07:52 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:08:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxT3J-0004FJ-If
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:37 +0200
+	id 1MxT3g-0004FJ-3r
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932761AbZJLVid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 17:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758367AbZJLVic
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:38:32 -0400
-Received: from peff.net ([208.65.91.99]:33459 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758361AbZJLVic (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:38:32 -0400
-Received: (qmail 8176 invoked by uid 107); 12 Oct 2009 21:41:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Oct 2009 17:41:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Oct 2009 17:37:56 -0400
-Content-Disposition: inline
-In-Reply-To: <cover.1255380039.git.trast@student.ethz.ch>
+	id S933331AbZJLVsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 17:48:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933329AbZJLVsx
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:48:53 -0400
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:39360 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933314AbZJLVsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:48:51 -0400
+Received: by yxe26 with SMTP id 26so3821828yxe.4
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 14:48:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=TJ84xne8qpnLz052b9Y58vGeSRqjYBMBx+drNN+vmq0=;
+        b=i9Br7yGfbgl6aOqyhZ/TiiORMgFXKLq1Z1RhHG9VlkLe++yTVwKeuMf5umgZmkZPTs
+         7wx5njvGYg+1CcSYgprh4ktLo0AeFCgcNovM1IVjdSikijFUb18p3tpATosklmLWecg5
+         h+ERnGw/tlQvRUcAwtGq+fDIVYeWk4qybcu2A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=nEmSKbxltWZ7fB5xqf/Ip0tKKTLghaF1lsJomhIMklFfnCxreH45hXtCST/myUX7ko
+         Nrnf6mh/ZFOpTkkXr1B6NLsoZ8i3lXV9rQikx2sdm1YftjsxmxNJLBmSk10KazZXoXwv
+         zcMJvQNxozj7DLYzm7E/v9//7bNNQxrrCPsQs=
+Received: by 10.90.58.2 with SMTP id g2mr3851619aga.73.1255384094992; Mon, 12 
+	Oct 2009 14:48:14 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0910120201350.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130082>
 
-On Mon, Oct 12, 2009 at 11:02:29PM +0200, Thomas Rast wrote:
+Hi,
 
-> > Stash listing is internally just "git log -g refs/stash", so you can
-> > pass any formatting or limiting arguments you want there (see the git
-> > log documentation for ideas). If no arguments are given, we pass "-10".
-> 
-> This seems fairly arbitrary, doesn't it?  My own working theory is
-> that Nanako put it in because the git-log|sed construct inherently
-> bars any way to a pager, so it needs to be cut short.
+Somebody from development camp recently complained here that there is
+no many end users "chiming" about issues in the mailing list. Well,
+don't tell i didn't try;)
 
-Yes, it's arbitrary, though it is probably a reasonable estimate for the
-intended use of stash. It's a stack, so you generally are only
-interested in the last couple of entries.
+First I tried to use gitweb.url, gitweb.description and gitweb.owner
+files and none of them worked... gitweb is unable to pickup the info
+from those files.
 
-What's much worse though is that the logic is not "if you told me how
-many to show, show that; otherwise, show 10".  Instead it is "if you
-gave me no options, default the size of the list.  But if you gave me
-any options, even if they have nothing whatsoever to do with limiting
-the size of the list, then show all".
+Although it successfully interactively picks up info from description
+and cloneurl files. I didn't find a substitution for gitweb.owner...
 
-So something like "git stash list --date=relative" suddenly shows many more
-stashes than just "git stash list". It would be nice to fix that.
+I might be sent to RTFM again, but i would like to bring an attention
+to the fact that setting up bare repo with these simplest parameters
+as well as setting up gitweb is a USABILITY NIGHTMARE for beginners. I
+would even say more: while gitweb is very flexible and powerful, all
+its flexibility and power is hidden behind unusable management
+interface, which IMHO requires a lot of improvements . Rebuilding to
+configure? Perl look-and-feel for configuration variables? I think
+this is not the way to configure web applications no matter how smart
+and flexible application should be. There are some problems with XML,
+I don't care. Let's use simple property file. 1 property file! and let
+gitweb read it. don;t like this solution, propose yours..
 
-> So suppose we could somehow get rid of the |sed... like if we had
-> --pretty specifiers for the reflog information.
+But leaving the emotions aside and once again -
 
-I'm not sure if people will like having a longer list in a pager than a
-shorter list without one (I personally can't remember ever using "git
-stash list", so I have no strong opinion).
+On Sun, 11 Oct 2009, Jakub Narebski wrote:
 
-But certainly the idea of adding pretty format specifiers to access
-reflog data seems like a good idea on its own.
+>And this would be best left for a custom script creating repositories
+>and their git hosting related configuration.  Such script of necessity
+>would have to be site-specific, or at least contain site-specific
+>configuration, like:
+ >* whether to use gitweb.owner or filesystem uid + GECOS is enough
+ >* whether to use gitweb.description or description file
+ >* whether to use gitweb.url, cloneurl file, or let gitweb autogenerate
+  >clone / fetch URL from base URL
 
--Peff
+I don't get it. I'm talking specifically about gitweb bundled into git
+package by default. It was bundled as i understand to provide full
+solution (I don't see any other reason). What the heck is wrong with
+continuing to move in this direction? I'm not talking about to enforce
+gitweb usage, but just simplify the setup and configuration of a tool
+provided by default...
+If the user chooses default solution, what is wrong with providing
+some usable way of doing things?
+Don't want to use git clone, fine. But, please, please save me from
+rebuilding gitweb, creating manually those files and putting info
+inside... It is 21st century or what?;)
+
+
+ >* gitosis / gitlite configuration, if needed, or setup of public keys
+  >for SSH authentication
+
+Are they included into git bundle? I didn't see those tools there...
+
+ >* project README.html file, if used
+>etc.
+
+Yes, I might be stubborn, but is just because i feel that i can
+contribute into making git better, although I'm not a developer. And i
+think usability is the thing which all beginners would thank you
+for... i understand that this issue is not the end of the world and i
+will finally overcome the burden, i will develop my script and stuff,
+I hope somebody would support me in this:)
+
+Thanks,
+Eugene
