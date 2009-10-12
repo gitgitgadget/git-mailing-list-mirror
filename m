@@ -1,55 +1,62 @@
-From: Vietor Liu <vietor@vxwo.org>
-Subject: Re: [PATCH] git-gui: Fixed _main window_ for screen height equal
- 600 px
-Date: Mon, 12 Oct 2009 16:23:32 +0800
-Message-ID: <1255335812.2326.20.camel@localhost.localdomain>
-References: <1255329194-2757-1-git-send-email-vietor@vxwo.org>
-	 <alpine.DEB.1.00.0910120934420.4985@pacific.mpi-cbg.de>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Let --decorate show HEAD position
+Date: Mon, 12 Oct 2009 11:01:51 +0200
+Message-ID: <4c70c935ab67266684aa14e38e276795cf1776db.1255337211.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 12 10:24:02 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 12 11:04:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxGCG-0008HA-2Q
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 10:24:00 +0200
+	id 1MxGpY-0007XQ-HU
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 11:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754730AbZJLIVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 04:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754693AbZJLIVZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 04:21:25 -0400
-Received: from mail-px0-f111.google.com ([209.85.216.111]:61514 "EHLO
-	mail-px0-f111.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753675AbZJLIVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 04:21:24 -0400
-Received: by pxi9 with SMTP id 9so514767pxi.4
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 01:20:48 -0700 (PDT)
-Received: by 10.114.7.25 with SMTP id 25mr9433982wag.21.1255335648527;
-        Mon, 12 Oct 2009 01:20:48 -0700 (PDT)
-Received: from ?192.168.254.100? ([123.113.93.118])
-        by mx.google.com with ESMTPS id 22sm124628pzk.6.2009.10.12.01.20.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 01:20:48 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0910120934420.4985@pacific.mpi-cbg.de>
-X-Mailer: Evolution 2.26.3 (2.26.3-1.fc11) 
+	id S1755150AbZJLJDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 05:03:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754890AbZJLJDk
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 05:03:40 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:21712 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754747AbZJLJDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 05:03:39 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 12 Oct
+ 2009 11:02:51 +0200
+Received: from localhost.localdomain (129.132.208.114) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 12 Oct
+ 2009 11:02:30 +0200
+X-Mailer: git-send-email 1.6.5.61.g35405
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129996>
 
-On Mon, 2009-10-12 at 09:35 +0200, Johannes Schindelin wrote:
->  
-> So what you _actually_ do is reduce the space for the diff, no?
->
+'git log --graph --oneline --decorate --all' is a useful way to get a
+general overview of the repository state, similar to 'gitk --all'.
+Let it indicate the position of HEAD by loading that ref too, so that
+the --decorate code can see it.
 
-Yes. 
-The _main window_ support auto resize. I was tested some way, only
-modify _diff body_ space could work. The _diff body_ is part of _main
-window_. 
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ log-tree.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Whether modify the commit message? 
+diff --git a/log-tree.c b/log-tree.c
+index 1618f3c..f7d54f2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -43,6 +43,7 @@ void load_ref_decorations(int flags)
+ 	if (!loaded) {
+ 		loaded = 1;
+ 		for_each_ref(add_ref_decoration, &flags);
++		head_ref(add_ref_decoration, &flags);
+ 	}
+ }
+ 
+-- 
+1.6.5.59.g76726.dirty
