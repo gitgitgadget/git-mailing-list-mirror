@@ -1,182 +1,81 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: Questions about the new
-Date: Mon, 12 Oct 2009 19:04:28 +0200
-Message-ID: <4AD3619C.6010808@gmail.com>
-References: <loom.20091012T115746-719@post.gmane.org> <4AD31EBF.6090307@viscovery.net>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/3] git config: clarify bool types
+Date: Mon, 12 Oct 2009 20:14:49 +0300
+Message-ID: <94a0d4530910121014k666207b9ub38fcecd47641ace@mail.gmail.com>
+References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>
+	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>
+	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>
+	 <7v7hv1kxyg.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530910120303y205e6cfeg80ba0dfd6ed5a045@mail.gmail.com>
+	 <4AD3216B.7030507@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 19:16:36 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 12 19:25:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxOVN-0002mb-4D
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 19:16:17 +0200
+	id 1MxOeZ-0007fq-VB
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 19:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932976AbZJLRFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 13:05:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932974AbZJLRFQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 13:05:16 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:60950 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932972AbZJLRFN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 13:05:13 -0400
-Received: by fxm27 with SMTP id 27so9415569fxm.17
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 10:04:36 -0700 (PDT)
+	id S1754616AbZJLRQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 13:16:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752384AbZJLRQi
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 13:16:38 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:50271 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751123AbZJLRQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 13:16:37 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so519058fgg.1
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 10:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=IWAVxjtp3v3rACqA2ugnlBtOI3S+B2+0oKGhGvQRLIw=;
-        b=NO9U5LITw6M7CpAABRuPvMgh1PUYEthOHpeurHlXfP551Go1BafMju8fdgN6I1r6fQ
-         2KGduMq2uhFGd1bKbU3Ix7d3DQE+CepzOsTe+ddALFeeWrh7BzSN3OnUvaCQcN8rntAa
-         N45Qt8JQoTGjnahumEz0qQ4Up6FNrTjf/IVqI=
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=hziLNW2G5U9wA+PRDXrkOvLcfZ2NmCxCAsx+6wDxXRo=;
+        b=BiVkQxw+TQjff5TRZIALLKqJcPLDJiBC1AqiYpdoUj8ToQPYxDJ4pEfuOOmw9vKGxb
+         gGOpHfI3ORLT5ON6dE0OMipPqj/vKJlPlRKE61HLLhnxgcMR1JQjtLczluOpZxmQi50+
+         g2Qx997rdI9VUkwkwHP+2yalAeJ5DeKkWoBv0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=AMVHk92B/aMHdhe3JyZ6T1MGEQomYGzlxa1T0eAguEbh27w6cjbUISeN+udgmTokiz
-         Z3s/9XGiyns+BOGoI22dIPoKhqSMlfnZ43PG4134jnhkfSldFvgAp2fG+BXw+dLjpxGZ
-         2c6OFrCsyl+BLgp8t/sIS4MPZhVvHR+UQT3TI=
-Received: by 10.204.25.152 with SMTP id z24mr5314261bkb.44.1255367074428;
-        Mon, 12 Oct 2009 10:04:34 -0700 (PDT)
-Received: from ?10.143.20.223? (mars-fw.arces.unibo.it [137.204.143.2])
-        by mx.google.com with ESMTPS id z10sm6161892fka.3.2009.10.12.10.04.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 10:04:32 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <4AD31EBF.6090307@viscovery.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Z4uMqvQg2g7m45Mkyh5lmzbqkX55DGi0dK4rL8CpPt292m1UDLs2ei4MJ3/Z064eHl
+         HxPJlQej40QQPQKrdDJ7GRdCNVxSIpMnBSVfASF9XiSk3U8xt8uDrTMOJ1RSOwdySY/N
+         k4ZeualAQ8XW4PKuas2c6iZWcu3ev5fKKMNaI=
+Received: by 10.86.249.22 with SMTP id w22mr231062fgh.1.1255367689807; Mon, 12 
+	Oct 2009 10:14:49 -0700 (PDT)
+In-Reply-To: <4AD3216B.7030507@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130036>
 
-Thanks Johannes for all the detailed explanations
+On Mon, Oct 12, 2009 at 3:30 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Felipe Contreras venit, vidit, dixit 12.10.2009 12:03:
+>> On Mon, Oct 12, 2009 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>
+>>>> The value is what it is, the --bool and --bool-or-int options don't
+>>>> specify the value type, just how it is interpreted. For example: a value
+>>>> of '1' can be interpreted as 'true'.
+>>>
+>>> It is not really about "interpreting", but about showing, isn't it?
+>>
+>> Unless you are setting it, instead of reading it.
+>>
+>
+> I'd still suggest fixing the typo ("interpreted") and spelling out
+> "boolean".
 
-Johannes Sixt <j.sixt <at> viscovery.net> writes:
+Oops! You mean s/intepreted/interpreted/?
 
- >
- > Sergio schrieb:
- > > 1) Grafts and replace entries seem to operate on different aspects 
-of the
- > > history graph. Grafts operate on arcs and replace on nodes.
- >
- > Correct, but see below about tree and blob objects.
+If we spell 'boolean' we might as well spell 'integer'; I think bool
+and int are fine.
 
-OK, the replace mechanism also can replace a blob object or a tree.
-My focus was on commit objects only.
-
- >
- > > As such, replace entries seem less general to me.
- >
- > With grafts you can only change parenthood; with replace entries you can
- > change parenthood *and* all other aspects of a commit (message, author,
- > committer, dates).
- >
- > Hence, replace entries are more general than grafts.
-
-Limiting the discussion to commit objects, I think there are two 
-possible scenarios.
-
-1) You create new commits objects as needed
-2) You do not.
-
-If you follow 1), I believe grafts and replace entries have exactly the same
-flexibility.
-
-If I happen not to like commit B in A---B---C and I want A---B'---C 
-where B' has
-completely different aspects from B I can either replace B by B' or 
-graft away
-B, pretending that the parent of A is B
-
-But there are many things that can be done with grafts merely adding a graft
-(e.g. cutting away a part of history, joining history),  that cannot be done
-with replace entries without creating new commits objects.
-
-I was asking because I was wandering whether replace entries were first 
-or later
-meant to make grafts deprecated. I hope not, because for a few things 
-working on
-arcs seems still nice.
-
- > > Apparently, to simulate a graft with replace entries, you need to 
-introduce
- > > extra commit objects. For instance, if object B has no parents, to 
-pretend >
- > Yes. Use git-cat-file + edit + git-hash-object as explained in this
- > message just the other day:
- > 
-http://thread.gmane.org/gmane.comp.version-control.git/129727/focus=129907
-
-Thanks, good pointer. I missed this!
-
- > > Conversely, I guess
- > > you can always simulate a replace entry with the graft mechanism, 
-without the
- > > need to add any extra commit object. Am I overlooking something?
- >
- > You cannot; see above.
-
-Well, I meant for what regards commit objects only.
-
-If I want to replace some commit X by some commit X' I merely need to 
-modify the
-parent information of all the commits that are child of X so that they 
-pretend
-to be child of X', or am I missing something?
-
- > You can even replace tree objects and blob objects
- > using replace entries, IIUC, but you cannot do that with grafts.
-
-Definitely right!
- 
- > > 2) Is it currently possible to use a replace entry to replace a 
-commit object
- > > with nothing? Namely if B has A as its sole parent, is it possible 
-to have a
- > > replace entry such as A-sha1 becomes null, to pretend that B is a 
-hierarchy
- > > root? 
- >
- > Sure. Just make a commit object that does not have parents.
-
-OK, you need to create a new commit object. At the beginning for some 
-reason I
-thought that you could replace an object
-with "nothing" or 00000000000000000000000000000000000000000000
-
- > > 3) If I remember correctly, there was a reason why grafts were not 
-considered
- > > suitable for transferring across repos. Can someone remind me about 
-it? How
- > > does the replace mechanism address this issue?
- >
- > The problem with grafts was that, for example, git-pack-objects 
-obeyed the
- > graft, and could create a broken repository by removing grafted-away
- > objects. And since git-fsck also obeyed the graft, it did not notice the
- > breakage.
- >
- > OTOH, history walkers (upload-pack, send-pack, pack-objects) and fsck
- > never obey replace entries in the history. But they do keep track of them
- > (and the history that they reference) because they are referenced 
-from the
- > refs/replace namespace.
- >
-
-Thanks for the explanation. Can this be made possible for grafts too? 
-Wouldn't
-it be a matter of having history walkers never obey grafts but keep track of
-them (i.e. of the history of the parenthood they reference)?
-
-Like we have "annotated" or heavyweight tags living as objects in the 
-database,
-would it be possible or make sense to have annotated grafts or replace 
-entries,
-so that one can express why, by whom and when history was changed?
+-- 
+Felipe Contreras
