@@ -1,132 +1,83 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: Filesystem has no item: Working copy path [...] does not exist
- in repository at /usr/bin/git-svn line 3856
-Date: Mon, 12 Oct 2009 23:26:04 +0200
-Message-ID: <1255382764.15646.5.camel@localhost>
-References: <9accb4400910120848n6a1e4036l5e45ce3882deb5aa@mail.gmail.com>
-	 <20091012182018.GA14143@dcvr.yhbt.net>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just
+ a branch
+Date: Mon, 12 Oct 2009 17:31:03 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu>
+References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Oct 12 23:36:02 2009
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 23:36:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxSYL-0004he-Ps
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 23:35:38 +0200
+	id 1MxSYU-0004he-O4
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 23:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933029AbZJLV1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 17:27:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbZJLV1N
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:27:13 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:42417 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932356AbZJLV1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:27:12 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so2006380eyf.19
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 14:26:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=kTgDEtK1dT2lq5RlYXqixputJeGXQ2va0jjMRucGft0=;
-        b=Al4Cy6lfYeO7o77J9tAAT4/wwvIuwbIgHTpIM2oBdW2MNcDQQJMYeuED7FDMu6gfjb
-         a8NoT79EoU9ujwyfJicrAb3/OLuMu8TUvq2eOM+CJDc93xeSVSqegcORYW2lG82u1Avw
-         fr5iny8juY5adC4/CnUXDFc1hkawgjKg5qXts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=HtziKXC9JMQfNNPAHkZ4mOg5XqPYe81ZxtkBtj0x6usayHuUbp54SeGUZ0Zs3Ku1K9
-         JILj2zZA6ocfubkWYGK/l1qL4PeVzno0FXYOfX0RkiEmj13NSCb+BBBx4x8E/ChigKSP
-         lA5ipvE6zSWN3+fvoxmcmSpbWUwS3wPBScpfI=
-Received: by 10.210.7.23 with SMTP id 23mr4657567ebg.38.1255382763989;
-        Mon, 12 Oct 2009 14:26:03 -0700 (PDT)
-Received: from ?192.168.1.2? (host185-1-dynamic.48-82-r.retail.telecomitalia.it [82.48.1.185])
-        by mx.google.com with ESMTPS id 5sm1280664eyh.4.2009.10.12.14.26.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 14:26:02 -0700 (PDT)
-In-Reply-To: <20091012182018.GA14143@dcvr.yhbt.net>
-X-Mailer: Evolution 2.26.3 
+	id S1758469AbZJLVbq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 17:31:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758464AbZJLVbp
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:31:45 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61302 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758451AbZJLVbn convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:31:43 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9CLV0Y4004156;
+	Mon, 12 Oct 2009 17:31:01 -0400 (EDT)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9CLV4PN009115;
+	Mon, 12 Oct 2009 17:31:04 -0400 (EDT)
+In-Reply-To: <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130078>
 
-Il giorno lun, 12/10/2009 alle 11.20 -0700, Eric Wong ha scritto:
-> First I thought this was a problem fixed in
-> 83c2fcff214fe89649fcd88e095d9961a36b53dd (git v1.6.2 or later),
-> but then I tried running it just to make sure.
+On Mon, 12 Oct 2009, Junio C Hamano wrote:
+> I offhand do not see a good rationale for such a shortcut to finish=20
+> bisect and switch to another branch (IOW, I understand "it is shorter=
+ to=20
+> type", but I do not see "it is often done and very useful"), but I am=
+=20
+> open to be enlightened by a workflow where such a shortcut is useful.
 
-thank you for taking the time
+I agree that =E2=80=98git bisect reset <branch>=E2=80=99 is a confusing=
+ shortcut.  It only=20
+really made sense before Git supported detached HEADs, and you needed t=
+o=20
+be on a branch all the time.  I think that lifting the arbitrary=20
+restriction to branch names makes it less confusing, but if you want to=
+=20
+remove the argument altogether, that would eliminate the confusion=20
+entirely.
 
-> This is a namespace conflict, the "trunk" ref is conflicting with a
-> (what seems to be a miscreated) branch named "trunk".  I anticipated
-> this problem originally but figured it was rare/uncommon enough that I
-> didn't want to burden users by prefixing all branches with something:
-> 
->   ------------------------------------------------------------------------
->   r25364 | michael.hashimoto | 2009-01-21 14:06:53 -0800 (Wed, 21 Jan 2009) | 1 line
->   Changed paths:
->      A /plugins/branches/trunk
-> 
->   Created directory 'plugins/branches/trunk'.
->   ------------------------------------------------------------------------
->   r25365 | michael.hashimoto | 2009-01-21 14:07:15 -0800 (Wed, 21 Jan 2009) | 1 line
->   Changed paths:
->      D /plugins/branches/trunk
-> 
->   Removed plugins/branches/trunk
-> 
-> Since it looks pretty obvious that "trunk" was miscreated here from the
-> revision history, you can skip these two revisions in your import by
-> recontinuing the clone with "git svn fetch -r25365:HEAD"
+I had in mind only one case where =E2=80=98git bisect reset <commit>=E2=
+=80=99 would be=20
+useful.  I often don=E2=80=99t even remember what commit I was on befor=
+e I started=20
+a bisect, much less believe that I want to immediately switch back to i=
+t. =20
+I would prefer to be able to clean the bisection state without checking=
+=20
+out another commit at all, because that takes forever and invalidates m=
+y=20
+compiled tree.  This is what =E2=80=98git bisect reset HEAD=E2=80=99 wo=
+uld do if it=20
+worked.
 
-I thought it could be a problem like this but I asked before re-fetching
-all the repository (just to be sure)..
+Perhaps it makes sense to add a command that just clears the bisection=20
+state.  =E2=80=98git bisect stop=E2=80=99?
 
-unfurtunately I already deleted all the .git directory so i'll have to
-start again...
-
-
-> Replace:
->   [svn-remote "svn"]
->     branches = plugins/branches/*:refs/remotes/svn/*
-> 
-> With:
-> 
->   [svn-remote "svn"]
->     branches = plugins/branches/*:refs/remotes/svn/branches/*
-> 
-> I didn't do this by default since I figured very few people would create
-> a branch named "trunk" (and those who did, did it accidentally as it
-> seems to be the case here).
-> 
-> Hope that helps.
-
-Yes it really help...
-
-But I'll change it like this instead:
-  [svn-remote "svn"]
-    url = http://svn.liferay.com/repos/public
-    fetch = plugins/trunk:refs/remotes/svn/master
-    branches = plugins/branches/*:refs/remotes/svn/*
-
-I think it will do as long as they didn't created some branch named
-"master" :)
-
-
-In this case the repo was public, what should I do to debug some git-svn
-issue like that if I encounter a problem with a non-public repo?
-May be there is some debug flag I could enable? Or I had to
-guess/explore the svn tree?
-
-thank you Eric
-
-regards,
-Daniele
+Anders
