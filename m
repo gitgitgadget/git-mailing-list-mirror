@@ -1,80 +1,87 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when appropriate to do so
-Date: Mon, 12 Oct 2009 23:40:11 +0200
-Message-ID: <200910122340.13366.trast@student.ethz.ch>
-References: <0016e68fd0123a175304754694b4@google.com> <alpine.DEB.1.00.0910120941150.4985@pacific.mpi-cbg.de>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Mon, 12 Oct 2009 23:37:39 +0200
+Message-ID: <1255383459.15646.10.camel@localhost>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: <Euguess@gmail.com>, Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	<git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 13 00:07:46 2009
+Cc: git@vger.kernel.org
+To: sylvain@demarque.qc.ca
+X-From: git-owner@vger.kernel.org Tue Oct 13 00:07:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxT3P-0004FJ-Ji
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:43 +0200
+	id 1MxT3L-0004FJ-6I
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933282AbZJLVlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 17:41:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933274AbZJLVlh
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:41:37 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:18738 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933273AbZJLVlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:41:36 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 12 Oct
- 2009 23:40:50 +0200
-Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.1.375.2; Mon, 12 Oct
- 2009 23:40:50 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <alpine.DEB.1.00.0910120941150.4985@pacific.mpi-cbg.de>
+	id S1758395AbZJLVit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 17:38:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758367AbZJLVit
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:38:49 -0400
+Received: from ey-out-2122.google.com ([74.125.78.25]:51225 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933213AbZJLVir (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:38:47 -0400
+Received: by ey-out-2122.google.com with SMTP id 4so2008177eyf.19
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 14:37:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=w9K9ANY7v/ggPvvGlGMPXxO3U3uGw5pFCbOW/3TQZ1Y=;
+        b=NinFPW2sB70w65ql1Qpds7lrdSn9CGSzEJxn09l2XycE6DVCnMWuuPCRjvAazk5jzA
+         6dtJD8eYdcHL5OkC1qwcoe8KJ0WWWSsRCllSbepgisI1wZTJOSV44wKogLgQjAUYzulH
+         dS7bbwCDWAWXV21aLcC1KjEeMztSkdKSjO6Ys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=CDVIaLKmje/ftX33JPiE/qaf14zChy0iVYYvQ5aV2cS1qHSzv3+HMZo0jWGIpjHQwU
+         2DAWzlsL1txo42EWclsNRbkVmU9Z9xlYyQiHDQRMGO/Qkc8Ne0pTY4Y/YAcwp2MGQdRD
+         kW1KOifaZQ0n+aU/u2E0eR5dRyJw3fritAl3E=
+Received: by 10.211.161.22 with SMTP id n22mr4656963ebo.83.1255383458731;
+        Mon, 12 Oct 2009 14:37:38 -0700 (PDT)
+Received: from ?192.168.1.2? (host185-1-dynamic.48-82-r.retail.telecomitalia.it [82.48.1.185])
+        by mx.google.com with ESMTPS id 7sm1379751eyb.0.2009.10.12.14.37.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Oct 2009 14:37:37 -0700 (PDT)
+In-Reply-To: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+X-Mailer: Evolution 2.26.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130080>
 
-Johannes Schindelin wrote:
-> On Tue, 6 Oct 2009, Euguess@gmail.com wrote:
-> > in case if you didn't do that and you try to checkout you will end up 
-> > having detached HEAD which is quite scary;) for non-experienced user and 
-> > as i see might lead to some unnecessary questions in this list or on IRC 
-> > channel...
-[...]
-> One thing one might add for the technically inclined folks (i.e. those who 
-> need to implement, and to see that Git is in dear need of some 
-> user-friendliness first): "git checkout" is a porcelain (i.e. a program 
-> meant for end-user consumption), and as such should not have a problem to 
-> react to isatty(0) (i.e. "is the input coming directly from the 
-> console?").
+Il giorno lun, 12/10/2009 alle 01.28 -0400, sylvain@demarque.qc.ca ha
+scritto:
+> localhost / # git init
 
-Sadly git-checkout seems to be stuck between being declared a
-porcelain, but at the same time being an extremely important command
-for scripts all over.  (There are probably others in the same place:
-reset comes to mind.)
 
-Your idea is also a backwards incompatible change, so we can just as
-well implement the original suggestion and force scripts (or us) to
-use some other means when they want to detach.  Say, why not just
-invent an option along the lines of
+I don't see the point of using git on the root directory :)
 
-  git checkout {-d|--detach} $ref
+but that made me think that it could actually be a good idea
+for /etc/ :)
+I happen to modify some configuration and then I forgot which one... and
+sometimes updates broke something
 
-to make it explicit.  We have to resort to more arcane means to
-*reliably* detach anyway, like 'git checkout master^0'.  Then in some
-future release, git-checkout will start making DWIM branches if the -d
-is not given.
 
-And while we're there, --attach would be a nice complement to force
-refs/heads/foo to attach.
+And that make me think of another question...
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+is there a way to have a git repo for a subset of directory that match a
+pattern?
+
+for instance...
+
+can I have a git report of $HOME/.* (without . and ..)? (all user
+setting)
+
+Or better: provide a list of directory under $HOME I want to track 
+
+Instead of providing the list of directory I want to ignore i would like
+to provide the list of the directory and files I want to track :)
+
+I probably am going out of topic here but I hope you forgive me :)
