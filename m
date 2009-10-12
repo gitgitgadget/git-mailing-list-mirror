@@ -1,71 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git refuses to work with gvim
-Date: Mon, 12 Oct 2009 14:43:50 +0200
-Message-ID: <vpq8wfgg4u1.fsf@bauges.imag.fr>
-References: <20091012134312.236d250e@gzip.coli.uni-saarland.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/3] user-manual: use 'fast-forward'
+Date: Mon, 12 Oct 2009 14:50:07 +0200
+Message-ID: <4AD325FF.6070105@drmicha.warpmail.net>
+References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-4-git-send-email-felipe.contreras@gmail.com>	 <7veip9jj6z.fsf@alter.siamese.dyndns.org> <94a0d4530910120305o49ed7c74sf6a03097b1098a5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: sebastian@CoLi.Uni-SB.DE
-X-From: git-owner@vger.kernel.org Mon Oct 12 14:49:02 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 14:57:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxKKc-0000Uz-Gq
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:48:54 +0200
+	id 1MxKTI-0004bx-Ak
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755497AbZJLMop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 08:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755394AbZJLMop
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 08:44:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39285 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754588AbZJLMoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 08:44:44 -0400
-Received: from archeboc.imag.fr (archeboc.imag.fr [129.88.43.1])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id n9CChelB001715
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 12 Oct 2009 14:43:40 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by archeboc.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1MxKFi-0000Fo-S9; Mon, 12 Oct 2009 14:43:50 +0200
-In-Reply-To: <20091012134312.236d250e@gzip.coli.uni-saarland.de> (sebastian@coli.uni-sb.de's message of "Mon\, 12 Oct 2009 13\:43\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 12 Oct 2009 14:43:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: n9CChelB001715
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1255956221.53763@FXzpohtdj4GsQsy+GVALUw
+	id S1755375AbZJLMvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 08:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754894AbZJLMvQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 08:51:16 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53064 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754647AbZJLMvQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 08:51:16 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BE688A38C4;
+	Mon, 12 Oct 2009 08:50:14 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 12 Oct 2009 08:50:14 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=LoihWnmRHkpjvtPbcRhkOs6yP2o=; b=KwifA1nsKMr0TwF30h8Dq0EaMD9QeZi6oZp7kXazO1euxHWrqQTcPEwpIq8bzUDEyQQ+n8n3yjtZ+sqYHt1vDg7gKU2PyuH/9wxzDNBQ2qNU3d2eMD3tsLzncdUxNFKeDS0chrGv73AX3av1iYUXYvoRo8CkeM3hKKQGBoLiPAQ=
+X-Sasl-enc: scq1zQWfGyyqmb8OaYjpPVIl57R0oa5QCyvCvvrSqC+L 1255351814
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1B9DB21779;
+	Mon, 12 Oct 2009 08:50:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091012 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <94a0d4530910120305o49ed7c74sf6a03097b1098a5f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130010>
 
-sebastian@CoLi.Uni-SB.DE writes:
+Felipe Contreras venit, vidit, dixit 12.10.2009 12:05:
+> On Mon, Oct 12, 2009 at 8:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> It's a compound word.
+>>
+>> Thanks.
+>>
+>> This removes 7 out of 37 "fast forward" in Documentation/ directory.  Are
+>> we going to convert the remaining ones, too?
+> 
+> Sure. Once I finish pushing the patches I have for user-manual, which
+> is the one I'm interested right now.
+> 
 
-> # git commit something
-> fatal: no commit message?  aborting commit.
-> #
+And how about the other 40 or so in the remaining code?
 
-The problem is that gvim returns immediately, and lets the window
-opened (try it in a terminal, "gvim foo.txt" returns immediately). Git
-expects the commit message to be written and saved when $EDITOR
-returns.
+In fact, hyphenated and separated forms of this compound noun are almost
+evenly split, which reflects well upon the fact that there is no
+clear-cut rule in US English (and neither in BE).
 
-A quick search for "wait" in the man pages tells me that
+So, if you are suggesting a style we should define it and follow it
+consistently. Our main source of definitions is the glossary. Now, that
+has a truly salomonic solution:
 
-  GIT_EDITOR='gvim -f' git commit 
+fast forward
+	A fast-forward is a special type...
 
-works.
+I suggest that this is the first place which needs attention, after
+fixating the definition, maybe not just among the three of us, all
+non-native speakers.
 
-(BTW, this is in no way specific to Git, 99% applications calling
-$EDITOR will expect the same behavior)
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
