@@ -1,101 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Supressing sorting of trees
-Date: Mon, 12 Oct 2009 18:05:06 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de>
-References: <loom.20091012T152113-874@post.gmane.org> <20091012142032.GG9261@spearce.org> <loom.20091012T171550-239@post.gmane.org>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: [PATCH] bisect reset: Allow resetting to any commit, not just a
+ branch
+Date: Mon, 12 Oct 2009 12:38:49 -0400 (EDT)
+Message-ID: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Sal Mangano <smangano@into-technology.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 18:08:55 2009
+To: gister@pobox.com
+X-From: git-owner@vger.kernel.org Mon Oct 12 18:42:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxNRn-0000ex-UY
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 18:08:32 +0200
+	id 1MxNyq-0001gi-7Q
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 18:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932712AbZJLQDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 12:03:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932695AbZJLQDR
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 12:03:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40021 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932733AbZJLQDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 12:03:17 -0400
-Received: (qmail invoked by alias); 12 Oct 2009 16:02:29 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp031) with SMTP; 12 Oct 2009 18:02:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+yNIdouFGy0FyAX9OjxLAluMgeFA7XOoXFGnlNJF
-	Ub+IcaXs7REVTV
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <loom.20091012T171550-239@post.gmane.org>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S932563AbZJLQjb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 12:39:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932833AbZJLQja
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 12:39:30 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:63773 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932775AbZJLQj3 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 12:39:29 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9CGckC8001103;
+	Mon, 12 Oct 2009 12:38:47 -0400 (EDT)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9CGcnqD018596;
+	Mon, 12 Oct 2009 12:38:49 -0400 (EDT)
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130031>
 
-Hi,
+=E2=80=98git bisect reset=E2=80=99 could already checkout an arbitrary =
+commit if you
+were on a detached HEAD before starting the bisection.  This lets you
+specify an arbitrary commit to =E2=80=98git bisect reset <commit>=E2=80=
+=99.
 
-On Mon, 12 Oct 2009, Sal Mangano wrote:
+This also provides a way to clean the bisection state without moving
+HEAD: =E2=80=98git bisect reset HEAD=E2=80=99.
 
-> Shawn O. Pearce <spearce <at> spearce.org> writes:
-> 
-> > 
-> > Sal Mangano <smangano <at> into-technology.com> wrote:
-> > > I am using Git in a non-standard way and need to make a few twaeks 
-> > > in my custom build. I have added a --nosort option to git mktree 
-> > > which will suppress the qsort of the tree.
-> > > 
-> > > Will this break any other git functions? Are there any commands that 
-> > > assume trees are always sorted?
-> > 
-> > _YES IT BREAKS GIT_.
-> > 
-> > You cannot do this.
-> > 
-> > A Git repository whose trees are not sorted according to the Git 
-> > specific sort ordering is severly broken and most tools will fail 
-> > horribly on it.
-> > 
-> > Almost all code which reads trees assumes the names are sorted in a 
-> > specific order.  These tools perform sorted merges against other tree 
-> > like structures.  If the names are out of order the merge will fail. 
-> > `git fsck` will complain that the tree is not sorted properly. Tools 
-> > like `git log -- foo.c` will fail randomly because they break out of 
-> > the entry lookup as soon as they find a name that is after foo.c, as 
-> > they assume the tree is sorted.
-> > 
-> > I could go on.  But there is no point.
-> > 
-> > Oh, and trust me when I say this, the tree sorting matters.  Long ago 
-> > JGit had a bug where it didn't sort trees correctly all of the time 
-> > and we had a devil of a time tracking down that corruption.
-> > 
-> 
-> Thanks Shawn. I get the picture. 
-> 
-> Now, let's assume I am stubborn, crazy or both :-)
-> 
-> I can modify fsck to ignore unsorted and at the moment I don't care 
-> about merging trees. If I hunt down all usage of base_name_compare will 
-> that identify all code with the sort assumption or is there other places 
-> as well? I can go > through the entire source to figure this out myself 
-> but I need to get something hacked up very quickly and would appreciate 
-> help even if you think I am nuts!
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ git-bisect.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-Look, one of the most trusted Git contributors just told you that you are 
-asking for trouble.
-
-It has nothing to do with being stubborn if you insist on doing it now.
-
-But I smell an XY problem.  Why don't you just reveil _what_ you want to 
-do (as opposed to _how_ you think you should do it)?
-
-Ciao,
-Dscho
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 6f6f039..d319b9f 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -311,8 +311,7 @@ bisect_reset() {
+ 	}
+ 	case "$#" in
+ 	0) branch=3D$(cat "$GIT_DIR/BISECT_START") ;;
+-	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
+-	       die "$1 does not seem to be a valid branch"
++	1) git rev-parse --verify "$1^{commit}" || exit
+ 	   branch=3D"$1" ;;
+ 	*)
+ 	    usage ;;
+--=20
+1.6.5
