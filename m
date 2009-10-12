@@ -1,112 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] git config: clarify bool types
-Date: Sun, 11 Oct 2009 22:01:11 -0700
-Message-ID: <7v7hv1kxyg.fsf@alter.siamese.dyndns.org>
-References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>
- <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>
- <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-add--interactive: never skip files included in
+ index
+Date: Mon, 12 Oct 2009 01:11:57 -0400
+Message-ID: <20091012051157.GA23007@coredump.intra.peff.net>
+References: <1255189906-16049-1-git-send-email-pav@iki.fi>
+ <7viqelwyp1.fsf@alter.siamese.dyndns.org>
+ <20091011191440.GA2532@coredump.intra.peff.net>
+ <7vpr8tr2pe.fsf@alter.siamese.dyndns.org>
+ <20091012014007.GA7674@coredump.intra.peff.net>
+ <7v63alpbwx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 12 07:07:47 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Pauli Virtanen <pav@iki.fi>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 07:14:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxD8L-0002gf-Cx
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 07:07:45 +0200
+	id 1MxDF0-0004fB-Be
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 07:14:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751174AbZJLFCC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 01:02:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751148AbZJLFCC
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:02:02 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58570 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbZJLFCA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 01:02:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B57E74606;
-	Mon, 12 Oct 2009 01:01:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=10Z/5lNIqqjXu+qG+V9kmi61KQM=; b=csbEzf
-	RrDzAPEpGQ944WfLMaX6hT1t4jlfkl5oBSh22/FdflYJiZbwVPAzCROTW1YDSj+Q
-	bkJGJ+WkqSlZziZUjPfIuoH8iwJ+/nDSNh4Xc4e5M79Za/Bbfc8YmS7bQJOnSYNR
-	BGRULmHGmn6YzNSofAeKiVganIfOilM8Yurzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jUkZMXY26rGCNW1B6lX8wvd3t+Cb8bjf
-	SWxdqAufiHBCbkmJNTFZdiSk3J/bTZoK0UWJUwtcNBoHAgOaPTdlHP+SzUllOrGY
-	lPzQBtZt8NP66rapj9Yf2/KoZZTByI+/lP8oa75AsmUWSK259o1Q5+if6LAw+A0k
-	QiLiWGnID6g=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D85F74605;
-	Mon, 12 Oct 2009 01:01:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0B76574604; Mon, 12 Oct 2009
- 01:01:12 -0400 (EDT)
-In-Reply-To: <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>
- (Felipe Contreras's message of "Sun\, 11 Oct 2009 23\:46\:12 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 45699D9E-B6EC-11DE-BFAE-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751633AbZJLFMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 01:12:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751381AbZJLFMe
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:12:34 -0400
+Received: from peff.net ([208.65.91.99]:58850 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751196AbZJLFMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 01:12:33 -0400
+Received: (qmail 1175 invoked by uid 107); 12 Oct 2009 05:15:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Oct 2009 01:15:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Oct 2009 01:11:57 -0400
+Content-Disposition: inline
+In-Reply-To: <7v63alpbwx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129976>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Sun, Oct 11, 2009 at 07:46:06PM -0700, Junio C Hamano wrote:
 
-> The value is what it is, the --bool and --bool-or-int options don't
-> specify the value type, just how it is interpreted. For example: a value
-> of '1' can be interpreted as 'true'.
+> Jeff King <peff@peff.net> writes:
+> 
+> > So now I am doubly confused. Did this feature exist, and was broken, and
+> > you actually fixed it in 63d285c, creating what looked like a regression
+> > but was actually intentional?
+> 
+> I do not think it was an intentional change.  I _think_ the comment at the
+> beginning of show_files() tells us quite a bit---we don't do read-dir when
+> showing the indexed files, and I suspect that we used to rely on the fact
+> that not doing the read-dir made exclusion mechanism a no-op.  After the
+> lazy .gitignore reading, I suspect that excluded() call started to
+> initialize the exclude mechanism lazily, and that is how the bug was
+> introduced, isn't it?
 
-It is not really about "interpreting", but about showing, isn't it?
+I did a bit more looking, and the situation is a bit more complex than
+that. Hopefully the commit message below explains it.
 
-With this in your .git/config file:
+-- >8 --
+Subject: [PATCH] ls-files: excludes should not impact tracked files
 
-    [core]
-        repositoryformatversion = 0
+In all parts of git, .gitignore and other exclude files
+impact only how we treat untracked files; they should have
+no effect on files listed in the index.
 
-you would see
+This behavior was originally implemented very early on in
+9ff768e, but only for --exclude-from. Later, commit 63d285c
+accidentally caused us to trigger the behavior for
+--exclude-per-directory.
 
-    $ git config --bool-or-int core.repositoryformatversion
-    0
-    $ git config --bool core.repositoryformatversion
-    false
-    $ git config --int core.repositoryformatversion
-    0
+This patch totally ignores excludes for files found in the
+index. This means we are reversing the original intent of
+9ff768e, while at the same time fixing the accidental
+behavior of 63d285c. This is a good thing, though, as the
+way that 9ff768e behaved does not really make sense with the
+way exclusions are used in modern git.
 
-So it would be more like...
+Signed-off-by: Jeff King <peff@peff.net>
+---
+One other option would be to retain the --exclude-from behavior but
+eliminate the --exclude-per-directory behavior. I don't think this is
+very easy, though, as it involves separating out which excludes came
+from which file. And I think expecting excludes to impact the list of
+index files is crazy, anyway, since no other part of git does so. But we
+should recognize that we are changing existing behavior; I consider it a
+bug fix, though.
 
-	show value as boolean
-        show value as integer or boolean
-        show value as integer
+I also still think that Pauli's patch makes sense; there is no point in
+passing --exclude-standard there. It should be a no-op.
 
-wouldn't it?
+ builtin-ls-files.c          |    8 --------
+ t/t3003-ls-files-exclude.sh |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 8 deletions(-)
+ create mode 100755 t/t3003-ls-files-exclude.sh
 
-> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
-> ---
->  builtin-config.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin-config.c b/builtin-config.c
-> index a2d656e..29d7b75 100644
-> --- a/builtin-config.c
-> +++ b/builtin-config.c
-> @@ -66,9 +66,9 @@ static struct option builtin_config_options[] = {
->  	OPT_STRING(0, "get-color", &get_color_slot, "slot", "find the color configured: [default]"),
->  	OPT_STRING(0, "get-colorbool", &get_colorbool_slot, "slot", "find the color setting: [stdout-is-tty]"),
->  	OPT_GROUP("Type"),
-> -	OPT_BIT(0, "bool", &types, "value is \"true\" or \"false\"", TYPE_BOOL),
-> +	OPT_BIT(0, "bool", &types, "value is intepreted as bool (\"true\" or \"false\")", TYPE_BOOL),
->  	OPT_BIT(0, "int", &types, "value is decimal number", TYPE_INT),
-> -	OPT_BIT(0, "bool-or-int", &types, "value is --bool or --int", TYPE_BOOL_OR_INT),
-> +	OPT_BIT(0, "bool-or-int", &types, "value is interpreted either as bool or int", TYPE_BOOL_OR_INT),
->  	OPT_GROUP("Other"),
->  	OPT_BOOLEAN('z', "null", &end_null, "terminate values with NUL byte"),
->  	OPT_END(),
-> -- 
-> 1.6.5.4.g31fc3
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 2c95ca6..c5c0407 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -170,10 +170,6 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 	if (show_cached | show_stage) {
+ 		for (i = 0; i < active_nr; i++) {
+ 			struct cache_entry *ce = active_cache[i];
+-			int dtype = ce_to_dtype(ce);
+-			if (excluded(dir, ce->name, &dtype) !=
+-					!!(dir->flags & DIR_SHOW_IGNORED))
+-				continue;
+ 			if (show_unmerged && !ce_stage(ce))
+ 				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+@@ -186,10 +182,6 @@ static void show_files(struct dir_struct *dir, const char *prefix)
+ 			struct cache_entry *ce = active_cache[i];
+ 			struct stat st;
+ 			int err;
+-			int dtype = ce_to_dtype(ce);
+-			if (excluded(dir, ce->name, &dtype) !=
+-					!!(dir->flags & DIR_SHOW_IGNORED))
+-				continue;
+ 			if (ce->ce_flags & CE_UPDATE)
+ 				continue;
+ 			err = lstat(ce->name, &st);
+diff --git a/t/t3003-ls-files-exclude.sh b/t/t3003-ls-files-exclude.sh
+new file mode 100755
+index 0000000..fc1e379
+--- /dev/null
++++ b/t/t3003-ls-files-exclude.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh
++
++test_description='ls-files --exclude does not affect index files'
++. ./test-lib.sh
++
++test_expect_success 'create repo with file' '
++	echo content >file &&
++	git add file &&
++	git commit -m file &&
++	echo modification >file
++'
++
++check_output() {
++test_expect_success "ls-files output contains file ($1)" "
++	echo '$2' >expect &&
++	git ls-files --exclude-standard --$1 >output &&
++	test_cmp expect output
++"
++}
++
++check_all_output() {
++	check_output 'cached' 'file'
++	check_output 'modified' 'file'
++}
++
++check_all_output
++test_expect_success 'add file to gitignore' '
++	echo file >.gitignore
++'
++check_all_output
++
++test_done
+-- 
+1.6.5.rc3.240.g77692
