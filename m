@@ -1,76 +1,74 @@
-From: Christian Himpel <chressie@googlemail.com>
-Subject: Re: backup git repo on every commit
-Date: Mon, 12 Oct 2009 20:35:04 +0200
-Message-ID: <20091012183504.GA3872@mrslave>
-References: <194a2c240910120641sccf0e55xef4226269df78864@mail.gmail.com>
- <20091012141544.GF9261@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Mon, 12 Oct 2009 14:35:19 -0400
+Message-ID: <20091012183519.GA10686@coredump.intra.peff.net>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+ <20091012135910.ujqifycf9cwsk4ss@webmail.demarque.qc.ca>
+ <f488382f0910121106h64571b93jb92372a1d7720b10@mail.gmail.com>
+ <81b0412b0910121115s26c6c08s1ea54c28851faf05@mail.gmail.com>
+ <20091012142017.vrs4v2cc8wgws8g4@webmail.demarque.qc.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Israel Garcia <igalvarez@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 12 20:36:51 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Steven Noonan <steven@uplinklabs.net>, git@vger.kernel.org
+To: sylvain@demarque.qc.ca
+X-From: git-owner@vger.kernel.org Mon Oct 12 20:37:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxPlJ-00010D-Cy
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:36:49 +0200
+	id 1MxPlJ-00010D-Tp
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 20:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757704AbZJLSfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 14:35:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757699AbZJLSfp
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:35:45 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:44667 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757701AbZJLSfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 14:35:44 -0400
-Received: by fxm27 with SMTP id 27so9500856fxm.17
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 11:35:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=vCZWnUSwSTnKMtE9UAF/zBBWKxiVLsrcI+7Ipl4F3Yk=;
-        b=gkWPUyVtfuWY5DNzQl0flgZtS3hHPQNltCKx+gNJd6TkTdAdC4Ix4xQGYh2+aDT5Hi
-         urQnnP0dbclnsz3RtsqChVAfOfrdsOPXG6cPbDvAJBTRpvXBerU5Y5r0vMk4wbSvGmLk
-         7KluThVt/UViGqLuzyP8mDLgk6NVj74HutX/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=BUzEDWaGFCgTGhvKbGF9pPSbN+gswfmPYaNYPgVn1w7tQs+R/BEZvahp3z/bF8OnQn
-         pxBFTPzh9GxG8+yMV17bAue5isBbFLCxTgLMYQ0RMTZTan5BrFvuZiseq0pTzQI2FYW4
-         M9DzqwmftzVwHuQn5g/Uzv/8XsJAesA/XeKcA=
-Received: by 10.103.126.32 with SMTP id d32mr2624028mun.0.1255372507876;
-        Mon, 12 Oct 2009 11:35:07 -0700 (PDT)
-Received: from mrslave (HSI-KBW-078-043-091-043.hsi4.kabel-badenwuerttemberg.de [78.43.91.43])
-        by mx.google.com with ESMTPS id n10sm470127mue.17.2009.10.12.11.35.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 11:35:06 -0700 (PDT)
+	id S1757707AbZJLSf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 14:35:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757596AbZJLSf4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 14:35:56 -0400
+Received: from peff.net ([208.65.91.99]:33698 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757598AbZJLSf4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 14:35:56 -0400
+Received: (qmail 6101 invoked by uid 107); 12 Oct 2009 18:38:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Oct 2009 14:38:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Oct 2009 14:35:19 -0400
 Content-Disposition: inline
-In-Reply-To: <20091012141544.GF9261@spearce.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20091012142017.vrs4v2cc8wgws8g4@webmail.demarque.qc.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130049>
 
-On Mon, Oct 12, 2009 at 07:15:44AM -0700, Shawn O. Pearce wrote:
-> Israel Garcia <igalvarez@gmail.com> wrote:
->   git remote add --mirror backup you@another.host:path/to/backup.git
+On Mon, Oct 12, 2009 at 02:20:17PM -0400, sylvain@demarque.qc.ca wrote:
+
+> >It's more of "a note to the future generation of developers": "Hey guys,
+> >we didn't need that working, but if you have a night to spare could you
+> >please finish that?"
 > 
->   cat >.git/hooks/post-commit
->   #!/bin/sh
->   git push backup
->   ^D
+> Ok, then I won't wait for it to work. I will dive in Git's code and
+> play the "future generation of developers" part... some day. ;-)
 > 
->   chmod a+x .git/hooks/post-commit
+> Thank you! :-)
 
-Since this is meant as a backup, is there also a sane way to push the
-reflog entries as well?  Or is it okay just to copy .git/logs to the
-backup repository?
+I think that it sort of works, actually. It seems to do OK if you do
+something like:
 
-Thanks,
-chressie
+  $ GIT_DIR=/path/to/store/repo; export GIT_DIR
+  $ GIT_WORK_TREE=/; export GIT_WORK_TREE
+  $ git init
+  $ cd /etc/whatever
+  $ git add .
+
+But it does not work if you try to make things work automatically:
+
+  $ cd /
+  $ git init
+  $ cd /etc/whatever
+  $ git add .
+
+So probably the bug is in detecting the location of the work tree when
+it is not explicitly given. You can use the explicit style as a
+workaround for now.
+
+-Peff
