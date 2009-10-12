@@ -1,63 +1,79 @@
-From: sylvain@demarque.qc.ca
-Subject: Git: "No you can't handle my root!" (?)
-Date: Mon, 12 Oct 2009 01:28:26 -0400
-Message-ID: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC 0/4] plumbing to help fix git-gui
+Date: Mon, 12 Oct 2009 00:45:47 -0500
+Message-ID: <20091012054546.GF11106@progeny.tock>
+References: <4AD0C93C.6050306@web.de>
+ <7vws327wbp.fsf@alter.siamese.dyndns.org>
+ <20091012052536.GA11106@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset=ISO-8859-1;
-	DelSp="Yes";
-	format="flowed"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Mon Oct 12 07:39:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxDcY-00039A-UH
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 07:38:59 +0200
+	id 1MxDcb-00039A-2C
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 07:39:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbZJLFg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 01:36:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbZJLFg0
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:36:26 -0400
-Received: from secure01.megaquebec.net ([199.202.64.88]:55861 "EHLO
-	mqplesk1l.megaquebec.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286AbZJLFgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 01:36:25 -0400
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Oct 2009 01:36:25 EDT
-Received: (qmail 11785 invoked by uid 48); 12 Oct 2009 01:28:26 -0400
-Received: from modemcable009.10-130-66.mc.videotron.ca
-	(modemcable009.10-130-66.mc.videotron.ca [66.130.10.9]) by
-	webmail.demarque.qc.ca (Horde MIME library) with HTTP; Mon, 12 Oct 2009
-	01:28:26 -0400
+	id S1753144AbZJLFh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 01:37:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752728AbZJLFh6
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:37:58 -0400
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:37980 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbZJLFh5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 01:37:57 -0400
+Received: by ywh6 with SMTP id 6so7900248ywh.4
+        for <git@vger.kernel.org>; Sun, 11 Oct 2009 22:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ZUupWiEsG2FmZWv+ntGdtTHK2LuTW4GeRMN2VnGK8W4=;
+        b=sbcIhIBwCS4jh5fo1i5XkR8mbeDQQRYEcLhaMJvFPif1Wfffe9MgmBpbbmAbjAf2GC
+         C2Blo3mLmKunSmzeMYPiLwH5b7ufHTQx1/sBHmvuhmSrFIgEeGJ2ZpFHP+xO6Vzaexq9
+         aMPcuTIxtcyssURYWFadg5fHW7VKMc7KbaJwk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=NI9W4xCRZsuggElKTDUKLFMDBIK5uqXMdszL9Ue2LfsCUpEnXvrAQxoUSpAp9mmjYM
+         Vw3xSpROs26U5kMHiN8OJ1lOGNd04xVHohAj1l0/LKuygw0Hj2RfGUdNaBQWt/kPbjsB
+         pI/nZX4Vs/fZGXnPaCE9xH4FmKQFqlKp9Cy0g=
+Received: by 10.151.16.2 with SMTP id t2mr9379381ybi.176.1255325841364;
+        Sun, 11 Oct 2009 22:37:21 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 15sm906269gxk.0.2009.10.11.22.37.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 11 Oct 2009 22:37:20 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.6)
+In-Reply-To: <20091012052536.GA11106@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129985>
 
-Git is good, Git is great! All praise the Git! :-D
+Jonathan Nieder wrote:
+> Junio C Hamano wrote:
 
-What do you people think about this strange phenomena?
+>> Perhaps an interface to give a cleaned-up version, e.g.
+>> 
+>>     $ git check-ref-format --print refs/heads//foo/bar
+>>     refs/heads/foo/bar
+>> 
+>> is what you want in order to fix git-gui?  I dunno.
+> 
+> The following packages do exactly that.
 
-localhost / # git --version
-git version 1.6.4.4
+s/packages/patches/
 
-localhost / # git init
-Initialized empty Git repository in //.git/
+I better sleep...
 
-localhost / # cd etc
-localhost etc # git add X11/xorg.conf
-fatal: pathspec 'etc/X11/xorg.conf' did not match any files
-
-Aside from the obvious question of why would I want to Git the whole
-tree ("But all files deserve the Holy Presence of the Git!"), why does
-Git refuse the love offering from "/etc/X11/xorg.conf"? Is it because
-it contains font directory configurations?
-
-Commit and [ENTER] to all,
-
-S! :-)
+Sorry for the confusion,
+Jonathan
