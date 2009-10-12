@@ -1,87 +1,73 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: Git: "No you can't handle my root!" (?)
-Date: Mon, 12 Oct 2009 23:37:39 +0200
-Message-ID: <1255383459.15646.10.camel@localhost>
-References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 0/5] Pretty formats for reflog data
+Date: Mon, 12 Oct 2009 17:37:56 -0400
+Message-ID: <20091012213756.GA12166@coredump.intra.peff.net>
+References: <20091012175201.GA10263@coredump.intra.peff.net>
+ <cover.1255380039.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: sylvain@demarque.qc.ca
+Content-Type: text/plain; charset=utf-8
+Cc: Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
 X-From: git-owner@vger.kernel.org Tue Oct 13 00:07:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxT3L-0004FJ-6I
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:39 +0200
+	id 1MxT3J-0004FJ-If
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 00:07:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758395AbZJLVit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 17:38:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758367AbZJLVit
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:38:49 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:51225 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933213AbZJLVir (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 17:38:47 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so2008177eyf.19
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 14:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=w9K9ANY7v/ggPvvGlGMPXxO3U3uGw5pFCbOW/3TQZ1Y=;
-        b=NinFPW2sB70w65ql1Qpds7lrdSn9CGSzEJxn09l2XycE6DVCnMWuuPCRjvAazk5jzA
-         6dtJD8eYdcHL5OkC1qwcoe8KJ0WWWSsRCllSbepgisI1wZTJOSV44wKogLgQjAUYzulH
-         dS7bbwCDWAWXV21aLcC1KjEeMztSkdKSjO6Ys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=CDVIaLKmje/ftX33JPiE/qaf14zChy0iVYYvQ5aV2cS1qHSzv3+HMZo0jWGIpjHQwU
-         2DAWzlsL1txo42EWclsNRbkVmU9Z9xlYyQiHDQRMGO/Qkc8Ne0pTY4Y/YAcwp2MGQdRD
-         kW1KOifaZQ0n+aU/u2E0eR5dRyJw3fritAl3E=
-Received: by 10.211.161.22 with SMTP id n22mr4656963ebo.83.1255383458731;
-        Mon, 12 Oct 2009 14:37:38 -0700 (PDT)
-Received: from ?192.168.1.2? (host185-1-dynamic.48-82-r.retail.telecomitalia.it [82.48.1.185])
-        by mx.google.com with ESMTPS id 7sm1379751eyb.0.2009.10.12.14.37.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 14:37:37 -0700 (PDT)
-In-Reply-To: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
-X-Mailer: Evolution 2.26.3 
+	id S932761AbZJLVid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 17:38:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758367AbZJLVic
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 17:38:32 -0400
+Received: from peff.net ([208.65.91.99]:33459 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758361AbZJLVic (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 17:38:32 -0400
+Received: (qmail 8176 invoked by uid 107); 12 Oct 2009 21:41:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 12 Oct 2009 17:41:26 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Oct 2009 17:37:56 -0400
+Content-Disposition: inline
+In-Reply-To: <cover.1255380039.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130081>
 
-Il giorno lun, 12/10/2009 alle 01.28 -0400, sylvain@demarque.qc.ca ha
-scritto:
-> localhost / # git init
+On Mon, Oct 12, 2009 at 11:02:29PM +0200, Thomas Rast wrote:
 
+> > Stash listing is internally just "git log -g refs/stash", so you can
+> > pass any formatting or limiting arguments you want there (see the git
+> > log documentation for ideas). If no arguments are given, we pass "-10".
+> 
+> This seems fairly arbitrary, doesn't it?  My own working theory is
+> that Nanako put it in because the git-log|sed construct inherently
+> bars any way to a pager, so it needs to be cut short.
 
-I don't see the point of using git on the root directory :)
+Yes, it's arbitrary, though it is probably a reasonable estimate for the
+intended use of stash. It's a stack, so you generally are only
+interested in the last couple of entries.
 
-but that made me think that it could actually be a good idea
-for /etc/ :)
-I happen to modify some configuration and then I forgot which one... and
-sometimes updates broke something
+What's much worse though is that the logic is not "if you told me how
+many to show, show that; otherwise, show 10".  Instead it is "if you
+gave me no options, default the size of the list.  But if you gave me
+any options, even if they have nothing whatsoever to do with limiting
+the size of the list, then show all".
 
+So something like "git stash list --date=relative" suddenly shows many more
+stashes than just "git stash list". It would be nice to fix that.
 
-And that make me think of another question...
+> So suppose we could somehow get rid of the |sed... like if we had
+> --pretty specifiers for the reflog information.
 
-is there a way to have a git repo for a subset of directory that match a
-pattern?
+I'm not sure if people will like having a longer list in a pager than a
+shorter list without one (I personally can't remember ever using "git
+stash list", so I have no strong opinion).
 
-for instance...
+But certainly the idea of adding pretty format specifiers to access
+reflog data seems like a good idea on its own.
 
-can I have a git report of $HOME/.* (without . and ..)? (all user
-setting)
-
-Or better: provide a list of directory under $HOME I want to track 
-
-Instead of providing the list of directory I want to ignore i would like
-to provide the list of the directory and files I want to track :)
-
-I probably am going out of topic here but I hope you forgive me :)
+-Peff
