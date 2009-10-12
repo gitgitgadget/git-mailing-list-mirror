@@ -1,84 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 3/4] git check-ref-format --print
-Date: Mon, 12 Oct 2009 16:36:48 -0700
-Message-ID: <7vococ6v73.fsf@alter.siamese.dyndns.org>
-References: <4AD0C93C.6050306@web.de>
- <7vws327wbp.fsf@alter.siamese.dyndns.org>
- <20091012052536.GA11106@progeny.tock> <20091012053141.GD11106@progeny.tock>
+Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just a
+ branch
+Date: Mon, 12 Oct 2009 16:41:57 -0700
+Message-ID: <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu>
+ <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 01:43:25 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Anders Kaseorg <andersk@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Oct 13 01:43:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxUY0-0007dA-DZ
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 01:43:24 +0200
+	id 1MxUY7-0007dA-LY
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 01:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757918AbZJLXho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 19:37:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756934AbZJLXho
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 19:37:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39708 "EHLO
+	id S1755626AbZJLXmr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009 19:42:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbZJLXmr
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 19:42:47 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38878 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756772AbZJLXhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 19:37:43 -0400
+	with ESMTP id S1753391AbZJLXmq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 19:42:46 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E292562F7;
-	Mon, 12 Oct 2009 19:36:59 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9A987580A;
+	Mon, 12 Oct 2009 19:42:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WQBkgxEY1d3IrBzNRd42IfWr4Ck=; b=gs9KCB
-	mht8raCs2nwUwxKLY10Bjpzvu/2+x7HB2gBnix3CXZxMlVbRYrC1JMd6LYMgr0/S
-	h/0r2+sMc8c9OVeIsRQFgLPSNIyPbw+BIwif1IfRx2zvbY42hoedJA+YPCPJ4Yjz
-	/5oP5JQ7AR6yOO/hkplp3cTv1crjKnLhlegsQ=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=NDYjTX8qpM44j5xLrC5XOf3Zh
+	/s=; b=fX7PbBaQ1r4WcmP//faDHb//TKEiTR3irW6uLJ+QK7bMeyEBLCTlMkhaI
+	Q2D1DnKMzq3sKz6Y5c7bTzb9VTa3dVTdQ7f8PDKTDyYx4kbrtgAXStHneNfwsb/0
+	M/7kRwBzWYRQk1fzM3Zeo71Sa87P5Ig9vo4kP3FfvHLvqweeUs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p7L2BAO3t/+9OblCNLZaX7TYHqK00i5n
-	NR0vwjBb7M6akETA9HIKuhPCqtv2c2+ZsNJH9WxUhlCJJc6bANWIiHNTGsI+iG+G
-	q+11C7lOPER/U+PCBQw07vU7idYpsx9uaGpZjeuMz1yqTcNsiYSs86UxFQajHwfr
-	/d6YbToo8aA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34A40562F6;
-	Mon, 12 Oct 2009 19:36:55 -0400 (EDT)
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=RjcM95vAuLtFIXRKyRd
+	uvyPXTUcjXfwthnrEo+ZHOjGCy0sWCFXzGstODmVD88S2rc9aZHqyljqUkNWdxKT
+	THbNumCI6F3ZD9bp+HnT7mq8mXXcHsRIYrSEzGQOENurrxapBXE4tIZg/IkWv/Wq
+	O5/bT/KE3xLt3+FI1/Yp9Xzs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E1B275809;
+	Mon, 12 Oct 2009 19:42:02 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76D09562F2; Mon, 12 Oct
- 2009 19:36:50 -0400 (EDT)
-In-Reply-To: <20091012053141.GD11106@progeny.tock> (Jonathan Nieder's message
- of "Mon\, 12 Oct 2009 00\:31\:42 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5EA9275808; Mon, 12 Oct 2009
+ 19:41:59 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 203AEDE2-B788-11DE-A26A-E80E3AD9C332-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D777685A-B788-11DE-8CA2-1000076EA04E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130094>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Anders Kaseorg <andersk@MIT.EDU> writes:
 
-> In the future, it would be very nice if this command could be
-> modified to transform Unicode ref names to some appropriate
-> normalization form, to make Unicode ref names usable in Mac OS X,
-> too, and less confusing everywhere.
+> I had in mind only one case where =E2=80=98git bisect reset <commit>=E2=
+=80=99 would be=20
+> useful.  I often don=E2=80=99t even remember what commit I was on bef=
+ore I started=20
+> a bisect, much less believe that I want to immediately switch back to=
+ it. =20
+> I would prefer to be able to clean the bisection state without checki=
+ng=20
+> out another commit at all, because that takes forever and invalidates=
+ my=20
+> compiled tree.  This is what =E2=80=98git bisect reset HEAD=E2=80=99 =
+would do if it=20
+> worked.
 
-I do not disagree with a desire to help fixing the unicode insanity on
-that platform, but I suspect that check-ref-format is a wrong place to
-tackle the issue.  You would need a similar filter for outputs from the
-likes of ls-files and "diff --name-only", iow, anything that deal with
-pathnames, no?
+I am not sure what "removing bisect states" really buys you.
 
-It would have be something like "check-ref-format --print | iconv ..."
-pipeline (conceptually, if not forcing the pipeline to the end users, that
-is).
+If having bisect states somehow interferes what you need to do in order=
+ to
+decide which commit you want to switch to, it may make sense to do 'git
+bisect reset HEAD' or 'git bisect stop', before starting whatever you n=
+eed
+to do to make that decision.
 
-Also are people happy with "--print"?  I was waiting for others to reword
-it to "--normalize" or something like that.  In your documentation you
-explain it to "canonicalize", and in your tests you name the output
-"normalized".  I am fine with either wording, but would like to see us
-using only one, not both.
+But I do not know how it hurts to still have bisect states around, in
+order to find where you want to go next.  Could you elaborate?
+
+But your explanation "I often don't even remember" makes sense to me.
+
+I would understand it, if not agreeing that I also am often in that
+situation myself", if somebody does not even care which commit he was o=
+n
+before starting the bisection, but knows (or is willing to decide at th=
+at
+point) which branch (or even a specific commit, while still being
+detached) he wants to switch to.  And it would make sense to avoid an
+extra checkout that snaps back to the pre-bisection commit before
+switching to the new state he has chosen.
+
+So in that sense, I would agree with your original patch more than I wo=
+uld
+agree with what you suggested as an alternative (i.e. "git bisect stop"
+which is what "git bisect reset HEAD" would do if we do not verify the
+argument is the name of an existing branch) in your response.
+
+I am inclined to ask you to come up with a paragraph in the documentati=
+on
+to discuss how the optional <branch> (now it will be <commit>) paramete=
+r
+to the reset subcommand is meant to be used and re-submit the original
+patch, perhaps with an updated commit log message.  "Allow resetting to
+any" said only what the patch does, without saying why such a mode of
+operation was even a good thing to begin with.
 
 Thanks.
