@@ -1,58 +1,84 @@
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG REPORT] "git ls-remote
-	http://git.domain.com/repo.git?HEAD" doesn't work
-Date: Sat, 14 Jun 2008 05:31:26 -0400
-Message-ID: <20080614093126.GC22538@sigill.intra.peff.net>
-References: <loom.20080614T065448-251@post.gmane.org> <20080614071011.GA29699@glandium.org> <7vprqkh423.fsf@gitster.siamese.dyndns.org> <loom.20080614T074854-525@post.gmane.org> <20080614090244.GA1262@glandium.org> <loom.20080614T092039-924@post.gmane.org>
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
+From: Sergio <sergio.callegari@gmail.com>
+Subject: Questions about the new
+Date: Mon, 12 Oct 2009 10:23:40 +0000 (UTC)
+Message-ID: <loom.20091012T115746-719@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-NNTP-Posting-Date: Sat, 14 Jun 2008 09:31:44 +0000 (UTC)
-Cc: git@vger.kernel.org
-To: Sven <svoop@delirium.ch>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+NNTP-Posting-Date: Mon, 12 Oct 2009 10:27:57 +0000 (UTC)
+To: git@vger.kernel.org
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Content-Disposition: inline
-In-Reply-To: <loom.20080614T092039-924@post.gmane.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+X-Injected-Via-Gmane: http://gmane.org/
+Original-Lines: 34
+Original-X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 80.183.7.34 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.3) Gecko/20090910 Ubuntu/9.04 (jaunty) Shiretoko/3.5.3)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/85000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130000>
 Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
- (Exim 4.50) id 1K7S7U-0001Ny-TF for gcvg-git-2@gmane.org; Sat, 14 Jun 2008
- 11:32:25 +0200
+ (Exim 4.50) id 1MxI7q-0001dH-HJ for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009
+ 12:27:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1755676AbYFNJb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2008
- 05:31:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755594AbYFNJb3
- (ORCPT <rfc822;git-outgoing>); Sat, 14 Jun 2008 05:31:29 -0400
-Received: from peff.net ([208.65.91.99]:4332 "EHLO peff.net"
- rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1755148AbYFNJb2
- (ORCPT <rfc822;git@vger.kernel.org>); Sat, 14 Jun 2008 05:31:28 -0400
-Received: (qmail 7843 invoked by uid 111); 14 Jun 2008 09:31:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- (smtp-auth username relayok, mechanism cram-md5) by peff.net (qpsmtpd/0.32)
- with ESMTP; Sat, 14 Jun 2008 05:31:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 14 Jun
- 2008 05:31:26 -0400
+ S1755901AbZJLK0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Oct 2009
+ 06:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755793AbZJLK0c
+ (ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 06:26:32 -0400
+Received: from lo.gmane.org ([80.91.229.12]:48594 "EHLO lo.gmane.org"
+ rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP id S1754780AbZJLK0b
+ (ORCPT <rfc822;git@vger.kernel.org>); Mon, 12 Oct 2009 06:26:31 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50) id
+ 1MxI5o-0000Yw-Bb for git@vger.kernel.org; Mon, 12 Oct 2009 12:25:28 +0200
+Received: from host34-7-dynamic.183-80-r.retail.telecomitalia.it
+ ([80.183.7.34]) by main.gmane.org with esmtp (Gmexim 0.1 (Debian)) id
+ 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 12 Oct 2009 12:25:28 +0200
+Received: from sergio.callegari by
+ host34-7-dynamic.183-80-r.retail.telecomitalia.it with local (Gmexim 0.1
+ (Debian)) id 1AlnuQ-0007hv-00 for <git@vger.kernel.org>; Mon, 12 Oct 2009
+ 12:25:28 +0200
 Sender: git-owner@vger.kernel.org
 
-On Sat, Jun 14, 2008 at 09:24:57AM +0000, Sven wrote:
 
-> As I said, I'm lacking the skills. But I'd take part in sponsoring the
-> patch so it's not another 7 weeks wait :-) I know, it's kinda unusual,
-> but it's important to me that Capistrano works out of the box with Git
-> over HTTP. So I'd throw in $50, anybody willing to join, too. Or to do
-> the patch?
 
-Maybe I wasn't clear in my other message. The wait is either "none,
-upgrade to the current master", or "a week or so, wait for 1.5.6 to be
-released."
 
-But I'll take the $50. ;)
+Hi,
 
+I read from the release notes of git 1.6.5 about the new "replace" mechanism.
+It is presented as "a replacement of the "grafts" mechanism, with the added
+advantage that it can be transferred across repositories."
+
+Since there is still little information about it, I would like to ask the
+following:
+
+1) Grafts and replace entries seem to operate on different aspects of the
+history graph. Grafts operate on arcs and replace on nodes. 
+As such, replace entries seem less general to me. 
+Apparently, to simulate a graft with replace entries, you need to introduce
+extra commit objects. For instance, if object B has no parents, to pretend that
+it derives from some A, one needs to create an object B' equivalent to B but
+for the parents and then replace B by B', is this right? Conversely, I guess
+you can always simulate a replace entry with the graft mechanism, without the
+need to add any extra commit object. Am I overlooking something? 
+
+2) Is it currently possible to use a replace entry to replace a commit object
+with nothing? Namely if B has A as its sole parent, is it possible to have a
+replace entry such as A-sha1 becomes null, to pretend that B is a hierarchy
+root?  
+
+3) If I remember correctly, there was a reason why grafts were not considered
+suitable for transferring across repos. Can someone remind me about it? How
+does the replace mechanism address this issue?
+
+Thanks,
+
+Sergio
