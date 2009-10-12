@@ -1,72 +1,94 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Merge (or maybe rebase) question
-Date: Mon, 12 Oct 2009 12:55:37 +0100
-Message-ID: <26ae428a0910120455k7ab5aa5ag8d701050e7acec5f@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Questions about the new
+Date: Mon, 12 Oct 2009 14:19:11 +0200
+Message-ID: <4AD31EBF.6090307@viscovery.net>
+References: <loom.20091012T115746-719@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 12 14:04:14 2009
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Sergio <sergio.callegari@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 12 14:26:49 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxJaC-0000hw-Ef
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:00:56 +0200
+	id 1MxJz3-0006Hg-1C
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 14:26:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755452AbZJLL4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 07:56:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755327AbZJLL4s
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 07:56:48 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:3277 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755264AbZJLL4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 07:56:45 -0400
-Received: by ey-out-2122.google.com with SMTP id 4so1903344eyf.19
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 04:55:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=XYo01A73W7JtBy5Tx5Q7Z24ww8vwypC/lbaG4dwPxjk=;
-        b=tMrauAJ1/KUlvGHQzO13d/AX6MmD+48pi+UPNZCd1nR7rUI8/96Iglxfmu8aRBtu35
-         6Yf3lopeWKCzHZQieDq9FUrjWFfEvizMeEdavxvfktyKkgsFbnIy1wI2pUICbu/YhLFK
-         OMW01FZOwCnKu5Bh6Bxc4Burz3yo2vy2C1ifo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=HatHbOpnZ52cXc/mMO7i5QF1o6e9LtsJ0IEcs3AxSQOizY7WS0zv3GRnvDQRJYAvqF
-         XQ2SPrAB/Jm3IXovWmZKoSV43CNc4eCxdqtsjWsyaWy434lpc39hZGWY1w0MVXn0gCBF
-         /D/K1cksBiR+22Dj3TCcH9CufMdEV/GyShtyM=
-Received: by 10.216.87.68 with SMTP id x46mr1835999wee.2.1255348537617; Mon, 
-	12 Oct 2009 04:55:37 -0700 (PDT)
-X-Google-Sender-Auth: d72bb59044044af7
+	id S1755192AbZJLMT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 08:19:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755163AbZJLMT5
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 08:19:57 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:55014 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751888AbZJLMT4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 08:19:56 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1MxJrr-0004fj-Gk; Mon, 12 Oct 2009 14:19:19 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2EBAF4E4; Mon, 12 Oct 2009 14:19:11 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <loom.20091012T115746-719@post.gmane.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130005>
 
-Another how best to do this.
+Sergio schrieb:
+> 1) Grafts and replace entries seem to operate on different aspects of the
+> history graph. Grafts operate on arcs and replace on nodes. 
 
-- I have my project all nicely in git with all the different releases
-and versions in there going back years. Happy :-)
+Correct, but see below about tree and blob objects.
 
-- I have a customer who has heaviliy modified an oldish version of the
-software.
+> As such, replace entries seem less general to me. 
 
-- I have identified the version that they modified and created a
-branch in my git repo based on that version (i.e. what they would have
-started with before modifying it)
+With grafts you can only change parenthood; with replace entries you can
+change parenthood *and* all other aspects of a commit (message, author,
+committer, dates).
 
-- Their changes where applied to a simple download - no version
-control, no nothing.
+Hence, replace entries are more general than grafts.
 
-I now need to update them to the latest version of the software - can
-git help me here or is it all a disaster?
+> Apparently, to simulate a graft with replace entries, you need to introduce
+> extra commit objects. For instance, if object B has no parents, to pretend that
+> it derives from some A, one needs to create an object B' equivalent to B but
+> for the parents and then replace B by B', is this right?
 
-As usual, any advice much appreciated.
+Yes. Use git-cat-file + edit + git-hash-object as explained in this
+message just the other day:
+http://thread.gmane.org/gmane.comp.version-control.git/129727/focus=129907
 
-PS. To make matters worse - their original is full of expanced CVS
-$Id:$ tags so it will look to git like every single file has changed.
-Damn you cvs!!!
+> Conversely, I guess
+> you can always simulate a replace entry with the graft mechanism, without the
+> need to add any extra commit object. Am I overlooking something? 
+
+You cannot; see above. You can even replace tree objects and blob objects
+using replace entries, IIUC, but you cannot do that with grafts.
+
+> 2) Is it currently possible to use a replace entry to replace a commit object
+> with nothing? Namely if B has A as its sole parent, is it possible to have a
+> replace entry such as A-sha1 becomes null, to pretend that B is a hierarchy
+> root?  
+
+Sure. Just make a commit object that does not have parents.
+
+> 3) If I remember correctly, there was a reason why grafts were not considered
+> suitable for transferring across repos. Can someone remind me about it? How
+> does the replace mechanism address this issue?
+
+The problem with grafts was that, for example, git-pack-objects obeyed the
+graft, and could create a broken repository by removing grafted-away
+objects. And since git-fsck also obeyed the graft, it did not notice the
+breakage.
+
+OTOH, history walkers (upload-pack, send-pack, pack-objects) and fsck
+never obey replace entries in the history. But they do keep track of them
+(and the history that they reference) because they are referenced from the
+refs/replace namespace.
+
+-- Hannes
