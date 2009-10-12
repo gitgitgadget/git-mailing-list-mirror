@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/4] Documentation: describe check-ref-format --branch
-Date: Mon, 12 Oct 2009 00:28:23 -0500
-Message-ID: <20091012052823.GC11106@progeny.tock>
+Subject: [PATCH 1/4] Add tests for git check-ref-format
+Date: Mon, 12 Oct 2009 00:27:04 -0500
+Message-ID: <20091012052704.GB11106@progeny.tock>
 References: <4AD0C93C.6050306@web.de>
  <7vws327wbp.fsf@alter.siamese.dyndns.org>
  <20091012052536.GA11106@progeny.tock>
@@ -15,41 +15,41 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxDKq-0006Uy-KI
+	id 1MxDKq-0006Uy-3L
 	for gcvg-git-2@lo.gmane.org; Mon, 12 Oct 2009 07:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752244AbZJLFUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 01:20:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752005AbZJLFUc
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:20:32 -0400
-Received: from mail-yw0-f176.google.com ([209.85.211.176]:56542 "EHLO
-	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751873AbZJLFUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 01:20:32 -0400
-Received: by ywh6 with SMTP id 6so7893437ywh.4
-        for <git@vger.kernel.org>; Sun, 11 Oct 2009 22:19:55 -0700 (PDT)
+	id S1752209AbZJLFTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 01:19:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbZJLFTP
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 01:19:15 -0400
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:63133 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751868AbZJLFTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 01:19:14 -0400
+Received: by gxk4 with SMTP id 4so9738880gxk.8
+        for <git@vger.kernel.org>; Sun, 11 Oct 2009 22:18:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=a6gOqLG5f/8WZKlJ4ni8Cmfba0nJ1X7FHvm82XpCQnE=;
-        b=vHVsMl80C/UyuErphZBHBsB3+3ZJ51tB5v7CZGSE8PEs3dTXyVEEiwxkhg56jVZFv5
-         dR90o+6/ojaMRmuuVpsSM+kcksMLV6YdMhAbiW/+WigsyQHTqW7BeKDAmLySy3eD7QEj
-         0wHCJ/hVAI3UQ8BU3xOaGBK5n+IgZr5Bp0gzg=
+        bh=o2Y5Yf578t/h2rZGa/Op1gh5ZVTTgejk1N/upgMuFik=;
+        b=Qhkpg9QgJHnuXHxRRvP1XOky9TyavJi7hAbckiDZPrBlY3LNJJ/nX4617XiPu+5RqV
+         Lxs/0jvPlfEKsjgHnmcxbZNLihbrScadnaHN2q4sUlQQtUrrX0NmK4vffWMi+cd6OQlN
+         jV001a5+DGdzjP5onHcEurlsDITtrC1rDqGOA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZLD77j6Fqv+f/COfITQ2Kx58LUtmUQ51oSykUSd5+OnLgVvIr8TF6EBQOGDnf6GIhC
-         LdXZZsqpYgLg24LU8EtIs6e1aKdEhWnMeBu3qJ006JC52DLe+HvmG64ynBKvhZWHwNMg
-         6sFIYWFx3Nktys/BQjQQj6xkljoAjZnDVTSoA=
-Received: by 10.150.242.2 with SMTP id p2mr9339344ybh.217.1255324795807;
-        Sun, 11 Oct 2009 22:19:55 -0700 (PDT)
+        b=jMbJY8gccFqi8yQLKtZWMmctNdXyZhQuhnDJCEv27omlRpif/k7OHl51GYRz3fvY3D
+         eVJ/TD6O18kSdMaj4rLEPYTYPayuTJuBPHeiMoJe/gYRLjAan7MDmSrDvDcXQ0HVgskd
+         SwpXN6k7WAltQeCaxmU/Pc0tmATmfaUZZHpg0=
+Received: by 10.150.22.2 with SMTP id 2mr9311681ybv.293.1255324717833;
+        Sun, 11 Oct 2009 22:18:37 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 13sm130615gxk.13.2009.10.11.22.19.54
+        by mx.google.com with ESMTPS id 14sm1119036gxk.14.2009.10.11.22.18.36
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 11 Oct 2009 22:19:55 -0700 (PDT)
+        Sun, 11 Oct 2009 22:18:36 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20091012052536.GA11106@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -57,44 +57,67 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/129981>
 
-Unless one already knew, it was not obvious what sort of shorthand
-"git check-ref-format --branch" expands.  Explain it.
-
-The --branch argument is not optional.
+The "git check-ref-format" command is a basic command various
+porcelains rely on.  Test its functionality to make sure it does
+not unintentionally change.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-check-ref-format.txt |    9 ++++++---
- 1 files changed, 6 insertions(+), 3 deletions(-)
+ t/t1402-check-ref-format.sh |   44 +++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 44 insertions(+), 0 deletions(-)
+ create mode 100644 t/t1402-check-ref-format.sh
 
-diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git-check-ref-format.txt
-index 0b7982e..e9b3b40 100644
---- a/Documentation/git-check-ref-format.txt
-+++ b/Documentation/git-check-ref-format.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git check-ref-format' <refname>
--'git check-ref-format' [--branch] <branchname-shorthand>
-+'git check-ref-format' --branch <branchname-shorthand>
- 
- DESCRIPTION
- -----------
-@@ -63,8 +63,11 @@ reference name expressions (see linkgit:git-rev-parse[1]):
- 
- . at-open-brace `@{` is used as a notation to access a reflog entry.
- 
--With the `--branch` option, it expands a branch name shorthand and
--prints the name of the branch the shorthand refers to.
-+With the `--branch` option, it expands the ``previous branch syntax''
-+`@{-n}`.  For example, `@{-1}` is a way to refer the last branch you
-+were on.  This option should be used by porcelains to accept this
-+syntax anywhere a branch name is expected, so they can act as if you
-+typed the branch name.
- 
- EXAMPLE
- -------
+diff --git a/t/t1402-check-ref-format.sh b/t/t1402-check-ref-format.sh
+new file mode 100644
+index 0000000..382bc6e
+--- /dev/null
++++ b/t/t1402-check-ref-format.sh
+@@ -0,0 +1,44 @@
++#!/bin/sh
++
++test_description='Test git check-ref-format'
++
++. ./test-lib.sh
++
++valid_ref() {
++	test_expect_success "ref name '$1' is valid" \
++		"git check-ref-format '$1'"
++}
++invalid_ref() {
++	test_expect_success "ref name '$1' is not valid" \
++		"test_must_fail git check-ref-format '$1'"
++}
++
++valid_ref 'heads/foo'
++invalid_ref 'foo'
++valid_ref 'foo/bar/baz'
++valid_ref 'refs///heads/foo'
++invalid_ref 'heads/foo/'
++invalid_ref './foo'
++invalid_ref '.refs/foo'
++invalid_ref 'heads/foo..bar'
++invalid_ref 'heads/foo?bar'
++valid_ref 'foo./bar'
++invalid_ref 'heads/foo.lock'
++valid_ref 'heads/foo@bar'
++invalid_ref 'heads/v@{ation'
++invalid_ref 'heads/foo\bar'
++
++test_expect_success "check-ref-format --branch @{-1}" '
++	T=$(git write-tree) &&
++	sha1=$(echo A | git commit-tree $T) &&
++	git update-ref refs/heads/master $sha1 &&
++	git update-ref refs/remotes/origin/master $sha1
++	git checkout master &&
++	git checkout origin/master &&
++	git checkout master &&
++	refname=$(git check-ref-format --branch @{-1}) &&
++	test "$refname" = "$sha1" &&
++	refname2=$(git check-ref-format --branch @{-2}) &&
++	test "$refname2" = master'
++
++test_done
 -- 
 1.6.5.rc1.199.g596ec
