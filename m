@@ -1,179 +1,189 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH v2 08/16] remote-helpers: Support custom transport
-	options
-Date: Tue, 13 Oct 2009 11:45:31 -0700
-Message-ID: <20091013184531.GB9261@spearce.org>
-References: <1255400715-10508-1-git-send-email-spearce@spearce.org> <1255400715-10508-9-git-send-email-spearce@spearce.org> <alpine.LNX.2.00.0910122357230.32515@iabervon.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Oct 13 20:55:25 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: [PATCH v3 2/8] imap-send: use separate read and write fds
+Date: Tue, 13 Oct 2009 19:25:19 +0000
+Message-ID: <1255461925-2244-3-git-send-email-kusmabite@gmail.com>
+References: <1255461925-2244-1-git-send-email-kusmabite@gmail.com> <1255461925-2244-2-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, Erik Faye-Lund <kusmabite@gmail.com>
+To: git@vger.kernel.org
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Oct 13 21:26:06 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f143.google.com ([209.85.221.143])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxmWn-00065q-1V
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 20:55:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760952AbZJMSqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 14:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760087AbZJMSqJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 14:46:09 -0400
-Received: from george.spearce.org ([209.20.77.23]:35494 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760951AbZJMSqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 14:46:08 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 4F338381FE; Tue, 13 Oct 2009 18:45:31 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0910122357230.32515@iabervon.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-Sender: git-owner@vger.kernel.org
+	id 1Mxn0X-0006Yc-Db
+	for gcvm-msysgit@m.gmane.org; Tue, 13 Oct 2009 21:26:05 +0200
+Received: by qyk7 with SMTP id 7so10658267qyk.15
+        for <gcvm-msysgit@m.gmane.org>; Tue, 13 Oct 2009 12:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=sB5iKF7jgLIKx8Mmmb7xNfm2yTwNuo+/IMW479cATTw=;
+        b=mQ9UH+b6Elnybp6XK1ENeZJl0FM28U9VQ/8IF4/hr3G8SjL4DuZ/AQadyvPkxYTouz
+         NH8Cfypw7vm8FO4nZvGHEhFc4iv9TJtHtmeeksFayycCty5M2WH2HufCqsWxyCKP7pmN
+         YxM6h6G6k2HXkaI5xz76Ag+NvcIBHcxNZD8sI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=34YQ+QzY28sd2gpIS/rNx6SgiJt/SeRK4d7sh++uX+x7pzYUlYmz+OInK1r4+xYp2m
+         TfT9oTQi5uU1xwzCrgpkMx/Sd1W50mO/9SPzkv8EShhXVvOLog2WQeMfaqAO6R4Hj4zQ
+         QmDe1rsbLJsO2yDAU2cMKdUEbsDMAQslvNJhE=
+Received: by 10.224.69.148 with SMTP id z20mr365228qai.45.1255461958303;
+        Tue, 13 Oct 2009 12:25:58 -0700 (PDT)
+Received: by 10.177.128.16 with SMTP id f16gr7396yqn.0;
+	Tue, 13 Oct 2009 12:25:57 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.211.128.10 with SMTP id f10mr1059814ebn.17.1255461956604; Tue, 13 Oct 2009 12:25:56 -0700 (PDT)
+Received: by 10.211.128.10 with SMTP id f10mr1059811ebn.17.1255461956256; Tue, 13 Oct 2009 12:25:56 -0700 (PDT)
+Received: from ey-out-2122.google.com (ey-out-2122.google.com [74.125.78.25]) by gmr-mx.google.com with ESMTP id 15si322559ewy.0.2009.10.13.12.25.55; Tue, 13 Oct 2009 12:25:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.25 as permitted sender) client-ip=74.125.78.25;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.25 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by ey-out-2122.google.com with SMTP id 22so2194226eye.37 for <msysgit@googlegroups.com>; Tue, 13 Oct 2009 12:25:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer:in-reply-to:references; bh=0aF2yue7O41/TTANfdvluVG+04cfWGjV2Rdy/mcia5c=; b=oNUys+k4Vt2Ya0pTDatNMKjGUUzCevTrI30w1v/sS3OeRKrXABP2jqHZZQPLMC71dv MAY6dNhoWmYgF2/IIUtdVa8Hy65gA/F2EanB6Tpvf4LeOIsKYVs7hDfNRRb5snlb6IEU wk1aeoyk/5iokmPZbxUkLtU7rNFrvK3INueYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references; b=xD79mXfg+1Xu+mSwaZzEmxwiSsDzyEFdgcCift8GUCXCFp2NqoDQST9ql7bIM2koiT cJp0kp3extcAo0SNOQfqkCXIDy0rDyjvWBfauFzNjlIwLYiiBNJCpmgHgu8cQb4Il7na BGwTBAI4vzTB3oY6tbo0ThKxn6buMm98C54Ck=
+Received: by 10.211.159.13 with SMTP id l13mr9063980ebo.82.1255461955138; Tue, 13 Oct 2009 12:25:55 -0700 (PDT)
+Received: from localhost (cm-84.215.142.12.getinternet.no [84.215.142.12]) by mx.google.com with ESMTPS id 7sm4155699eyb.8.2009.10.13.12.25.53 (version=TLSv1/SSLv3 cipher=RC4-MD5); Tue, 13 Oct 2009 12:25:54 -0700 (PDT)
+X-Mailer: git-send-email 1.6.4
+In-Reply-To: <1255461925-2244-2-git-send-email-kusmabite@gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130183>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130184>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> > +'option' <name>::
-> > +	This helper supports the option <name> under fetch-multiple.
-> > +
-> 
-> I'm a bit surprised that the options only apply in a fetch-multiple 
-> section, rather than getting set at the beginning and applying to 
-> everything for that run. At least, I think an "option" command should be 
-> useable outside of a fetch-multiple (or possible future grouping 
-> construct) and have global scope.
 
-In hindsight, I agree with you.
+This is a patch that enables us to use the run-command
+API, which is supported on Windows.
 
-I'll respin the series so the set_option method in the transport
-forwards the options immediately to the helper and lets the helper
-decide whether it accepts or rejects the option string.  This will
-clean up the capabilities interface since we no longer need to dump
-the list of options we support in the helper, and as you point out,
-it will make a lot more sense to just set the options for this
-transport instance.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ imap-send.c |   37 +++++++++++++++++++++++--------------
+ 1 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/imap-send.c b/imap-send.c
+index 8da7a94..7216453 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -151,7 +151,7 @@ struct imap_list {
+ };
  
-> >  REF LIST ATTRIBUTES
-> >  -------------------
-> >  
-> > @@ -76,10 +80,26 @@ None are defined yet, but the caller must accept any which are supplied.
-> >  
-> >  FETCH OPTIONS
-> >  -------------
-> > +To enable an option the helper must list it in 'capabilities'.
-> >  
-> >  'option verbose'::
-> >  	Print more verbose activity messages to stderr.
-> 
-> I think you mis-split the above part; your previoud patch declared this 
-> option without declaring any way to use it. Might be worth allowing 
-> multiple "verboses" and "quiet" or "option verbosity quiet"/"option 
-> verbosity verbose verbose".
-
-Hmmph.  "option verbosity verbose verbose" is a bit verbose, don't
-you think?  :-)
-
-I think we should just forward the verbosity setting from the
-frontend: "option verbosity [0-n]" where n is the number of
-times -v appeared on the command line/how verbose the user wants.
+ struct imap_socket {
+-	int fd;
++	int fd[2];
+ 	SSL *ssl;
+ };
  
-> > +'option uploadpack' <command>::
-> > +	The program to use on the remote side to generate a pack.
-> 
-> I sort of feel like the helper ought to read this one out of the config 
-> file itself if it wants it.
-
-Eh, true, but you can also set this on the command line.  An open
-question I still have for myself is how to set this in HTTP
-transports.
-
-The reason why I care is Gerrit Code Review has overloaded the
-'git-receive-pack' executable and taught it more command line flags:
-
-  $ ssh r git receive-pack -h
-  git receive-pack PROJECT.git [--cc EMAIL ...] [--help (-h)] [--reviewer (--re) EMAIL ...]
-
-   PROJECT.git             : project name
-   --cc EMAIL              : CC user on change(s)
-   --help (-h)             : display this help text
-   --reviewer (--re) EMAIL : request reviewer for change(s)
-
-Which is typically invoked as:
-
-  git push --receive-pack "git-receive-pack --reviewer spearce@spearce.org" URL REFSPEC
-
-Folks actually have scripts which make this invocation for them, so
-they can insert in the proper reviewer and/or cc arguments.  Since
-the arguments vary its hard to set this up in the configuration file.
-
-Over SSH this is fine, we obtain the arguments off the SSH command
-line string and its no big deal.  Over git:// this would fail as
-git-daemon can't parse the line anymore.  Over HTTP this also is not
-going to work since the service can't receive arbitrary arguements.
-
-My primary motivator for doing smart HTTP now is folks who are
-stuck behind firewalls that permit only HTTP through their local
-proxy servers are unable to communicate with a Gerrit Code Review
-instance over SSH on port 29418.  That --reviewer flag above is a
-very useful feature of Gerrit that I somehow have to support for
-the HTTP transport too.
-
-I started down the road of currying this data into the backend by
-at least exposing the option to the helper.  How the helper reads
-and uses it is up to the helper.
-
-But given that the value can come in from the command line or from
-the configuration file, I think this should be handled by fetch
-or push porcelain and fed through the helper protocol, and not be
-something that the helper reads from the config directly.
-
-> In general, it would be good to have 
-> transport.c and remote.c out of the business of knowing this sort of 
-> protocol-specific (albiet specific now to two protocols) information. (Of 
-> course, the native protocol's transport methods are in transport.c, so 
-> that's there, but I'd like to move that to a transport-native.c someday.)
-
-Agreed, but I have no solution for you due to the --receive-pack
-and --upload-pack arguments supported by the command line git push
-and git fetch/pull porcelain.
-
-But I have been trying to extend the helper interface in a way
-that would allow us to eject the native transport code entirely
-into a helper.  We may never bother, there are some advantages to
-being in the push/fetch client process, but I also didn't want to
-get stuck in a corner.
-
-I think with my series we do almost everything we need to support
-native git:// in an external helper process rather than builtin.
-We honor the pack lock file system used by fetch to maintain safe
-concurrent mutations.  We use push_refs API and signal back the
-complete information from the remote side.  We permit arbitrary
-message strings per ref to be returned by the helper.  Etc.
+@@ -301,8 +301,12 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+ 		ssl_socket_perror("SSL_new");
+ 		return -1;
+ 	}
+-	if (!SSL_set_fd(sock->ssl, sock->fd)) {
+-		ssl_socket_perror("SSL_set_fd");
++	if (!SSL_set_rfd(sock->ssl, sock->fd[0])) {
++		ssl_socket_perror("SSL_set_rfd");
++		return -1;
++	}
++	if (!SSL_set_wfd(sock->ssl, sock->fd[1])) {
++		ssl_socket_perror("SSL_set_wfd");
+ 		return -1;
+ 	}
  
-> > +'option followtags'::
-> > +	Aggressively fetch annotated tags if possible.
-> 
-> I assume this means to fetch tags which annotate objects we have or are 
-> fetching? (As opposed to fetching any annotated tag we could possibly 
-> fetch, even if we don't otherwise care about the tag or the thing it 
-> tags.) It's obvious in the context of git's config options, but I'd like 
-> this document to avoid assuming that context, and the option could apply 
-> more generally.
-
-Yes.  I'll extend the documentation further in the next iteration.
+@@ -324,11 +328,12 @@ static int socket_read(struct imap_socket *sock, char *buf, int len)
+ 		n = SSL_read(sock->ssl, buf, len);
+ 	else
+ #endif
+-		n = xread(sock->fd, buf, len);
++		n = xread(sock->fd[0], buf, len);
+ 	if (n <= 0) {
+ 		socket_perror("read", sock, n);
+-		close(sock->fd);
+-		sock->fd = -1;
++		close(sock->fd[0]);
++		close(sock->fd[1]);
++		sock->fd[0] = sock->fd[1] = -1;
+ 	}
+ 	return n;
+ }
+@@ -341,11 +346,12 @@ static int socket_write(struct imap_socket *sock, const char *buf, int len)
+ 		n = SSL_write(sock->ssl, buf, len);
+ 	else
+ #endif
+-		n = write_in_full(sock->fd, buf, len);
++		n = write_in_full(sock->fd[1], buf, len);
+ 	if (n != len) {
+ 		socket_perror("write", sock, n);
+-		close(sock->fd);
+-		sock->fd = -1;
++		close(sock->fd[0]);
++		close(sock->fd[1]);
++		sock->fd[0] = sock->fd[1] = -1;
+ 	}
+ 	return n;
+ }
+@@ -358,7 +364,8 @@ static void socket_shutdown(struct imap_socket *sock)
+ 		SSL_free(sock->ssl);
+ 	}
+ #endif
+-	close(sock->fd);
++	close(sock->fd[0]);
++	close(sock->fd[1]);
+ }
  
-> > +'option thin'::
-> > +	Transfer the data as a thin pack if possible.
-> 
-> Does anyone still use non-default thinness? 
-
-Its a command line option on the porcelain.  Until we remove
-the command line flag I think we should still try to honor it
-in implementations that understand that notion.
-
+ /* simple line buffering */
+@@ -911,7 +918,7 @@ static void imap_close_server(struct imap_store *ictx)
+ {
+ 	struct imap *imap = ictx->imap;
+ 
+-	if (imap->buf.sock.fd != -1) {
++	if (imap->buf.sock.fd[0] != -1) {
+ 		imap_exec(ictx, NULL, "LOGOUT");
+ 		socket_shutdown(&imap->buf.sock);
+ 	}
+@@ -939,7 +946,7 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 	ctx = xcalloc(sizeof(*ctx), 1);
+ 
+ 	ctx->imap = imap = xcalloc(sizeof(*imap), 1);
+-	imap->buf.sock.fd = -1;
++	imap->buf.sock.fd[0] = imap->buf.sock.fd[1] = -1;
+ 	imap->in_progress_append = &imap->in_progress;
+ 
+ 	/* open connection to IMAP server */
+@@ -966,7 +973,8 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 
+ 		close(a[0]);
+ 
+-		imap->buf.sock.fd = a[1];
++		imap->buf.sock.fd[0] = a[1];
++		imap->buf.sock.fd[1] = dup(a[1]);
+ 
+ 		imap_info("ok\n");
+ 	} else {
+@@ -1043,7 +1051,8 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 			goto bail;
+ 		}
+ 
+-		imap->buf.sock.fd = s;
++		imap->buf.sock.fd[0] = s;
++		imap->buf.sock.fd[1] = dup(s);
+ 
+ 		if (srvc->use_ssl &&
+ 		    ssl_socket_connect(&imap->buf.sock, 0, srvc->ssl_verify)) {
 -- 
-Shawn.
+1.6.4
