@@ -1,77 +1,78 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just
- a branch
-Date: Tue, 13 Oct 2009 03:03:31 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0910130250270.5105@dr-wily.mit.edu>
-References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu> <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/3] git config: clarify bool types
+Date: Tue, 13 Oct 2009 09:09:33 +0200
+Message-ID: <4AD427AD.3010701@drmicha.warpmail.net>
+References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>	 <7v7hv1kxyg.fsf@alter.siamese.dyndns.org>	 <94a0d4530910120303y205e6cfeg80ba0dfd6ed5a045@mail.gmail.com>	 <4AD3216B.7030507@drmicha.warpmail.net> <94a0d4530910121014k666207b9ub38fcecd47641ace@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 09:05:47 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 09:20:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxbRu-0003oz-TM
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 09:05:35 +0200
+	id 1Mxbfz-0001jz-0r
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 09:20:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933563AbZJMHEO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 03:04:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933561AbZJMHEN
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 03:04:13 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:59874 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933533AbZJMHEL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 03:04:11 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9D73SwJ005509;
-	Tue, 13 Oct 2009 03:03:28 -0400 (EDT)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9D73V2r022581;
-	Tue, 13 Oct 2009 03:03:32 -0400 (EDT)
-In-Reply-To: <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S933580AbZJMHKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 03:10:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933577AbZJMHKn
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 03:10:43 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43054 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933572AbZJMHKn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2009 03:10:43 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 25953A4C67;
+	Tue, 13 Oct 2009 03:09:41 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 13 Oct 2009 03:09:41 -0400
+X-Sasl-enc: Qex/uTDbxpk8TDWNCtBENCv2zzsumpHURuZfLPzbZr9V 1255417780
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 36E4A702F;
+	Tue, 13 Oct 2009 03:09:40 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091013 Lightning/1.0pre Shredder/3.0pre
+In-Reply-To: <94a0d4530910121014k666207b9ub38fcecd47641ace@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130135>
 
-On Mon, 12 Oct 2009, Junio C Hamano wrote:
-> But I do not know how it hurts to still have bisect states around, in
-> order to find where you want to go next.  Could you elaborate?
+Felipe Contreras venit, vidit, dixit 12.10.2009 19:14:
+> On Mon, Oct 12, 2009 at 3:30 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Felipe Contreras venit, vidit, dixit 12.10.2009 12:03:
+>>> On Mon, Oct 12, 2009 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>>
+>>>>> The value is what it is, the --bool and --bool-or-int options don't
+>>>>> specify the value type, just how it is interpreted. For example: a value
+>>>>> of '1' can be interpreted as 'true'.
+>>>>
+>>>> It is not really about "interpreting", but about showing, isn't it?
+>>>
+>>> Unless you are setting it, instead of reading it.
+>>>
+>>
+>> I'd still suggest fixing the typo ("interpreted") and spelling out
+>> "boolean".
+> 
+> Oops! You mean s/intepreted/interpreted/?
 
-Mostly little irritations.  Extra bisect/* refs show up in gitk.  If yo=
-u=20
-use __git_ps1 in your prompt (from git-completion.bash), it adds=20
-|BISECTING to your prompt.
+Yep :)
 
-Also, I just noticed that if you start a new bisection without ever=20
-cleaning up the old one, the next =E2=80=98git bisect reset=E2=80=99 wi=
-ll bring you back=20
-to HEAD before the old bisection instead of HEAD before the new one, wh=
-ich=20
-is not what you would expect if you forgot that the old bisection ever=20
-happened.
+> 
+> If we spell 'boolean' we might as well spell 'integer'; I think bool
+> and int are fine.
+> 
 
-> I am inclined to ask you to come up with a paragraph in the=20
-> documentation to discuss how the optional <branch> (now it will be=20
-> <commit>) parameter to the reset subcommand is meant to be used and=20
-> re-submit the original patch, perhaps with an updated commit log=20
-> message.
+"int" is at least a standard type name in C, whereas "bool" is not; but,
+yes, feel free to spell out "integer", or use "--int or --bool" as it
+is, which is a back reference to the corresponding entries for "--int"
+and "--bool", where things should be spelled out.
 
-I note that the =E2=80=98git checkout=E2=80=99 documentation mentions <=
-branch> and not=20
-<commit>, perhaps to emphasize that HEAD will become attached to the=20
-branch if you specify a branch name.  Do you think it makes sense for=20
-these to be documented differently?
-
-Anders
+Michael
