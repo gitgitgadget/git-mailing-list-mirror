@@ -1,66 +1,97 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
-   appropriate to do so
-Date: Tue, 13 Oct 2009 11:32:01 +0200
-Message-ID: <4AD44911.6070902@viscovery.net>
-References: <0016e68fd0123a175304754694b4@google.com> <200910122340.13366.trast@student.ethz.ch> <7vr5t89qiw.fsf@alter.siamese.dyndns.org> <200910130836.57011.trast@student.ethz.ch> <7vljjf226t.fsf@alter.siamese.dyndns.org>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH 2/3] git config: clarify bool types
+Date: Tue, 13 Oct 2009 13:02:15 +0300
+Message-ID: <94a0d4530910130302j26c5308ew5266d03c775b6ab0@mail.gmail.com>
+References: <1255293973-17444-1-git-send-email-felipe.contreras@gmail.com>
+	 <1255293973-17444-2-git-send-email-felipe.contreras@gmail.com>
+	 <1255293973-17444-3-git-send-email-felipe.contreras@gmail.com>
+	 <7v7hv1kxyg.fsf@alter.siamese.dyndns.org>
+	 <94a0d4530910120303y205e6cfeg80ba0dfd6ed5a045@mail.gmail.com>
+	 <4AD3216B.7030507@drmicha.warpmail.net>
+	 <94a0d4530910121014k666207b9ub38fcecd47641ace@mail.gmail.com>
+	 <4AD427AD.3010701@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Euguess@gmail.com, Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 11:33:18 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 13 12:12:11 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxdkr-000297-F2
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 11:33:17 +0200
+	id 1MxeMB-0004Wi-JJ
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 12:11:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757096AbZJMJcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 05:32:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756565AbZJMJcw
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 05:32:52 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:11291 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755630AbZJMJcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 05:32:51 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mxdje-0002UK-4R; Tue, 13 Oct 2009 11:32:02 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id D02759614; Tue, 13 Oct 2009 11:32:01 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7vljjf226t.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S933747AbZJMKEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 06:04:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755563AbZJMKEE
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 06:04:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:3698 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753780AbZJMKED (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 06:04:03 -0400
+Received: by fg-out-1718.google.com with SMTP id 16so723214fgg.1
+        for <git@vger.kernel.org>; Tue, 13 Oct 2009 03:02:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=i2QHopmXvPDD5A7hQ9G+M30l/PDTJxtiOb/5JmhVgfQ=;
+        b=BMaAOtcxwx0ZqVTOo9jE3ygG9iNG7AV2hWkiyzt7j/1/L5Si6Vq9gbdLEy4GSFqCL5
+         geSj2SX3fRSrp5YZ0ObxAscacAyoHpbLMyoNfw4pNL+pBPs2m/oVqCgwM0Fhx6AEfkfx
+         gUFw6OHJz5HrM4N4cKUHVTNDPADMa1ubZ8bVY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=GnYqY/AtqDQAnH9B8nkBjdSYKv9rHt1j1lnCn9fmDZye8357cPEK/QUz1I18w/VIX2
+         XdHLnW680WyeLvm5vqZqWE9/ZqidJjVmQj2nmvFHywxe7S5WogM9PzSAZHyPtamf0KgV
+         7WvaQ5PQmCOhF+Y4Qt4fz+hECOy2SCEYBwSlk=
+Received: by 10.86.221.25 with SMTP id t25mr6204053fgg.19.1255428135214; Tue, 
+	13 Oct 2009 03:02:15 -0700 (PDT)
+In-Reply-To: <4AD427AD.3010701@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130151>
 
-Junio C Hamano schrieb:
-> #1. These used to detach, but will create a local branch
-> 
->  $ git checkout origin/next        ;# as if with -t
->  $ git checkout xyzzy/frotz        ;# as if with -t (origin is not special)
+On Tue, Oct 13, 2009 at 10:09 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Felipe Contreras venit, vidit, dixit 12.10.2009 19:14:
+>> On Mon, Oct 12, 2009 at 3:30 PM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> Felipe Contreras venit, vidit, dixit 12.10.2009 12:03:
+>>>> On Mon, Oct 12, 2009 at 8:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>>>>
+>>>>>> The value is what it is, the --bool and --bool-or-int options don't
+>>>>>> specify the value type, just how it is interpreted. For example: a value
+>>>>>> of '1' can be interpreted as 'true'.
+>>>>>
+>>>>> It is not really about "interpreting", but about showing, isn't it?
+>>>>
+>>>> Unless you are setting it, instead of reading it.
+>>>>
+>>>
+>>> I'd still suggest fixing the typo ("interpreted") and spelling out
+>>> "boolean".
+>>
+>> Oops! You mean s/intepreted/interpreted/?
+>
+> Yep :)
+>
+>>
+>> If we spell 'boolean' we might as well spell 'integer'; I think bool
+>> and int are fine.
+>>
+>
+> "int" is at least a standard type name in C, whereas "bool" is not; but,
+> yes, feel free to spell out "integer", or use "--int or --bool" as it
+> is, which is a back reference to the corresponding entries for "--int"
+> and "--bool", where things should be spelled out.
 
-If I did 'git checkout origin/next' last week, I will already have a
-branch next. What should happen if I do it again today?
+'bool' is also a standard type, in C99.
 
-I think that it should DWIM: If last week's next fast-fowards to this
-week's origin/next (*and* next is the branch that tracks origin/next),
-then the fast foward should happen. Otherwise 'git checkout origin/next'
-should fail.
-
-This way, if I built on last week's next, I will be notified; but if I
-only want to browse history, then I won't be impeded by the existence of next.
-
--- Hannes
+-- 
+Felipe Contreras
