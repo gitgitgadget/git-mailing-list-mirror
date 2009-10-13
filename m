@@ -1,79 +1,53 @@
-From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
-Subject: Re: Supressing sorting of trees
-Date: Tue, 13 Oct 2009 21:49:22 +0100
-Message-ID: <efe2b6d70910131349n4cab61d0h9a9c8099830095f9@mail.gmail.com>
-References: <loom.20091012T152113-874@post.gmane.org> <20091012142032.GG9261@spearce.org> 
-	<loom.20091012T171550-239@post.gmane.org> <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de> 
-	<loom.20091012T182258-9@post.gmane.org>
+From: "Yann Dirson" <y.dirson@e-sidor.com>
+Subject: [msysgit? bug] crlf double-conversion on win32
+Date: Tue, 13 Oct 2009 22:49:25 +0200
+Message-ID: <38cfaa83fdf80dec3a3d81ed3e0de0e2.squirrel@intranet.linagora.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Sal Mangano <smangano@into-technology.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 22:58:45 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 13 22:59:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxoRw-0006dS-E6
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 22:58:28 +0200
+	id 1MxoS5-0006dS-1h
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 22:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934055AbZJMUuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 16:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760815AbZJMUuU
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 16:50:20 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:34112 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760731AbZJMUuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 16:50:19 -0400
-Received: by fxm27 with SMTP id 27so10701204fxm.17
-        for <git@vger.kernel.org>; Tue, 13 Oct 2009 13:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=2wVqFLOvmHKK0Zk9bj4EL5ZPs229HOpAWXBtiPJ4/jA=;
-        b=EBqd4RIjPMxkPHU29ZbrI2kRtd35Fp2VE7lnH0A7M7IwBCeua/WH/Sopj4TpilJIdw
-         mLz2GebGS8XB2AYch3/GTk4/goM9goDvR8xMyFQMs4PI0J1+DKDBvMa3ChvNRWEhdkzN
-         9FcUJCuy0SguZg2ep2EOCVf15kGUftMooqUkg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=A4ay74HX83Zj4yNSEtayPEbu36/vjMYvMzqTjChL1HiJWh0+v1FfSX1b1PdbVtSDUY
-         5+ma4NY9FLaOGUC4CM7APjYJawFNihIo6J+yJXkn5qjm+/vq99kav4YAtx/oiDVV5drr
-         gnl11JQoJEIzXrcjvkajgDxwvQrmkfZBH02IY=
-Received: by 10.223.5.25 with SMTP id 25mr1466330fat.38.1255466982695; Tue, 13 
-	Oct 2009 13:49:42 -0700 (PDT)
-In-Reply-To: <loom.20091012T182258-9@post.gmane.org>
+	id S934336AbZJMU4F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 16:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934324AbZJMU4F
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 16:56:05 -0400
+Received: from alderaan.linagora.com ([84.14.148.74]:34592 "EHLO
+	alderaan.linagora.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934183AbZJMU4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 16:56:04 -0400
+X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Oct 2009 16:56:04 EDT
+Received: from 10.0.0.2 (unknown [10.75.192.3])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by alderaan.linagora.com (Postfix) with ESMTPSA id 20103429ECA
+	for <git@vger.kernel.org>; Tue, 13 Oct 2009 22:49:00 +0200 (CEST)
+Received: from 10.0.0.1 (proxying for 194.206.158.221)
+        (SquirrelMail authenticated user ydirson)
+        by intranet.linagora.com with HTTP;
+        Tue, 13 Oct 2009 22:49:25 +0200
+User-Agent: SquirrelMail/1.4.18
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130211>
 
-On Mon, Oct 12, 2009 at 5:51 PM, Sal Mangano
-<smangano@into-technology.com> wrote:
+With a msysgit 1.6.4 package, I got stuck after someone copied a CRLF file
+to a Linux box and committed it.
 
-> 1) I can write by repository from scratch.
-> 2) I can use Git unchanged but preserve order by storing some information in
-> each sub tree (e.g. an extra blob) which retains the real order. I can also
-> store this information once for the whole "chunks" of the repository.
-> 3) I can change Git to suite my needs understanding that it is not Git
-> anymore.
->
-> For me, (1) makes no sense at this time. I started with the hope that (2)
-> would work but realized it is very awkward and will cause performance problems
-> because it means most updates where ordering matters will have to update the
-> Git trees and my private ordering blob(s). So, after a quick look at the
-> source code it seemed like hacking Git into what I wanted was easier than 1
-> or 2.
-
-You could add a prefix to the names so you get the order you want. Eg:
-a-foo
-b-bar
-c-baz
-
-If you need to move foo to between bar and baz, you just rename it to
-ba-foo, etc.
-
-Ealdwulf
+In that situation, the win32 client in autocrlf mode keeps telling that
+the files are locally modified, even after eg "git reset --hard".  Without
+touching the crlf setting (which I believe should not ever be necessary),
+this can be corrected by committing the faulty files after dos2unix'ing
+them, and using "git fetch && git reset --hard origin/master" ("git pull
+--rebase" refuses to do the job since it believes there are local
+changes).
