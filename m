@@ -1,131 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v2 04/16] Move "get_ack()" back to fetch-pack
-Date: Mon, 12 Oct 2009 19:25:03 -0700
-Message-ID: <1255400715-10508-5-git-send-email-spearce@spearce.org>
-References: <1255400715-10508-1-git-send-email-spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 13 04:34:13 2009
+From: Vietor Liu <vietor@vxwo.org>
+Subject: [PATCH v2] git-gui: Fixed diff pane height for shorter screen height
+Date: Tue, 13 Oct 2009 10:28:41 +0800
+Message-ID: <1255400921-4177-1-git-send-email-vietor@vxwo.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 13 04:34:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxXD9-0004cs-41
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 04:34:03 +0200
+	id 1MxXDD-0004cs-Bi
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 04:34:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758819AbZJMCZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 22:25:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758802AbZJMCZ4
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 22:25:56 -0400
-Received: from george.spearce.org ([209.20.77.23]:56185 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758811AbZJMCZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 22:25:55 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id DE86C38262; Tue, 13 Oct 2009 02:25:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 5CECF38215
-	for <git@vger.kernel.org>; Tue, 13 Oct 2009 02:25:17 +0000 (UTC)
-X-Mailer: git-send-email 1.6.5.52.g0ff2e
-In-Reply-To: <1255400715-10508-1-git-send-email-spearce@spearce.org>
+	id S932382AbZJMC0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 22:26:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758830AbZJMC0p
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 22:26:45 -0400
+Received: from mail-pz0-f105.google.com ([209.85.222.105]:54535 "EHLO
+	mail-pz0-f105.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758833AbZJMC0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 22:26:40 -0400
+Received: by pzk3 with SMTP id 3so354398pzk.21
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 19:26:04 -0700 (PDT)
+Received: by 10.114.253.14 with SMTP id a14mr11291087wai.160.1255400764332;
+        Mon, 12 Oct 2009 19:26:04 -0700 (PDT)
+Received: from localhost.localdomain ([123.113.93.118])
+        by mx.google.com with ESMTPS id 20sm995577pxi.12.2009.10.12.19.26.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 12 Oct 2009 19:26:03 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130113>
 
-In 41cb7488 Linus moved this function to connect.c for reuse inside
-of the git-clone-pack command.  That was 2005, but in 2006 Junio
-retired git-clone-pack in commit efc7fa53.  Since then the only
-caller has been fetch-pack.  Since this ACK/NAK exchange is only
-used by the fetch-pack/upload-pack protocol we should keep move
-it back to a private detail of fetch-pack.
+When the screen height is short(e.g. Asus EeePC 1024x600), the partial commit
+pane will hide. This patch adjust the minimum height of the diff pane, allowing
+the overall window to be shorter and still display the entire commit pane.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Vietor Liu <vietor@vxwo.org>
 ---
- builtin-fetch-pack.c |   21 +++++++++++++++++++++
- cache.h              |    1 -
- connect.c            |   21 ---------------------
- 3 files changed, 21 insertions(+), 22 deletions(-)
+ git-gui.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index 783c2b0..7c09d46 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -157,6 +157,27 @@ static const unsigned char *get_rev(void)
- 	return commit->object.sha1;
- }
- 
-+static int get_ack(int fd, unsigned char *result_sha1)
-+{
-+	static char line[1000];
-+	int len = packet_read_line(fd, line, sizeof(line));
-+
-+	if (!len)
-+		die("git fetch-pack: expected ACK/NAK, got EOF");
-+	if (line[len-1] == '\n')
-+		line[--len] = 0;
-+	if (!strcmp(line, "NAK"))
-+		return 0;
-+	if (!prefixcmp(line, "ACK ")) {
-+		if (!get_sha1_hex(line+4, result_sha1)) {
-+			if (strstr(line+45, "continue"))
-+				return 2;
-+			return 1;
-+		}
-+	}
-+	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
-+}
-+
- static int find_common(int fd[2], unsigned char *result_sha1,
- 		       struct ref *refs)
- {
-diff --git a/cache.h b/cache.h
-index a5eeead..4e283be 100644
---- a/cache.h
-+++ b/cache.h
-@@ -856,7 +856,6 @@ extern struct ref *find_ref_by_name(const struct ref *list, const char *name);
- extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
- extern int finish_connect(struct child_process *conn);
- extern int path_match(const char *path, int nr, char **match);
--extern int get_ack(int fd, unsigned char *result_sha1);
- struct extra_have_objects {
- 	int nr, alloc;
- 	unsigned char (*array)[20];
-diff --git a/connect.c b/connect.c
-index 7945e38..839a103 100644
---- a/connect.c
-+++ b/connect.c
-@@ -107,27 +107,6 @@ int server_supports(const char *feature)
- 		strstr(server_capabilities, feature) != NULL;
- }
- 
--int get_ack(int fd, unsigned char *result_sha1)
--{
--	static char line[1000];
--	int len = packet_read_line(fd, line, sizeof(line));
--
--	if (!len)
--		die("git fetch-pack: expected ACK/NAK, got EOF");
--	if (line[len-1] == '\n')
--		line[--len] = 0;
--	if (!strcmp(line, "NAK"))
--		return 0;
--	if (!prefixcmp(line, "ACK ")) {
--		if (!get_sha1_hex(line+4, result_sha1)) {
--			if (strstr(line+45, "continue"))
--				return 2;
--			return 1;
--		}
--	}
--	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
--}
--
- int path_match(const char *path, int nr, char **match)
- {
- 	int i;
+diff --git a/git-gui.sh b/git-gui.sh
+index 09b2720..037a1f2 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3083,7 +3083,7 @@ frame .vpane.lower.diff.body
+ set ui_diff .vpane.lower.diff.body.t
+ text $ui_diff -background white -foreground black \
+ 	-borderwidth 0 \
+-	-width 80 -height 15 -wrap none \
++	-width 80 -height 5 -wrap none \
+ 	-font font_diff \
+ 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
+ 	-yscrollcommand {.vpane.lower.diff.body.sby set} \
 -- 
-1.6.5.52.g0ff2e
+1.6.5
