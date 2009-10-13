@@ -1,178 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/2] user-manual: add global config section
-Date: Tue, 13 Oct 2009 09:19:56 +0200
-Message-ID: <4AD42A1C.1080709@drmicha.warpmail.net>
-References: <1255293786-17293-1-git-send-email-felipe.contreras@gmail.com>	 <1255293786-17293-2-git-send-email-felipe.contreras@gmail.com>	 <4AD32024.6020005@drmicha.warpmail.net> <94a0d4530910121009r52d45522jf1c27dd102db4ad9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just a 
+  branch
+Date: Tue, 13 Oct 2009 00:21:50 -0700
+Message-ID: <7vbpkb21yp.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu>
+ <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu>
+ <7vaazw6uyi.fsf@alter.siamese.dyndns.org> <4AD42203.6030802@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	"J. Bruce Fields" <bfields@citi.umich.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 09:39:08 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Anders Kaseorg <andersk@MIT.EDU>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 13 09:39:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxbvz-00016f-Dh
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 09:36:39 +0200
+	id 1Mxbw1-00016f-0T
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 09:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933650AbZJMHVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 03:21:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933648AbZJMHVI
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 03:21:08 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46775 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933629AbZJMHVG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2009 03:21:06 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id F1E35A4D5B;
-	Tue, 13 Oct 2009 03:20:04 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 13 Oct 2009 03:20:05 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ocLhY3Y9JG0/Bsy9Af6bhlaHJwc=; b=VUBW67LFx+I4i01WzvR35gwfhrBFVuAIviUS3ZJUV3ZhGoJ1yq9W8QAG05NOiMPE3B/eHRBJbHQl2XX3c6IwUVyX/QoEAffqSzma8uwrhK+F3LQ/aki9HIRF43RguTmVvzvBbCZwwfnOCpCznUTVrjoWgvxStk2Zyf6OcPBsCiE=
-X-Sasl-enc: QidowsLfj0TA25V7C8gmzi34+xNRzn8ZFToIGp3ogFww 1255418404
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A4C316A01A;
-	Tue, 13 Oct 2009 03:20:03 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091013 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <94a0d4530910121009r52d45522jf1c27dd102db4ad9@mail.gmail.com>
+	id S933614AbZJMHWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 03:22:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758975AbZJMHWr
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 03:22:47 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59502 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757222AbZJMHWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 03:22:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 39E2975D64;
+	Tue, 13 Oct 2009 03:22:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AV+HJdlnHD1ylhTUUiL5g05/AYY=; b=bJwHxQ
+	+vqwumt3e/oMnYVnPa5M0FDRD0YtJEucm1C9Ddhhn0lsoOQfuEs6aUcSFLdWbpVT
+	VWhXRrKgLqOebHMsK/TkqyJFdXtaqo7n+ctHBzsFSb9vLZYaDRnUkvjnQzT/T1m+
+	SSIGM29loxqcE7Yt04OpF+ZDI718lL7yPjN1E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SCvUlDqFdAj/xSiBOVAG7BnWU4CSOw0J
+	CI4mM3skI6HAZK8hNBb5W8v1O+KJhThIcrSgDjPMBgmOIVq/qcZHfzDjwZG4y2zJ
+	sPjt1k+NnsbMV7zVahhmvlM2aA3/Sj2TRvgruAys3QErKWElYCLFebjjOG6uUDTO
+	JZajjJCgNGw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F85175D63;
+	Tue, 13 Oct 2009 03:21:57 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 981EC75D62; Tue, 13 Oct 2009
+ 03:21:51 -0400 (EDT)
+In-Reply-To: <4AD42203.6030802@viscovery.net> (Johannes Sixt's message of
+ "Tue\, 13 Oct 2009 08\:45\:23 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1705677A-B7C9-11DE-86D8-A730BBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130142>
 
-Felipe Contreras venit, vidit, dixit 12.10.2009 19:09:
-> On Mon, Oct 12, 2009 at 3:25 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Felipe Contreras venit, vidit, dixit 11.10.2009 22:43:
->>> So that users get to know how to configure git from the get-to with good
->>> practical example (color.ui = auto) that most people would probably like
->>> anyway.
->>>
->>> Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
->>> ---
->>>  Documentation/user-manual.txt |   27 +++++++++++++++++++++++++++
->>>  1 files changed, 27 insertions(+), 0 deletions(-)
->>>
->>> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
->>> index 67ebffa..ff2563a 100644
->>> --- a/Documentation/user-manual.txt
->>> +++ b/Documentation/user-manual.txt
->>> @@ -40,6 +40,33 @@ without any explanation.
->>>  Finally, see <<todo>> for ways that you can help make this manual more
->>>  complete.
->>>
->>> +[[getting-started]]
->>> +Getting started
->>> +=============
->>> +
->>> +Git's configuration is distributed among different locations--this manual will
->>> +only to deal with 'global' (for the user) and 'repository' variables, where
->>> +'repository' variables take precedence over 'global' ones.
->>
->> Well, you do talk about "system" below, and that's about it. Also, the
->> configuration is not really distributed among different locations. Most
->> newbies interested in a *D*VCS will misunderstand this (as git having
->> distributed configuration).
->>
->> Alternative:
->>
->> Git's default configuration can be changed on a system wide, global (per
->> user) and local (per repository) level, in the order of increasing
->> precedence.
-> 
-> When I read that it's not clear if the local level discards the global
-> level completely or it's aggregated. If we specify that it's only the
-> variables that take precedence it might be clearer:
-> 
-> Git's configuration is composed of variables that are stored in
-> multiple locations: 'system' (all users), 'global' (for the user), and
-> 'repository' -- in decreasing order of precedence.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-Yep, although established lingo is "options" (not "variables"), and it's
-really increasing order, not decreasing.
+> The situation that I'm faced quite frequently is that after I find a
+> regression, I cannot tell which released version did not have the
+> breakage. Hence, the first thing I have to do is to find a good commit.
+> Therefore, I jump around in ancient history until I find a good commit.
+> Then I start bisect. I certainly do NOT want to be warped back to this
+> ancient commit by 'bisect reset'.
 
-> 
->>> +
->>> +You would probably want to start setting up something useful:
->>> +------------------------------------------------
->>> +$ git config --global color.ui auto
->>> +------------------------------------------------
->>> +
->>> +This will make prettier the output of certain commands such as `git diff`, but
->>> +that's not important; what is important here is that `color.ui` has been
->>> +stored in the 'global' configuration.
->>
->> This will make certain commands such as `git diff` use colors in the
->> output. What is important here is that the value `auto` for the option
->> `color.ui` has been stored in the 'global' configuration. Use `--system`
->> for the system wide configuration; specifying neither `--system` nor
->> `--global` makes `git config` access the local configuration.
-> 
-> I think we should only mention (once) the system wide configuration,
-> but not cover it. That's for system administrators, not users.
-> 
->>> +
->>> +View and manually modify the configuration by opening `~/.gitconfig`:
->>
->> View and manually modify the global configuration by opening
->> `~/.gitconfig` in your editor or using `git config --global --edit`:
-> 
-> I have separate patches for 'git config --edit', but Junio suggested
-> to hold them back because --edit is a relatively new option.
-> 
->>> +------------------------------------------------
->>> +[color]
->>> +        ui = auto
->>> +------------------------------------------------
->>> +
->>> +Other locations are `/etc/gitconfig` (system), and `.git/config` (repository).
->>
->> I don't even think we should talk about locations here, "git config -e"
->> should be the first user's way to do it.
-> 
-> I disagree. Most useful configurations (color.ui, user.email) should
-> be global. The complete newbie might think: cool, now I have my git
-> properly configured (with 'git config -e'), and then when cloning a
-> new repo (s)he would think: ok, git just forgot what I told him. When
-> that happens (s)he would have to re-learn and re-configure git.
-> 
-> When users think about configuration, it's usually a 'global'
-> configuration, so that's what we should teach from the beginning and
-> make sure they understand the difference between 'global' and
-> 'repository' configurations.
+Unlike your other message, now, I can see _this_ one making sense very
+much.
 
-Sure. What I meant are the file locations, the actual paths. First
-timers should use "git config -e" and "git config --global -e" if they
-really want to edit their local and global config files. Better yet,
-they should use "git config" and "git config --global" in their set and
-get modes, because they make sure that there's no total garbage in the
-config. The locations of the files are an implementation detail.
-
-> 
->>> +
->>> +More git configurations will be covered in the rest of the manual, if you want
->>> +to learn more look at linkgit:git-config[1] for details.
->>
->> "Configurations" is ambiguous, it can be easily (mis)understood as
->> "types of configuration" (global, local etc.). Also, the above doesn't
->> really cover even one option. How about:
->>
->> This manual covers many configuration options (such as `color.ui.`). For
->> more details on the `git config` command as well as all configuration
->> options see linkgit:git-config[1].
-> 
-> Looks better, except s/configuration options/configuration variables/
-> 
-
-Uhm, no, for the reason mentioned above. While the man page of git
-config is not completely consistent either, we're really talking about
-configuration options. An "option" can be set to a "value", and the
-thing you pass in order to do that can be called a "variable". For the
-most part this is how git-config[1] uses this terminology.
-
-Michael
+It is a very good explanation as to why BISECT_START (whose sole purpose
+is to go back there) is not a very useful concept.  What you wrote deserve
+to go to the "bisect reset" documentation to explain what the optional
+<branch> argument (perhaps we would make it a <commit> with Anders's
+patch) is good for and how it is intended to be used.
