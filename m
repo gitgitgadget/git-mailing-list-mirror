@@ -1,87 +1,132 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: Git: "No you can't handle my root!" (?)
-Date: Tue, 13 Oct 2009 06:17:13 +0200
-Message-ID: <1255407433.15646.12.camel@localhost>
-References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
-	 <1255383459.15646.10.camel@localhost>
-	 <20091013014332.GB13737@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC PATCH v2 08/16] remote-helpers: Support custom transport
+ options
+Date: Tue, 13 Oct 2009 00:23:23 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910122357230.32515@iabervon.org>
+References: <1255400715-10508-1-git-send-email-spearce@spearce.org> <1255400715-10508-9-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: sylvain@demarque.qc.ca, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 13 06:21:38 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 13 06:30:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxYtE-0005d6-Fv
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 06:21:36 +0200
+	id 1MxZ20-00004s-LR
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 06:30:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751427AbZJMERw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 00:17:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbZJMERv
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 00:17:51 -0400
-Received: from mail-ew0-f208.google.com ([209.85.219.208]:47156 "EHLO
-	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbZJMERv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 00:17:51 -0400
-Received: by ewy4 with SMTP id 4so3031318ewy.37
-        for <git@vger.kernel.org>; Mon, 12 Oct 2009 21:17:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=MRWAhMv//KDt3FNCj1M5Dm0oI+Ko83SHqNu90KC3jmQ=;
-        b=nCNYvP1idh+lw7IFXkiwDpjRUCsLFsKB6BA7wSgk7ZJYtAbevK17y1VvqKSxi4Qm2T
-         2f/fNOZXqq7DqfQJOmm4w7PmU4abu5efK5wqTKx6Zh6hZ4HKyqgUC58V4SpDgri0xShT
-         C8jtAaxisD1jneVdfxZtV1VEF/+LWXNxzoqMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=hS5N//M47pzKldT11Pz0dJBCPfDSNUKaX8b87Mn8EQbl4rOaa3FgyKVSqcqNRq4wYr
-         tDlx/+FsbkA9jyfyVgHmzcL9/rgfy1VhgQqiZckjNa0cfEIT/cA36WyiNyTbDBKKTOPM
-         rfFeuPBNSSi0PLr5uiMw2JDB9uD/mPfPdndoY=
-Received: by 10.210.7.24 with SMTP id 24mr5016945ebg.53.1255407433938;
-        Mon, 12 Oct 2009 21:17:13 -0700 (PDT)
-Received: from ?192.168.1.2? (host185-1-dynamic.48-82-r.retail.telecomitalia.it [82.48.1.185])
-        by mx.google.com with ESMTPS id 10sm2020286eyz.44.2009.10.12.21.17.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Oct 2009 21:17:12 -0700 (PDT)
-In-Reply-To: <20091013014332.GB13737@coredump.intra.peff.net>
-X-Mailer: Evolution 2.26.3 
+	id S1751620AbZJMEYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 00:24:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbZJMEYA
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 00:24:00 -0400
+Received: from iabervon.org ([66.92.72.58]:39629 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751497AbZJMEYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 00:24:00 -0400
+Received: (qmail 5473 invoked by uid 1000); 13 Oct 2009 04:23:23 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 Oct 2009 04:23:23 -0000
+In-Reply-To: <1255400715-10508-9-git-send-email-spearce@spearce.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130125>
 
-Il giorno lun, 12/10/2009 alle 21.43 -0400, Jeff King ha scritto:
-> Take a look at:
+On Mon, 12 Oct 2009, Shawn O. Pearce wrote:
+
+> Some transports, like the native pack transport implemented by
+> fetch-pack, support useful features like depth or include tags.
+> These should be exposed if the underlying helper knows how to
+> use them and is based upon the same infrastructure.
+>
+> Helpers must advertise the options they support, any attempt
+> to set an unsupported option will cause a failure.
 > 
->   http://joey.kitenet.net/code/etckeeper/
-
-
-thanks really interesting
-
-
-> > can I have a git report of $HOME/.* (without . and ..)? (all user
-> > setting)
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> CC: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+>  Documentation/git-remote-helpers.txt |   20 ++++++++++
+>  remote-curl.c                        |   16 ++++++-
+>  transport-helper.c                   |   70 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 103 insertions(+), 3 deletions(-)
 > 
-> This seems to work:
-> 
->   $ cd ~
->   $ git init
->   $ echo '*' >.gitignore
->   $ echo '!.*' >.gitignore
-> 
-> > Or better: provide a list of directory under $HOME I want to track 
-> 
-> Same thing, but make your ! pattern more specific.
+> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+> index e10ce99..334ab30 100644
+> --- a/Documentation/git-remote-helpers.txt
+> +++ b/Documentation/git-remote-helpers.txt
+> @@ -46,6 +46,7 @@ Supported if the helper has the "fetch" capability.
+>  'fetch-multiple'::
+>  	Fetches multiple objects at once.  The fetch-multiple
+>  	command is followed by one or more 'fetch' lines as above,
+> +	zero or more 'option' lines for the supported options,
+>  	and then a blank line to terminate the batch.  Outputs a
+>  	single blank line when the entire batch is complete.
+>  	Optionally may output a 'lock <file>' line indicating a
+> @@ -69,6 +70,9 @@ CAPABILITIES
+>  'fetch-multiple'::
+>  	This helper supports the 'fetch-multiple' command.
+>  
+> +'option' <name>::
+> +	This helper supports the option <name> under fetch-multiple.
+> +
 
-thanks again!
+I'm a bit surprised that the options only apply in a fetch-multiple 
+section, rather than getting set at the beginning and applying to 
+everything for that run. At least, I think an "option" command should be 
+useable outside of a fetch-multiple (or possible future grouping 
+construct) and have global scope.
 
-regards,
-Daniele
+>  REF LIST ATTRIBUTES
+>  -------------------
+>  
+> @@ -76,10 +80,26 @@ None are defined yet, but the caller must accept any which are supplied.
+>  
+>  FETCH OPTIONS
+>  -------------
+> +To enable an option the helper must list it in 'capabilities'.
+>  
+>  'option verbose'::
+>  	Print more verbose activity messages to stderr.
+
+I think you mis-split the above part; your previoud patch declared this 
+option without declaring any way to use it. Might be worth allowing 
+multiple "verboses" and "quiet" or "option verbosity quiet"/"option 
+verbosity verbose verbose".
+
+> +'option uploadpack' <command>::
+> +	The program to use on the remote side to generate a pack.
+
+I sort of feel like the helper ought to read this one out of the config 
+file itself if it wants it. In general, it would be good to have 
+transport.c and remote.c out of the business of knowing this sort of 
+protocol-specific (albiet specific now to two protocols) information. (Of 
+course, the native protocol's transport methods are in transport.c, so 
+that's there, but I'd like to move that to a transport-native.c someday.)
+
+> +'option depth' <depth>::
+> +	Deepen the history of a shallow repository.
+> +
+> +'option keep'::
+> +	Keep the transferred pack(s) with .keep files.
+> +
+> +'option followtags'::
+> +	Aggressively fetch annotated tags if possible.
+
+I assume this means to fetch tags which annotate objects we have or are 
+fetching? (As opposed to fetching any annotated tag we could possibly 
+fetch, even if we don't otherwise care about the tag or the thing it 
+tags.) It's obvious in the context of git's config options, but I'd like 
+this document to avoid assuming that context, and the option could apply 
+more generally.
+
+> +
+> +'option thin'::
+> +	Transfer the data as a thin pack if possible.
+
+Does anyone still use non-default thinness? 
+
+	-Daniel
+*This .sig left intentionally blank*
