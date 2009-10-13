@@ -1,95 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
- appropriate to do so
-Date: Tue, 13 Oct 2009 13:53:12 -0700
-Message-ID: <7vljjfuibr.fsf@alter.siamese.dyndns.org>
-References: <0016e68fd0123a175304754694b4@google.com>
- <200910122340.13366.trast@student.ethz.ch>
- <7vr5t89qiw.fsf@alter.siamese.dyndns.org>
- <200910130836.57011.trast@student.ethz.ch>
- <7vljjf226t.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.0910131358000.32515@iabervon.org>
+From: Ealdwulf Wuffinga <ealdwulf@googlemail.com>
+Subject: Re: Supressing sorting of trees
+Date: Tue, 13 Oct 2009 21:49:22 +0100
+Message-ID: <efe2b6d70910131349n4cab61d0h9a9c8099830095f9@mail.gmail.com>
+References: <loom.20091012T152113-874@post.gmane.org> <20091012142032.GG9261@spearce.org> 
+	<loom.20091012T171550-239@post.gmane.org> <alpine.DEB.1.00.0910121803360.4985@pacific.mpi-cbg.de> 
+	<loom.20091012T182258-9@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Euguess@gmail.com, Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
-	git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Oct 13 22:58:33 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Sal Mangano <smangano@into-technology.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 22:58:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxoS0-0006dS-9O
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 22:58:32 +0200
+	id 1MxoRw-0006dS-E6
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 22:58:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934142AbZJMUyV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 16:54:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934034AbZJMUyU
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 16:54:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:32982 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934008AbZJMUyT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 16:54:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ABD4C57542;
-	Tue, 13 Oct 2009 16:53:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Axjh25LQXZHn74cbr0oVq0qZPus=; b=BARuT4
-	THDjc+hqrvrUIkTnzXWLIAm4eduDVpnkfoUiyB+WtF1VcuR1rrOCkMm6csHH9lVo
-	1+01IgAGfi4b0gC3IfVZZyknzpVDVosvkwAs5uyenorrZRQxWedvJQniVXgpe8Xl
-	kvjwU76eirWs6Fx3S1afgbkvtoRV+TWUqJqWk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HeHDPufwrktzrCr/W2QDDFq2aWu5bgl+
-	AKpexHE+6rUmofDFM2JoCOM8yo58xT3sS8tDsTQPqMiuyqmRlg44HD/opBeszJJC
-	NKalrEYX89YjXPp+GbUtwEQG/m2mVSpPTHtimg+l8ZZd0K8hk8s95/pD/SZolRCh
-	FvEMaVqrO5E=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2AA0E5753E;
-	Tue, 13 Oct 2009 16:53:25 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C35C55753C; Tue, 13 Oct
- 2009 16:53:13 -0400 (EDT)
-In-Reply-To: <alpine.LNX.2.00.0910131358000.32515@iabervon.org> (Daniel
- Barkalow's message of "Tue\, 13 Oct 2009 14\:39\:51 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7367190C-B83A-11DE-9799-B3E4ED7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934055AbZJMUuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 16:50:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760815AbZJMUuU
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 16:50:20 -0400
+Received: from mail-fx0-f227.google.com ([209.85.220.227]:34112 "EHLO
+	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760731AbZJMUuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 16:50:19 -0400
+Received: by fxm27 with SMTP id 27so10701204fxm.17
+        for <git@vger.kernel.org>; Tue, 13 Oct 2009 13:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=2wVqFLOvmHKK0Zk9bj4EL5ZPs229HOpAWXBtiPJ4/jA=;
+        b=EBqd4RIjPMxkPHU29ZbrI2kRtd35Fp2VE7lnH0A7M7IwBCeua/WH/Sopj4TpilJIdw
+         mLz2GebGS8XB2AYch3/GTk4/goM9goDvR8xMyFQMs4PI0J1+DKDBvMa3ChvNRWEhdkzN
+         9FcUJCuy0SguZg2ep2EOCVf15kGUftMooqUkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=A4ay74HX83Zj4yNSEtayPEbu36/vjMYvMzqTjChL1HiJWh0+v1FfSX1b1PdbVtSDUY
+         5+ma4NY9FLaOGUC4CM7APjYJawFNihIo6J+yJXkn5qjm+/vq99kav4YAtx/oiDVV5drr
+         gnl11JQoJEIzXrcjvkajgDxwvQrmkfZBH02IY=
+Received: by 10.223.5.25 with SMTP id 25mr1466330fat.38.1255466982695; Tue, 13 
+	Oct 2009 13:49:42 -0700 (PDT)
+In-Reply-To: <loom.20091012T182258-9@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130210>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+On Mon, Oct 12, 2009 at 5:51 PM, Sal Mangano
+<smangano@into-technology.com> wrote:
 
-> I suspect that a very common pattern for people who follow trees for 
-> testing and such or who only develop in topic branches is:
-> ...
-> << many issues with this kind of DWIM omitted >>
-> ...
-> On the second cycle, either git refuses or does something actively 
-> confusing to this user, and the user has to learn the difference between 
-> local branches and remote branches on the *second* cycle. IMHO, it's much 
-> better to make users learn things at the point when they don't think they 
-> know how to use the system, rather than when they think they understand it 
-> and are just trying to get things done.
+> 1) I can write by repository from scratch.
+> 2) I can use Git unchanged but preserve order by storing some information in
+> each sub tree (e.g. an extra blob) which retains the real order. I can also
+> store this information once for the whole "chunks" of the repository.
+> 3) I can change Git to suite my needs understanding that it is not Git
+> anymore.
+>
+> For me, (1) makes no sense at this time. I started with the hope that (2)
+> would work but realized it is very awkward and will cause performance problems
+> because it means most updates where ordering matters will have to update the
+> Git trees and my private ordering blob(s). So, after a quick look at the
+> source code it seemed like hacking Git into what I wanted was easier than 1
+> or 2.
 
-Yeah, and I think J6t pointed out the same issue.
+You could add a prefix to the names so you get the order you want. Eg:
+a-foo
+b-bar
+c-baz
 
-I think it tells us something, after some of "the most trusted Git
-contributors" thought "really long and hard, and making sure to take
-user-friendliness into account at least as much as simplicity of
-implementation", they are getting to the same conclusion that this
-particular DWIMery is a misguided attempt to be helpful without really
-helping but rather hurting the users.
+If you need to move foo to between bar and baz, you just rename it to
+ba-foo, etc.
 
-I will stop trying to come up with a strawman for other people's itch that
-I do not agree to begin with, at least for now.  I will still look at
-concrete and workable proposals from other people, though.
+Ealdwulf
