@@ -1,108 +1,104 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH v3 5/8] imap-send: build imap-send on Windows
-Date: Tue, 13 Oct 2009 23:34:05 +0200
-Message-ID: <40aa078e0910131434u4240ea8fy480efcebdaa21a8f@mail.gmail.com>
-References: <1255461925-2244-1-git-send-email-kusmabite@gmail.com> <1255461925-2244-5-git-send-email-kusmabite@gmail.com> <1255461925-2244-6-git-send-email-kusmabite@gmail.com> <200910132157.41279.j6t@kdbg.org> <40aa078e0910131316s308f2bc5h8d679c59c0d5b762@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
+ appropriate to do so
+Date: Tue, 13 Oct 2009 17:31:46 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910131654270.32515@iabervon.org>
+References: <0016e68fd0123a175304754694b4@google.com> <200910122340.13366.trast@student.ethz.ch> <7vr5t89qiw.fsf@alter.siamese.dyndns.org> <200910130836.57011.trast@student.ethz.ch> <7vljjf226t.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0910131358000.32515@iabervon.org>
+ <7vljjfuibr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Tue Oct 13 23:34:24 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yx0-f141.google.com ([209.85.210.141])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Euguess@gmail.com, Mikael Magnusson <mikachu@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 23:43:13 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxp0f-0008AE-UV
-	for gcvm-msysgit@m.gmane.org; Tue, 13 Oct 2009 23:34:22 +0200
-Received: by yxe5 with SMTP id 5so3465652yxe.24
-        for <gcvm-msysgit@m.gmane.org>; Tue, 13 Oct 2009 14:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type:sender
-         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
-         :list-unsubscribe:x-beenthere-env:x-beenthere;
-        bh=nnOQ9/NShYSf6GQP50U3iUbiDK8Szq+M91VMqe3shRU=;
-        b=LaL/iIP6yC1DkKYs9Tdjw2LzS5KwqMzJSe3WI36rMa33l8YcLpZW2DzXKKx02qJM7x
-         Q2LRdKv33AjbvHUL1M42rMil8LtgxttNXdqdey+Z6MC6zLf5cFNilNXYhuM1zQXHqRYE
-         zvZ9cxyxTEG+cKwQcza/oL4pE83PsAaLABUdk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:mime-version:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:sender:precedence:x-google-loop:mailing-list:list-id
-         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
-        b=AMjfGay4xgDrYiZgZGezoWicNvlsN1jWIERnb5qSxk8RAuNtArVkM5GSxJtsgdkVq6
-         KXo0SIb3eN6B5PML7TUNTnAu6ZhjLp/EqwcJiSJow7dZKejH4pu5EIzyTeVLjvUygkQn
-         dMxVuRyCGJJCpRKFql2TQt2Rr5eA7xAKog0iw=
-Received: by 10.150.17.1 with SMTP id 1mr914988ybq.34.1255469654719;
-        Tue, 13 Oct 2009 14:34:14 -0700 (PDT)
-Received: by 10.177.105.17 with SMTP id h17gr7409yqm.0;
-	Tue, 13 Oct 2009 14:34:08 -0700 (PDT)
-X-Sender: kusmabite@googlemail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.204.25.5 with SMTP id x5mr90216bkb.37.1255469646962; Tue, 13 Oct 2009 14:34:06 -0700 (PDT)
-Received: by 10.204.25.5 with SMTP id x5mr90215bkb.37.1255469646936; Tue, 13 Oct 2009 14:34:06 -0700 (PDT)
-Received: from mail-fx0-f212.google.com (mail-fx0-f212.google.com [209.85.220.212]) by gmr-mx.google.com with ESMTP id 16si324279fxm.2.2009.10.13.14.34.05; Tue, 13 Oct 2009 14:34:05 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.212 as permitted sender) client-ip=209.85.220.212;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.212 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
-Received: by mail-fx0-f212.google.com with SMTP id 8so9428601fxm.45 for <msysgit@googlegroups.com>; Tue, 13 Oct 2009 14:34:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:reply-to:in-reply-to :references:date:message-id:subject:from:to:cc:content-type; bh=mLDVDIEKA+H/BRYCQNKrGHSfC1Fvbweq31vjkX7O9+k=; b=fxYaGzV0nccONEvR9rQNk81xmkYn4n2R1T/o8w8Heucs8urzASX7je7H2dsegeu1Uk p1/s2CYcbvp3YTqqUzeYNdmwJ73SJijFfXKf2vrWxQsxa6h1nIS5THnmO/hbdfS2uvp9 kFBpWR/eRDol5aoQtqOw2kr1oqO0WH1J7TcQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:reply-to:in-reply-to:references:date:message-id :subject:from:to:cc:content-type; b=CJPMG8cMSMlY0Is3cz44NHsRk7gtSLNiEVAsBMPWGZHrOIGJFazFjjqoqq+UywVuFC fopo2li+Y1DlUnqD9grov/J64KvVDxEkJjaqpmALMulkWftU9VWra5XdY18b8CA2shwi +ZxEcfnXKrphdPDM8BRj/J8MpAg73mXsMRHxs=
-Received: by 10.204.10.143 with SMTP id p15mr6572013bkp.167.1255469645753;  Tue, 13 Oct 2009 14:34:05 -0700 (PDT)
-In-Reply-To: <40aa078e0910131316s308f2bc5h8d679c59c0d5b762@mail.gmail.com>
-Sender: msysgit@googlegroups.com
+	id 1Mxp9F-0004He-1b
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 23:43:13 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1761448AbZJMVcY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 17:32:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761432AbZJMVcX
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 17:32:23 -0400
+Received: from iabervon.org ([66.92.72.58]:38612 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761442AbZJMVcX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 17:32:23 -0400
+Received: (qmail 7592 invoked by uid 1000); 13 Oct 2009 21:31:46 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 13 Oct 2009 21:31:46 -0000
+In-Reply-To: <7vljjfuibr.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130215>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130216>
 
+On Tue, 13 Oct 2009, Junio C Hamano wrote:
 
-On Tue, Oct 13, 2009 at 10:16 PM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-> On Tue, Oct 13, 2009 at 9:57 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> This list is sorted. Please keep it so.
-> Aha, I didn't notice! Thanks, I'll fix :)
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > I suspect that a very common pattern for people who follow trees for 
+> > testing and such or who only develop in topic branches is:
+> > ...
+> > << many issues with this kind of DWIM omitted >>
+> > ...
+> > On the second cycle, either git refuses or does something actively 
+> > confusing to this user, and the user has to learn the difference between 
+> > local branches and remote branches on the *second* cycle. IMHO, it's much 
+> > better to make users learn things at the point when they don't think they 
+> > know how to use the system, rather than when they think they understand it 
+> > and are just trying to get things done.
+> 
+> Yeah, and I think J6t pointed out the same issue.
+> 
+> I think it tells us something, after some of "the most trusted Git
+> contributors" thought "really long and hard, and making sure to take
+> user-friendliness into account at least as much as simplicity of
+> implementation", they are getting to the same conclusion that this
+> particular DWIMery is a misguided attempt to be helpful without really
+> helping but rather hurting the users.
+> 
+> I will stop trying to come up with a strawman for other people's itch that
+> I do not agree to begin with, at least for now.  I will still look at
+> concrete and workable proposals from other people, though.
 
-Here's the new (trivial) diff. I don't think it's worth a resend, at
-least not yet.
+I personally think that the real issue is that our "detached HEAD" message 
+is still too scary, and what we really want is to issue the scary message 
+when using "git commit" to move a detached HEAD from what was checked out 
+to a new commit. So:
 
----
+$ git checkout origin/next
+(friendly message telling you you're browsing history)
+$ git commit
+(scary message telling you you're not on any branch)
+$ git commit
+(one line message like usual, except "detached HEAD" instead of branch 
+name)
 
-diff --git a/Makefile b/Makefile
-index fea237b..0d13af3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -354,6 +354,7 @@ EXTRA_PROGRAMS =
- PROGRAMS += $(EXTRA_PROGRAMS)
- PROGRAMS += git-fast-import$X
- PROGRAMS += git-hash-object$X
-+PROGRAMS += git-imap-send$X
- PROGRAMS += git-index-pack$X
- PROGRAMS += git-merge-index$X
- PROGRAMS += git-merge-tree$X
-@@ -1075,7 +1076,6 @@ EXTLIBS += -lz
+This still makes sure that you get the scary message before you could lose 
+track of your work, but only gives it to you at the point where there's a 
+commit that's in your HEAD and nowhere else.
 
- ifndef NO_POSIX_ONLY_PROGRAMS
-        PROGRAMS += git-daemon$X
--       PROGRAMS += git-imap-send$X
- endif
- ifndef NO_OPENSSL
-        OPENSSL_LIBSSL = -lssl
+The other thing that I think would be nice is:
 
+$ git checkout origin/next
+$ git fetch origin
+$ git checkout !! (probably not a good syntax)
 
+That is, expand "!!" to the string used to detach HEAD, and expand it 
+again now. (Of course, something would have to be done if you did "git 
+checkout HEAD^1" before, or "git checkout !!^1".) This is related in that 
+I think the scary message should happen when "git commit" sees this stored 
+string and clears it.
 
--- 
-Erik "kusma" Faye-Lund
+	-Daniel
+*This .sig left intentionally blank*
