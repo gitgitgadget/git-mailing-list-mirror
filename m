@@ -1,152 +1,144 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [JGit-io-RFC-PATCH v2 2/4] Add JGit IO SPI and default
-	implementation
-Date: Tue, 13 Oct 2009 08:15:23 -0700
-Message-ID: <20091013151522.GR9261@spearce.org>
-References: <1255270073-14205-1-git-send-email-imyousuf@gmail.com> <1255270073-14205-2-git-send-email-imyousuf@gmail.com> <20091012145741.GM9261@spearce.org> <7bfdc29a0910121830y4dc9b3efpe17860e04457988d@mail.gmail.com>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: [PATCH v2] bisect reset: Allow resetting to any commit, not just a
+ branch
+Date: Tue, 13 Oct 2009 11:22:42 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.0910131116300.5105@dr-wily.mit.edu>
+References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu> <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, egit-dev@eclipse.org,
-	Imran M Yousuf <imyousuf@smartitengineering.com>
-To: Imran M Yousuf <imyousuf@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 17:19:38 2009
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 17:32:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxj9u-000174-Nc
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 17:19:31 +0200
+	id 1MxjMf-000094-91
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 17:32:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760224AbZJMPQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 11:16:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760206AbZJMPQA
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 11:16:00 -0400
-Received: from george.spearce.org ([209.20.77.23]:33674 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760221AbZJMPP7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 11:15:59 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 235BC381FE; Tue, 13 Oct 2009 15:15:23 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7bfdc29a0910121830y4dc9b3efpe17860e04457988d@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1760255AbZJMPX0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 11:23:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZJMPX0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 11:23:26 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61087 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760188AbZJMPXZ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 11:23:25 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9DFMeKu021768;
+	Tue, 13 Oct 2009 11:22:40 -0400 (EDT)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9DFMh7E014689;
+	Tue, 13 Oct 2009 11:22:43 -0400 (EDT)
+In-Reply-To: <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130166>
 
-Imran M Yousuf <imyousuf@gmail.com> wrote:
-> Firstly, I am sorry but I am not intelligent enough to perceive, how
-> do the user decide which instance of Config to use? I personally think
-> that there is no API to achieve what you just mentioned :(; i.e. the
-> user will have know CassandraConfig directly.
+=E2=80=98git bisect reset=E2=80=99 accepts an optional argument specify=
+ing a branch to
+check out after cleaning up the bisection state.  This lets you
+specify an arbitrary commit.
 
-Yes.  Well, almost.
+In particular, this provides a way to clean the bisection state
+without moving HEAD: =E2=80=98git bisect reset HEAD=E2=80=99.  This may=
+ be useful if
+you are not interested in the state before you began a bisect,
+especially if checking out the old commit would be expensive and
+invalidate most of your compiled tree.
 
-The user will have to know that s/he wants a CassandraRepository or
-a JdbcRepository in order to obtain the abstract Repository handle.
-Each of these will need different configuration, possibly data which
-is too complex to simply cram into a URL string, so I was expecting
-the application would construct the concrete Repository class and
-configure it with the proper arguments required for contact with
-the underlying storage.
+Clarify the =E2=80=98git bisect reset=E2=80=99 documentation to explain=
+ this optional
+argument, which was previously mentioned only in the usage message.
 
-Since the Repository wants several things associated with it, each
-concrete Repository class knows what concrete Config, ObjectDatabase
-and RefDatabase it should create.  Those concrete classes know how
-to read a repository stored on that medium.
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ Documentation/git-bisect.txt |   23 +++++++++++++++++------
+ git-bisect.sh                |    7 +++----
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
-> Secondly, I instead was
-> thinking of porting JGit for that matter to any system supporting
-> streams (not any specific sub-class of them), such HBase/BigTable or
-> HDFS anything.... Thirdly, I think we actually have several task in
-> hand and I would state them as -
-> 
-> 1. First introduce the I/O API such that it completely replaces java.io.File
-> 2. Secondly segregate persistence of for config (or config like
-> objects) and introduce a SPI for them for smarter storage.
-
-Supporting streams on an arbitrary backend is difficult.  DHTs like
-BigTable/Cassandra aren't very good at providing streams, they tend
-to have a limit on how big a row can be.  They tend to have very
-slow read latencies, but can return a small block of consecutive
-rows in one reply.
-
-I want to talk about the DHT backend more with Scott Chacon at the
-GitTogether, but I have this feeling that just laying a pack file
-into a stream in a DHT is going to perform very poorly.
-
-Likewise JDBC has similar performance problems, you can only store
-so much in a row before performance of the RDBMS drops off sharply.
-You can get a handful of rows in a single reply pretty efficiently,
-but each query takes longer than you'd like.  Yes, there is often
-a BLOB type that allows large file storage, but different RDBMS
-support these differently and have different performance when it
-comes to accessing the BLOB types.  Some don't support random access,
-some do.  Even if they do support random access read, writing a large
-2 GiB repository's pack file after repacking it would take ages.
-
-Once you get outside of the pack file, *everything* else git stores
-is either a loose object, or very tiny text files (aka refs, their
-logs, config).  The loose object case should be handled by the same
-thing that handles the bulk of the object store, loose objects are
-a trivial thing compared to packed objects.
-
-The refs, the ref logs, and the config are all structured text.
-If you lay a Git repository down into a database of some sort,
-I think its reasonable to expect that the schema for these items
-in that database permits query and update using relatively native
-primitives in that database.  E.g. if you put this in SQL I would
-expect a schema like:
-
-  CREATE TABLE refs (
-   repository_id INT NOT NULL
-  ,name VARCHAR(255) NOT NULL
-  ,id CHAR(40)
-  ,target VARCHAR(255)
-  ,PRIMARY KEY (repository_id, name)
-  ,CHECK (id IS NOT NULL OR target IS NOT NULL));
- 
-  CREATE TABLE reflogs (
-   repository_id INT NOT NULL
-  ,name VARCHAR(255) NOT NULL
-  ,old_id CHAR(40) NOT NULL
-  ,new_id CHAR(40) NOT NULL
-  ,committer_name VARCHAR(255)
-  ,committer_email VARCHAR(255)
-  ,committer_date TIMESTAMP NOT NULL
-  ,message VARCHAR(255)
-  ,PRIMARY KEY (repository_id, name, committer_date));
-
-  CREATE TABLE config (
-   repository_id INT NOT NULL
-  ,section VARCHAR(255) NOT NULL
-  ,group VARCHAR(255)
-  ,name VARCHAR(255) NOT NULL
-  ,value VARCHAR(255)
-  ,PRIMARY KEY(repository_id, section, group, name, value))
-
-This makes it easier to manipulate settings, you can use direct
-SQL UPDATE to modify the configuration, or SELECT to scan through
-reflogs.  Etc.
-
-If we just threw everything as streams into the database this
-would be a lot more difficult to work with through the database's
-own native query and update interface.  You'd lose alot of the
-benefits of using a database, but still be paying the massive price
-in performance.
- 
-> I am not thinking of storing "only" the bare content of a git
-> repository, but I intent to be able to also store the versioned
-> contents it self as well.
-
-When I say "bare repository" I only mean a repository without a
-working directory.  It still holds the complete revision history.
-If you wanted a git repository on Cassandra but wanted to actually
-have a working directory checkout, you'd need the local filesystem
-for the checkout and .git/index, but could otherwise keep the objects
-and refs in Cassandra.  Its nuts... but in theory one could do it.
-
--- 
-Shawn.
+diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.tx=
+t
+index 63e7a42..d2ffae0 100644
+--- a/Documentation/git-bisect.txt
++++ b/Documentation/git-bisect.txt
+@@ -20,7 +20,7 @@ on the subcommand:
+  git bisect bad [<rev>]
+  git bisect good [<rev>...]
+  git bisect skip [(<rev>|<range>)...]
+- git bisect reset [<branch>]
++ git bisect reset [<commit>]
+  git bisect visualize
+  git bisect replay <logfile>
+  git bisect log
+@@ -81,16 +81,27 @@ will have been left with the first bad kernel revis=
+ion in "refs/bisect/bad".
+ Bisect reset
+ ~~~~~~~~~~~~
+=20
+-To return to the original head after a bisect session, issue the
+-following command:
++After a bisect session, to clean up the bisection state and return to
++the original HEAD, issue the following command:
+=20
+ ------------------------------------------------
+ $ git bisect reset
+ ------------------------------------------------
+=20
+-This resets the tree to the original branch instead of being on the
+-bisection commit ("git bisect start" will also do that, as it resets
+-the bisection state).
++By default, this will return your tree to the commit that was checked
++out before `git bisect start`.  (A new `git bisect start` will also do
++that, as it cleans up the old bisection state.)
++
++With an optional argument, you can return to a different commit
++instead:
++
++------------------------------------------------
++$ git bisect reset <commit>
++------------------------------------------------
++
++For example, `git bisect reset HEAD` will leave you on the current
++bisection commit and avoid switching commits at all, while `git bisect
++reset bisect/bad` will check out the first bad revision.
+=20
+ Bisect visualize
+ ~~~~~~~~~~~~~~~~
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 6f6f039..0c56c26 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -13,8 +13,8 @@ git bisect skip [(<rev>|<range>)...]
+         mark <rev>... untestable revisions.
+ git bisect next
+         find next bisection to test and check it out.
+-git bisect reset [<branch>]
+-        finish bisection search and go back to branch.
++git bisect reset [<commit>]
++        finish bisection search and go back to commit.
+ git bisect visualize
+         show bisect status in gitk.
+ git bisect replay <logfile>
+@@ -311,8 +311,7 @@ bisect_reset() {
+ 	}
+ 	case "$#" in
+ 	0) branch=3D$(cat "$GIT_DIR/BISECT_START") ;;
+-	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
+-	       die "$1 does not seem to be a valid branch"
++	1) git rev-parse --verify "$1^{commit}" || exit
+ 	   branch=3D"$1" ;;
+ 	*)
+ 	    usage ;;
+--=20
+1.6.5
