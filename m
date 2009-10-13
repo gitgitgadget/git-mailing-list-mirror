@@ -1,72 +1,100 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: linkify author/committer names with search
-Date: Tue, 13 Oct 2009 12:26:55 +0200
-Message-ID: <1255429615-4402-1-git-send-email-giuseppe.bilotta@gmail.com>
-References: <1255328340-28449-1-git-send-email-bebarino@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Changing branches in supermodule does not affect submodule?
+Date: Tue, 13 Oct 2009 11:29:08 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.0910131115160.14223@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 13 12:39:20 2009
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 13 12:39:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxeiL-0001Yw-Lf
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 12:34:46 +0200
+	id 1MxeiN-0001Yw-Qt
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 12:34:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933664AbZJMK1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 06:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759380AbZJMK1z
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 06:27:55 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:35558 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759289AbZJMK1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 06:27:54 -0400
-Received: by fxm27 with SMTP id 27so9989516fxm.17
-        for <git@vger.kernel.org>; Tue, 13 Oct 2009 03:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:references:user-agent:mime-version:content-type
-         :content-transfer-encoding:x-face;
-        bh=aEt+ZUIC/Lq/5hGIvXbkmhS1Osh8eC6wZ48Y3FXGDvE=;
-        b=dQxmGz9CB0cxhMmRRKsdaMfA2mc/yH2YlgvV8FjAGEo4UeN73vNgNJilRjfeu61VYF
-         S4+NLkNGd8GnzsTjl4BGUyyMd6Gb7uIw9fRPFKelfXl/0bLDyHxlKbHmQ4GnhZbRMl+v
-         AnF67HwBywES1fAgIYTLNnw2xZadASgS4cvUM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:references:user-agent
-         :mime-version:content-type:content-transfer-encoding:x-face;
-        b=wL0BYbqdd55VPrbu1rCuMf07PTT0Cyn9QNz0SMQnUGNAqyu7AsPpFJX6/fpzAYAy9e
-         a9sZTxw79pVTbZQVM1gvAkC6N/hM/ymo3FA3iltHDaxvq6dIESyKYftBqTAnPvPhhzFz
-         X8GTDLjZPxkcOJU+mW+Svo8/jM5DkiLhwSbwI=
-Received: by 10.102.249.18 with SMTP id w18mr2909611muh.51.1255429636517;
-        Tue, 13 Oct 2009 03:27:16 -0700 (PDT)
-Received: from localhost (host-78-13-55-37.cust-adsl.tiscali.it [78.13.55.37])
-        by mx.google.com with ESMTPS id y2sm2059058mug.19.2009.10.13.03.27.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Oct 2009 03:27:15 -0700 (PDT)
-X-Mailer: git-send-email 1.6.5.rc2.209.g8cdfd
-User-Agent: KNode/4.3.2
-X-Face: ::w9}R^l{WGM\{y)C0QF@4^U,',W3Mk^X0HP)=:bKM^Z]A9+6bY6fe3}O*]fH{l<j1/9RTp  `KR0idy]Im#9^%}P5Dga'>AViT_'?&>&ufo2_X5Vs3C^tPO@drZRuu&6iK}x}~9`F\-dNZ>(p|V7`4
+	id S933757AbZJMK3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 06:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756788AbZJMK3w
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 06:29:52 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:46003 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1759381AbZJMK3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 06:29:51 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n9DAT8sW027949
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 13 Oct 2009 12:29:08 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n9DAT8ts027942;
+	Tue, 13 Oct 2009 12:29:08 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 13 Oct 2009 12:29:08 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130155>
 
-On Monday 12 October 2009 08:19, Stephen Boyd wrote:
+Hi!
 
-> The problem is I can't get it to work with UTF-8 characters. I'm not sure
-> if it's my system or not, so I'm just posting here to see if others
-> experience the same problem and if there's interest.
+If I have a repository with submodules that is in a clean state, and switch 
+branches in the super repository, the submodules are left in the state they 
+were in before I switched branches (with 1.6.4, at least). Is this the 
+expected behaviour?
 
-Does it work if you use CGI::escape() on the author names when filling
-the searchtext?
+--->8--8<---
+#!/bin/bash
+# Create supermodule.
+mkdir super-$$
+cd super-$$
+git init
+
+# Create submodule with commit.
+mkdir sub
+cd sub
+git init
+echo C > c.txt
+echo D > d.txt
+git add c.txt d.txt
+git commit -m Created.
+cd ..
+
+# Create commit and branch in supermodule.
+echo A > a.txt
+echo B > b.txt
+git add a.txt b.txt sub
+git commit -m Created.
+git tag branchpoint
+git checkout -b branch1
+
+# Create branch1 in submodule and commit.
+cd sub
+git checkout -b branch1
+echo E > c.txt
+echo F > d.txt
+git add c.txt d.txt
+git commit -m Branched.
+cd ..
+
+# Commit to a branch in the supermodule.
+git add sub
+git commit -m Sub-update.
+
+# Status should now be clean.
+git status
+
+# Create a new branch in supermodule, from the original commit.
+git checkout -b branch2 branchpoint
+
+# I now expect the submodule to be up-to-date and the state clean.
+git status
+--->8--8<---
 
 -- 
-Giuseppe "Oblomov" Bilotta
+\\// Peter - http://www.softwolves.pp.se/
