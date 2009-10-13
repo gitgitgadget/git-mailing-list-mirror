@@ -1,145 +1,117 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH v3] bisect reset: Allow resetting to any commit, not just a
- branch
-Date: Tue, 13 Oct 2009 17:02:24 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0910131700320.5105@dr-wily.mit.edu>
-References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vaazw6uyi.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0910131116300.5105@dr-wily.mit.edu> <200910132206.18460.chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
+ appropriate to do so
+Date: Tue, 13 Oct 2009 23:20:28 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910132302380.4985@pacific.mpi-cbg.de>
+References: <0016e68fd0123a175304754694b4@google.com> <200910130836.57011.trast@student.ethz.ch> <7vljjf226t.fsf@alter.siamese.dyndns.org> <200910131051.47117.trast@student.ethz.ch> <7vy6nfwssk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>, Euguess@gmail.com,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
+	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 23:12:53 2009
+X-From: git-owner@vger.kernel.org Tue Oct 13 23:26:42 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxofr-0005u2-Q1
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 23:12:52 +0200
+	id 1MxotD-0004Lb-Ne
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 23:26:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761318AbZJMVEM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 17:04:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761301AbZJMVEM
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 17:04:12 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:45517 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761121AbZJMVEL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 17:04:11 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9DL2L9Z011133;
-	Tue, 13 Oct 2009 17:02:21 -0400 (EDT)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9DL2Osu023451;
-	Tue, 13 Oct 2009 17:02:24 -0400 (EDT)
-In-Reply-To: <200910132206.18460.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S934370AbZJMVSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 17:18:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761302AbZJMVSi
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 17:18:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49161 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752600AbZJMVSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 17:18:37 -0400
+Received: (qmail invoked by alias); 13 Oct 2009 21:17:50 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp056) with SMTP; 13 Oct 2009 23:17:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX187loEM9U47Yk73GFwjcrH0sqwHekSJ5jjQhIJu31
+	I/5Wy28srEx75p
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <7vy6nfwssk.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.52
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130214>
 
-=E2=80=98git bisect reset=E2=80=99 accepts an optional argument specify=
-ing a branch to
-check out after cleaning up the bisection state.  This lets you
-specify an arbitrary commit.
+Hi,
 
-In particular, this provides a way to clean the bisection state
-without moving HEAD: =E2=80=98git bisect reset HEAD=E2=80=99.  This may=
- be useful if
-you are not interested in the state before you began a bisect,
-especially if checking out the old commit would be expensive and
-invalidate most of your compiled tree.
+On Tue, 13 Oct 2009, Junio C Hamano wrote:
 
-Clarify the =E2=80=98git bisect reset=E2=80=99 documentation to explain=
- this optional
-argument, which was previously mentioned only in the usage message.
+> Thomas Rast <trast@student.ethz.ch> writes:
+> 
+> [this was probably quoted from Junio, Dscho doesn't have time to go back 
+>  and check, but then, this was not specified in the quoted mail]
+>
+> >> #2. These are allowed only when unambiguous and there is no local branch yet.
+> >> 
+> >>  $ git checkout next               ;# ok
+> >>  $ git checkout frotz              ;# ok (origin is not special)
+> >>  $ git checkout nitfol             ;# not ok (ambiguous and origin is not special)
+> >
+> > I'm weakly leaning towards refusing all three, as the user should be
+> > required to explicitly say a remote branch should be involved.
+> >
+> > (Weakly because there's also a certain DWIM advantage to 'git checkout
+> > sometopic'...)
+> 
+> I thought this was the primary point of what Dscho has been advocating.
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- Documentation/git-bisect.txt |   23 +++++++++++++++++------
- git-bisect.sh                |    8 ++++----
- 2 files changed, 21 insertions(+), 10 deletions(-)
+To be honest, I was not advocating anything except being more open to 
+users' problems, because we _did_ grow a large user base, way beyond the 
+Linux developers (whom we can always harrass and tell to RTFM).
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.tx=
-t
-index 63e7a42..d2ffae0 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -20,7 +20,7 @@ on the subcommand:
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-- git bisect reset [<branch>]
-+ git bisect reset [<commit>]
-  git bisect visualize
-  git bisect replay <logfile>
-  git bisect log
-@@ -81,16 +81,27 @@ will have been left with the first bad kernel revis=
-ion in "refs/bisect/bad".
- Bisect reset
- ~~~~~~~~~~~~
-=20
--To return to the original head after a bisect session, issue the
--following command:
-+After a bisect session, to clean up the bisection state and return to
-+the original HEAD, issue the following command:
-=20
- ------------------------------------------------
- $ git bisect reset
- ------------------------------------------------
-=20
--This resets the tree to the original branch instead of being on the
--bisection commit ("git bisect start" will also do that, as it resets
--the bisection state).
-+By default, this will return your tree to the commit that was checked
-+out before `git bisect start`.  (A new `git bisect start` will also do
-+that, as it cleans up the old bisection state.)
-+
-+With an optional argument, you can return to a different commit
-+instead:
-+
-+------------------------------------------------
-+$ git bisect reset <commit>
-+------------------------------------------------
-+
-+For example, `git bisect reset HEAD` will leave you on the current
-+bisection commit and avoid switching commits at all, while `git bisect
-+reset bisect/bad` will check out the first bad revision.
-=20
- Bisect visualize
- ~~~~~~~~~~~~~~~~
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 6f6f039..8b3c585 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -13,8 +13,8 @@ git bisect skip [(<rev>|<range>)...]
-         mark <rev>... untestable revisions.
- git bisect next
-         find next bisection to test and check it out.
--git bisect reset [<branch>]
--        finish bisection search and go back to branch.
-+git bisect reset [<commit>]
-+        finish bisection search and go back to commit.
- git bisect visualize
-         show bisect status in gitk.
- git bisect replay <logfile>
-@@ -311,8 +311,8 @@ bisect_reset() {
- 	}
- 	case "$#" in
- 	0) branch=3D$(cat "$GIT_DIR/BISECT_START") ;;
--	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
--	       die "$1 does not seem to be a valid branch"
-+	1) git rev-parse --quiet --verify "$1^{commit}" > /dev/null ||
-+	       die "'$1' is not a valid commit"
- 	   branch=3D"$1" ;;
- 	*)
- 	    usage ;;
---=20
-1.6.5
+Just to re-add my well-known stance: consistency is a good thing.  So if 
+things are ambiguous, we can be consistent in saying so and refusing to 
+DWIM.  And if things are _not_ ambiguous, we can be consistent in just 
+DWIMming what the user most probably meant.
+
+If the user just typed random things in the hope that it works, we cannot 
+do anything about it anyway.
+
+So in my opinion, we should DWIM "git checkout $X" to mean "git checkout 
+-b $X refs/remotes/$REMOTE/$X" when there is no ref $X, refs/heads/$X and 
+no other refs/remotes/$OTHER/$X.
+
+Likewise "git checkout $REMOTE/$X".
+
+But, in my opinion, if there is refs/heads/$X and refs/remotes/origin/$X, 
+and the user says "git checkout origin/$X", we should tell the user that 
+there are the options to checkout $X and origin/$X^0 (the latter only if 
+the user really intended to detach her HEAD), but not try to DWIM 
+anything.
+
+IMHO it is obvious that Hannes' suggestion to fast-forward $X and check it 
+out in said scenario has some benefits in certain situations, but dramatic 
+downsides in others.
+
+But I need to drive some very important point home in this thread: 1.7.0 
+was announced to break some old-time habits in favor of a better 
+user-interface.  We _need_ to use this opportunity fully.
+
+Even if that means that a few fingers have to be retrained.  Because 
+retraining a few for the benefit of an easier time with the many others 
+is Just Worth It.
+
+Or in other words: logic clearly dictates that the needs of the many 
+outweigh the needs of the few.
+
+Ciao,
+Dscho
+
+P.S.: In case certain persons, ahem, think that I am applying the "Many 
+Outweigh Few" principle to the time involved in top-posting and 
+"forgetting" to cut quoted text to what is actually addressed: yes, you 
+could not be more correct.  And I no longer believe that this goes without 
+saying.
