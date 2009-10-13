@@ -1,75 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch
- when appropriate to do so
-Date: Tue, 13 Oct 2009 18:06:40 -0400
-Message-ID: <20091013220640.GB12603@coredump.intra.peff.net>
-References: <0016e68fd0123a175304754694b4@google.com>
- <200910130836.57011.trast@student.ethz.ch>
- <7vljjf226t.fsf@alter.siamese.dyndns.org>
- <200910131051.47117.trast@student.ethz.ch>
- <7vy6nfwssk.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.1.00.0910132302380.4985@pacific.mpi-cbg.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] clone: Supply the right commit hash to post-checkout when
+ -b is used
+Date: Wed, 14 Oct 2009 00:11:09 +0200
+Message-ID: <20091013221109.GA30972@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Euguess@gmail.com,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 14 00:18:01 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, ranguvar@archlinux.us,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 14 00:25:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxpXZ-0001jO-Jn
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 00:08:21 +0200
+	id 1MxpmI-00073g-VV
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 00:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761249AbZJMWHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 18:07:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760908AbZJMWHR
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 18:07:17 -0400
-Received: from peff.net ([208.65.91.99]:41025 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760276AbZJMWHP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 18:07:15 -0400
-Received: (qmail 21729 invoked by uid 107); 13 Oct 2009 22:10:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 13 Oct 2009 18:10:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Oct 2009 18:06:40 -0400
+	id S1760669AbZJMWMD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 18:12:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbZJMWMD
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 18:12:03 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40733 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754986AbZJMWMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 18:12:01 -0400
+Received: (qmail invoked by alias); 13 Oct 2009 22:11:13 -0000
+Received: from i59F57E86.versanet.de (EHLO atjola.homenet) [89.245.126.134]
+  by mail.gmx.net (mp025) with SMTP; 14 Oct 2009 00:11:13 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19rX/NOlFtrB0BLfBzrqe80M5YqdkdpNu455JDega
+	A3G+4iZAdyuCat
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.0910132302380.4985@pacific.mpi-cbg.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130225>
 
-On Tue, Oct 13, 2009 at 11:20:28PM +0200, Johannes Schindelin wrote:
+When we use -b <branch>, we may checkout something else than what the
+remote's HEAD references, but we still used remote_head to supply the
+new ref value to the post-checkout hook, which is wrong.
 
-> So in my opinion, we should DWIM "git checkout $X" to mean "git checkout 
-> -b $X refs/remotes/$REMOTE/$X" when there is no ref $X, refs/heads/$X and 
-> no other refs/remotes/$OTHER/$X.
+So instead of using remote_head to find the value to be passed to the
+post-checkout hook, we have to use our_head_points_at, which is always
+correctly setup, even if -b is not used.
 
-The similar suggestion that is less magical is to say something like
-"there is no $X; maybe you meant $REMOTE/$X?".  Is there a reason not to
-phase in the behavior, to make sure it is not doing unexpected things?
-In other words:
+This also fixes a segfault when "clone -b <branch>" is used with a
+remote repo that doesn't have a valid HEAD, as in such a case
+remote_head is NULL, but we still tried to access it.
 
-  1. In v1.6.6, find all error-correcting candidates and print them as
-     a suggestion (similar to what we do with "git foo").
+Reported-by: Devin Cofer <ranguvar@archlinux.us>
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+ builtin-clone.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-  2. Then, if we all agree that it seems to be producing sane results,
-     the next step is to turn the unambiguous cases into a DWIM (and
-     leave the ambiguous ones with the "did you mean?" message).
-
-Because right now I think there are a lot of hypothetical "maybe it
-would be less convenient or more confusing in this instance", but we
-don't have any data on how often those instances occur, or how actual
-users might react. So doing step (1) would be a way of collecting some
-of that data (will users say "stupid git, if you knew what I wanted, why
-didn't you just do it?" or "stupid git, your suggestion is just
-confusing me!").
-
--Peff
+diff --git a/builtin-clone.c b/builtin-clone.c
+index 4992c25..5762a6f 100644
+--- a/builtin-clone.c
++++ b/builtin-clone.c
+@@ -641,7 +641,8 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 			die("unable to write new index file");
+=20
+ 		err |=3D run_hook(NULL, "post-checkout", sha1_to_hex(null_sha1),
+-				sha1_to_hex(remote_head->old_sha1), "1", NULL);
++				sha1_to_hex(our_head_points_at->old_sha1), "1",
++				NULL);
+=20
+ 		if (!err && option_recursive)
+ 			err =3D run_command_v_opt(argv_submodule, RUN_GIT_CMD);
+--=20
+1.6.5.7.g9ecb2
