@@ -1,89 +1,60 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: [PATCH] bisect reset: Allow resetting to any commit, not just
  a   branch
-Date: Tue, 13 Oct 2009 08:39:56 +0200
-Message-ID: <4AD420BC.5060506@viscovery.net>
-References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+Date: Tue, 13 Oct 2009 08:45:23 +0200
+Message-ID: <4AD42203.6030802@viscovery.net>
+References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu> <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: Anders Kaseorg <andersk@MIT.EDU>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 08:41:30 2009
+X-From: git-owner@vger.kernel.org Tue Oct 13 08:53:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxb4a-0002Fr-0B
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 08:41:28 +0200
+	id 1MxbGR-0006nV-TP
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 08:53:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758936AbZJMGki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 02:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758922AbZJMGki
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 02:40:38 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:52569 "EHLO
+	id S1758820AbZJMGqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 02:46:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756595AbZJMGqD
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 02:46:03 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:56333 "EHLO
 	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751442AbZJMGkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 02:40:37 -0400
+	with ESMTP id S1752023AbZJMGqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 02:46:02 -0400
 Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
 	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1Mxb37-0004fZ-7c; Tue, 13 Oct 2009 08:39:57 +0200
+	id 1Mxb8O-0004tV-78; Tue, 13 Oct 2009 08:45:24 +0200
 Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
 	by linz.eudaptics.com (Postfix) with ESMTP
-	id 011759614; Tue, 13 Oct 2009 08:39:56 +0200 (CEST)
+	id F34DE9614; Tue, 13 Oct 2009 08:45:23 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7vr5t8coex.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
 X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130131>
 
 Junio C Hamano schrieb:
-> I even think that the support for an explicit branch name in the reset
-> subcommand should eventually be deprecated, perhaps unless it matches what
-> is stored in BISECT_START.
+> I would understand it, if not agreeing that I also am often in that
+> situation myself", if somebody does not even care which commit he was on
+> before starting the bisection, but knows (or is willing to decide at that
+> point) which branch (or even a specific commit, while still being
+> detached) he wants to switch to.  And it would make sense to avoid an
+> extra checkout that snaps back to the pre-bisection commit before
+> switching to the new state he has chosen.
 
-Goodness, NO!
-
-> The documentation, does not even talk about what the optional <branch>
-> argument is good for, even though it lists the optional <branch> in the
-> synopsis section.
-
-If I had know about this feature (yes, FEATURE), I would have used it like
-this in the past:
-
-  $ git branch tmp
-  $ git bisect reset tmp
-  $ git branch -d tmp
-
-With the patch proposed by Anders this shortens to:
-
-  $ git bisect reset HEAD
-
-> Having said all that, four years and two months are looooooong time in git
-> timescale, and I am discounting, without any evidence to judge either way,
-> the possibility that people may have learned during that time to (ab)use
-> this as a (very useful?) shortcut to finish the current bisection and
-> switch to some entirely different branch.
-
-In all the bisect runs that I have done in my live, the ONLY way I wanted
-'bisect reset' to act was to NOT change the commit it currently was on.
-The fact that it switched back to the commit or branch that the bisect was
-started on, was always a major inconvenience.
-
-So, I have no problem if you want to deprecate the branch parameter, if at
-the same time bisect reset no longer switches to some other commit. ;)
-
-> I offhand do not see a good rationale for such a shortcut to finish bisect
-> and switch to another branch (IOW, I understand "it is shorter to type",
-> but I do not see "it is often done and very useful"), but I am open to be
-> enlightened by a workflow where such a shortcut is useful.
-
-In my workflow, after I've found the bad commit, I always want bisect to
-stay at the commit that it found. I don't want it to warp me somewhere
-else; I want to make the decision where to go next myself.
+The situation that I'm faced quite frequently is that after I find a
+regression, I cannot tell which released version did not have the
+breakage. Hence, the first thing I have to do is to find a good commit.
+Therefore, I jump around in ancient history until I find a good commit.
+Then I start bisect. I certainly do NOT want to be warped back to this
+ancient commit by 'bisect reset'.
 
 -- Hannes
