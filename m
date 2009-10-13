@@ -1,144 +1,89 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH v2] bisect reset: Allow resetting to any commit, not just a
- branch
-Date: Tue, 13 Oct 2009 11:22:42 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0910131116300.5105@dr-wily.mit.edu>
-References: <alpine.DEB.1.10.0910121237540.2223@dr-wily.mit.edu> <7vr5t8coex.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.0910121708030.5105@dr-wily.mit.edu> <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: quote in help code example
+Date: Tue, 13 Oct 2009 17:30:31 +0200
+Message-ID: <20091013153031.GX23777@genesis.frugalware.org>
+References: <20091012102926.GA3937@debian.b2j>
+ <20091012194016.GS23777@genesis.frugalware.org>
+ <20091013021616.GA10554@debian.b2j>
+ <20091013101916.GV23777@genesis.frugalware.org>
+ <20091013140622.GA3927@debian.b2j>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 17:32:53 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="lIrNkN/7tmsD/ALM"
+Cc: git <git@vger.kernel.org>
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 13 17:33:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxjMf-000094-91
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 17:32:41 +0200
+	id 1MxjMj-000094-IN
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 17:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760255AbZJMPX0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 11:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZJMPX0
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 11:23:26 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61087 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760188AbZJMPXZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 11:23:25 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9DFMeKu021768;
-	Tue, 13 Oct 2009 11:22:40 -0400 (EDT)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9DFMh7E014689;
-	Tue, 13 Oct 2009 11:22:43 -0400 (EDT)
-In-Reply-To: <7vaazw6uyi.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1753545AbZJMPbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 11:31:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751273AbZJMPbL
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 11:31:11 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:48850 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751196AbZJMPbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 11:31:10 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A5FE2580B5;
+	Tue, 13 Oct 2009 17:30:31 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6C50044906;
+	Tue, 13 Oct 2009 17:30:31 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9BEDB11F0028; Tue, 13 Oct 2009 17:30:31 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20091013140622.GA3927@debian.b2j>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130167>
 
-=E2=80=98git bisect reset=E2=80=99 accepts an optional argument specify=
-ing a branch to
-check out after cleaning up the bisection state.  This lets you
-specify an arbitrary commit.
 
-In particular, this provides a way to clean the bisection state
-without moving HEAD: =E2=80=98git bisect reset HEAD=E2=80=99.  This may=
- be useful if
-you are not interested in the state before you began a bisect,
-especially if checking out the old commit would be expensive and
-invalidate most of your compiled tree.
+--lIrNkN/7tmsD/ALM
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Clarify the =E2=80=98git bisect reset=E2=80=99 documentation to explain=
- this optional
-argument, which was previously mentioned only in the usage message.
+On Tue, Oct 13, 2009 at 10:06:23PM +0800, bill lam <cbill.lam@gmail.com> wr=
+ote:
+> I run these commands=20
+>=20
+> make ASCIIDOC_NO_ROFF=3DYesPlease prefix=3D/usr all doc info
+> sudo make ASCIIDOC_NO_ROFF=3DYesPlease prefix=3D/usr install install-doc =
+install-html install-info
+>=20
+> 1. did I need to set ASCIIDOC_NO_ROFF in both lines?
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- Documentation/git-bisect.txt |   23 +++++++++++++++++------
- git-bisect.sh                |    7 +++----
- 2 files changed, 20 insertions(+), 10 deletions(-)
+In general, it's always a good idea, though I don't think it's necessary
+for the second time.
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.tx=
-t
-index 63e7a42..d2ffae0 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -20,7 +20,7 @@ on the subcommand:
-  git bisect bad [<rev>]
-  git bisect good [<rev>...]
-  git bisect skip [(<rev>|<range>)...]
-- git bisect reset [<branch>]
-+ git bisect reset [<commit>]
-  git bisect visualize
-  git bisect replay <logfile>
-  git bisect log
-@@ -81,16 +81,27 @@ will have been left with the first bad kernel revis=
-ion in "refs/bisect/bad".
- Bisect reset
- ~~~~~~~~~~~~
-=20
--To return to the original head after a bisect session, issue the
--following command:
-+After a bisect session, to clean up the bisection state and return to
-+the original HEAD, issue the following command:
-=20
- ------------------------------------------------
- $ git bisect reset
- ------------------------------------------------
-=20
--This resets the tree to the original branch instead of being on the
--bisection commit ("git bisect start" will also do that, as it resets
--the bisection state).
-+By default, this will return your tree to the commit that was checked
-+out before `git bisect start`.  (A new `git bisect start` will also do
-+that, as it cleans up the old bisection state.)
-+
-+With an optional argument, you can return to a different commit
-+instead:
-+
-+------------------------------------------------
-+$ git bisect reset <commit>
-+------------------------------------------------
-+
-+For example, `git bisect reset HEAD` will leave you on the current
-+bisection commit and avoid switching commits at all, while `git bisect
-+reset bisect/bad` will check out the first bad revision.
-=20
- Bisect visualize
- ~~~~~~~~~~~~~~~~
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 6f6f039..0c56c26 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -13,8 +13,8 @@ git bisect skip [(<rev>|<range>)...]
-         mark <rev>... untestable revisions.
- git bisect next
-         find next bisection to test and check it out.
--git bisect reset [<branch>]
--        finish bisection search and go back to branch.
-+git bisect reset [<commit>]
-+        finish bisection search and go back to commit.
- git bisect visualize
-         show bisect status in gitk.
- git bisect replay <logfile>
-@@ -311,8 +311,7 @@ bisect_reset() {
- 	}
- 	case "$#" in
- 	0) branch=3D$(cat "$GIT_DIR/BISECT_START") ;;
--	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
--	       die "$1 does not seem to be a valid branch"
-+	1) git rev-parse --verify "$1^{commit}" || exit
- 	   branch=3D"$1" ;;
- 	*)
- 	    usage ;;
---=20
-1.6.5
+> 2. now the .ft pair fixed but it still displayed incorrect quote.
+>=20
+>  git filter-branch --tree-filter =B4rm filename=B4 HEAD
+>=20
+> it should be 'rm filename' not =B4rm filename=B4
+
+I can reproduce that here as well, that's how it is in the official
+manpages as well (see the man branch), so that's not specific to your
+system.
+
+--lIrNkN/7tmsD/ALM
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkrUnRcACgkQe81tAgORUJZRkgCfU2vAtu1uJhk7IKn4e1lORY4l
+UVYAniukkqJBsaJ46gDIRqSx+8fYznxa
+=lJ75
+-----END PGP SIGNATURE-----
+
+--lIrNkN/7tmsD/ALM--
