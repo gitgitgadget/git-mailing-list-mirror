@@ -1,74 +1,63 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [RFC/PATCH] gitweb: linkify author/committer names with search
-Date: Tue, 13 Oct 2009 21:41:42 +0200
-Message-ID: <cb7bb73a0910131241t7220a3c2q16e99a8fc62dd29a@mail.gmail.com>
-References: <1255328340-28449-1-git-send-email-bebarino@gmail.com> 
-	<1255429615-4402-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<4AD4C94A.9010909@gmail.com>
+From: jonhud <jon@huddler-inc.com>
+Subject: How do I see all of my changes on a branch?
+Date: Tue, 13 Oct 2009 12:40:19 -0700 (PDT)
+Message-ID: <25879435.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 13 21:49:17 2009
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 13 21:49:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxnMz-0002YX-2y
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 21:49:17 +0200
+	id 1MxnMy-0002YX-IS
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 21:49:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbZJMTmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Oct 2009 15:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760893AbZJMTmk
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 15:42:40 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:63091 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753869AbZJMTmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 15:42:40 -0400
-Received: by fxm27 with SMTP id 27so10623464fxm.17
-        for <git@vger.kernel.org>; Tue, 13 Oct 2009 12:42:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=87ItcPV+TEsnE4T3JD6S1ssY258Ypfc0piTbks5knhM=;
-        b=tspNfP2dvh0GBGUjvaqZ4OwTU9rUh7BSwbrpnbMoTCcGfx1N3Sy2wJxv1wwBvGTP5O
-         Zrxl4MjwttX+8qigUb39oNV/Dltmyp1qoUG6S0MlihgyFCrFCsEegWTKmHvLfAn3ph/N
-         ufqhFPpK3YilBnuBDy5YFQP+gspAhjJ+piyWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=STgQp8i/2EFttL3MHHYIykhHYVY8MFQsXP2KwtRYW7pnqyTzfcGMAT+7lMKPhC3QNf
-         j/hE6Rp4p3J1VNX+iUbcPvRwrKhOJK+ZwpzclvITn3H7jtjOivuelo5rJnQ3fpPMcjY7
-         T9kHM2UVXbt5EWWEk6jXk/6xXN+kLPAvpM6FY=
-Received: by 10.204.151.209 with SMTP id d17mr6567201bkw.120.1255462922186; 
-	Tue, 13 Oct 2009 12:42:02 -0700 (PDT)
-In-Reply-To: <4AD4C94A.9010909@gmail.com>
+	id S934236AbZJMTk4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 15:40:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934234AbZJMTk4
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 15:40:56 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:57666 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934233AbZJMTkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 15:40:55 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1MxnEJ-0003lx-An
+	for git@vger.kernel.org; Tue, 13 Oct 2009 12:40:19 -0700
+X-Nabble-From: jon@huddler-inc.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130193>
-
-On Tue, Oct 13, 2009 at 8:39 PM, Stephen Boyd <bebarino@gmail.com> wrote:
-> Giuseppe Bilotta wrote:
->> On Monday 12 October 2009 08:19, Stephen Boyd wrote:
->>> The problem is I can't get it to work with UTF-8 characters. I'm not sure
->>> if it's my system or not, so I'm just posting here to see if others
->>> experience the same problem and if there's interest.
->>
->> Does it work if you use CGI::escape() on the author names when filling
->> the searchtext?
->
-> This doesn't seem to work. Now I get %25 in front of the escaped
-> characters. For example, a space is now %25%20.
->
-> Can you reproduce my problem locally?
-
-Reproduced, debugged, patch incoming (the problem is not in your patch
-but in esc_param).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130194>
 
 
+Hi,
+
+We are using github (but that's more or less irrelevant, since I'm just
+running git 1.6 locally on Ubuntu). Some time ago, I created a new branch
+(release.2.2) and pushed it out to the remote repository. All the digging
+through log, gitk, etc. has not made it possible for me to figure out the
+commit (or point in time) at which I cut the branch. 
+
+What I want to do is to get a list of files (and/or diffs for those files)
+from that point in time to HEAD on the branch. I understand that git-diff
+--name-only is part of the solution. What I can't figure out is how to
+pinpoint the first commit. So that's my first question... how do I do that?
+
+To complicate things, I was also working on a side branch which I merged to
+master before cutting the release.2.2 branch. In the best of all worlds, I
+would trace my changes back to the point at which I cut *that* branch and
+follow through the HEAD of release.2.2. How do I do that? I know I might
+have to take 2 passes, one for release 2.2 and one for the side branch and
+that's OK.
+
+Thanks!
+
+Jon
 -- 
-Giuseppe "Oblomov" Bilotta
+View this message in context: http://www.nabble.com/How-do-I-see-all-of-my-changes-on-a-branch--tp25879435p25879435.html
+Sent from the git mailing list archive at Nabble.com.
