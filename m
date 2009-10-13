@@ -1,78 +1,99 @@
 From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: [PATCH] clone: Supply the right commit hash to post-checkout when
- -b is used
-Date: Wed, 14 Oct 2009 00:11:09 +0200
-Message-ID: <20091013221109.GA30972@atjola.homenet>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch
+ when appropriate to do so
+Date: Wed, 14 Oct 2009 00:38:21 +0200
+Message-ID: <20091013223821.GA15814@atjola.homenet>
+References: <0016e68fd0123a175304754694b4@google.com>
+ <200910122340.13366.trast@student.ethz.ch>
+ <7vr5t89qiw.fsf@alter.siamese.dyndns.org>
+ <200910130836.57011.trast@student.ethz.ch>
+ <7vljjf226t.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0910131358000.32515@iabervon.org>
+ <7vljjfuibr.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0910131654270.32515@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ranguvar@archlinux.us,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 00:25:45 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Euguess@gmail.com, Mikael Magnusson <mikachu@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Jay Soffian <jaysoffian@gmail.com>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Oct 14 00:40:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxpmI-00073g-VV
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 00:23:35 +0200
+	id 1Mxq2E-0003bs-FI
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 00:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760669AbZJMWMD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 18:12:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754994AbZJMWMD
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 18:12:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40733 "HELO mail.gmx.net"
+	id S1760872AbZJMWjU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 18:39:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760833AbZJMWjT
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 18:39:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32827 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754986AbZJMWMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Oct 2009 18:12:01 -0400
-Received: (qmail invoked by alias); 13 Oct 2009 22:11:13 -0000
+	id S1760808AbZJMWjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 18:39:18 -0400
+Received: (qmail invoked by alias); 13 Oct 2009 22:38:31 -0000
 Received: from i59F57E86.versanet.de (EHLO atjola.homenet) [89.245.126.134]
-  by mail.gmx.net (mp025) with SMTP; 14 Oct 2009 00:11:13 +0200
+  by mail.gmx.net (mp008) with SMTP; 14 Oct 2009 00:38:31 +0200
 X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19rX/NOlFtrB0BLfBzrqe80M5YqdkdpNu455JDega
-	A3G+4iZAdyuCat
+X-Provags-ID: V01U2FsdGVkX1/w/5R8ssnwK4jjHXxMG0zgo22q+UenIbGOuFiS+3
+	P0z43LqO3zxBh4
 Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0910131654270.32515@iabervon.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.51
+X-FuHaFi: 0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130226>
 
-When we use -b <branch>, we may checkout something else than what the
-remote's HEAD references, but we still used remote_head to supply the
-new ref value to the post-checkout hook, which is wrong.
-
-So instead of using remote_head to find the value to be passed to the
-post-checkout hook, we have to use our_head_points_at, which is always
-correctly setup, even if -b is not used.
-
-This also fixes a segfault when "clone -b <branch>" is used with a
-remote repo that doesn't have a valid HEAD, as in such a case
-remote_head is NULL, but we still tried to access it.
-
-Reported-by: Devin Cofer <ranguvar@archlinux.us>
-Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
----
- builtin-clone.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-clone.c b/builtin-clone.c
-index 4992c25..5762a6f 100644
---- a/builtin-clone.c
-+++ b/builtin-clone.c
-@@ -641,7 +641,8 @@ int cmd_clone(int argc, const char **argv, const ch=
-ar *prefix)
- 			die("unable to write new index file");
+On 2009.10.13 17:31:46 -0400, Daniel Barkalow wrote:
+> The other thing that I think would be nice is:
+>=20
+> $ git checkout origin/next
+> $ git fetch origin
+> $ git checkout !! (probably not a good syntax)
+>=20
+> That is, expand "!!" to the string used to detach HEAD, and expand it=
 =20
- 		err |=3D run_hook(NULL, "post-checkout", sha1_to_hex(null_sha1),
--				sha1_to_hex(remote_head->old_sha1), "1", NULL);
-+				sha1_to_hex(our_head_points_at->old_sha1), "1",
-+				NULL);
-=20
- 		if (!err && option_recursive)
- 			err =3D run_command_v_opt(argv_submodule, RUN_GIT_CMD);
---=20
-1.6.5.7.g9ecb2
+> again now. (Of course, something would have to be done if you did "gi=
+t=20
+> checkout HEAD^1" before, or "git checkout !!^1".) This is related in =
+that=20
+> I think the scary message should happen when "git commit" sees this s=
+tored=20
+> string and clears it.
+
+That sounds somewhat like the "git up" hack I've shown here:
+http://article.gmane.org/gmane.comp.version-control.git/130050
+
+In #git, Dscho even suggested that "git pull" could do that kind of
+DWIMmery while on a detached HEAD that waas reached by checking out a r=
+emote
+tracking branch. I'm undecided about that, because real merges/rebases
+could make it easier to lose work, as opposed to the "fast-forward only=
+"
+behaviour I had in mind for that "git up" thing. Though of course, the
+"git pull" DWIMmery for a detached HEAD could simply refuse to do
+anything but a fast-forward.
+
+Overall, I'm starting to think that improving the "work with a detached
+HEAD" area might be more worthwhile than adding DWIMmery that tries to
+completely avoid a detached HEAD.
+
+This could include DWIMmery like the "git up"/"git pull" stuff, and
+improved security checks, like checking that leaving a detached HEAD
+doesn't "lose" any commits to the reflog.  So checkout could do
+something like "git rev-list HEAD --not --all" (or does --all include
+HEAD?) and complain if there's something to be "lost".
+
+Bj=F6rn
