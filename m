@@ -1,64 +1,87 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC PATCH v2 07/16] remote-helpers: Fetch more than one ref in
- a batch
-Date: Mon, 12 Oct 2009 23:56:43 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910122326130.32515@iabervon.org>
-References: <1255400715-10508-1-git-send-email-spearce@spearce.org> <1255400715-10508-8-git-send-email-spearce@spearce.org>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: Git: "No you can't handle my root!" (?)
+Date: Tue, 13 Oct 2009 06:17:13 +0200
+Message-ID: <1255407433.15646.12.camel@localhost>
+References: <20091012012826.7sffggwmm8sk0cc8@webmail.demarque.qc.ca>
+	 <1255383459.15646.10.camel@localhost>
+	 <20091013014332.GB13737@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 13 05:58:47 2009
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: sylvain@demarque.qc.ca, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 13 06:21:38 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxYX8-0006rR-BJ
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 05:58:46 +0200
+	id 1MxYtE-0005d6-Fv
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 06:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754598AbZJMD5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 23:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754201AbZJMD5W
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 23:57:22 -0400
-Received: from iabervon.org ([66.92.72.58]:55782 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751004AbZJMD5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 23:57:21 -0400
-Received: (qmail 26644 invoked by uid 1000); 13 Oct 2009 03:56:43 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 13 Oct 2009 03:56:43 -0000
-In-Reply-To: <1255400715-10508-8-git-send-email-spearce@spearce.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1751427AbZJMERw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 00:17:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751194AbZJMERv
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 00:17:51 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:47156 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751125AbZJMERv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 00:17:51 -0400
+Received: by ewy4 with SMTP id 4so3031318ewy.37
+        for <git@vger.kernel.org>; Mon, 12 Oct 2009 21:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=MRWAhMv//KDt3FNCj1M5Dm0oI+Ko83SHqNu90KC3jmQ=;
+        b=nCNYvP1idh+lw7IFXkiwDpjRUCsLFsKB6BA7wSgk7ZJYtAbevK17y1VvqKSxi4Qm2T
+         2f/fNOZXqq7DqfQJOmm4w7PmU4abu5efK5wqTKx6Zh6hZ4HKyqgUC58V4SpDgri0xShT
+         C8jtAaxisD1jneVdfxZtV1VEF/+LWXNxzoqMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=hS5N//M47pzKldT11Pz0dJBCPfDSNUKaX8b87Mn8EQbl4rOaa3FgyKVSqcqNRq4wYr
+         tDlx/+FsbkA9jyfyVgHmzcL9/rgfy1VhgQqiZckjNa0cfEIT/cA36WyiNyTbDBKKTOPM
+         rfFeuPBNSSi0PLr5uiMw2JDB9uD/mPfPdndoY=
+Received: by 10.210.7.24 with SMTP id 24mr5016945ebg.53.1255407433938;
+        Mon, 12 Oct 2009 21:17:13 -0700 (PDT)
+Received: from ?192.168.1.2? (host185-1-dynamic.48-82-r.retail.telecomitalia.it [82.48.1.185])
+        by mx.google.com with ESMTPS id 10sm2020286eyz.44.2009.10.12.21.17.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Oct 2009 21:17:12 -0700 (PDT)
+In-Reply-To: <20091013014332.GB13737@coredump.intra.peff.net>
+X-Mailer: Evolution 2.26.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130124>
 
-On Mon, 12 Oct 2009, Shawn O. Pearce wrote:
-
-> Some network protocols (e.g. native git://) are able to fetch more
-> than one ref at a time and reduce the overall transfer cost by
-> combining the requests into a single exchange.  Instead of feeding
-> each fetch request one at a time to the helper, feed all of them
-> at once so the helper can decide whether or not it should batch them.
+Il giorno lun, 12/10/2009 alle 21.43 -0400, Jeff King ha scritto:
+> Take a look at:
 > 
-> Because 'fetch' was already released in 1.6.5 we introduce the new
-> fetch-multiple capability/command to signal that the helper wants
-> to use batch oriented approach to fetching refs.
+>   http://joey.kitenet.net/code/etckeeper/
 
-In 1.6.5, there's no way to call a helper other than git-remote-curl, and 
-no way to call git-remote-curl unless 1.6.5 was built with it. So I think 
-the protocol is not set in stone quite yet. It's documentated for being an 
-API, and it's supposed to be that, but it's not quite there in this 
-version.
 
-I think it should be generally a good idea to have a start signal and an 
-end signal for a block of fetches (and, with the foreign stuff, it would 
-be useful to have transport-helper tell the helper process when it was 
-done making requests, so the helper process could tell the gfi process to 
-exit and stop consuming the helper process's output). At worst, if the 
-helper doesn't care, it can just ignore this information.
+thanks really interesting
 
-	-Daniel
-*This .sig left intentionally blank*
+
+> > can I have a git report of $HOME/.* (without . and ..)? (all user
+> > setting)
+> 
+> This seems to work:
+> 
+>   $ cd ~
+>   $ git init
+>   $ echo '*' >.gitignore
+>   $ echo '!.*' >.gitignore
+> 
+> > Or better: provide a list of directory under $HOME I want to track 
+> 
+> Same thing, but make your ! pattern more specific.
+
+thanks again!
+
+regards,
+Daniele
