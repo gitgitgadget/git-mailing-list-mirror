@@ -1,353 +1,131 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v2 10/16] Git-aware CGI to provide dumb HTTP transport
-Date: Mon, 12 Oct 2009 19:25:09 -0700
-Message-ID: <1255400715-10508-11-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v2 04/16] Move "get_ack()" back to fetch-pack
+Date: Mon, 12 Oct 2009 19:25:03 -0700
+Message-ID: <1255400715-10508-5-git-send-email-spearce@spearce.org>
 References: <1255400715-10508-1-git-send-email-spearce@spearce.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 13 04:34:11 2009
+X-From: git-owner@vger.kernel.org Tue Oct 13 04:34:13 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxXDG-0004cs-NT
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 04:34:11 +0200
+	id 1MxXD9-0004cs-41
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Oct 2009 04:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932889AbZJMC1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Oct 2009 22:27:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932671AbZJMC1B
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 22:27:01 -0400
-Received: from george.spearce.org ([209.20.77.23]:56212 "EHLO
+	id S1758819AbZJMCZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Oct 2009 22:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758802AbZJMCZ4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Oct 2009 22:25:56 -0400
+Received: from george.spearce.org ([209.20.77.23]:56185 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758828AbZJMC0f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Oct 2009 22:26:35 -0400
+	with ESMTP id S1758811AbZJMCZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Oct 2009 22:25:55 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 95CEB38215; Tue, 13 Oct 2009 02:25:23 +0000 (UTC)
+	id DE86C38262; Tue, 13 Oct 2009 02:25:18 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 833B338239
-	for <git@vger.kernel.org>; Tue, 13 Oct 2009 02:25:19 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id 5CECF38215
+	for <git@vger.kernel.org>; Tue, 13 Oct 2009 02:25:17 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.52.g0ff2e
 In-Reply-To: <1255400715-10508-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130112>
 
-The git-http-backend CGI can be configured into any Apache server
-using ScriptAlias, such as with the following configuration:
-
-  LoadModule cgi_module /usr/libexec/apache2/mod_cgi.so
-  LoadModule alias_module /usr/libexec/apache2/mod_alias.so
-  ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
-
-Repositories are accessed via the translated PATH_INFO.
-
-The CGI is backwards compatible with the dumb client, allowing all
-older HTTP clients to continue to download repositories which are
-managed by the CGI.
+In 41cb7488 Linus moved this function to connect.c for reuse inside
+of the git-clone-pack command.  That was 2005, but in 2006 Junio
+retired git-clone-pack in commit efc7fa53.  Since then the only
+caller has been fetch-pack.  Since this ACK/NAK exchange is only
+used by the fetch-pack/upload-pack protocol we should keep move
+it back to a private detail of fetch-pack.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- .gitignore     |    1 +
- Makefile       |    1 +
- http-backend.c |  261 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 263 insertions(+), 0 deletions(-)
- create mode 100644 http-backend.c
+ builtin-fetch-pack.c |   21 +++++++++++++++++++++
+ cache.h              |    1 -
+ connect.c            |   21 ---------------------
+ 3 files changed, 21 insertions(+), 22 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 51a37b1..353d22f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -55,6 +55,7 @@ git-get-tar-commit-id
- git-grep
- git-hash-object
- git-help
-+git-http-backend
- git-http-fetch
- git-http-push
- git-imap-send
-diff --git a/Makefile b/Makefile
-index fea237b..271c290 100644
---- a/Makefile
-+++ b/Makefile
-@@ -365,6 +365,7 @@ PROGRAMS += git-show-index$X
- PROGRAMS += git-unpack-file$X
- PROGRAMS += git-upload-pack$X
- PROGRAMS += git-var$X
-+PROGRAMS += git-http-backend$X
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 783c2b0..7c09d46 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -157,6 +157,27 @@ static const unsigned char *get_rev(void)
+ 	return commit->object.sha1;
+ }
  
- # List built-in command $C whose implementation cmd_$C() is not in
- # builtin-$C.o but is linked in as part of some other command.
-diff --git a/http-backend.c b/http-backend.c
-new file mode 100644
-index 0000000..39cfd25
---- /dev/null
-+++ b/http-backend.c
-@@ -0,0 +1,261 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "pkt-line.h"
-+#include "object.h"
-+#include "tag.h"
-+#include "exec_cmd.h"
-+#include "run-command.h"
-+
-+static const char content_type[] = "Content-Type";
-+static const char content_length[] = "Content-Length";
-+
-+static char buffer[1024];
-+
-+static const char *http_date(unsigned long time)
++static int get_ack(int fd, unsigned char *result_sha1)
 +{
-+	return show_date(time, 0, DATE_RFC2822);
-+}
++	static char line[1000];
++	int len = packet_read_line(fd, line, sizeof(line));
 +
-+static void format_write(const char *fmt, ...)
-+{
-+	va_list args;
-+	unsigned n;
-+
-+	va_start(args, fmt);
-+	n = vsnprintf(buffer, sizeof(buffer), fmt, args);
-+	va_end(args);
-+	if (n >= sizeof(buffer))
-+		die("protocol error: impossibly long line");
-+
-+	safe_write(1, buffer, n);
-+}
-+
-+static void write_status(unsigned code, const char *msg)
-+{
-+	format_write("Status: %u %s\r\n", code, msg);
-+}
-+
-+static void write_header(const char *name, const char *value)
-+{
-+	format_write("%s: %s\r\n", name, value);
-+}
-+
-+static void end_headers(void)
-+{
-+	safe_write(1, "\r\n", 2);
-+}
-+
-+static void write_nocache(void)
-+{
-+	write_header("Expires", "Fri, 01 Jan 1980 00:00:00 GMT");
-+	write_header("Pragma", "no-cache");
-+	write_header("Cache-Control", "no-cache, max-age=0, must-revalidate");
-+}
-+
-+static void write_cache_forever(void)
-+{
-+	unsigned long now = time(NULL);
-+	write_header("Date", http_date(now));
-+	write_header("Expires", http_date(now + 31536000));
-+	write_header("Cache-Control", "public, max-age=31536000");
-+}
-+
-+static NORETURN void not_found(const char *err, ...)
-+{
-+	va_list params;
-+
-+	write_status(404, "Not Found");
-+	write_nocache();
-+	end_headers();
-+
-+	va_start(params, err);
-+	if (err && *err) {
-+		vsnprintf(buffer, sizeof(buffer), err, params);
-+		fprintf(stderr, "%s\n", buffer);
-+	}
-+	va_end(params);
-+	exit(0);
-+}
-+
-+static void write_file(const char *the_type, const char *name)
-+{
-+	const char *p = git_path("%s", name);
-+	int fd;
-+	struct stat sb;
-+	uintmax_t remaining;
-+
-+	fd = open(p, O_RDONLY);
-+	if (fd < 0)
-+		not_found("Cannot open '%s': %s", p, strerror(errno));
-+	if (fstat(fd, &sb) < 0)
-+		die_errno("Cannot stat '%s'", p);
-+	remaining = (uintmax_t)sb.st_size;
-+
-+	write_header(content_type, the_type);
-+	write_header("Last-Modified", http_date(sb.st_mtime));
-+	format_write("Content-Length: %" PRIuMAX "\r\n", remaining);
-+	end_headers();
-+
-+	while (remaining) {
-+		ssize_t n = xread(fd, buffer, sizeof(buffer));
-+		if (n < 0)
-+			die_errno("Cannot read '%s'", p);
-+		n = safe_write(1, buffer, n);
-+		if (n <= 0)
-+			break;
-+	}
-+	close(fd);
-+}
-+
-+static void get_text_file(char *name)
-+{
-+	write_nocache();
-+	write_file("text/plain; charset=utf-8", name);
-+}
-+
-+static void get_loose_object(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-loose-object", name);
-+}
-+
-+static void get_pack_file(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-packed-objects", name);
-+}
-+
-+static void get_idx_file(char *name)
-+{
-+	write_cache_forever();
-+	write_file("application/x-git-packed-objects-toc", name);
-+}
-+
-+static int show_text_ref(const char *name, const unsigned char *sha1,
-+	int flag, void *cb_data)
-+{
-+	struct object *o = parse_object(sha1);
-+	if (!o)
++	if (!len)
++		die("git fetch-pack: expected ACK/NAK, got EOF");
++	if (line[len-1] == '\n')
++		line[--len] = 0;
++	if (!strcmp(line, "NAK"))
 +		return 0;
-+
-+	format_write("%s\t%s\n", sha1_to_hex(sha1), name);
-+	if (o->type == OBJ_TAG) {
-+		o = deref_tag(o, name, 0);
-+		if (!o)
-+			return 0;
-+		format_write("%s\t%s^{}\n", sha1_to_hex(o->sha1), name);
-+	}
-+
-+	return 0;
-+}
-+
-+static void get_info_refs(char *arg)
-+{
-+	write_nocache();
-+	write_header(content_type, "text/plain; charset=utf-8");
-+	end_headers();
-+
-+	for_each_ref(show_text_ref, NULL);
-+}
-+
-+static void get_info_packs(char *arg)
-+{
-+	size_t objdirlen = strlen(get_object_directory());
-+	struct packed_git *p;
-+
-+	write_nocache();
-+	write_header(content_type, "text/plain; charset=utf-8");
-+	end_headers();
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next) {
-+		if (!p->pack_local)
-+			continue;
-+		format_write("P %s\n", p->pack_name + objdirlen + 6);
-+	}
-+	safe_write(1, "\n", 1);
-+}
-+
-+static NORETURN void die_webcgi(const char *err, va_list params)
-+{
-+	write_status(500, "Internal Server Error");
-+	write_nocache();
-+	end_headers();
-+
-+	vsnprintf(buffer, sizeof(buffer), err, params);
-+	fprintf(stderr, "fatal: %s\n", buffer);
-+	exit(0);
-+}
-+
-+static struct service_cmd {
-+	const char *method;
-+	const char *pattern;
-+	void (*imp)(char *);
-+} services[] = {
-+	{"GET", "/HEAD$", get_text_file},
-+	{"GET", "/info/refs$", get_info_refs},
-+	{"GET", "/objects/info/packs$", get_info_packs},
-+	{"GET", "/objects/info/[^/]*$", get_text_file},
-+	{"GET", "/objects/[0-9a-f]{2}/[0-9a-f]{38}$", get_loose_object},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.pack$", get_pack_file},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file}
-+};
-+
-+int main(int argc, char **argv)
-+{
-+	char *dir = getenv("PATH_TRANSLATED");
-+	char *input_method = getenv("REQUEST_METHOD");
-+	struct service_cmd *cmd = NULL;
-+	char *cmd_arg = NULL;
-+	int i;
-+
-+	set_die_routine(die_webcgi);
-+
-+	if (!dir)
-+		die("No PATH_TRANSLATED from server");
-+	if (!input_method)
-+		die("No REQUEST_METHOD from server");
-+	if (!strcmp(input_method, "HEAD"))
-+		input_method = "GET";
-+
-+	for (i = 0; i < ARRAY_SIZE(services); i++) {
-+		struct service_cmd *c = &services[i];
-+		regex_t re;
-+		regmatch_t out[1];
-+
-+		if (regcomp(&re, c->pattern, REG_EXTENDED))
-+			die("Bogus regex in service table: %s", c->pattern);
-+		if (!regexec(&re, dir, 1, out, 0)) {
-+			size_t n = out[0].rm_eo - out[0].rm_so;
-+
-+			if (strcmp(input_method, c->method)) {
-+				const char *proto = getenv("SERVER_PROTOCOL");
-+				if (proto && !strcmp(proto, "HTTP/1.1"))
-+					write_status(405, "Method Not Allowed");
-+				else
-+					write_status(400, "Bad Request");
-+				write_nocache();
-+				end_headers();
-+				return 0;
-+			}
-+
-+			cmd = c;
-+			cmd_arg = xmalloc(n);
-+			strncpy(cmd_arg, dir + out[0].rm_so + 1, n);
-+			cmd_arg[n] = '\0';
-+			dir[out[0].rm_so] = 0;
-+			break;
++	if (!prefixcmp(line, "ACK ")) {
++		if (!get_sha1_hex(line+4, result_sha1)) {
++			if (strstr(line+45, "continue"))
++				return 2;
++			return 1;
 +		}
-+		regfree(&re);
 +	}
-+
-+	if (!cmd)
-+		not_found("Request not supported: '%s'", dir);
-+
-+	setup_path();
-+	if (!enter_repo(dir, 0))
-+		not_found("Not a git repository: '%s'", dir);
-+
-+	cmd->imp(cmd_arg);
-+	return 0;
++	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
 +}
++
+ static int find_common(int fd[2], unsigned char *result_sha1,
+ 		       struct ref *refs)
+ {
+diff --git a/cache.h b/cache.h
+index a5eeead..4e283be 100644
+--- a/cache.h
++++ b/cache.h
+@@ -856,7 +856,6 @@ extern struct ref *find_ref_by_name(const struct ref *list, const char *name);
+ extern struct child_process *git_connect(int fd[2], const char *url, const char *prog, int flags);
+ extern int finish_connect(struct child_process *conn);
+ extern int path_match(const char *path, int nr, char **match);
+-extern int get_ack(int fd, unsigned char *result_sha1);
+ struct extra_have_objects {
+ 	int nr, alloc;
+ 	unsigned char (*array)[20];
+diff --git a/connect.c b/connect.c
+index 7945e38..839a103 100644
+--- a/connect.c
++++ b/connect.c
+@@ -107,27 +107,6 @@ int server_supports(const char *feature)
+ 		strstr(server_capabilities, feature) != NULL;
+ }
+ 
+-int get_ack(int fd, unsigned char *result_sha1)
+-{
+-	static char line[1000];
+-	int len = packet_read_line(fd, line, sizeof(line));
+-
+-	if (!len)
+-		die("git fetch-pack: expected ACK/NAK, got EOF");
+-	if (line[len-1] == '\n')
+-		line[--len] = 0;
+-	if (!strcmp(line, "NAK"))
+-		return 0;
+-	if (!prefixcmp(line, "ACK ")) {
+-		if (!get_sha1_hex(line+4, result_sha1)) {
+-			if (strstr(line+45, "continue"))
+-				return 2;
+-			return 1;
+-		}
+-	}
+-	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
+-}
+-
+ int path_match(const char *path, int nr, char **match)
+ {
+ 	int i;
 -- 
 1.6.5.52.g0ff2e
