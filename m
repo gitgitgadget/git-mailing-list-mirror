@@ -1,71 +1,94 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Changing branches in supermodule does not affect submodule?
-Date: Wed, 14 Oct 2009 07:31:04 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.0910140728420.16100@ds9.cixit.se>
-References: <alpine.DEB.2.00.0910131115160.14223@ds9.cixit.se> <4AD47C65.5080904@web.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git svn with non-standard svn layout
+Date: Tue, 13 Oct 2009 23:33:50 -0700
+Message-ID: <20091014063350.GB17178@dcvr.yhbt.net>
+References: <loom.20091010T001433-536@post.gmane.org> <20091011070937.GC16264@dcvr.yhbt.net> <loom.20091011T205226-197@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jens Lehmann <Jens.Lehmann@web.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 14 08:34:45 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Fabian Molder <fm122@arcor.de>
+X-From: git-owner@vger.kernel.org Wed Oct 14 08:47:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxxRR-000452-1e
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 08:34:33 +0200
+	id 1Mxxdi-0005dq-LZ
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 08:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755399AbZJNGbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 02:31:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbZJNGbr
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 02:31:47 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:59431 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755255AbZJNGbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 02:31:47 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id n9E6V4Nt018054
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Oct 2009 08:31:04 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id n9E6V4Ji018050;
-	Wed, 14 Oct 2009 08:31:04 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <4AD47C65.5080904@web.de>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 14 Oct 2009 08:31:04 +0200 (CEST)
+	id S1755498AbZJNGeb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 02:34:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754255AbZJNGea
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 02:34:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:44223 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751220AbZJNGea (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 02:34:30 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 4006F1F92E;
+	Wed, 14 Oct 2009 06:33:52 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <loom.20091011T205226-197@post.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130260>
 
-Jens Lehmann:
+Fabian Molder <fm122@arcor.de> wrote:
+> Eric Wong <normalperson <at> yhbt.net> writes:
+> > Hi Fabian,
+> > 
+> > Since you don't want to track the entire repo and these seem like
+> > unrelated (history-wise) trees, you probably want the simplest cases:
+> > 
+> >   git svn clone svn://example.com/path/to/xapplication2
+> >   git svn clone svn://example.com/path/to/aa/bb/cc/xapplication1
+> > 
+> > These commands are like doing the following with plain old svn:
+> > 
+> >   svn co svn://example.com/path/to/xapplication2
+> >   svn co svn://example.com/path/to/aa/bb/cc/xapplication1
+> > 
+> > > I tried to use "git config svn-remote.svn.branches" to do this,
+> > >  please see in function "do_git_svn" in bash-script - but no success
+> > 
+> > svn-remote.svn.branches and tags are really only for repos with
+> > standard layouts.
+> > 
+> 
+> Hello Eric,
+>   hmm, understand,
+>   but this just does an checkout to the working dir
+> 
+>   the reason for using git is:
+>     - work offline, with (at least read) access to all the svn branches
+>     - have some more (privat, not commit back to svn) branches for experiments
+>     - all the nice git stuff ..
 
-> just calling "git submodule update" every time you want the submodule to 
-> be updated according to the state committed in the superproject will do 
-> the trick (but keep in mind that all referenced commits have to be 
-> accessible in the local clone of your submodule, so you might have to do a 
-> fetch there once in a while).
+Sorry, not sure if I understood you the first time.  The pastie was
+hard to read on my screen (big fonts, low res).
 
-Is it possible to automate this from a hook or something else? Basically, I 
-would like it to update all the submodules to the state recorded in the 
-commit I move to, if they were in a clean state before I moved. I do not 
-want it to change states if I do something like
+I think what you need is to match the number of globs (*) on
+both the remote and local sides:
 
-   cd submodule
-   # do some changes
-   git commit
-   cd ..
-   git checkout -b newbranch
+  REMOTE=branches/*/*/aa/bb/cc/zapplication1
+  LOCAL=refs/remotes/svn/aa/bb/cc/zapplication1/*/*
+  git config svn-remote.svn.branches "${REMOTE}:${LOCAL}"
 
-because there I want the commit I made to the submodule to be recorded on 
-the new branch I created. But then it was in a dirty state before I created 
-the branch anyway, so that shouldn't be a problem.
+  #---> matches all in svn repo and also creates subdirs
+#
+#  git config svn-remote.svn.branches \
+#  "branches/r*/development/aa/bb/cc/zapplication1:refs/remotes/svn/branches/*"
+#
+  #--> Missing trailing '/' on left side of: 'branches/r*/development/aa/bb/cc/zapplication1' (branches/r)
+
+The glob code is still a bit wonky, but it needs to be "/*/" (that is
+"*" must have a "/" or nothing, but not "/r*/"
+
+But it looks like the example with 2 globs works.
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Eric Wong
