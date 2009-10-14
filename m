@@ -1,48 +1,50 @@
-From: Matthew Cline <matt@nightrealms.com>
-Subject: git-commit feature request: pass editor command line options
-Date: Tue, 13 Oct 2009 21:58:51 -0700 (PDT)
-Message-ID: <25885354.post@talk.nabble.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH 3/5] stash: Use new %g/%G formats instead of sed
+Date: Wed, 14 Oct 2009 01:00:38 -0400
+Message-ID: <20091014050038.GB31810@coredump.intra.peff.net>
+References: <cover.1255380039.git.trast@student.ethz.ch>
+ <77e591b80021efc265fea1a101ce6b7124ea832e.1255380039.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 14 07:04:40 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 14 07:04:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxw2P-0003iP-2o
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:04:37 +0200
+	id 1Mxw2Q-0003iP-Kp
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbZJNE72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 00:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbZJNE72
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 00:59:28 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:53897 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751792AbZJNE71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 00:59:27 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1Mxvwp-0006FT-Bi
-	for git@vger.kernel.org; Tue, 13 Oct 2009 21:58:51 -0700
-X-Nabble-From: matt@nightrealms.com
+	id S1753588AbZJNFBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 01:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753185AbZJNFBP
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 01:01:15 -0400
+Received: from peff.net ([208.65.91.99]:56517 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753169AbZJNFBO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 01:01:14 -0400
+Received: (qmail 24495 invoked by uid 107); 14 Oct 2009 05:04:09 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Oct 2009 01:04:09 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 01:00:38 -0400
+Content-Disposition: inline
+In-Reply-To: <77e591b80021efc265fea1a101ce6b7124ea832e.1255380039.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130245>
 
+On Mon, Oct 12, 2009 at 11:06:05PM +0200, Thomas Rast wrote:
 
-I'd like to be able to have git-commit pass the commit-message editor command
-line options which aren't passed to the editor for other usages.  Right now
-I have "co" aliased to "!sh -c 'GIT_EDITOR=git-commit-editor git commit'",
-where git-commit-editor is a wrapper around my editor-of-choice which passes
-the editor the command line options I want, but it'd be simpler and cleaner
-if I could just set "commit.editor_options=-BAR".  Or even let there be a
-separate editor for commits, so I could do "core.editor=foo" and
-"commit.editor=foo -BAR".
--- 
-View this message in context: http://www.nabble.com/git-commit-feature-request%3A-pass-editor-command-line-options-tp25885354p25885354.html
-Sent from the git mailing list archive at Nabble.com.
+>  list_stash () {
+>  	have_stash || return 0
+> -	git log --no-color --pretty=oneline -g "$@" $ref_stash -- |
+> -	sed -n -e 's/^[.0-9a-f]* refs\///p'
+> +	git log --format="%g: %G" -g "$@" $ref_stash
+
+You dropped the trailing "--" which is needed for disambiguation.
+
+-Peff
