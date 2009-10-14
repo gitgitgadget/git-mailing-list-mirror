@@ -1,72 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] checkout: add 'pre-checkout' hook
-Date: Wed, 14 Oct 2009 01:25:27 -0400
-Message-ID: <20091014052527.GH31810@coredump.intra.peff.net>
-References: <1255495525-11254-1-git-send-email-sam.vilain@catalyst.net.nz>
- <7vr5t6lfr0.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Efficient cloning from svn (with multiple branches/tags
+	subdirs)
+Date: Tue, 13 Oct 2009 23:03:07 -0700
+Message-ID: <20091014060307.GA17178@dcvr.yhbt.net>
+References: <hb2fvu$8qi$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Sam Vilain <sam.vilain@catalyst.net.nz>, git@vger.kernel.org,
-	elliot@catalyst.net.nz
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 07:30:25 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk>
+X-From: git-owner@vger.kernel.org Wed Oct 14 08:08:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxwRH-0001cU-Bf
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:30:19 +0200
+	id 1Mxx1Z-00041z-1u
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 08:07:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752746AbZJNF0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 01:26:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbZJNF0F
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 01:26:05 -0400
-Received: from peff.net ([208.65.91.99]:41567 "EHLO peff.net"
+	id S1755044AbZJNGDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 02:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755029AbZJNGDr
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 02:03:47 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36873 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750820AbZJNF0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 01:26:04 -0400
-Received: (qmail 24745 invoked by uid 107); 14 Oct 2009 05:28:58 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Oct 2009 01:28:58 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 01:25:27 -0400
+	id S1755005AbZJNGDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 02:03:46 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id 6E8FA1F9AD;
+	Wed, 14 Oct 2009 06:03:09 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vr5t6lfr0.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <hb2fvu$8qi$1@ger.gmane.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130256>
 
-On Tue, Oct 13, 2009 at 10:13:39PM -0700, Junio C Hamano wrote:
+Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk> wrote:
+> Hello,
+>
+> I'm trying to clone an existing subversion repository (Restlet:  
+> http://restlet.tigris.org/source/browse/). I'm using Git 1.6.5. The  
+> layout of the project is like this:
+>   trunk/
+>   branches/1.0
+>   branches/1.1
+>   tags/1.0/1.0b1
+>   tags/1.0/1.0b2
+>   ...
+>   tags/1.0/1.0.1
+>   ...
+>   tags/1.1/1.1.0
+>   tags/1.1/1.1.1
+>   ...
 
-> >  worktree.  The hook is given three parameters: the ref of the previous HEAD,
-> >  the ref of the new HEAD (which may or may not have changed), and a flag
-> >  indicating whether the checkout was a branch checkout (changing branches,
-> >  flag=1) or a file checkout (retrieving a file from the index, flag=0).
-> > -This hook cannot affect the outcome of 'git-checkout'.
-> > +This hook can prevent the checkout from proceeding by exiting with an
-> > +error code.
-> >  
-> >  It is also run after 'git-clone', unless the --no-checkout (-n) option is
-> >  used. The first parameter given to the hook is the null-ref, the second the
-> >  ref of the new HEAD and the flag is always 1.
-> >  
-> > +This hook can be used to perform any clean-up deemed necessary before
-> > +checking out the new branch/files.
-> > +
-> > +post-checkout
-> > +-----------
-> 
-> This is not about your patch, but the patch text shows that our diff
-> algorithm seems to have a room for improvement.  I expected to see a
-> straight insersion of block of text, not touching anything in the original
-> section on post-checkout hook.
 
-I think it's right as-is. He changed the title of the section, made a
-few tweaks in the text to make it appropriate for "pre-checkout", and
-then made a new post-checkout section that says "This is just like
-pre-checkout". So most of the lines were left untouched. Short of our
-diff understanding the block-formatting of asciidoc, I think it's as
-good as we can get.
+Hi Bruno,
 
--Peff
+That looks like there's two levels of tags.  You should be able to do
+this with your version of git in $GIT_CONFIG:
+
+	[svn-remote "svn"]
+		url = http://restlet.tigris.org/svn/restlet
+		fetch = trunk:refs/remotes/svn/trunk
+		branches = branches/*:refs/remotes/svn/*
+		tags = tags/*/*:refs/remotes/svn/tags/*/*
+		; note the */* to glob at multiple levels
+
+> Therefore, I've tried to use this (with and without '-T trunk', but  
+> that's a separate problem):
+>
+>   git init
+>   git svn init --prefix=svn/ -t tags/1.0 -t tags/1.1 -t tags/1.2 -t  
+> tags/2.0 -b branches/1.0 -b branches/1.1  
+> http://restlet.tigris.org/svn/restlet
+>   git svn fetch
+>
+>
+> This takes a while (I've had to interrupt this) and this creates a  
+> number of branches such as:
+>   remotes/svn/tags/1.0b1
+>   remotes/svn/tags/1.0b2
+>   remotes/svn/tags/1.0b3
+>   remotes/svn/tags/1.0b3@1883
+>   remotes/svn/tags/1.0b3@323
+>
+>
+> What surprises me is that it looks like it's looping over and over,  
+> since sometimes it starts back from SVN revision 1 when it's trying to  
+> import a new tag.
+
+Yeah, that's an unfortunate thing about the flexibility of Subversion,
+basically anything can be a "tag" or a directory and it's extremely
+hard for git svn to support any uncommon cases for tags/branches
+out-of-the box, so the manual config editing is needed.
+
+-- 
+Eric Wong
