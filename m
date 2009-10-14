@@ -1,68 +1,72 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] checkout: add 'pre-checkout' hook
-Date: Wed, 14 Oct 2009 18:25:28 +1300
-Organization: Catalyst IT (NZ) Ltd
-Message-ID: <4AD560C8.8010108@catalyst.net.nz>
-References: <1255495525-11254-1-git-send-email-sam.vilain@catalyst.net.nz> <20091014051319.GF31810@coredump.intra.peff.net>
+Date: Wed, 14 Oct 2009 01:25:27 -0400
+Message-ID: <20091014052527.GH31810@coredump.intra.peff.net>
+References: <1255495525-11254-1-git-send-email-sam.vilain@catalyst.net.nz>
+ <7vr5t6lfr0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, elliot@catalyst.net.nz
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 14 07:30:24 2009
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>, git@vger.kernel.org,
+	elliot@catalyst.net.nz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 14 07:30:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxwRH-0001cU-Ts
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:30:20 +0200
+	id 1MxwRH-0001cU-Bf
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753894AbZJNF0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 01:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753211AbZJNF0H
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 01:26:07 -0400
-Received: from bertrand.catalyst.net.nz ([202.78.240.40]:51313 "EHLO
-	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751560AbZJNF0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 01:26:06 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mail.catalyst.net.nz (Postfix) with ESMTP id 9B739323A2;
-	Wed, 14 Oct 2009 18:25:29 +1300 (NZDT)
-X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
-Received: from mail.catalyst.net.nz ([127.0.0.1])
-	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id etwbJu7NMx+V; Wed, 14 Oct 2009 18:25:29 +1300 (NZDT)
-Received: from [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0] (unknown [IPv6:2404:130:0:1000:21d:7dff:fe90:5fe0])
-	(Authenticated sender: samv)
-	by mail.catalyst.net.nz (Postfix) with ESMTPSA id 050C032214;
-	Wed, 14 Oct 2009 18:25:29 +1300 (NZDT)
-User-Agent: Mozilla-Thunderbird 2.0.0.19 (X11/20090103)
-In-Reply-To: <20091014051319.GF31810@coredump.intra.peff.net>
-X-Enigmail-Version: 0.95.0
+	id S1752746AbZJNF0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 01:26:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751560AbZJNF0F
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 01:26:05 -0400
+Received: from peff.net ([208.65.91.99]:41567 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750820AbZJNF0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 01:26:04 -0400
+Received: (qmail 24745 invoked by uid 107); 14 Oct 2009 05:28:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Oct 2009 01:28:58 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 01:25:27 -0400
+Content-Disposition: inline
+In-Reply-To: <7vr5t6lfr0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130255>
 
-Jeff King wrote:
->> Add a simple hook that will run before checkouts.
+On Tue, Oct 13, 2009 at 10:13:39PM -0700, Junio C Hamano wrote:
+
+> >  worktree.  The hook is given three parameters: the ref of the previous HEAD,
+> >  the ref of the new HEAD (which may or may not have changed), and a flag
+> >  indicating whether the checkout was a branch checkout (changing branches,
+> >  flag=1) or a file checkout (retrieving a file from the index, flag=0).
+> > -This hook cannot affect the outcome of 'git-checkout'.
+> > +This hook can prevent the checkout from proceeding by exiting with an
+> > +error code.
+> >  
+> >  It is also run after 'git-clone', unless the --no-checkout (-n) option is
+> >  used. The first parameter given to the hook is the null-ref, the second the
+> >  ref of the new HEAD and the flag is always 1.
+> >  
+> > +This hook can be used to perform any clean-up deemed necessary before
+> > +checking out the new branch/files.
+> > +
+> > +post-checkout
+> > +-----------
 > 
-> What is the use case that makes it useful as a hook, and not simply as
-> something people can do before running checkout?
-> 
-> I guess you can use it to block a checkout, but only after finding out
-> _what_ you are going to checkout, but an exact use case escapes me.
+> This is not about your patch, but the patch text shows that our diff
+> algorithm seems to have a room for improvement.  I expected to see a
+> straight insersion of block of text, not touching anything in the original
+> section on post-checkout hook.
 
-Right.  Yes, this could be explained more.
+I think it's right as-is. He changed the title of the section, made a
+few tweaks in the text to make it appropriate for "pre-checkout", and
+then made a new post-checkout section that says "This is just like
+pre-checkout". So most of the lines were left untouched. Short of our
+diff understanding the block-formatting of asciidoc, I think it's as
+good as we can get.
 
-Actually the use case is submodules.  When switching branches, the user
-wants to add a hook to remove submodules.  However post-checkout is too
-late, because the index and the .gitmodules file do not record the
-submodule locations.
-
-Of course the best explanation is a test case :) I'll look at cooking
-one up.
--- 
-Sam Vilain, Perl Hacker, Catalyst IT (NZ) Ltd.
-phone: +64 4 499 2267        PGP ID: 0x66B25843
+-Peff
