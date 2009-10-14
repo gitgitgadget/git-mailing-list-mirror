@@ -1,84 +1,99 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
 Subject: Re: [PATCH] gitweb: fix esc_param
-Date: Wed, 14 Oct 2009 08:19:22 +0200
-Message-ID: <cb7bb73a0910132319p27b4f362sf5bffa2afe6e5849@mail.gmail.com>
-References: <1255463496-21617-1-git-send-email-giuseppe.bilotta@gmail.com> 
-	<4AD525CA.8090102@gmail.com>
+Date: Tue, 13 Oct 2009 23:29:45 -0700
+Message-ID: <4AD56FD9.70602@gmail.com>
+References: <1255463496-21617-1-git-send-email-giuseppe.bilotta@gmail.com> 	<4AD525CA.8090102@gmail.com> <cb7bb73a0910132319p27b4f362sf5bffa2afe6e5849@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 08:22:38 2009
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 14 08:34:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxxFn-0005Mv-T4
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 08:22:32 +0200
+	id 1MxxRO-000452-V9
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 08:34:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753683AbZJNGUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 02:20:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752173AbZJNGUU
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 02:20:20 -0400
-Received: from mail-fx0-f227.google.com ([209.85.220.227]:51167 "EHLO
-	mail-fx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790AbZJNGUT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 02:20:19 -0400
-Received: by fxm27 with SMTP id 27so11136802fxm.17
-        for <git@vger.kernel.org>; Tue, 13 Oct 2009 23:19:43 -0700 (PDT)
+	id S1755376AbZJNGa1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Oct 2009 02:30:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755186AbZJNGa1
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 02:30:27 -0400
+Received: from mail-qy0-f186.google.com ([209.85.221.186]:61499 "EHLO
+	mail-qy0-f186.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755363AbZJNGaZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 02:30:25 -0400
+Received: by qyk16 with SMTP id 16so3889684qyk.15
+        for <git@vger.kernel.org>; Tue, 13 Oct 2009 23:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=rjkwmaObYyYTCB7ZDKh2oU+4i0+R05VUAmu9HrxWLR4=;
-        b=u1y2nE0iNnkEEL+wQYgR4J+cBPi7aORoWQzfCNWx9UnzfPqZEKz4RQi4SX6aTvuDCc
-         Kwo3pq6uBmO06BMUxZ5UZyfGTvQi9t9HGfhU72UvrIa4WH2FkvzoidHQDllTWwCf1NE7
-         fqMNmXTPANsGdLxWtLe6MoqzxzT50BJQKv8JU=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=grhnaW44ctP8XwwNsSIp2/ZuGGKuVgtbZbn3dig52wA=;
+        b=b5RmlSeVeEHlWuSuenoiMSGQmTmEsU1wNoAsr0E1dMLfFoWRKrksyTM0s0TOow74nY
+         HQQ8r9XFnXDb4b1gG4dVTWHOZKdgo7C/cBQSck7bF5rywG0DiqveCBPCc/52HmJLvWOl
+         sJ0fBqQ173F5mVOxWpOfemhSyDaQYqtkgfPlE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=GDu8le5H7jnslCZ64b2lleTe/1MNseieUuSZPxmb26x9sSt+no4Irj2N4LrFyFO4Q9
-         26gseJU53UGp2CRhGJfetiNQq87+2SpZbgsEmhhC7Lpr6b+F9CRENnTjNwVnnvWAEAAZ
-         IZnn1TYpWtOMY8SavR6zclKqfAUC/s6bG2xxc=
-Received: by 10.204.2.211 with SMTP id 19mr6907784bkk.6.1255501183066; Tue, 13 
-	Oct 2009 23:19:43 -0700 (PDT)
-In-Reply-To: <4AD525CA.8090102@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=JEE22GORssQE+M8d3aMQMaB7RB7Sgt/GBu0/anUoQpieqzY9jz4miZN0QZfRpgym+3
+         Y+RzMePwsbX5JDZZCpXiUgs47nIEhbGtGTHEXvvM3MTT8N7Fb8oOf/87HKbtflaVFhp+
+         seMo8Dek2ygec9nuA4vRlItXo9NEWwx3OIRiI=
+Received: by 10.224.83.136 with SMTP id f8mr6755849qal.86.1255501789363;
+        Tue, 13 Oct 2009 23:29:49 -0700 (PDT)
+Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 7sm835132qwb.22.2009.10.13.23.29.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Oct 2009 23:29:48 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090827)
+In-Reply-To: <cb7bb73a0910132319p27b4f362sf5bffa2afe6e5849@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130258>
 
-On Wed, Oct 14, 2009 at 3:13 AM, Stephen Boyd <bebarino@gmail.com> wrote:
-> Giuseppe Bilotta wrote:
->> The custom CGI escaping done in esc_param failed to escape UTF-8
->> properly. Fix by using CGI::escape on each sequence of matched
->> characters instead of sprintf()ing a custom escaping for each byte.
->>
->> Additionally, the space -> + escape was being escaped due to greedy
->> matching on the first substitution. Fix by adding space to the
->> list of characters not handled on the first substitution.
->>
->> Finally, remove an unnecessary escaping of the + sign.
->>
+Giuseppe Bilotta wrote:
+> On Wed, Oct 14, 2009 at 3:13 AM, Stephen Boyd <bebarino@gmail.com> wr=
+ote:
+>> This works great for my purposes. Thanks.
 >
-> Signoff?
+> Can you also check if this fixes the branch name issue you mentioned
+> in the other branch? (And/or do you have a repository exposing the
+> problem if not?)
 
-Doh.
+(We're jumping back and forth between threads haha)
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Sorry, it doesn't. But this diff fixes the first part of the problem.
+There are still problems with the RSS/Atom feed names being mangled. Th=
+e
+branch name I'm using is gitw=E9b, but I imagine any utf8 character wil=
+l fail.
 
-(If this isn't enough, let me know)
+I see the title and the actual text being mangled without this patch.
 
-> This works great for my purposes. Thanks.
-
-Can you also check if this fixes the branch name issue you mentioned
-in the other branch? (And/or do you have a repository exposing the
-problem if not?)
-
-
-
--- 
-Giuseppe "Oblomov" Bilotta
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 4b21ad2..910c370 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1500,9 +1500,10 @@ sub format_ref_marker {
+                                -href =3D> href(
+                                        action=3D>$dest_action,
+                                        hash=3D>$dest
+-                               )}, $name);
++                               )}, esc_html($name));
+=20
+-                       $markers .=3D " <span class=3D\"$class\" title=3D=
+\"$ref\">" .
++                       my $title_ref =3D esc_html($ref);
++                       $markers .=3D " <span class=3D\"$class\" title=3D=
+\"$title_ref\">" .
+                                $link . "</span>";
+                }
+        }
