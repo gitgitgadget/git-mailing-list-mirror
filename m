@@ -1,140 +1,169 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [RFC PATCH] implement sample post-checkout hook to checkout
-	new/unchanged submodules
-Date: Wed, 14 Oct 2009 22:12:57 +0200
-Message-ID: <20091014201257.GA5788@book.hvoigt.net>
-References: <alpine.DEB.2.00.0910131115160.14223@ds9.cixit.se> <4AD47C65.5080904@web.de> <alpine.DEB.2.00.0910140728420.16100@ds9.cixit.se> <4AD5F0B1.4000507@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 14 22:22:11 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCHv2] gitweb: linkify author/committer names with search
+Date: Wed, 14 Oct 2009 13:24:46 -0700
+Message-ID: <1255551886-15496-1-git-send-email-bebarino@gmail.com>
+References: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Wincent Colaiuta <win@wincent.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 22:26:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyAKS-0001hn-82
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 22:20:12 +0200
+	id 1MyAQy-0003gz-Mc
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 22:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933707AbZJNUNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 16:13:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933727AbZJNUNi
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 16:13:38 -0400
-Received: from darksea.de ([83.133.111.250]:45594 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933665AbZJNUNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 16:13:37 -0400
-Received: (qmail 2639 invoked from network); 14 Oct 2009 22:12:57 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 14 Oct 2009 22:12:57 +0200
-Content-Disposition: inline
-In-Reply-To: <4AD5F0B1.4000507@web.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S933835AbZJNU0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 16:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933724AbZJNU0l
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 16:26:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:30042 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933662AbZJNU0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 16:26:40 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1574957fga.1
+        for <git@vger.kernel.org>; Wed, 14 Oct 2009 13:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=9Ml6xpZJQiN/ApHzW1q+TPHKm+5kAYdJfSQobw0Tj24=;
+        b=FYwM850a2wVyrMaYDvWY1H2TozZWSllewGZ0HjzK78+IcUL+XzQky6RzoTOXAHhv9K
+         ICaFunUqVMkflSgxHMfMT3tFy+/Q+L85bFZ3yTgVjV0ptdpn+40dSWv1a8RjjTxnZgg9
+         5gZ33IQj2R/B7wQT/LVi0zTPI7UW+VVxK3sLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=FtDx+4/bPue6UN/agrI4b4h9vWWH9WIG5NOCjxmWra0j1GGhF+wN1Ddf016HNlnhNX
+         d67DGNyZwqO2dH45WV2/aTtmsyH3/FISisdBCTmsiKQtGc7UMmOnxYNoFZF2wK8RzWLY
+         pJpWl5oGpB+iVptSiiluUMp7THwE6k/3Ya3mE=
+Received: by 10.86.192.34 with SMTP id p34mr8120731fgf.28.1255551891854;
+        Wed, 14 Oct 2009 13:24:51 -0700 (PDT)
+Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 4sm126016fgg.13.2009.10.14.13.24.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Oct 2009 13:24:50 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Wed, 14 Oct 2009 13:24:46 -0700
+X-Mailer: git-send-email 1.6.5.94.gcd2f3
+In-Reply-To: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130333>
 
-Currently gits default behaviour is not to recursively update submodules
-when they are unchanged in the working copy. This hook implements this
-by comparing whether the current HEAD in the submodule is the same as
-recorded in the commit we are coming from. It then initializes or
-updates the submodule as necessary.
+It's nice to search for an author by merely clicking on their name in
+gitweb. This is usually faster than selecting the name, copying the
+selection, pasting it into the search box, selecting between
+author/committer and then hitting enter.
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+Linkify the avatar icon in log/shortlog view because the icon is directly
+adjacent to the name and thus more related. The same is not true
+when in commit/tag view where the icon is farther away.
+
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
 
-On Wed, Oct 14, 2009 at 05:39:29PM +0200, Jens Lehmann wrote:
-> Peter Krefting schrieb:
-> > Jens Lehmann:
-> > 
-> >> just calling "git submodule update" every time you want the submodule
-> >> to be updated according to the state committed in the superproject
-> >> will do the trick (but keep in mind that all referenced commits have
-> >> to be accessible in the local clone of your submodule, so you might
-> >> have to do a fetch there once in a while).
-> 
-> BTW: unless you use the -N or --no-fetch option, git submodule update
-> will do the fetch for you.
-> 
-> 
-> > Is it possible to automate this from a hook or something else?
-> 
-> Yep, you can use the post-checkout hook for that, just put a "git
-> submodule update" in it.
+This is based off next now that Giuseppe's patch is there.
 
-Incidentially I have just been working on such a hook. Here is a patch
-that implements it as a sample hook.
+Changes since v1:
 
-I tested most cases, but I have not worked with it productively so it
-might have strange results in some cases. One I already found is that
-post-checkout is not called after a merge so you need to add a
-submodule update there as well.
+ * CSS hack has been cleaned up to only remove the link border from
+   avatar icons when actually linked.
 
-cheers Heiko
+ * Checking for search capability to avoid generating search links (Wincent)
 
+ * Linking of name and email are separate in commit/commitdiff/tag views
 
- templates/hooks--post-checkout.sample |   50 +++++++++++++++++++++++++++++++++
- 1 files changed, 50 insertions(+), 0 deletions(-)
- create mode 100644 templates/hooks--post-checkout.sample
+The last one I figured I'd throw in because I'm doing it again.
 
-diff --git a/templates/hooks--post-checkout.sample b/templates/hooks--post-checkout.sample
-new file mode 100644
-index 0000000..9ffffa0
---- /dev/null
-+++ b/templates/hooks--post-checkout.sample
-@@ -0,0 +1,50 @@
-+#!/bin/sh
+ gitweb/gitweb.css  |    4 ++++
+ gitweb/gitweb.perl |   33 ++++++++++++++++++++++++++++-----
+ 2 files changed, 32 insertions(+), 5 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 8faa94e..50067f2 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -32,6 +32,10 @@ img.avatar {
+ 	vertical-align: middle;
+ }
+ 
++a.list img.avatar {
++	border-style: none;
++}
 +
-+# if this is a file checkout we do nothing
-+flag=$3
-+if [ ! $flag ]
-+then
-+	exit 0
-+fi
+ div.page_header {
+ 	height: 25px;
+ 	padding: 8px;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0c71ee8..6325b97 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1625,6 +1625,22 @@ sub git_get_avatar {
+ 	}
+ }
+ 
++sub format_search_author {
++	my $searchtext = shift;
++	my $searchtype = shift;
++	my $displaytext = shift;
++	my $have_search = gitweb_check_feature('search');
++	if ($have_search) {
++		return $cgi->a({-href => href(action=>"search", hash=>$hash,
++				searchtext=>$searchtext,
++				searchtype=>$searchtype), class=>"list"},
++				$displaytext);
 +
-+# if this is the initial checkout also intialize submodules
-+if [ $1 == "0000000000000000000000000000000000000000" ]; then
-+	git submodule init
-+	git submodule update
-+	# after initial checkout we are done now
-+	exit 0
-+fi
++	} else {
++		return $displaytext;
++	}
++}
 +
-+# update all submodules that where not modified beforehand
-+# or did not exist
-+prev_sha1=$1
-+new_sha1=$2
-+
-+git ls-tree $new_sha1 | grep ^160000 |cut -f2 |
-+while read submodule
-+do
-+	prev_submodule_sha1=$(git ls-tree $prev_sha1 |
-+		grep "	$submodule$" | cut -f1 | cut -d' ' -f3)
-+	curr_submodule_sha1=$(cd "$submodule"; git rev-parse HEAD \
-+		2>/dev/null)
-+
-+	if [ -z "$prev_submodule_sha1" ]
-+	then
-+		git submodule init "$submodule"
-+		git submodule update "$submodule"
-+		continue
-+	fi
-+
-+	if [ "$prev_submodule_sha1" = "$curr_submodule_sha1" ]
-+	then
-+		if [ -z "$(git config submodule."$submodule".url)" ]
-+		then
-+			git submodule init "$submodule"
-+		fi
-+
-+		if [ "$(git diff $prev_sha1 $new_sha1 -- "$submodule")" ]
-+		then
-+			git submodule update "$submodule"
-+		fi
-+	fi
-+done
+ # format the author name of the given commit with the given tag
+ # the author name is chopped and escaped according to the other
+ # optional parameters (see chop_str).
+@@ -1633,8 +1649,10 @@ sub format_author_html {
+ 	my $co = shift;
+ 	my $author = chop_and_escape_str($co->{'author_name'}, @_);
+ 	return "<$tag class=\"author\">" .
+-	       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
+-	       $author . "</$tag>";
++	       format_search_author($co->{'author_name'}, "author",
++		       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
++		       $author) .
++	       "</$tag>";
+ }
+ 
+ # format git diff header line, i.e. "diff --(git|combined|cc) ..."
+@@ -3433,10 +3451,11 @@ sub git_print_authorship {
+ 	my $co = shift;
+ 	my %opts = @_;
+ 	my $tag = $opts{-tag} || 'div';
++	my $author = $co->{'author_name'};
+ 
+ 	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+-	      esc_html($co->{'author_name'}) .
++	      format_search_author($author, "author", esc_html($author)) .
+ 	      " [$ad{'rfc2822'}";
+ 	print_local_time(%ad) if ($opts{-localtime});
+ 	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
+@@ -3455,8 +3474,12 @@ sub git_print_authorship_rows {
+ 	@people = ('author', 'committer') unless @people;
+ 	foreach my $who (@people) {
+ 		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+-		print "<tr><td>$who</td><td>" . esc_html($co->{$who}) . "</td>" .
+-		      "<td rowspan=\"2\">" .
++		print "<tr><td>$who</td><td>" .
++		      format_search_author($co->{"${who}_name"}, $who,
++			       esc_html($co->{"${who}_name"})) . " " .
++		      format_search_author($co->{"${who}_email"}, $who,
++			       esc_html("<" . $co->{"${who}_email"} . ">")) .
++		      "</td><td rowspan=\"2\">" .
+ 		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
+ 		      "</td></tr>\n" .
+ 		      "<tr>" .
 -- 
-1.6.5.rc1.12.gc72fe
+1.6.5.94.gcd2f3
