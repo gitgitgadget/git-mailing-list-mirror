@@ -1,72 +1,59 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD
- was
-Date: Wed, 14 Oct 2009 16:48:29 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
-References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
- <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
- <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
- <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
- <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-commit feature request: pass editor command line options
+Date: Wed, 14 Oct 2009 17:12:45 -0400
+Message-ID: <20091014211245.GA21670@sigill.intra.peff.net>
+References: <25885354.post@talk.nabble.com>
+ <20091014172337.GE6115@genesis.frugalware.org>
+ <7vvdihdc4f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Matthew Cline <matt@nightrealms.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 22:56:51 2009
+X-From: git-owner@vger.kernel.org Wed Oct 14 23:18:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyAof-0007lo-Si
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 22:51:26 +0200
+	id 1MyBEy-0004wC-32
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 23:18:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759886AbZJNUtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 16:49:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757204AbZJNUtL
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 16:49:11 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:26459 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755227AbZJNUtK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 16:49:10 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KRI00CY6V4T56A0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 14 Oct 2009 16:48:29 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1759607AbZJNVNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 17:13:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759587AbZJNVNY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 17:13:24 -0400
+Received: from peff.net ([208.65.91.99]:58208 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759548AbZJNVNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 17:13:23 -0400
+Received: (qmail 32129 invoked by uid 107); 14 Oct 2009 21:16:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 14 Oct 2009 17:16:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 17:12:45 -0400
+Content-Disposition: inline
+In-Reply-To: <7vvdihdc4f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130340>
 
-On Wed, 14 Oct 2009, Junio C Hamano wrote:
+On Wed, Oct 14, 2009 at 12:11:28PM -0700, Junio C Hamano wrote:
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
-> 
-> > On Wed, 14 Oct 2009, Daniel Barkalow wrote:
+> > Hmm, what is the use-case when using an option --foo is useful when
+> > creating a commit, but not useful when crating a tag?
 > >
-> >> On Wed, 14 Oct 2009, Jay Soffian wrote:
-> >> 
-> >> > $ git commit -m "blah"
-> >> > Cannot commit while not on any branch. Please use git commit -b <branch> to
-> >> > specify the name of a new branch to commit to, or use git commit -f to
-> >> > force a detached commit.
-> >> 
-> >> The difference is that some experienced users depend on being able to 
-> >> commit while not on a branch, and want to not get a warning for every 
-> >> commit while not on a branch.
-> >
-> > I assume that the -f would silence any warning?
+> > Apart from introducing inconsistency...
 > 
-> It won't help to alleviate my irritation if I need to give -f to each and
-> every invocation of "git commit" while detached, though.
+> Not between commit and tag, but I can see you may want to auto-wrap for
+> log message but forbid auto-wrap when editing rebase insn sheet during
+> "rebase -i".
 
-Agreed.  Presumably some expert mode config would imply -f 
-automatically.
+I think most people who want that just have their editor automagically
+recognize the different situations based on the file name or contents. I
+don't think the original author is wrong to want to be able to use
+command-line options to do so, but if he is using a common editor like
+vim or emacs, I think such autodetection has already been written.
 
-
-Nicolas
+-Peff
