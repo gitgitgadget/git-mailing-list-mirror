@@ -1,86 +1,76 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when 
-	appropriate to do so
-Date: Tue, 13 Oct 2009 21:05:54 -0400
-Message-ID: <76718490910131805o42e8321ama85b90b7e901dc7d@mail.gmail.com>
-References: <0016e68fd0123a175304754694b4@google.com>
-	 <200910130836.57011.trast@student.ethz.ch>
-	 <7vljjf226t.fsf@alter.siamese.dyndns.org>
-	 <200910131051.47117.trast@student.ethz.ch>
-	 <7vy6nfwssk.fsf@alter.siamese.dyndns.org>
-	 <alpine.DEB.1.00.0910132302380.4985@pacific.mpi-cbg.de>
-	 <20091013220640.GB12603@coredump.intra.peff.net>
-	 <alpine.DEB.1.00.0910140117280.4985@pacific.mpi-cbg.de>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH] gitweb: fix esc_param
+Date: Tue, 13 Oct 2009 18:13:46 -0700
+Message-ID: <4AD525CA.8090102@gmail.com>
+References: <1255463496-21617-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, Euguess@gmail.com,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 14 03:13:23 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 14 03:19:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxsQc-0007WX-P1
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 03:13:23 +0200
+	id 1MxsWG-00075b-OF
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 03:19:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761244AbZJNBGd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Oct 2009 21:06:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760223AbZJNBGd
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 21:06:33 -0400
-Received: from mail-vw0-f203.google.com ([209.85.212.203]:53250 "EHLO
-	mail-vw0-f203.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751200AbZJNBGc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Oct 2009 21:06:32 -0400
-Received: by vws41 with SMTP id 41so5514779vws.4
-        for <git@vger.kernel.org>; Tue, 13 Oct 2009 18:05:54 -0700 (PDT)
+	id S1760662AbZJNBPk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Oct 2009 21:15:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760254AbZJNBPk
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Oct 2009 21:15:40 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:60628 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760129AbZJNBPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Oct 2009 21:15:39 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1119725fga.1
+        for <git@vger.kernel.org>; Tue, 13 Oct 2009 18:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cHtAhCDutGSL2VSRjv2kWUGWnSxbhJzRc27xLL+npDs=;
-        b=gp9PWIY7MC85KEfrWx8N7Qy9w6n9HoQhnrj7XmDjdzGE0aMUOUHQkFE1pWFbegLFjX
-         B2dWfzpZ6gwI0VmvXDtiJbFS2caPrCyM+hXc196ybAFYRon8WT1Y8A797R0DohlvD5ak
-         MqSluKlV7lVHsUM0wgbtUHM2gFlygzWmvmY5w=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=d6pIXDQP36iWpdSeT53TuYiTAPl7DxjWpG+rSqJiUdc=;
+        b=vEqR5HlOSvqUoX7angdW2qhWNIBntc8gvp3QLHgz355Hjc+uohtwZCY8Wv8iO1lFan
+         daRZWz1ULLt6mzEuEX8RffRUzRfea6DfyC4NCDDVx7WhvDSpZ6PBhHSTSTUPqUnBW3RV
+         ptMRzfBHoq7BCgCaxPX1c2RsWG2X+faLzpWS4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mzCgorGMAULW4fFdKLxjgHLf6thU17McWp9XM/bpRrwJ4u9JEa3NldiYwPMmE/GBEh
-         yJYMvLi6g4f9E4gHikCp8fjFhBw9IjEP8KdVYjPfr6rFwW3wewM4IqIrDcoiaMj2lnD1
-         +fL/2UnzfIPyTKXlvtp8Cda8aj1us0fiDy6bc=
-Received: by 10.220.107.226 with SMTP id c34mr1533993vcp.69.1255482354480; 
-	Tue, 13 Oct 2009 18:05:54 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.0910140117280.4985@pacific.mpi-cbg.de>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=QahyXFGdTE2FHG06DiD34xxLlHbmxfgERAXGqVhSSxdwKvwjgQ9fZXUcvdJ9vRddYD
+         w9sl/Ud8kKKC7o6J7EhCQsb+B/aiDLUJMuIf2S78evvcdTi8xKctL2uE1JLxZZE0vSic
+         5Jj2VdNxLhVcNJIBvGgvkek+SaBEBqSBLLIZ0=
+Received: by 10.86.13.7 with SMTP id 7mr7069734fgm.64.1255482831892;
+        Tue, 13 Oct 2009 18:13:51 -0700 (PDT)
+Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 4sm1015119fge.7.2009.10.13.18.13.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Oct 2009 18:13:50 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090827)
+In-Reply-To: <1255463496-21617-1-git-send-email-giuseppe.bilotta@gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130234>
 
-On Tue, Oct 13, 2009 at 7:22 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> At some point, trying to educate the user is not helpful but annoying=
-=2E =C2=A0If
-> Git already knows what I want, why does it not do it already? =C2=A0_=
-That_ is
-> the question I already hear in my ears.
+Giuseppe Bilotta wrote:
+> The custom CGI escaping done in esc_param failed to escape UTF-8
+> properly. Fix by using CGI::escape on each sequence of matched
+> characters instead of sprintf()ing a custom escaping for each byte.
+>
+> Additionally, the space -> + escape was being escaped due to greedy
+> matching on the first substitution. Fix by adding space to the
+> list of characters not handled on the first substitution.
+>
+> Finally, remove an unnecessary escaping of the + sign.
+>
 
-Modify checkout so that the first commit while detached automatically
-creates a branch. Perhaps the name is derived from the branch point,
-or the user is prompted for a name.
+Signoff?
 
-This doesn't help with the original problem, which was that a user
-attempted to checkout refs/remotes/origin/<name> by just saying 'git
-checkout <name>' which I happen to think should work. A lot of what I
-keep hearing in this thread seems to be in the vein of the perfect
-being the enemy of the good.
-
-That rambled a bit. Sorry.
-
-j.
+This works great for my purposes. Thanks.
