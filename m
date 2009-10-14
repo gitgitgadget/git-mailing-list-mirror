@@ -1,82 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysgit? bug] crlf double-conversion on win32
-Date: Wed, 14 Oct 2009 11:47:47 -0700
-Message-ID: <7vfx9lersc.fsf@alter.siamese.dyndns.org>
-References: <38cfaa83fdf80dec3a3d81ed3e0de0e2.squirrel@intranet.linagora.com>
- <loom.20091014T001602-378@post.gmane.org>
- <alpine.DEB.1.00.0910141601580.4985@pacific.mpi-cbg.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD 
+	was
+Date: Wed, 14 Oct 2009 14:56:11 -0400
+Message-ID: <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Raible <raible@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 14 20:54:32 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Oct 14 21:05:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1My8zJ-0007sb-OY
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 20:54:18 +0200
+	id 1My99S-0005bn-6X
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 21:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760747AbZJNSsl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 14:48:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757672AbZJNSsk
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 14:48:40 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43223 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756947AbZJNSsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 14:48:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 403C377E37;
-	Wed, 14 Oct 2009 14:47:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=phhfk/x3YRKbc/QS4p4H2wIC9cQ=; b=iafS5p
-	1I+nml6nTqLXi1SsBF0W/1dVyskaPr+Sb63nBYSo2jHPJbtEpG2Ty/iSwUKsWGdT
-	HruWo2PZV3ljNGI7s43xSIK9jybEQkxtqp7srmgohF2DXqJ31veuf/5J/O/iJb6g
-	Pl7qKkwhPlhWaVglQ13g42kZL/p/o9Rv4bjIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Lh+fAoLVRXU+fhlPsu4s+zJcnqwhT9n6
-	A2JXT/hwejv9UjoCAW/38sAEkRPOO6K83soCtbKwEXbjdoONV0wWzZmTDZy7WTfY
-	quYIjny6wq+CFCadtiiqwyVQGU9EvGFmI7QlAAmtmi+4FZc7MNW8ewN5WInyt2JL
-	KfvHycKpugQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1A2B477E36;
-	Wed, 14 Oct 2009 14:47:54 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B3BF177E35; Wed, 14 Oct 2009
- 14:47:49 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0910141601580.4985@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Wed\, 14 Oct 2009 16\:03\:43 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 14F0A10A-B8F2-11DE-A9DE-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1762021AbZJNS4u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Oct 2009 14:56:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762019AbZJNS4u
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 14:56:50 -0400
+Received: from mail-iw0-f180.google.com ([209.85.223.180]:49810 "EHLO
+	mail-iw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757204AbZJNS4t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Oct 2009 14:56:49 -0400
+Received: by iwn10 with SMTP id 10so55815iwn.4
+        for <git@vger.kernel.org>; Wed, 14 Oct 2009 11:56:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=C1HHeSIP4E1yRNmdbB3FPoSIRVJ3TllrRq7oP0dcEVk=;
+        b=wJV5gh4mWGu6I4ikw4Zj4m6MKpYaeG2O3zK5RMiiYYVjY3qClWybnbBOxqW8jhj4ep
+         wc0wVU45NFtEJocTdMWTAtgh0coVMLDn92nNmnyw97MtdWsTnLrT1Nx9DcDiuZ48Bkmm
+         XaoaAojPwzSdymIqLPJTPx2jKXk2u1nFlwBwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sRZxGx2eFcnQNuAaLc/dXccCl5gOkHXmdNRWrEHQY4efBq517k0mFQSYZCKqraezA8
+         wYTIDRQg7DIXt9E4TE3MpCo1yH6CAObmLw3lkUbb5BviF8iug1PK1OHKvF8VwQLUfoJd
+         N3SBny4x6TPy76EG8+EYYp2mxNw45hGAF5CV4=
+Received: by 10.231.6.87 with SMTP id 23mr4320043iby.19.1255546571571; Wed, 14 
+	Oct 2009 11:56:11 -0700 (PDT)
+In-Reply-To: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130323>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Oct 14, 2009 at 12:44 AM, Daniel Barkalow <barkalow@iabervon.or=
+g> wrote:
+> =C2=A0$ git commit
+> =C2=A0You've been sightseeing "origin/master". The commit can't chang=
+e that
+> =C2=A0value, so your commit isn't held in any branch. If you want to =
+create
+> =C2=A0a branch to hold it, here's how.
+>
+> "git checkout origin/master" should be similar in complexity to
+> "svn checkout -r 8655"; the difference is that svn won't let you
+> commit then and git will but you'll need to understand the
+> implications if you do so. If you don't commit (because you don't wan=
+t
+> to make any changes, because you don't think it would be possible, or
+> because you don't want to worry about what would happen), there's no
+> meaningful difference, and you don't need to be told.
 
-> So I started some time ago to code a "git checkout --fix-crlf", but I 
-> am not really happy with the user interface.  I think that Git should 
-> realize itself that something went wrong with the line endings.  If I say 
-> "git reset --hard", it is just a bug in Git when it insists afterwards 
-> that the files are modified.
+Huh, I hadn't seen this message before I wrote in a reply to
+"builtin-checkout: suggest creating local branch" that we do the
+following at commit, which I think is what you're suggesting:
 
-I tend to agree.  "git reset --hard-without-cached-stat-info" that ignores
-the cached stat information while it does the equivalent of the usual
-"reset --hard" may be a reasonably safe and usable alternative for
-"checkout --fix-crlf".  When people see "reset --hard...", it will tell
-them that this is about matching the index and the work tree with the
-named commit, as opposed to "checkout", so enhancing "reset" would make
-more sense, I think.
+$ git commit -m "blah"
+Cannot commit while not on any branch. Please use git commit -b <branch=
+> to
+specify the name of a new branch to commit to, or use git commit -f to
+force a detached commit.
 
-Obviously, I am not seriously suggesting "--hard-without-cached-stat-info"
-as the name of this mode of operation, and you need to come up with a
-better one.  But it is better than "--crlf", as it is not limited to the
-crlf conversion that brings the inconsistency you will be resetting away.
-It arises from any silent invalidation of the cached stat optimization
-after you touch attributes and config.
+I'm not sure that requires the complexity of remembering how the user
+got detached though?
+
+j.
