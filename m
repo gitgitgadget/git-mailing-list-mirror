@@ -1,65 +1,92 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Wed, 14 Oct 2009 11:56:20 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910141143520.32515@iabervon.org>
-References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org> <20091014050851.GE31810@coredump.intra.peff.net>
+From: Laurent Boulard <laurent.boulard@gmail.com>
+Subject: Re: [msysgit? bug] crlf double-conversion on win32
+Date: Wed, 14 Oct 2009 17:59:23 +0200
+Message-ID: <cdea158b0910140859y3a914654nd293557eb44067e3@mail.gmail.com>
+References: <38cfaa83fdf80dec3a3d81ed3e0de0e2.squirrel@intranet.linagora.com> 
+	<loom.20091014T001602-378@post.gmane.org> <alpine.DEB.1.00.0910141601580.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 14 17:58:57 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Raible <raible@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 14 18:27:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1My6F4-0004Ar-QA
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 17:58:23 +0200
+	id 1My6gd-0001oP-MT
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 18:26:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934327AbZJNP5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 11:57:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761884AbZJNP5A
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 11:57:00 -0400
-Received: from iabervon.org ([66.92.72.58]:47150 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761847AbZJNP47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 11:56:59 -0400
-Received: (qmail 17547 invoked by uid 1000); 14 Oct 2009 15:56:20 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Oct 2009 15:56:20 -0000
-In-Reply-To: <20091014050851.GE31810@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S934738AbZJNQBc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Oct 2009 12:01:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933325AbZJNQBc
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 12:01:32 -0400
+Received: from gv-out-0910.google.com ([216.239.58.191]:30509 "EHLO
+	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934226AbZJNQBb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Oct 2009 12:01:31 -0400
+Received: by gv-out-0910.google.com with SMTP id r4so241132gve.37
+        for <git@vger.kernel.org>; Wed, 14 Oct 2009 08:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=C6Fco/qlcREY88JCS0Akq6N89HWAiMujr8zRQLgUOow=;
+        b=jy02godIiSNyKDSYPsMMbZKnucmavQXW8JOTls4cAaHl88GUXVyRQUkzDrGvKdOQEY
+         q3trl5bDFv7R0x14Ug08LxTWBZw0VC1rW/uSzwuHAe/5BxJzZ2c7yCGJcXFq7ekVUxP/
+         w0GMTLB3y36u9vD9MsexIEAs3+81os8RY4NxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vLNXXRAdqYBd/eRKarrZNP59Rfox1enyxSxa85QjMMLACElr5sll+KX1HH93nXqtjk
+         ZxpIi7yX/WxQPLHYQMW09qggg85GvDviLYosqh3n5g6LkMRsjp5Q2RxjPq/YAhLHkEd/
+         OKPBdain5DCj5hwJjeDcdtYmCpvA7q5YdQ+x4=
+Received: by 10.102.226.17 with SMTP id y17mr3764811mug.67.1255535983141; Wed, 
+	14 Oct 2009 08:59:43 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.0910141601580.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130302>
 
-On Wed, 14 Oct 2009, Jeff King wrote:
+On Wed, Oct 14, 2009 at 16:03, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>> See http://thread.gmane.org/gmane.comp.version-control.git/122823/fo=
+cus=3D122862
+>>
+>> In which Junio suggests:
+>> $ rm .git/index
+>> $ git reset --hard
+>>
+>> in order to "restore sanity to your work tree"
+>
+> Of course this is insane as a user interface. =A0It is not even plumb=
+ing.
+>
+> So I started some time ago to code a "git checkout --fix-crlf", but I
+> am not really happy with the user interface. =A0I think that Git shou=
+ld
+> realize itself that something went wrong with the line endings. =A0If=
+ I say
+> "git reset --hard", it is just a bug in Git when it insists afterward=
+s
+> that the files are modified.
 
-> On Wed, Oct 14, 2009 at 12:44:34AM -0400, Daniel Barkalow wrote:
-> 
-> > +char *get_detached_head_string(void)
-> > +{
-> > +	char *filename = git_path("DETACH_NAME");
-> > +	struct stat st;
-> > +	if (stat(filename, &st) || !S_ISREG(st.st_mode))
-> > +		return NULL;
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	strbuf_read_file(&buf, filename, st.st_size);
-> > +	strbuf_trim(&buf);
-> > +	return strbuf_detach(&buf, 0);
-> > +}
-> 
-> Would it hurt to tuck this information into HEAD itself, as we already
-> put arbitrary text into FETCH_HEAD?
+I have to work on win32 at work and depending of projects, I have to
+play with autocrlf/crlf config.
+So I cannot do a git clone because it will inherit the global crlf
+configuration which is not want I want. My flow is often:
 
-I don't know; I'll have to try that and see if the tools that handle HEAD 
-are happy with extra text there. If it works, it's a good solution.
+$ git init ...
+$ git config core.autocrlf ...
+$ git remote add origin ...
+$ git fetch origin ...
 
-I think I tried it at some point and things failed all over the place, but 
-that may have been before symrefs, when you could get the actual sha1 
-hash out of HEAD with "$(cat .git/HEAD)".
+I stuffed those four lines behind a few git alias but I think having a
+config option for git init and git clone to set core.autocrlf in
+repository would be a (small) improvement, isn't it ?
 
-	-Daniel
-*This .sig left intentionally blank*
+Laurent.
