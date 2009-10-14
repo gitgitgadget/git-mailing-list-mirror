@@ -1,98 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/2] user-manual: add global config section
-Date: Wed, 14 Oct 2009 18:09:34 +0200
-Message-ID: <4AD5F7BE.9000704@drmicha.warpmail.net>
-References: <1255293786-17293-1-git-send-email-felipe.contreras@gmail.com>	 <1255293786-17293-2-git-send-email-felipe.contreras@gmail.com>	 <4AD32024.6020005@drmicha.warpmail.net>	 <94a0d4530910121009r52d45522jf1c27dd102db4ad9@mail.gmail.com>	 <4AD42A1C.1080709@drmicha.warpmail.net> <94a0d4530910140726i4465e919h77045904aa33c61a@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Efficient cloning from svn (with multiple branches/tags subdirs)
+Date: Wed, 14 Oct 2009 12:28:38 -0400
+Message-ID: <32541b130910140928jdac0187x754423e8d5c64e53@mail.gmail.com>
+References: <hb2fvu$8qi$1@ger.gmane.org> <20091014060307.GA17178@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	"J. Bruce Fields" <bfields@citi.umich.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 18:28:04 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 14 18:42:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1My6gu-0001oP-Bp
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 18:27:08 +0200
+	id 1My6tb-0005yf-2V
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 18:40:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761988AbZJNQKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 12:10:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761982AbZJNQKv
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 12:10:51 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49562 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761977AbZJNQKs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Oct 2009 12:10:48 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DA6CAA83D8;
-	Wed, 14 Oct 2009 12:09:45 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 14 Oct 2009 12:09:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=PoKq+HmYbyI+MhDoK/+8afH7+Qg=; b=SnykdVOlD6D7xGWN3aRKGbFX5SOuqp7vxWZddUO2yIUWITtnmo7vesiqnlTZGxTzL9PTmVGIwyoLzQ8Mk4Qc3KgRbIYXmtQGc/aDq5nB7TBGi0oAXRJ0p3kw4la+lhj430dP8mZdjPr6sDi9tmPadu1q3tWFDhkV/7s5B1UOU4A=
-X-Sasl-enc: VlaB3YC9m1P0yr+CZs24diT7Eo8kkAtHmQN8Uw1KxFpl 1255536582
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 727EB6A8F9;
-	Wed, 14 Oct 2009 12:09:41 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091013 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <94a0d4530910140726i4465e919h77045904aa33c61a@mail.gmail.com>
+	id S1761707AbZJNQ3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 12:29:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756472AbZJNQ3f
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 12:29:35 -0400
+Received: from mail-yx0-f188.google.com ([209.85.210.188]:36517 "EHLO
+	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755850AbZJNQ3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 12:29:34 -0400
+Received: by yxe26 with SMTP id 26so5508353yxe.4
+        for <git@vger.kernel.org>; Wed, 14 Oct 2009 09:28:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=QqE061gOCKSwB8ByaWYJiKrQCjiCdFVKeQZ6RLSee0Q=;
+        b=BzBfVMRenj+LpeKG0+qJvCQgQd9nui64/awld+3RpxGRAYMXYkd07hVF4aN4NwpeBV
+         aYUaJsDx52hP3PEQMgk4pSi4hbAZ8ty+72bSTVgYnoR7DCLNw3DONgO3+Va4+uPenpqE
+         6Q8CT3h/0Z8o6cSTVGPL30MIFcSV3xvx8qAWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MWO0ME6WaIPDht7vOGrGuEDhmh4SeHLWNAoyiTcHDrHulWDnICtrbwJzNWUZes3UzP
+         dPeleyJ1T2ZICTqxgbnm9/MNYdN0673Ba/j82NTCpqYZmcmVs6HZRpldYzxgC4qHxNtU
+         XmLDBxJTpIXWUO4iDCor7hatx0DL6/8R9SiCw=
+Received: by 10.150.28.4 with SMTP id b4mr10801455ybb.124.1255537738078; Wed, 
+	14 Oct 2009 09:28:58 -0700 (PDT)
+In-Reply-To: <20091014060307.GA17178@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130306>
 
-Felipe Contreras venit, vidit, dixit 14.10.2009 16:26:
-> On Tue, Oct 13, 2009 at 10:19 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Felipe Contreras venit, vidit, dixit 12.10.2009 19:09:
->>> On Mon, Oct 12, 2009 at 3:25 PM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Well, you do talk about "system" below, and that's about it. Also, the
->>>> configuration is not really distributed among different locations. Most
->>>> newbies interested in a *D*VCS will misunderstand this (as git having
->>>> distributed configuration).
->>>>
->>>> Alternative:
->>>>
->>>> Git's default configuration can be changed on a system wide, global (per
->>>> user) and local (per repository) level, in the order of increasing
->>>> precedence.
->>>
->>> When I read that it's not clear if the local level discards the global
->>> level completely or it's aggregated. If we specify that it's only the
->>> variables that take precedence it might be clearer:
->>>
->>> Git's configuration is composed of variables that are stored in
->>> multiple locations: 'system' (all users), 'global' (for the user), and
->>> 'repository' -- in decreasing order of precedence.
->>
->> Yep, although established lingo is "options" (not "variables"), and it's
->> really increasing order, not decreasing.
-> 
-> Really? I remember clearly Junio stating otherwise:
-> http://marc.info/?l=git&m=123460371724873&w=2
-> 
-> ----
->> +	OPT_BOOLEAN(0, "unset", &do_unset, "removes an option: name [value-regex]"),
-> 
-> Please don't introduce a new noun "option" that has never been used to
-> mean a "configuration variable" in git documentation.  It unnecessarily
-> confuses everybody.
-> ----
+On Wed, Oct 14, 2009 at 2:03 AM, Eric Wong <normalperson@yhbt.net> wrote:
+> Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk> wrote:
+>> What surprises me is that it looks like it's looping over and over,
+>> since sometimes it starts back from SVN revision 1 when it's trying to
+>> import a new tag.
+>
+> Yeah, that's an unfortunate thing about the flexibility of Subversion,
+> basically anything can be a "tag" or a directory and it's extremely
+> hard for git svn to support any uncommon cases for tags/branches
+> out-of-the box, so the manual config editing is needed.
 
-Well, Junio certainly is authoritative, and I don't want to risk any bad
-patch-acceptance-fu ( :) ), but
+I've been thinking about this myself for some time.  One option that
+might be "interesting" would be to just grab the *entire* svn tree
+(from the root), and then use git-subtree[1] to slice and dice it into
+branches using your local copy of git (which is fast and uses no
+bandwidth) instead of during the svn fetch (which is slow and uses
+lots of bandwidth).  I think it would also simplify the git-svn code
+quite a lot, at least for fetching, since there would always be a
+global view of the tree and SVN things like "copy branch A to tag B"
+would just be exactly that.
 
-2d2465c (Add documentation for git-config-set, 2005-11-17)
+Of course I have no time to code this up myself, so I apologize for
+just dumping ideas on you without code behind them.  If this inspires
+anyone, I'd be happy to help with any missing features (or
+documentation) this exposes in git-subtree, though.
 
-is the origin of that doc for git-config. I'm not just claiming it
-myself. That commit introduced "option", uses it in all but one place,
-and this never changed since then! [The ratio went up from 6:1 to 40:5]
-I have no objection to changing this established notion, but established
-it is. I haven't tracked down the use of option vs. variable in other
-places than git-config.txt and its predecessors.
+Have fun,
 
-Michael
+Avery
+
+[1] http://github.com/apenwarr/git-subtree
