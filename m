@@ -1,141 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [ANNOUNCE] GIT 1.6.5
-Date: Wed, 14 Oct 2009 15:11:50 -0700 (PDT)
-Message-ID: <m3fx9lfwwr.fsf@localhost.localdomain>
-References: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Wed, 14 Oct 2009 15:34:05 -0700
+Message-ID: <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
+ <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
+ <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
+ <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
+ <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 00:25:36 2009
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Oct 15 00:35:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyCHU-0007yt-K0
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 00:25:16 +0200
+	id 1MyCR4-0003uN-EI
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 00:35:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762069AbZJNWNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 18:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762060AbZJNWNl
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 18:13:41 -0400
-Received: from fg-out-1718.google.com ([72.14.220.152]:60192 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193AbZJNWNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 18:13:40 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1622641fga.1
-        for <git@vger.kernel.org>; Wed, 14 Oct 2009 15:11:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=HGiNgBz9oepArWmi+u+KMg+yfDSJ22vTg8Ze7ANTmiQ=;
-        b=u1B3iHgtDFup3x2Fl6SuLUWyYKIwacZxAL7wDI7WX2OGDbIFcCMGZabZoNmEE52bYY
-         2b1bEQO/DFstryA8pmXCV5m8gqIWUk4H3ZJCtCnxHZbLUHIItFNaa3bCGqlqQ1GMKh8e
-         8WPv8KqNhzz5eewzLCShGZHb/KHBe/tr6kA0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Dn0SJjYF5WC9Bzumi8ukKACUqJHC0y7orOw6NR03BIa+7N5rV9uHry+fti3KCCtJDS
-         u/7cFxNbSIcOJd2mwbDR9SIbW6DQHCULx2njtGUXyC+GXvya+K+Tody/kP75Hlvd9f+s
-         ewb0PVLkCvl1DQ79lpdhjgdGnt1XKsgXPB8k0=
-Received: by 10.86.211.38 with SMTP id j38mr8189393fgg.26.1255558311397;
-        Wed, 14 Oct 2009 15:11:51 -0700 (PDT)
-Received: from localhost.localdomain (abvu196.neoplus.adsl.tpnet.pl [83.8.218.196])
-        by mx.google.com with ESMTPS id 3sm353952fge.14.2009.10.14.15.11.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Oct 2009 15:11:50 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n9EMBoZQ014966;
-	Thu, 15 Oct 2009 00:11:50 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n9EMBn5m014963;
-	Thu, 15 Oct 2009 00:11:49 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1761112AbZJNWe7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 18:34:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760782AbZJNWe7
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 18:34:59 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37431 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760736AbZJNWe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 18:34:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1CFCE58E3B;
+	Wed, 14 Oct 2009 18:34:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Qi1q2m4YyG4G7nLmEFSsZ9JxteI=; b=x5v55F
+	m7JSWMi407rC/mISJkZGnA+uT8xhkDjd/w6ynvI/Cf1Sec3NM8Bt8FApqbWCctOE
+	GjIdaKwHFVY1pBXgBvfyaml0fTuRWA0ITm1u2SV0BdopnjTk6bD9DYzX7ThbeIr4
+	wlYe7LmFJyRZYkIYd7y9oyesDnJkJpOU3Lnb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oepI6q5bfcyGvkCIMU5kgbPyCpuWr6Wt
+	B+ry5hc5jRE16uqnriRmL823b8LfSu8es/eoDciWmMgOyQ5TmOdzODPbg/JDy8tj
+	SrA+ztRb7EhnMgApf+x6jX3ekP/i392KP6jDn2r/NXDKohxe0z1bp10w9xH1oRm8
+	MuUl+WcNj8A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D9ADD58E37;
+	Wed, 14 Oct 2009 18:34:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C18558E34; Wed, 14 Oct
+ 2009 18:34:06 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.0910141647390.20122@xanadu.home> (Nicolas
+ Pitre's message of "Wed\, 14 Oct 2009 16\:48\:29 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B1F10CBE-B911-11DE-A80D-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130344>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-> The latest feature release GIT 1.6.5 is available at the usual
-> places:
-> 
->   http://www.kernel.org/pub/software/scm/git/
-> 
->   git-1.6.5.tar.{gz,bz2}			(source tarball)
->   git-htmldocs-1.6.5.tar.{gz,bz2}		(preformatted docs)
->   git-manpages-1.6.5.tar.{gz,bz2}		(preformatted docs)
-> 
-> The RPM binary packages for a few architectures are found in:
-> 
->   RPMS/$arch/git-*-1.6.5-1.fc9.$arch.rpm	(RPM)
-> 
-> This cycle took a bit longer than I hoped, but here it is.  We already
-> have some new features cooking in 'next', and I expect we may be able to
-> have 1.6.6 by the end of the year.
+> On Wed, 14 Oct 2009, Junio C Hamano wrote:
+>
+>> Nicolas Pitre <nico@fluxnic.net> writes:
+>> 
+>> > On Wed, 14 Oct 2009, Daniel Barkalow wrote:
+>> >
+>> >> On Wed, 14 Oct 2009, Jay Soffian wrote:
+>> >> 
+>> >> > $ git commit -m "blah"
+>> >> > Cannot commit while not on any branch. Please use git commit -b <branch> to
+>> >> > specify the name of a new branch to commit to, or use git commit -f to
+>> >> > force a detached commit.
+>> >> 
+>> >> The difference is that some experienced users depend on being able to 
+>> >> commit while not on a branch, and want to not get a warning for every 
+>> >> commit while not on a branch.
+>> >
+>> > I assume that the -f would silence any warning?
+>> 
+>> It won't help to alleviate my irritation if I need to give -f to each and
+>> every invocation of "git commit" while detached, though.
+>
+> Agreed.  Presumably some expert mode config would imply -f 
+> automatically.
 
-Compiling git from source RPM git-1.6.5-1.fc9.src.rpm using
-
-  $ rpmbuild --rebuild git-1.6.5-1.fc9.src.rpm
-
-fails with the following error:
-
-    SUBDIR perl
-/usr/bin/perl Makefile.PL PREFIX='/usr'
-Only one of PREFIX or INSTALL_BASE can be given.  Not both.
-make[1]: *** [perl.mak] Error 2
-make: *** [perl/perl.mak] Error 2
-error: Bad exit status from /var/tmp/rpm-tmp.53174 (%build)
-
-Compiling git from source with
-
- $ make prefix=/home/local/git \
-        bindir=/home/local/git \
-        gitexecdir=/home/local/git \
-        template_dir=/home/local/git \
-        GIT_PYTHON_DIR=/home/local/git 
-
-gives the same error.
-
-It might matter that I am using modern Perl way of installing Perl
-modules locally, via local::lib, with ~/perl5/.modulebuildrc
-containing 
-
-  install  --install_base  /home/jnareb/perl5
-
-and I have
-
-  export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
-  export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
-
-Doing
-
- $ unset PERL_MM_OPT
-
-before compiling (from SRPMS) made compilation pass this stage,
-and finally succeed.
-
-I guess that perl/Makefile (or rather the file that generates it)
-should unset PERL_MM_OPT, or use INSTALL_BASE as DESTDIR rather
-than fiddling with PREFIX.
-
-
-But I am not a Perl hacker
-------------------------------------------------------------
-perl, v5.8.6
-ExtUtils::MakeMaker 6.54 (local)
-ExtUtils::MakeMaker 6.17 (global)
-
-export MODULEBUILDRC="$HOME/perl5/.modulebuildrc"
-export PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+No, I do not want an expert mode.  I can probably live with "per session"
+setting, that makes me decide to set or not set it when I detach, though.
