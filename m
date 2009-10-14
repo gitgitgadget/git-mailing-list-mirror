@@ -1,58 +1,81 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Oct 2009, #02; Sun, 11)
-Date: Wed, 14 Oct 2009 00:24:17 -0400
-Message-ID: <20091014042417.GA28795@coredump.intra.peff.net>
-References: <7vfx9pmhae.fsf@alter.siamese.dyndns.org>
- <20091012051442.GB23007@coredump.intra.peff.net>
- <7vmy3w9qdd.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch
+ when appropriate to do so
+Date: Wed, 14 Oct 2009 00:31:50 -0400
+Message-ID: <20091014043150.GB28795@coredump.intra.peff.net>
+References: <0016e68fd0123a175304754694b4@google.com>
+ <200910130836.57011.trast@student.ethz.ch>
+ <7vljjf226t.fsf@alter.siamese.dyndns.org>
+ <200910131051.47117.trast@student.ethz.ch>
+ <7vy6nfwssk.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.1.00.0910132302380.4985@pacific.mpi-cbg.de>
+ <20091013220640.GB12603@coredump.intra.peff.net>
+ <alpine.DEB.1.00.0910140117280.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 06:30:31 2009
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, Euguess@gmail.com,
+	Mikael Magnusson <mikachu@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 14 06:39:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MxvVO-0005XA-1p
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 06:30:30 +0200
+	id 1MxveO-00086a-Oa
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 06:39:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423AbZJNEY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 00:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbZJNEY4
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 00:24:56 -0400
-Received: from peff.net ([208.65.91.99]:60931 "EHLO peff.net"
+	id S1751197AbZJNEc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 00:32:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbZJNEc0
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 00:32:26 -0400
+Received: from peff.net ([208.65.91.99]:34476 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751413AbZJNEYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 00:24:55 -0400
-Received: (qmail 24128 invoked by uid 107); 14 Oct 2009 04:27:48 -0000
+	id S1751104AbZJNEc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 00:32:26 -0400
+Received: (qmail 24179 invoked by uid 107); 14 Oct 2009 04:35:21 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Oct 2009 00:27:48 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 00:24:17 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 14 Oct 2009 00:35:21 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Oct 2009 00:31:50 -0400
 Content-Disposition: inline
-In-Reply-To: <7vmy3w9qdd.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <alpine.DEB.1.00.0910140117280.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130241>
 
-On Mon, Oct 12, 2009 at 03:52:46PM -0700, Junio C Hamano wrote:
+On Wed, Oct 14, 2009 at 01:22:26AM +0200, Johannes Schindelin wrote:
 
-> > Hmm. I thought you wanted to re-order some of these for to put the
-> > porcelain and short formats into v1.6.6, but leave the status switchover
-> > for v1.7.0.
+> At some point, trying to educate the user is not helpful but annoying.  If 
+> Git already knows what I want, why does it not do it already?  _That_ is 
+> the question I already hear in my ears.
+
+I am not entirely convinced that the suggested behaviors will result in
+that user response, or a different one (like "why does git keep giving
+me bad advice?"). Which is why I suggested data collection.
+
+> > So doing step (1) would be a way of collecting some of that data (will 
+> > users say "stupid git, if you knew what I wanted, why didn't you just do 
+> > it?" or "stupid git, your suggestion is just confusing me!").
 > 
-> We could build an alternate history between 3fa509d..46b77a6, revert the
-> merges 9558627 and 65c8513, and merge the alternate history.  But is the
-> short format support so solid that it deserves to be in 1.6.6 in the
-> current shape?
+> I disagree.  It is not about collecting data.  We will not get any 
+> feedback from the affected people.  You know that, I know that.
 
-Somewhere I seem to recall you saying that it would be nice to give the
---short format some wider exposure as "git status --short" before making
-the "status is no longer commit --dry-run" switch-over. But now I can't
-find that message anywhere.
+I don't agree. You are already talking about users complaining about
+git's interface. Isn't that feedback? How do you hear those complaints
+now?
 
-Let's not worry about it.
+I don't think they will come on the list and talk about it, but if we
+release a version of git that has differing behavior and give it some
+time to be used in the wild, we _will_ get feedback in the form of
+blogs, complaints on other lists, word-of-mouth, etc.
+
+Now maybe that is not a good idea in this instance, because that sort of
+feedback may take several versions to appear, and we are talking about a
+potential timetable of v1.7.0, which is probalby only two versions away.
 
 -Peff
