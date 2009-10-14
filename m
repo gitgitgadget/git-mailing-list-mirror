@@ -1,259 +1,148 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Proof-of-concept patch to remember what the detached HEAD
- was
-Date: Wed, 14 Oct 2009 00:44:34 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 14 06:46:33 2009
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: [PATCH] checkout: add 'pre-checkout' hook
+Date: Wed, 14 Oct 2009 17:45:25 +1300
+Message-ID: <1255495525-11254-1-git-send-email-sam.vilain@catalyst.net.nz>
+Cc: elliot@catalyst.net.nz, Sam Vilain <sam.vilain@catalyst.net.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 14 07:04:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mxvko-0007NA-04
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 06:46:26 +0200
+	id 1Mxw2M-0003iP-G3
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Oct 2009 07:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751562AbZJNEpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 00:45:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbZJNEpN
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 00:45:13 -0400
-Received: from iabervon.org ([66.92.72.58]:38662 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751466AbZJNEpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 00:45:12 -0400
-Received: (qmail 13990 invoked by uid 1000); 14 Oct 2009 04:44:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 14 Oct 2009 04:44:34 -0000
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752401AbZJNE5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 00:57:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbZJNE5I
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 00:57:08 -0400
+Received: from bertrand.catalyst.net.nz ([202.78.240.40]:36997 "EHLO
+	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751088AbZJNE5H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 00:57:07 -0400
+X-Greylist: delayed 653 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Oct 2009 00:57:07 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id 3A2E732317;
+	Wed, 14 Oct 2009 17:45:35 +1300 (NZDT)
+X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
+Received: from mail.catalyst.net.nz ([127.0.0.1])
+	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bA1JBX-YtE2Q; Wed, 14 Oct 2009 17:45:34 +1300 (NZDT)
+Received: from localhost.localdomain (leibniz.catalyst.net.nz [202.78.240.7])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id BCCBD321F7;
+	Wed, 14 Oct 2009 17:45:34 +1300 (NZDT)
+X-Mailer: git-send-email 1.6.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130243>
 
-When detaching HEAD (or "browsing history"), the user has specified
-the commit with some "extended SHA1" which is not a local
-branch. Exactly what that string was is likely to be useful to the
-user later. Also, we can detect the user putting work into the history
-for the first time (such that it is no longer going to be protected as
-uncommitted changes in the working tree) without a branch to hold it
-by seeing that there is such a description for the current state
-before the commit. (Afterwards, the description should be dropped; it
-doesn't make sense to tell the user they checked out "origin/master"
-or "d199fb7" when they've now diverged from that remote branch with
-local changes or made a different commit.)
+Add a simple hook that will run before checkouts.
 
-The upshot of the messages should be:
-
- $ git checkout origin/master
- Since you can't actually change "origin/master" yourself, you'll just
- be sightseeing unless you create a local branch to hold new local work.
-
- $ git branch
- * (not a local branch, but "origin/master")
-
- $ git commit
- You've been sightseeing "origin/master". The commit can't change that
- value, so your commit isn't held in any branch. If you want to create
- a branch to hold it, here's how.
-
-"git checkout origin/master" should be similar in complexity to
-"svn checkout -r 8655"; the difference is that svn won't let you
-commit then and git will but you'll need to understand the
-implications if you do so. If you don't commit (because you don't want
-to make any changes, because you don't think it would be possible, or
-because you don't want to worry about what would happen), there's no
-meaningful difference, and you don't need to be told.
-
-The messages have to be improved and made more useful.
-
-The effects of "git checkout HEAD", "git checkout origin/master; git 
-checkout HEAD^", and "git checkout origin/master; git reset --hard 
-origin/next" aren't handled quite right; none of them keep a description, 
-but there should always be some description of a detached HEAD unless the 
-user has made a commit (and therefore gotten the message about making a 
-local branch to put it on).
+Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
 ---
- branch.c                 |   13 +++++++++++++
- branch.h                 |    6 ++++++
- builtin-branch.c         |   13 ++++++++++++-
- builtin-checkout.c       |    8 +++++++-
- builtin-commit.c         |   10 +++++++++-
- t/t3203-branch-output.sh |    2 +-
- t/t7201-co.sh            |    6 ++----
- 7 files changed, 50 insertions(+), 8 deletions(-)
+ Documentation/githooks.txt |   20 +++++++++++++++-----
+ builtin-checkout.c         |   25 ++++++++++++++++++++++---
+ 2 files changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 05ef3f5..2c5b6d3 100644
---- a/branch.c
-+++ b/branch.c
-@@ -194,6 +194,18 @@ void create_branch(const char *head,
- 	free(real_ref);
- }
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 06e0f31..8dc3fbf 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -143,21 +143,31 @@ pre-rebase
+ This hook is called by 'git-rebase' and can be used to prevent a branch
+ from getting rebased.
  
-+char *get_detached_head_string(void)
-+{
-+	char *filename = git_path("DETACH_NAME");
-+	struct stat st;
-+	if (stat(filename, &st) || !S_ISREG(st.st_mode))
-+		return NULL;
-+	struct strbuf buf = STRBUF_INIT;
-+	strbuf_read_file(&buf, filename, st.st_size);
-+	strbuf_trim(&buf);
-+	return strbuf_detach(&buf, 0);
-+}
++pre-checkout
++-----------
+ 
+-post-checkout
+-~~~~~~~~~~~~~
+-
+-This hook is invoked when a 'git-checkout' is run after having updated the
++This hook is invoked when a 'git-checkout' is run after before updating the
+ worktree.  The hook is given three parameters: the ref of the previous HEAD,
+ the ref of the new HEAD (which may or may not have changed), and a flag
+ indicating whether the checkout was a branch checkout (changing branches,
+ flag=1) or a file checkout (retrieving a file from the index, flag=0).
+-This hook cannot affect the outcome of 'git-checkout'.
++This hook can prevent the checkout from proceeding by exiting with an
++error code.
+ 
+ It is also run after 'git-clone', unless the --no-checkout (-n) option is
+ used. The first parameter given to the hook is the null-ref, the second the
+ ref of the new HEAD and the flag is always 1.
+ 
++This hook can be used to perform any clean-up deemed necessary before
++checking out the new branch/files.
 +
- void remove_branch_state(void)
- {
- 	unlink(git_path("MERGE_HEAD"));
-@@ -201,4 +213,5 @@ void remove_branch_state(void)
- 	unlink(git_path("MERGE_MSG"));
- 	unlink(git_path("MERGE_MODE"));
- 	unlink(git_path("SQUASH_MSG"));
-+	unlink(git_path("DETACH_NAME"));
- }
-diff --git a/branch.h b/branch.h
-index eed817a..0a30c3a 100644
---- a/branch.h
-+++ b/branch.h
-@@ -22,6 +22,12 @@ void create_branch(const char *head, const char *name, const char *start_name,
- void remove_branch_state(void);
- 
- /*
-+ * Returns the string used when detaching HEAD, or NULL if HEAD is not
-+ * detached.
-+ */
-+char *get_detached_head_string(void);
++post-checkout
++-----------
 +
-+/*
-  * Configure local branch "local" to merge remote branch "remote"
-  * taken from origin "origin".
-  */
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 9f57992..9ce4127 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -425,7 +425,18 @@ static void show_detached(struct ref_list *ref_list)
- 
- 	if (head_commit && is_descendant_of(head_commit, ref_list->with_commit)) {
- 		struct ref_item item;
--		item.name = xstrdup("(no branch)");
-+		char *literal = get_detached_head_string();
-+		struct stat st;
-+		if (literal) {
-+			struct strbuf buf = STRBUF_INIT;
-+			strbuf_addstr(&buf, "(no branch, as \"");
-+			strbuf_addstr(&buf, literal);
-+			strbuf_addstr(&buf, "\")");
-+			free(literal);
-+			item.name = strbuf_detach(&buf, 0);
-+		} else {
-+			item.name = xstrdup("(no branch)");
-+		}
- 		item.len = strlen(item.name);
- 		item.kind = REF_LOCAL_BRANCH;
- 		item.dest = NULL;
++This hook is invoked when a 'git-checkout' is run after having updated the
++worktree.  It takes the same arguments as the 'pre-checkout' hook.
++This hook cannot affect the outcome of 'git-checkout'.
++
+ This hook can be used to perform repository validity checks, auto-display
+ differences from the previous HEAD if different, or set working dir metadata
+ properties.
 diff --git a/builtin-checkout.c b/builtin-checkout.c
-index d050c37..448397d 100644
+index d050c37..b72a3cb 100644
 --- a/builtin-checkout.c
 +++ b/builtin-checkout.c
-@@ -510,11 +510,17 @@ static void update_refs_for_switch(struct checkout_opts *opts,
- 			   REF_NODEREF, DIE_ON_ERR);
- 		if (!opts->quiet) {
- 			if (old->path)
--				fprintf(stderr, "Note: moving to '%s' which isn't a local branch\nIf you want to create a new branch from this checkout, you may do so\n(now or later) by using -b with the checkout command again. Example:\n  git checkout -b <new_branch_name>\n", new->name);
-+				fprintf(stderr, "Note: moving to '%s' which isn't a local branch.\nAny commits you may make will not affect the commit with this name.\n", new->name);
- 			describe_detached_head("HEAD is now at", new->commit);
- 		}
- 	}
- 	remove_branch_state();
-+	if (!new->path && strcmp(new->name, "HEAD")) {
-+		FILE *detach_name;
-+		detach_name = fopen(git_path("DETACH_NAME"), "w");
-+		fprintf(detach_name, "%s\n", new->name);
-+		fclose(detach_name);
-+	}
- 	strbuf_release(&msg);
- 	if (!opts->quiet && (new->path || !strcmp(new->name, "HEAD")))
- 		report_tracking(new);
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 200ffda..2ceb951 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -24,6 +24,7 @@
- #include "string-list.h"
- #include "rerere.h"
- #include "unpack-trees.h"
-+#include "branch.h"
+@@ -36,6 +36,17 @@ struct checkout_opts {
+ 	enum branch_track track;
+ };
  
- static const char * const builtin_commit_usage[] = {
- 	"git commit [options] [--] <filepattern>...",
-@@ -968,6 +969,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	struct ref_lock *ref_lock;
- 	struct commit_list *parents = NULL, **pptr = &parents;
- 	struct stat statbuf;
-+	char *detached_string;
- 	int allow_fast_forward = 1;
- 	struct wt_status s;
- 
-@@ -1089,10 +1091,13 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		die("cannot update HEAD ref");
- 	}
- 
-+	detached_string = get_detached_head_string();
++static int pre_checkout_hook(struct commit *old, struct commit *new,
++			      int changed)
++{
++	return run_hook(NULL, "pre-checkout",
++			sha1_to_hex(old ? old->object.sha1 : null_sha1),
++			sha1_to_hex(new ? new->object.sha1 : null_sha1),
++			changed ? "1" : "0", NULL);
++	/* "new" can be NULL when checking out from the index before
++	   a commit exists. */
++}
 +
- 	unlink(git_path("MERGE_HEAD"));
- 	unlink(git_path("MERGE_MSG"));
- 	unlink(git_path("MERGE_MODE"));
- 	unlink(git_path("SQUASH_MSG"));
-+	unlink(git_path("DETACH_NAME"));
+ static int post_checkout_hook(struct commit *old, struct commit *new,
+ 			      int changed)
+ {
+@@ -256,6 +267,13 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
+ 	if (errs)
+ 		return 1;
  
- 	if (commit_index_files())
- 		die ("Repository has been updated, but unable to write\n"
-@@ -1101,8 +1106,11 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
++	/* Run the pre-checkout hook */
++	resolve_ref("HEAD", rev, 0, &flag);
++	head = lookup_commit_reference_gently(rev, 1);
++	errs = pre_checkout_hook(head, head, 0);
++	if (errs)
++		return 1;
++
+ 	/* Now we are committed to check them out */
+ 	memset(&state, 0, sizeof(state));
+ 	state.force = 1;
+@@ -279,9 +297,6 @@ static int checkout_paths(struct tree *source_tree, const char **pathspec,
+ 	    commit_locked_index(lock_file))
+ 		die("unable to write new index file");
  
- 	rerere();
- 	run_hook(get_index_file(), "post-commit", NULL);
--	if (!quiet)
-+	if (!quiet) {
-+		if (detached_string)
-+			fprintf(stderr, "\nNote: you had checked out '%s' which isn't a local branch.\nIf you want to create a new branch with this commit, you may do so\n(now or later) by using -b with the checkout command. Example:\n  git checkout -b <new_branch_name>\n\n", detached_string);
- 		print_summary(prefix, commit_sha1);
-+	}
- 
- 	return 0;
+-	resolve_ref("HEAD", rev, 0, &flag);
+-	head = lookup_commit_reference_gently(rev, 1);
+-
+ 	errs |= post_checkout_hook(head, head, 0);
+ 	return errs;
  }
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 809d1c4..08409cd 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -67,7 +67,7 @@ test_expect_success 'git branch -v shows branch summaries' '
- '
+@@ -543,6 +558,10 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
+ 		parse_commit(new->commit);
+ 	}
  
- cat >expect <<'EOF'
--* (no branch)
-+* (no branch, as "HEAD^0")
-   branch-one
-   branch-two
-   master
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index ebfd34d..0f40589 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -171,10 +171,8 @@ test_expect_success 'checkout to detach HEAD' '
- 	git checkout -f renamer && git clean -f &&
- 	git checkout renamer^ 2>messages &&
- 	(cat >messages.expect <<EOF
--Note: moving to '\''renamer^'\'' which isn'\''t a local branch
--If you want to create a new branch from this checkout, you may do so
--(now or later) by using -b with the checkout command again. Example:
--  git checkout -b <new_branch_name>
-+Note: moving to '\''renamer^'\'' which isn'\''t a local branch.
-+Any commits you may make will not affect the commit with this name.
- HEAD is now at 7329388... Initial A one, A two
- EOF
- ) &&
++	ret = pre_checkout_hook(old.commit, new->commit, 1);
++	if (ret)
++		return ret;
++
+ 	ret = merge_working_tree(opts, &old, new);
+ 	if (ret)
+ 		return ret;
 -- 
-1.6.5.9.ge994f.dirty
+1.6.3.3
