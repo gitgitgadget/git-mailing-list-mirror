@@ -1,495 +1,620 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v3 11/17] Git-aware CGI to provide dumb HTTP transport
-Date: Wed, 14 Oct 2009 20:36:48 -0700
-Message-ID: <1255577814-14745-12-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v3 10/17] Move WebDAV HTTP push under remote-curl
+Date: Wed, 14 Oct 2009 20:36:47 -0700
+Message-ID: <1255577814-14745-11-git-send-email-spearce@spearce.org>
 References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Mike Hommey <mh@glandium.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Oct 15 05:43:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHFR-0007IV-Cl
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:29 +0200
+	id 1MyHFR-0007IV-TX
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756540AbZJODi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 23:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754888AbZJODi0
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:26 -0400
-Received: from george.spearce.org ([209.20.77.23]:33057 "EHLO
+	id S1762434AbZJODi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 23:38:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756580AbZJODi2
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:28 -0400
+Received: from george.spearce.org ([209.20.77.23]:33054 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762434AbZJODiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 23:38:15 -0400
+	with ESMTP id S1762443AbZJODiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 23:38:14 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 8964A381FF; Thu, 15 Oct 2009 03:37:06 +0000 (UTC)
+	id 4EFEC38239; Thu, 15 Oct 2009 03:37:05 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 242A438262
-	for <git@vger.kernel.org>; Thu, 15 Oct 2009 03:36:58 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id AF181381FF;
+	Thu, 15 Oct 2009 03:36:57 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.52.g0ff2e
 In-Reply-To: <1255577814-14745-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130367>
 
-The git-http-backend CGI can be configured into any Apache server
-using ScriptAlias, such as with the following configuration:
+The remote helper interface now supports the push capability,
+which can be used to ask the implementation to push one or more
+specs to the remote repository.  For remote-curl we implement this
+by calling the existing WebDAV based git-http-push executable.
 
-  LoadModule cgi_module /usr/libexec/apache2/mod_cgi.so
-  LoadModule alias_module /usr/libexec/apache2/mod_alias.so
-  ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
-
-Repositories are accessed via the translated PATH_INFO.
-
-The CGI is backwards compatible with the dumb client, allowing all
-older HTTP clients to continue to download repositories which are
-managed by the CGI.
+Internally the helper interface uses the push_refs transport hook
+so that the complexity of the refspec parsing and matching can be
+reused between remote implementations.  When possible however the
+helper protocol uses source ref name rather than the source SHA-1,
+thereby allowing the helper to access this name if it is useful.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+CC: Daniel Barkalow <barkalow@iabervon.org>
+CC: Tay Ray Chuan <rctay89@gmail.com>
+CC: Mike Hommey <mh@glandium.org>
 ---
- .gitignore                         |    1 +
- Documentation/git-http-backend.txt |  105 +++++++++++++
- Makefile                           |    1 +
- http-backend.c                     |  290 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 397 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-http-backend.txt
- create mode 100644 http-backend.c
+ Documentation/git-remote-helpers.txt |   33 ++++++++-
+ http-push.c                          |   43 ++++++++---
+ remote-curl.c                        |   98 +++++++++++++++++++++---
+ transport-helper.c                   |  137 +++++++++++++++++++++++++++++++++-
+ transport.c                          |   31 --------
+ 5 files changed, 286 insertions(+), 56 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 51a37b1..353d22f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -55,6 +55,7 @@ git-get-tar-commit-id
- git-grep
- git-hash-object
- git-help
-+git-http-backend
- git-http-fetch
- git-http-push
- git-imap-send
-diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-new file mode 100644
-index 0000000..867675f
---- /dev/null
-+++ b/Documentation/git-http-backend.txt
-@@ -0,0 +1,105 @@
-+git-http-backend(1)
-+===================
-+
-+NAME
-+----
-+git-http-backend - Server side implementation of Git over HTTP
-+
-+SYNOPSIS
-+--------
-+[verse]
-+'git-http-backend'
-+
-+DESCRIPTION
-+-----------
-+A simple CGI program to serve the contents of a Git repository to Git
-+clients accessing the repository over http:// and https:// protocols.
-+
-+By default, only the `upload-pack` service is enabled, which serves
-+'git-fetch-pack' and 'git-ls-remote' clients, which are invoked from
-+'git-fetch', 'git-pull', and 'git-clone'.
-+
-+This is ideally suited for read-only updates, i.e., pulling from
-+git repositories.
-+
-+URL TRANSLATION
-+---------------
-+'git-http-backend' relies on the invoking web server to perform
-+URL to path translation, and store the repository path into the
-+PATH_TRANSLATED environment variable.  Most web servers will do
-+this translation automatically, resolving the suffix after the
-+CGI name relative to the server's document root.
-+
-+EXAMPLES
-+--------
-+
-+Apache 2.x::
-+	To serve all Git repositories contained within the '/git/'
-+	subdirectory of the DocumentRoot, ensure mod_cgi and
-+	mod_alias are enabled, and create a ScriptAlias to the CGI:
+diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
+index 1133f04..3751b12 100644
+--- a/Documentation/git-remote-helpers.txt
++++ b/Documentation/git-remote-helpers.txt
+@@ -34,6 +34,10 @@ Commands are given by the caller on the helper's standard input, one per line.
+ 	value of the ref. A space-separated list of attributes follows
+ 	the name; unrecognized attributes are ignored. After the
+ 	complete list, outputs a blank line.
 ++
-+----------------------------------------------------------------
-+ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/git/
-+
-+<Directory /usr/libexec/git-core>
-+	Options None
-+</Directory>
-+<Files /usr/libexec/git-core/git-http-backend>
-+	Options ExecCGI
-+</Files>
-+----------------------------------------------------------------
-++
-+To require authentication for reads, use a Directory
-+directive around the repository, or one of its parent directories:
-++
-+----------------------------------------------------------------
-+<Directory /var/www/git/private>
-+	AuthType Basic
-+	AuthName "Private Git Access"
-+	Require group committers
-+	...
-+</Directory>
-+----------------------------------------------------------------
-+
-+Accelerated static Apache 2.x::
-+	Similar to the above, but Apache can be used to return static
-+	files that are stored on disk.	On many systems this may
-+	be more efficient as Apache can ask the kernel to copy the
-+	file contents from the file system directly to the network:
-++
-+----------------------------------------------------------------
-+DocumentRoot /var/www
-+
-+ScriptAlias /git/        /usr/libexec/git-core/git-http-backend/git/
-+Alias       /git_static/ /var/www/git/
-+
-+RewriteEngine on
-+RewriteRule ^/git/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$    /git_static/$1 [PT]
-+RewriteRule ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.pack)$ /git_static/$1 [PT]
-+RewriteRule ^/git/(.*/objects/pack/pack-[0-9a-f]{40}.idx)$  /git_static/$1 [PT]
-+----------------------------------------------------------------
-+
-+
-+ENVIRONMENT
-+-----------
-+'git-http-backend' relies upon the CGI environment variables set
-+by the invoking web server, including:
-+
-+* PATH_TRANSLATED
-+* REMOTE_USER
-+* REMOTE_ADDR
-+* CONTENT_TYPE
-+* QUERY_STRING
-+* REQUEST_METHOD
-+
-+Author
-+------
-+Written by Shawn O. Pearce <spearce@spearce.org>.
-+
-+Documentation
-+--------------
-+Documentation by Shawn O. Pearce <spearce@spearce.org>.
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index fea237b..271c290 100644
---- a/Makefile
-+++ b/Makefile
-@@ -365,6 +365,7 @@ PROGRAMS += git-show-index$X
- PROGRAMS += git-unpack-file$X
- PROGRAMS += git-upload-pack$X
- PROGRAMS += git-var$X
-+PROGRAMS += git-http-backend$X
++If 'push' is supported this may be called as 'list for-push'
++to obtain the current refs prior to sending one or more 'push'
++commands to the helper.
  
- # List built-in command $C whose implementation cmd_$C() is not in
- # builtin-$C.o but is linked in as part of some other command.
-diff --git a/http-backend.c b/http-backend.c
-new file mode 100644
-index 0000000..374f60d
---- /dev/null
-+++ b/http-backend.c
-@@ -0,0 +1,290 @@
-+#include "cache.h"
-+#include "refs.h"
-+#include "pkt-line.h"
-+#include "object.h"
-+#include "tag.h"
-+#include "exec_cmd.h"
+ 'option' <name> <value>::
+ 	Set the transport helper option <name> to <value>.  Outputs a
+@@ -59,6 +63,22 @@ suitably updated.
+ +
+ Supported if the helper has the "fetch" capability.
+ 
++'push' +<src>:<dst>::
++	Pushes the given <src> commit or branch locally to the
++	remote branch described by <dst>.  A batch sequence of
++	one or more push commands is terminated with a blank line.
+++
++Zero or more protocol options may be entered after the last 'push'
++command, before the batch's terminating blank line.
+++
++When the push is complete, outputs one or more 'ok <dst>' or
++'error <dst> <why>?' lines to indicate success or failure of
++each pushed ref.  The status report output is terminated by
++a blank line.  The option field <why> may be quoted in a C
++style string if it contains an LF.
+++
++Supported if the helper has the "push" capability.
 +
-+static const char content_type[] = "Content-Type";
-+static const char content_length[] = "Content-Length";
-+static const char last_modified[] = "Last-Modified";
+ If a fatal error occurs, the program writes the error message to
+ stderr and exits. The caller should expect that a suitable error
+ message has been printed if the child closes the connection without
+@@ -76,10 +96,16 @@ CAPABILITIES
+ 'option'::
+ 	This helper supports the option command.
+ 
++'push'::
++	This helper supports the 'push' command.
 +
-+static void format_write(int fd, const char *fmt, ...)
-+{
-+	static char buffer[1024];
+ REF LIST ATTRIBUTES
+ -------------------
+ 
+-None are defined yet, but the caller must accept any which are supplied.
++'for-push'::
++	The caller wants to use the ref list to prepare push
++	commands.  A helper might chose to acquire the ref list by
++	opening a different type of connection to the destination.
+ 
+ OPTIONS
+ -------
+@@ -106,6 +132,11 @@ OPTIONS
+ 	ask for the tag specifically.  Some helpers may be able to
+ 	use this option to avoid a second network connection.
+ 
++'option dry-run' \{'true'|'false'\}:
++	If true, pretend like the operation completed successfully,
++	but don't actually change any repository data.	For most
++	helpers this only applies to the 'push', if supported.
 +
-+	va_list args;
-+	unsigned n;
-+
-+	va_start(args, fmt);
-+	n = vsnprintf(buffer, sizeof(buffer), fmt, args);
-+	va_end(args);
-+	if (n >= sizeof(buffer))
-+		die("protocol error: impossibly long line");
-+
-+	safe_write(fd, buffer, n);
-+}
-+
-+static void http_status(unsigned code, const char *msg)
-+{
-+	format_write(1, "Status: %u %s\r\n", code, msg);
-+}
-+
-+static void hdr_str(const char *name, const char *value)
-+{
-+	format_write(1, "%s: %s\r\n", name, value);
-+}
-+
-+static void hdr_int(const char *name, size_t value)
-+{
-+	format_write(1, "%s: %" PRIuMAX "\r\n", name, value);
-+}
-+
-+static void hdr_date(const char *name, unsigned long when)
-+{
-+	const char *value = show_date(when, 0, DATE_RFC2822);
-+	hdr_str(name, value);
-+}
-+
-+static void hdr_nocache(void)
-+{
-+	hdr_str("Expires", "Fri, 01 Jan 1980 00:00:00 GMT");
-+	hdr_str("Pragma", "no-cache");
-+	hdr_str("Cache-Control", "no-cache, max-age=0, must-revalidate");
-+}
-+
-+static void hdr_cache_forever(void)
-+{
-+	unsigned long now = time(NULL);
-+	hdr_date("Date", now);
-+	hdr_date("Expires", now + 31536000);
-+	hdr_str("Cache-Control", "public, max-age=31536000");
-+}
-+
-+static void end_headers(void)
-+{
-+	safe_write(1, "\r\n", 2);
-+}
-+
-+static NORETURN void not_found(const char *err, ...)
-+{
-+	va_list params;
-+
-+	http_status(404, "Not Found");
-+	hdr_nocache();
-+	end_headers();
-+
-+	va_start(params, err);
-+	if (err && *err)
-+		vfprintf(stderr, err, params);
-+	va_end(params);
-+	exit(0);
-+}
-+
-+static void send_strbuf(const char *type, struct strbuf *buf)
-+{
-+	hdr_int(content_length, buf->len);
-+	hdr_str(content_type, type);
-+	end_headers();
-+	safe_write(1, buf->buf, buf->len);
-+}
-+
-+static void send_file(const char *the_type, const char *name)
-+{
-+	const char *p = git_path("%s", name);
-+	size_t buf_alloc = 8192;
-+	char *buf = xmalloc(buf_alloc);
-+	int fd;
-+	struct stat sb;
-+	size_t size;
-+
-+	fd = open(p, O_RDONLY);
-+	if (fd < 0)
-+		not_found("Cannot open '%s': %s", p, strerror(errno));
-+	if (fstat(fd, &sb) < 0)
-+		die_errno("Cannot stat '%s'", p);
-+
-+	size = xsize_t(sb.st_size);
-+
-+	hdr_int(content_length, size);
-+	hdr_str(content_type, the_type);
-+	hdr_date(last_modified, sb.st_mtime);
-+	end_headers();
-+
-+	while (size) {
-+		ssize_t n = xread(fd, buf, buf_alloc);
-+		if (n < 0)
-+			die_errno("Cannot read '%s'", p);
-+		if (!n)
-+			break;
-+		safe_write(1, buf, n);
+ Documentation
+ -------------
+ Documentation by Daniel Barkalow.
+diff --git a/http-push.c b/http-push.c
+index 00e83dc..9010ccc 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -78,6 +78,7 @@ static int push_verbosely;
+ static int push_all = MATCH_REFS_NONE;
+ static int force_all;
+ static int dry_run;
++static int helper_status;
+ 
+ static struct object_list *objects;
+ 
+@@ -1813,6 +1814,10 @@ int main(int argc, char **argv)
+ 				dry_run = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--helper-status")) {
++				helper_status = 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--verbose")) {
+ 				push_verbosely = 1;
+ 				http_is_verbose = 1;
+@@ -1941,9 +1946,14 @@ int main(int argc, char **argv)
+ 
+ 		if (is_null_sha1(ref->peer_ref->new_sha1)) {
+ 			if (delete_remote_branch(ref->name, 1) == -1) {
+-				error("Could not remove %s", ref->name);
++				if (helper_status)
++					printf("error %s cannot remove\n", ref->name);
++				else
++					error("Could not remove %s", ref->name);
+ 				rc = -4;
+ 			}
++			else if (helper_status)
++				printf("ok %s\n", ref->name);
+ 			new_refs++;
+ 			continue;
+ 		}
+@@ -1951,6 +1961,8 @@ int main(int argc, char **argv)
+ 		if (!hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
+ 			if (push_verbosely || 1)
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
++			if (helper_status)
++				printf("ok %s up to date\n", ref->name);
+ 			continue;
+ 		}
+ 
+@@ -1968,12 +1980,15 @@ int main(int argc, char **argv)
+ 				 * commits at the remote end and likely
+ 				 * we were not up to date to begin with.
+ 				 */
+-				error("remote '%s' is not an ancestor of\n"
+-				      "local '%s'.\n"
+-				      "Maybe you are not up-to-date and "
+-				      "need to pull first?",
+-				      ref->name,
+-				      ref->peer_ref->name);
++				if (helper_status)
++					printf("error %s non-fast forward\n", ref->name);
++				else
++					error("remote '%s' is not an ancestor of\n"
++						  "local '%s'.\n"
++						  "Maybe you are not up-to-date and "
++						  "need to pull first?",
++						  ref->name,
++						  ref->peer_ref->name);
+ 				rc = -2;
+ 				continue;
+ 			}
+@@ -1987,14 +2002,20 @@ int main(int argc, char **argv)
+ 		if (strcmp(ref->name, ref->peer_ref->name))
+ 			fprintf(stderr, " using '%s'", ref->peer_ref->name);
+ 		fprintf(stderr, "\n  from %s\n  to   %s\n", old_hex, new_hex);
+-		if (dry_run)
++		if (dry_run) {
++			if (helper_status)
++				printf("ok %s\n", ref->name);
+ 			continue;
++		}
+ 
+ 		/* Lock remote branch ref */
+ 		ref_lock = lock_remote(ref->name, LOCK_TIME);
+ 		if (ref_lock == NULL) {
+-			fprintf(stderr, "Unable to lock remote branch %s\n",
+-				ref->name);
++			if (helper_status)
++				printf("error %s lock error\n", ref->name);
++			else
++				fprintf(stderr, "Unable to lock remote branch %s\n",
++					ref->name);
+ 			rc = 1;
+ 			continue;
+ 		}
+@@ -2045,6 +2066,8 @@ int main(int argc, char **argv)
+ 
+ 		if (!rc)
+ 			fprintf(stderr, "    done\n");
++		if (helper_status)
++			printf("%s %s\n", !rc ? "ok" : "error", ref->name);
+ 		unlock_remote(ref_lock);
+ 		check_locks();
+ 	}
+diff --git a/remote-curl.c b/remote-curl.c
+index 0951f11..af2fddf 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -4,6 +4,7 @@
+ #include "walker.h"
+ #include "http.h"
+ #include "exec_cmd.h"
++#include "run-command.h"
+ 
+ static struct remote *remote;
+ static const char *url;
+@@ -13,7 +14,8 @@ struct options {
+ 	int verbosity;
+ 	unsigned long depth;
+ 	unsigned progress : 1,
+-		followtags : 1;
++		followtags : 1,
++		dry_run : 1;
+ };
+ static struct options options;
+ 
+@@ -59,6 +61,15 @@ static int set_option(const char *name, const char *value)
+ 			return -1;
+ 		return 1 /* TODO implement later */;
+ 	}
++	else if (!strcmp(name, "dry-run")) {
++		if (!strcmp(value, "true"))
++			options.dry_run = 1;
++		else if (!strcmp(value, "false"))
++			options.dry_run = 0;
++		else
++			return -1;
++		return 0;
 +	}
-+	close(fd);
-+	free(buf);
+ 	else {
+ 		return 1 /* unsupported */;
+ 	}
+@@ -136,6 +147,20 @@ static struct ref *get_refs(void)
+ 	return refs;
+ }
+ 
++static void output_refs(struct ref *refs)
++{
++	struct ref *posn;
++	for (posn = refs; posn; posn = posn->next) {
++		if (posn->symref)
++			printf("@%s %s\n", posn->symref, posn->name);
++		else
++			printf("%s %s\n", sha1_to_hex(posn->old_sha1), posn->name);
++	}
++	printf("\n");
++	fflush(stdout);
++	free_refs(refs);
 +}
 +
-+static void get_text_file(char *name)
+ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
+ {
+ 	char **targets = xmalloc(nr_heads * sizeof(char*));
+@@ -211,6 +236,58 @@ static void parse_fetch(struct strbuf *buf)
+ 	strbuf_reset(buf);
+ }
+ 
++static int push_dav(int nr_spec, char **specs)
 +{
-+	hdr_nocache();
-+	send_file("text/plain", name);
++	const char **argv = xmalloc((10 + nr_spec) * sizeof(char*));
++	int argc = 0, i;
++
++	argv[argc++] = "http-push";
++	argv[argc++] = "--helper-status";
++	if (options.dry_run)
++		argv[argc++] = "--dry-run";
++	if (options.verbosity > 1)
++		argv[argc++] = "--verbose";
++	argv[argc++] = url;
++	for (i = 0; i < nr_spec; i++)
++		argv[argc++] = specs[i];
++	argv[argc++] = NULL;
++
++	if (run_command_v_opt(argv, RUN_GIT_CMD))
++		die("git-%s failed", argv[0]);
++	free(argv);
++	return 0;
 +}
 +
-+static void get_loose_object(char *name)
++static void parse_push(struct strbuf *buf)
 +{
-+	hdr_cache_forever();
-+	send_file("application/x-git-loose-object", name);
++	char **specs = NULL;
++	int alloc_spec = 0, nr_spec = 0, i;
++
++	do {
++		if (!prefixcmp(buf->buf, "push ")) {
++			ALLOC_GROW(specs, nr_spec + 1, alloc_spec);
++			specs[nr_spec++] = xstrdup(buf->buf + 5);
++		}
++		else
++			die("http transport does not support %s", buf->buf);
++
++		strbuf_reset(buf);
++		if (strbuf_getline(buf, stdin, '\n') == EOF)
++			return;
++		if (!*buf->buf)
++			break;
++	} while (1);
++
++	if (push_dav(nr_spec, specs))
++		exit(128); /* error already reported */
++	for (i = 0; i < nr_spec; i++)
++		free(specs[i]);
++	free(specs);
++
++	printf("\n");
++	fflush(stdout);
 +}
 +
-+static void get_pack_file(char *name)
-+{
-+	hdr_cache_forever();
-+	send_file("application/x-git-packed-objects", name);
-+}
+ int main(int argc, const char **argv)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -240,16 +317,14 @@ int main(int argc, const char **argv)
+ 			parse_fetch(&buf);
+ 
+ 		} else if (!strcmp(buf.buf, "list")) {
+-			struct ref *refs = get_refs();
+-			struct ref *posn;
+-			for (posn = refs; posn; posn = posn->next) {
+-				if (posn->symref)
+-					printf("@%s %s\n", posn->symref, posn->name);
+-				else
+-					printf("%s %s\n", sha1_to_hex(posn->old_sha1), posn->name);
+-			}
+-			printf("\n");
+-			fflush(stdout);
++			output_refs(get_refs());
 +
-+static void get_idx_file(char *name)
-+{
-+	hdr_cache_forever();
-+	send_file("application/x-git-packed-objects-toc", name);
-+}
++		} else if (!strcmp(buf.buf, "list for-push")) {
++			output_refs(get_refs());
 +
-+static int show_text_ref(const char *name, const unsigned char *sha1,
-+	int flag, void *cb_data)
++		} else if (!prefixcmp(buf.buf, "push ")) {
++			parse_push(&buf);
++
+ 		} else if (!prefixcmp(buf.buf, "option ")) {
+ 			char *name = buf.buf + strlen("option ");
+ 			char *value = strchr(name, ' ');
+@@ -272,6 +347,7 @@ int main(int argc, const char **argv)
+ 		} else if (!strcmp(buf.buf, "capabilities")) {
+ 			printf("fetch\n");
+ 			printf("option\n");
++			printf("push\n");
+ 			printf("\n");
+ 			fflush(stdout);
+ 		} else {
+diff --git a/transport-helper.c b/transport-helper.c
+index 577abc6..16c6641 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1,6 +1,6 @@
+ #include "cache.h"
+ #include "transport.h"
+-
++#include "quote.h"
+ #include "run-command.h"
+ #include "commit.h"
+ #include "diff.h"
+@@ -13,7 +13,8 @@ struct helper_data
+ 	struct child_process *helper;
+ 	FILE *out;
+ 	unsigned fetch : 1,
+-		option : 1;
++		option : 1,
++		push : 1;
+ };
+ 
+ static struct child_process *get_helper(struct transport *transport)
+@@ -52,6 +53,8 @@ static struct child_process *get_helper(struct transport *transport)
+ 			data->fetch = 1;
+ 		if (!strcmp(buf.buf, "option"))
+ 			data->option = 1;
++		if (!strcmp(buf.buf, "push"))
++			data->push = 1;
+ 	}
+ 	return data->helper;
+ }
+@@ -214,6 +217,130 @@ static int fetch(struct transport *transport,
+ 	return -1;
+ }
+ 
++static int push_refs(struct transport *transport,
++		struct ref *remote_refs, int flags)
 +{
-+	struct strbuf *buf = cb_data;
-+	struct object *o = parse_object(sha1);
-+	if (!o)
++	int force_all = flags & TRANSPORT_PUSH_FORCE;
++	int mirror = flags & TRANSPORT_PUSH_MIRROR;
++	struct helper_data *data = transport->data;
++	struct strbuf buf = STRBUF_INIT;
++	struct child_process *helper;
++	struct ref *ref;
++
++	if (!remote_refs)
 +		return 0;
 +
-+	strbuf_addf(buf, "%s\t%s\n", sha1_to_hex(sha1), name);
-+	if (o->type == OBJ_TAG) {
-+		o = deref_tag(o, name, 0);
-+		if (!o)
-+			return 0;
-+		strbuf_addf(buf, "%s\t%s^{}\n", sha1_to_hex(o->sha1), name);
-+	}
-+	return 0;
-+}
++	helper = get_helper(transport);
++	if (!data->push)
++		return 1;
 +
-+static void get_info_refs(char *arg)
-+{
-+	struct strbuf buf = STRBUF_INIT;
++	for (ref = remote_refs; ref; ref = ref->next) {
++		if (ref->peer_ref)
++			hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
++		else if (!mirror)
++			continue;
 +
-+	for_each_ref(show_text_ref, &buf);
-+	hdr_nocache();
-+	send_strbuf("text/plain", &buf);
-+	strbuf_release(&buf);
-+}
-+
-+static void get_info_packs(char *arg)
-+{
-+	size_t objdirlen = strlen(get_object_directory());
-+	struct strbuf buf = STRBUF_INIT;
-+	struct packed_git *p;
-+	size_t cnt = 0;
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next) {
-+		if (p->pack_local)
-+			cnt++;
-+	}
-+
-+	strbuf_grow(&buf, cnt * 53 + 2);
-+	for (p = packed_git; p; p = p->next) {
-+		if (p->pack_local)
-+			strbuf_addf(&buf, "P %s\n", p->pack_name + objdirlen + 6);
-+	}
-+	strbuf_addch(&buf, '\n');
-+
-+	hdr_nocache();
-+	send_strbuf("text/plain; charset=utf-8", &buf);
-+	strbuf_release(&buf);
-+}
-+
-+static NORETURN void die_webcgi(const char *err, va_list params)
-+{
-+	char buffer[1000];
-+
-+	http_status(500, "Internal Server Error");
-+	hdr_nocache();
-+	end_headers();
-+
-+	vsnprintf(buffer, sizeof(buffer), err, params);
-+	fprintf(stderr, "fatal: %s\n", buffer);
-+	exit(0);
-+}
-+
-+static struct service_cmd {
-+	const char *method;
-+	const char *pattern;
-+	void (*imp)(char *);
-+} services[] = {
-+	{"GET", "/HEAD$", get_text_file},
-+	{"GET", "/info/refs$", get_info_refs},
-+	{"GET", "/objects/info/alternates$", get_text_file},
-+	{"GET", "/objects/info/http-alternates$", get_text_file},
-+	{"GET", "/objects/info/packs$", get_info_packs},
-+	{"GET", "/objects/info/[^/]*$", get_text_file},
-+	{"GET", "/objects/[0-9a-f]{2}/[0-9a-f]{38}$", get_loose_object},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.pack$", get_pack_file},
-+	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file}
-+};
-+
-+int main(int argc, char **argv)
-+{
-+	char *method = getenv("REQUEST_METHOD");
-+	char *dir = getenv("PATH_TRANSLATED");
-+	struct service_cmd *cmd = NULL;
-+	char *cmd_arg = NULL;
-+	int i;
-+
-+	git_extract_argv0_path(argv[0]);
-+	set_die_routine(die_webcgi);
-+
-+	if (!method)
-+		die("No REQUEST_METHOD from server");
-+	if (!strcmp(method, "HEAD"))
-+		method = "GET";
-+	if (!dir)
-+		die("No PATH_TRANSLATED from server");
-+
-+	for (i = 0; i < ARRAY_SIZE(services); i++) {
-+		struct service_cmd *c = &services[i];
-+		regex_t re;
-+		regmatch_t out[1];
-+
-+		if (regcomp(&re, c->pattern, REG_EXTENDED))
-+			die("Bogus regex in service table: %s", c->pattern);
-+		if (!regexec(&re, dir, 1, out, 0)) {
-+			size_t n = out[0].rm_eo - out[0].rm_so;
-+
-+			if (strcmp(method, c->method)) {
-+				const char *proto = getenv("SERVER_PROTOCOL");
-+				if (proto && !strcmp(proto, "HTTP/1.1"))
-+					http_status(405, "Method Not Allowed");
-+				else
-+					http_status(400, "Bad Request");
-+				hdr_nocache();
-+				end_headers();
-+				return 0;
-+			}
-+
-+			cmd = c;
-+			cmd_arg = xmalloc(n);
-+			strncpy(cmd_arg, dir + out[0].rm_so + 1, n);
-+			cmd_arg[n] = '\0';
-+			dir[out[0].rm_so] = 0;
-+			break;
++		ref->deletion = is_null_sha1(ref->new_sha1);
++		if (!ref->deletion &&
++			!hashcmp(ref->old_sha1, ref->new_sha1)) {
++			ref->status = REF_STATUS_UPTODATE;
++			continue;
 +		}
-+		regfree(&re);
++
++		if (force_all)
++			ref->force = 1;
++
++		strbuf_addstr(&buf, "push ");
++		if (!ref->deletion) {
++			if (ref->force)
++				strbuf_addch(&buf, '+');
++			if (ref->peer_ref)
++				strbuf_addstr(&buf, ref->peer_ref->name);
++			else
++				strbuf_addstr(&buf, sha1_to_hex(ref->new_sha1));
++		}
++		strbuf_addch(&buf, ':');
++		strbuf_addstr(&buf, ref->name);
++		strbuf_addch(&buf, '\n');
 +	}
 +
-+	if (!cmd)
-+		not_found("Request not supported: '%s'", dir);
++	transport->verbose = flags & TRANSPORT_PUSH_VERBOSE ? 1 : 0;
++	standard_options(transport);
 +
-+	setup_path();
-+	if (!enter_repo(dir, 0))
-+		not_found("Not a git repository: '%s'", dir);
++	if (flags & TRANSPORT_PUSH_DRY_RUN) {
++		if (set_helper_option(transport, "dry-run", "true") != 0)
++			die("helper %s does not support dry-run", data->name);
++	}
 +
-+	cmd->imp(cmd_arg);
++	strbuf_addch(&buf, '\n');
++	if (write_in_full(helper->in, buf.buf, buf.len) != buf.len)
++		exit(128);
++
++	ref = remote_refs;
++	while (1) {
++		char *refname, *msg;
++		int status;
++
++		strbuf_reset(&buf);
++		if (strbuf_getline(&buf, data->out, '\n') == EOF)
++			exit(128); /* child died, message supplied already */
++		if (!buf.len)
++			break;
++
++		if (!prefixcmp(buf.buf, "ok ")) {
++			status = REF_STATUS_OK;
++			refname = buf.buf + 3;
++		} else if (!prefixcmp(buf.buf, "error ")) {
++			status = REF_STATUS_REMOTE_REJECT;
++			refname = buf.buf + 6;
++		} else
++			die("expected ok/error, helper said '%s'\n", buf.buf);
++
++		msg = strchr(refname, ' ');
++		if (msg) {
++			struct strbuf msg_buf = STRBUF_INIT;
++			const char *end;
++
++			*msg++ = '\0';
++			if (!unquote_c_style(&msg_buf, msg, &end))
++				msg = strbuf_detach(&msg_buf, NULL);
++			else
++				msg = xstrdup(msg);
++			strbuf_release(&msg_buf);
++
++			if (!strcmp(msg, "no match")) {
++				status = REF_STATUS_NONE;
++				free(msg);
++				msg = NULL;
++			}
++			else if (!strcmp(msg, "up to date")) {
++				status = REF_STATUS_UPTODATE;
++				free(msg);
++				msg = NULL;
++			}
++			else if (!strcmp(msg, "non-fast forward")) {
++				status = REF_STATUS_REJECT_NONFASTFORWARD;
++				free(msg);
++				msg = NULL;
++			}
++		}
++
++		if (ref)
++			ref = find_ref_by_name(ref, refname);
++		if (!ref)
++			ref = find_ref_by_name(remote_refs, refname);
++		if (!ref) {
++			warning("helper reported unexpected status of %s", refname);
++			continue;
++		}
++
++		ref->status = status;
++		ref->remote_status = msg;
++	}
++	strbuf_release(&buf);
 +	return 0;
 +}
++
+ static struct ref *get_refs_list(struct transport *transport, int for_push)
+ {
+ 	struct helper_data *data = transport->data;
+@@ -225,7 +352,10 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+ 
+ 	helper = get_helper(transport);
+ 
+-	write_str_in_full(helper->in, "list\n");
++	if (data->push && for_push)
++		write_str_in_full(helper->in, "list for-push\n");
++	else
++		write_str_in_full(helper->in, "list\n");
+ 
+ 	while (1) {
+ 		char *eov, *eon;
+@@ -266,6 +396,7 @@ int transport_helper_init(struct transport *transport, const char *name)
+ 	transport->set_option = set_helper_option;
+ 	transport->get_refs_list = get_refs_list;
+ 	transport->fetch = fetch;
++	transport->push_refs = push_refs;
+ 	transport->disconnect = disconnect_helper;
+ 	return 0;
+ }
+diff --git a/transport.c b/transport.c
+index 644a30a..6d9652d 100644
+--- a/transport.c
++++ b/transport.c
+@@ -349,35 +349,6 @@ static int rsync_transport_push(struct transport *transport,
+ 	return result;
+ }
+ 
+-#ifndef NO_CURL
+-static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags)
+-{
+-	const char **argv;
+-	int argc;
+-
+-	if (flags & TRANSPORT_PUSH_MIRROR)
+-		return error("http transport does not support mirror mode");
+-
+-	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
+-	argv[0] = "http-push";
+-	argc = 1;
+-	if (flags & TRANSPORT_PUSH_ALL)
+-		argv[argc++] = "--all";
+-	if (flags & TRANSPORT_PUSH_FORCE)
+-		argv[argc++] = "--force";
+-	if (flags & TRANSPORT_PUSH_DRY_RUN)
+-		argv[argc++] = "--dry-run";
+-	if (flags & TRANSPORT_PUSH_VERBOSE)
+-		argv[argc++] = "--verbose";
+-	argv[argc++] = transport->url;
+-	while (refspec_nr--)
+-		argv[argc++] = *refspec++;
+-	argv[argc] = NULL;
+-	return !!run_command_v_opt(argv, RUN_GIT_CMD);
+-}
+-
+-#endif
+-
+ struct bundle_transport_data {
+ 	int fd;
+ 	struct bundle_header header;
+@@ -826,8 +797,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		transport_helper_init(ret, "curl");
+ #ifdef NO_CURL
+ 		error("git was compiled without libcurl support.");
+-#else
+-		ret->push = curl_transport_push;
+ #endif
+ 
+ 	} else if (is_local(url) && is_file(url)) {
 -- 
 1.6.5.52.g0ff2e
