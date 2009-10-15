@@ -1,188 +1,261 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v3 12/17] Add stateless RPC options to upload-pack, receive-pack
-Date: Wed, 14 Oct 2009 20:36:49 -0700
-Message-ID: <1255577814-14745-13-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v3 14/17] Discover refs via smart HTTP server when available
+Date: Wed, 14 Oct 2009 20:36:51 -0700
+Message-ID: <1255577814-14745-15-git-send-email-spearce@spearce.org>
 References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
+Cc: Daniel Barkalow <barkalow@iabervon.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Oct 15 05:43:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHFP-0007IV-A1
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:27 +0200
+	id 1MyHFP-0007IV-Qq
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762451AbZJODiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 23:38:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762448AbZJODiR
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:17 -0400
-Received: from george.spearce.org ([209.20.77.23]:33056 "EHLO
+	id S1762462AbZJODiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 23:38:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762442AbZJODiS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:18 -0400
+Received: from george.spearce.org ([209.20.77.23]:33059 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762442AbZJODiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 23:38:15 -0400
+	with ESMTP id S1762450AbZJODiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 23:38:16 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id 0D33738262; Thu, 15 Oct 2009 03:37:07 +0000 (UTC)
+	id B582638267; Thu, 15 Oct 2009 03:37:08 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 5D61B38200
-	for <git@vger.kernel.org>; Thu, 15 Oct 2009 03:36:58 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id D9B3138215;
+	Thu, 15 Oct 2009 03:36:58 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.52.g0ff2e
 In-Reply-To: <1255577814-14745-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130365>
 
-When --stateless-rpc is passed as a command line parameter to
-upload-pack or receive-pack the programs now assume they may
-perform only a single read-write cycle with stdin and stdout.
-This fits with the HTTP POST request processing model where a
-program may read the request, write a response, and must exit.
-
-When --advertise-refs is passed as a command line parameter only
-the initial ref advertisement is output, and the program exits
-immediately.  This fits with the HTTP GET request model, where
-no request content is received but a response must be produced.
-
-HTTP headers and/or environment are not processed here, but
-instead are assumed to be handled by the program invoking
-either service backend.
+Instead of loading the cached info/refs, try to use the smart HTTP
+version when the server supports it.  Since the smart variant is
+actually the pkt-line stream from the start of either upload-pack
+or receive-pack we need to parse these through get_remote_heads,
+which requires a background thread to feed its pipe.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+CC: Daniel Barkalow <barkalow@iabervon.org>
 ---
- builtin-receive-pack.c |   26 ++++++++++++++++++++------
- upload-pack.c          |   40 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 56 insertions(+), 10 deletions(-)
+ remote-curl.c |  149 ++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 files changed, 131 insertions(+), 18 deletions(-)
 
-diff --git a/builtin-receive-pack.c b/builtin-receive-pack.c
-index b771fe9..70ff8c5 100644
---- a/builtin-receive-pack.c
-+++ b/builtin-receive-pack.c
-@@ -615,6 +615,8 @@ static void add_alternate_refs(void)
+diff --git a/remote-curl.c b/remote-curl.c
+index af2fddf..c6e3172 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -5,6 +5,7 @@
+ #include "http.h"
+ #include "exec_cmd.h"
+ #include "run-command.h"
++#include "pkt-line.h"
  
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- {
-+	int advertise_refs = 0;
-+	int stateless_rpc = 0;
- 	int i;
- 	char *dir = NULL;
- 
-@@ -623,7 +625,15 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		const char *arg = *argv++;
- 
- 		if (*arg == '-') {
--			/* Do flag handling here */
-+			if (!strcmp(arg, "--advertise-refs")) {
-+				advertise_refs = 1;
-+				continue;
-+			}
-+			if (!strcmp(arg, "--stateless-rpc")) {
-+				stateless_rpc = 1;
-+				continue;
-+			}
-+
- 			usage(receive_pack_usage);
- 		}
- 		if (dir)
-@@ -652,12 +662,16 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		" report-status delete-refs ofs-delta " :
- 		" report-status delete-refs ";
- 
--	add_alternate_refs();
--	write_head_info();
--	clear_extra_refs();
-+	if (advertise_refs || !stateless_rpc) {
-+		add_alternate_refs();
-+		write_head_info();
-+		clear_extra_refs();
- 
--	/* EOF */
--	packet_flush(1);
-+		/* EOF */
-+		packet_flush(1);
-+	}
-+	if (advertise_refs)
-+		return 0;
- 
- 	read_head_info();
- 	if (commands) {
-diff --git a/upload-pack.c b/upload-pack.c
-index f1dc3a3..70badcf 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -39,6 +39,8 @@ static unsigned int timeout;
-  */
- static int use_sideband;
- static int debug_fd;
-+static int advertise_refs;
-+static int stateless_rpc;
- 
- static void reset_timeout(void)
- {
-@@ -509,6 +511,8 @@ static int get_common_commits(void)
- 		if (!len) {
- 			if (have_obj.nr == 0 || multi_ack)
- 				packet_write(1, "NAK\n");
-+			if (stateless_rpc)
-+				exit(0);
- 			continue;
- 		}
- 		strip(line, len);
-@@ -710,12 +714,32 @@ static int send_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	return 0;
+ static struct remote *remote;
+ static const char *url;
+@@ -75,21 +76,46 @@ static int set_option(const char *name, const char *value)
+ 	}
  }
  
-+static int mark_our_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
+-static struct ref *get_refs(void)
++struct discovery {
++	const char *service;
++	char *buf_alloc;
++	char *buf;
++	size_t len;
++	unsigned proto_git : 1;
++};
++static struct discovery *last_discovery;
++
++static void free_discovery(struct discovery *d)
 +{
-+	struct object *o = parse_object(sha1);
-+	if (!o)
-+		die("git upload-pack: cannot find object %s:", sha1_to_hex(sha1));
-+	if (!(o->flags & OUR_REF)) {
-+		o->flags |= OUR_REF;
-+		nr_our_refs++;
++	if (d) {
++		if (d == last_discovery)
++			last_discovery = NULL;
++		free(d->buf_alloc);
++		free(d);
 +	}
-+	return 0;
 +}
 +
- static void upload_pack(void)
++static struct discovery* discover_refs(const char *service)
  {
--	reset_timeout();
--	head_ref(send_ref, NULL);
--	for_each_ref(send_ref, NULL);
--	packet_flush(1);
-+	if (advertise_refs || !stateless_rpc) {
-+		reset_timeout();
-+		head_ref(send_ref, NULL);
-+		for_each_ref(send_ref, NULL);
-+		packet_flush(1);
-+	} else {
-+		head_ref(mark_our_ref, NULL);
-+		for_each_ref(mark_our_ref, NULL);
-+	}
-+	if (advertise_refs)
-+		return;
-+
- 	receive_needs();
- 	if (want_obj.nr) {
- 		get_common_commits();
-@@ -737,6 +761,14 @@ int main(int argc, char **argv)
+ 	struct strbuf buffer = STRBUF_INIT;
+-	char *data, *start, *mid;
+-	char *ref_name;
++	struct discovery *last = last_discovery;
+ 	char *refs_url;
+-	int i = 0;
+-	int http_ret;
++	int http_ret, is_http = 0;
  
- 		if (arg[0] != '-')
- 			break;
-+		if (!strcmp(arg, "--advertise-refs")) {
-+			advertise_refs = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--stateless-rpc")) {
-+			stateless_rpc = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--strict")) {
- 			strict = 1;
- 			continue;
+-	struct ref *refs = NULL;
+-	struct ref *ref = NULL;
+-	struct ref *last_ref = NULL;
++	if (last && !strcmp(service, last->service))
++		return last;
++	free_discovery(last);
+ 
+-	refs_url = xmalloc(strlen(url) + 11);
+-	sprintf(refs_url, "%s/info/refs", url);
++	strbuf_addf(&buffer, "%s/info/refs", url);
++	if (!prefixcmp(url, "http://") || !prefixcmp(url, "https://")) {
++		is_http = 1;
++		if (!strchr(url, '?'))
++			strbuf_addch(&buffer, '?');
++		else
++			strbuf_addch(&buffer, '&');
++		strbuf_addf(&buffer, "service=%s", service);
++	}
++	refs_url = strbuf_detach(&buffer, NULL);
+ 
+ 	init_walker();
+ 	http_ret = http_get_strbuf(refs_url, &buffer, HTTP_NO_CACHE);
+@@ -104,10 +130,86 @@ static struct ref *get_refs(void)
+ 		die("HTTP request failed");
+ 	}
+ 
+-	data = buffer.buf;
++	last= xcalloc(1, sizeof(*last_discovery));
++	last->service = service;
++	last->buf_alloc = strbuf_detach(&buffer, &last->len);
++	last->buf = last->buf_alloc;
++
++	if (is_http && 5 <= last->len && last->buf[4] == '#') {
++		/* smart HTTP response; validate that the service
++		 * pkt-line matches our request.
++		 */
++		struct strbuf exp = STRBUF_INIT;
++
++		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
++			die("%s has invalid packet header", refs_url);
++		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
++			strbuf_setlen(&buffer, buffer.len - 1);
++
++		strbuf_addf(&exp, "# service=%s", service);
++		if (strbuf_cmp(&exp, &buffer))
++			die("invalid server response; got '%s'", buffer.buf);
++		strbuf_release(&exp);
++
++		/* The header can include additional metadata lines, up
++		 * until a packet flush marker.  Ignore these now, but
++		 * in the future we might start to scan them.
++		 */
++		strbuf_reset(&buffer);
++		while (packet_get_line(&buffer, &last->buf, &last->len) > 0)
++			strbuf_reset(&buffer);
++
++		last->proto_git = 1;
++	}
++
++	free(refs_url);
++	strbuf_release(&buffer);
++	last_discovery = last;
++	return last;
++}
++
++static int write_discovery(int fd, void *data)
++{
++	struct discovery *heads = data;
++	int err = 0;
++	if (write_in_full(fd, heads->buf, heads->len) != heads->len)
++		err = 1;
++	close(fd);
++	return err;
++}
++
++static struct ref *parse_git_refs(struct discovery *heads)
++{
++	struct ref *list = NULL;
++	struct async async;
++
++	memset(&async, 0, sizeof(async));
++	async.proc = write_discovery;
++	async.data = heads;
++
++	if (start_async(&async))
++		die("cannot start thread to parse advertised refs");
++	get_remote_heads(async.out, &list, 0, NULL, 0, NULL);
++	close(async.out);
++	if (finish_async(&async))
++		die("ref parsing thread failed");
++	return list;
++}
++
++static struct ref *parse_info_refs(struct discovery *heads)
++{
++	char *data, *start, *mid;
++	char *ref_name;
++	int i = 0;
++
++	struct ref *refs = NULL;
++	struct ref *ref = NULL;
++	struct ref *last_ref = NULL;
++
++	data = heads->buf;
+ 	start = NULL;
+ 	mid = data;
+-	while (i < buffer.len) {
++	while (i < heads->len) {
+ 		if (!start) {
+ 			start = &data[i];
+ 		}
+@@ -131,8 +233,7 @@ static struct ref *get_refs(void)
+ 		i++;
+ 	}
+ 
+-	strbuf_release(&buffer);
+-
++	init_walker();
+ 	ref = alloc_ref("HEAD");
+ 	if (!walker->fetch_ref(walker, ref) &&
+ 	    !resolve_remote_symref(ref, refs)) {
+@@ -142,11 +243,23 @@ static struct ref *get_refs(void)
+ 		free(ref);
+ 	}
+ 
+-	strbuf_release(&buffer);
+-	free(refs_url);
+ 	return refs;
+ }
+ 
++static struct ref *get_refs(int for_push)
++{
++	struct discovery *heads;
++
++	if (for_push)
++		heads = discover_refs("git-receive-pack");
++	else
++		heads = discover_refs("git-upload-pack");
++
++	if (heads->proto_git)
++		return parse_git_refs(heads);
++	return parse_info_refs(heads);
++}
++
+ static void output_refs(struct ref *refs)
+ {
+ 	struct ref *posn;
+@@ -317,10 +430,10 @@ int main(int argc, const char **argv)
+ 			parse_fetch(&buf);
+ 
+ 		} else if (!strcmp(buf.buf, "list")) {
+-			output_refs(get_refs());
++			output_refs(get_refs(0));
+ 
+ 		} else if (!strcmp(buf.buf, "list for-push")) {
+-			output_refs(get_refs());
++			output_refs(get_refs(1));
+ 
+ 		} else if (!prefixcmp(buf.buf, "push ")) {
+ 			parse_push(&buf);
 -- 
 1.6.5.52.g0ff2e
