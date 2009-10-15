@@ -1,56 +1,64 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [RFC PATCH v3 00/17] Return of smart HTTP
-Date: Thu, 15 Oct 2009 18:52:53 +0900
-Message-ID: <20091015185253.6117@nanako3.lavabit.com>
-References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
-	<7v63ah85ss.fsf@alter.siamese.dyndns.org>
+From: bill lam <cbill.lam@gmail.com>
+Subject: unrelated file conflict during rebase
+Date: Thu, 15 Oct 2009 18:35:26 +0800
+Message-ID: <20091015103525.GI27040@debian.b2j>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 11:56:05 2009
+Content-Type: text/plain; charset=iso-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 15 12:37:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyN3t-0006wy-3G
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:55:57 +0200
+	id 1MyNi1-0003q5-Ut
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 12:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758043AbZJOJxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 05:53:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756718AbZJOJxy
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:53:54 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:46435 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756241AbZJOJxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 05:53:53 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 6ABED11B955;
-	Thu, 15 Oct 2009 04:53:17 -0500 (CDT)
-Received: from 6277.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id ZNCNMSCWS6N9; Thu, 15 Oct 2009 04:53:17 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=icogZIw0kF1kB91RDoMeqBBWk2aZuo0fvxKEP1pABzTBzPvB+5BKZnwOfsDALgGcZFk/7yLw8Nv9VL4TeKE5X8vdFaX2Ym+kKB1oH0eHOC6ayj9QjKocDQnSUOPHEWi/0au+F1azruWvNmJQIkSULtrJx5S4t/BmpVZGHKoc9M0=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7v63ah85ss.fsf@alter.siamese.dyndns.org>
+	id S1761339AbZJOKgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 06:36:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761295AbZJOKgJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 06:36:09 -0400
+Received: from mail-px0-f187.google.com ([209.85.216.187]:61181 "EHLO
+	mail-px0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760736AbZJOKgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 06:36:08 -0400
+Received: by pxi17 with SMTP id 17so805501pxi.21
+        for <git@vger.kernel.org>; Thu, 15 Oct 2009 03:35:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=IL7hJB5HSxx7L1JbBQiiJbjINjoHUnkClLcM/z1hLNw=;
+        b=xAs6MXy8PpUAdH1ov2lJQ00p9nafhPgEevOd5bFNLPGa33UdeDcp8r57LXh9G/3qVi
+         YeRmbHZV3Z8acCzYKWXnoOIYngkx3bjjNnBGBGFFz8vg4ZX0HtQe4S4UWz+3fL+3UpSY
+         NzpGg2ykr+8CgNZorNxRPwFaRDw9OggHiAEC0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=GWJBJJJdiD2bBPpfJY3eZmxJvubNI7VGBK/ibH29Vlry4Gbtrgw9juI+8E/A2+dkLG
+         iGLXJH6UMWrLwjyD2PeirNTLbmFlgvqMnkcgLHuCrjr8UsN4N0gnQiLh1PD+2odCfCqy
+         l7zQqZB8a1tPtyBjC3eUkieX6FqHL8xrSP67U=
+Received: by 10.115.101.20 with SMTP id d20mr17481317wam.192.1255602932349;
+        Thu, 15 Oct 2009 03:35:32 -0700 (PDT)
+Received: from localhost (n218103234139.netvigator.com [218.103.234.139])
+        by mx.google.com with ESMTPS id 21sm14623pzk.3.2009.10.15.03.35.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Oct 2009 03:35:31 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130385>
 
-Quoting Junio C Hamano <gitster@pobox.com> writes:
-
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
->
->> This v3 series is a respin, and includes fixes to address reviewer
->> comments from v2.
->
-> Thanks.
-
-Junio, you merged this series to your "pu" branch, but it breaks "make test" (t9801). Shawn's "sp/smart-http" topic doesn't have t9801 and passes all the tests.
+Something I change a file in rebase -i.  During the process, for some
+commits, git said some other apparently unrelated files (not that I
+had changed) caused merged conflicts usually both modified.  Why did
+this happen?
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+regards,
+====================================================
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
