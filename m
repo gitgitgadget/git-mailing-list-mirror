@@ -1,135 +1,110 @@
-From: "Guillermo S. Romero" <gsromero@infernal-iceberg.com>
-Subject: [PATCH] gitk: Add configuration for UI colour scheme (menus,
- scrollbars, etc)
-Date: Thu, 15 Oct 2009 18:51:49 +0200
-Message-ID: <20091015165149.GA28219@crossbow.battleship>
+From: Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk>
+Subject: Re: Efficient cloning from svn (with multiple branches/tags subdirs)
+Date: Thu, 15 Oct 2009 18:23:31 +0100
+Message-ID: <4AD75A93.9050106@manchester.ac.uk>
+References: <hb2fvu$8qi$1@ger.gmane.org> <20091014060307.GA17178@dcvr.yhbt.net> 	<32541b130910140928jdac0187x754423e8d5c64e53@mail.gmail.com> 	<20091014180013.GA24741@dcvr.yhbt.net> <32541b130910141126u4df7f439i3d2926c2e1db9497@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: paulus@samba.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 15 19:28:01 2009
+X-From: git-owner@vger.kernel.org Thu Oct 15 19:28:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyU7L-0002cU-P2
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 19:28:00 +0200
+	id 1MyU7N-0002cU-CT
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 19:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935203AbZJORTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 13:19:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935146AbZJORTt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 13:19:49 -0400
-Received: from jubjub.tera-byte.com ([216.234.161.59]:38318 "EHLO
-	jubjub.tera-byte.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932952AbZJORTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 13:19:48 -0400
-X-Greylist: delayed 1613 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Oct 2009 13:19:47 EDT
-Received: from crossbow.battleship (localhost.localdomain [127.0.0.1])
-	by jubjub.tera-byte.com (8.13.8/8.13.8) with ESMTP id n9FGpoCv014985;
-	Thu, 15 Oct 2009 10:51:51 -0600
-Received: from unnamed by crossbow.battleship with local (Exim 4.69)
-	(envelope-from <gsromero@infernal-iceberg.com>)
-	id 1MyTYL-0007YV-UC; Thu, 15 Oct 2009 18:51:49 +0200
-Content-Disposition: inline
+	id S933471AbZJORYm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 13:24:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759632AbZJORYm
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 13:24:42 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34006 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758630AbZJORYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 13:24:41 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1MyU3Q-0000Cr-4Y
+	for git@vger.kernel.org; Thu, 15 Oct 2009 19:23:56 +0200
+Received: from rain.gmane.org ([80.91.229.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Oct 2009 19:23:56 +0200
+Received: from Bruno.Harbulot by rain.gmane.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Oct 2009 19:23:56 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: rain.gmane.org
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <32541b130910141126u4df7f439i3d2926c2e1db9497@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130404>
 
-Add option to control global colour scheme in Edit > Preferences dialog
-so the whole interface can have other color beyond the default one
-and match changes to other areas controlled by bgcolor and fgcolor.
+Hello,
 
-Signed-off-by: Guillermo S. Romero <gsromero@infernal-iceberg.com>
----
+Avery Pennarun wrote:
+> On Wed, Oct 14, 2009 at 2:00 PM, Eric Wong <normalperson@yhbt.net> wrote:
+>> Avery Pennarun <apenwarr@gmail.com> wrote:
+>>> I've been thinking about this myself for some time.  One option that
+>>> might be "interesting" would be to just grab the *entire* svn tree
+>>> (from the root), and then use git-subtree[1] to slice and dice it into
+>>> branches using your local copy of git (which is fast and uses no
+>>> bandwidth) instead of during the svn fetch (which is slow and uses
+>>> lots of bandwidth).  I think it would also simplify the git-svn code
+>>> quite a lot, at least for fetching, since there would always be a
+>>> global view of the tree and SVN things like "copy branch A to tag B"
+>>> would just be exactly that.
+>> This was actually the original use case of git svn back when I started.
+>>
+>>  git svn clone SVNREPO_ROOT   (without --stdlayout)
+>>
+>> It's still an option if you have the disk space for the working copies,
+>> but I had to create the branches/tags support since the working copies
+>> would be become prohibitively large.  If git-subtree could be
+>> taught to work on a bare repo (git svn has a --no-checkout option)
+>> it might be an option, too.
 
-Hi:
+Thank you for your suggestions. Unfortunately, I'm not really familiar 
+with git-subtree and how it could work with git-svn, sorry.
 
-Small cosmetic patch. I found all colours were easily configurable
-from prefs, except the main colour, which can look a bit out of place
-with the rest. No big changes, Tk computes all needed colours for
-button shading, fonts, etc. I hope the patch is correct, first time
-with git.
+I've tried another workaround: using svnsync to pull the repository only 
+once, and only then using git-svn fetch, locally, so as to avoid too 
+much network traffic (I don't mind too much if it loops locally). I was 
+hoping to be able to change the URL of the repository to the original 
+one afterwards, but it doesn't seem to work so easily, because of the 
+commit IDs. I'm assuming not having the same will cause problems for 
+further fetches (this time directly from the original SVN repository) 
+and for potential dcommits.
 
-Thanks for the app, pretty useful.
+When I do this:
+   git init
+   git svn init -s --prefix=svn/ file:///path/to/local/restlet-svnroot
+   git svn fetch -r 1:2
 
-GSR
- 
-PS: Not subscribed to git@vger, so remember to CC: me.
- 
+I get this ID, for example:
+   r2 = c69a0b98d288a6e4e8779b50962b7fc65c4622e8
 
- gitk-git/gitk |   16 ++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
+If I do this using the original http://restlet.tigris.org/svn/restlet, I 
+get this:
+   r2 = ce3b82915e92fe1ccf6ddedacd9d74b30bd4de86
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index a0214b7..d40a735 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2519,7 +2519,7 @@ proc savestuff {w} {
-     global maxwidth showneartags showlocalchanges
-     global viewname viewfiles viewargs viewargscmd viewperm nextviewnum
-     global cmitmode wrapcomment datetimeformat limitdiffs
--    global colors bgcolor fgcolor diffcolors diffcontext selectbgcolor
-+    global colors uicolor bgcolor fgcolor diffcolors diffcontext selectbgcolor
-     global autoselect extdifftool perfile_attrs markbgcolor
-     global hideremotes
- 
-@@ -2546,6 +2546,7 @@ proc savestuff {w} {
- 	puts $f [list set showlocalchanges $showlocalchanges]
- 	puts $f [list set datetimeformat $datetimeformat]
- 	puts $f [list set limitdiffs $limitdiffs]
-+	puts $f [list set uicolor $uicolor]
- 	puts $f [list set bgcolor $bgcolor]
- 	puts $f [list set fgcolor $fgcolor]
- 	puts $f [list set colors $colors]
-@@ -10425,7 +10426,7 @@ proc chg_fontparam {v sub op} {
- proc doprefs {} {
-     global maxwidth maxgraphpct
-     global oldprefs prefstop showneartags showlocalchanges
--    global bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
-+    global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
-     global tabstop limitdiffs autoselect extdifftool perfile_attrs
-     global hideremotes
- 
-@@ -10489,6 +10490,10 @@ proc doprefs {} {
- 
-     label $top.cdisp -text [mc "Colors: press to choose"]
-     grid $top.cdisp - -sticky w -pady 10
-+    label $top.ui -padx 40 -relief sunk -background $uicolor
-+    button $top.uibut -text [mc "Interface"] -font optionfont \
-+       -command [list choosecolor uicolor {} $top.ui [mc "interface"] setui]
-+    grid x $top.uibut $top.ui -sticky w
-     label $top.bg -padx 40 -relief sunk -background $bgcolor
-     button $top.bgbut -text [mc "Background"] -font optionfont \
- 	-command [list choosecolor bgcolor {} $top.bg [mc "background"] setbg]
-@@ -10572,6 +10577,10 @@ proc setselbg {c} {
-     allcanvs itemconf secsel -fill $c
- }
- 
-+proc setui {c} {
-+    tk_setPalette $c
-+}
-+
- proc setbg {c} {
-     global bglist
- 
-@@ -11079,6 +11088,7 @@ if {[tk windowingsystem] eq "aqua"} {
- }
- 
- set colors {green red blue magenta darkgrey brown orange}
-+set uicolor grey85
- set bgcolor white
- set fgcolor black
- set diffcolors {red "#00a000" blue}
-@@ -11130,6 +11140,8 @@ eval font create textfontbold [fontflags textfont 1]
- parsefont uifont $uifont
- eval font create uifont [fontflags uifont]
- 
-+tk_setPalette $uicolor
-+
- setoptions
- 
- # check that we can find a .git directory somewhere...
--- 
-1.6.4.3
+
+I've even tried to install a Apache-based subversion server locally and 
+make it believe it was restlet.tigris.org (by editing /etc/hosts and 
+creating the appropriate VirtualHost), but this generates another SHA1 
+ID. (That's of course not a solution that would be generalisable.)
+
+I've had a quick look at the git-svn code to see how this ID was 
+generated, but couldn't find anything obvious.
+I realise this isn't the cleanest approach possible, but any suggestion 
+would be appreciated.
+
+
+Best wishes,
+
+Bruno.
