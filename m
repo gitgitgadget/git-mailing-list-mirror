@@ -1,85 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: linkify author/committer names with search
-Date: Thu, 15 Oct 2009 13:41:34 +0200
-Message-ID: <200910151341.36520.jnareb@gmail.com>
-References: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: quote in help code example
+Date: Thu, 15 Oct 2009 14:02:55 +0200
+Message-ID: <200910151402.56295.trast@student.ethz.ch>
+References: <20091012102926.GA3937@debian.b2j> <20091013153031.GX23777@genesis.frugalware.org> <200910132215.46840.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 13:50:18 2009
+Cc: bill lam <cbill.lam@gmail.com>, git <git@vger.kernel.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Oct 15 14:07:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyOqX-0005F2-GP
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 13:50:17 +0200
+	id 1MyP6i-000679-Vg
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 14:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935133AbZJOLng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 07:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935110AbZJOLnf
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 07:43:35 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:23370 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934559AbZJOLne (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 07:43:34 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so435188fgg.1
-        for <git@vger.kernel.org>; Thu, 15 Oct 2009 04:41:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=N7XmZ3uwIFOGamKEY96/l251dMitaZQb/bd1C1ZtPks=;
-        b=H6F+QpalR/MvRDl0VtNmfzOzC9WDTTw4261BZEi/A1uXInxMcME6ZHx+s2MV4dX+Tr
-         8Nbv7JwJLmcI7Hj84uW4k0zzs3939myaDh0Vz7wIj4JW+PapC498pUAh8ZQhfB1WbnG+
-         yPcUQULT6ADcBlmoyoLEmy3CUDP9vf16TNg3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=MsDGIZ+9BnzUOc/XVF/KC2qRrToi8Yj0F2RaIeXVTx4szvErY8E8oRvDgh0XwusTEq
-         jMGueU1/MBF7Nv3MU0mwYEP1qiK4FL8OPUjvSd6evYpV965aL4pfx04tCNhUyl7WFqjk
-         BtvohTvnmer74aUbqD2Essc+LXVeG4zAcExHQ=
-Received: by 10.86.254.17 with SMTP id b17mr42658fgi.65.1255606906878;
-        Thu, 15 Oct 2009 04:41:46 -0700 (PDT)
-Received: from ?192.168.1.13? (abvx49.neoplus.adsl.tpnet.pl [83.8.221.49])
-        by mx.google.com with ESMTPS id d4sm1639976fga.16.2009.10.15.04.41.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Oct 2009 04:41:45 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
-Content-Disposition: inline
+	id S1762719AbZJOMEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 08:04:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762710AbZJOMEk
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 08:04:40 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:27741 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758479AbZJOMEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 08:04:39 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 15 Oct
+ 2009 14:03:50 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 15 Oct
+ 2009 14:03:30 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <200910132215.46840.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130389>
 
-On Wed, 14 Oct 2009, Stephen Boyd wrote:
+Thomas Rast wrote:
+> 
+> The patch below just replaces said template with a no-op for git's
+> manpage creation.  I have not been able to substantiate the claim that
+> apostrophes are special, and in fact with the patch my manpages look
+> fine.  Then again I don't know anything about roff syntax either, and
+> manuals seem a bit hard to come by.
 
-> It's nice to search for an author by merely clicking on their name in
-> gitweb. This is usually faster than selecting the name, copying the
-> selection, pasting it into the search box, selecting between
-> author/committer and then hitting enter.
-[...]
+Actually, scratch the patch.  I haven't been able to nail it yet, and
+I'm not sure I have the energy for another stab at this mess; but
+during testing with older versions, I learned that they behave
+differently and the patch just shifts the breakage a bit.
 
-I see that it can be useful.  But is this discoverable, and does this
-do expected thing?  Most of links in gitweb lead to some view (page)
-that is specific to link; other lead to anchor on same page.  Leading
-to search results can be unexpected.
-
-Perhaps title explaining what does such link does would help?  Or making
-style of this link distinct from other (dashed underline, dashed 
-underline on mouseover, double underline, different mouse cursor on
-mouseover, etc.)?
-
-Just my 2 eurocents.  Feel free to ignore my ramblings.
+Also, the single quotes are apparently special at the beginning of a
+line and to delimit function arguments, though not elsewhere.  The
+bash manpage uses \(aq to get a literal apostrophe, which I will aim
+to convert them to.  Oddly enough, the groff(7) manpage does not
+document \(aq, but lists \(cq as the official escape for ' ... which
+then turns out to mutate into this cursed non-apostrophe again.  Sigh.
 
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
