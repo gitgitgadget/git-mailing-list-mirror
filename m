@@ -1,75 +1,118 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] gitweb: linkify author/committer names with search
-Date: Thu, 15 Oct 2009 11:30:35 -0700
-Message-ID: <4AD76A4B.5000302@gmail.com>
-References: <1255486344-11891-1-git-send-email-bebarino@gmail.com> <200910151341.36520.jnareb@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD
+ was
+Date: Thu, 15 Oct 2009 14:51:00 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0910151436180.20122@xanadu.home>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
+ <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
+ <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
+ <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
+ <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
+ <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
+ <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 20:31:45 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 15 21:00:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyV72-0000ik-T0
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 20:31:45 +0200
+	id 1MyVYy-0007nG-Pk
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 21:00:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934998AbZJOSbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 14:31:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933396AbZJOSbV
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 14:31:21 -0400
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:46308 "EHLO
-	mail-fx0-f228.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933351AbZJOSbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 14:31:21 -0400
-Received: by fxm28 with SMTP id 28so1371268fxm.18
-        for <git@vger.kernel.org>; Thu, 15 Oct 2009 11:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=END9U9dHd27yyj2pSTZq0GLGDsIT53DBeJ4qsDyr3F4=;
-        b=bw/dpLXR8kny2KwMvCHArw23P/QvME4HO28hFXaILzTAlQfYruC2XSN4byFNCorNNT
-         KJT66kU9TfLGbz0SvkYAk4+lEjNys27p1QiitPOGT3gSaa4h08RW5hwW9GMFKyol2mtQ
-         czf08fqQ6EUmwk+6yyazb2XFAxjw1/hPVs2J4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=WIE8fG3qUKZEtfGxwSC9uHsLV6QObitgs9tK1qEIt8dMv5+iVJXLbMB6DhrM6OBwf5
-         sLfuJp124W6IybxzHjAENLXRK2sNjzbee9xFl3/MBGOc0Txs1HrtsungGSUNgQ9NoBXy
-         GEh+cz5N0n+unqsD2j3FHJ8F76TwDUTMTnroI=
-Received: by 10.103.126.33 with SMTP id d33mr165999mun.109.1255631444252;
-        Thu, 15 Oct 2009 11:30:44 -0700 (PDT)
-Received: from ?192.168.0.5? (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
-        by mx.google.com with ESMTPS id s11sm323137mue.11.2009.10.15.11.30.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Oct 2009 11:30:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090827)
-In-Reply-To: <200910151341.36520.jnareb@gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S933155AbZJOSvn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 14:51:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757871AbZJOSvn
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 14:51:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:13388 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757273AbZJOSvm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 14:51:42 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KRK003MQKD021J0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 15 Oct 2009 14:51:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130410>
 
-Jakub Narebski wrote:
->
-> I see that it can be useful.  But is this discoverable, and does this
-> do expected thing?  Most of links in gitweb lead to some view (page)
-> that is specific to link; other lead to anchor on same page.  Leading
-> to search results can be unexpected.
->
-> Perhaps title explaining what does such link does would help?  Or making
-> style of this link distinct from other (dashed underline, dashed 
-> underline on mouseover, double underline, different mouse cursor on
-> mouseover, etc.)?
+On Thu, 15 Oct 2009, James Pickens wrote:
 
-A title sounds good. Something like "List commits by $author"? I'll try
-to write something up by tonight.
+> On Wed, Oct 14, 2009 at 4:09 PM, Jeff King <peff@peff.net> wrote:
+> > That makes the most sense to me. If "git checkout" could write metadata
+> > into HEAD (or into DETACH_HEAD, as in Daniel's patch), then checkout
+> > could record an "ok to commit" bit. And could also be used to change it
+> > after the fact. E.g.:
+> >
+> >  $ git checkout --detach=commit origin/master
+> >  $ git commit ;# should be ok
+> >
+> >  $ git checkout --detach=examine origin/master
+> >  $ git commit ;# complain
+> >  $ git checkout --detach=commit HEAD
+> >  $ git commit ;# ok
+> >
+> > I guess something like "rebase" should detach with "ok to commit", since
+> > it is planning on attaching the commits later. I'm not sure about "git
+> > bisect". I guess probably it should be "not ok to commit" to be on the
+> > safe side, and then somebody can "git checkout --detach=commit" if they
+> > want to.
+> 
+> How about not detaching the head at all if the user checks out any ref, and
+> reject commits if he checked out a tag or remote branch.  For example:
+> 
+> $ git checkout origin/master
+> $ git status
+> # On branch origin/master
+> $ git commit ;# complain
+> 
+> $ git checkout v1.0.1
+> $ git status
+> # On tag v1.0.1
+> $ git commit ;# complain
+> 
+> $ git checkout v1.0.1^0 ;# detach
+> $ git commit ;# ok
+> 
+> I think this would help the newbies and wouldn't cost the experts too much.
+
+I agree.
+
+> Checking out anything other than a plain ref would still detach the 
+> head, and commits on a detached head would still be allowed.  Perhaps 
+> as an additional safety feature, Git could refuse to switch away from 
+> a detached head if the head isn't reachable from any ref, and require 
+> -f to override:
+> 
+> $ git checkout $sha1
+> $ git commit
+> $ git checkout master ;# complain
+> $ git checkout -f master ;# ok
+
+Nah.  This is obnoxious.  The usual "this is not a local branch" warning 
+could be displayed at that point, and if one really ignores the warning 
+then any commit made that way is always reachable through the reflog.  
+You would have had to work a bit harder to detach HEAD already anyway, 
+so at that point you're not supposed to be such a newbie anymore.
+
+> Maybe I'm missing something and this all can't be done, but it seems simpler
+> than the other options I've seen in this thread.
+
+It is indeed simpler.  It makes the checkout command less verbose as 
+well.  Only the commit command would need to warn the user and only if a 
+forbidden operation is attempted (like committing on a non 
+refs/heads/*). I think I like this.
+
+
+Nicolas
