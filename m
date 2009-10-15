@@ -1,262 +1,368 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 3/5] Introduce new pretty formats %g[sdD] for reflog information
-Date: Fri, 16 Oct 2009 00:41:46 +0200
-Message-ID: <012c71c4eab143691bc5e2d62b421f8c84effa0e.1255645570.git.trast@student.ethz.ch>
+Subject: [PATCH v2 1/5] Refactor pretty_print_commit arguments into a struct
+Date: Fri, 16 Oct 2009 00:41:44 +0200
+Message-ID: <9d3d0f0a6126afc86689138adf58ac7a12c43858.1255645570.git.trast@student.ethz.ch>
 References: <cover.1255645570.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Jef Driesen <jefdriesen@hotmail.com>,
 	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 00:46:37 2009
+X-From: git-owner@vger.kernel.org Fri Oct 16 00:46:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyZ4u-0006Yh-MA
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 00:45:49 +0200
+	id 1MyZ4u-0006Yh-00
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 00:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763177AbZJOWoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 18:44:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763143AbZJOWoI
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 18:44:08 -0400
+	id S1763163AbZJOWnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 18:43:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763159AbZJOWnu
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 18:43:50 -0400
 Received: from gwse.ethz.ch ([129.132.178.238]:58969 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758714AbZJOWoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 18:44:07 -0400
+	id S1761137AbZJOWnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 18:43:49 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
  2009 00:42:44 +0200
 Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
- 2009 00:42:24 +0200
+ 2009 00:42:23 +0200
 X-Mailer: git-send-email 1.6.5.116.gfe4b9
 In-Reply-To: <cover.1255645570.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130434>
 
-Add three new --pretty=format escapes:
+pretty_print_commit() has a bunch of rarely-used arguments, and
+introducing more of them requires yet another update of all the call
+sites.  Refactor most of them into a struct to make future extensions
+easier.
 
-  %gD  long  reflog descriptor (e.g. refs/stash@{0})
-  %gd  short reflog descriptor (e.g. stash@{0})
-  %gs  reflog message
+The ones that stay "plain" arguments were chosen on the grounds that
+all callers put real arguments there, whereas some callers have 0/NULL
+for all arguments that were factored into the struct.
 
-This is achieved by passing down the reflog info, if any, inside the
-pretty_print_context struct.
-
-We use the newly refactored get_reflog_selector(), and give it some
-extra functionality to extract a shortened ref.  The shortening has a
-very simple 1-element cache, since it will usually be called with the
-same ref every time.  Add another helper get_reflog_message() for the
-message extraction.
-
-Note that the --format="%h %gD: %gs" tests may not work in real
-repositories, as the --pretty formatter doesn't know to leave away the
-": " on the last commit in an incomplete (because git-gc removed the
-old part) reflog.  This equivalence is nevertheless the main goal of
-this patch.
+We declare the struct 'const' to ensure none of the callers are bitten
+by the changed (no longer call-by-value) semantics.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- Documentation/pretty-formats.txt |    3 +++
- commit.h                         |    1 +
- log-tree.c                       |    1 +
- pretty.c                         |   17 +++++++++++++++++
- reflog-walk.c                    |   37 ++++++++++++++++++++++++++++++++++---
- reflog-walk.h                    |    8 ++++++++
- t/t1411-reflog-show.sh           |   12 ++++++++++++
- 7 files changed, 76 insertions(+), 3 deletions(-)
+ builtin-branch.c      |    3 ++-
+ builtin-checkout.c    |    3 ++-
+ builtin-log.c         |    3 ++-
+ builtin-merge.c       |    7 +++++--
+ builtin-rev-list.c    |    7 ++++---
+ builtin-shortlog.c    |    9 ++++++---
+ builtin-show-branch.c |    4 ++--
+ commit.h              |   19 +++++++++++++------
+ log-tree.c            |   20 ++++++++++----------
+ pretty.c              |   27 ++++++++++++++-------------
+ 10 files changed, 60 insertions(+), 42 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2a845b1..6359272 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -123,6 +123,9 @@ The placeholders are:
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
- - '%b': body
-+- '%gD': reflog selector, e.g., `refs/stash@{1}`
-+- '%gd': shortened reflog selector, e.g., `stash@{1}`
-+- '%gs': reflog subject
- - '%Cred': switch color to red
- - '%Cgreen': switch color to green
- - '%Cblue': switch color to blue
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 9f57992..05e876e 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -387,8 +387,9 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 
+ 		commit = item->commit;
+ 		if (commit && !parse_commit(commit)) {
++			struct pretty_print_context ctx = {0};
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-					    &subject, 0, NULL, NULL, 0, 0);
++					    &subject, &ctx);
+ 			sub = subject.buf;
+ 		}
+ 
+diff --git a/builtin-checkout.c b/builtin-checkout.c
+index d050c37..075a49f 100644
+--- a/builtin-checkout.c
++++ b/builtin-checkout.c
+@@ -302,8 +302,9 @@ static void show_local_changes(struct object *head)
+ static void describe_detached_head(char *msg, struct commit *commit)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
++	struct pretty_print_context ctx = {0};
+ 	parse_commit(commit);
+-	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, 0, NULL, NULL, 0, 0);
++	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, &ctx);
+ 	fprintf(stderr, "%s %s... %s\n", msg,
+ 		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV), sb.buf);
+ 	strbuf_release(&sb);
+diff --git a/builtin-log.c b/builtin-log.c
+index 25e21ed..207a361 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -1304,8 +1304,9 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 
+ 		if (verbose) {
+ 			struct strbuf buf = STRBUF_INIT;
++			struct pretty_print_context ctx = {0};
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-			                    &buf, 0, NULL, NULL, 0, 0);
++					    &buf, &ctx);
+ 			printf("%c %s %s\n", sign,
+ 			       sha1_to_hex(commit->object.sha1), buf.buf);
+ 			strbuf_release(&buf);
+diff --git a/builtin-merge.c b/builtin-merge.c
+index b6b8428..c69a305 100644
+--- a/builtin-merge.c
++++ b/builtin-merge.c
+@@ -264,6 +264,7 @@ static void squash_message(void)
+ 	struct strbuf out = STRBUF_INIT;
+ 	struct commit_list *j;
+ 	int fd;
++	struct pretty_print_context ctx = {0};
+ 
+ 	printf("Squash commit -- not updating HEAD\n");
+ 	fd = open(git_path("SQUASH_MSG"), O_WRONLY | O_CREAT, 0666);
+@@ -285,13 +286,15 @@ static void squash_message(void)
+ 	if (prepare_revision_walk(&rev))
+ 		die("revision walk setup failed");
+ 
++	ctx.abbrev = rev.abbrev;
++	ctx.date_mode = rev.date_mode;
++
+ 	strbuf_addstr(&out, "Squashed commit of the following:\n");
+ 	while ((commit = get_revision(&rev)) != NULL) {
+ 		strbuf_addch(&out, '\n');
+ 		strbuf_addf(&out, "commit %s\n",
+ 			sha1_to_hex(commit->object.sha1));
+-		pretty_print_commit(rev.commit_format, commit, &out, rev.abbrev,
+-			NULL, NULL, rev.date_mode, 0);
++		pretty_print_commit(rev.commit_format, commit, &out, &ctx);
+ 	}
+ 	if (write(fd, out.buf, out.len) < 0)
+ 		die_errno("Writing SQUASH_MSG");
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 4ba1c12..42cc8d8 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -96,9 +96,10 @@ static void show_commit(struct commit *commit, void *data)
+ 
+ 	if (revs->verbose_header && commit->buffer) {
+ 		struct strbuf buf = STRBUF_INIT;
+-		pretty_print_commit(revs->commit_format, commit,
+-				    &buf, revs->abbrev, NULL, NULL,
+-				    revs->date_mode, 0);
++		struct pretty_print_context ctx = {0};
++		ctx.abbrev = revs->abbrev;
++		ctx.date_mode = revs->date_mode;
++		pretty_print_commit(revs->commit_format, commit, &buf, &ctx);
+ 		if (revs->graph) {
+ 			if (buf.len) {
+ 				if (revs->commit_format != CMIT_FMT_ONELINE)
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index 4d4a3c8..8aa63c7 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -158,9 +158,12 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ 		    sha1_to_hex(commit->object.sha1));
+ 	if (log->user_format) {
+ 		struct strbuf buf = STRBUF_INIT;
+-
+-		pretty_print_commit(CMIT_FMT_USERFORMAT, commit, &buf,
+-			DEFAULT_ABBREV, "", "", DATE_NORMAL, 0);
++		struct pretty_print_context ctx = {0};
++		ctx.abbrev = DEFAULT_ABBREV;
++		ctx.subject = "";
++		ctx.after_subject = "";
++		ctx.date_mode = DATE_NORMAL;
++		pretty_print_commit(CMIT_FMT_USERFORMAT, commit, &buf, &ctx);
+ 		insert_one_record(log, author, buf.buf);
+ 		strbuf_release(&buf);
+ 		return;
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index be95930..9f13caa 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -293,8 +293,8 @@ static void show_one_commit(struct commit *commit, int no_name)
+ 	struct commit_name *name = commit->util;
+ 
+ 	if (commit->object.parsed) {
+-		pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-				    &pretty, 0, NULL, NULL, 0, 0);
++		struct pretty_print_context ctx = {0};
++		pretty_print_commit(CMIT_FMT_ONELINE, commit, &pretty, &ctx);
+ 		pretty_str = pretty.buf;
+ 	}
+ 	if (!prefixcmp(pretty_str, "[PATCH] "))
 diff --git a/commit.h b/commit.h
-index 011766d..15cb649 100644
+index f4fc5c5..011766d 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -70,6 +70,7 @@ struct pretty_print_context
- 	const char *after_subject;
- 	enum date_mode date_mode;
- 	int need_8bit_cte;
-+	struct reflog_walk_info *reflog_info;
+@@ -63,6 +63,15 @@ enum cmit_fmt {
+ 	CMIT_FMT_UNSPECIFIED,
  };
  
++struct pretty_print_context
++{
++	int abbrev;
++	const char *subject;
++	const char *after_subject;
++	enum date_mode date_mode;
++	int need_8bit_cte;
++};
++
  extern int non_ascii(int);
+ extern int has_non_ascii(const char *text);
+ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+@@ -71,12 +80,10 @@ enum cmit_fmt {
+ extern void get_commit_format(const char *arg, struct rev_info *);
+ extern void format_commit_message(const struct commit *commit,
+ 				  const void *format, struct strbuf *sb,
+-				  enum date_mode dmode);
+-extern void pretty_print_commit(enum cmit_fmt fmt, const struct commit*,
+-                                struct strbuf *,
+-                                int abbrev, const char *subject,
+-                                const char *after_subject, enum date_mode,
+-				int need_8bit_cte);
++				  const struct pretty_print_context *context);
++extern void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
++				struct strbuf *sb,
++				const struct pretty_print_context *context);
+ void pp_user_info(const char *what, enum cmit_fmt fmt, struct strbuf *sb,
+ 		   const char *line, enum date_mode dmode,
+ 		   const char *encoding);
 diff --git a/log-tree.c b/log-tree.c
-index f57487f..8e782fc 100644
+index f7d54f2..f57487f 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -409,6 +409,7 @@ void show_log(struct rev_info *opt)
- 	ctx.date_mode = opt->date_mode;
- 	ctx.abbrev = opt->diffopt.abbrev;
- 	ctx.after_subject = extra_headers;
-+	ctx.reflog_info = opt->reflog_info;
- 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+@@ -277,10 +277,9 @@ void show_log(struct rev_info *opt)
+ 	struct strbuf msgbuf = STRBUF_INIT;
+ 	struct log_info *log = opt->loginfo;
+ 	struct commit *commit = log->commit, *parent = log->parent;
+-	int abbrev = opt->diffopt.abbrev;
+ 	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
+-	const char *subject = NULL, *extra_headers = opt->extra_headers;
+-	int need_8bit_cte = 0;
++	const char *extra_headers = opt->extra_headers;
++	struct pretty_print_context ctx = {0};
+ 
+ 	opt->loginfo = NULL;
+ 	if (!opt->verbose_header) {
+@@ -347,8 +346,8 @@ void show_log(struct rev_info *opt)
+ 	 */
+ 
+ 	if (opt->commit_format == CMIT_FMT_EMAIL) {
+-		log_write_email_headers(opt, commit, &subject, &extra_headers,
+-					&need_8bit_cte);
++		log_write_email_headers(opt, commit, &ctx.subject, &extra_headers,
++					&ctx.need_8bit_cte);
+ 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
+ 		fputs(diff_get_color_opt(&opt->diffopt, DIFF_COMMIT), stdout);
+ 		if (opt->commit_format != CMIT_FMT_ONELINE)
+@@ -405,11 +404,12 @@ void show_log(struct rev_info *opt)
+ 	/*
+ 	 * And then the pretty-printed message itself
+ 	 */
+-	if (need_8bit_cte >= 0)
+-		need_8bit_cte = has_non_ascii(opt->add_signoff);
+-	pretty_print_commit(opt->commit_format, commit, &msgbuf,
+-			    abbrev, subject, extra_headers, opt->date_mode,
+-			    need_8bit_cte);
++	if (ctx.need_8bit_cte >= 0)
++		ctx.need_8bit_cte = has_non_ascii(opt->add_signoff);
++	ctx.date_mode = opt->date_mode;
++	ctx.abbrev = opt->diffopt.abbrev;
++	ctx.after_subject = extra_headers;
++	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
  
  	if (opt->add_signoff)
+ 		append_signoff(&msgbuf, opt->add_signoff);
 diff --git a/pretty.c b/pretty.c
-index d6d57eb..fc65fca 100644
+index f5983f8..d6d57eb 100644
 --- a/pretty.c
 +++ b/pretty.c
-@@ -7,6 +7,7 @@
- #include "mailmap.h"
- #include "log-tree.h"
- #include "color.h"
-+#include "reflog-walk.h"
+@@ -442,7 +442,7 @@ struct chunk {
  
- static char *user_format;
+ struct format_commit_context {
+ 	const struct commit *commit;
+-	enum date_mode dmode;
++	const struct pretty_print_context *pretty_ctx;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
  
-@@ -701,6 +702,22 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
- 	case 'd':
- 		format_decoration(sb, commit);
+@@ -711,11 +711,11 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	case 'a':	/* author ... */
+ 		return format_person_part(sb, placeholder[1],
+ 				   msg + c->author.off, c->author.len,
+-				   c->dmode);
++				   c->pretty_ctx->date_mode);
+ 	case 'c':	/* committer ... */
+ 		return format_person_part(sb, placeholder[1],
+ 				   msg + c->committer.off, c->committer.len,
+-				   c->dmode);
++				   c->pretty_ctx->date_mode);
+ 	case 'e':	/* encoding */
+ 		strbuf_add(sb, msg + c->encoding.off, c->encoding.len);
  		return 1;
-+	case 'g':		/* reflog info */
-+		switch(placeholder[1]) {
-+		case 'd':	/* reflog selector */
-+		case 'D':
-+			if (c->pretty_ctx->reflog_info)
-+				get_reflog_selector(sb,
-+						    c->pretty_ctx->reflog_info,
-+						    c->pretty_ctx->date_mode,
-+						    (placeholder[1] == 'd'));
-+			return 2;
-+		case 's':	/* reflog message */
-+			if (c->pretty_ctx->reflog_info)
-+				get_reflog_message(sb, c->pretty_ctx->reflog_info);
-+			return 2;
-+		}
-+		return 0;	/* unknown %g placeholder */
- 	}
+@@ -741,13 +741,13 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
  
- 	/* For the rest we have to parse the commit header. */
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 596bafe..6c6867b 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -243,15 +243,29 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- 
- void get_reflog_selector(struct strbuf *sb,
- 			 struct reflog_walk_info *reflog_info,
--			 enum date_mode dmode)
-+			 enum date_mode dmode,
-+			 int shorten)
+ void format_commit_message(const struct commit *commit,
+ 			   const void *format, struct strbuf *sb,
+-			   enum date_mode dmode)
++			   const struct pretty_print_context *pretty_ctx)
  {
- 	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
- 	struct reflog_info *info;
-+	static const char *last_ref = NULL;
-+	static char *last_short_ref = NULL;
-+	const char *printed_ref;
+ 	struct format_commit_context context;
  
- 	if (!commit_reflog)
- 		return;
- 
--	strbuf_addf(sb, "%s@{", commit_reflog->reflogs->ref);
-+	if (shorten) {
-+		if (last_ref != commit_reflog->reflogs->ref) {
-+			free(last_short_ref);
-+			last_short_ref = shorten_unambiguous_ref(commit_reflog->reflogs->ref, 0);
-+		}
-+		printed_ref = last_short_ref;
-+	} else {
-+		printed_ref = commit_reflog->reflogs->ref;
-+	}
-+
-+	strbuf_addf(sb, "%s@{", printed_ref);
- 	if (commit_reflog->flag || dmode) {
- 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
- 		strbuf_addstr(sb, show_date(info->timestamp, info->tz, dmode));
-@@ -263,6 +277,23 @@ void get_reflog_selector(struct strbuf *sb,
- 	strbuf_addch(sb, '}');
+ 	memset(&context, 0, sizeof(context));
+ 	context.commit = commit;
+-	context.dmode = dmode;
++	context.pretty_ctx = pretty_ctx;
+ 	strbuf_expand(sb, format, format_commit_item, &context);
  }
  
-+void get_reflog_message(struct strbuf *sb,
-+			struct reflog_walk_info *reflog_info)
-+{
-+	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
-+	struct reflog_info *info;
-+	size_t len;
-+
-+	if (!commit_reflog)
-+		return;
-+
-+	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
-+	len = strlen(info->message);
-+	if (len > 0)
-+		len--; /* strip away trailing newline */
-+	strbuf_add(sb, info->message, len);
-+}
-+
- void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
- 	enum date_mode dmode)
+@@ -900,18 +900,18 @@ void pp_remainder(enum cmit_fmt fmt,
+ }
+ 
+ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+-			 struct strbuf *sb, int abbrev,
+-			 const char *subject, const char *after_subject,
+-			 enum date_mode dmode, int need_8bit_cte)
++			 struct strbuf *sb,
++			 const struct pretty_print_context *context)
  {
-@@ -272,7 +303,7 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
- 		struct strbuf selector = STRBUF_INIT;
+ 	unsigned long beginning_of_body;
+ 	int indent = 4;
+ 	const char *msg = commit->buffer;
+ 	char *reencoded;
+ 	const char *encoding;
++	int need_8bit_cte = context->need_8bit_cte;
  
- 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
--		get_reflog_selector(&selector, reflog_info, dmode);
-+		get_reflog_selector(&selector, reflog_info, dmode, 0);
- 		if (oneline) {
- 			printf("%s: %s", selector.buf, info->message);
+ 	if (fmt == CMIT_FMT_USERFORMAT) {
+-		format_commit_message(commit, user_format, sb, dmode);
++		format_commit_message(commit, user_format, sb, context);
+ 		return;
+ 	}
+ 
+@@ -946,8 +946,9 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
  		}
-diff --git a/reflog-walk.h b/reflog-walk.h
-index 74c9096..7bd2cd4 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -3,6 +3,8 @@
+ 	}
  
- #include "cache.h"
+-	pp_header(fmt, abbrev, dmode, encoding, commit, &msg, sb);
+-	if (fmt != CMIT_FMT_ONELINE && !subject) {
++	pp_header(fmt, context->abbrev, context->date_mode, encoding,
++		  commit, &msg, sb);
++	if (fmt != CMIT_FMT_ONELINE && !context->subject) {
+ 		strbuf_addch(sb, '\n');
+ 	}
  
-+struct reflog_walk_info;
-+
- extern void init_reflog_walk(struct reflog_walk_info** info);
- extern int add_reflog_for_walk(struct reflog_walk_info *info,
- 		struct commit *commit, const char *name);
-@@ -10,5 +12,11 @@ extern void fake_reflog_parent(struct reflog_walk_info *info,
- 		struct commit *commit);
- extern void show_reflog_message(struct reflog_walk_info *info, int,
- 		enum date_mode);
-+extern void get_reflog_message(struct strbuf *sb,
-+		struct reflog_walk_info *reflog_info);
-+extern void get_reflog_selector(struct strbuf *sb,
-+		struct reflog_walk_info *reflog_info,
-+		enum date_mode dmode,
-+		int shorten);
+@@ -956,8 +957,8 @@ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
  
- #endif
-diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
-index c18ed8e..cb8d0fd 100755
---- a/t/t1411-reflog-show.sh
-+++ b/t/t1411-reflog-show.sh
-@@ -64,4 +64,16 @@ test_expect_success 'using --date= shows reflog date (oneline)' '
- 	test_cmp expect actual
- '
+ 	/* These formats treat the title line specially. */
+ 	if (fmt == CMIT_FMT_ONELINE || fmt == CMIT_FMT_EMAIL)
+-		pp_title_line(fmt, &msg, sb, subject,
+-			      after_subject, encoding, need_8bit_cte);
++		pp_title_line(fmt, &msg, sb, context->subject,
++			      context->after_subject, encoding, need_8bit_cte);
  
-+test_expect_success '--format="%h %gD: %gs" is same as git-reflog' '
-+	git reflog >expect &&
-+	git log -g --format="%h %gD: %gs" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--format="%h %gD: %gs" is same as git-reflog (with date)' '
-+	git reflog --date=raw >expect &&
-+	git log -g --format="%h %gD: %gs" --date=raw >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	beginning_of_body = sb->len;
+ 	if (fmt != CMIT_FMT_ONELINE)
 -- 
 1.6.5.18.g9f87a.dirty
