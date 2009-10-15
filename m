@@ -1,52 +1,84 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Q: how to check for -crlf property for a set of files using git
-    command line?
-Date: Thu, 15 Oct 2009 11:25:10 +0200
-Message-ID: <4AD6EA76.2040400@viscovery.net>
-References: <85647ef50910150215w1efec91fu16b1fe13f8acec61@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: why no "ignore" command on git
+Date: Thu, 15 Oct 2009 11:29:57 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910151125240.4985@pacific.mpi-cbg.de>
+References: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com> <200910142220.51725.wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 11:34:33 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ralf Thielow <ralf.thielow@googlemail.com>, git@vger.kernel.org
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Thu Oct 15 11:34:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyMik-0004ze-2p
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:34:06 +0200
+	id 1MyMio-0004ze-N9
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:34:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756943AbZJOJZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 05:25:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755689AbZJOJZt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:25:49 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:19442 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752533AbZJOJZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 05:25:48 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1MyMa6-0006M2-Q5; Thu, 15 Oct 2009 11:25:11 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 843CA6D9; Thu, 15 Oct 2009 11:25:10 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <85647ef50910150215w1efec91fu16b1fe13f8acec61@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S934171AbZJOJ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 05:28:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933743AbZJOJ2E
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:28:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47393 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933788AbZJOJ2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 05:28:03 -0400
+Received: (qmail invoked by alias); 15 Oct 2009 09:27:15 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp043) with SMTP; 15 Oct 2009 11:27:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18peqxArrkpnkFW3D4AKh4t2jpGprTdbivJ1MRXz/
+	4pGyi9Yo+Waicz
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <200910142220.51725.wjl@icecavern.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130383>
 
-Constantine Plotnikov schrieb:
-> I'm interested how to check for -crlf property (from .gitattributes)
-> on the set of files using git command line. I'm also interested how to
-> query for values specified in .gitattributes in general from scripts.
-> Parsing .gitattributes looks like too complex way of doing this.
+Hi,
 
-man git-check-attr
+On Wed, 14 Oct 2009, Wesley J. Landaker wrote:
 
--- Hannes
+> On Wednesday 14 October 2009 16:35:23 Ralf Thielow wrote:
+> > why does git don't have an "ignore" command, to ignore some files or
+> > directories all the time.
+> [...]
+> > I read on some pages by a google search that you can create
+> > a ".gitignore" directory or something like that. But you had to do
+> > this manually.
+> >
+> > why there is no "ignore" command on git?
+> 
+> You could always make your own git-ignore script, e.g.:
+> 
+> #!/bin/sh
+> echo "$@" >> .gitignore
+
+Probably it needs to be a little more sophisticated, because of Postel's 
+law.
+
+#!/bin/sh
+
+git rev-parse > /dev/null || exit
+for f
+do
+	case "$f" in
+	*'[*?]'*)
+		# patterns probably are meant to be recursive
+		echo "$f"
+		;;
+	*)
+		echo /"$f"
+		;;
+	esac >> .gitignore
+done
+git add .gitignore
+
+
+Ciao,
+Dscho
