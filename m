@@ -1,423 +1,502 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v3 16/17] Smart fetch over HTTP: client side
-Date: Wed, 14 Oct 2009 20:36:53 -0700
-Message-ID: <1255577814-14745-17-git-send-email-spearce@spearce.org>
+Subject: [RFC PATCH v3 13/17] Smart fetch and push over HTTP: server side
+Date: Wed, 14 Oct 2009 20:36:50 -0700
+Message-ID: <1255577814-14745-14-git-send-email-spearce@spearce.org>
 References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
-Cc: Daniel Barkalow <barkalow@iabervon.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 15 05:43:36 2009
+X-From: git-owner@vger.kernel.org Thu Oct 15 05:43:40 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHFU-0007IV-Hz
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:32 +0200
+	id 1MyHFQ-0007IV-BR
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762490AbZJODin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 23:38:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762487AbZJODin
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:43 -0400
-Received: from george.spearce.org ([209.20.77.23]:33049 "EHLO
+	id S1762464AbZJODiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Oct 2009 23:38:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762460AbZJODiT
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:19 -0400
+Received: from george.spearce.org ([209.20.77.23]:33058 "EHLO
 	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762443AbZJODi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 23:38:29 -0400
+	with ESMTP id S1762449AbZJODiQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Oct 2009 23:38:16 -0400
 Received: by george.spearce.org (Postfix, from userid 1000)
-	id E5DFB38269; Thu, 15 Oct 2009 03:37:10 +0000 (UTC)
+	id 2F00938200; Thu, 15 Oct 2009 03:37:08 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
 	autolearn=ham version=3.2.4
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id 805D23826E;
-	Thu, 15 Oct 2009 03:36:59 +0000 (UTC)
+	by george.spearce.org (Postfix) with ESMTP id A051838267
+	for <git@vger.kernel.org>; Thu, 15 Oct 2009 03:36:58 +0000 (UTC)
 X-Mailer: git-send-email 1.6.5.52.g0ff2e
 In-Reply-To: <1255577814-14745-1-git-send-email-spearce@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130372>
 
-The git-remote-curl backend detects if the remote server supports
-the git-upload-pack service, and if so, runs git-fetch-pack locally
-in a pipe to generate the want/have commands.
+Requests for $GIT_URL/git-receive-pack and $GIT_URL/git-upload-pack
+are forwarded to the corresponding backend process by directly
+executing it and leaving stdin and stdout connected to the invoking
+web server.  Prior to starting the backend process the HTTP response
+headers are sent, thereby freeing the backend from needing to know
+about the HTTP protocol.
 
-The advertisements from the server that were obtained during the
-discovery are passed into git-fetch-pack before the POST request
-starts, permitting server capability discovery and enablement.
-
-Common objects that are discovered are appended onto the request as
-have lines and are sent again on the next request.  This allows the
-remote side to reinitialize its in-memory list of common objects
-during the next request.
-
-Because all requests are relatively short, below git-remote-curl's
-1 MiB buffer limit, requests will use the standard Content-Length
-header and be valid HTTP/1.0 POST requests.  This makes the fetch
-client more tolerant of proxy servers which don't support HTTP/1.1
-or the chunked transfer encoding.
+Requests that are encoded with Content-Encoding: gzip are
+automatically inflated before being streamed into the backend.
+This is primarily useful for the git-upload-pack backend, which
+receives highly repetitive text data from clients that easily
+compresses to 50% of its original size.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-CC: Daniel Barkalow <barkalow@iabervon.org>
 ---
- builtin-fetch-pack.c |  110 ++++++++++++++++++++++++++++++++++++++++++--------
- fetch-pack.h         |    3 +-
- remote-curl.c        |   69 +++++++++++++++++++++++++++++--
- 3 files changed, 160 insertions(+), 22 deletions(-)
+ Documentation/git-http-backend.txt |   39 +++++-
+ http-backend.c                     |  324 +++++++++++++++++++++++++++++++++++-
+ 2 files changed, 359 insertions(+), 4 deletions(-)
 
-diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
-index 615f549..8ed4a6f 100644
---- a/builtin-fetch-pack.c
-+++ b/builtin-fetch-pack.c
-@@ -165,6 +165,24 @@ enum ack_type {
- 	ACK_ready
- };
+diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
+index 867675f..022a243 100644
+--- a/Documentation/git-http-backend.txt
++++ b/Documentation/git-http-backend.txt
+@@ -22,6 +22,23 @@ By default, only the `upload-pack` service is enabled, which serves
+ This is ideally suited for read-only updates, i.e., pulling from
+ git repositories.
  
-+static void consume_shallow_list(int fd)
++SERVICES
++--------
++These services can be enabled/disabled using the per-repository
++configuration file:
++
++http.uploadpack::
++	This serves 'git-fetch-pack' and 'git-ls-remote' clients.
++	It is enabled by default, but a repository can disable it
++	by setting this configuration item to `false`.
++
++http.receivepack::
++	This serves 'git-send-pack' clients, allowing push.  It is
++	disabled by default for anonymous users, and enabled by
++	default for users authenticated by the web server.  It can be
++	disabled by setting this item to `false`, or enabled for all
++	users, including anonymous users, by setting it to `true`.
++
+ URL TRANSLATION
+ ---------------
+ 'git-http-backend' relies on the invoking web server to perform
+@@ -49,7 +66,19 @@ ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/git/
+ </Files>
+ ----------------------------------------------------------------
+ +
+-To require authentication for reads, use a Directory
++To enable anonymous read access but authenticated write access,
++require authorization with a LocationMatch directive:
+++
++----------------------------------------------------------------
++<LocationMatch ".*/git-receive-pack$">
++	AuthType Basic
++	AuthName "Git Access"
++	Require group committers
++	...
++</LocationMatch>
++----------------------------------------------------------------
+++
++To require authentication for both reads and writes, use a Directory
+ directive around the repository, or one of its parent directories:
+ +
+ ----------------------------------------------------------------
+@@ -92,6 +121,14 @@ by the invoking web server, including:
+ * QUERY_STRING
+ * REQUEST_METHOD
+ 
++The backend process sets GIT_COMMITTER_NAME to '$REMOTE_USER' and
++GIT_COMMITTER_EMAIL to '$\{REMOTE_USER}@http.$\{REMOTE_ADDR\}',
++ensuring that any reflogs created by 'git-receive-pack' contain some
++identifying information of the remote user who performed the push.
++
++All CGI environment variables are available to each of the hooks
++invoked by the 'git-receive-pack'.
++
+ Author
+ ------
+ Written by Shawn O. Pearce <spearce@spearce.org>.
+diff --git a/http-backend.c b/http-backend.c
+index 374f60d..67030b5 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -4,11 +4,109 @@
+ #include "object.h"
+ #include "tag.h"
+ #include "exec_cmd.h"
++#include "run-command.h"
++#include "string-list.h"
+ 
+ static const char content_type[] = "Content-Type";
+ static const char content_length[] = "Content-Length";
+ static const char last_modified[] = "Last-Modified";
+ 
++static struct string_list *query_params;
++
++struct rpc_service {
++	const char *name;
++	const char *config_name;
++	signed enabled : 2;
++};
++
++static struct rpc_service rpc_service[] = {
++	{ "upload-pack", "uploadpack", 1 },
++	{ "receive-pack", "receivepack", -1 },
++};
++
++static int decode_char(const char *q)
 +{
-+	if (args.stateless_rpc && args.depth > 0) {
-+		/* If we sent a depth we will get back "duplicate"
-+		 * shallow and unshallow commands every time there
-+		 * is a block of have lines exchanged.
-+		 */
-+		char line[1000];
-+		while (packet_read_line(fd, line, sizeof(line))) {
-+			if (!prefixcmp(line, "shallow "))
++	int i;
++	unsigned char val = 0;
++	for (i = 0; i < 2; i++) {
++		unsigned char c = *q++;
++		val <<= 4;
++		if (c >= '0' && c <= '9')
++			val += c - '0';
++		else if (c >= 'a' && c <= 'f')
++			val += c - 'a' + 10;
++		else if (c >= 'A' && c <= 'F')
++			val += c - 'A' + 10;
++		else
++			return -1;
++	}
++	return val;
++}
++
++static char *decode_parameter(const char **query, int is_name)
++{
++	const char *q = *query;
++	struct strbuf out;
++
++	strbuf_init(&out, 16);
++	do {
++		unsigned char c = *q;
++
++		if (!c)
++			break;
++		if (c == '&' || (is_name && c == '=')) {
++			q++;
++			break;
++		}
++
++		if (c == '%') {
++			int val = decode_char(q + 1);
++			if (0 <= val) {
++				strbuf_addch(&out, val);
++				q += 3;
 +				continue;
-+			if (!prefixcmp(line, "unshallow "))
-+				continue;
-+			die("git fetch-pack: expected shallow list");
++			}
++		}
++
++		if (c == '+')
++			strbuf_addch(&out, ' ');
++		else
++			strbuf_addch(&out, c);
++		q++;
++	} while (1);
++	*query = q;
++	return strbuf_detach(&out, NULL);
++}
++
++static struct string_list *get_parameters(void)
++{
++	if (!query_params) {
++		const char *query = getenv("QUERY_STRING");
++
++		query_params = xcalloc(1, sizeof(*query_params));
++		while (query && *query) {
++			char *name = decode_parameter(&query, 1);
++			char *value = decode_parameter(&query, 0);
++			struct string_list_item *i;
++
++			i = string_list_lookup(name, query_params);
++			if (!i)
++				i = string_list_insert(name, query_params);
++			else
++				free(i->util);
++			i->util = value;
 +		}
 +	}
++	return query_params;
 +}
 +
- static enum ack_type get_ack(int fd, unsigned char *result_sha1)
++static const char *get_parameter(const char *name)
++{
++	struct string_list_item *i;
++	i = string_list_lookup(name, get_parameters());
++	return i ? i->util : NULL;
++}
++
+ static void format_write(int fd, const char *fmt, ...)
  {
- 	static char line[1000];
-@@ -190,6 +208,15 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
- 	die("git fetch_pack: expected ACK/NAK, got '%s'", line);
+ 	static char buffer[1024];
+@@ -81,6 +179,21 @@ static NORETURN void not_found(const char *err, ...)
+ 	exit(0);
  }
  
-+static void send_request(int fd, struct strbuf *buf)
++static NORETURN void forbidden(const char *err, ...)
 +{
-+	if (args.stateless_rpc) {
-+		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
-+		packet_flush(fd);
-+	} else
-+		safe_write(fd, buf->buf, buf->len);
++	va_list params;
++
++	http_status(403, "Forbidden");
++	hdr_nocache();
++	end_headers();
++
++	va_start(params, err);
++	if (err && *err)
++		vfprintf(stderr, err, params);
++	va_end(params);
++	exit(0);
 +}
 +
- static int find_common(int fd[2], unsigned char *result_sha1,
- 		       struct ref *refs)
+ static void send_strbuf(const char *type, struct strbuf *buf)
  {
-@@ -199,7 +226,10 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 	unsigned in_vain = 0;
- 	int got_continue = 0;
- 	struct strbuf req_buf = STRBUF_INIT;
-+	size_t state_len = 0;
+ 	hdr_int(content_length, buf->len);
+@@ -147,6 +260,145 @@ static void get_idx_file(char *name)
+ 	send_file("application/x-git-packed-objects-toc", name);
+ }
  
-+	if (args.stateless_rpc && multi_ack == 1)
-+		die("--stateless-rpc requires multi_ack_detailed");
- 	if (marked)
- 		for_each_ref(clear_marks, NULL);
- 	marked = 1;
-@@ -256,13 +286,13 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 	if (args.depth > 0)
- 		packet_buf_write(&req_buf, "deepen %d", args.depth);
- 	packet_buf_flush(&req_buf);
--
--	safe_write(fd[1], req_buf.buf, req_buf.len);
-+	state_len = req_buf.len;
- 
- 	if (args.depth > 0) {
- 		char line[1024];
- 		unsigned char sha1[20];
- 
-+		send_request(fd[1], &req_buf);
- 		while (packet_read_line(fd[0], line, sizeof(line))) {
- 			if (!prefixcmp(line, "shallow ")) {
- 				if (get_sha1_hex(line + 8, sha1))
-@@ -284,28 +314,40 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 			}
- 			die("expected shallow/unshallow, got %s", line);
- 		}
-+	} else if (!args.stateless_rpc)
-+		send_request(fd[1], &req_buf);
++static int http_config(const char *var, const char *value, void *cb)
++{
++	struct rpc_service *svc = cb;
 +
-+	if (!args.stateless_rpc) {
-+		/* If we aren't using the stateless-rpc interface
-+		 * we don't need to retain the headers.
-+		 */
-+		strbuf_setlen(&req_buf, 0);
-+		state_len = 0;
- 	}
- 
- 	flushes = 0;
- 	retval = -1;
- 	while ((sha1 = get_rev())) {
--		packet_write(fd[1], "have %s\n", sha1_to_hex(sha1));
-+		packet_buf_write(&req_buf, "have %s\n", sha1_to_hex(sha1));
- 		if (args.verbose)
- 			fprintf(stderr, "have %s\n", sha1_to_hex(sha1));
- 		in_vain++;
- 		if (!(31 & ++count)) {
- 			int ack;
- 
--			packet_flush(fd[1]);
-+			packet_buf_flush(&req_buf);
-+			send_request(fd[1], &req_buf);
-+			strbuf_setlen(&req_buf, state_len);
- 			flushes++;
- 
- 			/*
- 			 * We keep one window "ahead" of the other side, and
- 			 * will wait for an ACK only on the next one
- 			 */
--			if (count == 32)
-+			if (!args.stateless_rpc && count == 32)
- 				continue;
- 
-+			consume_shallow_list(fd[0]);
- 			do {
- 				ack = get_ack(fd[0], result_sha1);
- 				if (args.verbose && ack)
-@@ -322,6 +364,17 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 				case ACK_continue: {
- 					struct commit *commit =
- 						lookup_commit(result_sha1);
-+					if (args.stateless_rpc
-+					 && ack == ACK_common
-+					 && !(commit->object.flags & COMMON)) {
-+						/* We need to replay the have for this object
-+						 * on the next RPC request so the peer knows
-+						 * it is in common with us.
-+						 */
-+						const char *hex = sha1_to_hex(result_sha1);
-+						packet_buf_write(&req_buf, "have %s\n", hex);
-+						state_len = req_buf.len;
-+					}
- 					mark_common(commit, 0, 1);
- 					retval = 0;
- 					in_vain = 0;
-@@ -339,7 +392,8 @@ static int find_common(int fd[2], unsigned char *result_sha1,
- 		}
- 	}
- done:
--	packet_write(fd[1], "done\n");
-+	packet_buf_write(&req_buf, "done\n");
-+	send_request(fd[1], &req_buf);
- 	if (args.verbose)
- 		fprintf(stderr, "done\n");
- 	if (retval != 0) {
-@@ -348,6 +402,7 @@ done:
- 	}
- 	strbuf_release(&req_buf);
- 
-+	consume_shallow_list(fd[0]);
- 	while (flushes || multi_ack) {
- 		int ack = get_ack(fd[0], result_sha1);
- 		if (ack) {
-@@ -672,6 +727,8 @@ static struct ref *do_fetch_pack(int fd[2],
- 			 */
- 			warning("no common commits");
- 
-+	if (args.stateless_rpc)
-+		packet_flush(fd[1]);
- 	if (get_pack(fd, pack_lockfile))
- 		die("git fetch-pack: fetch failed.");
- 
-@@ -742,6 +799,8 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	struct ref *ref = NULL;
- 	char *dest = NULL, **heads;
- 	int fd[2];
-+	char *pack_lockfile = NULL;
-+	char **pack_lockfile_ptr = NULL;
- 	struct child_process *conn;
- 
- 	nr_heads = 0;
-@@ -791,6 +850,15 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 				args.no_progress = 1;
- 				continue;
- 			}
-+			if (!strcmp("--stateless-rpc", arg)) {
-+				args.stateless_rpc = 1;
-+				continue;
-+			}
-+			if (!strcmp("--lock-pack", arg)) {
-+				args.lock_pack = 1;
-+				pack_lockfile_ptr = &pack_lockfile;
-+				continue;
-+			}
- 			usage(fetch_pack_usage);
- 		}
- 		dest = (char *)arg;
-@@ -801,19 +869,27 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
- 	if (!dest)
- 		usage(fetch_pack_usage);
- 
--	conn = git_connect(fd, (char *)dest, args.uploadpack,
--			   args.verbose ? CONNECT_VERBOSE : 0);
--	if (conn) {
--		get_remote_heads(fd[0], &ref, 0, NULL, 0, NULL);
--
--		ref = fetch_pack(&args, fd, conn, ref, dest, nr_heads, heads, NULL);
--		close(fd[0]);
--		close(fd[1]);
--		if (finish_connect(conn))
--			ref = NULL;
-+	if (args.stateless_rpc) {
-+		conn = NULL;
-+		fd[0] = 0;
-+		fd[1] = 1;
- 	} else {
--		ref = NULL;
-+		conn = git_connect(fd, (char *)dest, args.uploadpack,
-+				   args.verbose ? CONNECT_VERBOSE : 0);
++	if (!prefixcmp(var, "http.") &&
++	    !strcmp(var + 5, svc->config_name)) {
++		svc->enabled = git_config_bool(var, value);
++		return 0;
 +	}
 +
-+	get_remote_heads(fd[0], &ref, 0, NULL, 0, NULL);
++	/* we are not interested in parsing any other configuration here */
++	return 0;
++}
 +
-+	ref = fetch_pack(&args, fd, conn, ref, dest,
-+		nr_heads, heads, pack_lockfile_ptr);
-+	if (pack_lockfile) {
-+		printf("lock %s\n", pack_lockfile);
-+		fflush(stdout);
- 	}
-+	close(fd[0]);
-+	close(fd[1]);
-+	if (finish_connect(conn))
-+		ref = NULL;
- 	ret = !ref;
++static struct rpc_service *select_service(const char *name)
++{
++	struct rpc_service *svc = NULL;
++	int i;
++
++	if (prefixcmp(name, "git-"))
++		forbidden("Unsupported service: '%s'", name);
++
++	for (i = 0; i < ARRAY_SIZE(rpc_service); i++) {
++		struct rpc_service *s = &rpc_service[i];
++		if (!strcmp(s->name, name + 4)) {
++			svc = s;
++			break;
++		}
++	}
++
++	if (!svc)
++		forbidden("Unsupported service: '%s'", name);
++
++	git_config(http_config, svc);
++	if (svc->enabled < 0) {
++		const char *user = getenv("REMOTE_USER");
++		svc->enabled = (user && *user) ? 1 : 0;
++	}
++	if (!svc->enabled)
++		forbidden("Service not enabled: '%s'", svc->name);
++	return svc;
++}
++
++static void inflate_request(const char *prog_name, int out)
++{
++	z_stream stream;
++	unsigned char in_buf[8192];
++	unsigned char out_buf[8192];
++	unsigned long cnt = 0;
++	int ret;
++
++	memset(&stream, 0, sizeof(stream));
++	ret = inflateInit2(&stream, (15 + 16));
++	if (ret != Z_OK)
++		die("cannot start zlib inflater, zlib err %d", ret);
++
++	while (1) {
++		ssize_t n = xread(0, in_buf, sizeof(in_buf));
++		if (n <= 0)
++			die("request ended in the middle of the gzip stream");
++
++		stream.next_in = in_buf;
++		stream.avail_in = n;
++
++		while (0 < stream.avail_in) {
++			int ret;
++
++			stream.next_out = out_buf;
++			stream.avail_out = sizeof(out_buf);
++
++			ret = inflate(&stream, Z_NO_FLUSH);
++			if (ret != Z_OK && ret != Z_STREAM_END)
++				die("zlib error inflating request, result %d", ret);
++
++			n = stream.total_out - cnt;
++			if (write_in_full(out, out_buf, n) != n)
++				die("%s aborted reading request", prog_name);
++			cnt += n;
++
++			if (ret == Z_STREAM_END)
++				goto done;
++		}
++	}
++
++done:
++	inflateEnd(&stream);
++	close(out);
++}
++
++static void run_service(const char **argv)
++{
++	const char *encoding = getenv("HTTP_CONTENT_ENCODING");
++	const char *user = getenv("REMOTE_USER");
++	const char *host = getenv("REMOTE_ADDR");
++	char *env[3];
++	struct strbuf buf = STRBUF_INIT;
++	int gzipped_request = 0;
++	struct child_process cld;
++
++	if (encoding && !strcmp(encoding, "gzip"))
++		gzipped_request = 1;
++	else if (encoding && !strcmp(encoding, "x-gzip"))
++		gzipped_request = 1;
++
++	if (!user || !*user)
++		user = "anonymous";
++	if (!host || !*host)
++		host = "(none)";
++
++	memset(&env, 0, sizeof(env));
++	strbuf_addf(&buf, "GIT_COMMITTER_NAME=%s", user);
++	env[0] = strbuf_detach(&buf, NULL);
++
++	strbuf_addf(&buf, "GIT_COMMITTER_EMAIL=%s@http.%s", user, host);
++	env[1] = strbuf_detach(&buf, NULL);
++	env[2] = NULL;
++
++	memset(&cld, 0, sizeof(cld));
++	cld.argv = argv;
++	cld.env = (const char *const *)env;
++	if (gzipped_request)
++		cld.in = -1;
++	cld.git_cmd = 1;
++	if (start_command(&cld))
++		exit(1);
++
++	close(1);
++	if (gzipped_request)
++		inflate_request(argv[0], cld.in);
++	else
++		close(0);
++
++	if (finish_command(&cld))
++		exit(1);
++	free(env[0]);
++	free(env[1]);
++	strbuf_release(&buf);
++}
++
+ static int show_text_ref(const char *name, const unsigned char *sha1,
+ 	int flag, void *cb_data)
+ {
+@@ -167,11 +419,32 @@ static int show_text_ref(const char *name, const unsigned char *sha1,
  
- 	if (!ret && nr_heads) {
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 8bd9c32..fbe85ac 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -13,7 +13,8 @@ struct fetch_pack_args
- 		fetch_all:1,
- 		verbose:1,
- 		no_progress:1,
--		include_tag:1;
-+		include_tag:1,
-+		stateless_rpc:1;
+ static void get_info_refs(char *arg)
+ {
++	const char *service_name = get_parameter("service");
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+-	for_each_ref(show_text_ref, &buf);
+ 	hdr_nocache();
+-	send_strbuf("text/plain", &buf);
++
++	if (service_name) {
++		const char *argv[] = {NULL /* service name */,
++			"--stateless-rpc", "--advertise-refs",
++			".", NULL};
++		struct rpc_service *svc = select_service(service_name);
++
++		strbuf_addf(&buf, "application/x-git-%s-advertisement",
++			svc->name);
++		hdr_str(content_type, buf.buf);
++		end_headers();
++
++		packet_write(1, "# service=git-%s\n", svc->name);
++		packet_flush(1);
++
++		argv[0] = svc->name;
++		run_service(argv);
++
++	} else {
++		for_each_ref(show_text_ref, &buf);
++		send_strbuf("text/plain", &buf);
++	}
+ 	strbuf_release(&buf);
+ }
+ 
+@@ -200,6 +473,48 @@ static void get_info_packs(char *arg)
+ 	strbuf_release(&buf);
+ }
+ 
++static void check_content_type(const char *accepted_type)
++{
++	const char *actual_type = getenv("CONTENT_TYPE");
++
++	if (!actual_type)
++		actual_type = "";
++
++	if (strcmp(actual_type, accepted_type)) {
++		http_status(415, "Unsupported Media Type");
++		hdr_nocache();
++		end_headers();
++		format_write(1,
++			"Expected POST with Content-Type '%s',"
++			" but received '%s' instead.\n",
++			accepted_type, actual_type);
++		exit(0);
++	}
++}
++
++static void service_rpc(char *service_name)
++{
++	const char *argv[] = {NULL, "--stateless-rpc", ".", NULL};
++	struct rpc_service *svc = select_service(service_name);
++	struct strbuf buf = STRBUF_INIT;
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, "application/x-git-%s-request", svc->name);
++	check_content_type(buf.buf);
++
++	hdr_nocache();
++
++	strbuf_reset(&buf);
++	strbuf_addf(&buf, "application/x-git-%s-result", svc->name);
++	hdr_str(content_type, buf.buf);
++
++	end_headers();
++
++	argv[0] = svc->name;
++	run_service(argv);
++	strbuf_release(&buf);
++}
++
+ static NORETURN void die_webcgi(const char *err, va_list params)
+ {
+ 	char buffer[1000];
+@@ -226,7 +541,10 @@ static struct service_cmd {
+ 	{"GET", "/objects/info/[^/]*$", get_text_file},
+ 	{"GET", "/objects/[0-9a-f]{2}/[0-9a-f]{38}$", get_loose_object},
+ 	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.pack$", get_pack_file},
+-	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file}
++	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file},
++
++	{"POST", "/git-upload-pack$", service_rpc},
++	{"POST", "/git-receive-pack$", service_rpc}
  };
  
- struct ref *fetch_pack(struct fetch_pack_args *args,
-diff --git a/remote-curl.c b/remote-curl.c
-index 45436d1..eb71ffd 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -45,7 +45,7 @@ static int set_option(const char *name, const char *value)
- 			options.progress = 0;
- 		else
- 			return -1;
--		return 1 /* TODO implement later */;
-+		return 0;
- 	}
- 	else if (!strcmp(name, "depth")) {
- 		char *end;
-@@ -53,7 +53,7 @@ static int set_option(const char *name, const char *value)
- 		if (value == end || *end)
- 			return -1;
- 		options.depth = v;
--		return 1 /* TODO implement later */;
-+		return 0;
- 	}
- 	else if (!strcmp(name, "followtags")) {
- 		if (!strcmp(value, "true"))
-@@ -62,7 +62,7 @@ static int set_option(const char *name, const char *value)
- 			options.followtags = 0;
- 		else
- 			return -1;
--		return 1 /* TODO implement later */;
-+		return 0;
- 	}
- 	else if (!strcmp(name, "dry-run")) {
- 		if (!strcmp(value, "true"))
-@@ -462,6 +462,8 @@ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- 	char **targets = xmalloc(nr_heads * sizeof(char*));
- 	int ret, i;
- 
-+	if (options.depth)
-+		die("dumb http transport does not support --depth");
- 	for (i = 0; i < nr_heads; i++)
- 		targets[i] = xstrdup(sha1_to_hex(to_fetch[i]->old_sha1));
- 
-@@ -480,6 +482,65 @@ static int fetch_dumb(int nr_heads, struct ref **to_fetch)
- 	return ret ? error("Fetch failed.") : 0;
- }
- 
-+static int fetch_git(struct discovery *heads,
-+	int nr_heads, struct ref **to_fetch)
-+{
-+	struct rpc_state rpc;
-+	char *depth_arg = NULL;
-+	const char **argv;
-+	int argc = 0, i, err;
-+
-+	argv = xmalloc((15 + nr_heads) * sizeof(char*));
-+	argv[argc++] = "fetch-pack";
-+	argv[argc++] = "--stateless-rpc";
-+	argv[argc++] = "--lock-pack";
-+	if (options.followtags)
-+		argv[argc++] = "--include-tag";
-+	if (options.thin)
-+		argv[argc++] = "--thin";
-+	if (options.verbosity >= 3) {
-+		argv[argc++] = "-v";
-+		argv[argc++] = "-v";
-+	}
-+	if (!options.progress)
-+		argv[argc++] = "--no-progress";
-+	if (options.depth) {
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addf(&buf, "--depth=%lu", options.depth);
-+		depth_arg = strbuf_detach(&buf, NULL);
-+		argv[argc++] = depth_arg;
-+	}
-+	argv[argc++] = url;
-+	for (i = 0; i < nr_heads; i++) {
-+		struct ref *ref = to_fetch[i];
-+		if (!ref->name || !*ref->name)
-+			die("cannot fetch by sha1 over smart http");
-+		argv[argc++] = ref->name;
-+	}
-+	argv[argc++] = NULL;
-+
-+	memset(&rpc, 0, sizeof(rpc));
-+	rpc.service_name = "git-upload-pack",
-+	rpc.argv = argv;
-+
-+	err = rpc_service(&rpc, heads);
-+	if (rpc.result.len)
-+		safe_write(1, rpc.result.buf, rpc.result.len);
-+	strbuf_release(&rpc.result);
-+	free(argv);
-+	free(depth_arg);
-+	return err;
-+}
-+
-+static int fetch(int nr_heads, struct ref **to_fetch)
-+{
-+	struct discovery *d = discover_refs("git-upload-pack");
-+	if (d->proto_git)
-+		return fetch_git(d, nr_heads, to_fetch);
-+	else
-+		return fetch_dumb(nr_heads, to_fetch);
-+}
-+
- static void parse_fetch(struct strbuf *buf)
- {
- 	struct ref **to_fetch = NULL;
-@@ -522,7 +583,7 @@ static void parse_fetch(struct strbuf *buf)
- 			break;
- 	} while (1);
- 
--	if (fetch_dumb(nr_heads, to_fetch))
-+	if (fetch(nr_heads, to_fetch))
- 		exit(128); /* error already reported */
- 	free_refs(list_head);
- 	free(to_fetch);
+ int main(int argc, char **argv)
 -- 
 1.6.5.52.g0ff2e
