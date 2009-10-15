@@ -1,109 +1,127 @@
-From: James Pickens <jepicken@gmail.com>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD 
-	was
-Date: Thu, 15 Oct 2009 16:47:57 -0700
-Message-ID: <885649360910151647v27a15334x63fe3b6f5035dbd2@mail.gmail.com>
-References: <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
-	 <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
-	 <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
-	 <20091014230934.GC29664@coredump.intra.peff.net>
-	 <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
-	 <alpine.LFD.2.00.0910151436180.20122@xanadu.home>
-	 <7v1vl45t9k.fsf@alter.siamese.dyndns.org>
-	 <20091015212632.GA13180@coredump.intra.peff.net>
-	 <7v1vl42uid.fsf@alter.siamese.dyndns.org>
-	 <7vfx9k1faa.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 01:50:59 2009
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: [PATCH] am: allow some defaults to be specified via git-config
+Date: Fri, 16 Oct 2009 12:50:27 +1300
+Message-ID: <1255650627-17576-1-git-send-email-sam.vilain@catalyst.net.nz>
+Cc: Nigel McNie <nigel@catalyst.net.nz>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 02:02:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mya5s-0006vi-Lt
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 01:50:53 +0200
+	id 1MyaGh-0002Xv-TW
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 02:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935610AbZJOXsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 19:48:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935608AbZJOXse
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 19:48:34 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:46106 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935607AbZJOXse (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 19:48:34 -0400
-Received: by yxe17 with SMTP id 17so1567945yxe.33
-        for <git@vger.kernel.org>; Thu, 15 Oct 2009 16:47:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=VQy3uHCl+nK12eqagyMLPiEnTIeuGjrK1CgDBzt1OQI=;
-        b=X5G28eUEHT2rCK80x2pQWYFspxaYZgDbZQRNnq/6CsYXD3kPrwNDKcTENhPuQwN+vZ
-         KZ1yN6rAPUk0XQiipHZUkewIuLnD4EIq5YhU+rPxZd86GicbrkyfhoYgBancfQxHbUY1
-         NdJsmJhbUf7TX98hwSDoja6v3trbxl1MFDPQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=NHf5IS0iXdmYYVGyLR+Vh9J24UhnAQebV3tBzsq3Cnjoy210Gy7UcAJKR+mdWmCkp9
-         XcgcCvKOPz6F3J+uxpSMo2tyOmsYPomTn84Zl8MTJi0cnmlghguR+F+A/0971O4f+cmq
-         skGd7EaFmvrC5uuW6vx7KfhjiugVtRgq3yspA=
-Received: by 10.101.181.26 with SMTP id i26mr1112741anp.56.1255650477911; Thu, 
-	15 Oct 2009 16:47:57 -0700 (PDT)
-In-Reply-To: <7vfx9k1faa.fsf@alter.siamese.dyndns.org>
+	id S1763178AbZJOXvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 19:51:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932686AbZJOXvK
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 19:51:10 -0400
+Received: from bertrand.catalyst.net.nz ([202.78.240.40]:57676 "EHLO
+	mail.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758819AbZJOXvJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 19:51:09 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id C29BA3240D;
+	Fri, 16 Oct 2009 12:50:31 +1300 (NZDT)
+X-Virus-Scanned: Debian amavisd-new at catalyst.net.nz
+Received: from mail.catalyst.net.nz ([127.0.0.1])
+	by localhost (bertrand.catalyst.net.nz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id FdBoVC1ugJ+I; Fri, 16 Oct 2009 12:50:30 +1300 (NZDT)
+Received: from localhost.localdomain (leibniz.catalyst.net.nz [202.78.240.7])
+	by mail.catalyst.net.nz (Postfix) with ESMTP id BDB61323FC;
+	Fri, 16 Oct 2009 12:50:30 +1300 (NZDT)
+X-Mailer: git-send-email 1.6.3.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130440>
 
-On Thu, Oct 15, 2009 at 3:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>     $ git checkout origin/next ;# ditto
->>     $ git symbolic-ref HEAD
->>     refs/remotes/origin/next
->
-> Ok, after reading Daniel's message to remind us that "git fetch" after
-> this will get us into trouble, I agree that detaching HEAD is inevitable.
+Some users prefer in particular '3way' to be the default, let them
+specify it via the config file - and some other boolean settings while
+we're at it.
 
-Some people liked the idea, so let's not give up just yet.  Here are a few
-things Git could do when a fetch wants to update the currently checked out
-branch:
+Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+---
+ Documentation/config.txt |    4 ++++
+ Documentation/git-am.txt |   11 +++++++++--
+ git-am.sh                |    5 +++++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-1. Refuse the fetch.
-2. Update the ref, leaving the user with a work tree and index that don't
-   match their HEAD.
-3. Detach the HEAD, then update the ref.
-4. Update the ref, then check it out.
-
-Option 1 is ok, as long as the "next step" is not too complicated.  It's no
-good if the user has to checkout a different branch, then fetch, then
-checkout the original branch again.
-
-Option 2 is crap.
-
-Option 3 seems reasonable, but it might be just as scary/confusing to
-newbies as the current behavior, so I don't think it should be the default.
-
-Option 4 also seems reasonable, but you run into problems if the user had
-changed the index or work tree.  In that case Git could do 'checkout
---merge' automatically.  This option is also less "pure" since it lets 'git
-fetch' modify the index and work tree.
-
-So how about this:
-* 'git fetch' refuses the fetch by default.
-* 'git fetch --detach' detaches HEAD, then updates the ref
-* 'git pull' detaches HEAD, updates the ref, then checks out the new ref
-  with --merge.
-
-BTW I'm not convinced this is any better than the current UI... just
-thinking out loud.  And I find it more than a little depressing that most
-of these ideas have already been discussed almost 3 years ago (thanks Jeff
-for the pointer).
-
-James
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index cd17814..82adca5 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -476,6 +476,10 @@ it will be treated as a shell command.  For example, defining
+ executed from the top-level directory of a repository, which may
+ not necessarily be the current directory.
+ 
++am.*::
++	Specify defaults for linkgit:git-am[1].  Currently, the three
++	boolean options, 'sign', 'utf8' and 'keep' may be specified.
++
+ apply.ignorewhitespace::
+ 	When set to 'change', tells 'git-apply' to ignore changes in
+ 	whitespace, in the same way as the '--ignore-space-change'
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 67ad5da..c22bca2 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -38,6 +38,7 @@ OPTIONS
+ -k::
+ --keep::
+ 	Pass `-k` flag to 'git-mailinfo' (see linkgit:git-mailinfo[1]).
++	May be specified via 'am.keep' (see linkgit:git-config[1]).
+ 
+ -c::
+ --scissors::
+@@ -60,7 +61,8 @@ OPTIONS
+ 	preferred encoding if it is not UTF-8).
+ +
+ This was optional in prior versions of git, but now it is the
+-default.   You can use `--no-utf8` to override this.
++default.   You can use `--no-utf8` to override this, or set
++'am.utf8' to no via linkgit:git-config[1].
+ 
+ --no-utf8::
+ 	Pass `-n` flag to 'git-mailinfo' (see
+@@ -71,7 +73,12 @@ default.   You can use `--no-utf8` to override this.
+ 	When the patch does not apply cleanly, fall back on
+ 	3-way merge if the patch records the identity of blobs
+ 	it is supposed to apply to and we have those blobs
+-	available locally.
++	available locally.  This can be configured via
++	linkgit:git-config[1] using the 'am.3way' option
++
++--no-3way::
++	If 'am.3way' is specified to be true in the configuration file,
++	this switch allows it to be disabled.
+ 
+ --ignore-date::
+ --ignore-space-change::
+diff --git a/git-am.sh b/git-am.sh
+index c132f50..a22fa3b 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -294,6 +294,9 @@ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+ 
++# apply defaults from config
++eval "$(git config --bool --get-regexp '^am\.(sign|utf8|keep)' | sed 's/^am\.\([a-z0-9]*\) /\1=/;s/true/t/;s/false//')"
++
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -303,6 +306,8 @@ do
+ 		: ;;
+ 	-3|--3way)
+ 		threeway=t ;;
++	--no-3way)
++		threeway= ;;
+ 	-s|--signoff)
+ 		sign=t ;;
+ 	-u|--utf8)
+-- 
+1.6.3.3
