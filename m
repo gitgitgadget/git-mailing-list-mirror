@@ -1,54 +1,62 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: why no "ignore" command on git
-Date: Wed, 14 Oct 2009 22:20:50 -0600
-Organization: icecavern.net
-Message-ID: <200910142220.51725.wjl@icecavern.net>
-References: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Thu, 15 Oct 2009 00:21:59 -0400
+Message-ID: <20091015042159.GA21701@coredump.intra.peff.net>
+References: <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
+ <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
+ <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
+ <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
+ <20091014230934.GC29664@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0910141926170.20122@xanadu.home>
+ <7viqeha2zv.fsf@alter.siamese.dyndns.org>
+ <20091015014737.GA9923@coredump.intra.peff.net>
+ <alpine.LFD.2.00.0910142237010.20122@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 15 06:23:05 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Oct 15 06:23:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHrk-0003Un-37
+	id 1MyHrk-0003Un-Kb
 	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 06:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbZJOEVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 00:21:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbZJOEVg
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 00:21:36 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:40278 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750966AbZJOEVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 00:21:36 -0400
-Received: from chocobo.localnet (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id 2835635A66;
-	Thu, 15 Oct 2009 06:20:57 +0200 (CEST)
-User-Agent: KMail/1.11.4 (Linux/2.6.28-15-generic; KDE/4.2.4; i686; ; )
-In-Reply-To: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com>
+	id S1751268AbZJOEWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 00:22:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbZJOEWi
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 00:22:38 -0400
+Received: from peff.net ([208.65.91.99]:53173 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750776AbZJOEWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 00:22:38 -0400
+Received: (qmail 3594 invoked by uid 107); 15 Oct 2009 04:25:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 15 Oct 2009 00:25:32 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Oct 2009 00:21:59 -0400
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.0910142237010.20122@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130376>
 
-On Wednesday 14 October 2009 16:35:23 Ralf Thielow wrote:
-> why does git don't have an "ignore" command, to ignore some files or
-> directories all the time.
-[...]
-> I read on some pages by a google search that you can create
-> a ".gitignore" directory or something like that. But you had to do
-> this manually.
->
-> why there is no "ignore" command on git?
+On Wed, Oct 14, 2009 at 11:08:59PM -0400, Nicolas Pitre wrote:
 
-You could always make your own git-ignore script, e.g.:
+> IMHO this patch proposed by Daniel about the detached head is probably a 
+> good compromise.  It makes "confusing" operations more verbose to give 
+> new users a better feeling while keeping the flexibility intact.  And 
+> increased verbosity is less annoying than decreased flexibility.
 
-#!/bin/sh
-echo "$@" >> .gitignore
+And I don't think there is as much opposition to a config option to
+silence verbosity, because it isn't really a change in behavior. We
+already have advice.*, and if the new message is too annoying, we can
+get advice.commitDetachedHead.
+
+-Peff
