@@ -1,94 +1,95 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: My custom cccmd
-Date: Thu, 15 Oct 2009 16:20:02 +0300
-Message-ID: <94a0d4530910150620g733bdf0aq88660053f869b0a9@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD  was
+Date: Thu, 15 Oct 2009 16:11:51 +0200
+Message-ID: <20091015141151.GA7867@atjola.homenet>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
+ <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
+ <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
+ <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
+ <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
+ <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
+ <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+ <m3bpk8g6nj.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 15 15:29:51 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 15 16:14:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyQOs-0007rl-OL
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 15:29:51 +0200
+	id 1MyR5Z-000724-Vb
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 16:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762751AbZJONVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 09:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762749AbZJONVv
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 09:21:51 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:41412 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762748AbZJONVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 09:21:50 -0400
-Received: by fg-out-1718.google.com with SMTP id 16so482424fgg.1
-        for <git@vger.kernel.org>; Thu, 15 Oct 2009 06:20:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=EgCPkKJZMhnKjrNNdwyZvWe3P1ciifnPrEpD9bdZHhk=;
-        b=PIeOLaO04VMJ0Se67dgPyNdKyTa6rfY07Tr7Cdci0J+PhsUND8ken6GxV93DhAhHFU
-         9VLwmWe7SPbhZi4+kOx52YmpawV5hnDooIROqtGs/uq6jSL5g013oUK16ORYrLSYN7xa
-         IS+CCXGoRHFTwBdrk4NRHdPRfPFmGXzrITN3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=i/j5Sq3evgkw+gPsTJMj9wiuj5OeFHMbhFLJBprWQODU95KvnVdO/IzKmYwOhEhWIA
-         JB/r7dZo2IBXNvc4gFUHi4TnmYmBWIC6Ggi8IoKcYTOsfdFLX0xRArdYIjmS3pQuTxDa
-         2Zf27ce5wbaSvy2e2o1wfKr5bD0u0zkBkM8Tw=
-Received: by 10.86.208.2 with SMTP id f2mr193996fgg.16.1255612802530; Thu, 15 
-	Oct 2009 06:20:02 -0700 (PDT)
+	id S1753563AbZJOOMp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Oct 2009 10:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751781AbZJOOMp
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 10:12:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42605 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752529AbZJOOMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 10:12:43 -0400
+Received: (qmail invoked by alias); 15 Oct 2009 14:11:55 -0000
+Received: from i59F5472B.versanet.de (EHLO atjola.homenet) [89.245.71.43]
+  by mail.gmx.net (mp021) with SMTP; 15 Oct 2009 16:11:55 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18wM68sxgUwY8YQeKNotMRJpmbD6c8KJtTCyPxZ6D
+	R+3X7nUX/8riTP
+Content-Disposition: inline
+In-Reply-To: <m3bpk8g6nj.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.58
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130392>
 
-Hi,
+On 2009.10.15 05:54:52 -0700, Jakub Narebski wrote:
+> James Pickens <jepicken@gmail.com> writes:
+> > Perhaps as an additional safety feature, Git could refuse to switch
+> > away from a detached head if the head isn't reachable from any ref,
+> > and require -f to override:
+> >=20
+> > $ git checkout $sha1
+> > $ git commit
+> > $ git checkout master ;# complain
+> > $ git checkout -f master ;# ok
+> >=20
+> > Maybe I'm missing something and this all can't be done, but it seem=
+s simpler
+> > than the other options I've seen in this thread.
+>=20
+> I'm not sure about overloading '-f' option, unless we would require
+> doubled '-f' for overriding both safety checks: checkout from detache=
+d
+> HEAD, and current meaning of forcing a switch even if index or the
+> working are differs from HEAD.  So you would need
+>=20
+>   $ git checkout -f -f master
+>=20
+> if you are on detached HEAD and have uncommitted changes (dirty tree=20
+> or dirty index).
 
-I love the new option to run a cccmd and how good it works on the
-linux kernel, but I couldn't find a generic script. So I decided to
-write my own.
+A dirty index/worktree doesn't necessarily stop you from checking out a
+different branch head/commit. Only if you have uncommitted changes to a
+file that also has changes between HEAD and <other_branch>, git refuses
+to switch. And if you want to keep your uncommitted changes, you want t=
+o
+use -m (3-way merge), not -f (drop changes).
 
-It's very simple, it just looks into the authors of the commits that
-modified the lines being overridden (git blame). It's not checking for
-s-o-b, or anything fancy.
+git checkout -f foo ~=3D git reset --hard && git checkout foo
 
-Comments?
+So -f is most likely _not_ the flag one wants to overload.
 
-#!/usr/bin/env ruby
-
-@commits = {} # keeps a count of commits per author
-
-ARGV.each do |filename|
-  File.open(filename) do |patch_file|
-    patch_file.each_line do |patch_line|
-      case patch_line
-      when /^---\s+(\S+)/
-        @source = $1[2..-1]
-      when /^@@\s-(\d+),(\d+)/
-        blame = `git blame -p -L #{$1},+#{$2} #{@source} | grep author`
-        blame.each_line do |al|
-          key, value = al.chomp.split(" ", 2)
-          case key
-          when "author"
-            @name = value
-          when "author-mail"
-            @mail = value
-            author = "\"#{@name}\" #{@mail}"
-            @commits[author] ||= 0
-            @commits[author] += 1
-          end
-        end
-      end
-    end
-  end
-end
-
-@commits.each_key do |a|
-  puts a
-end
-
--- 
-Felipe Contreras
+Bj=F6rn
