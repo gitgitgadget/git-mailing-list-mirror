@@ -1,62 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Thu, 15 Oct 2009 00:21:59 -0400
-Message-ID: <20091015042159.GA21701@coredump.intra.peff.net>
-References: <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
- <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
- <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
- <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
- <20091014230934.GC29664@coredump.intra.peff.net>
- <alpine.LFD.2.00.0910141926170.20122@xanadu.home>
- <7viqeha2zv.fsf@alter.siamese.dyndns.org>
- <20091015014737.GA9923@coredump.intra.peff.net>
- <alpine.LFD.2.00.0910142237010.20122@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Oct 15 06:23:06 2009
+From: Vietor Liu <vietor@vxwo.org>
+Subject: [PATCH v3] git-gui: adjust the minimum height of diff pane for shorter screen height
+Date: Thu, 15 Oct 2009 13:05:27 +0800
+Message-ID: <1255583127-14893-1-git-send-email-vietor@vxwo.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 15 07:04:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHrk-0003Un-Kb
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 06:23:04 +0200
+	id 1MyIVV-00015p-Mq
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 07:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751268AbZJOEWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 00:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbZJOEWi
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 00:22:38 -0400
-Received: from peff.net ([208.65.91.99]:53173 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750776AbZJOEWi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 00:22:38 -0400
-Received: (qmail 3594 invoked by uid 107); 15 Oct 2009 04:25:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 15 Oct 2009 00:25:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Oct 2009 00:21:59 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.0910142237010.20122@xanadu.home>
+	id S1752159AbZJOFD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 01:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752143AbZJOFD4
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 01:03:56 -0400
+Received: from mail-pz0-f188.google.com ([209.85.222.188]:35045 "EHLO
+	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752131AbZJOFD4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 01:03:56 -0400
+Received: by pzk26 with SMTP id 26so447861pzk.4
+        for <git@vger.kernel.org>; Wed, 14 Oct 2009 22:02:44 -0700 (PDT)
+Received: by 10.114.2.3 with SMTP id 3mr2531693wab.109.1255582963924;
+        Wed, 14 Oct 2009 22:02:43 -0700 (PDT)
+Received: from localhost.localdomain ([123.113.93.118])
+        by mx.google.com with ESMTPS id 21sm1087502pzk.3.2009.10.14.22.02.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Oct 2009 22:02:43 -0700 (PDT)
+X-Mailer: git-send-email 1.6.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130377>
 
-On Wed, Oct 14, 2009 at 11:08:59PM -0400, Nicolas Pitre wrote:
+When the screen height is shorter (e.g. Netbook screen 1024x600), both the
+partial commit pane and the status bar will hide. This patch adjust the
+minimum height of the diff pane, allowing the overall window to be shorter
+and still display both the entire commit pane and status bar.
 
-> IMHO this patch proposed by Daniel about the detached head is probably a 
-> good compromise.  It makes "confusing" operations more verbose to give 
-> new users a better feeling while keeping the flexibility intact.  And 
-> increased verbosity is less annoying than decreased flexibility.
+Signed-off-by: Vietor Liu <vietor@vxwo.org>
+---
+ git-gui.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-And I don't think there is as much opposition to a config option to
-silence verbosity, because it isn't really a change in behavior. We
-already have advice.*, and if the new message is too annoying, we can
-get advice.commitDetachedHead.
-
--Peff
+diff --git a/git-gui.sh b/git-gui.sh
+index 09b2720..037a1f2 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3083,7 +3083,7 @@ frame .vpane.lower.diff.body
+ set ui_diff .vpane.lower.diff.body.t
+ text $ui_diff -background white -foreground black \
+ 	-borderwidth 0 \
+-	-width 80 -height 15 -wrap none \
++	-width 80 -height 5 -wrap none \
+ 	-font font_diff \
+ 	-xscrollcommand {.vpane.lower.diff.body.sbx set} \
+ 	-yscrollcommand {.vpane.lower.diff.body.sby set} \
+-- 
+1.6.5
