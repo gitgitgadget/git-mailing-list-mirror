@@ -1,68 +1,56 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git hang with corrupted .pack
-Date: Thu, 15 Oct 2009 00:39:06 -0700
-Message-ID: <7vbpk985t1.fsf@alter.siamese.dyndns.org>
-References: <20091014042249.GA5250@hexapodia.org>
- <20091014142351.GI9261@spearce.org>
- <alpine.LFD.2.00.0910141208170.20122@xanadu.home>
- <20091014161259.GK9261@spearce.org>
- <alpine.LFD.2.00.0910141234540.20122@xanadu.home>
- <20091014180302.GL9261@spearce.org>
- <alpine.LFD.2.00.0910141435040.20122@xanadu.home>
+From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
+Subject: Q: how to check for -crlf property for a set of files using git 
+	command line?
+Date: Thu, 15 Oct 2009 13:15:19 +0400
+Message-ID: <85647ef50910150215w1efec91fu16b1fe13f8acec61@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andy Isaacson <adi@hexapodia.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Oct 15 09:49:29 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 15 11:22:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyL5M-00029D-Tp
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 09:49:21 +0200
+	id 1MyMXE-0008Jf-O8
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933325AbZJOHkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 03:40:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933099AbZJOHkD
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 03:40:03 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43643 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933075AbZJOHkC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 03:40:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4A88378CB1;
-	Thu, 15 Oct 2009 03:39:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=8tABFRdCAAh/tsRXg4jldbbQypQ=; b=ehbnS/BIAX+qonXrgFNu01B
-	eia5vg9AntToO3Nl9owwuQKArpH4fD/p6M+t3rDU1mhJ+fy6KRGYKRTaDR6PRCnp
-	XTajM+U0Rr72X0/lb/fYigSvuP7kFOvfZF2x+33wkdcYYsamoc65Vt/MYeA3vIxS
-	B7xvDcHQPVJa77FQqPj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=JZRqa056U7hIx58j9KfVYm2koWH2HnAMZwOIxMMcsUXfbeDq1
-	hyPqEfWlFPCs3mfJnVaAryIyRWRuLgWZep0nEhSRxRLD2p9X1HZaIAafhbzXK8Pv
-	/PMw9PlIZJ5Xp3DELMAkg8X4MBQfbvDUdVTl1MRxb+BnFtltLaF6C7B2KA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 148A178CB0;
-	Thu, 15 Oct 2009 03:39:15 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 54D9078CAF; Thu, 15 Oct 2009
- 03:39:08 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D68E08E6-B95D-11DE-AC0E-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1756582AbZJOJP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 05:15:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751752AbZJOJP4
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:15:56 -0400
+Received: from mail-yw0-f176.google.com ([209.85.211.176]:46121 "EHLO
+	mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755491AbZJOJPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 05:15:55 -0400
+Received: by ywh6 with SMTP id 6so626653ywh.4
+        for <git@vger.kernel.org>; Thu, 15 Oct 2009 02:15:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=nNWOIbf0DscyysmV6SltxfF79RhYlgkPWgrsceWrGf0=;
+        b=XSAH0B+nTgUaqBs+9whaDDg+fuYdjS0gN4buB1OH0yeElAKNohVEH0HbEAHoQR0XZq
+         y9S6IFH9dgFPBxqbZ92ZM23KUy2+nP8OPwRelB6HrtZcyE95HT4LaaGbepawIi6M/vCB
+         /bqByIRo9psCpT20nZRY9CWjy95BJpLjk/33A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=bAxiY17rEUX9f4RjptvApMtiZ0/Av01kRuIFebmwi2r3nhhX1s52iSi8x41nURW+9J
+         0r19hwlW/TQayHRITrgijVVNLI4fZS50k4wgOC0htkx6J3HR+DErqSC6eJW+wN2ANcRG
+         fCbp1w8G8EMWW5Km/fbp6+k/SDi9r78NQOV8A=
+Received: by 10.100.244.24 with SMTP id r24mr8505061anh.8.1255598119160; Thu, 
+	15 Oct 2009 02:15:19 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130381>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Hello!
 
-> I confirm this test without the fix reproduces the infinite loop (and 
-> does stall the test suite).
+I'm interested how to check for -crlf property (from .gitattributes)
+on the set of files using git command line. I'm also interested how to
+query for values specified in .gitattributes in general from scripts.
+Parsing .gitattributes looks like too complex way of doing this.
 
-Thanks, both of you.
+Constantine
