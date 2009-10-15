@@ -1,84 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: why no "ignore" command on git
-Date: Thu, 15 Oct 2009 11:29:57 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910151125240.4985@pacific.mpi-cbg.de>
-References: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com> <200910142220.51725.wjl@icecavern.net>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [RFC PATCH v3 00/17] Return of smart HTTP
+Date: Thu, 15 Oct 2009 18:52:53 +0900
+Message-ID: <20091015185253.6117@nanako3.lavabit.com>
+References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
+	<7v63ah85ss.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>, git@vger.kernel.org
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Thu Oct 15 11:34:40 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 15 11:56:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyMio-0004ze-N9
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:34:11 +0200
+	id 1MyN3t-0006wy-3G
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 11:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934171AbZJOJ2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 05:28:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933743AbZJOJ2E
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:28:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47393 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933788AbZJOJ2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 05:28:03 -0400
-Received: (qmail invoked by alias); 15 Oct 2009 09:27:15 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp043) with SMTP; 15 Oct 2009 11:27:15 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18peqxArrkpnkFW3D4AKh4t2jpGprTdbivJ1MRXz/
-	4pGyi9Yo+Waicz
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <200910142220.51725.wjl@icecavern.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.57
+	id S1758043AbZJOJxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 05:53:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756718AbZJOJxy
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 05:53:54 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:46435 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756241AbZJOJxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 05:53:53 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id 6ABED11B955;
+	Thu, 15 Oct 2009 04:53:17 -0500 (CDT)
+Received: from 6277.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id ZNCNMSCWS6N9; Thu, 15 Oct 2009 04:53:17 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=icogZIw0kF1kB91RDoMeqBBWk2aZuo0fvxKEP1pABzTBzPvB+5BKZnwOfsDALgGcZFk/7yLw8Nv9VL4TeKE5X8vdFaX2Ym+kKB1oH0eHOC6ayj9QjKocDQnSUOPHEWi/0au+F1azruWvNmJQIkSULtrJx5S4t/BmpVZGHKoc9M0=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <7v63ah85ss.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130384>
 
-Hi,
+Quoting Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, 14 Oct 2009, Wesley J. Landaker wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>
+>> This v3 series is a respin, and includes fixes to address reviewer
+>> comments from v2.
+>
+> Thanks.
 
-> On Wednesday 14 October 2009 16:35:23 Ralf Thielow wrote:
-> > why does git don't have an "ignore" command, to ignore some files or
-> > directories all the time.
-> [...]
-> > I read on some pages by a google search that you can create
-> > a ".gitignore" directory or something like that. But you had to do
-> > this manually.
-> >
-> > why there is no "ignore" command on git?
-> 
-> You could always make your own git-ignore script, e.g.:
-> 
-> #!/bin/sh
-> echo "$@" >> .gitignore
+Junio, you merged this series to your "pu" branch, but it breaks "make test" (t9801). Shawn's "sp/smart-http" topic doesn't have t9801 and passes all the tests.
 
-Probably it needs to be a little more sophisticated, because of Postel's 
-law.
-
-#!/bin/sh
-
-git rev-parse > /dev/null || exit
-for f
-do
-	case "$f" in
-	*'[*?]'*)
-		# patterns probably are meant to be recursive
-		echo "$f"
-		;;
-	*)
-		echo /"$f"
-		;;
-	esac >> .gitignore
-done
-git add .gitignore
-
-
-Ciao,
-Dscho
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
