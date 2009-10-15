@@ -1,29 +1,29 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 4/5] stash list: use new %g formats instead of sed
-Date: Fri, 16 Oct 2009 00:41:47 +0200
-Message-ID: <2d36cdc7b3b71ea9fd40e50cce1acfaeaed48a69.1255645570.git.trast@student.ethz.ch>
+Subject: [PATCH v2 3/5] Introduce new pretty formats %g[sdD] for reflog information
+Date: Fri, 16 Oct 2009 00:41:46 +0200
+Message-ID: <012c71c4eab143691bc5e2d62b421f8c84effa0e.1255645570.git.trast@student.ethz.ch>
 References: <cover.1255645570.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Jef Driesen <jefdriesen@hotmail.com>,
 	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 00:46:34 2009
+X-From: git-owner@vger.kernel.org Fri Oct 16 00:46:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyZ4v-0006Yh-6f
+	id 1MyZ4u-0006Yh-MA
 	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 00:45:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763180AbZJOWoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 18:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763178AbZJOWoX
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 18:44:23 -0400
+	id S1763177AbZJOWoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 18:44:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763143AbZJOWoI
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 18:44:08 -0400
 Received: from gwse.ethz.ch ([129.132.178.238]:58969 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763139AbZJOWoX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 18:44:23 -0400
+	id S1758714AbZJOWoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 18:44:07 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
  2009 00:42:44 +0200
@@ -36,31 +36,227 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130433>
 
-With the new formats, we can rewrite 'git stash list' in terms of an
-appropriate pretty format, instead of hand-editing with sed.  This has
-the advantage that it obeys the normal settings for git-log, notably
-the pager.
+Add three new --pretty=format escapes:
+
+  %gD  long  reflog descriptor (e.g. refs/stash@{0})
+  %gd  short reflog descriptor (e.g. stash@{0})
+  %gs  reflog message
+
+This is achieved by passing down the reflog info, if any, inside the
+pretty_print_context struct.
+
+We use the newly refactored get_reflog_selector(), and give it some
+extra functionality to extract a shortened ref.  The shortening has a
+very simple 1-element cache, since it will usually be called with the
+same ref every time.  Add another helper get_reflog_message() for the
+message extraction.
+
+Note that the --format="%h %gD: %gs" tests may not work in real
+repositories, as the --pretty formatter doesn't know to leave away the
+": " on the last commit in an incomplete (because git-gc removed the
+old part) reflog.  This equivalence is nevertheless the main goal of
+this patch.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- git-stash.sh |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+ Documentation/pretty-formats.txt |    3 +++
+ commit.h                         |    1 +
+ log-tree.c                       |    1 +
+ pretty.c                         |   17 +++++++++++++++++
+ reflog-walk.c                    |   37 ++++++++++++++++++++++++++++++++++---
+ reflog-walk.h                    |    8 ++++++++
+ t/t1411-reflog-show.sh           |   12 ++++++++++++
+ 7 files changed, 76 insertions(+), 3 deletions(-)
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 4febbbf..f8847c1 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -205,8 +205,7 @@ have_stash () {
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 2a845b1..6359272 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -123,6 +123,9 @@ The placeholders are:
+ - '%s': subject
+ - '%f': sanitized subject line, suitable for a filename
+ - '%b': body
++- '%gD': reflog selector, e.g., `refs/stash@{1}`
++- '%gd': shortened reflog selector, e.g., `stash@{1}`
++- '%gs': reflog subject
+ - '%Cred': switch color to red
+ - '%Cgreen': switch color to green
+ - '%Cblue': switch color to blue
+diff --git a/commit.h b/commit.h
+index 011766d..15cb649 100644
+--- a/commit.h
++++ b/commit.h
+@@ -70,6 +70,7 @@ struct pretty_print_context
+ 	const char *after_subject;
+ 	enum date_mode date_mode;
+ 	int need_8bit_cte;
++	struct reflog_walk_info *reflog_info;
+ };
  
- list_stash () {
- 	have_stash || return 0
--	git log --no-color --pretty=oneline -g "$@" $ref_stash -- |
--	sed -n -e 's/^[.0-9a-f]* refs\///p'
-+	git log --format="%gd: %gs" -g "$@" $ref_stash --
+ extern int non_ascii(int);
+diff --git a/log-tree.c b/log-tree.c
+index f57487f..8e782fc 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -409,6 +409,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.date_mode = opt->date_mode;
+ 	ctx.abbrev = opt->diffopt.abbrev;
+ 	ctx.after_subject = extra_headers;
++	ctx.reflog_info = opt->reflog_info;
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf, &ctx);
+ 
+ 	if (opt->add_signoff)
+diff --git a/pretty.c b/pretty.c
+index d6d57eb..fc65fca 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -7,6 +7,7 @@
+ #include "mailmap.h"
+ #include "log-tree.h"
+ #include "color.h"
++#include "reflog-walk.h"
+ 
+ static char *user_format;
+ 
+@@ -701,6 +702,22 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 	case 'd':
+ 		format_decoration(sb, commit);
+ 		return 1;
++	case 'g':		/* reflog info */
++		switch(placeholder[1]) {
++		case 'd':	/* reflog selector */
++		case 'D':
++			if (c->pretty_ctx->reflog_info)
++				get_reflog_selector(sb,
++						    c->pretty_ctx->reflog_info,
++						    c->pretty_ctx->date_mode,
++						    (placeholder[1] == 'd'));
++			return 2;
++		case 's':	/* reflog message */
++			if (c->pretty_ctx->reflog_info)
++				get_reflog_message(sb, c->pretty_ctx->reflog_info);
++			return 2;
++		}
++		return 0;	/* unknown %g placeholder */
+ 	}
+ 
+ 	/* For the rest we have to parse the commit header. */
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 596bafe..6c6867b 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -243,15 +243,29 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+ 
+ void get_reflog_selector(struct strbuf *sb,
+ 			 struct reflog_walk_info *reflog_info,
+-			 enum date_mode dmode)
++			 enum date_mode dmode,
++			 int shorten)
+ {
+ 	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+ 	struct reflog_info *info;
++	static const char *last_ref = NULL;
++	static char *last_short_ref = NULL;
++	const char *printed_ref;
+ 
+ 	if (!commit_reflog)
+ 		return;
+ 
+-	strbuf_addf(sb, "%s@{", commit_reflog->reflogs->ref);
++	if (shorten) {
++		if (last_ref != commit_reflog->reflogs->ref) {
++			free(last_short_ref);
++			last_short_ref = shorten_unambiguous_ref(commit_reflog->reflogs->ref, 0);
++		}
++		printed_ref = last_short_ref;
++	} else {
++		printed_ref = commit_reflog->reflogs->ref;
++	}
++
++	strbuf_addf(sb, "%s@{", printed_ref);
+ 	if (commit_reflog->flag || dmode) {
+ 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+ 		strbuf_addstr(sb, show_date(info->timestamp, info->tz, dmode));
+@@ -263,6 +277,23 @@ void get_reflog_selector(struct strbuf *sb,
+ 	strbuf_addch(sb, '}');
  }
  
- show_stash () {
++void get_reflog_message(struct strbuf *sb,
++			struct reflog_walk_info *reflog_info)
++{
++	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
++	struct reflog_info *info;
++	size_t len;
++
++	if (!commit_reflog)
++		return;
++
++	info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
++	len = strlen(info->message);
++	if (len > 0)
++		len--; /* strip away trailing newline */
++	strbuf_add(sb, info->message, len);
++}
++
+ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 	enum date_mode dmode)
+ {
+@@ -272,7 +303,7 @@ void show_reflog_message(struct reflog_walk_info *reflog_info, int oneline,
+ 		struct strbuf selector = STRBUF_INIT;
+ 
+ 		info = &commit_reflog->reflogs->items[commit_reflog->recno+1];
+-		get_reflog_selector(&selector, reflog_info, dmode);
++		get_reflog_selector(&selector, reflog_info, dmode, 0);
+ 		if (oneline) {
+ 			printf("%s: %s", selector.buf, info->message);
+ 		}
+diff --git a/reflog-walk.h b/reflog-walk.h
+index 74c9096..7bd2cd4 100644
+--- a/reflog-walk.h
++++ b/reflog-walk.h
+@@ -3,6 +3,8 @@
+ 
+ #include "cache.h"
+ 
++struct reflog_walk_info;
++
+ extern void init_reflog_walk(struct reflog_walk_info** info);
+ extern int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		struct commit *commit, const char *name);
+@@ -10,5 +12,11 @@ extern void fake_reflog_parent(struct reflog_walk_info *info,
+ 		struct commit *commit);
+ extern void show_reflog_message(struct reflog_walk_info *info, int,
+ 		enum date_mode);
++extern void get_reflog_message(struct strbuf *sb,
++		struct reflog_walk_info *reflog_info);
++extern void get_reflog_selector(struct strbuf *sb,
++		struct reflog_walk_info *reflog_info,
++		enum date_mode dmode,
++		int shorten);
+ 
+ #endif
+diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+index c18ed8e..cb8d0fd 100755
+--- a/t/t1411-reflog-show.sh
++++ b/t/t1411-reflog-show.sh
+@@ -64,4 +64,16 @@ test_expect_success 'using --date= shows reflog date (oneline)' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--format="%h %gD: %gs" is same as git-reflog' '
++	git reflog >expect &&
++	git log -g --format="%h %gD: %gs" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success '--format="%h %gD: %gs" is same as git-reflog (with date)' '
++	git reflog --date=raw >expect &&
++	git log -g --format="%h %gD: %gs" --date=raw >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 1.6.5.18.g9f87a.dirty
