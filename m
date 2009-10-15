@@ -1,79 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [RFC PATCH v3 07/17] fetch: Allow transport -v -v -v to set verbosity to 3
-Date: Wed, 14 Oct 2009 20:36:44 -0700
-Message-ID: <1255577814-14745-8-git-send-email-spearce@spearce.org>
-References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
-Cc: Daniel Barkalow <barkalow@iabervon.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 15 05:43:45 2009
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: why no "ignore" command on git
+Date: Wed, 14 Oct 2009 22:20:50 -0600
+Organization: icecavern.net
+Message-ID: <200910142220.51725.wjl@icecavern.net>
+References: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 15 06:23:05 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyHFS-0007IV-Ut
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 05:43:31 +0200
+	id 1MyHrk-0003Un-37
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 06:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762478AbZJODig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Oct 2009 23:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762470AbZJODid
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Oct 2009 23:38:33 -0400
-Received: from george.spearce.org ([209.20.77.23]:33052 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762441AbZJODiO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Oct 2009 23:38:14 -0400
-Received: by george.spearce.org (Postfix, from userid 1000)
-	id C92C238221; Thu, 15 Oct 2009 03:37:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.4 (2008-01-01) on george.spearce.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=4.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=ham version=3.2.4
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by george.spearce.org (Postfix) with ESMTP id BD8E238222;
-	Thu, 15 Oct 2009 03:36:56 +0000 (UTC)
-X-Mailer: git-send-email 1.6.5.52.g0ff2e
-In-Reply-To: <1255577814-14745-1-git-send-email-spearce@spearce.org>
+	id S1751232AbZJOEVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 00:21:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbZJOEVg
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 00:21:36 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:40278 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750966AbZJOEVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 00:21:36 -0400
+Received: from chocobo.localnet (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 2835635A66;
+	Thu, 15 Oct 2009 06:20:57 +0200 (CEST)
+User-Agent: KMail/1.11.4 (Linux/2.6.28-15-generic; KDE/4.2.4; i686; ; )
+In-Reply-To: <42efdea40910141535g23a50b87p9b6c4a0fde7e842e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130375>
 
-Helpers might want a higher level of verbosity than just +1 (the
-porcelain default setting) and +2 (-v -v).  Expand the field to
-allow verbosity in the range -1..3.
+On Wednesday 14 October 2009 16:35:23 Ralf Thielow wrote:
+> why does git don't have an "ignore" command, to ignore some files or
+> directories all the time.
+[...]
+> I read on some pages by a google search that you can create
+> a ".gitignore" directory or something like that. But you had to do
+> this manually.
+>
+> why there is no "ignore" command on git?
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-CC: Daniel Barkalow <barkalow@iabervon.org>
----
- builtin-fetch.c |    2 +-
- transport.h     |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+You could always make your own git-ignore script, e.g.:
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index cb48c57..52a9a42 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -665,7 +665,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	transport = transport_get(remote, remote->url[0]);
- 	if (verbosity >= 2)
--		transport->verbose = 1;
-+		transport->verbose = verbosity <= 3 ? verbosity : 3;
- 	if (verbosity < 0)
- 		transport->verbose = -1;
- 	if (upload_pack)
-diff --git a/transport.h b/transport.h
-index c14da6f..e4e6177 100644
---- a/transport.h
-+++ b/transport.h
-@@ -25,7 +25,7 @@ struct transport {
- 
- 	int (*disconnect)(struct transport *connection);
- 	char *pack_lockfile;
--	signed verbose : 2;
-+	signed verbose : 3;
- 	/* Force progress even if the output is not a tty */
- 	unsigned progress : 1;
- };
--- 
-1.6.5.52.g0ff2e
+#!/bin/sh
+echo "$@" >> .gitignore
