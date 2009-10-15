@@ -1,87 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD  was
-Date: Thu, 15 Oct 2009 13:34:41 -0700
-Message-ID: <7v3a5k4cri.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
- <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
- <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
- <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
- <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
- <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
- <20091014230934.GC29664@coredump.intra.peff.net>
- <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
- <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC PATCH v3 00/17] Return of smart HTTP
+Date: Thu, 15 Oct 2009 13:45:43 -0700
+Message-ID: <20091015204543.GP10505@spearce.org>
+References: <1255577814-14745-1-git-send-email-spearce@spearce.org> <20091015185253.6117@nanako3.lavabit.com> <20091015143340.GI10505@spearce.org> <200910151721.08352.johan@herland.net> <20091015154142.GL10505@spearce.org> <7vfx9k4d33.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Oct 15 22:43:13 2009
+Cc: Johan Herland <johan@herland.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Oct 15 22:46:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyXAD-0005UP-E8
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 22:43:09 +0200
+	id 1MyXDk-0007fG-BE
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Oct 2009 22:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935491AbZJOUfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 16:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935489AbZJOUfl
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 16:35:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38270 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935483AbZJOUfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 16:35:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 91F9D5AF87;
-	Thu, 15 Oct 2009 16:34:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=caqVXlH7DvTnKnuenaUWJM4hwt8=; b=lxVCZx
-	6nMw/ElsvIIdlNxUfSJHaG/7NqAbNkL+pWUH5wM1LwB9o7wTm8OSWDg93m04i/DL
-	HRtDyKIGsxna2QwH4h5hmKlzF2D31JEgseDOLhdxC+43tJX16qXWZYbvtyv6eKqo
-	1+Vbj9TJvaBQWc2caeoDJ9/nS915iXzZozwTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=f8JZ/xK0s7xqvnedjnGgj9ohd/ab4KMy
-	xrnTkBx+PgNz2VEGQGG6jpKOWrHMD3GztFUd2m+8yyjgOk+DPPapwM7VoVQJ5kHq
-	/jW1/0MZWp7Nv3DRgSrpCm1Q8gK+DUQHL7d0fH/BYFA3ASelbXaeI5OZ2Y6BFWMB
-	t4oDxoVsUY8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A01C5AF86;
-	Thu, 15 Oct 2009 16:34:51 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D4945AF82; Thu, 15 Oct
- 2009 16:34:42 -0400 (EDT)
-In-Reply-To: <alpine.LNX.2.00.0910151523020.32515@iabervon.org> (Daniel
- Barkalow's message of "Thu\, 15 Oct 2009 15\:31\:13 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3044CC6E-B9CA-11DE-90DA-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758162AbZJOUqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 16:46:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757764AbZJOUqU
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 16:46:20 -0400
+Received: from george.spearce.org ([209.20.77.23]:48385 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756137AbZJOUqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 16:46:20 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 0BA3D381FE; Thu, 15 Oct 2009 20:45:44 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <7vfx9k4d33.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130421>
 
-Daniel Barkalow <barkalow@iabervon.org> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > It does.  It is caused by the disconnect_helper call inside of
+> > fetch_with_import.  You can't disconnect inside of the fetch method
+> > of a transport, the caller is going to disconnect you a second time.
+> > ...
+> > This bug isn't due to the merge, its a bug in Johan's series that
+> > needs to be fixed before it could merge down to next/master.
+...
+> I am a bit confused about your diagnosis, though.  As far as I recall,
+> Johan's topic itself nor 'pu' with Johan's topic but without v2 of
+> sp/smart-http did not have the issue.
 
->  $ git checkout origin/master
->  $ git fetch
->  $ git checkout origin/next
->  Uncommited file '...' would be overwritten.
->
-> If HEAD is a symref to refs/remotes/origin/master, and you update 
-> refs/remotes/origin/master, git will subsequently see that your index 
-> doesn't match HEAD, and when you switch branches, it will try to apply a 
-> revert to the branch you're switching to. It's the same issue as pushing 
-> into a non-bare repository.
+Sadly, sometimes double frees do not result in segfaults, other
+times they do.  The reason you are not seeing a problem with these
+other variants is because of luck, not code correctness.
 
-I think the idea here is to allow HEAD to point at outside refs/heads/,
-e.g. refs/remotes/origin/master, but forbid commit and other commands from
-updating HEAD and its underlying ref via update_ref() unless HEAD is
-detached or points at a local branch.
+Actually, after some further research, the bug is not Johan's but is
+actually Daniel's.  Johan, I apologize for claiming it was your bug.
+
+In:
+
+  commit 23a3380ee9c2d5164712c40f8821cb0fba24e80c
+  Author: Daniel Barkalow <barkalow@iabervon.org>
+  Date:   Thu Sep 3 22:14:01 2009 -0400
+
+    Add support for "import" helper command
+
+Daniel introduces the fetch_with_import() function to
+transport-helper.c.  This method calls disconnect_helper():
+
++static int fetch_with_import(struct transport *transport,
++                            int nr_heads, struct ref **to_fetch)
++{
+...
++       disconnect_helper(transport);
++       finish_command(&fastimport);
+
+Unfortunately this is in the middle of the transport_fetch() call
+stack; transport_fetch() called the static fetch() function in
+transport-helper.c, which in turn called fetch_with_import().
+
+Callers (e.g. builtin-fetch.c) invoke transport_close() when
+they are done with the handle (see line 704).  That in turn calls
+disconnect_helper() a second time.
+
+The disconnect_helper function is not prepared to be called twice:
+
+static int disconnect_helper(struct transport *transport)
+{
+	struct helper_data *data = transport->data;
+	if (data->helper) {
+	...
+	}
+	free(data);
+	return 0;
+}
+
+Because of that unexpected invocation inside of fetch_with_import
+we have already free'd the memory block used by transport->data,
+and the second invocation attempts to free it again.  Worse, if the
+block was reused by a subsequent malloc, data->helper might not be
+NULL, and we'd enter into the if block and do its work again.
+
+Long story short, transport_close() is what is supposed to perform
+the work that disconnect_helper does, as its the final thing right
+before we free the struct transport block.  Free'ing the data block
+inside of the fetch or push functions is wrong.
+
+Its fine to close the helper and restart it within the single
+lifespan of a struct transport, but dammit, don't free the
+struct helper_data until transport_close().
+
+-- 
+Shawn.
