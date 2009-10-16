@@ -1,133 +1,147 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Introduction and Wikipedia and Git Blame
-Date: Fri, 16 Oct 2009 16:11:02 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910161548550.4985@pacific.mpi-cbg.de>
-References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>  <alpine.DEB.1.00.0910161321550.4985@pacific.mpi-cbg.de> <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 16:11:54 2009
+From: Matt Kraai <kraai@ftbfs.org>
+Subject: [PATCH] grep: do not segfault when -f is used
+Date: Fri, 16 Oct 2009 07:13:25 -0700
+Message-ID: <1255702405-7050-1-git-send-email-kraai@ftbfs.org>
+References: <4AD8791A.8060500@viscovery.net>
+Cc: Matt Kraai <kraai@ftbfs.org>
+To: git@vger.kernel.org, gitster@pobox.com,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 16 16:17:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MynX1-0001FS-Da
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:11:47 +0200
+	id 1MyncG-00041E-97
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:17:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759523AbZJPOJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 10:09:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759430AbZJPOJG
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:09:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45356 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759378AbZJPOJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 10:09:05 -0400
-Received: (qmail invoked by alias); 16 Oct 2009 14:08:17 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp008) with SMTP; 16 Oct 2009 16:08:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19lmA8FJPNlvLozkfdmlR+udgcvFLHAiLWzduFkRc
-	PZwzM8AQ6xJapK
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.5
+	id S1760076AbZJPOQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 10:16:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760069AbZJPOQz
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:16:55 -0400
+Received: from zoom.lafn.org ([206.117.18.8]:35287 "EHLO zoom.lafn.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760067AbZJPOQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 10:16:54 -0400
+Received: from macbookpro (pool-173-51-225-123.lsanca.fios.verizon.net [173.51.225.123])
+	(authenticated bits=0)
+	by zoom.lafn.org (8.14.3/8.14.2) with ESMTP id n9GEG65T070203
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 16 Oct 2009 07:16:09 -0700 (PDT)
+	(envelope-from kraai@ftbfs.org)
+Received: from kraai by macbookpro with local (Exim 4.69)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1MynYh-0001qM-0H; Fri, 16 Oct 2009 07:13:31 -0700
+X-Mailer: git-send-email 1.6.5
+In-Reply-To: <4AD8791A.8060500@viscovery.net>
+X-Virus-Scanned: clamav-milter 0.95.1 at zoom.lafn.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130488>
 
-Hi,
+"git grep" would segfault if its -f option was used because it would
+try to use an uninitialized strbuf, so initialize the strbuf.
 
-On Fri, 16 Oct 2009, jamesmikedupont@googlemail.com wrote:
+Thanks to Johannes Sixt <j.sixt@viscovery.net> for the help with the
+test cases.
 
-> On Fri, Oct 16, 2009 at 1:26 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >> Here is the discussion on foundation-l :
-> >> http://www.gossamer-threads.com/lists/wiki/foundation/181163
-> >
-> > I found the link to the bazaar repository there, but do you have a Git
-> > repository, too?
-> 
-> Not yet. Where should I put it?  Any suggestions.
+Signed-off-by: Matt Kraai <kraai@ftbfs.org>
+---
+ builtin-grep.c  |    2 +-
+ t/t7002-grep.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+), 1 deletions(-)
 
-github.com has a nice interface.
-
-BTW after reading some of the code, I am a bit surprised that you did not 
-do it as a .php script outputting fast-import capable text...
-
-> >> the question is, is there a blame tool that we can use for multiple 
-> >> horizontal diffs on the same line that will be needed for wikipedia 
-> >> articles?
-> >
-> > I am not quite sure what you want to do horizontally there... Can you
-> > explain what you want to see?
-> 
-> Yes, I would like to see all the contributors to each word or line.
-> 
-> Basically one line of blame per contributor, so many lines of output.
-> Ideally we would have something that is usable in a html display. Lets
-> say, just an blame attribute for each word. so on one line :
-> 
-> This is a line with two changes first change Second change  end of line
-> 
-> It would look like this in html :
-> This is a line with two changes <span blame=revisionid>first
-> change</span><span blame=revisionid>Second change</span> end of line
-> 
-> The blame edit could look like this :
-> REVISION ID 1    48     :  This is a line with two changes first
-> change first change \
-> REVISTION ID 2  48 C:   Second change end of line
-
-Okay, so basically you want to analyze the text on a word-by-word basis 
-rather than line-by-line.
-
-Or maybe even better: you want to analyze the text character-by-character.  
-That would also nicely circumvent to specify just what makes a word a word 
-(subject for a lot of heated discussion during the design of the 
---color-words=<regex> patch).
-
-Basically, if I had to implement that, I would not try to modify 
-builtin-blame.c, but write a new program linking to libgit.a, calling the 
-revision walker on the file you want to calculate the blame for.  (One of 
-the best examples is probably in builtin-shortlog.c.)
-
-Then I would introduce a linked-list structure which will hold the blamed 
-regions in this form:
-
-	struct region {
-		int start;
-		struct region *next;
-	};
-
-Initially, this would have a start element with the start offset 0 
-pointing to the end element with start offset being set to the size of the 
-blob.
-
-Most likely you will have to add members to this struct, such as the 
-original offsets (as you will have to adjust the offsets to the different 
-file revisions while you go back in time), and the commit it was 
-attributed to.
-
-Then I would make modified "texts" from the blob of the file in the 
-current revision and its parent revision, by inserting newlines after 
-every single byte (probably replacing the original newlines by other 
-values, such as \x01).
-
-The reason for this touchup is that the diff machinery in Git only handles 
-line-based diffs.
-
-Then you can parse the hunk headers, adjust the offsets accordingly, and 
-attribute the +++ regions to the current commit (by construction, the 
-offsets are equal to the line number in the hunk header).  Here it is most 
-likely necessary to split the regions.
-
-You should also have a counter how many regions are still unattributed so 
-you can stop early.
-
-Ciao,
-Dscho
+diff --git a/builtin-grep.c b/builtin-grep.c
+index 761799d..1df25b0 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -631,7 +631,7 @@ static int file_callback(const struct option *opt, const char *arg, int unset)
+ 	struct grep_opt *grep_opt = opt->value;
+ 	FILE *patterns;
+ 	int lno = 0;
+-	struct strbuf sb;
++	struct strbuf sb = STRBUF_INIT;
+ 
+ 	patterns = fopen(arg, "r");
+ 	if (!patterns)
+diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
+index ae56a36..ae5290a 100755
+--- a/t/t7002-grep.sh
++++ b/t/t7002-grep.sh
+@@ -213,6 +213,72 @@ test_expect_success 'grep -e A --and --not -e B' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep -f, non-existent file' '
++	test_must_fail git grep -f patterns
++'
++
++cat >expected <<EOF
++file:foo mmap bar
++file:foo_mmap bar
++file:foo_mmap bar mmap
++file:foo mmap bar_mmap
++file:foo_mmap bar mmap baz
++EOF
++
++cat >pattern <<EOF
++mmap
++EOF
++
++test_expect_success 'grep -f, one pattern' '
++	git grep -f pattern >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++file:foo mmap bar
++file:foo_mmap bar
++file:foo_mmap bar mmap
++file:foo mmap bar_mmap
++file:foo_mmap bar mmap baz
++t/a/v:vvv
++t/v:vvv
++v:vvv
++EOF
++
++cat >patterns <<EOF
++mmap
++vvv
++EOF
++
++test_expect_success 'grep -f, multiple patterns' '
++	git grep -f patterns >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++file:foo mmap bar
++file:foo_mmap bar
++file:foo_mmap bar mmap
++file:foo mmap bar_mmap
++file:foo_mmap bar mmap baz
++t/a/v:vvv
++t/v:vvv
++v:vvv
++EOF
++
++cat >patterns <<EOF
++
++mmap
++
++vvv
++
++EOF
++
++test_expect_success 'grep -f, ignore empty lines' '
++	git grep -f patterns >actual &&
++	test_cmp expected actual
++'
++
+ cat >expected <<EOF
+ y:y yy
+ --
+-- 
+1.6.5
