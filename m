@@ -1,102 +1,62 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC PATCH v3 00/17] Return of smart HTTP
-Date: Fri, 16 Oct 2009 07:31:54 -0700
-Message-ID: <20091016143154.GS10505@spearce.org>
-References: <1255577814-14745-1-git-send-email-spearce@spearce.org> <ca433830910152120l1bd358ads6401572ccc05b29@mail.gmail.com>
+From: Richard Lee <richard@webdezign.co.uk>
+Subject: Moving git
+Date: Fri, 16 Oct 2009 07:58:47 -0700 (PDT)
+Message-ID: <25926819.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 16:34:59 2009
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 17:03:29 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MynsJ-0004ff-OS
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:33:48 +0200
+	id 1MyoL0-0005Lv-86
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 17:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760447AbZJPOcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 10:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760403AbZJPOca
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:32:30 -0400
-Received: from george.spearce.org ([209.20.77.23]:45859 "EHLO
-	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760235AbZJPOca (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 10:32:30 -0400
-Received: by george.spearce.org (Postfix, from userid 1001)
-	id 29650381FF; Fri, 16 Oct 2009 14:31:54 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <ca433830910152120l1bd358ads6401572ccc05b29@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1760592AbZJPO7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 10:59:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760581AbZJPO7X
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:59:23 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:38022 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759560AbZJPO7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 10:59:23 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1MyoGV-0000fk-4F
+	for git@vger.kernel.org; Fri, 16 Oct 2009 07:58:47 -0700
+X-Nabble-From: richard@webdezign.co.uk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130501>
 
-Mark Lodato <lodatom@gmail.com> wrote:
-> On Wed, Oct 14, 2009 at 11:36 PM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > This series is still lacking:
-> >
-> > ??* The HTTP protocol documentation
-> > ??* Tests for the smart http transport code (existing tests pass)
-> 
-> * Dumb HTTP push support
 
-I'm not interested in implementing a WebDAV server.  13 years
-ago when WebDAV was the new shiny I considered it.  Today, bleh,
-no desire.
- 
-> It would be really nice if git-http-backend supported dumb pushing
-> over WebDAV.  Currently, to support both smart and dumb pushing, one
-> has to configure Apache in a very awkward and confusing way (if it is
-> even possible - I'm still trying to figure it out).
+Hi Git forum,
 
-Sure, its confusing, its one reason nobody uses it.  Another is
-that pushing over WebDAV is slow and error prone, locks get taken
-and have to get released, its a general mess.
+I've just started using git yesterday, so I'm very new. So please excuse if
+I've done something the wrong way.
 
-> Without some way
-> to support older clients, it will be very hard to transition to the
-> new protocol.
+I cloned a git directory/repository? and then moved it. I'm trying to prune
+branches and it gives
 
-Why?
+]fatal: '/var/www/vhosts/mydomain.co.uk/b2.git': unable to chdir or not a
+git archive
+fatal: The remote end hung up unexpectedly
+ls-remote --heads /var/www/vhosts/mydomain.co.uk/b2.git: command returned
+error: 1
 
-Smart HTTP is primarily about improving the situation for a client
-fetching from the server.  If the server happens to allow writes,
-users will just have to upgrade to a new enough version of Git that
-understands the push variant of the protocol.
+b2.git was the cloned bare thing I create following the instruction here:
 
-If users don't want to upgrade, or can't upgrade, then you can't
-push over HTTP.  Simple.
+http://book.git-scm.com/4_setting_up_a_private_repository.html
 
-Really, what it comes down to is, I don't think it matters that
-we don't have backwards compatiblity for pushing through WebDAV.
-If you think it matters, you are free to write a patch series on
-top of mine which adds the functionality.  But don't wait for me
-to do it, it won't happen.
- 
-> Also, your examples use "DocumentRoot /pub/git", but I think most
-> people would want to have their main website as the DocumentRoot, have
-> the URL "/git" serve the repositories through gitweb, and have that
-> same "/git" URL be `git clone'-able.
+Is there someway I can get git to update the git base directory?
 
-Why not have git-http-backend exec gitweb when it gets a request
-for the repository itself?  Why do you have to go through such
-contortions in Apache for this?  The two CGIs are shipped in the
-same software package, surely one could actually invoke the other.
+Richard
 
-> The Apache configuration for
-> this is complicated and non-intuitive, so I think an example of this
-> in the documentation is warranted.  The following accomplishes what I
-> describe, except it does not work with dump HTTP push, and does not
-> allow anonymous read-only access.  (I am currently trying to figure
-> out how to do both of these things.)
-
-Yes, I'd like to have examples in the git-http-backend manpage.
-I put a couple in there already, but they don't consider gitweb
-because I assumed we'd find a way to have gitweb be invoked out
-of git-http-backend.  Unfortunately that hasn't happened yet.
- 
 -- 
-Shawn.
+View this message in context: http://www.nabble.com/Moving-git-tp25926819p25926819.html
+Sent from the git mailing list archive at Nabble.com.
