@@ -1,72 +1,82 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when appropriate to do so
-Date: Fri, 16 Oct 2009 14:07:13 +0200
-Message-ID: <200910161407.14832.trast@student.ethz.ch>
-References: <0016e68fd0123a175304754694b4@google.com> <200910141133.11386.trast@student.ethz.ch> <alpine.DEB.1.00.0910161346560.4985@pacific.mpi-cbg.de>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Fri, 16 Oct 2009 13:15:35 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org> <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com> <alpine.LNX.2.00.0910141509200.32515@iabervon.org> <alpine.LFD.2.00.0910141616530.20122@xanadu.home> <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home> <7vws2xa9lu.fsf@alter.siamese.dyndns.org> <20091014230934.GC29664@coredump.intra.peff.net> <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com> <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Sixt <j.sixt@viscovery.net>, <Euguess@gmail.com>,
-	Mikael Magnusson <mikachu@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jay Soffian <jaysoffian@gmail.com>, <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 16 14:10:08 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Oct 16 14:22:14 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyldH-0006RQ-TH
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 14:10:08 +0200
+	id 1Myloz-0003lo-ML
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 14:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbZJPMI5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 08:08:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751896AbZJPMI5
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 08:08:57 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:44033 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751429AbZJPMI4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 08:08:56 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
- 2009 14:08:09 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
- 2009 14:07:47 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <alpine.DEB.1.00.0910161346560.4985@pacific.mpi-cbg.de>
+	id S1757055AbZJPMSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 08:18:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753089AbZJPMSG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 08:18:06 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:34434 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751614AbZJPMSF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2009 08:18:05 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 0CA3C357014
+	for <git@vger.kernel.org>; Fri, 16 Oct 2009 13:17:28 +0100 (BST)
+Received: (qmail 5341 invoked by uid 103); 16 Oct 2009 13:15:35 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.95.2/9902. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025645 secs); 16 Oct 2009 12:15:35 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 16 Oct 2009 13:15:35 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130483>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 14 Oct 2009, Thomas Rast wrote:
-> 
-> > [On the other hand, some users appear unwilling to learn something new 
-> > because they "just want to version control this" or "just need to make a 
-> > commit to this project".]
-> 
-> Frankly, if the choice is between "I just want to make a commit to this 
-> project" and "Then I'll not use version control at all", I'd rather choose 
-> the former.
+On Thu, 15 Oct 2009, Daniel Barkalow wrote:
 
-Using your automatic gearbox analogy, I should point out that people
-still spend significant amounts of time and money on learning how to
-drive, despite the fact that learning the internals of the engine is
-no longer required.
+> On Thu, 15 Oct 2009, James Pickens wrote:
+>
+>> How about not detaching the head at all if the user checks out any ref, and
+>> reject commits if he checked out a tag or remote branch.  For example:
+>>
+>> $ git checkout origin/master
+>> $ git status
+>> # On branch origin/master
+>> $ git commit ;# complain
+>
+> $ git checkout origin/master
+> $ git fetch
+> $ git checkout origin/next
+> Uncommited file '...' would be overwritten.
 
-Yet for some reason, the same people want computers to read their
-minds instead of learning how to operate (the more involved parts of)
-it.
+How about:
 
-(Yeah, call me arrogant...)
+$ git checkout origin/master
+$ git fetch
+Refusing to fetch, as it would update a checkedout branch
+"git fetch -f" will force the update, but you will need to run "git 
+reset --hard HEAD" to update your checkout to match.
+
+?
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Julian
+
+  ---
+    If you care, you just get disappointed all the time. If you don't care
+nothing matters so you are never upset.	  -- Calvin
