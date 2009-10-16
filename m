@@ -1,58 +1,68 @@
-From: Constantine Plotnikov <constantine.plotnikov@gmail.com>
-Subject: Q: supplying large sets of path to git commands
-Date: Fri, 16 Oct 2009 14:40:23 +0400
-Message-ID: <85647ef50910160340s5b608d9cmb13679d7c6a987cd@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Introduction and Wikipedia and Git Blame
+Date: Fri, 16 Oct 2009 13:26:16 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910161321550.4985@pacific.mpi-cbg.de>
+References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 16 12:51:20 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 13:26:06 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MykMW-00012S-0J
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 12:48:44 +0200
+	id 1Mykw2-0008K9-1O
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 13:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757868AbZJPKlA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 06:41:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756811AbZJPKlA
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 06:41:00 -0400
-Received: from mail-gx0-f216.google.com ([209.85.217.216]:41253 "EHLO
-	mail-gx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753463AbZJPKk7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 06:40:59 -0400
-Received: by gxk8 with SMTP id 8so2030904gxk.1
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 03:40:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=ZGL5MNOr/7TktWujlYyrPyPhYTR0SPgiyrrEf2JKBg0=;
-        b=pR0nbtMn4gLzaHrduC3clNFFphjv2lGWAhV0iwYOjJ5DmCdTxBvtYI56v8qZwwEYXc
-         HH5UACtvHGwOmmumHJkmsBY68wnoOBMPMODVLavFyqZ94z8rSsWH0hkntlJd5HBOcbOE
-         b9m++f9h0SZx2jNUjhlq6IYx78BqhSlxQHMME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=VcPXjDNucCBGByB/q3Kh1mxq9gooIKq9fSj0REPyWVjftgGv56BSYIxBhfzKyw3QEj
-         d391f+dIoK6g//iNUJGAybYLiaIwArFw2sEItuDe0wtk4SQ1ZuYF8G8gehJ8VXQ6XypI
-         O4R4Sf3/oDAUCcgcHZ3dtKCSAGuBrCil306yc=
-Received: by 10.100.55.18 with SMTP id d18mr1559381ana.80.1255689623487; Fri, 
-	16 Oct 2009 03:40:23 -0700 (PDT)
+	id S1757772AbZJPLYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 07:24:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757273AbZJPLYU
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 07:24:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34426 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756483AbZJPLYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 07:24:19 -0400
+Received: (qmail invoked by alias); 16 Oct 2009 11:23:32 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp015) with SMTP; 16 Oct 2009 13:23:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19GCe0gI1pGRWKMzBHXj60fN19NuaXw+vmbP/f2Qo
+	GJkwVXNwdS00Lb
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130475>
 
-Some git commands like git check-attr supports receiving paths from
-stdin. For other commands like "git diff" and "git commit --only" I
-have not found a way to supply a lot of paths (say 1000). Is there a
-standard way pass a additional paths to git commands that works on
-windows and unix? It would be nice to have --stdin option for all
-commands that might receive a set of paths. Or even better would
-something like "--options-from-stdin" and
-"--options-from-file=file.txt" as a possible last argument specified
-on the command line.
+Hi,
 
-Constantine
+On Fri, 16 Oct 2009, jamesmikedupont@googlemail.com wrote:
+
+> I made a hack to import the wikipedia changelogs into git, it is free
+> software and all checked in. I will be improving it to keep the git
+> repo in sync.
+
+This is cool!  I actually wanted this for quite some time, and could not 
+find the time to do it myself.
+
+> Here is the discussion on foundation-l :
+> http://www.gossamer-threads.com/lists/wiki/foundation/181163
+
+I found the link to the bazaar repository there, but do you have a Git 
+repository, too?
+
+> the question is, is there a blame tool that we can use for multiple 
+> horizontal diffs on the same line that will be needed for wikipedia 
+> articles?
+
+I am not quite sure what you want to do horizontally there... Can you 
+explain what you want to see?
+
+Ciao,
+Dscho
