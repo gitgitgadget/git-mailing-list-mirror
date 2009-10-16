@@ -1,85 +1,79 @@
-From: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
-Subject: Re: Introduction and Wikipedia and Git Blame
-Date: Sat, 17 Oct 2009 08:50:15 +0200
-Message-ID: <ee9cc730910162350p250b8afak767b0626bede34e4@mail.gmail.com>
-References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
-	 <alpine.DEB.1.00.0910161321550.4985@pacific.mpi-cbg.de>
-	 <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
-	 <alpine.DEB.1.00.0910161548550.4985@pacific.mpi-cbg.de>
-	 <7vbpk7w9qx.fsf@alter.siamese.dyndns.org>
-	 <ee9cc730910161100r71818303v343f555151db4dcc@mail.gmail.com>
-	 <7v7huvuptn.fsf@alter.siamese.dyndns.org>
-	 <7vpr8nt894.fsf@alter.siamese.dyndns.org>
-	 <ee9cc730910161419x608f5972x705ce8088d72c94a@mail.gmail.com>
-	 <7v3a5irkel.fsf@alter.siamese.dyndns.org>
+From: Christoph Bartoschek <bartoschek@gmx.de>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD was
+Date: Sat, 17 Oct 2009 00:36:37 +0200
+Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Bonn
+Message-ID: <m49nq6-uk5.ln1@burns.bruehl.pontohonk.de>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 08:50:33 2009
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 17 09:00:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mz37Z-0003nc-5M
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 08:50:33 +0200
+	id 1Mz3HE-0006v5-8t
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 09:00:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751689AbZJQGuO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 02:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751606AbZJQGuO
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 02:50:14 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:55148 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751397AbZJQGuM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 02:50:12 -0400
-Received: by fxm18 with SMTP id 18so3210921fxm.37
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 23:50:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HJZ44ooUFe8iutm9XFmcnCqWK0voGFylstc9PcRKPYY=;
-        b=D6b1F2zYiAOJbXJLcrj922i18+oCZNe2Yrwx9fHNCqB0AJs3uch92rLq+6jtyi4Gwa
-         GCd7XptWX3r0uNhjJ7OmMet0YEoI5holWBcrT4gk18WYjKGZN0VO1KnyapjAuZARKqiA
-         M48sBMnbOexoZfT2QKh26kuhGEcohSkY1CtAA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RUYCe5dnF37l10gxkNeoy6GBOrV2+WUsoDkZoc9/cIB3qT3e6gfA6+N1G0/bKLC54n
-         AX2Iy+vXnEFWxxK2QV6VXBEDLnYmxGD2wKXlaltbHm+F7ikXpDxTPJ10i2Mx4Y8a5v4o
-         kDl8uo53dBrW1VJu+2vErotVVXYOWDaya+W1Q=
-Received: by 10.204.160.85 with SMTP id m21mr2208718bkx.175.1255762215633; 
-	Fri, 16 Oct 2009 23:50:15 -0700 (PDT)
-In-Reply-To: <7v3a5irkel.fsf@alter.siamese.dyndns.org>
+	id S1751760AbZJQHAT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 03:00:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751615AbZJQHAT
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 03:00:19 -0400
+Received: from lo.gmane.org ([80.91.229.12]:53749 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751577AbZJQHAS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 03:00:18 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1Mz3H4-0006rW-K0
+	for git@vger.kernel.org; Sat, 17 Oct 2009 09:00:22 +0200
+Received: from p54baf8f1.dip.t-dialin.net ([84.186.248.241])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 17 Oct 2009 09:00:22 +0200
+Received: from bartoschek by p54baf8f1.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 17 Oct 2009 09:00:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: p54baf8f1.dip.t-dialin.net
+User-Agent: KNode/4.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130545>
 
-Thank you very much for your input and advice,
-I have a lot of learn about this great tool.
-I am working on learning how the existing blame tool runs now.
-Will report back when I have some code.
-mike
+Daniel Barkalow wrote:
 
-On Sat, Oct 17, 2009 at 1:25 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com> wri=
-tes:
->
->> What do you think of my idea to create blames along a specific user
->> defined byte positions ?
->
-> Overly complicated and not enough time for _review_. =A0If you are bl=
-aming
-> one-byte (or one-char) per line, wouldn't it be enough to consider th=
-e
-> line number in the output as byte (or char) position when reconstitut=
-ing
-> the original text?
->
+> The upshot of the messages should be:
+> 
+>  $ git checkout origin/master
+>  Since you can't actually change "origin/master" yourself, you'll just
+>  be sightseeing unless you create a local branch to hold new local work.
+> 
+>  $ git branch
+>  * (not a local branch, but "origin/master")
+> 
+>  $ git commit
+>  You've been sightseeing "origin/master". The commit can't change that
+>  value, so your commit isn't held in any branch. If you want to create
+>  a branch to hold it, here's how.
+
+
+I appreciate such a message for git branch as a user. Today I had the 
+following problem:
+
+I wanted to compile Qt Creator 1.3 from their repository. I cloned it with 
+git clone and then issued git checkout origin/1.3.0-beta. First there came a 
+the warning and I was not sure whether the checkout succeeded at all. I had 
+to ask in the IRC channel whether the checkout was ok.
+
+But then I was not able to verify that the checkout indeed matched the 
+1.3.0-beta.  "git status" and "git branch" did not help here. 
+
+Having an improved "git branch" would help a lot, especially if one returns 
+some weeks later to the directory and wants to know what the checkout is.
+
+Christoph
