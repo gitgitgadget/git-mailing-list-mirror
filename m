@@ -1,64 +1,57 @@
-From: Bruno Harbulot <Bruno.Harbulot@manchester.ac.uk>
-Subject: Re: Efficient cloning from svn (with multiple branches/tags subdirs)
-Date: Fri, 16 Oct 2009 12:20:16 +0100
-Message-ID: <4AD856F0.6030905@manchester.ac.uk>
-References: <hb2fvu$8qi$1@ger.gmane.org> <20091014060307.GA17178@dcvr.yhbt.net>	 <32541b130910140928jdac0187x754423e8d5c64e53@mail.gmail.com>	 <20091014180013.GA24741@dcvr.yhbt.net>	 <32541b130910141126u4df7f439i3d2926c2e1db9497@mail.gmail.com>	 <4AD75A93.9050106@manchester.ac.uk> <28c656e20910151029s2e053f75q56e968f313d12b21@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] strbuf_nested_expand(): allow expansion to interrupt
+ in the middle
+Date: Fri, 16 Oct 2009 13:30:18 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910161329270.4985@pacific.mpi-cbg.de>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com> <1255681702-5215-3-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 16 13:27:56 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 13:35:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MykyR-0001Z4-LZ
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 13:27:56 +0200
+	id 1Myl6C-0004zE-3Z
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 13:35:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758143AbZJPL0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 07:26:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758006AbZJPL0O
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 07:26:14 -0400
-Received: from lo.gmane.org ([80.91.229.12]:38032 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757866AbZJPL0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 07:26:14 -0400
-Received: from list by lo.gmane.org with local (Exim 4.50)
-	id 1Mykuy-0007c9-JY
-	for git@vger.kernel.org; Fri, 16 Oct 2009 13:24:20 +0200
-Received: from rain.gmane.org ([80.91.229.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 13:24:20 +0200
-Received: from Bruno.Harbulot by rain.gmane.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 13:24:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: rain.gmane.org
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <28c656e20910151029s2e053f75q56e968f313d12b21@mail.gmail.com>
+	id S1758292AbZJPL2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 07:28:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758006AbZJPL2W
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 07:28:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42525 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751429AbZJPL2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 07:28:21 -0400
+Received: (qmail invoked by alias); 16 Oct 2009 11:27:33 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp066) with SMTP; 16 Oct 2009 13:27:33 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lV+lbiAClOyozbawPOWLxK6XKUzm0OT/BEEOef2
+	w4W2gacu/1iNAl
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <1255681702-5215-3-git-send-email-gitster@pobox.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130477>
 
+Hi,
 
+On Fri, 16 Oct 2009, Junio C Hamano wrote:
 
-B Smith-Mannschott wrote:
+>  		consumed = fn(sb, format, context);
+> -		if (consumed)
+> +		if ((ssize_t) consumed < 0)
+> +			break;
 
->> I've had a quick look at the git-svn code to see how this ID was generated,
->> but couldn't find anything obvious.
->> I realise this isn't the cleanest approach possible, but any suggestion
->> would be appreciated.
-> 
-> When I 'git svn clone' from a svnsync mirror I pass
-> --use-svnsync-props. Have you tried that?
+Would it not be much better to fix the signature of fn in a separate 
+commit before this one?
 
-Thank you, I hadn't noticed this option, but it was the right one indeed.
-
-Best wishes,
-
-Bruno.
+Ciao,
+Dscho
