@@ -1,64 +1,68 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: cgit suggestion
-Date: Fri, 16 Oct 2009 02:13:27 +0200
-Message-ID: <8c5c35580910151713q5dda789fn7143124149b29d26@mail.gmail.com>
-References: <e95c2db40909252314t12abb6e2w9b6e9c34c7a724a5@mail.gmail.com>
-	 <200909272302.30742.snakeru@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached HEAD
+ was
+Date: Thu, 15 Oct 2009 20:34:37 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0910152032050.20122@xanadu.home>
+References: <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
+ <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
+ <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
+ <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+ <alpine.LFD.2.00.0910151436180.20122@xanadu.home>
+ <7v1vl45t9k.fsf@alter.siamese.dyndns.org>
+ <20091015212632.GA13180@coredump.intra.peff.net>
+ <7v1vl42uid.fsf@alter.siamese.dyndns.org>
+ <7vfx9k1faa.fsf@alter.siamese.dyndns.org>
+ <885649360910151647v27a15334x63fe3b6f5035dbd2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Alexey Nezhdanov <snakeru@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 02:26:29 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: James Pickens <jepicken@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 02:40:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyaeE-0002YO-V5
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 02:26:23 +0200
+	id 1Myas9-0007Ex-SY
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 02:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763349AbZJPAWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 20:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763347AbZJPAWP
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 20:22:15 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:50020 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763346AbZJPAWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 20:22:14 -0400
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Oct 2009 20:22:14 EDT
-Received: by ywh40 with SMTP id 40so216863ywh.33
-        for <git@vger.kernel.org>; Thu, 15 Oct 2009 17:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=vUQ5imTkXaur0k/68RVcS8mvSdDkGwyuJjZ9GCpKDv4=;
-        b=YPMPCNOvb1txo3hS6HzZSuj0tjqNrXRY7vdTNHbYYDyBGgy0DUJSslSL9ogZJ/MKsA
-         TuX5dCMoNcSzfUi64D5Y/MyCHzvQs8n21pfNsduCARRIR3ByoVp+lPWSLk3skhCaO0d2
-         roK4pplsOkzUT2CgH77WwI/7yljsmytTaDL88=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=mxbqt7c7KOCAgAawGRoGDwvJJBJpkRl8mkfoeOuwSTyHlM3uPPPtx/TnlCGcsOeC26
-         BDQmpaJLjMdCNkzNPNRM4hCdmr56o0Ddd0LUUjNugqVxDmW0wH4JziaChURqYCoJ6/z5
-         dgNbMAz2tjK7yl6Cw9UATm1cx3n4J9pZiOC8E=
-Received: by 10.150.250.13 with SMTP id x13mr1472238ybh.230.1255652007266; 
-	Thu, 15 Oct 2009 17:13:27 -0700 (PDT)
-In-Reply-To: <200909272302.30742.snakeru@gmail.com>
+	id S1763338AbZJPAfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Oct 2009 20:35:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762705AbZJPAfV
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 20:35:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:28094 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758849AbZJPAfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Oct 2009 20:35:20 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KRL00B0S09P1WQ0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 15 Oct 2009 20:34:38 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <885649360910151647v27a15334x63fe3b6f5035dbd2@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130442>
 
-[* Sorry for the late reply *]
+On Thu, 15 Oct 2009, James Pickens wrote:
 
-On Sun, Sep 27, 2009 at 21:02, Alexey Nezhdanov <snakeru@gmail.com> wrote:
-> Here is the diff. It adds feature of downloading 'named' tarball from the tag
-> description page.
+> BTW I'm not convinced this is any better than the current UI... just
+> thinking out loud.
 
-Thanks, I've applied the patch (slightly modified) to my master branch
-and pushed the result to http://hjemli.net/git/cgit.
+I concur with that.
 
---
-larsh
+> And I find it more than a little depressing that most
+> of these ideas have already been discussed almost 3 years ago (thanks Jeff
+> for the pointer).
+
+Rehashing them from time to time is not necessarily a bad idea.  Maybe 
+something better might (or not) turn up this time.
+
+
+Nicolas
