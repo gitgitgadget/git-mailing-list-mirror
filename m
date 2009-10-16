@@ -1,67 +1,86 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v3 4/5] stash list: use new %g formats instead of sed
-Date: Fri, 16 Oct 2009 16:20:36 +0200
-Message-ID: <1d2a75bdb94691839f4a8ce0d1712d2bac6e405d.1255701207.git.trast@student.ethz.ch>
-References: <cover.1255701207.git.trast@student.ethz.ch>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v3 3/8] imap-send: use run-command API for 
+ tunneling
+Date: Fri, 16 Oct 2009 16:27:33 +0200
+Message-ID: <40aa078e0910160727g2ebc1e6qe0c3a00186e38569@mail.gmail.com>
+References: <1255461925-2244-1-git-send-email-kusmabite@gmail.com> <200910132159.11616.j6t@kdbg.org> <40aa078e0910131327q682c7044x854fec4de60b0c43@mail.gmail.com> <200910142158.59073.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jef Driesen <jefdriesen@hotmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 16 16:25:57 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Fri Oct 16 16:27:51 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-px0-f152.google.com ([209.85.216.152])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MynkP-0008Gh-IM
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:25:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760197AbZJPOXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 10:23:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760159AbZJPOXI
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:23:08 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:34132 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760144AbZJPOXI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 10:23:08 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
- 2009 16:21:31 +0200
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
- 2009 16:21:10 +0200
-X-Mailer: git-send-email 1.6.5.116.g4aaa3
-In-Reply-To: <cover.1255701207.git.trast@student.ethz.ch>
-Sender: git-owner@vger.kernel.org
+	id 1MynmY-000127-D4
+	for gcvm-msysgit@m.gmane.org; Fri, 16 Oct 2009 16:27:50 +0200
+Received: by mail-px0-f152.google.com with SMTP id 16so346824pxi.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 16 Oct 2009 07:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=wdu2bCBvhB/1Wie6TVmUnudB6bQ2TM3zgCd5dUffSEo=;
+        b=SAWfyg3HYyFFotMJYR85QFzYiNk4BV5G1+NtbKPoTZ1HFbDOwf+u0Ot3MWzCpPmYB2
+         A6amFu57oUfuTtkgB1XAH4oDzBkrhi45uEKavzbJUTI1J5rwzoPZkVbeUjD3Q1x6hTJt
+         JlH//CwMqS5auDgRpD3NtdVlNBy7zamo5+4SM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=vTV54fWz1A5ExaYptGeJEdpa64g2pieuOUczfg0prN52D4znsmA2r5NYpdeOFD4BFK
+         59jevJbs3aYkJefQ6zGlsZKgkXwCXmfG8Utw0t8fbYHamHbyRz8IzsnG/RsavabEOFoS
+         wrgLLN81xqb73UViULx+2EQ7umaaUGZ6m4jhg=
+Received: by 10.142.4.4 with SMTP id 4mr37348wfd.40.1255703263542;
+        Fri, 16 Oct 2009 07:27:43 -0700 (PDT)
+Received: by 10.176.233.14 with SMTP id f14gr7432yqh.0;
+	Fri, 16 Oct 2009 07:27:36 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.86.232.35 with SMTP id e35mr47007fgh.27.1255703254870; Fri, 16 Oct 2009 07:27:34 -0700 (PDT)
+Received: by 10.86.232.35 with SMTP id e35mr47006fgh.27.1255703254852; Fri, 16 Oct 2009 07:27:34 -0700 (PDT)
+Received: from mail-fx0-f221.google.com (mail-fx0-f221.google.com [209.85.220.221]) by gmr-mx.google.com with ESMTP id 14si222388fxm.7.2009.10.16.07.27.33; Fri, 16 Oct 2009 07:27:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.221 as permitted sender) client-ip=209.85.220.221;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.221 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by mail-fx0-f221.google.com with SMTP id 21so2478180fxm.9 for <msysgit@googlegroups.com>; Fri, 16 Oct 2009 07:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:reply-to:in-reply-to :references:date:message-id:subject:from:to:cc:content-type; bh=l3WMnTg+cB1bsTEg9XG1XSclBmjUGGc6laF8T6T5wLw=; b=LII5noMULUGmA3QoAWbTDFs5irWezugaomg/okwJOEmYJ3UcDDOdiyW9/kTkHTVBsL VEcGKU7hFNAhnvcZGAOuVbtLITXgkd7Kd87WI72EnZc+Cczd3mIZT9dwmvhHEbbul1rZ sPn9ZAuFWWqNOdLBr6wxjWhzIbaNcX1AQHpWs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:reply-to:in-reply-to:references:date:message-id :subject:from:to:cc:content-type; b=CMS+3ufR9IaRpODULFBqgAQOkyj38Y3Uve3rJP+VN6YXKOVUWkC5O+aA2zpR3TLyfe VMKWa/jSAxeONLCbM+i9yil4YAZrrP9+7o8bS+kC4wbQDxLcmw1A3ef/KqARanqAl396 1SsZvv3QXBdIbOcYbZ4dseaqw6sbFv+MPQBqc=
+Received: by 10.204.34.78 with SMTP id k14mr1394010bkd.106.1255703253680; Fri,  16 Oct 2009 07:27:33 -0700 (PDT)
+In-Reply-To: <200910142158.59073.j6t@kdbg.org>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130497>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130498>
 
-With the new formats, we can rewrite 'git stash list' in terms of an
-appropriate pretty format, instead of hand-editing with sed.  This has
-the advantage that it obeys the normal settings for git-log, notably
-the pager.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- git-stash.sh |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+Sorry about the late reply, lots of things to do.
+On Wed, Oct 14, 2009 at 9:58 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Dienstag, 13. Oktober 2009, Erik Faye-Lund wrote:
+>> I'm really unsure if it's worth the hassle.
+>
+> We already depend on the existence of a Bourne shell for our scripted
+> commands. There are already more places in the code that run "sh"
+> than "/bin/sh".
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 4febbbf..f8847c1 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -205,8 +205,7 @@ have_stash () {
- 
- list_stash () {
- 	have_stash || return 0
--	git log --no-color --pretty=oneline -g "$@" $ref_stash -- |
--	sed -n -e 's/^[.0-9a-f]* refs\///p'
-+	git log --format="%gd: %gs" -g "$@" $ref_stash --
- }
- 
- show_stash () {
+OK, you've got me convinced. I'll update the patch with this tweak.
+
 -- 
-1.6.5.116.gfe4b9
+Erik "kusma" Faye-Lund
