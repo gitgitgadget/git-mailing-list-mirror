@@ -1,73 +1,85 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [RFC PATCH 1/4] Document the HTTP transport protocol
-Date: Fri, 16 Oct 2009 09:19:42 +0200
-Message-ID: <20091016071942.GC3009@glandium.org>
-References: <1255065768-10428-1-git-send-email-spearce@spearce.org>
- <1255065768-10428-2-git-send-email-spearce@spearce.org>
- <7vskdss3ei.fsf@alter.siamese.dyndns.org>
- <slrnhd0nfv.tq2.antti-juhani@kukkaseppele.kaijanaho.fi>
- <4AD80BBD.8080504@zytor.com>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: [PATCH] rebase -i: fix reword when using a terminal editor
+Date: Fri, 16 Oct 2009 10:05:39 +0200
+Message-ID: <6672d0160910160105t33ea0585r5c791d47d03f40a9@mail.gmail.com>
+References: <1255674753-13949-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Antti-Juhani Kaijanaho <antti-juhani@kaijanaho.fi>,
-	git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 09:26:37 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 10:09:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyhCu-00037K-LG
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 09:26:37 +0200
+	id 1Myhrd-0006T1-VB
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 10:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882AbZJPHTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 03:19:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755751AbZJPHTf
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 03:19:35 -0400
-Received: from vuizook.err.no ([85.19.221.46]:36734 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753427AbZJPHTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 03:19:34 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1Myh5R-0002nU-4n; Fri, 16 Oct 2009 09:18:55 +0200
-Received: from mh by jigen with local (Exim 4.69)
-	(envelope-from <mh@jigen>)
-	id 1Myh6E-0000n3-3O; Fri, 16 Oct 2009 09:19:42 +0200
-Content-Disposition: inline
-In-Reply-To: <4AD80BBD.8080504@zytor.com>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1754353AbZJPIGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Oct 2009 04:06:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbZJPIGV
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 04:06:21 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:36796 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbZJPIGQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2009 04:06:16 -0400
+Received: by fxm18 with SMTP id 18so2088978fxm.37
+        for <git@vger.kernel.org>; Fri, 16 Oct 2009 01:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LHKmicKzwLYTbaE9vl1yh3IKUOo5W3hJZezfECJctQc=;
+        b=np2Z7/OLRFO3typUzMiwGqoz+Y2byBu6nqKPcDbD/8E+Y2W8FW2Zj0nhC22HxquoQ8
+         DcPGLghNyoMFoGV92bzxAKM+7vRjyx1uZs/iRJsT4ILE7SmOSwOr4/fJrdC6TCWLZt+u
+         012Syh/MCzFfLSdhhI41U1IJOrkT/Qm3KWyRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vr3u4+zBpUUrv4j/c9A5Ar5udmwS1pIYcESyQe1l+6uRtoGTToA2WIu9MiisdGLuNA
+         psrEnSZrlGHgtDZGycXOLiKf52+uSsif4FeN5aenjSUA5VlSK5RZjoWDzUD9FyAIH2SG
+         4dK0szvcCH1eNWa0jI9wljrd9JDIeCBEGE1uc=
+Received: by 10.204.2.73 with SMTP id 9mr931464bki.159.1255680339384; Fri, 16 
+	Oct 2009 01:05:39 -0700 (PDT)
+In-Reply-To: <1255674753-13949-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130462>
 
-On Thu, Oct 15, 2009 at 10:59:25PM -0700, H. Peter Anvin wrote:
-> On 10/10/2009 03:12 AM, Antti-Juhani Kaijanaho wrote:
-> > On 2009-10-09, Junio C Hamano <gitster@pobox.com> wrote:
-> >>> +If there is no repository at $GIT_URL, the server MUST respond with
-> >>> +the '404 Not Found' HTTP status code.
-> >>
-> >> We may also want to add
-> >>
-> >>     If there is no object at $GIT_URL/some/path, the server MUST respond
-> >>     with the '404 Not Found' HTTP status code.
-> >>
-> >> to help dumb clients.
-> > 
-> > In both cases - is it really necessary to forbid the use of 410 (Gone)?
-> > 
-> 
-> 410 means "we once had it, it's no longer here, no idea where it went."
->  It's a largely useless code...
+2009/10/16 Stephen Boyd <bebarino@gmail.com>:
+> We don't want to use output() on git-commit --amend when rewording th=
+e
+> commit message. This leads to confusion as the editor is run in a
+> subshell with it's output saved away, leaving the user with a seeming=
+ly
+> frozen terminal.
+>
+> Fix by removing the output part.
+>
+> Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+> ---
+>
+> On top of next.
+>
+> I think this is right, although I'm not really experienced in the reb=
+ase -i
+> code
 
-There is an additional meaning to it, that is "it will never ever
-return". It thus has a stronger meaning than 404. Sadly, not even search
-engine spiders consider it as a hint to not crawl there in the future...
+Thanks!
 
-Mike
+Yes, it seems right to me too after a more thorough reading of the
+existing rebase -i code. It seems that 'output' is only used for
+non-interactive commands.
+
+I never noticed the problem because I use 'emacsclient' as my
+commit editor. I didn't think of testing with an editor that run in
+the terminal window.
+
+/Bj=C3=B6rn
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
