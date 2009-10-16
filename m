@@ -1,111 +1,126 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] Pretty formats for reflog data
-Date: Fri, 16 Oct 2009 01:20:03 -0400
-Message-ID: <20091016052003.GA10629@coredump.intra.peff.net>
-References: <20091014050645.GD31810@coredump.intra.peff.net>
- <cover.1255645570.git.trast@student.ethz.ch>
+Subject: Re: [PATCH v2 3/5] Introduce new pretty formats %g[sdD] for reflog
+ information
+Date: Fri, 16 Oct 2009 01:32:30 -0400
+Message-ID: <20091016053230.GB10629@coredump.intra.peff.net>
+References: <cover.1255645570.git.trast@student.ethz.ch>
+ <012c71c4eab143691bc5e2d62b421f8c84effa0e.1255645570.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jef Driesen <jefdriesen@hotmail.com>,
 	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 16 07:23:59 2009
+X-From: git-owner@vger.kernel.org Fri Oct 16 07:33:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyfI3-0001ST-1D
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 07:23:47 +0200
+	id 1MyfRb-0004sX-A1
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 07:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbZJPFUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 01:20:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbZJPFUn
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 01:20:43 -0400
-Received: from peff.net ([208.65.91.99]:44214 "EHLO peff.net"
+	id S1752480AbZJPFdM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 01:33:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751559AbZJPFdK
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 01:33:10 -0400
+Received: from peff.net ([208.65.91.99]:34516 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752534AbZJPFUm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 01:20:42 -0400
-Received: (qmail 13159 invoked by uid 107); 16 Oct 2009 05:23:37 -0000
+	id S1750944AbZJPFdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 01:33:09 -0400
+Received: (qmail 13201 invoked by uid 107); 16 Oct 2009 05:36:03 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 16 Oct 2009 01:23:37 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Oct 2009 01:20:03 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 16 Oct 2009 01:36:03 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Oct 2009 01:32:30 -0400
 Content-Disposition: inline
-In-Reply-To: <cover.1255645570.git.trast@student.ethz.ch>
+In-Reply-To: <012c71c4eab143691bc5e2d62b421f8c84effa0e.1255645570.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130456>
 
-On Fri, Oct 16, 2009 at 12:41:43AM +0200, Thomas Rast wrote:
+On Fri, Oct 16, 2009 at 12:41:46AM +0200, Thomas Rast wrote:
 
-> Jeff King wrote:
-> > Maybe a better solution would be a "short name" variant for pretty
-> > format specifiers. We already have %(refname) and %(refname:short) [...]
-> > The tricky part would be deciding on a syntax. This seems to come up a
-> > fair bit.
-> 
-> Ok, I settled for %g[dDs] for now to save on letters.  I'm saving the
-> syntax question for a later series while we discuss this one ;-)
+> Note that the --format="%h %gD: %gs" tests may not work in real
+> repositories, as the --pretty formatter doesn't know to leave away the
+> ": " on the last commit in an incomplete (because git-gc removed the
+> old part) reflog.  This equivalence is nevertheless the main goal of
+> this patch.
 
-:) That is probably sensible. Your %g[dD] doesn't support selecting
-between the numbered version and the "date" version, which is something
-we might want, but certainly it is no worse than the status quo (and
-doing something like that probably _would_ want an extended syntax, as
-you now have two orthogonal arguments: shorten and date/numbered).
+Yeah, I see what you are talking about in my git.git repo. I am tempted
+to suggest cutting it out of both formats, as it is somewhat confusing,
+but it does actually convey a slight bit of information (even if
+information that is extremely unlikely to be of use).
 
-> I think going for %(...) wouldn't be too bad since we already have
-> that in for-each-ref, and it can be backwards compatible.  So we would
-> have different sets of short and long specifiers, e.g.
-> 
->   %ae = %(authoremail)
->   %aE = %(authoremail:mailmap)
-> 
-> We can then pass arguments via some yet-to-be decided syntax, say,
-> %(body:indent(10)).
+I am also fine with leaving it, and if we one day invent the
+"conditionally include the ': '" syntax, using it then.
 
-That seems reasonable to me, though if we can limit ourselves to one
-argument per specifier (I suspect most specifiers would simply be
-boolean, but a few may take numbers or strings), then something like
-%(body:indent=10) might be a little more readable.
+> diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+> index 2a845b1..6359272 100644
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -123,6 +123,9 @@ The placeholders are:
+>  - '%s': subject
+>  - '%f': sanitized subject line, suitable for a filename
+>  - '%b': body
+> +- '%gD': reflog selector, e.g., `refs/stash@{1}`
+> +- '%gd': shortened reflog selector, e.g., `stash@{1}`
+> +- '%gs': reflog subject
+>  - '%Cred': switch color to red
+>  - '%Cgreen': switch color to green
+>  - '%Cblue': switch color to blue
 
-It would also be nice to have some sort of conditional inclusion, which
-could deal with your extra ": " in patch 3. Either something like:
+Should we give a note that these do nothing if "-g" was not given?
 
-  %(reflog:short)%(reflog:+: )
+> +	if (shorten) {
+> +		if (last_ref != commit_reflog->reflogs->ref) {
+> +			free(last_short_ref);
+> +			last_short_ref = shorten_unambiguous_ref(commit_reflog->reflogs->ref, 0);
+> +		}
+> +		printed_ref = last_short_ref;
 
-or even
+Clever. I hadn't considered caching, but you are right that
+shorten_unambiguous_ref is a bit heavyweight to be calling for every
+entry.
 
-  %(reflog:short:prefix=\: )
+> diff --git a/t/t1411-reflog-show.sh b/t/t1411-reflog-show.sh
+> index c18ed8e..cb8d0fd 100755
+> --- a/t/t1411-reflog-show.sh
+> +++ b/t/t1411-reflog-show.sh
+> @@ -64,4 +64,16 @@ test_expect_success 'using --date= shows reflog date (oneline)' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success '--format="%h %gD: %gs" is same as git-reflog' '
+> +	git reflog >expect &&
+> +	git log -g --format="%h %gD: %gs" >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--format="%h %gD: %gs" is same as git-reflog (with date)' '
+> +	git reflog --date=raw >expect &&
+> +	git log -g --format="%h %gD: %gs" --date=raw >actual &&
+> +	test_cmp expect actual
+> +'
 
-and note that allowing arbitrary arguments means we get to deal with
-quoting.
+A test for '%gd' would be nice. A squashable one is below. I am tempted
+to test all three forms in t6006, since the intent of that script is to
+test all format specifiers. However, those tests would be somewhat
+redundant with your t1411 tests.
 
-But that is all for another potential series.
-
-> Other changes in this version include:
-> 
-> * I followed your struct suggestion, which is the new 1/5.
-
-Thanks. It looks like it didn't turn out to be too invasive, and I think
-some of the callsites are a bit more readable.
-
-> * I fixed the warning that Junio found (and finally found the right
->   combination of -W flags, though I cannot compile with -Werror myself
->   because of *other* warnings...)
-
-I always compile with -Wall -Werror (including testing your series);
-what warnings are you getting?
-
-> Thomas Rast (5):
->   Refactor pretty_print_commit arguments into a struct
->   reflog-walk: refactor the branch@{num} formatting
->   Introduce new pretty formats %g[sdD] for reflog information
->   stash list: use new %g formats instead of sed
->   stash list: drop the default limit of 10 stashes
-
-Thanks, this series looks really good to me. I have a few comments on
-patch 3 which I'll send separately.
-
--Peff
+---
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index 59d1f62..d1f2476 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -162,4 +162,10 @@ test_expect_success 'empty email' '
+ 	}
+ '
+ 
++test_expect_success '%gd shortens ref name' '
++	echo "master@{0}" >expect.gd-short &&
++	git log -g -1 --format=%gd refs/heads/master >actual.gd-short &&
++	test_cmp expect.gd-short actual.gd-short
++'
++
+ test_done
