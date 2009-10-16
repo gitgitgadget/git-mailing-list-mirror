@@ -1,176 +1,111 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Fri, 16 Oct 2009 07:03:12 +0200
-Message-ID: <20091016050312.GB9233@atjola.homenet>
-References: <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
- <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
- <20091014230934.GC29664@coredump.intra.peff.net>
- <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
- <alpine.LFD.2.00.0910151436180.20122@xanadu.home>
- <7v1vl45t9k.fsf@alter.siamese.dyndns.org>
- <20091015212632.GA13180@coredump.intra.peff.net>
- <7v1vl42uid.fsf@alter.siamese.dyndns.org>
- <7vfx9k1faa.fsf@alter.siamese.dyndns.org>
- <885649360910151647v27a15334x63fe3b6f5035dbd2@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/5] Pretty formats for reflog data
+Date: Fri, 16 Oct 2009 01:20:03 -0400
+Message-ID: <20091016052003.GA10629@coredump.intra.peff.net>
+References: <20091014050645.GD31810@coredump.intra.peff.net>
+ <cover.1255645570.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: James Pickens <jepicken@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 07:08:27 2009
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 16 07:23:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Myf3A-0005Xi-30
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 07:08:24 +0200
+	id 1MyfI3-0001ST-1D
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 07:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbZJPFEG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Oct 2009 01:04:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752133AbZJPFED
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 01:04:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53291 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752125AbZJPFEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 01:04:02 -0400
-Received: (qmail invoked by alias); 16 Oct 2009 05:03:14 -0000
-Received: from i59F5472B.versanet.de (EHLO atjola.homenet) [89.245.71.43]
-  by mail.gmx.net (mp058) with SMTP; 16 Oct 2009 07:03:14 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/47UdHGV34fdGJlNtTatJwKjtNYpFlkp+uB0GnHp
-	u4n1lKFCK2JUzN
+	id S1752624AbZJPFUn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 01:20:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbZJPFUn
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 01:20:43 -0400
+Received: from peff.net ([208.65.91.99]:44214 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752534AbZJPFUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 01:20:42 -0400
+Received: (qmail 13159 invoked by uid 107); 16 Oct 2009 05:23:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 16 Oct 2009 01:23:37 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Oct 2009 01:20:03 -0400
 Content-Disposition: inline
-In-Reply-To: <885649360910151647v27a15334x63fe3b6f5035dbd2@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.54
+In-Reply-To: <cover.1255645570.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130455>
 
-On 2009.10.15 16:47:57 -0700, James Pickens wrote:
-> On Thu, Oct 15, 2009 at 3:08 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> >>     $ git checkout origin/next ;# ditto
-> >>     $ git symbolic-ref HEAD
-> >>     refs/remotes/origin/next
-> >
-> > Ok, after reading Daniel's message to remind us that "git fetch" af=
-ter
-> > this will get us into trouble, I agree that detaching HEAD is inevi=
-table.
->=20
-> Some people liked the idea, so let's not give up just yet.  Here are =
-a few
-> things Git could do when a fetch wants to update the currently checke=
-d out
-> branch:
->=20
-> 1. Refuse the fetch.
-> 2. Update the ref, leaving the user with a work tree and index that d=
-on't
->    match their HEAD.
-> 3. Detach the HEAD, then update the ref.
-> 4. Update the ref, then check it out.
->=20
-> Option 1 is ok, as long as the "next step" is not too complicated.  I=
-t's no
-> good if the user has to checkout a different branch, then fetch, then
-> checkout the original branch again.
+On Fri, Oct 16, 2009 at 12:41:43AM +0200, Thomas Rast wrote:
 
-Not good. It makes "git fetch; git log ..origin/foo" impossible. And
-that's IMHO a very useful thing for people that just want to follow
-things and look at what happens.
+> Jeff King wrote:
+> > Maybe a better solution would be a "short name" variant for pretty
+> > format specifiers. We already have %(refname) and %(refname:short) [...]
+> > The tricky part would be deciding on a syntax. This seems to come up a
+> > fair bit.
+> 
+> Ok, I settled for %g[dDs] for now to save on letters.  I'm saving the
+> syntax question for a later series while we discuss this one ;-)
 
-> Option 2 is crap.
+:) That is probably sensible. Your %g[dD] doesn't support selecting
+between the numbered version and the "date" version, which is something
+we might want, but certainly it is no worse than the status quo (and
+doing something like that probably _would_ want an extended syntax, as
+you now have two orthogonal arguments: shorten and date/numbered).
 
-Agreed.
+> I think going for %(...) wouldn't be too bad since we already have
+> that in for-each-ref, and it can be backwards compatible.  So we would
+> have different sets of short and long specifiers, e.g.
+> 
+>   %ae = %(authoremail)
+>   %aE = %(authoremail:mailmap)
+> 
+> We can then pass arguments via some yet-to-be decided syntax, say,
+> %(body:indent(10)).
 
-> Option 3 seems reasonable, but it might be just as scary/confusing to
-> newbies as the current behavior, so I don't think it should be the de=
-fault.
+That seems reasonable to me, though if we can limit ourselves to one
+argument per specifier (I suspect most specifiers would simply be
+boolean, but a few may take numbers or strings), then something like
+%(body:indent=10) might be a little more readable.
 
-Doesn't seem very good to me. The idea was to stop people from
-accidently getting on a detached HEAD, if common operations like "fetch=
-"
-now suddenly detach HEAD, that's _worse_ than before. And for a
-single-branch remote, even "git pull" may detach HEAD then:
+It would also be nice to have some sort of conditional inclusion, which
+could deal with your extra ": " in patch 3. Either something like:
 
-git init;
-git remote add -f -t master origin git://...
-git checkout origin/master
-*wait*
-git pull # Will work, as the fetch refspec is not a glob
+  %(reflog:short)%(reflog:+: )
 
-But that "pull" does:
-git fetch origin refs/heads/master:refs/remotes/origin/master
+or even
 
-Which detaches HEAD before merging/fast-forwarding.
+  %(reflog:short:prefix=\: )
 
-Bad.
+and note that allowing arbitrary arguments means we get to deal with
+quoting.
 
-And seeing that the requests for "clone just a single branch" seem to
-increase in #git, I guess that such non-globbing refspecs for
-remote.origin.fetch might become more common in the future.
+But that is all for another potential series.
 
-> Option 4 also seems reasonable, but you run into problems if the user=
- had
-> changed the index or work tree.  In that case Git could do 'checkout
-> --merge' automatically.  This option is also less "pure" since it let=
-s 'git
-> fetch' modify the index and work tree.
+> Other changes in this version include:
+> 
+> * I followed your struct suggestion, which is the new 1/5.
 
-Same as for option 1, it kills "git fetch; git log ..origin/foo". And
-that would basically turn "fetch" into a hypothetical "pull --reset".
-That's IMHO better done in a separate command.
+Thanks. It looks like it didn't turn out to be too invasive, and I think
+some of the callsites are a bit more readable.
 
-> So how about this:
-> * 'git fetch' refuses the fetch by default.
-> * 'git fetch --detach' detaches HEAD, then updates the ref
-> * 'git pull' detaches HEAD, updates the ref, then checks out the new =
-ref
->   with --merge.
+> * I fixed the warning that Junio found (and finally found the right
+>   combination of -W flags, though I cannot compile with -Werror myself
+>   because of *other* warnings...)
 
-"fetch --detach" doesn't feel right to me. Wrong class of commands to
-have such an option. And I'm not sure about adding a third mode to
-"pull" (besides "merge" and "rebase") that only triggers for special
-cases. Again, I'd prefer a separate command.
+I always compile with -Wall -Werror (including testing your series);
+what warnings are you getting?
 
-If we store "where did I come from" instead of just "where am I" in HEA=
-D
-when detached, those problems don't seem to show up (but just storing
-that information correctly seems hard enough, see the other mail I wrot=
-e
-a few minutes ago).
+> Thomas Rast (5):
+>   Refactor pretty_print_commit arguments into a struct
+>   reflog-walk: refactor the branch@{num} formatting
+>   Introduce new pretty formats %g[sdD] for reflog information
+>   stash list: use new %g formats instead of sed
+>   stash list: drop the default limit of 10 stashes
 
-"git fetch" just updates the remote tracking branch, you stay at where
-you are, "git log ..origin/foo" keeps working. It could give a special
-hint that you might want to use "git checkout origin/foo" or "git
-new-command" to update your working tree to the newest version, when
-your working tree is based upon an old version of that remote tracking
-branch.
+Thanks, this series looks really good to me. I have a few comments on
+patch 3 which I'll send separately.
 
-And "git pull" might perform a fast-forward automatically (figuring out
-the right remote from the extra info in HEAD), but refuse to do merges
-(if upstream has been rewritten), pointing the user to "git checkout" o=
-r
-"git new-command". (Interestingly, "pull --rebase" wouldn't suffer from
-such history rewriting, as it looks at the reflog for the remote
-tracking branch, but I guess a working "git pull --rebase" while "git
-pull" fails is bound to cause major user confusion).
-
-"git new-command" could act like "svn up", doing a fetch and a
-"checkout --merge <remote_tracking_branch>" to just get the user
-up-to-date keeping local uncommitted modifications. I can't tell why,
-but my feeling is that this should be a new command, and not part of
-pull, as said above.
-
-Bj=F6rn
+-Peff
