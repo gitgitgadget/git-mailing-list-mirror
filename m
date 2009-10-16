@@ -1,96 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] Add proof-of-concept %[w(width,in1,in2)<<any-string>>%] implementation
-Date: Sat, 17 Oct 2009 00:19:59 +0200
-Message-ID: <200910170020.01756.jnareb@gmail.com>
-References: <1255681702-5215-1-git-send-email-gitster@pobox.com> <m33a5jfc6p.fsf@localhost.localdomain> <7v3a5jupr7.fsf@alter.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH RFC] git describe without refs distinguishes dirty
+	working tree
+Date: Fri, 16 Oct 2009 15:37:42 -0700
+Message-ID: <20091016223742.GV10505@spearce.org>
+References: <dffdbd190910160812h6d6a876el8261a622b5439b30@mail.gmail.com> <20091016173902.GT10505@spearce.org> <7veip3t6rm.fsf@alter.siamese.dyndns.org> <dffdbd190910161452o4ac0b426i7c48649eafa0d53@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 00:19:04 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jean Privat <jean@pryen.org>
+X-From: git-owner@vger.kernel.org Sat Oct 17 00:37:50 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Myv8X-0007cd-Oh
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 00:19:02 +0200
+	id 1MyvQj-00064p-H5
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 00:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751068AbZJPWSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 18:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbZJPWSq
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 18:18:46 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:57850 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbZJPWSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 18:18:46 -0400
-Received: by fxm18 with SMTP id 18so2975259fxm.37
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 15:18:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=PzNfWLpKD1l8NdM1H+VcjETML80gFE5wpGlEUKFQHhs=;
-        b=skW0EKFxN6F5ZI01jM64PPmsGcv/7gPUnkSKWicF4nEODuxTEdz9sBZESXSqcTjwLu
-         mNbgQcgcgM4EIaHaFonZ9XBEE0D2cJrp+116tq1kqfGtixGKRnsMoiFCyoeXLkvLbGmh
-         peDwq+fmmV+/aD5uRTQ6JfOUD38k2a8IYMLTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=kwaSwZyfGY5LAoO1Aq4UTRV+S47gU4+hjXKWMDTd42PZ+ti/PUR2rqI9+hdA28tsCq
-         pkkGxyDzfgywvK5ajxwC+xcR7rmjxF3RXKUp0rENJTFsmct22TRx3v/nEfDxAO7t2FY2
-         rtixy3zVCTgIba6RFamsQzUIA9otoWry/Kwvg=
-Received: by 10.204.10.6 with SMTP id n6mr1883745bkn.27.1255731529410;
-        Fri, 16 Oct 2009 15:18:49 -0700 (PDT)
-Received: from ?192.168.1.13? (absh57.neoplus.adsl.tpnet.pl [83.8.127.57])
-        by mx.google.com with ESMTPS id 14sm280891bwz.9.2009.10.16.15.18.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 16 Oct 2009 15:18:48 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v3a5jupr7.fsf@alter.siamese.dyndns.org>
+	id S1751026AbZJPWhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 18:37:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbZJPWhi
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 18:37:38 -0400
+Received: from george.spearce.org ([209.20.77.23]:37472 "EHLO
+	george.spearce.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750809AbZJPWhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 18:37:37 -0400
+Received: by george.spearce.org (Postfix, from userid 1001)
+	id 62E94381FE; Fri, 16 Oct 2009 22:37:42 +0000 (UTC)
 Content-Disposition: inline
+In-Reply-To: <dffdbd190910161452o4ac0b426i7c48649eafa0d53@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130532>
 
-On Fri, 16 Oct 2009, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > I don't remember what were original parameters to w(72,4,8) means...
-> 
-> "man git-shortlog" look for -w.
+Jean Privat <jean@pryen.org> wrote:
+> > I still haven't heard anything that helps me to decide which way the
+> > default should be.  The only concrete thing I have heard against the
+> > change of the default is that it will break existing setup, but I haven't
+> > heard anything concrete for the change yet.
+...
+> Then, I realized that for some other git commands that can work both
+> on the working tree and on an arbitrary commit reference, the default
+> was to work on the working tree and require an explicit HEAD to work
+> on the HEAD commit. Thus it makes sense to me that "git describe"
+> alone should describe the working tree and that "git describe HEAD"
+> should describe the HEAD commit.
 
-Thanks.  So those would be:
+Yup.  That's my take on it too.  This default of "no argument means
+describe the working tree" matches with tools like `git diff`,
+`git checkout`, `git status`, `git blame` with no revision arguments.
 
--w[<width>[,<indent1>[,<indent2>]]]::
-        Linewrap the output by wrapping each line at `width`.  The first
-        line of each entry is indented by `indent1` spaces, and the second
-        and subsequent lines are indented by `indent2` spaces. `width`,
-        `indent1`, and `indent2` default to 76, 6 and 9 respectively.
+We are being blasted by users for being inconsistent in our UI in too
+many places.  Here's yet another.  We need to start standardizing
+on a more consistent UI model.  If that model means we need to
+use a "--worktree" flag to mean "against the working tree" then
+we should start doing that also to `git status`, `git checkout`,
+`git blame`, and `git diff`.
 
-I think better solution might be to give _string_ to use for initial and
-subsequent indent rather than number of spaces... well, at least more
-generic one, allowing one to use e.g. "\t" (TAB) character to indent,
-or indent in the following way:
+>  $ git describe --dirty v1.2.1
+> should it show an error, output "v1.2.1" anyway, or output
+> "v1.2.1-dirty" if the working tree is different from v1.2.1 ?
 
- * Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-   veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-   commodo consequat. [...]
-
-But even with original w(<width>,<indent1>,<indent2>) we can get output
-of bare "git log" using pretty format... well, almost; it would be the
-same if there was ability to put infinite width, and there doesn't seem
-to be specifier for the whole, unchanged commit message (subject,
-unwrapped + separating lines + body).
+IMHO, that should be a fatal usage error, if we go that approach.
+I would also argue `git describe --dirty HEAD` is equally fatal.
 
 -- 
-Jakub Narebski
-Poland
+Shawn.
