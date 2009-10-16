@@ -1,61 +1,124 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git gui and gitk documentation
-Date: Fri, 16 Oct 2009 15:10:37 +0200
-Message-ID: <4AD870CD.1040709@drmicha.warpmail.net>
-References: <BLU149-W532BC93AF99F2B8D4C90F1E3C50@phx.gbl>
+From: Matt Kraai <kraai@ftbfs.org>
+Subject: Re: [PATCH] grep: do not segfault when -f is used
+Date: Fri, 16 Oct 2009 06:39:08 -0700
+Message-ID: <20091016133908.GA3172@ftbfs.org>
+References: <1255683204-28988-1-git-send-email-kraai@ftbfs.org>
+ <4AD84C2F.5000809@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: chris miles <chrismileswales@hotmail.co.uk>
-X-From: git-owner@vger.kernel.org Fri Oct 16 15:12:52 2009
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 16 15:45:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mymc0-00011i-ED
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 15:12:52 +0200
+	id 1Myn7O-0001jU-82
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 15:45:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759105AbZJPNLs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 09:11:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754507AbZJPNLs
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 09:11:48 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37378 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754486AbZJPNLr (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2009 09:11:47 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 056D1B2973;
-	Fri, 16 Oct 2009 09:10:46 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 16 Oct 2009 09:10:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=pvTglEcPB9nZt2nLGOIvnrO1o6E=; b=HNS7AaFiKIowrYZGOgbtxVFJ5KsiyyTi8LRE8hcTAsmRh6Gs95oBM27DHXtIzJRSJ5pmu+2EFiCOJTYHB1FizuQJtUlVet9R8R6EKWwxyC2QzZIi+Tk6tmsWhJw7q9baEZKzJAxNnQpelW6VmYSNNBgR+hSDUKp3IqvNDwbiHcE=
-X-Sasl-enc: grk5DuclocdH/q0kbjm1H/xDIUSYOxqGqG8P0H/K+o8D 1255698645
-Received: from localhost.localdomain (p5DCC18CF.dip0.t-ipconnect.de [93.204.24.207])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2C8919B3F6;
-	Fri, 16 Oct 2009 09:10:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091015 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <BLU149-W532BC93AF99F2B8D4C90F1E3C50@phx.gbl>
+	id S1756172AbZJPNmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 09:42:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753104AbZJPNmX
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 09:42:23 -0400
+Received: from zoom.lafn.org ([206.117.18.8]:31402 "EHLO zoom.lafn.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751583AbZJPNmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 09:42:22 -0400
+Received: from macbookpro (pool-173-51-225-123.lsanca.fios.verizon.net [173.51.225.123])
+	(authenticated bits=0)
+	by zoom.lafn.org (8.14.3/8.14.2) with ESMTP id n9GDfiCn069132
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 16 Oct 2009 06:41:45 -0700 (PDT)
+	(envelope-from kraai@ftbfs.org)
+Received: from kraai by macbookpro with local (Exim 4.69)
+	(envelope-from <kraai@ftbfs.org>)
+	id 1Myn1Q-0001j8-Qz; Fri, 16 Oct 2009 06:39:08 -0700
+Content-Disposition: inline
+In-Reply-To: <4AD84C2F.5000809@viscovery.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.95.1 at zoom.lafn.org
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130485>
 
-chris miles venit, vidit, dixit 15.10.2009 22:51:
+On Fri, Oct 16, 2009 at 12:34:23PM +0200, Johannes Sixt wrote:
+> Matt Kraai schrieb:
+> > +test_expect_success 'grep should not segfault with -f' '
+> > +        test_must_fail git grep -f /dev/null
+> > +'
 > 
-> Hi
-> 
-> I'm looking for documentation on gitk and the gui that is distributed with git.
-> Could anyone point me in the right direction?
+> there must be a better way to test whether grep -f behaves correctly.
 
-How about
+How about the following test cases instead?
 
-man gitk
-man git-gui
+test_expect_success 'grep -f, non-existent file' '
+	test_must_fail git grep -f patterns
+'
 
-The latter is the same as "git help gui". There is no "git help k",
-though :)
+cat >expected <<EOF
+file:foo mmap bar
+file:foo_mmap bar
+file:foo_mmap bar mmap
+file:foo mmap bar_mmap
+file:foo_mmap bar mmap baz
+EOF
 
-Cheers,
-Michael
+cat >pattern <<EOF
+mmap
+EOF
+
+test_expect_success 'grep -f, one pattern' '
+	git grep -f pattern >actual &&
+	test_cmp expected actual
+'
+
+cat >expected <<EOF
+file:foo mmap bar
+file:foo_mmap bar
+file:foo_mmap bar mmap
+file:foo mmap bar_mmap
+file:foo_mmap bar mmap baz
+t/a/v:vvv
+t/v:vvv
+v:vvv
+EOF
+
+cat >patterns <<EOF
+mmap
+vvv
+EOF
+
+test_expect_success 'grep -f, multiple patterns' '
+	git grep -f patterns >actual &&
+	test_cmp expected actual
+'
+
+cat >expected <<EOF
+file:foo mmap bar
+file:foo_mmap bar
+file:foo_mmap bar mmap
+file:foo mmap bar_mmap
+file:foo_mmap bar mmap baz
+t/a/v:vvv
+t/v:vvv
+v:vvv
+EOF
+
+cat >patterns <<EOF
+
+mmap
+
+vvv
+
+EOF
+
+test_expect_success 'grep -f, ignore empty lines' '
+	git grep -f patterns >actual &&
+	test_cmp expected actual
+'
+
+-- 
+Matt Kraai                                           http://ftbfs.org/
