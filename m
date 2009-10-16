@@ -1,108 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC] git describe without refs distinguishes dirty
- working  tree
-Date: Fri, 16 Oct 2009 10:26:15 -0700
-Message-ID: <7vd44nuu6g.fsf@alter.siamese.dyndns.org>
-References: <dffdbd190910160812h6d6a876el8261a622b5439b30@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Fri, 16 Oct 2009 18:31:23 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
+References: <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com> <alpine.LNX.2.00.0910141509200.32515@iabervon.org> <alpine.LFD.2.00.0910141616530.20122@xanadu.home> <7v7huxbtbk.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
+ <7vws2xa9lu.fsf@alter.siamese.dyndns.org> <20091014230934.GC29664@coredump.intra.peff.net> <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com> <alpine.LNX.2.00.0910151523020.32515@iabervon.org> <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+ <20091016143041.GA11821@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jean Privat <jean@pryen.org>
-X-From: git-owner@vger.kernel.org Fri Oct 16 19:33:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 16 19:38:45 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyqgH-0006qD-Qb
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 19:33:34 +0200
+	id 1MyqlC-0001I0-N7
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 19:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754303AbZJPR02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 13:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932635AbZJPR0V
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 13:26:21 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47428 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754154AbZJPR0S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 13:26:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B09667AEB1;
-	Fri, 16 Oct 2009 13:26:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=om5sPugObZ9vCkPam0rGqsfwqCM=; b=ujm5Br2KBK+gxlVIDHzSrDt
-	AvjV7YfsIQsvb6Sej6Tlkse2QjxetjuMRfV5vpwsjc/Ir9vgVZpbtLqKHIIuDrqw
-	Ux0fLQLDnxTSNv6OdDIs5Z5o2XstJ+VyClkLLOPshYcGtl9U6vCA2OVDTOut4DqT
-	05Z4sMth4YFBR7LIWOXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=hMJGn8ZlGZy0CIEaZCnyBeISSZqPld4UEv+Rrgs+C17kuTLid
-	OSTpf9mPs0Y1K2yG8BKwC3U9ut+gu5EWEcTKZcYnLgvO9n9qlTQMjX2CRKHXbbBa
-	6CdBVnJNT07/4yCA/KkXULGUeGNbcb0YSLLiuzib7sX/C2B/+kysMFvCHs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 936DF7AEB0;
-	Fri, 16 Oct 2009 13:26:20 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 252017AEAE; Fri, 16 Oct 2009
- 13:26:16 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 050386F8-BA79-11DE-A49F-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751591AbZJPRi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 13:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbZJPRi1
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 13:38:27 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:52725 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750741AbZJPRi0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Oct 2009 13:38:26 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 78320358B05
+	for <git@vger.kernel.org>; Fri, 16 Oct 2009 18:38:29 +0100 (BST)
+Received: (qmail 27872 invoked by uid 103); 16 Oct 2009 18:31:24 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.95.2/9902. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.026399 secs); 16 Oct 2009 17:31:24 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 16 Oct 2009 18:31:23 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <20091016143041.GA11821@atjola.homenet>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130514>
 
-Jean Privat <jean@pryen.org> writes:
+On Fri, 16 Oct 2009, Bj?rn Steinbrink wrote:
 
-> ...
-> This new behavior could affect existing scripts by producing version
-> number like v1.0.4-14-g2414721-dirty-dirty.
-> These scripts could be easily fixed by explicitly using HEAD when calling
-> `git describe` and works with any version of git.
+> On 2009.10.16 13:15:35 +0100, Julian Phillips wrote:
+>> On Thu, 15 Oct 2009, Daniel Barkalow wrote:
+>>
+>>> On Thu, 15 Oct 2009, James Pickens wrote:
+>>>
+>>>> How about not detaching the head at all if the user checks out any ref, and
+>>>> reject commits if he checked out a tag or remote branch.  For example:
+>>>>
+>>>> $ git checkout origin/master
+>>>> $ git status
+>>>> # On branch origin/master
+>>>> $ git commit ;# complain
+>>>
+>>> $ git checkout origin/master
+>>> $ git fetch
+>>> $ git checkout origin/next
+>>> Uncommited file '...' would be overwritten.
+>>
+>> How about:
+>>
+>> $ git checkout origin/master
+>> $ git fetch
+>> Refusing to fetch, as it would update a checkedout branch
+>> "git fetch -f" will force the update, but you will need to run "git
+>> reset --hard HEAD" to update your checkout to match.
 >
-> Signed-off-by: Jean Privat <jean@pryen.org>
-> ---
+> That would redefine -f (currently means "allow non-fast-forward
+> updates"), the flag that allows the checked out branch head to be
+> updated is -u, --update-head-ok, and is for internal use only.
 >
-> Initially, I wanted to add an option `--worktree` that works on HEAD and
-> appends "-dirty" when the working tree is dirty. After rethink I
-> realized that users (me included) should prefer to describe the working
-> tree by default, and only describe HEAD if HEAD was explicitly specified.
+> And suggesting "reset --hard" seems wrong, that just kills any
+> uncommitted changes.
+
+Ok, so the commands were wrong.  Not important.
+
+It was the approach that I was trying to suggest rather than the actual 
+commands.  The point I was trying to make was how, as a user, I would be 
+happy to git behave.
+
+So, I try to run fetch, git says "ooh, now that would be dangerous - you 
+can force it happen by running "git foo", but you will then be in 
+situation X, which you can then recover from by running "git bar", though 
+you may need to run "git stash" to save any edits you have made" or 
+something similar.
+
+Now as a user I know that I have tried to do something a bit unusual, but 
+I don't have to run to the mailing list or #git saying "I just did X Y Z 
+and everything is now FUBARed".  I can even proceed to do the unusal 
+thing, as git itself has given me the information I need to sort things 
+out afterwards.
+
+> And such uncommitted changes would be lost in the big "undo the fetch
+> update" diff. So you'd have to do:
+> git reset --soft HEAD@{1}
+> git checkout --merge HEAD@{1}
 >
-> Note that documentation of `git describe` did not mentioned the behavior
-> of the command when no committish is specified.
-> However, since it is still a behavior change. If the patch is accepted,
-> it could target version 1.7.
-> ---
->  Documentation/git-describe.txt |    5 ++++-
->  builtin-describe.c             |   18 +++++++++++++++++-
->  t/t6120-describe.sh            |    8 ++++++++
->  3 files changed, 29 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-> index b231dbb..c49ecc8 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -8,7 +8,7 @@ git-describe - Show the most recent tag that is
-> reachable from a commit
+> to keep them, while updating to the new state of the remote tracking
+> branch. Not quite intuitive, is it?
 
-Here is an indication of a linewrapped and broken patch that discourages
-me to look further.
+I don't care what git has to do, I'm talking about the user experience - 
+if we have to write some new code to support it, that really isn't a 
+terribly hard thing to do.  UIs should be driven down from the user 
+interaction not up from the implementation.
 
-As to the new _ability_, I think it would make sense to reduce the need
-for an extra invocation of "is the work tree dirty" and this addition is a
-welcomed one in that sense.  However, as you already are aware of, this
-will break existing scripts; it should not trigger for them.
+-- 
+Julian
 
-How about "describe --dirty" and "describe --dirty=-mod" (the latter
-creates v1.6.5-15-gc274db7-mod"), possibly with a short version of options
-if this proves to be useful and frequently used from interactive sessions?
+  ---
+Captain: "Catalyzer's a nothing part, captain."
 
-I personally think this does not deserve to have a short option (as you
-said in the log message, it is primarily a way to make up a version number
-string, and give interactive users a sense of where in the history he is.
-If you want to know if your tree is dirty, depending on the reason _why_
-you want to know it and what you want to do with the information after
-learning your tree is dirty, "status", "diff --stat", "add -i" are more
-appropriate and useful tools) but you (and others) may bring up use cases
-that I didn't think of when I wrote the beginning of this sentence ;-)
+Mal: "It's nothing until you don't got one. Then it appears to be everything."
+ 				--Episode #8, "Out of Gas"
