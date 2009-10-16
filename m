@@ -1,81 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Introduction and Wikipedia and Git Blame
-Date: Fri, 16 Oct 2009 12:00:20 -0700
-Message-ID: <7v7huvuptn.fsf@alter.siamese.dyndns.org>
-References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
- <alpine.DEB.1.00.0910161321550.4985@pacific.mpi-cbg.de>
- <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
- <alpine.DEB.1.00.0910161548550.4985@pacific.mpi-cbg.de>
- <7vbpk7w9qx.fsf@alter.siamese.dyndns.org>
- <ee9cc730910161100r71818303v343f555151db4dcc@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Add proof-of-concept
+ %[w(width,in1,in2)<<any-string>>%] implementation
+Date: Fri, 16 Oct 2009 12:01:48 -0700
+Message-ID: <7v3a5jupr7.fsf@alter.siamese.dyndns.org>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com>
+ <1255681702-5215-4-git-send-email-gitster@pobox.com>
+ <alpine.DEB.1.00.0910161331350.4985@pacific.mpi-cbg.de>
+ <7vk4yvuu79.fsf@alter.siamese.dyndns.org>
+ <m33a5jfc6p.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "jamesmikedupont\@googlemail.com" <jamesmikedupont@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 16 21:00:37 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 16 21:02:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mys2W-0000hp-9Q
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 21:00:36 +0200
+	id 1Mys4C-0001dS-Dv
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 21:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbZJPTA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 15:00:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbZJPTAZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 15:00:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35317 "EHLO
+	id S1754817AbZJPTB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 15:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754644AbZJPTB4
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 15:01:56 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37575 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789AbZJPTAZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 15:00:25 -0400
+	with ESMTP id S1752675AbZJPTBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 15:01:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 613755BC99;
-	Fri, 16 Oct 2009 15:00:29 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 386657A6BF;
+	Fri, 16 Oct 2009 15:01:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9oWOLTR1tBhpSRpSZbhRPbJEtpU=; b=kc7ATn
-	ttw0eU02drWgh4wWVOQ37gPH/XmNKSRPylKVXucW+IfReOt7cw9h4dKeXSOqIMte
-	ZW1NFLDegf6KqUFNob/s+ozsnwZg5RMz9ECCxvn0PkVwTuSDTUSJwGOchjq+XMO+
-	MWpUrXTMpNU9hM4e4n28vqsXUT+NYgtOz/xUs=
+	:content-type; s=sasl; bh=oz+1GwNC8gX82Y/BSancBNZ+D60=; b=s5l7cU
+	oPcodejHsIIJ16lOQaP3uE/wFah7MUkPSDfN/uQuqbLRY37HOe3dJXQihs5b9INE
+	1aP1MH0EN1udgtUo8u3wCrcwG59c/Foce46JsKQfUrIhnQQ9NmHeAqlUZrlQQkB6
+	rNT/tExOHs+oUS61EbGAy4L8AXjvic8sOF2W4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dZPHbhuUmEFInaxO87sJqetbMFoSDlde
-	vVYfRqFssaRdda6P1hzBbUZSAtuuf//ACJubA38bWSuUTs68AEwHWr323eXxeYbe
-	OpBRsXtTWacYlA0P5YPyQlyUWGxbNfwdGA8LyqH1G35QVZvS20+Zbm5pjur1upZT
-	HuXj4sE1uNU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 24CC75BC95;
-	Fri, 16 Oct 2009 15:00:26 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=EHlcN2miry898cW7wpr68G8lGUFWeeZK
+	CKwfIDRgV62c3rFrMsTUE+bMvWv3f0+qjMUhqLej6qB0sK2NbaFZv6q1RN3wFPad
+	ACHKh1mihwYKUOkElkMAzffZQAM7orcmAiF0Lh2SL4PcAEywpcrXoaTkxBe/l/s7
+	Q1rELSn6KT8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DD727A6BE;
+	Fri, 16 Oct 2009 15:01:56 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A82D5BC93; Fri, 16 Oct
- 2009 15:00:22 -0400 (EDT)
-In-Reply-To: <ee9cc730910161100r71818303v343f555151db4dcc@mail.gmail.com>
- (jamesmikedupont@googlemail.com's message of "Fri\, 16 Oct 2009 20\:00\:17
- +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2A6EB7A6BD; Fri, 16 Oct 2009
+ 15:01:49 -0400 (EDT)
+In-Reply-To: <m33a5jfc6p.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Fri\, 16 Oct 2009 11\:02\:56 -0700 \(PDT\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 29FC171A-BA86-11DE-B5AB-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5F9B0534-BA86-11DE-AEFC-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130521>
 
-"jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
->> You would need to postprocess the computed result (either by diff or
->> blame) to lay out the final text output in either case anyway, and making
->> the existing blame engine do the work for you would be a better approach,
->> I think.
->
-> Please can you tell me what is the basic algorithm of the blame engine?
+> I don't remember what were original parameters to w(72,4,8) means...
 
-I think this is one of the most conprehensive write-up on the algorithm:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/28826/focus=28895
-
-The whole thread (at least what I wrote in it) is worth reading if you
-want to understand what the current code does.  The first message in the
-thread talks about "NEEDSWORK" label on an unimplemented part of the code,
-and says "we could", but these gaps were since filled.
+"man git-shortlog" look for -w.
