@@ -1,124 +1,177 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Thu, 15 Oct 2009 19:56:52 -0700
-Message-ID: <7vvdigxczv.fsf@alter.siamese.dyndns.org>
-References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
- <76718490910141156g440ee455t2e1db72ad72b7049@mail.gmail.com>
- <alpine.LNX.2.00.0910141509200.32515@iabervon.org>
- <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
- <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
- <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
- <20091014230934.GC29664@coredump.intra.peff.net>
- <alpine.LFD.2.00.0910141926170.20122@xanadu.home>
- <7viqeha2zv.fsf@alter.siamese.dyndns.org>
- <20091015014737.GA9923@coredump.intra.peff.net>
- <alpine.LFD.2.00.0910142237010.20122@xanadu.home>
- <alpine.DEB.1.00.0910160256180.4985@pacific.mpi-cbg.de>
- <alpine.LFD.2.00.0910152118360.20122@xanadu.home>
- <alpine.DEB.1.00.0910160357370.4985@pacific.mpi-cbg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 16 05:03:07 2009
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCHv3] gitweb: linkify author/committer names with search
+Date: Thu, 15 Oct 2009 21:14:59 -0700
+Message-ID: <1255666499-14098-1-git-send-email-bebarino@gmail.com>
+References: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 16 06:19:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Myd5o-0000gz-7S
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 05:03:00 +0200
+	id 1MyeI5-0007qR-Sa
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 06:19:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751620AbZJPC5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Oct 2009 22:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbZJPC5w
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Oct 2009 22:57:52 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60470 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374AbZJPC5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Oct 2009 22:57:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E36F7796E6;
-	Thu, 15 Oct 2009 22:57:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/r9O1xOW8p/wsm2yenYoP7WDLDc=; b=jgKhNL
-	wxiFVuk9wCrFXE1IdCSb2oe/6lRfuU63119Rg/Q3iz/4ryn8/TMqc2+yZyx0cKy2
-	JwcMa0rthasOVy72i7iuQibmrojjg6L70ShMSKUsn9srpQvstybh1xHXrW+JTcoP
-	Mae0bkZJmvgPjBazXgIK3F7NObMckLNY7dn+k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vw8Hr3RvvZOJiPEUo0L6DjJT7rp03Efa
-	Y5Xz/qpC0+zDqzNYCeky0RFxpNL/T28viNWCjj3v/GIt1TCxY20WaM9Sb1agKq0Q
-	OkNISQHbEXtCATIVpJOONiRLOYHaaQodMG5fp2FGDNzftvuFf3doKu+ZnBNxFSRp
-	Fbo2bpAWZqs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 825AC796E2;
-	Thu, 15 Oct 2009 22:57:03 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 233C2796DF; Thu, 15 Oct 2009
- 22:56:53 -0400 (EDT)
-In-Reply-To: <alpine.DEB.1.00.0910160357370.4985@pacific.mpi-cbg.de>
- (Johannes Schindelin's message of "Fri\, 16 Oct 2009 04\:07\:23 +0200
- \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 94F9EEC0-B9FF-11DE-A8AD-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1751319AbZJPEPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 00:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751290AbZJPEPl
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 00:15:41 -0400
+Received: from mail-qy0-f172.google.com ([209.85.221.172]:45398 "EHLO
+	mail-qy0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751069AbZJPEPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 00:15:40 -0400
+Received: by qyk2 with SMTP id 2so1244204qyk.21
+        for <git@vger.kernel.org>; Thu, 15 Oct 2009 21:15:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=T4nHIixPOxoqSV0+2XYRDZ4xsecb7rCfYQ1rGM7odSk=;
+        b=jU+hfroAv0N9uyQUhmhcppnEOtBQ05RsUGlsQOsE74CHbt/ict27KdLLw7HIQahfYa
+         ojU3pAwvQHxBh6/X+0mlJjHsfC7P7e19SzmjEWDTGvqnIP3nIV6ZMdwk92A87xRXsvFc
+         /lFt68VHeRQ+A4Drrfc6yobnZvEMcxyK3L/mA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=TSO8LmHXp5uvbYVTgCykYGk97pk0sWgqJkhmSRJ/sxQbarcUqqvwJr+SEyjYLY+xAl
+         O56xgaNCMUgIxC1jxP2GZF65np3M+herbeiLxZS4tMD+qq7yHHlWNgkLTyXn6UfMI+lw
+         BwxQvZbCs+QfaIrR+ybDOlQSdUaxaZbuGO+eA=
+Received: by 10.224.7.133 with SMTP id d5mr746186qad.45.1255666503758;
+        Thu, 15 Oct 2009 21:15:03 -0700 (PDT)
+Received: from earth (cpe-76-174-15-88.socal.res.rr.com [76.174.15.88])
+        by mx.google.com with ESMTPS id 5sm1708205qwg.50.2009.10.15.21.15.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 15 Oct 2009 21:15:02 -0700 (PDT)
+Received: by earth (sSMTP sendmail emulation); Thu, 15 Oct 2009 21:14:59 -0700
+X-Mailer: git-send-email 1.6.5.94.gb6c65
+In-Reply-To: <1255486344-11891-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130451>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+It's nice to search for an author by merely clicking on their name in
+gitweb. This is usually faster than selecting the name, copying the
+selection, pasting it into the search box, selecting between
+author/committer and then hitting enter.
 
-> You are trying to educate the users to use the double-clutch.  Rather than 
-> making the double-clutch obsolete.
+Linkify the avatar icon in log/shortlog view because the icon is directly
+adjacent to the name and thus more related. The same is not true
+when in commit/tag view where the icon is farther away.
 
-I do not quite get your double-clutch rhetoric, in the sense that I do not
-think it has anything analogous in the topic of detached HEAD we have been
-discussing.
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
+---
 
-Didn't we discuss possible solutions to make sure that you do not have to
-detach HEAD and lose commits by coming back without saving them?  I would
-consider that corresponds to inventing automatic (iow, making sure that
-sightseeing can be done without having to worry about accidentally
-committing on that state and later losing them).  Obviously, you would
-need to cover cases other than we have discussed (e.g. if "rebase -i"
-detaches, it needs to allow "commit", "commit --amend", and "reset --soft
-HEAD^", but you probably would not want to allow "checkout" to switch to
-another branch).  Thinking things through so that we can fill in all these
-details is a tedious and hard work, but I would say it would be worth it.
-In the ideal world, if you do not have to (nor want to) use the detached
-HEAD feature, you do not have to.
+Changes since v2:
 
-But that is entirely different from saying "I do not need to use detached
-HEAD, I cannot explain it to my users. Let's make it unusable, iow, I give
-up".  Unfortunately that is the impression I am getting from your whining.
+ * Add a title to make it not so suprising before you click (Jakub)
 
-If you have been advocating for something else, and you share the goal of
-helping users by e.g. making it unnecessary to worry about accidentally
-committing on that state and later losing them, you would need to do a
-better job explaining yourself.
+Changes since v1:
 
-> Just recently, I had a user request (a very valid one, mind you) where the 
-> user does not want to provide a commit message, and wants to just commit 
-> all the current changes.  In that particular case, it is very sensible to 
-> ask for these things.  It is something utterly simple to ask for. Yet, it 
-> is utterly hard with Git, especially if I have to explain it.
+ * CSS hack has been cleaned up to only remove the link border from
+    avatar icons when actually linked.
 
-I suspect the above is another example of your needing to do a better job
-explaining yourself here, but from "just commit all the changes without
-saying message", my knee-jerk reaction is "git commit -a -m 'no message'".
+ * Checking for search capability to avoid generating search links (Wincent)
 
-You would need to justify why -m 'no message' does not fit the bill better
-than just saying "is very sensible to ask for these things", as I highly
-suspect that I misunderstood what "these things" are in your five lines to
-come up with that "solution" that you are now going to explain why that is
-not what the end user wanted.  And in this case, I do not think it is that
-me being disconnected from the real world, but that your explanation is
-insufficient.
+ * Linking of name and email are separate in commit/commitdiff/tag views
+
+ gitweb/gitweb.css  |    4 ++++
+ gitweb/gitweb.perl |   40 +++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 39 insertions(+), 5 deletions(-)
+
+diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
+index 8faa94e..50067f2 100644
+--- a/gitweb/gitweb.css
++++ b/gitweb/gitweb.css
+@@ -32,6 +32,10 @@ img.avatar {
+ 	vertical-align: middle;
+ }
+ 
++a.list img.avatar {
++	border-style: none;
++}
++
+ div.page_header {
+ 	height: 25px;
+ 	padding: 8px;
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 0c71ee8..63e18f4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1625,6 +1625,29 @@ sub git_get_avatar {
+ 	}
+ }
+ 
++sub format_search_author {
++	my ($author, $searchtype, $displaytext) = @_;
++	my $have_search = gitweb_check_feature('search');
++
++	if ($have_search) {
++		my $performed = "";
++		if ($searchtype eq 'author') {
++			$performed = "authored";
++		} elsif ($searchtype eq 'committer') {
++			$performed = "committed";
++		}
++
++		return $cgi->a({-href => href(action=>"search", hash=>$hash,
++				searchtext=>$author,
++				searchtype=>$searchtype), class=>"list",
++				title=>"Search for commits $performed by $author"},
++				$displaytext);
++
++	} else {
++		return $displaytext;
++	}
++}
++
+ # format the author name of the given commit with the given tag
+ # the author name is chopped and escaped according to the other
+ # optional parameters (see chop_str).
+@@ -1633,8 +1656,10 @@ sub format_author_html {
+ 	my $co = shift;
+ 	my $author = chop_and_escape_str($co->{'author_name'}, @_);
+ 	return "<$tag class=\"author\">" .
+-	       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
+-	       $author . "</$tag>";
++	       format_search_author($co->{'author_name'}, "author",
++		       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
++		       $author) .
++	       "</$tag>";
+ }
+ 
+ # format git diff header line, i.e. "diff --(git|combined|cc) ..."
+@@ -3433,10 +3458,11 @@ sub git_print_authorship {
+ 	my $co = shift;
+ 	my %opts = @_;
+ 	my $tag = $opts{-tag} || 'div';
++	my $author = $co->{'author_name'};
+ 
+ 	my %ad = parse_date($co->{'author_epoch'}, $co->{'author_tz'});
+ 	print "<$tag class=\"author_date\">" .
+-	      esc_html($co->{'author_name'}) .
++	      format_search_author($author, "author", esc_html($author)) .
+ 	      " [$ad{'rfc2822'}";
+ 	print_local_time(%ad) if ($opts{-localtime});
+ 	print "]" . git_get_avatar($co->{'author_email'}, -pad_before => 1)
+@@ -3455,8 +3481,12 @@ sub git_print_authorship_rows {
+ 	@people = ('author', 'committer') unless @people;
+ 	foreach my $who (@people) {
+ 		my %wd = parse_date($co->{"${who}_epoch"}, $co->{"${who}_tz"});
+-		print "<tr><td>$who</td><td>" . esc_html($co->{$who}) . "</td>" .
+-		      "<td rowspan=\"2\">" .
++		print "<tr><td>$who</td><td>" .
++		      format_search_author($co->{"${who}_name"}, $who,
++			       esc_html($co->{"${who}_name"})) . " " .
++		      format_search_author($co->{"${who}_email"}, $who,
++			       esc_html("<" . $co->{"${who}_email"} . ">")) .
++		      "</td><td rowspan=\"2\">" .
+ 		      git_get_avatar($co->{"${who}_email"}, -size => 'double') .
+ 		      "</td></tr>\n" .
+ 		      "<tr>" .
+-- 
+1.6.5.94.gb6c65
