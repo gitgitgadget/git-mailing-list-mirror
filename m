@@ -1,147 +1,107 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: [PATCH] grep: do not segfault when -f is used
-Date: Fri, 16 Oct 2009 07:13:25 -0700
-Message-ID: <1255702405-7050-1-git-send-email-kraai@ftbfs.org>
-References: <4AD8791A.8060500@viscovery.net>
-Cc: Matt Kraai <kraai@ftbfs.org>
-To: git@vger.kernel.org, gitster@pobox.com,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 16 16:17:14 2009
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v3 0/5] Pretty formats for reflog data
+Date: Fri, 16 Oct 2009 16:20:32 +0200
+Message-ID: <cover.1255701207.git.trast@student.ethz.ch>
+References: <20091016053230.GB10629@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 16 16:25:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyncG-00041E-97
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:17:12 +0200
+	id 1MynkM-0008Gh-Ar
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Oct 2009 16:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760076AbZJPOQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 10:16:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760069AbZJPOQz
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:16:55 -0400
-Received: from zoom.lafn.org ([206.117.18.8]:35287 "EHLO zoom.lafn.org"
+	id S932079AbZJPOV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 10:21:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760002AbZJPOV7
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 10:21:59 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:25267 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760067AbZJPOQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 10:16:54 -0400
-Received: from macbookpro (pool-173-51-225-123.lsanca.fios.verizon.net [173.51.225.123])
-	(authenticated bits=0)
-	by zoom.lafn.org (8.14.3/8.14.2) with ESMTP id n9GEG65T070203
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 16 Oct 2009 07:16:09 -0700 (PDT)
-	(envelope-from kraai@ftbfs.org)
-Received: from kraai by macbookpro with local (Exim 4.69)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1MynYh-0001qM-0H; Fri, 16 Oct 2009 07:13:31 -0700
-X-Mailer: git-send-email 1.6.5
-In-Reply-To: <4AD8791A.8060500@viscovery.net>
-X-Virus-Scanned: clamav-milter 0.95.1 at zoom.lafn.org
-X-Virus-Status: Clean
+	id S1759992AbZJPOV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 10:21:58 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
+ 2009 16:21:10 +0200
+Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Fri, 16 Oct
+ 2009 16:21:10 +0200
+X-Mailer: git-send-email 1.6.5.116.g4aaa3
+In-Reply-To: <20091016053230.GB10629@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130489>
 
-"git grep" would segfault if its -f option was used because it would
-try to use an uninitialized strbuf, so initialize the strbuf.
+Next round :-)
 
-Thanks to Johannes Sixt <j.sixt@viscovery.net> for the help with the
-test cases.
+I only changed 3/5, as per your comments:
 
-Signed-off-by: Matt Kraai <kraai@ftbfs.org>
----
- builtin-grep.c  |    2 +-
- t/t7002-grep.sh |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 67 insertions(+), 1 deletions(-)
+Jeff King wrote:
+> On Fri, Oct 16, 2009 at 12:41:46AM +0200, Thomas Rast wrote:
+> > +- '%gD': reflog selector, e.g., `refs/stash@{1}`
+> > +- '%gd': shortened reflog selector, e.g., `stash@{1}`
+> > +- '%gs': reflog subject
+> 
+> Should we give a note that these do nothing if "-g" was not given?
 
-diff --git a/builtin-grep.c b/builtin-grep.c
-index 761799d..1df25b0 100644
---- a/builtin-grep.c
-+++ b/builtin-grep.c
-@@ -631,7 +631,7 @@ static int file_callback(const struct option *opt, const char *arg, int unset)
- 	struct grep_opt *grep_opt = opt->value;
- 	FILE *patterns;
- 	int lno = 0;
--	struct strbuf sb;
-+	struct strbuf sb = STRBUF_INIT;
- 
- 	patterns = fopen(arg, "r");
- 	if (!patterns)
-diff --git a/t/t7002-grep.sh b/t/t7002-grep.sh
-index ae56a36..ae5290a 100755
---- a/t/t7002-grep.sh
-+++ b/t/t7002-grep.sh
-@@ -213,6 +213,72 @@ test_expect_success 'grep -e A --and --not -e B' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'grep -f, non-existent file' '
-+	test_must_fail git grep -f patterns
-+'
-+
-+cat >expected <<EOF
-+file:foo mmap bar
-+file:foo_mmap bar
-+file:foo_mmap bar mmap
-+file:foo mmap bar_mmap
-+file:foo_mmap bar mmap baz
-+EOF
-+
-+cat >pattern <<EOF
-+mmap
-+EOF
-+
-+test_expect_success 'grep -f, one pattern' '
-+	git grep -f pattern >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+file:foo mmap bar
-+file:foo_mmap bar
-+file:foo_mmap bar mmap
-+file:foo mmap bar_mmap
-+file:foo_mmap bar mmap baz
-+t/a/v:vvv
-+t/v:vvv
-+v:vvv
-+EOF
-+
-+cat >patterns <<EOF
-+mmap
-+vvv
-+EOF
-+
-+test_expect_success 'grep -f, multiple patterns' '
-+	git grep -f patterns >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+file:foo mmap bar
-+file:foo_mmap bar
-+file:foo_mmap bar mmap
-+file:foo mmap bar_mmap
-+file:foo_mmap bar mmap baz
-+t/a/v:vvv
-+t/v:vvv
-+v:vvv
-+EOF
-+
-+cat >patterns <<EOF
-+
-+mmap
-+
-+vvv
-+
-+EOF
-+
-+test_expect_success 'grep -f, ignore empty lines' '
-+	git grep -f patterns >actual &&
-+	test_cmp expected actual
-+'
-+
- cat >expected <<EOF
- y:y yy
- --
--- 
-1.6.5
+I tried for some time, but all attempts at interrupting the lists
+ended up terminating it again, so that the %g family list would not
+line up with the rest of the parameters.  Having the note there would
+be nice, but I think keeping the list together optically is more
+important.  However, AFAICS it really is the first character that only
+works with certain options (%m makes little sense without A...B, but
+still expands to >).
+
+Looking at it did make me notice that @{1} is invalid asciidoc and
+needs to be spelled @\{1\} though :-)
+
+> A test for '%gd' would be nice. A squashable one is below. I am tempted
+> to test all three forms in t6006, since the intent of that script is to
+> test all format specifiers. However, those tests would be somewhat
+> redundant with your t1411 tests.
+
+I added yours and moved my tests to t6006 too, as indicated in the
+other mail.
+
+I also changed the caching, as outlined earlier:
+
+I wrote:
+> I had a slightly better idea today: We can just put an extra member
+> into the complete_reflogs struct, i.e., a short_ref to go along with
+> the ref.  It'll take a bit of auditing to verify that all allocations
+> are zeroed, but since the struct is local to the file that shouldn't
+> be so hard.
+
+There's in fact only a single allocation (with xcalloc).
+
+
+Thomas Rast (5):
+  Refactor pretty_print_commit arguments into a struct
+  reflog-walk: refactor the branch@{num} formatting
+  Introduce new pretty formats %g[sdD] for reflog information
+  stash list: use new %g formats instead of sed
+  stash list: drop the default limit of 10 stashes
+
+ Documentation/pretty-formats.txt |    3 +
+ builtin-branch.c                 |    3 +-
+ builtin-checkout.c               |    3 +-
+ builtin-log.c                    |    3 +-
+ builtin-merge.c                  |    7 ++-
+ builtin-rev-list.c               |    7 ++-
+ builtin-shortlog.c               |    9 +++-
+ builtin-show-branch.c            |    4 +-
+ commit.h                         |   20 ++++++---
+ git-stash.sh                     |    8 +---
+ log-tree.c                       |   21 +++++-----
+ pretty.c                         |   44 ++++++++++++++------
+ reflog-walk.c                    |   83 ++++++++++++++++++++++++++++----------
+ reflog-walk.h                    |    8 ++++
+ t/t6006-rev-list-format.sh       |   18 ++++++++
+ 15 files changed, 170 insertions(+), 71 deletions(-)
