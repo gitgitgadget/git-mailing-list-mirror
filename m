@@ -1,146 +1,117 @@
-From: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
-Subject: Re: Introduction and Wikipedia and Git Blame
-Date: Sat, 17 Oct 2009 18:42:18 +0200
-Message-ID: <ee9cc730910170942p7869d62ra08571948675d696@mail.gmail.com>
-References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
-	 <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
-	 <alpine.DEB.1.00.0910161548550.4985@pacific.mpi-cbg.de>
-	 <7vbpk7w9qx.fsf@alter.siamese.dyndns.org>
-	 <ee9cc730910161100r71818303v343f555151db4dcc@mail.gmail.com>
-	 <7v7huvuptn.fsf@alter.siamese.dyndns.org>
-	 <7vpr8nt894.fsf@alter.siamese.dyndns.org>
-	 <ee9cc730910161419x608f5972x705ce8088d72c94a@mail.gmail.com>
-	 <7v3a5irkel.fsf@alter.siamese.dyndns.org>
-	 <ee9cc730910162350p250b8afak767b0626bede34e4@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Sat, 17 Oct 2009 19:04:21 +0200
+Message-ID: <20091017170421.GA10490@atjola.homenet>
+References: <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+ <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
+ <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+ <20091016143041.GA11821@atjola.homenet>
+ <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
+ <7vvdiftb0d.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0910162029460.31673@reaper.quantumfyre.co.uk>
+ <alpine.LFD.2.00.0910161557500.20122@xanadu.home>
+ <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 18:42:32 2009
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Sat Oct 17 19:04:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzCMN-0001GH-MG
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 18:42:28 +0200
+	id 1MzChq-0001nO-9w
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 19:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbZJQQmQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 12:42:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751365AbZJQQmQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 12:42:16 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:59729 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049AbZJQQmP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 12:42:15 -0400
-Received: by fxm18 with SMTP id 18so3516802fxm.37
-        for <git@vger.kernel.org>; Sat, 17 Oct 2009 09:42:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UlkHOJs7xWF6HO6/Fly2whE00D49co41yQ8oOlu1Nt8=;
-        b=eMtn0etupDCR5SGLtJxBjlAaLcZ7k1o681AeOYEP02oWhX7NCkCswnVTzD6/cqYu74
-         BCHKL35aHgT1abyggKFR7qKFhIUtHSy4FQIe1VXdgVZ3JvzNQEtMeOKmXgOi8JncJPqv
-         SowN5wFhnW4bz6RPPFVq7giySBmgdst/GhGto=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QVKC3DBw4XCvKT3hj7HoMhkVUx2rra6dOyvGjQimA4/pRU2kMndP/LJs8AErkY0lxd
-         i9B240YUIZT5pzQwzYK0VklWYoHzJqxDxPWgeosoW2aLISzDmxZY9NXlxymmUTIS14hm
-         zyPTTK5FXJru4tncmDT/PikADLF5jZGI10AyY=
-Received: by 10.204.8.138 with SMTP id h10mr2758794bkh.187.1255797738587; Sat, 
-	17 Oct 2009 09:42:18 -0700 (PDT)
-In-Reply-To: <ee9cc730910162350p250b8afak767b0626bede34e4@mail.gmail.com>
+	id S1752390AbZJQREX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 13:04:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZJQREX
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 13:04:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44771 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751726AbZJQREW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 13:04:22 -0400
+Received: (qmail invoked by alias); 17 Oct 2009 17:04:25 -0000
+Received: from i59F5B216.versanet.de (EHLO atjola.homenet) [89.245.178.22]
+  by mail.gmx.net (mp005) with SMTP; 17 Oct 2009 19:04:25 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19Eu6swjKJEx/8LhCfxtJuGQbp2BGcs40qZcqGoCQ
+	CvvlOhyvxKXkUU
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.49
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130565>
 
-I have done a workaround hack,
-today I attempted to hack the blame code but I need to do more
-research, it did not work.
+On 2009.10.17 16:15:13 +0100, Julian Phillips wrote:
+> On Fri, 16 Oct 2009, Nicolas Pitre wrote:
+>=20
+> >On Fri, 16 Oct 2009, Julian Phillips wrote:
+> >
+> >>My interest in this thread is solely that it might provide a mechan=
+ism to find
+> >>out which tag was checked out.  So, I'm just chucking in my $0.02 a=
+s a user.
+> >
+> >Try this:
+> >
+> >$ git checkout v1.5.5
+> >Note: moving to 'v1.5.5' which isn't a local branch
+> >If you want to create a new branch from this checkout, you may do so
+> >(now or later) by using -b with the checkout command again. Example:
+> > git checkout -b <new_branch_name>
+> >HEAD is now at 1d2375d... GIT 1.5.5
+> >
+> >[look around, and then ...]
+> >
+> >$ git checkout HEAD~2
+> >Previous HEAD position was 1d2375d... GIT 1.5.5
+> >HEAD is now at f61cc48... git-svn: fix following renamed paths when =
+tracking a single path
+> >
+> >[go out for lunch ... and forget what this was about.]
+> >
+> >$ git reflog -3
+> >f61cc48 HEAD@{0}: checkout: moving from 1d2375d... to HEAD~2
+> >1d2375d HEAD@{1}: checkout: moving from master to v1.5.5
+> >c274db7 HEAD@{2}: pull : Fast forward
+> >
+> >Here I have all the information to see what I did, and from what sta=
+te.
+> >I even know that I did a pull on the master branch before moving awa=
+y
+> >from it.  The -3 limits the log to 3 entries.  With no limit you get=
+ it
+> >all in your default pager.
+> >
+> >So there is no need for another mechanism to find out what tag was
+> >actually checked out -- you have it all already.
+>=20
+> What I want is a way for my build process to reliably know what
+> branch or tag is currently being built.  "git symbolic-ref HEAD"
+> will give me the branch name, but doesn't work for tags.  "git
+> describe" will find _a_ tag, but I can't tell if it's actually the
+> one checked out.
 
-But I did get a new version of the import script running and word
-level blame going.
+Do you have multiple (annotated) tags for the same commit? Otherwise, I
+don't see why "git describe HEAD" should print the wrong one. If there'=
+s
+a tag that can be resolved to the same commit that HEAD can be resolved=
+,
+then "git describe HEAD" must output that one. Otherwise, that'd be a
+clear bug to me.
 
-http://fmtyewtk.blogspot.com/2009/10/mediawiki-git-word-level-blaming-o=
-ne.html
-
-Next step is ready :
-
-1. I have a single script that will pull a given article and check in
-the revisions into git,
-it is not perfect, but works.
-
-http://bazaar.launchpad.net/~jamesmikedupont/+junk/wikiatransfer/revisi=
-on/8
-you run it like this,from inside a git repo :
-
-perl GetRevisions.pl "Article_Name"
-
-git blame Article_Name/Article.xml
-git push origin master
-
-The code that splits up the line is in Process File, this splits all
-spaces into newlines.
-that way we get a word level blame.
-
-     if ($insidetext)
-     {
-  ## split all lines on the space
-  s/(\ )/\\\n/g;
-
-
-  print OUT  $_;
-     }
-
-
-The Article is here:
-http://github.com/h4ck3rm1k3/KosovoWikipedia/blob/master/Wiki/2008_Koso=
-vo_declaration_of_independence/article.xml
-
-
-here are the blame results.
-http://github.com/h4ck3rm1k3/KosovoWikipedia/blob/master/Wiki/2008_Koso=
-vo_declaration_of_independence/wordblame.txt
-
-
-Problem is that github does not like this amount of processor power
-begin used and kills the process, you can do a local git blame.
-
-Now we have the tool to easily create a repository from wikipedia, or
-any other export enabled mediawiki.
-
-mike
-
-
-On Sat, Oct 17, 2009 at 8:50 AM, jamesmikedupont@googlemail.com
-<jamesmikedupont@googlemail.com> wrote:
-> Thank you very much for your input and advice,
-> I have a lot of learn about this great tool.
-> I am working on learning how the existing blame tool runs now.
-> Will report back when I have some code.
-> mike
->
-> On Sat, Oct 17, 2009 at 1:25 AM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com> wr=
-ites:
->>
->>> What do you think of my idea to create blames along a specific user
->>> defined byte positions ?
->>
->> Overly complicated and not enough time for _review_. =A0If you are b=
-laming
->> one-byte (or one-char) per line, wouldn't it be enough to consider t=
-he
->> line number in the output as byte (or char) position when reconstitu=
-ting
->> the original text?
->>
->
+Bj=F6rn
