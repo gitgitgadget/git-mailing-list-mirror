@@ -1,42 +1,42 @@
 From: Thomas Rast <trast@student.ethz.ch>
 Subject: [PATCH v3.1 3/5] Introduce new pretty formats %g[sdD] for reflog information
-Date: Sat, 17 Oct 2009 16:39:53 +0200
-Message-ID: <e0ab6923eb4057bcbc8e97980dad5e4a37e53067.1255789678.git.trast@student.ethz.ch>
-References: <cover.1255789678.git.trast@student.ethz.ch>
+Date: Sat, 17 Oct 2009 16:48:11 +0200
+Message-ID: <e0ab6923eb4057bcbc8e97980dad5e4a37e53067.1255790816.git.trast@student.ethz.ch>
+References: <8a5b3a586d437f02e2a75edd2786636b605522a7.1255701207.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Jef Driesen <jefdriesen@hotmail.com>,
 	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 16:41:37 2009
+X-From: git-owner@vger.kernel.org Sat Oct 17 16:48:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzASm-00046a-9F
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 16:40:56 +0200
+	id 1MzAaQ-00083P-Hi
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 16:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbZJQOko (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 10:40:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751845AbZJQOko
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 10:40:44 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:21713 "EHLO gwse.ethz.ch"
+	id S1751825AbZJQOsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 10:48:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751513AbZJQOsk
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 10:48:40 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:25329 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517AbZJQOkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 10:40:43 -0400
+	id S1751274AbZJQOsk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 10:48:40 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Sat, 17 Oct
- 2009 16:40:45 +0200
+ 2009 16:48:43 +0200
 Received: from localhost.localdomain (217.162.250.189) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Sat, 17 Oct
- 2009 16:40:24 +0200
+ 2009 16:48:43 +0200
 X-Mailer: git-send-email 1.6.5.116.g4aaa3
-In-Reply-To: <cover.1255789678.git.trast@student.ethz.ch>
+In-Reply-To: <8a5b3a586d437f02e2a75edd2786636b605522a7.1255701207.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130557>
 
 Add three new --pretty=format escapes:
 
@@ -64,8 +64,13 @@ Thanks to Jeff King for reviews, the %gd testcase and documentation.
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-[Tacking this on the corresponding v3 patch, but the text below is
-from <20091017011801.GA31443@coredump.intra.peff.net>.]
+I wrote:
+> [Tacking this on the corresponding v3 patch, but the text below is
+> from <20091017011801.GA31443@coredump.intra.peff.net>.]
+
+This sadly backfired, as I forgot to snip out the in-reply-to in the
+mail itself and git-send-email apparently trusted that more.  Sorry
+for the confusion.
 
 Jeff King wrote:
 > I am tempted to do a note like the one below, but maybe the behavior is
@@ -80,7 +85,6 @@ Jeff King wrote:
 Sure.  I figured it was obvious enough, but since you already went to
 the lengths of documenting the exact behaviour of %d, I squashed it
 and adjusted the acknowledgement in the commit message accordingly.
-
 
  Documentation/pretty-formats.txt |    9 +++++++++
  commit.h                         |    1 +
