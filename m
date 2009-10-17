@@ -1,117 +1,81 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Sat, 17 Oct 2009 19:04:21 +0200
-Message-ID: <20091017170421.GA10490@atjola.homenet>
-References: <20091014230934.GC29664@coredump.intra.peff.net>
- <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
- <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
- <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
- <20091016143041.GA11821@atjola.homenet>
- <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
- <7vvdiftb0d.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.0910162029460.31673@reaper.quantumfyre.co.uk>
- <alpine.LFD.2.00.0910161557500.20122@xanadu.home>
- <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/5] Refactor pretty_print_commit arguments into a
+ struct
+Date: Sat, 17 Oct 2009 10:05:35 -0700
+Message-ID: <7vljja7xy8.fsf@alter.siamese.dyndns.org>
+References: <cover.1255701207.git.trast@student.ethz.ch>
+ <9d3d0f0a6126afc86689138adf58ac7a12c43858.1255701207.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Sat Oct 17 19:04:39 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Oct 17 19:05:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzChq-0001nO-9w
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 19:04:38 +0200
+	id 1MzCj7-0002IV-6M
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 19:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbZJQREX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 13:04:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZJQREX
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 13:04:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44771 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751726AbZJQREW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 13:04:22 -0400
-Received: (qmail invoked by alias); 17 Oct 2009 17:04:25 -0000
-Received: from i59F5B216.versanet.de (EHLO atjola.homenet) [89.245.178.22]
-  by mail.gmx.net (mp005) with SMTP; 17 Oct 2009 19:04:25 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19Eu6swjKJEx/8LhCfxtJuGQbp2BGcs40qZcqGoCQ
-	CvvlOhyvxKXkUU
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.49
+	id S1752842AbZJQRFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 13:05:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752498AbZJQRFq
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 13:05:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64106 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751234AbZJQRFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 13:05:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D4AF17BFAD;
+	Sat, 17 Oct 2009 13:05:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=w/u3h8QkdJiSTJc920/4uhw3p6g=; b=h0AfUz
+	AHWP+PpSgoI7m6e4VrvipSCcTO7xsBroXhNoxlHabABYlKX9Sz5TTifdsEoIoG1b
+	1Lh5YEbUj3VRfML+jHKWAC4ApXV1vTLkTBfOe8B/ch47mhg9edM3usAq/8qUuZbh
+	bGYOPkZHdmR3P30rrv9a4x7Y0RJNwubu+WjuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PSx2QyFi+MfFVz0go2Fx0NdabUqbWD/Z
+	LHCW6fsJE4ny8V0pUnIE+iPicQqb+D/yOPlP+/n/tguL3dl8nAUjR/zNtl5IH6El
+	oFua6IGZmEmgPHF/zaAQKoXNHCmK0DZUs7f36cLPqj1NCFdYArnr8JTGo0lbbWJe
+	kcya65g2mx8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 944817BFAC;
+	Sat, 17 Oct 2009 13:05:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D0AAD7BFA8; Sat, 17 Oct 2009
+ 13:05:36 -0400 (EDT)
+In-Reply-To: <9d3d0f0a6126afc86689138adf58ac7a12c43858.1255701207.git.trast@student.ethz.ch> (Thomas Rast's message of "Fri\, 16 Oct 2009 16\:20\:33 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E1EB62A-BB3F-11DE-B287-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130566>
 
-On 2009.10.17 16:15:13 +0100, Julian Phillips wrote:
-> On Fri, 16 Oct 2009, Nicolas Pitre wrote:
->=20
-> >On Fri, 16 Oct 2009, Julian Phillips wrote:
-> >
-> >>My interest in this thread is solely that it might provide a mechan=
-ism to find
-> >>out which tag was checked out.  So, I'm just chucking in my $0.02 a=
-s a user.
-> >
-> >Try this:
-> >
-> >$ git checkout v1.5.5
-> >Note: moving to 'v1.5.5' which isn't a local branch
-> >If you want to create a new branch from this checkout, you may do so
-> >(now or later) by using -b with the checkout command again. Example:
-> > git checkout -b <new_branch_name>
-> >HEAD is now at 1d2375d... GIT 1.5.5
-> >
-> >[look around, and then ...]
-> >
-> >$ git checkout HEAD~2
-> >Previous HEAD position was 1d2375d... GIT 1.5.5
-> >HEAD is now at f61cc48... git-svn: fix following renamed paths when =
-tracking a single path
-> >
-> >[go out for lunch ... and forget what this was about.]
-> >
-> >$ git reflog -3
-> >f61cc48 HEAD@{0}: checkout: moving from 1d2375d... to HEAD~2
-> >1d2375d HEAD@{1}: checkout: moving from master to v1.5.5
-> >c274db7 HEAD@{2}: pull : Fast forward
-> >
-> >Here I have all the information to see what I did, and from what sta=
-te.
-> >I even know that I did a pull on the master branch before moving awa=
-y
-> >from it.  The -3 limits the log to 3 entries.  With no limit you get=
- it
-> >all in your default pager.
-> >
-> >So there is no need for another mechanism to find out what tag was
-> >actually checked out -- you have it all already.
->=20
-> What I want is a way for my build process to reliably know what
-> branch or tag is currently being built.  "git symbolic-ref HEAD"
-> will give me the branch name, but doesn't work for tags.  "git
-> describe" will find _a_ tag, but I can't tell if it's actually the
-> one checked out.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Do you have multiple (annotated) tags for the same commit? Otherwise, I
-don't see why "git describe HEAD" should print the wrong one. If there'=
-s
-a tag that can be resolved to the same commit that HEAD can be resolved=
-,
-then "git describe HEAD" must output that one. Otherwise, that'd be a
-clear bug to me.
+> pretty_print_commit() has a bunch of rarely-used arguments, and
+> introducing more of them requires yet another update of all the call
+> sites.  Refactor most of them into a struct to make future extensions
+> easier.
+>
+> The ones that stay "plain" arguments were chosen on the grounds that
+> all callers put real arguments there, whereas some callers have 0/NULL
+> for all arguments that were factored into the struct.
+>
+> We declare the struct 'const' to ensure none of the callers are bitten
+> by the changed (no longer call-by-value) semantics.
+>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 
-Bj=F6rn
+Good idea, a slightly sloppy/careless execution.
+
+The existing calls to format_commit_message() often take DATE_NORMAL to
+its "enum date_mode dmode" argument, and you replaced it with a pointer to
+a struct.  DATE_NORMAL happens to be "0" and the compiler does not catch
+calls you forgot to convert in this patch.
