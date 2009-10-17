@@ -1,77 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Introduction and Wikipedia and Git Blame
-Date: Fri, 16 Oct 2009 16:25:38 -0700
-Message-ID: <7v3a5irkel.fsf@alter.siamese.dyndns.org>
-References: <ee9cc730910160207x49feb40ej692188abb0a57473@mail.gmail.com>
- <alpine.DEB.1.00.0910161321550.4985@pacific.mpi-cbg.de>
- <ee9cc730910160443k7e5f718bs964923a796cf38d1@mail.gmail.com>
- <alpine.DEB.1.00.0910161548550.4985@pacific.mpi-cbg.de>
- <7vbpk7w9qx.fsf@alter.siamese.dyndns.org>
- <ee9cc730910161100r71818303v343f555151db4dcc@mail.gmail.com>
- <7v7huvuptn.fsf@alter.siamese.dyndns.org>
- <7vpr8nt894.fsf@alter.siamese.dyndns.org>
- <ee9cc730910161419x608f5972x705ce8088d72c94a@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] Add proof-of-concept %[w(width,in1,in2)<<any-string>>%] implementation
+Date: Sat, 17 Oct 2009 02:00:02 +0200
+Message-ID: <200910170200.03681.jnareb@gmail.com>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com> <200910170020.01756.jnareb@gmail.com> <7v7huurkif.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "jamesmikedupont\@googlemail.com" <jamesmikedupont@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 01:25:59 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 17 01:59:12 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MywBJ-0007CM-2N
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 01:25:57 +0200
+	id 1MywhT-0001qd-Sh
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 01:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbZJPXZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 19:25:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750765AbZJPXZr
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 19:25:47 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65440 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750724AbZJPXZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 19:25:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ACD845B4C4;
-	Fri, 16 Oct 2009 19:25:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cmORMIDyKn58dWqviqA/6NIg9ic=; b=DMJA+M
-	AQv15+Akzfbw7yPJHqFaTCglUARiUbS9H5pGBHc1cQWnNZwzTJaYNZxSKiQVf6c7
-	Lf4rmBFdA83pF+B9mJgB6+H6wPd0xUa3+ja1sOcU3SZEhB82nGxrprkvqvGZ/4La
-	072b7AAn4aP5DuCcKlwBns0iIDvyNzGmKvbK0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I5G3jHG+uDAR8kmOaltsKUyb1OwNON01
-	lJZdunwHHT1d7Uk0/ip2k0NqOZptYhxShS7KjKA8tG6Mp9PVJyYc3CZCLHQNqnbQ
-	5oAC93je+H7qWEO0PQ6hTlvbl1jLpawCccU/G07SSmU+zd7YuLlwEpG8pVdXd3Mp
-	MygVEYUZVF8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C0DB5B4C2;
-	Fri, 16 Oct 2009 19:25:45 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E0AA5B4C1; Fri, 16 Oct
- 2009 19:25:40 -0400 (EDT)
-In-Reply-To: <ee9cc730910161419x608f5972x705ce8088d72c94a@mail.gmail.com>
- (jamesmikedupont@googlemail.com's message of "Fri\, 16 Oct 2009 23\:19\:03
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3AB518F2-BAAB-11DE-A84F-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751182AbZJPX6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 19:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbZJPX6r
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 19:58:47 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:42773 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750911AbZJPX6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 19:58:46 -0400
+Received: by fxm18 with SMTP id 18so3040294fxm.37
+        for <git@vger.kernel.org>; Fri, 16 Oct 2009 16:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=/VzZPlVDcTQ3Lwyi/dP54vNcoUKxn7HS7bjP4UvsdYw=;
+        b=d11nUDDLi8C8ea4bjtM+U+nHQ6DVfc65nir9xG83ekBZrf+MunoNd0H1zx+YEcSzWN
+         as06E94ce0ad3Y1UKQlEOzegSN31WFB6OTBE5R8acyB4DAjlH/tkg6YKuhbkscQq8x/O
+         ItwGYRXKTrY7Lbb5u0dA+mY7CHS5mzDlWJW6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=gWO5Y5uY4jt6sn7lYzb3BLUUFKJeSMo5FBW6gyq1i4c/Px7/LTMgDyrASgdKHcoge4
+         5+7UzFmUqZvYhpL1Uo8cGoWT0Zs1DFHFYNS+eCTdEB7ChC5prP5y9mFLjfDDd1bmkZVj
+         LsDVGeMq4r7pccfkqm2GdbJU5A7iphGLtxKkI=
+Received: by 10.204.160.143 with SMTP id n15mr1905888bkx.183.1255737530419;
+        Fri, 16 Oct 2009 16:58:50 -0700 (PDT)
+Received: from ?192.168.1.13? (absh57.neoplus.adsl.tpnet.pl [83.8.127.57])
+        by mx.google.com with ESMTPS id 15sm298131bwz.0.2009.10.16.16.58.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Oct 2009 16:58:49 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v7huurkif.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130538>
 
-"jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com> writes:
+On Sat, 17 Oct 2009, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > But even with original w(<width>,<indent1>,<indent2>) we can get output
+> > of bare "git log" using pretty format... well, almost; it would be the
+> > same if there was ability to put infinite width, and there doesn't seem
+> > to be specifier for the whole, unchanged commit message (subject,
+> > unwrapped + separating lines + body).
+> 
+> I think I already discussed this when I sent out %s%+b patch.  You would
+> need to adjust and apply both series, but essentially it would become
+> something like:
+> 
+>     %s%+[w(-1,4,4)%b]
+> 
+> I.e. a single subject line, potentially followed by a LF and body indented
+> by 4-place, but the LF will be there only when the body is not empty.
 
-> What do you think of my idea to create blames along a specific user
-> defined byte positions ?
+Why not
 
-Overly complicated and not enough time for _review_.  If you are blaming
-one-byte (or one-char) per line, wouldn't it be enough to consider the
-line number in the output as byte (or char) position when reconstituting
-the original text?
+    %[w(-1,4,4)%s%+b]
+
+Or is it
+
+    %[w(-1,4,4)%s%+%b]
+
+(i.e. %+ is this empty line between subject and body, if it exists).
+
+The %+x seems a bit strange... but I guess implementing conditional
+expansion a la shell or rpn spec/queryformat would be out of question
+(i.e. %?s:+ )...
+-- 
+Jakub Narebski
+Poland
