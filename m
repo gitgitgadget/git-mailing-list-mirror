@@ -1,102 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
  HEAD was
-Date: Sat, 17 Oct 2009 01:11:23 -0700
-Message-ID: <7vws2ue8yc.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.0910141616530.20122@xanadu.home>
- <7v7huxbtbk.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0910141647390.20122@xanadu.home>
- <7vws2xa9lu.fsf@alter.siamese.dyndns.org>
- <20091014230934.GC29664@coredump.intra.peff.net>
- <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
- <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
- <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
- <20091016143041.GA11821@atjola.homenet>
- <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
- <20091017075551.GA5474@atjola.homenet>
+Date: Sat, 17 Oct 2009 10:19:01 +0200
+Message-ID: <20091017081901.GB5474@atjola.homenet>
+References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org>
+ <m49nq6-uk5.ln1@burns.bruehl.pontohonk.de>
+ <7vr5t2h3do.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 17 10:11:59 2009
+Cc: Christoph Bartoschek <bartoschek@gmx.de>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Oct 17 10:19:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mz4OJ-00066k-WB
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 10:11:56 +0200
+	id 1Mz4VQ-0000DV-J2
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 10:19:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116AbZJQILm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 04:11:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbZJQILm
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 04:11:42 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51868 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751710AbZJQILk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 04:11:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 851217A737;
-	Sat, 17 Oct 2009 04:11:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=jqD7n0WeS/E0
-	AVtyvyWNdg/QEGQ=; b=eRBDa5jnFY3IC4i01oCTnrrk1wzxbR2fvnikQe4ryHDP
-	VFRP6oKgClE+UKlzhqhhUKkyQfEAfuqX8AKTTtiQe04F9+JqJZtHER5pGQUwgVB9
-	rbiieVgz+MP/Q74truYURnLfxqCPrwPR85AK0IT6h1Y1IhEV5C17z0FHuTG9oTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iES+In
-	owPH3/QSPm4FvX0r2n0AMWpn1I/sVs7aM3VCWPe2IVICQrtbaVoXDRrffln+YDg6
-	WiGy4v0FM3/ApvDvUFgpxru7BcATU7EV+Gc7f5aymuSED16+7xWwG+Fods6KGQyb
-	MFu3S9qGJL2TCnnJ1IJZ9qyPxsFqZnH3ISe3s=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 16A4B7A734;
-	Sat, 17 Oct 2009 04:11:36 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 719AC7A731; Sat, 17 Oct 2009
- 04:11:25 -0400 (EDT)
-In-Reply-To: <20091017075551.GA5474@atjola.homenet> (=?utf-8?Q?=22Bj=C3=B6?=
- =?utf-8?Q?rn?= Steinbrink"'s message of "Sat\, 17 Oct 2009 09\:55\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B04FF2DC-BAF4-11DE-8187-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752372AbZJQITD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 04:19:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752311AbZJQITC
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 04:19:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49766 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752109AbZJQITA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 04:19:00 -0400
+Received: (qmail invoked by alias); 17 Oct 2009 08:19:04 -0000
+Received: from i59F5487B.versanet.de (EHLO atjola.homenet) [89.245.72.123]
+  by mail.gmx.net (mp054) with SMTP; 17 Oct 2009 10:19:04 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19kHc8MN1hkzcc2BndOXR87jtvDQ/PxaFbIiH95pg
+	KuMHEM9uSwvmmY
+Content-Disposition: inline
+In-Reply-To: <7vr5t2h3do.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130551>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
+On 2009.10.17 00:43:31 -0700, Junio C Hamano wrote:
+> Christoph Bartoschek <bartoschek@gmx.de> writes:
+> > Daniel Barkalow wrote:
+> >
+> >> The upshot of the messages should be:
+> >>=20
+> >>  $ git checkout origin/master
+> >>  Since you can't actually change "origin/master" yourself, you'll =
+just
+> >>  be sightseeing unless you create a local branch to hold new local=
+ work.
+> >>=20
+> >>  $ git branch
+> >>  * (not a local branch, but "origin/master")
+> >>=20
+> >>  $ git commit
+> >>  You've been sightseeing "origin/master". The commit can't change =
+that
+> >>  value, so your commit isn't held in any branch. If you want to cr=
+eate
+> >>  a branch to hold it, here's how.
 
-> ... If so, it does a "git checkout --merge
-> <upstream>" (possibly leaving conflicts for the uncommitted changes,
-> just like "svn update").
+[...]
 
-Up to this point I was reading with quite a lot of interest.  But here =
-I
-strongly disagree to the point of getting actually disgusted.
+> The second item in the Daniel's transcript above may be an improvemen=
+t but
+> I think it is a wrong economy to record and show 'but "origin/master"=
+'
+> (which cannot be correct forever and has to be invalidated once the u=
+ser
+> starts committing or resetting) in the message.
 
-"svn up" is one of the areas Subversion folks failed to make their syst=
-em
-a better CVS.  It has the same "local changes are lost in the merge
-conflict mess in an irreversible way" failure mode, and we shouldn't be
-making it easy to new people.  It is not something we should emulate.
+I don't think it's entirely wrong to record that information, git just
+has to know when to invalidate it, possibly requiring the user to reall=
+y
+detach HEAD.
 
-You can and should instead refuse the update, and suggest committing fi=
-rst
-so that the user has a safe record of what he has done and the merge wi=
-th
-upstream can be retried if necessary.  As you need to have that "refuse
-but guide the lost soul by telling what to do" mode anyway when...
+git checkout origin/master
+git checkout origin/master~3
+git checkout HEAD^2~5
+git reset --hard HEAD~2
 
-> ... If a fast-forward is not possible, it
-> complains, telling the user that he needs to use "git merge/rebase/pu=
-ll"
-> instead, and might want to create a branch head, in case of a detache=
-d
-> HEAD.
+Those commands are all about walking the ancestry of origin/master in
+some way. So it seems reasonable to assume that HEAD is still weakly
+bound to origin/master. And based upon that, there could be something
+like "git update", and things like "git status" could show that you're
+browsing through the ancestry of origin/master, and that "git commit"
+message could maybe say "You've been sightseeing 'origin/master'
+[currently at 'origin/master~3^2~7'] ...".
+
+> I am wondering if a similar effect to help new users can be had by
+> rewording the message to:
+>=20
+>     $ git branch
+>     * (not a local branch; see "git reflog" to learn how you got here=
+)
+>=20
+> The user can see how he got there even after doing something else aft=
+er
+> the checkout (see Nico's write-up in $gmane/130527).  The difference =
+is
+> between giving fish and teaching how to catch one himself.
+
+That could be used when the user actively detached HEAD, invalidating
+the "weak binding". Maybe implicitly by "git commit" or=20
+"git reset <something_we_can't_keep_track_of>", or maybe explicitly,
+if committing on a "semi-detached HEAD" becomes forbidden.
+
+Or maybe it could always be shown, in addition to "You are here", you
+also get told "Do this to find out how you got there". Does seem like a
+good idea.
+
+Bj=F6rn
