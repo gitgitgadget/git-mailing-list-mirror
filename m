@@ -1,62 +1,62 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH RFC] git describe without refs distinguishes dirty working
- tree
-Date: Fri, 16 Oct 2009 20:31:20 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.0910162028190.21739@xanadu.home>
-References: <dffdbd190910160812h6d6a876el8261a622b5439b30@mail.gmail.com>
- <20091016173902.GT10505@spearce.org> <7veip3t6rm.fsf@alter.siamese.dyndns.org>
- <dffdbd190910161452o4ac0b426i7c48649eafa0d53@mail.gmail.com>
- <7vvdifq6vw.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: allow some defaults to be specified via git-config
+Date: Fri, 16 Oct 2009 17:50:35 -0700
+Message-ID: <7v3a5iq1wk.fsf@alter.siamese.dyndns.org>
+References: <1255650627-17576-1-git-send-email-sam.vilain@catalyst.net.nz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jean Privat <jean@pryen.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 02:31:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nigel McNie <nigel@catalyst.net.nz>
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Sat Oct 17 02:50:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MyxCh-0003sl-Ll
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 02:31:28 +0200
+	id 1MyxVT-0001XD-Ib
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 02:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751161AbZJQAbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 20:31:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbZJQAbR
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 20:31:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44448 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750838AbZJQAbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 20:31:16 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0KRM00EWHUS8JW90@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 16 Oct 2009 20:31:20 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vvdifq6vw.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751778AbZJQAul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 20:50:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751701AbZJQAul
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 20:50:41 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48283 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751683AbZJQAuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 20:50:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAEC77A065;
+	Fri, 16 Oct 2009 20:50:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=9pjKp1DA5WY2KNtHs+8TNTz/IO0=; b=tAWgXYW72Ic3sKT2MgliHxT
+	7fFTM1KnDfdIUTb89enXP+0pljYqR0Tb8hB2sO24KxMoCogsvkyDNt7dXU6W86lA
+	RRNCbmLCShuwBVvCOjojL9MBYralxeAtmBy+6TXf0gOspzolEco6fkf3/F7wUctA
+	IxzsvOhLkmBFI2y0xseQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=gCe3Gt/mDn/g/KRFNdXVhmtjJOoXv2VPYuKdrLF8SK6RzKtX7
+	RcF0/T5jO3CvXzr50Cq+agQO6DH0IqrZbxi0IQnH4j3RzrYVBlq3qbUrcBOx0Ayj
+	Bq1FLsrhL/5oUnenEoZcpYnm0S/3I3PiBtcEzTRLXjw3JpyqDo4/GseSnk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B1F177A064;
+	Fri, 16 Oct 2009 20:50:41 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7A1DA7A063; Fri, 16 Oct 2009
+ 20:50:37 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1848458A-BAB7-11DE-B084-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130541>
 
-On Fri, 16 Oct 2009, Junio C Hamano wrote:
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
-> But the thing is, "git describe" without arguments already works on HEAD
-> and describes it, and people depend on the behaviour.
-> 
-> I originally thought this _might_ break and hoped it won't be a big issue,
-> but now I've seen that even the kernel would break (it runs the command
-> without saying "HEAD"), I do not want to risk breaking other projects I
-> may not even heard of.  Some people might have copied our GIT-VERSION-GEN
-> (that says "HEAD"), but I would not bet against that many many more people
-> would have copied the use of "git describe" from the kernel build tree
-> than from us.
+> Some users prefer in particular '3way' to be the default, let them
+> specify it via the config file - and some other boolean settings while
+> we're at it.
 
-OpenOCD is another project that just started using Git and copied 
-describe usage from Linux.
-
-
-Nicolas
+I have to wonder how this will interact with the internal call rebase
+makes into am.  Would there be unexpected fallouts?
