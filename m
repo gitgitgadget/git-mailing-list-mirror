@@ -1,96 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] Add proof-of-concept %[w(width,in1,in2)<<any-string>>%] implementation
-Date: Sat, 17 Oct 2009 02:00:02 +0200
-Message-ID: <200910170200.03681.jnareb@gmail.com>
-References: <1255681702-5215-1-git-send-email-gitster@pobox.com> <200910170020.01756.jnareb@gmail.com> <7v7huurkif.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Add proof-of-concept
+ %[w(width,in1,in2)<<any-string>>%] implementation
+Date: Fri, 16 Oct 2009 17:18:43 -0700
+Message-ID: <7vy6naq3do.fsf@alter.siamese.dyndns.org>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com>
+ <200910170020.01756.jnareb@gmail.com>
+ <7v7huurkif.fsf@alter.siamese.dyndns.org>
+ <200910170200.03681.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 01:59:12 2009
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 17 02:19:00 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MywhT-0001qd-Sh
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 01:59:12 +0200
+	id 1Myx0d-0008Lf-Lx
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 02:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751182AbZJPX6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Oct 2009 19:58:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751070AbZJPX6r
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 19:58:47 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:42773 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbZJPX6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Oct 2009 19:58:46 -0400
-Received: by fxm18 with SMTP id 18so3040294fxm.37
-        for <git@vger.kernel.org>; Fri, 16 Oct 2009 16:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=/VzZPlVDcTQ3Lwyi/dP54vNcoUKxn7HS7bjP4UvsdYw=;
-        b=d11nUDDLi8C8ea4bjtM+U+nHQ6DVfc65nir9xG83ekBZrf+MunoNd0H1zx+YEcSzWN
-         as06E94ce0ad3Y1UKQlEOzegSN31WFB6OTBE5R8acyB4DAjlH/tkg6YKuhbkscQq8x/O
-         ItwGYRXKTrY7Lbb5u0dA+mY7CHS5mzDlWJW6Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=gWO5Y5uY4jt6sn7lYzb3BLUUFKJeSMo5FBW6gyq1i4c/Px7/LTMgDyrASgdKHcoge4
-         5+7UzFmUqZvYhpL1Uo8cGoWT0Zs1DFHFYNS+eCTdEB7ChC5prP5y9mFLjfDDd1bmkZVj
-         LsDVGeMq4r7pccfkqm2GdbJU5A7iphGLtxKkI=
-Received: by 10.204.160.143 with SMTP id n15mr1905888bkx.183.1255737530419;
-        Fri, 16 Oct 2009 16:58:50 -0700 (PDT)
-Received: from ?192.168.1.13? (absh57.neoplus.adsl.tpnet.pl [83.8.127.57])
-        by mx.google.com with ESMTPS id 15sm298131bwz.0.2009.10.16.16.58.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 16 Oct 2009 16:58:49 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v7huurkif.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1750923AbZJQASt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Oct 2009 20:18:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbZJQASt
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Oct 2009 20:18:49 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54930 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750789AbZJQASs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Oct 2009 20:18:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A12207AE99;
+	Fri, 16 Oct 2009 20:18:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NE+XaJnTuCVvtWJut7DLzJg5t7E=; b=Ng9f0C
+	b9jZWvE7yXZCPcCE3hoGeglfo0K85umSQ6kX6YtvGcw9fwad9Uk14ITytHWRJed8
+	FgZbyPhLPjK3MxeeUje9z85o9mtrtTFfrB1rXyed6vAd8ftEMGiVaPBdu90eBRt/
+	hVovSX9tvA6mko+w+FI3zX5qS6M9GS2124UK0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u4mFLFrNmm2f06CGty/FUtMI1EuIZt49
+	RGHlxCxyW1mFDrbvmJkE+CtRPnuZKxKI/Wo4YNAJAz09InW/fB7soSwRZZu3suWR
+	4OHlPuLLcml631DsUruHqOrBPxZB1lA2H2zsBFkqM7iuESjeHFzRljJB9vtPC+0y
+	Pn/Rev7wwWI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77FDA7AE98;
+	Fri, 16 Oct 2009 20:18:49 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 49D5E7AE97; Fri, 16 Oct 2009
+ 20:18:45 -0400 (EDT)
+In-Reply-To: <200910170200.03681.jnareb@gmail.com> (Jakub Narebski's message
+ of "Sat\, 17 Oct 2009 02\:00\:02 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A4801334-BAB2-11DE-9F07-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130539>
 
-On Sat, 17 Oct 2009, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
-> > But even with original w(<width>,<indent1>,<indent2>) we can get output
-> > of bare "git log" using pretty format... well, almost; it would be the
-> > same if there was ability to put infinite width, and there doesn't seem
-> > to be specifier for the whole, unchanged commit message (subject,
-> > unwrapped + separating lines + body).
-> 
-> I think I already discussed this when I sent out %s%+b patch.  You would
-> need to adjust and apply both series, but essentially it would become
-> something like:
-> 
->     %s%+[w(-1,4,4)%b]
-> 
-> I.e. a single subject line, potentially followed by a LF and body indented
-> by 4-place, but the LF will be there only when the body is not empty.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Why not
+> Why not
+>
+>     %[w(-1,4,4)%s%+b]
 
-    %[w(-1,4,4)%s%+b]
+Yeah.  As you said "subject unwrapped and body indented" or something like
+that, I excluded that part outside the indentation, but log output indents
+everything, so placing both inside %[w] would be correct.
 
-Or is it
+> (i.e. %+ is this empty line between subject and body, if it exists).
 
-    %[w(-1,4,4)%s%+%b]
+As %+ is to add LF iff the next expansion is non-empty, it must always be
+followed by an expansion, i.e. %something.  That means "%+%something" is
+unnecessary verbose and "%+something" is enough.  "%+anything" syntax,
+just like "%[func()anything]" syntax, is not limited to any particular
+expansion.
 
-(i.e. %+ is this empty line between subject and body, if it exists).
+> The %+x seems a bit strange... but I guess implementing conditional
+> expansion a la shell or rpn spec/queryformat would be out of question
+> (i.e. %?s:+ )...
 
-The %+x seems a bit strange... but I guess implementing conditional
-expansion a la shell or rpn spec/queryformat would be out of question
-(i.e. %?s:+ )...
--- 
-Jakub Narebski
-Poland
+Why not?
+
+I can see us doing something like %[conditional%|iftrue%|iffalse%] quite
+easily, now we have the "nested" variant of the strbuf_expand()
+infrastructure.
+
+But that is not the primary focus of the two patch series I've
+demonstrated so far.
