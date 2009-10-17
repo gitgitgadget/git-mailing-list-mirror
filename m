@@ -1,297 +1,166 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] Add the --submodule option to the diff option family
-Date: Sat, 17 Oct 2009 20:46:20 +0200
-Message-ID: <4ADA10FC.40708@web.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Sat, 17 Oct 2009 21:41:53 +0200
+Message-ID: <20091017194153.GA30003@atjola.homenet>
+References: <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+ <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
+ <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+ <20091016143041.GA11821@atjola.homenet>
+ <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
+ <20091017075551.GA5474@atjola.homenet>
+ <7vws2ue8yc.fsf@alter.siamese.dyndns.org>
+ <20091017084025.GC5474@atjola.homenet>
+ <7vaazqcry5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 20:49:56 2009
+X-From: git-owner@vger.kernel.org Sat Oct 17 21:43:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzELk-0003q0-1C
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 20:49:56 +0200
+	id 1MzFBD-00084V-Ig
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 21:43:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272AbZJQStP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 14:49:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbZJQStO
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 14:49:14 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:39216 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753152AbZJQStN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 14:49:13 -0400
-Received: from smtp08.web.de (fmsmtp08.dlan.cinetic.de [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 666BB126C778B;
-	Sat, 17 Oct 2009 20:46:25 +0200 (CEST)
-Received: from [80.128.52.242] (helo=[192.168.178.26])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #314)
-	id 1MzEIL-0001kn-00; Sat, 17 Oct 2009 20:46:25 +0200
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19/gVOxe1VIQqn/RpkqlX5i8lMg5oxMEu/G0ykp
-	TqBL2sSB2riZ9YzLUeCIvX090zQ62fzc+aUKfuqkmtQnX3h9Wj
-	700KqIkBPbrqvSE4WwIw==
+	id S1752117AbZJQTl4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 15:41:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752005AbZJQTl4
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 15:41:56 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33655 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751726AbZJQTlz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 15:41:55 -0400
+Received: (qmail invoked by alias); 17 Oct 2009 19:41:58 -0000
+Received: from i59F5B216.versanet.de (EHLO atjola.homenet) [89.245.178.22]
+  by mail.gmx.net (mp036) with SMTP; 17 Oct 2009 21:41:58 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX181uoQqHco1aqChgk7Izkh0RDmkXL0vB0ksv7Q/ey
+	D27amzRlotCeT9
+Content-Disposition: inline
+In-Reply-To: <7vaazqcry5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.55
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130575>
 
-When you use the option --submodule=left-right-log you can see the submodule
-summaries inlined in the diff, instead of not-quite-helpful SHA-1 pairs.
+On 2009.10.17 02:04:02 -0700, Junio C Hamano wrote:
+> The "save" part of the work-save-then-merge sequence should be made v=
+ery
+> visible to help people get used to the "not up, but work-save-then-me=
+rge"
+> mental model.  I do not think it would help people in the long run to=
+ make
+> the "save" step less visible by wrapping the sequence into an unrelia=
+ble
+> "up" script, especially because the script would sometimes work but o=
+ther
+> times *has to* force users to know that what is happening behind the =
+scene
+> is work-save-then-merge in order to resolve and recover from conflict=
+s
+> anyway.
 
-The format imitates what "git submodule summary" shows.
+Hm, which cases would that be? I basically see three cases:
 
-To do that, <path>/.git/objects/ is added to the alternate object
-databases (if that directory exists).
+ 1) No uncommitted changes =3D> No problem
+ 2) Uncommitted changes merge cleanly =3D> No problem
+ 3) Uncommitted changes causes conflicts =3D>
+   - User can resolve
+   - User can start over (git update --retry)
+   - User can give up (git update --abort)
 
-This option was requested by Jens Lehmann at the GitTogether in Berlin.
+Of course the user can clearly see that some state was saved (otherwise
+you couldn't retry or abort), but I don't see how the user is "forced"
+in any way, he just gets those two commands to work with (which
+internally just wrap reset + stash apply, making things more
+convenient).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+I do see problems with a "stash around merge" thing ("stash" around
+rebase seems easier, as that could just create a commit and reset later=
+,
+but I'm not exactly sure that such smartness is a good idea). As soon a=
+s
+the merge has conflicts, you need to know that you have to unstash afte=
+r
+committing the merge, but what I have in mind is fast-forward only (or
+possibly reset, when upstream was rewritten).  Primarily for users that
+don't commit at all, but just look at things [*1*]. And also for the
+semi-detached HEAD case, in which you may not commit and in which doing
+a merge/rebase is therefore not an option, but git still knows what to
+fetch/checkout by using the discussed extra info in HEAD, or by
+examining the reflog.
+
+> > OTOH, it might be easier to just tell the user to do the stash thin=
+g
+> > himself. But I wonder how many users would really know how to get b=
+ack
+> > to the initial state then.
+>=20
+> I agree with the first sentence, but I do not understand what "the in=
+itial
+> state" you talk about here in the second sentence, sorry.
+
+The state they were in before they did the "git stash" part.
+
+*work on stuff not ready to be committed*
+git pull # refused
+git stash
+git pull
+git stash apply # Conflicts, user decides that he wants go back
+
+At that point, you need the reflog (also handle fast-forwards), and do:
+
+git reset --hard HEAD@{1}
+git stash apply --index
 
 
-In this patch i tried to address all the issues mentioned so far, please
-let me know if anything is missing.
+Of course, a more correct way might be to use commit and rebase instead=
+:
+
+*work on stuff not ready to be committed*
+git pull # refused
+git add -A # Or whatever
+git commit
+git pull --rebase # conflicts, decide to abort
+git rebase --abort
+git reset HEAD^
+
+But that still needs the extra "reset HEAD^" step to really get back to
+the state with your uncommitted changes.
+
+The problem with "svn up" is that there's no other way, and no way back=
+=2E
+Git has other ways, but no convenient one for non-committers and no
+"obvious" way to go back, should you decide that you actually prefer no=
+t
+to update after seeing the conflicts.
+
+Anyway, this isn't _my_ itch and to some (large) degree I'm trying to
+guess what someone else would expect. If at all, I'm more interested in
+a command that figures out which remote tracking branch I checked out,
+and that updates it, and updates my work tree/index as well. Uncommitte=
+d
+changes aren't important to me there. So I'll simply give up on that
+part.
+
+Bj=F6rn
 
 
- Documentation/diff-options.txt |    7 +++
- Makefile                       |    2 +
- diff.c                         |   16 ++++++
- diff.h                         |    1 +
- submodule.c                    |  112 ++++++++++++++++++++++++++++++++++++++++
- submodule.h                    |    8 +++
- 6 files changed, 146 insertions(+), 0 deletions(-)
- create mode 100644 submodule.c
- create mode 100644 submodule.h
-
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 9276fae..99cb517 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -87,6 +87,13 @@ endif::git-format-patch[]
- 	Show only names and status of changed files. See the description
- 	of the `--diff-filter` option on what the status letters mean.
-
-+--submodule[=<format>]::
-+	Chose the output format for submodule differences. <format> can be one of
-+	'short' and 'left-right-log'. 'short' is the default value for this
-+	option and and shows pairs of commit names. 'left-right-log' lists the
-+	commits in that commit range like the 'summary' option of
-+	linkgit:git-submodule[1] does.
-+
- --color::
- 	Show colored diff.
-
-diff --git a/Makefile b/Makefile
-index c0eff64..2f61e17 100644
---- a/Makefile
-+++ b/Makefile
-@@ -453,6 +453,7 @@ LIB_H += sideband.h
- LIB_H += sigchain.h
- LIB_H += strbuf.h
- LIB_H += string-list.h
-+LIB_H += submodule.h
- LIB_H += tag.h
- LIB_H += transport.h
- LIB_H += tree.h
-@@ -551,6 +552,7 @@ LIB_OBJS += sideband.o
- LIB_OBJS += sigchain.o
- LIB_OBJS += strbuf.o
- LIB_OBJS += string-list.o
-+LIB_OBJS += submodule.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += trace.o
-diff --git a/diff.c b/diff.c
-index c719ce2..8af1ae2 100644
---- a/diff.c
-+++ b/diff.c
-@@ -13,6 +13,7 @@
- #include "utf8.h"
- #include "userdiff.h"
- #include "sigchain.h"
-+#include "submodule.h"
-
- #ifdef NO_FAST_WORKING_DIRECTORY
- #define FAST_WORKING_DIRECTORY 0
-@@ -1557,6 +1558,17 @@ static void builtin_diff(const char *name_a,
- 	const char *a_prefix, *b_prefix;
- 	const char *textconv_one = NULL, *textconv_two = NULL;
-
-+	if (DIFF_OPT_TST(o, SUBMODULE_LEFT_RIGHT_LOG) &&
-+			(!one->mode || S_ISGITLINK(one->mode)) &&
-+			(!two->mode || S_ISGITLINK(two->mode))) {
-+		const char *del = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		const char *add = diff_get_color_opt(o, DIFF_FILE_NEW);
-+		show_submodule_summary(o->file, one ? one->path : two->path,
-+				one->sha1, two->sha1,
-+				del, add, reset);
-+		return;
-+	}
-+
- 	if (DIFF_OPT_TST(o, ALLOW_TEXTCONV)) {
- 		textconv_one = get_textconv(one);
- 		textconv_two = get_textconv(two);
-@@ -2771,6 +2783,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
- 	else if (!strcmp(arg, "--ignore-submodules"))
- 		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
-+	else if (!prefixcmp(arg, "--submodule=")) {
-+		if (!strcmp(arg + 12, "left-right-log"))
-+			DIFF_OPT_SET(options, SUBMODULE_LEFT_RIGHT_LOG);
-+	}
-
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
-diff --git a/diff.h b/diff.h
-index a7e7ccb..8079f5b 100644
---- a/diff.h
-+++ b/diff.h
-@@ -67,6 +67,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
- #define DIFF_OPT_DIRSTAT_BY_FILE     (1 << 20)
- #define DIFF_OPT_ALLOW_TEXTCONV      (1 << 21)
- #define DIFF_OPT_DIFF_FROM_CONTENTS  (1 << 22)
-+#define DIFF_OPT_SUBMODULE_LEFT_RIGHT_LOG (1 << 23)
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
- #define DIFF_OPT_CLR(opts, flag)    ((opts)->flags &= ~DIFF_OPT_##flag)
-diff --git a/submodule.c b/submodule.c
-new file mode 100644
-index 0000000..206386f
---- /dev/null
-+++ b/submodule.c
-@@ -0,0 +1,112 @@
-+#include "cache.h"
-+#include "submodule.h"
-+#include "dir.h"
-+#include "diff.h"
-+#include "commit.h"
-+#include "revision.h"
-+
-+int add_submodule_odb(const char *path)
-+{
-+	struct strbuf objects_directory = STRBUF_INIT;
-+	struct alternate_object_database *alt_odb;
-+
-+	strbuf_addf(&objects_directory, "%s/.git/objects/", path);
-+	if (!is_directory(objects_directory.buf))
-+		return -1;
-+
-+	/* avoid adding it twice */
-+	for (alt_odb = alt_odb_list; alt_odb; alt_odb = alt_odb->next)
-+		if (alt_odb->name - alt_odb->base == objects_directory.len &&
-+				!strncmp(alt_odb->base, objects_directory.buf,
-+					objects_directory.len))
-+			return 0;
-+
-+	alt_odb = xmalloc(objects_directory.len + 42 + sizeof(*alt_odb));
-+	alt_odb->next = alt_odb_list;
-+	strcpy(alt_odb->base, objects_directory.buf);
-+	alt_odb->name = alt_odb->base + objects_directory.len;
-+	alt_odb->name[2] = '/';
-+	alt_odb->name[40] = '\0';
-+	alt_odb->name[41] = '\0';
-+	alt_odb_list = alt_odb;
-+	prepare_alt_odb();
-+	return 0;
-+}
-+
-+void show_submodule_summary(FILE *f, const char *path,
-+		unsigned char one[20], unsigned char two[20],
-+		const char *del, const char *add, const char *reset)
-+{
-+	struct rev_info rev;
-+	struct commit *commit, *left = left, *right;
-+	struct commit_list *merge_bases, *list;
-+	const char *message = NULL;
-+	struct strbuf sb = STRBUF_INIT;
-+	static const char *format = "  %m %s";
-+	int fast_forward = 0, fast_backward = 0;
-+
-+	if (is_null_sha1(two))
-+		message = "(submodule deleted)";
-+	else if (add_submodule_odb(path))
-+		message = "(not checked out)";
-+	else if (is_null_sha1(one))
-+		message = "(new submodule)";
-+	else if (!(left = lookup_commit_reference(one)) ||
-+		 !(right = lookup_commit_reference(two)))
-+		message = "(commits not present)";
-+
-+	if (!message) {
-+		init_revisions(&rev, NULL);
-+		setup_revisions(0, NULL, &rev, NULL);
-+		rev.left_right = 1;
-+		rev.first_parent_only = 1;
-+		left->object.flags |= SYMMETRIC_LEFT;
-+		add_pending_object(&rev, &left->object, path);
-+		add_pending_object(&rev, &right->object, path);
-+		merge_bases = get_merge_bases(left, right, 1);
-+		if (merge_bases) {
-+			if (merge_bases->item == left)
-+				fast_forward = 1;
-+			else if (merge_bases->item == right)
-+				fast_backward = 1;
-+		}
-+		for (list = merge_bases; list; list = list->next) {
-+			list->item->object.flags |= UNINTERESTING;
-+			add_pending_object(&rev, &list->item->object,
-+				sha1_to_hex(list->item->object.sha1));
-+		}
-+		if (prepare_revision_walk(&rev))
-+			message = "(revision walker failed)";
-+	}
-+
-+	strbuf_addf(&sb, "Submodule %s %s..", path,
-+			find_unique_abbrev(one, DEFAULT_ABBREV));
-+	if (!fast_backward && !fast_forward)
-+		strbuf_addch(&sb, '.');
-+	strbuf_addf(&sb, "%s", find_unique_abbrev(two, DEFAULT_ABBREV));
-+	if (message)
-+		strbuf_addf(&sb, " %s\n", message);
-+	else
-+		strbuf_addf(&sb, "%s:\n", fast_backward ? " (rewind)" : "");
-+	fwrite(sb.buf, sb.len, 1, f);
-+
-+	if (!message) {
-+		while ((commit = get_revision(&rev))) {
-+			strbuf_setlen(&sb, 0);
-+			if (commit->object.flags & SYMMETRIC_LEFT) {
-+				if (del)
-+					strbuf_addstr(&sb, del);
-+			}
-+			else if (add)
-+				strbuf_addstr(&sb, add);
-+			format_commit_message(commit, format, &sb,
-+					rev.date_mode);
-+			if (reset)
-+				strbuf_addstr(&sb, reset);
-+			strbuf_addch(&sb, '\n');
-+			fprintf(f, "%s", sb.buf);
-+		}
-+		clear_commit_marks(left, ~0);
-+		clear_commit_marks(right, ~0);
-+	}
-+}
-diff --git a/submodule.h b/submodule.h
-new file mode 100644
-index 0000000..4c0269d
---- /dev/null
-+++ b/submodule.h
-@@ -0,0 +1,8 @@
-+#ifndef SUBMODULE_H
-+#define SUBMODULE_H
-+
-+void show_submodule_summary(FILE *f, const char *path,
-+		unsigned char one[20], unsigned char two[20],
-+		const char *del, const char *add, const char *reset);
-+
-+#endif
--- 
-1.6.5.3.g464e1.dirty
+[*1*] One could also say: Users that don't give a damn about git, but
+just need it to get the code and maybe have some minor, uncommitted
+modifications on top. I'm _not_ thinking about users that actually
+commit and do stuff. Those should use merge/rebase/pull, and get a
+complaint from "git update" if the update is not a fast-forward one,
+telling them what to use instead.
