@@ -1,147 +1,170 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Sat, 17 Oct 2009 16:35:44 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910171528390.32515@iabervon.org>
-References: <alpine.LNX.2.00.0910140037570.32515@iabervon.org> <m49nq6-uk5.ln1@burns.bruehl.pontohonk.de> <7vr5t2h3do.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/3] Generalized "string function" syntax
+Date: Sat, 17 Oct 2009 23:04:19 +0200
+Message-ID: <4ADA3153.7070606@lsrfire.ath.cx>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christoph Bartoschek <bartoschek@gmx.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 17 22:36:03 2009
+X-From: git-owner@vger.kernel.org Sat Oct 17 23:04:34 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzG0K-0003RM-Ok
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 22:35:57 +0200
+	id 1MzGS1-00069L-Le
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 23:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbZJQUfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 16:35:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753464AbZJQUfq
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 16:35:46 -0400
-Received: from iabervon.org ([66.92.72.58]:58146 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753515AbZJQUfp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 16:35:45 -0400
-Received: (qmail 1657 invoked by uid 1000); 17 Oct 2009 20:35:44 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 17 Oct 2009 20:35:44 -0000
-In-Reply-To: <7vr5t2h3do.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1753655AbZJQVEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 17:04:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753042AbZJQVEX
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 17:04:23 -0400
+Received: from india601.server4you.de ([85.25.151.105]:34622 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752525AbZJQVEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Oct 2009 17:04:22 -0400
+Received: from [10.0.1.101] (p57B7C517.dip.t-dialin.net [87.183.197.23])
+	by india601.server4you.de (Postfix) with ESMTPSA id 30E3D2F803D;
+	Sat, 17 Oct 2009 23:04:26 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1255681702-5215-1-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130577>
 
-On Sat, 17 Oct 2009, Junio C Hamano wrote:
-
-> Christoph Bartoschek <bartoschek@gmx.de> writes:
+Junio C Hamano schrieb:
+> I mentioned an idea to enhance the pretty=format language with a
+> string function syntax that people can extend by adding new functions
+> in one of the "What's cooking" messages earlier.  The general syntax
+> would be like
 > 
-> [jc: added Daniel back to cc list; please do not cull the cc list without
-> good reason]
+> %[function(args...)any string here%]
 > 
-> > Daniel Barkalow wrote:
-> >
-> >> The upshot of the messages should be:
-> >> 
-> >>  $ git checkout origin/master
-> >>  Since you can't actually change "origin/master" yourself, you'll just
-> >>  be sightseeing unless you create a local branch to hold new local work.
-> >> 
-> >>  $ git branch
-> >>  * (not a local branch, but "origin/master")
-> >> 
-> >>  $ git commit
-> >>  You've been sightseeing "origin/master". The commit can't change that
-> >>  value, so your commit isn't held in any branch. If you want to create
-> >>  a branch to hold it, here's how.
-> > ...
-> > But then I was not able to verify that the checkout indeed matched the 
-> > 1.3.0-beta.  "git status" and "git branch" did not help here. 
-> 
-> This is not going to help you, but "git reflog" would have helped here.
-> 
-> The reason my suggesting "git reflog" now won't help you is because the
-> word "reflog" does not connect the question "how did I get here" unless
-> and until you know git already; in other words, it is not your fault that
-> you got lost, but it is showing a wart in the UI.
-> 
-> If the question you were asking was "does the files I have in my work tree
-> after issuing that scary checkout actually match origin/1.3.0-beta?", you
-> could have asked that question in a more direct way, and the command to do
-> so is "git diff origin/1.3.0-beta".  I do not think this would be asking
-> the user to be doing something unreasonably unintuitive.
-> 
-> If the question you were asking was (and it was not, from the description
-> of your experience, but you could be in that situation when you "return
-> some weeks later") "how does the checked out history relate to 1.3.0-beta?",
-> then there is a way to ask the question in a very direct way, and the
-> command to do so is "git show-branch HEAD origin/1.3.0-beta" (or give the
-> same argument to "gitk").
-> 
-> Although it is not _so_ unreasonable to expect "git status" to show the
-> information, I suspect it would not be practical.  After all, whenever
-> somebody is lost, everything is "status".  For a person who is lost and
-> does not know where in the history he is, it might be reasonable to expect
-> "status" to give the relationship between your HEAD and some branch/tag,
-> while for another person who was hit by "git gui" complaining that he has
-> too many loose objects, it might be reasonable for him to expect "status"
-> to give the number of loose objects in the repository.  IOW, "status" is
-> too broad a word and following the path to cram everything into "status"
-> so that any new person who gets lost can get necessary infor from the
-> command will unfortunately lead to insanity.
-> 
-> The second item in the Daniel's transcript above may be an improvement but
-> I think it is a wrong economy to record and show 'but "origin/master"'
-> (which cannot be correct forever and has to be invalidated once the user
-> starts committing or resetting) in the message.
+> where "any string here" part would have the usual pretty=format
+> strings. E.g.  git show -s --format='%{w(72,8,4)%s%+b%]' should give
+> you a line wrapped commit log message if w(width,in1,in2) is such a
+> function.
 
-It's easy to invalidate it for reasons of the user going elsewhere: you 
-invalidate it when you invalidate MERGE_HEAD (which, incidentally, 
-locates a bug in my original patch: there's a third 
-"unlink(git_path("MERGE_HEAD"));" I didn't think of, in builtin-merge.c).
+I pondered line wrapping with format strings briefly a long time ago, and
+I always considered it to be more similar to a colour, i.e. a state that
+one can change and that is applied to all following text until the next
+state change.  (Except that it's always reset at the end of the format
+string.)  The example above would then turn into '%w(72,8,4)%s%+b'.
 
-I think the case of it going stale, mainly due to updating a ref it uses, 
-is a matter of having whatever wants to describe HEAD check if the 
-extended sha1 still expands to the same sha1.
+Here's a patch to implement this behaviour.  It leaves the implementation
+of the actual wrap function as an exercise to the reader, too. ;-)
 
-I also think that it fits with the git world model to distinguish 
-"lvalues" from "non-lvalues". An "lvalue" is something where you can make 
-a commit and change the value while the expression stays the same; you can 
-assign to it. If your current position is not an "lvalue" and you commit, 
-your current position must become a new temporary "lvalue", diverging from 
-the thing you can't change. But if you don't assign to it, there's no 
-problem with having a non-lvalue be your current position.
 
-> I am wondering if a similar effect to help new users can be had by 
-> rewording the message to:
-> 
->     $ git branch
->     * (not a local branch; see "git reflog" to learn how you got here)
-> 
-> The user can see how he got there even after doing something else after
-> the checkout (see Nico's write-up in $gmane/130527).  The difference is
-> between giving fish and teaching how to catch one himself.
+ pretty.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 66 insertions(+), 0 deletions(-)
 
-The reflog hint is a good one in general; on the other hand, I think it 
-would be generally helpful to have the information in a more 
-machine-readable fashion, for a "git checkout (whatever I gave to reset or 
-checkout before)".
-
-Perhaps the right implementation is actually to have machine-readable 
-descriptions in the HEAD reflog? That would actually lead to the 
-interesting:
-
-$ git checkout topic
-$ git checkout origin/master
-$ git checkout HEAD@{1}
-$ git branch
-* topic
-
-Actually, we turn out to have a flaw in our reflog explanation: when 
-rebase finishes, it doesn't log that it's back to a particular branch.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/pretty.c b/pretty.c
+index f5983f8..33464f1 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -445,6 +445,7 @@ struct format_commit_context {
+ 	enum date_mode dmode;
+ 	unsigned commit_header_parsed:1;
+ 	unsigned commit_message_parsed:1;
++	size_t width, indent1, indent2;
+ 
+ 	/* These offsets are relative to the start of the commit message. */
+ 	struct chunk author;
+@@ -458,6 +459,7 @@ struct format_commit_context {
+ 	struct chunk abbrev_commit_hash;
+ 	struct chunk abbrev_tree_hash;
+ 	struct chunk abbrev_parent_hashes;
++	size_t wrap_start;
+ };
+ 
+ static int add_again(struct strbuf *sb, struct chunk *chunk)
+@@ -595,6 +597,44 @@ static void format_decoration(struct strbuf *sb, const struct commit *commit)
+ 		strbuf_addch(sb, ')');
+ }
+ 
++static void strbuf_wrap(struct strbuf *sb, size_t pos, size_t len,
++			size_t width, size_t indent1, size_t indent2)
++{
++	struct strbuf tmp = STRBUF_INIT;
++
++	if (!len)
++		return;
++	if (pos)
++		strbuf_add(&tmp, sb->buf, pos);
++
++	/* XXX: all that's missing is the wrapping code itself.. */
++	strbuf_addf(&tmp, "w(%u,%u,%u)[\n",
++		    (unsigned)width, (unsigned)indent1, (unsigned)indent2);
++	strbuf_add(&tmp, sb->buf + pos, len);
++	strbuf_addstr(&tmp, "\n]");
++
++	if (pos + len < sb->len)
++		strbuf_add(&tmp, sb->buf + pos + len, sb->len - pos - len);
++	strbuf_swap(&tmp, sb);
++	strbuf_release(&tmp);
++}
++
++static void rewrap_message_tail(struct strbuf *sb,
++				struct format_commit_context *c,
++				size_t new_width, size_t new_indent1,
++				size_t new_indent2)
++{
++	if (c->width == new_width && c->indent1 == new_indent1 &&
++	    c->indent2 == new_indent2)
++		return;
++	strbuf_wrap(sb, c->wrap_start, sb->len - c->wrap_start, c->width,
++		    c->indent1, c->indent2);
++	c->wrap_start = sb->len;
++	c->width = new_width;
++	c->indent1 = new_indent1;
++	c->indent2 = new_indent2;
++}
++
+ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+                                void *context)
+ {
+@@ -645,6 +685,30 @@ static size_t format_commit_item(struct strbuf *sb, const char *placeholder,
+ 			return 3;
+ 		} else
+ 			return 0;
++	case 'w':
++		if (placeholder[1] == '(') {
++			unsigned long width = 0, indent1 = 0, indent2 = 0;
++			char *next;
++			const char *start = placeholder + 2;
++			const char *end = strchr(start, ')');
++			if (!end)
++				return 0;
++			if (end > start) {
++				width = strtoul(start, &next, 10);
++				if (*next == ',') {
++					indent1 = strtoul(next + 1, &next, 10);
++					if (*next == ',') {
++						indent2 = strtoul(next + 1,
++								 &next, 10);
++					}
++				}
++				if (*next != ')')
++					return 0;
++			}
++			rewrap_message_tail(sb, c, width, indent1, indent2);
++			return end - placeholder + 1;
++		} else
++			return 0;
+ 	}
+ 
+ 	/* these depend on the commit */
+@@ -748,7 +812,9 @@ void format_commit_message(const struct commit *commit,
+ 	memset(&context, 0, sizeof(context));
+ 	context.commit = commit;
+ 	context.dmode = dmode;
++	context.wrap_start = sb->len;
+ 	strbuf_expand(sb, format, format_commit_item, &context);
++	rewrap_message_tail(sb, &context, 0, 0, 0);
+ }
+ 
+ static void pp_header(enum cmit_fmt fmt,
