@@ -1,74 +1,83 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: git submodules
-Date: Sun, 18 Oct 2009 07:30:39 +0900
-Message-ID: <20091018073039.6117@nanako3.lavabit.com>
-References: <f488382f0910171015j1a6d4d9fg690867154334c514@mail.gmail.com>
-    <m3tyxydj8f.fsf@localhost.localdomain>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Sat, 17 Oct 2009 23:28:45 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0910172320060.9794@reaper.quantumfyre.co.uk>
+References: <alpine.LNX.2.00.0910151523020.32515@iabervon.org> <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk> <20091016143041.GA11821@atjola.homenet> <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk> <7vvdiftb0d.fsf@alter.siamese.dyndns.org>
+ <alpine.LNX.2.00.0910162029460.31673@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0910161557500.20122@xanadu.home> <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk> <20091017170421.GA10490@atjola.homenet> <alpine.LNX.2.00.0910171829430.7906@reaper.quantumfyre.co.uk>
+ <20091017174843.GA16251@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Steven Noonan <steven@uplinklabs.net>,
-	crawl-ref-discuss@lists.sourceforge.net
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 18 00:31:03 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 18 00:35:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzHng-0002Ws-BZ
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 00:31:00 +0200
+	id 1MzHsK-0003q3-2k
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 00:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752280AbZJQWas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 18:30:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752037AbZJQWas
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 18:30:48 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:55192 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751931AbZJQWas (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 18:30:48 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id A74B211B87B;
-	Sat, 17 Oct 2009 17:30:52 -0500 (CDT)
-Received: from 9740.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id 8PW8KENHS9U5; Sat, 17 Oct 2009 17:30:52 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=XyCS7fVwGNrI1QCLdKu8Hk8LPhE0j2W8HhZLl3fhf4599bP1g3D3XaTw3YmOlYnUEOdCYuIls3aUMCUv/xskoUONdQXLSzktcx1d0I0QGzgzYut6zYpPZCWG0bjtjYdUnHHZ6AWTJBvohwhqa6eteW2VEbSxP7uoR1qN384dHH4=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <m3tyxydj8f.fsf@localhost.localdomain>
+	id S1752525AbZJQWfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 18:35:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbZJQWfc
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 18:35:32 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:49782 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752440AbZJQWfb (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 18:35:31 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B347D693E1
+	for <git@vger.kernel.org>; Sat, 17 Oct 2009 23:35:35 +0100 (BST)
+Received: (qmail 11693 invoked by uid 103); 17 Oct 2009 23:28:45 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.95.2/9906. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.036229 secs); 17 Oct 2009 22:28:45 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 17 Oct 2009 23:28:45 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <20091017174843.GA16251@atjola.homenet>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130581>
 
-Quoting Jakub Narebski <jnareb@gmail.com>
+On Sat, 17 Oct 2009, Bj?rn Steinbrink wrote:
 
-> Steven Noonan <steven@uplinklabs.net> writes:
+> On 2009.10.17 18:35:38 +0100, Julian Phillips wrote:
+>> On Sat, 17 Oct 2009, Bj?rn Steinbrink wrote:
+>>> Do you have multiple (annotated) tags for the same commit?
+>>
+>> Potentially, yes.  Releasing isn't the only thing that requires
+>> keeping track of things.  It's even possible that the person
+>> creating the newer tag doesn't yet know that a release tag has been
+>> applied if the person who applied it hasn't yet pushed it back.
 >
->> We're using git submodules for the contributing libraries. When I
->> commit changes to those contribs, it correctly shows in the parent
->> repository that those folders have different revisions than what's
->> currently committed. However, if someone pulls those changes, it
->> doesn't automatically update the contribs to match the committed
->> version. But doing a pull or merge _should_ update the working tree to
->> match the committed versions. It does with file data, so why not
->> update the submodules? Especially if the submodule revision matched
->> the committed version -before- the pull. Why are we forced into using
->> 'git submodule update'?
->
-> Because you might want not to use most current version of submodule,
-> so git-pull shouldn't update submodules by default.  And because
-> git-pull didn't learn --recursive option yet.
+> OK, I'd consider that namespace pollution, as things like
+> "this-version-sucks" doesn't seem like it show go into public repos, but
+> anyway. If your release tags fix into a certain "unique" format, you
+> could use describe with --match, like:
+> git describe --match 'v[0-9]*'
 
-I don't think your description is correct. Steven is talking about what the command should do by default. If you checked out the current superproject, by default you should get the submodule that matches. If you don't want the most current version, you can checkout an older submodule yourself.
+Well - that only helps if we only ever build the release tags.  Which 
+isn't the case.  The other tags are there for similar purposes and also 
+should go into the version string - but only when they were the tag 
+checked out.
 
-You may want to follow this discussion:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/130155/focus=130330
-
-After stating that he isn't against the idea to make it automatic, Junio describes what needs to be done for it to happen and what are the corner cases that needs to be treated with care.
+Is it really that unreasonable to want to know exactly what it was that 
+was checked out?  It's one of the few things that I miss from Subversion.
 
 -- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Julian
+
+  ---
+printk(KERN_INFO MYNAM ": English readable SCSI-3 strings enabled :-)\n");
+         linux-2.6.6/drivers/message/fusion/mptbase.c
