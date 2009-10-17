@@ -1,86 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git submodules
-Date: Sat, 17 Oct 2009 10:27:00 -0700 (PDT)
-Message-ID: <m3tyxydj8f.fsf@localhost.localdomain>
-References: <f488382f0910171015j1a6d4d9fg690867154334c514@mail.gmail.com>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Sat, 17 Oct 2009 18:35:38 +0100 (BST)
+Message-ID: <alpine.LNX.2.00.0910171829430.7906@reaper.quantumfyre.co.uk>
+References: <20091014230934.GC29664@coredump.intra.peff.net> <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com> <alpine.LNX.2.00.0910151523020.32515@iabervon.org> <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+ <20091016143041.GA11821@atjola.homenet> <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk> <7vvdiftb0d.fsf@alter.siamese.dyndns.org> <alpine.LNX.2.00.0910162029460.31673@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0910161557500.20122@xanadu.home>
+ <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk> <20091017170421.GA10490@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	crawl-ref-discuss@lists.sourceforge.net
-To: Steven Noonan <steven@uplinklabs.net>
-X-From: git-owner@vger.kernel.org Sat Oct 17 19:27:17 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 17 19:38:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzD3k-0002cU-Ls
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 19:27:17 +0200
+	id 1MzDEf-0006o9-Cv
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Oct 2009 19:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753100AbZJQR07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 13:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbZJQR06
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 13:26:58 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:37957 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753056AbZJQR06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Oct 2009 13:26:58 -0400
-Received: by fxm18 with SMTP id 18so3544989fxm.37
-        for <git@vger.kernel.org>; Sat, 17 Oct 2009 10:27:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=zOxrza9R0OCB465Vex6DDCAArPOfo2f9B70bByMCAiI=;
-        b=hlWompvFiaz1WfDgsa2TpKfR70byghpQUtknr9KNY9MMNDXPtXDJrCtEGMR2pjmirI
-         JUxRcKK8VlOikw5HnIHN7XkseBrD9Jyp1puoqZhVCz7xSnO97H9uvCNrWnmL7f2OjCEE
-         b8QmKoW8wGWEWjfPyughCOsJ7Kt3Zu5m37UQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=rowCoafzXbAHiKhhKcYdfgR5u0dfVKtjyMthDHiK+/vtMKEwZu6fIuhlVU1MBlDuUM
-         +G4c+H99sE6ukUCz9Wga/lKXhUZsneIZslY3+dHj6TdHr4pZ9IMTemoXQF04hxSBt9d3
-         zkKCOUiOtybYVc4B6exExKGvYCRwMxh2nBtv0=
-Received: by 10.103.78.7 with SMTP id f7mr1218419mul.95.1255800421970;
-        Sat, 17 Oct 2009 10:27:01 -0700 (PDT)
-Received: from localhost.localdomain (abvw176.neoplus.adsl.tpnet.pl [83.8.220.176])
-        by mx.google.com with ESMTPS id s10sm2603387muh.54.2009.10.17.10.27.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 17 Oct 2009 10:27:00 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id n9HHQw4j000911;
-	Sat, 17 Oct 2009 19:26:59 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id n9HHQvb8000908;
-	Sat, 17 Oct 2009 19:26:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <f488382f0910171015j1a6d4d9fg690867154334c514@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753202AbZJQRiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Oct 2009 13:38:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbZJQRiW
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 13:38:22 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:39905 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753189AbZJQRiW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 13:38:22 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 8F91135772F
+	for <git@vger.kernel.org>; Sat, 17 Oct 2009 18:38:25 +0100 (BST)
+Received: (qmail 31662 invoked by uid 103); 17 Oct 2009 18:35:38 +0100
+Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
+ (clamdscan: 0.95.2/9906. spamassassin: 3.2.1. perlscan: 2.05st.  
+ Clear:RC:1(212.159.54.234):. 
+ Processed in 0.025803 secs); 17 Oct 2009 17:35:38 -0000
+Received: from reaper.quantumfyre.co.uk (212.159.54.234)
+  by neutron.quantumfyre.co.uk with SMTP; 17 Oct 2009 18:35:38 +0100
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <20091017170421.GA10490@atjola.homenet>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130570>
 
-Steven Noonan <steven@uplinklabs.net> writes:
+On Sat, 17 Oct 2009, Bj?rn Steinbrink wrote:
 
-> We're using git submodules for the contributing libraries. When I
-> commit changes to those contribs, it correctly shows in the parent
-> repository that those folders have different revisions than what's
-> currently committed. However, if someone pulls those changes, it
-> doesn't automatically update the contribs to match the committed
-> version. But doing a pull or merge _should_ update the working tree to
-> match the committed versions. It does with file data, so why not
-> update the submodules? Especially if the submodule revision matched
-> the committed version -before- the pull. Why are we forced into using
-> 'git submodule update'?
+> On 2009.10.17 16:15:13 +0100, Julian Phillips wrote:
+>> On Fri, 16 Oct 2009, Nicolas Pitre wrote:
+>>
+>>> On Fri, 16 Oct 2009, Julian Phillips wrote:
+>>>
+>>>> My interest in this thread is solely that it might provide a mechanism to find
+>>>> out which tag was checked out.  So, I'm just chucking in my $0.02 as a user.
+>>>
+>>> Try this:
+>>>
+>>> $ git checkout v1.5.5
+>>> Note: moving to 'v1.5.5' which isn't a local branch
+>>> If you want to create a new branch from this checkout, you may do so
+>>> (now or later) by using -b with the checkout command again. Example:
+>>> git checkout -b <new_branch_name>
+>>> HEAD is now at 1d2375d... GIT 1.5.5
+>>>
+>>> [look around, and then ...]
+>>>
+>>> $ git checkout HEAD~2
+>>> Previous HEAD position was 1d2375d... GIT 1.5.5
+>>> HEAD is now at f61cc48... git-svn: fix following renamed paths when tracking a single path
+>>>
+>>> [go out for lunch ... and forget what this was about.]
+>>>
+>>> $ git reflog -3
+>>> f61cc48 HEAD@{0}: checkout: moving from 1d2375d... to HEAD~2
+>>> 1d2375d HEAD@{1}: checkout: moving from master to v1.5.5
+>>> c274db7 HEAD@{2}: pull : Fast forward
+>>>
+>>> Here I have all the information to see what I did, and from what state.
+>>> I even know that I did a pull on the master branch before moving away
+>>> from it.  The -3 limits the log to 3 entries.  With no limit you get it
+>>> all in your default pager.
+>>>
+>>> So there is no need for another mechanism to find out what tag was
+>>> actually checked out -- you have it all already.
+>>
+>> What I want is a way for my build process to reliably know what
+>> branch or tag is currently being built.  "git symbolic-ref HEAD"
+>> will give me the branch name, but doesn't work for tags.  "git
+>> describe" will find _a_ tag, but I can't tell if it's actually the
+>> one checked out.
+>
+> Do you have multiple (annotated) tags for the same commit?
 
-Because you might want not to use most current version of submodule,
-so git-pull shouldn't update submodules by default.  And because
-git-pull didn't learn --recursive option yet.
+Potentially, yes.  Releasing isn't the only thing that requires keeping 
+track of things.  It's even possible that the person creating the newer 
+tag doesn't yet know that a release tag has been applied if the person 
+who applied it hasn't yet pushed it back.
+
+> Otherwise, I don't see why "git describe HEAD" should print the wrong 
+> one. If there's a tag that can be resolved to the same commit that HEAD 
+> can be resolved, then "git describe HEAD" must output that one. 
+> Otherwise, that'd be a clear bug to me.
+
+Oh, definately no bug.  git describe works exactly as expected, the 
+problem is that the tag checked out isn't always the latest tag applied to 
+that commit.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Julian
+
+  ---
+Jayne: Shee-nio high tech Alliance crap!"
+ 				--Episode #9, "Ariel"
