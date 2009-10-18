@@ -1,83 +1,116 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
- HEAD was
-Date: Sat, 17 Oct 2009 23:28:45 +0100 (BST)
-Message-ID: <alpine.LNX.2.00.0910172320060.9794@reaper.quantumfyre.co.uk>
-References: <alpine.LNX.2.00.0910151523020.32515@iabervon.org> <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk> <20091016143041.GA11821@atjola.homenet> <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk> <7vvdiftb0d.fsf@alter.siamese.dyndns.org>
- <alpine.LNX.2.00.0910162029460.31673@reaper.quantumfyre.co.uk> <alpine.LFD.2.00.0910161557500.20122@xanadu.home> <alpine.LNX.2.00.0910171606180.6644@reaper.quantumfyre.co.uk> <20091017170421.GA10490@atjola.homenet> <alpine.LNX.2.00.0910171829430.7906@reaper.quantumfyre.co.uk>
- <20091017174843.GA16251@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] GIT 1.6.5.1
+Date: Sat, 17 Oct 2009 18:04:56 -0700
+Message-ID: <7vws2t5x6v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 18 00:35:48 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 18 03:05:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzHsK-0003q3-2k
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 00:35:48 +0200
+	id 1MzKDC-0004ys-0U
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 03:05:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbZJQWfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Oct 2009 18:35:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbZJQWfc
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 18:35:32 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:49782 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752440AbZJQWfb (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 18:35:31 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.quantumfyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id B347D693E1
-	for <git@vger.kernel.org>; Sat, 17 Oct 2009 23:35:35 +0100 (BST)
-Received: (qmail 11693 invoked by uid 103); 17 Oct 2009 23:28:45 +0100
-Received: from reaper.quantumfyre.co.uk by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-2.05st 
- (clamdscan: 0.95.2/9906. spamassassin: 3.2.1. perlscan: 2.05st.  
- Clear:RC:1(212.159.54.234):. 
- Processed in 0.036229 secs); 17 Oct 2009 22:28:45 -0000
-Received: from reaper.quantumfyre.co.uk (212.159.54.234)
-  by neutron.quantumfyre.co.uk with SMTP; 17 Oct 2009 23:28:45 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <20091017174843.GA16251@atjola.homenet>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1754118AbZJRBFI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Oct 2009 21:05:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753941AbZJRBFH
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Oct 2009 21:05:07 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63978 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753921AbZJRBFG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Oct 2009 21:05:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9CF17B8AC;
+	Sat, 17 Oct 2009 21:05:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=DwJpfacBZXy7vtodWjxePDhpE
+	I0=; b=Fe7+i6coJAPtP6eRMH+pl6LGp/UiIgTyy3AXBoAWyensDPmW3GF2uuM4w
+	bhKBxt5lC2aU9BRrNJsPfJNsalI5AqnIiviIFoI0ZlLosCmYpdEo84wXYUJnhlFU
+	W1hitcrHu0AF+618M+G8mX31g7ktyXW0X6BEWB/6Cr/c/FOflU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=NwXl9rbRV1JifMGiBHw
+	BOhwWvf7UO/X4mkW/cxMNSvpw9dpaQ3mHfESVjqG9FBIghURuJOfxDeHeTblcAs9
+	tls9j8c5fs69tlU/p0KXJzSx1WiNjXRtOngANzPm2RumkLB/BhlDq5m8BUizThwn
+	IZAeCmV9SB1aswvEcIRKf/Wg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 847DB7B8AA;
+	Sat, 17 Oct 2009 21:05:04 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 30FE07B8A9; Sat, 17 Oct 2009
+ 21:04:57 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 44F912BE-BB82-11DE-8202-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130582>
 
-On Sat, 17 Oct 2009, Bj?rn Steinbrink wrote:
+The latest maintenance release GIT 1.6.5.1 is available at the
+usual places:
 
-> On 2009.10.17 18:35:38 +0100, Julian Phillips wrote:
->> On Sat, 17 Oct 2009, Bj?rn Steinbrink wrote:
->>> Do you have multiple (annotated) tags for the same commit?
->>
->> Potentially, yes.  Releasing isn't the only thing that requires
->> keeping track of things.  It's even possible that the person
->> creating the newer tag doesn't yet know that a release tag has been
->> applied if the person who applied it hasn't yet pushed it back.
->
-> OK, I'd consider that namespace pollution, as things like
-> "this-version-sucks" doesn't seem like it show go into public repos, but
-> anyway. If your release tags fix into a certain "unique" format, you
-> could use describe with --match, like:
-> git describe --match 'v[0-9]*'
+  http://www.kernel.org/pub/software/scm/git/
 
-Well - that only helps if we only ever build the release tags.  Which 
-isn't the case.  The other tags are there for similar purposes and also 
-should go into the version string - but only when they were the tag 
-checked out.
+  git-1.6.5.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.6.5.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.6.5.1.tar.{gz,bz2}		(preformatted docs)
 
-Is it really that unreasonable to want to know exactly what it was that 
-was checked out?  It's one of the few things that I miss from Subversion.
+The RPM binary packages for a few architectures are found in:
 
--- 
-Julian
+  RPMS/$arch/git-*-1.6.5.1-1.fc9.$arch.rpm	(RPM)
 
-  ---
-printk(KERN_INFO MYNAM ": English readable SCSI-3 strings enabled :-)\n");
-         linux-2.6.6/drivers/message/fusion/mptbase.c
+GIT v1.6.5.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.6.5
+------------------
+
+ * An corrupt pack could make codepath to read objects into an
+   infinite loop.
+
+ * Download throughput display was always shown in KiB/s but on fast li=
+nks
+   it is more appropriate to show it in MiB/s.
+
+ * "git grep -f filename" used uninitialized variable and segfaulted.
+
+ * "git clone -b branch" gave a wrong commit object name to post-checko=
+ut
+   hook.
+
+ * "git pull" over http did not work on msys.
+
+Other minor documentation updates are included.
+
+----------------------------------------------------------------
+
+Changes since v1.6.5 are as follows:
+
+Bj=C3=B6rn Steinbrink (1):
+      clone: Supply the right commit hash to post-checkout when -b is u=
+sed
+
+Johannes Sixt (1):
+      remote-curl: add missing initialization of argv0_path
+
+Junio C Hamano (1):
+      GIT 1.6.5.1
+
+Matt Kraai (1):
+      grep: do not segfault when -f is used
+
+Miklos Vajna (1):
+      git-stash documentation: mention default options for 'list'
+
+Nicolas Pitre (1):
+      change throughput display units with fast links
+
+Shawn O. Pearce (1):
+      sha1_file: Fix infinite loop when pack is corrupted
