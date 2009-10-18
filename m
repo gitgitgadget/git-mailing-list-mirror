@@ -1,57 +1,75 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3.1 3/5] Introduce new pretty formats %g[sdD] for
- reflog information
-Date: Sun, 18 Oct 2009 03:18:29 -0400
-Message-ID: <20091018071829.GA7748@coredump.intra.peff.net>
-References: <8a5b3a586d437f02e2a75edd2786636b605522a7.1255701207.git.trast@student.ethz.ch>
- <e0ab6923eb4057bcbc8e97980dad5e4a37e53067.1255790816.git.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] builtin-checkout: suggest creating local branch when
+ appropriate to do so
+Date: Sun, 18 Oct 2009 00:58:06 -0700
+Message-ID: <7vzl7pyvzl.fsf@alter.siamese.dyndns.org>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+ <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jef Driesen <jefdriesen@hotmail.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Oct 18 09:18:41 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 18 10:00:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzQ2K-0002st-8L
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 09:18:40 +0200
+	id 1MzQga-0006Ut-2H
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 10:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752083AbZJRHS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 03:18:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751970AbZJRHS3
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 03:18:29 -0400
-Received: from peff.net ([208.65.91.99]:38582 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750977AbZJRHS2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 03:18:28 -0400
-Received: (qmail 2472 invoked by uid 107); 18 Oct 2009 07:22:05 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 18 Oct 2009 03:22:05 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Oct 2009 03:18:29 -0400
-Content-Disposition: inline
-In-Reply-To: <e0ab6923eb4057bcbc8e97980dad5e4a37e53067.1255790816.git.trast@student.ethz.ch>
+	id S1752765AbZJRH6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 03:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752329AbZJRH6N
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 03:58:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44980 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752076AbZJRH6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 03:58:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 147215DBFD;
+	Sun, 18 Oct 2009 03:58:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=fkTSyX7mhaa6q/Ic/mlJLuO1WKo=; b=mDl7lUNKpM/r+MCU1nENsM6
+	TZ2ARujugkgdIeZEFzoJRZyMkUwivwH3bY/Ax1d6lUBhfTyrzuObIQhXCT+tB8BV
+	g9MQlLie0E3uI+gOE45/k9urSbrndKyLCfGwe7Brt6wd7tso02q6v41HUieR5kpM
+	7hKa6a2V5U+qXRZ8NB3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=iIk0+kDhK0mZtW1d7rbbBgdgb3Xmqi3Bd6iXp0EEBdo3/7SGQ
+	GrQT2o7Ah9EN/D6bYTgsFKXrUuSLf+BmQb+KJc61BFH6GEBAHPCQSxF16xcU8nTz
+	YYo4Jwyd5iVef2Xu5ZGQOzyVrw6+YBCVoiLFEPkIhLF1pmL2/vuUZV6z8M=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DD0685DBFC;
+	Sun, 18 Oct 2009 03:58:11 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 41FBA5DBFB; Sun, 18 Oct
+ 2009 03:58:08 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FB65FC0E-BBBB-11DE-8696-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130586>
 
-On Sat, Oct 17, 2009 at 04:48:11PM +0200, Thomas Rast wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > +NOTE: Some placeholders may depend on other options given to the
-> > +revision traversal engine. For example, the `%g*` reflog options will
-> > +insert an empty string unless we are traversing reflog entries (e.g., by
-> > +`git log -g`). The `%d` placeholder will use the "short" decoration
-> > +format if `--decorate` was not already provided on the command line.
-> 
-> Sure.  I figured it was obvious enough, but since you already went to
-> the lengths of documenting the exact behaviour of %d, I squashed it
-> and adjusted the acknowledgement in the commit message accordingly.
+> Actually, we should really think long and hard why we should not 
+> automatically check out the local branch "next" in that case.
 
-If the consensus (or Junio's decision when applying) is that we don't
-need it, I don't mind if my suggestion is scrapped (or reworded).
+While people were thinking long and hard, I've spent some quality time
+having fun with these patches, and realized that if we limit the scope of
+the change to make sure that we only change the behaviour of a case where
+we refused to do anything, this is not even something we need to think
+long nor hard after all.
 
--Peff
+At least from the maintainer's point of view, that is.
+
+I on the other hand do agree that we need to think long and hard when it
+comes to the matter of explaining this to the users, though.  I couldn't
+come up with a good (re-)ordering of the documentation to fit this new
+"short-cut" into the manpage.
+
+A three-patch series will follow shortly.
