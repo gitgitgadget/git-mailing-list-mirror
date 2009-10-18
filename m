@@ -1,180 +1,170 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Creating something like increasing revision numbers
-Date: Sun, 18 Oct 2009 15:47:39 -0700
-Message-ID: <7vfx9gnwtw.fsf@alter.siamese.dyndns.org>
-References: <20091018144158.GA9789@gandalf.dynalias.org>
- <200910181703.20607.johan@herland.net>
- <20091018152054.GA3956@gamma.logic.tuwien.ac.at>
+Subject: Re: [PATCH] Proof-of-concept patch to remember what the detached
+ HEAD was
+Date: Sun, 18 Oct 2009 15:47:13 -0700
+Message-ID: <7vws2snwum.fsf@alter.siamese.dyndns.org>
+References: <20091014230934.GC29664@coredump.intra.peff.net>
+ <885649360910150036o72c3bd97ofad85d5316dc5b35@mail.gmail.com>
+ <alpine.LNX.2.00.0910151523020.32515@iabervon.org>
+ <alpine.LNX.2.00.0910161311460.28491@reaper.quantumfyre.co.uk>
+ <20091016143041.GA11821@atjola.homenet>
+ <alpine.LNX.2.00.0910161821230.30589@reaper.quantumfyre.co.uk>
+ <20091017075551.GA5474@atjola.homenet>
+ <7vws2ue8yc.fsf@alter.siamese.dyndns.org>
+ <20091017084025.GC5474@atjola.homenet>
+ <7vaazqcry5.fsf@alter.siamese.dyndns.org>
+ <20091017194153.GA30003@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Norbert Preining <preining@logic.at>
-X-From: git-owner@vger.kernel.org Mon Oct 19 00:47:55 2009
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	James Pickens <jepicken@gmail.com>, Jeff King <peff@peff.net>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 19 00:47:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzeXZ-0007tZ-34
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 00:47:53 +0200
+	id 1MzeXY-0007tZ-IT
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 00:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755429AbZJRWro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 18:47:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755415AbZJRWro
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 18:47:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53495 "EHLO
+	id S1755408AbZJRWrf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 18:47:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755405AbZJRWrf
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 18:47:35 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46403 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755413AbZJRWrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 18:47:43 -0400
+	with ESMTP id S1754259AbZJRWrb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Oct 2009 18:47:31 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C7CD45E9E9;
-	Sun, 18 Oct 2009 18:47:47 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B76327C9CC;
+	Sun, 18 Oct 2009 18:47:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=5m6+Jf0vo2QY9229cimImiZtNLk=; b=hBHfm8jMVdFkmbFRzkxGdDR
-	yExRXF/B+b1m7UQnVDghNFdNlOVR10NHI2l2XizAYMNHThFVfaKyejubV1syakYF
-	MAZeLezKY0yG+yMPK2h8ilO5rKPsbMuolt/d0JwWLxfoh4BJrkNTydmtuasaTGu+
-	omQnvZdz+weyAcw+tazY=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=r53nBhUjbupo//jquTj8mjFik
+	Uw=; b=v/eea2LfrP5wqdXIz1pZIIa868LskQEavkGoLNkq+QXdxC0e/X9hGrAPE
+	A7/mm3w0ReAzvGuQCYdScn3KmaEqRnAS7Pso0sFEowqZzqpcn08xUxque6l/3mdA
+	V8ogUTg83YBcnEP02fgUECRlMl6N1E+dKHPTdk4b+iQKnF+rvo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=F/bfGRfVvyxajJvWIowJjrkdVnoX+rWB29iTMRT4tRL0t6xg+
-	LT16fM4POuK/+FrxsCXM/0E/ThcwxOa+qwFdaOgWKpfKYzhsXw5kuf+kiPhrpdml
-	brFIBLoMBI9trQ+5NLirQlRJMzykj4XoGSZ7eMmG/Qtea00hd7ZHibxV+A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4EB8B5E9E8;
-	Sun, 18 Oct 2009 18:47:44 -0400 (EDT)
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=iKoWT+sLT1XHfeeFP3J
+	nVaXWRX/Yn0YYf6znfxhDxm/D9scTf9c9/T6d3srXQkI8RHS0wLbRrohmrxdfDHl
+	v9ob4EqreneDiU+6uDGhAFtjj9NJ7cr4w3QtBc5ZLCaM4l0tY56XoT3ezZrdNhVr
+	QWvxp6mxZ3oNtqwUjJa/i3Gc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 48ED87C9C9;
+	Sun, 18 Oct 2009 18:47:27 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 615C95E9E4; Sun, 18 Oct
- 2009 18:47:40 -0400 (EDT)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 84CFA7C9C8; Sun, 18 Oct 2009
+ 18:47:15 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3FD5A9DA-BC38-11DE-87C0-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 35ABFE6E-BC38-11DE-9C1F-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130616>
 
-Norbert Preining <preining@logic.at> writes:
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-> On So, 18 Okt 2009, Johan Herland wrote:
->> A global, increasing version number ala SVN is fundamentally impossible in 
->> any distributed version control system (like Git).
+> On 2009.10.17 02:04:02 -0700, Junio C Hamano wrote:
+>> The "save" part of the work-save-then-merge sequence should be made =
+very
+>> visible to help people get used to the "not up, but work-save-then-m=
+erge"
+>> mental model.  I do not think it would help people in the long run t=
+o make
+>> the "save" step less visible by wrapping the sequence into an unreli=
+able
+>> "up" script, especially because the script would sometimes work but =
+other
+>> times *has to* force users to know that what is happening behind the=
+ scene
+>> is work-save-then-merge in order to resolve and recover from conflic=
+ts
+>> anyway.
 >
-> Yes, agreed. 
+> Hm, which cases would that be? I basically see three cases:
 >
-> The point is that I do not actually need the "distributed" part of git.
-> I want one central repository and all collaborators commit to that.
-> Yes, that is subversion, I know.
->
-> We have no branches, no tags, nothing of that. Only trunk.
+>  1) No uncommitted changes =3D> No problem
+>  2) Uncommitted changes merge cleanly =3D> No problem
+>  3) Uncommitted changes causes conflicts =3D>
+>    - User can resolve
+>    - User can start over (git update --retry)
+>    - User can give up (git update --abort)
 
-No, it is not subversion at all.  Don't say "I know" until you really
-know.  Anybody who thinks that is not distributed does not understand
-distributedness of git.
+By "--abort", if you meant to discard the local change, that is only
+suitable for people who would say "what I was doing was minor anyway, a=
+nd
+I'll redo them based on the updated upstream", and may not be so useful=
+, I
+think.  The user may want to pretend that he did not even start "update=
+"
+(i.e. not pulled while he was still working on something) at this point=
+,
+and if you meant by "give up" (aka --abort) to "reset --hard @{1} &&
+unstash", I think it makes quite a lot of sense.  Then the user has an
+option to fork a topic at that point:
 
-Distributedness does _not_ come from not having a central shared
-repository, nor not using more than one branch.
+    git update --abort
+    git checkout -b topic
+    work on more with committing
+    git checkout master
+    git update
 
-Distrubutedness comes the moment any and all of your people can make their
-commits _locally_.  And the fundamental lack of "increasing global version
-number" is one implication of the distributedness.
+But then this starts to look more like an enhanced failure recovery mod=
+e
+for "git pull" command.
 
-Suppose you and Alice collaborate that way.  You make the initial commit,
-that is pushed to the central shared repository, and alice clones.
+In addition, I think that you would internally implement the "save" ste=
+p
+with "stash" (which would be a sane thing to do), but then you would ne=
+ed
+to worry about the case where the user was in the middle of a merge (or
+"revert", "cherry-pick", "checkout -m") that did not complete.  "git pu=
+ll"
+fails upfront, says why and tells users what to do.  "git update" shoul=
+d
+do the same.
 
-    norb$ git commit -m 'first one'
-    norb$ git push
-    alice$ git clone $central
+> I do see problems with a "stash around merge" thing ("stash" around
+> rebase seems easier, as that could just create a commit and reset lat=
+er,
+> but I'm not exactly sure that such smartness is a good idea). As soon=
+ as
+> the merge has conflicts, you need to know that you have to unstash af=
+ter
+> committing the merge, but what I have in mind is fast-forward only (o=
+r
+> possibly reset, when upstream was rewritten).  Primarily for users th=
+at
+> don't commit at all, but just look at things [*1*].
 
-Now Norb and Alice share that the 'first one' is the current and only
-commit at the tip of their history.  The central repository also shares
-that notion.  You work and produce a few commits.
+Ok.  If you have a clean way to guarantee that "update" users won't
+commit, I think the above would sort of make sense and my earlier worri=
+es
+about (1) a user who wish he did not fetch and (2) a user who was doing
+something more complex and had conflicts already would go away.
 
-    norb$ edit; git commit -a -m 'second norb'
-    norb$ edit; git commit -a -m 'third norb'
-    norb$ edit; git commit -a -m 'fourth norb'
+If the sole target audience is "minor changes only, never committing"
+people, then I would even rescind my earlier suggestion on --abort; it
+should mean "remove the minor changes and get pristine copy of the
+upstream---the user will redo the minor changes to adjust to the update=
+d
+upstream from scratch", to keep the end user experience simpler and
+clearer.
 
-while Alice does the same.
-    
-    alice$ edit; git commit -a -m 'second alice'
-    alice$ edit; git commit -a -m 'third alice'
+I am undecided if it is a good thing to divide the userbase into two
+classes, "update" people and "work-commit-fetch-merge-resolve" people.
 
-You happened to push first:
-
-    norb$ git push
-
-You and the central repository shares the view of the history in which
-the mapping between "revision sequence number" and commits looks like:
-
-    1. first one
-    2. second norb
-    3. third norb
-    4. fourth norb
-
-Imagine what view of the history Alice has at this point and think for a
-while.  Recall Alice hasn't pulled from the central repository since she
-cloned.  There are two possible things you may want to do.
-
- #1 Some sequential number is given but that is useless as global
-    identifier.
-
-    1. first one
-    2. second alice
-    3. third alice
-
- #2 Do not give such sequential number locally; the central repository is
-    the _only_ place that assigns such a number.  '?' stands for
-    'unnumbered'
-
-    1. first one
-    ?. second alice
-    ?. third alice
-
-Then Alice fetches from the central and integrates her history with it.
-She can do one of two things.  "pull" to create a non-linear history by
-merging, or "pull --rebase" to keep the history linear.
-
-Since you are imitating subversion, you may choose the latter route to
-rebase, and now the linearlized history would become:
-
-    1. first one
-    2. second norb
-    3. third norb
-    4. fourth norb
-    ?. second alice
-    ?. third alice
-
-Alice's two commits may stay unnumbered (if you chose #2---no local
-versions), or changes from 2/3 to 5/6 (if you chose #1).
-
-If you instead use merges, then there won't be 'sequence' number you can
-usefully compare anymore.
-
-                    1 first one
-                   /|
-  second alice    2 2     second norb
-                  | |
-                  | 3     third norb
-                  | |
-   third alice    3 4     fourth norb
-                  |/
-   fourth alice   5
-
-Scheme #1 inherently cannot give you stable and unique numbers in a
-distributed environment where you can commit locally without talking to
-the central "number naming authority".  By rebasing, you can keep the
-long-term numbering unique (by renaming some new ones), but rebase has its
-own downsides besides the name of the commit.
-
-Scheme #2 is a way to get some stablility; give the authority of numbering
-to the central repository and commits that haven't hit the central
-repository are left unnumbered.  But that is generally not very useful
-for your purpose of giving incrementing version number for building (the
-developers would want to build for testing before finally committing to
-publish the result to the central place).
-
-Running describe using one tag on the 'initial' would give you a rough
-equivalent of #1 (i.e. you get tentative numbers on the local commits),
-both in the case you rebase (i.e. your numbers change) and you merge
-(i.e. you can have more than one "second" commits and numbers are not
-unique), which would be the best compromise you can get.
+> [*1*] One could also say: Users that don't give a damn about git, but
+> just need it to get the code and maybe have some minor, uncommitted
+> modifications on top. I'm _not_ thinking about users that actually
+> commit and do stuff. Those should use merge/rebase/pull, and get a
+> complaint from "git update" if the update is not a fast-forward one,
+> telling them what to use instead.
