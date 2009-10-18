@@ -1,101 +1,86 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use "--no-" prefix to switch off some of checkout
- dwimmery
-Date: Sun, 18 Oct 2009 15:49:44 -0700
-Message-ID: <7vzl7omi5z.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/3] DWIM "git checkout frotz" to "git checkout -b frotz
+ origin/frotz"
+Date: Sun, 18 Oct 2009 15:50:35 -0700
+Message-ID: <7vvdicmi4k.fsf@alter.siamese.dyndns.org>
 References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
  <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
  <7vzl7pyvzl.fsf@alter.siamese.dyndns.org>
- <7v63adxh9a.fsf_-_@alter.siamese.dyndns.org>
- <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com>
- <7v7huspjg0.fsf@alter.siamese.dyndns.org>
- <20091018210222.GA5371@blimp.localdomain>
+ <7vaazpxha4.fsf_-_@alter.siamese.dyndns.org>
+ <20091018193448.6117@nanako3.lavabit.com>
+ <20091018120053.GA11391@atjola.homenet>
+ <20091019052043.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: B.Steinbrink@gmx.de, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jay Soffian <jaysoffian@gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 00:50:16 2009
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 00:50:57 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzeZr-00008t-Fm
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 00:50:15 +0200
+	id 1MzeaV-0000OV-Kv
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 00:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444AbZJRWtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 18:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbZJRWtw
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 18:49:52 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55245 "EHLO
+	id S1755413AbZJRWuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 18:50:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbZJRWuq
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 18:50:46 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47559 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755417AbZJRWtv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 18:49:51 -0400
+	with ESMTP id S1752290AbZJRWup (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 18:50:45 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E15FD5EA07;
-	Sun, 18 Oct 2009 18:49:55 -0400 (EDT)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 479317C9E5;
+	Sun, 18 Oct 2009 18:50:50 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LtcRQqpZ+QuZxMQ4HLKMSWnQGWg=; b=VJxC8G
-	d1gh4pquFFg375akLDc9JnR6C8re64IzQVG9lymeG2a8EcmBy8mxnmaLNh/bMsQS
-	lJkya+FzDZdW3yOUAOLtGHgo3DAVtxATNUGyp22WyK09DTCwcHgJKAwQZtVdCQJO
-	mcf+AzOxI48btD+UVJEKj2IYCvMHY6l+wEIw8=
+	:content-type; s=sasl; bh=keCYIXQT5J3a3xlu/accpEKC8fI=; b=H6WdMY
+	kbViZvBRBqjrzEo9bacPHRw78V7yGIdKV0l+dNxlkeisNmJc+DVCztv6l4vTwUPV
+	o/oiv9225q1ep3kc9pEdIVKJJsEIRSssX1CN92dpXzvU7FQiDNnQuIhyo76YWeUz
+	XZj+BesmShO+fgpiTwyTFzRar7dYjERtTn7Dk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LvSz/vQ4IR4xgtRITyNcbNa/aijs17VJ
-	JWJtEIBcJsZfn3jIeHdNczPSMbTrhv8+37wP47LJSr1eJxF+Fb1QEI2oMkvG+D79
-	tTngIXtNS84KMx389xQnZ5llc9JL3RKN2l9QgCi4bsdx4dyXJuLzc32O7sJjQ5j1
-	QYQmccG9M+o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB85A5EA06;
-	Sun, 18 Oct 2009 18:49:51 -0400 (EDT)
+	:content-type; q=dns; s=sasl; b=Ho16/kA1MBY0WP/+u8PpmzkaYm+5jCPR
+	SDBAetvO0DvDq22TqoezzSzTymxAQJUre1BM6ePpL5UuPHXUgGuTPTUPov7qt+J/
+	VS8mLDKjir+OcHYy/F2Y3CyK4JpBok5fvGAKJIqOsT51dsyW0bP4AH2mlLuNu4IW
+	XHrQHjdcMMs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 027C97C9E4;
+	Sun, 18 Oct 2009 18:50:44 -0400 (EDT)
 Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC5E25EA05; Sun, 18 Oct
- 2009 18:49:45 -0400 (EDT)
-In-Reply-To: <20091018210222.GA5371@blimp.localdomain> (Alex Riesen's message
- of "Sun\, 18 Oct 2009 23\:02\:22 +0200")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1E02A7C9E1; Sun, 18 Oct 2009
+ 18:50:36 -0400 (EDT)
+In-Reply-To: <20091019052043.6117@nanako3.lavabit.com> (Nanako Shiraishi's
+ message of "Mon\, 19 Oct 2009 05\:20\:43 +0900")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8BC3D1C8-BC38-11DE-9E10-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AB87A94E-BC38-11DE-A6EA-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130619>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Nanako Shiraishi <nanako3@lavabit.com> writes:
 
-> The one which guesses local branch name from a remote reference.
+>>> In the subject you used 'git checkout -b frotz origin/frotz'. Did you
+>>> forget to say '-t'?
+>>
+>> Hm, the DWIMmery only triggers when opts.track is
+>> BRANCH_TRACK_UNSPECIFIED, i.e. -t was not used. And it doesn't change
+>> opts.track when it DWIMs, so it respects branch.autosetupmerge, which
+>> would be overriden by -t. So it seems correct that -t is not in there.
 >
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
+> I see.
 >
-> Maybe like this?
->
-> BTW, can parse-options take care of the " (default)" addition?
->
->  builtin-checkout.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin-checkout.c b/builtin-checkout.c
-> index 6ec9b83..22b023b 100644
-> --- a/builtin-checkout.c
-> +++ b/builtin-checkout.c
-> @@ -632,8 +632,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->  		OPT_STRING(0, "conflict", &conflict_style, "style",
->  			   "conflict style (merge or diff3)"),
->  		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
-> -		OPT_SET_INT(0, "nodwim", &dwim_new_local_branch,
-> -			    "do not dwim local branch creation", 0),
-> +		OPT_SET_INT(0, "dwim", &dwim_new_local_branch,
-> +			    "Guess local branch from remote reference (default)", 0),
+> A user who always wants tracking can set the config option and use 
+> the new "git checkout frotz" shortcut, but a user who usually 
+> doesn't want tracking doesn't have the config option and when he 
+> wants tracking only for this new branch he can explicitly say "git 
+> checkout -t origin/frotz", right?
 
-Humph, how does SET_INT know to set it to 1 with --dwim and set it to 0
-with --no-dwim?
-
->  		OPT_END(),
->  	};
->  	int has_dash_dash;
-> -- 
-> 1.6.5.1.50.g84e6e
+Correct.
