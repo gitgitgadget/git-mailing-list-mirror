@@ -1,84 +1,94 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Creating something like increasing revision numbers
-Date: Sun, 18 Oct 2009 17:43:39 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910181727130.32515@iabervon.org>
-References: <20091018144158.GA9789@gandalf.dynalias.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Generalized "string function" syntax
+Date: Sun, 18 Oct 2009 15:47:27 -0700
+Message-ID: <7vr5t0nwu8.fsf@alter.siamese.dyndns.org>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com>
+ <4ADA3153.7070606@lsrfire.ath.cx> <7v63ad5o8p.fsf@alter.siamese.dyndns.org>
+ <4ADAD0D2.504@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Norbert Preining <preining@logic.at>
-X-From: git-owner@vger.kernel.org Sun Oct 18 23:43:48 2009
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Oct 19 00:47:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzdXW-00045H-Lw
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 23:43:47 +0200
+	id 1MzeXW-0007tZ-Rm
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 00:47:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325AbZJRVng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 17:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753311AbZJRVng
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 17:43:36 -0400
-Received: from iabervon.org ([66.92.72.58]:38975 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751877AbZJRVnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 17:43:35 -0400
-Received: (qmail 5008 invoked by uid 1000); 18 Oct 2009 21:43:39 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Oct 2009 21:43:39 -0000
-In-Reply-To: <20091018144158.GA9789@gandalf.dynalias.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1755347AbZJRWra convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 18:47:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754259AbZJRWra
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 18:47:30 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53183 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752290AbZJRWr3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Oct 2009 18:47:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 494EA5E9E3;
+	Sun, 18 Oct 2009 18:47:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=snUTxHGZZIfWBbDwICjc6HuaV
+	tk=; b=j8bG0yRPPUiPZIs6Z+j1Dpz7Pn+03gkdzMycqYTfI/UaJWOfRuyo9CBQ9
+	zt0rKM8Z54CDEhBQ3b+PmEhCHN86OeLr+R1LxC3cZcAL/86N1B5BLBmhh/tiCRiq
+	CFzJbtEnATcPJH3FyhU9rY3pYy0SW0RuLVDZzVmMWOPZQa/GoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=F4wCqKXucY7q76cgmxg
+	UbOFAyzpEGHI+bTF8egODWnHNkuHoePW0kc8DSTI7FEywI1R2dzLkIBJQpzuP9Tx
+	l4K/VbLoSLqkv/+EgQ9QxQ9VrlHBJL9jR+U2QAySR2aSV7QqVEbuxcHrsBg+MiDQ
+	e5J7mPagtNI4lxkGqueMUScU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 285795E9E2;
+	Sun, 18 Oct 2009 18:47:31 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82C365E9E1; Sun, 18 Oct
+ 2009 18:47:28 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 37FE0748-BC38-11DE-8095-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130614>
 
-On Sun, 18 Oct 2009, Norbert Preining wrote:
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-> Dear all,
-> 
-> (please Cc)
-> 
-> I am managing some of my projects with git and I am quite happy about it.
-> 
-> There is another project I am working that is quite big, the subversion
-> checkout is about 14Gb. Doing svn up is a pain, it has to open tens of
-> thousands of files and directories traversing the whole tree, trashing
-> the fs cache and taking ages.
-> 
-> My idea was to move to git, from what I read it should be more capable
-> in handling these type of projects.
-> 
-> Now, there is one show-stopper I see. From our repository we create a
-> set of "packages", and the maximum of the "last-changed" revisions of
-> the contained files determine the "version" of the package. This 
-> guarantees that any change in a file will increase the revision number
-> of the package (some tricks for removals have to be done). This is necessary
-> since we are distributing the packages from servers and the version number
-> pf a package determines whether it should be upgraded (well known concept).
-> 
-> Now my question, is there any way to set up something similar with git?
-> 
-> My idea is that git - like subversion - could (if asked to) count each
-> commit (global to the repository, irrelevant of the branch) and give it
-> a version number. Since we all will use a bare repository on a server
-> and pull/push from/to there, I think that something similar could be possible.
+> Which other text functions are we going to add which would break this
+> model?  The only thing I can think of right now is nesting such
+> functions themselves, e.g. when indenting a list in an indented
+> sub-paragraph in an indented paragraph.  Useful?
 
-It's possible as long as you don't think of the "version number" as a 
-property of the commit, but rather a property that some commits get by 
-virtue of having been at some time the commit that's what would be found 
-on that particular server at that particular time. Even though the history 
-of the *content* is non-linear, the sequence of values stored in 
-refs/heads/master on your central server is linear, local, and easy to 
-enumerate.
+I was more worried about painting ourselves now in a corner we cannot g=
+et
+out of easily later.  Even if my answer to question "what are we going =
+to
+add" may be "nothing I can think of right now", it does not make me hap=
+py.
 
-Of course, when someone does a bunch of development in parallel with other 
-people, does a final merge, and pushes it back to the server, this only 
-increases the version by one, and only the final merge actually has a 
-version number at all. For your application, this shouldn't be a problem, 
-because the intermediate commits don't ever get packages created of them 
-to need to be compared to other packages.
+Something off the top of my head are combinations like these.
 
-	-Daniel
-*This .sig left intentionally blank*
+    %[toupper()%cD%] =3D> 'SUN, 18 OCT 2009 12:34:56 -0700'
+    %[substr(7,3)%[toupper()%cD%]] =3D> 'OCT'
+
+    %[sanitize()%s%] =3D=3D=3D %f (i.e. format-patch filename)
+    %[sanitize()%[substr(0,7)%[toupper()%aN%]%]%s] (with upcased author=
+ name)
+
+By the way, I think that date formatting can be helped by introducing a
+strftime() function that takes %ct/%at as input, e.g. %aD would become
+
+    %[strftime(%a, %d %b %Y %H:%M:%S %z)%at]
+
+and we do not have to worry about keep adding random %[ac]X formats and
+running out of X.  Right now we use d/D/r/i and there were talks of add=
+ing
+a shortened 8601 format without time or something we did not implement.
+
+Also, if we had this %[func() any string%] mechanism, we probably would=
+n't
+have had to add distinction between n/N and e/E after %a and %c.
