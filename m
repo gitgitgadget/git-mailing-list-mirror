@@ -1,67 +1,90 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/3] git checkout --nodwim
-Date: Sun, 18 Oct 2009 14:40:21 +0200
-Message-ID: <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com>
-References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
-	 <alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
-	 <7vzl7pyvzl.fsf@alter.siamese.dyndns.org>
-	 <7v63adxh9a.fsf_-_@alter.siamese.dyndns.org>
+From: Norbert Preining <preining@logic.at>
+Subject: Creating something like increasing revision numbers
+Date: Sun, 18 Oct 2009 23:41:58 +0900
+Message-ID: <20091018144158.GA9789@gandalf.dynalias.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 18 14:40:30 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 18 16:48:21 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzV3k-0001lx-OO
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 14:40:29 +0200
+	id 1MzX3T-0004Sa-3D
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 16:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754408AbZJRMkT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 08:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754305AbZJRMkS
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 08:40:18 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:51377 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753516AbZJRMkS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Oct 2009 08:40:18 -0400
-Received: by fxm18 with SMTP id 18so4032879fxm.37
-        for <git@vger.kernel.org>; Sun, 18 Oct 2009 05:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=A+WOiaoSiMq+C4aRqRMgbeE/nwEtnXJC+ecfl1FmCow=;
-        b=OrgHQnwTZnPgB7Rl7HeY6rlhFzq89m3U2Npr8dN0diZLGChtYIFI8Oa2nABf1H04I5
-         4WDOertQEoGLvKvVbkeo5CCLNNt+1BcOCs6iL2PxjQvt5dXyB2mqJgqmmIKV89He24mK
-         rZZaAp7chJ3AE3+4QJF5CTOS1VlqgV4/ZEe6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=oX31G6LJwEsyXZweNaS0u3ismn8NMKGQ/JufNfdVq/td3xbAw7zke9/AldPrF86K0p
-         TA4On/HbLhd5MO5Tk/D/93nGnj/EcmbGTjLPhq65U/XDGI2q4/32wRIbY6KTSbiqUtG6
-         Ol29HvpsJS9mSQ2YGmBSQ7QptPn/BcCMhWqIA=
-Received: by 10.204.36.202 with SMTP id u10mr3588545bkd.196.1255869621779; 
-	Sun, 18 Oct 2009 05:40:21 -0700 (PDT)
-In-Reply-To: <7v63adxh9a.fsf_-_@alter.siamese.dyndns.org>
+	id S1754657AbZJROsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 10:48:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754645AbZJROsG
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 10:48:06 -0400
+Received: from mx.logic.tuwien.ac.at ([128.130.175.19]:59155 "EHLO
+	mx.logic.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754642AbZJROsF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 10:48:05 -0400
+Received: from rsd-f52.jaist.ac.jp
+	([150.65.47.160] helo=localhost ident=Debian-exim)
+	by mx.logic.tuwien.ac.at with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <preining@logic.at>)
+	id 1MzX3F-0006BK-6j; Sun, 18 Oct 2009 16:48:07 +0200
+Received: from norbert by localhost with local (Exim 4.69)
+	(envelope-from <preining@logic.at>)
+	id 1MzWxL-0002iB-5Q; Sun, 18 Oct 2009 23:41:59 +0900
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130595>
 
-On Sun, Oct 18, 2009 at 10:01, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_SET_INT(0, "no=
-dwim", &dwim_new_local_branch,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 "do not dwim local branch creation", 0),
+Dear all,
 
-Isn't there a special negation support for --no-something in parse-opti=
-ons?
+(please Cc)
+
+I am managing some of my projects with git and I am quite happy about it.
+
+There is another project I am working that is quite big, the subversion
+checkout is about 14Gb. Doing svn up is a pain, it has to open tens of
+thousands of files and directories traversing the whole tree, trashing
+the fs cache and taking ages.
+
+My idea was to move to git, from what I read it should be more capable
+in handling these type of projects.
+
+Now, there is one show-stopper I see. From our repository we create a
+set of "packages", and the maximum of the "last-changed" revisions of
+the contained files determine the "version" of the package. This 
+guarantees that any change in a file will increase the revision number
+of the package (some tricks for removals have to be done). This is necessary
+since we are distributing the packages from servers and the version number
+pf a package determines whether it should be upgraded (well known concept).
+
+Now my question, is there any way to set up something similar with git?
+
+My idea is that git - like subversion - could (if asked to) count each
+commit (global to the repository, irrelevant of the branch) and give it
+a version number. Since we all will use a bare repository on a server
+and pull/push from/to there, I think that something similar could be possible.
+
+So, before I delve into more gitty-nitty conversion, let me know if
+there is any chance for that, or we should stay with subversion.
+
+Thanks a lot and all the best
+
+Norbert
+
+PS: for those interested, it is TeX Live: www.tug.org/texlive
+
+-------------------------------------------------------------------------------
+Dr. Norbert Preining                                        Associate Professor
+JAIST Japan Advanced Institute of Science and Technology   preining@jaist.ac.jp
+Vienna University of Technology                               preining@logic.at
+Debian Developer (Debian TeX Task Force)                    preining@debian.org
+gpg DSA: 0x09C5B094      fp: 14DF 2E6C 0307 BE6D AD76  A9C0 D2BF 4AA3 09C5 B094
+-------------------------------------------------------------------------------
+YONKERS (n.)
+(Rare.) The combined thrill of pain and shame when being caught in
+public plucking your nostril-hairs and stuffing them into your
+side-pocket.
+			--- Douglas Adams, The Meaning of Liff
