@@ -1,79 +1,81 @@
-From: Mohit Aron <mohit.aron@gmail.com>
-Subject: git push should automatically push to remote tracking branch
-Date: Sun, 18 Oct 2009 13:20:22 -0700
-Message-ID: <ee22b09e0910181320j15a273e8vc510801c890b93a9@mail.gmail.com>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [PATCH 2/3] DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
+Date: Mon, 19 Oct 2009 05:20:43 +0900
+Message-ID: <20091019052043.6117@nanako3.lavabit.com>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com>
+	<alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de>
+	<7vzl7pyvzl.fsf@alter.siamese.dyndns.org>
+	<7vaazpxha4.fsf_-_@alter.siamese.dyndns.org>
+	<20091018193448.6117@nanako3.lavabit.com>
+	<20091018120053.GA11391@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 18 22:20:33 2009
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: B.Steinbrink@gmx.de
+X-From: git-owner@vger.kernel.org Sun Oct 18 22:20:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzcEx-0007zM-Tc
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 22:20:32 +0200
+	id 1MzcFL-0008C4-EJ
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Oct 2009 22:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181AbZJRUUT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 16:20:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755128AbZJRUUT
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 16:20:19 -0400
-Received: from mail-px0-f171.google.com ([209.85.216.171]:62016 "EHLO
-	mail-px0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755119AbZJRUUS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Oct 2009 16:20:18 -0400
-Received: by pxi1 with SMTP id 1so743614pxi.33
-        for <git@vger.kernel.org>; Sun, 18 Oct 2009 13:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type:content-transfer-encoding;
-        bh=kj5LliuLrobsL/DZ/+UiSYTTqLu1276/zNlLVTvg0mc=;
-        b=kXxg/vaN/6q9LgKbox0XTO/Eqt2ONfWDaGmd1q0yaexm5SNJgKm1k3fNYGlEX9m3zJ
-         oB6JrsbF10wToGvBSgv0FyBSvb0Apfgh7sZVdBBylZeX2dWklKrZPFnexi+ftEZ+/wHC
-         8DCw/+nNiWB0MjU7Gig2y2lX1SE9G6nnwq5c8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=X8c4dFJABAJ5o9wchIN4dVJ9qJsC9wWC++jnssK0jbeWqpig2bhKj0NQ+F+adYTnxL
-         aDVORyvhmqXlgp8/XZYW353jnzoAOu1TZBOpWQOK787v/Qd+i9zN0RZ7hawOJ2I4a2++
-         mtfepnPlynChV8tDLY9/b7qifOOaIOp+37h1I=
-Received: by 10.114.18.17 with SMTP id 17mr4395526war.131.1255897222959; Sun, 
-	18 Oct 2009 13:20:22 -0700 (PDT)
+	id S1755260AbZJRUUp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 16:20:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755224AbZJRUUo
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 16:20:44 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:44403 "EHLO karen.lavabit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755250AbZJRUUm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 16:20:42 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id B940711B8CA;
+	Sun, 18 Oct 2009 15:20:47 -0500 (CDT)
+Received: from 4448.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id ABF5WG32B036; Sun, 18 Oct 2009 15:20:47 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=vIZIw+7j9wFyvd9SLa9ClPxknjt6t4qPW0o6uITExjJ3luz6nUt6VYh27xa4syqC/F2aKPPmI4OoGYXU96j9MvD5SSkLBeDerKoTl5/XNLQmw/opoYzuh+JE2HCT0h/rHqLwZQKwq8QjQP8PSFgJXg46TWsjS+AEadqRjT2Zq64=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20091018120053.GA11391@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130610>
 
-Hello,
+Quoting Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-I've been using git for around a year now and I'm continuing to find
-the 'git push' API rather cumbersome. My workflow is as follows. I
-typically have a local branch track a remote branch and want to pull
-and push changes back and forth. The names of the local and remote
-branches are different. Even so, while 'git pull' is enough to pull
-changes, 'git push' is not. Instead, the pull requires a full refspec
-to be specified which gets real cumbersome and error prone.
+> On 2009.10.18 19:34:48 +0900, Nanako Shiraishi wrote:
+>> Quoting Junio C Hamano <gitster@pobox.com>
+>>=20
+>> > When 'frotz' is not a valid object name nor a tracked filename,
+>> > we used to complain and failed this command.  When there is only
+>> > one remote that has 'frotz' as one of its tracking branches, we ca=
+n
+>> > DWIM it as a request to create a local branch 'frotz' forking from
+>> > the matching remote tracking branch.
+>>=20
+>> In the subject you used 'git checkout -b frotz origin/frotz'. Did yo=
+u
+>> forget to say '-t'?
+>
+> Hm, the DWIMmery only triggers when opts.track is
+> BRANCH_TRACK_UNSPECIFIED, i.e. -t was not used. And it doesn't change
+> opts.track when it DWIMs, so it respects branch.autosetupmerge, which
+> would be overriden by -t. So it seems correct that -t is not in there=
+=2E
 
-Say my local branch name is foo and it is tracking a remote release
-branch of a product. Say the remote's name is origin and corresponding
-branch there is 6.1. 'git pull' nicely fetches and merges changes
-submitted by others in the remote branch to my branch foo. However, to
-do a push, I need to call:
+I see.
 
-=A0=A0 =A0 =A0git push origin HEAD:6.1
+A user who always wants tracking can set the config option and use=20
+the new "git checkout frotz" shortcut, but a user who usually=20
+doesn't want tracking doesn't have the config option and when he=20
+wants tracking only for this new branch he can explicitly say "git=20
+checkout -t origin/frotz", right?
 
-Since my local branch has been setup to track the remote branch, I
-shouldn't have to specify all this in the 'git push' command. It'll be
-great if 'git push' were to support a variant that automatically
-allows pushing to the remotely tracked branch. This is the typical
-workflow with other version control systems too.
-
-If anyone knows a simpler alternative I can use in Git, please let me
-know. Otherwise, it'll be great if such a feature could be added to
-Git in the future.
-
-
-- Mohit
+--=20
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
