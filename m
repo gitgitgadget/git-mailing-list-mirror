@@ -1,106 +1,112 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v4 0/8] imap-send: Windows support
-Date: Mon, 19 Oct 2009 17:42:01 +0200
-Message-ID: <1255966929-1280-1-git-send-email-kusmabite@gmail.com>
-Cc: msysgit@googlegroups.com, Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Oct 19 17:44:39 2009
-Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vw0-f156.google.com ([209.85.212.156])
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH v4 0/5] Pretty formats for reflog data
+Date: Mon, 19 Oct 2009 17:48:07 +0200
+Message-ID: <cover.1255966426.git.trast@student.ethz.ch>
+References: <7vaazonwtr.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>, Jef Driesen <jefdriesen@hotmail.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 17:49:31 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzuPU-0006rY-VJ
-	for gcvm-msysgit@m.gmane.org; Mon, 19 Oct 2009 17:44:37 +0200
-Received: by mail-vw0-f156.google.com with SMTP id 28so4738984vws.3
-        for <gcvm-msysgit@m.gmane.org>; Mon, 19 Oct 2009 08:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:received:x-sender:x-apparently-to
-         :received:received:received:received-spf:received:dkim-signature
-         :domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
-         :x-beenthere;
-        bh=jc7Nt/lSD4jmeLi+XakfpqVds7RfhbZg/EiXQBddOfQ=;
-        b=VWpGv2ZDr6HKgTmzruK0MA5d6aEUirYBKQHijTDHGpRm+Mqc0cdLGnavWm29ws/n1G
-         H1tUvvA/uNz6ovn9pTAaeygdEKlydN2Y3+cDbyBxnctWMOwC8B2lep9JQ5QiATWV3JfP
-         dOWlp6P05DA49GwTzUuUNxYrZrr89HWi9wN1c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-sender:x-apparently-to:received-spf:authentication-results
-         :dkim-signature:domainkey-signature:from:to:cc:subject:date
-         :message-id:x-mailer:sender:precedence:x-google-loop:mailing-list
-         :list-id:list-post:list-help:list-unsubscribe:x-beenthere-env
-         :x-beenthere;
-        b=Pf0zcixnFgTBcsRYLl2k6BGIOwSA63UL/DLQy0Qs2uKBCczcORMwK0Z0OC5QgDyWgq
-         S7O/hAcAeo5sSxYzguSPWQKV0wAGack/h4kQzTenYB7KLr+97O415DCvDzdJW6EqOpiH
-         te6brg5gchnegsH4fZliy8ZR071zKSenCCwqg=
-Received: by 10.220.68.102 with SMTP id u38mr121616vci.5.1255966985132;
-        Mon, 19 Oct 2009 08:43:05 -0700 (PDT)
-Received: by 10.176.181.37 with SMTP id d37gr7446yqf.0;
-	Mon, 19 Oct 2009 08:43:03 -0700 (PDT)
-X-Sender: kusmabite@googlemail.com
-X-Apparently-To: msysgit@googlegroups.com
-Received: by 10.210.4.13 with SMTP id 13mr338631ebd.10.1255966982400; Mon, 19 Oct 2009 08:43:02 -0700 (PDT)
-Received: by 10.210.4.13 with SMTP id 13mr338630ebd.10.1255966982374; Mon, 19 Oct 2009 08:43:02 -0700 (PDT)
-Received: from mail-ew0-f219.google.com (mail-ew0-f219.google.com [209.85.219.219]) by gmr-mx.google.com with ESMTP id 15si913403ewy.4.2009.10.19.08.43.01; Mon, 19 Oct 2009 08:43:01 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.219 as permitted sender) client-ip=209.85.219.219;
-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.219 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
-Received: by mail-ew0-f219.google.com with SMTP id 19so4198812ewy.28 for <msysgit@googlegroups.com>; Mon, 19 Oct 2009 08:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer; bh=K9qaoOO58J7Cwv3VXBxYUaRCycGm6+fJIWO/BlWYj5Q=; b=kp3wqavDnd2bTUx2wod9E4xUsu/J5v6VEc+j+te0wJ/DfHnBcoUhtauYSBcdDnkbmf 5r7VbMqW7Z3L01bA0Cq10vlTO6/2YFXE9SYGqhrpJ+K+wRfo2t2JdgjHznJ7DeklTh0I ELxZe6FIjgHo+jIYlg+VD0iqfJ9aG272kB1r4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer; b=aiqZy8HLgS6F8sHK+W4P8v59tzbBV9nq5aWSdPWu9DuUFdk/mZZyajOa7eEWz0tzWe cSuds9GgL2hz7lujQTi5HSW680fEpJ7EY3mbd6l+n9ZvgeJgMuaae8MGBofQlxT02YqK PtrsVJb+2fftFBMqSRW2Q1NFs37iZj/fezki4=
-Received: by 10.211.131.40 with SMTP id i40mr54263ebn.99.1255966981204; Mon, 19 Oct 2009 08:43:01 -0700 (PDT)
-Received: from localhost ([77.40.159.131]) by mx.google.com with ESMTPS id 7sm4970533eyb.32.2009.10.19.08.43.00 (version=TLSv1/SSLv3 cipher=RC4-MD5); Mon, 19 Oct 2009 08:43:00 -0700 (PDT)
-X-Mailer: git-send-email 1.6.4.msysgit.0
-Sender: msysgit@googlegroups.com
+	id 1MzuUD-0000tw-3K
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 17:49:29 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756771AbZJSPsp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 11:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756765AbZJSPso
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 11:48:44 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:28915 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755934AbZJSPso (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 11:48:44 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 19 Oct
+ 2009 17:48:47 +0200
+Received: from localhost.localdomain (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Mon, 19 Oct
+ 2009 17:48:46 +0200
+X-Mailer: git-send-email 1.6.5.1.137.gefbc6
+In-Reply-To: <7vaazonwtr.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-X-Google-Loop: groups
-Mailing-List: list msysgit@googlegroups.com;
-	contact msysgit+owner@googlegroups.com
-List-Id: <msysgit.googlegroups.com>
-List-Post: <mailto:msysgit@googlegroups.com>
-List-Help: <mailto:msysgit+help@googlegroups.com>
-List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
-	<mailto:msysgit+unsubscribe@googlegroups.com>
-X-BeenThere-Env: msysgit@googlegroups.com
-X-BeenThere: msysgit@googlegroups.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130709>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130710>
+
+Junio C Hamano wrote:
+> 
+> One solution to help the compiler catch this kind of semantic crash upon
+> merging or applying code based on the old format_commit_message() would
+> have been to change its function signature (or even the name), so that it
+> would not go unnoticed that DATE_NORMAL that happens to be "0" is silently
+> interpreted as (void *)0 == NULL.
+
+Indeed, that would have been a good idea.  (I still don't fully see
+the use of allowing an enum value as a pointer, but apparently the
+standard's that way.)
+
+I fixed the calls to format_commit_message(), but without changing the
+function signature compared to the last patch.  I also decided not to
+put in the test case; the easiest I could come up with was the
+following:
+
+-- 8< --
+diff --git i/t/t5001-archive-attr.sh w/t/t5001-archive-attr.sh
+index 426b319..0950527 100755
+--- i/t/t5001-archive-attr.sh
++++ w/t/t5001-archive-attr.sh
+@@ -4,7 +4,7 @@ test_description='git archive attribute tests'
+ 
+ . ./test-lib.sh
+ 
+-SUBSTFORMAT=%H%n
++SUBSTFORMAT=%H%ad%n
+ 
+ test_expect_exists() {
+ 	test_expect_success " $1 exists" "test -e $1"
+-- >8 --
+
+which immediately fails most tests in the file because of segfaults
+with the buggy series.  However, it still wouldn't catch other broken
+callers, if there were any, so I left it out.
+
+Compared to v3, I also rebased the series on current master, which
+conflicted with 7f98ebc (format_commit_message(): fix function
+signature, 2009-10-15) so you now need that commit to apply it.
+
+Finally, I squashed a revert of 0a0c342 (git-stash documentation:
+mention default options for 'list', 2009-10-12) into 5/5 since there
+are no more default options after my patch.
 
 
-Here's the 4th iteration of my patches for
-Windows-compatibility in imap-send.
+Thomas Rast (5):
+  Refactor pretty_print_commit arguments into a struct
+  reflog-walk: refactor the branch@{num} formatting
+  Introduce new pretty formats %g[sdD] for reflog information
+  stash list: use new %g formats instead of sed
+  stash list: drop the default limit of 10 stashes
 
- - Patch 1-3 is about getting rid of or rewriting
-   code with portability issues.
- - Patch 4 fixes a compilation error on Windows
- - Patch 5 enables compilation of imap-send
- - Patch 6-7 enables SSL-suport for mingw
- - Patch 8 enables imap-send and SSL for msvc
-
-Changes in this iteration compared to the previous
-are as follows:
- - Patch 3/8 calls "sh -c" instead of "/bin/sh -c"
- - Patch 5/8 keeps the list sorted
-
-Thanks to Johannes Sixt for reviewing v4
-
-Erik Faye-Lund (6):
-  imap-send: use separate read and write fds
-  imap-send: use run-command API for tunneling
-  imap-send: fix compilation-error on Windows
-  imap-send: build imap-send on Windows
-  mingw: wrap SSL_set_(w|r)fd to call _get_osfhandle
-  mingw: enable OpenSSL
-
-Jeff King (1):
-  imap-send: remove useless uid code
-
-Marius Storm-Olsen (1):
-  MSVC: Enable OpenSSL, and translate -lcrypto
-
- Makefile                        |    4 +-
- compat/mingw.h                  |   21 ++++
- compat/vcbuild/scripts/clink.pl |    3 +
- contrib/buildsystems/engine.pl  |    3 +
- imap-send.c                     |  226 +++++++++------------------------------
- 5 files changed, 77 insertions(+), 180 deletions(-)
+ Documentation/git-stash.txt      |    3 +-
+ Documentation/pretty-formats.txt |    9 ++++
+ archive.c                        |    4 +-
+ builtin-branch.c                 |    3 +-
+ builtin-checkout.c               |    3 +-
+ builtin-commit.c                 |    8 +++-
+ builtin-log.c                    |    3 +-
+ builtin-merge.c                  |    7 ++-
+ builtin-rev-list.c               |    7 ++-
+ builtin-shortlog.c               |    9 +++-
+ builtin-show-branch.c            |    4 +-
+ commit.h                         |   20 ++++++---
+ git-stash.sh                     |    8 +---
+ log-tree.c                       |   25 ++++++-----
+ pretty.c                         |   44 ++++++++++++++------
+ reflog-walk.c                    |   83 ++++++++++++++++++++++++++++----------
+ reflog-walk.h                    |    8 ++++
+ t/t6006-rev-list-format.sh       |   18 ++++++++
+ 18 files changed, 189 insertions(+), 77 deletions(-)
