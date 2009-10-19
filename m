@@ -1,80 +1,73 @@
-From: Norbert Preining <preining@logic.at>
+From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: Creating something like increasing revision numbers
-Date: Mon, 19 Oct 2009 02:48:29 +0200
-Message-ID: <20091019004829.GD11739@gamma.logic.tuwien.ac.at>
-References: <20091018144158.GA9789@gandalf.dynalias.org> <200910181703.20607.johan@herland.net> <20091018152054.GA3956@gamma.logic.tuwien.ac.at> <7vfx9gnwtw.fsf@alter.siamese.dyndns.org>
+Date: Sun, 18 Oct 2009 21:15:36 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.0910182112200.21739@xanadu.home>
+References: <20091018144158.GA9789@gandalf.dynalias.org>
+ <200910181703.20607.johan@herland.net>
+ <20091018152054.GA3956@gamma.logic.tuwien.ac.at>
+ <200910181923.19511.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 02:48:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Norbert Preining <preining@logic.at>, git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 19 03:16:09 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzgQQ-0000xC-Kx
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 02:48:38 +0200
+	id 1Mzgr1-00089A-Sq
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 03:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047AbZJSAs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 20:48:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbZJSAs2
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 20:48:28 -0400
-Received: from mx.logic.tuwien.ac.at ([128.130.175.19]:40341 "EHLO
-	mx.logic.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750883AbZJSAs2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 20:48:28 -0400
-Received: from gamma.logic.tuwien.ac.at ([128.130.175.3] ident=Debian-exim)
-	by mx.logic.tuwien.ac.at with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <preining@logic.at>)
-	id 1MzgQH-0000oh-LB; Mon, 19 Oct 2009 02:48:29 +0200
-Received: from preining by gamma.logic.tuwien.ac.at with local (Exim 4.69)
-	(envelope-from <preining@logic.at>)
-	id 1MzgQH-0003fa-HR; Mon, 19 Oct 2009 02:48:29 +0200
-Content-Disposition: inline
-In-Reply-To: <7vfx9gnwtw.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753038AbZJSBPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 21:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753129AbZJSBPl
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 21:15:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:50396 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752890AbZJSBPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 21:15:37 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0KRQ00IC5M609O00@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 18 Oct 2009 21:15:36 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <200910181923.19511.johan@herland.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130633>
 
-On So, 18 Okt 2009, Junio C Hamano wrote:
->  #2 Do not give such sequential number locally; the central repository is
->     the _only_ place that assigns such a number.  '?' stands for
->     'unnumbered'
+On Sun, 18 Oct 2009, Johan Herland wrote:
 
-[...]
+> On Sunday 18 October 2009, Norbert Preining wrote:
+> > On So, 18 Okt 2009, Johan Herland wrote:
+> > >     $ git describe
+> > >     v1.0.4-14-g2414721
+> > >
+> > > where the "v1.0.4" part is the last tag that the current state is based
+> > > on, the "14" part is the number of commit between that tag and the
+> > > current
+> > 
+> > So if we have only one tag (initial) then it would count the number
+> > of commits?
+> 
+> Yes. You can create the 'initial' tag with
+> 
+>   git rev-list HEAD | tail -n1 | xargs git tag initial
+> 
+> and from then on
+> 
+>   git describe --tags --match initial | cut -d'-' -f2
 
-> Scheme #2 is a way to get some stablility; give the authority of numbering
-> to the central repository and commits that haven't hit the central
-> repository are left unnumbered.  But that is generally not very useful
-> for your purpose of giving incrementing version number for building (the
-> developers would want to build for testing before finally committing to
-> publish the result to the central place).
+Even simpler, without any tag:
 
-That problem we have anyway with subversion, too, because as long as you
-do not commit your changes nothing will happen on package rebuild.
-So that is not a problem here.
+	git rev-list HEAD | wc -l
 
-Yes, we want server-sided linear numbers and anything *not* pushed to
-the server is unnumbered.
+That should roughly give the equivalent of the SVN revision number.  
+Valid only in one specific repository of course.
 
-And that is also fine, because packages are built only from the server.
 
-Best wishes
-
-Norbert
-
--------------------------------------------------------------------------------
-Dr. Norbert Preining                                        Associate Professor
-JAIST Japan Advanced Institute of Science and Technology   preining@jaist.ac.jp
-Vienna University of Technology                               preining@logic.at
-Debian Developer (Debian TeX Task Force)                    preining@debian.org
-gpg DSA: 0x09C5B094      fp: 14DF 2E6C 0307 BE6D AD76  A9C0 D2BF 4AA3 09C5 B094
--------------------------------------------------------------------------------
-PUDSEY (n.)
-The curious-shaped flat wads of dough left on a kitchen table after
-someone has been cutting scones out of it.
-			--- Douglas Adams, The Meaning of Liff
+Nicolas
