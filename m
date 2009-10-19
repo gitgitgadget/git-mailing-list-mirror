@@ -1,118 +1,84 @@
-From: "Rolf Bjarne Kvinge" <RKvinge@novell.com>
-Subject: Re: Unapplied patches reminder
-Date: Mon, 19 Oct 2009 13:57:29 +0200
-Organization: Novell
-Message-ID: <op.u11p53ryk71drc@linux.home>
-References: <20091019052030.6117@nanako3.lavabit.com>
- <7vzl7ogtxs.fsf@alter.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: denying branch creation in a shared repository
+Date: Mon, 19 Oct 2009 14:00:17 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910191353080.4985@pacific.mpi-cbg.de>
+References: <ee22b09e0910190132u20931fb4i6a98fb87582a9e56@mail.gmail.com>  <alpine.DEB.1.00.0910191155310.4985@pacific.mpi-cbg.de> <26ae428a0910190308t3233debdjfc0c8beedb9c0ac6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=----------Deh0UO6WqGgSIwaZJn3BxV
-Cc: "Nanako Shiraishi" <nanako3@lavabit.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 13:56:19 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mohit Aron <mohit.aron@gmail.com>, git@vger.kernel.org
+To: Howard Miller <howard@e-learndesign.co.uk>
+X-From: git-owner@vger.kernel.org Mon Oct 19 13:57:41 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mzqpn-000347-7i
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 13:55:31 +0200
+	id 1Mzqrr-0004L1-Nu
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 13:57:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752125AbZJSLzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 07:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751316AbZJSLzU
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 07:55:20 -0400
-Received: from vpn.id2.novell.com ([195.33.99.129]:58164 "EHLO
-	gwia-smtp.id2.novell.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750846AbZJSLzT (ORCPT
-	<rfc822;groupwise-RKvinge@novell.com;0:0>);
-	Mon, 19 Oct 2009 07:55:19 -0400
-Received: from linux.home ([::ffff:149.44.117.250])
-	by gwia-smtp.id2.novell.com with ESMTP; Mon, 19 Oct 2009 13:42:51 +0100
-In-Reply-To: <7vzl7ogtxs.fsf@alter.siamese.dyndns.org>
-User-Agent: Opera Mail/10.00 (Linux)
+	id S1755153AbZJSL51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 07:57:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754774AbZJSL5Z
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 07:57:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51565 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755088AbZJSL5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 07:57:23 -0400
+Received: (qmail invoked by alias); 19 Oct 2009 11:57:26 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp050) with SMTP; 19 Oct 2009 13:57:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18llXtNvY4leepiExZV2WahSqkFCTOpoKml2xKjzR
+	voJzpPEmYpO/pj
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <26ae428a0910190308t3233debdjfc0c8beedb9c0ac6@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130692>
 
-------------Deh0UO6WqGgSIwaZJn3BxV
-Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
-Content-Transfer-Encoding: 8bit
+Hi,
 
-On Mon, 19 Oct 2009 01:31:59 +0200, Junio C Hamano <gitster@pobox.com> wrote:
+first, if you want to be taken seriously, you might want to avoid to 
+top-post.
 
-> Nanako Shiraishi <nanako3@lavabit.com> writes:
->
->> Junio, I saw these patches and thought what they try to do were
->> sensible, but I don't them in your tree. I didn't see much discussion
->> on most of them, either.
->>
->> Because I don't read C very well, I may have listed some patches
->> here that you may have discarded because the code was no good, and
->> if so I apologize for wasting your time, but I thought at least
->> some of them should be salvaged.
->> ...
->> From: "Rolf Bjarne Kvinge" <RKvinge@novell.com>
->> Subject: git rev-list --pretty=raw strips empty lines
->> Date: Tue, 06 Oct 2009 14:33:37 +0200
->> Message-ID: <op.u1do6bq5k71drc@linux.lacasa>
->>
->>     It seems like the --pretty=raw format strips off empty newlines from
->>     the beginning of log messages, while I'd expect the raw format to
->>     not do any transformations (just as the documentation says: "The
->>     'raw' format shows the entire commit exactly as stored in the commit
->>     object").
->>
->>     The below changes works for me, not sure if I'm right about this
->>     though (my first time here ;-)
->
-> I do not recall seeing this one; most likely it was lost in the noise,
-> especially because it did not look like a patch submission, without having
-> anything resembling a commit log message.
->
-> I think the change itself is an uncontroversial one, even though this
-> really changes the behaviour.
+Second, do diligent research (e.g. on the 'mob' user).
 
-My specific need is to be able to get out the exact same log message as I committed, another way of getting the same result would be to implement --pretty=xml (along the lines of subversions 'svn log --xml'). This would prevent behavioural changes. And yes, I'm willing to implement it if you agree it's a good idea.
+On Mon, 19 Oct 2009, Howard Miller wrote:
 
-Regarding the previous patch I just found that it's not complete - git would still print lines with only whitespace as empty lines (i.e. stripping off the whitespace). I'm attaching a revised patch that fixes this issue, but since I found the resulting code slightly ugly, I also found an easier approach: in pretty_print_commit (pretty.c) just print the commit message buffer and return.
+> I'm quite interested in this too but I can't see what that patch does at 
+> all. I'm unsure what the 'mob' account is but a search suggests it's 
+> something to do with anonymous access, which doesn't seem to make any 
+> sense.
 
-Rolf
+If this trivial script (_not_ a patch! This should be obvious at first 
+sight) does not make any sense to you, I fear you will not be able to use 
+hooks to do what you want to do.
 
--- 
-Using Opera's revolutionary e-mail client: http://www.opera.com/mail/
-------------Deh0UO6WqGgSIwaZJn3BxV
-Content-Disposition: attachment; filename*0="0001-pretty.c-Don-t-do-any-transformatio";
- filename*1="ns-when-using-the.patch"
-Content-Type: application/octet-stream; name*0="0001-pretty.c-Don-t-do-any-transformatio";
- name*1="ns-when-using-the.patch"
-Content-Transfer-Encoding: Base64
+> Can you explain?
 
+Yes.
 
-------------Deh0UO6WqGgSIwaZJn3BxV
-Content-Disposition: attachment; filename=0001-pretty.c-special-case-raw-format.patch
-Content-Type: application/octet-stream; name=0001-pretty.c-special-case-raw-format.patch
-Content-Transfer-Encoding: Base64
+The 'mob' user (who is password-less) can push to the 'mob' branch _iff_ 
+that exists.  IOW a user of repo.or.cz can decide to let random people to 
+push commits by creating the 'mob' branch and adding the 'mob' user to the 
+pushers.
 
-RnJvbSA0ZmE5ZTRjMWMxMzNmYmUzNDIzYzk3OWVmZDU3MjJkZDdiZDVkNTMwIE1v
-biBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBSb2xmIEJqYXJuZSBLdmluZ2Ug
-PFJLdmluZ2VAbm92ZWxsLmNvbT4KRGF0ZTogTW9uLCAxOSBPY3QgMjAwOSAxMzoz
-MToxNyArMDIwMApTdWJqZWN0OiBbUEFUQ0hdIHByZXR0eS5jOiBEb24ndCBkbyBh
-bnkgdHJhbnNmb3JtYXRpb25zIHdoZW4gdXNpbmcgdGhlICdyYXcnIGZvcm1hdC4K
-CldoZW4gZm9ybWF0dGluZyBjb21taXRzIHdpdGggdGhlICdyYXcnIGZvcm1hdCwg
-cHJpbnQgdGhlIGNvbW1pdCBleGFjdGx5IGFzCnN0b3JlZC4KClNpZ25lZC1vZmYt
-Ynk6IFJvbGYgQmphcm5lIEt2aW5nZSA8Ukt2aW5nZUBub3ZlbGwuY29tPgotLS0K
-IHByZXR0eS5jIHwgICAgNSArKysrKwogMSBmaWxlcyBjaGFuZ2VkLCA1IGluc2Vy
-dGlvbnMoKyksIDAgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvcHJldHR5LmMg
-Yi9wcmV0dHkuYwppbmRleCBmNTk4M2Y4Li45NmRhYzlhIDEwMDY0NAotLS0gYS9w
-cmV0dHkuYworKysgYi9wcmV0dHkuYwpAQCAtOTE1LDYgKzkxNSwxMSBAQCB2b2lk
-IHByZXR0eV9wcmludF9jb21taXQoZW51bSBjbWl0X2ZtdCBmbXQsIGNvbnN0IHN0
-cnVjdCBjb21taXQgKmNvbW1pdCwKIAkJcmV0dXJuOwogCX0KIAorCWlmIChmbXQg
-PT0gQ01JVF9GTVRfUkFXKSB7CisJCXN0cmJ1Zl9hZGQoc2IsIG1zZywgc3RybGVu
-IChtc2cpKTsKKwkJcmV0dXJuOworCX0KKwogCXJlZW5jb2RlZCA9IHJlZW5jb2Rl
-X2NvbW1pdF9tZXNzYWdlKGNvbW1pdCwgJmVuY29kaW5nKTsKIAlpZiAocmVlbmNv
-ZGVkKSB7CiAJCW1zZyA9IHJlZW5jb2RlZDsKLS0gCjEuNi41LnJjMi4xNy5nZGJj
-MWIuZGlydHkKCg==
+The first part of the hook (as you can see from the pretty helpful error 
+messages it outputs) is about denying to push to anything but the mob 
+branch.
 
-------------Deh0UO6WqGgSIwaZJn3BxV--
+The second part is much more interesting in the context of this thread 
+(and I would expect anyone capable of reading shell scripts to see that 
+readily), because it denies the 'mob' user to _create_ the 'mob' branch.  
+See line 16ff.
+
+So the point is: the update hook gets a "$2" = 0000... in case a branch is 
+about to be created, and the hook can prevent that by exiting with a 
+non-zero exit code.
+
+Hth,
+Dscho
