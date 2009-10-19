@@ -1,205 +1,145 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [RFC PATCH v3 10/17] Move WebDAV HTTP push under remote-curl
-Date: Mon, 19 Oct 2009 10:59:21 +0800
-Message-ID: <20091019105921.d58c2728.rctay89@gmail.com>
-References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
-	<1255577814-14745-11-git-send-email-spearce@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add the --submodule option to the diff option family
+Date: Sun, 18 Oct 2009 20:02:55 -0700
+Message-ID: <7v3a5gdr1c.fsf@alter.siamese.dyndns.org>
+References: <4ADA10FC.40708@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Mike Hommey <mh@glandium.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 19 04:59:44 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Oct 19 05:03:15 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MziTH-00056z-5u
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 04:59:43 +0200
+	id 1MziWg-0006Ib-H7
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 05:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755759AbZJSC7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Oct 2009 22:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755746AbZJSC7d
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 22:59:33 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:61109 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755738AbZJSC7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 22:59:32 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1257506fga.1
-        for <git@vger.kernel.org>; Sun, 18 Oct 2009 19:59:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=kY4RE+LdyEsoMetF2qBY6Czb/2xXPrisVFZxergQSyU=;
-        b=K33tOYHkYMCBnWffwbHqUqWhnfnUFEVDYlADNirSHyHYXBPYKR6/lDwaWYruhrxIFB
-         qIbslS9LaCo+ER1Izi1g4hZ6eNWdwAUgL0sr+AK05x06CZb+nAWXYC7oqrFWHq+7/xi+
-         etS1xRFRjGSWI7Qa/lU/bE+bQU3D46pw0TQis=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=JlJL8eTrHgEDyT7Hm9Z+O5LYhaUeFY2kWpY4yY6SKxIDxRWBwi5PzhuD/6lM344TQR
-         dXodc186I4d32J4pEvGCghahsL02UrHc1uBM0pwa85aIo6trtEIzIIGr+GWow8zm7yfB
-         leYsPufGjmCPb0qHyT1pNyGIqsqDC+TaYQw70=
-Received: by 10.86.214.34 with SMTP id m34mr2804457fgg.6.1255921175874;
-        Sun, 18 Oct 2009 19:59:35 -0700 (PDT)
-Received: from your-cukc5e3z5n (cm134.zeta152.maxonline.com.sg [116.87.152.134])
-        by mx.google.com with ESMTPS id e20sm4338392fga.25.2009.10.18.19.59.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Oct 2009 19:59:34 -0700 (PDT)
-In-Reply-To: <1255577814-14745-11-git-send-email-spearce@spearce.org>
-X-Mailer: Sylpheed 2.6.0 (GTK+ 2.10.14; i686-pc-mingw32)
+	id S1755813AbZJSDDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 23:03:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755810AbZJSDDD
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 23:03:03 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64424 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755802AbZJSDDC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 23:03:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DC2B55E8C3;
+	Sun, 18 Oct 2009 23:03:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=k7LJraDVMUYWmFboSq+s/RrQHR4=; b=uht8hn
+	dBQK61ZTLNFy6CnQ8WzAlH1taINebHwPhD/fa0uE3CCdX5xw47BThSFs/tWYPGpL
+	K555GCJ6uQCboB82inThPs3V5KfxYfuMrITN9gkotF8nOMfhAnRKK9lBXinXN1IB
+	IROaN9dtOiwfyNmgAQhNiGKy8L2y3VDZzkUH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SygBJV0YMHkbOubcTdcCBurltO31adEp
+	YYLBCxEbnfA0YyY59NiBL9pZ/0Rp26xaJ3WTRrA2F/ws0xxmKu/cm1zjc6N5SGXh
+	QxVnITgdj8quoM0PmsQhhjLsPol8aHx+gR1m9FOnBPGl8Puy1lhpslZe0CeJ1CxX
+	hq6nu/Ua2Ns=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B26875E8C2;
+	Sun, 18 Oct 2009 23:03:00 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E94F45E8C1; Sun, 18 Oct
+ 2009 23:02:56 -0400 (EDT)
+In-Reply-To: <4ADA10FC.40708@web.de> (Jens Lehmann's message of "Sat\, 17 Oct
+ 2009 20\:46\:20 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E921A7DC-BC5B-11DE-B995-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130641>
 
-Hi,
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-On Thu, Oct 15, 2009 at 11:36 AM, Shawn O. Pearce <spearce@spearce.org> wrote:
-> diff --git a/Documentation/git-remote-helpers.txt b/Documentation/git-remote-helpers.txt
-> @@ -34,6 +34,10 @@ Commands are given by the caller on the helper's standard input, one per line.
->        value of the ref. A space-separated list of attributes follows
->        the name; unrecognized attributes are ignored. After the
->        complete list, outputs a blank line.
-> ++
-> +If 'push' is supported this may be called as 'list for-push'
-> +to obtain the current refs prior to sending one or more 'push'
-> +commands to the helper.
+> When you use the option --submodule=left-right-log you can see the submodule
+> summaries inlined in the diff, instead of not-quite-helpful SHA-1 pairs.
+>
+> The format imitates what "git submodule summary" shows.
+>
+> To do that, <path>/.git/objects/ is added to the alternate object
+> databases (if that directory exists).
+>
+> This option was requested by Jens Lehmann at the GitTogether in Berlin.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
 
-The new paragraph should have the same indentation as 'list'.
+Thanks.
 
-It would have been great if you implemented this as a filter, such that
-'list <attr>' lists the refs with the specified attribute <attr>,
-rather than hardcoding it.
+I have four patches queued on js/diff-verbose-submodule topic and I think
+this corresponds to the first three, correct?
 
-> @@ -59,6 +63,22 @@ suitably updated.
-> +When the push is complete, outputs one or more 'ok <dst>' or
-> +'error <dst> <why>?' lines to indicate success or failure of
-> +each pushed ref.  The status report output is terminated by
-> +a blank line.  The option field <why> may be quoted in a C
-> +style string if it contains an LF.
-
-You should mention that this behaviour only occurs when the
---helper-status option is used.
-
-> @@ -106,6 +132,11 @@ OPTIONS
-> +'option dry-run' \{'true'|'false'\}:
-> +       If true, pretend like the operation completed successfully,
-> +       but don't actually change any repository data.  For most
-> +       helpers this only applies to the 'push', if supported.
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index 9276fae..99cb517 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -87,6 +87,13 @@ endif::git-format-patch[]
+>  	Show only names and status of changed files. See the description
+>  	of the `--diff-filter` option on what the status letters mean.
+>
+> +--submodule[=<format>]::
+> +	Chose the output format for submodule differences. <format> can be one of
+> +	'short' and 'left-right-log'. 'short' is the default value for this
+> +	option and and shows pairs of commit names. 'left-right-log' lists the
+> +	commits in that commit range like the 'summary' option of
+> +	linkgit:git-submodule[1] does.
 > +
 
-The 'like' after 'pretend' can be, like, removed. :)
+Well, while left-right-log may be logically the most correct name for this
+option, I think it is too long to be practical.  Because it is not like we
+would want to have an option to have full log there when we are showing
+"diff", I think it would make sense to making left-right-log the default
+when "--submodule" (without format specification) is given, and possibly
+give "--submodule=log" as the synonym for this format.
 
-> diff --git a/http-push.c b/http-push.c
-> @@ -1941,9 +1946,14 @@ int main(int argc, char **argv)
->
->                if (is_null_sha1(ref->peer_ref->new_sha1)) {
->                        if (delete_remote_branch(ref->name, 1) == -1) {
-> -                               error("Could not remove %s", ref->name);
-> +                               if (helper_status)
-> +                                       printf("error %s cannot remove\n", ref->name);
-> +                               else
-> +                                       error("Could not remove %s", ref->name);
->                                rc = -4;
->                        }
+After all, if you do not give --submodule, we will give the traditional
+short format, no?
 
-I think error() calls should be left intact (as indicators to the
-user), even when --helper-status is specified. It wouldn't affect
-transport-helper.c's parsing of '(ok|error) <ref>' lines, since it
-reads stdout only.
+> diff --git a/diff.c b/diff.c
+> index c719ce2..8af1ae2 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2771,6 +2783,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+>  		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
+>  	else if (!strcmp(arg, "--ignore-submodules"))
+>  		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
+> +	else if (!prefixcmp(arg, "--submodule=")) {
+> +		if (!strcmp(arg + 12, "left-right-log"))
+> +			DIFF_OPT_SET(options, SUBMODULE_LEFT_RIGHT_LOG);
+> +	}
 
-In other words, the above would read:
+I do not see --submodule (without "=<format>") supported here as the
+documentation claims, but this is the logical place to do so.
 
->                                error("Could not remove %s", ref->name);
-> +                               if (helper_status)
-> +                                       printf("error %s cannot remove\n", ref->name);
->                                rc = -4;
->                        }
+> diff --git a/submodule.c b/submodule.c
+> new file mode 100644
+> index 0000000..206386f
+> --- /dev/null
+> +++ b/submodule.c
+> @@ -0,0 +1,112 @@
+> +...
+> +void show_submodule_summary(FILE *f, const char *path,
+> +		unsigned char one[20], unsigned char two[20],
+> +		const char *del, const char *add, const char *reset)
+> +{
+> ...
+> +	fwrite(sb.buf, sb.len, 1, f);
+> +
+> +	if (!message) {
+> +		while ((commit = get_revision(&rev))) {
+> + ...
+> +		}
+> +		clear_commit_marks(left, ~0);
+> +		clear_commit_marks(right, ~0);
+> +	}
+> +}
 
-> @@ -1968,12 +1980,15 @@ int main(int argc, char **argv)
->                                 * commits at the remote end and likely
->                                 * we were not up to date to begin with.
->                                 */
-> -                               error("remote '%s' is not an ancestor of\n"
-> -                                     "local '%s'.\n"
-> -                                     "Maybe you are not up-to-date and "
-> -                                     "need to pull first?",
-> -                                     ref->name,
-> -                                     ref->peer_ref->name);
-> +                               if (helper_status)
-> +                                       printf("error %s non-fast forward\n", ref->name);
-> +                               else
-> +                                       error("remote '%s' is not an ancestor of\n"
-> +                                                 "local '%s'.\n"
-> +                                                 "Maybe you are not up-to-date and "
-> +                                                 "need to pull first?",
-> +                                                 ref->name,
-> +                                                 ref->peer_ref->name);
->                                rc = -2;
->                                continue;
->                        }
-
-Same here.
-
-> @@ -1987,14 +2002,20 @@ int main(int argc, char **argv)
->                /* Lock remote branch ref */
->                ref_lock = lock_remote(ref->name, LOCK_TIME);
->                if (ref_lock == NULL) {
-> -                       fprintf(stderr, "Unable to lock remote branch %s\n",
-> -                               ref->name);
-> +                       if (helper_status)
-> +                               printf("error %s lock error\n", ref->name);
-> +                       else
-> +                               fprintf(stderr, "Unable to lock remote branch %s\n",
-> +                                       ref->name);
->                        rc = 1;
->                        continue;
->                }
-
-Same here.
-
-Two more areas in http-push.c that should have status messages
-(generated on top of pu):
-
-(I'm not sure what ref should read when there's no match, but
-transport-helper.c should have no problems parsing it with 'null'.)
-
--->8--
-
-diff --git a/http-push.c b/http-push.c
-index 9010ccc..e979feb 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1916,9 +1916,12 @@ int main(int argc, char **argv)
-
- 	/* Remove a remote branch if -d or -D was specified */
- 	if (delete_branch) {
--		if (delete_remote_branch(refspec[0], force_delete) == -1)
-+		if (delete_remote_branch(refspec[0], force_delete) == -1) {
- 			fprintf(stderr, "Unable to delete remote branch %s\n",
- 				refspec[0]);
-+			if (helper_status)
-+				printf("error %s cannot remove\n", refspec[0]);
-+		}
- 		goto cleanup;
- 	}
-
-@@ -1930,6 +1933,8 @@ int main(int argc, char **argv)
- 	}
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n");
-+		if (helper_status)
-+			printf("error null no match\n");
- 		rc = 0;
- 		goto cleanup;
- 	}
-
---
-Cheers,
-Ray Chuan
+I thought we had strbuf_release(&sb) here...  Where did it go?
