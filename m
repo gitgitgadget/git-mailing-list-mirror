@@ -1,232 +1,355 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: How to revert one of multiple merges
-Date: Mon, 19 Oct 2009 21:36:38 +0200
-Message-ID: <4ADCBFC6.5010807@drmicha.warpmail.net>
-References: <19162.32265.738503.382638@lisa.zopyra.com>	<4ADC8387.9010808@drmicha.warpmail.net> <19164.44099.875117.96168@lisa.zopyra.com>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: [RFC PATCH] git-gui: Allow staging multiple lines at once
+Date: Mon, 19 Oct 2009 14:54:57 -0500
+Message-ID: <20091019195456.GA11121@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 21:37:10 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 19 22:01:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Mzy2Q-0002L3-P6
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 21:37:03 +0200
+	id 1MzyPx-00086V-9c
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 22:01:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757328AbZJSTgm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 15:36:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757254AbZJSTgm
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 15:36:42 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:44630 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757323AbZJSTgl (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Oct 2009 15:36:41 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EFA84B4C15;
-	Mon, 19 Oct 2009 15:36:45 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 19 Oct 2009 15:36:45 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=NK7RB91hCHTgXm8iJh1ocKs1IKo=; b=GHN1IKiAEtqM3nzo/Q+4m+ewlJ/mngd34iHYahY8htelUvIelIdD5Kg3g369Xwy+1FZ27Y8yPewWMHymwrtJumXjffmYrwHz3/fNON1jiCWWpFTj1W5UzwqolRdKmyitl5oxaZ6VIOzJG3RyQylLmQZZWdk0AjZY+BgGhTfXDP0=
-X-Sasl-enc: RUSk8Pgvmh3aU0t83ht1yP4QTVX1ZlvcfGUdEuRkWshM 1255981005
-Received: from localhost.localdomain (p5DCC180B.dip0.t-ipconnect.de [93.204.24.11])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F2BF629B72;
-	Mon, 19 Oct 2009 15:36:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.5pre) Gecko/20091019 Lightning/1.0pre Shredder/3.0pre
-In-Reply-To: <19164.44099.875117.96168@lisa.zopyra.com>
+	id S1757361AbZJSUBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 16:01:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755220AbZJSUBG
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 16:01:06 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:44969 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751103AbZJSUBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 16:01:05 -0400
+X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Oct 2009 16:01:05 EDT
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 088A911456C; Mon, 19 Oct 2009 14:54:57 -0500 (CDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130732>
 
-Bill Lear venit, vidit, dixit 19.10.2009 20:13:
-> On Monday, October 19, 2009 at 17:19:35 (+0200) Michael J Gruber writes:
->> Bill Lear venit, vidit, dixit 18.10.2009 04:31:
->>> Branch A, B, C each have 20 commits, 0-19.
->>>
->>> Branch v1.0.0 created, then merge of A, B, C performed.
->>>
->>> After testing, we realize that the branch B is not ready for
->>> production release and we'd like to remove it from branch
->>> v1.0.0.
->>>
->>> If I do
->>>
->>> % git merge A B C
->>>
->>> I get a single commit:
->>>
->>> % git log -p
->>>
->>> commit 1644a0b98c01869aa83e59aa41374c22098c47b6
->>> [...]
->>> Date:   Fri Oct 16 09:52:32 2009 -0500
->>>
->>>     Merge branches 'A', 'B' and 'C' into v1.0.0
->>>
->>> [20 x 3 commits]
->>>
->>> If I do
->>>
->>> % git merge A
->>> % git merge B
->>> % git merge C
->>>
->>> Then:
->>>
->>> % git log -p
->>>
->>> commit 8946edd381384d0882221c87b5b3b7bf47127d70
->>> [...]
->>> Date:   Sat Oct 17 21:28:36 2009 -0500
->>>
->>>     Merge branch 'B' into v1.0.0
->>>
->>> commit 076ed422443e3684e564f7cae2b92e4538088ae6
->>> [...]
->>> Date:   Sat Oct 17 21:28:35 2009 -0500
->>>
->>>     Merge branch 'A' into v1.0.0
->>>
->>> but no "Merge branch 'C' into v1.0.0".
->>
->> Do you get any commits after the merge of B? If yes, then v1.0.0 got
->> fast-forwarded (you can avoid that using --no-ff). If no, C was
->> contained in v1.0.0 already.
-> 
-> BTW this is all with git 1.6.5.
-> 
-> My test script that set all of this up makes no commit to any branch
-> after the merge of any branch is done.  C was not in v1.0.0 already.
-> Here is the script I used to set this up:
-> 
-> % cat scripto
-> rm -rf branch_test
-> mkdir branch_test
-> cd branch_test
-> git init
-> 
-> echo foo > foo
-> git add foo
-> git commit -a -m "foo"
-> 
-> git checkout -b A
-> for ((i=0; i < 20; ++i)); do
->     echo "bar $i" > bar
->     git add bar
->     git commit -a -m "bar $i"
-> done
-> 
-> git checkout master
-> git checkout -b B
-> for ((i=0; i < 20; ++i)); do
->     echo "baz $i" > baz
->     git add baz
->     git commit -a -m "baz $i"
-> done
-> 
-> git checkout master
-> git checkout -b C
-> for ((i=0; i < 20; ++i)); do
->     echo "buz $i" > buz
->     git add buz
->     git commit -a -m "buz $i"
-> done
-> 
-> git checkout master
-> git checkout -b v1.0.0
-> 
-> After that, I did the merges this way:
-> 
-> % git merge A
-> % git merge B
-> % git merge C
-> 
-> and then the git log shows no merge of C, as above.  Hmm, actually, when I
-> just ran this, I get no output showing branch A was merged.  I just
-> did this again and here is the merge output:
-> 
-> % git branch -a
->   A
->   B
->   C
->   master
-> * v1.0.0
-> % git merge A
-> Updating af6c884..c7e5f2c
-> Fast forward
+When applying less than a full hunk, it's still often desirable to apply
+a number of consecutive lines.
 
-A was based off master, and v1.0.0 equals that base commit, so it's a f-f.
+This change makes it possible to sweep out a range of lines in the diff view
+with the left mouse button, then right click and "Stage Lines For Commit".
 
->  bar |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 bar
-> % git merge B
-> Merge made by recursive.
->  baz |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 baz
-> % git merge C
-> Merge made by recursive.
->  buz |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
->  create mode 100644 buz
-> 
-> Then, git log -p shows no branch A merge:
-> 
-> % git log -p | grep -i merge
-> Merge: f462b95 2c2b064
->     Merge branch 'C' into v1.0.0
-> Merge: c7e5f2c adde6ff
->     Merge branch 'B' into v1.0.0
-> 
->> In both cases, it's not clear how C could have been "ready" when B was not.
-> 
-> A, B, and C, are entirely independent of one another.  I'm trying to
-> replicate an instance in which a feature is developed and submitted for
-> inclusion in a release, accepted for inclusion, but then later found
-> to be defective.
-> 
->>> And so, I'm faced with git rebase -i posing some unanswerable questions
->>> to our release manager.  She cannot easily remove B from the merge after
->>> doint either merge A B C, or merge A, merge B, merge C.
->>
->> The way you described the situation there are no commits after the
->> merges. So, why not reset to before the merge and do a "git merge A C"?
-> 
-> Presumably, I would need to tag the v1.0.0 branch after creating it,
-> which I was hoping not to have to do.  I wanted the equivalent of
-> "git unmerge B" after doing three separate merges as above, or an octopus
-> merge.  I'm just trying to make life simpler for our release manager,
-> who is not equipped with git fu.
+The selected lines may span multiple hunks.
 
-I think the octopus case is difficult. So let's treat the other one ;)
+Signed-off-by: Jeff Epler <jepler@unpythonic.net>
+---
+The diff looks bigger than it is because it changed the indentation level
+of about 80 lines, and that made it necessary to reflow a lengthy comment
+block as well.
 
-If you have separate merges you can revert them separately. You don't
-need to tag them, you only need to be able to find the merge commit, say
-using
+This introduces new user interface strings.  I felt this was probably a
+better decision than using the inaccurate "Stage Line For Commit" when
+a block of text was swept out.
 
-git log --grep='Merge branch'
+I wonder a bit about the message [mc "Apply/Reverse Line"] -- as far as
+I can tell, it is never shown to a user, so why is it translated?
 
-Then you can revert that merge using
+ git-gui/git-gui.sh   |   15 +++-
+ git-gui/lib/diff.tcl |  222 +++++++++++++++++++++++++++----------------------
+ 2 files changed, 134 insertions(+), 103 deletions(-)
 
-git revert -m 1 sha1ofthatmerge
-
-Now comes the difficult part: If, later on, you want to merge B *and
-include also the parts of B from before that previous merge* you need to
-revert that revert, then merge. If, on the other hand, you only want to
-merge the "new parts" of B then simply merge B.
-
-The reason is that reverting a merge undoes its changes, but still
-leaves the merge in the DAG, so that the commits of the merged branch
-are still considered part of the history, and as such won't be merged in
-again.
-
-howto/revert-a-faulty-merge.txt explains this, but the above is a short
-summary.
-
-Cheers,
-Michael
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 14b92ba..a80ed0d 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -3165,7 +3165,7 @@ set ui_diff_applyhunk [$ctxm index last]
+ lappend diff_actions [list $ctxm entryconf $ui_diff_applyhunk -state]
+ $ctxm add command \
+ 	-label [mc "Apply/Reverse Line"] \
+-	-command {apply_line $cursorX $cursorY; do_rescan}
++	-command {apply_range_or_line $cursorX $cursorY; do_rescan}
+ set ui_diff_applyline [$ctxm index last]
+ lappend diff_actions [list $ctxm entryconf $ui_diff_applyline -state]
+ $ctxm add separator
+@@ -3205,12 +3205,21 @@ proc popup_diff_menu {ctxm ctxmmg x y X Y} {
+ 	if {[string first {U} $state] >= 0} {
+ 		tk_popup $ctxmmg $X $Y
+ 	} else {
++		set has_range [expr {[$::ui_diff tag nextrange sel 0.0] != {}}]
+ 		if {$::ui_index eq $::current_diff_side} {
+ 			set l [mc "Unstage Hunk From Commit"]
+-			set t [mc "Unstage Line From Commit"]
++			if {$has_range} {
++				set t [mc "Unstage Lines From Commit"]
++			} else {
++				set t [mc "Unstage Line From Commit"]
++			}
+ 		} else {
+ 			set l [mc "Stage Hunk For Commit"]
+-			set t [mc "Stage Line For Commit"]
++			if {$has_range} {
++				set t [mc "Stage Lines For Commit"]
++			} else {
++				set t [mc "Stage Line For Commit"]
++			}
+ 		}
+ 		if {$::is_3way_diff
+ 			|| $current_diff_path eq {}
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index 925b3f5..30ac659 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -505,10 +505,23 @@ proc apply_hunk {x y} {
+ 	}
+ }
+ 
+-proc apply_line {x y} {
++proc apply_range_or_line {x y} {
+ 	global current_diff_path current_diff_header current_diff_side
+ 	global ui_diff ui_index file_states
+ 
++	set selected [$ui_diff tag nextrange sel 0.0]
++
++	if {$selected == {}} {
++		set first [$ui_diff index "@$x,$y"]
++		set last $first
++	} else {
++		set first [lindex $selected 0]
++		set last [lindex $selected 1]
++	}
++
++	set first_l [$ui_diff index "$first linestart"]
++	set last_l [$ui_diff index "$last lineend"]
++
+ 	if {$current_diff_path eq {} || $current_diff_header eq {}} return
+ 	if {![lock_index apply_hunk]} return
+ 
+@@ -531,119 +544,128 @@ proc apply_line {x y} {
+ 		}
+ 	}
+ 
+-	set the_l [$ui_diff index @$x,$y]
++	set wholepatch {}
+ 
+-	# operate only on change lines
+-	set c1 [$ui_diff get "$the_l linestart"]
+-	if {$c1 ne {+} && $c1 ne {-}} {
+-		unlock_index
+-		return
+-	}
+-	set sign $c1
+-
+-	set i_l [$ui_diff search -backwards -regexp ^@@ $the_l 0.0]
+-	if {$i_l eq {}} {
+-		unlock_index
+-		return
+-	}
+-	# $i_l is now at the beginning of a line
++	while {$first_l < $last_l} {
++		set i_l [$ui_diff search -backwards -regexp ^@@ $first_l 0.0]
++		if {$i_l eq {}} {
++			# If there's not a @@ above, then the selected range
++			# must have come before the first_l @@
++			set i_l [$ui_diff search -regexp ^@@ $first_l $last_l]
++		}
++		if {$i_l eq {}} {
++			unlock_index
++			return
++		}
++		# $i_l is now at the beginning of a line
+ 
+-	# pick start line number from hunk header
+-	set hh [$ui_diff get $i_l "$i_l + 1 lines"]
+-	set hh [lindex [split $hh ,] 0]
+-	set hln [lindex [split $hh -] 1]
++		# pick start line number from hunk header
++		set hh [$ui_diff get $i_l "$i_l + 1 lines"]
++		set hh [lindex [split $hh ,] 0]
++		set hln [lindex [split $hh -] 1]
+ 
+-	# There is a special situation to take care of. Consider this hunk:
+-	#
+-	#    @@ -10,4 +10,4 @@
+-	#     context before
+-	#    -old 1
+-	#    -old 2
+-	#    +new 1
+-	#    +new 2
+-	#     context after
+-	#
+-	# We used to keep the context lines in the order they appear in the
+-	# hunk. But then it is not possible to correctly stage only
+-	# "-old 1" and "+new 1" - it would result in this staged text:
+-	#
+-	#    context before
+-	#    old 2
+-	#    new 1
+-	#    context after
+-	#
+-	# (By symmetry it is not possible to *un*stage "old 2" and "new 2".)
+-	#
+-	# We resolve the problem by introducing an asymmetry, namely, when
+-	# a "+" line is *staged*, it is moved in front of the context lines
+-	# that are generated from the "-" lines that are immediately before
+-	# the "+" block. That is, we construct this patch:
+-	#
+-	#    @@ -10,4 +10,5 @@
+-	#     context before
+-	#    +new 1
+-	#     old 1
+-	#     old 2
+-	#     context after
+-	#
+-	# But we do *not* treat "-" lines that are *un*staged in a special
+-	# way.
+-	#
+-	# With this asymmetry it is possible to stage the change
+-	# "old 1" -> "new 1" directly, and to stage the change
+-	# "old 2" -> "new 2" by first staging the entire hunk and
+-	# then unstaging the change "old 1" -> "new 1".
+-
+-	# This is non-empty if and only if we are _staging_ changes;
+-	# then it accumulates the consecutive "-" lines (after converting
+-	# them to context lines) in order to be moved after the "+" change
+-	# line.
+-	set pre_context {}
+-
+-	set n 0
+-	set i_l [$ui_diff index "$i_l + 1 lines"]
+-	set patch {}
+-	while {[$ui_diff compare $i_l < "end - 1 chars"] &&
+-	       [$ui_diff get $i_l "$i_l + 2 chars"] ne {@@}} {
+-		set next_l [$ui_diff index "$i_l + 1 lines"]
+-		set c1 [$ui_diff get $i_l]
+-		if {[$ui_diff compare $i_l <= $the_l] &&
+-		    [$ui_diff compare $the_l < $next_l]} {
+-			# the line to stage/unstage
+-			set ln [$ui_diff get $i_l $next_l]
+-			if {$c1 eq {-}} {
+-				set n [expr $n+1]
++		# There is a special situation to take care of. Consider this
++		# hunk:
++		#
++		#    @@ -10,4 +10,4 @@
++		#     context before
++		#    -old 1
++		#    -old 2
++		#    +new 1
++		#    +new 2
++		#     context after
++		#
++		# We used to keep the context lines in the order they appear in
++		# the hunk. But then it is not possible to correctly stage only
++		# "-old 1" and "+new 1" - it would result in this staged text:
++		#
++		#    context before
++		#    old 2
++		#    new 1
++		#    context after
++		#
++		# (By symmetry it is not possible to *un*stage "old 2" and "new
++		# 2".)
++		#
++		# We resolve the problem by introducing an asymmetry, namely,
++		# when a "+" line is *staged*, it is moved in front of the
++		# context lines that are generated from the "-" lines that are
++		# immediately before the "+" block. That is, we construct this
++		# patch:
++		#
++		#    @@ -10,4 +10,5 @@
++		#     context before
++		#    +new 1
++		#     old 1
++		#     old 2
++		#     context after
++		#
++		# But we do *not* treat "-" lines that are *un*staged in a
++		# special way.
++		#
++		# With this asymmetry it is possible to stage the change "old
++		# 1" -> "new 1" directly, and to stage the change "old 2" ->
++		# "new 2" by first staging the entire hunk and then unstaging
++		# the change "old 1" -> "new 1".
++
++		# This is non-empty if and only if we are _staging_ changes;
++		# then it accumulates the consecutive "-" lines (after
++		# converting them to context lines) in order to be moved after
++		# the "+" change line.
++		set pre_context {}
++
++		set n 0
++		set m 0
++		set i_l [$ui_diff index "$i_l + 1 lines"]
++		set patch {}
++		while {[$ui_diff compare $i_l < "end - 1 chars"] &&
++		       [$ui_diff get $i_l "$i_l + 2 chars"] ne {@@}} {
++			set next_l [$ui_diff index "$i_l + 1 lines"]
++			set c1 [$ui_diff get $i_l]
++			if {[$ui_diff compare $first_l <= $i_l] &&
++			    [$ui_diff compare $i_l < $last_l] &&
++			    ($c1 eq {-} || $c1 eq {+})} {
++				# the line to stage/unstage
++				set ln [$ui_diff get $i_l $next_l]
++				if {$c1 eq {-}} {
++					set n [expr $n+1]
++					set patch "$patch$pre_context$ln"
++				} else {
++					set m [expr $m+1]
++					set patch "$patch$ln$pre_context"
++				}
++				set pre_context {}
++			} elseif {$c1 ne {-} && $c1 ne {+}} {
++				# context line
++				set ln [$ui_diff get $i_l $next_l]
+ 				set patch "$patch$pre_context$ln"
++				set n [expr $n+1]
++				set m [expr $m+1]
++				set pre_context {}
++			} elseif {$c1 eq $to_context} {
++				# turn change line into context line
++				set ln [$ui_diff get "$i_l + 1 chars" $next_l]
++				if {$c1 eq {-}} {
++					set pre_context "$pre_context $ln"
++				} else {
++					set patch "$patch $ln"
++				}
++				set n [expr $n+1]
++				set m [expr $m+1]
+ 			} else {
+-				set patch "$patch$ln$pre_context"
+-			}
+-			set pre_context {}
+-		} elseif {$c1 ne {-} && $c1 ne {+}} {
+-			# context line
+-			set ln [$ui_diff get $i_l $next_l]
+-			set patch "$patch$pre_context$ln"
+-			set n [expr $n+1]
+-			set pre_context {}
+-		} elseif {$c1 eq $to_context} {
+-			# turn change line into context line
+-			set ln [$ui_diff get "$i_l + 1 chars" $next_l]
+-			if {$c1 eq {-}} {
+-				set pre_context "$pre_context $ln"
+-			} else {
+-				set patch "$patch $ln"
+ 			}
+-			set n [expr $n+1]
++			set i_l $next_l
+ 		}
+-		set i_l $next_l
++		set wholepatch "$wholepatch@@ -$hln,$n +$hln,$m @@\n$patch"
++		set first_l [$ui_diff index "$next_l + 1 lines"]
+ 	}
+-	set patch "@@ -$hln,$n +$hln,[eval expr $n $sign 1] @@\n$patch"
+ 
+ 	if {[catch {
+ 		set enc [get_path_encoding $current_diff_path]
+ 		set p [eval git_write $apply_cmd]
+ 		fconfigure $p -translation binary -encoding $enc
+ 		puts -nonewline $p $current_diff_header
+-		puts -nonewline $p $patch
++		puts -nonewline $p $wholepatch
+ 		close $p} err]} {
+ 		error_popup [append $failed_msg "\n\n$err"]
+ 	}
+-- 
+1.6.5.rc1.49.ge970
