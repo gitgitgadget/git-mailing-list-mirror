@@ -1,75 +1,65 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: What's cooking in git.git (Oct 2009, #03; Mon, 19)
-Date: Mon, 19 Oct 2009 22:05:22 +0200
-Message-ID: <40aa078e0910191305r288c950ej3d76939282385c5e@mail.gmail.com>
-References: <7vhbtv6c76.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [RFC PATCH] git-gui: Allow staging multiple lines at once
+Date: Mon, 19 Oct 2009 16:08:39 -0400
+Message-ID: <3A647965-01B7-4025-A708-C05D25A63A7D@adacore.com>
+References: <20091019195456.GA11121@unpythonic.net>
+Mime-Version: 1.0 (Apple Message framework v1076)
+Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 22:05:32 2009
+To: Jeff Epler <jepler@unpythonic.net>
+X-From: git-owner@vger.kernel.org Mon Oct 19 22:19:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzyTy-0001dt-9f
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 22:05:30 +0200
+	id 1MzyhI-00085X-6c
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 22:19:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757429AbZJSUFT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2009 16:05:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757423AbZJSUFT
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 16:05:19 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:51752 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753486AbZJSUFS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Oct 2009 16:05:18 -0400
-Received: by fxm18 with SMTP id 18so5516394fxm.37
-        for <git@vger.kernel.org>; Mon, 19 Oct 2009 13:05:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TV0k9OUEYeHhgr8vZDr1gavdLpYblCmyi7h0p7oxjJE=;
-        b=RCVITMRPHZsu5dp+Ib8iETLUJiKQ1v03nCOPhxdbGcRZ8p1WY+pgvTtx+V9Xiqi2yU
-         tJZYGcYvWE3Zgp4R2V/qdBREl7txmiO/DudK2b+cQIHQCCEA7Zvms/WObFe/S995vu7R
-         STa1cUImW5Z5qj76PpQpkeUPMtx3Ato7aWP8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=eJQYvBaunGXa4KS2G9H44V5+rrQ5k+yekCbgWJ028D8zsEttsuFHdS0wlXpWzp+pV+
-         htJ3jiF4QnlqGRqhGxweChNTGZCTRr7fN9PbTrWAId8pZmUeRl2o2nLogVEfZ/pe7GMB
-         2gWgslykE8imIpAlQa20yGXv0IlCfFRWP8NMU=
-Received: by 10.204.3.219 with SMTP id 27mr5269766bko.127.1255982722159; Mon, 
-	19 Oct 2009 13:05:22 -0700 (PDT)
-In-Reply-To: <7vhbtv6c76.fsf@alter.siamese.dyndns.org>
+	id S1757458AbZJSUTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 16:19:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757457AbZJSUTF
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 16:19:05 -0400
+Received: from rock.gnat.com ([205.232.38.15]:33281 "EHLO rock.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757416AbZJSUTE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 16:19:04 -0400
+X-Greylist: delayed 627 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Oct 2009 16:19:04 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id 420B52BACA2;
+	Mon, 19 Oct 2009 16:08:41 -0400 (EDT)
+X-Virus-Scanned: Debian amavisd-new at gnat.com
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id r7+X8Z3Fmi29; Mon, 19 Oct 2009 16:08:41 -0400 (EDT)
+Received: from potomac.gnat.com (potomac.gnat.com [205.232.38.115])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTPSA id EEA052BAC23;
+	Mon, 19 Oct 2009 16:08:39 -0400 (EDT)
+In-Reply-To: <20091019195456.GA11121@unpythonic.net>
+X-Mailer: Apple Mail (2.1076)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130734>
 
-On Mon, Oct 19, 2009 at 10:05 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> * ef/msys-imap (2009-10-13) 8 commits.
-> =A0- MSVC: Enable OpenSSL, and translate -lcrypto
-> =A0- mingw: enable OpenSSL
-> =A0- mingw: wrap SSL_set_(w|r)fd to call _get_osfhandle
-> =A0- imap-send: build imap-send on Windows
-> =A0- imap-send: fix compilation-error on Windows
-> =A0- imap-send: use run-command API for tunneling
-> =A0- imap-send: use separate read and write fds
-> =A0- imap-send: remove useless uid code
+
+On Oct 19, 2009, at 15:54, Jeff Epler wrote:
+
+> When applying less than a full hunk, it's still often desirable to  
+> apply
+> a number of consecutive lines.
 >
-> Is this good to go yet?
+> This change makes it possible to sweep out a range of lines in the  
+> diff view
+> with the left mouse button, then right click and "Stage Lines For  
+> Commit".
+>
+> The selected lines may span multiple hunks.
 
-As far as I know, yes. I sent out a new iteration a couple of hours
-ago (after you sent this mail). This version addresses all issues that
-has been raised AFAIK. But let's give people some more time to shoot
-holes in it, OK?
+Great! I've wished for this feature...
 
---=20
-Erik "kusma" Faye-Lund
+Thanks,
+    -Geert
