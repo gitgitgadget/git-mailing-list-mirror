@@ -1,85 +1,65 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: [PATCH] git push: say that --tag can't be used with --all or --mirror in help text
-Date: Mon, 19 Oct 2009 12:57:01 +0900
-Message-ID: <20091019125701.6117@nanako3.lavabit.com>
-References: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
-	<4ADB4AE8.5070007@hartwork.org>
-	<20091018235240.GU6115@genesis.frugalware.org>
-	<20091019115412.6117@nanako3.lavabit.com>
-	<7vpr8kcc00.fsf@alter.siamese.dyndns.org>
+From: Mohit Aron <mohit.aron@gmail.com>
+Subject: Re: git push should automatically push to remote tracking branch
+Date: Sun, 18 Oct 2009 20:50:57 -0700
+Message-ID: <ee22b09e0910182050k55efac83v6799285d992fcbb0@mail.gmail.com>
+References: <ee22b09e0910181320j15a273e8vc510801c890b93a9@mail.gmail.com>
+	 <1B59440B-5929-4AB9-82C7-05188DC4F959@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nanako Shiraishi <nanako3@lavabit.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Bjorn Gustavsson <bgustavsson@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 19 05:57:21 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 05:58:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzjN3-0004hn-2K
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 05:57:21 +0200
+	id 1MzjNi-0004u3-CX
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 05:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755756AbZJSD5K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Oct 2009 23:57:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755732AbZJSD5K
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 23:57:10 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:57441 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750985AbZJSD5J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Oct 2009 23:57:09 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 79F5511B92F;
-	Sun, 18 Oct 2009 22:57:14 -0500 (CDT)
-Received: from 7492.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id BHGNKLDEJHAK; Sun, 18 Oct 2009 22:57:14 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=vNVxtDVl52qfuxsD9mApzCpR/iWH068YveKP7ZycgN1ya5jRI/awJNkMJKVGxkoCkuGVkj36V2IwGcrruYGwvBUpFTJA6qNg4twRoXlXSz0q3wYuQaLARer2ihvCnhN0UaJwnPT/2HQVELGrEm1ef1MMrQQQ0EYP7sXAKt7eKyY=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vpr8kcc00.fsf@alter.siamese.dyndns.org>
+	id S1755879AbZJSD5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Oct 2009 23:57:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755880AbZJSD5t
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Oct 2009 23:57:49 -0400
+Received: from mail-px0-f171.google.com ([209.85.216.171]:55327 "EHLO
+	mail-px0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755770AbZJSD5r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Oct 2009 23:57:47 -0400
+Received: by pxi1 with SMTP id 1so83171pxi.33
+        for <git@vger.kernel.org>; Sun, 18 Oct 2009 20:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=eP3ZvB5dY13+qzGDaDrISWHGKllbNqR76nCwgPvtHl0=;
+        b=IBo002VwppLZq9XbFsVYZ1Ebowfm14Uhk+ID3UGzlNNvG0Cu84uG1oaNyeI8GE2Me6
+         J68suVMaO7v+U5AQztsrcJvqbJonef+v1ed+Cx2uPp6uJw/M1hsrIQlEgKPVxSZ93gW/
+         ShdzvtqQfgsokr19lopZOLyXWHlHbzGAlJxqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=EbvfI1GjFYI7D3TQmzwpf9xg7n8uJW7HvMFglZqfvTPFG2F+7rhxXQ7jPn0smUhMNa
+         TCiz2yCGHUczYpEJaN4DzFxRpd+PMADHySHQeEzQfwYD7gM+hxqecH6ZX1oXjk2uRDA5
+         8/osto9eixuetZVonxL3ofedXZKJNK6fZCtzg=
+Received: by 10.115.80.6 with SMTP id h6mr5142451wal.108.1255924258016; Sun, 
+	18 Oct 2009 20:50:58 -0700 (PDT)
+In-Reply-To: <1B59440B-5929-4AB9-82C7-05188DC4F959@dbservice.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130644>
 
-This replaces an earlier patch by Bj=C3=B6rn Gustavsson,
-
-  Message-ID: <4AD75029.1010109@gmail.com>
-
-Signed-off-by: =E3=81=97=E3=82=89=E3=81=84=E3=81=97 =E3=81=AA=E3=81=AA=E3=
-=81=93 <nanako3@lavabit.com>
----
- builtin-push.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-push.c b/builtin-push.c
-index 6686b79..d7248f2 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -181,7 +181,7 @@ int cmd_push(int argc, const char **argv, const cha=
-r *prefix)
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
--		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
-+		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all=
- nor --mirror"),
- 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
- 		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPO=
-RT_PUSH_PORCELAIN),
- 		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE)=
-,
---=20
-1.6.5.rc1.18.g53a9a
+Thanks - I suppose this is a new config option. I'm running Git
+version 1.6.0.4 (the latest with Ubuntu Jaunty) and that doesn't seem
+to have this option.
 
 
+- Mohit
 
-
---=20
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+>
+> $ git config push.default tracking
+>
+> tom
+>
+>
