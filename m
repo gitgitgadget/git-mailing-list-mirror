@@ -1,139 +1,121 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Re: denying branch creation in a shared repository
-Date: Mon, 19 Oct 2009 13:20:47 +0100
-Message-ID: <26ae428a0910190520t64411515je6f5c4551963d6bb@mail.gmail.com>
-References: <ee22b09e0910190132u20931fb4i6a98fb87582a9e56@mail.gmail.com>
-	 <alpine.DEB.1.00.0910191155310.4985@pacific.mpi-cbg.de>
-	 <26ae428a0910190308t3233debdjfc0c8beedb9c0ac6@mail.gmail.com>
-	 <alpine.DEB.1.00.0910191353080.4985@pacific.mpi-cbg.de>
-	 <26ae428a0910190519mbe9ddaava3c15de94a0cd14f@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Add the --submodule option to the diff option family
+Date: Mon, 19 Oct 2009 14:29:43 +0200
+Message-ID: <4ADC5BB7.5090207@web.de>
+References: <4ADA10FC.40708@web.de> <7v3a5gdr1c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mohit Aron <mohit.aron@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 19 14:20:55 2009
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 14:29:52 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzrEM-0005ta-At
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 14:20:54 +0200
+	id 1MzrN2-0001QQ-07
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 14:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755174AbZJSMUo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2009 08:20:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754889AbZJSMUo
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 08:20:44 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:13976 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754689AbZJSMUn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Oct 2009 08:20:43 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so911013eyd.19
-        for <git@vger.kernel.org>; Mon, 19 Oct 2009 05:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=/SPnFe1tpfbQWzNACom9Bngim2ckqp9RvmfXGZueBqg=;
-        b=XvxCEsqfiWLR2mvzYrVP6Urrg+A86wbicHqeJYKynOrqHcbq4aLeoH51CSYd/xy3qr
-         vB8dk8lORtV2bJ2jN/ivOHp8zroGoxr5/EXGp499f8yCr8/ul6dNHfkS7xCMu8bBYRqt
-         9+vhbziKT0HHxcxrVcuWJFINJI9GE8gFjadyU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=VOfV6zk9nEcf2ZVpaVKYwjTNPVdRGfMi/vN/I6AXC6rZo8nM7qQCXIpQvdSCACKMmh
-         jghgenixhETi+5U80IKffAo6hDFhx4jcLvwYwrTT2KY1pvrWvOXKoTPe6D/GjvRWGMcs
-         3zB9yNvhxm6+fRk+3wQm6zk23n1UpoLupgMCQ=
-Received: by 10.216.91.81 with SMTP id g59mr1800791wef.128.1255954847183; Mon, 
-	19 Oct 2009 05:20:47 -0700 (PDT)
-In-Reply-To: <26ae428a0910190519mbe9ddaava3c15de94a0cd14f@mail.gmail.com>
-X-Google-Sender-Auth: 8bd8c04c4dd04d32
+	id S1755699AbZJSM3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 08:29:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754880AbZJSM3l
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 08:29:41 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:55924 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754624AbZJSM3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 08:29:40 -0400
+Received: from smtp05.web.de (fmsmtp05.dlan.cinetic.de [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 9C43312F7ED6F;
+	Mon, 19 Oct 2009 14:29:44 +0200 (CEST)
+Received: from [80.128.88.231] (helo=[192.168.178.26])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #314)
+	id 1MzrMt-0007if-00; Mon, 19 Oct 2009 14:29:43 +0200
+User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
+In-Reply-To: <7v3a5gdr1c.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+1Yy6W4vn4sjINBgP6qKy5g2DUK2xOljAOvfy/
+	SKFba7u6p5KhTJ57ldAonwJhJB8muCUcTufIWTE/a4gxWFBfIm
+	8ENfLW2giPhMpIPcw6+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130695>
 
-And... I instantly have to apologise..  With wonderful irony,
-Googlemail folded the helpful bit of your reply leaving just the
-(apparently) unhelpful bit.
+Junio C Hamano schrieb:
+> I have four patches queued on js/diff-verbose-submodule topic and I think
+> this corresponds to the first three, correct?
 
-(Crawls under nearest rock).
+Yes.
 
-2009/10/19 Howard Miller <howard@e-learndesign.co.uk>:
-> Mmm....
->
-> Thanks for the helpful reply Johannes. Perhaps you should do diligent
-> research into mail software that folds quoted text for you. There's a
-> company called Google you might have heard of. Just a thought.
->
-> On the other hand if you can't be bothered making a helpful reply
-> rather than a rude one perhaps simply not writing anything at all
-> would, at the very least, leave us absolutely no worse off. Just the
-> opinion of someone not to be taken seriously.... of course!
->
-> Howard
->
-> 2009/10/19 Johannes Schindelin <Johannes.Schindelin@gmx.de>:
->> Hi,
->>
->> first, if you want to be taken seriously, you might want to avoid to
->> top-post.
->>
->> Second, do diligent research (e.g. on the 'mob' user).
->>
->> On Mon, 19 Oct 2009, Howard Miller wrote:
->>
->>> I'm quite interested in this too but I can't see what that patch do=
-es at
->>> all. I'm unsure what the 'mob' account is but a search suggests it'=
-s
->>> something to do with anonymous access, which doesn't seem to make a=
-ny
->>> sense.
->>
->> If this trivial script (_not_ a patch! This should be obvious at fir=
-st
->> sight) does not make any sense to you, I fear you will not be able t=
-o use
->> hooks to do what you want to do.
->>
->>> Can you explain?
->>
->> Yes.
->>
->> The 'mob' user (who is password-less) can push to the 'mob' branch _=
-iff_
->> that exists. =A0IOW a user of repo.or.cz can decide to let random pe=
-ople to
->> push commits by creating the 'mob' branch and adding the 'mob' user =
-to the
->> pushers.
->>
->> The first part of the hook (as you can see from the pretty helpful e=
-rror
->> messages it outputs) is about denying to push to anything but the mo=
-b
->> branch.
->>
->> The second part is much more interesting in the context of this thre=
-ad
->> (and I would expect anyone capable of reading shell scripts to see t=
-hat
->> readily), because it denies the 'mob' user to _create_ the 'mob' bra=
-nch.
->> See line 16ff.
->>
->> So the point is: the update hook gets a "$2" =3D 0000... in case a b=
-ranch is
->> about to be created, and the hook can prevent that by exiting with a
->> non-zero exit code.
->>
->> Hth,
->> Dscho
->>
->>
->
+
+>> +--submodule[=<format>]::
+>> +	Chose the output format for submodule differences. <format> can be one of
+>> +	'short' and 'left-right-log'. 'short' is the default value for this
+>> +	option and and shows pairs of commit names. 'left-right-log' lists the
+>> +	commits in that commit range like the 'summary' option of
+>> +	linkgit:git-submodule[1] does.
+>> +
+> 
+> Well, while left-right-log may be logically the most correct name for this
+> option, I think it is too long to be practical.  Because it is not like we
+> would want to have an option to have full log there when we are showing
+> "diff", I think it would make sense to making left-right-log the default
+> when "--submodule" (without format specification) is given, and possibly
+> give "--submodule=log" as the synonym for this format.
+
+O.k., "--submodule=log" it is.
+
+
+> After all, if you do not give --submodule, we will give the traditional
+> short format, no?
+
+Yes. Will make the documentation clearer on this.
+
+
+>> diff --git a/diff.c b/diff.c
+>> index c719ce2..8af1ae2 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -2771,6 +2783,10 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+>>  		DIFF_OPT_CLR(options, ALLOW_TEXTCONV);
+>>  	else if (!strcmp(arg, "--ignore-submodules"))
+>>  		DIFF_OPT_SET(options, IGNORE_SUBMODULES);
+>> +	else if (!prefixcmp(arg, "--submodule=")) {
+>> +		if (!strcmp(arg + 12, "left-right-log"))
+>> +			DIFF_OPT_SET(options, SUBMODULE_LEFT_RIGHT_LOG);
+>> +	}
+> 
+> I do not see --submodule (without "=<format>") supported here as the
+> documentation claims, but this is the logical place to do so.
+
+Will change that.
+
+
+>> diff --git a/submodule.c b/submodule.c
+>> new file mode 100644
+>> index 0000000..206386f
+>> --- /dev/null
+>> +++ b/submodule.c
+>> @@ -0,0 +1,112 @@
+>> +...
+>> +void show_submodule_summary(FILE *f, const char *path,
+>> +		unsigned char one[20], unsigned char two[20],
+>> +		const char *del, const char *add, const char *reset)
+>> +{
+>> ...
+>> +	fwrite(sb.buf, sb.len, 1, f);
+>> +
+>> +	if (!message) {
+>> +		while ((commit = get_revision(&rev))) {
+>> + ...
+>> +		}
+>> +		clear_commit_marks(left, ~0);
+>> +		clear_commit_marks(right, ~0);
+>> +	}
+>> +}
+> 
+> I thought we had strbuf_release(&sb) here...  Where did it go?
+
+*blush* ... thanks for catching this, will put it back where it belongs.
