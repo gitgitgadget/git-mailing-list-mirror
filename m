@@ -1,102 +1,97 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] TortoiseGit 1.2.1.0 Release
-Date: Mon, 19 Oct 2009 14:58:02 +0800
-Message-ID: <1976ea660910182358ubd9ab36l6985658c8facce69@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git add -e documentation: rephrase note
+Date: Mon, 19 Oct 2009 00:07:23 -0700
+Message-ID: <7vaazn7tg4.fsf@alter.siamese.dyndns.org>
+References: <20091014222628.GK6115@genesis.frugalware.org>
+ <20091014230434.GB29664@coredump.intra.peff.net>
+ <20091019000900.GV6115@genesis.frugalware.org>
+ <20091019043418.GD7170@coredump.intra.peff.net>
+ <20091019050456.GA15706@coredump.intra.peff.net>
+ <7vbpk4aqop.fsf@alter.siamese.dyndns.org>
+ <20091019063446.GA1457@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org,
-	tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-users@googlegroups.com,
-	tortoisegit-announce@googlegroups.com, tortoisegit@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon Oct 19 09:06:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Oct 19 09:07:43 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzmJY-0001Qe-AP
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 09:05:56 +0200
+	id 1MzmLE-0001zd-6g
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 09:07:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbZJSHFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 03:05:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbZJSHFp
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 03:05:45 -0400
-Received: from mail-qy0-f202.google.com ([209.85.221.202]:41696 "EHLO
-	mail-qy0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752224AbZJSHFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 03:05:45 -0400
-X-Greylist: delayed 467 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Oct 2009 03:05:45 EDT
-Received: by qyk40 with SMTP id 40so3122841qyk.22
-        for <git@vger.kernel.org>; Mon, 19 Oct 2009 00:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:date:message-id:subject
-         :from:to:content-type;
-        bh=R6iQ77gwuYm1plhv6290k3aMlbdnBXnv2D6FKR2XUsI=;
-        b=rHm55nWMKXF1ggHgRuW/HOzpWfUqgMpE3MRXiaWjaA6t7HDfsDyOQwh3JNp9R2kZ+c
-         AYy1hn7DO+EDvsTMNzyPhHdXGCzpvC+gHhjYF7PvjzESQTqDYr1Nam3pLitrC+SVevKI
-         o0WG4zWXfboNEqp66li6xTWpjQCgNdcQ87P4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=WnXKNxwEfG2C31WFB8VdYLxhnLfHSEiR0sw8kLQ2K56djjENmtX7pLMPcxO0agAtWH
-         62o34K7uwMtQAY/cohuOrPNE/QlOJf78tOE8ed9HsPquJFJEXrEedimQOM7ObX0LM0H5
-         JyRstxA8bIyeBlyF9tN/lYPRjpnGPkcFYt0xQ=
-Received: by 10.224.33.195 with SMTP id i3mr2409496qad.386.1255935482657; Sun, 
-	18 Oct 2009 23:58:02 -0700 (PDT)
+	id S1754924AbZJSHH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 03:07:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754009AbZJSHH3
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 03:07:29 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59331 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754004AbZJSHH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 03:07:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6F6BB7D832;
+	Mon, 19 Oct 2009 03:07:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fmWdJA6wqACzw7EkjLLWLdRCx1A=; b=QnhqdT
+	71V+lytIgP0df/3i7RsOYI8cgbni+Wm7BLrYO1QS+CSNIWsrv6HzBop4TG9EhD+/
+	s/gQ47naz5fLd1DEkqCLMT4+7yU1i9iPbbqdqNQvSXct7ca3ztLPL6ZALNEJlDMz
+	qI/XHQJxKtI1xSju9YptWnecuuc7bubHjvJMQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=df0lOh9p4V95k+YZMnxjjiJUxNlX3bJL
+	40RC7d97E1tp8oGOITM1oiHBlbISSg+GiFb0hhEymuShTWn8VEAdb4nPlAi+HjKp
+	zPRw9QCBZ/XGMffxmbgG4gHk4ieNqgWXzhossQh2oiP4q/y2isavzqQhVVAGQMsT
+	t5MbLq6BSvU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 130B67D830;
+	Mon, 19 Oct 2009 03:07:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C9F5B7D82E; Mon, 19 Oct 2009
+ 03:07:24 -0400 (EDT)
+In-Reply-To: <20091019063446.GA1457@coredump.intra.peff.net> (Jeff King's
+ message of "Mon\, 19 Oct 2009 02\:34\:46 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 10238522-BC7E-11DE-B2EA-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130663>
 
-Download:
-http://tortoisegit.googlecode.com/files/TortoiseGit-1.1.1.0-32bit.msi
-http://tortoisegit.googlecode.com/files/TortoiseGit-1.1.1.0-64bit.msi
+Jeff King <peff@peff.net> writes:
 
+>> > +* remove addition lines (don't stage the line)
+>> 
+>> This is more like "don't add the line", isn't it?  Also if this "+" line
+>> has corresponding "-" line (i.e. it is a "rewrite to this" line), removal
+>> of such a line would mean "instead of rewriting, remove it".
+>
+> I was trying not to use "add" because we are already talking about
+> addition and removal in the patch itself,
 
-= Release 1.1.1.0 =
-== Features ==
+Ah, I wasn't saying "add" is more kosher than "stage" by the above.
 
- * Improve Rebase Dialog
-  Allow lanuch new rebase dialog again after finish rebase dialog
-  Disable "force rebase" checkbox during rebase.
+By "don't add", I meant that the user is saying "I inserted a new line to
+the file, but I actually did not want to add that line to the file for the
+next commit."  In other words, I was more focusing on the act of inserting
+the line to the contents, not on staging the change to the index.
 
- * Git SVN
-  Append svn:ignore settings to the default git exclude file Add
-shell extension command to import svn ignore settings.
-  Need press "Shift" key to show "import svn ignore" command.
+> ... So I am not sure I agree that using "add" is any
+> better than "stage", but I don't feel that strongly about it.
 
- * Drag-drop copy\move support
-  File only
+That is Ok; the comment was not about stage vs add.
 
- * Add paste command at shell extension
-  Copy and paste file is okay. But there are problems when including
-directory.
-  Cut and paste working
+> But beyond that, yes, you are right that removing a "+" line may have a
+> different conceptual meaning to the user depending on the surrounding
+> text. I wonder if such a "check-list" document really makes much sense,
+> given that using "-e" at all means you need to understand the patch
+> format and what makes sense (i.e., anybody who understands 'patch' knows
+> that you can't just delete context lines and expect it to apply).
 
- * Update notepad2 to 4.022
+Yeah, that is really what I wanted people who are in this discussion to
+eventually realize ;-)
 
- * Sync Dialog
-  Ability to sync submodules in TGit sync dialog
-
- * Statics
-  Sort commits by dates before processed by StatGraphDlg
-
- * Log Dialog
-  Show <No branch> replace ref error message at log dialog
-
- * Add Check software updater support.
-
-== Bug Fix ==
- * Fixed issue #185. "Can't find Super-project" when pathname include space.
- * Fixed issue #190: Access violation in Blame and wrong path name
-when root dir is git repository
- * Fixed issue #180: Create patch serial doesn't work when there is
-"\" at end of path
- * Fixed issue #173: SVN Rebase does not work The correct handle below
-case git config svn-remote.svn.fetch
-myproject/trunk:refs/remotes/trunk
- * Fixed issue #169: Force rebase checkbox is fixed
- * Fixed issue #163: Conflict "theirs" and "mine" are reversed during a rebase
- * Fixed issue #165: Incorect path to Notepad2
- * Fixed issue #158: Rebase can act on the wrong branch
+> Yeah, again, this comes down to understanding what you are doing:
