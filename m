@@ -1,172 +1,144 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v4 2/8] imap-send: use separate read and write fds
-Date: Mon, 19 Oct 2009 17:42:03 +0200
-Message-ID: <1255966929-1280-3-git-send-email-kusmabite@gmail.com>
-References: <1255966929-1280-1-git-send-email-kusmabite@gmail.com>
- <1255966929-1280-2-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v4 3/8] imap-send: use run-command API for tunneling
+Date: Mon, 19 Oct 2009 17:42:04 +0200
+Message-ID: <1255966929-1280-4-git-send-email-kusmabite@gmail.com>
+References: <1255966929-1280-1-git-send-email-kusmabite@gmail.com> <1255966929-1280-2-git-send-email-kusmabite@gmail.com> <1255966929-1280-3-git-send-email-kusmabite@gmail.com>
 Cc: msysgit@googlegroups.com, Erik Faye-Lund <kusmabite@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 17:43:29 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Mon Oct 19 17:43:45 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vw0-f156.google.com ([209.85.212.156])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzuOE-0006Jw-Ta
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 17:43:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756662AbZJSPnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 11:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756643AbZJSPnJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 11:43:09 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:8386 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752581AbZJSPnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 11:43:07 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so956920eyd.19
-        for <git@vger.kernel.org>; Mon, 19 Oct 2009 08:43:11 -0700 (PDT)
+	id 1MzuOX-0006H8-O1
+	for gcvm-msysgit@m.gmane.org; Mon, 19 Oct 2009 17:43:37 +0200
+Received: by mail-vw0-f156.google.com with SMTP id 28so4737983vws.3
+        for <gcvm-msysgit@m.gmane.org>; Mon, 19 Oct 2009 08:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Dsm2G0MlgyMuoIQ/BZKcH23RWzRkXlqZIEEw3b6J23s=;
-        b=dGDVMIDWpWLKMByIuMu2Fo9k55MjOLiSDusx5t+MlFYp6++C9bTfngtKm6/i/oMJgW
-         pELy070F/cuGAT0ZVVvBM2iU5Z+90+11jfBilozhNv03LHLDt+yTbc34SWeHHBZs43JG
-         l5kl+917/uOYVvIH6vSNrmnPyqlbYvN3Q3IZI=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=L8H8D+JPLKz9IHl3sEm+LtoNSNjDA8FiaUHuQq740U8=;
+        b=AAI3+XaDS6PJg2vHHa8SfUZ+HgzGYpZBOE2GB7igh5ZutXHcMmmjl7dy3FxsmaRzb7
+         PVwzp/DBaC5q2yRsDDOrWdSj5yeXi+1Apzt/KTrBfqM0qUvrQZX/601lEQN4zFCJq553
+         oyhOG+CkLaQCXGFmoHONqpNMr8lUddcCFYcyA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=j562jMN/HTzXBSj6f6NBJFYrwj9SyKQMomz2rUkJWkmoqLyWH1ndCZzlrTo0oaC9jr
-         nV09wONShoGLE6NXg22AEWQMJch9clcS4NZBK7Il/plEZvxu+VrqQYPKUXjmOpN2wqYQ
-         f24YMJjqeTjyLClKriUjw47eMq+dX4ydx0uvY=
-Received: by 10.210.6.8 with SMTP id 8mr5088989ebf.41.1255966991601;
-        Mon, 19 Oct 2009 08:43:11 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id 7sm4970962eyb.32.2009.10.19.08.43.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Oct 2009 08:43:10 -0700 (PDT)
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=ChipiB91e11vLnJyM0eWONcajEKWaZp7fzWLGykselxUK1FPfbJHY8pzQPPNtMAvc0
+         h1gY/6G2d7ECkcVTReISkAQhnc7Ea4FiVGIqAjRP+AtB6CVPaoRZhwIrioFA93fitRAm
+         tLBp8znsatQyzSYktTGAQV0rVsahDR4RSgAkI=
+Received: by 10.220.16.211 with SMTP id p19mr183984vca.26.1255967009491;
+        Mon, 19 Oct 2009 08:43:29 -0700 (PDT)
+Received: by 10.176.11.6 with SMTP id 6gr7449yqk.0;
+	Mon, 19 Oct 2009 08:43:19 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.211.174.12 with SMTP id b12mr368387ebp.15.1255966997277; Mon, 19 Oct 2009 08:43:17 -0700 (PDT)
+Received: by 10.211.174.12 with SMTP id b12mr368386ebp.15.1255966997229; Mon, 19 Oct 2009 08:43:17 -0700 (PDT)
+Received: from mail-ew0-f211.google.com (mail-ew0-f211.google.com [209.85.219.211]) by gmr-mx.google.com with ESMTP id 14si904677ewy.5.2009.10.19.08.43.16; Mon, 19 Oct 2009 08:43:16 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.211 as permitted sender) client-ip=209.85.219.211;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.219.211 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by mail-ew0-f211.google.com with SMTP id 7so3688486ewy.34 for <msysgit@googlegroups.com>; Mon, 19 Oct 2009 08:43:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer:in-reply-to:references; bh=T/B2SKj9ofCGSkH1kw9+y+rDp4VhKdPcto1oI2TZZYI=; b=TsHE9LL9tm1uSCR1r844XT2EG+NVNKmk81HZli7IcwtZkonj+RRyObEp8RSJRF64vq rBJK1VmV4bwwzC9I4SpnlGIhj+kV8RnPHI7CF6GhuVrFHpVzRVXm3Xok2oPNErfRoDno 8QQy9B4e/ki2TKf+uasrnPcJIgWyH0I5XB3bE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references; b=wM4LvRjRJkfravZeV6h0e8Sz6mmSpzU8EbM2bemzVicnA2u0BWohpO9OE29WqUxTbW GWvHrcBKeEftskCI0jmb7qpaRASkg1WYJbm2tqSR5fwPP78CwbeJoUgDqtVtCbacsrze WNmBPh6/6yPTjFKT3gRtBqdwrWLqxISq79V60=
+Received: by 10.210.7.21 with SMTP id 21mr2794843ebg.75.1255966996059; Mon, 19 Oct 2009 08:43:16 -0700 (PDT)
+Received: from localhost ([77.40.159.131]) by mx.google.com with ESMTPS id 7sm774541eyg.6.2009.10.19.08.43.14 (version=TLSv1/SSLv3 cipher=RC4-MD5); Mon, 19 Oct 2009 08:43:14 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.msysgit.0
-In-Reply-To: <1255966929-1280-2-git-send-email-kusmabite@gmail.com>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <1255966929-1280-3-git-send-email-kusmabite@gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130702>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130703>
 
-This is a patch that enables us to use the run-command
-API, which is supported on Windows.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- imap-send.c |   37 +++++++++++++++++++++++--------------
- 1 files changed, 23 insertions(+), 14 deletions(-)
+ imap-send.c |   37 ++++++++++++++++---------------------
+ 1 files changed, 16 insertions(+), 21 deletions(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index 8da7a94..7216453 100644
+index 7216453..72ed640 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -151,7 +151,7 @@ struct imap_list {
- };
+@@ -24,6 +24,7 @@
  
- struct imap_socket {
--	int fd;
-+	int fd[2];
- 	SSL *ssl;
- };
- 
-@@ -301,8 +301,12 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
- 		ssl_socket_perror("SSL_new");
- 		return -1;
- 	}
--	if (!SSL_set_fd(sock->ssl, sock->fd)) {
--		ssl_socket_perror("SSL_set_fd");
-+	if (!SSL_set_rfd(sock->ssl, sock->fd[0])) {
-+		ssl_socket_perror("SSL_set_rfd");
-+		return -1;
-+	}
-+	if (!SSL_set_wfd(sock->ssl, sock->fd[1])) {
-+		ssl_socket_perror("SSL_set_wfd");
- 		return -1;
- 	}
- 
-@@ -324,11 +328,12 @@ static int socket_read(struct imap_socket *sock, char *buf, int len)
- 		n = SSL_read(sock->ssl, buf, len);
- 	else
+ #include "cache.h"
+ #include "exec_cmd.h"
++#include "run-command.h"
+ #ifdef NO_OPENSSL
+ typedef void *SSL;
  #endif
--		n = xread(sock->fd, buf, len);
-+		n = xread(sock->fd[0], buf, len);
- 	if (n <= 0) {
- 		socket_perror("read", sock, n);
--		close(sock->fd);
--		sock->fd = -1;
-+		close(sock->fd[0]);
-+		close(sock->fd[1]);
-+		sock->fd[0] = sock->fd[1] = -1;
- 	}
- 	return n;
- }
-@@ -341,11 +346,12 @@ static int socket_write(struct imap_socket *sock, const char *buf, int len)
- 		n = SSL_write(sock->ssl, buf, len);
- 	else
- #endif
--		n = write_in_full(sock->fd, buf, len);
-+		n = write_in_full(sock->fd[1], buf, len);
- 	if (n != len) {
- 		socket_perror("write", sock, n);
--		close(sock->fd);
--		sock->fd = -1;
-+		close(sock->fd[0]);
-+		close(sock->fd[1]);
-+		sock->fd[0] = sock->fd[1] = -1;
- 	}
- 	return n;
- }
-@@ -358,7 +364,8 @@ static void socket_shutdown(struct imap_socket *sock)
- 		SSL_free(sock->ssl);
- 	}
- #endif
--	close(sock->fd);
-+	close(sock->fd[0]);
-+	close(sock->fd[1]);
- }
+@@ -940,8 +941,7 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
+ 	struct imap_store *ctx;
+ 	struct imap *imap;
+ 	char *arg, *rsp;
+-	int s = -1, a[2], preauth;
+-	pid_t pid;
++	int s = -1, preauth;
  
- /* simple line buffering */
-@@ -911,7 +918,7 @@ static void imap_close_server(struct imap_store *ictx)
- {
- 	struct imap *imap = ictx->imap;
- 
--	if (imap->buf.sock.fd != -1) {
-+	if (imap->buf.sock.fd[0] != -1) {
- 		imap_exec(ictx, NULL, "LOGOUT");
- 		socket_shutdown(&imap->buf.sock);
- 	}
-@@ -939,7 +946,7 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
  	ctx = xcalloc(sizeof(*ctx), 1);
  
- 	ctx->imap = imap = xcalloc(sizeof(*imap), 1);
--	imap->buf.sock.fd = -1;
-+	imap->buf.sock.fd[0] = imap->buf.sock.fd[1] = -1;
- 	imap->in_progress_append = &imap->in_progress;
- 
+@@ -952,29 +952,24 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
  	/* open connection to IMAP server */
-@@ -966,7 +973,8 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
  
- 		close(a[0]);
+ 	if (srvc->tunnel) {
+-		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
++		const char *argv[4];
++		struct child_process tunnel = {0};
  
--		imap->buf.sock.fd = a[1];
-+		imap->buf.sock.fd[0] = a[1];
-+		imap->buf.sock.fd[1] = dup(a[1]);
+-		if (socketpair(PF_UNIX, SOCK_STREAM, 0, a)) {
+-			perror("socketpair");
+-			exit(1);
+-		}
++		imap_info("Starting tunnel '%s'... ", srvc->tunnel);
+ 
+-		pid = fork();
+-		if (pid < 0)
+-			_exit(127);
+-		if (!pid) {
+-			if (dup2(a[0], 0) == -1 || dup2(a[0], 1) == -1)
+-				_exit(127);
+-			close(a[0]);
+-			close(a[1]);
+-			execl("/bin/sh", "sh", "-c", srvc->tunnel, NULL);
+-			_exit(127);
+-		}
++		argv[0] = "sh";
++		argv[1] = "-c";
++		argv[2] = srvc->tunnel;
++		argv[3] = NULL;
+ 
+-		close(a[0]);
++		tunnel.argv = argv;
++		tunnel.in = -1;
++		tunnel.out = -1;
++		if (start_command(&tunnel))
++			die("cannot start proxy %s", argv[0]);
+ 
+-		imap->buf.sock.fd[0] = a[1];
+-		imap->buf.sock.fd[1] = dup(a[1]);
++		imap->buf.sock.fd[0] = tunnel.out;
++		imap->buf.sock.fd[1] = tunnel.in;
  
  		imap_info("ok\n");
  	} else {
-@@ -1043,7 +1051,8 @@ static struct store *imap_open_store(struct imap_server_conf *srvc)
- 			goto bail;
- 		}
- 
--		imap->buf.sock.fd = s;
-+		imap->buf.sock.fd[0] = s;
-+		imap->buf.sock.fd[1] = dup(s);
- 
- 		if (srvc->use_ssl &&
- 		    ssl_socket_connect(&imap->buf.sock, 0, srvc->ssl_verify)) {
 -- 
 1.6.5.15.g5f078
