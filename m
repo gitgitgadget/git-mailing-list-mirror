@@ -1,60 +1,60 @@
-From: Gabor Gombas <gombasg@sztaki.hu>
-Subject: Re: git fsck not identifying corrupted packs
-Date: Mon, 19 Oct 2009 20:36:55 +0200
-Message-ID: <20091019183655.GC3630@boogie.lpds.sztaki.hu>
-References: <loom.20091019T094924-194@post.gmane.org>
- <4ADC2D45.3020803@viscovery.net>
+From: Nasser Grainawi <nasser@codeaurora.org>
+Subject: Re: git-pack-objects gitattributes?
+Date: Mon, 19 Oct 2009 12:47:51 -0600
+Organization: Code Aurora Forum
+Message-ID: <4ADCB457.8050601@codeaurora.org>
+References: <4AD3B4F8.6030007@codeaurora.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergio Callegari <sergio.callegari@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 19 20:44:02 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Mon Oct 19 20:48:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzxD7-0001wF-R1
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 20:44:02 +0200
+	id 1MzxGx-0003nl-Hw
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 20:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753809AbZJSSnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 14:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbZJSSnv
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 14:43:51 -0400
-Received: from boogie.lpds.sztaki.hu ([193.224.70.237]:58122 "EHLO
-	boogie.lpds.sztaki.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752622AbZJSSnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 14:43:51 -0400
-X-Greylist: delayed 418 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Oct 2009 14:43:51 EDT
-Received: by boogie.lpds.sztaki.hu (Postfix, from userid 1000)
-	id 69CE2C5AA9; Mon, 19 Oct 2009 20:36:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4ADC2D45.3020803@viscovery.net>
-X-Copyright: Forwarding or publishing without permission is prohibited.
+	id S1756366AbZJSSrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 14:47:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756012AbZJSSrt
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 14:47:49 -0400
+Received: from wolverine02.qualcomm.com ([199.106.114.251]:10042 "EHLO
+	wolverine02.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751191AbZJSSrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 14:47:49 -0400
+X-IronPort-AV: E=McAfee;i="5300,2777,5776"; a="25596246"
+Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
+  by wolverine02.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 19 Oct 2009 11:47:53 -0700
+Received: from [129.46.10.111] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id A63A510004C8
+	for <git@vger.kernel.org>; Mon, 19 Oct 2009 11:51:10 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
+In-Reply-To: <4AD3B4F8.6030007@codeaurora.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130725>
 
-On Mon, Oct 19, 2009 at 11:11:33AM +0200, Johannes Sixt wrote:
-
-> > Is there a means to have fsck to a truly full check on the sanity of a repo?
+Nasser Grainawi wrote:
+> Hello,
 > 
-> git fsck --full
+> I'm trying to avoid doing delta compression on a number of large binary 
+> files. I got a suggestion to use $GIT_DIR/info/attributes and a line 
+> like this:
+> *.bin -delta
 > 
-> RTFM, please.
+> This doesn't seem to show a big improvement (and honestly I can't find 
+> where in the git-pack-objects source the value of this attribute is used).
+> 
+> Could someone shed some light on this attribute and any other 
+> improvements I could make for efficiently serving up a repo over 
+> git-daemon with near-weekly revisions of 100MB+ files?
+> 
+> Thanks,
+> Nasser
 
-That still does not catch everything. About a week ago I wanted to check
-out a branch in a local repo and I got an error that it was corrupt. But
-"git fsck --full" only complained about some dangling objects, it did
-not notice the corruption. I used git version 1.6.4.3 (Debian unstable
-at that time). It would be nice to have a
-"git fsck --i-really-want-to-check-everything".
-
-Gabor
-
--- 
-     ---------------------------------------------------------
-     MTA SZTAKI Computer and Automation Research Institute
-                Hungarian Academy of Sciences
-     ---------------------------------------------------------
+ping? any help? anyone?
