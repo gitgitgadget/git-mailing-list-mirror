@@ -1,91 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Generalized "string function" syntax
-Date: Mon, 19 Oct 2009 16:18:02 -0700
-Message-ID: <7vd44jx9at.fsf@alter.siamese.dyndns.org>
-References: <1255681702-5215-1-git-send-email-gitster@pobox.com>
- <4ADA3153.7070606@lsrfire.ath.cx> <7v63ad5o8p.fsf@alter.siamese.dyndns.org>
- <4ADAD0D2.504@lsrfire.ath.cx> <7vr5t0nwu8.fsf@alter.siamese.dyndns.org>
- <4ADCF117.2030905@lsrfire.ath.cx>
+From: John Feuerstein <john@feurix.com>
+Subject: Rebase fails because of apply.whitespace setting
+Date: Tue, 20 Oct 2009 01:31:53 +0200
+Message-ID: <4ADCF6E9.8090704@feurix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Oct 20 01:18:20 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 01:41:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N01UX-0000dd-Uv
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 01:18:18 +0200
+	id 1N01rG-0000G9-01
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 01:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932274AbZJSXSG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2009 19:18:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757936AbZJSXSG
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 19:18:06 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39332 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757925AbZJSXSF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Oct 2009 19:18:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E6C3B7EA36;
-	Mon, 19 Oct 2009 19:18:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=zH8XVXdxzOHq
-	Efac6sWpUbBJV2k=; b=jbBSRQPuniKjJbeqqyK5BCFfhyWbnCorhz2GEGDBDcx+
-	u9t7Biv6SSw2Gn+H02I39I8IEi08apx3A9kv03zwyWGWmKt5SPmKoBWvfWK/Hjq1
-	dObF0IAZUJS+l+ylBG97/075gomBO3qMtlzyq5EusPrdYasie6TNoY7pW335jmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=YgrEZC
-	9tb4sSUCy4tHGqfbet8xuOVdR2xbp7WTnuvZXQwwO7p8pivARaoLPR87wOPxb24K
-	1eKqMwtaZIt2H+0iw2WJE/HQfc/iFmWyiSNXETZ2ZY4hcjxTZ8cWPAqer3SUitbN
-	OfFrjqFli93IFO7Tmt26KJOM6vOxBwDdeJRTc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C15C37EA35;
-	Mon, 19 Oct 2009 19:18:06 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CD60E7EA34; Mon, 19 Oct 2009
- 19:18:03 -0400 (EDT)
-In-Reply-To: <4ADCF117.2030905@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue\, 20 Oct 2009 01\:07\:03 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A8852C44-BD05-11DE-AA85-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S932253AbZJSXlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 19:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757925AbZJSXlU
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 19:41:20 -0400
+Received: from mx2.cluster1.pyrox.eu ([78.46.200.219]:45741 "EHLO
+	mx2.cluster1.pyrox.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758007AbZJSXlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 19:41:19 -0400
+X-Greylist: delayed 568 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Oct 2009 19:41:18 EDT
+Received: from [192.168.10.100] (ip-95-223-145-189.unitymediagroup.de [95.223.145.189])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx2.cluster1.pyrox.eu (PX-MAIL) with ESMTPSA id F16E74E15B
+	for <git@vger.kernel.org>; Tue, 20 Oct 2009 01:31:53 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (X11/20091008)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130744>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+I had to rewrite history recently (ugh -- private repo, not shared with
+anybody) and wanted to change the commit message of the root commit.
+During this I've encountered a failing git-rebase if apply.whitespace is
+set to "error".
 
-> Junio C Hamano schrieb:
-> ...
->> I was more worried about painting ourselves now in a corner we canno=
-t get
->> out of easily later.  Even if my answer to question "what are we goi=
-ng to
->> add" may be "nothing I can think of right now", it does not make me =
-happy.
->
-> If wrapping wasn't implemented as a nested function, nesting could st=
-ill
-> be introduced independently and used for other things -- once these
-> other things arrive.
+Should whitespace-errors really be detected when rebasing?
+(or worse: be "fixed" without explicitely asking for it when using a
+global apply.whitespace=fix setting)
+What about making --ignore-whitespace the default for git-rebase?
 
-True.  I do not think we _need_ nested expansion; obviously we have liv=
-ed
-without it for a long time.
 
-> I'm more in favour of adding ways to customize the shape of the eleme=
-nts
-> rather than adding string functions.  %S(width=3D76,indent=3D4) over
-> %[wrap(76,4)%s%].
+Simplified example:
 
-Yeah, %X(some modifier) that can apply to any 'X' looks much simpler an=
-d
-easier to look at.  The way the code is structured currently it might b=
-e
-more work and risk to break things, though.
+$ mkdir test
+$ cd test/
+$ git config apply.whitespace
+error
+$ git init
+Initialized empty Git repository in /home/john/test/.git/
+$ git commit --allow-empty -m 'root commit'
+[master (root-commit) a208f9f] root commit
+$ echo ' ' > whitespace
+$ git add whitespace
+$ git commit -m 'add whitespace file'
+[master 12b685b] add whitespace file
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 whitespace
+$ git tag root a208f9f
+$ git checkout -b new-root root
+Switched to a new branch 'new-root'
+$ git commit --amend --allow-empty -m 'changed root commit'
+[new-root b9adb89] changed root commit
+$ git checkout -
+Switched to branch 'master'
+$ git rebase --onto new-root root
+First, rewinding head to replay your work on top of it...
+Applying: add whitespace file
+Patch failed at 0001 add whitespace file
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+$ git diff
+$ git status
+$ git apply .git/rebase-apply/0001
+.git/rebase-apply/0001:17: trailing whitespace.
+
+fatal: 1 line adds whitespace errors.
