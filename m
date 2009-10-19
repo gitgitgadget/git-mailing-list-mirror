@@ -1,270 +1,118 @@
-From: Nick Edelen <sirnot@gmail.com>
-Subject: Re: [PATCH 7/6 (v4)] support for commit grafts, slight change to
- general mechanism
-Date: Mon, 19 Oct 2009 21:31:37 +0100
-Message-ID: <4ADCCCA9.4000802@gmail.com>
-References: <op.uzv4dyuotdk399@sirnot.private>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 0/3] Generalized "string function" syntax
+Date: Tue, 20 Oct 2009 01:07:03 +0200
+Message-ID: <4ADCF117.2030905@lsrfire.ath.cx>
+References: <1255681702-5215-1-git-send-email-gitster@pobox.com> <4ADA3153.7070606@lsrfire.ath.cx> <7v63ad5o8p.fsf@alter.siamese.dyndns.org> <4ADAD0D2.504@lsrfire.ath.cx> <7vr5t0nwu8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Nick Edelen <sirnot@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Micha
-X-From: git-owner@vger.kernel.org Mon Oct 19 22:32:01 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 01:07:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzytV-0005Og-FH
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 22:31:53 +0200
+	id 1N01Jv-00057c-PW
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 01:07:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932284AbZJSUbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 16:31:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932281AbZJSUbm
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 16:31:42 -0400
-Received: from gv-out-0910.google.com ([216.239.58.191]:43881 "EHLO
-	gv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932265AbZJSUbl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 16:31:41 -0400
-Received: by gv-out-0910.google.com with SMTP id r4so506572gve.37
-        for <git@vger.kernel.org>; Mon, 19 Oct 2009 13:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=g7hpJPILNnijCJAsdPRLk078HsCNSLLaF7e0hBb/hoc=;
-        b=HYxlpGKDMlMvb64wyHddOJhq7IPybWoTDVPlQipxrijcVJ6x9Z+LACwKmq4tIoZOX7
-         dbrj5MaHxteH+v520QyUoSYr5fV92sxVpbj6h1ymmZG6DG8AWLeixK8Mw905rJtIWslp
-         FvBwpRYVOqMieEiXG++fsLrCb+UUAEDNv8KzU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=aS6vVcx7ISrXc6X32AvMuoZKh4H3GSAaFr4lJzzlsedu2ByquALHWpQnGJhFidCGzO
-         L7qG1YhtyiBQW3cX8S03rn9c5sdmt4pSWpZsB1tClfEy9bMfHnWemaXzBEjgX3FWHU6Y
-         G+KZsxsmr0gvwjSNCzM18wcRnTq67FrOXAzMA=
-Received: by 10.102.211.35 with SMTP id j35mr2258328mug.35.1255984305304;
-        Mon, 19 Oct 2009 13:31:45 -0700 (PDT)
-Received: from ?172.20.56.35? (cnat210.wlan.net.ed.ac.uk [129.215.5.210])
-        by mx.google.com with ESMTPS id j10sm27234mue.36.2009.10.19.13.31.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Oct 2009 13:31:44 -0700 (PDT)
+	id S1757906AbZJSXHD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Oct 2009 19:07:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757838AbZJSXHC
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 19:07:02 -0400
+Received: from india601.server4you.de ([85.25.151.105]:37836 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755582AbZJSXHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 19:07:01 -0400
+Received: from [10.0.1.101] (p57B7E7B1.dip.t-dialin.net [87.183.231.177])
+	by india601.server4you.de (Postfix) with ESMTPSA id A570C2F8059;
+	Tue, 20 Oct 2009 01:07:04 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <op.uzv4dyuotdk399@sirnot.private>
+In-Reply-To: <7vr5t0nwu8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130742>
 
-Adds support for graft commits in rev-cache (w/ test), and slightly alters
-graft mechanism.  Before, parse_commit() checked the graft list on every
-commit.  Now register_commit_graft() preemptively loads graft commits into
-memory, and sets a new 'graft' flag in the object.  This allows awareness of
-the commits' medical history without searching a (normally private) array upon
-each commit.
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Which other text functions are we going to add which would break thi=
+s
+>> model?  The only thing I can think of right now is nesting such
+>> functions themselves, e.g. when indenting a list in an indented
+>> sub-paragraph in an indented paragraph.  Useful?
+>=20
+> I was more worried about painting ourselves now in a corner we cannot=
+ get
+> out of easily later.  Even if my answer to question "what are we goin=
+g to
+> add" may be "nothing I can think of right now", it does not make me h=
+appy.
 
-Signed-off-by: Nick Edelen <sirnot@gmail.com>
+If wrapping wasn't implemented as a nested function, nesting could stil=
+l
+be introduced independently and used for other things -- once these
+other things arrive.
 
----
-fixed bug in mechanism alteration, which was causing test t6001 to fail.
+> Something off the top of my head are combinations like these.
+>=20
+>     %[toupper()%cD%] =3D> 'SUN, 18 OCT 2009 12:34:56 -0700'
+>     %[substr(7,3)%[toupper()%cD%]] =3D> 'OCT'
+>=20
+>     %[sanitize()%s%] =3D=3D=3D %f (i.e. format-patch filename)
+>     %[sanitize()%[substr(0,7)%[toupper()%aN%]%]%s] (with upcased auth=
+or name)
 
- builtin-rev-cache.c       |   14 ++++++++++++--
- commit.c                  |   27 +++++++++++++++++++++++++--
- object.h                  |    3 ++-
- rev-cache.c               |   32 ++++++++++++++++++++++++++++++++
- t/t6017-rev-cache-list.sh |    6 ++++++
- 5 files changed, 77 insertions(+), 5 deletions(-)
+Interesting examples, I particular like sanitize().
 
-diff --git a/builtin-rev-cache.c b/builtin-rev-cache.c
-index 4c1766d..b36bc39 100644
---- a/builtin-rev-cache.c
-+++ b/builtin-rev-cache.c
-@@ -102,8 +102,18 @@ static int test_rev_list(int argc, const char *argv[])
- 			flags ^= UNINTERESTING;
- 		else if (!strcmp(argv[i], "--objects"))
- 			revs.tree_objects = revs.blob_objects = 1;
--		else
--			handle_revision_arg(argv[i], &revs, flags, 1);
-+		else {
-+			struct commit_graft graft;
-+
-+			if (argv[i][0] == ':') {
-+				handle_revision_arg(argv[i] + 1, &revs, flags, 1);
-+
-+				hashcpy(graft.sha1, revs.pending.objects[revs.pending.nr - 1].item->sha1);
-+				graft.nr_parent = -1;
-+				register_commit_graft(&graft, 0);
-+			} else
-+				handle_revision_arg(argv[i], &revs, flags, 1);
-+		}
- 	}
- 
- 	setup_revisions(0, 0, &revs, 0);
-diff --git a/commit.c b/commit.c
-index 61d83c6..c227748 100644
---- a/commit.c
-+++ b/commit.c
-@@ -99,6 +99,7 @@ static int commit_graft_pos(const unsigned char *sha1)
- 
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(graft->sha1);
- 
- 	if (0 <= pos) {
-@@ -123,6 +124,12 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 			(commit_graft_nr - pos - 1) *
- 			sizeof(*commit_graft));
- 	commit_graft[pos] = graft;
-+
-+	commit = lookup_commit(graft->sha1);
-+	commit->object.graft = 1;
-+	commit->object.parsed = 0;
-+	parse_commit(commit); /* in case commit was already parsed */
-+
- 	return 0;
- }
- 
-@@ -221,6 +228,7 @@ int write_shallow_commits(int fd, int use_pack_protocol)
- 
- int unregister_shallow(const unsigned char *sha1)
- {
-+	struct commit *commit;
- 	int pos = commit_graft_pos(sha1);
- 	if (pos < 0)
- 		return -1;
-@@ -229,6 +237,12 @@ int unregister_shallow(const unsigned char *sha1)
- 				sizeof(struct commit_graft *)
- 				* (commit_graft_nr - pos - 1));
- 	commit_graft_nr--;
-+
-+	commit = lookup_commit(sha1);
-+	commit->object.graft = 0;
-+	commit->object.parsed = 0;
-+	parse_commit(commit);
-+
- 	return 0;
- }
- 
-@@ -255,7 +269,13 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 	while (pop_commit(pptr))
- 		; /* clear anything from cache */
- 
--	graft = lookup_commit_graft(item->object.sha1);
-+	/* make sure .graft flag is initialized */
-+	prepare_commit_graft();
-+	if (item->object.graft)
-+		graft = lookup_commit_graft(item->object.sha1);
-+	else
-+		graft = 0;
-+
- 	while (bufptr + 48 < tail && !memcmp(bufptr, "parent ", 7)) {
- 		struct commit *new_parent;
- 
-@@ -283,7 +303,10 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
- 				continue;
- 			pptr = &commit_list_insert(new_parent, pptr)->next;
- 		}
--	}
-+		item->object.graft = 1;
-+	} else
-+		item->object.graft = 0;
-+
- 	item->date = parse_commit_date(bufptr, tail);
- 
- 	return 0;
-diff --git a/object.h b/object.h
-index 89dd0c4..f848e0f 100644
---- a/object.h
-+++ b/object.h
-@@ -22,7 +22,7 @@ struct object_array {
- };
- 
- #define TYPE_BITS   3
--#define FLAG_BITS  27
-+#define FLAG_BITS  26
- 
- /*
-  * The object type is stored in 3 bits.
-@@ -30,6 +30,7 @@ struct object_array {
- struct object {
- 	unsigned parsed : 1;
- 	unsigned used : 1;
-+	unsigned graft : 1;
- 	unsigned type : TYPE_BITS;
- 	unsigned flags : FLAG_BITS;
- 	unsigned char sha1[20];
-diff --git a/rev-cache.c b/rev-cache.c
-index 6c96297..f7b1cd2 100644
---- a/rev-cache.c
-+++ b/rev-cache.c
-@@ -664,9 +664,41 @@ static int traverse_cache_slice_1(struct rc_slice_header *head, unsigned char *m
- 			}
- 		} else if (!ipath_nr && co->date <= date)
- 			slop--;
-+		else if (!ipath_nr && !upath_nr)
-+			break;
- 		else
- 			slop = SLOP;
- 
-+		/* before opening further topo-relations, check if the parenting has had medical attention */
-+		if (obj->graft) {
-+			struct commit_list *list;
-+
-+			parse_commit(co);
-+			obj->flags &= ~FACE_VALUE;
-+			last_objects[path] = 0;
-+
-+			/* we're only interested in its indirect influence */
-+			for (list = co->parents; list; list = list->next) {
-+				struct rc_index_entry *iep;
-+				struct object *po = &list->item->object;
-+
-+				iep = search_index(po->sha1);
-+				if (!iep || hashcmp(idx_caches + 20 * iep->cache_index, head->sha1)) {
-+					if (!(obj->flags & UNINTERESTING) && !(po->flags & UNINTERESTING))
-+						ioutside = 1;
-+				}
-+			}
-+
-+			/* an abrupt end */
-+			myworkp = &commit_list_insert(co, myworkp)->next;
-+			if (entry->uninteresting)
-+				upath_nr--;
-+			else
-+				ipath_nr--;
-+			paths[path] = 0;
-+			continue;
-+		}
-+
- 		/* open parents */
- 		if (entry->merge_nr) {
- 			int j, off = index + sizeof(struct rc_object_entry_ondisk);
-diff --git a/t/t6017-rev-cache-list.sh b/t/t6017-rev-cache-list.sh
-index f0f3bcf..3e16949 100755
---- a/t/t6017-rev-cache-list.sh
-+++ b/t/t6017-rev-cache-list.sh
-@@ -92,6 +92,7 @@ git-rev-list --topo-order HEAD --not HEAD~2 >proper_commit_list_limited2
- git-rev-list --topo-order HEAD >proper_commit_list
- git-rev-list --objects HEAD >proper_object_list
- git-rev-list HEAD --max-age=$min_date --min-age=$max_date >proper_list_date_limited
-+git-rev-cache test HEAD :HEAD~2 >proper_shallow_list 2>/dev/null
- 
- cache_sha1=`git-rev-cache add HEAD 2>output.err`
- 
-@@ -252,4 +253,9 @@ test_expect_success 'test --ignore-size function in fuse' '
- 	test -e .git/rev-cache/$cache_sha1
- '
- 
-+test_expect_success 'check graft handling' '
-+	git-rev-cache test HEAD :HEAD~2 >list
-+	test_cmp list proper_shallow_list
-+'
-+
- test_done
--- 
-tg: (52c9694..) t/revcache/graft (depends on: t/revcache/names)
+> By the way, I think that date formatting can be helped by introducing=
+ a
+> strftime() function that takes %ct/%at as input, e.g. %aD would becom=
+e
+>=20
+>     %[strftime(%a, %d %b %Y %H:%M:%S %z)%at]
+>=20
+> and we do not have to worry about keep adding random %[ac]X formats a=
+nd
+> running out of X.  Right now we use d/D/r/i and there were talks of a=
+dding
+> a shortened 8601 format without time or something we did not implemen=
+t.
+
+The number of date formats is scary, but this could be solved e.g. by
+introducing "%aT(<date format specifiers etc.>)", without nesting.
+
+> Also, if we had this %[func() any string%] mechanism, we probably wou=
+ldn't
+> have had to add distinction between n/N and e/E after %a and %c.
+
+Yeah, the place holders multiplied, and some of that growth could have
+been avoided by providing ways to change the change the output instead
+of providing the processed results.
+
+However, I think that nesting is such a big addition that it warrants
+further planning.  It turns the simple "see place holder, fill in value=
+"
+interpolator into more of a programming language.  Is that really
+needed?  And if yes, do we want to keep all these percent signs around
+or is it better to invent a nicer syntax?  Or borrow it from somewhere
+else?  Or perhaps I'm just afraid of change and complexity.
+
+Anyway, all of the functions that accept strings need to be able to ski=
+p
+over escape codes, which includes all of those mentioned above except
+perhaps strftime.  This is ugly.  Or one could forbid colour codes in
+function arguments.
+
+I'm more in favour of adding ways to customize the shape of the element=
+s
+rather than adding string functions.  %S(width=3D76,indent=3D4) over
+%[wrap(76,4)%s%].
+
+I feel I need to think a bit more about this; currently I'm a bit scare=
+d
+by %[...%].  But first to catch some sleep..
+
+Ren=C3=A9
