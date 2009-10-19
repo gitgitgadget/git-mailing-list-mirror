@@ -1,102 +1,64 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Document git push -q
-Date: Mon, 19 Oct 2009 00:01:19 -0400
-Message-ID: <20091019040119.GA7170@coredump.intra.peff.net>
+Subject: Re: [PATCH] git push: remove incomplete options list from help text
+Date: Mon, 19 Oct 2009 00:10:34 -0400
+Message-ID: <20091019041033.GB7170@coredump.intra.peff.net>
 References: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
  <4ADB4AE8.5070007@hartwork.org>
  <20091018235240.GU6115@genesis.frugalware.org>
+ <20091019115412.6117@nanako3.lavabit.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
 	Sebastian Pipping <webmaster@hartwork.org>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Oct 19 06:01:30 2009
+To: Nanako Shiraishi <nanako3@lavabit.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 06:10:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzjR1-0005no-Ei
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 06:01:27 +0200
+	id 1Mzja2-0008Dx-GZ
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 06:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758AbZJSEBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 00:01:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750714AbZJSEBS
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 00:01:18 -0400
-Received: from peff.net ([208.65.91.99]:39547 "EHLO peff.net"
+	id S1751130AbZJSEKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 00:10:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbZJSEKd
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 00:10:33 -0400
+Received: from peff.net ([208.65.91.99]:48193 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750701AbZJSEBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 00:01:17 -0400
-Received: (qmail 14206 invoked by uid 107); 19 Oct 2009 04:04:55 -0000
+	id S1750863AbZJSEKd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 00:10:33 -0400
+Received: (qmail 14278 invoked by uid 107); 19 Oct 2009 04:14:10 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 19 Oct 2009 00:04:55 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Oct 2009 00:01:19 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 19 Oct 2009 00:14:10 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Oct 2009 00:10:34 -0400
 Content-Disposition: inline
-In-Reply-To: <20091018235240.GU6115@genesis.frugalware.org>
+In-Reply-To: <20091019115412.6117@nanako3.lavabit.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130646>
 
-On Mon, Oct 19, 2009 at 01:52:40AM +0200, Miklos Vajna wrote:
+On Mon, Oct 19, 2009 at 11:54:12AM +0900, Nanako Shiraishi wrote:
 
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index ba6a8a2..beb3422 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -138,6 +138,12 @@ useful if you write an alias or script around 'git-push'.
->  --verbose::
->  	Run verbosely.
->  
-> +-q::
-> +--quiet::
-> +	Some transports produce output even without `--verbose` turned
-> +	on. This provides a way to tell them to be more quiet (whereas
-> +	simply redirecting might lose error messages).
-> +
+>  static const char * const push_usage[] = {
+> -	"git push [--all | --mirror] [-n | --dry-run] [--porcelain] [--tags] [--receive-pack=<git-receive-pack>] [--repo=<repository>] [-f | --force] [-v] [<repository> <refspec>...]",
+> +	"git push <options> [<repository> <refspec>...]",
 
-Thanks, though two complaints:
+This is a big improvement, IMO. We should probably standardize on when
+to show options, and when to simply say <options>, and make sure every
+program does the right thing. I am in favor of a short synopsis followed
+by a list (as you do here) for both usage and for manpages. However, I
+raised the question a few weeks ago and the response was slightly
+negative:
 
-  1. This is not just about "some transports". Some of the quieted code
-     is in transport_push, so hopefully it applies to all transports
-     once they follow that code path (though we also pass the quiet flag
-     on to pack-objects, so that part is about "some transports".
+  http://thread.gmane.org/gmane.comp.version-control.git/129399/focus=129424
 
-  2. Maybe it would be more helpful to the user to describe what is
-     shown and what is not. I think we want to claim to suppress all
-     non-error output (since that was the intent of the recent patches).
-     If that is not true for some transport, then we need to fix passing
-     --quiet to that transport.
+Probably few people read it, as it was buried deep in a thread. But
+maybe we should settle on a rule like "short synopsis for usage, long
+synopsis for manpage" or whatever people think is best.
 
-...Ah, I see your confusion. You read the log for afdeeb00, but there
-were some follow-on patches that impacted others part of push. :)
+Also, minor nit with your patch: should it be "[<options>]"?
 
-So maybe this instead:
-
--- >8 --
-Subject: [PATCH] document push's new quiet option
-
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/git-push.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index ba6a8a2..37c8895 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -138,6 +138,11 @@ useful if you write an alias or script around 'git-push'.
- --verbose::
- 	Run verbosely.
- 
-+-q::
-+--quiet::
-+	Suppress all output, including the listing of updated refs,
-+	unless an error occurs.
-+
- include::urls-remotes.txt[]
- 
- OUTPUT
--- 
-1.6.5.1.121.g65c47
+-Peff
