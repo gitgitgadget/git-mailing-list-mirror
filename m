@@ -1,43 +1,59 @@
-From: rhlee <richard@webdezign.co.uk>
-Subject: Re: Moving git
-Date: Mon, 19 Oct 2009 02:30:27 -0700 (PDT)
-Message-ID: <1255944627643-3848039.post@n2.nabble.com>
-References: <25926819.post@talk.nabble.com> <25928820.post@talk.nabble.com> <20091016184251.GG19511@inocybe.localdomain>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: denying branch creation in a shared repository
+Date: Mon, 19 Oct 2009 11:57:58 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910191155310.4985@pacific.mpi-cbg.de>
+References: <ee22b09e0910190132u20931fb4i6a98fb87582a9e56@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 19 11:30:39 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Mohit Aron <mohit.aron@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 19 11:55:20 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1MzoZV-0006CK-8T
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 11:30:33 +0200
+	id 1MzoxT-0002oh-Qb
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Oct 2009 11:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbZJSJaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Oct 2009 05:30:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752061AbZJSJaX
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 05:30:23 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:58858 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892AbZJSJaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Oct 2009 05:30:22 -0400
-Received: from tervel.nabble.com ([192.168.236.150])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists+1217463532682-661346@n2.nabble.com>)
-	id 1MzoZP-0006yG-Ku
-	for git@vger.kernel.org; Mon, 19 Oct 2009 02:30:27 -0700
-In-Reply-To: <20091016184251.GG19511@inocybe.localdomain>
-X-Nabble-From: richard@webdezign.co.uk
+	id S1754523AbZJSJzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Oct 2009 05:55:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753898AbZJSJzG
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Oct 2009 05:55:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34553 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752512AbZJSJzE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Oct 2009 05:55:04 -0400
+Received: (qmail invoked by alias); 19 Oct 2009 09:55:08 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp014) with SMTP; 19 Oct 2009 11:55:08 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18CHThpi3ICZeOZsemzRIQN4FLT7kVaY7iipB5Wfn
+	nNsZwwBCTggioj
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <ee22b09e0910190132u20931fb4i6a98fb87582a9e56@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.62
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130685>
 
+Hi,
 
-Thanks, I've been looking for something like EPEL for a long time.
--- 
-View this message in context: http://n2.nabble.com/Moving-git-tp3836198p3848039.html
-Sent from the git mailing list archive at Nabble.com.
+On Mon, 19 Oct 2009, Mohit Aron wrote:
+
+> I'm setting up a shared repository and I'd like to prevent users from 
+> creating branches in it (they can of course create local branches in 
+> their own clone of this repository). How can I accomplish this ? I 
+> looked at 'git help config' and it seems I need something similar to the 
+> parameter receive.denyDeletes - this prevents deletion of branches.
+
+The easiest way to accomplish things is to look who had the same problem 
+and solved it:
+
+http://repo.or.cz/w/repo.git?a=blob;f=update-hook;h=98b419ecad61f6c80f;hb=6f92e96db0d605bed50db99029172607af301792#l16
+
+Hth,
+Dscho
