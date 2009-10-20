@@ -1,62 +1,103 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: ident hash usage question
-Date: Tue, 20 Oct 2009 22:35:10 +0200
-Message-ID: <81b0412b0910201335j3b3340cydf3cbaf3c938190@mail.gmail.com>
-References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
-	 <76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
-	 <81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
-	 <200910202222.37563.j6t@kdbg.org>
+From: Sean Estabrooks <seanlkml@sympatico.ca>
+Subject: Re: [PATCH] pull: refuse complete src:dst fetchspec arguments
+Date: Tue, 20 Oct 2009 13:30:53 -0700
+Message-ID: <BLU0-SMTP97AA2287062D9A104101C8AEC00@phx.gbl>
+References: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Oct 20 22:35:21 2009
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Oct 20 22:37:16 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0LQO-0000Vr-KN
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 22:35:20 +0200
+	id 1N0LSE-0001Zy-JM
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 22:37:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbZJTUfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 16:35:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752212AbZJTUfI
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 16:35:08 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:61799 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751987AbZJTUfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 16:35:07 -0400
-Received: by fxm18 with SMTP id 18so6892327fxm.37
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 13:35:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=eiX75etGvesionF8W1Bi4jwZ9dDu+JBpX7gKC5ctoZE=;
-        b=urI6zW9Md9YFYGREZDcT8CTUTEja2vaO6HH9XLSAv4+aHggKg3H0h3pRyNk99s+/5w
-         6RT5gWjNYRSDaoiM7ieWzaNuTvtBcf5awdTniMd3fy/2A4+iqoV93+vDWv+b5R44DLup
-         Komwczh1EbuQPp8v6T3D5BeN2d1orh0idvFnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=vZbErs8Hzfx6Ny0pzERJedRBA/aLwAxZnHojB7nVoqCaVOUG1xH6UMKWRLwebwEFO1
-         PwrAl37vhn0FfXBD405HHCP1gEuyXnDHAufGHDEKct4T4cPtkj7eDaZOlw250N/G0lV6
-         WZIE5QGRrxVg+ocVh86dScrfx832+LxpRHbcw=
-Received: by 10.204.3.211 with SMTP id 19mr6914264bko.36.1256070910933; Tue, 
-	20 Oct 2009 13:35:10 -0700 (PDT)
-In-Reply-To: <200910202222.37563.j6t@kdbg.org>
+	id S1752928AbZJTUhC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 16:37:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752877AbZJTUhC
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 16:37:02 -0400
+Received: from blu0-omc3-s34.blu0.hotmail.com ([65.55.116.109]:7903 "EHLO
+	blu0-omc3-s34.blu0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752682AbZJTUhB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 16:37:01 -0400
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Oct 2009 16:37:00 EDT
+Received: from BLU0-SMTP97 ([65.55.116.72]) by blu0-omc3-s34.blu0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 20 Oct 2009 13:30:55 -0700
+X-Originating-IP: [66.183.8.119]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from lex.hookers.net ([66.183.8.119]) by BLU0-SMTP97.blu0.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Tue, 20 Oct 2009 13:30:55 -0700
+In-Reply-To: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch>
+X-Mailer: Sylpheed 2.6.0 (GTK+ 2.16.6; x86_64-redhat-linux-gnu)
+X-OriginalArrivalTime: 20 Oct 2009 20:30:55.0541 (UTC) FILETIME=[399B7650:01CA51C4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130839>
 
-On Tue, Oct 20, 2009 at 22:22, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Dienstag, 20. Oktober 2009, Alex Riesen wrote:
->> What's so hard with storing the SHA-1 of the *commit*, anyway?
->
-> The hard part is that you get a cycle: commit SHA1 depends on contents depends
-> on commit SHA1.
+On Tue, 20 Oct 2009 20:23:06 +0200
+Thomas Rast <trast@student.ethz.ch> wrote:
 
-Don't store it in the repo. Store it in the output.
+Hi Thomas,
+
+> git-pull has historically accepted full fetchspecs, meaning that you
+> could do
+> 
+>   git pull $repo A:B
+> 
+> which would simultaneously fetch the remote branch A into the local
+> branch B and merge B into HEAD.  This got especially confusing if B
+> was checked out.  New users variously mistook pull for fetch or read
+> that command as "merge the remote A into my B", neither of which is
+> correct.
+> 
+> Since the above usage should be very rare and can be done with
+> separate calls to fetch and merge, we just disallow full fetchspecs in
+> git-pull.
+
+It is however a handy shortcut to be able to specify the full refspec
+and specify where you want the head stored locally.  It seems a shame to
+throw away that functionality because of one confusing case.   Wouldn't
+it be better to test of the confusing case and instead error out if the
+local refname is already checked out?
+
+
+[...]
+> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+> index dd2ee84..a566a99 100755
+> --- a/t/t5520-pull.sh
+> +++ b/t/t5520-pull.sh
+> @@ -29,18 +29,6 @@ test_expect_success 'checking the results' '
+>  	diff file cloned/file
+>  '
+>  
+> -test_expect_success 'pulling into void using master:master' '
+> -	mkdir cloned-uho &&
+> -	(
+> -		cd cloned-uho &&
+> -		git init &&
+> -		git pull .. master:master
+> -	) &&
+> -	test -f file &&
+> -	test -f cloned-uho/file &&
+> -	test_cmp file cloned-uho/file
+> -
+> -
+>  test_expect_success 'test . as a remote' '
+>  
+>  	git branch copy master &&
+> -- 
+> 
+
+Instead of removing this test it should be modified or replaced
+with a test that ensures the new functionality operates correctly.
+In this case that would mean checking that using a full refspec
+errors out.
+
+Cheers,
+Sean
