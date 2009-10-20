@@ -1,94 +1,60 @@
-From: "Richard" <richard@webdezign.co.uk>
-Subject: RE: Moving git
-Date: Tue, 20 Oct 2009 17:37:12 +0100
-Message-ID: <8440EA2C12E50645A68C4AA9887166512446DD@SERVER.webdezign.local>
-References: <25926819.post@talk.nabble.com> <alpine.LNX.2.00.0910201222080.14365@iabervon.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Update working copy on push without touching several files
+Date: Tue, 20 Oct 2009 18:45:59 +0200
+Message-ID: <200910201846.00650.trast@student.ethz.ch>
+References: <4ADDCC7A.8080607@amiryan.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: <git@vger.kernel.org>
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:37:27 2009
+To: Alex Amiryan <alex@amiryan.org>
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:46:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Hi5-0002zi-Md
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:37:22 +0200
+	id 1N0Hr8-0007lF-Mo
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbZJTQhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 12:37:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbZJTQhK
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:37:10 -0400
-Received: from mail.webdezign.co.uk ([213.123.201.79]:58348 "EHLO
-	webdezign.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751146AbZJTQhJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 12:37:09 -0400
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-In-Reply-To: <alpine.LNX.2.00.0910201222080.14365@iabervon.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: Moving git
-Thread-Index: AcpRoxdjlXLmiHF9SaeDgS3zejn6bgAAEsjQ
+	id S1752685AbZJTQqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 12:46:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZJTQqc
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:46:32 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:23241 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752643AbZJTQqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 12:46:32 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Tue, 20 Oct
+ 2009 18:46:35 +0200
+Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Tue, 20 Oct
+ 2009 18:46:34 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <4ADDCC7A.8080607@amiryan.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130811>
 
-Thanks to anyone for the reply, but this issue has been resolved. I
-might have submitted this several times, but Nabble keeps on nagging me
-about multiple posts. So I'm just going to delete it.
+Alex Amiryan wrote:
+> Online versions of websites are maintained with git
+> too. I need to have working copy of my remote git repository (online
+> version of the site) updated by git push (which I do locally). The
+> problem is that I have some files there (like database config) that have
+> to be different from local ones and they must not be updated on git
+> push.
 
------Original Message-----
-From: Daniel Barkalow [mailto:barkalow@iabervon.org] 
-Sent: 20 October 2009 17:34
-To: Richard
-Cc: git@vger.kernel.org
-Subject: Re: Moving git
+My best results so far were with special config branches that are
+auto-merged in post-receive.  As a simple example, post-receive might
+simply be
 
-On Tue, 20 Oct 2009, Richard Lee wrote:
+  #!/bin/sh
 
-> 
-> Hi Git forum,
-> 
-> I've just started using git yesterday, so I'm very new. So please
-excuse if
-> I've done something the wrong way.
-> 
-> I cloned a git directory/repository? and then moved it. I'm trying to
-prune
-> branches and it gives
-> 
-> ]fatal: '/var/www/vhosts/mydomain.co.uk/b2.git': unable to chdir or
-not a
-> git archive
-> fatal: The remote end hung up unexpectedly
-> ls-remote --heads /var/www/vhosts/mydomain.co.uk/b2.git: command
-returned
-> error: 1
-> 
-> b2.git was the cloned bare thing I create following the instruction
-here:
-> 
-> http://book.git-scm.com/4_setting_up_a_private_repository.html
-> 
-> Is there someway I can get git to update the git base directory?
+  git checkout -f master^0
+  git merge config
 
-The exact problem, I think, is that your clone has saved the original 
-location of the bare repository as the default upstream repository 
-location, and now it's not there. (It's a little hard to tell without
-the 
-command that you were running when you got the error.)
-
-If you edit the clone's .git/config, you should see the old location in
-a 
-'[remote "origin"]' section. If you change this to the new location, 
-everything should work. You can also do it with "git remote" somehow,
-but 
-I personally just edit the config file, so I don't know the details.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
