@@ -1,99 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: git gc and kernel.org
-Date: Tue, 20 Oct 2009 00:48:15 -0700
-Message-ID: <7veioyqzeo.fsf@alter.siamese.dyndns.org>
-References: <4ADD6026.8070203@zytor.com>
+Date: Tue, 20 Oct 2009 16:51:06 +0900
+Message-ID: <4ADD6BEA.3080300@zytor.com>
+References: <4ADD6026.8070203@zytor.com> <7veioyqzeo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>, ftpadmin@kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 09:48:43 2009
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 09:52:22 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N09SN-00043X-Kh
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 09:48:35 +0200
+	id 1N09W1-0005as-5a
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 09:52:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750958AbZJTHsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 03:48:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750959AbZJTHsU
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 03:48:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45594 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750897AbZJTHsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 03:48:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B76C95FDD9;
-	Tue, 20 Oct 2009 03:48:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z9xG7EaycCA66ySVEUkiRxUUkcY=; b=rBZm4m
-	0WKBRv7QTppXtWtDCDnnECodfSnLZOExplf+OZO3jLydA/3Jzlgk4m2OxcVKrV8c
-	gjJu446dnHVLtGddhFVfqKLv8MfHF1XsrHsg6g3qoR/PvkFjWQB2A4Eb+9GO9kX/
-	qVx9OYlTVyKfXTLYJe7XbD0+SCI/q1ZmTS+Yc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cz4CBy//WY4Ph4VFhfIo3qcKYEHjVZu2
-	yzxK86UnO6xkXHhUsfsKfQnSHsBWTkWyPUlXkNx7ih/LLwJNP3IQ92eZ1JjJpEse
-	vTHVYxcy/2C6tFSblJgjdqEj4pLRFqHS9c3/bePyFdVywspAPsOuSO5L/FRA6u8D
-	/QDYoQGma30=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D1CD5FDD8;
-	Tue, 20 Oct 2009 03:48:20 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CC8085FDD6; Tue, 20 Oct
- 2009 03:48:16 -0400 (EDT)
-In-Reply-To: <4ADD6026.8070203@zytor.com> (H. Peter Anvin's message of "Tue\,
- 20 Oct 2009 16\:00\:54 +0900")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EFC18606-BD4C-11DE-BE3F-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751146AbZJTHwK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 03:52:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751134AbZJTHwK
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 03:52:10 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:46055 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751117AbZJTHwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 03:52:09 -0400
+Received: from [192.168.11.49] (p32183-ipbffx02marunouchi.tokyo.ocn.ne.jp [220.106.13.183])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.3/8.14.3) with ESMTP id n9K7pBw6030110
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 20 Oct 2009 00:51:13 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Fedora/3.0-2.8.b4.fc11 Thunderbird/3.0b4
+In-Reply-To: <7veioyqzeo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130772>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On 10/20/2009 04:48 PM, Junio C Hamano wrote:
+> As to (1), I think it is reasonable to do some sort of "gc" in
+> receive-pack, and while I recall that Linus was violently against the
+> idea, I personally think it is reasonable to run update-server-info
+> ourselves at the same time without needing the hook, even if the
+> repository is never going to be served over dumb http [*1*].  At one
+> point, update-server-info used to compute a lot more than what we
+> currently compute and it made some sense to oppose against it on
+> performance ground.
+>
+> But these days it only lists the refs and packs and does nothing else; the
+> performance impact should be immeasurable and it adds only two files to
+> the repository.  It cannot be a big deal, unless you oppose to http
+> transport on a non-technical ground.
 
-> We have run into two major problems with git on kernel.org.  We have
-> discussed workarounds, but I believe they are generally major problems
-> which will affect other sites, and really need to be fixed upstream.
->
-> 1) git receive-pack doesn't run git gc --auto.
->
-> This cause repositories which people thought were being autopacked to
-> not be so.  This can be done via a hook, but that is way too painful
-> for people to do -- in fact, it's hard enough just to get people to
-> enable the post-update hook for http fetching.
->
-> 1b) as per the above, a way to make "git update-server-info" at
-> post-update time a configurable option rather than needing to be done
-> via the hook would be very nice, since a configuration option can be
-> enabled sitewide.
->
-> 2) When pushing to a repository, it apparently doesn't honor new
-> objects in alternate repositories.  This causes massive unnecessary
-> duplication.
->
-> I believe these are major issues that need to be addressed.  If we are
-> *mistaken* on these, then we would appreciate being corrected.
+I'm obviously happy with making it a non-default option; we can enable 
+it sitewide on kernel.org.
 
-I actually was wondering if (2) is still true after reading the message
-from Wilcox.  It should be a simple matter of testing, but I think this
-issue was improved around the end of January this year with v1.6.1.2.
+However, git update-server-info seems to take almost no time even in 
+very large repos.
 
-As to (1), I think it is reasonable to do some sort of "gc" in
-receive-pack, and while I recall that Linus was violently against the
-idea, I personally think it is reasonable to run update-server-info
-ourselves at the same time without needing the hook, even if the
-repository is never going to be served over dumb http [*1*].  At one
-point, update-server-info used to compute a lot more than what we
-currently compute and it made some sense to oppose against it on
-performance ground.
-
-But these days it only lists the refs and packs and does nothing else; the
-performance impact should be immeasurable and it adds only two files to
-the repository.  It cannot be a big deal, unless you oppose to http
-transport on a non-technical ground.
+	-hpa
