@@ -1,83 +1,52 @@
-From: Alex Amiryan <alex@amiryan.org>
-Subject: Update working copy on push without touching several files
-Date: Tue, 20 Oct 2009 19:43:06 +0500
-Message-ID: <4ADDCC7A.8080607@amiryan.org>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: Documentation video for svn-git
+Date: Tue, 20 Oct 2009 09:04:11 -0600
+Organization: icecavern.net
+Message-ID: <200910200904.11886.wjl@icecavern.net>
+References: <ee9cc730910192330i6c593143w5f35a7a1f66810a1@mail.gmail.com> <200910200820.18986.wjl@icecavern.net> <ee9cc730910200734t66cfe15emd7314ae443e6ac1c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 20 16:43:54 2009
+Cc: git@vger.kernel.org
+To: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 17:04:35 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Fvi-0004F5-OS
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 16:43:19 +0200
+	id 1N0GG8-0007s8-CE
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 17:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752448AbZJTOnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 10:43:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbZJTOnH
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 10:43:07 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:24339 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752407AbZJTOnG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 10:43:06 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so2069944fga.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 07:43:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:subject:x-enigmail-version:openpgp
-         :content-type:content-transfer-encoding;
-        bh=Fi6gvZwO5Agar8byGTLgGPP/fng+S9hu67XOrKQnHYU=;
-        b=YpKvBej7zs32XNVbGpeGb5K+2ZMk/8QJAMHm+y5Se6EJcSRddBnKfkPz0c9JJ8bxaU
-         6An5WpCqeaOovmMPYhjaKqktOhzH0UBR2BEgmq6z92YRxwD3JQYsTqc7TKeoOfLSV9Jq
-         bRTpwmsLQFr0B1HlirW8CIl1OzK5uM+ENyhTI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:openpgp:content-type:content-transfer-encoding;
-        b=NMtuuJMNAAEQlX55Y38v0GRXh1D2dBOrVcGe3IYqhsBVPLrCsI/ts5sOyyTJTsWmAK
-         f4SwAEC5Za+2mYpczNAoCuYvhRwPUplEYr1CsXbdrteb7W3O5TRg49bRJrPN3k/HUVZh
-         HIQ2MteLxgZJUW6BX06Q8Q9K2iltA9xivPFlA=
-Received: by 10.86.209.23 with SMTP id h23mr3917453fgg.22.1256049789994;
-        Tue, 20 Oct 2009 07:43:09 -0700 (PDT)
-Received: from ?83.217.237.158? ([83.217.237.158])
-        by mx.google.com with ESMTPS id d6sm614fga.15.2009.10.20.07.43.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 20 Oct 2009 07:43:09 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090812)
-X-Enigmail-Version: 0.96.0
-OpenPGP: id=54435131;
-	url=hkp://pool.sks-keyserver.net
+	id S1752148AbZJTPEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 11:04:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752067AbZJTPEN
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 11:04:13 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:38388 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752023AbZJTPEN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 11:04:13 -0400
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id 495CD3686D;
+	Tue, 20 Oct 2009 17:04:14 +0200 (CEST)
+User-Agent: KMail/1.12.0 (Linux/2.6.29-2-amd64; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <ee9cc730910200734t66cfe15emd7314ae443e6ac1c@mail.gmail.com>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130800>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Tuesday 20 October 2009 08:34:21 jamesmikedupont@googlemail.com wrote:
+> The purpose is that it will reach more people on youtube,
+> and people who are lazy can just listen to the video
+> and not everyone has screen reader software available to them at all
+> times. I learn alot listening to espeak...
 
-Hello. I am a web site developer. My team is developing web sites
-locally using git. Online versions of websites are maintained with git
-too. I need to have working copy of my remote git repository (online
-version of the site) updated by git push (which I do locally). The
-problem is that I have some files there (like database config) that have
-to be different from local ones and they must not be updated on git
-push. I have made "git update-index --assume-unchanged
-incs/config.db.php" but they are not being updated only when I do "git
-pull" remotely. I have used some post-update hooks which I found on the
-net, but they all do "git reset --hard HEAD" which restores my config
-files. Can you please help me to write post-update hook which updates
-remote working copy but doesn't touch my assume-unchanged marked files.
-
-- --
-Alex Amiryan
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkrdzHMACgkQ1KOfm1RDUTH3eQCgsEy+349Q/BnqLyl+6uQcZ871
-lZgAn38ZlB4r5Utdt9PbxH/oCCIU2cjM
-=2FQ/
------END PGP SIGNATURE-----
+Fair enough. I just wasn't sure if I was missing a huge use case here. =)
