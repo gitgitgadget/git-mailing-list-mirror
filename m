@@ -1,86 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git hang with corrupted .pack
-Date: Tue, 20 Oct 2009 10:13:50 -0700
-Message-ID: <7vzl7mng35.fsf@alter.siamese.dyndns.org>
-References: <20091014042249.GA5250@hexapodia.org>
- <20091014142351.GI9261@spearce.org> <7viqeaovmp.fsf@alter.siamese.dyndns.org>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: ident hash usage question
+Date: Tue, 20 Oct 2009 13:24:52 -0400
+Message-ID: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Isaacson <adi@hexapodia.org>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 20 19:14:17 2009
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eugene Sajine <euguess@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 19:25:03 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0IHl-0004zA-KN
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 19:14:13 +0200
+	id 1N0ISD-0002Qn-BK
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 19:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661AbZJTROD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 13:14:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752634AbZJTROC
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 13:14:02 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41072 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555AbZJTROB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 13:14:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1B2C57E555;
-	Tue, 20 Oct 2009 13:14:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZC9N3CwfrT2Q7Q6xlEG/iAvYM/o=; b=JoG6+T
-	rZBIFHMiIsvEyWDxXrTxv5z9Y2V3j/XprKn9gZNlpH0mwgWR2xexFQD6cPARYlSC
-	pPv05jRMtqKnsxi13cuPl3uEDcgPXiw9LsvtSugTBkE7vl8Ft8IObMWvcwal7uD9
-	cOVxBrYOVowCZGT4NbuCr/zyGFv8JnATgeCz4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EVOYoB4Ul+dS5DMvCGuiVYisIAJzj5Lr
-	p/R3v9Ex+QGAtGlmdVXFYPSSHV9KBdxBNBpwrmk/4Htj0sGzhQRHGEX+4dt+mkt4
-	QKg4IJN8hl3SIk3e9gganZ5CFYVi8Fd3vna7wxlBndmvW74RbxJiz3hegFsaKoU9
-	VpFRzdrVvUg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C6B297E554;
-	Tue, 20 Oct 2009 13:13:58 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F28587E54E; Tue, 20 Oct 2009
- 13:13:51 -0400 (EDT)
-In-Reply-To: <7viqeaovmp.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 20 Oct 2009 09\:52\:46 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F484D27A-BD9B-11DE-9B0D-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1752751AbZJTRYt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 13:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752692AbZJTRYt
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 13:24:49 -0400
+Received: from mail-gx0-f212.google.com ([209.85.217.212]:61605 "EHLO
+	mail-gx0-f212.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752529AbZJTRYs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 13:24:48 -0400
+Received: by gxk4 with SMTP id 4so4864687gxk.8
+        for <git@vger.kernel.org>; Tue, 20 Oct 2009 10:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=LHurAyVu4zYh9MWxrvWaOK8MCvtY77xWlaapP1+FZrY=;
+        b=w6G7ykFbqrS95RmYdJWSeF1k00ILm796DloemjmxUxRFeuHSnjWYGzCgt52iKy+WKp
+         Ku3+u2Yc15wGl8EFzKQso6/QTfg6+8fQASt0rE8mr011/dzQutC8SULSza+B3VqL45XN
+         /719113Ueo8RC71+M2+C0a9QSrYZTwzKHygHc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=os8WvPSAGo10PpB6zhhU3ClwreN7CZJOu4UtTNHU4uJXIYudiSshMuII2xjnA8H1yq
+         FH55lmUK0C+uXy853PUcfTAPIEBykmy7L5mEa0hxiYVpk8OJ8/DRPNn70MkU/j0KreHi
+         crjEc0ZlsNYkNcXY0kmuQd+tNeX5aUlPcmRGc=
+Received: by 10.91.45.22 with SMTP id x22mr6869245agj.120.1256059492617; Tue, 
+	20 Oct 2009 10:24:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130818>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
->> We now abort the loop if inflate() returns Z_BUF_ERROR without
->> consuming the entire input buffer it was given, or has filled
->> the entire output buffer but has not yet returned Z_STREAM_END.
->> Either state is a clear indicator that this loop is not working
->> as expected, and should not continue.
->
-> When the inflated contents is of size 0, avail_out would be 0 and avail_in
-> would still have something because the input stream needs to have the end
-> of stream marker that is more than zero byte long.
+Please correct me if I=E2=80=99m missing something, but:
 
-After thinking about this a bit more, I am reasonably sure that this is
-it.  The contents does not have to be a 0-length string, but you would hit
-this if the pure-data portion of the deflated stream aligns at the end of
-your (un)pack window and it happens to require another use_pack() to move
-the window to read the end-of-stream signal.  In that situation, the
-output buffer has already been filled, but you haven't read the input
-stream fully.  Would't the new check incorrectly trigger in such a case?
+I was able to get the $Id$ keyword to show the SHA-1 hash of the file
+content, which is done using ident in gitattributes. Now I=E2=80=99m tr=
+ying to
+find a way to get more info about the file using only this hash.
 
->>  		st = git_inflate(&stream, Z_FINISH);
->> +		if (st == Z_BUF_ERROR && (stream.avail_in || !stream.avail_out))
->> +			break;
+Could you , please, advise if there is a way to get file name and path
+inside the repo by having only this Blob hash?
 
-We won't see this on 64-bit platforms because we use larger (un)pack
-window and the condition is much less likely to be met.
+Thank you,
+Eugene
