@@ -1,61 +1,70 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: Documentation video for svn-git
-Date: Tue, 20 Oct 2009 08:20:18 -0600
-Organization: icecavern.net
-Message-ID: <200910200820.18986.wjl@icecavern.net>
-References: <ee9cc730910192330i6c593143w5f35a7a1f66810a1@mail.gmail.com>
+From: Jean Privat <jean@pryen.org>
+Subject: Re: [PATCH v2] new --dirty option for git describe
+Date: Tue, 20 Oct 2009 10:31:45 -0400
+Message-ID: <dffdbd190910200731w5b49f329g5005539f875901e1@mail.gmail.com>
+References: <1255800990-7806-1-git-send-email-jean@pryen.org> 
+	<dffdbd190910200727r30e161ffka0b3cf764be26cd8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "jamesmikedupont@googlemail.com" <jamesmikedupont@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 16:20:51 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 16:32:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0FZx-0000O8-94
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 16:20:49 +0200
+	id 1N0Fky-0006aY-O2
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 16:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbZJTOU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 10:20:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752420AbZJTOU1
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 10:20:27 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:42563 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752385AbZJTOUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 10:20:24 -0400
-Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id 6019B35B38;
-	Tue, 20 Oct 2009 16:20:26 +0200 (CEST)
-User-Agent: KMail/1.12.0 (Linux/2.6.29-2-amd64; KDE/4.3.0; x86_64; ; )
-In-Reply-To: <ee9cc730910192330i6c593143w5f35a7a1f66810a1@mail.gmail.com>
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
- =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
- =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
- =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S1752278AbZJTOcC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 10:32:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752148AbZJTOcB
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 10:32:01 -0400
+Received: from mail-pz0-f188.google.com ([209.85.222.188]:45711 "EHLO
+	mail-pz0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752070AbZJTOcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 10:32:00 -0400
+Received: by pzk26 with SMTP id 26so4128031pzk.4
+        for <git@vger.kernel.org>; Tue, 20 Oct 2009 07:32:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:in-reply-to
+         :references:from:date:x-google-sender-auth:message-id:subject:to:cc
+         :content-type;
+        bh=myvpkZ4x7HhDPiDsnOxX08tR6F/dfdJUsXCLORxWLeE=;
+        b=bXlxJP72FfZMZJOSqE1tEfbn9HpSBmk9Ralp6hZltmvCQrP9yQy4wt41Hw0AzFE1ZO
+         HOL0KTOpEfX5IiuJx0cVSVHrvIvxejkTvuGmktAHhUSpJAPcCPZdQ79K1vDJwflRcEN3
+         /ZAw16yRE3lkc1eD83yF7CcmU0Z/mfWv1EI5s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=gGFCHx/w2RNF4TitIOC2jXAd58hVneRzSMc9WNeoQiAWzPPNTakRBVv//+yomBBxuH
+         DyJ33i9r15IR7OWyCfWjwiPCyFsHNL1xoRfFMDd/ZbWrBoXEGDdiI+97Ifj2YEFNLBM2
+         nRtZISBH6NiGXkI9jJFlQJEolvNmRJ2F0wXQ8=
+Received: by 10.140.134.17 with SMTP id h17mr1609348rvd.282.1256049125467; 
+	Tue, 20 Oct 2009 07:32:05 -0700 (PDT)
+In-Reply-To: <dffdbd190910200727r30e161ffka0b3cf764be26cd8@mail.gmail.com>
+X-Google-Sender-Auth: 67c50c2edd1a07c4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130796>
 
-On Tuesday 20 October 2009 00:30:49 jamesmikedupont@googlemail.com wrote:
-> I have created a computer reading of Sam's svn-git text :
->
-> http://www.archive.org/details/SvnGitVideo
->
-> It runs 1.5 hours.
->
-> I can also do other texts, also the source is checked in to create
-> them yourselves.
-> https://code.launchpad.net/~jamesmikedupont/introspectorreader/wikipedia-
->strategy
+> --- a/Documentation/git-describe.txt
+> +++ b/Documentation/git-describe.txt
+> @@ -9,6 +9,7 @@ git-describe - Show the most recent tag that is
+> reachable from a commit
 
-I'm definite fan free software text-to-speech software. (I know espeak when 
-I hear it!). But I have to ask: besides being a cool technology demo, what 
-is the use case for this? How is this better/different than, for instance, 
-just using a screen-reader on-the-fly?
+%#$@!&&@ !!!
+
+I followed instructions from Documentation/SubmittingPatches about
+sending patches trought gmail imap, it did not seem to work.
+I will resend with git-send-email (and try on something else that
+git@vger.kernel.org)
+
+Sorry for that.
+
+-J
