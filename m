@@ -1,117 +1,72 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: ident hash usage question
-Date: Tue, 20 Oct 2009 19:49:48 -0400
-Message-ID: <76c5b8580910201649i76d14f8bod9a84afa6ea6bbb0@mail.gmail.com>
-References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
-	 <81b0412b0910201116s694d7877rda872b368f1ae09a@mail.gmail.com>
-	 <81b0412b0910201119w7583487ag276cf964d0a85e@mail.gmail.com>
-	 <76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
-	 <81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
-	 <76c5b8580910201330r45cf625k3a41b5b9e24b3e01@mail.gmail.com>
-	 <7veioxn6ee.fsf@alter.siamese.dyndns.org>
-	 <76c5b8580910201514sc44f1cag222cf8a3710c875@mail.gmail.com>
-	 <7vbpk1lmvl.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC] pull/fetch rename
+Date: Tue, 20 Oct 2009 19:56:01 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.0910201912390.14365@iabervon.org>
+References: <200910201947.50423.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Eugene Sajine <euguess@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 01:50:01 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 21 01:56:17 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0OSl-0005I1-K9
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 01:49:59 +0200
+	id 1N0OYm-0007Lb-NF
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 01:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751601AbZJTXtp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 19:49:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbZJTXtp
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 19:49:45 -0400
-Received: from mail-gx0-f216.google.com ([209.85.217.216]:34926 "EHLO
-	mail-gx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751096AbZJTXto convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 19:49:44 -0400
-Received: by gxk8 with SMTP id 8so6744087gxk.1
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 16:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1HHH5nZHDObgugcMmhq6t/HBGEW2Yj5gt6+U2V/HC44=;
-        b=kQUi0vMhjENmYtAN/HXnzHhNdooSZkPVJ8dpxlJfwGXdihQeecE4z/VnJfTPyc9fkP
-         QaYooaEChqGT2skKDTk79NgDBbvzstqul10eKUFW1BKcMFQ/eA6IZM8bXoWsKWmL/XSv
-         2eLLNRgTA/XhA/b5akwXcudRf2tPZoCwcQ1kI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aXlYqd+PTOnfYASiw6UxOO6yNrYk0T56xU/IJ/rAygClBvam9W3I02hNJ5lXJShPlW
-         55O/ElfNQlIKiw1hBh6q91EUvCFeDH5T94eiJaMdZpOkAojrsjjKNtG5rBduM3trdiMj
-         GrO/vpZ0nbMaWmn8KNKxFouOZSgkRe0oMEMH8=
-Received: by 10.90.61.31 with SMTP id j31mr2924251aga.3.1256082588719; Tue, 20 
-	Oct 2009 16:49:48 -0700 (PDT)
-In-Reply-To: <7vbpk1lmvl.fsf@alter.siamese.dyndns.org>
+	id S1752300AbZJTXz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 19:55:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752117AbZJTXz6
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 19:55:58 -0400
+Received: from iabervon.org ([66.92.72.58]:39298 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751096AbZJTXz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 19:55:57 -0400
+Received: (qmail 15708 invoked by uid 1000); 20 Oct 2009 23:56:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 20 Oct 2009 23:56:01 -0000
+In-Reply-To: <200910201947.50423.trast@student.ethz.ch>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130871>
 
-> I am not sure what you mean by "static linking" anymore. =C2=A0Usuall=
-y the word
-> means that everything you tell the linker to link to the executable i=
-s
-> linked, together with objects from libraries. =C2=A0The resulting exe=
-cutable is
-> usable on its own and it does not change behaviour regardless of whic=
-h
-> version of dynamic libraries you depend on happen to be installed on =
-the
-> target system (because by definition a statically linked executable d=
-oes
-> not depend on dynamic libraries---that is the whole point of static
-> linking).
->
+On Tue, 20 Oct 2009, Thomas Rast wrote:
 
-There seems to be no misunderstanding in the static linking - i meant
-the same thing. But let me put an example:
+> Hi all,
+> 
+> While everyone is busy in two other UI threads, I figured I might as
+> well toss up another (probably) controversial topic.
+> 
+> Especially on IRC, we see many people who are some combination of
+> misunderstanding, misusing or overusing git-pull.  I figure this is
+> the result of several factors, notably
+> 
+> a) pull/push are not symmetric,
 
-I have a program.exe
+In a certain sense they are; they both update the branches local to one 
+repository with the data from the other repository. In this sense, fetch 
+is the oddity in that it doesn't update any repository's own branches, but 
+just the local information about other repositories' branches.
 
-This program.exe is built basing on two statically linked libraries
-lib1.lib and lib2.lib
+In another sense, push is unlike anything else in that it updates 
+something that's remote; in a third sense, pull is unique in that it can 
+generate a merge.
 
-I'm not developing any of those libraries, but only my own code of the
-program.exe
+I suspect that what we've called "fetch" isn't what the people want when 
+they type "pull", either. And I suspect that the fundamental issue is that 
+the operation people are looking for is not the operation that they would 
+do best to use, regardless of naming. I think users are looking for 
+something that corresponds to "svn up", and they find "git pull"; this 
+isn't going to make them happy git users, but finding "git fetch" instead 
+is going to make them even more confused.
 
-Now, somebody changed 2 files in lib1.lib and 5 files in lib2.lib. But
-i don't know that they are changed because it is different CVS module
-or because I'm building against latest released libs or for whatever
-reason...
+But I don't really know; are there IRC logs you can quote or reference 
+with people making the mistake you're trying to help them avoid?
 
-When i rebuild my program the build supposed to pick up changes from
-the libraries I'm using and relink, that will include 7 changed obj
-files.
-
-How can i say which exactly files are changed in my new version of
-executable comparing to the previous version?
-
-Currently they can take a look at the revision number of every
-particular file included into the executable, which is put there by
-CVS and compare it with the production. If the version is different,
-then you know which files are changed and you can get diffs on them...
-They also have file path and date and other stuff expanded...
-
-Please note, my personal goal is *to prove that git can do that
-better*, with less intrusion into the code sources, not other way
-around.So, while keeping the info they want to have they might get
-some benefits of git. Although, i understand that there might be no
-cure for this state already, you can tell me that and I will close the
-topic, but I just keep hoping;)
-
-
-Thanks a lot,
-Eugene
+	-Daniel
+*This .sig left intentionally blank*
