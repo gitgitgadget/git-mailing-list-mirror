@@ -1,91 +1,94 @@
-From: Nasser Grainawi <nasser@codeaurora.org>
-Subject: Re: git-pack-objects gitattributes?
-Date: Tue, 20 Oct 2009 10:34:00 -0600
-Organization: Code Aurora Forum
-Message-ID: <4ADDE678.4030001@codeaurora.org>
-References: <4AD3B4F8.6030007@codeaurora.org> <4ADCB457.8050601@codeaurora.org> <4ADCBAC7.9010601@drmicha.warpmail.net>
+From: "Richard" <richard@webdezign.co.uk>
+Subject: RE: Moving git
+Date: Tue, 20 Oct 2009 17:37:12 +0100
+Message-ID: <8440EA2C12E50645A68C4AA9887166512446DD@SERVER.webdezign.local>
+References: <25926819.post@talk.nabble.com> <alpine.LNX.2.00.0910201222080.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:34:11 2009
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Daniel Barkalow" <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:37:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Hf0-00018u-0P
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:34:10 +0200
+	id 1N0Hi5-0002zi-Md
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:37:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbZJTQd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 12:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752685AbZJTQd5
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:33:57 -0400
-Received: from wolverine01.qualcomm.com ([199.106.114.254]:49033 "EHLO
-	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752664AbZJTQd4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 12:33:56 -0400
-X-IronPort-AV: E=McAfee;i="5300,2777,5777"; a="25672643"
-Received: from pdmz-ns-mip.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.10])
-  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 20 Oct 2009 09:34:01 -0700
-Received: from [129.46.10.111] (pdmz-snip-v218.qualcomm.com [192.168.218.1])
-	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 7145910004C8;
-	Tue, 20 Oct 2009 09:37:19 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.23 (X11/20090817)
-In-Reply-To: <4ADCBAC7.9010601@drmicha.warpmail.net>
+	id S1751501AbZJTQhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 12:37:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751352AbZJTQhK
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:37:10 -0400
+Received: from mail.webdezign.co.uk ([213.123.201.79]:58348 "EHLO
+	webdezign.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751146AbZJTQhJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 12:37:09 -0400
+Content-class: urn:content-classes:message
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+In-Reply-To: <alpine.LNX.2.00.0910201222080.14365@iabervon.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Moving git
+Thread-Index: AcpRoxdjlXLmiHF9SaeDgS3zejn6bgAAEsjQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130810>
 
-Michael J Gruber wrote:
-> Nasser Grainawi venit, vidit, dixit 19.10.2009 20:47:
->> Nasser Grainawi wrote:
->>> Hello,
->>>
->>> I'm trying to avoid doing delta compression on a number of large binary 
->>> files. I got a suggestion to use $GIT_DIR/info/attributes and a line 
->>> like this:
->>> *.bin -delta
->>>
->>> This doesn't seem to show a big improvement (and honestly I can't find 
->>> where in the git-pack-objects source the value of this attribute is used).
->>>
->>> Could someone shed some light on this attribute and any other 
->>> improvements I could make for efficiently serving up a repo over 
->>> git-daemon with near-weekly revisions of 100MB+ files?
->>>
->>> Thanks,
->>> Nasser
->> ping? any help? anyone?
-> 
-> Well, describing a reproducable test case would help... as well as
-> telling us your git version.
+Thanks to anyone for the reply, but this issue has been resolved. I
+might have submitted this several times, but Nabble keeps on nagging me
+about multiple posts. So I'm just going to delete it.
 
-1.6.5
+-----Original Message-----
+From: Daniel Barkalow [mailto:barkalow@iabervon.org] 
+Sent: 20 October 2009 17:34
+To: Richard
+Cc: git@vger.kernel.org
+Subject: Re: Moving git
+
+On Tue, 20 Oct 2009, Richard Lee wrote:
 
 > 
-> builtin-pack-objects.c certainly refers to the delta attribute, see
-> no_try_delta() and its callers.
-
-Oops, somehow missed that while looking at the code right above it. Thanks.
-
+> Hi Git forum,
 > 
-> Have you checked your attrs with git-check-attr? How do you measure the
-> improvements you expect?
+> I've just started using git yesterday, so I'm very new. So please
+excuse if
+> I've done something the wrong way.
+> 
+> I cloned a git directory/repository? and then moved it. I'm trying to
+prune
+> branches and it gives
+> 
+> ]fatal: '/var/www/vhosts/mydomain.co.uk/b2.git': unable to chdir or
+not a
+> git archive
+> fatal: The remote end hung up unexpectedly
+> ls-remote --heads /var/www/vhosts/mydomain.co.uk/b2.git: command
+returned
+> error: 1
+> 
+> b2.git was the cloned bare thing I create following the instruction
+here:
+> 
+> http://book.git-scm.com/4_setting_up_a_private_repository.html
+> 
+> Is there someway I can get git to update the git base directory?
 
-I did check, it returns 'unset' like one would expect.
+The exact problem, I think, is that your clone has saved the original 
+location of the bare repository as the default upstream repository 
+location, and now it's not there. (It's a little hard to tell without
+the 
+command that you were running when you got the error.)
 
-I guess the big problem is that I don't have a good test case. I would have
-expected a 'git repack -adf' to spend less time saying "Compressing objects",
-but that doesn't seem to be happening...
+If you edit the clone's .git/config, you should see the old location in
+a 
+'[remote "origin"]' section. If you change this to the new location, 
+everything should work. You can also do it with "git remote" somehow,
+but 
+I personally just edit the config file, so I don't know the details.
 
-Oh, wait, never mind.
-I was missing some of the binaries I was trying to skip. Adding some more 
-exceptions to the attributes file dropped the "Compressing objects" time from 
-20 minutes (or more) to maybe 10 seconds.
-
-Thanks Michael!
-
-Nasser
+	-Daniel
+*This .sig left intentionally blank*
