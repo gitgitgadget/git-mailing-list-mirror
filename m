@@ -1,90 +1,75 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: git fsck not identifying corrupted packs
-Date: Tue, 20 Oct 2009 10:20:18 -0600
-Organization: icecavern.net
-Message-ID: <200910201020.18676.wjl@icecavern.net>
-References: <loom.20091019T094924-194@post.gmane.org> <200910191327.49092.wjl@icecavern.net> <200910201741.50764.robin.rosenberg@dewire.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] new --dirty option for git describe
+Date: Tue, 20 Oct 2009 09:30:38 -0700
+Message-ID: <7vmy3mownl.fsf@alter.siamese.dyndns.org>
+References: <1255800990-7806-1-git-send-email-jean@pryen.org>
+ <dffdbd190910200727r30e161ffka0b3cf764be26cd8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:20:33 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jean Privat <jean@pryen.org>
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:32:02 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0HRm-00021h-Eg
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:20:30 +0200
+	id 1N0Hct-0008Rd-5l
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549AbZJTQUV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 12:20:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbZJTQUU
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:20:20 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:45195 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752514AbZJTQUU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 12:20:20 -0400
-Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id BE00036865;
-	Tue, 20 Oct 2009 18:20:21 +0200 (CEST)
-User-Agent: KMail/1.12.0 (Linux/2.6.29-2-amd64; KDE/4.3.0; x86_64; ; )
-In-Reply-To: <200910201741.50764.robin.rosenberg@dewire.com>
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
- =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
- =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
- =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S1752639AbZJTQbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 12:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbZJTQbn
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:31:43 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55296 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352AbZJTQbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 12:31:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2175B7E018;
+	Tue, 20 Oct 2009 12:31:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YzWscrUhXJzJmBXSa1D1d2Cl4hI=; b=JQHbPe
+	Pcj3xCSq7364wAFinpgzAh8ESNNxabIHRBlZ6VBDWo7W/8x8LWk0tmWuydB3fl04
+	jtOSloDAWEIu6rk1HM2A7tOfGb0BdBfhBRRgJgZQBmi35xRXdw6lNw0hH1G6FrAf
+	FBhgT5k9BHk2u3V39udqV5qhtN07tfWUacpMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=adiH7QWCWONpJtngNUA6tlfGHiwBVKTY
+	QjIK39M/nqB3Y2gQzJTBe2pEbceGCRg0gC24GFyvKY71NTxhJtHUb4IFYSM6DnH8
+	T2TofnDQRwZcfGEBGtFatcV86ukQVegDmfhXr5zEAje6x8qx6i1DP85IIRZ9qF+F
+	89o2J8EhBJU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E8D1A7E00D;
+	Tue, 20 Oct 2009 12:31:41 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CFD937FFF2; Tue, 20 Oct 2009
+ 12:30:39 -0400 (EDT)
+In-Reply-To: <dffdbd190910200727r30e161ffka0b3cf764be26cd8@mail.gmail.com>
+ (Jean Privat's message of "Tue\, 20 Oct 2009 10\:27\:11 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C6FC0EE-BD96-11DE-ADF2-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130807>
 
-On Tuesday 20 October 2009 09:41:50 Robin Rosenberg wrote:
-> m=E5ndag 19 oktober 2009 21:27:48 skrev  Wesley J. Landaker:
-> > (Not CCing everyone, since this is mostly curiosa in the "using git=
- as
-> > it was never intended" section):
-[...]
-> > Filesystems are mostly reliable, but only until your crazy users do
-> > strange and terrible things. I have a real, non-toy environment whe=
-re I
-> > use this stack as a [horrible] workaround for some issues beyond my
-> > control:
-> >
-> > git -> ext4 -> lvm -> dmcrypt -> loop -> sshfs -> cygwin sshd -> SM=
-B
-> > share
+Jean Privat <jean@pryen.org> writes:
 
-My main point was to illustrate that having "git fsck" do a REALLY GOOD=
-=20
-CHECK is still desirable, as we still haven't reached the days of file-
-system utopia where nothing ever gets corrupted (even with a smaller,=20
-simpler stack).
+> +test_expect_success 'describe --dirty HEAD' '
+> +	git describe --dirty HEAD
+> +	test $? != 0
+> +'
 
-The actual application where I use this stack is because of odd require=
-ments=20
-and circumstances like data must be physically stored on a particular=20
-Windows server on the network that uses a weird authentication method t=
-hat=20
-samba doesn't support, and it has to go over the network encrypted anyw=
-ay,=20
-there are lots of holes in the data, so I want ext4 for the extent supp=
-ort,=20
-file-size limitations on the target, etc.
+We tend to write this as
 
-It's a really an exotic love-hate mix between an off-by-one-please-no-n=
-ever-
-again kind of situation coupled with a bit of "because I can".
+	test_expect_success '...' '
+        	test_must_fail git describe --dirty HEAD
+	'
 
-> The obvious follow up question here is: Why?
-
-If you are both nerdy and morbidly curious enough to care, send me a "b=
-ut,=20
-no ... really, WHY?!" with the git list CC dropped and we can talk abou=
-t=20
-details and/or other crazy stuff. (I don't want to get wildly off-topic=
- on=20
-this list.)
+The difference is when the tested command segfaults or dies in an
+uncontrolled fashion; test_must_fail diagnoses it as a failure,
+while "test $? != 0" at the end will say "ok, the command correctly
+failed".
