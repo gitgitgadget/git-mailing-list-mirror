@@ -1,65 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: set PERL_PATH and SHELL_PATH unconditionally
-Date: Tue, 20 Oct 2009 09:18:29 -0700
-Message-ID: <7vtyxuox7u.fsf@alter.siamese.dyndns.org>
-References: <7vr5syshat.fsf@alter.siamese.dyndns.org>
- <1256029588-24128-1-git-send-email-kraai@ftbfs.org>
+From: "Wesley J. Landaker" <wjl@icecavern.net>
+Subject: Re: git fsck not identifying corrupted packs
+Date: Tue, 20 Oct 2009 10:20:18 -0600
+Organization: icecavern.net
+Message-ID: <200910201020.18676.wjl@icecavern.net>
+References: <loom.20091019T094924-194@post.gmane.org> <200910191327.49092.wjl@icecavern.net> <200910201741.50764.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Matt Kraai <kraai@ftbfs.org>
-X-From: git-owner@vger.kernel.org Tue Oct 20 18:18:53 2009
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 18:20:33 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0HQ8-000191-8c
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:18:48 +0200
+	id 1N0HRm-00021h-Eg
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 18:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520AbZJTQSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 12:18:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbZJTQSg
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:18:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52316 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751859AbZJTQSf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 12:18:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3A07A604F2;
-	Tue, 20 Oct 2009 12:18:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i5Fd3X7+GgjKqEaULy0qNWa1Qeg=; b=iFQL9l
-	yLx9GXQume5ApV6F1ONzY8DihhEjY2xQSyJxpMHq1gIEDw2fwQn7YVeCdseunPgx
-	1lZ7u3PfFsjHkJ3Q4pbmhNMHzp1HXKi6XBibsHuytz+bjjsaxvuNfa8gArH1moIC
-	WqSPja8NT/dzjJlz81pWu/K/ABBaQMqndydJc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QN8QrvSQOyeo0p6hV1xZZFlFrq46b9Vz
-	6UlN4OwoJkAb5DrhNBgSX5GpJq2L7yvfaLGcurrNnuS0q5P1SaCTMOvjD3Fjr+/+
-	WZbtOVZuaMbSQuuN/1fYH81ZtxM+hWupsoowGC2SC7OSWAlk2r80e0a00dfPlQWU
-	TByeXiaoFOs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BF09604F1;
-	Tue, 20 Oct 2009 12:18:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 84ABA604EF; Tue, 20 Oct
- 2009 12:18:31 -0400 (EDT)
-In-Reply-To: <1256029588-24128-1-git-send-email-kraai@ftbfs.org> (Matt
- Kraai's message of "Tue\, 20 Oct 2009 02\:06\:28 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 36DBCE1A-BD94-11DE-ACF7-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752549AbZJTQUV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 12:20:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbZJTQUU
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 12:20:20 -0400
+Received: from rinoa.icecavern.net ([92.243.7.152]:45195 "EHLO icecavern.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752514AbZJTQUU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 12:20:20 -0400
+Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
+	by icecavern.net (Postfix) with ESMTPSA id BE00036865;
+	Tue, 20 Oct 2009 18:20:21 +0200 (CEST)
+User-Agent: KMail/1.12.0 (Linux/2.6.29-2-amd64; KDE/4.3.0; x86_64; ; )
+In-Reply-To: <200910201741.50764.robin.rosenberg@dewire.com>
+X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
+ =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
+ =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
+ =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
+ =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
+ =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130806>
 
-Matt Kraai <kraai@ftbfs.org> writes:
+On Tuesday 20 October 2009 09:41:50 Robin Rosenberg wrote:
+> m=E5ndag 19 oktober 2009 21:27:48 skrev  Wesley J. Landaker:
+> > (Not CCing everyone, since this is mostly curiosa in the "using git=
+ as
+> > it was never intended" section):
+[...]
+> > Filesystems are mostly reliable, but only until your crazy users do
+> > strange and terrible things. I have a real, non-toy environment whe=
+re I
+> > use this stack as a [horrible] workaround for some issues beyond my
+> > control:
+> >
+> > git -> ext4 -> lvm -> dmcrypt -> loop -> sshfs -> cygwin sshd -> SM=
+B
+> > share
 
-> Do not check whether PERL_PATH and SHELL_PATH are undefined before
-> setting their default values.  This prevents them from being set via
-> environment variables.
+My main point was to illustrate that having "git fsck" do a REALLY GOOD=
+=20
+CHECK is still desirable, as we still haven't reached the days of file-
+system utopia where nothing ever gets corrupted (even with a smaller,=20
+simpler stack).
 
-Is there an upside of "preventing them from getting set", by the way?
+The actual application where I use this stack is because of odd require=
+ments=20
+and circumstances like data must be physically stored on a particular=20
+Windows server on the network that uses a weird authentication method t=
+hat=20
+samba doesn't support, and it has to go over the network encrypted anyw=
+ay,=20
+there are lots of holes in the data, so I want ext4 for the extent supp=
+ort,=20
+file-size limitations on the target, etc.
+
+It's a really an exotic love-hate mix between an off-by-one-please-no-n=
+ever-
+again kind of situation coupled with a bit of "because I can".
+
+> The obvious follow up question here is: Why?
+
+If you are both nerdy and morbidly curious enough to care, send me a "b=
+ut,=20
+no ... really, WHY?!" with the git list CC dropped and we can talk abou=
+t=20
+details and/or other crazy stuff. (I don't want to get wildly off-topic=
+ on=20
+this list.)
