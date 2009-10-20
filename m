@@ -1,74 +1,89 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: ident hash usage question
-Date: Tue, 20 Oct 2009 18:19:56 -0400
-Message-ID: <76c5b8580910201519s29b939f3o3f6af8ca50340db1@mail.gmail.com>
-References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
-	 <81b0412b0910201116s694d7877rda872b368f1ae09a@mail.gmail.com>
-	 <81b0412b0910201119w7583487ag276cf964d0a85e@mail.gmail.com>
-	 <76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
-	 <81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
-	 <76c5b8580910201330r45cf625k3a41b5b9e24b3e01@mail.gmail.com>
-	 <81b0412b0910201343r4ff49f9fnbdd9260dcf682416@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: git-send-email.perl defect: address missing trailing > accepted
+Date: Wed, 21 Oct 2009 00:29:55 +0200
+Message-ID: <40aa078e0910201529m338ef3d1o4fa1a31c3dcc2a20@mail.gmail.com>
+References: <1256076767.2029.59.camel@Joe-Laptop.home>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Eugene Sajine <euguess@gmail.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 00:20:07 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 00:30:04 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0N3j-0006Ue-4i
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 00:20:03 +0200
+	id 1N0NDP-0002eP-6V
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 00:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751696AbZJTWTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 18:19:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751470AbZJTWTx
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 18:19:53 -0400
-Received: from mail-yx0-f188.google.com ([209.85.210.188]:38877 "EHLO
-	mail-yx0-f188.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbZJTWTw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 18:19:52 -0400
-Received: by yxe26 with SMTP id 26so5090676yxe.4
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 15:19:56 -0700 (PDT)
+	id S1752038AbZJTW3x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 18:29:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751601AbZJTW3x
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 18:29:53 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:39880 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbZJTW3w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 18:29:52 -0400
+Received: by fxm18 with SMTP id 18so7014640fxm.37
+        for <git@vger.kernel.org>; Tue, 20 Oct 2009 15:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=5MoRt1JXoi9pepYNsiDJbRVvZqjQbgA2sxlRHB+edZI=;
-        b=KBJIKHeFZf8/HStQQvitQNp9doqnulwXk+Vj57qs14efT8DFEcAuknpGhVOTtyyLe1
-         8syGNDR+a9GP1/Bixd5I5iDqIc4Oo/xWwdHCh4qeRG8DPP8zXVRg3bdT5xb2gPG1osnf
-         mOqsXGB72mJUPcJQVg8Eh6/7UlgNQT9y8bShU=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PbQqlAm5bMPisEoE4BAQ4DZ4ZkC6OQsa2vV0Uoq2w0w=;
+        b=lW9BRBd/Wg5NnPfZurz87BynjPk9ZPfMAVXBj81Mfon7qu/DNaFc1xUZRIM1r7+O0k
+         DTU981NXlkUocQKMDvDDNHHcz1ebX2OMwIp/tuWsLGvJ95mgwgQMH37ZV067zt73peiv
+         4qy9U9yb8rgKxpnIkLf+XjbwbQqlG1JAv8XpY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sAt9LkkY/LMMQSEPj1R6b3OYn+2K5DTw5eQh5dMdPaAzjCd+7zox0S1Ihb6mADlCoK
-         VT29SRE+SM9WQWII4NJOuCLjnTSKOCxuZr4KCuKYvor88znLTOvH5roKwhjy74uOtnHS
-         GnEwN11E/uH5fTh9Cr5JJM1D/hBeudyXZ34Zw=
-Received: by 10.90.22.17 with SMTP id 17mr7439855agv.76.1256077196879; Tue, 20 
-	Oct 2009 15:19:56 -0700 (PDT)
-In-Reply-To: <81b0412b0910201343r4ff49f9fnbdd9260dcf682416@mail.gmail.com>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=AO9fWksvwwfjxONx4gDBNWkdAy13+rx1cMh+AFkCa3BmcdGVLE/sfmn+WeP7tfwz1G
+         obZen7sCdv3PGlW0PJHAKOG6YbobPdWMmawN6UMzMvqn56By5jk+Cv1RVuPipq6A5Jyv
+         Xl/svZeVpZCiJJ1fJD+Py5GkT+9iOfy0FZL38=
+Received: by 10.204.162.210 with SMTP id w18mr7222119bkx.174.1256077795292; 
+	Tue, 20 Oct 2009 15:29:55 -0700 (PDT)
+In-Reply-To: <1256076767.2029.59.camel@Joe-Laptop.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130860>
 
->> How is that? It seams to me that git log <path> will show only commits
->> where <path> was changed/committed? Considering the fact that I've got
->> the initial path from the blob, i should get the exact commit history
->> (or last commit in my example) for the file(s) (Files if renaming
->> occurred without content change).
+On Wed, Oct 21, 2009 at 12:12 AM, Joe Perches <joe@perches.com> wrote:
+> I typo cut/pasted an invalid email address,
+> neglecting to copy the trailing ">".
 >
-> The blob is present in each commit since it was introduced. Except
-> when your project contains only that one blob, isn't the state of
-> the other parts of an interest?
+> was: =A0 =A0"Name <addr.org"
+> needed: "Name <addr.org>"
 >
-I would question this statement. It seems to me that hash of the file
-content is logged only for the commit when it was touched.
-Therefore there is very limited amount of actual commits where the
-same hash can be met.
+> Anyone have suggestions on how to get
+> git-send-email.perl to notify and abort
+> sending on more invalid address styles?
 
-Thanks,
-Eugene
+Something along these lines? Of course, the error message is, uhm,
+less than helpful :)
+
+--->8---
+diff --git a/git-send-email.perl b/git-send-email.perl
+index f5ba4e7..83f5e80 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -787,6 +787,10 @@ sub is_rfc2047_quoted {
+ sub sanitize_address
+ {
+ 	my ($recipient) =3D @_;
++	if ($recipient =3D~ m/.*<[^>]*$/) {
++		die "EEK!"
++	}
++
+ 	my ($recipient_name, $recipient_addr) =3D ($recipient =3D~ /^(.*?)\s*=
+(<.*)/);
+
+ 	if (not $recipient_name) {
+
+
+--=20
+Erik "kusma" Faye-Lund
