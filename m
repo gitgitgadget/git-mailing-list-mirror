@@ -1,55 +1,51 @@
-From: Matt Kraai <kraai@ftbfs.org>
-Subject: Re: [PATCH] Makefile: set PERL_PATH and SHELL_PATH unconditionally
-Date: Tue, 20 Oct 2009 09:33:07 -0700
-Message-ID: <20091020163307.GA5208@ftbfs.org>
-References: <7vr5syshat.fsf@alter.siamese.dyndns.org> <1256029588-24128-1-git-send-email-kraai@ftbfs.org> <7vtyxuox7u.fsf@alter.siamese.dyndns.org>
+From: =?ISO-8859-1?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
+Subject: Re: [RFC PATCH] git-gui: Allow staging multiple lines at once
+Date: Tue, 20 Oct 2009 19:09:05 +0200
+Message-ID: <4ADDEEB1.80107@dirk.my1.cc>
+References: <20091019195456.GA11121@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 19:01:46 2009
+To: Jeff Epler <jepler@unpythonic.net>
+X-From: git-owner@vger.kernel.org Tue Oct 20 19:09:18 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0I5L-0006iS-5K
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 19:01:23 +0200
+	id 1N0ICy-0002Mh-Nq
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 19:09:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752473AbZJTRBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 13:01:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbZJTRBN
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 13:01:13 -0400
-Received: from neon.ftbfs.org ([83.168.236.214]:46293 "EHLO neon.ftbfs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751477AbZJTRBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 13:01:12 -0400
-X-Greylist: delayed 1687 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Oct 2009 13:01:12 EDT
-Received: from kraai by neon.ftbfs.org with local (Exim 4.69)
-	(envelope-from <kraai@ftbfs.org>)
-	id 1N0Hdz-0001MR-3N; Tue, 20 Oct 2009 09:33:07 -0700
-Content-Disposition: inline
-In-Reply-To: <7vtyxuox7u.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752705AbZJTRJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 13:09:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbZJTRJD
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 13:09:03 -0400
+Received: from smtprelay07.ispgateway.de ([80.67.29.7]:57196 "EHLO
+	smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbZJTRJD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 13:09:03 -0400
+Received: from [84.176.127.162] (helo=[192.168.2.100])
+	by smtprelay07.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1N0IDf-0002iL-Lo; Tue, 20 Oct 2009 19:09:59 +0200
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <20091019195456.GA11121@unpythonic.net>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130816>
 
-On Tue, Oct 20, 2009 at 09:18:29AM -0700, Junio C Hamano wrote:
-> Matt Kraai <kraai@ftbfs.org> writes:
+Am 19.10.2009 21:54 schrieb Jeff Epler:
+> When applying less than a full hunk, it's still often desirable to apply
+> a number of consecutive lines.
 > 
-> > Do not check whether PERL_PATH and SHELL_PATH are undefined before
-> > setting their default values.  This prevents them from being set via
-> > environment variables.
+> This change makes it possible to sweep out a range of lines in the diff view
+> with the left mouse button, then right click and "Stage Lines For Commit".
 > 
-> Is there an upside of "preventing them from getting set", by the way?
+> The selected lines may span multiple hunks.
+> 
 
-Not that I know of.
-
-I originally thought that the checks were superfluous, but now I just
-believe they're inconsistent and confusing to people like me who think
-they understand Makefiles but don't.  :)
-
--- 
-Matt Kraai                                             http://ftbfs.org/
+Awesome! I've been waiting for that very feature. Thanks in advance.
+-- Dirk
