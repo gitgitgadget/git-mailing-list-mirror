@@ -1,159 +1,173 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] blame: make sure that the last line ends in an LF
-Date: Tue, 20 Oct 2009 08:15:26 -0500
-Message-ID: <fabb9a1e0910200615x5d487cdk6f50e11c96f2cb6c@mail.gmail.com>
-References: <1256007988-13321-1-git-send-email-srabbelier@gmail.com> 
-	<7vbpk2sg6m.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Git rebase using "wrong" commit
+Date: Tue, 20 Oct 2009 15:21:04 +0200
+Message-ID: <200910201521.05526.trast@student.ethz.ch>
+References: <1256037982.7122.31.camel@gridbug.soton.smoothwall.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 15:15:55 2009
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Thomas Adam <thomas.adam@smoothwall.net>
+To: Philip Allison <philip.allison@smoothwall.net>
+X-From: git-owner@vger.kernel.org Tue Oct 20 15:21:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0EZ8-00061G-7d
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 15:15:54 +0200
+	id 1N0Eeu-0000is-7x
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 15:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030AbZJTNPn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 09:15:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbZJTNPn
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 09:15:43 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:45552 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889AbZJTNPm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 09:15:42 -0400
-Received: by ewy3 with SMTP id 3so4790428ewy.17
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 06:15:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WW3KPSel4fs67v2lNT925DjSVVFaIDFakFF6bCXyJ2Q=;
-        b=mRsXSLNcM7EaVG0L0F/wLpmB9WOtYWKXYBKucR8sh21lOmPwipWTkMOw//mqNpvBK7
-         4dQiZV1tFJHRvKJgKcSq7Q7+2RnS8tvFxp8AqDjwUjs3bMM6YeHRrviVp5ov4KEWPvXM
-         V8WImB0BIJ/6oV96M3Y9ZjA5SjCw4QyWhPf94=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=MJFUOe9QV3OvhkNlMz2XvQ/8hOUMxspTFeXnD6XROUH6iPZHp1vTbbWV7njKixGaVG
-         0oJRpx5pfgmLt6VvM8NnEziwWx/hQEHhhwAwQhmUT5Eln00cnaaIgNw2wfjn8xeFvVnV
-         aARw8l1Sk7Ecw3glzp7VcOqs6fbx7t4RWwcUQ=
-Received: by 10.216.87.79 with SMTP id x57mr2240200wee.83.1256044546106; Tue, 
-	20 Oct 2009 06:15:46 -0700 (PDT)
-In-Reply-To: <7vbpk2sg6m.fsf@alter.siamese.dyndns.org>
+	id S1751977AbZJTNVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 09:21:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbZJTNVm
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 09:21:42 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:57204 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863AbZJTNVl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 09:21:41 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Tue, 20 Oct
+ 2009 15:21:43 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Tue, 20 Oct
+ 2009 15:21:39 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <1256037982.7122.31.camel@gridbug.soton.smoothwall.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130794>
 
-Heya,
+Philip Allison wrote:
+> Please find attached a working copy of the repository, just before any
+> attempted rebase.
+[...]
+> bug/2 has, effectively, been merged into master; bug/1 has not; hence,
+> there is not (on master) any equivalent change to that which was made to
+> resolve the conflict.
 
-On Tue, Oct 20, 2009 at 02:00, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =A0(2) Do the right thing, by coming up with a notation to show that =
-the
-> =A0 =A0 final line is incomplete, perhaps similar to "\No newline ...=
-"
-> =A0 =A0 notation used by "diff".
+Ok, so I gather the (simplified) history looks like
 
-What about 'git blame -p', can we just go about changing the format lik=
-e that?
+  *------A  (master)
+   \\__   \
+    \  \   \
+     B--M1--M2  (topic)
 
-=46or purpose of the discussion below let's assume we squash in the fol=
-lowing:
+where A and B conflict, so M2 is nontrivial.  B is the *second* parent
+to M1, which I originally thought would affect the 'rebase -p', but it
+doesn't; see below.  (You're talking about bug/2, but the repository
+shows bug/2 == master, so there are only two branches involved.)
 
--- <8 --
+> 	Occasionally, we want to release some bug fixes, but not others.  IOW,
+> when integration/bug-fixes comes to be rebased onto master, we wish to
+> preserve some of the topic branch merges, but not others.  This usually
+> works fine, but an issue has cropped up where there is a conflict
+> between two fixes, and only one of the two bug fixes has been released;
+> now, when we come to perform the rebase, it is not working as desired.
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index dd16b22..cf492a0 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -1606,7 +1606,7 @@ static void emit_porcelain(struct scoreboard
-*sb, struct blame_entry *ent)
- 	}
+The inherent difficulty with doing a rebase here is, what about the
+merges?  By definition, git-rebase needs to somehow "rebuild" the
+commits, as defined by the changes they do, on the new base.
 
- 	if (sb->final_buf_size && cp[-1] !=3D '\n')
--		putchar('\n');
-+		printf("\n\\ No newline at end of file\n");
- }
+There are several ways how merges can be rebased, and you tried some:
 
- static void emit_other(struct scoreboard *sb, struct blame_entry *ent,=
- int opt)
-@@ -1672,7 +1672,7 @@ static void emit_other(struct scoreboard *sb,
-struct blame_entry *ent, int opt)
- 	}
+* Not at all; discard the merges.  The result would be
 
- 	if (sb->final_buf_size && cp[-1] !=3D '\n')
--		putchar('\n');
-+		printf("\n\\ No newline at end of file\n");
- }
+    *---A  (master)
+         \
+          \
+           B'  (topic)
 
- static void output(struct scoreboard *sb, int option)
---=20
+  B' will differ substantially from B because there will be a (rebase)
+  conflict.  This is the normal mode of operation, as you noticed:
 
--- <8 --
+> "git rebase -i master" output (whilst on HEAD of integration/bug-fixes):
+> 
+> -----
+> pick b17a93c Fix file 1
+> 
+> # Rebase cd8273f..9f79ca3 onto cd8273f
+> -----
 
-> Does the code assign blame
-> correctly around the last line of the original blob?
+* Attempt to rebuild merges; this is the -p flag.  Assume for a second
+  that you have a different history
 
-Yes, it does, when there is no trailing newline an extra "\ No newline
-at end of file" is printed, but the last line is still attributed
-correctly.
+    *---A  (master)
+     \   
+      \   
+       C---M2  (topic2)
+          /
+         *
 
-> What if an older
-> version ended with an incomplete line and a later version changed the=
- line
-> (without adding the terminating LF)?
+  where M2 is a merge with some other branch.  'git rebase -i -p
+  master topic2' will attempt to build
 
-Nothing changes, the blame on that last line is attributed correctly
-and the "\ No newline at end of file" is printed.
+    *---A  (master)
+         \   
+          \   
+           C---M2  (topic2)
+              /
+             *
 
-> What if a later version changed the
-> line and added the terminating LF?
+  Going back to your scenario, this means building
 
-The trailing "\ No newline at end of file" is no longer printed and
-the last line is correctly attributed to the commit that added the
-trailing LF.
+  *------A--.  (master)
+   \      \  \
+    \      \  \
+     B-----M1--M2  (topic)
 
-> What if a later version only added the
-> terminating LF and did nothing else? =A0Are these three cases handled
-> correctly?
+  Now there appears to be some bug with rebase -p, because it insists
+  that there is no work at all to do (the buffer is just 'noop').
+  However, rebase -p is known to be somewhat ill-defined and broken.
+  I think that in this case, what actually happens is that the merge
+  from master to topic confuses the initialisation of $REWRITTEN in
 
-Same as above.
+	# line 668
+	for c in $(git merge-base --all $HEAD $UPSTREAM)
+	do
+		echo $ONTO > "$REWRITTEN"/$c || die "blah"
+        done
 
-> After thinking issues like the above, I read the patch and I see it d=
-oes
-> not take neither approach.  That makes me feel nervous.
+  because suddenly the merge-base is A, meaning that the later test
 
-Reading your reply I see that if you care about the presence (or
-absence) of a trailing newline the current patch would be problematic,
-as it makes it impossible to see in the blame output whether there was
-a trailing newline or not.
+	# line 712
+	for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
+	do
+		if test -f "$REWRITTEN"/$p -a \( $p != $ONTO -o $sha1 = $first_after_upstream \)
 
-> By tweaking only the output routine you _might_ be getting correct ou=
-tput,
-> but even then it looks to me like the end result is working correctly=
- not
-> by design but by accident.  IOW, the patch may be better than nothing=
-, but
-> somehow it just feels like it is papering over the real issue than be=
-ing a
-> proper fix.
->
-> Or am I worrying too much?
+  fails for all commits except M2.  So what's *actually* rewritten is
+  M2; but doing so is pointless in rebase's eyes, because it assumes
+  the topic will be based on master eventually, so merging master into
+  it is a no-op.  Hence there is nothing to do.
 
-No, I think your concerns are valid, we should go with (2) and DTRT.
-Does the updated patch address your concerns? If so I can send a new
-version.
+> 	The "-m" and "-p" options to rebase don't seem to be helping. I have
+> tried getting rebase to "pick 2bc19f9" via -i, but that isn't working
+> either:
 
---=20
-Cheers,
+-m means something entirely different, namely that git-rebase should
+use an (internal) merge instead of format-patch|am, which has some
+advantages but a big speed disadvantage.  This doesn't matter for
+rebase -i as it never uses format-patch|am.
 
-Sverre Rabbelier
+As for manually picking merge commits, that fails because you're just
+trying to fool git-cherry-pick into doing something it can't.
+
+> 	We have a specific branch (integration/bug-fixes) which is under
+> continual rebase, shared amongst several developers.
+[...]
+> At the moment I don't know where to go from here, short of manually
+> recreating the branch as I want it, which I am loathe to do.
+
+Note that there is no real reason to rebase continually unless you
+want to kick out flawed topics or old versions of branches.  For
+example, git.git only rebases 'next' immediately after a release.
+Furthermore, even if you go for the 'pu' model which is rebuilt all
+the time, you can automate this with a script.  There is one in the
+'todo' branch of git.git, called PU.
+
+(I myself just use a list of topics I want merged, and a simple 'git
+merge $topic' loop.)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
