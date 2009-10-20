@@ -1,124 +1,72 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] pull/fetch rename
-Date: Wed, 21 Oct 2009 00:53:28 +0200
-Message-ID: <200910210053.29794.trast@student.ethz.ch>
-References: <200910201947.50423.trast@student.ethz.ch> <200910201359.30880.wjl@icecavern.net> <7vpr8hlow9.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: git-send-email.perl defect: address missing trailing > accepted
+Date: Wed, 21 Oct 2009 00:56:50 +0200
+Message-ID: <40aa078e0910201556h4757dbbdn853be4dd8aa920d0@mail.gmail.com>
+References: <1256076767.2029.59.camel@Joe-Laptop.home>
+	 <40aa078e0910201529m338ef3d1o4fa1a31c3dcc2a20@mail.gmail.com>
+	 <1256078917.2029.77.camel@Joe-Laptop.home>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>,
-	=?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	"Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 01:08:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 01:10:46 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Nam-0005sF-94
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 00:54:12 +0200
+	id 1N0NdQ-0007IB-6i
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 00:56:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752305AbZJTWyC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 18:54:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbZJTWyB
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 18:54:01 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:29445 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751284AbZJTWyA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 18:54:00 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 00:54:05 +0200
-Received: from thomas.localnet (84.74.103.245) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 00:54:03 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <7vpr8hlow9.fsf@alter.siamese.dyndns.org>
+	id S1752719AbZJTW4r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 18:56:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752682AbZJTW4r
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 18:56:47 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:34392 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640AbZJTW4q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 18:56:46 -0400
+Received: by fxm18 with SMTP id 18so7039375fxm.37
+        for <git@vger.kernel.org>; Tue, 20 Oct 2009 15:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=88Imiv9J8/v4N3fTARKSWxp/56SJQtnH+eHx1BmNqeU=;
+        b=Y4WP8mJvyVT+adF7FFC7moLWUEA4uN5XzVxXDUGsomWwrv5HxRLNHSusdfM1XHhHfl
+         H+BjBnnb07GGSHi3uU63c+T7SmlZA9Ob7bfS3KyY3tFBBC6+X3Xf/cyA6uckyqEpzkyy
+         Ec5nMi+lvSQW9VmScg3qw1Cx6cr8yNlu/NwDQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=WgvdbMEiMIeuGZsnuCaS07rX9NJoYJnd10RgJH4jD3D+52LUHe+xxNMr3luiG4gXWC
+         mcTpLmuQpEhWIvhKPlAu6P64qu4+stQZzzV3/V82jCfiU6JMIM9nHcS3yAPLOzF9mXlO
+         QcyGggBy8Bzsz2X4InVnVAx+TpPT1iKTU/k+s=
+Received: by 10.204.7.144 with SMTP id d16mr7025922bkd.209.1256079410158; Tue, 
+	20 Oct 2009 15:56:50 -0700 (PDT)
+In-Reply-To: <1256078917.2029.77.camel@Joe-Laptop.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130865>
 
-Junio C Hamano wrote:
-> "Wesley J. Landaker" <wjl@icecavern.net> writes:
-> > d) in mercurial, pull/push are symmetric, but fetch means pull+merge
+On Wed, Oct 21, 2009 at 12:48 AM, Joe Perches <joe@perches.com> wrote:
+>> Something along these lines? Of course, the error message is, uhm,
+>> less than helpful :)
+>
+> Maybe this? =A0Seems to work.
+>
 
-Ugh.  I can see how they arrived at hg-pull == git-fetch, but why on
-earth was the logical next step hg-fetch == git-pull?!
+Didn't my version work for you? It worked for me.
 
-</aside>
+I find it a bit cleaner to make it a part of the address-sanitizion,
+since that needs to be performed for all addresses. I might miss
+something vital, though. I don't really speak perl all that well ;)
 
-> > I would love to see this change, not because I get confused about pull/fetch 
-> > (it honestly only took a few days to get used to), but because having 
-> > push/pull be symmetric just is so much more conceptually pure / easier 
-> > explain to co-workers / separation between orthogonal operations / 
-> > satisfying to my inner perfectionist / etc.
-> 
-> Is making "pull" a symmetric opposite of "push" the ultimate goal?
-> 
-> Or is making (or rather "keeping") "pull" useful more important?
-> 
-> It is not even an attitude that values philosophy over utility.
-> 
-> Fundamentally, pull and push cannot be symmetric because nobody is sitting
-> in front of the repository you are pushing into (that is what a "push" is;
-> you push from outside the repository---otherwise you would be "pull"ing
-> from inside it in the other direction), but you know you are sitting in
-> the repository, ready to resolve potential conflicts, when you say "pull".
 
-Well, I'd rather not argue the little semantic details, but I think
-with the changes to disallow pushing into HEAD, push and fetch are as
-symmetric as it gets.  Both are exactly and only about transmitting
-refs with their associated commits to the other side.  Which one you
-pick only depends on which side you sit on.
-
-OTOH pull is about merging.  And we can repeat the "pull = fetch +
-merge" mantra to ourselves all we like, having pull as "the opposite
-of push" is conceptually much easier to understand and thus far easier
-to explain to new users.
-
-> And you are doing this for what gain?  The only thing I can think of is
-> "People who deliberately set 'pull.merge = yes' can no longer blame us for
-> pull not being the opposite of push."  I do not consider it as a gain.
-> 
-> I do not buy "People who set 'pull.merge = yes' now understand why pull
-> touches their work tree, because they did it themselves" either.
-[...]
-> But I do not know what to say when people say "push cannot update the work
-> tree, so let's make pull not to update the work tree by default---it will
-> make it much less useful so we will fix that regression with yet another
-> configuration option".
-
-There would not be a configuration option.
-
-Really, the whole goal would be to make pull the opposite of push.  No
-exceptions, and most certainly no little loopholes to escape into the
-merging behaviour by default.  The current 'git pull' behaviour would
-either be obtained through a new command, or through an explicit
-switch.
-
-> I would be much more sympathetic if the suggested approach were to make
-> "push" more symmetric to "pull", or at least attempt to allow it to be, by
-> giving it an option to update the associated work tree when it can [*1*].
-[...]
-> *1* Obviously you cannot do this most of the time _if_ the work tree has
-> an interactive user sitting in front of it, but in a repository that never
-> allows a non-ff push, with a work tree that is never updated except by
-> such a push, can reasonably be maintained to give an illusion of push
-> being an opposite of pull by fast forwarding the work tree when the push
-> updates HEAD.
-
-Well, that reminds me of
-
-  http://thread.gmane.org/gmane.comp.version-control.git/110251
-
-but was not really what I was aiming at.
-
-> It's not even funny.
-
-It was an RFC, not a joke ;-)
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+--=20
+Erik "kusma" Faye-Lund
