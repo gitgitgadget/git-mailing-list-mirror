@@ -1,76 +1,77 @@
-From: =?UTF-8?Q?Daniel?= <mjucde@o2.pl>
-Subject: =?UTF-8?Q?Re:_Which_dates_'git_log_--since=3D_--after=3D'_compare=3F?=
-Date: Tue, 20 Oct 2009 11:35:35 +0200
-Message-ID: <16ee5f3.236584ce.4add8467.a19be@o2.pl>
-References: <4c067ee1.a34185.4adc390d.a980c@o2.pl> <20091020083703.GA14740@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use faster byte swapping when compiling with MSVC
+Date: Tue, 20 Oct 2009 11:53:03 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.0910201149020.4985@pacific.mpi-cbg.de>
+References: <hbi4mt$tjt$1@ger.gmane.org>  <7vzl7mr1f5.fsf@alter.siamese.dyndns.org> <bdca99240910200156x48511478w9eaa2239eb8342b4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Jeff_King?= <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 20 11:35:52 2009
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>
+To: Sebastian Schuberth <sschuberth@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 20 11:50:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0B8B-00054w-Ks
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 11:35:51 +0200
+	id 1N0BMG-0003Fz-5a
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 11:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbZJTJfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 05:35:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751599AbZJTJfi
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 05:35:38 -0400
-Received: from mailout1.go2.pl ([193.17.41.11]:39571 "EHLO mailout1.go2.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751594AbZJTJfh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Oct 2009 05:35:37 -0400
-Received: from mailout1.go2.pl (unknown [10.0.0.105])
-	by mailout1.go2.pl (Postfix) with ESMTP id CB8045F000A;
-	Tue, 20 Oct 2009 11:35:36 +0200 (CEST)
-Received: from o2.pl (unknown [10.0.0.38])
-	by mailout1.go2.pl (Postfix) with SMTP;
-	Tue, 20 Oct 2009 11:35:36 +0200 (CEST)
-In-Reply-To: <20091020083703.GA14740@coredump.intra.peff.net>
-X-Originator: 153.19.128.10
+	id S1751775AbZJTJuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 05:50:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751750AbZJTJuI
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 05:50:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51289 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751695AbZJTJuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 05:50:07 -0400
+Received: (qmail invoked by alias); 20 Oct 2009 09:50:11 -0000
+Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
+  by mail.gmx.net (mp059) with SMTP; 20 Oct 2009 11:50:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19rz3d+DiRrF9hWSiAD9M0sWQI+IoUyYhFQ58w/HU
+	LHckWgCpgxiEAh
+X-X-Sender: schindelin@pacific.mpi-cbg.de
+In-Reply-To: <bdca99240910200156x48511478w9eaa2239eb8342b4@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.57
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130781>
 
-Jeff King <peff@peff.net> wrote:
+Hi,
 
-> On Mon, Oct 19, 2009 at 12:01:49PM +0200, Daniel wrote:
-> 
-> > I can see that 'git log --since= --after=' compares commit's dates,
-> > not author's dates.How can I limit commits by Author's date?
-> 
-> AFAIK, there is currently no way to do it with a simple option. In fact,
-> we don't even parse the author date when doing revision limiting.
-> 
-> So it would need a patch, but the "obvious" solution of just parsing and
-> storing the author date in a "struct commit" might not be acceptable; as
-> I recall, some performance tuning went into keeping the per-commit
-> memory footprint as small as possible, which had a noticeable speed
-> benefit (I'm not saying it couldn't be done, but care needs to be taken
-> in that regard).
-> 
-> If it's not something you need to do often, I'd consider something like:
-> 
->   git log --format='%H %at' |
->     perl -ane '
->       BEGIN {
->         use DateTime::Format::Natural;
->         $max_age = DateTime::Format::Natural->new->parse_datetime(
->                       "last friday"
->                    )->epoch;
->       }
->       print $F[0], "\n" if $F[1] < $max_age;
->   '
-> 
-> Of course that's awful to type, and it will be much slower than git
-> doing the revision limiting itself.
-> 
-> -Peff
+On Tue, 20 Oct 2009, Sebastian Schuberth wrote:
 
-Thanks.
+> On Tue, Oct 20, 2009 at 09:04, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> >> When compiling with MSVC on x86-compatible, use an intrinsic for byte 
+> >> swapping. In contrast to the GCC path, we do not prefer inline 
+> >> assembly here as it is not supported for the x64 platform.
+> >>
+> >> Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+> >
+> > Unlike the other one this is not Acked by Marius, Dscho, or J6t; 
+> > should I pick this up myself, or should I wait to be fed by one of 
+> > msysgit people?
+> 
+> Well, in fact I am one of the msysgit poeple, although I mostly worked 
+> on the installer until now. In general, I like my patches to be 
+> reviewed, but this one is rather uncritical, I guess. So it's up to you, 
+> Junio, I'm perfectly OK with waiting for an ACK.
+
+Apart from the fact that I do not have MSVC (and I don't want it, either), 
+there is another strong reason why I think Sebastian does not need ACKs or 
+SOBs on MSVC patches: he has plenty of experience as a maintainer of a 
+rather big (commercial) software that has to compile on Windows, MacOSX 
+and several Unix-type OSes (and it is known that Sebastian is a Windows 
+guy).
+
+So I would trust Sebastian's patches (at least when it comes to MSVC) 
+without even reviewing them.
+
+Ciao,
+Dscho
