@@ -1,75 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git fsck not identifying corrupted packs
-Date: Tue, 20 Oct 2009 12:22:40 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910201221250.4985@pacific.mpi-cbg.de>
-References: <loom.20091019T094924-194@post.gmane.org>  <4ADC2D45.3020803@viscovery.net>  <alpine.DEB.1.00.0910191202020.4985@pacific.mpi-cbg.de>  <7v7hur1a0h.fsf@alter.siamese.dyndns.org>  <vpqy6n6shri.fsf@bauges.imag.fr>  <7vfx9esgvt.fsf@alter.siamese.dyndns.org>
- <81b0412b0910200225g47220cc9wa2e82290a853c85d@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323328-617623483-1256034161=:4985"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Sergio Callegari <sergio.callegari@gmail.com>,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 20 12:24:24 2009
+From: Ingmar Vanhassel <ingmar@exherbo.org>
+Subject: [PATCH] import-tars: Add support for tarballs compressed with lzma, xz
+Date: Tue, 20 Oct 2009 12:29:32 +0200
+Message-ID: <1256034572-14228-1-git-send-email-ingmar@exherbo.org>
+References: <alpine.DEB.1.00.0910201155260.4985@pacific.mpi-cbg.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ingmar Vanhassel <ingmar@exherbo.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 20 12:34:44 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Boq-0001SC-8K
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 12:19:56 +0200
+	id 1N0ByL-00080t-Cy
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Oct 2009 12:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751096AbZJTKTq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 06:19:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbZJTKTq
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 06:19:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35130 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751067AbZJTKTp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 06:19:45 -0400
-Received: (qmail invoked by alias); 20 Oct 2009 10:19:48 -0000
-Received: from pacific.mpi-cbg.de (EHLO pacific.mpi-cbg.de) [141.5.10.38]
-  by mail.gmx.net (mp003) with SMTP; 20 Oct 2009 12:19:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182lNIWcwg2AKU8Ah+59ROyO/8jqIBSgqV76fOo59
-	PWJxW+TwLnk+NW
-X-X-Sender: schindelin@pacific.mpi-cbg.de
-In-Reply-To: <81b0412b0910200225g47220cc9wa2e82290a853c85d@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.6
+	id S1751687AbZJTK3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 06:29:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751504AbZJTK3f
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 06:29:35 -0400
+Received: from bach.exherbo.org ([78.47.197.147]:55309 "EHLO bach.exherbo.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751458AbZJTK3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 06:29:35 -0400
+Received: from [83.101.72.69] (helo=localhost)
+	by bach.exherbo.org with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <ingmar@exherbo.org>)
+	id 1N0ByC-0002S6-6O; Tue, 20 Oct 2009 10:29:36 +0000
+X-Mailer: git-send-email 1.6.5.1
+In-Reply-To: <alpine.DEB.1.00.0910201155260.4985@pacific.mpi-cbg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130784>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Also handle the extensions .tlz and .txz, aliases for .tar.lzma and
+.tar.xz respectively.
 
---8323328-617623483-1256034161=:4985
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Ingmar Vanhassel <ingmar@exherbo.org>
+---
+ contrib/fast-import/import-tars.perl |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-Hi,
+> Nice!  Maybe you want to mention in the commit message that it handles
+> also .txz and .tlz, for convenience.  (I was looking specifically for that
+> support in the patch, fully prepared to suggest to add it...)
 
-On Tue, 20 Oct 2009, Alex Riesen wrote:
+Right, thanks!
 
-> On Tue, Oct 20, 2009 at 08:45, Junio C Hamano <gitster@pobox.com> wrote:
-> > Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-> >>> It probably is also a good idea to add a "--loose" option that does what
-> >>> "fsck" currently does without "--full".  It is a good name
-> >>
-> >> +1 too.
-> >
-> > Actually, I changed my mind.  I do not think this so big that we need to
-> > wait for a major version bump.  Why not shoot for 1.6.6?
-> 
-> --no-full works
-
-It works.  Technically.  For human users, though, --loose-objects-only 
-(with a shortcut "--loose") would be better.
-
-Disclaimer: this email was written by a bot and is valid without signature
---8323328-617623483-1256034161=:4985--
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 7001862..95438e1 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -20,7 +20,7 @@ use Getopt::Long;
+ 
+ my $metaext = '';
+ 
+-die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,Z}\n"
++die "usage: import-tars [--metainfo=extension] *.tar.{gz,bz2,lzma,xz,Z}\n"
+ 	unless GetOptions('metainfo=s' => \$metaext) && @ARGV;
+ 
+ my $branch_name = 'import-tars';
+@@ -49,6 +49,9 @@ foreach my $tar_file (@ARGV)
+ 	} elsif ($tar_name =~ s/\.tar\.Z$//) {
+ 		open(I, '-|', 'uncompress', '-c', $tar_file)
+ 			or die "Unable to uncompress -c $tar_file: $!\n";
++	} elsif ($tar_name =~ s/\.(tar\.(lzma|xz)|(tlz|txz))$//) {
++		open(I, '-|', 'xz', '-dc', $tar_file)
++			or die "Unable to xz -dc $tar_file: $!\n";
+ 	} elsif ($tar_name =~ s/\.tar$//) {
+ 		open(I, $tar_file) or die "Unable to open $tar_file: $!\n";
+ 	} else {
+-- 
+1.6.5.1
