@@ -1,86 +1,63 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Quote ' as \(aq in manpages
-Date: Wed, 21 Oct 2009 12:38:43 +0200
-Message-ID: <20091021103843.GO6115@genesis.frugalware.org>
-References: <200910151402.56295.trast@student.ethz.ch>
- <ab31eb03b25272341b91e1f1132dab9d8a49e5b6.1256113282.git.trast@student.ethz.ch>
+From: Soham Mehta <soham@box.net>
+Subject: Finding a commit
+Date: Wed, 21 Oct 2009 04:29:25 -0700
+Message-ID: <4ADEF095.3020406@box.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cKDw3XFoqocuprIa"
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Oct 21 12:39:31 2009
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 13:54:27 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0YbH-00035N-Oq
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 12:39:28 +0200
+	id 1N0Zlr-0000CG-90
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 13:54:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbZJUKil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 06:38:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbZJUKil
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 06:38:41 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:33361 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752868AbZJUKik (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 06:38:40 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id C15C158099;
-	Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 9E46244906;
-	Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 99F3211F002B; Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <ab31eb03b25272341b91e1f1132dab9d8a49e5b6.1256113282.git.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753399AbZJULyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 07:54:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753397AbZJULyI
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 07:54:08 -0400
+Received: from mailrelay.ve.box.net ([209.249.140.142]:59178 "EHLO
+	corpmail.ve.box.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753376AbZJULyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 07:54:07 -0400
+X-Greylist: delayed 1471 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2009 07:54:07 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by corpmail.ve.box.net (Postfix) with ESMTP id AB4653B19C8
+	for <git@vger.kernel.org>; Wed, 21 Oct 2009 04:29:32 -0700 (PDT)
+Received: from corpmail.ve.box.net ([127.0.0.1])
+	by localhost (mail.box.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id mZHoltyrDnCo for <git@vger.kernel.org>;
+	Wed, 21 Oct 2009 04:29:32 -0700 (PDT)
+Received: from [192.168.1.102] (c-24-23-197-167.hsd1.ca.comcast.net [24.23.197.167])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by corpmail.ve.box.net (Postfix) with ESMTP id 63B573B19C0
+	for <git@vger.kernel.org>; Wed, 21 Oct 2009 04:29:32 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130904>
 
+Given a SHA1 of a commit from one repository (say x), wondering what is 
+a proper way to find out if that commit (change) also exists in a 
+different repository (say y).
 
---cKDw3XFoqocuprIa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Because SHA1 can change if a commit is cherry-picked around, I cannot 
+just grep for that SHA1 from git-rev-list or git-log on 'y'. I need a 
+way to know if a commit with identical changes (as in 'x') is also 
+present in 'y'.
 
-On Wed, Oct 21, 2009 at 10:24:42AM +0200, Thomas Rast <trast@student.ethz.c=
-h> wrote:
-> The docbook/xmlto toolchain insists on quoting ' as \'.  This does
-> achieve the quoting goal, but modern 'man' implementations turn the
-> apostrophe into a unicode "proper" apostrophe (given the right
-> circumstances), breaking code examples in many of our manpages.
->=20
-> Quote them as \(aq instead, which is an "apostrophe quote" as per the
-> groff_char manpage.
->=20
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->=20
-> I've had this around since my last rant, and it actually gives good
-> results with both setups I can test on, which are:
->=20
-> - asciidoc 8.4.5, docbook-xsl 1.75.2, xmlto 0.0.18
-> - asciidoc 8.2.7, docbook-xsl 1.73.2, xmlto 0.0.20
+I realize that Author and Timestamp do not change when the commit is 
+moved (fetched, pushed, pulled, rebased, cherry-picked etc). So my 
+current solution relies on grepping for the pair of Author-Timestamp 
+from git-log on 'y'.
 
-Tested-by: Miklos Vajna <vmiklos@frugalware.org>
+Wondering if there is more appropriate way of doing this?
 
-- asciidoc 8.3.5, docbook-xsl 1.74.0, xmlto 0.0.20
-
---cKDw3XFoqocuprIa
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkre5LMACgkQe81tAgORUJa2qQCghEcPSsaSOB4Bk6cVHzhCVv5f
-YVgAoKKTeVhC/QdhDBFnaXnRC0AQrHrn
-=bdeb
------END PGP SIGNATURE-----
-
---cKDw3XFoqocuprIa--
+Thanks.
+-Soham
