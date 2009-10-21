@@ -1,75 +1,70 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: ident hash usage question
-Date: Wed, 21 Oct 2009 08:25:01 +0200
-Message-ID: <81b0412b0910202325i7a2f440bxcc9ce3ab9b684b2c@mail.gmail.com>
-References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
-	 <81b0412b0910201116s694d7877rda872b368f1ae09a@mail.gmail.com>
-	 <81b0412b0910201119w7583487ag276cf964d0a85e@mail.gmail.com>
-	 <76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
-	 <81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
-	 <76c5b8580910201330r45cf625k3a41b5b9e24b3e01@mail.gmail.com>
-	 <81b0412b0910201343r4ff49f9fnbdd9260dcf682416@mail.gmail.com>
-	 <76c5b8580910201519s29b939f3o3f6af8ca50340db1@mail.gmail.com>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [RFC] pull/fetch rename
+Date: Wed, 21 Oct 2009 08:30:08 +0200
+Message-ID: <20091021063008.GA3349@glandium.org>
+References: <200910201947.50423.trast@student.ethz.ch>
+ <alpine.LNX.2.00.0910201912390.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 08:25:28 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	=?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Oct 21 08:29:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0UdP-0007SD-AA
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 08:25:23 +0200
+	id 1N0UhO-0000Ua-2T
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 08:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752237AbZJUGY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 02:24:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbZJUGY6
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 02:24:58 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:57586 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752023AbZJUGY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 02:24:57 -0400
-Received: by fxm18 with SMTP id 18so7343973fxm.37
-        for <git@vger.kernel.org>; Tue, 20 Oct 2009 23:25:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type;
-        bh=yWWixnY7Mnqte4uzQcR/iRT8zs7fIv+3+r6hGuyaHuQ=;
-        b=VVSuTr7JVH4CiQfyvI1HRsXtyqhOQ3LjL3IXkCu63eltchw1MWdajxKADGym8tzXgE
-         /ZsXDYM7olKjwz8EOwYcUEU36dGYl64TIAWbshYmGC0MN3lzv/wyLSXzdM0h3JJyyJGf
-         PC9o/0sjKyVTU3ylSMEH3nw4scvv6tnYi7JmE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=eph3LITTZTMfJlbHL1g1MHywlFQnVHAztnEf/P7U7nG5RN1gKIGxp1dZ5sZmJdTWGi
-         ZhYEGDDfFH5RpUQwYOMkgu6Ybh879FtDsftqixw+ngcjp0d3HjcsmoBREJWKj0OHxf2C
-         2zOchcgs3aWShLen7AEh99KFsYTmprFWu8loI=
-Received: by 10.204.156.18 with SMTP id u18mr633482bkw.102.1256106301611; Tue, 
-	20 Oct 2009 23:25:01 -0700 (PDT)
-In-Reply-To: <76c5b8580910201519s29b939f3o3f6af8ca50340db1@mail.gmail.com>
+	id S1752545AbZJUG3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 02:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552AbZJUG3U
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 02:29:20 -0400
+Received: from vuizook.err.no ([85.19.221.46]:55342 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752545AbZJUG3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 02:29:20 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=jigen)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1N0UhB-00078o-T4; Wed, 21 Oct 2009 08:29:20 +0200
+Received: from mh by jigen with local (Exim 4.69)
+	(envelope-from <mh@jigen>)
+	id 1N0Ui0-0000v6-T4; Wed, 21 Oct 2009 08:30:08 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0910201912390.14365@iabervon.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Spam-Status: (score 0.1): No, score=0.1 required=5.0 tests=RDNS_DYNAMIC autolearn=disabled version=3.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130888>
 
-On Wed, Oct 21, 2009 at 00:19, Eugene Sajine <euguess@gmail.com> wrote:
->>> How is that? It seams to me that git log <path> will show only commits
->>> where <path> was changed/committed? Considering the fact that I've got
->>> the initial path from the blob, i should get the exact commit history
->>> (or last commit in my example) for the file(s) (Files if renaming
->>> occurred without content change).
->>
->> The blob is present in each commit since it was introduced. Except
->> when your project contains only that one blob, isn't the state of
->> the other parts of an interest?
->>
-> I would question this statement. It seems to me that hash of the file
-> content is logged only for the commit when it was touched.
-> Therefore there is very limited amount of actual commits where the
-> same hash can be met.
+On Tue, Oct 20, 2009 at 07:56:01PM -0400, Daniel Barkalow wrote:
+> On Tue, 20 Oct 2009, Thomas Rast wrote:
+> 
+> > Hi all,
+> > 
+> > While everyone is busy in two other UI threads, I figured I might as
+> > well toss up another (probably) controversial topic.
+> > 
+> > Especially on IRC, we see many people who are some combination of
+> > misunderstanding, misusing or overusing git-pull.  I figure this is
+> > the result of several factors, notably
+> > 
+> > a) pull/push are not symmetric,
+> 
+> In a certain sense they are; they both update the branches local to one 
+> repository with the data from the other repository. In this sense, fetch 
+> is the oddity in that it doesn't update any repository's own branches, but 
+> just the local information about other repositories' branches.
 
-git rev-list HEAD | while read sha; do git ls-tree $sha; done | grep <blob-sha>
+BTW, shouldn't fetch be deprecated in favour of git remote update ?
+(this may require adding some features to git remote update, but you get
+the idea)
+
+Mike
