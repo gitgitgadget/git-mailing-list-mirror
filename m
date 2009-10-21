@@ -1,87 +1,79 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: drawbacks to svn server + git-svn vs git server?
-Date: Wed, 21 Oct 2009 17:19:02 +0200
-Organization: Home - http://www.obry.net
-Message-ID: <4ADF2666.1070908@obry.net>
-References: <25994334.post@talk.nabble.com>
-Reply-To: pascal@obry.net
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [RFC] What to you think about a loose status for submodules?
+Date: Wed, 21 Oct 2009 18:01:23 +0200
+Message-ID: <20091021160122.GA2067@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dexter Riley <edbeaty@charter.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 17:19:01 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <jens.lehmann@web.de>, Lars Hjemli <hjemli@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 18:01:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0cxi-00066t-Ap
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 17:18:54 +0200
+	id 1N0dcw-00082z-SF
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 18:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753702AbZJUPSo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 11:18:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbZJUPSn
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 11:18:43 -0400
-Received: from qw-out-2122.google.com ([74.125.92.27]:12193 "EHLO
-	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751190AbZJUPSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 11:18:43 -0400
-Received: by qw-out-2122.google.com with SMTP id 9so914503qwb.37
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 08:18:47 -0700 (PDT)
-Received: by 10.102.236.11 with SMTP id j11mr3521450muh.3.1256138326973;
-        Wed, 21 Oct 2009 08:18:46 -0700 (PDT)
-Received: from ?192.168.0.100? (AVelizy-154-1-56-169.w83-199.abo.wanadoo.fr [83.199.38.169])
-        by mx.google.com with ESMTPS id j9sm135128mue.26.2009.10.21.08.18.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 21 Oct 2009 08:18:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <25994334.post@talk.nabble.com>
+	id S1754171AbZJUQBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 12:01:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754154AbZJUQBU
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 12:01:20 -0400
+Received: from darksea.de ([83.133.111.250]:44135 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753876AbZJUQBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 12:01:20 -0400
+Received: (qmail 22299 invoked from network); 21 Oct 2009 18:01:23 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 21 Oct 2009 18:01:23 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130928>
 
-Le 21/10/2009 17:05, Dexter Riley a =E9crit :
-> Hello.  My group is currently using subversion on our version control=
- server,
-> but would like to move to git as a client.  We are considering using
-> git-svn, to avoid revalidating the server software.  My question is, =
-are
-> there any major disadvantages to using git-svn versus git?  I know th=
-at the
-> git repository would be smaller.  I'm more concerned about possible s=
-vn
-> repository corruption, performance when pushing large merges back to =
-svn,
-> and any gotchas you might have encountered.
+Hi,
 
-Something that come to mind immediately is that you'll loose merge=20
-information as Subversion has linear history. I understand that recent=20
-Subversion versions have added some information about merges but I don'=
-t=20
-think git-svn handles this (I don't even know if it makes sense or not:=
-).
+for some time now I have been thinking about submodules which are
+not checked out by default. So for example if you have a project which
+consist of the submodules:
 
-If you have a single integrator you'll also loose the author name. Keep=
-=20
-in mind also that git-svn is slower to get new commits from the upstrea=
-m=20
-repository.
+project/core
+       /help
+       /app
+...
 
-I've used git-svn for a while now without any trouble. And I can say=20
-that I won't move back to using an svn client.
+Consider the situation that 'help' is really big because it is a user
+friendly application ;)
 
-Pascal.
+So you usually do not need the help folder to develop the application
+but it still is tied to a certain revision.
 
---=20
+For such a workflow I would like to implement what I call 'loose'
+submodules. Where a
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|    http://www.obry.net  -  http://v2p.fr.eu.org
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+  git clone project.git
+  cd project
+  git submodule init && git submodule update
+
+would omit the 'help' folder. But in case I specify it directly like
+
+  git submodule init help
+
+it would update to the recorded revision.
+
+Of course the relation would be configurable. E.g.:
+
+  git config submodule."name".relation loose
+
+and the opposite as
+
+  git config submodule."name".relation tight
+
+Initially the implementation would only deal with the initialization
+case. As a second step I would like to deal with the situation whether a
+submodule should be shown as changed or not. What do you think about such
+an extension?
+
+cheers Heiko
