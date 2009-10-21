@@ -1,124 +1,175 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 1/2] filter-branch: stop special-casing $filter_subdir argument
-Date: Wed, 21 Oct 2009 20:28:50 +0200
-Message-ID: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
-References: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch>
+Subject: [PATCH v2 2/2] filter-branch: nearest-ancestor rewriting outside subdir filter
+Date: Wed, 21 Oct 2009 20:28:51 +0200
+Message-ID: <9676b8307ce61d9b3bf79beff7f4b9a04220154f.1256149428.git.trast@student.ethz.ch>
+References: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 20:29:39 2009
+X-From: git-owner@vger.kernel.org Wed Oct 21 20:30:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0fwD-0000gJ-8N
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:29:33 +0200
+	id 1N0fwY-0000qA-2f
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:29:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754467AbZJUS3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 14:29:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754343AbZJUS3W
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:29:22 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:11206 "EHLO gwse.ethz.ch"
+	id S1754658AbZJUS3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 14:29:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbZJUS3n
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:29:43 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:26099 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754312AbZJUS3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 14:29:21 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:29:25 +0200
+	id S1753884AbZJUS3n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 14:29:43 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
+ 2009 20:29:46 +0200
 Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
  2009 20:29:24 +0200
 X-Mailer: git-send-email 1.6.5.1.142.g4bac9
-In-Reply-To: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch>
+In-Reply-To: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130951>
 
-Handling $filter_subdir in the usual way requires a separate case at
-every use, because the variable is empty when unused.  Furthermore,
-the case for --subdirectory-filter supplies its own --, so the user
-cannot provide one himself (though there is also very little point in
-doing so).
+Since a0e4639 (filter-branch: fix ref rewriting with
+--subdirectory-filter, 2008-08-12) git-filter-branch has done
+nearest-ancestor rewriting when using a --subdirectory-filter.
 
-Instead, tack the $filter_subdir onto $@ in the right place
-automatically, and only use a -- if it was not already provided by the
-user.
+However, that rewriting strategy is also a useful building block in
+other tasks.  For example, if you want to split out a subset of files
+from your history, you would typically call
 
-We set non_ref_args again after changing "$@"; the next patch wants to
-use it again afterwards, so we better not leave a stale value in
-there.
+  git filter-branch -- <refs> -- <files>
+
+But this fails for all refs that do not point directly to a commit
+that affects <files>, because their referenced commit will not be
+rewritten and the ref remains untouched.
+
+The code was already there for the --subdirectory-filter case, so just
+introduce an option that enables it independently.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-[Same as v1.]
+Evidently I shouldn't send any patches after dinner, or before, for
+that matter (but for lack of wifi in the restaurant, *during* dinner
+is not an option either).  Or at least I shouldn't re-read them after
+sending :-(
 
-This is preparatory for the next patch; introducing another 'case'
-along the lines of the existing one annoyed me, so I went for this
-instead.  I would greatly appreciate extra eyes on my use of 'eval'.
-I originally expected this to work without eval, but apparently this
-is how one does it.  Quoting rules in the shell are annoying.
+v1 had a completely misplaced option parsing for the new option.
+Very embarrassing.  Really.
 
-Incidentally, the last hunk sneak fixes a previously unquoted use of
-$ref that is my fault from back in a0e4639 (filter-branch: fix ref
-rewriting with --subdirectory-filter, 2008-08-12).
+I also sneak fixed the commit message above; you only need two -- if
+you want rev-list options, e.g.,
+
+  git filter-branch -- --all -- README
+
+in which case the first one of course needs to appear before the first
+<refs> argument.
 
 
- git-filter-branch.sh |   28 +++++++++++++++++++++-------
- 1 files changed, 21 insertions(+), 7 deletions(-)
+ Documentation/git-filter-branch.txt |   13 ++++++++++++-
+ git-filter-branch.sh                |    9 ++++++++-
+ t/t7003-filter-branch.sh            |   18 ++++++++++++++++++
+ 3 files changed, 38 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+index 2b40bab..394a77a 100644
+--- a/Documentation/git-filter-branch.txt
++++ b/Documentation/git-filter-branch.txt
+@@ -159,7 +159,18 @@ to other tags will be rewritten to point to the underlying commit.
+ --subdirectory-filter <directory>::
+ 	Only look at the history which touches the given subdirectory.
+ 	The result will contain that directory (and only that) as its
+-	project root.
++	project root.  Implies --remap-to-ancestor.
++
++--remap-to-ancestor::
++	Rewrite refs to the nearest rewritten ancestor instead of
++	ignoring them.
+++
++Normally, positive refs on the command line are only changed if the
++commit they point to was rewritten.  However, you can limit the extent
++of this rewriting by using linkgit:rev-list[1] arguments, e.g., path
++limiters.  Refs pointing to such excluded commits would then normally
++be ignored.  With this option, they are instead rewritten to point at
++the nearest ancestor that was not excluded.
+ 
+ --prune-empty::
+ 	Some kind of filters will generate empty commits, that left the tree
 diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a480d6f..3890c22 100755
+index 3890c22..be36db4 100755
 --- a/git-filter-branch.sh
 +++ b/git-filter-branch.sh
-@@ -257,15 +257,29 @@ git read-tree || die "Could not seed the index"
- # map old->new commit ids for rewriting parents
- mkdir ../map || die "Could not create map/ directory"
+@@ -125,6 +125,7 @@ filter_subdir=
+ orig_namespace=refs/original/
+ force=
+ prune_empty=
++remap_to_ancestor=
+ while :
+ do
+ 	case "$1" in
+@@ -137,6 +138,11 @@ do
+ 		force=t
+ 		continue
+ 		;;
++	--remap-to-ancestor)
++		shift
++		remap_to_ancestor=t
++		continue
++		;;
+ 	--prune-empty)
+ 		shift
+ 		prune_empty=t
+@@ -182,6 +188,7 @@ do
+ 		;;
+ 	--subdirectory-filter)
+ 		filter_subdir="$OPTARG"
++		remap_to_ancestor=t
+ 		;;
+ 	--original)
+ 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
+@@ -364,7 +371,7 @@ done <../revs
+ # revision walker.  Fix it by mapping these heads to the unique nearest
+ # ancestor that survived the pruning.
  
-+non_ref_args=$(git rev-parse --no-revs --sq "$@")
-+dashdash=--
-+for arg in "$non_ref_args"; do
-+	if test arg = --; then
-+		dashdash=
-+		break
-+	fi
-+done
-+
- case "$filter_subdir" in
- "")
--	git rev-list --reverse --topo-order --default HEAD \
--		--parents --simplify-merges "$@"
-+	filter_subdir_sq=
- 	;;
- *)
--	git rev-list --reverse --topo-order --default HEAD \
--		--parents --simplify-merges "$@" -- "$filter_subdir"
--esac > ../revs || die "Could not get the commits"
-+	filter_subdir_sq=$(git rev-parse --sq-quote "$filter_subdir")
-+esac
-+
-+eval "set -- \"\$@\" $dashdash $filter_subdir_sq"
-+non_ref_args=$(git rev-parse --no-revs --sq "$@")
-+
-+git rev-list --reverse --topo-order --default HEAD \
-+	--parents --simplify-merges "$@" \
-+	> ../revs || die "Could not get the commits"
- commits=$(wc -l <../revs | tr -d " ")
- 
- test $commits -eq 0 && die "Found nothing to rewrite"
-@@ -356,8 +370,8 @@ then
+-if test "$filter_subdir"
++if test "$remap_to_ancestor" = t
+ then
+ 	while read ref
  	do
- 		sha1=$(git rev-parse "$ref"^0)
- 		test -f "$workdir"/../map/$sha1 && continue
--		ancestor=$(git rev-list --simplify-merges -1 \
--				$ref -- "$filter_subdir")
-+		ancestor=$(eval "git rev-list --simplify-merges " \
-+				"-1 \"$ref\" $non_ref_args")
- 		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
- 	done < "$tempdir"/heads
- fi
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index 329c851..9503875 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -288,4 +288,22 @@ test_expect_success 'Prune empty commits' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--remap-to-ancestor with filename filters' '
++	git checkout master &&
++	git reset --hard A &&
++	test_commit add-foo foo 1 &&
++	git branch moved-foo &&
++	test_commit add-bar bar a &&
++	git branch invariant &&
++	orig_invariant=$(git rev-parse invariant) &&
++	git branch moved-bar &&
++	test_commit change-foo foo 2 &&
++	git filter-branch -f --remap-to-ancestor \
++		moved-foo moved-bar A..master \
++		-- -- foo &&
++	test $(git rev-parse moved-foo) = $(git rev-parse moved-bar) &&
++	test $(git rev-parse moved-foo) = $(git rev-parse master^) &&
++	test $orig_invariant = $(git rev-parse invariant)
++'
++
+ test_done
 -- 
 1.6.5.1.142.g4bac9
