@@ -1,65 +1,86 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: Re: git gc and kernel.org
-Date: Wed, 21 Oct 2009 12:21:02 +0200
-Message-ID: <20091021122102.0793295e@perceptron>
-References: <4ADD6026.8070203@zytor.com>
-	<7veioyqzeo.fsf@alter.siamese.dyndns.org>
-	<200910201054.48315.johan@herland.net>
-	<alpine.LFD.2.00.0910201442480.21460@xanadu.home>
-	<7v63a9n5i6.fsf@alter.siamese.dyndns.org>
-	<4ADEA93E.7060907@viscovery.net>
-	<7vzl7l8b1y.fsf@alter.siamese.dyndns.org>
-	<7vaazl8acd.fsf@alter.siamese.dyndns.org>
-	<4ADEC0DB.4000104@viscovery.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Quote ' as \(aq in manpages
+Date: Wed, 21 Oct 2009 12:38:43 +0200
+Message-ID: <20091021103843.GO6115@genesis.frugalware.org>
+References: <200910151402.56295.trast@student.ethz.ch>
+ <ab31eb03b25272341b91e1f1132dab9d8a49e5b6.1256113282.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, ftpadmin@kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 12:27:20 2009
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cKDw3XFoqocuprIa"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Oct 21 12:39:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0YPX-0006ba-G4
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 12:27:19 +0200
+	id 1N0YbH-00035N-Oq
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 12:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299AbZJUK1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 06:27:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753294AbZJUK1I
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 06:27:08 -0400
-Received: from zoidberg.org ([88.198.6.61]:35479 "EHLO cthulhu.zoidberg.org"
+	id S1753219AbZJUKil (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 06:38:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753209AbZJUKil
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 06:38:41 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:33361 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753264AbZJUK1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 06:27:07 -0400
-X-Greylist: delayed 364 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2009 06:27:07 EDT
-Received: from perceptron (xdsl-78-35-162-227.netcologne.de [::ffff:78.35.162.227])
-  (IDENT: unknown, AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Wed, 21 Oct 2009 12:21:04 +0200
-  id 004D013D.4ADEE091.00001C7C
-In-Reply-To: <4ADEC0DB.4000104@viscovery.net>
-X-Mailer: Claws Mail 3.7.3 (GTK+ 2.16.1; i486-pc-linux-gnu)
-X-Obscure-Spam: http://music-jk.net/
+	id S1752868AbZJUKik (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 06:38:40 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C15C158099;
+	Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9E46244906;
+	Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 99F3211F002B; Wed, 21 Oct 2009 12:38:43 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <ab31eb03b25272341b91e1f1132dab9d8a49e5b6.1256113282.git.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130903>
 
-Johannes Sixt <j.sixt@viscovery.net> wrote:
-> $ git gc --auto --quiet
-> Auto packing your repository for optimum performance. You may also
-> run "git gc" manually. See "git help gc" for more information.
-> [...]
-> [*] Skipping the hint to "run git gc manually" would even be good in
-> this case, because the hint pertains the remote repository, not the
-> one from which "git push" was issued.
 
-I agree with your suggestions. On the same note, while we're already
-changing the message, it might make sense to change it to "Auto packing
-the repository [...]".
+--cKDw3XFoqocuprIa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Jan
+On Wed, Oct 21, 2009 at 10:24:42AM +0200, Thomas Rast <trast@student.ethz.c=
+h> wrote:
+> The docbook/xmlto toolchain insists on quoting ' as \'.  This does
+> achieve the quoting goal, but modern 'man' implementations turn the
+> apostrophe into a unicode "proper" apostrophe (given the right
+> circumstances), breaking code examples in many of our manpages.
+>=20
+> Quote them as \(aq instead, which is an "apostrophe quote" as per the
+> groff_char manpage.
+>=20
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>=20
+> I've had this around since my last rant, and it actually gives good
+> results with both setups I can test on, which are:
+>=20
+> - asciidoc 8.4.5, docbook-xsl 1.75.2, xmlto 0.0.18
+> - asciidoc 8.2.7, docbook-xsl 1.73.2, xmlto 0.0.20
+
+Tested-by: Miklos Vajna <vmiklos@frugalware.org>
+
+- asciidoc 8.3.5, docbook-xsl 1.74.0, xmlto 0.0.20
+
+--cKDw3XFoqocuprIa
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkre5LMACgkQe81tAgORUJa2qQCghEcPSsaSOB4Bk6cVHzhCVv5f
+YVgAoKKTeVhC/QdhDBFnaXnRC0AQrHrn
+=bdeb
+-----END PGP SIGNATURE-----
+
+--cKDw3XFoqocuprIa--
