@@ -1,53 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git gc and kernel.org
-Date: Wed, 21 Oct 2009 08:25:02 +0200
-Message-ID: <4ADEA93E.7060907@viscovery.net>
-References: <4ADD6026.8070203@zytor.com> <7veioyqzeo.fsf@alter.siamese.dyndns.org> <200910201054.48315.johan@herland.net> <alpine.LFD.2.00.0910201442480.21460@xanadu.home> <7v63a9n5i6.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: ident hash usage question
+Date: Wed, 21 Oct 2009 08:25:01 +0200
+Message-ID: <81b0412b0910202325i7a2f440bxcc9ce3ab9b684b2c@mail.gmail.com>
+References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
+	 <81b0412b0910201116s694d7877rda872b368f1ae09a@mail.gmail.com>
+	 <81b0412b0910201119w7583487ag276cf964d0a85e@mail.gmail.com>
+	 <76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
+	 <81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
+	 <76c5b8580910201330r45cf625k3a41b5b9e24b3e01@mail.gmail.com>
+	 <81b0412b0910201343r4ff49f9fnbdd9260dcf682416@mail.gmail.com>
+	 <76c5b8580910201519s29b939f3o3f6af8ca50340db1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, ftpadmin@kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 08:25:27 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 08:25:28 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0UdP-0007SD-QL
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 08:25:24 +0200
+	id 1N0UdP-0007SD-AA
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 08:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752508AbZJUGZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 02:25:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752314AbZJUGZE
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 02:25:04 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:18312 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221AbZJUGZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 02:25:03 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1N0Ud4-0005hU-OZ; Wed, 21 Oct 2009 08:25:02 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 727F46D9; Wed, 21 Oct 2009 08:25:02 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
-In-Reply-To: <7v63a9n5i6.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1752237AbZJUGY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 02:24:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751966AbZJUGY6
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 02:24:58 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:57586 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbZJUGY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 02:24:57 -0400
+Received: by fxm18 with SMTP id 18so7343973fxm.37
+        for <git@vger.kernel.org>; Tue, 20 Oct 2009 23:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :date:message-id:subject:from:to:cc:content-type;
+        bh=yWWixnY7Mnqte4uzQcR/iRT8zs7fIv+3+r6hGuyaHuQ=;
+        b=VVSuTr7JVH4CiQfyvI1HRsXtyqhOQ3LjL3IXkCu63eltchw1MWdajxKADGym8tzXgE
+         /ZsXDYM7olKjwz8EOwYcUEU36dGYl64TIAWbshYmGC0MN3lzv/wyLSXzdM0h3JJyyJGf
+         PC9o/0sjKyVTU3ylSMEH3nw4scvv6tnYi7JmE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=eph3LITTZTMfJlbHL1g1MHywlFQnVHAztnEf/P7U7nG5RN1gKIGxp1dZ5sZmJdTWGi
+         ZhYEGDDfFH5RpUQwYOMkgu6Ybh879FtDsftqixw+ngcjp0d3HjcsmoBREJWKj0OHxf2C
+         2zOchcgs3aWShLen7AEh99KFsYTmprFWu8loI=
+Received: by 10.204.156.18 with SMTP id u18mr633482bkw.102.1256106301611; Tue, 
+	20 Oct 2009 23:25:01 -0700 (PDT)
+In-Reply-To: <76c5b8580910201519s29b939f3o3f6af8ca50340db1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130887>
 
-Junio C Hamano schrieb:
-> +		if (auto_gc) {
-> +			const char *argv_gc_auto[] = { "gc", "--auto", NULL };
-> +			run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
+On Wed, Oct 21, 2009 at 00:19, Eugene Sajine <euguess@gmail.com> wrote:
+>>> How is that? It seams to me that git log <path> will show only commits
+>>> where <path> was changed/committed? Considering the fact that I've got
+>>> the initial path from the blob, i should get the exact commit history
+>>> (or last commit in my example) for the file(s) (Files if renaming
+>>> occurred without content change).
+>>
+>> The blob is present in each commit since it was introduced. Except
+>> when your project contains only that one blob, isn't the state of
+>> the other parts of an interest?
+>>
+> I would question this statement. It seems to me that hash of the file
+> content is logged only for the commit when it was touched.
+> Therefore there is very limited amount of actual commits where the
+> same hash can be met.
 
-Am I correct that this will produce progress output? If git-daemon runs
-receive-pack, then this output will go to the syslog. Do we care?
-
--- Hannes
+git rev-list HEAD | while read sha; do git ls-tree $sha; done | grep <blob-sha>
