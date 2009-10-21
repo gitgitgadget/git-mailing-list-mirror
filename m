@@ -1,39 +1,41 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 1/2] filter-branch: stop special-casing $filter_subdir argument
-Date: Wed, 21 Oct 2009 20:16:21 +0200
-Message-ID: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch>
+Subject: [PATCH v2 1/2] filter-branch: stop special-casing $filter_subdir argument
+Date: Wed, 21 Oct 2009 20:28:50 +0200
+Message-ID: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
+References: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 20:17:13 2009
+X-From: git-owner@vger.kernel.org Wed Oct 21 20:29:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0fkB-0002X4-Hs
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:17:07 +0200
+	id 1N0fwD-0000gJ-8N
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754722AbZJUSQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 14:16:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754713AbZJUSQ5
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:16:57 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:30590 "EHLO gwse.ethz.ch"
+	id S1754467AbZJUS3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 14:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754343AbZJUS3W
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:29:22 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:11206 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754691AbZJUSQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 14:16:56 -0400
+	id S1754312AbZJUS3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 14:29:21 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
  (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:16:59 +0200
+ 2009 20:29:25 +0200
 Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:16:55 +0200
+ 2009 20:29:24 +0200
 X-Mailer: git-send-email 1.6.5.1.142.g4bac9
+In-Reply-To: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130950>
 
 Handling $filter_subdir in the usual way requires a separate case at
 every use, because the variable is empty when unused.  Furthermore,
@@ -51,6 +53,8 @@ there.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
+
+[Same as v1.]
 
 This is preparatory for the next patch; introducing another 'case'
 along the lines of the existing one annoyed me, so I went for this
@@ -117,4 +121,4 @@ index a480d6f..3890c22 100755
  	done < "$tempdir"/heads
  fi
 -- 
-1.6.5.1.139.g12527
+1.6.5.1.142.g4bac9
