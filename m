@@ -1,84 +1,90 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Finding a commit
-Date: Wed, 21 Oct 2009 14:37:37 +0200
-Message-ID: <200910211437.39166.trast@student.ethz.ch>
-References: <4ADEF095.3020406@box.net> <9accb4400910210530k75a763cbtbc9294d937de9242@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH v4 7/8] mingw: enable OpenSSL
+Date: Wed, 21 Oct 2009 14:43:30 +0200
+Message-ID: <40aa078e0910210543t2dcc2af6ie16eb0e49895788f@mail.gmail.com>
+References: <1255966929-1280-1-git-send-email-kusmabite@gmail.com> <1255966929-1280-7-git-send-email-kusmabite@gmail.com> <1255966929-1280-8-git-send-email-kusmabite@gmail.com> <200910192020.44890.j6t@kdbg.org> <4ADEFB6D.9050501@viscovery.net>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>,
-	Soham Mehta <soham@box.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 14:40:54 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,  Marius Storm-Olsen <mstormo@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Oct 21 14:48:25 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yx0-f137.google.com ([209.85.210.137])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0aSe-0005eV-2V
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 14:38:40 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752172AbZJUMia (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 08:38:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbZJUMia
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 08:38:30 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:2036 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751479AbZJUMi3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 08:38:29 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 14:38:32 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 14:38:12 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <9accb4400910210530k75a763cbtbc9294d937de9242@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	id 1N0aXc-0008Rd-A6
+	for gcvm-msysgit@m.gmane.org; Wed, 21 Oct 2009 14:43:48 +0200
+Received: by yxe1 with SMTP id 1so5359555yxe.3
+        for <gcvm-msysgit@m.gmane.org>; Wed, 21 Oct 2009 05:43:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:mime-version:received:reply-to:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type:sender
+         :precedence:x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=1q/ALJZ+/ZpT6wSucvu+OwFvPUiUaXa9Qu8C4WbTmuQ=;
+        b=yOETHaL+LZyk5O5f8bqtoY+8HptG+S8p0IyW419Klpj9kPsOvyeyV9BG+EtgpboVjb
+         WzN1x8RymTeWRVo9TrG58f7fCZ2gQzX66pqAym/FMmcHd5d5Jx3hNQ9sQmvZQTNdlfUy
+         RCi+MMh5I6PTCu0/1h/uv0PM8IwuBkfEEL5Jg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:mime-version:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:sender:precedence:x-google-loop:mailing-list:list-id
+         :list-post:list-help:list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=nF0y7A2LxO5acpBq6sWLX0GppQ56dTR8/bvgPbFIl761NrFP7gF1Hn80kpgKc+gH5I
+         2sAAkxAV9L+HOUDxsqLj4ubVYQ44qQZq/vfQjrbfuMw73+XHVn+kMN8hX6L2VmTFrzQm
+         LGfhhG0M5iLdqTF8voatWh6J9IfEfjBSzpSu8=
+Received: by 10.151.95.1 with SMTP id x1mr843025ybl.36.1256129019659;
+        Wed, 21 Oct 2009 05:43:39 -0700 (PDT)
+Received: by 10.177.52.5 with SMTP id e5gr7472yqk.0;
+	Wed, 21 Oct 2009 05:43:33 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.204.35.141 with SMTP id p13mr249657bkd.21.1256129012375; Wed, 21 Oct 2009 05:43:32 -0700 (PDT)
+Received: by 10.204.35.141 with SMTP id p13mr249656bkd.21.1256129012303; Wed, 21 Oct 2009 05:43:32 -0700 (PDT)
+Received: from mail-fx0-f224.google.com (mail-fx0-f224.google.com [209.85.220.224]) by gmr-mx.google.com with ESMTP id 15si16446fxm.1.2009.10.21.05.43.31; Wed, 21 Oct 2009 05:43:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.224 as permitted sender) client-ip=209.85.220.224;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 209.85.220.224 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by mail-fx0-f224.google.com with SMTP id 24so8582326fxm.11 for <msysgit@googlegroups.com>; Wed, 21 Oct 2009 05:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:mime-version:received:reply-to:in-reply-to :references:date:message-id:subject:from:to:cc:content-type; bh=r0aIdtqYHz4B8BDxnJj87d1Bqevlpl5qT/+5//XCNhw=; b=dodzV3VMaXrLDST5BqBF0dYaN56sDAppqcDzzljeGlRF1JqScH89N49mkDCBbxudXE JJMJIrMBdz+XR9ijp38YKZGhA0SSIr/fgihz97za0D8kllh5EY2hnWwcW29S2b+fwDqJ jPb9V0BT+C7gyyy/yQrpkLi7P35jpY3+CVDoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=mime-version:reply-to:in-reply-to:references:date:message-id :subject:from:to:cc:content-type; b=redJMwhqWJtRlyIOaSp+Ew2lnFHzYQDpZY1twa+9KgncqbRlXnvIT/NARGL0cqH5Tx V+GeIPTdx6j1SQ7FM/TBNAQXixyMyrEUiJ3aESNAYrfpWf9N2XPu9+lC2lA1LosYK/Br grQZTDStNAaw9x1YySXSHk6iQfpBb7xa1stKs=
+Received: by 10.204.3.19 with SMTP id 19mr7740435bkl.151.1256129010800; Wed,  21 Oct 2009 05:43:30 -0700 (PDT)
+In-Reply-To: <4ADEFB6D.9050501@viscovery.net>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130910>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130911>
 
-Daniele Segato wrote:
-> On Wed, Oct 21, 2009 at 1:29 PM, Soham Mehta <soham@box.net> wrote:
-> > Because SHA1 can change if a commit is cherry-picked around, I cannot just
-> > grep for that SHA1 from git-rev-list or git-log on 'y'. I need a way to know
-> > if a commit with identical changes (as in 'x') is also present in 'y'.
 
-man git-patch-id (online at http://git.or.cz/man/git-patch-id).
+On Wed, Oct 21, 2009 at 2:15 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> I seem to have ack'ed this one too early. After testing in my environment,
+> I get:
+>
+> imap-send.o: In function `ssl_socket_perror':
+> D:\Src\mingw-git/imap-send.c:241: undefined reference to `ERR_get_error'
+> D:\Src\mingw-git/imap-send.c:241: undefined reference to `ERR_error_string'
+>
+> I need this patch in addition, and perhaps something similar is also
+> needed with MSVC:
 
-Note that if the cherry-pick conflicted, you'll get a different
-patch-id.
-
-> I'm really not an expert of git..
-> 
-> but A commit is something like:
-> 
-> Commit -> Tree ---> Blob1, Blob2, Blob3
-> 
-> Commit, Trees and Blobs are all identified by sha1
-> the commit should keep information on the author, the "parent"
-> commit(s) and so on..
-> the tree should just keep the "snapshot" of the data..
-> 
-> so I think that if you search for the SHA-1 of the tree you should be fine..
-
-Not if you really want to find out if X was cherry-picked into this
-repository, because the tree is the *final state* at that commit,
-which of course includes all preceding changes.
-
-So suppose you have two patches A.diff and B.diff introducing files of
-the same name; then if you combine them into history as
-
-  A -- B
-
-the tree state at B has both files, and hence is different from the
-tree state of B' in
-
-  B' -- A'
-
-because there it only has the file B.
+Ah, yes - thanks for that one. I traced it a bit, and I found that it
+works for me without your patch because I'm using OpenSSL's sha1, so
+$(LIB_4_CRYPTO) is already included. Your fix is of course correct.
+I'll squash it in and resend.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Erik "kusma" Faye-Lund
