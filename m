@@ -1,84 +1,85 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: [PATCH 3/3] git checkout --nodwim
-Date: Wed, 21 Oct 2009 13:29:09 -0400
-Message-ID: <32541b130910211029x2f4295c3w40dd13b3cdc7762c@mail.gmail.com>
-References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com> 
-	<alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de> <7vzl7pyvzl.fsf@alter.siamese.dyndns.org> 
-	<7v63adxh9a.fsf_-_@alter.siamese.dyndns.org> <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com> 
-	<7v7huspjg0.fsf@alter.siamese.dyndns.org>
+From: David Roundy <roundyd@physics.oregonstate.edu>
+Subject: confusion with git diff-tree output
+Date: Wed, 21 Oct 2009 13:43:40 -0400
+Message-ID: <117f2cc80910211043q3a92a7b6o15464cc049ee33dc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 19:29:36 2009
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 19:43:48 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0f0B-0003GS-47
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 19:29:35 +0200
+	id 1N0fDw-00022G-4u
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 19:43:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbZJUR3Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 13:29:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754376AbZJUR3Z
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 13:29:25 -0400
-Received: from mail-yw0-f202.google.com ([209.85.211.202]:37945 "EHLO
-	mail-yw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943AbZJUR3Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Oct 2009 13:29:24 -0400
-Received: by ywh40 with SMTP id 40so4703755ywh.33
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 10:29:29 -0700 (PDT)
+	id S1754616AbZJURnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 13:43:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754613AbZJURnh
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 13:43:37 -0400
+Received: from qw-out-2122.google.com ([74.125.92.24]:5598 "EHLO
+	qw-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753930AbZJURng (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 13:43:36 -0400
+Received: by qw-out-2122.google.com with SMTP id 9so963886qwb.37
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 10:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=74GZmRlrVYnW7IsDc5OnrqmNvQtWAoQjvklDrmqb3GU=;
-        b=IJLiRe1ymRIK9LdHU0j+uLtaSaO2BXOM45Sn2NMTdbVDoOV1J4MpBYk5hFwvQml2SX
-         4Ol8YK/bQYPKvfj0JI+wBINRM+4JG8pAprzvDHkixLvo+2tXn3aE3tgIZ+R6mW2KlV/g
-         lIaKENluRwyNcRLMpQAt5LlU6TUX69PLL+iPY=
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=+jZ8nZEovVKT1c0sumzW15Y/VdVGphyXbdkjPT/mfE4=;
+        b=vRueGGiuQ1bpL+ctXivS04upKGmNNS2t2Iq6QWtxYfN+9g/LCFPhmljgk8j1pfPL86
+         EUZJOzQO4JCMJpdxiCVGHwbGy0QAZEDS/GClsJD9J4WLSInJnsVelzDHO1oJXugp6U6w
+         sCieLqTveK4z9nVQ9gG06JRyTW3LP65D0F5Aw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VRsS82VGfNCpEa0UWXqhc5NM7c841GmX95AgQbkBURmFJy0/LOQqxTO5vWMt0VNpIw
-         0X0I8VYN9WW8I4mPJ8MAdtfhC4yJrTsKJN4aikxG41cScw12J0IxUOYwXTnFfftQqlQw
-         IciqyrpYIA8L4vkTMXHqnNXod/QwJFTI3mIZ8=
-Received: by 10.150.89.8 with SMTP id m8mr13473324ybb.310.1256146169217; Wed, 
-	21 Oct 2009 10:29:29 -0700 (PDT)
-In-Reply-To: <7v7huspjg0.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=c35NCywMbhd2/L8JEIHhV/Q9ieUqFV2+nA87ynKNGGsbkCwAHGvxqNm2KLm4eirLhz
+         RD1qPJkWXUhxtn7KZNt9NQPN4asNSBzFBp9vzaq6RpmNO8pTlvUZbyjxevo2KKsQOR+z
+         4qzEDS30IjVumu+r0BY27DTCvQXHC8v4u/nhU=
+Received: by 10.224.87.228 with SMTP id x36mr4066722qal.287.1256147020921; 
+	Wed, 21 Oct 2009 10:43:40 -0700 (PDT)
+X-Google-Sender-Auth: 7771569520ca7aa1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130944>
 
-On Sun, Oct 18, 2009 at 3:53 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Alex Riesen <raa.lkml@gmail.com> writes:
->
->> On Sun, Oct 18, 2009 at 10:01, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 OPT_SET_INT(0, "nodwim", &dwim_new_lo=
-cal_branch,
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "do not dwim =
-local branch creation", 0),
->>
->> Isn't there a special negation support for --no-something in parse-o=
-ptions?
->
-> There probably is, but this is a whetherbaloon patch without document=
-ation
-> and pretty much Porcelain only, so I took the lazy route.
->
-> Helping hands in polishing it up is very welcome.
+Hi all,
 
-I find the idea of an option for "don't do what I mean" to be pretty
-entertaining.  Or maybe just misleading :)
+I've been struggling with trying to figure out how to make diff-tree
+output the actual files changed.  Below is the output when I run
+diff-tree on a given commit.  It reports that the directory is
+modified, rather than that a single file within that directory is
+modified.  I can find out what *file* was modified by running
+diff-tree -p --raw, which gives me output similar to what I expected
+from a plain old diff-tree.  Is there a flag that will make diff-tree
+give this information?
 
-Have fun,
+As background, what I really want is --name-only, which rarely reports
+the files modified, instead reporting the directories as modified, and
+I've been struggling to figure out what is going on.  The
+documentation seems to imply that the --raw diff output will report
+modified files, and I haven't found anything indicating when it would
+report the directories containing the modified files instead.
 
-Avery
+Thanks!
+David
+
+$ git diff-tree fd99a198222c14cf42fee82087a13467ff4a8205
+fd99a198222c14cf42fee82087a13467ff4a8205
+:040000 040000 8cdb796ea801da99c34d8f60045d8eb08fbb0e41
+66b67ea1763799c0b2ac01f6803177ca870f6544 M	Iolaus
+
+$ git diff-tree fd99a198222c14cf42fee82087a13467ff4a8205 -p --raw
+fd99a198222c14cf42fee82087a13467ff4a8205
+:100644 100644 dab4c531f3f69f08e5dc202ad8b6dfad9e8855fe
+0e3f305e641a6440bb478765dfcd089e0420c155 M	Iolaus/Lcs2.hs
+
+diff --git a/Iolaus/Lcs2.hs b/Iolaus/Lcs2.hs
+index dab4c53..0e3f305 100644
+--- a/Iolaus/Lcs2.hs
++++ b/Iolaus/Lcs2.hs
+(changes cut)
