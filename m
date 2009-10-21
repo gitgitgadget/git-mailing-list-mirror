@@ -1,84 +1,88 @@
 From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: [PATCH v5 8/8] MSVC: Enable OpenSSL, and translate -lcrypto
-Date: Wed, 21 Oct 2009 19:04:51 +0200
-Message-ID: <1256144691-2908-9-git-send-email-kusmabite@gmail.com>
-References: <1256144691-2908-1-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-2-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-3-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-4-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-5-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-6-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-7-git-send-email-kusmabite@gmail.com>
- <1256144691-2908-8-git-send-email-kusmabite@gmail.com>
-Cc: msysgit@googlegroups.com, Marius Storm-Olsen <mstormo@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v5 7/8] mingw: enable OpenSSL
+Date: Wed, 21 Oct 2009 19:04:50 +0200
+Message-ID: <1256144691-2908-8-git-send-email-kusmabite@gmail.com>
+References: <1256144691-2908-1-git-send-email-kusmabite@gmail.com> <1256144691-2908-2-git-send-email-kusmabite@gmail.com> <1256144691-2908-3-git-send-email-kusmabite@gmail.com> <1256144691-2908-4-git-send-email-kusmabite@gmail.com> <1256144691-2908-5-git-send-email-kusmabite@gmail.com> <1256144691-2908-6-git-send-email-kusmabite@gmail.com> <1256144691-2908-7-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, Erik Faye-Lund <kusmabite@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 19:06:01 2009
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+X-From: grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com Wed Oct 21 19:06:03 2009
+Return-path: <grbounce-SUPTvwUAAABqUyiVh9Fi-Slj5a_0adWQ=gcvm-msysgit=m.gmane.org@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f163.google.com ([209.85.221.163])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0edJ-0007uR-Mi
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 19:05:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754472AbZJURFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 13:05:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754467AbZJURFl
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 13:05:41 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:63374 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754402AbZJURFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 13:05:40 -0400
-Received: by mail-ew0-f207.google.com with SMTP id 3so6261965ewy.17
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 10:05:44 -0700 (PDT)
+	id 1N0edO-0007fq-FX
+	for gcvm-msysgit@m.gmane.org; Wed, 21 Oct 2009 19:06:02 +0200
+Received: by mail-qy0-f163.google.com with SMTP id 35so5684134qyk.24
+        for <gcvm-msysgit@m.gmane.org>; Wed, 21 Oct 2009 10:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=fvh8tjumvNr/Hh/bwBptXAaMM6qOjX9HGTJsXvRBps8=;
-        b=ZIfjDNDaRmHThsbNiJRHbMxIZtBe7FiVCARWj2bBYgHllXuKUvr+YjNaLx2mmSImFL
-         px6pmbdBZMudFqooa0jRGAZwCbodTaSTobzqtMO5Svne0bjCEy+RQDQQ3GiNvs/j5Fj0
-         yAbaI+FysJGX/iRj5e/9Xeu+7D/tMcyBI6uHg=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:received:x-sender:x-apparently-to
+         :received:received:received:received-spf:received:dkim-signature
+         :domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        bh=R+lr7wPPZWrIt2XLJ3bxCm/Leta7+pjWCQtx5JMrRAo=;
+        b=efJeYh2hvB6cebNVlvrXy8KFoMmeulpKAEPFNY7B+6qscwDYZv0An4G50Ba+o+xAm/
+         PYMbJHzfxbm8ZAdw5csU/zjJjFjmt+GxMpnNKVeoTLrdOTOOX89qSzrYvD0+I9JtsuhP
+         MUGX7gA8vw8iHu99CrDrTlJQGGhfBUpAB6QFA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=eCforeTFNVWrlt0uA8UPPOuBba10a4A+Kqa16iM00CNDzspxJdwhU3ouuWGBkq72Cl
-         9ClLL8y5bX6Gq6cFMuADyzRxTkNYjODFatfPlNHhsVkYAHuBm3iz7YBpW0u116IGCOgT
-         UX5IxJbcvGvefSeG+/9vk4DhQKECLsTSMCN0U=
-Received: by 10.210.7.24 with SMTP id 24mr1332193ebg.48.1256144744466;
-        Wed, 21 Oct 2009 10:05:44 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id 23sm900295eya.12.2009.10.21.10.05.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 21 Oct 2009 10:05:43 -0700 (PDT)
+        d=googlegroups.com; s=beta;
+        h=x-sender:x-apparently-to:received-spf:authentication-results
+         :dkim-signature:domainkey-signature:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:sender:precedence
+         :x-google-loop:mailing-list:list-id:list-post:list-help
+         :list-unsubscribe:x-beenthere-env:x-beenthere;
+        b=p21QDsb+EOPoscrrmj1esmuyDVagaHkTfv6s45ZbuS6oJChC4lggL8EBhEufpbHPep
+         krgT6kaBI81I/BlBz8r9BHLM/4ifgqXwggycZUIouXH2zin6rAHKO+BC38dtL8IfMiCR
+         5ymBy1S0vfF/sNaeAYKU4uY93p+7Lr79AVkWo=
+Received: by 10.224.112.78 with SMTP id v14mr400133qap.22.1256144755692;
+        Wed, 21 Oct 2009 10:05:55 -0700 (PDT)
+Received: by 10.177.108.35 with SMTP id k35gr7481yqm.0;
+	Wed, 21 Oct 2009 10:05:41 -0700 (PDT)
+X-Sender: kusmabite@googlemail.com
+X-Apparently-To: msysgit@googlegroups.com
+Received: by 10.211.171.2 with SMTP id y2mr806870ebo.19.1256144740964; Wed, 21 Oct 2009 10:05:40 -0700 (PDT)
+Received: by 10.211.171.2 with SMTP id y2mr806869ebo.19.1256144740941; Wed, 21 Oct 2009 10:05:40 -0700 (PDT)
+Received: from ey-out-2122.google.com (ey-out-2122.google.com [74.125.78.27]) by gmr-mx.google.com with ESMTP id 14si44903ewy.5.2009.10.21.10.05.39; Wed, 21 Oct 2009 10:05:39 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.27 as permitted sender) client-ip=74.125.78.27;
+Authentication-Results: gmr-mx.google.com; spf=pass (google.com: domain of kusmabite@googlemail.com designates 74.125.78.27 as permitted sender) smtp.mail=kusmabite@googlemail.com; dkim=pass (test mode) header.i=@googlemail.com
+Received: by ey-out-2122.google.com with SMTP id 9so1368308eyd.27 for <msysgit@googlegroups.com>; Wed, 21 Oct 2009 10:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=googlemail.com; s=gamma; h=domainkey-signature:received:received:from:to:cc:subject:date :message-id:x-mailer:in-reply-to:references; bh=NPlfu6RrRGzG4hLAl5b4AtPINDNIjcf49+cbnQJLBmg=; b=iMkQRsjYUUB4kgyqB1Ca8tg1uGku6+vuigd6RMXYOPLLZZcJ0ccjhrYDBgYmKbXHfR vaSi2F8/B0lCF4g0JMdprLzsOh++TEebMXYqspsJ1o08PxG0mpGyL6S2FqvOx38SxczK 4WXtrr6QM4MNFttBPMU2Rzjv0K6UBIWYLKQmA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=googlemail.com; s=gamma; h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references; b=T8VVqThgsozxvc681AP2h/SChk167OU2G4BBunnxR1Ok3i9aZoe2e2gozFGgd77iuJ FD+3xz1uhIiVqMxaSiy0pMlll4vCI81C+8WJ3VkwfjOrvzY3EdJ/ShIMaNMPopmA8lIB v7EMM9K8ugOhFXyw/mUt15kP3PeyKIf74NcJo=
+Received: by 10.211.142.18 with SMTP id u18mr2200231ebn.88.1256144739851; Wed, 21 Oct 2009 10:05:39 -0700 (PDT)
+Received: from localhost ([77.40.159.131]) by mx.google.com with ESMTPS id 5sm523063eyh.2.2009.10.21.10.05.38 (version=TLSv1/SSLv3 cipher=RC4-MD5); Wed, 21 Oct 2009 10:05:39 -0700 (PDT)
 X-Mailer: git-send-email 1.6.4.msysgit.0
-In-Reply-To: <1256144691-2908-8-git-send-email-kusmabite@gmail.com>
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <1256144691-2908-7-git-send-email-kusmabite@gmail.com>
+Sender: msysgit@googlegroups.com
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130935>
+X-Google-Loop: groups
+Mailing-List: list msysgit@googlegroups.com;
+	contact msysgit+owner@googlegroups.com
+List-Id: <msysgit.googlegroups.com>
+List-Post: <mailto:msysgit@googlegroups.com>
+List-Help: <mailto:msysgit+help@googlegroups.com>
+List-Unsubscribe: <http://googlegroups.com/group/msysgit/subscribe>,
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+X-BeenThere-Env: msysgit@googlegroups.com
+X-BeenThere: msysgit@googlegroups.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130936>
 
-From: Marius Storm-Olsen <mstormo@gmail.com>
 
-We don't use crypto, but rather require libeay32 and
-ssleay32. handle it in both the Makefile msvc linker
-script, and the buildsystem generator.
+Since we have OpenSSL in msysgit now, enable it to support SSL
+encryption for imap-send.
 
-Signed-off-by: Marius Storm-Olsen <mstormo@gmail.com>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- Makefile                        |    2 +-
- compat/vcbuild/scripts/clink.pl |    3 +++
- contrib/buildsystems/engine.pl  |    3 +++
- 3 files changed, 7 insertions(+), 1 deletions(-)
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 986483b..1e1a2f2 100644
+index 0d13af3..986483b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -900,7 +900,7 @@ ifdef MSVC
- 	GIT_VERSION := $(GIT_VERSION).MSVC
+@@ -952,7 +952,7 @@ else
+ ifneq (,$(findstring MINGW,$(uname_S)))
  	pathsep = ;
  	NO_PREAD = YesPlease
 -	NO_OPENSSL = YesPlease
@@ -86,33 +90,5 @@ index 986483b..1e1a2f2 100644
  	NO_LIBGEN_H = YesPlease
  	NO_SYMLINK_HEAD = YesPlease
  	NO_IPV6 = YesPlease
-diff --git a/compat/vcbuild/scripts/clink.pl b/compat/vcbuild/scripts/clink.pl
-index f9528c0..8a2112f 100644
---- a/compat/vcbuild/scripts/clink.pl
-+++ b/compat/vcbuild/scripts/clink.pl
-@@ -29,6 +29,9 @@ while (@ARGV) {
- 		push(@args, "zlib.lib");
- 	} elsif ("$arg" eq "-liconv") {
- 		push(@args, "iconv.lib");
-+	} elsif ("$arg" eq "-lcrypto") {
-+		push(@args, "libeay32.lib");
-+		push(@args, "ssleay32.lib");
- 	} elsif ("$arg" =~ /^-L/ && "$arg" ne "-LTCG") {
- 		$arg =~ s/^-L/-LIBPATH:/;
- 		push(@args, $arg);
-diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
-index 20bd061..d506717 100644
---- a/contrib/buildsystems/engine.pl
-+++ b/contrib/buildsystems/engine.pl
-@@ -315,6 +315,9 @@ sub handleLinkLine
-             $appout = shift @parts;
-         } elsif ("$part" eq "-lz") {
-             push(@libs, "zlib.lib");
-+	} elsif ("$part" eq "-lcrypto") {
-+            push(@libs, "libeay32.lib");
-+            push(@libs, "ssleay32.lib");
-         } elsif ($part =~ /^-/) {
-             push(@lflags, $part);
-         } elsif ($part =~ /\.(a|lib)$/) {
 -- 
 1.6.4.msysgit.0
