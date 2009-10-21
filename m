@@ -1,67 +1,72 @@
-From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: ident hash usage question
-Date: Wed, 21 Oct 2009 12:09:10 +0900
-Message-ID: <20091021120910.6117@nanako3.lavabit.com>
-References: <76c5b8580910201024x58ffdd3bs6f4cc6932ac31868@mail.gmail.com>
-	<81b0412b0910201116s694d7877rda872b368f1ae09a@mail.gmail.com>
-	<81b0412b0910201119w7583487ag276cf964d0a85e@mail.gmail.com>
-	<76c5b8580910201159i75a90f28pb882e83f0c7c40ae@mail.gmail.com>
-	<81b0412b0910201219q4d16c472n43cab4b5d17cf63c@mail.gmail.com>
-	<76c5b8580910201330r45cf625k3a41b5b9e24b3e01@mail.gmail.com>
-	<7veioxn6ee.fsf@alter.siamese.dyndns.org>
-	<76c5b8580910201514sc44f1cag222cf8a3710c875@mail.gmail.com>
-	<7vbpk1lmvl.fsf@alter.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH] pull: refuse complete src:dst fetchspec arguments
+Date: Wed, 21 Oct 2009 05:15:28 +0200
+Message-ID: <20091021031528.GB18997@atjola.homenet>
+References: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch>
+ <BLU0-SMTP97AA2287062D9A104101C8AEC00@phx.gbl>
+ <alpine.LNX.2.00.0910202001050.14365@iabervon.org>
+ <BLU0-SMTP889B2109047E949E039EFDAEBF0@phx.gbl>
+ <alpine.LNX.2.00.0910202044150.14365@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Eugene Sajine <euguess@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 05:09:29 2009
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sean Estabrooks <seanlkml@sympatico.ca>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Oct 21 05:15:39 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0RZo-00032y-VQ
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 05:09:29 +0200
+	id 1N0Rfl-0005HD-Dp
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 05:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbZJUDJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 23:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbZJUDJT
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 23:09:19 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:53512 "EHLO karen.lavabit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752278AbZJUDJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 23:09:18 -0400
-Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 9EFE011B834;
-	Tue, 20 Oct 2009 22:09:23 -0500 (CDT)
-Received: from 1728.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id 2SAF5EPAPRGI; Tue, 20 Oct 2009 22:09:23 -0500
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=HaqazCgmTqjq/G7ltIbcsnZTU9UA8tvlfNM6VW7MD3l/pbtwFXSjqW07qXlPOCoaEbWOTUwc+5TyWLbOAcbLbgiWRNGeZUFrNANZFQdiQEpjYnZX58HI3o7+n2NLXHs+f1SUJGhuX7hzVqYdDRcHVGrBMDnk4SPzKPBGYqlB75c=;
-  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vbpk1lmvl.fsf@alter.siamese.dyndns.org>
+	id S1752414AbZJUDP2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Oct 2009 23:15:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752278AbZJUDP1
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 23:15:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46915 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752047AbZJUDP1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 23:15:27 -0400
+Received: (qmail invoked by alias); 21 Oct 2009 03:15:30 -0000
+Received: from i59F57083.versanet.de (EHLO atjola.homenet) [89.245.112.131]
+  by mail.gmx.net (mp055) with SMTP; 21 Oct 2009 05:15:30 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+GXPRyWaCG7EHVKfddJ14fCwam854+29yn+j+6Q8
+	VX0NiGqGfLbcSp
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.0910202044150.14365@iabervon.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
+X-FuHaFi: 0.68
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130881>
 
-Quoting Junio C Hamano <gitster@pobox.com>
+On 2009.10.20 20:55:25 -0400, Daniel Barkalow wrote:
+> Maybe it should be fine to do:
+>=20
+> $ git fetch long-url-here master:temp
+> $ git merge temp
+> $ git checkout other-branch-that-also-needs-it
+> $ git merge temp
+>=20
+> But "temp" is "refs/remotes/temp", not "refs/heads/temp"?
 
-> If your product ships as one main executable _dynamically_ linked with two
-> dynamic libraries, and all three components are built from the source
-> material under your source control, obviously you would need to make sure
-> that the above version.o or some equivalent of what embeds output from
-> "git describe HEAD" are linked to the main executable and to the two
-> libraries, but the idea is the same.
+One (maybe important) difference there is that the "pull" gets you:
 
-Doesn't the above strategy also apply to the case where the 
-libraries are linked statically, too? You get the version 
-string from the main program and two version strings from the 
-libraries embedded in the final product.
+    Merge branch 'pu' of git://git.kernel.org/pub/scm/git/git
 
--- 
-Nanako Shiraishi
-http://ivory.ap.teacup.com/nanako3/
+Even with "master:tmp". But with fetch+merge (storing in refs/remotes):
+
+    Merge remote branch 'tmp'
+
+As a minor side-effect, having the "tmp" ref makes re-running the pull
+(for whatever reason) cheaper, as without it, the fetch step would
+possibly re-fetch the whole stuff (not reachable through any local ref)=
+=2E
+
+Bj=F6rn, undecided...
