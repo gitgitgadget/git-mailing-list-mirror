@@ -1,60 +1,93 @@
-From: Thomas Adam <thomas.adam22@gmail.com>
-Subject: Re: Feature request: Store comments on branches
-Date: Wed, 21 Oct 2009 14:46:19 +0100
-Message-ID: <18071eea0910210646l41f18deam8c75f1218df7e25a@mail.gmail.com>
-References: <20091021133702.GA470@lisa>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 7/6 (v4)] support for commit grafts, slight change to general mechanism
+Date: Wed, 21 Oct 2009 15:44:07 +0200
+Message-ID: <200910211544.08776.trast@student.ethz.ch>
+References: <op.uzv4dyuotdk399@sirnot.private> <4ADCCCA9.4000802@gmail.com> <200910211115.25017.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Patrick Schoenfeld <schoenfeld@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 15:52:05 2009
+Content-Type: text/plain; charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sam Vilain <sam@vilain.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andreas Ericsson <exon@op5.se>,
+	Christian Couder <christian@couder.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Nick Edelen <sirnot@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 15:52:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0bWk-0004S9-Gl
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 15:46:58 +0200
+	id 1N0bUp-0003HX-Lx
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 15:45:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753455AbZJUNqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 09:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753301AbZJUNqt
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 09:46:49 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:46492 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751980AbZJUNqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 09:46:48 -0400
-Received: by ewy3 with SMTP id 3so6057011ewy.17
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 06:46:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=BLvts2Xb6o8Y2ORW2yVZNBOlFnu2qwZ8ZQ5zy9jblok=;
-        b=PYjDedrcVRGBlqzt4L5PA2eo92dMdjEImyzW1Ax+lesFPWVDO/Hf9a7JLkGYBr6JUn
-         JZ6HbPiA9AGR69rUDx2sP/1UDGkjHxDGaoaMhi7uNJBfd1XnM9NF61DARp1Zj1yCBsED
-         UAXtHIMvY9i/mY7takI/ayUmgCN2iE9yTMC5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=MfcjqfhKiIOz3lywj9IGU1kvv+GvenPz7djUL7QhxU6rrt8UBLhqvF9c6eGyIKK0cI
-         TkJsUPsC5XPg5b66v7OUm94CnQYlTy/kyYY5XM5GC3vtOcYZWkNnH6U9rue1VLLlvY/6
-         XHrfqIjZ8ByH6gQzd6v9pGTgtGTEH8Jm/vkKE=
-Received: by 10.216.87.144 with SMTP id y16mr311247wee.95.1256132812113; Wed, 
-	21 Oct 2009 06:46:52 -0700 (PDT)
-In-Reply-To: <20091021133702.GA470@lisa>
+	id S1753427AbZJUNot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 09:44:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZJUNot
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 09:44:49 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:53786 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753330AbZJUNot (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 09:44:49 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
+ 2009 15:44:52 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
+ 2009 15:44:42 +0200
+User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
+In-Reply-To: <200910211115.25017.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130916>
 
-2009/10/21 Patrick Schoenfeld <schoenfeld@debian.org>:
-> What do others think about this? Would this be useful
-> for others, too?
+Thomas Rast wrote:
+> Nick Edelen wrote:
+> > Adds support for graft commits in rev-cache (w/ test), and slightly alters
+> > graft mechanism.  Before, parse_commit() checked the graft list on every
+> > commit.  Now register_commit_graft() preemptively loads graft commits into
+> > memory, and sets a new 'graft' flag in the object.  This allows awareness of
+> > the commits' medical history without searching a (normally private) array upon
+> > each commit.
+> 
+> I felt adventurous and merged the topic into my local build, but I get
+> "error: duplicate graft data ..." in repositories with only a single
+> line in .git/info/grafts, which bisects to this commit (1c0a666 in
+> today's pu).
 
-This feature is already being worked on as "git notes" -- see the "pu"
-branch, I think it's still in there, unless it has graduated to next;
-I forget now.
+Here's the complaint in squashable form if you want to keep it as a
+testcase:
 
--- Thomas Adam
+diff --git i/t/t6001-rev-list-graft.sh w/t/t6001-rev-list-graft.sh
+index b2131cd..49ba37b 100755
+--- i/t/t6001-rev-list-graft.sh
++++ w/t/t6001-rev-list-graft.sh
+@@ -110,4 +110,18 @@ do
+ 	"
+ 
+ done
++
++duplicate_error="error: duplicate graft"
++
++test_expect_success 'duplicates: no false positives' '
++	echo $B0 $A2 > .git/info/grafts &&
++	! git rev-list -1 HEAD 2>&1 | grep -q "$duplicate_error"
++'
++
++test_expect_success 'duplicates: no false negatives' '
++	echo $B0 $A2 > .git/info/grafts &&
++	echo $B0 $A1 >> .git/info/grafts &&
++	git rev-list -1 HEAD 2>&1 | grep "$duplicate_error"
++'
++
+ test_done
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
