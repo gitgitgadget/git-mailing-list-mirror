@@ -1,125 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2] Quote ' as \(aq in manpages
-Date: Wed, 21 Oct 2009 20:57:27 +0200
-Message-ID: <7a3e6c8c5a11e14c19bc1a27608dcc78171c9feb.1256151199.git.trast@student.ethz.ch>
-References: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: git submodules
+Date: Wed, 21 Oct 2009 15:38:27 -0400
+Message-ID: <32541b130910211238s6f4a04cawd7f95c4731fe4a3b@mail.gmail.com>
+References: <f488382f0910171015j1a6d4d9fg690867154334c514@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Anders Kaseorg <andersk@mit.edu>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	bill lam <cbill.lam@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 20:58:30 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	crawl-ref-discuss@lists.sourceforge.net
+To: Steven Noonan <steven@uplinklabs.net>
+X-From: git-owner@vger.kernel.org Wed Oct 21 21:38:54 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0gOD-0006fv-O1
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:58:30 +0200
+	id 1N0h1J-00018i-Uk
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 21:38:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715AbZJUS6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 14:58:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754663AbZJUS6T
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:58:19 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:37326 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753903AbZJUS6T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 14:58:19 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:58:22 +0200
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:58:01 +0200
-X-Mailer: git-send-email 1.6.5.1.144.g316236
-In-Reply-To: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu>
+	id S1754855AbZJUTin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 15:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754745AbZJUTin
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 15:38:43 -0400
+Received: from mail-gx0-f216.google.com ([209.85.217.216]:34058 "EHLO
+	mail-gx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754005AbZJUTim (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 15:38:42 -0400
+Received: by gxk8 with SMTP id 8so7788101gxk.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 12:38:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=FB89cOCYl450HLIrotvApcNbWhAZff+83VL+pFDc8Lo=;
+        b=n+EJvkSgaaVYTrQkuIDpSNrN1FxuQd2hVXgkQltyyJzOI895CrCKSkNKjy4pQOU/yG
+         9OTRO8UZ5zM7cGOcdJAVWsoF1em0Vy6UgOxmomNxN03rLofZ/pm4mHSO1LvqR6s7M6iA
+         5b/zPOgGRh20vth5Nt8grAA7+gNvRlBLvlws8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ct4pp8leWGwO4Y2Y6iIp5aQRDRTgfmOKF2Qi1LvXSKWxLjJnmpDzn+BsByJRgxdr2l
+         BAcLXM6acJ+4z5y5KBAZ4Ha1YMltrBn3M0SXwOMx4GA5RhciwtUic8Ke3pvmiQJErttF
+         AUpNU2qGky7JTyILMeIrmg7RhW8MC38ZPbPeQ=
+Received: by 10.150.114.1 with SMTP id m1mr13771653ybc.182.1256153927137; Wed, 
+	21 Oct 2009 12:38:47 -0700 (PDT)
+In-Reply-To: <f488382f0910171015j1a6d4d9fg690867154334c514@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130953>
 
-The docbook/xmlto toolchain insists on quoting ' as \'.  This does
-achieve the quoting goal, but modern 'man' implementations turn the
-apostrophe into a unicode "proper" apostrophe (given the right
-circumstances), breaking code examples in many of our manpages.
+On Sat, Oct 17, 2009 at 1:15 PM, Steven Noonan <steven@uplinklabs.net> wrote:
+> We're using git submodules for the contributing libraries. When I
+> commit changes to those contribs, it correctly shows in the parent
+> repository that those folders have different revisions than what's
+> currently committed. However, if someone pulls those changes, it
+> doesn't automatically update the contribs to match the committed
+> version. But doing a pull or merge _should_ update the working tree to
+> match the committed versions. It does with file data, so why not
+> update the submodules? Especially if the submodule revision matched
+> the committed version -before- the pull. Why are we forced into using
+> 'git submodule update'?
 
-Quote them as \(aq instead, which is an "apostrophe quote" as per the
-groff_char manpage.
+<advertisement>
+git-subtree (http://github.com/apenwarr/git-subtree) is an alternative
+to submodules that doesn't have this problem.
+</advertisement>
 
-Unfortunately, as Anders Kaseorg kindly pointed out, this is not
-portable beyond groff, so we add an extra Makefile variable GNU_ROFF
-which you need to enable to get the new quoting.
+But it probably has other problems. :)  Works great for my purposes,
+though, and quite a few people have contacted me to say they're using
+it happily.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+Have fun,
 
-[Reinstated the Cc list, which I accidentally dropped when sending the
-first patch...]
-
-Anders Kaseorg wrote:
-> \(aq is not portable to non-GNU roff.  See
->   http://bugs.debian.org/507673#65
->   http://sourceforge.net/tracker/index.php?func=detail&aid=2412738&group_id=21935&atid=373747
-> for a proposed portable solution.
-
-Thanks for pointing that out.  Makes things a lot easier though.  I'm
-really beginning to enjoy the whole doc toolchain.
-
-I could not find a way to insert the proposed definitions into the
-header by tweaking the xsls, so unless someone comes up with a way of
-doing that, this is the best I can do.
-
-To save you the effort of clicking the links, the header definitions
-would be
-
-.ie \n(.g .ds Aq \(aq
-.el .ds Aq '
-
-and you then have to change the template to quote to \(Aq instead.
-
-
- Documentation/Makefile               |    3 +++
- Documentation/manpage-quote-apos.xsl |   16 ++++++++++++++++
- 2 files changed, 19 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/manpage-quote-apos.xsl
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 06b0c57..68876d0 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -102,6 +102,9 @@ endif
- ifdef DOCBOOK_SUPPRESS_SP
- XMLTO_EXTRA += -m manpage-suppress-sp.xsl
- endif
-+ifdef GNU_ROFF
-+XMLTO_EXTRA += -m manpage-quote-apos.xsl
-+endif
- 
- SHELL_PATH ?= $(SHELL)
- # Shell quote;
-diff --git a/Documentation/manpage-quote-apos.xsl b/Documentation/manpage-quote-apos.xsl
-new file mode 100644
-index 0000000..aeb8839
---- /dev/null
-+++ b/Documentation/manpage-quote-apos.xsl
-@@ -0,0 +1,16 @@
-+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-+		version="1.0">
-+
-+<!-- work around newer groff/man setups using a prettier apostrophe
-+     that unfortunately does not quote anything when cut&pasting
-+     examples to the shell -->
-+<xsl:template name="escape.apostrophe">
-+  <xsl:param name="content"/>
-+  <xsl:call-template name="string.subst">
-+    <xsl:with-param name="string" select="$content"/>
-+    <xsl:with-param name="target">'</xsl:with-param>
-+    <xsl:with-param name="replacement">\(aq</xsl:with-param>
-+  </xsl:call-template>
-+</xsl:template>
-+
-+</xsl:stylesheet>
--- 
-1.6.5.1.144.g316236
+Avery
