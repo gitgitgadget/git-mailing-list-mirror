@@ -1,71 +1,73 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] Document GNU_ROFF in Makefile
-Date: Wed, 21 Oct 2009 18:51:33 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.0910211824220.5105@dr-wily.mit.edu>
-References: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu> <7a3e6c8c5a11e14c19bc1a27608dcc78171c9feb.1256151199.git.trast@student.ethz.ch> <20091021213149.GX6115@genesis.frugalware.org> <7vk4yoz8sf.fsf@alter.siamese.dyndns.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [PATCH] git checkout --no-guess
+Date: Wed, 21 Oct 2009 18:51:46 -0400
+Message-ID: <32541b130910211551n13e0dd1bha6dcdc82d1d6b4cd@mail.gmail.com>
+References: <1254775583-49452-1-git-send-email-jaysoffian@gmail.com> 
+	<alpine.DEB.1.00.0910052314580.4985@pacific.mpi-cbg.de> <7vzl7pyvzl.fsf@alter.siamese.dyndns.org> 
+	<7v63adxh9a.fsf_-_@alter.siamese.dyndns.org> <81b0412b0910180540u7030c22br7efcaf7f51df771d@mail.gmail.com> 
+	<7v7huspjg0.fsf@alter.siamese.dyndns.org> <32541b130910211029x2f4295c3w40dd13b3cdc7762c@mail.gmail.com> 
+	<20091022062145.6117@nanako3.lavabit.com> <7vskdcz973.fsf@alter.siamese.dyndns.org> 
+	<7vtyxsxtmp.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	bill lam <cbill.lam@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jay Soffian <jaysoffian@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 00:52:03 2009
+X-From: git-owner@vger.kernel.org Thu Oct 22 00:52:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0k2E-0006mk-V4
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 00:52:03 +0200
+	id 1N0k2T-0006sI-Vg
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 00:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755864AbZJUWvt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 18:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755842AbZJUWvt
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 18:51:49 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:63151 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755834AbZJUWvs convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 18:51:48 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9LMpQk3005549;
-	Wed, 21 Oct 2009 18:51:26 -0400 (EDT)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9LMpZl2022096;
-	Wed, 21 Oct 2009 18:51:35 -0400 (EDT)
-In-Reply-To: <7vk4yoz8sf.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1755870AbZJUWwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 18:52:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755842AbZJUWwD
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 18:52:03 -0400
+Received: from mail-gx0-f216.google.com ([209.85.217.216]:54317 "EHLO
+	mail-gx0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755839AbZJUWwB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 18:52:01 -0400
+Received: by gxk8 with SMTP id 8so8006999gxk.1
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 15:52:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=42rSLQ0DF7Ir5NZL7R2FkHz7h+vPz5/MivYygvCpoi8=;
+        b=cz3LnXC+fOvLcZw+sD77oRW1rooSHR3ay1JzBxR1FmFFdUhFBFAV7l6INCCTVr41ts
+         uCToE+E26C6sdYqu6pCvldPVyy5qhGOciGnLTP4/WIFM/qCqFfVhvBwvCoS0yMER01DN
+         r11q7osG/LkrT7eixWyIyVq/wEhf7W2JDb3fY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=eUAzGbwNru/Aw4FXlzTy8Uj/QMbWcQJ8JYdpz2o/n6WEyM7wJsDXdQiHjox2vkih9c
+         0Hm5GTN9DQKQAgTCN0NSjNSqTfgPAxj/uiSUmAQT9OrtZq6MvIi2FjGHCuglZQHcrD8T
+         5GAAwH0mxqBjmy1SdnaqkvyaE7BWgBoxv+IzE=
+Received: by 10.150.32.1 with SMTP id f1mr14146411ybf.96.1256165526154; Wed, 
+	21 Oct 2009 15:52:06 -0700 (PDT)
+In-Reply-To: <7vtyxsxtmp.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130984>
 
-On Wed, 21 Oct 2009, Junio C Hamano wrote:
-> > +# Define GNU_ROFF if you have GNU roff and you don't want to have =
-pretty
-> > +# apostrophe so that cut&pasting examples to the shell will work.
->=20
-> This makes it sound as if groff is the only roff implementation that =
-has=20
-> this problem---iow, if we use non-GNU roff then the documentation com=
-es=20
-> out just fine.  Is that the case?
+On Wed, Oct 21, 2009 at 6:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> As this is strictly script-only option, do not even bother to document it,
+> and do bother to hide it from "git checkout -h".
 
-Yes:
-                            built without GNU_ROFF   built with GNU_ROF=
-=46
- viewed with non-GNU roff   correct (')              wrong (no output!)
- viewed with GNU groff      wrong (=C2=B4)                correct (')
+Is it a standard git policy to not document script-only options?  As a
+person who writes scripts that use git, we will need to discover these
+options somehow...
 
-In order to build a manpage that can be viewed correctly on both=20
-platforms, the conditional logic should live in the manpage itself (as =
-per=20
-the bug comments I linked to and Thomas quoted from).
+Just curious.  (And now wondering how many other wonderful options are
+in there but undocumented...)
 
-Anders
+Thanks,
+
+Avery
