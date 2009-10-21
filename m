@@ -1,74 +1,102 @@
-From: David Roundy <roundyd@physics.oregonstate.edu>
-Subject: Re: confusion with git diff-tree output
-Date: Wed, 21 Oct 2009 18:23:08 -0400
-Message-ID: <117f2cc80910211523m5c1399aej594398fb6597e5de@mail.gmail.com>
-References: <117f2cc80910211043q3a92a7b6o15464cc049ee33dc@mail.gmail.com>
-	 <20091021195103.01cef9c4@perceptron>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Document GNU_ROFF in Makefile
+Date: Wed, 21 Oct 2009 15:22:56 -0700
+Message-ID: <7vk4yoz8sf.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu>
+ <7a3e6c8c5a11e14c19bc1a27608dcc78171c9feb.1256151199.git.trast@student.ethz.ch> <20091021213149.GX6115@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 22 00:35:54 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Anders Kaseorg <andersk@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	bill lam <cbill.lam@gmail.com>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Oct 22 00:35:55 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0jaO-0006ZF-Ow
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 00:23:17 +0200
+	id 1N0jaY-0006ft-TT
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 00:23:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755556AbZJUWXF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 18:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755345AbZJUWXF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 18:23:05 -0400
-Received: from mail-qy0-f194.google.com ([209.85.221.194]:63921 "EHLO
-	mail-qy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755038AbZJUWXE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Oct 2009 18:23:04 -0400
-Received: by qyk32 with SMTP id 32so4946389qyk.4
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 15:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:received:in-reply-to
-         :references:date:x-google-sender-auth:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=MVtxUfl5xhG1Dh80Ci2CaZcfsVhMgIpZsKBLFeSgGBY=;
-        b=frDI3KEVeZ1j80mCCus95FxIUKJJ+cNMKIxDtuoOjoSzYiwtPU64dmbD2uZ0yj0ovz
-         pJZ/hcv99gbR8x77w0HpJXa8bLC7w3g/XskVEa9z9KCIzSk0uU5+MiM4W5Vw0VrM9zG8
-         TzV7J3SSjdH5Zxs9aWwN4KnRnTONPpXOujLfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=TCneEDAKXMfANxxuTVhKk23CilcyTj+fUKPiZ+RBYP+5fp7ZnbNX+eJARPhPqMCnhF
-         lo6xpQG8SbszFWlfhB3P42QeGPSro3lQB65KdNs8dMEqUmfEx8f8cwireriPUzFi0zM4
-         vplQ9ZxNT1pisghvRL4IUuCP3FLizGTRxbqns=
-Received: by 10.224.73.78 with SMTP id p14mr4247145qaj.56.1256163788402; Wed, 
-	21 Oct 2009 15:23:08 -0700 (PDT)
-In-Reply-To: <20091021195103.01cef9c4@perceptron>
-X-Google-Sender-Auth: 3240af6b890a8e3d
+	id S1755709AbZJUWXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 18:23:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755634AbZJUWXJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 18:23:09 -0400
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54894 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755588AbZJUWXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 18:23:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D6CE4802C4;
+	Wed, 21 Oct 2009 18:23:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CawvFQ6lnwRiOo7z2XNF8Qo5sos=; b=IKbR2N
+	bpMEWxF788qnSr4jV+lM0b3dlRzwKTDEL7N48RRrLHAlWR+HapwZAuTfBauA/wLX
+	BCHfxa6PexXP08rFcO3SxUD+sCcDpEO0xh1KHSV+bJryoY/WYRY7bwQfUQtlbl31
+	3u5eWkCFoaPhvR9tt55tNcwdmQn3L7VWgZdR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Wk+S8d9ID12FnbySGNS8wa7TC9tCY/7U
+	JT8MNQUne+6uZUWjn22CZ5H1QKqgYlcC3fiIOdPPnUjU2rBiJr2T/rON6TQJh7yO
+	HRX7QqXqG94E5sGZPeBePV/CYSX/26EjT5MvM777kVuDxja2Rndny1at8hYDqyuG
+	WkeS/+K1rOw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 931D9802BD;
+	Wed, 21 Oct 2009 18:23:07 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 36EA4802B5; Wed, 21 Oct 2009
+ 18:22:58 -0400 (EDT)
+In-Reply-To: <20091021213149.GX6115@genesis.frugalware.org> (Miklos Vajna's
+ message of "Wed\, 21 Oct 2009 23\:31\:49 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4EDFA458-BE90-11DE-871F-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130978>
 
-You're right.  I figured I must be overlooking something obvious, and
-that was it.  What surprised me was that -p implies -r, which is not
-documented.  Since the -p output was recursive, I incorrectly presumed
-that this was the default.
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-David
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>
+> On Wed, Oct 21, 2009 at 08:57:27PM +0200, Thomas Rast <trast@student.ethz.ch> wrote:
+>> Unfortunately, as Anders Kaseorg kindly pointed out, this is not
+>> portable beyond groff, so we add an extra Makefile variable GNU_ROFF
+>> which you need to enable to get the new quoting.
+>
+> You forgot to document this in Makefile. Maybe this could be just
+> squashed in, Junio will decide.
+>
+>  Makefile |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index fea237b..40da590 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -159,6 +159,9 @@ all::
+>  # Define ASCIIDOC_NO_ROFF if your DocBook XSL escapes raw roff directives
+>  # (versions 1.72 and later and 1.68.1 and earlier).
+>  #
+> +# Define GNU_ROFF if you have GNU roff and you don't want to have pretty
+> +# apostrophe so that cut&pasting examples to the shell will work.
+> +#
 
-On Wed, Oct 21, 2009 at 1:51 PM, Jan Kr=C3=BCger <jk@jk.gs> wrote:
-> Tree objects are recursively nested, i.e.
->
->> 66b67ea1763799c0b2ac01f6803177ca870f6544 M =C2=A0 =C2=A0Iolaus
->
-> is a reference to another tree object... and since a file in that
-> subtree changed, a new tree object that contains a different file
-> record is now referenced as "Iolaus".
->
-> By default git diff-tree doesn't recurse, but you can use -r for that=
-=2E
-> Which is documented, I might add. ;)
+This makes it sound as if groff is the only roff implementation that has
+this problem---iow, if we use non-GNU roff then the documentation comes
+out just fine.  Is that the case?
+
+Or is the situation more like "we know how to fix this for groff, and the
+fix is enabled if this variable is defined---on other roff implementations
+the output is still broken"?
+
+>  # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+>  # MakeMaker (e.g. using ActiveState under Cygwin).
+>  #
+> -- 
+> 1.6.5
