@@ -1,93 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 7/6 (v4)] support for commit grafts, slight change to general mechanism
-Date: Wed, 21 Oct 2009 15:44:07 +0200
-Message-ID: <200910211544.08776.trast@student.ethz.ch>
-References: <op.uzv4dyuotdk399@sirnot.private> <4ADCCCA9.4000802@gmail.com> <200910211115.25017.trast@student.ethz.ch>
+From: Patrick Schoenfeld <schoenfeld@debian.org>
+Subject: Feature request: Store comments on branches
+Date: Wed, 21 Oct 2009 15:37:03 +0200
+Message-ID: <20091021133702.GA470@lisa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sam Vilain <sam@vilain.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Andreas Ericsson <exon@op5.se>,
-	Christian Couder <christian@couder.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nick Edelen <sirnot@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 15:52:24 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 15:52:31 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0bUp-0003HX-Lx
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 15:45:00 +0200
+	id 1N0bTX-0002Tu-BL
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 15:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753427AbZJUNot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 09:44:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753419AbZJUNot
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 09:44:49 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:53786 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753330AbZJUNot (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 09:44:49 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 15:44:52 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 15:44:42 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <200910211115.25017.trast@student.ethz.ch>
+	id S1753397AbZJUNn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 09:43:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753330AbZJUNn2
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 09:43:28 -0400
+Received: from mail-fx0-f218.google.com ([209.85.220.218]:47366 "EHLO
+	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301AbZJUNn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 09:43:27 -0400
+Received: by fxm18 with SMTP id 18so7766182fxm.37
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 06:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=WHOdBOojrLOaCFux5bOYdMTitf8fP3Xvd0CooU7R7G0=;
+        b=ov1p/EPFiWZAOs1+Hd+QKpvcP5JQAHCXnBF4BqOW8XTDTugzPMJb9et4255xEaXN+F
+         5W7b1igzeFrxSP9Rj14LVB743Ol4GaWDWQvRY2+yVAwBRf+ThL2g1NkdrRMzLLRnbhCK
+         6OOjCOnd4n3iRyQ8gfGF3IO+5xRsA+LtQgWfU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=s1QI9wolQ0aTFaCMyYcypdXvaJh/wuWjXhendovsW5Omn5slKmgiSNTonm3Hr0i2fL
+         eqop8iCks75Yk5mbJC1aDKA61nq+VrzRdofUT/CWC1kKj8LWyUQi6k6P2rGCnvIeQhlY
+         OvfvLCI6hiEG92AVIQMwz/8WUHM7Icr+H5Tl0=
+Received: by 10.204.148.69 with SMTP id o5mr8038725bkv.99.1256132229814;
+        Wed, 21 Oct 2009 06:37:09 -0700 (PDT)
+Received: from lisa (exit.credativ.com [87.139.82.80])
+        by mx.google.com with ESMTPS id 13sm289089bwz.10.2009.10.21.06.37.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Oct 2009 06:37:09 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130917>
 
-Thomas Rast wrote:
-> Nick Edelen wrote:
-> > Adds support for graft commits in rev-cache (w/ test), and slightly alters
-> > graft mechanism.  Before, parse_commit() checked the graft list on every
-> > commit.  Now register_commit_graft() preemptively loads graft commits into
-> > memory, and sets a new 'graft' flag in the object.  This allows awareness of
-> > the commits' medical history without searching a (normally private) array upon
-> > each commit.
-> 
-> I felt adventurous and merged the topic into my local build, but I get
-> "error: duplicate graft data ..." in repositories with only a single
-> line in .git/info/grafts, which bisects to this commit (1c0a666 in
-> today's pu).
+Hi,
 
-Here's the complaint in squashable form if you want to keep it as a
-testcase:
+I regulary work with various branches, that I call by the number
+of an associated bug tracking / support tracking number. That
+makes it clear to which ticket a given branch belongs.
+In this case I would find it very useful, if I could associate
+short comments with a branch, which would be shown when
+doing a 'git branch'. This way I could see what this branch
+about, without looking up the ticket information.
 
-diff --git i/t/t6001-rev-list-graft.sh w/t/t6001-rev-list-graft.sh
-index b2131cd..49ba37b 100755
---- i/t/t6001-rev-list-graft.sh
-+++ w/t/t6001-rev-list-graft.sh
-@@ -110,4 +110,18 @@ do
- 	"
- 
- done
-+
-+duplicate_error="error: duplicate graft"
-+
-+test_expect_success 'duplicates: no false positives' '
-+	echo $B0 $A2 > .git/info/grafts &&
-+	! git rev-list -1 HEAD 2>&1 | grep -q "$duplicate_error"
-+'
-+
-+test_expect_success 'duplicates: no false negatives' '
-+	echo $B0 $A2 > .git/info/grafts &&
-+	echo $B0 $A1 >> .git/info/grafts &&
-+	git rev-list -1 HEAD 2>&1 | grep "$duplicate_error"
-+'
-+
- test_done
+Obvious the workaround is to name the branches different,
+but this is sometimes not convenient and may result in quiet
+long branch names.
 
+What do others think about this? Would this be useful
+for others, too?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Best Regards,
+Patrick
