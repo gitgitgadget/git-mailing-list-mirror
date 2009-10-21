@@ -1,175 +1,125 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 2/2] filter-branch: nearest-ancestor rewriting outside subdir filter
-Date: Wed, 21 Oct 2009 20:28:51 +0200
-Message-ID: <9676b8307ce61d9b3bf79beff7f4b9a04220154f.1256149428.git.trast@student.ethz.ch>
-References: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
+Subject: [PATCH v2] Quote ' as \(aq in manpages
+Date: Wed, 21 Oct 2009 20:57:27 +0200
+Message-ID: <7a3e6c8c5a11e14c19bc1a27608dcc78171c9feb.1256151199.git.trast@student.ethz.ch>
+References: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Anders Kaseorg <andersk@mit.edu>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	bill lam <cbill.lam@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 21 20:30:01 2009
+X-From: git-owner@vger.kernel.org Wed Oct 21 20:58:30 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0fwY-0000qA-2f
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:29:54 +0200
+	id 1N0gOD-0006fv-O1
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 20:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658AbZJUS3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 14:29:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbZJUS3n
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:29:43 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:26099 "EHLO gwse.ethz.ch"
+	id S1754715AbZJUS6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 14:58:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754663AbZJUS6T
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 14:58:19 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:37326 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753884AbZJUS3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 14:29:43 -0400
+	id S1753903AbZJUS6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 14:58:19 -0400
 Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:29:46 +0200
+ 2009 20:58:22 +0200
 Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Wed, 21 Oct
- 2009 20:29:24 +0200
-X-Mailer: git-send-email 1.6.5.1.142.g4bac9
-In-Reply-To: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
+ 2009 20:58:01 +0200
+X-Mailer: git-send-email 1.6.5.1.144.g316236
+In-Reply-To: <alpine.DEB.2.00.0910211357160.5105@dr-wily.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130952>
 
-Since a0e4639 (filter-branch: fix ref rewriting with
---subdirectory-filter, 2008-08-12) git-filter-branch has done
-nearest-ancestor rewriting when using a --subdirectory-filter.
+The docbook/xmlto toolchain insists on quoting ' as \'.  This does
+achieve the quoting goal, but modern 'man' implementations turn the
+apostrophe into a unicode "proper" apostrophe (given the right
+circumstances), breaking code examples in many of our manpages.
 
-However, that rewriting strategy is also a useful building block in
-other tasks.  For example, if you want to split out a subset of files
-from your history, you would typically call
+Quote them as \(aq instead, which is an "apostrophe quote" as per the
+groff_char manpage.
 
-  git filter-branch -- <refs> -- <files>
-
-But this fails for all refs that do not point directly to a commit
-that affects <files>, because their referenced commit will not be
-rewritten and the ref remains untouched.
-
-The code was already there for the --subdirectory-filter case, so just
-introduce an option that enables it independently.
+Unfortunately, as Anders Kaseorg kindly pointed out, this is not
+portable beyond groff, so we add an extra Makefile variable GNU_ROFF
+which you need to enable to get the new quoting.
 
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
 
-Evidently I shouldn't send any patches after dinner, or before, for
-that matter (but for lack of wifi in the restaurant, *during* dinner
-is not an option either).  Or at least I shouldn't re-read them after
-sending :-(
+[Reinstated the Cc list, which I accidentally dropped when sending the
+first patch...]
 
-v1 had a completely misplaced option parsing for the new option.
-Very embarrassing.  Really.
+Anders Kaseorg wrote:
+> \(aq is not portable to non-GNU roff.  See
+>   http://bugs.debian.org/507673#65
+>   http://sourceforge.net/tracker/index.php?func=detail&aid=2412738&group_id=21935&atid=373747
+> for a proposed portable solution.
 
-I also sneak fixed the commit message above; you only need two -- if
-you want rev-list options, e.g.,
+Thanks for pointing that out.  Makes things a lot easier though.  I'm
+really beginning to enjoy the whole doc toolchain.
 
-  git filter-branch -- --all -- README
+I could not find a way to insert the proposed definitions into the
+header by tweaking the xsls, so unless someone comes up with a way of
+doing that, this is the best I can do.
 
-in which case the first one of course needs to appear before the first
-<refs> argument.
+To save you the effort of clicking the links, the header definitions
+would be
+
+.ie \n(.g .ds Aq \(aq
+.el .ds Aq '
+
+and you then have to change the template to quote to \(Aq instead.
 
 
- Documentation/git-filter-branch.txt |   13 ++++++++++++-
- git-filter-branch.sh                |    9 ++++++++-
- t/t7003-filter-branch.sh            |   18 ++++++++++++++++++
- 3 files changed, 38 insertions(+), 2 deletions(-)
+ Documentation/Makefile               |    3 +++
+ Documentation/manpage-quote-apos.xsl |   16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/manpage-quote-apos.xsl
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index 2b40bab..394a77a 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -159,7 +159,18 @@ to other tags will be rewritten to point to the underlying commit.
- --subdirectory-filter <directory>::
- 	Only look at the history which touches the given subdirectory.
- 	The result will contain that directory (and only that) as its
--	project root.
-+	project root.  Implies --remap-to-ancestor.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 06b0c57..68876d0 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -102,6 +102,9 @@ endif
+ ifdef DOCBOOK_SUPPRESS_SP
+ XMLTO_EXTRA += -m manpage-suppress-sp.xsl
+ endif
++ifdef GNU_ROFF
++XMLTO_EXTRA += -m manpage-quote-apos.xsl
++endif
+ 
+ SHELL_PATH ?= $(SHELL)
+ # Shell quote;
+diff --git a/Documentation/manpage-quote-apos.xsl b/Documentation/manpage-quote-apos.xsl
+new file mode 100644
+index 0000000..aeb8839
+--- /dev/null
++++ b/Documentation/manpage-quote-apos.xsl
+@@ -0,0 +1,16 @@
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
++		version="1.0">
 +
-+--remap-to-ancestor::
-+	Rewrite refs to the nearest rewritten ancestor instead of
-+	ignoring them.
-++
-+Normally, positive refs on the command line are only changed if the
-+commit they point to was rewritten.  However, you can limit the extent
-+of this rewriting by using linkgit:rev-list[1] arguments, e.g., path
-+limiters.  Refs pointing to such excluded commits would then normally
-+be ignored.  With this option, they are instead rewritten to point at
-+the nearest ancestor that was not excluded.
- 
- --prune-empty::
- 	Some kind of filters will generate empty commits, that left the tree
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 3890c22..be36db4 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -125,6 +125,7 @@ filter_subdir=
- orig_namespace=refs/original/
- force=
- prune_empty=
-+remap_to_ancestor=
- while :
- do
- 	case "$1" in
-@@ -137,6 +138,11 @@ do
- 		force=t
- 		continue
- 		;;
-+	--remap-to-ancestor)
-+		shift
-+		remap_to_ancestor=t
-+		continue
-+		;;
- 	--prune-empty)
- 		shift
- 		prune_empty=t
-@@ -182,6 +188,7 @@ do
- 		;;
- 	--subdirectory-filter)
- 		filter_subdir="$OPTARG"
-+		remap_to_ancestor=t
- 		;;
- 	--original)
- 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
-@@ -364,7 +371,7 @@ done <../revs
- # revision walker.  Fix it by mapping these heads to the unique nearest
- # ancestor that survived the pruning.
- 
--if test "$filter_subdir"
-+if test "$remap_to_ancestor" = t
- then
- 	while read ref
- 	do
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index 329c851..9503875 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -288,4 +288,22 @@ test_expect_success 'Prune empty commits' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--remap-to-ancestor with filename filters' '
-+	git checkout master &&
-+	git reset --hard A &&
-+	test_commit add-foo foo 1 &&
-+	git branch moved-foo &&
-+	test_commit add-bar bar a &&
-+	git branch invariant &&
-+	orig_invariant=$(git rev-parse invariant) &&
-+	git branch moved-bar &&
-+	test_commit change-foo foo 2 &&
-+	git filter-branch -f --remap-to-ancestor \
-+		moved-foo moved-bar A..master \
-+		-- -- foo &&
-+	test $(git rev-parse moved-foo) = $(git rev-parse moved-bar) &&
-+	test $(git rev-parse moved-foo) = $(git rev-parse master^) &&
-+	test $orig_invariant = $(git rev-parse invariant)
-+'
++<!-- work around newer groff/man setups using a prettier apostrophe
++     that unfortunately does not quote anything when cut&pasting
++     examples to the shell -->
++<xsl:template name="escape.apostrophe">
++  <xsl:param name="content"/>
++  <xsl:call-template name="string.subst">
++    <xsl:with-param name="string" select="$content"/>
++    <xsl:with-param name="target">'</xsl:with-param>
++    <xsl:with-param name="replacement">\(aq</xsl:with-param>
++  </xsl:call-template>
++</xsl:template>
 +
- test_done
++</xsl:stylesheet>
 -- 
-1.6.5.1.142.g4bac9
+1.6.5.1.144.g316236
