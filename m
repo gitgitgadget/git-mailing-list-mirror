@@ -1,112 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] What to you think about a loose status for submodules?
-Date: Wed, 21 Oct 2009 13:23:19 -0700
-Message-ID: <7vy6n4339k.fsf@alter.siamese.dyndns.org>
-References: <20091021160122.GA2067@book.hvoigt.net>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [Foundation-l] Wikipedia meets git
+Date: Wed, 21 Oct 2009 16:31:20 -0400
+Message-ID: <32541b130910211331n4f65c2d4ga76ac90816fe45d@mail.gmail.com>
+References: <ee9cc730910151155w307a87f0w7bba5c4039bb1ef9@mail.gmail.com> 
+	<71cd4dd90910170705o7c61e06fuacba41f447571b45@mail.gmail.com> 
+	<deea21830910170804s61786d8ewae0bc9390baaed71@mail.gmail.com> 
+	<71cd4dd90910170823o3f58b8c2x1d39040e7582634@mail.gmail.com> 
+	<ee9cc730910170939m6e83ad2fy5f22a541c3679638@mail.gmail.com> 
+	<deea21830910170953o33823dd3rd7a9305f9ea794d@mail.gmail.com> 
+	<ee9cc730910171011l1b68a1a0q7096a93c36362959@mail.gmail.com> 
+	<e405c96a0910190830y51009225lc72942a703575042@mail.gmail.com> 
+	<5396c0d10910210543i4c0a3350je5bee4c6389a2292@mail.gmail.com> 
+	<1256154567.1477.87.camel@giskard>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Oct 21 22:23:39 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Samuel Klein <meta.sj@gmail.com>,
+	Wikimedia Foundation Mailing List 
+	<foundation-l@lists.wikimedia.org>, git <git@vger.kernel.org>
+To: Bernie Innocenti <bernie@codewiz.org>
+X-From: git-owner@vger.kernel.org Wed Oct 21 22:31:47 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0hib-0007Ct-Dt
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 22:23:37 +0200
+	id 1N0hqU-0002fz-AX
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 22:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753297AbZJUUX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 16:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753079AbZJUUX1
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 16:23:27 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56893 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750919AbZJUUX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 16:23:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4112F8063F;
-	Wed, 21 Oct 2009 16:23:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TroDj4KGTNVTOdt6C7HQ4u1mZQM=; b=nthB1u
-	sGFRT9VjQoK9yN/u+PW0DX2kRqlMaaX6VBKYBPYiiNrrpXBp9GXVcgrNEtdkeu39
-	AMLuEDbEVzKM0V7l1dXKRs/doJI+UpC9W0waKI/QOGAWEwnp3B6Pv06qIh59dyk/
-	2Jsxp7tqcLUz3514nDmPVujGnUDZgoRDT7Bkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gx24lecEOjhkhuljhZkuEuKoNyr8yuk7
-	8tevLYPju8KnPtVEHFEQiAURJx8NzpJc3vevX+Nx5lUM+dHVvtg7TeQmKz4SC6lQ
-	KvtptLJSOlDySA0qOSZqltf1pR2p+lEff411zKZfEwrmSyL31fxWtyI65ehyrBAg
-	lBHgfEd+Uz4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0A5E78063D;
-	Wed, 21 Oct 2009 16:23:27 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E6F3780636; Wed, 21 Oct 2009
- 16:23:20 -0400 (EDT)
-In-Reply-To: <20091021160122.GA2067@book.hvoigt.net> (Heiko Voigt's message
- of "Wed\, 21 Oct 2009 18\:01\:23 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 96ED0CD8-BE7F-11DE-8535-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1754843AbZJUUbg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 16:31:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754819AbZJUUbg
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 16:31:36 -0400
+Received: from mail-yx0-f187.google.com ([209.85.210.187]:39922 "EHLO
+	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753079AbZJUUbf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Oct 2009 16:31:35 -0400
+Received: by yxe17 with SMTP id 17so6409590yxe.33
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 13:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kpgiyBUbkF1D7H1soUGOu7ZTa9IqzFhQcF+jJYBAUNo=;
+        b=Qz2BwnmjXnqe3QU9tTnwD/cOg7T1+Ays30yIdqpT/VtGVBXVF6APOg5s7aWyNnXzsD
+         +8Qz9/6nfMxcbPHvz6g6iYQL4LBKxLaHhBQQIENbd9atk2OzQI7RelAk7c+M44uiGOVy
+         dQthLOEfGI7OqE/VoR0/exvtFs0IIoft/EJic=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=nk2t8zv5FzYM8Wgf8RxXC121WDgJzw96ew06xl7XPqf8zViKclj/DDD7P6u2gLuBow
+         xRRnCJnxIiQC00D54AcpqVm6NGv/HWHGffTUWwjwv7N/Ky42W0x5pd5tDqQKxP7yUTyw
+         MrHsi24T1TzQ68C2pJoh5tU5PoE6KvHTT2isQ=
+Received: by 10.150.114.1 with SMTP id m1mr13874992ybc.182.1256157100139; Wed, 
+	21 Oct 2009 13:31:40 -0700 (PDT)
+In-Reply-To: <1256154567.1477.87.camel@giskard>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130960>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
-
-> For such a workflow I would like to implement what I call 'loose'
-> submodules. Where a
+On Wed, Oct 21, 2009 at 3:49 PM, Bernie Innocenti <bernie@codewiz.org> =
+wrote:
+> And here's the the catch: the history of individual files is not
+> directly represented in a git repository. It is typically scattered
+> across thousands of commit objects, with no direct links to help find
+> them. If you want to retrieve the log of a file that was changed only=
+ 6
+> times in the entire history of the Linux kernel, you'd have to dig
+> through *all* of the 170K revisions in the "master" branch.
 >
->   git clone project.git
->   cd project
->   git submodule init && git submodule update
+> And it takes some time even if git is blazingly fast:
 >
-> would omit the 'help' folder. But in case I specify it directly like
-
-I thought a blanket "submodule init/update" wasn't even a recommended
-practice for this exact reason.  We tried to keep the default not to
-gratuitously populate and checkout all submodule repositories, but
-probably what you are trying to do was made more difficult by mistake
-because people who wanted the other behaviour pushed too hard?
-
-Defaulting to "do not populate and checkout unless explicitly asked"
-sounds like the right thing to do, and if we broke it, it should be
-corrected, I think.  Shouldn't it be a simple matter of teaching "--all"
-option to "submodule init" (and "update") to let them blindly affect all
-submodules, while making the default not to do anything?
-
->   git submodule init help
+> =A0bernie@giskard:~/src/kernel/linux-2.6$ time git log =A0--pretty=3D=
+oneline REPORTING-BUGS =A0| wc -l
+> =A06
 >
-> it would update to the recorded revision.
+> =A0real =A0 0m1.668s
+> =A0user =A0 0m1.416s
+> =A0sys =A0 =A00m0.210s
 >
-> Of course the relation would be configurable. E.g.:
+> (my laptop has a low-power CPU. A fast server would be 8-10x faster).
 >
->   git config submodule."name".relation loose
 >
-> and the opposite as
->
->   git config submodule."name".relation tight
+> Now, the English Wikipedia seems to have slightly more than 3M articl=
+es,
+> with--how many? tenths of millions of revisions for sure. Going throu=
+gh
+> them *every time* one needs to consult the history of a file would be
+> 100x slower. Tens of seconds. Not acceptable, uh?
 
-I do not think this should be a project-wide configuration that is
-recorded in .gitmodules; if you are "help documentation" participant to
-the project you would want "help" submodule, and other people will want
-different submodules.
+I think this slowness could be overcome using a simple cache of
+filename -> commitid list, right?
 
-It would probably make more sense to introduce the notion of "module
-groups", similar to the way "remote update <group>" can name a group of
-remotes to affect.  Then documentation people can say
+That is, you run some variant of "git log --name-only" and, for each
+file changed by each commit, add an element to the commit list for
+that file.  When committing in the future, use a hook that updates the
+cache.  When you want to view the history of a particular file, simply
+retrieve exactly the list of commits in that file's commitlist, not
+other commits.
 
-    submodule init doc && submodule update
+It sounds like such a cache could be implemented quite easily outside
+of git itself.
 
-if .gitmodules file records the mapping from "doc" to one or more
-submodules (e.g. "help" and "doc").  If we are going to take this route,
-it would still make sense to teach "--all" to "submodule init" and perhaps
-default to init the "default" group if one exists, instead of making the
-parameterless "init" a no-op as I suggested earlier.
+Would that help?
 
-But it is quite a long time since I looked at git-submodule.sh so please
-take the above with a healthy dose of salt.
+That said, I'll bet you find other performance glitches when you
+import millions of files and tens/hundreds of millions of commits.
+But we probably won't know what those problems are until someone
+imports them :)
+
+Have fun,
+
+Avery
