@@ -1,138 +1,152 @@
-From: Bernie Innocenti <bernie@codewiz.org>
-Subject: Re: [Foundation-l] Wikipedia meets git
-Date: Wed, 21 Oct 2009 15:49:27 -0400
-Organization: Sugar Labs - http://www.sugarlabs.org/
-Message-ID: <1256154567.1477.87.camel@giskard>
-References: <ee9cc730910151155w307a87f0w7bba5c4039bb1ef9@mail.gmail.com>
-	 <e692861c0910170118n6cabcc0bt3a4028cbbb54da86@mail.gmail.com>
-	 <ee9cc730910170140m5a7f2949h80afce7398d9e503@mail.gmail.com>
-	 <71cd4dd90910170705o7c61e06fuacba41f447571b45@mail.gmail.com>
-	 <deea21830910170804s61786d8ewae0bc9390baaed71@mail.gmail.com>
-	 <71cd4dd90910170823o3f58b8c2x1d39040e7582634@mail.gmail.com>
-	 <ee9cc730910170939m6e83ad2fy5f22a541c3679638@mail.gmail.com>
-	 <deea21830910170953o33823dd3rd7a9305f9ea794d@mail.gmail.com>
-	 <ee9cc730910171011l1b68a1a0q7096a93c36362959@mail.gmail.com>
-	 <e405c96a0910190830y51009225lc72942a703575042@mail.gmail.com>
-	 <5396c0d10910210543i4c0a3350je5bee4c6389a2292@mail.gmail.com>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: [PATCH] everyday: fsck and gc are not everyday operations
+Date: Wed, 21 Oct 2009 16:02:48 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.0910211559210.5105@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: TEXT/PLAIN; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wikimedia Foundation Mailing List 
-	<foundation-l@lists.wikimedia.org>, git <git@vger.kernel.org>
-To: Samuel Klein <meta.sj@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 21:56:26 2009
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 22:03:01 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0hIE-00016u-8v
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 21:56:22 +0200
+	id 1N0hOb-0004am-Lv
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 22:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827AbZJUT4M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 15:56:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754113AbZJUT4L
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 15:56:11 -0400
-Received: from trinity.develer.com ([83.149.158.210]:51530 "EHLO
-	trinity.develer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753668AbZJUT4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 15:56:10 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2009 15:56:10 EDT
-Received: (qmail 10857 invoked from network); 21 Oct 2009 19:49:32 -0000
-Received: from terminus-est.gnu.org (HELO ?101.117.138.19?) (bernie@66.92.78.210)
-  by trinity.develer.com with ESMTPA; 21 Oct 2009 19:49:32 -0000
-In-Reply-To: <5396c0d10910210543i4c0a3350je5bee4c6389a2292@mail.gmail.com>
-X-Mailer: Evolution 2.28.0 (2.28.0-2.fc12) 
+	id S1753193AbZJUUCr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Oct 2009 16:02:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752885AbZJUUCr
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 16:02:47 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:57166 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750919AbZJUUCq convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 16:02:46 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id n9LK2fvV018251;
+	Wed, 21 Oct 2009 16:02:41 -0400 (EDT)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id n9LK2oa9026488;
+	Wed, 21 Oct 2009 16:02:50 -0400 (EDT)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130955>
 
-[cc+=3Dgit@vger.kernel.org]
+Back in 2005 when this document was written, it may have made sense to=20
+introduce =E2=80=98git fsck=E2=80=99 (then =E2=80=98git fsck-objects=E2=
+=80=99) as the very first example=20
+command for new users of Git 0.99.9.  Now that Git has been stable for=20
+years and does not actually tend to eat your data, it makes significant=
+ly=20
+less sense.  In fact, it sends an entirely wrong message.
 
-El Wed, 21-10-2009 a las 08:43 -0400, Samuel Klein escribi=F3:
-> That sounds like a great idea.  I know a few other people who have
-> worked on git-based wikis and toyed with making them compatible with
-> mediawiki (copying bernie innocenti, one of the most eloquent :).
+=E2=80=98git gc=E2=80=99 is also unnecessary for the purposes of this d=
+ocument, especially=20
+with gc.auto enabled by default.
 
-Then I'll do my best to sound as eloquent as expected :)
+The only other commands in the =E2=80=9CBasic Repository=E2=80=9D secti=
+on were =E2=80=98git init=E2=80=99=20
+and =E2=80=98git clone=E2=80=99.  =E2=80=98clone=E2=80=99 is already li=
+sted in the =E2=80=9CParticipant=E2=80=9D section,=20
+so move =E2=80=98init=E2=80=99 to the =E2=80=9CStandalone=E2=80=9D sect=
+ion and get rid of =E2=80=9CBasic=20
+Repository=E2=80=9D entirely.
 
-While I think git's internal structure is wonderfully simple and
-elegant, I'm a little worried about its scalability in the wiki usecase=
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ Documentation/everyday.txt |   51 +++---------------------------------=
+-------
+ 1 files changed, 4 insertions(+), 47 deletions(-)
+
+diff --git a/Documentation/everyday.txt b/Documentation/everyday.txt
+index 9310b65..e0ba8cc 100644
+--- a/Documentation/everyday.txt
++++ b/Documentation/everyday.txt
+@@ -1,13 +1,8 @@
+ Everyday GIT With 20 Commands Or So
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
+-<<Basic Repository>> commands are needed by people who have a
+-repository --- that is everybody, because every working tree of
+-git is a repository.
+-
+-In addition, <<Individual Developer (Standalone)>> commands are
+-essential for anybody who makes a commit, even for somebody who
+-works alone.
++<<Individual Developer (Standalone)>> commands are essential for
++anybody who makes a commit, even for somebody who works alone.
+=20
+ If you work with other people, you will need commands listed in
+ the <<Individual Developer (Participant)>> section as well.
+@@ -20,46 +15,6 @@ administrators who are responsible for the care and =
+feeding
+ of git repositories.
+=20
+=20
+-Basic Repository[[Basic Repository]]
+-------------------------------------
+-
+-Everybody uses these commands to maintain git repositories.
+-
+-  * linkgit:git-init[1] or linkgit:git-clone[1] to create a
+-    new repository.
+-
+-  * linkgit:git-fsck[1] to check the repository for errors.
+-
+-  * linkgit:git-gc[1] to do common housekeeping tasks such as
+-    repack and prune.
+-
+-Examples
+-~~~~~~~~
+-
+-Check health and remove cruft.::
+-+
+-------------
+-$ git fsck <1>
+-$ git count-objects <2>
+-$ git gc <3>
+-------------
+-+
+-<1> running without `\--full` is usually cheap and assures the
+-repository health reasonably well.
+-<2> check how many loose objects there are and how much
+-disk space is wasted by not repacking.
+-<3> repacks the local repository and performs other housekeeping tasks=
 =2E
-
-The scenario for which git's repository format was designed is "patch
-oriented" revision control of a filesystem tree. The central object of =
-a
-git tree is the "commit", which represents a set of changes on multiple
-files. I'll disregard all the juicy details on how the changes are
-actually packed together to save disk space, making git's repository
-format amazingly compact.
-
-Commits are linked to each other in order to represent the history. Git
-can efficiently represent a highly non-linear history with thousands of
-branches, each containing hundreds of thousands revisions. Branching an=
-d
-merging huge trees is so fast that one is left wondering if anything ha=
-s
-happened at all.
-
-So far, so good. This commit-oriented design is great if you want to
-track the history *the whole tree* at once, applying related changes to
-multiple files atomically. In Git, as well as most other version contro=
-l
-systems, there's no such thing as a *file* revision! Git manages entire
-trees. Trees are assigned unique revision numbers (in fact, ugly sha-1
-hashes), and can optionally by tagged or branched at will.
-
-And here's the the catch: the history of individual files is not
-directly represented in a git repository. It is typically scattered
-across thousands of commit objects, with no direct links to help find
-them. If you want to retrieve the log of a file that was changed only 6
-times in the entire history of the Linux kernel, you'd have to dig
-through *all* of the 170K revisions in the "master" branch.
-
-And it takes some time even if git is blazingly fast:
-
- bernie@giskard:~/src/kernel/linux-2.6$ time git log  --pretty=3Donelin=
-e REPORTING-BUGS  | wc -l=20
- 6
-
- real	0m1.668s
- user	0m1.416s
- sys	0m0.210s
-
-(my laptop has a low-power CPU. A fast server would be 8-10x faster).
-
-
-Now, the English Wikipedia seems to have slightly more than 3M articles=
-,
-with--how many? tenths of millions of revisions for sure. Going through
-them *every time* one needs to consult the history of a file would be
-100x slower. Tens of seconds. Not acceptable, uh?
-
-It seems to me that the typical usage pattern of an encyclopedia is to
-change each article individually. Perhaps I'm underestimating the role
-of bots here. Anyway, there's no consistency *requirement* for mass
-changes to be applied atomically throughout all the encyclopedia, right=
-?
-
-In conclusion, the "tree at a time" design is going to be a performance
-bottleneck for a large wiki, with no useful application. Unless of
-course the concept of changesets was exposed in the UI, which would be
-an interesting idea to explore.
-
-Mercurial (Hg) seems to have a better repository layout for the "one
-file at a time" access pattern... Unfortunately, it's also much slower
-than git for almost any other purpose, sometimes by an order of
-magnitude. I'm not even sure how well Hg would cope with a repository
-containing 3M files and some 30M revisions. The largest Hg tree I've
-dealt with is the "mozilla central" repo, which is already unbearably
-slow to work with.
-
-It would be interesting to compare notes with the other DSCM hackers,
-too.
-
+-
+-Repack a small project into single pack.::
+-+
+-------------
+-$ git gc <1>
+-------------
+-+
+-<1> pack all the objects reachable from the refs into one pack,
+-then remove the other packs.
+-
+-
+ Individual Developer (Standalone)[[Individual Developer (Standalone)]]
+ ----------------------------------------------------------------------
+=20
+@@ -67,6 +22,8 @@ A standalone individual developer does not exchange p=
+atches with
+ other people, and works alone in a single repository, using the
+ following commands.
+=20
++  * linkgit:git-init[1] to create a new repository.
++
+   * linkgit:git-show-branch[1] to see where you are.
+=20
+   * linkgit:git-log[1] to see what happened.
 --=20
-   // Bernie Innocenti - http://codewiz.org/
- \X/  Sugar Labs       - http://sugarlabs.org/
+1.6.5.1
