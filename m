@@ -1,79 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git push: say that --tag can't be used with --all or
- --mirror in help text
-Date: Wed, 21 Oct 2009 10:42:03 -0400
-Message-ID: <20091021144203.GA30485@coredump.intra.peff.net>
-References: <7v8wfi1fya.fsf@alter.siamese.dyndns.org>
- <4ADB4AE8.5070007@hartwork.org>
- <20091018235240.GU6115@genesis.frugalware.org>
- <20091019115412.6117@nanako3.lavabit.com>
- <7vpr8kcc00.fsf@alter.siamese.dyndns.org>
- <20091019125701.6117@nanako3.lavabit.com>
+From: E R <pc88mxer@gmail.com>
+Subject: keeping track of where a patch begins
+Date: Wed, 21 Oct 2009 09:45:15 -0500
+Message-ID: <3a69fa7c0910210745r311cf18xf966f5c63650cde6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	git@vger.kernel.org, Bjorn Gustavsson <bgustavsson@gmail.com>
-To: Nanako Shiraishi <nanako3@lavabit.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 16:42:34 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 21 16:52:36 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0cOU-0003DR-Ev
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 16:42:30 +0200
+	id 1N0cY9-0000L1-U3
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 16:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbZJUOmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 10:42:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753640AbZJUOmF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 10:42:05 -0400
-Received: from peff.net ([208.65.91.99]:48857 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753523AbZJUOmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 10:42:04 -0400
-Received: (qmail 16315 invoked by uid 107); 21 Oct 2009 14:45:43 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Oct 2009 10:45:43 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Oct 2009 10:42:03 -0400
-Content-Disposition: inline
-In-Reply-To: <20091019125701.6117@nanako3.lavabit.com>
+	id S1753683AbZJUOwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 10:52:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753671AbZJUOwT
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 10:52:19 -0400
+Received: from mail-px0-f197.google.com ([209.85.216.197]:53510 "EHLO
+	mail-px0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753484AbZJUOwS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 10:52:18 -0400
+X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Oct 2009 10:52:18 EDT
+Received: by pxi35 with SMTP id 35so49584pxi.18
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 07:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:date:message-id:subject
+         :from:to:content-type;
+        bh=BWJ0kUElHmHYjxRweji2jMzLaE6R6aBTJZUYiiubino=;
+        b=kCvNeK2kXhFatJ8nb3YC4Eh1KmdnS+bB0J5wiD82FMjBXDjevl7nZBep9DTSByE+Eg
+         bRPN3+sFRnyAszSZjJBFd3jjsz8JNtAp6Y8f3cu3yjpc572Ya4HjX/7Jm1spNqkBrRWw
+         5AaeD5UeCAmVz9oEbXXC/ezepoIYQDHEXK+JQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=tGyNYiL5qu0FWh2+10eChI6xrUT3C3J1uJRMW+DGk7nr7g0Kxhu11j65FrAQSxRPo9
+         fdQuAAabx6k3NFeRu1JCksBSIrzLx1aOulNQ/RbJb7XlfBt8VQUqhAIOrgyK6sXOzhcV
+         URNYBVbJD/RsW5Z6J6F8JcM1/LiwkU51iATJ0=
+Received: by 10.142.75.21 with SMTP id x21mr617639wfa.150.1256136315067; Wed, 
+	21 Oct 2009 07:45:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130924>
 
-On Mon, Oct 19, 2009 at 12:57:01PM +0900, Nanako Shiraishi wrote:
+Hi,
 
-> -		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
-> +		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all nor --mirror"),
+We've started to use git at work. Developers create branches for their
+patches (which we call "tickets" because they are related to our
+ticketing system), and those branches are picked up by an integration
+team and merged together to form a release. Hopefully this is not too
+unconventional.
 
-Hmm. We apparently all managed to miss this typo. It's visually hard to
-notice because of the ")" closing the macro.
+Ideally a developer will start their ticket branch from a previous
+release. However, occasionally a developer working on multiple tickets
+will forget to switch back to a release node when creating a new
+ticket branch. Then code from the first ticket inadvertently gets
+added to the second ticket, and this is a problem if integration
+decides to include the second ticket in the release but not the first.
 
--- >8 --
-Subject: [PATCH] push: fix typo in usage
+What solutions have you come up with to either to catch or prevent
+this from happening? It is possible to determine what node a branch
+started from?
 
-Missing ")".
+It seems that somehow the node that the patch begins at has to be
+either identified, marked or remembered, and it might have to done
+outside of git. Then the integration team or other tools can validate
+the starting node to ensure that it complies with the build process.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-push.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-push.c b/builtin-push.c
-index 7d78711..019c986 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -181,7 +181,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT( 0 , "all", &flags, "push all refs", TRANSPORT_PUSH_ALL),
- 		OPT_BIT( 0 , "mirror", &flags, "mirror all refs",
- 			    (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE)),
--		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all or --mirror"),
-+		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all or --mirror)"),
- 		OPT_BIT( 0 , "purge", &flags,
- 			"remove locally deleted refs from remote",
- 			TRANSPORT_PUSH_PURGE),
--- 
-1.6.5.1.139.g6f544.dirty
+Thanks,
+ER
