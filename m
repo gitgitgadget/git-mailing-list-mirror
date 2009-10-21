@@ -1,72 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Feature request: Store comments on branches
-Date: Wed, 21 Oct 2009 10:13:52 -0400
-Message-ID: <20091021141352.GA24230@coredump.intra.peff.net>
-References: <20091021133702.GA470@lisa>
- <18071eea0910210646l41f18deam8c75f1218df7e25a@mail.gmail.com>
- <28c656e20910210656m5ad597b9h7668e33eeb86b096@mail.gmail.com>
+From: Daniel Cordero <theappleman@gmail.com>
+Subject: [bug][bisected] git-svn with root branches
+Date: Wed, 21 Oct 2009 15:41:13 +0100
+Message-ID: <20091021144113.GA7440@cumin>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Thomas Adam <thomas.adam22@gmail.com>,
-	Patrick Schoenfeld <schoenfeld@debian.org>, git@vger.kernel.org
-To: B Smith-Mannschott <bsmith.occs@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 21 16:14:05 2009
+Cc: git@vger.kernel.org
+To: Adam Brewster <adambrewster@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Oct 21 16:40:51 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0bwx-0003qw-1V
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 16:14:03 +0200
+	id 1N0cMs-0002FM-Dt
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 16:40:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753511AbZJUONx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 10:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753426AbZJUONx
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 10:13:53 -0400
-Received: from peff.net ([208.65.91.99]:47029 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753425AbZJUONx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 10:13:53 -0400
-Received: (qmail 16121 invoked by uid 107); 21 Oct 2009 14:17:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Oct 2009 10:17:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Oct 2009 10:13:52 -0400
+	id S1753596AbZJUOjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 10:39:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753547AbZJUOjP
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 10:39:15 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:10127 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753577AbZJUOjO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 10:39:14 -0400
+Received: by ey-out-2122.google.com with SMTP id 9so1451071eyd.19
+        for <git@vger.kernel.org>; Wed, 21 Oct 2009 07:39:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=qS2rG6bfGUsIapDda58z+2ytWB9wjhVjMkSYwH8sb8A=;
+        b=xd9v4a0JpyzfglI8X2IHWfa26LE8KUPLqa/KxCrI/m5e+SU+Ypo1cF/4F+GfoqMMmI
+         Imzw01zjKL6pJJyxkvPTD74WeiCQi19ylG06aQIPjI1j529cOh1xJM6D7VLnZrFjg/pz
+         47Eu+vz2AlHJ8kzNd4TjcXfRxeKwfoQI9JbhA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=hoTgQrUV14GwaYKMUmkyu1GmkpJoqHJBtVxu6x7w552hcxDDfL5uH/Z/XeGmxS9fdP
+         Ou1ltMLScNlui0L3CBGi4R4Kk48ExuqHQT50QHRejFmF0YHbb/w54q6wNxXNWECOQ52G
+         xFPvhzyQdfp6hAvZIxy4aS4chi8moGnUm2zs0=
+Received: by 10.216.88.132 with SMTP id a4mr2763158wef.203.1256135958403;
+        Wed, 21 Oct 2009 07:39:18 -0700 (PDT)
+Received: from cumin (82-35-17-232.cable.ubr03.hari.blueyonder.co.uk [82.35.17.232])
+        by mx.google.com with ESMTPS id t2sm3581556gve.27.2009.10.21.07.39.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 21 Oct 2009 07:39:16 -0700 (PDT)
+Mail-Followup-To: Daniel Cordero <theappleman@gmail.com>,
+	Adam Brewster <adambrewster@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <28c656e20910210656m5ad597b9h7668e33eeb86b096@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130922>
 
-On Wed, Oct 21, 2009 at 03:56:51PM +0200, B Smith-Mannschott wrote:
+Hello,
 
-> >> What do others think about this? Would this be useful
-> >> for others, too?
-> >
-> > This feature is already being worked on as "git notes" -- see the "pu"
-> > branch, I think it's still in there, unless it has graduated to next;
-> > I forget now.
-> 
-> Really? I was under the impression that the nodes were meant to
-> annotate commits, or more generally things with SHA-1 IDs. (commits,
-> tress, blobs). The SHA-1 ID a branch uses to refer to its HEAD commit
-> changes with every commit, and the branch itself doesn't have an ID,
-> just a name.
+when trying to clone a svn repo with the command-line:
 
-Yes, I think you are right. If I understand the OP, he really just wants
-to annotate the refs themselves, not the commits they point to. So you
-could probably get away with setting a "branch.$name.description" config
-variable and then showing it during "git branch". The downside of such a
-scheme is that it is purely local -- there's no way of pushing or
-pulling your descriptions (which is maybe a feature, if you are thinking
-of the descriptions as something only for you yourself to see).
+	$ git svn clone -b / http://svn.collab.net/repos/svn/
 
-A related technique is to maintain a separate meta repository which has
-a list of branches, their status, etc. This is what Junio does with the
-'todo' branch of git.git. The advantage is that it is fully version
-controlled, and you can do much more than just set descriptions (e.g.,
-'todo' also has scripts for maintaining the list of topic branches,
-calculating branch dependencies, building the pu branch, etc). The
-disadvantage is that it's a lot more work to set up and maintain.
+(that is, each folder in the root of the repo should be considered it's
+own branch)
+the clone sometimes[1] fails saying:
 
--Peff
+	ref: 'refs/remotes/' ends with a trailing slash, this is not permitted by git nor Subversion
+
+The offending config is:
+[svn-remote "svn"]
+        url = http://svn.collab.net/repos/svn
+        branches = /*:refs/remotes/*
+
+
+This used to work in the past; I bisected the bad commit to
+
+commit 6f5748e14cc5bb0a836b649fb8e2d6a5eb166f1d
+Author: Adam Brewster <adambrewster@gmail.com>
+Date:   Tue Aug 11 23:14:03 2009 -0400
+
+    svn: allow branches outside of refs/remotes
+
+
+Thanks in advance.
+
+
+[1] It does work when the URL has at least 1 folder of depth
+(e.g. suffix "trunk" to the above URL).
+
+Its config section is:
+[svn-remote "svn"]
+        url = http://svn.collab.net/repos/svn
+	branches = trunk//*:refs/remotes/*
