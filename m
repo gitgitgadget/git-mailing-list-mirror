@@ -1,124 +1,65 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Creating something like increasing revision numbers
-Date: Wed, 21 Oct 2009 00:47:12 -0700
-Message-ID: <20091021074711.GB67773@gmail.com>
-References: <20091018144158.GA9789@gandalf.dynalias.org>
- <alpine.LNX.2.00.0910181727130.32515@iabervon.org>
- <20091019004447.GC11739@gamma.logic.tuwien.ac.at>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] pull/fetch rename
+Date: Wed, 21 Oct 2009 03:47:59 -0400
+Message-ID: <20091021074759.GB13531@coredump.intra.peff.net>
+References: <200910201947.50423.trast@student.ethz.ch>
+ <alpine.LNX.2.00.0910201912390.14365@iabervon.org>
+ <20091021063008.GA3349@glandium.org>
+ <7v3a5db6ij.fsf@alter.siamese.dyndns.org>
+ <7v63a99pok.fsf@alter.siamese.dyndns.org>
+ <20091021074522.GA13531@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Norbert Preining <preining@logic.at>
-X-From: git-owner@vger.kernel.org Wed Oct 21 09:47:31 2009
+Cc: Mike Hommey <mh@glandium.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 09:48:10 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0Vun-0005V9-SQ
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 09:47:26 +0200
+	id 1N0VvW-0005r6-6x
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 09:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096AbZJUHrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 03:47:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753086AbZJUHrQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 03:47:16 -0400
-Received: from mail-ew0-f207.google.com ([209.85.219.207]:56693 "EHLO
-	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752885AbZJUHrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Oct 2009 03:47:15 -0400
-Received: by ewy3 with SMTP id 3so5723732ewy.17
-        for <git@vger.kernel.org>; Wed, 21 Oct 2009 00:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=qapOkiDwh646NbE6CwA9kACksY4EmKo22gh/fa8lZfU=;
-        b=d0n/NSXUHriMncETN0YmSyz4fI7dbeYmRaXytQVU9L5Ti/x/q/KD1RnOqhGhSZXjQ9
-         rqyjJZCuoeza7wwdG9dW+vDtg4+fyjBaRYeD5TPBw97MW1npF0mB9kkjN5ZbzONkPPcK
-         2ZvULYnhu5mbZIGP9HSRiz/R+aMEGQRhCb58U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Yax9P9YN3EM7AzpUSlVqgtMHTUFbTmWv5brEvbwU+CWHfBsLJuFfrw8bPaszUU0dlH
-         +uK8jOyiH7isVya05R2wem8X0sO/S3/3VTPDLObfBBghVmwTLKfjDWaH25jxmZDrGI0r
-         6bwppyGG0zywZmq4WopMLlZdzwotbV2T/9fvQ=
-Received: by 10.216.87.11 with SMTP id x11mr2565302wee.16.1256111239143;
-        Wed, 21 Oct 2009 00:47:19 -0700 (PDT)
-Received: from gmail.com (cpe-76-94-197-182.socal.res.rr.com [76.94.197.182])
-        by mx.google.com with ESMTPS id i35sm2006008gve.28.2009.10.21.00.47.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 21 Oct 2009 00:47:18 -0700 (PDT)
+	id S1753158AbZJUHr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 03:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbZJUHr7
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 03:47:59 -0400
+Received: from peff.net ([208.65.91.99]:59763 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752730AbZJUHr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Oct 2009 03:47:59 -0400
+Received: (qmail 31808 invoked by uid 107); 21 Oct 2009 07:51:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 21 Oct 2009 03:51:38 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Oct 2009 03:47:59 -0400
 Content-Disposition: inline
-In-Reply-To: <20091019004447.GC11739@gamma.logic.tuwien.ac.at>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20091021074522.GA13531@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130896>
 
-On Mon, Oct 19, 2009 at 02:44:47AM +0200, Norbert Preining wrote:
-> Hi all,
-> 
-> thanks everyone for the nice feedback!
-> 
-> On So, 18 Okt 2009, Daniel Barkalow wrote:
-> > It's possible as long as you don't think of the "version number" as a 
-> > property of the commit, but rather a property that some commits get by 
-> > virtue of having been at some time the commit that's what would be found 
-> > on that particular server at that particular time. Even though the history 
-> 
-> Right! That is a good point. In fact I don't care about (local) commits,
-> but about the pushes to the central server.
-> 
-> > of the *content* is non-linear, the sequence of values stored in 
-> > refs/heads/master on your central server is linear, local, and easy to 
-> > enumerate.
-> 
-> That is exactely what I need.
+On Wed, Oct 21, 2009 at 03:45:22AM -0400, Jeff King wrote:
 
+> Declaring it a failure depends on what you consider the goal of "git
+> remote update" to be. I find it very useful as a shorthand for "fetch
+> from _all_ remotes"[1]. Which does save typing over
+>
+> [...]
+>
+> On Wed, Oct 21, 2009 at 12:22:35AM -0700, Junio C Hamano wrote:
+>
+>> *1* The only thing "git remote update" does that "git fetch" does not
+>> is that it can serve as "fetch from everywhere" shorthand.  But that
+>> is something we could have added to "git fetch".  So in that sense, I
+>> think it may make even more sense to deprecate "remote update" and
+>> teach "fetch" how to do that.
 
-If you have any control over how people will use git,
-then you can give your constantly-incrementing revision number
-more stability by ensuring that everyone uses
-'git pull --rebase'.
+...and it would probably help if I had read your footnotes before
+responding.
 
-That'll literally keep the history completely linear.
-If someone forgets then it's not a big deal; you'll
-just get a merge commit and the number will increment
-by 2 instead of by 1.
-
-> Now my follow-up questions:
-> - how would one access this "sequence" number on the server
-
-If you've done the "tag the initial commit" as suggested
-elsewhere on this thread:
-
-	git tag projectname $(git rev-list HEAD | tail -n1)
-
-then you can do this with simply:
-
-	git describe --tags
-
-
-It should output something like:
-
-	projectname-101-g20912df
-
-> - is there a way to determine at which of this "sequence" numbers a specific
->   file has been changed last?
-
-	commit=$(git log --pretty=%H -1 -- <filename>)
-	git describe --tags $commit
-
-
-> JAIST Japan Advanced Institute of Science and Technology   preining@jaist.ac.jp
-> Vienna University of Technology                               preining@logic.at
-> Debian Developer (Debian TeX Task Force)                    preining@debian.org
-
-
-Just another happy Debian user here,
-
--- 
-		David
+-Peff
