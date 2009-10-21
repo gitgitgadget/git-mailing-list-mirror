@@ -1,50 +1,82 @@
-From: Dexter Riley <edbeaty@charter.net>
-Subject: drawbacks to svn server + git-svn vs git server?
-Date: Wed, 21 Oct 2009 08:05:21 -0700 (PDT)
-Message-ID: <25994334.post@talk.nabble.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Feature request: Store comments on branches
+Date: Wed, 21 Oct 2009 10:05:11 -0500
+Message-ID: <19167.8999.927157.455014@lisa.zopyra.com>
+References: <20091021133702.GA470@lisa>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 21 17:06:18 2009
+Cc: git@vger.kernel.org
+To: Patrick Schoenfeld <schoenfeld@debian.org>
+X-From: git-owner@vger.kernel.org Wed Oct 21 17:06:24 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0ckl-00074s-Vh
+	id 1N0ckm-00074s-Fm
 	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 17:05:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754067AbZJUPFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Oct 2009 11:05:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754055AbZJUPFS
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 11:05:18 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:36378 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753500AbZJUPFR (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754070AbZJUPFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Oct 2009 11:05:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754055AbZJUPFT
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Oct 2009 11:05:19 -0400
+Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:60241
+	"EHLO zopyra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753954AbZJUPFR (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 21 Oct 2009 11:05:17 -0400
-Received: from isper.nabble.com ([192.168.236.156])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <lists@nabble.com>)
-	id 1N0ckb-0006Ke-TK
-	for git@vger.kernel.org; Wed, 21 Oct 2009 08:05:21 -0700
-X-Nabble-From: edbeaty@charter.net
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id n9LF5J032131;
+	Wed, 21 Oct 2009 09:05:19 -0600
+In-Reply-To: <20091021133702.GA470@lisa>
+X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130926>
+
+On Wednesday, October 21, 2009 at 15:37:03 (+0200) Patrick Schoenfeld writes:
+>Hi,
+>
+>I regulary work with various branches, that I call by the number
+>of an associated bug tracking / support tracking number. That
+>makes it clear to which ticket a given branch belongs.
+>In this case I would find it very useful, if I could associate
+>short comments with a branch, which would be shown when
+>doing a 'git branch'. This way I could see what this branch
+>about, without looking up the ticket information.
+>
+>Obvious the workaround is to name the branches different,
+>but this is sometimes not convenient and may result in quiet
+>long branch names.
+
+For now, we do just this.  We use Jira for bug reporting.  When we
+create a new Jira bug, we use the Jira Id as the base and then tack on
+a short suffix:
+
+% git checkout -b ADM-417_service_deploy_race_condition
+
+We are also working on tools that would, among other things, obviate
+this.  For example:
+
+% git branch
+* ADM-417
+ADM-312
+master
+
+% jira describe
+ADM-417: Service deployments have logging race condition on first start
+
+% jira describe -l ADM-312
+ADM-312: Portal permissions set incorrectly for WEP users
+Description: The portal permissions get whacked whenever ...
+Assigned To: John Smith <jsmith@ourhouse.com>
+Status: In Progress
+[...]
+
+The 'jira' command just connects to our Jira server and performs
+actions directly on the Jira server for current or whichever branch,
+etc.
 
 
-Hello.  My group is currently using subversion on our version control server,
-but would like to move to git as a client.  We are considering using
-git-svn, to avoid revalidating the server software.  My question is, are
-there any major disadvantages to using git-svn versus git?  I know that the
-git repository would be smaller.  I'm more concerned about possible svn
-repository corruption, performance when pushing large merges back to svn,
-and any gotchas you might have encountered.
-Any advice would be greatly appreciated.
-Thanks,
-Ed
--- 
-View this message in context: http://www.nabble.com/drawbacks-to-svn-server-%2B-git-svn-vs-git-server--tp25994334p25994334.html
-Sent from the git mailing list archive at Nabble.com.
+Bill
