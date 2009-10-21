@@ -1,81 +1,52 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] pull: refuse complete src:dst fetchspec arguments
-Date: Tue, 20 Oct 2009 20:55:25 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910202044150.14365@iabervon.org>
-References: <d561e70f0aa802ceb96eba16d3bb2316134d69c8.1256062808.git.trast@student.ethz.ch> <BLU0-SMTP97AA2287062D9A104101C8AEC00@phx.gbl> <alpine.LNX.2.00.0910202001050.14365@iabervon.org> <BLU0-SMTP889B2109047E949E039EFDAEBF0@phx.gbl>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git gc and kernel.org
+Date: Wed, 21 Oct 2009 10:00:23 +0900
+Message-ID: <4ADE5D27.2000907@zytor.com>
+References: <4ADD6026.8070203@zytor.com> <237967ef0910200208t290d7ba2l15c75081da5448de@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Sean Estabrooks <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Wed Oct 21 02:55:42 2009
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, ftpadmin@kernel.org
+To: Mikael Magnusson <mikachu@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 21 03:01:19 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0PUD-000322-Mr
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 02:55:34 +0200
+	id 1N0PZm-0005OF-Ek
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Oct 2009 03:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbZJUAzX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Oct 2009 20:55:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752341AbZJUAzW
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 20:55:22 -0400
-Received: from iabervon.org ([66.92.72.58]:52541 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751782AbZJUAzW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Oct 2009 20:55:22 -0400
-Received: (qmail 19662 invoked by uid 1000); 21 Oct 2009 00:55:25 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Oct 2009 00:55:25 -0000
-In-Reply-To: <BLU0-SMTP889B2109047E949E039EFDAEBF0@phx.gbl>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752643AbZJUBBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Oct 2009 21:01:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbZJUBBG
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Oct 2009 21:01:06 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:52798 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752413AbZJUBBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Oct 2009 21:01:05 -0400
+Received: from [192.168.11.29] (p32183-ipbffx02marunouchi.tokyo.ocn.ne.jp [220.106.13.183])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.14.3/8.14.3) with ESMTP id n9L10SLd011246
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 20 Oct 2009 18:00:30 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.4pre) Gecko/20091014 Fedora/3.0-2.8.b4.fc11 Thunderbird/3.0b4
+In-Reply-To: <237967ef0910200208t290d7ba2l15c75081da5448de@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130876>
 
-On Tue, 20 Oct 2009, Sean Estabrooks wrote:
+On 10/20/2009 06:08 PM, Mikael Magnusson wrote:
+>
+> I don't know how you create repos on kernel.org, but by default both
+> git init and git clone uses /usr/share/git-core/templates for the new
+> repo, for example I put a symbolic ref h ->  HEAD there to save some
+> typing. You can enable whatever hooks you want there, but they would
+> only take effect for new repos.
+>
 
-> On Tue, 20 Oct 2009 20:15:23 -0400 (EDT)
-> Daniel Barkalow <barkalow@iabervon.org> wrote:
-> 
-> Hi Daniel,
-> 
-> > Surely, "where you want the head stored locally" is somewhere that's 
-> > information about a remote repository, and therefore under "refs/remotes/" 
-> > (or "refs/tags/" or something) and therefore not possible to be checked 
-> > out (in the "HEAD is a symref to it" sense).
-> 
-> Maybe, but it could also just be to create a temp local branch for
-> merging into additional branches afterward with "checkout other;
-> merge temp".   This is especially helpful when pulling from an
-> annoyingly long URL instead of from a configured remote.
+They only take effect for new repos, and any changes I do there get 
+messed up when git is updated.
 
-Maybe it should be fine to do:
-
-$ git fetch long-url-here master:temp
-$ git merge temp
-$ git checkout other-branch-that-also-needs-it
-$ git merge temp
-
-But "temp" is "refs/remotes/temp", not "refs/heads/temp"?
-
-> > Actually, I think it would be good to prohibit fetching into a new or 
-> > existing local branch, whether or not it is checked out. We'd probably 
-> > need to provide a plumbing method of doing a fetch, though, for script 
-> > environments that aren't using the normal porcelain meanings of refs/ 
-> > subdirectories. (Defining a bare repo with --mirror as not having local 
-> > branches, of course)
-> 
-> I'm hoping you don't mean that all fetching to a new local branch should
-> be prohibited and you're only talking about the current issue of full
-> refspecs on and the pull command.   Otherwise i'd say it seems
-> unnecessarily restrictive.
-
-I think, actually, that creating or changing a local branch is really not 
-what "fetch" (or the fetch part of pull) is about. I think that just leads 
-to confusion about what's locally-controlled and what's a local memory of 
-something remotely-controlled.
-
-	-Daniel
-*This .sig left intentionally blank*
+	-hpa
