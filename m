@@ -1,121 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] What to you think about a loose status for submodules?
-Date: Thu, 22 Oct 2009 12:58:04 -0700
-Message-ID: <7vvdi7fbg3.fsf@alter.siamese.dyndns.org>
-References: <20091021160122.GA2067@book.hvoigt.net>
- <7vy6n4339k.fsf@alter.siamese.dyndns.org>
- <20091022194446.GA3944@book.hvoigt.net>
+From: Howard Miller <howard@e-learndesign.co.uk>
+Subject: Any way to "flatten" a series of changes in git
+Date: Thu, 22 Oct 2009 21:03:44 +0100
+Message-ID: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Thu Oct 22 21:58:36 2009
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 22 22:04:25 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N13ns-0007Tn-DW
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 21:58:32 +0200
+	id 1N13tG-0001ci-Mp
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 22:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756578AbZJVT6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 15:58:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756568AbZJVT6S
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 15:58:18 -0400
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756512AbZJVT6R (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 15:58:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D576E81402;
-	Thu, 22 Oct 2009 15:58:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+rXjPnUQt8T0LOrzLapU0eePoCE=; b=mUdNnw
-	OpyZPkaqbpVnLKf3vWEhWpHb/c/Wq6xZnmc+tpKj9nWX36T9kttaW6E4prXFkokN
-	je8sV3hw77Ya+UMsoTyqM/ZJ+WYEv6d3uq/BdArU20hK3AdpB3RJnNMEHHfVl9p9
-	XjURAhgbRFmPSodNF7LDF3M0QOXUkhz+bNz0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HdNOeVJA2k5JlDxddgdUm+yZ2fjQ9Owv
-	qCYvbuDZHTMB5Sz2rfowzMs3VlmDF+9wGaM9bSKbjF+T9R3NoBGN55rp63KVHIAH
-	7QbIJDfboC2ZnokGPgWAvKekSIIiu6BmkQ8jPMckLj5c+Wm3v3VT9cPchB3Vh901
-	SDp2fj0RU2g=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9CD12813FF;
-	Thu, 22 Oct 2009 15:58:16 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7DE22813FD; Thu, 22 Oct 2009
- 15:58:10 -0400 (EDT)
-In-Reply-To: <20091022194446.GA3944@book.hvoigt.net> (Heiko Voigt's message
- of "Thu\, 22 Oct 2009 21\:44\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3D11631E-BF45-11DE-B46C-A67CBBB5EC2E-77302942!a-pb-sasl-sd.pobox.com
+	id S1756593AbZJVUDu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 16:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756522AbZJVUDt
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 16:03:49 -0400
+Received: from mail-ew0-f207.google.com ([209.85.219.207]:36943 "EHLO
+	mail-ew0-f207.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755448AbZJVUDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 16:03:41 -0400
+Received: by ewy3 with SMTP id 3so994586ewy.17
+        for <git@vger.kernel.org>; Thu, 22 Oct 2009 13:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=mU6pgWcgWT36NFAE4kmFVV8Bue8GPyjEm6r6z5y6NOY=;
+        b=jle8SMR54h3XGjJfVKnTjhl3VIlc2HaOQNQVlJGm7Ok38WcszVl23/L/j4/k+4kU0w
+         A4wg2aatoTmjtvJl91ww0ZWs6yKkxN0ZS9H7Qp2N9awfhlHQ0sWO5qGLsdBrs8gihnmu
+         6jSshbNZzv1MeGX7gaSUx+M//p1BHELsCGmDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=Nsr5KNlcxQrJTNOIewdqxhseCS8FbbzSey0ooVRULnmo4n+MmtniTSfSLUo0jZE4/z
+         D2A6pXYj6ZxNePoNCVASJim5YyJSge/WClervQDQx9WuN3gDvugIP7NoMeyFpJIgIy61
+         UZTOiciZ4HV0EDHmygkFPietgfbLgAwqnkyE4=
+Received: by 10.216.91.69 with SMTP id g47mr3643105wef.167.1256241824799; Thu, 
+	22 Oct 2009 13:03:44 -0700 (PDT)
+X-Google-Sender-Auth: 6200dbf7848aeed0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131051>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Hello,
 
-> I am not sure what is the best way to create such a group mapping using
-> our config files though. I would like to allow multiple groups/views to
-> have the submodules like:
->
-> [submodule "doc"]
-> 	path = Documentation
-> 	views = doc
->
-> [submodule "help"]
-> 	path = help
-> 	views = doc
->
-> [submodule "core"]
-> 	path = core
-> 	views = doc default
->
-> [submodule "app"]
-> 	path = app
-> 	views = default
->
-> What do you think?
+I have a branch with a whole series of commits. I want to export this
+work to be customer (to their svn repo if that has any bearing on it).
+All the stuff in the history is irrelevant to my customer ("committing
+now, going to bed" etc.) so I'd like to create a new branch that only
+has one commit.. the end point with a new message. Is this possible?
 
-That, or alternatively:
-
-    [submodule "doc"]
-        path = Documentation
-
-    [submodule "help"]
-        path = help
-
-    [submodule "core"]
-        path = core
-
-    [submodule "app"]
-        path = app
-
-    [view "default"]
-        modules = core app
-
-    [view "doc"]
-        modules = core doc help
-
-Or even (mimicking the way how "git remote" defines remote groups):
-
-    [submodule "doc"]
-        path = Documentation
-
-    [submodule "help"]
-        path = help
-
-    [submodule "core"]
-        path = core
-
-    [submodule "app"]
-        path = app
-
-    [submodule]
-        default = core app
-        doc = core doc help
+Thanks again!
