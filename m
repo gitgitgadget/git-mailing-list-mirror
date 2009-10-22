@@ -1,68 +1,60 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] modernize fetch/merge/pull examples
-Date: Thu, 22 Oct 2009 10:51:23 +0200
-Message-ID: <200910221051.26336.trast@student.ethz.ch>
-References: <200910201947.50423.trast@student.ethz.ch> <7vk4ypb71j.fsf@alter.siamese.dyndns.org> <20091021172123.GB27495@localhost>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/fetch-options.txt: order options alphabetically
+Date: Thu, 22 Oct 2009 12:23:24 +0300
+Message-ID: <87my3jzss3.fsf@jondo.cante.net>
+References: <87eiow1pey.fsf@jondo.cante.net>
+	<7vpr8g32ht.fsf@alter.siamese.dyndns.org>
+	<7vhbts3285.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>, <git@vger.kernel.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Thu Oct 22 10:52:12 2009
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 22 11:23:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0tP2-0000es-4O
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 10:52:12 +0200
+	id 1N0ttm-0006gv-3a
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 11:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221AbZJVIv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 04:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753451AbZJVIv5
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 04:51:57 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:10813 "EHLO gwse.ethz.ch"
+	id S1754691AbZJVJXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 05:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754528AbZJVJXp
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 05:23:45 -0400
+Received: from lo.gmane.org ([80.91.229.12]:52803 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752664AbZJVIv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 04:51:56 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 10:51:59 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 10:51:59 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <20091021172123.GB27495@localhost>
+	id S1754486AbZJVJXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 05:23:44 -0400
+Received: from list by lo.gmane.org with local (Exim 4.50)
+	id 1N0tta-0006cR-Vp
+	for git@vger.kernel.org; Thu, 22 Oct 2009 11:23:46 +0200
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Oct 2009 11:23:46 +0200
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Oct 2009 11:23:46 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:YK269Y7vkEJIK1PAnF8MI7DwuPA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131012>
 
-Clemens Buchacher wrote:
-> On Tue, Oct 20, 2009 at 11:22:16PM -0700, Junio C Hamano wrote:
-> 
-> > For example, I am in favor of deprecating the "pull $there $src:$dst"
-> > notation. 
-> 
-> A first step in that direction.
+Junio C Hamano <gitster@pobox.com> writes:
+> I think you looked only at git-fetch.txt without
+> checking where else this file is included.  Then the patch certainly is
+> understandable.  It would probably make git-fetch.{1,html} easier to scan,
+> while making things not worse for git-pull.{1,html}
 
-I think this is a good change independently of the deprecation.
+Yes. Unfortunately there doesn't seem to be a way to arrange all nicely,
+so perhaps you could accept the following patch to accompany with it. At
+least there would be ordered "git-fetch" and semi ordered "git-pull".
 
-> +------------------------------------------------
-> +$ git fetch origin +pu:pu maint:tmp
-> +------------------------------------------------
-[...]
-> +The `pu` branch will be updated even if it is does not fast-forward;
-> +the others will not be.
+    Subject: [PATCH] Documentation/merge-options.txt: order options in alphabetical groups
 
-I think to a new user it is not immediately clear if this means "will
-not be updated, period" or "will not be updated if ...".  How about
-
-  The `pu` branch will always be updated; the `tmp` branch only if it
-  is a fast-forward update.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jari
