@@ -1,88 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] pull/fetch rename
-Date: Thu, 22 Oct 2009 11:48:26 +0200
-Message-ID: <200910221148.28335.trast@student.ethz.ch>
-References: <200910201947.50423.trast@student.ethz.ch> <20091021030608.GA18997@atjola.homenet> <7vk4ypb71j.fsf@alter.siamese.dyndns.org>
+From: Nanako Shiraishi <nanako3@lavabit.com>
+Subject: Re: [RFC PATCH v3 00/17] Return of smart HTTP
+Date: Thu, 22 Oct 2009 19:21:49 +0900
+Message-ID: <20091022192149.6117@nanako3.lavabit.com>
+References: <1255577814-14745-1-git-send-email-spearce@spearce.org>
+	<20091015185253.6117@nanako3.lavabit.com>
+	<20091015143340.GI10505@spearce.org>
+	<200910151721.08352.johan@herland.net>
+	<20091015154142.GL10505@spearce.org>
+	<7vfx9k4d33.fsf@alter.siamese.dyndns.org>
+	<20091015204543.GP10505@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Bj=C3=B6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>, <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 11:49:11 2009
+X-From: git-owner@vger.kernel.org Thu Oct 22 12:21:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0uIA-0001b8-Q7
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 11:49:11 +0200
+	id 1N0unt-0006yV-Qa
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 12:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754528AbZJVJs7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Oct 2009 05:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754486AbZJVJs7
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 05:48:59 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:16041 "EHLO gwse.ethz.ch"
+	id S1753243AbZJVKVs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 06:21:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbZJVKVs
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 06:21:48 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:60662 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751074AbZJVJs6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Oct 2009 05:48:58 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 11:49:01 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 11:49:01 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <7vk4ypb71j.fsf@alter.siamese.dyndns.org>
+	id S1752664AbZJVKVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 06:21:47 -0400
+Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
+	by karen.lavabit.com (Postfix) with ESMTP id F2B6111B9CF;
+	Thu, 22 Oct 2009 05:21:51 -0500 (CDT)
+Received: from 5391.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
+	by lavabit.com with ESMTP id Z0P9HL5H6WOR; Thu, 22 Oct 2009 05:21:51 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
+  b=vlhRHOo1MN/sgy3ZBfhqJHp0/MppAbBmRICFUWLb/KIuMsYuuxyIcYO4FuQd90TBDTlrJJBxcOGEESFkd89CPsWX60Z+eI5ylQeSRqxJ0Ss9ruD826EdCY7cSb8mx2ZmEtA4/1D+bFqsmOvdJQC35dURL8geCsmv3eFw2erH2h4=;
+  h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
+In-Reply-To: <20091015204543.GP10505@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131015>
 
-Junio C Hamano wrote:
-> Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
->=20
-> > So that's ten days of #git. I left out a bunch of duplications (mos=
-t
-> > were "pull =3D=3D fetch", "pull =3D=3D update" and "pull to update
-> > non-checked-out branch").
->=20
-> Interesting; this shows that people who do not understand what "pull"=
- does
-> expect different behaviour from "pull", use the word "pull" to expres=
-s
-> what they want to happen, expect other people interpret the word to m=
-ean
-> the way they think it does.  At the same time, judging from different
-> behaviour expected by these people, push/pull asymmetry does not seem=
- to
-> have much to do with the confusion.
+Quoting "Shawn O. Pearce" <spearce@spearce.org>
 
-This of course is where our conclusions differ.  I haven't counted
-them, but Bj=C3=B6rn (thanks again for the excellent survey) points out
-that most duplicates are confusion with fetch, (imagined) update or
-"update to not checked out branch".
+> Actually, after some further research, the bug is not Johan's but is
+> actually Daniel's.  Johan, I apologize for claiming it was your bug.
+> ...
+> Long story short, transport_close() is what is supposed to perform
+> the work that disconnect_helper does, as its the final thing right
+> before we free the struct transport block.  Free'ing the data block
+> inside of the fetch or push functions is wrong.
+>
+> Its fine to close the helper and restart it within the single
+> lifespan of a struct transport, but dammit, don't free the
+> struct helper_data until transport_close().
 
-Pull is none of these, but if it was (current) fetch, at least the
-first group of people would have had the right idea of what it does.
+Ping? Are there any progress on this issue?
 
-> I am actually even Ok, at least in the long run (like in 3 years), if=
- we
-> were to deprecate the refspecs with colon given on the command line t=
-o
-> "pull" and "fetch" altogether [*1*].
-
-As an aside, there are actually some use-cases, e.g., to grab the
-git-svn refs from a freshly cloned repository you would run:
-
-  git fetch origin refs/remotes/*:refs/remotes/*
-
-(and then 'git svn init' etc.)  I've also had some weird requests on
-IRC that could be solved by clever (and of course dangerous) use of
-'git fetch . glob:otherglob'.
-
-Hiding that power behind an option could be a good idea though.
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- 
+Nanako Shiraishi
+http://ivory.ap.teacup.com/nanako3/
