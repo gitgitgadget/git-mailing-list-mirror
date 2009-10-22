@@ -1,90 +1,85 @@
-From: Bill Lear <rael@zopyra.com>
+From: Jacob Helwig <jacob.helwig@gmail.com>
 Subject: Re: Any way to "flatten" a series of changes in git
-Date: Thu, 22 Oct 2009 15:44:40 -0500
-Message-ID: <19168.50232.47935.864407@lisa.zopyra.com>
-References: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com>
-	<19168.49405.775024.649626@lisa.zopyra.com>
+Date: Thu, 22 Oct 2009 13:51:01 -0700
+Message-ID: <8c9a060910221351w12e6c610kb842263e1c02ea63@mail.gmail.com>
+References: <26ae428a0910221303n493fb7s701269d694110685@mail.gmail.com> 
+	<19168.49405.775024.649626@lisa.zopyra.com> <19168.50232.47935.864407@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 22 22:44:52 2009
+Content-Type: text/plain; charset=UTF-8
+Cc: Howard Miller <howard@e-learndesign.co.uk>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 22:51:32 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N14We-0004xf-02
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 22:44:48 +0200
+	id 1N14d6-0008To-LY
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 22:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756138AbZJVUoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 16:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755951AbZJVUoi
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 16:44:38 -0400
-Received: from 75-27-130-60.lightspeed.austtx.sbcglobal.net ([75.27.130.60]:33047
-	"EHLO zopyra.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754862AbZJVUoi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 16:44:38 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id n9MKigR13780;
-	Thu, 22 Oct 2009 14:44:42 -0600
-In-Reply-To: <19168.49405.775024.649626@lisa.zopyra.com>
-X-Mailer: VM 8.0.11 under Emacs 21.1.1 (i686-pc-linux-gnu)
+	id S1755205AbZJVUvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 16:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbZJVUvR
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 16:51:17 -0400
+Received: from mail-px0-f171.google.com ([209.85.216.171]:43561 "EHLO
+	mail-px0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751815AbZJVUvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 16:51:17 -0400
+Received: by pxi1 with SMTP id 1so3386727pxi.33
+        for <git@vger.kernel.org>; Thu, 22 Oct 2009 13:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=0qqVfhgWGY/iOF6DKmWiDMQbhMjDnpXMvt8Y4/B7Tsg=;
+        b=ObiIlvm4Buzf+Vc4CLy7nQYW3gmUZwNEJTDFA24k+k8c8fQzanu/9OXKtaN684sERc
+         xH8LPNHqg82+xA2Q1DddzKc0+YKp5oz0cGroc1qzwKtFa7BBckdKhpVTEK7VRFc3LWWy
+         fpUS2+Y/lHoZK8OdrnwqgiZXqOQbrpRfy2v50=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=boc5qVdBlJIFvWIrPf7ty4DNP6k36V+NeiP/MNREyyraVsKc/J6RhEc8EZoj0EiLM4
+         AS81VN/uBgTUt34lDctDm87mvq5sB/+mqRo+dN4m1e/9Pp8TKcth9kp14E82H+MppKUk
+         p/9bmFt/GnmFkhKD5kh29U1d6LB8xPM8QsTUM=
+Received: by 10.140.136.15 with SMTP id j15mr1839278rvd.229.1256244681103; 
+	Thu, 22 Oct 2009 13:51:21 -0700 (PDT)
+In-Reply-To: <19168.50232.47935.864407@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131058>
 
-On Thursday, October 22, 2009 at 15:30:53 (-0500) Bill Lear writes:
->On Thursday, October 22, 2009 at 21:03:44 (+0100) Howard Miller writes:
->>Hello,
+On Thu, Oct 22, 2009 at 13:44, Bill Lear <rael@zopyra.com> wrote:
+> On Thursday, October 22, 2009 at 15:30:53 (-0500) Bill Lear writes:
+>>On Thursday, October 22, 2009 at 21:03:44 (+0100) Howard Miller writes:
+>>>Hello,
+>>>
+>>>I have a branch with a whole series of commits. I want to export this
+>>>work to be customer (to their svn repo if that has any bearing on it).
+>>>All the stuff in the history is irrelevant to my customer ("committing
+>>>now, going to bed" etc.) so I'd like to create a new branch that only
+>>>has one commit.. the end point with a new message. Is this possible?
 >>
->>I have a branch with a whole series of commits. I want to export this
->>work to be customer (to their svn repo if that has any bearing on it).
->>All the stuff in the history is irrelevant to my customer ("committing
->>now, going to bed" etc.) so I'd like to create a new branch that only
->>has one commit.. the end point with a new message. Is this possible?
+>>git rebase is your friend.
 >
->git rebase is your friend.
+> Someone correct me if I'm wrong.
+>
+> % git branch
+> * master
+> % git checkout -b my_work_branch
+> % [work work work, commit, commit, commit]
+> % git rebase -i master
+>
 
-Someone correct me if I'm wrong.
+Alternatively, you could use git merge --squash
 
-% git branch
-* master
-% git checkout -b my_work_branch
-% [work work work, commit, commit, commit]
-% git rebase -i master
+git checkout master
+git merge --squash topic
 
-You'll then get an editor buffer that looks like this:
+See git-merge(1) for details.
 
-pick 16730c6 baz 0
-pick 2a844e7 baz 1
-pick d6e71dc baz 2
-pick d1a6995 baz 3
-pick 157e675 baz 4
-
-# Rebase ef0a89e..157e675 onto ef0a89e
-#
-# Commands:
-#  p, pick = use commit
-#  e, edit = use commit, but stop for amending
-#  s, squash = use commit, but meld into previous commit
-#
-# If you remove a line here THAT COMMIT WILL BE LOST.
-# However, if you remove everything, the rebase will be aborted.
-#
-
-Edit this to keep what you need:
-pick 16730c6 baz 0
-squash 2a844e7 baz 1
-squash d6e71dc baz 2
-squash d1a6995 baz 3
-squash 157e675 baz 4
-
-then exit the editor.  It'll pop you in another editor session to
-type in a commit message for these, just type in what you need and
-exit and you'll have the new commit with all the olds ones squashed
-into it.
-
-
-Bill
+rebase --interactive it excellent for cleaning up history, especially
+if you want to end up with more than one commit at the end.  merge
+--squash is usually sufficient if all you need is one commit at the
+end.
