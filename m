@@ -1,63 +1,128 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Updating a branch.
-Date: Thu, 22 Oct 2009 15:26:04 -0400
-Message-ID: <32541b130910221226t78f27976t69d0093aa7ba417c@mail.gmail.com>
-References: <26015707.post@talk.nabble.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [RFC] What to you think about a loose status for
+	submodules?
+Date: Thu, 22 Oct 2009 21:44:47 +0200
+Message-ID: <20091022194446.GA3944@book.hvoigt.net>
+References: <20091021160122.GA2067@book.hvoigt.net> <7vy6n4339k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: elyod72 <elyod72@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 21:26:34 2009
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Lars Hjemli <hjemli@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 21:44:56 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N13Is-00084O-2C
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 21:26:30 +0200
+	id 1N13ah-0000U5-0k
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 21:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756717AbZJVT0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 15:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756363AbZJVT0T
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 15:26:19 -0400
-Received: from mail-yx0-f187.google.com ([209.85.210.187]:36028 "EHLO
-	mail-yx0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755942AbZJVT0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 15:26:19 -0400
-Received: by yxe17 with SMTP id 17so7298677yxe.33
-        for <git@vger.kernel.org>; Thu, 22 Oct 2009 12:26:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=XDT430iGhCBlVBbrngFFK4JowUkwafuy6VXcKiJ3J8Q=;
-        b=CVAPjaqCPDoosxhp/hR9lJAYQv77eDvo/Dn2geuTRv1IMC/AjyL3mDbbIfqhWGhyK/
-         xwfKyrpVy0Is+iWbOs3pD92686LmA2eGyo0m+ng5/yv6SaQ7ame0p9VXUZT1VxQCuW03
-         TQzfwnWsKErXtq9KjMVyxy4ip3b9bWNmxng3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=hTU0zIeJpac5EnxM4j2lUD2yuRA1jjy6fRtpUMvyYj0f2bjUgC+byffIOO5EKj1BxW
-         tN7ifF7s52Cu8wTlqUsRJwl3zY07RO33yJf4ShaNw0QZYzRDQQ+4DumwYR2wg2QqB2H9
-         iDsFaGa3M4SQ7ND/upR/G1dmVkZtnPPLek81g=
-Received: by 10.150.87.28 with SMTP id k28mr16303440ybb.275.1256239584054; 
-	Thu, 22 Oct 2009 12:26:24 -0700 (PDT)
-In-Reply-To: <26015707.post@talk.nabble.com>
+	id S1754983AbZJVTop (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 15:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbZJVToo
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 15:44:44 -0400
+Received: from darksea.de ([83.133.111.250]:41798 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752494AbZJVToo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 15:44:44 -0400
+Received: (qmail 25654 invoked from network); 22 Oct 2009 21:44:47 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 22 Oct 2009 21:44:47 +0200
+Content-Disposition: inline
+In-Reply-To: <7vy6n4339k.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131048>
 
-On Thu, Oct 22, 2009 at 3:21 PM, elyod72 <elyod72@gmail.com> wrote:
-> I have my Master branch.
-> I then create a new branch named Test.
-> I then make changes and additions to the test branch.
-> At the same time I make changes to the Master branch.
-> Now I want to update the Test branch with the latest information from the
-> Master branch.
->
-> How do I go about doing that?
+On Wed, Oct 21, 2009 at 01:23:19PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > For such a workflow I would like to implement what I call 'loose'
+> > submodules. Where a
+> >
+> >   git clone project.git
+> >   cd project
+> >   git submodule init && git submodule update
+> >
+> > would omit the 'help' folder. But in case I specify it directly like
+> 
+> I thought a blanket "submodule init/update" wasn't even a recommended
+> practice for this exact reason.  We tried to keep the default not to
+> gratuitously populate and checkout all submodule repositories, but
+> probably what you are trying to do was made more difficult by mistake
+> because people who wanted the other behaviour pushed too hard?
 
-git checkout Test
-git merge Master
+Currently if a project has submodule its either use all submodules or
+none. There is nothing in between.
+
+> Defaulting to "do not populate and checkout unless explicitly asked"
+> sounds like the right thing to do, and if we broke it, it should be
+> corrected, I think.  Shouldn't it be a simple matter of teaching "--all"
+> option to "submodule init" (and "update") to let them blindly affect all
+> submodules, while making the default not to do anything?
+
+Not completely. As said above I want something 'in between' because some
+small submodule might be necessary to compile the project. And they are
+submodules because they are shared code, so more than one project is
+using them. And then there are optional submodules like pugins or
+documentation which are not needed for compilation.
+
+> >   git config submodule."name".relation tight
+> 
+> I do not think this should be a project-wide configuration that is
+> recorded in .gitmodules; if you are "help documentation" participant to
+> the project you would want "help" submodule, and other people will want
+> different submodules.
+> 
+> It would probably make more sense to introduce the notion of "module
+> groups", similar to the way "remote update <group>" can name a group of
+> remotes to affect.  Then documentation people can say
+> 
+>     submodule init doc && submodule update
+
+That makes sense. If I understand it correctly the group definitions
+would then be stored in .gitmodules ?
+
+Thinking further we could also name the group definition 'view'. In the
+notion of different kind of views for a project. That way a doc
+developer would get a set of options which make more sense for him
+(thinking about extending this to sparse checkout). But first lets
+consider submodules.
+
+> if .gitmodules file records the mapping from "doc" to one or more
+> submodules (e.g. "help" and "doc").  If we are going to take this route,
+> it would still make sense to teach "--all" to "submodule init" and perhaps
+> default to init the "default" group if one exists, instead of making the
+> parameterless "init" a no-op as I suggested earlier.
+
+I like this idea.
+
+> But it is quite a long time since I looked at git-submodule.sh so please
+> take the above with a healthy dose of salt.
+
+I am not sure what is the best way to create such a group mapping using
+our config files though. I would like to allow multiple groups/views to
+have the submodules like:
+
+[submodule "doc"]
+	path = Documentation
+	views = doc
+
+[submodule "help"]
+	path = help
+	views = doc
+
+[submodule "core"]
+	path = core
+	views = doc default
+
+[submodule "app"]
+	path = app
+	views = default
+
+What do you think?
+
+cheers Heiko
