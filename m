@@ -1,73 +1,79 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] describe: when failing, tell the user about options that 
-	work
-Date: Thu, 22 Oct 2009 18:40:33 +0200
-Message-ID: <81b0412b0910220940n78ddb774i30338147327b198a@mail.gmail.com>
-References: <76c5b8580910220810n389d065di349339ab38909ef7@mail.gmail.com>
-	 <f1e86b9095d63c6541d0a8df6a1cf8eadfe247bb.1256226187.git.trast@student.ethz.ch>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: git bisect Vs branch
+Date: Thu, 22 Oct 2009 18:50:30 +0200
+Message-ID: <adf1fd3d0910220950s50ccf8efwda891374e6480a30@mail.gmail.com>
+References: <4AE07EEB.2010101@maxim-ic.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Oct 22 18:48:02 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?B?R3LpZ29yeSBSb23p?= <gregory.rome@maxim-ic.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 18:50:37 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N10pV-0002MY-Pu
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 18:48:02 +0200
+	id 1N10rz-0003at-VD
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 18:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756740AbZJVQrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 12:47:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756215AbZJVQrg
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 12:47:36 -0400
-Received: from mail-fx0-f218.google.com ([209.85.220.218]:39929 "EHLO
-	mail-fx0-f218.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755429AbZJVQrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 12:47:35 -0400
-Received: by fxm18 with SMTP id 18so9403198fxm.37
-        for <git@vger.kernel.org>; Thu, 22 Oct 2009 09:47:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:in-reply-to:references
-         :date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=flszMq+P09uyGpKtbU7Ep0hNfbEAAmL7khEwLJk3Luo=;
-        b=PSOtSILVgtTqOYmbmgCsNcIekEzvyVzphSbRUfaRzKZOfqox5bw+CaNf4wU7VztXx+
-         Um2Esrcc21vAgTFMzX22wmNWAVjOAGGJksbUEq3XuwPGl5hK3HcwMF8y/Ff5w86S03V1
-         KKeZ3SE7yrgi2HxBCPIcAXIO4Er9ztD4RMWh8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F6BxgpyUdOjQR71isvIPXo0BCS/T+K+JdQctwghake7iBqjNG0mC1Tiu2subjwyO0n
-         Ox8HWzvRPg7cRX9bWlvK1rew9hVePJmtnmo7l2cdQ5WRIUtatv46Rz40+spW9S0teBgx
-         b/DrQZjdr+WeyioHYRaQRQ3LfPyl6cudePi9Q=
-Received: by 10.204.154.207 with SMTP id p15mr1444171bkw.202.1256229633468; 
-	Thu, 22 Oct 2009 09:40:33 -0700 (PDT)
-In-Reply-To: <f1e86b9095d63c6541d0a8df6a1cf8eadfe247bb.1256226187.git.trast@student.ethz.ch>
+	id S1755626AbZJVQu0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Oct 2009 12:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755942AbZJVQu0
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 12:50:26 -0400
+Received: from mail-pw0-f42.google.com ([209.85.160.42]:55979 "EHLO
+	mail-pw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755044AbZJVQuZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Oct 2009 12:50:25 -0400
+Received: by pwj1 with SMTP id 1so1536719pwj.21
+        for <git@vger.kernel.org>; Thu, 22 Oct 2009 09:50:30 -0700 (PDT)
+Received: by 10.115.98.40 with SMTP id a40mr6552007wam.97.1256230230355; Thu, 
+	22 Oct 2009 09:50:30 -0700 (PDT)
+In-Reply-To: <4AE07EEB.2010101@maxim-ic.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131032>
 
-T24gVGh1LCBPY3QgMjIsIDIwMDkgYXQgMTc6NDQsIFRob21hcyBSYXN0IDx0cmFzdEBzdHVkZW50
-LmV0aHouY2g+IHdyb3RlOgo+IEBAIC0yNTksNyArMjYwLDE0IEBAIHN0YXRpYyB2b2lkIGRlc2Ny
-aWJlKGNvbnN0IGNoYXIgKmFyZywgaW50IGxhc3Rfb25lKQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgcHJpbnRmKCIlc1xuIiwgZmluZF91bmlxdWVfYWJicmV2KHNoYTEsIGFi
-YnJldikpOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcmV0dXJuOwo+IMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgfQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgZGllKCJjYW5u
-b3QgZGVzY3JpYmUgJyVzJyIsIHNoYTFfdG9faGV4KHNoYTEpKTsKPiArIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIGlmICh1bmFubm90YXRlZF9jbnQpCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBkaWUoImNhbm5vdCBkZXNjcmliZSAnJXMnIgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgIiB3aXRoIG9ubHlcbmFubm90YXRlZCB0YWdzLiBUcnkgLS10
-YWdzLiIsCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzaGExX3Rv
-X2hleChzaGExKSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlbHNlCj4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBkaWUoImNhbm5vdCBkZXNjcmliZSAnJXMnIgo+ICsgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIiB3aXRoIHRhZ3NcblRyeSAtLWFs
-d2F5cywgb3IgY3JlYXRlIHNvbWUgdGFncy4iLAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgc2hhMV90b19oZXgoc2hhMSkpOwoKVGhlc2UgYXJlIHF1aXRlIHZlcmJv
-c2UuIENvdWxkIHRoZXkgYmUgY29uZGl0aW9uYWwgb24gc29tZXRoaW5nIGxpa2UKYWR2aWNlLmRl
-c2NyaWJlSGludHM/Cg==
+On Thu, Oct 22, 2009 at 5:48 PM, Gr=E9gory Rom=E9 <gregory.rome@maxim-i=
+c.com> wrote:
+> Considering the following story what is the method to find the regres=
+sion
+> with bisect?
+>
+> I cloned a git repository (origin) which derives from another one
+> (first-origin). A merge is done from first-origin to origin at each s=
+table
+> release (identified by a tag).
+>
+> first-origin/master =A0*---A---------B-----------------------C-
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 \ =A0 =A0 =A0 =A0 \ =A0=
+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 \
+> origin/master =A0 =A0 =A0 =A0 =A0 =A0 =A0----------B'----------U-----=
+------C'-
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ \ =A0 =A0 =A0 =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 \ =A0 master
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ------------U'---=
+-------C''-
+>
+> Now, after that I merged C' I fixed the conflicts and compiled withou=
+t error
+> but I have a regression. It could come from any commit between B and =
+C or U
+> and C', and I need to modify my code to correct the issue.
+>
+> I would like to find the commit which introduce this regression by us=
+ing git
+> bisect but as the history is not linear it is not so easy (1). It tho=
+ugh to
+> create a linear history but I have no idea how to proceed...
+
+You just have to proceed as normal, but you may test more commits than
+with a linear history.
+
+The only problem is iff the culprit is a merge commit (as in the
+user-manual chapter you linked). And the "problem" is to know where
+exactly in the (merge) commit is the bug, but not the procedure.
+
+HTH,
+Santi
