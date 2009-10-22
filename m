@@ -1,197 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git hang with corrupted .pack
-Date: Wed, 21 Oct 2009 23:06:14 -0700
-Message-ID: <7vd44gm089.fsf@alter.siamese.dyndns.org>
-References: <20091014042249.GA5250@hexapodia.org>
- <20091014142351.GI9261@spearce.org> <7viqeaovmp.fsf@alter.siamese.dyndns.org>
- <7vzl7mng35.fsf@alter.siamese.dyndns.org>
- <7vpr8hn9ly.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.0910201538180.21460@xanadu.home>
- <7vaazln61u.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 1/2] filter-branch: stop special-casing $filter_subdir
+ argument
+Date: Thu, 22 Oct 2009 08:06:39 +0200
+Message-ID: <4ADFF66F.1080005@viscovery.net>
+References: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch> <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Isaacson <adi@hexapodia.org>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 22 08:06:40 2009
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Oct 22 08:06:53 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0qop-0005sm-FK
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 08:06:39 +0200
+	id 1N0qp2-0005yl-EF
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 08:06:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752026AbZJVGG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 02:06:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbZJVGG2
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 02:06:28 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46199 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263AbZJVGG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 02:06:27 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF55C628EF;
-	Thu, 22 Oct 2009 02:06:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=IbPpMf402WAQyZXvEBoK8M2Lq/0=; b=rODRFX1mbQZSvRzpJQShJ8V
-	L4YAZV5WNIjHSB+2yFHOa/Shg0n/Ar0NJ4eQE5tjFXXBiAOkB4E8AnBZjEmsWkMe
-	PjvvauSWaPOeJ2l55amgIW2Gb6pMcz0skJYnwO7/RdI+p8l4ZAvwsrz9Fkur6fCO
-	5EjuHFdyZnUjBJUrWXDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=cjclQIvo9kl1A+oq3S/U+UfYaBhutBAgHhbL/PZ1GkqGqSz9I
-	9GpR4sHkWbxbNPv5I9g/YJZHMk9e48JNaMKiPvseFmiDB+5sJBFrSJPD65iG1Sbb
-	x7FVE3QOra4DkaDb/TT4CEOKzYUW0t9j2F+QG+f6REoDBctlIeYRevBBEU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9E46628EE;
-	Thu, 22 Oct 2009 02:06:23 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FACD628EC; Thu, 22 Oct
- 2009 02:06:15 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 06A5AED0-BED1-11DE-94C7-1B12EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752721AbZJVGGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 02:06:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbZJVGGk
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 02:06:40 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:22601 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751440AbZJVGGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 02:06:39 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N0qop-0006oB-MX; Thu, 22 Oct 2009 08:06:39 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 73E03A4A1; Thu, 22 Oct 2009 08:06:39 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130993>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Rast schrieb:
+> Handling $filter_subdir in the usual way requires a separate case at
+> every use, because the variable is empty when unused.  Furthermore,
+> the case for --subdirectory-filter supplies its own --, so the user
+> cannot provide one himself (though there is also very little point in
+> doing so).
+> 
+> Instead, tack the $filter_subdir onto $@ in the right place
+> automatically, and only use a -- if it was not already provided by the
+> user.
 
-> Nicolas Pitre <nico@fluxnic.net> writes:
->
->> I didn't spend the time needed to think about this issue and your 
->> proposed fix yet.
+I understand that this is a preparatory patch, but you seem to argue that
+even without the follow-up patch there is a problem. But from your
+explanation I do not understand what it is. An example invocation that
+shows the problem would be very helpful.
 
-I looked at the issue again, and came to the conclusion that we need quite
-different fix for the two inflate callsites, as they do quite different
-things.
+> @@ -257,15 +257,29 @@ git read-tree || die "Could not seed the index"
+>  # map old->new commit ids for rewriting parents
+>  mkdir ../map || die "Could not create map/ directory"
+>  
+> +non_ref_args=$(git rev-parse --no-revs --sq "$@")
+> +dashdash=--
+> +for arg in "$non_ref_args"; do
 
--- >8 --
-Subject: Fix incorrect error check while reading deflated pack data
+At this point $non_ref_args might contain one or more IFS-separatable
+words, but if you say "$non_ref_args" here, this loop will be entered
+exactly once. But even if you drop the dquotes, the --sq quoting that you
+requested from rev-parse bought you nothing.
 
-The loop in get_size_from_delta() feeds a deflated delta data from the
-pack stream _until_ we get inflated result of 20 bytes[*] or we reach the
-end of stream.
+> +	if test arg = --; then
 
-    Side note. This magic number 20 does not have anything to do with the
-    size of the hash we use, but comes from 1a3b55c (reduce delta head
-    inflated size, 2006-10-18).
+Did you mean $arg here? Even then this test will succeed only if
+$non_ref_args contains exactly one word and that word is '--'. Is that
+what you mean?
 
-The loop reads like this:
+> +		dashdash=
+> +		break
+> +	fi
+> +done
+> +
+>  case "$filter_subdir" in
+>  "")
+> -	git rev-list --reverse --topo-order --default HEAD \
+> -		--parents --simplify-merges "$@"
+> +	filter_subdir_sq=
+>  	;;
+>  *)
+> -	git rev-list --reverse --topo-order --default HEAD \
+> -		--parents --simplify-merges "$@" -- "$filter_subdir"
+> -esac > ../revs || die "Could not get the commits"
+> +	filter_subdir_sq=$(git rev-parse --sq-quote "$filter_subdir")
+> +esac
+> +
+> +eval "set -- \"\$@\" $dashdash $filter_subdir_sq"
+> +non_ref_args=$(git rev-parse --no-revs --sq "$@")
+> +
+> +git rev-list --reverse --topo-order --default HEAD \
+> +	--parents --simplify-merges "$@" \
+> +	> ../revs || die "Could not get the commits"
+>  commits=$(wc -l <../revs | tr -d " ")
+>  
+>  test $commits -eq 0 && die "Found nothing to rewrite"
+> @@ -356,8 +370,8 @@ then
+>  	do
+>  		sha1=$(git rev-parse "$ref"^0)
+>  		test -f "$workdir"/../map/$sha1 && continue
+> -		ancestor=$(git rev-list --simplify-merges -1 \
+> -				$ref -- "$filter_subdir")
+> +		ancestor=$(eval "git rev-list --simplify-merges " \
+> +				"-1 \"$ref\" $non_ref_args")
+>  		test "$ancestor" && echo $(map $ancestor) >> "$workdir"/../map/$sha1
+>  	done < "$tempdir"/heads
+>  fi
 
-    do {
-        in = use_pack();
-        stream.next_in = in;
-        st = git_inflate(&stream, Z_FINISH);
-        curpos += stream.next_in - in;
-    } while ((st == Z_OK || st == Z_BUF_ERROR) &&
-             stream.total_out < sizeof(delta_head));
+This looks so convoluted; there must be a simpler way to achieve your goal.
 
-This git_inflate() can return:
-
- - Z_STREAM_END, if use_pack() fed it enough input and the delta itself
-   was smaller than 20 bytes;
-
- - Z_OK, when some progress has been made;
-
- - Z_BUF_ERROR, if no progress is possible, because we either ran out of
-   input (due to corrupt pack), or we ran out of output before we saw the
-   end of the stream.
-
-The fix b3118bd (sha1_file: Fix infinite loop when pack is corrupted,
-2009-10-14) attempted was against a corruption that appears to be a valid
-stream that produces a result larger than the output buffer, but we are
-not even trying to read the stream to the end in this loop.  If avail_out
-becomes zero, total_out will be the same as sizeof(delta_head) so the loop
-will terminate without the "fix".  There is no fix from b3118bd needed for
-this loop, in other words.
-
-The loop in unpack_compressed_entry() is quite a different story.  It
-feeds a deflated stream (either delta or base) and allows the stream to
-produce output up to what we expect but no more.
-
-    do {
-        in = use_pack();
-        stream.next_in = in;
-        st = git_inflate(&stream, Z_FINISH);
-        curpos += stream.next_in - in;
-    } while (st == Z_OK || st == Z_BUF_ERROR)
-
-This _does_ risk falling into an endless interation, as we can exhaust
-avail_out if the length we expect is smaller than what the stream wants to
-produce (due to pack corruption).  In such a case, avail_out will become
-zero and inflate() will return Z_BUF_ERROR, while avail_in may (or may
-not) be zero.
-
-But this is not a right fix:
-
-    do {
-        in = use_pack();
-        stream.next_in = in;
-        st = git_inflate(&stream, Z_FINISH);
-+       if (st == Z_BUF_ERROR && (stream.avail_in || !stream.avail_out)
-+               break; /* wants more input??? */
-        curpos += stream.next_in - in;
-    } while (st == Z_OK || st == Z_BUF_ERROR)
-
-as Z_BUF_ERROR from inflate() may be telling us that avail_in has also run
-out before reading the end of stream marker.  In such a case, both avail_in
-and avail_out would be zero, and the loop should iterate to allow the end
-of stream marker to be seen by inflate from the input stream.
-
-The right fix for this loop is likely to be to increment the initial
-avail_out by one (we allocate one extra byte to terminate it with NUL
-anyway, so there is no risk to overrun the buffer), and break out if we
-see that avail_out has become zero, in order to detect that the stream
-wants to produce more than what we expect.  After the loop, we have a
-check that exactly tests this condition:
-
-    if ((st != Z_STREAM_END) || stream.total_out != size) {
-        free(buffer);
-        return NULL;
-    }
-
-So here is a patch (without my previous botched attempts) to fix this
-issue.  The first hunk reverts the corresponding hunk from b3118bd, and
-the second hunk is the same fix proposed earlier. 
-
----
- sha1_file.c |    8 +++-----
- 1 files changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 4cc8939..63981fb 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1357,8 +1357,6 @@ unsigned long get_size_from_delta(struct packed_git *p,
- 		in = use_pack(p, w_curs, curpos, &stream.avail_in);
- 		stream.next_in = in;
- 		st = git_inflate(&stream, Z_FINISH);
--		if (st == Z_BUF_ERROR && (stream.avail_in || !stream.avail_out))
--			break;
- 		curpos += stream.next_in - in;
- 	} while ((st == Z_OK || st == Z_BUF_ERROR) &&
- 		 stream.total_out < sizeof(delta_head));
-@@ -1589,15 +1587,15 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 	buffer[size] = 0;
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out = buffer;
--	stream.avail_out = size;
-+	stream.avail_out = size + 1;
- 
- 	git_inflate_init(&stream);
- 	do {
- 		in = use_pack(p, w_curs, curpos, &stream.avail_in);
- 		stream.next_in = in;
- 		st = git_inflate(&stream, Z_FINISH);
--		if (st == Z_BUF_ERROR && (stream.avail_in || !stream.avail_out))
--			break;
-+		if (!stream.avail_out)
-+			break; /* the payload is larger than it should be */
- 		curpos += stream.next_in - in;
- 	} while (st == Z_OK || st == Z_BUF_ERROR);
- 	git_inflate_end(&stream);
+-- Hannes
