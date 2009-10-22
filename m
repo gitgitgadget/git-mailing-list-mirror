@@ -1,107 +1,106 @@
-From: "jamesmikedupont-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org" <jamesmikedupont-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org>
-Subject: Re: Wikipedia meets git
-Date: Thu, 22 Oct 2009 08:27:14 +0200
-Message-ID: <ee9cc730910212327i6ecdbd4fw933e62d08c4c46ec@mail.gmail.com>
-References: <ee9cc730910151155w307a87f0w7bba5c4039bb1ef9@mail.gmail.com>
-	<71cd4dd90910170823o3f58b8c2x1d39040e7582634@mail.gmail.com>
-	<ee9cc730910170939m6e83ad2fy5f22a541c3679638@mail.gmail.com>
-	<deea21830910170953o33823dd3rd7a9305f9ea794d@mail.gmail.com>
-	<ee9cc730910171011l1b68a1a0q7096a93c36362959@mail.gmail.com>
-	<e405c96a0910190830y51009225lc72942a703575042@mail.gmail.com>
-	<5396c0d10910210543i4c0a3350je5bee4c6389a2292@mail.gmail.com>
-	<1256154567.1477.87.camel@giskard>
-	<ee9cc730910211308u5a0284d6he483b0904ddb6068@mail.gmail.com>
-	<fbad4e140910211636hd772962x4535ccbda6faa3c7@mail.gmail.com>
-Reply-To: Wikimedia Foundation Mailing List <foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [bug][bisected] git-svn with root branches
+Date: Wed, 21 Oct 2009 23:30:36 -0700
+Message-ID: <20091022063036.GA8081@dcvr.yhbt.net>
+References: <20091021144113.GA7440@cumin>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Cc: Bernie Innocenti <bernie-+SBua99wBSpAfugRpC6u6w@public.gmane.org>,
-	Wikimedia Foundation Mailing List <foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>,
-	git <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>
-To: David Gerard <dgerard-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
-X-From: foundation-l-bounces-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org Thu Oct 22 08:27:34 2009
-Return-path: <foundation-l-bounces-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>
-Envelope-to: gowf-foundation-l@m.gmane.org
-Received: from lists.wikimedia.org ([91.198.174.5])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Cordero <theappleman@gmail.com>,
+	Adam Brewster <adambrewster@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 08:30:47 2009
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0r92-0005I8-JT
-	for gowf-foundation-l@m.gmane.org; Thu, 22 Oct 2009 08:27:32 +0200
-Received: from localhost ([127.0.0.1]:60121 helo=lily.esams.wikimedia.org)
-	by lily.knams.wikimedia.org with esmtp (Exim 4.69)
-	(envelope-from <foundation-l-bounces-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>)
-	id 1N0r8r-0004GM-6v; Thu, 22 Oct 2009 06:27:21 +0000
-Received: from mail-fx0-f228.google.com ([209.85.220.228]:64511)
-	by lily.knams.wikimedia.org with esmtp (Exim 4.69)
-	(envelope-from <jamesmikedupont-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org>) id 1N0r8k-0004Fq-RN
-	for foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org; Thu, 22 Oct 2009 06:27:17 +0000
-Received: by fxm28 with SMTP id 28so8843573fxm.42
-	for <foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>;
-	Wed, 21 Oct 2009 23:27:14 -0700 (PDT)
-Received: by 10.204.153.215 with SMTP id l23mr719987bkw.135.1256192834476; 
-	Wed, 21 Oct 2009 23:27:14 -0700 (PDT)
-In-Reply-To: <fbad4e140910211636hd772962x4535ccbda6faa3c7-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
-X-BeenThere: foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: Wikimedia Foundation Mailing List <foundation-l.lists.wikimedia.org>
-List-Unsubscribe: <https://lists.wikimedia.org/mailman/listinfo/foundation-l>, 
-	<mailto:foundation-l-request-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org?subject=unsubscribe>
-List-Archive: <http://lists.wikimedia.org/pipermail/foundation-l>
-List-Post: <mailto:foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org>
-List-Help: <mailto:foundation-l-request-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org?subject=help>
-List-Subscribe: <https://lists.wikimedia.org/mailman/listinfo/foundation-l>,
-	<mailto:foundation-l-request-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org?subject=subscribe>
-Sender: foundation-l-bounces-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org
-Errors-To: foundation-l-bounces-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130994>
+	id 1N0rC9-0006QL-Us
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 08:30:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753068AbZJVGag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 02:30:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752600AbZJVGaf
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 02:30:35 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54505 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752464AbZJVGaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 02:30:35 -0400
+Received: from localhost (user-118bg0q.cable.mindspring.com [66.133.192.26])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by dcvr.yhbt.net (Postfix) with ESMTPSA id ECF191F9B9;
+	Thu, 22 Oct 2009 06:30:38 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20091021144113.GA7440@cumin>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/130995>
 
-Ok,
-I have started a google group called mediawiki-vcs
+Daniel Cordero <theappleman@gmail.com> wrote:
+> Hello,
+> 
+> when trying to clone a svn repo with the command-line:
+> 
+> 	$ git svn clone -b / http://svn.collab.net/repos/svn/
+> 
+> (that is, each folder in the root of the repo should be considered it's
+> own branch)
+> the clone sometimes[1] fails saying:
+> 
+> 	ref: 'refs/remotes/' ends with a trailing slash, this is not permitted by git nor Subversion
+> 
+> The offending config is:
+> [svn-remote "svn"]
+>         url = http://svn.collab.net/repos/svn
+>         branches = /*:refs/remotes/*
+> 
+> 
+> This used to work in the past; I bisected the bad commit to
+> 
+> commit 6f5748e14cc5bb0a836b649fb8e2d6a5eb166f1d
+> Author: Adam Brewster <adambrewster@gmail.com>
+> Date:   Tue Aug 11 23:14:03 2009 -0400
+> 
+>     svn: allow branches outside of refs/remotes
+> 
+> 
+> Thanks in advance.
 
+Thanks for bisecting it for us!
 
+Reverting the left hand side of these two regexps from Adam's commit
+seems to fix the problem.
 
-              http://groups.google.com/group/mediawiki-vcs
+diff --git a/git-svn.perl b/git-svn.perl
+index eb4b75a..56af221 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1765,7 +1765,7 @@ sub read_all_remotes {
+ 	my $use_svm_props = eval { command_oneline(qw/config --bool
+ 	    svn.useSvmProps/) };
+ 	$use_svm_props = $use_svm_props eq 'true' if $use_svm_props;
+-	my $svn_refspec = qr{\s*/?(.*?)\s*:\s*(.+?)\s*};
++	my $svn_refspec = qr{\s*(.*?)\s*:\s*(.+?)\s*};
+ 	foreach (grep { s/^svn-remote\.// } command(qw/config -l/)) {
+ 		if (m!^(.+)\.fetch=$svn_refspec$!) {
+ 			my ($remote, $local_ref, $remote_ref) = ($1, $2, $3);
+@@ -1979,7 +1979,7 @@ sub find_ref {
+ 	my ($ref_id) = @_;
+ 	foreach (command(qw/config -l/)) {
+ 		next unless m!^svn-remote\.(.+)\.fetch=
+-		              \s*/?(.*?)\s*:\s*(.+?)\s*$!x;
++		              \s*(.*?)\s*:\s*(.+?)\s*$!x;
+ 		my ($repo_id, $path, $ref) = ($1, $2, $3);
+ 		if ($ref eq $ref_id) {
+ 			$path = '' if ($path =~ m#^\./?#);
+---
 
-We should just move the discussion there.
-Additionaly, I did not name it git, but vcs, for the reason that we
-should support multiple backends via a plugin. I am interested in
-using git because i think git is great, but others should be free to
-use cvs if they feel it is needed.
+I'm not sure why Adam decided the leading slash needed to be removed for
+the git refspec.  That said, the globbing/branching code still makes me
+want to hide under a rock and I'm generally afraid to touch it.
+I'll wait for Adam to chime in since he's braver than I am :)
 
-mike
-
-
-On Thu, Oct 22, 2009 at 1:36 AM, David Gerard <dgerard-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org> wrote:
-> 2009/10/21 jamesmikedupont-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org <jamesmikedupont-gM/Ye1E23mwN+BqQ9rBEUg@public.gmane.org=
->:
->
->> most people are working on very small subsets of the data. Very few
->> people will want to have all the data, think about getting all the
->> versions from all the git repos, it would be the same.
->> My idea is for smaller chapters who want to get started easily, or
->> towns, regions to host their own branches of relevant data.
->> Given a world full of such servers, the sum would be great but the
->> individual branches needed at one time would be small.
->
->
-> A distributed backend is a nice idea anyway - imagine a meteor hitting
-> the Florida data centres ...
->
-> And there are third-party users who could benefit from a highly
-> distributed backend, such as Wikileaks.
->
-> This thread should probably move to mediawiki-l ...
->
->
-> - d.
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-
-_______________________________________________
-foundation-l mailing list
-foundation-l-RusutVdil2icGmH+5r0DM0B+6BGkLq7r@public.gmane.org
-Unsubscribe: https://lists.wikimedia.org/mailman/listinfo/foundation-l
+-- 
+Eric Wong
