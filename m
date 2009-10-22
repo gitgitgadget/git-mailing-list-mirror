@@ -1,84 +1,87 @@
 From: Nanako Shiraishi <nanako3@lavabit.com>
-Subject: Re: [RFC/PATCH] git-merge: forbid fast-forward and up-to-date when --no-commit is given
-Date: Thu, 22 Oct 2009 19:21:45 +0900
-Message-ID: <20091022192145.6117@nanako3.lavabit.com>
-References: <200910201947.50423.trast@student.ethz.ch>
-	<alpine.LNX.2.00.0910201912390.14365@iabervon.org>
-	<20091021030608.GA18997@atjola.homenet>
-	<7vk4ypb71j.fsf@alter.siamese.dyndns.org>
-	<20091021172123.GB27495@localhost>
-	<7v3a5c2zrr.fsf@alter.siamese.dyndns.org>
-	<7vpr8g1l2a.fsf_-_@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] Documentation/fetch-options.txt: order options alphabetically
+Date: Thu, 22 Oct 2009 19:21:52 +0900
+Message-ID: <20091022192152.6117@nanako3.lavabit.com>
+References: <87eiow1pey.fsf@jondo.cante.net>
+	<7vpr8g32ht.fsf@alter.siamese.dyndns.org>
+	<7vhbts3285.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Cc: git@vger.kernel.org, Clemens Buchacher <drizzd@aon.at>,
-	Bjorn Steinbrink <B.Steinbrink@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Thomas Rast <trast@student.ethz.ch>
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 12:21:58 2009
+X-From: git-owner@vger.kernel.org Thu Oct 22 12:21:59 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0unt-0006yV-AH
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 12:21:57 +0200
+	id 1N0unu-0006yV-CE
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 12:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110AbZJVKVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 06:21:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZJVKVp
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 06:21:45 -0400
-Received: from karen.lavabit.com ([72.249.41.33]:60657 "EHLO karen.lavabit.com"
+	id S1753260AbZJVKVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 06:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbZJVKVt
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 06:21:49 -0400
+Received: from karen.lavabit.com ([72.249.41.33]:60667 "EHLO karen.lavabit.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752524AbZJVKVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 06:21:45 -0400
+	id S1753176AbZJVKVr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 06:21:47 -0400
 Received: from c.earth.lavabit.com (c.earth.lavabit.com [192.168.111.12])
-	by karen.lavabit.com (Postfix) with ESMTP id 11AA711B9CE;
-	Thu, 22 Oct 2009 05:21:50 -0500 (CDT)
+	by karen.lavabit.com (Postfix) with ESMTP id D547D11B9D0;
+	Thu, 22 Oct 2009 05:21:52 -0500 (CDT)
 Received: from 5391.lavabit.com (customer-148-233-239-23.uninet.net.mx [148.233.239.23])
-	by lavabit.com with ESMTP id XM79IDCSTNS7; Thu, 22 Oct 2009 05:21:50 -0500
+	by lavabit.com with ESMTP id W100RBQ2G2LD; Thu, 22 Oct 2009 05:21:52 -0500
 DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=lavabit; d=lavabit.com;
-  b=ywTmGuUc2fyv20A6nkk/HRrXwHeaABJt9rFZMPiwUpM21CSiMJ5emnmcnyNbZOqpT1vI27IE4lLtnaKUOEeG6WkLfPEn0uMb7OaOL2bZTLXHMLUydhJ66iPdGEJ6k1ZWMgqqbhCh2PNTt0edlJvOOsRlePx+ZPgORfQ0R0rCZeU=;
+  b=YLHJv5t3c/MEI0v4HOYAXBXfyRlJ+XkjEeJezpy3l1aPmhhztB368PkJT1EpnBIsga2I9F990RudF4wX8YXDt1ZT2cpBFUdovM0NPh2MI3ajWg6F7qmapXErjXDsKcPlotmqE8/UVQaSkm6mXJhDOaE/tQo2lmI/hHQYc60p5hg=;
   h=From:To:Cc:Subject:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id;
-In-Reply-To: <7vpr8g1l2a.fsf_-_@alter.siamese.dyndns.org>
+In-Reply-To: <7vhbts3285.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131017>
 
 Quoting Junio C Hamano <gitster@pobox.com>
 
-> Traditionally "git merge --no-commit" meant just that: do not create a new
-> commit even when a merge succeeds.  But this leads to confusion when the
-> merged commit is a descendant of the current commit, in which case we
-> succeed the merge by fast-forwarding and without creating a new commit.
-> Also when the merged commit is already a part of the history, we succeeded
-> without doing anything.
->
-> Error out when --no-commit is given but the merge would result in a
-> fast-forward or an up-to-date.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * This is the first alternative.  I think it makes more sense than the
->    other one, but I am unsure, as I obviously do not get confused when
->    --no-commit becomes no-op due to a fast-forward nor an up-to-date and
->    am rather happy with the current behaviour.
+> Ah, in your defense ;-) I think you looked only at git-fetch.txt without
+> checking where else this file is included.  Then the patch certainly is
+> understandable.  It would probably make git-fetch.{1,html} easier to scan,
+> while making things not worse for git-pull.{1,html}
 
-I think this is good (but I am saying this only from your 
-description without understanding the updated code), but 
-the change breaks --squash to merge a branch, doesn't it?
+Can't we introduce subsections in the OPTIONS section to 
+group them together, like this (sorry, not a patch)?
 
-    % git checkout feature  # from your master branch
-    % work; git commit; work; git commit
-    % git checkout master  # go back to your master branch
-    % git merge --squash feature
+OPTIONS
+-------
 
-This is a useful way to clean up changes that were built
-in small steps that turned out to be worth only a commit.
+Options related to merging  <---- added
+~~~~~~~~~~~~~~~~~~~~~~~~~~  <---- added
+include::merge-options.txt[]
+
+:git-pull: 1
+
+--rebase::
+	Instead of a merge, perform a rebase after fetching.  If
+	there is a remote ref for the upstream branch, and this branch
+	was rebased since last fetched, the rebase uses that information
+	to avoid rebasing non-local changes. To make this the default
+	for branch `<name>`, set configuration `branch.<name>.rebase`
+	to `true`.
++
+[NOTE]
+This is a potentially _dangerous_ mode of operation.
+It rewrites history, which does not bode well when you
+published that history already.  Do *not* use this option
+unless you have read linkgit:git-rebase[1] carefully.
+
+--no-rebase::
+	Override earlier --rebase.
+
+Options related to fetching  <---- added
+~~~~~~~~~~~~~~~~~~~~~~~~~~~  <---- added
+include::fetch-options.txt[]
+
+include::pull-fetch-param.txt[]
 
 -- 
 Nanako Shiraishi
