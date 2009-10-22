@@ -1,99 +1,94 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: keeping track of where a patch begins
-Date: Thu, 22 Oct 2009 10:27:31 +0200
-Message-ID: <200910221027.32739.trast@student.ethz.ch>
-References: <3a69fa7c0910210745r311cf18xf966f5c63650cde6@mail.gmail.com> <alpine.LFD.2.00.0910211402490.21460@xanadu.home> <7veiow4iqc.fsf@alter.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2 1/2] filter-branch: stop special-casing $filter_subdir
+ argument
+Date: Thu, 22 Oct 2009 10:31:56 +0200
+Message-ID: <4AE0187C.4040608@viscovery.net>
+References: <95535b01e2181d321190c6d93b2834188612a389.1256148512.git.trast@student.ethz.ch> <95535b01e2181d321190c6d93b2834188612a389.1256149428.git.trast@student.ethz.ch> <4ADFF66F.1080005@viscovery.net> <200910221005.11813.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>, E R <pc88mxer@gmail.com>,
-	<git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 22 10:28:26 2009
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Oct 22 10:32:08 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0t21-00061c-Ib
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 10:28:25 +0200
+	id 1N0t5b-0007qJ-68
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 10:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753862AbZJVI2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 04:28:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbZJVI2P
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 04:28:15 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:56280 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752318AbZJVI2O (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 04:28:14 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 10:28:17 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
- 2009 10:28:06 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.27.29-0.1-default; KDE/4.3.1; x86_64; ; )
-In-Reply-To: <7veiow4iqc.fsf@alter.siamese.dyndns.org>
+	id S1754077AbZJVIb5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 04:31:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753999AbZJVIb5
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 04:31:57 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:41314 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752664AbZJVIb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 04:31:56 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1N0t5Q-0003yZ-VB; Thu, 22 Oct 2009 10:31:57 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id BB369A4A1; Thu, 22 Oct 2009 10:31:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.23 (Windows/20090812)
+In-Reply-To: <200910221005.11813.trast@student.ethz.ch>
+X-Enigmail-Version: 0.95.5
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131007>
 
-Junio C Hamano wrote:
+Thomas Rast schrieb:
+> Well, I just observed while writing the patch that you cannot say
 > 
-> A branch in git, as Randal often used to say on #git, is an illusion---it
-> points only at the top and does not identify the bottom.
+>   git filter-branch --subdirectory-filter subdir -- --all -- subdir/file
+
+Please include this in the commit message.
+
+> Johannes Sixt wrote:
+>> Thomas Rast schrieb:
+>>> @@ -257,15 +257,29 @@ git read-tree || die "Could not seed the index"
+>>>  # map old->new commit ids for rewriting parents
+>>>  mkdir ../map || die "Could not create map/ directory"
+>>>  
+>>> +non_ref_args=$(git rev-parse --no-revs --sq "$@")
+>>> +dashdash=--
+>>> +for arg in "$non_ref_args"; do
+>> At this point $non_ref_args might contain one or more IFS-separatable
+>> words, but if you say "$non_ref_args" here, this loop will be entered
+>> exactly once. But even if you drop the dquotes, the --sq quoting that you
+>> requested from rev-parse bought you nothing.
 > 
-> But it does _not_ have to stay that way at the Porcelain level.
-> 
-> Here is a rough sketch of one possible solution.  It is not fully thought
-> out; the basic idea is probably sound but I did not try to exhaustively
-> cover changes to various tools that are necessary to maintain the
-> invariants this scheme requires.
-> 
->  (0) Define a way to identify the bottom of a branch.  One way to do this
->      is by an extra ref (e.g. refs/branchpoints/frotz).  Then the commits
->      between refs/branchpoints/frotz..refs/heads/frotz identifies the
->      commits on the branch.  None of the additional restrictions below
->      applies when the branch does not have such bottom defined (i.e.
->      created by the current git without this extension).
-> 
->  (1) At branch creation, the branchpoint is noted. [...]
-> 
->  (2) You can grow the branch naturally with "commit", "am" and "merge".
->      The bottom of the branch does not have to move with these operations.
-> 
->  (3) Operations that alter histories, e.g. "commit --amend", "rebase",
->      "reset", while on a branch that records its bottom need to be taught
->      to pay attention to not break its bottom. [...]
-> 
->  (4) Operations that browse histories, e.g. "log", "show-branch", while on
->      a branch that records its bottom can be taught to pay attention to
->      the bottom. [...]
+> Hrm.  Ok, so the ".." were clearly in mistake, but why could I remove
+> the --sq?  Doesn't the shell expand the arguments provided by
+> $non_ref_args if I use it without quotes nor --sq, so that it might
+> accidentally expand paths or such?
 
-I think this not only changes the model of branches, but also commits,
-to some extent.  Currently, commit have no intrinsic branch
-membership; if you say
+When the shell expands $variable (outside quotes), it does not apply
+quotes anymore, but only word-splits using $IFS. In your code, the words
+would contain literal single-quotes, and paths with spaces would still be
+split into words.
 
-  git branch foo bar
+Wouldn't it be sufficient to just check whether any non-rev arguments are
+present, and to suppress '--' if there are, like:
 
-you cannot distinguish whether the commits on 'bar' were created on
-'foo' or on 'bar'.  (By git's means; of course the decision would
-favour 'master' if I had used that instead.)
+dashdash=
+test -z "$(git rev-parse --no-revs "$@")" && dashdash=--
 
-Technically your proposal does not change this fact very much; it is
-still possible to create "clones" of branches that are
-indistinguishable.  However, to the *user* I think we would create a
-notion that "a commit belongs to one specific branch", in that, during
-the course of normal operations, a commit will end up on exactly one
+OK, this still leaves you with the problem that you want to separate
+non-rev arguments from rev arguments. Right?
 
-  git rev-list --first-parent base..branch
+For this I suggest that you extract revs into a regular variable (because
+the SHA1s can be word-split in a predictable way), and that you leave the
+non-rev arguments in $@:
 
-range.
+revs=$(git rev-parse --revs "$@")	# don't know if this works
+eval set -- "$(git rev-parse --no-revs --sq "$@")"	# dquotes?
 
-(Not sure if I consider this as an argument in favour or against yet,
-but I wanted to point it out anyway.)
+or so... This way you 'eval' should not be needed in later code.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-- Hannes
