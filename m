@@ -1,83 +1,113 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Oct 2009, #03; Mon, 19)
-Date: Thu, 22 Oct 2009 17:33:53 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.0910221732450.1263@felix-maschine>
-References: <7vhbtv6c76.fsf@alter.siamese.dyndns.org> <200910191125.19997.johan@herland.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] describe: when failing, tell the user about options that work
+Date: Thu, 22 Oct 2009 17:44:39 +0200
+Message-ID: <f1e86b9095d63c6541d0a8df6a1cf8eadfe247bb.1256226187.git.trast@student.ethz.ch>
+References: <76c5b8580910220810n389d065di349339ab38909ef7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Oct 22 17:34:22 2009
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 22 17:46:26 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N0zg2-0001ig-N2
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 17:34:11 +0200
+	id 1N0zrC-0000Z7-ST
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Oct 2009 17:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756517AbZJVPdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Oct 2009 11:33:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756285AbZJVPdo
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 11:33:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53699 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756128AbZJVPdn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Oct 2009 11:33:43 -0400
-Received: (qmail invoked by alias); 22 Oct 2009 15:33:46 -0000
-Received: from cbg-off-client.mpi-cbg.de (EHLO [10.1.35.45]) [141.5.11.5]
-  by mail.gmx.net (mp015) with SMTP; 22 Oct 2009 17:33:46 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19DWWwMgXZDrYBvQd8laUgp6g1cEKkZ1zek2jcUzw
-	VWsBmV5hqqTq4y
-X-X-Sender: johannes@felix-maschine
-In-Reply-To: <200910191125.19997.johan@herland.net>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
-X-FuHaFi: 0.58
+	id S1756313AbZJVPpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Oct 2009 11:45:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756243AbZJVPpc
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Oct 2009 11:45:32 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:12375 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756128AbZJVPpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Oct 2009 11:45:31 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
+ 2009 17:45:34 +0200
+Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.176.0; Thu, 22 Oct
+ 2009 17:45:13 +0200
+X-Mailer: git-send-email 1.6.5.1.70.g1383ae
+In-Reply-To: <76c5b8580910220810n389d065di349339ab38909ef7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131028>
 
-Hi Johan,
+Users seem to call git-describe without reading the manpage, and then
+wonder why it doesn't work with unannotated tags by default.
 
-On Mon, 19 Oct 2009, Johan Herland wrote:
+Make a minimal effort towards seeing if there would have been
+unannotated tags, and tell the user.  Specifically, we say that --tags
+could work if we found any unannotated tags.  If not, we say that
+--always would have given results.
 
-> On Monday 19 October 2009, Junio C Hamano wrote:
-> > * jh/notes (2009-10-09) 22 commits.
-> >  - fast-import: Proper notes tree manipulation using the notes API
-> >  - Refactor notes concatenation into a flexible interface for combining notes
-> >  - Notes API: Allow multiple concurrent notes trees with new struct notes_tree
-> >  - Notes API: for_each_note(): Traverse the entire notes tree with a callback
-> >  - Notes API: get_note(): Return the note annotating the given object
-> >  - Notes API: add_note(): Add note objects to the internal notes tree structure
-> >  - Notes API: init_notes(): Initialize the notes tree from the given notes ref
-> >  - Notes API: get_commit_notes() -> format_note() + remove the commit restriction
-> >  - Add selftests verifying concatenation of multiple notes for the same commit
-> >  - Refactor notes code to concatenate multiple notes annotating the same object
-> >  - Add selftests verifying that we can parse notes trees with various fanouts
-> >  - Teach the notes lookup code to parse notes trees with various fanout schemes
-> >  - Teach notes code to free its internal data structures on request
-> >  - Add '%N'-format for pretty-printing commit notes
-> >  - Add flags to get_commit_notes() to control the format of the note string
-> >  - t3302-notes-index-expensive: Speed up create_repo()
-> >  - fast-import: Add support for importing commit notes
-> >  - Teach "-m <msg>" and "-F <file>" to "git notes edit"
-> >  - Add an expensive test for git-notes
-> >  - Speed up git notes lookup
-> >  - Add a script to edit/inspect notes
-> >  - Introduce commit notes
-> 
-> > Is this good for 'next' now?
-> 
-> Not all of it.
-> 
-> I suspect the first 14 patches are stable and 'next'-worthy, although
-> it would be nice if Dscho had the time to ACK them.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-As you probably realized, I have little time for Git these days (mainly 
-due to work), so please do not wait for me.
+Eugene Sajine wrote:
+> [git-describe fails if you don't have annotated tags]
+>  
+> Thanks! It is working ok.
+> Although it is probably not the best error handling.
+> I believe git should fail with some meaningful message in this case...
 
-Ciao,
-Dscho
+We already had most of the information available, so hey, why not.
+
+
+ builtin-describe.c |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-describe.c b/builtin-describe.c
+index 2dcfd3d..1ffa0d8 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -96,8 +96,6 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void 
+ 	if (!all) {
+ 		if (!prio)
+ 			return 0;
+-		if (!tags && prio < 2)
+-			return 0;
+ 	}
+ 	add_to_known_names(all ? path + 5 : path + 10, commit, prio, sha1);
+ 	return 0;
+@@ -184,6 +182,7 @@ static void describe(const char *arg, int last_one)
+ 	struct possible_tag all_matches[MAX_TAGS];
+ 	unsigned int match_cnt = 0, annotated_cnt = 0, cur_match;
+ 	unsigned long seen_commits = 0;
++	unsigned int unannotated_cnt = 0;
+ 
+ 	if (get_sha1(arg, sha1))
+ 		die("Not a valid object name %s", arg);
+@@ -217,7 +216,9 @@ static void describe(const char *arg, int last_one)
+ 		seen_commits++;
+ 		n = c->util;
+ 		if (n) {
+-			if (match_cnt < max_candidates) {
++			if (!tags && !all && n->prio < 2) {
++				unannotated_cnt++;
++			} else if (match_cnt < max_candidates) {
+ 				struct possible_tag *t = &all_matches[match_cnt++];
+ 				t->name = n;
+ 				t->depth = seen_commits - 1;
+@@ -259,7 +260,14 @@ static void describe(const char *arg, int last_one)
+ 			printf("%s\n", find_unique_abbrev(sha1, abbrev));
+ 			return;
+ 		}
+-		die("cannot describe '%s'", sha1_to_hex(sha1));
++		if (unannotated_cnt)
++			die("cannot describe '%s'"
++			    " with only\nannotated tags. Try --tags.",
++			    sha1_to_hex(sha1));
++		else
++			die("cannot describe '%s'"
++			    " with tags\nTry --always, or create some tags.",
++			    sha1_to_hex(sha1));
+ 	}
+ 
+ 	qsort(all_matches, match_cnt, sizeof(all_matches[0]), compare_pt);
+-- 
+1.6.5.1.70.g1383ae
