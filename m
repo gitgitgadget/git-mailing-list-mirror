@@ -1,76 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git bisect Vs branch
-Date: Fri, 23 Oct 2009 12:31:07 -0400 (EDT)
-Message-ID: <alpine.LNX.2.00.0910231137290.14365@iabervon.org>
-References: <4AE07EEB.2010101@maxim-ic.com> <adf1fd3d0910220950s50ccf8efwda891374e6480a30@mail.gmail.com> <4AE156A9.9060809@maxim-ic.com> <4AE16A82.1010103@viscovery.net> <4AE17645.2000408@maxim-ic.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: ks/precompute-completion (was Re: What's cooking in git.git (Oct 
+	2009, #04; Wed, 21))
+Date: Fri, 23 Oct 2009 13:27:18 -0500
+Message-ID: <fabb9a1e0910231127i3ab469qebdc17168a58f22a@mail.gmail.com>
+References: <7veiovly35.fsf@alter.siamese.dyndns.org> <4AE0190E.8020803@gmail.com> 
+	<fabb9a1e0910221011r957246dx3162cd675ff16800@mail.gmail.com> 
+	<4AE0DAB3.1030103@gmail.com> <fabb9a1e0910221555k287b45ebwb15ac97851b845f9@mail.gmail.com> 
+	<fabb9a1e0910221556s694a344ag8e5ae07c35351ee4@mail.gmail.com> 
+	<4AE0E542.8010501@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-421231465-1256315467=:14365"
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <santi@agolina.net>
-To: =?ISO-8859-15?Q?Gr=E9gory_Rom=E9?= <gregory.rome@maxim-ic.com>
-X-From: git-owner@vger.kernel.org Fri Oct 23 18:31:15 2009
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Kirill Smelkov <kirr@mns.spb.ru>,
+	Stephen Boyd <bebarino@gmail.com>
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Fri Oct 23 20:27:58 2009
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1N1N2p-0007af-3n
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 18:31:15 +0200
+	id 1N1Orh-0002mf-00
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Oct 2009 20:27:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752592AbZJWQbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Oct 2009 12:31:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752548AbZJWQbE
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 12:31:04 -0400
-Received: from iabervon.org ([66.92.72.58]:38846 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535AbZJWQbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Oct 2009 12:31:03 -0400
-Received: (qmail 28982 invoked by uid 1000); 23 Oct 2009 16:31:07 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Oct 2009 16:31:07 -0000
-In-Reply-To: <4AE17645.2000408@maxim-ic.com>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752684AbZJWS1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Oct 2009 14:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752574AbZJWS1f
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Oct 2009 14:27:35 -0400
+Received: from mail-ew0-f208.google.com ([209.85.219.208]:63910 "EHLO
+	mail-ew0-f208.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752281AbZJWS1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Oct 2009 14:27:34 -0400
+Received: by ewy4 with SMTP id 4so1900081ewy.37
+        for <git@vger.kernel.org>; Fri, 23 Oct 2009 11:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type;
+        bh=+JjDVht0fHqK1mz7cKUNOdavtMGiYIurq58uGYeU7Io=;
+        b=hh5WqFNRFS462AWREFtLZYWN/F4n6n9c9kYm88qoDwCExWjuBxogU4mojlu60+5+lm
+         7G4JpuKNdywuTOgRSm0jG/Bm4mS3FLnLApM5SPfGNJr0cl/N6ovO5Kc/LYrMURperMeP
+         rjC+p2RGcOpkdAGGenZGmADQzlwpZR1xZ+B5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=JRXprBIwpJUFMd0FHS0Fmk+IDg9ifg2MMQEWdhuoG21XNJfI4V6SrPhTCYb4gR9yuC
+         eIVgNXn4osRUa5neApFCrKC2YWQByGE7ra9/QAqlF+4YwTgwP21UqbJ52b7byK36gvPn
+         mSRru6F9Vt6ROi7YGtrcwZ3lH6XouPo4o392M=
+Received: by 10.216.87.16 with SMTP id x16mr3956607wee.106.1256322458078; Fri, 
+	23 Oct 2009 11:27:38 -0700 (PDT)
+In-Reply-To: <4AE0E542.8010501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/131112>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Heya,
 
---1547844168-421231465-1256315467=:14365
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Thu, Oct 22, 2009 at 18:05, A Large Angry SCM <gitzilla@gmail.com> wrote:
+> Your original email included 'make && make install'; it's the "make install"
+> part I'm concerned about.
 
-On Fri, 23 Oct 2009, Grégory Romé wrote:
+Ah, no, I meant that as part of my semi-regular git update (during
+which I do 'make && make install') I want to have up-to-date bash
+completion, preferably installed somewhere system-wide; currently I am
+forced to have a 'source
+/home/sverre/code/git/contrib/completion/git-completion.bash' in my
+.bashrc,..
 
-> Thanks even if that's what scared me :)
-> The draw is very simple comparing to the reality (much more merge points) and
-> rebase will require lot of conflicts resolutions but now I'm sure that's what
-> I have to do.
+-- 
+Cheers,
 
-Alternatively, you could say that your testing procedure is to merge with 
-your branch and check for the regression. Instead of bisecting U''-C'', 
-bisect U'-C', but merge master (or rather, the first parent of the merge 
-that started not working) before testing each commit. Pose the problem as 
-upstream having a regression in that it doesn't work when merged with your 
-code, and solve that problem with bisect.
-
-But, before you start, verify that merging U'' and origin/master doesn't 
-work; if it does work, you recently introduced the change that doesn't 
-work with upstream, and it's probably a lot easier to find what you did 
-that's not okay any more than what made it not okay upstream. That is, 
-make C*; if it works, rebase your recent changes on it and debug that. 
-This should have fewer conflicts and be easier than the full rebase, if C* 
-actually turns out to work:
-
-U'--o-o--C'
- \       |\
-  U''-y-y--C''
-   \     |
-    -----C*--y-y
-
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-421231465-1256315467=:14365--
+Sverre Rabbelier
